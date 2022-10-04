@@ -1,22 +1,10 @@
 /*
-  Copyright (c) 2014-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef DISPLAYMESSAGEFORMATACTIONMENUTEST_H
-#define DISPLAYMESSAGEFORMATACTIONMENUTEST_H
+#pragma once
 
 #include <QObject>
 
@@ -24,12 +12,10 @@ class DisplayMessageFormatActionMenuTest : public QObject
 {
     Q_OBJECT
 public:
-    DisplayMessageFormatActionMenuTest();
+    explicit DisplayMessageFormatActionMenuTest(QObject *parent = nullptr);
 private Q_SLOTS:
     void shouldHaveDefaultValue();
     void shouldEmitSignalWhenClickOnSubMenu();
     void shouldSelectItemWhenChangeFormat();
     void shouldDontEmitSignalWhenChangeFormat();
 };
-
-#endif // DISPLAYMESSAGEFORMATACTIONMENUTEST_H

@@ -1,0 +1,143 @@
+# Translation of akonadi_followupreminder_agent.po to Ukrainian
+# Copyright (C) 2014-2021 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_followupreminder_agent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-02-03 08:54+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#: followupreminderinfoconfigwidget.cpp:25
+#, kde-format
+msgid "Follow Up Reminder Agent"
+msgstr "Агент нагадування щодо стеження"
+
+#: followupreminderinfoconfigwidget.cpp:27
+#, kde-format
+msgid "Follow Up Reminder"
+msgstr "Нагадування щодо стеження"
+
+#: followupreminderinfoconfigwidget.cpp:29
+#, kde-format
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr "© Laurent Montel, 2014–%1"
+
+#: followupreminderinfoconfigwidget.cpp:31
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: followupreminderinfoconfigwidget.cpp:31
+#, kde-format
+msgid "Maintainer"
+msgstr "Супровідник"
+
+#: followupreminderinfoconfigwidget.cpp:33
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: followupreminderinfoconfigwidget.cpp:33
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "To"
+msgstr "Кому"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Subject"
+msgstr "Тема"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Deadline"
+msgstr "Кінцевий строк"
+
+#: followupreminderinfowidget.cpp:61
+#, kde-format
+msgid "Answer"
+msgstr "Відповідь"
+
+#: followupreminderinfowidget.cpp:145
+#, kde-format
+msgid "Received"
+msgstr "Отримано"
+
+#: followupreminderinfowidget.cpp:145
+#, kde-format
+msgid "On hold"
+msgstr "На очікуванні"
+
+#: followupreminderinfowidget.cpp:217
+#, kde-format
+msgid "Show Message"
+msgstr "Показати повідомлення"
+
+#: followupreminderinfowidget.cpp:220
+#, kde-format
+msgid "Show Original Message"
+msgstr "Показати початкове повідомлення"
+
+#: followupreminderinfowidget.cpp:223
+#, kde-format
+msgid "Delete"
+msgstr "Вилучити"
+
+#: followupreminderinfowidget.cpp:250
+#, kde-format
+msgid "Do you want to delete this selected item?"
+msgid_plural "Do you want to delete these %1 selected items?"
+msgstr[0] "Хочете вилучити цей %1 позначений запис?"
+msgstr[1] "Хочете вилучити ці %1 позначені записи?"
+msgstr[2] "Хочете вилучити ці %1 позначених записів?"
+msgstr[3] "Хочете вилучити цей позначений запис?"
+
+#: followupreminderinfowidget.cpp:251
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Вилучення записів"
+
+#: followupremindermanager.cpp:154
+#, kde-format
+msgid "Answer from %1 received"
+msgstr "Отримано відповідь від %1"
+
+#: followupremindernoanswerdialog.cpp:37
+#, kde-format
+msgctxt "@title:window"
+msgid "Follow Up Reminder"
+msgstr "Нагадування щодо стеження"
+
+#: followupremindernoanswerdialog.cpp:43
+#, kde-format
+msgid "You still wait an answer about this mail:"
+msgstr "Ви все ще очікуєте на відповідь щодо цього повідомлення:"
+
+#~ msgid "Configure"
+#~ msgstr "Налаштувати"
+
+#~ msgid "Follow Up Mail."
+#~ msgstr "Стеження за відповідями."
+
+#~ msgid "Follow Up Mail"
+#~ msgstr "Стеження за відповідями"

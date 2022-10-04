@@ -1,41 +1,28 @@
 /*
-    Copyright (c) 2010 Casey Link <unnamedrambler@gmail.com>
-    Copyright (c) 2009-2010 Klaralvdalens Datakonsult AB, a KDAB Group company <info@kdab.net>
-    Copyright (c) 2006-2008 Tobias Koenig <tokoe@kde.org>
+    SPDX-FileCopyrightText: 2010 Casey Link <unnamedrambler@gmail.com>
+    SPDX-FileCopyrightText: 2009-2010 Klaralvdalens Datakonsult AB, a KDAB Group company <info@kdab.net>
+    SPDX-FileCopyrightText: 2006-2008 Tobias Koenig <tokoe@kde.org>
 
-    This library is free software; you can redistribute it and/or modify it
-    under the terms of the GNU Library General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-
-    This library is distributed in the hope that it will be useful, but WITHOUT
-    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-    License for more details.
-
-    You should have received a copy of the GNU Library General Public License
-    along with this library; see the file COPYING.LIB.  If not, write to the
-    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    02110-1301, USA.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "configagentdelegate.h"
 
-#include <AkonadiCore/AgentInstanceModel>
-#include <AkonadiCore/AgentInstance>
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentInstanceModel>
 
-#include <QIcon>
-#include <KLocalizedString>
 #include <KIconLoader>
+#include <KLocalizedString>
+#include <QIcon>
 
-#include <QUrl>
 #include <QApplication>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QTextDocument>
-#include <QMouseEvent>
+#include <QUrl>
 
-using Akonadi::AgentInstanceModel;
 using Akonadi::AgentInstance;
+using Akonadi::AgentInstanceModel;
 
 static const int s_delegatePaddingSize = 7;
 
@@ -48,8 +35,9 @@ struct Icons {
         , checkMailIcon(QIcon::fromTheme(QStringLiteral("mail-receive")))
     {
     }
-    QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
-    QIcon checkMailIcon;
+
+    const QPixmap readyPixmap, syncPixmap, errorPixmap, offlinePixmap;
+    const QIcon checkMailIcon;
 };
 
 Q_GLOBAL_STATIC(Icons, s_icons)
@@ -66,17 +54,16 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     }
 
     const QString name = index.model()->data(index, Qt::DisplayRole).toString();
-    int status = index.model()->data(index, AgentInstanceModel::StatusRole).toInt();
-    uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
+    const int status = index.model()->data(index, AgentInstanceModel::StatusRole).toInt();
+    const uint progress = index.model()->data(index, AgentInstanceModel::ProgressRole).toUInt();
     const QString statusMessage = index.model()->data(index, AgentInstanceModel::StatusMessageRole).toString();
 
-    QTextDocument *document = new QTextDocument(nullptr);
+    auto document = new QTextDocument(nullptr);
 
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
     if (data.isValid() && data.type() == QVariant::Icon) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")),
-                              qvariant_cast<QIcon> (data).pixmap(decorationSize));
+        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")), qvariant_cast<QIcon>(data).pixmap(decorationSize));
     }
 
     if (!index.data(AgentInstanceModel::OnlineRole).toBool()) {
@@ -89,7 +76,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
         document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->errorPixmap);
     }
 
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
+    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
     if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
         cg = QPalette::Inactive;
     }
@@ -108,12 +95,14 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
                                 "<tr>"
                                 "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
                                 "<td><b>%2</b></td>"
-                                "</tr>").arg(textColor.name().toUpper()).arg(name)
-                            + QStringLiteral(
-                                "<tr>"
-                                "<td><img src=\"status_icon\"/> %1 %2</td>"
-                                "</tr>").arg(statusMessage).arg(status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1String(""))
-                            + QLatin1String("</table></body></html>");
+                                "</tr>")
+                                .arg(textColor.name().toUpper(), name)
+        + QStringLiteral(
+              "<tr>"
+              "<td><img src=\"status_icon\"/> %1 %2</td>"
+              "</tr>")
+              .arg(statusMessage, status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1String(""))
+        + QLatin1String("</table></body></html>");
 
     document->setHtml(content);
 
@@ -138,10 +127,10 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QPen pen = painter->pen();
 
-    QPalette::ColorGroup cg = option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
-    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
-        cg = QPalette::Inactive;
-    }
+    //    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
+    //    if (cg == QPalette::Normal && !(option.state & QStyle::State_Active)) {
+    //        cg = QPalette::Inactive;
+    //    }
 
     QStyleOptionViewItem opt(option);
     opt.showDecorationSelected = true;
@@ -162,36 +151,34 @@ void ConfigAgentDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
 QSize ConfigAgentDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &) const
 {
-    const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + (s_delegatePaddingSize * 2);  //icon height + padding either side
-    const int textHeight = option.fontMetrics.height() + qMax(option.fontMetrics.height(), 16) + (s_delegatePaddingSize * 2);   //height of text + icon/text + padding either side
+    const int iconHeight = KIconLoader::global()->currentSize(KIconLoader::Desktop) + (s_delegatePaddingSize * 2); // icon height + padding either side
+    const int textHeight =
+        option.fontMetrics.height() + qMax(option.fontMetrics.height(), 16) + (s_delegatePaddingSize * 2); // height of text + icon/text + padding either side
 
-    return QSize(1, qMax(iconHeight, textHeight));    //any width,the view will give us the whole thing in list mode
+    return {1, qMax(iconHeight, textHeight)}; // any width,the view will give us the whole thing in list mode
 }
 
-QWidget* ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
+QWidget *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem &, const QModelIndex &) const
 {
     return nullptr;
 }
 
 bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    Q_UNUSED(model);
+    Q_UNUSED(model)
     if (!index.isValid()) {
         return false;
     }
-    if (!((event->type() == QEvent::MouseButtonRelease)
-            || (event->type() == QEvent::MouseButtonPress)
-            || (event->type() == QEvent::MouseMove))) {
+    if (!((event->type() == QEvent::MouseButtonRelease) || (event->type() == QEvent::MouseButtonPress) || (event->type() == QEvent::MouseMove))) {
         return false;
     }
 
-    QMouseEvent *me = static_cast<QMouseEvent *>(event);
+    auto me = static_cast<QMouseEvent *>(event);
     const QPoint mousePos = me->pos() - option.rect.topLeft();
 
     QStyleOptionButton buttonOpt = buttonOption(option);
 
     if (buttonOpt.rect.contains(mousePos)) {
-
         switch (event->type()) {
         case QEvent::MouseButtonPress:
             return false;
@@ -212,12 +199,11 @@ void ConfigAgentDelegate::drawFocus(QPainter *painter, const QStyleOptionViewIte
 {
     if (option.state & QStyle::State_HasFocus) {
         QStyleOptionFocusRect o;
-        o.QStyleOption::operator= (option);
+        o.QStyleOption::operator=(option);
         o.rect = rect;
         o.state |= QStyle::State_KeyboardFocusChange;
         QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
-        o.backgroundColor = option.palette.color(cg, (option.state & QStyle::State_Selected)
-                            ? QPalette::Highlight : QPalette::Background);
+        o.backgroundColor = option.palette.color(cg, (option.state & QStyle::State_Selected) ? QPalette::Highlight : QPalette::Window);
         QApplication::style()->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter);
     }
 }
@@ -227,8 +213,8 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     const QString label = i18n("Retrieval Options");
     QStyleOptionButton buttonOpt;
     QRect buttonRect = option.rect;
-    int height = option.rect.height() / 2;
-    int width = 22 + option.fontMetrics.width(label) + 40;   // icon size + label size + arrow and padding
+    const int height = option.rect.height() / 2;
+    const int width = 22 + option.fontMetrics.boundingRect(label).width() + 40; // icon size + label size + arrow and padding
     buttonRect.setTop(0);
     buttonRect.setHeight(height);
     buttonRect.setLeft(option.rect.right() - width);
@@ -240,8 +226,7 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
     buttonOpt.palette = option.palette;
     buttonOpt.features = QStyleOptionButton::HasMenu;
     buttonOpt.icon = s_icons->checkMailIcon;
-    buttonOpt.iconSize = QSize(22, 22);    // FIXME don't hardcode this icon size
+    buttonOpt.iconSize = QSize(22, 22); // FIXME don't hardcode this icon size
 
     return buttonOpt;
 }
-

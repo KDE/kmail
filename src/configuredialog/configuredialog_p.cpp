@@ -1,3 +1,8 @@
+/*
+ *   kmail: KDE mail client
+ *   SPDX-FileCopyrightText: 2016 Laurent Montel <montel@kde.org>
+ *   SPDX-License-Identifier: GPL-2.0-or-later
+ */
 // configuredialog_p.cpp: classes internal to ConfigureDialog
 // see configuredialog.cpp for details.
 
@@ -15,22 +20,20 @@
 #include <QVBoxLayout>
 
 // Other headers:
-#include <KConfigGroup>
 
-ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent)
-    : ConfigModule(parent), mWasInitialized(false)
+ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent, const QVariantList &args)
+    : ConfigModule(parent, args)
+    , mTabWidget(new QTabWidget(this))
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setMargin(0);
-    mTabWidget = new QTabWidget(this);
+    auto vlay = new QVBoxLayout(this);
+    vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
 }
 
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
 {
     mTabWidget->addTab(tab, title);
-    connect(tab, SIGNAL(changed(bool)),
-            this, SIGNAL(changed(bool)));
+    connect(tab, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
 }
 
 void ConfigModuleWithTabs::showEvent(QShowEvent *event)
@@ -43,7 +46,7 @@ void ConfigModuleWithTabs::load()
 {
     const int numberOfTab = mTabWidget->count();
     for (int i = 0; i < numberOfTab; ++i) {
-        ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
+        auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
         if (tab) {
             tab->load();
         }
@@ -57,7 +60,7 @@ void ConfigModuleWithTabs::save()
         KCModule::save();
         const int numberOfTab = mTabWidget->count();
         for (int i = 0; i < numberOfTab; ++i) {
-            ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
+            auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
             if (tab) {
                 tab->save();
             }
@@ -67,7 +70,7 @@ void ConfigModuleWithTabs::save()
 
 void ConfigModuleWithTabs::defaults()
 {
-    ConfigModuleTab *tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
+    auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
     if (tab) {
         tab->defaults();
     }
@@ -93,10 +96,9 @@ void ConfigModuleTab::defaults()
     doResetToDefaultsOther();
 }
 
-void ConfigModuleTab::slotEmitChanged(void)
+void ConfigModuleTab::slotEmitChanged()
 {
     if (mEmitChanges) {
         Q_EMIT changed(true);
     }
 }
-

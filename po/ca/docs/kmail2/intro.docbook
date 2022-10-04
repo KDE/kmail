@@ -1,0 +1,121 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+<date
+>16 d'agost de 2020</date>
+<releaseinfo
+>5.14.2 (Aplicacions 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Introducció</title>
+
+<screenshot>
+<screeninfo
+>La pantalla de benvinguda del &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>La pantalla de benvinguda del &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>La pantalla de benvinguda del &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>L'equip del &kmail; us dona la benvinguda al &kmail;, un client de correu fàcil d'emprar per al &kde;. El nostre objectiu és que alhora sigui bonic i intuïtiu sense sacrificar-ne la potència. </para>
+
+<para
+>Si mai heu configurat un client de correu electrònic en un sistema &UNIX;, us suggerim que primer llegiu la secció <link linkend="getting-started"
+>Com començar</link
+>.</para>
+<sect1 id="features">
+<title
+>Algunes característiques del &kmail;</title>
+<para
+>A continuació, us oferim una breu guia per a algunes de les grans característiques en el &kmail;.</para>
+<itemizedlist>
+<listitem>
+<para
+>No teniu per què utilitzar el ratolí quan treballeu amb el &kmail;. Qualsevol cosa pot fer-se utilitzant les <link linkend="keyboard-shortcuts"
+>Dreceres del teclat</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Tot i que el &kmail; és molt fiable, hauríeu de mantenir una còpia de seguretat dels vostres missatges, &pex;, utilitzeu una de les opcions exporta/arxiva llistades a <link linkend="backups"
+>Opcions per a una còpia de seguretat</link
+> per a crear amb regularitat una còpia de seguretat de la vostra configuració i del correu electrònic.</para>
+</listitem>
+<listitem>
+<para
+>El &kmail; facilita la importació del correu electrònic des de diferents aplicacions de correu electrònic. Les opcions es descriuen a <link linkend="import-restore"
+>Restaurar i importar al &kmail;</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Podeu separar els vostres missatges en diferents categories utilitzant les àmplies opcions de <link linkend="folders"
+>Carpetes</link
+> del &kmail;. Entre les característiques s'inclouen la gestió per a les carpetes: llistes de correu, &acl; (només &IMAP;) i l'arxivat.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>Podeu completar la vostra configuració de les carpetes amb alguns <link linkend="filters"
+>filtres</link
+> altament configurables.</para>
+</listitem>
+<listitem>
+<para
+>De manera predeterminada, el &kmail; detectarà <link linkend="configure-security-email-scams"
+>estafes</link
+> comunes per correu electrònic. També pot lluitar contra el correu brossa i els virus mitjançant la creació de filtres que treballen junt amb programes externs per a analitzar el correu electrònic a mesura que va entrant. Per a més detalls, vegeu <link linkend="the-anti-spam-wizard"
+>Contra el correu brossa</link
+> i <link linkend="the-anti-virus-wizard"
+>Contra els virus</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Gestioneu amb facilitat els diversos comptes utilitzant diferents <link linkend="configure-identity"
+>identitats</link
+>.</para>
+</listitem>
+</itemizedlist>
+<para
+>Esperem que gaudiu del &kmail;!</para>
+<sect2 id="getting-help">
+<title
+>Obtenir ajuda</title>
+ 
+<para
+>La pàgina web del &kmail; es troba a <ulink url="https://userbase.kde.org/KMail/ca"
+>https://userbase.kde.org/KMail/ca</ulink
+>. Allí trobareu enllaços d'utilitat (&pex;, llistes de correu per a usuaris i desenvolupadors, i a les pàgines wiki de la comunitat). Si us plau, informeu dels errors al &kmail; emprant <menuchoice
+><guimenu
+>Ajuda</guimenu
+><guimenuitem
+>Informa d'un error...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

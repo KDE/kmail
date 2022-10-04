@@ -1,30 +1,17 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Parts based on KMail code by:
  * Various authors.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef KMAIL_ATTACHMENTCONTROLLER_H
-#define KMAIL_ATTACHMENTCONTROLLER_H
+#pragma once
 
-#include "messagecomposer/attachmentcontrollerbase.h"
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
+#include <MessageComposer/AttachmentControllerBase>
 class KMComposerWin;
 class QModelIndex;
 namespace MessageComposer
@@ -42,26 +29,21 @@ class AttachmentController : public MessageComposer::AttachmentControllerBase
 
 public:
     explicit AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer);
-    ~AttachmentController();
+    ~AttachmentController() override;
 
 public Q_SLOTS:
-    /// @reimp
-    void attachMyPublicKey() Q_DECL_OVERRIDE;
+    void attachMyPublicKey() override;
 
-private Q_SLOTS:
+private:
     void identityChanged();
-    void actionsCreated();
+    void slotActionsCreated();
     void addAttachmentItems(const Akonadi::Item::List &items);
     void selectionChanged();
     void onShowAttachment(KMime::Content *content, const QByteArray &charset);
     void doubleClicked(const QModelIndex &itemClicked);
     void slotSelectAllAttachment();
 
-private:
-    KMComposerWin *mComposer;
-    AttachmentView *mView;
+    KMComposerWin *const mComposer;
+    AttachmentView *const mView;
 };
-
 } // namespace KMail
-
-#endif // KMAIL_ATTACHMENTCONTROLLER_H

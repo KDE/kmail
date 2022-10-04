@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Hilisema saatmise agent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Hilisema saatmise agendi käsiraamat</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2013-11-30</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Sissejuhatus</title>
+
+<para
+>&i18n-sendlateragent; on Akonadi agent, mis võimaldab saata ajastatud kirju ühe korra või ka korduvalt. </para>
+
+<sect2 id="using-kapp">
+<title
+>Hilisema saatmise agendi kasutamine</title>
+
+<para
+>Menüükäsuga <menuchoice
+><guimenu
+>Kiri</guimenu
+><guimenuitem
+>Saada hiljem</guimenuitem
+></menuchoice
+> &kmail;i kirja koostamise aknas saab avada dialoogi, mis võimaldab määrata kindlaks kirjade saatmise kindlal kuupäeval ja kellaajal.</para>
+
+<screenshot>
+<screeninfo
+>Hilisema saatmise agendi dialoog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Hilisema saatmise agendi dialoog</phrase>
+    </textobject>
+    <caption>
+      <para
+>Hilisema saatmise agendi dialoog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Oletame, et oled koostanud suurepärase kirja, milles on üles loetud ülesanded, mida su alluvad peavad täitma ajal, mil viibid ise konverentsil, aga oled sel ajal, kui soovid kirja saata, parajasti lennukis. Siin tutvustatava võimalusega saad kirja saata täpselt vajalikul kuupäeval ja kellaajal. Et saata kiri millalgi hiljem, märgi kõigepealt kastike <guilabel
+>Viivitus</guilabel
+> ning seejärel vali kuupäev ja kellaaeg kerimiskastides <guilabel
+>Saatmise aeg:</guilabel
+> järel.</para>
+<para
+>Kui sul on aga vaja saata alluvatele iganädalane meeldetuletuskiri, võid määrata kirja korduva saatmise, märkides kastikese <guilabel
+>Kordumise intervall</guilabel
+> ja valides soovitud ajavahemiku.</para>
+<para
+>Kirja võib panna järjekorras ootavate kirjade hulka klõpsuga nupule <guibutton
+>Saada hiljem</guibutton
+>, millega kiri ajastatakse otsekohe. </para>
+<para
+>See agent töötab sõltumatult &kmail;ilst ega vaja ajastatud kirja saatmiseks ei &kmail;i töötamist ega isegi seda, et &kmail; oleks võrgus.</para>
+<para
+>Kui sul pole ajal, mil kiri peaks saadetama, võrguühendust, annab agent teada tõrkest ja küsib, kas soovid saata kirja hiljem uuesti.</para>
+<para
+>&kde; seanssi sisselogimisel kontrollib agent ajastatud kirju ning saadab vajaduse korral ära need, mida oleks tulnud saata aja jooksul pärast viimast väljalogimist. </para>
+<para
+>Kirjade valikute muutmiseks, mida oled määranud hilisemaks saatmiseks, vali &kmail;is menüükäsk <menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Hilisema saatmise seadistamine...</guimenuitem
+></menuchoice
+> </para>
+
+<screenshot>
+<screeninfo
+>Hilisema saatmise seadistamine</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Hilisema saatmise seadistamine</phrase>
+    </textobject>
+    <caption>
+      <para
+>Hilisema saatmise seadistamine</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>See avab dialoogi, kus saab muuta ajastust ning eemaldada kirju, mida on saadetud hilisema saatmise võimalust kasutades.</action>
+</para>
+<para
+>Ajastatud kirja sisu (põhiteksti, päiseid jms.) muuta ei saa. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Autorid ja litsents</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Rakenduse autoriõigus 2013: &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentatsiooni autoriõigus &copy; 2013: &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

@@ -1,0 +1,5 @@
+{
+    "X-Akonadi-PluginType": "AgentConfig",
+    "X-Akonadi-Library": "archivemailagentconfig",
+    "X-Akonadi-AgentConfig-Type": "akonadi_archivemail_agent"
+}

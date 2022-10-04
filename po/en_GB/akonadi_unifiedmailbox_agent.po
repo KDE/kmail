@@ -1,0 +1,93 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Steve Allewell <steve.allewell@gmail.com>, 2018, 2019, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-07-04 13:58+0100\n"
+"Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
+"Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 21.04.2\n"
+
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Add"
+
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Modify"
+
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#, kde-format
+msgid "Remove"
+msgstr "Remove"
+
+#: settingsdialog.cpp:100
+#, kde-format
+msgid "Do you really want to remove unified mailbox <b>%1</b>?"
+msgstr "Do you really want to remove unified mailbox <b>%1</b>?"
+
+#: settingsdialog.cpp:101
+#, kde-format
+msgid "Really Remove?"
+msgstr "Really Remove?"
+
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#, kde-format
+msgid "Unified Mailboxes"
+msgstr "Unified Mailboxes"
+
+#: unifiedmailboxagent.cpp:168
+#, kde-format
+msgid "Synchronizing unified mailbox %1"
+msgstr "Synchronising unified mailbox %1"
+
+#: unifiedmailboxeditor.cpp:85
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure Unified Mailbox"
+msgstr "Configure Unified Mailbox"
+
+#: unifiedmailboxeditor.cpp:97
+#, kde-format
+msgid "Name:"
+msgstr "Name:"
+
+#: unifiedmailboxeditor.cpp:102
+#, kde-format
+msgid "Pick icon..."
+msgstr "Pick icon..."
+
+#: unifiedmailboxeditor.cpp:103
+#, kde-format
+msgid "Icon:"
+msgstr "Icon:"
+
+#: unifiedmailboxmanager.cpp:294
+#, kde-format
+msgid "Inbox"
+msgstr "Inbox"
+
+#: unifiedmailboxmanager.cpp:301
+#, kde-format
+msgid "Sent"
+msgstr "Sent"
+
+#: unifiedmailboxmanager.cpp:308
+#, kde-format
+msgid "Drafts"
+msgstr "Drafts"
+
+#~ msgctxt "@title:window"
+#~ msgid "Add an Unified MailBox"
+#~ msgstr "Add an Unified MailBox"

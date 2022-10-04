@@ -1,13 +1,10 @@
 /*
   This file is part of KTnef.
 
-  Copyright (C) 2003 Michael Goffioul <kdeprint@swing.be>
-  Copyright (c) 2012 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2003 Michael Goffioul <kdeprint@swing.be>
+  SPDX-FileCopyrightText: 2012 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-or-later
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
@@ -22,37 +19,40 @@
 #include <KLocalizedString>
 #include <KStandardGuiItem>
 
-#include <QTreeWidget>
 #include <KConfigGroup>
 #include <KGuiItem>
-#include <QDialogButtonBox>
-#include <QPushButton>
 #include <KSharedConfig>
+#include <KWindowConfig>
+#include <QDialogButtonBox>
 #include <QHeaderView>
+#include <QPushButton>
+#include <QTreeWidget>
+#include <QWindow>
+namespace
+{
+static const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
+}
 
 MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     : QDialog(parent)
+    , mMessage(msg)
+    , mListView(new QTreeWidget(this))
 {
-    mMessage = msg;
-
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    setWindowTitle(i18n("Message Properties"));
-    mListView = new QTreeWidget(this);
+    auto mainLayout = new QVBoxLayout(this);
+    setWindowTitle(i18nc("@title:window", "Message Properties"));
     mainLayout->addWidget(mListView);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &MessagePropertyDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MessagePropertyDialog::reject);
     mainLayout->addWidget(buttonBox);
-    QPushButton *user1Button = new QPushButton;
+    auto user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(user1Button, &QPushButton::clicked, this, &MessagePropertyDialog::slotSaveProperty);
 
-    const QStringList headerLabels =
-        (QStringList(i18nc("@title:column property name", "Name"))
-         << i18nc("@title:column property value", "Value"));
+    const QStringList headerLabels = (QStringList(i18nc("@title:column property name", "Name")) << i18nc("@title:column property value", "Value"));
     mListView->setHeaderLabels(headerLabels);
     mListView->setAllColumnsShowFocus(true);
     mListView->setWordWrap(true);
@@ -62,7 +62,6 @@ MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)
     KGuiItem::assign(user1Button, KStandardGuiItem::save());
     AttachPropertyDialog::formatPropertySet(mMessage, mListView);
     readConfig();
-
 }
 
 MessagePropertyDialog::~MessagePropertyDialog()
@@ -77,11 +76,11 @@ void MessagePropertyDialog::slotSaveProperty()
 
 void MessagePropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "MessagePropertyDialog");
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
     const QByteArray headerState = group.readEntry("HeaderState", QByteArray());
     if (!headerState.isEmpty()) {
         mListView->header()->restoreState(headerState);
@@ -90,8 +89,8 @@ void MessagePropertyDialog::readConfig()
 
 void MessagePropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "MessagePropertyDialog");
-    group.writeEntry("Size", size());
+    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();
 }

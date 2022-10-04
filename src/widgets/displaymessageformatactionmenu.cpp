@@ -1,40 +1,28 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "displaymessageformatactionmenu.h"
 
 #include <KLocalizedString>
-#include <QAction>
-#include <QMenu>
 #include <KToggleAction>
+#include <QAction>
+#include <QActionGroup>
+#include <QMenu>
 
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
-    : KActionMenu(parent),
-      mDisplayMessageFormat(MessageViewer::Viewer::UseGlobalSetting)
+    : KActionMenu(parent)
 {
     setText(i18n("Message Default Format"));
-    QMenu *subMenu = new QMenu;
+    delete menu();
+    auto subMenu = new QMenu;
     setMenu(subMenu);
 
-    QActionGroup *actionGroup = new QActionGroup(this);
+    auto actionGroup = new QActionGroup(this);
 
-    KToggleAction *act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
+    auto act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
     act->setObjectName(QStringLiteral("prefer-html-action"));
     act->setData(MessageViewer::Viewer::Html);
     actionGroup->addAction(act);
@@ -55,15 +43,13 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     updateMenu();
 }
 
-DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu()
-{
-
-}
+DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu() = default;
 
 void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act)
 {
     MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
     if (format != mDisplayMessageFormat) {
+        mDisplayMessageFormat = format;
         Q_EMIT changeDisplayMessageFormat(format);
     }
 }

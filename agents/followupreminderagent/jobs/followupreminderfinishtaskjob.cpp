@@ -1,46 +1,30 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "followupreminderfinishtaskjob.h"
-#include "FollowupReminder/FollowUpReminderInfo"
-#include <AkonadiCore/Item>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemModifyJob>
 #include "followupreminderagent_debug.h"
-#include <KCalCore/Todo>
+
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemModifyJob>
+#include <KCalendarCore/Todo>
 
 FollowUpReminderFinishTaskJob::FollowUpReminderFinishTaskJob(Akonadi::Item::Id id, QObject *parent)
-    : QObject(parent),
-      mTodoId(id)
+    : QObject(parent)
+    , mTodoId(id)
 {
 }
 
-FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob()
-{
-
-}
+FollowUpReminderFinishTaskJob::~FollowUpReminderFinishTaskJob() = default;
 
 void FollowUpReminderFinishTaskJob::start()
 {
     if (mTodoId != -1) {
         closeTodo();
     } else {
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to FollowUpReminderFinishTaskJob::start";
         Q_EMIT finishTaskFailed();
         deleteLater();
     }
@@ -49,14 +33,14 @@ void FollowUpReminderFinishTaskJob::start()
 void FollowUpReminderFinishTaskJob::closeTodo()
 {
     Akonadi::Item item(mTodoId);
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(item, this);
+    auto job = new Akonadi::ItemFetchJob(item, this);
     connect(job, &Akonadi::ItemFetchJob::result, this, &FollowUpReminderFinishTaskJob::slotItemFetchJobDone);
 }
 
 void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
 {
     if (job->error()) {
-        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << job->errorString();
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Failed to fetch item in FollowUpReminderFinishTaskJob : " << job->errorString();
         Q_EMIT finishTaskFailed();
         deleteLater();
         return;
@@ -65,18 +49,18 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
     const Akonadi::Item::List lst = qobject_cast<Akonadi::ItemFetchJob *>(job)->items();
     if (lst.count() == 1) {
         const Akonadi::Item item = lst.first();
-        if (!item.hasPayload<KCalCore::Todo::Ptr>()) {
-            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " item is not a todo.";
+        if (!item.hasPayload<KCalendarCore::Todo::Ptr>()) {
+            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemFetchJobDone: item is not a todo.";
             Q_EMIT finishTaskFailed();
             deleteLater();
             return;
         }
-        KCalCore::Todo::Ptr todo = item.payload<KCalCore::Todo::Ptr>();
+        auto todo = item.payload<KCalendarCore::Todo::Ptr>();
         todo->setCompleted(true);
         Akonadi::Item updateItem = item;
-        updateItem.setPayload<KCalCore::Todo::Ptr>(todo);
+        updateItem.setPayload<KCalendarCore::Todo::Ptr>(todo);
 
-        Akonadi::ItemModifyJob *job = new Akonadi::ItemModifyJob(updateItem);
+        auto job = new Akonadi::ItemModifyJob(updateItem);
         connect(job, &Akonadi::ItemModifyJob::result, this, &FollowUpReminderFinishTaskJob::slotItemModifiedResult);
     } else {
         qCWarning(FOLLOWUPREMINDERAGENT_LOG) << " Found item different from 1: " << lst.count();
@@ -89,7 +73,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
 void FollowUpReminderFinishTaskJob::slotItemModifiedResult(KJob *job)
 {
     if (job->error()) {
-        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << job->errorString();
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemModifiedResult: Error during modified item: " << job->errorString();
         Q_EMIT finishTaskFailed();
     } else {
         Q_EMIT finishTaskDone();

@@ -1,46 +1,30 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "removeduplicatemailjob.h"
 
-#include "libkdepim/progressmanager.h"
+#include <Akonadi/Collection>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/RemoveDuplicatesJob>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <AkonadiCore/Collection>
-#include <akonadi/kmime/removeduplicatesjob.h>
-#include <AkonadiCore/EntityTreeModel>
+#include <Libkdepim/ProgressManager>
 
 #include <QItemSelectionModel>
 Q_DECLARE_METATYPE(KPIM::ProgressItem *)
 Q_DECLARE_METATYPE(Akonadi::Job *)
 
 RemoveDuplicateMailJob::RemoveDuplicateMailJob(QItemSelectionModel *selectionModel, QWidget *widget, QObject *parent)
-    : QObject(parent),
-      mParent(widget),
-      mSelectionModel(selectionModel)
+    : QObject(parent)
+    , mParent(widget)
+    , mSelectionModel(selectionModel)
 {
 }
 
-RemoveDuplicateMailJob::~RemoveDuplicateMailJob()
-{
-
-}
+RemoveDuplicateMailJob::~RemoveDuplicateMailJob() = default;
 
 void RemoveDuplicateMailJob::start()
 {
@@ -52,15 +36,15 @@ void RemoveDuplicateMailJob::start()
     Akonadi::Collection::List collections;
 
     for (const QModelIndex &index : indexes) {
-        const Akonadi::Collection collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         if (collection.isValid()) {
             collections << collection;
         }
     }
 
-    Akonadi::RemoveDuplicatesJob *job = new Akonadi::RemoveDuplicatesJob(collections, this);
+    auto job = new Akonadi::RemoveDuplicatesJob(collections, this);
     job->setProperty("ProgressItem", QVariant::fromValue(item));
-    item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
+    item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(job));
     connect(job, &KJob::finished, this, &RemoveDuplicateMailJob::slotRemoveDuplicatesDone);
     connect(job, &KJob::description, this, &RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate);
     connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled);
@@ -68,7 +52,7 @@ void RemoveDuplicateMailJob::start()
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 {
-    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
         item->setComplete();
         item->setStatus(i18n("Done"));
@@ -82,7 +66,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
 {
-    Akonadi::Job *job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
+    auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
     if (job) {
         job->kill(KJob::Quietly);
     }
@@ -94,7 +78,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *it
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
 {
-    KPIM::ProgressItem *item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
+    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
         item->setStatus(description);
     }

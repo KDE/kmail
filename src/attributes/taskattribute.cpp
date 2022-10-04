@@ -1,42 +1,27 @@
 /*
-  Copyright (c) 2014-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "taskattribute.h"
 
 #include <QByteArray>
 #include <QDataStream>
+#include <QIODevice>
 
 TaskAttribute::TaskAttribute()
-    : Akonadi::Attribute(),
-      mId(-1)
+    : Akonadi::Attribute()
 {
 }
 
 TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
-    : Akonadi::Attribute(),
-      mId(id)
-{
-
-}
-
-
-TaskAttribute::~TaskAttribute()
+    : Akonadi::Attribute()
+    , mId(id)
 {
 }
+
+TaskAttribute::~TaskAttribute() = default;
 
 TaskAttribute *TaskAttribute::clone() const
 {
@@ -72,4 +57,3 @@ QByteArray TaskAttribute::type() const
     static const QByteArray sType("TaskAttribute");
     return sType;
 }
-

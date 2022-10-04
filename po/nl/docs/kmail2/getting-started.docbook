@@ -1,0 +1,810 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+&Tom.Albers;&Rinse.Devries;&Natalie.Koning; 
+</authorgroup>
+
+<date
+>2020-08-18</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Hoe te beginnen</title>
+
+<para
+>Dit is een korte introductie van &kmail; en het gebruik zodat u er direct mee kunt gaan werken. Een uitgebreidere uitleg is te vinden in het hoofdstuk <link linkend="using-kmail"
+>&kmail; gebruiken</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>Accountassistent</title>
+
+<para
+>De eerste keer dat u &kmail; uitvoert wordt u begroet door de Accountassistent.</para>
+<note
+><para
+>Als u op een bepaald moment weer de Accountassistent wilt uitvoeren, dan kunt u die vinden onder <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Account toevoegen</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>De assistent leidt u door het proces van het maken van een e-mailaccount. Uw panelen zullen variëren afhankelijk van hoeveel de assistent zelf kan achterhalen. Hier is een korte beschrijving van de panelen die u tegen zult komen bij gebruik van deze assistent.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+>Het eerste paneel van de assistent is <guilabel
+>Lever persoonlijke gegevens</guilabel
+>. Deze zal u vragen om de basis informatie van uw account: <guilabel
+>Volledige naam</guilabel
+>, <guilabel
+>E-mailadres</guilabel
+> en <guilabel
+>Wachtwoord</guilabel
+>. Standaard de optie <guilabel
+>Zoek instellingen van de provider op het internet</guilabel
+> geactiveerd, de assistent zal dus proberen om de noodzakelijke informatie van de e-mailserver op te halen. Schakel deze optie uit als u een gebruiker met ervaring bent en een geavanceerde configuratie in wilt stellen. Klik op de knop <guibutton
+>Volgende</guibutton
+> indien gereed.</para>
+    
+    <screenshot>
+    <screeninfo
+>Accountassistent</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Accountassistent</phrase>
+        </textobject>
+        <caption>
+        <para
+>De dialoog "Persoonlijke gegevens opgeven"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <note
+><para
+>GMail-accounts moeten &IMAP; gebruiken. Als u tweestapsverificatie hebt ingeschakeld voor uw GMail-account zult u een verificatiecode van Google moeten krijgen als onderdeel van het initiële proces van het opzetten van een account. U hoeft geen tweefactorverificatie hoeven te doen nadat het &kmail;-account is aangemaakt, omdat Google uw &IMAP;-koppeling als volledig vertrouwd zal markeren.</para
+></note>
+    
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+    
+    <para
+>Het volgende paneel helpt u bij het instellen van sleutels voor versleuteling van uw e-mail.</para>
+    
+    <screenshot>
+    <screeninfo
+>Accountassistent 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Accountassistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>De dialoog Versleutelingsopties</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Als u uw communicatie wilt beveiligen met GnuPG dan kunt u een nieuwe sleutel genereren en de sleutel publiceren op een publieke sleutelserver of u kunt een bestaande sleutel importeren. Als u beslist om een nieuw sleutelpaar te genereren, vergeet dan niet het wachtwoord gebruikt om het te genereren. U zult dat wachtwoord elke keer nodig hebben als u de sleutel wilt gebruiken. </para>
+    <para
+>Bij verzenden van e-mailberichten zal &kmail; als optie automatisch zoeken naar sleutels voor versleuteling van uw ontvangers en wordt het e-mailbericht versleuteld wanneer een sleutel voor de ontvanger is gevonden. &kmail; kan ook uw e-mailberichten cryptografisch ondertekenen zodat geverifieerd kan worden dat er met uw bericht niet is gerommeld. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Select-account-type">
+    <para
+>Een paneel <guilabel
+>Instellen gereed</guilabel
+> zal verschijnen als de assistent heeft bepaald dat het type account een succes is. Klik op <guibutton
+>Details...</guibutton
+> om te zien welke instellingen &kmail; heeft bepaald. Klik op de knop <guibutton
+>Beëindigen</guibutton
+> om het account in te stellen, de assistent te beëindigen en het venster te sluiten. </para>
+    
+    <screenshot>
+    <screeninfo
+>Accountassistent 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Accountassistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>De dialoog Accounttype selecteren</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Als de assistent uw accounttype niet kan bepalen zal het paneel <guilabel
+>Accounttype selecteren</guilabel
+> verschijnen. Selecteer uw type account uit de lijst (als u het niet weet dan moet u contact opnemen met de leverancier van uw e-mail). Als uw type account niet in de lijst staat, klik dan op de knop <guibutton
+>Zoek op het internet naar meer</guibutton
+>. Nadat uw type account is geselecteerd, klik op de knop <guibutton
+>Volgende</guibutton
+> en u krijgt het paneel <guilabel
+>Persoonlijke instellingen</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Personal-settings">
+      
+    <para
+>Als de assistent uw e-mailserver niet kon vinden door te zoeken op het internet zal het paneel <guibutton
+>Persoonlijke instellingen</guibutton
+> verschijnen.</para
+>  
+        
+    <screenshot>
+    <screeninfo
+>Accountassistent 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Accountassistent 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>De dialoog "Persoonlijke instellingen"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Controleer of uw ingevoerde informatie juist is. Selecteer <guilabel
+>Download alle berichten voor offline gebruik</guilabel
+> als u uw berichten beschikbaar wilt hebben wanneer u geen verbinding met het internet hebt (alleen &IMAP;). Klik op de knop <guibutton
+>Volgende</guibutton
+> nadat u klaar bent. Het paneel <guilabel
+>Setup voltooid</guilabel
+> zal verschijnen.</para>
+    
+    <para
+>Uw account is nu ingesteld en u kunt op de knop <guibutton
+>Beëindigen</guibutton
+> klikken om de assistent te beëindigen en het venster te sluiten of klik op de knop <guibutton
+>Details...</guibutton
+> om de accountinstellingen te bekijken.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+  
+  <para
+>Als u een account handmatig wilt aanmaken, lees dan verder in dit hoofdstuk. Anders kunt u veilig verder gaan naar <link linkend="testing-your-setup"
+>Uw setup testen</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Handmatige configuratie Quickstart</title>
+  <screenshot>
+    <screeninfo
+>Het configuratiepaneel</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Het configuratiepaneel</phrase>
+        </textobject>
+        <caption>
+        <para
+>Het hoofdconfiguratiepaneel van &kmail;</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  
+  <para
+>Het venster <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&kmail; configureren...</guisubmenu
+></menuchoice
+> bestaat uit zes secties: <guilabel
+>Accounts</guilabel
+>, <guilabel
+>Uiterlijk</guilabel
+>, <guilabel
+>Berichten opstellen</guilabel
+>, <guilabel
+>Beveiliging</guilabel
+>, <guilabel
+>Diversen</guilabel
+> en <guilabel
+>Plug-ins</guilabel
+>. </para>
+
+  <para
+>Om met verzenden en ontvangen van berichten te beginnen zult u slechts enkele instellingen op de pagina <guilabel
+>Accounts</guilabel
+> moeten wijzigen. Hier is een korte opsomming van de stappen die u moet namen om een nieuw e-mailaccount in te stellen. Voor een meer gedetailleerde beschrijving leest u het hoofdstuk <link linkend="configure-generalinfo"
+> &kmail; configureren</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>Identiteit instellen </title>
+
+    <para
+>Om een nieuwe identiteit aan te maken, klik op de knop <guilabel
+>Toevoegen...</guilabel
+> op het tabblad <guilabel
+>Identiteiten</guilabel
+> geassocieerd met de pagina <guilabel
+>Accounts</guilabel
+>. Een klein pop-up-venster zal verschijnen.</para>
+  
+    <screenshot>
+    <screeninfo
+>De dialoog Nieuwe identiteit</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>De dialoog Nieuwe identiteit</phrase>
+        </textobject>
+        <caption>
+        <para
+>Een nieuwe identiteit toevoegen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>U hebt hier enige opties. Geef de nieuwe identiteit een naam en selecteer een van de beschikbare keuzes ("Met lege velden" of "Waarden van systeeminstellingen gebruiken"). Klik daarna op <guilabel
+>OK</guilabel
+>. Het configuratiepaneel voor identiteit zal verschijnen.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <screenshot>
+    <screeninfo
+>Vervolg van de dialoog voor Nieuwe identiteit</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Vervolg van de dialoog voor Nieuwe identiteit</phrase>
+        </textobject>
+        <caption>
+        <para
+>De nieuwe identiteit configureren</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <para
+>De instellingen in het tabblad <guilabel
+>Algemeen</guilabel
+> spreken voor zich. Vul het veld <guilabel
+>Uw naam</guilabel
+> in met uw volledige naam (&eg; <userinput
+>Jan Klaassen</userinput
+>) en het veld <guilabel
+>Organisatie</guilabel
+> (optioneel) met de naam van de organisatie waarvoor u deze identiteit wilt gebruiken. Vul vervolgens het veld <guilabel
+>E-mailadres</guilabel
+> in met uw e-mailadres (&eg; <userinput
+>jan@voorbeeld.nl</userinput
+>). </para>
+    <para
+>Indien u <application
+>PGP</application
+> of <application
+>GnuPG</application
+> gebruikt, kunt u uw &openpgp;-sleutels en/of &smime;-certificaten op het tabblad <link linkend="configure-identity-cryptography"
+><guilabel
+>Cryptografie</guilabel
+></link
+> aangeven. </para>
+    <para
+>De tabbladen <guilabel
+>Geavanceerd</guilabel
+> en <guilabel
+>Sjablonen</guilabel
+> kunnen gebruikt worden om de manier waarop uitgaande berichten worden aangekleed vanuit deze identiteit ingedeeld en verwerkt zullen worden. Zie <link linkend="configure-generalinfo"
+>&kmail; configureren</link
+> voor meer gedetailleerde instructies. </para>
+    <para
+>Optioneel kunt u op het tabblad <guilabel
+>Ondertekening</guilabel
+> uw ondertekening aangeven. Dit is een kort stukje tekst die automatisch onder uw berichten kan komen te staan. Dit heeft overigens niets van doen met de <emphasis
+>digitale ondertekening</emphasis
+>. U kunt ook een kleine persoonlijke avatar in uitgaande berichtkoppen invoegen via het tabblad <guilabel
+>Plaatje</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>Een account instellen</title>
+
+  <para
+>De pagina <guilabel
+>Accounts</guilabel
+> bevat ook de instellingen die aangeven hoe e-mailberichten verzonden en opgehaald moeten worden. Veel van deze instellingen hangen af van de configuratie van de computer en het netwerk waarmee de mail-server verbonden is. Indien een instelling onduidelijk is, is het raadzaam om de (<acronym
+>ISP</acronym
+>) internetprovider of systeembeheerder te raadplegen.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>Berichten verzenden</title>
+  <para
+>Hier is een manier om een uitgaand e-mailaccount aan te maken.</para>
+  
+  <screenshot>
+    <screeninfo
+>Keuzes uitgaand account</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Keuzes uitgaand account</phrase>
+        </textobject>
+        <caption>
+        <para
+>Type van een uitgaand e-mailaccount kiezen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>Wann u op de knop <guibutton
+>Toevoegen...</guibutton
+> klikt op het tabblad <guilabel
+>Verzenden</guilabel
+> zal dit paneel verschijnen. Als uw computer direct is verbonden met het internet zult het meest waarschijnlijk &SMTP; kiezen. Als u &Sendmail; of &Microsoft; <acronym
+>EWS</acronym
+> moet gebruiken, kijk dan in het hoofdstuk <link linkend="configure-accounts-sending"
+>Configuratie</link
+>. Welk type uitgaand account u selecteert, activeer het vakje met label "Maak dit het standaard uitgaande account". (U kunt gemakkelijk dit later wijzigen als u meer dan één e-mailaccount hebt.)</para>
+
+  <para
+>Wanneer u de optie <guilabel
+>&SMTP;</guilabel
+> selecteert en op de knop <guibutton
+>✓ Aanmaken en configureren</guibutton
+> klikt, zal het volgende configuratiepaneel verschijnen.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>Het configuratiepaneel voor verzenden</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Het configuratiepaneel voor verzenden</phrase>
+        </textobject>
+        <caption>
+        <para
+>Een &SMTP;-account configureren</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>Als minimum moet u een e-mailserver &URI; leveren. Als uw e-mailservice authenticatie vereist alvorens berichten te kunnen verzenden, activeer het vakje "Server vereist authenticatie" en lever uw e-mailadres en wachtwoord. Als u wilt dat &kmail; uw wachtwoord onthoudt, activeer het vakje "SMTP-wachtwoord". Als u nog geen portefeuille hebt aangemaakt, dan zult u gevraagd worden om een wachtwoord voor de portefeuille.</para>
+
+  <para
+>Verifieer dat de verbinding naar de SMTP-server werkt door het tabblad <guilabel
+>Geavanceerd</guilabel
+> te kiezen en op de knop <guibutton
+> Automatisch detecteren</guibutton
+> te klikken. &kmail; zal uw &SMTP;-server afvragen naar de juiste instellingen (versleuteling, poortnummer en authenticatiemethode). Na de juiste instellingen te hebben gedetecteerd, is het uitgaande account gereed voor gebruik. (U wordt verwezen naar <link linkend="configure-accounts-sending"
+>Configuration</link
+> als de &SMTP;-verbinding additionele fijneafstemming vereist).</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>Berichten ontvangen</title>
+
+  <para
+>Standaard zijn de <guilabel
+>Lokale mappen</guilabel
+> (postvak-in, postvak-uit, verzonden mail, prullenbak, concepten en sjablonen) in de primaire map van &kmail; voorgedefinieerd op dit tabblad. Met het afrolvak kunt u de <guilabel
+>Ophaalopties</guilabel
+> voor deze mappen instellen. (Merk op dat &kmail; het formaat Maildir gebruikt om berichten op uw vaste schijf op te slaan: elk bericht is opgeslagen als een apart bestand. De exacte locatie van de primaire map  van &kmail; hangt af van de &Linux; distributie die u hebt geïnstalleerd, maar het is waarschijnlijk ergens in ~/.local/share/ .)</para>
+
+  <para
+>Om een account in te stellen voor het ontvangen van e-mail, druk op de knop <guibutton
+>Toevoegen...</guibutton
+> in het tabblad <guilabel
+>Ontvangen</guilabel
+>. Kies "Aangepast account..." uit de afrollijst. U zult gevraagd worden naar het type account. De meeste gebruikers zullen hier kiezen voor <guilabel
+>POP3-e-mailserver</guilabel
+> of <guilabel
+>IMAP-e-mailserver</guilabel
+>. Als u een lokaal postvakbestand (<guilabel
+>Mbox</guilabel
+>) wilt gebruiken, kijk dan op <link linkend="faq-file-locking"
+>Veel gestelde vragen (FAQ) over bestandsvergrendeling</link
+>.</para>
+    
+  <screenshot>
+    <screeninfo
+>Het configuratiepaneel voor ontvangen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Het configuratiepaneel voor ontvangen</phrase>
+        </textobject>
+        <caption>
+        <para
+>Een &IMAP;-account configureren</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->  
+
+  <para
+>Als u &POP3; of &IMAP; kiest zal het instellingenpaneel voor accounts verschijnen. Allereerst moet voor het account een <guilabel
+>Accountnaam</guilabel
+> ingesteld worden; u kunt elke naam kiezen. Ook <guilabel
+>Gebruikersnaam</guilabel
+>, <guilabel
+>Wachtwoord</guilabel
+> en <guilabel
+>Inkomende e-mailserver</guilabel
+> moeten worden gevuld met de bijbehorende gegevens van uw <acronym
+>ISP</acronym
+> of systeembeheerder. Als u wilt dat &kmail; automatisch controleert op nieuwe berichten, activeer het vakje <guilabel
+>Berichtencontrole met interval inschakelen</guilabel
+> en stel het tijdinterval in dat u wenst.</para>
+
+  <para
+>Klik vervolgens op het tabblad <guilabel
+>Geavanceerd</guilabel
+> en daarna op de knop <guibutton
+>Automatisch detecteren</guibutton
+>. &kmail; zal uw inkomende e-mailserver afvragen om de juiste instellingen voor dit account (versleuteling, poortnummer en authenticatiemethode) te bepalen.</para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>Opties die alleen relevant zijn bij IMAP</title>
+
+    <para
+>Als u het keuzevakje <guilabel
+>Mappen automatisch comprimeren</guilabel
+> selecteert op het configuratietabblad <guilabel
+>Geavanceerd</guilabel
+>, zal &kmail; de berichten, die u hebt verwijderd, definitief verwijderen zodra de map verlaten wordt. Anders worden de berichten allen gemarkeerd als verwijderd en is het aan u om de mappen handmatig te comprimeren.</para>
+    
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>Instellingen die alleen bij <acronym
+>POP3</acronym
+> aanwezig zijn</title>
+      
+    <para
+>Selecteer <guilabel
+>Opgehaalde berichten op de server laten</guilabel
+> in het configuratietabblad <guilabel
+>Geavanceerd</guilabel
+> als u uw berichten op de server wilt laten nadat u ze hebt gedownload. Er zijn zeven manieren om te specificeren hoe lang oude berichten bewaard zullen worden na het downloaden: altijd (laat alle opties niet-geactiveerd) of aantal dagen / aantal berichten / maximum grootte van postvak-in aan de serverkant (kies één, twee of alle drie). Als dit keuzevakje niet geactiveerd is, zullen alle berichten onmiddellijk verwijderd worden van de server op afstand nadat het downloaden is voltooid.</para
+>  
+  
+    <para
+>In het tabblad <guilabel
+>Geavanceerd</guilabel
+> kunt u ook <guilabel
+>Gebruik pipelining voor sneller e-mail ophalen</guilabel
+> selecteren indien de server dat ondersteunt. Test dit om er zeker van te zijn dat het veilig werkt.</para>
+
+    <para
+><guilabel
+>Postvak in</guilabel
+> is de standaardmap voor inkomende berichten. Indien u dat om één of andere reden wilt wijzigen, dan kan dat bij <guilabel
+>Bestemmingsmap</guilabel
+> worden aangegeven. Maar wat u waarschijnlijk wilt een <link linkend="filters"
+>filter</link
+>.</para>
+
+    <para
+>Met <guilabel
+>Precommando</guilabel
+> kunt u een commando opgegeven dat &kmail; voor het ophalen van de e-mail zal uitvoeren. Geef het volledige pad naar het commando op (gebruik geen <quote
+>~</quote
+>) en hou er rekening mee dat &kmail; niet door zal gaan zolang het commando bezig is.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>Opties voor zowel POP3 als IMAP</title>
+    
+    <para
+>Op het tabblad <guilabel
+>Ontvangen</guilabel
+>, onder<guilabel
+>Ophaalopties</guilabel
+>, select <guilabel
+>Invoegen in handmatige e-mailcontrole</guilabel
+> als dit account gecontroleerd moet worden op nieuwe berichten wanneer u in menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Controleren op nieuwe berichten</guimenuitem
+></menuchoice
+> kiest. Als u deze optie niet activeert kunnen de berichten ook worden opgehaald door in het menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Controleren op nieuwe berichten in &gt;</guimenuitem
+></menuchoice
+> te kiezen.</para>
+    
+    <para
+>&kmail; ondersteunt versleuteling via <guilabel
+>SSL/TSL</guilabel
+> en <guilabel
+>STARTTLS</guilabel
+> (indien aanwezig heeft <guilabel
+>SSL/TLS</guilabel
+> de voorkeur).</para>
+
+    <para
+>&kmail; ondersteunt negen authenticatiemethoden:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+><guilabel
+>Platte tekst</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (aanbevolen indien<guilabel
+>DIGEST-MD5</guilabel
+> niet beschikbaar is),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (aanbevolen),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (aka Anonymous)</guilabel
+> en </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>Gmail</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+><guilabel
+>DIGEST-MD5</guilabel
+>, <guilabel
+>CRAM-MD5</guilabel
+> en <guilabel
+>APOP</guilabel
+> zijn van zichzelf veilig, de andere opties zijn alleen veilig in combinatie met <guilabel
+>SSL</guilabel
+> of <guilabel
+>TLS</guilabel
+>. U moet <guilabel
+>Platte tekst</guilabel
+> alleen gebruiken indien de mailserver geen van de andere authenticatiemethoden ondersteunt. <guilabel
+>Anonymous</guilabel
+> wordt ondersteund op &IMAP;, maar <guilabel
+>APOP</guilabel
+> niet. <guilabel
+>Gmail</guilabel
+>-authenticatie is alleen beschikbaar voor &IMAP; accounts die gebruik maken van Google's GMail service.</para>
+  
+    <para
+>Gebruik de knop <guibutton
+>Automatisch detecteren</guibutton
+> op het tabblad <guilabel
+>Geavanceerd</guilabel
+> om automatisch de meest veilige instelling ondersteunt door uw server te selecteren.</para>
+
+    <para
+>U bent nu klaar om e-mail te ontvangen. Voor &IMAP; open nu uw mappen in de mappenlijst van &kmail;. &kmail; zal dan een verbinding maken met de server en de aangetroffen berichten tonen. POP3-gebruikers kunnen nu via <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Controleren op nieuwe berichten</guimenuitem
+></menuchoice
+> hun e-mail ophalen.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>Instellingen testen</title>
+
+  <para
+>Allereerst zou u uzelf een e-mail kunnen sturen om de gemaakte instellingen te controleren. Om een bericht op te stellen, druk op <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, kies de knop <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;Nieuw</guiicon
+> of kies het menu <menuchoice
+><guimenu
+>Bericht</guimenu
+> <guimenuitem
+>Nieuw bericht...</guimenuitem
+></menuchoice
+>. Het venster <link linkend="the-composer-window"
+>Bericht opstellen</link
+> zal dan verschijnen. Vul het <guilabel
+>Aan:</guilabel
+>-veld in met uw e-mailadres en typ iets in bij het <guilabel
+>Onderwerp</guilabel
+>-veld. Verstuur het bericht door te kiezen voor <menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Bericht verzenden</guimenuitem
+></menuchoice
+>.</para>
+
+  <para
+>Om te controleren of er nieuwe berichten zijn kiest u het menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Controleren op nieuwe berichten</guimenuitem
+></menuchoice
+>. Rechtsonder in beeld is te zien hoeveel berichten er opgehaald zijn en hoeveel berichten er in totaal opgehaald moeten worden. Indien het bericht dat u net hebt verstuurd zich hiertussen bevindt, dan: gefeliciteerd! Indien u echter foutmeldingen krijgt, controleer dan of de internetverbinding werkt of controleer de gemaakte netwerkinstellingen bij <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&kmail; instellen...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+</sect1>
+
+</chapter>

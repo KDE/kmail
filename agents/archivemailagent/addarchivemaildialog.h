@@ -1,29 +1,15 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ADDARCHIVEMAILDIALOG_H
-#define ADDARCHIVEMAILDIALOG_H
+#pragma once
 
-#include "MailCommon/BackupJob"
 #include "archivemailinfo.h"
+#include <Akonadi/Collection>
+#include <MailCommon/BackupJob>
 #include <QDialog>
-#include <Collection>
 class QUrl;
 class QCheckBox;
 class KUrlRequester;
@@ -42,40 +28,38 @@ class AddArchiveMailDialog : public QDialog
     Q_OBJECT
 public:
     explicit AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent = nullptr);
-    ~AddArchiveMailDialog();
+    ~AddArchiveMailDialog() override;
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
     MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setRecursive(bool b);
-    bool recursive() const;
+    Q_REQUIRED_RESULT bool recursive() const;
 
     void setSelectedFolder(const Akonadi::Collection &collection);
     Akonadi::Collection selectedFolder() const;
 
-    QUrl path() const;
+    Q_REQUIRED_RESULT QUrl path() const;
     void setPath(const QUrl &);
 
     ArchiveMailInfo *info();
 
     void setMaximumArchiveCount(int);
 
-    int maximumArchiveCount() const;
+    Q_REQUIRED_RESULT int maximumArchiveCount() const;
 
 private:
     void slotFolderChanged(const Akonadi::Collection &);
     void slotUpdateOkButton();
     void load(ArchiveMailInfo *info);
-    MailCommon::FolderRequester *mFolderRequester;
-    FormatComboBox *mFormatComboBox;
-    UnitComboBox *mUnits;
-    QCheckBox *mRecursiveCheckBox;
-    KUrlRequester *mPath;
-    QSpinBox *mDays;
-    QSpinBox *mMaximumArchive;
+    MailCommon::FolderRequester *mFolderRequester = nullptr;
+    FormatComboBox *mFormatComboBox = nullptr;
+    UnitComboBox *mUnits = nullptr;
+    QCheckBox *mRecursiveCheckBox = nullptr;
+    KUrlRequester *mPath = nullptr;
+    QSpinBox *mDays = nullptr;
+    QSpinBox *mMaximumArchive = nullptr;
 
-    ArchiveMailInfo *mInfo;
-    QPushButton *mOkButton;
+    ArchiveMailInfo *mInfo = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
-
-#endif // ADDARCHIVEMAILDIALOG_H

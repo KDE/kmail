@@ -1,22 +1,10 @@
 /*
-  Copyright (c) 2013-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef ADDEMAILTOEXISTINGCONTACTDIALOG_H
-#define ADDEMAILTOEXISTINGCONTACTDIALOG_H
+#pragma once
 
 #include <QDialog>
 class QPushButton;
@@ -30,19 +18,16 @@ class AddEmailToExistingContactDialog : public QDialog
     Q_OBJECT
 public:
     explicit AddEmailToExistingContactDialog(QWidget *parent);
-    ~AddEmailToExistingContactDialog();
+    ~AddEmailToExistingContactDialog() override;
 
-    Akonadi::Item selectedContact() const;
+    Q_REQUIRED_RESULT Akonadi::Item selectedContact() const;
 
-private Q_SLOTS:
+private:
     void slotSelectionChanged();
 
     void slotDoubleClicked();
-private:
     void readConfig();
     void writeConfig();
-    Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget;
-    QPushButton *mOkButton;
+    Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget = nullptr;
+    QPushButton *mOkButton = nullptr;
 };
-
-#endif // ADDEMAILTOEXISTINGCONTACTDIALOG_H

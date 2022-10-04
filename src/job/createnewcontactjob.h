@@ -1,27 +1,13 @@
 /*
-  Copyright (c) 2012-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
-#ifndef CREATENEWCONTACTJOB_H
-#define CREATENEWCONTACTJOB_H
+#pragma once
 
-#include <AkonadiCore/Item>
+#include <Akonadi/Item>
 #include <KJob>
 
 /**
@@ -43,24 +29,20 @@ public:
     /**
      * Destroys the new contact job
      */
-    ~CreateNewContactJob();
+    ~CreateNewContactJob() override;
 
     /**
      * @brief start the job
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
-private Q_SLOTS:
+private:
     void slotCollectionsFetched(KJob *);
     void slotResourceCreationDone(KJob *job);
     void slotContactEditorError(const QString &error);
     void contactStored(const Akonadi::Item &item);
 
-private:
     void createContact();
 
-private:
-    QWidget *mParentWidget;
+    QWidget *const mParentWidget;
 };
-
-#endif // CREATENEWCONTACTJOB_H

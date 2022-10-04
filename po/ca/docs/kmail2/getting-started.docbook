@@ -1,0 +1,824 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<date
+>18 d'agost de 2020</date>
+<releaseinfo
+>5.14.2 (Aplicacions 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Com començar</title>
+
+<para
+>Aquesta és una introducció al &kmail; i el seu ús de manera que pugueu començar a treballar amb ell ara mateix. Per a més informació, vegeu la secció <link linkend="using-kmail"
+>Usar el &kmail;</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>Assistent de comptes</title>
+
+<para
+>La primera vegada que executeu el &kmail;, aquest us donarà la benvinguda amb l'Assistent de comptes.</para>
+<note
+><para
+>Si en qualsevol moment necessiteu executar l'assistent de comptes una altra vegada, el trobareu a <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Afegeix un compte</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>L'assistent us guiarà a través del procés de la creació d'un compte de correu electrònic. Les pantalles poden variar depenent del que l'assistent pugui determinar per si mateix. A continuació es mostra un resum de les pantalles que poden sorgir durant l'ús d'aquest assistent.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+><guilabel
+>Proporcioneu les dades personals</guilabel
+>, és la primera pantalla de l'assistent. Se us demanarà la informació bàsica del compte: <guilabel
+>Nom complet:</guilabel
+>, <guilabel
+>Adreça de correu</guilabel
+> i una <guilabel
+>Contrasenya</guilabel
+>. De manera predeterminada, es deixa marcada l'opció <guilabel
+>Cerca la configuració del proveïdor a Internet</guilabel
+>, de manera que l'assistent intentarà recuperar la informació necessària des del servidor. Desmarqueu-la si sou un usuari expert i necessiteu establir una configuració avançada. Feu clic al botó <guibutton
+>Següent</guibutton
+> una vegada hàgiu finalitzat.</para>
+    
+    <screenshot>
+    <screeninfo
+>Assistent de comptes</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Assistent de comptes</phrase>
+        </textobject>
+        <caption>
+        <para
+>El diàleg «Proporcioneu les dades personals»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <note
+><para
+>Els comptes de GMail han d'utilitzar &IMAP;. Si heu habilitat la verificació en dos passos per al vostre compte de GMail, haureu d'obtenir un codi de verificació de Google com a part del procés de configuració inicial del compte. No haureu de realitzar la verificació de dos factors una vegada s'hagi creat el compte al &kmail;, perquè Google marca l'enllaç &IMAP; com de total confiança.</para
+></note>
+    
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+    
+    <para
+>La següent pantalla us ajudarà a configurar les claus d'encriptatge per al vostre correu.</para>
+    
+    <screenshot>
+    <screeninfo
+>Assistent de comptes 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Assistent de comptes 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>El diàleg Opcions de l'encriptatge</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Si voleu assegurar la vostra comunicació amb GnuPG, podeu generar una clau nova i publicar-la en un servidor de claus públic o importar-ne una d'existent. Si decidiu generar un parell nou de claus, no oblideu la contrasenya que s'utilitza per a generar-la. La necessitareu cada vegada que vulgueu fer servir la clau. </para>
+    <para
+>Quan envieu correu, el &kmail; cercarà de manera opcional les claus d'encriptatge per als vostres destinataris i encriptarà el missatge si es pot trobar una clau. El &kmail; també pot signar criptogràficament el correu, de manera que cada destinatari pugui verificar que el missatge no ha estat alterat. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Select-account-type">
+    <para
+>Apareixerà una pantalla <guilabel
+>S'ha completat l'arranjament</guilabel
+> si l'assistent ha determinat correctament el tipus de compte. Feu clic a <guibutton
+>Detalls...</guibutton
+> per a veure la configuració que ha establert el &kmail;. Feu clic al botó <guibutton
+>Finalitza</guibutton
+> per a configurar el compte, completar l'assistent i tancar la finestra. </para>
+    
+    <screenshot>
+    <screeninfo
+>Assistent de comptes 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Assistent de comptes 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>El diàleg de selecció del tipus de compte</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Si l'assistent no pot determinar el tipus de compte, apareixerà la pantalla <guilabel
+>Seleccioneu el tipus de compte</guilabel
+>. Seleccioneu-lo des de la llista (si no el sabeu, haureu de posar-vos en contacte amb el proveïdor de correu electrònic). Si el tipus de compte que no es troba a la llista, feu clic al botó <guibutton
+>Cerca'n més a Internet</guibutton
+>. Una vegada seleccionat, feu clic al botó <guibutton
+>Següent</guibutton
+> i se us presentarà la pantalla <guilabel
+>Configuració personal</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Personal-settings">
+      
+    <para
+>Si l'assistent no ha pogut localitzar el servidor de correu electrònic cercant a Internet, apareixerà la pantalla <guibutton
+>Configuració personal</guibutton
+>.</para
+>  
+        
+    <screenshot>
+    <screeninfo
+>Assistent de comptes 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Assistent de comptes 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>El diàleg «Configuració personal»</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Assegureu-vos d'introduir tota aquesta informació correctament. Seleccioneu <guilabel
+>Descarrega tots els missatges per a ús fora de línia</guilabel
+> si voleu que els vostres missatges siguin accessibles quan no es tingui una connexió a Internet (només &IMAP;). Feu clic al botó <guibutton
+>Següent</guibutton
+> una vegada hàgiu finalitzat. Apareixerà la pantalla <guilabel
+>S'ha completat l'arranjament</guilabel
+>.</para>
+    
+    <para
+>El vostre compte estarà configurat, i podeu fer clic al botó <guibutton
+>Finalitza</guibutton
+> per a completar l'assistent i tancar la finestra, o feu clic al botó <guibutton
+>Detalls...</guibutton
+> per a revisar la configuració del compte.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+  
+  <para
+>Si voleu crear manualment un compte, continueu llegint aquest capítol. En cas contrari, el podeu ometre de forma segura anant a <link linkend="testing-your-setup"
+>Comprovar la configuració</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Inici ràpid de la configuració manual</title>
+  <screenshot>
+    <screeninfo
+>La pantalla de configuració</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>La pantalla de configuració</phrase>
+        </textobject>
+        <caption>
+        <para
+>La pantalla de configuració principal del &kmail;</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  
+  <para
+>La finestra de configuració <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>Configura el &kmail;...</guisubmenu
+></menuchoice
+> consta de sis seccions: <guilabel
+>Comptes</guilabel
+>, <guilabel
+>Aparença</guilabel
+>, <guilabel
+>Editor</guilabel
+>, <guilabel
+>Seguretat</guilabel
+>, <guilabel
+>Miscel·lània</guilabel
+> i <guilabel
+>Connectors</guilabel
+>. </para>
+
+  <para
+>Per a començar a enviar i rebre missatges només haureu de canviar algunes opcions a la pàgina <guilabel
+>Comptes</guilabel
+>. A continuació, es mostra una breu sinopsi dels passos que haureu de realitzar per a configurar un nou compte de correu. Per a obtenir una descripció més detallada, llegiu el capítol <link linkend="configure-generalinfo"
+>Configurar el &kmail;</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>Establir la vostra identitat </title>
+
+    <para
+>Per a crear una identitat nova, feu clic al botó <guilabel
+>Afegeix...</guilabel
+> a la pestanya <guilabel
+>Identitats</guilabel
+> associada amb la pàgina <guilabel
+>Comptes</guilabel
+>. Apareixerà una petita finestra emergent.</para>
+  
+    <screenshot>
+    <screeninfo
+>El diàleg Identitat nova</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>El diàleg Identitat nova</phrase>
+        </textobject>
+        <caption>
+        <para
+>Afegir una identitat nova</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Aquí teniu algunes opcions. Doneu un nom a la nova identitat i seleccioneu una de les opcions disponibles (<guilabel
+>Amb els camps buits</guilabel
+> o <guilabel
+>Usa els valors de l'Arranjament del sistema</guilabel
+>). Després, feu clic a <guilabel
+>D'acord</guilabel
+>. Apareixerà la pantalla de configuració de la identitat.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <screenshot>
+    <screeninfo
+>El diàleg Identitat nova continua</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>El diàleg Identitat nova continua</phrase>
+        </textobject>
+        <caption>
+        <para
+>Configurant la Identitat nova</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <para
+>Les opcions de la pestanya <guilabel
+>General</guilabel
+> són força evidents. Ompliu el camp <guilabel
+>El vostre nom</guilabel
+> amb el nom complet (&pex;, <userinput
+>Jordi Exemple</userinput
+>) i el camp <guilabel
+>Organització</guilabel
+> (opcional) amb la informació adequada. Després, empleneu el camp <guilabel
+>Adreça de correu electrònic</guilabel
+> amb la vostra adreça de correu electrònic (&pex;, <userinput
+>jordi@exemple.cat</userinput
+>). </para>
+    <para
+>Si utilitzareu <application
+>PGP</application
+> o <application
+>GnuPG</application
+>, podeu establir les claus &openpgp; i/o els certificats &smime; a la pestanya <link linkend="configure-identity-cryptography"
+><guilabel
+>Criptografia</guilabel
+></link
+>. </para>
+    <para
+>Les pestanyes <guilabel
+>Avançat</guilabel
+> i <guilabel
+>Plantilles</guilabel
+> es poden utilitzar per a adaptar la manera com es donarà format i es processaran els missatges sortints d'aquesta identitat. Vegeu <link linkend="configure-generalinfo"
+>Configurar el &kmail;</link
+> per a obtenir instruccions més detallades. </para>
+    <para
+>De manera opcional, podeu anar a la pestanya <guilabel
+>Signatura</guilabel
+> i introduir la vostra signatura. Aquesta serà un text breu que s'afegirà automàticament a tots els vostres missatges. No té res a veure amb les <emphasis
+>signatures digitals</emphasis
+>. També podeu inserir un petit avatar personal a les capçaleres dels missatges sortints mitjançant la pestanya <guilabel
+>Imatge</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>Establir el vostre compte</title>
+
+  <para
+>La pàgina <guilabel
+>Comptes</guilabel
+> també conté les opcions que informen el &kmail; de com enviar i rebre els vostres missatges de correu electrònic. Moltes d'aquestes opcions poden variar depenent en gran manera de la configuració del vostre sistema i del tipus de xarxa en la qual es trobi el vostre servidor de correu electrònic. Si no sabeu quines opcions escollir o què posar en un camp, consulteu amb el vostre proveïdor de serveis d'Internet (<acronym
+>ISP</acronym
+>) o a l'administrador del vostre sistema.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>Enviar missatges</title>
+  <para
+>Aquí teniu una manera de crear un compte de correu sortint.</para>
+  
+  <screenshot>
+    <screeninfo
+>Seleccions del Compte sortint</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Seleccions del Compte sortint</phrase>
+        </textobject>
+        <caption>
+        <para
+>Escollint un tipus de compte de correu electrònic sortint</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>Quan feu clic al botó <guibutton
+>Afegeix...</guibutton
+> a la pestanya <guilabel
+>Enviament</guilabel
+>, apareixerà aquesta pantalla. Si l'ordinador està connectada directament a Internet, el més probable és que vulgueu triar &SMTP;. Si necessiteu utilitzar el &Sendmail; o <acronym
+>EWS</acronym
+> de &Microsoft;, consulteu el capítol <link linkend="configure-accounts-sending"
+>Configuració</link
+>. Independentment del tipus de compte sortint que seleccioneu, marqueu la casella <guilabel
+>Fes que aquest sigui el compte sortint predeterminat</guilabel
+>. (Podreu canviar-ho amb facilitat més endavant si teniu més d'un compte de correu electrònic).</para>
+
+  <para
+>Quan seleccioneu l'opció <guilabel
+>&SMTP;</guilabel
+> i feu clic al botó <guibutton
+>Crea i configura</guibutton
+>, apareixerà la següent pantalla de configuració.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>El diàleg de configuració de l'enviament</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>El diàleg de configuració de l'enviament</phrase>
+        </textobject>
+        <caption>
+        <para
+>Configurant un compte &SMTP;</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>Com a mínim, haureu de proporcionar un &URI; de servidor per al correu electrònic. Si el servei de correu electrònic requereix autenticació abans d'enviar els missatges, marqueu la casella <guilabel
+>El servidor requereix autenticació</guilabel
+> i proporcioneu la vostra adreça de correu electrònic i contrasenya. Si voleu que el &kmail; recordi la contrasenya, marqueu la casella <guilabel
+>Emmagatzema la contrasenya &SMTP;</guilabel
+>. Si encara no heu creat una cartera, se us demanarà que proporcioneu una contrasenya.</para>
+
+  <para
+>Verifiqueu que la connexió amb el servidor &SMTP; estigui funcionant seleccionant la pestanya <guilabel
+>Avançat</guilabel
+> i fent clic al botó <guibutton
+>Detecta automàticament</guibutton
+>. El &kmail; sol·licitarà al servidor &SMTP; la configuració correcta (encriptatge, número de port i mètode d'autenticació). Una vegada que s'hagi detectat la configuració adequada, el compte sortint estarà a punt per a utilitzar. (Reviseu la <link linkend="configure-accounts-sending"
+>Configuració</link
+> si la connexió &SMTP; requereix algun ajust fi addicional).</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>Rebre missatges</title>
+
+  <para
+>De manera predeterminada, les <guilabel
+>Carpetes locals</guilabel
+> (safata d'entrada, sortida, enviats, paperera, esborranys i plantilles) a la carpeta primària del &kmail; estan predefinides en aquesta pestanya. Mitjançant la llista desplegable podreu seleccionar les <guilabel
+>Opcions de recuperació</guilabel
+> per a aquestes carpetes. (Cal tenir present que el &kmail; utilitza el format Maildir per a emmagatzemar els missatges en el disc dur: cada missatge s'emmagatzema com a un fitxer separat. La ubicació exacta de la carpeta principal del &kmail; dependrà de la distribució de &Linux; que hi hagi instal·lada, però probablement es troba a ~/.local/share/).</para>
+
+  <para
+>Per a configurar un compte perquè rebeu el correu, premeu el botó <guibutton
+>Afegeix...</guibutton
+> a la pestanya <guilabel
+>Recepció</guilabel
+>. Trieu <guilabel
+>Personalitza un compte...</guilabel
+> des de la llista desplegable. Se us preguntarà pel tipus de compte. La majoria d'usuaris haurien de seleccionar <guilabel
+>Servidor de correu POP3</guilabel
+> o <guilabel
+>Servidor de correu &IMAP;</guilabel
+>. Si voleu utilitzar un fitxer de bústia local (<guilabel
+>Mbox</guilabel
+>), si us plau, vegeu la <link linkend="faq-file-locking"
+>&PMF; sobre el blocatge d'un fitxer</link
+>.</para>
+    
+  <screenshot>
+    <screeninfo
+>El diàleg de configuració de la recepció</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>El diàleg de configuració de la recepció</phrase>
+        </textobject>
+        <caption>
+        <para
+>Configurant un compte &IMAP;</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->  
+
+  <para
+>Si trieu &POP3; o &IMAP;, apareixerà una finestra de configuració per al compte. Primer, ompliu el camp <guilabel
+>Nom del compte</guilabel
+> amb un nom per al vostre compte. Podeu escollir qualsevol nom que us agradi. Després haureu d'omplir els camps <guilabel
+>Nom d'usuari</guilabel
+>, <guilabel
+>Contrasenya</guilabel
+> i <guilabel
+>Servidor de correu entrant</guilabel
+> (o <guilabel
+>Servidor &IMAP;</guilabel
+>) amb la informació obtinguda des del vostre <acronym
+>ISP</acronym
+> o administrador del sistema. Si voleu que el &kmail; comprovi automàticament si hi ha missatges nous, marqueu la casella <guilabel
+>Habilita l'interval de recuperació del correu</guilabel
+> i establiu l'interval de temps que desitgeu.</para>
+
+  <para
+>A continuació, feu clic a la pestanya <guilabel
+>Avançat</guilabel
+> i després en el botó <guibutton
+>Detecta automàticament</guibutton
+>. El &kmail; consultarà el servidor de missatges entrants per a determinar la configuració correcta per a aquest compte (encriptatge, número de port i mètode d'autenticació).</para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>Opcions tan sols de rellevància per a &IMAP;</title>
+
+    <para
+>Si marqueu <guilabel
+>Compacta automàticament les carpetes</guilabel
+> a la pestanya de configuració <guilabel
+>Avançat</guilabel
+>, el &kmail; eliminarà del servidor els missatges esborrats tan aviat com abandoneu la carpeta a on es troben. D'altra manera els missatges tan sols es marcaran com a esborrats i haureu de compactar manualment les carpetes.</para>
+    
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>Opcions tan sols de rellevància per a <acronym
+>POP3</acronym
+></title>
+      
+    <para
+>Seleccioneu <guilabel
+>Deixa els missatges recuperats al servidor</guilabel
+> a la pestanya de configuració <guilabel
+>Avançat</guilabel
+> si voleu deixar els missatges al servidor després d'haver-los descarregat. Hi ha set maneres d'especificar quant de temps es conservaran els missatges antics després de descarregar-los: indefinidament (deixeu totes les opcions sense seleccionar), o nombre de dies / nombre de missatges / mida màxima de la safata d'entrada a la banda del servidor (trieu-ne una, dues o les tres). Si aquest quadre no està marcat, tots els missatges s'esborraran immediatament del servidor remot una vegada es completi la descàrrega.</para
+>  
+  
+    <para
+>A la pestanya <guilabel
+>Avançat</guilabel
+> podreu seleccionar <guilabel
+>Usa el paral·lelisme per a una baixada de correu més ràpida</guilabel
+>, si això està acceptat pel servidor. Proveu-ho per a assegurar-vos que funciona correctament.</para>
+
+    <para
+><guilabel
+>entrada</guilabel
+> és la carpeta predeterminada a on es deixaran els missatges entrants. Si per algun motiu voleu canviar-la, podeu fer-ho amb <guilabel
+>Carpeta de destinació</guilabel
+>. Però probablement el que voleu és un <link linkend="filters"
+>filtre</link
+>.</para>
+
+    <para
+>Amb <guilabel
+>Preordre</guilabel
+> podreu especificar qualsevol programa que el &kmail; hagi d'executar just després de descarregar el correu. Si us plau, especifiqueu el camí complet (no empreu «~») i cal tenir present que el &kmail; no continuarà a menys que el programa finalitzi.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>Opcions tant per a &IMAP; com <acronym
+>POP3</acronym
+></title>
+    
+    <para
+>A la pestanya <guilabel
+>Recepció</guilabel
+>, sota el grup <guilabel
+>Opcions de recuperació</guilabel
+>, seleccioneu <guilabel
+>Inclou en la comprovació manual del correu</guilabel
+> si voleu que es comprovi el correu d'aquest compte en utilitzar <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Comprova el correu</guimenuitem
+></menuchoice
+>. Si desseleccioneu aquesta opció, encara podreu comprovar si hi ha missatges nous amb <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Comprova el correu a &gt;</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>El &kmail; accepta l'encriptatge mitjançant <guilabel
+>SSL/TLS</guilabel
+> i <guilabel
+>STARTTLS</guilabel
+> (el <guilabel
+>SSL/TLS</guilabel
+> hauria de ser el preferit si està disponible).</para>
+
+    <para
+>El &kmail; admet nou mètodes d'autenticació:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+>Autenticació <guilabel
+>Text en clar</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (recomanat si <guilabel
+>DIGEST-MD5</guilabel
+> no està disponible),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (recomanat),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (també conegut com Anonymous)</guilabel
+>, i </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>Gmail</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+><guilabel
+>DIGEST-MD5</guilabel
+>,<guilabel
+>CRAM-MD5</guilabel
+> i <guilabel
+>APOP</guilabel
+> són intrínsecament segurs. Les altres opcions només són segures quan s'estan utilitzant conjuntament amb <guilabel
+>SSL</guilabel
+> o <guilabel
+>TLS</guilabel
+>. Només hauríeu d'usar <guilabel
+>Text en clar</guilabel
+> si el servidor no accepta cap altre mètode d'autenticació. <guilabel
+>Anonymous</guilabel
+> està admès sobre &IMAP;, però no <guilabel
+>APOP</guilabel
+>. L'autenticació <guilabel
+>Gmail</guilabel
+> només està disponible per als comptes &IMAP; que utilitzen el servei GMail de Google.</para>
+  
+    <para
+>Utilitzeu el botó <guibutton
+>Detecció automàtica</guibutton
+> a la pestanya <guilabel
+>Avançat</guilabel
+> per a seleccionar automàticament les opcions més segures admeses pel servidor.</para>
+
+    <para
+>Ara ja està tot llest per a rebre el correu. Per als comptes &IMAP;, després d'obrir les carpetes a l'arbre de carpetes de la finestra principal del &kmail;, aquest es connectarà amb el vostre servidor i mostrarà els missatges que hi trobi. Per a POP3 empreu <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Comprova el correu</guimenuitem
+></menuchoice
+>.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>Comprovar la configuració</title>
+
+  <para
+>Primerament, hauríeu d'enviar-vos un correu a vosaltres mateixos per a comprovar la vostra configuració. Per a enviar un missatge, premeu <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, seleccioneu el botó <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;Nou</guiicon
+> o seleccioneu l'element del menú <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Missatge nou...</guimenuitem
+></menuchoice
+>. Apareixerà la <link linkend="the-composer-window"
+>finestra de l'editor</link
+>. Ompliu el camp <guilabel
+>A:</guilabel
+> amb la vostra adreça de correu electrònic i escriviu qualsevol cosa al camp <guilabel
+>Assumpte:</guilabel
+>. Envieu el missatge seleccionant <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Envia el correu</guimenuitem
+></menuchoice
+>.</para>
+
+  <para
+>Per a comprovar el vostre correu, seleccioneu <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+>Comprova el correu</guimenuitem
+></menuchoice
+>. A la cantonada inferior dreta de la finestra principal hi haurà una barra de progrés indicant quants missatges hi ha per a descarregar. Si rebeu el missatge que acabeu d'enviar: Felicitats! Si no és així i rebeu qualsevol missatge d'error mentre esteu comprovant la vostra configuració, assegureu-vos que la vostra connexió a xarxa és funcional i torneu a comprovar les vostres opcions a <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+</sect1>
+
+</chapter>

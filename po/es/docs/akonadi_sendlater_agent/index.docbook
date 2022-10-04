@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agente de enviar después</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>El manual de &i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Javier</firstname
+><surname
+>Viñal</surname
+> <affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Traductor</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2013-11-30</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introducción</title>
+
+<para
+>&i18n-sendlateragent; es un agente de akonadi que le permite enviar correos planificados una sola vez o repetidamente. </para>
+
+<sect2 id="using-kapp">
+<title
+>Uso de &i18n-sendlateragent;</title>
+
+<para
+>Use <menuchoice
+><guimenu
+>Mensaje</guimenu
+><guimenuitem
+>Enviar más tarde</guimenuitem
+></menuchoice
+> en la ventana del editor de &kmail; para abrir un diálogo que le permite planificar sus correos para enviarlos a una fecha y hora específica.</para>
+
+<screenshot>
+<screeninfo
+>Diálogo de &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Diálogo de &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Diálogo de &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Digamos que usted ha construido un brillante correo perfilando tareas que le gustaría que sus empleados terminaran mientras usted está en un congreso, pero usted estará en un avión cuando usted quiera enviar el correo. Use esta característica para enviar el correo en una fecha y hora precisa. Para planificar el correo para enviar más tarde, primero marque la casilla <guilabel
+>Retrasar</guilabel
+> y, a continuación, seleccione la fecha y hora en el menú <guilabel
+>Enviar el:</guilabel
+>.</para>
+<para
+>Si usted necesita enviar un correo de recordatorio semanal a sus empleados, puede configurarlo para repetir el envío del mensaje marcando la casilla de verificación <guilabel
+>Repetir cada</guilabel
+> y seleccionando los intervalos deseados.</para>
+<para
+>Usted puede colocar el mensaje en sus mensajes encolados seleccionando el botón <guibutton
+>Enviar más tarde</guibutton
+> para planificar el mensaje inmediatamente. </para>
+<para
+>Este agente funciona independientemente de &kmail; y no necesita una instancia de &kmail; en ejecución o que &kmail; esté en modo en línea para enviar correos planificados.</para>
+<para
+>Si usted no dispusiera de conexión de red cuando se debiera enviar un mensaje planificado, el agente informará de un error y preguntará si usted quiere enviarlo más tarde.</para>
+<para
+>Al iniciar una sesión de &kde;, el agente comprueba los mensajes planificados y envía todos los mensajes vencidos desde el último cierre de sesión si es necesario. </para>
+<para
+>Para cambiar las opciones para correos que usted haya planificado para más tarde use <menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar agente de enviar más tarde...</guimenuitem
+></menuchoice
+> en &kmail;. </para>
+
+<screenshot>
+<screeninfo
+>Configurar &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurar &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurar &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Esto muestra un diálogo que le permite modificar la planificación y eliminar correos que han sido enviados usando la característica de enviar más tarde.</action>
+</para>
+<para
+>Si no es posible cambiar el contenido (cuerpo, encabezados, &etc;) de un mensaje planificado. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Créditos y licencia</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Derechos de autor del programa 2013 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Derechos de autor de la documentación &copy; 2013 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traducido por Javier Viñal <email
+>fjvinal@gmail.com</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

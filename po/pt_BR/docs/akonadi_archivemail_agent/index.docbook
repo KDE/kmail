@@ -1,0 +1,219 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Agente de Arquivamento de E-mails</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Brazilian-Portuguese "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Manual do &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>André Marcelo</firstname
+><surname
+>Alvarenga</surname
+><affiliation
+><address
+><email
+>alvarenga@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>30/08/2013</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introdução</title>
+
+<para
+>O &i18n-archivemailagent; é um agente do Akonadi que permite arquivar pastas de e-mails de forma automática. </para>
+
+<sect2 id="using-kapp">
+<title
+>Usando o &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Use a opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Configurar o arquivamento automático...</guimenuitem
+> </menuchoice
+><action
+> na janela de leitura do &kmail; para abrir uma caixa de diálogo que configura o arquivamento automático das pastas de e-mails.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Esta é uma ferramenta poderosa que pode ser usada para auxiliar a realização de cópias de segurança dos seus e-mails. Para usá-la, clique no botão <guibutton
+>Adicionar...</guibutton
+> para aparecer a caixa de diálogo <guilabel
+>Adicionar arquivamento de e-mails</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Caixa de diálogo Adicionar arquivamento de e-mails</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Caixa de diálogo Adicionar arquivamento de e-mails</phrase>
+    </textobject>
+    <caption>
+      <para
+>Caixa de diálogo Adicionar arquivamento de e-mails</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Primeiro selecione a pasta que gostaria de arquivar.</para
+></listitem>
+<listitem
+><para
+>Selecione o formato que deseja usar para salvar o arquivo, &eg;, <literal role="extension"
+>.tar.bz2</literal
+>, na lista respectiva. O nome do arquivamento será composto pelo prefixo <userinput
+>Archive_</userinput
+>, pelo caminho da pasta selecionada na lista de pastas do &kmail;, pela data no formato <userinput
+>ano-mês-dia</userinput
+> e pela extensão do arquivo selecionado, como &eg;, <filename
+>Archive_Pasta local_caixa_de_entrada_2013-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Por padrão, a opção <guilabel
+>Arquivar todas as subpastas</guilabel
+> está assinalada. Desmarque-a quiser arquivar apenas a pasta-mãe.</para
+></listitem>
+<listitem
+><para
+>Você pode digitar o local onde deseja salvar o seu arquivo ou clicar no botão <guibutton
+>Caixa de dialogo Abrir arquivo</guibutton
+> para selecionar a pasta.</para
+></listitem>
+<listitem
+><para
+>Indique a frequência com que deseja criar a cópia de segurança nos menus após o a opção <guilabel
+>Cópia de segurança a cada:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Se tiver pouco espaço em disco, você poderá definir um limite em <guilabel
+>Número máximo de arquivamentos:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>Caso tenha adicionado ou modificado uma tarefa de arquivamento, esta será automaticamente executada após fecha a caixa de diálogo. </para>
+
+<para
+>Se já tiver adicionado tarefas de arquivamento de e-mails, a caixa de diálogo <guilabel
+>Configurar o Agente de Arquivamento de E-mails</guilabel
+> irá aparecer para permitir modificá-las. </para>
+<screenshot>
+<screeninfo
+>Configurar o Agente de Arquivamento de E-mails</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurar o Agente de Arquivamento de E-mails</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurar o Agente de Arquivamento de E-mails</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Você pode usar a opção à esquerda de cada item da lista para ativar ou desativar o arquivamento desta tarefa. </para>
+<para
+>Usando o menu de contexto que aparece com o &RMB; sobre uma tarefa de arquivamento, você poderá abrir a pasta que contém os arquivos ou iniciar a tarefa imediatamente. Isto irá substituir um arquivamento que tenha sido criado para o mesmo dia sem qualquer notificação. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Créditos e licença</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Direitos autorais do programa 2013 Laurent Montel montel@kde.org </para>
+<para
+>Direitos autorais da documentação Copyright &copy; 2013 Laurent Montel montel@kde.org </para>
+
+<para
+>Tradução de André Marcelo Alvarenga <email
+>alvarenga@kde.org</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

@@ -1,113 +1,111 @@
 /*
-    Copyright (c) 2011 Tobias Koenig <tokoe@kde.org>
+    SPDX-FileCopyrightText: 2011 Tobias Koenig <tokoe@kde.org>
 
-    This library is free software; you can redistribute it and/or modify it
-    under the terms of the GNU Library General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-
-    This library is distributed in the hope that it will be useful, but WITHOUT
-    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-    License for more details.
-
-    You should have received a copy of the GNU Library General Public License
-    along with this library; see the file COPYING.LIB.  If not, write to the
-    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    02110-1301, USA.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "mailfilteragent.h"
 
-#include "mailcommon/dbusoperators.h"
 #include "dummykernel.h"
 #include "filterlogdialog.h"
 #include "filtermanager.h"
 #include "mailfilteragentadaptor.h"
-#include <AkonadiCore/Pop3ResourceAttribute>
+#include <MailCommon/DBusOperators>
 
-#include <AkonadiCore/changerecorder.h>
-#include <AkonadiCore/collectionfetchjob.h>
-#include <AkonadiCore/collectionfetchscope.h>
-#include <kdbusconnectionpool.h>
-#include <AkonadiCore/itemfetchscope.h>
-#include <Akonadi/KMime/MessageParts>
-#include <Akonadi/KMime/MessageStatus>
-#include <AkonadiCore/session.h>
-#include <MailCommon/MailKernel>
-#include <KLocalizedString>
-#include <QIcon>
 #include "mailfilteragent_debug.h"
-#include <KIconLoader>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AttributeFactory>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/MessageParts>
+#include <Akonadi/MessageStatus>
+#include <Akonadi/Pop3ResourceAttribute>
+#include <Akonadi/ServerManager>
+#include <Akonadi/Session>
+#include <KConfigGroup>
+#include <KLocalizedString>
 #include <KMime/Message>
 #include <KNotification>
 #include <KWindowSystem>
-#include <AgentManager>
-#include <ItemFetchJob>
-#include <AttributeFactory>
-#include <KConfigGroup>
+#include <MailCommon/MailKernel>
+#include <QDBusConnection>
 
-#include <QVector>
-#include <QTimer>
 #include <KSharedConfig>
+#include <QTimer>
 
-#include <kdelibs4configmigrator.h>
+#include <chrono>
 
-static bool isFilterableCollection(const Akonadi::Collection &collection)
+using namespace std::chrono_literals;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#include <Kdelibs4ConfigMigrator>
+#endif
+bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {
-    return MailCommon::Kernel::folderIsInbox(collection);
+    if (!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
+        return false;
+    }
 
-    //TODO: check got filter attribute here
+    return m_filterManager->hasAllFoldersFilter() || MailCommon::Kernel::folderIsInbox(collection);
+
+    // TODO: check got filter attribute here
 }
 
 MailFilterAgent::MailFilterAgent(const QString &id)
-    : Akonadi::AgentBase(id),
-      m_filterLogDialog(nullptr)
+    : Akonadi::AgentBase(id)
+    , mProgressTimer(new QTimer(this))
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("mailfilteragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_mailfilter_agentrc") << QStringLiteral("akonadi_mailfilter_agent.notifyrc"));
     migrate.migrate();
+#endif
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::Pop3ResourceAttribute>();
     mMailFilterKernel = new DummyKernel(this);
-    CommonKernel->registerKernelIf(mMailFilterKernel);   //register KernelIf early, it is used by the Filter classes
-    CommonKernel->registerSettingsIf(mMailFilterKernel);   //SettingsIf is used in FolderTreeWidget
+    CommonKernel->registerKernelIf(mMailFilterKernel); // register KernelIf early, it is used by the Filter classes
+    CommonKernel->registerSettingsIf(mMailFilterKernel); // SettingsIf is used in FolderTreeWidget
 
+    // Initialize it after registring CommonKernel otherwise it crashs!
     m_filterManager = new FilterManager(this);
 
     connect(m_filterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
     connect(m_filterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
 
-    Akonadi::Monitor *collectionMonitor = new Akonadi::Monitor(this);
+    auto collectionMonitor = new Akonadi::Monitor(this);
+    collectionMonitor->setObjectName(QStringLiteral("MailFilterCollectionMonitor"));
     collectionMonitor->fetchCollection(true);
     collectionMonitor->ignoreSession(Akonadi::Session::defaultSession());
     collectionMonitor->collectionFetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
     collectionMonitor->setMimeTypeMonitored(KMime::Message::mimeType());
 
     connect(collectionMonitor, &Akonadi::Monitor::collectionAdded, this, &MailFilterAgent::mailCollectionAdded);
-    connect(collectionMonitor, SIGNAL(collectionChanged(Akonadi::Collection)),
-            this, SLOT(mailCollectionChanged(Akonadi::Collection)));
+    connect(collectionMonitor, qOverload<const Akonadi::Collection &>(&Akonadi::Monitor::collectionChanged), this, &MailFilterAgent::mailCollectionChanged);
 
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &MailFilterAgent::mailCollectionRemoved);
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MailFilterAgent::slotInstanceRemoved);
 
     QTimer::singleShot(0, this, &MailFilterAgent::initializeCollections);
 
-    qDBusRegisterMetaType<QList<qint64> >();
+    qDBusRegisterMetaType<QList<qint64>>();
 
     new MailFilterAgentAdaptor(this);
 
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.MailFilterAgent"));
-    //Enabled or not filterlogdialog
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
+
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+
+    QDBusConnection::sessionBus().registerService(service);
+    // Enabled or not filterlogdialog
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     if (config->hasGroup("FilterLog")) {
         KConfigGroup group(config, "FilterLog");
         if (group.readEntry("Enabled", false)) {
-            const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("view-filter")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
-            KNotification *notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
+            auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
             notify->setComponentName(QApplication::applicationDisplayName());
-            notify->setPixmap(pixmap);
+            notify->setIconName(QStringLiteral("view-filter"));
             notify->setText(i18nc("Notification when the filter log was enabled", "Mail Filter Log Enabled"));
             notify->sendEvent();
         }
@@ -118,9 +116,15 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     changeRecorder()->fetchCollection(true);
     changeRecorder()->setChangeRecordingEnabled(false);
 
-    mProgressCounter = 0;
-    mProgressTimer = new QTimer(this);
-    connect(mProgressTimer, SIGNAL(timeout()), this, SLOT(emitProgress()));
+    connect(mProgressTimer, &QTimer::timeout, this, [this]() {
+        emitProgress();
+    });
+
+    itemMonitor = new Akonadi::Monitor(this);
+    itemMonitor->setObjectName(QStringLiteral("MailFilterItemMonitor"));
+    itemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
+    itemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+    connect(itemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);
 }
 
 MailFilterAgent::~MailFilterAgent()
@@ -130,15 +134,15 @@ MailFilterAgent::~MailFilterAgent()
 
 void MailFilterAgent::configure(WId windowId)
 {
-    Q_UNUSED(windowId);
+    Q_UNUSED(windowId)
 }
 
 void MailFilterAgent::initializeCollections()
 {
     m_filterManager->readConfig();
 
-    Akonadi::CollectionFetchJob *job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
-    job->fetchScope().setContentMimeTypes(QStringList() << KMime::Message::mimeType());
+    auto job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
+    job->fetchScope().setContentMimeTypes({KMime::Message::mimeType()});
     connect(job, &Akonadi::CollectionFetchJob::result, this, &MailFilterAgent::initialCollectionFetchingDone);
 }
 
@@ -146,32 +150,29 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
 {
     if (job->error()) {
         qCWarning(MAILFILTERAGENT_LOG) << job->errorString();
-        return; //TODO: proper error handling
+        return; // TODO: proper error handling
     }
 
-    Akonadi::CollectionFetchJob *fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    const auto fetchJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
 
-    const QMap<QString, Akonadi::Collection::Id> pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
+    const auto pop3ResourceMap = MailCommon::Kernel::pop3ResourceTargetCollection();
 
-    const Akonadi::Collection::List lstCols = fetchJob->collections();
+    const auto lstCols = fetchJob->collections();
     for (const Akonadi::Collection &collection : lstCols) {
         if (isFilterableCollection(collection)) {
             changeRecorder()->setCollectionMonitored(collection, true);
         } else {
-            QMap<QString, Akonadi::Collection::Id>::const_iterator i = pop3ResourceMap.constBegin();
-            const QMap<QString, Akonadi::Collection::Id>::const_iterator end = pop3ResourceMap.constEnd();
-            while (i != end) {
-                if (collection.id() == i.value()) {
+            for (auto pop3ColId : pop3ResourceMap) {
+                if (collection.id() == pop3ColId) {
                     changeRecorder()->setCollectionMonitored(collection, true);
                     break;
                 }
-                ++i;
             }
         }
     }
     Q_EMIT status(AgentBase::Idle, i18n("Ready"));
     Q_EMIT percent(100);
-    QTimer::singleShot(2000, this, &MailFilterAgent::clearMessage);
+    QTimer::singleShot(2s, this, &MailFilterAgent::clearMessage);
 }
 
 void MailFilterAgent::clearMessage()
@@ -181,19 +182,38 @@ void MailFilterAgent::clearMessage()
 
 void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)
 {
-    /* The monitor mimetype filter would Q_DECL_OVERRIDE the collection filter, therefor we have to check
-    * for the mimetype of the item here.
-    */
+    /* The monitor mimetype filter would override the collection filter, therefor we have to check
+     * for the mimetype of the item here.
+     */
     if (item.mimeType() != KMime::Message::mimeType()) {
         qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemAdded called for a non-message item!";
         return;
     }
 
+    if (item.remoteId().isEmpty()) {
+        itemMonitor->setItemMonitored(item);
+    } else {
+        filterItem(item, collection);
+    }
+}
+
+void MailFilterAgent::slotItemChanged(const Akonadi::Item &item)
+{
+    if (item.remoteId().isEmpty()) {
+        return;
+    }
+
+    // now we have the remoteId
+    itemMonitor->setItemMonitored(item, false);
+    filterItem(item, item.parentCollection());
+}
+
+void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection)
+{
     MailCommon::SearchRule::RequiredPart requiredPart = m_filterManager->requiredPart(collection.resource());
 
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(item);
-    connect(job, &Akonadi::ItemFetchJob::itemsReceived,
-            this, &MailFilterAgent::itemsReceiviedForFiltering);
+    auto job = new Akonadi::ItemFetchJob(item);
+    connect(job, &Akonadi::ItemFetchJob::itemsReceived, this, &MailFilterAgent::itemsReceiviedForFiltering);
     if (requiredPart == MailCommon::SearchRule::CompleteMessage) {
         job->fetchScope().fetchFullPayload();
     } else if (requiredPart == MailCommon::SearchRule::Header) {
@@ -205,7 +225,7 @@ void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collec
     job->fetchScope().fetchAttribute<Akonadi::Pop3ResourceAttribute>();
     job->setProperty("resource", collection.resource());
 
-    //TODO: Error handling?
+    // TODO: Error handling?
 }
 
 void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &items)
@@ -217,8 +237,8 @@ void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &item
 
     Akonadi::Item item = items.first();
     /*
-    * happens when item no longer exists etc, and queue compression didn't happen yet
-    */
+     * happens when item no longer exists etc, and queue compression didn't happen yet
+     */
     if (!item.hasPayload()) {
         qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceiviedForFiltering item has no payload!";
         return;
@@ -237,7 +257,9 @@ void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &item
     }
 
     emitProgressMessage(i18n("Filtering in %1", Akonadi::AgentManager::self()->instance(resource).name()));
-    m_filterManager->process(item, m_filterManager->requiredPart(resource), FilterManager::Inbound, true, resource);
+    if (!m_filterManager->process(item, m_filterManager->requiredPart(resource), FilterManager::Inbound, true, resource)) {
+        qCWarning(MAILFILTERAGENT_LOG) << "Impossible to process mails";
+    }
 
     emitProgress(++mProgressCounter);
 
@@ -267,7 +289,7 @@ QString MailFilterAgent::createUniqueName(const QString &nameTemplate)
     return m_filterManager->createUniqueName(nameTemplate);
 }
 
-void MailFilterAgent::filterItems(const QList< qint64 > &itemIds, int filterSet)
+void MailFilterAgent::filterItems(const QList<qint64> &itemIds, int filterSet)
 {
     Akonadi::Item::List items;
     items.reserve(itemIds.count());
@@ -278,7 +300,18 @@ void MailFilterAgent::filterItems(const QList< qint64 > &itemIds, int filterSet)
     m_filterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
 }
 
-void MailFilterAgent::applySpecificFilters(const QList< qint64 > &itemIds, int requires, const QStringList &listFilters)
+void MailFilterAgent::filterCollections(const QList<qint64> &collections, int filterSet)
+{
+    for (qint64 id : collections) {
+        auto ifj = new Akonadi::ItemFetchJob{Akonadi::Collection{id}, this};
+        ifj->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
+        connect(ifj, &Akonadi::ItemFetchJob::itemsReceived, this, [=](const Akonadi::Item::List &items) {
+            m_filterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
+        });
+    }
+}
+
+void MailFilterAgent::applySpecificFilters(const QList<qint64> &itemIds, int requiresPart, const QStringList &listFilters)
 {
     Akonadi::Item::List items;
     items.reserve(itemIds.count());
@@ -286,7 +319,21 @@ void MailFilterAgent::applySpecificFilters(const QList< qint64 > &itemIds, int r
         items << Akonadi::Item(id);
     }
 
-    m_filterManager->applySpecificFilters(items, static_cast<MailCommon::SearchRule::RequiredPart>(requires), listFilters);
+    m_filterManager->applySpecificFilters(items, static_cast<MailCommon::SearchRule::RequiredPart>(requiresPart), listFilters);
+}
+
+void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters, int filterSet)
+{
+    // TODO: Actually calculate this based on the listFilters' requirements
+    const auto requiresParts = MailCommon::SearchRule::CompleteMessage;
+
+    for (qint64 id : colIds) {
+        auto ifj = new Akonadi::ItemFetchJob{Akonadi::Collection{id}, this};
+        ifj->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
+        connect(ifj, &Akonadi::ItemFetchJob::itemsReceived, this, [=](const Akonadi::Item::List &items) {
+            m_filterManager->applySpecificFilters(items, requiresParts, listFilters, static_cast<FilterManager::FilterSet>(filterSet));
+        });
+    }
 }
 
 void MailFilterAgent::filterItem(qint64 item, int filterSet, const QString &resourceId)
@@ -312,12 +359,9 @@ void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
 {
     if (!m_filterLogDialog) {
         m_filterLogDialog = new FilterLogDialog(nullptr);
+        m_filterLogDialog->setAttribute(Qt::WA_NativeWindow, true);
     }
-#ifndef Q_OS_WIN
-    KWindowSystem::setMainWindow(m_filterLogDialog, windowId);
-#else
-    KWindowSystem::setMainWindow(m_filterLogDialog, (HWND)windowId);
-#endif
+    KWindowSystem::setMainWindow(m_filterLogDialog->windowHandle(), windowId);
     m_filterLogDialog->show();
     m_filterLogDialog->raise();
     m_filterLogDialog->activateWindow();
@@ -339,7 +383,7 @@ void MailFilterAgent::emitProgressMessage(const QString &message)
     Q_EMIT status(AgentBase::Running, message);
 }
 
-QString MailFilterAgent::printCollectionMonitored()
+QString MailFilterAgent::printCollectionMonitored() const
 {
     QString printDebugCollection;
     const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
@@ -357,12 +401,6 @@ QString MailFilterAgent::printCollectionMonitored()
     return printDebugCollection;
 }
 
-void MailFilterAgent::showConfigureDialog(qlonglong windowId)
-{
-    Q_UNUSED(windowId);
-    //TODO
-}
-
 void MailFilterAgent::expunge(qint64 collectionId)
 {
     mMailFilterKernel->expunge(collectionId, false);
@@ -374,4 +412,3 @@ void MailFilterAgent::slotInstanceRemoved(const Akonadi::AgentInstance &instance
 }
 
 AKONADI_AGENT_MAIN(MailFilterAgent)
-

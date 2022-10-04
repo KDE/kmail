@@ -1,29 +1,16 @@
-/***************************************************************************
-              kmsystemtray.h  -  description
-               -------------------
-  begin                : Fri Aug 31 22:38:44 EDT 2001
-  copyright            : (C) 2001 by Ryan Breen
-  email                : ryan@porivo.com
- ***************************************************************************/
+/*
+   SPDX-FileCopyrightText: 2001 by Ryan Breen <ryan@porivo.com>
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+   SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
-#ifndef KMSYSTEMTRAY_H
-#define KMSYSTEMTRAY_H
+#pragma once
 
-#include <AkonadiCore/collection.h>
-#include <qicon.h>
-#include <kstatusnotifieritem.h>
+#include <Akonadi/Collection>
+#include <KStatusNotifierItem>
 
-#include <QAction>
 #include <QAbstractItemModel>
+#include <QAction>
 
 class QMenu;
 
@@ -33,54 +20,39 @@ class QMenu;
  */
 namespace KMail
 {
+class UnityServiceManager;
 class KMSystemTray : public KStatusNotifierItem
 {
     Q_OBJECT
 public:
-    /** construtor */
+    /** constructor */
     explicit KMSystemTray(QObject *parent = nullptr);
     /** destructor */
-    ~KMSystemTray();
-
-    /**
-     * Use this method to disable any systray icon changing.
-     * By default this is enabled and you'll see the "new e-mail" icon whenever there's
-     * new e-mail.
-     */
-    void setSystrayIconNotificationsEnabled(bool enable);
+    ~KMSystemTray() override;
 
     void hideKMail();
-    bool hasUnreadMail() const;
 
-    void updateSystemTray();
+    void updateStatus(int count);
+    void updateCount(int count);
+    void setUnityServiceManager(KMail::UnityServiceManager *unityServiceManager);
+    void initialize(int count);
+    void updateToolTip(int count);
 
-private Q_SLOTS:
+private:
     void slotActivated();
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
-    void initListOfCollection();
-    void slotCollectionStatisticsChanged(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
-    void slotGeneralFontChanged();
 
-private:
-    bool mainWindowIsOnCurrentDesktop();
-    bool buildPopupMenu();
-    void updateCount();
+    Q_REQUIRED_RESULT bool buildPopupMenu();
     void fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName = QString(), const QModelIndex &parentIndex = QModelIndex());
-    void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = QModelIndex());
-    bool excludeFolder(const Akonadi::Collection &collection) const;
-    bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
+    int mDesktopOfMainWin = 0;
+    bool mBuiltContextMenu = false;
 
-private:
-    QIcon mIcon;
-    int mDesktopOfMainWin;
+    bool mHasUnreadMessage = false;
+    bool mIconNotificationsEnabled = true;
 
-    int mCount;
-
-    bool mIconNotificationsEnabled;
-
-    QMenu *mNewMessagesPopup;
-    QAction *mSendQueued;
+    QMenu *mNewMessagesPopup = nullptr;
+    QAction *mSendQueued = nullptr;
+    KMail::UnityServiceManager *mUnityServiceManager = nullptr;
 };
 }
-#endif

@@ -3,23 +3,22 @@
 <chapterinfo>
 <authorgroup>
 <author>
-<firstname>Daniel</firstname>
-<surname>Naber</surname>
-<affiliation><address>
+&Daniel.Naber;
 &Daniel.Naber.mail;
-</address></affiliation>
 </author>
 <author>
-<firstname>Scarlett</firstname>
-<surname>Clark</surname>
-<affiliation><address>
+&Scarlett.Clark;
 &Scarlett.Clark.mail;
-</address></affiliation>
+</author>
+<author>
+&David.Bryant;
+&David.Bryant.mail;
 </author>
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
-<date>2013-12-14</date>
-<releaseinfo>(&kde; 4.12)</releaseinfo>
+
+<date>2020-09-12</date>
+<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
 <title>Using &kmail;</title>
@@ -32,7 +31,7 @@ when &kmail; is started. It is by default divided into three panes:</para>
 
 <variablelist>
 <varlistentry>
-<term>Folder list (on the left)</term>
+<term>Folder List (on the left)</term>
 <listitem>
   <screenshot>
 <screeninfo>Folder Pane</screeninfo>
@@ -44,99 +43,127 @@ when &kmail; is started. It is by default divided into three panes:</para>
       <phrase>Folder Pane</phrase>
     </textobject>
     <caption>
-      <para>Folder Pane</para>
+      <para>The Folder List</para>
     </caption>
   </mediaobject>
 </screenshot>
+<para>&nbsp;</para> <!-- whitespace -->
 
 <para>This pane contains the list of your message folders (other email programs
 may call them mailboxes). To select a folder, simply click on
-it. The messages contained in the folder will now appear in the Headers
+it. The message header information contained in the folder will then appear in the Message List
 pane. The folder list can be displayed in both a short view, which takes up only
 a small portion of the left side of the screen, and a long view, which takes up the 
-entire left side of the screen but is able to show more mailboxes. You can toggle
-between these two views under <guilabel>Appearance</guilabel>/<guilabel>Layout</guilabel>
+entire left side of the screen (and can show more folders). You can toggle
+between these two views by using the <guilabel>Appearance</guilabel>/<guilabel>Layout</guilabel> tab
 in the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
-&kmail;...</guimenuitem></menuchoice> dialog. The top section of the folder pane contains quick links
-to your favorite folders. Add folders here through the &RMB; context menu <guimenuitem>Add to Favorite Folders</guimenuitem>.
-Please see the <link linkend="folders">Folders Section</link> for detailed information about how to use folders.</para>
+&kmail;...</guimenuitem></menuchoice> dialog. The top section of the folder pane provides quick links
+to your favorite folders. Drag and drop folders here, or add them via the &RMB; context menu item <guimenuitem>Add Favorite Folder</guimenuitem>.
+Please see the <link linkend="folders">Folders Section</link> for more details about folders.</para>
+<para>&nbsp;</para> <!-- whitespace -->
 </listitem>
 </varlistentry>
+
 <varlistentry>
-<term>Message list (in the upper right by default)</term>
+<term>Message List (on the upper right by default)</term>
 <listitem>
 <screenshot>
-<screeninfo>Message List with Message View</screeninfo>
+<screeninfo>The Message List</screeninfo>
   <mediaobject>
     <imageobject>
       <imagedata fileref="message.png" format="PNG"/>
     </imageobject>
     <textobject>
-      <phrase>Message List and Message View</phrase>
+      <phrase>The Message List</phrase>
     </textobject>
     <caption>
-      <para>Message List and Message View</para>
+      <para>The Message List (Smart Theme)</para>
     </caption>
   </mediaobject>
 </screenshot>
-<para>This pane lists header information (message Status Flags, Sender, Subject,
-Date, and other optional columns like Size, Attachment Flag, Important Flag, etc.)
-for the messages in the currently selected folder. Clicking on a header
-will select that message and display it in the Message pane; you can also select
-more than one message by holding down the &Ctrl; key when clicking on messages.
-Change the view of your message list by selecting <menuchoice><guimenu>View</guimenu><guimenuitem>Message List</guimenuitem>
+<para>&nbsp;</para> <!-- whitespace -->
+<para>This pane lists header information (Subject, Sender, and Date)
+for the messages in the currently selected folder. Clicking on an item in the Message List
+will select that message and display it in the Preview pane; you can also select
+more than one message by holding down the &Ctrl; key (or the &Shift; key) when clicking on messages.</para>
+
+<para>Change the appearance of your message list by selecting <menuchoice><guimenu>View</guimenu><guimenuitem>Message List</guimenuitem>
 <guimenuitem>Theme</guimenuitem></menuchoice>. You have several options here.
 </para>
 <itemizedlist>
-  <listitem><para><guilabel>Classic</guilabel> A simple, backward compatible, single row with clickable sort columns.</para></listitem>
-  <listitem><para><guilabel>Smart</guilabel> A smart multi-line, multi-item with status icons, no sort columns.</para></listitem>
-  <listitem><para><guilabel>Smart with clickable status</guilabel> A smart multi-line, multi-item, status icons and clickable sort icons.</para></listitem>
-  <listitem><para><guilabel>Configure...</guilabel> Allows you to customize your own Message List Theme &eg; add or remove columns from the clickable sort bar.</para></listitem>
+  <listitem><para><guilabel>Classic</guilabel> A simple, backward compatible single row with clickable sort columns.</para></listitem>
+  <listitem><para><guilabel>Smart</guilabel> A smart multi-line, multi-item list with status icons, and no sort columns.</para></listitem>
+  <listitem><para><guilabel>Smart with Clickable Status</guilabel> A smart multi-line, multi-item list with clickable status icons.</para></listitem>
+  <listitem><para><guilabel>Configure...</guilabel> Allows you to customize your own Message List Theme (&eg; add or remove columns from the clickable sort bar.)</para></listitem>
 </itemizedlist>
 <para>
-If you have chosen a theme with a clickable status, you may sort the messages by clicking on the column that you wish to sort;
-if you click on the same column more than once, sort order will toggle between ascending/descending and some alternative sorting criteria will become
-available (like sorting by Status when you click on the header of the Subject column). Clicking the &RMB; on the list header shows a pop up menu,
-which allows you to show or hide several columns in the list. You can customize the columns visible on the sort bar, see <link linkend="customize-messagelist-theme">Configure Appearance Message List</link> for details.
+If you have chosen the Classic theme, you may sort the messages by clicking on the column that you wish to sort;
+if you click on the same column again, the sort order will toggle between ascending/descending. Clicking the &RMB; on the list header shows a pop up menu,
+which allows you to show or hide several columns in the list. You can customize the columns visible on the sort bar;
+see <link linkend="customize-messagelist-theme">Configure Appearance of Message List</link> for details.
 </para>
+<para>&nbsp;</para> <!-- whitespace -->
 </listitem>
 </varlistentry>
 <varlistentry id="using-message-preview-pane">
-<term>Message preview pane (in the lower right by default)</term>
-<listitem><para>This pane displays the currently selected message. Below you will find options to adjust the reader window to your preference.</para>
-<para>The top of the reader window contains various header options. Go to <menuchoice><guimenu>View</guimenu><guisubmenu>Headers</guisubmenu></menuchoice>
-and try them out until you find one you like! Details for the various headers are as follows:</para>
+<term>Preview Pane (in the lower right by default)</term>
+<listitem>
+<screenshot>
+<screeninfo>The Message Preview Pane</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="preview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Message Preview Pane</phrase>
+    </textobject>
+    <caption>
+      <para>The Preview Pane</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para> <!-- whitespace -->
+<anchor id="the-preview-pane-headers" />
+<para>This pane displays the currently selected message. Here are some ways to adjust the Preview pane.</para>
+<para>The top of the Preview pane displays the message headers. Several display options are available. Go to 
+<menuchoice><guimenu>View</guimenu><guisubmenu>Headers</guisubmenu></menuchoice>
+and try them out until you find one you like!</para>
 <itemizedlist id="using-header-options">
-  <listitem><para><guilabel>Enterprise Headers</guilabel> A minimal header with title, From, and To, with a graphical design.</para></listitem>
-  <listitem><para><guilabel>Fancy Headers</guilabel> Minimal header with a spam status notification.</para></listitem>
-  <listitem><para><guilabel>Brief Headers</guilabel> Title, and in parentheses you will find From and the date.</para></listitem>
-  <listitem><para><guilabel>Standard Headers</guilabel> Title, From, and To.</para></listitem>
-  <listitem><para><guilabel>Long Headers</guilabel> Title, Date, From, and To.</para></listitem>
-  <listitem><para><guilabel>All Headers</guilabel> List everything you ever wanted to know about the email, including every server it went through, virus/spam scanners it went through, &etc;</para></listitem>
-  <listitem><para><guilabel>Custom Headers</guilabel> See <link linkend="configure-appearance-message-window">Message Window configuration</link> <guilabel>Headers:</guilabel> to set up custom headers that can be selected here.</para></listitem>
-  <listitem><para><guilabel>Example</guilabel> An example header from the <guilabel>Download New Themes...</guilabel>.</para></listitem>
-  <listitem><para><guilabel>Example Fancy</guilabel> An example fancy header from the <guilabel>Download New Themes...</guilabel>.</para></listitem>
+  <listitem><para><guilabel>Fancy Headers</guilabel> Colorful header with a spam status / attachments notification.</para></listitem>
+  <listitem><para><guilabel>Brief Headers</guilabel> Title, and in parentheses: From, CCs (if any), and the date.</para></listitem>
+  <listitem><para><guilabel>&kmail; 5.2</guilabel> An avatar (if available) with Title, From, To, CCs (if any), and spam status
+    / attachments on separate lines.</para></listitem>
   <listitem><para><guilabel>Download New Themes...</guilabel> Allows you to download custom themes created by other &kmail; users.</para></listitem>
 </itemizedlist>
-<para>If you prefer to view your email in &HTML; format instead of plain text (Default) click on the bar located on the left hand side of the pane.
-The text on the bar will inform you which view you are in. If this bar is missing you can enable it in the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
-&kmail;...</guimenuitem></menuchoice> dialog, from there you want the <guilabel>Message Window</guilabel>
-tab, and select <guilabel>Show &HTML; status bar</guilabel>.</para>
-<para>If you would like to change how your attachments appear in your messages, go to <menuchoice><guimenu>View</guimenu><guisubmenu>Attachments</guisubmenu></menuchoice>.
-Your options are as follows:</para>
+<para>Click on the bar located on the left hand side of the pane to toggle between plain text and &HTML; (if and only if the message is coded both ways).
+The text on the bar will inform you which view you are in. The <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
+&kmail;...</guimenuitem><guisubmenu>Security</guisubmenu></menuchoice> dialog allows you to select HTML as the default message
+display option, if you prefer &HTML; to plain text.</para>
+<para>If you would like to change the way your attachments appear in your messages, go to <menuchoice><guimenu>View</guimenu>
+<guisubmenu>Attachments</guisubmenu></menuchoice>.
+These are your options.</para>
 <itemizedlist id="using-attachment-view-options">
   <listitem><para><guimenuitem>As Icons</guimenuitem>, all attachments appear as icons at the bottom of the message.</para></listitem>
   <listitem><para><guimenuitem>Smart</guimenuitem> will show attachments as icons, unless the message suggests that they should be displayed inline.
-  You can suggest that certain attachments should be shown inline in your own messages when you select <guilabel>Suggest automatic display</guilabel>
-  in the attachment's properties dialog.</para></listitem>
+    You can suggest that certain attachments should be shown inline in messages you compose by selecting <guilabel>Suggest automatic display</guilabel>
+    in <link linkend="the-composer-window">the composer window</link> via the attachment's properties dialog.</para></listitem>
   <listitem><para><guimenuitem>Inline</guimenuitem> shows the contents of the attachments at the bottom of the message.
-  Attachments that cannot be displayed, &eg; compressed files, will still be shown as an icon.</para></listitem>
+    Attachments that cannot be displayed, &eg; compressed files, will still be shown as an icon.</para></listitem>
   <listitem><para><guimenuitem>Hide</guimenuitem> will not show attachments.</para></listitem>
+  <listitem><para><guimenuitem>In Header Only</guimenuitem> will suppress inline displays, but list the attachments along with
+    the message headers.</para></listitem>
 </itemizedlist>
-<para>For complex messages you can show the structure of the message by selecting
-<menuchoice><guimenu>View</guimenu><guimenuitem>Show Message Structure</guimenuitem></menuchoice>, this will show in the message structure viewer below the preview pane.</para>
-<para>You can scroll through the message page-by-page using the <keycap>Page Up</keycap> and <keycap>Page Down</keycap> keys, or line-by-line using the
-<keycap>Up arrow</keycap> and <keycap>Down arrow</keycap> keys; you can also use <link linkend="keyboard-shortcuts">keyboard shortcuts</link>
+<para>The interactions among the header themes, the attachment views, and the plain text versus &HTML; preferences is rather complex.
+For example, if you attach an HTML file to a plain text message, &kmail; will probably interpret your message as being coded in two
+different formats, even though this is not really the case. Similarly, &HTML; messages may display embedded images even when you have
+selected the "Hide" option for attachments.</para>
+
+<para>The structure of each message can be displayed by pressing <keycombo 
+  action="simul">&Ctrl;&Alt;<keycap>D</keycap></keycombo>. This will open a message structure viewer below the preview pane.
+  Turn the message structure viewer off by pressing the same three keys.</para>
+
+<para>You can scroll through the message page-by-page using the &PgUp; and &PgDn; keys, or line-by-line using the
+&Up; and &Down; keys; you can also use <link linkend="keyboard-shortcuts">keyboard shortcuts</link>
 to skip through your messages without having to use the mouse.</para></listitem>
 </varlistentry>
 </variablelist>
@@ -146,7 +173,10 @@ to skip through your messages without having to use the mouse.</para></listitem>
 <sect1 id="keyboard-shortcuts">
 <title>Keyboard Shortcuts</title>
 
-<para>The following keyboard shortcuts are supported in the main window:</para>
+<para>The following keyboard shortcuts are supported by default in the main window. Notice that
+many "universal" shortcuts (&eg; <keycombo action="simul">&Ctrl;<keycap>C</keycap></keycombo> to
+copy selected text to the clipboard, or <keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
+to open a "Find" dialog) are recognized by &kmail;, but are not documented here.</para>
 
 <informaltable>
 <tgroup cols="2">
@@ -158,25 +188,24 @@ to skip through your messages without having to use the mouse.</para></listitem>
 </thead>
 <tbody>
 <row>
-<entry><keycap>Space</keycap></entry>
-<entry>Scroll down in the current message or go to the next unread message if you are already 
-at the bottom.</entry>
+<entry>&Space;</entry>
+<entry>Scroll down in the current message.</entry>
 </row>
 <row>
-<entry><keycap>Right Arrow</keycap> or <keycap>N</keycap></entry>
+<entry><keycap>→</keycap> or <keycap>N</keycap></entry>
 <entry>Go to the next message in the current folder and display the message preview.</entry>
 </row>
 <row>
-<entry><keycap>Left Arrow</keycap> key or <keycap>P</keycap></entry>
+<entry><keycap>←</keycap> or <keycap>P</keycap></entry>
 <entry>Go to the previous message in the current folder and display the message preview.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Alt;<keycap>Right Arrow</keycap></keycombo></entry>
-<entry>Scroll down the message list in the current folder, the message preview does not change.</entry>
+<entry><keycombo action="simul">&Ctrl;&Home;</keycombo></entry>
+<entry>Go to the very first message in the current folder and display the message preview.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Alt;<keycap>Left Arrow</keycap></keycombo></entry>
-<entry>Scroll up the message list in the current folder, the message preview does not change.</entry>
+<entry><keycombo action="simul">&Ctrl;&End;</keycombo></entry>
+<entry>Go to the very last message in the current folder and display the message preview.</entry>
 </row>
 <row>
 <entry><keycap>+</keycap></entry>
@@ -187,63 +216,150 @@ at the bottom.</entry>
 <entry>Go to the previous unread message in the current folder.</entry>
 </row>
 <row>
+<entry><keycap>C</keycap></entry>
+<entry>Copy this message to another folder.</entry>
+</row>
+<row>
+<entry><keycap>M</keycap></entry>
+<entry>Move this message to another folder.</entry>
+</row>
+<row>
+<entry><keycap>A</keycap></entry>
+<entry>Reply to all recipients of this message (with quote).</entry>
+</row>
+<row>
+<entry><keycap>R</keycap></entry>
+<entry>Reply to sender with quote.</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Shift;<keycap>R</keycap></keycombo></entry>
+<entry>Reply to sender without quoting anything.</entry>
+</row>
+<row>
+<entry><keycap>S</keycap></entry>
+<entry>Launch the message search dialog.</entry>
+</row>
+<row>
+<entry><keycap>T</keycap></entry>
+<entry>Open this message in the composition window.</entry>
+</row>
+<row>
+<entry>&Enter;</entry>
+<entry>View selected message in the full-screen message viewer.</entry>
+</row>
+<row>
+<entry><keycap>V</keycap></entry>
+<entry>View the raw message, headers and all, as a text file.</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></entry>
+<entry>Check for new messages on the server(s).</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo></entry>
+<entry>Open the composition window to write a new message.</entry>
+</row>
+<row>
 <entry><keycombo action="simul">&Ctrl;<keycap>+</keycap></keycombo></entry>
-<entry>Go to the next folder with unread messages.</entry>
+<entry>Zoom in on the current message, in increments of 20%.</entry>
 </row>
 <row>
 <entry><keycombo action="simul">&Ctrl;<keycap>-</keycap></keycombo></entry>
-<entry>Go to the previous folder with unread messages.</entry>
+<entry>Zoom out of the current message, in increments of 20%.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Alt;<keycap>Up Arrow</keycap></keycombo></entry>
-<entry>Go to the next folder in the folder list (if the folder list has focus.)</entry>
+<entry><keycombo action="simul">&Ctrl;<keycap>0</keycap></keycombo></entry>
+<entry>Reset message Zoom factor to 100% (full size).</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Alt;<keycap>Down Arrow</keycap></keycombo></entry>
-<entry>Go to the previous folder in the folder list (if the folder list has focus.)</entry>
+<entry><keycombo action="simul">&Ctrl;&Alt;<keycap>D</keycap></keycombo></entry>
+<entry>Toggle message structure display (below the message preview pane).</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Ctrl;<keycap>Left Arrow</keycap></keycombo></entry>
-<entry>Focus on previous folder. Use
-<keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo> to actually
+<entry><keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo></entry>
+<entry>Create the tabbing toolbar (appears above the message list).</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Ctrl;&Shift;<keycap>W</keycap></keycombo></entry>
+<entry>Remove the currently active tab from the tabbing toolbar.</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Alt;<keycap>↑</keycap></keycombo></entry>
+<entry>Go to the previous folder in the folder list (if the folder list has focus).</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Alt;<keycap>↓</keycap></keycombo></entry>
+<entry>Go to the next folder in the folder list (if the folder list has focus).</entry>
+</row>
+<row>
+<entry><keycombo action="simul">&Ctrl;&Home;</keycombo></entry>
+<entry>Focus on the very first folder. Use
+<keycombo action="simul">&Ctrl;&Space;</keycombo> to actually
 enter the folder.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Ctrl;<keycap>Right Arrow</keycap></keycombo></entry>
-<entry>Focus on next folder. Use
-<keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo> to actually
+<entry><keycombo action="simul">&Ctrl;&End;</keycombo></entry>
+<entry>Focus on the very last folder. Use
+<keycombo action="simul">&Ctrl;&Space;</keycombo> to actually
 enter the folder.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Ctrl;<keycap>Space</keycap></keycombo></entry>
+<entry><keycombo action="simul">&Ctrl;&Space;</keycombo></entry>
 <entry>Enter the folder that has focus, &ie; the folder that you navigated
-to using <keycombo action="simul">&Ctrl;<keycap>Left Arrow</keycap></keycombo> or
-<keycombo action="simul">&Ctrl;<keycap>Right Arrow</keycap></keycombo>.</entry>
+to using <keycombo action="simul">&Ctrl;&Home;</keycombo> or
+<keycombo action="simul">&Ctrl;&End;</keycombo>.</entry>
 </row>
 <row>
-<entry><keycombo action="simul">&Shift;<keycap>Left Arrow</keycap></keycombo> and
-<keycombo action="simul">&Shift;<keycap>Right Arrow</keycap></keycombo></entry>
-<entry>Select messages in the header pane, starting with the current message.</entry>
+<entry><keycombo action="simul">&Shift;<keycap>H</keycap></keycombo></entry>
+<entry>Toggle between plain text and &HTML; (unless &HTML; has been preferred 
+via the <guilabel>Settings</guilabel> dialog).</entry>
+</row>
+<row>    
+<entry><keycombo action="simul">&Shift;<keycap>←</keycap></keycombo> &amp;
+<keycombo action="simul">&Shift;<keycap>→</keycap></keycombo></entry>
+<entry>Select messages sequentially in the message list, starting with the current message.</entry>
 </row>
 </tbody>
 </tgroup>
 </informaltable>
 
-<para>For more keyboard shortcuts have a look at the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
-Shortcuts...</guimenuitem></menuchoice> dialog.</para>
+<para>For more keyboard shortcuts, take a look at the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
+Shortcuts...</guimenuitem></menuchoice> dialog. If you're not happy with the defaults, you can change them!</para>
+
+<para>Two mouse actions deserve mention here. First, you can select multiple noncontiguous messages to be processed
+all at once (&eg; copied, deleted, or moved) by pressing &Ctrl; and selecting them with the &LMB;. Second, you
+can open a message in an external window by double-clicking an item in the message list. If the message is in 
+the outbox, drafts, or templates folder, it will be opened in a composition window. Otherwise, it will be opened
+with the external message viewer, an abbreviated version of &kmail;'s main window without the folder and 
+message lists, and with shorter menus.</para>
 
 </sect1>
 
 <sect1 id="the-composer-window">
 <title>The Composer Window</title>
-<para>The composer window is used to write new, reply, and forward messages;
-  it can be invoked in several ways. Here you will find the various options to composing messages.</para>
+<screenshot>
+<screeninfo>Composer Window</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composer-window.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>Composer Window</phrase>
+    </textobject>
+    <caption>
+      <para>The Composer Window in &HTML; composition mode.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para> <!-- whitespace -->
+<para>The composer window is used to write new messages, to compose replies, and to forward messages.
+  It can be opened in several ways. Here are the various options for composing messages.</para>
 <sect2 id="composing-a-message">
 <title>Composing a Message</title>
 <variablelist>
   <varlistentry id="compose-new-message"><term>New Message...</term>
   <listitem>
-  <para>The New Message composer window can be invoked the following ways:</para>
+  <para>The New Message composer window can be invoked in four different ways:</para>
       <itemizedlist>
         <listitem>
           <para><menuchoice><guimenu>File</guimenu><guisubmenu>New</guisubmenu><guimenuitem>New Message...</guimenuitem></menuchoice></para>
@@ -252,78 +368,91 @@ Shortcuts...</guimenuitem></menuchoice> dialog.</para>
           <para><menuchoice><guimenu>Message</guimenu><guimenuitem>New Message...</guimenuitem></menuchoice></para>
         </listitem>
         <listitem>
-          <para>The <guiicon>New</guiicon> icon on the main toolbar.</para>
+          <para>Via the <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-message-new.png" format="PNG"/>
+          </imageobject></inlinemediaobject> New</guiicon> icon on the main toolbar.</para>
+        </listitem>
+        <listitem>
+          <para>Via the keyboard shortcut <keycombo action="simul">&Ctrl;<keycap>N</keycap></keycombo>.</para>
         </listitem>
       </itemizedlist>
       <para>To write your message, fill in the appropriate fields in the
         composer window. Use the <guimenu>View</guimenu> menu
-        to select which header fields are displayed. Some field options offer a
-        <guibutton>Sticky</guibutton> checkbox, that if checked, your selection will remain as the default when you open a
-        new composer window. The following list describes the various headers.</para>
+        to select which header fields are displayed. Any selection you make will remain as the
+        default when you open a new composer window. These items are available.</para>
       <itemizedlist id="composer-headers">
         <listitem>
-          <para>The <guimenuitem>Identity</guimenuitem> drop down box allows you to select an identity to use.</para>
+          <para>The <guimenuitem>Identity</guimenuitem> drop down box lets you select an identity to use.</para>
         </listitem>
         <listitem>
-          <para>The <guimenuitem>Dictionary</guimenuitem> drop down box allows you to choose your dictionary of choice for use
-          with spellchecking.</para>
+          <para>The <guimenuitem>Dictionary</guimenuitem> drop down box lets you choose a dictionary for spell checking.</para>
         </listitem>
         <listitem>
-          <para>The <guimenuitem>Sent-Mail folder</guimenuitem> allows you to change the location to save sent emails.</para>
+          <para><guimenuitem>Sent-Mail Folder</guimenuitem> lets you specify where a local copy of this message will be saved when you send it.</para>
         </listitem>
         <listitem>
-          <para>The <guimenuitem>Mail transport</guimenuitem> allows you to select the outgoing mail server you would like to use.</para>
+          <para><guimenuitem>Mail Transport</guimenuitem> lets you select an outgoing mail server.</para>
         </listitem>
         <listitem>
-          <para>Your traditional From:, Reply To:, To:, and Subject: fields.</para>
+          <para>The traditional From:, To:, and Subject: fields. (The Reply To: field will appear only if you have
+            specified an alternative <guilabel>Reply To</guilabel> address on the <guilabel>Advanced</guilabel> tab
+            in the <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure &kmail;...</guisubmenu>
+            <guisubmenu>Accounts</guisubmenu><guimenuitem>Identities</guimenuitem></menuchoice> dialog.)</para>
         </listitem>
         <listitem>
-          <para>The <guimenuitem>Use Fixed Font</guimenuitem> allows you to toggle fixed fonts on and off.</para>
+          <para><guimenuitem>Use Fixed Font</guimenuitem> toggles fixed width fonts on and off.</para>
         </listitem>
         <listitem>
-          <para>The <guimenuitem>Snippets</guimenuitem> allows you to show the snippets window to store and use often used parts of text.</para>
-        </listitem>
-        <listitem>
-          <para>The <guimenuitem>Translator</guimenuitem> allows you to translate your text within the composer window.</para>
+          <para><guimenuitem>Snippets</guimenuitem> displays the snippets window, where you may save frequently used bits of verbiage.</para>
         </listitem>
       </itemizedlist>
 
-      <para>There are a variety of shortcuts to help
-you with writing your messages. The <guibutton>Select...</guibutton> buttons next to
+<para>There are a variety of shortcuts to help you select
+recipients. The <guibutton>Select...</guibutton> button next to
 the <guilabel>To:</guilabel>, <guilabel>CC:</guilabel>, and
-<guilabel>BCC:</guilabel> fields will call up the address book so that you can
-select addresses from there.</para>
+<guilabel>BCC:</guilabel> fields opens a list from &kaddressbook; so you can
+select one or more people who should receive this message.</para>
 
-<para>When you start typing an address in the
+<para>Alternatively, when you start typing an address in one of the
 <guilabel>To:</guilabel>/<guilabel>CC:</guilabel>/<guilabel>BCC:</guilabel>
-fields, a popup will appear that offers matching addresses that have been used recently 
-and matching addresses from your address book; if you do not like the automatic 
-popup you can disable it by clicking with the &RMB; on the field and choosing 
-a different completion mode.</para>
+fields, a popup will appear that suggests similar recently used addresses
+and closely matching addresses from &kaddressbook;; if you do not like this automatic 
+popup, you can disable it by clicking the &RMB; in the field where you're typing, then choosing 
+a different <guilabel>Text Completion &gt;</guilabel> mode. You can also use this context menu to fine-tune the
+order in which suggested completions appear (via <guilabel>Configure Completion...</guilabel>).</para>
 
 <para>Whenever you want to add more than one
-recipient in one of the fields, use a comma to separate each address
+recipient in one of the fields, use a comma to separate one address
 from the next one. 
 <!-- fixme: there's now a setting for this: -->
-You may need to specify fully qualified addresses
+You may have to specify fully qualified addresses
 (&ie; <userinput>user@example.com</userinput>) even for local
 users, depending on your system configuration.</para>
 
-<para>When you are finished with your message, you click the <guiicon>Send</guiicon> icon (the envelope) to send the message now, or click the <guiicon>Queue</guiicon> icon to put the message in the outbox.
-If your message is not finished yet, select <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Draft</guimenuitem></menuchoice> to save for later editing.
-  If you would like to print your message, select <menuchoice><guimenu>Message</guimenu><guimenuitem>Print Preview</guimenuitem></menuchoice> to preview the message, and
-    <menuchoice><guimenu>Message</guimenu><guimenuitem>Print</guimenuitem></menuchoice> to print it.</para>
+<para>When you are finished with your message, click the <guiicon><inlinemediaobject><imageobject>
+<imagedata fileref="mail-send.png" format="PNG"/></imageobject></inlinemediaobject> Send</guiicon> icon to send the message now,
+or click the <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-queue.png" format="PNG"/></imageobject>
+</inlinemediaobject> Queue</guiicon> icon to put the message in the outbox.
+If your message is not finished yet, select <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Draft</guimenuitem></menuchoice>
+to save it for later editing.
+If you want to print your message, select <menuchoice><guimenu>Message</guimenu><guimenuitem>Print Preview</guimenuitem></menuchoice>
+to preview the message, and <menuchoice><guimenu>Message</guimenu><guimenuitem>Print</guimenuitem></menuchoice> to print it.</para>
   <para id="send-later"><menuchoice><guimenu>Message</guimenu><guimenuitem>Send Later</guimenuitem></menuchoice>
-    allows you to schedule your emails to send at a specific date and time. Please see <ulink url="help:/akonadi_sendlater_agent">Send Later Agent</ulink> for details.</para>
+    lets you schedule your emails to be sent at a specific date and time. Please see 
+    <ulink url="help:/akonadi_sendlater_agent">Send Later Agent</ulink> for details.</para>
+<para>&nbsp;</para> <!-- whitespace -->
 </listitem>
 </varlistentry>
-<varlistentry id="new-compose-from-templates"><term><menuchoice><guimenu>File</guimenu><guisubmenu>New</guisubmenu><guisubmenu>Message From Template</guisubmenu>
-        <guimenuitem><replaceable>My Super Template</replaceable></guimenuitem></menuchoice></term>
+<varlistentry id="new-compose-from-templates">
+    <term><menuchoice><guimenu>File</guimenu><guisubmenu>New</guisubmenu><guisubmenu>Message From Template</guisubmenu>
+    <guimenuitem><replaceable>My Super Template</replaceable></guimenuitem></menuchoice></term>
   <listitem>
-    <para>Compose a new Message from Template is useful if you have created a masterpiece message that you would like to save as a template for use in future new messages.
-    Select <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Template</guimenuitem></menuchoice> and this will place your new template in
-      the <guilabel>templates:</guilabel> folder. You can revise the template at anytime by selecting it in this folder.
-      The saved template will now be listed under this menu to use for new messages. Please see <link linkend="compose-new-message">Compose New Message</link> for further details on composing a message.</para>
+    <para>Composing a new message from a template is useful when you have created a masterpiece
+    that you would like to use as a template for future new messages.
+    Select <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Template</guimenuitem></menuchoice>; this will place your new template in
+    the <guilabel>templates</guilabel> folder. You can revise the template at any time by selecting it from this folder.
+    Double click on the template's name (or press the shortcut key, <keycap>T</keycap>) to open it in a composition window.
+    You may also select the template via the <guimenu>File</guimenu> menu, as shown above.</para>
+  <para>&nbsp;</para> <!-- whitespace -->
   </listitem>
 </varlistentry>
 </variablelist>
@@ -333,12 +462,15 @@ If your message is not finished yet, select <menuchoice><guimenu>Message</guimen
 <title>Signing and Encrypting Messages</title>
 
 <para>
- If you want to send an <link
-linkend="pgp-encrypt-your-messages">encrypted</link>
+If you want to send an <link linkend="pgp-encrypt-your-messages">encrypted</link>
 or <link linkend="pgp-sign-your-messages">digitally signed</link> message, select the
-<guiicon>Sign Message</guiicon> or <guiicon>Encrypt 
-Message</guiicon> icons in the toolbar. Moreover you can select the format that should be used to sign and/or encrypt the message. Depending on the
-installed encryption programs you can choose between:
+<guiicon><inlinemediaobject><imageobject><imagedata fileref="document-edit.png" format="PNG"/>
+</imageobject></inlinemediaobject> Sign</guiicon> and / or <guiicon><inlinemediaobject><imageobject><imagedata
+fileref="document-decrypt.png" format="PNG"/></imageobject></inlinemediaobject> Encrypt</guiicon> icon in the toolbar.
+Use the <menuchoice><guimenuitem>Options</guimenuitem><guisubmenu>Cryptographic Message
+Format &gt;</guisubmenu></menuchoice> dropdown list to select the format used to encrypt the 
+message. (The <guilabel>Options</guilabel> menu also lets you sign / encrypt the message.)
+You may choose one of five formatting options.
 </para>
 
 <variablelist id="cryptographic-message-formats">
@@ -346,26 +478,26 @@ installed encryption programs you can choose between:
 <term><guilabel>Any</guilabel></term>
 <listitem>
 <para>&kmail; will use a format which is understood by all recipients of the
-message. The preferred format of the recipients can be specified in the
-&kde; Address Book.</para></listitem>
+message. The preferred format for each recipient can be specified via 
+<ulink url="help:/kaddressbook">&kaddressbook;</ulink>.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Inline OpenPGP (deprecated)</guilabel></term>
 <listitem>
-<para>This format is outdated. If you use this format then only the
+<para>This format is deprecated, but is supported for backward compatibility. If you use this format then only the
 message text will be signed and/or encrypted. <emphasis>Attachments will 
 neither be signed nor encrypted.</emphasis> &HTML; messages cannot be signed
 with this format. You should only use this format
-if necessary, &ie; if you send messages to users of email clients that cannot
+when necessary, &ie; if you send messages to people who use email clients that cannot
 handle the more advanced formats.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>OpenPGP/&MIME;</guilabel></term>
 <listitem>
-<para>This format is the successor of the inline OpenPGP format. If you
+<para>This format is the successor to the inline OpenPGP format. If you
 use this format then the message text and all attachments will be signed
 and/or encrypted (at least by default). This is the recommended format if you
-use OpenPGP.</para></listitem>
+use OpenPGP encryption.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>S/&MIME;</guilabel></term>
@@ -373,50 +505,57 @@ use OpenPGP.</para></listitem>
 <para>This format is an alternative format to OpenPGP/&MIME;. If you
 use this format then the message text and all attachments will be signed
 and/or encrypted (at least by default). This format is mostly used by
-corporations.</para></listitem>
+corporations. It relies on an x.509 certificate, not a PGP / GPG key.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>S/&MIME; opaque</guilabel></term>
 <listitem>
-<para>This format is a variant of the S/&MIME; format. It should only be
+<para>This format is a variant of the S/&MIME; format. Because it rolls the message, any attachments,
+and the digital signature into a single &MIME; object, it is cpu-intensive and should only be
 used if necessary.</para></listitem>
 </varlistentry>
 </variablelist>
-
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="html-mails">
 <title>Creating &HTML; Messages</title>
 
 <para>Note that &HTML; messages are often regarded as an annoyance; therefore,
-you should avoid sending &HTML; messages if possible. Particularly, you should never
-send &HTML; messages to a mailing list unless &HTML; messages are explicitly
+you should use &HTML; messages judiciously. In particular, you should never
+send &HTML; messages to mailing list recipients unless &HTML; messages are explicitly
 allowed.</para>
 
-<para>In order to be able to create &HTML; messages you first have to enable
-the markup tools. To do this enable <guimenuitem>Rich text editing</guimenuitem> in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu.
-A toolbar with several tools to
-format the message will appear. Via the drop down box you can select between
-standard text and six different types of lists (three bulleted lists with 
-different symbols and three numbered lists with different numbering).
-Moreover, you can select the font family, the font size, the font style (bold,
-italic, underlined) and the text color. Last but not least, you can select
-the alignment of the text (left aligned, centered, right aligned).</para>
-
-<para>Creating tables and embedding images is currently not possible.</para>
-
+<para>To create &HTML; messages, you must first enable
+the markup tools. To do this, enable <guimenuitem>Rich Text Editing</guimenuitem>
+in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu, or click on
+the <guiicon><inlinemediaobject><imageobject><imagedata fileref="preferences-desktop-font.png"
+format="PNG"/></imageobject></inlinemediaobject> Rich Text</guiicon> icon on the &kmail; toolbar.
+An additional toolbar with several formatting tools will appear. Via the &HTML; toolbar you can choose
+standard text or bulleted / numbered lists. (Use the <guilabel>None <inlinemediaobject><imageobject>
+<imagedata fileref="go-down.png" format="PNG"/></imageobject></inlinemediaobject></guilabel>
+drop-down list at the left edge of the toolbar to control the style of bulleted / numbered lists.)
+You can also control the font family, the font size, the font style (bold,
+italic, underlined, or strike-through) and the text / background color. And you can specify
+the alignment of the text (left aligned, centered, right aligned, or justified) and
+insert anchor tags (aka links), horizontal lines, images, tables, and arbitrary &HTML; code
+(although support for some of the more advanced &HTML; tags is still incomplete).</para>
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="attachments">
 <title>Adding Attachments</title>
 
-<para>You can attach files to your message by using one of the methods
-below:</para>
+<para>You can attach files to your message by using any of these methods.</para>
 
 <itemizedlist>
 <listitem>
-<para>Click the <guiicon>Attach File</guiicon> (paper clip) icon and select the file you wish
-to attach;</para>
+<para>Use the <menuchoice><guimenu>Attach</guimenu><guisubmenu>Attach
+&gt;</guisubmenu></menuchoice> dropdown list and ensuing dialog to choose a file;</para>
+</listitem>
+<listitem>
+<para>Click the <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-attachment.png" format="PNG"/>
+</imageobject></inlinemediaobject> Attach </guiicon> icon and select the file you wish to attach;</para>
 </listitem>
 <listitem>
 <para>Drag a file from the desktop or another folder into the
@@ -424,61 +563,67 @@ composer window;</para>
 </listitem>
 <listitem>
 <para>Drag a message from &kmail;'s message list into the composer
-window -- that message will then be attached;</para>
+window – that message will then be attached;</para>
 </listitem>
 <listitem>
-<para>Select one of the options in the
-<menuchoice><guimenu>Attach</guimenu></menuchoice> menu.</para>
+<para>Select one of the additional options in the
+<menuchoice><guimenu>Attach</guimenu></menuchoice> menu; or</para>
 </listitem>
 <listitem>
-  <para> Select <menuchoice><guimenu>Message</guimenu><guimenuitem>Insert Recent text file</guimenuitem></menuchoice>.</para>
+<para> Select <menuchoice><guimenu>Message</guimenu><guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="document-open.png" format="PNG"/></imageobject></inlinemediaobject> Insert Text File ...</guimenuitem></menuchoice>
+or <menuchoice><guimenu>Message</guimenu><guimenuitem><inlinemediaobject><imageobject><imagedata fileref="document-open.png" format="PNG"/>
+</imageobject></inlinemediaobject> Insert Recent Text File  &gt;</guimenuitem></menuchoice>.</para>
 </listitem>
 </itemizedlist>
 
 <para>Once a file is attached to your message, it appears in the attachments
 pane at the bottom of the composer window. You can use the
-&RMB; on each attachment to <guimenuitem>Open</guimenuitem>, <guimenuitem>View</guimenuitem>,
-<guimenuitem>Save As...</guimenuitem> or <guimenuitem>Remove</guimenuitem>
-the attachment.</para>
+&RMB; on each attachment to <guimenuitem>View</guimenuitem>, <guimenuitem>Open</guimenuitem>,
+<guimenuitem>Edit</guimenuitem>, <guimenuitem>Reload</guimenuitem>,
+<guimenuitem>Save As...</guimenuitem>, or <guimenuitem>Remove</guimenuitem> the
+attachment. (This context menu varies a little, depending on the file type of the
+attachment.) Several options (Compress / Encrypt / Sign / Suggest Automatic Display) may
+be toggled on or off for each file attached to a message.</para>
 
-<para>Use the <guimenuitem>Properties</guimenuitem> item to
-open the <guilabel>Message Part Properties</guilabel> dialog.
+<para>Use the <guimenuitem>Properties</guimenuitem> item in the context menu to
+open the <guilabel>Attachment Properties</guilabel> dialog.
 The first field contains the attachment's &MIME; type. Just like the <guilabel>Name</guilabel>
-field, it should be automatically filled with an appropriate value. Sometimes the
-&MIME; type value may be wrong. You can then type in any &MIME; type or
+field, it is automatically filled with an appropriate value. Sometimes the
+&MIME; type may be wrong. You can then type in any &MIME; type or
 choose from the list of common &MIME; types. You can also select an encoding
 method for your file from the list of encoding options (normally, the default
 value works fine). Check the <guilabel>Suggest automatic display</guilabel> option 
-if you want to suggest to the recipient the automatic (inline) display of this attachment. Whether this works or not depends on the recipient's email client
+if you want to suggest to the recipient the automatic (inline) display of this attachment. 
+Whether this works, or not, depends on the recipient's email client,
 and on his settings.</para>
 
-<para>You can also attach public keys to the message by using the appropriate options in the
+<para>You can also attach public crypto keys to the message by choosing the appropriate options in the
 <menuchoice><guimenu>Attach</guimenu></menuchoice> menu. <application>GnuPG</application>
-key attachments are handled like file attachments.</para>
+keys and x.509 certificates are (usually) handled as file attachments.</para>
 
 </sect2>
 
 <sect2 id="checking-the-spelling-of-your-message">
 <title>Checking the Spelling of your Message</title>
 
-<para>&kmail; will automatically check the spelling of your message (in
-&HTML; mode this currently does not work)
-and display unknown words using red color. If there are too many
-unknown words &kmail; will disable its checking. To select the language
-used for checking, select <menuchoice><guimenu>View</guimenu>
+<para>&kmail; can automatically check the spelling of your message
+and underline unknown words in red. If there are too many
+unknown words, &kmail; will disable its checking. To select the language
+used when checking, select <menuchoice><guimenu>View</guimenu>
 <guimenuitem>Dictionary</guimenuitem></menuchoice>. You can disable
-automatic spellchecking in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu.</para>
+automatic spell checking in the <menuchoice><guimenu>Options</guimenu></menuchoice> menu.</para>
 <para>If you need to write mails in different languages, enable the <guilabel>Dictionary</guilabel> 
 drop down box with <menuchoice><guimenu>View</guimenu> <guimenuitem>Dictionary</guimenuitem></menuchoice> 
-from the menu. Using this drop down box allows you to change the spellchecker's language with one mouse click.
+from the menu. Using this drop down box allows you to change the spell checker's language with one mouse click.
 </para>
-<para>To check the spelling of your message using a dialog, select
+<para>To check the spelling of your message via a dialog, select
 <menuchoice><guimenu>Tools</guimenu>
 <guimenuitem>Spelling...</guimenuitem></menuchoice>. &kmail; uses 
-<ulink url="help:sonnet">&sonnet;</ulink> to
-check spelling, which is the &kde; frontend to the 
-<application>ispell</application> or <application>aspell</application> spelling
-checker. Note that you may first need to configure the spellchecker using
+&sonnet; to check spelling; &sonnet; is the &kde; frontend to the 
+<application>Aspell</application>, <application>Hspell</application>,
+<application>Enchant</application>, and <application>HUNSPELL</application> spell
+checking programs. Note that you may need to configure the spell checker using
 <menuchoice><guimenu>Settings</guimenu>
 <guimenuitem>Spellchecker...</guimenuitem></menuchoice>.</para>
 
@@ -487,16 +632,22 @@ checker. Note that you may first need to configure the spellchecker using
 <sect2 id="setup-text-snippets">
 <title>Setting Up the Text Snippets Tool</title>
 <para>
-When editing in the composer window you can store often used parts of text as snippets. To configure the capabilities of the mail snippets part select <menuchoice> 
-<guimenu>View</guimenu> <guimenuitem>Snippets</guimenuitem> </menuchoice> from the menubar. A new panel will appear on the right side of the composer.
+When editing in the composer window you can insert frequently used bits of text as snippets. To configure mail snippets, select <menuchoice> 
+<guimenu>View</guimenu> <guimenuitem>Snippets</guimenuitem> </menuchoice> from the menubar. A new panel will appear on the right side of the composer window.
 </para>
-<para>To add a new snippet to Snippet Panel, right click on panel, click on <menuchoice><guimenu>Add Snippet</guimenu></menuchoice> in the context menu. A snippet editor dialog will appear, in which new text can be added and the snippet can be given a name. Also a <guilabel>Shortcut</guilabel> can be associated with the snippet. 
-Snippets can be grouped together as well by creating groups and adding snippets to a particular group. If you want to view the stored text in a tooltip window keep the mouse cursor over the title of that snippet.
+<para>To add a new snippet to the Snippet Panel, right click on the panel, then click <menuchoice><guimenu>Add Snippet</guimenu></menuchoice>
+in the context menu. A snippet editor dialog will appear, in which new text can be added and the snippet can be given a name. A
+<guilabel>Shortcut</guilabel> can also be associated with the snippet. 
+Snippets can be grouped together by creating groups and adding snippets to a particular group.
+Use the &RMB; context menu to add, edit, or remove snippets of text from the saved collection.
 </para>
-<para>The <guilabel>Snippets</guilabel> tool allows for a variable text in predefined places any time you insert a snippet into a file. To accomplish this  <guilabel>Snippets</guilabel> provides its own variables mechanism. You can insert variables in the snippet text itself by using separators ( $ ) that enclose the variable names. For example: $variablename$, $invoicenumber$, $weekno$.
+<para>The <guilabel>Snippets</guilabel> tool enables insertion of variable text in predefined places any time you insert a snippet
+in a file. To do this, <guilabel>Snippets</guilabel> provides its own variables mechanism. You can insert variables in the snippet
+text itself by using separators ( $ ) to enclose the variable names. For example: $variablename$, $invoicenumber$, $weekno$.
 </para>
 <para>
-  The variable separator can be changed to another character by changing <varname>snippetDelimiter</varname> in the [SnippetPart] section in the Text Snippet configuration file, which can be found at $KDEHOME/share/config/kmailsnippetrc .
+  The variable separator can be changed to another character by changing <varname>snippetDelimiter</varname> in the
+  [SnippetPart] section in the Text Snippet configuration file, which can be found at ~./config/kmailsnippetrc.
 <programlisting>
 snippetDelimiter=$
 </programlisting>
@@ -506,16 +657,18 @@ snippetDelimiter=$
 </sect2>
 <sect2 id="using-the-translator">
   <title>Using the Built-in Translator</title>
-  <para>&kmail; 2 composer provides a built-in translator that can be accessed by selecting
-    <menuchoice><guimenu>View</guimenu><guimenuitem>Translator</guimenuitem></menuchoice> from the
-      menubar. A new panel will appear at the bottom of the composer.</para>
-      <para> To translate a section of text, first select the text you would like translated to the
-	box with the <guilabel>Drag text that you want to translate.</guilabel>. Select the language it currently is, in the <guilabel>From:</guilabel> drop down box.
-          Select the language you would like to translate to in the <guilabel>To:</guilabel> drop down box, and click the <guibutton>Translate</guibutton> button.
-          Your translated text will appear in the next box. If you need to translate
-            in the other direction you can just click the <guibutton>Invert</guibutton> button.
-              To clear all text, click the <guibutton>Clear</guibutton> button. </para>
-            </sect2>
+  <para>The &kmail; 2 composer provides a built-in translator that can be accessed by selecting
+    <menuchoice><guimenu>Tools</guimenu><guimenuitem>Translator</guimenuitem></menuchoice> from the
+    menu bar. A new panel will appear at the bottom of the composer window.</para>
+    <para> To translate a section of text, first enter the text you would like translated in the
+	box labeled <guilabel>Drag text that you want to translate.</guilabel>. Select the language in
+    which it is written in the <guilabel>From:</guilabel> drop down box. Select the language you
+    would like to translate to in the <guilabel>To:</guilabel> drop down box, then click the
+    <guibutton>Translate</guibutton> button. After being translated by Google Translate, a free online service,
+    your translated text will appear in the next box. If you need to translate in the other direction
+    you can just click the <guibutton>Invert</guibutton> button.
+    To clear all text, click the <guibutton>Clear</guibutton> button. </para>
+</sect2>
 </sect1>
 
 <sect1 id="folders">
@@ -530,88 +683,97 @@ snippetDelimiter=$
       <phrase>Folder Setup Example</phrase>
     </textobject>
     <caption>
-      <para>Folder Setup Example</para>
+      <para>&kmail;'s default folders.</para>
     </caption>
   </mediaobject>
 </screenshot>
+<para>&nbsp;</para> <!-- whitespace -->
 <para>Message Folders are used to organize your email messages. When you
   first start &kmail; the <quote>Local Folders</quote> containing <guilabel>inbox</guilabel>,
 <guilabel>outbox</guilabel>, <guilabel>sent-mail</guilabel>,
 <guilabel>trash</guilabel>, <guilabel>drafts</guilabel> and <guilabel>templates</guilabel> 
-folders are created. These folders each have special functions:</para>
+folders are created. Each of these folders has a special function.</para>
 <variablelist>
 <varlistentry>
 <term><guilabel>inbox:</guilabel></term>
 <listitem>
-<para>Where &kmail; by default puts your new messages when you ask it to check your
-  mail. </para><note><para>&imap; accounts will not use this inbox. The inbox is located on the &imap; server.</para></note>
+<para>Where &kmail; by default puts your new messages when you tell it to check your
+  mail. </para><note><para>&IMAP; accounts will not use this inbox. The &IMAP; inbox is located on the &IMAP; server.</para></note>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>outbox:</guilabel></term>
 <listitem>
-<para>Where messages are put while they are waiting to be delivered. Note that
-you should not drag and drop messages here to send them, use the <guiicon>Send</guiicon>
-icon in the composer window instead.<!-- fixme 3.2: has this been 'fixed'? Still cannot drag and drop 12/4/2013 --></para>
+<para>Where messages are put while they are waiting to be delivered.
+You must not just drag and drop messages here to send them; use the <guiicon><inlinemediaobject>
+<imageobject><imagedata fileref="mail-send.png" format="PNG"/>
+</imageobject></inlinemediaobject> Send</guiicon>
+icon in the composer window instead.</para>
 </listitem></varlistentry>
 <varlistentry>
 <term><guilabel>sent-mail:</guilabel></term>
 <listitem>
-<para>By default copies of all messages that you have sent are put into this folder.</para>
+<para>By default, a copy of every message you send is saved in this folder.</para>
 </listitem></varlistentry>
 <varlistentry>
 <term><guilabel>trash:</guilabel></term>
 <listitem>
-<para>By default all messages that you have moved to trash are moved into this folder.</para>
+<para>By default, all messages that you have designated as trash are moved into this folder.</para>
 </listitem></varlistentry>
 <varlistentry>
 <term><guilabel>drafts:</guilabel></term>
 <listitem>
-<para>Contains messages you started to edit but then saved to this
-  folder through <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Draft</guimenuitem></menuchoice>.</para>
+<para>Contains messages you started to write but then saved to this
+  folder with <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Draft</guimenuitem></menuchoice>.</para>
 </listitem></varlistentry>
 <varlistentry>
 <term><guilabel>templates:</guilabel></term>
 <listitem>
 <para>This folder holds your templates created via <menuchoice><guimenu>Message</guimenu><guimenuitem>Save as Template</guimenuitem></menuchoice>
-in the composer window. Please see <link linkend="new-compose-from-templates">New Composer Templates</link> for details.</para>
+from the composer window. Please see <link linkend="new-compose-from-templates">New Composer Templates</link> for details.</para>
 </listitem></varlistentry>
 </variablelist>
+<para>&nbsp;</para> <!-- whitespace -->
 <sect2 id="folder-details">
 <title>Creating and Using Folders</title>
 
-<para>Organize your emails, &eg; by mailing lists, bill receipts &etc;, by creating new folders. To create a new folder, select
-<menuchoice><guimenu>Folder</guimenu><guimenuitem>Add Folder...</guimenuitem></menuchoice> or <guimenuitem>Add Folder...</guimenuitem> from
-the &RMB; context menu. A dialog will pop up, enter the name of the new folder in the text box. You can fully customize each folder &eg; views, replies, &etc;
-in the properties for a folder by selecting the folder you wish to modify in the folders pane and select <guimenuitem>Folder Properties</guimenuitem> from the &RMB; context menu.
-See <link linkend="folders-properties-window">Properties of Folder</link> for details.</para>
+<para>Organize your emails (&eg; mailing lists, bills and receipts, &etc;) by creating new folders. To create a new folder, select
+<menuchoice><guimenu>Folder</guimenu><guimenuitem>Add Folder...</guimenuitem></menuchoice>, or <guimenuitem>Add Folder...</guimenuitem> from
+the &RMB; context menu. A dialog will pop up. Enter the name of the new folder in the text box. You can fully customize each folder
+(&ie; views, replies, &etc;) by selecting the folder you wish to modify in the folders pane and then choosing <guimenuitem>Folder
+Properties</guimenuitem> from the &RMB; context menu.
+See <link linkend="folders-properties-window">Properties of Folders</link> for details.</para>
 
 <para>To move messages from one folder into another, select the message(s) you want to move and press the <keycap>M</keycap> key or select
-<menuchoice><guimenu>Message</guimenu><guimenuitem>Move Messages To</guimenuitem></menuchoice>. A list of folders will appear; select the folder
-from the list that you want to move the messages to. Messages can also be moved by dragging them from the Message list to a folder in the Folder list.</para>
+<menuchoice><guimenu>Message</guimenu><guimenuitem>Move Message To... &gt;</guimenuitem></menuchoice>. A list of folders will appear; select the folder
+into which you wish to move the message from that list. Messages can also be moved by dragging them from the Message list to a folder in the Folder
+list, or by using a context menu invoked with the &RMB;.</para>
 
-<para>If you have folders that are frequently accessed, you can add them to your favorite folders pane in the upper left corner. Add them through the &RMB;
-context menu <guimenuitem>Add to Favorite Folders</guimenuitem>.</para>
+<para>If you have folders that are frequently accessed, you can add them to your favorite folders pane (above the list of folders). Add them with the &RMB;
+context menu option <guimenuitem>Add to Favorite Folders</guimenuitem>.</para>
 
-<para>You can create a virtual folder with search parameters by going to either <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find Messages...</guimenuitem></menuchoice>, <menuchoice><guimenu>Tools</guimenu>
-<guimenuitem>Find Messages...</guimenuitem></menuchoice>, or Keyboard shortcut <keycap>S</keycap>. Enter your search parameters into the dialog. Name
-your search at the bottom <guilabel>Search folder name:</guilabel> textbox, &eg; <replaceable>emails with the word Blog</replaceable>. Click the <guibutton>Search</guibutton> button. Now select
-the <guibutton>Open Search Folder</guibutton>. Your results folder will be at the bottom of the Folder pane.</para>
+<para>You can create a virtual folder with search parameters by going to <menuchoice><guimenu>Tools</guimenu>
+<guimenuitem>Find Messages...</guimenuitem></menuchoice>, or by using keyboard shortcut <keycap>S</keycap>. Enter your search parameters into the dialog. Name
+your search with the <guilabel>Search folder name:</guilabel> textbox, &eg; <replaceable>emails with the word Blog</replaceable>. Click the <guibutton>Search</guibutton> button. Now select
+the <guibutton>Open Search Folder</guibutton> button. A results folder will open, positioned at the bottom of the Folder pane.
+(By default, each new search is named "Last Search". You can save particular search parameters by assigning a special name as described above.)</para>
 
 <para>Creating filters to automatically move messages to specified folders is a great way to organize messages by mailing list, sender, subject &etc;
 Please see <link linkend="filters">Filters</link> for details.</para>
 
-<para>In the case that you receive emails from a trusted source, &eg; a Blog you signed up for, that is formatted in &HTML; and you would like to enable &HTML; view for just those emails. You can achieve this
-by doing the following: Create a new folder, set up a <link linkend="filters">filter</link> to place those emails in the new folder,
-select the folder and select <menuchoice><guimenu>Folder</guimenu><guimenuitem>Message Default Format</guimenuitem>
+<para>If you receive emails from a trusted source (&eg; a Blog you signed up for) that is formatted in &HTML; 
+and you would like to enable &HTML; view for those emails only, you can create a new folder, set up a 
+<link linkend="filters">filter</link> to place all email from the Blog in the new folder,
+select the folder, and then choose <menuchoice><guimenu>Folder</guimenu><guimenuitem>Message Default Format  &gt;</guimenuitem>
 <guimenuitem>Prefer &HTML; to Plain Text</guimenuitem></menuchoice>.</para>
+<para>&nbsp;</para> <!-- whitespace -->
 
-<para>Some common folder actions are:</para>
+<para>Some common folder actions are</para>
 <variablelist>
 <varlistentry>
 <term><menuchoice><guimenu>Folder</guimenu><guimenuitem>Move All Messages to Trash</guimenuitem></menuchoice></term>
 <listitem>
-<para><action>Moves</action> all your messages in the selected folder to the trash folder.</para>
+<para><action>Move</action> all the messages in the selected folder to the trash folder.</para>
 </listitem></varlistentry>
 <varlistentry>
 <term><menuchoice><guimenu>Folder</guimenu><guimenuitem>Archive Folder</guimenuitem></menuchoice></term>
@@ -626,9 +788,10 @@ select the folder and select <menuchoice><guimenu>Folder</guimenu><guimenuitem>M
 <varlistentry>
 <term><menuchoice><guimenu>Folder</guimenu><guimenuitem>Remove Duplicate Messages</guimenuitem></menuchoice></term>
 <listitem>
-<para>This will <action>search</action> the currently selected folder for duplicates and <action>delete</action> them.</para>
+<para><action>Search</action> the currently selected folder for duplicates and <action>delete</action> them.</para>
 </listitem></varlistentry>
 </variablelist>
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="folders-properties-window">
@@ -643,97 +806,182 @@ select the folder and select <menuchoice><guimenu>Folder</guimenu><guimenuitem>M
       <phrase>Folder Properties Example</phrase>
     </textobject>
     <caption>
-      <para>Folder Properties Example</para>
+      <para>The Folder Properties Dialog</para>
     </caption>
   </mediaobject>
 </screenshot>
-<para>The <guilabel>Properties of Folder</guilabel> dialog lets you rename and specify all of its properties. Note that most properties
-are only available for your own folders and not for default folder like <guilabel>inbox</guilabel> &etc; Default folders also cannot be renamed.</para>
+<para>&nbsp;</para> <!-- whitespace -->
+<para>The <guilabel>Properties of Folder</guilabel> dialog lets you specify its properties. Note that some properties are only
+available for the folders you create and not for default folders like <guilabel>inbox</guilabel> &etc; The six default folders cannot be renamed.</para>
 
 <sect3 id="folders-properties-general">
-<title>General</title>
-<para>If you need to rename a folder change the entry in the <guilabel>Name:</guilabel> field.</para>
+<title>General tab</title>
+<para>If you want to rename a folder, change the entry in the <guilabel>Name:</guilabel> field.</para>
 
-<para><guilabel>Act on new/unread mail in this folder</guilabel> is enabled by default on new folders, it allows notifications about new mail that arrives in the folder. Uncheck this option on folders like SPAM and trash that you do not desire notifications.</para>
-<para>When replying to messages in this folder, check <guilabel>Keep replies in this folder</guilabel> if you want
-the replies to be stored in this folder rather than into the default configured sent-mail folder.</para>
+<para><guilabel>Act on new/unread mail in this folder</guilabel> is enabled by default on new folders. It enables notifications about new mail that arrives in the folder. Uncheck this option on folders like SPAM and trash for which you do not desire notifications.</para>
+<para>Check <guilabel>Keep replies in this folder</guilabel> if you want
+replies to these messages to be stored in this folder rather than in the default configured sent-mail folder.</para>
 
 <para>Check <guilabel>Hide this folder in the folder selection dialog</guilabel> if you do not want this folder to be shown in folder selection dialogs,
 such as the <guimenuitem>Jump to Folder</guimenuitem> and <guimenuitem>Move Message to</guimenuitem> dialogs.</para>
 
-<para>By default new folders use the default identity. Uncheck <guilabel>Use default identity</guilabel> and select a new one
+<para>New folders use the default identity. If you wish to associate a folder with a different identity, uncheck
+<guilabel>Use default identity</guilabel> and select a different one
 from the <guilabel>Sender identity</guilabel> drop down menu. See <link linkend="configure-identity">Identities configuration</link> for
-information on Identities. Replies to messages that were sent directly to you will still default to the message's <quote>To</quote> address if an
-according identity is found.</para>
+information on Identities. Replies to messages that were sent directly to you will still default to the message's <quote>To</quote> address if a
+matching identity is found.</para>
 
-<para>If you have groupware, you can change the contents &eg; calendar, notes, &etc; of the folder in the
+<!-- <para>If you have groupware, you can change the contents &eg; calendar, notes, &etc; of the folder in the
 <guilabel>Folder contents:</guilabel> drop down box.</para>
 
 <para>If you share the folder with other users, you can <guilabel>Share unread state with all users</guilabel> which will show the same unread state for all users.</para>
-  <informalexample><para>For example, a ticket system that all emails must be read and multiple users are responsible for reading unread tickets.</para></informalexample>
+<informalexample><para>For example, a ticket system that all emails must be read and multiple users are responsible for reading unread tickets.</para></informalexample> -->  <!-- I cannot find any "groupware" functionality in kmail. @dcb2020291 -->
 </sect3>
 
 <sect3 id="folders-properties-view">
-<title>View</title>
-<para>The <guilabel>Use custom icons</guilabel> option lets you choose icons that are different from the default ones in the folder list.</para>
-<para>With <guilabel>Show column</guilabel> drop down you can set the visible columns in the header pane to Default, Sender, or Receiver. This is useful
-if you use a folder to save your own sent messages.</para>
+<title>View tab</title>
+<para>The <guilabel>Use custom icons</guilabel> option lets you choose icons that are different from the defaults in the folder list.</para>
+<para>With the <guilabel>Show column</guilabel> drop down list you can set the visible columns in the header pane to Default, Sender, or Receiver. This may be useful
+if you use a custom folder to save some of your own sent messages.</para>
 <para>In the <guilabel>Message List</guilabel> section you can select and configure an <guilabel>Aggregation</guilabel> and <guilabel>Theme</guilabel>
-for this folder different from the default configured in &kmail;s settings. For more details see the <link linkend="configure-appearance-message-list">
-Message List</link> tab in the <guilabel>Appearance</guilabel> page.</para>
+for this folder that differs from the default configured in &kmail;s settings. For more details see the <link linkend="configure-appearance-message-list">
+Message List</link> tab on the <guilabel>Appearance</guilabel> page.</para>
+<para>The <guilabel>Message Default Format</guilabel> section lets you choose between plain and &HTML; displays for messages in this folder.</para>
 </sect3>
-<sect3 id="folders-properties-retrieval">
-<title>Retrieval</title>
-<para>If you have an account that does not receive much mail and you don't want &kmail; to query the server as often, you can uncheck <guilabel>Use options from parent folder or account</guilabel> to set
-  a higher interval in <guilabel>Automatically synchronize after:</guilabel> spin box.</para>
-<para>In <guilabel>Retrieval Options</guilabel> you can change <guilabel>Always retrieve full messages</guilabel> option to <guilabel>Retrieve message
-bodies on demand</guilabel> if you have a slow connection. You can set how long the message will remain locally in the following spin box.
-</para>
 
+<sect3 id="folders-properties-retrieval">
+<title>Retrieval tab</title>
+<para>If you have an account that does not receive much mail and you don't want &kmail; to query the server too often, you can uncheck <guilabel>Use options from parent folder or account</guilabel> to set
+a longer interval in the <guilabel>Automatically synchronize after:</guilabel> spin box.</para>
+<para>In <guilabel>Retrieval Options</guilabel> you can change the <guilabel>Always retrieve full messages</guilabel> option to <guilabel>Retrieve message
+bodies on demand</guilabel> if you have a slow connection. You can also set how long the message will be retained locally via the spin box.
+</para>
 </sect3>
+
 <sect3 id="folders-properties-templates">
-<title>Templates</title>
+<title>Templates tab</title>
 <para>On this tab you can define folder-specific templates for your custom folders.  
 For more details see the <link linkend="configure-composer-standard-templates">
-Standard Templates</link> tab in the <guilabel>Composer</guilabel> page
+Standard Templates</link> tab on the <guilabel>Composer</guilabel> page.
 </para>
 </sect3>
 
 <sect3 id="folders-properties-expiry">
-<title>Expiry</title>
-<para>You can set automatic cleanup or deletion of emails in this tab. Check the box if you would like to automatically expire
-read or unread messages respectively. Set the amount of days in the spinbox. If you do not want to permanently delete the messages you can
-assign a folder to move them to in <guilabel>Move expired messages to:</guilabel> textbox or folder selection dialog. Once you have reviewed the messages and want to permanently
-delete them, you can go to the folder expiry options of the folder you chose to move them to and set the option <guilabel>Delete expired messages permanently</guilabel>, then click
-the <guibutton>Save Settings and Expire Now</guibutton>.
+<title>Expiry tab</title>
+<para>You can set up automatic cleanup or deletion of emails. Check the box if you would like to automatically expire
+read or unread messages respectively. Set the number of days in the spin box. If you do not want to delete the messages permanently, you can
+assign a folder to keep them in via the <guilabel>Move expired messages to:</guilabel> text box / folder selection dialog. Once you have reviewed
+the messages and want to delete them permanently,
+you can go to the folder expiry options of the folder you chose to move them to and set the option <guilabel>Delete expired messages
+permanently</guilabel>, then click the <guibutton>Save Settings and Expire Now</guibutton> button.
 </para>
-<warning><para>Messages that are deleted during expiration of old messages
-cannot be restored, so be careful with this setting.</para></warning>
+<warning><para>Messages that are deleted cannot be restored, so be careful with this setting.</para></warning>
+<para>&nbsp;</para> <!-- whitespace -->
+</sect3>
+
+<sect3 id="folders-properties-mailinglist">
+<title>Mailing List tab</title>
+
+<para>If you are going to use the folder for a mailing list open the
+<guilabel>Mailing List Folder Properties</guilabel> dialog with
+<menuchoice><guimenu>Folder</guimenu> <guimenuitem>Mailing List Management</guimenuitem>
+</menuchoice> from the menu. Then you should
+check <guilabel>Folder holds a mailing list</guilabel> to associate this folder
+with the mailing list. Next you should click on <guilabel>Detect Automatically</guilabel>. &kmail; will then try
+to guess some information about the mailing list from the currently selected
+message. If &kmail; could not determine some addresses then you can add
+the missing information manually. To do this first select the
+<guilabel>Address type</guilabel> for which you want to add an address.
+You can choose among five options.</para>
+<variablelist>
+<varlistentry id="folders-properties-mailinglist-post">
+<term><guilabel>Post to List</guilabel></term>
+<listitem>
+<para>This address is used for sending messages to the mailing list. This is usually an email address.</para>
+</listitem></varlistentry>
+<varlistentry id="folders-properties-mailinglist-subscribe">
+<term><guilabel>Subscribe to List</guilabel></term>
+<listitem>
+<para>This address is used for subscribing to the mailing list. This can be an email address or the address of a web page.</para>
+</listitem></varlistentry>
+<varlistentry id="folders-properties-mailinglist-unsubscribe">
+<term><guilabel>Unsubscribe From List</guilabel></term>
+<listitem><para>This address is used for unsubscribing from the mailing list. This can be an email address or the address of a web page.</para>
+</listitem></varlistentry>
+<varlistentry id="folders-properties-mailinglist-archive">
+<term><guilabel>List Archives</guilabel></term>
+<listitem><para>This is the address of the archive of the mailing list. This is usually the address of a web page.</para>
+</listitem></varlistentry>
+<varlistentry id="folders-properties-mailinglist-help">
+<term><guilabel>List Help</guilabel></term>
+<listitem>
+<para>This address is used for requesting help for this mailing list. This is usually an email address.</para>
+</listitem></varlistentry>
+</variablelist>
+
+<para>After selecting the appropriate <guilabel>Address type</guilabel>,
+enter the email address or the address of the web page and then click on
+<guilabel>Add</guilabel>. With <guilabel>Remove</guilabel> you can remove
+addresses.</para>
+
+<para>When all the addresses have been added, you can execute an action, &eg;
+go to the list archives, by selecting the appropriate
+<guilabel>Address type</guilabel> and then clicking on
+<guilabel>Invoke Handler</guilabel>. If there is an email address and an
+address of a web page for the desired action, you will have to select
+the <guilabel>Preferred handler</guilabel> prior to clicking on
+<guilabel>Invoke Handler</guilabel>. Select <guilabel>KMail</guilabel> if you
+want to send a message to the email address and select
+<guilabel>Browser</guilabel> if you want to go to the web page.</para>
+
+<para>You can also send a new message to the
+mailing list via <menuchoice><guimenu>Message</guimenu><guimenuitem>New
+        Message to Mailing-List...</guimenuitem></menuchoice> (instead of <guilabel>Invoke Handler</guilabel>).</para>
+</sect3>
+
+<sect3 id="folders-properties-shortcut">
+<title>Shortcut tab</title>
+<para>You can define a keyboard shortcut to access the folder.</para>
+</sect3>
+
+<sect3 id="folders-properties-maintainance">
+<title>Maintenance tab</title>
+<para>This tab shows an overview about the folder type and its size, 
+the number of read and unread messages in the folder and allows you to enable
+text indexing.</para>
+</sect3>
+
+<sect3 id="folders-properties-quota">
+<title>Quota tab (&IMAP; only)</title>
+<para>
+This tab will show you how much space has been allocated to your &IMAP; account by the server,
+and also how much of the allocated space you are currently using.
+</para>
 </sect3>
 
 <sect3 id="folders-properties-acl">
-<title>Access Control tab (&imap; only)</title>
-<para>Here you can manage the access control lists (&acl;s) of &imap; folders.</para>
-<note><para>The &imap; server must have user level &acl; configured and enabled for this tab to be visible.</para></note>
+<title>Access Control tab (&IMAP; only)</title>
+<para>Here you can manage the access control lists (&acl;s) of &IMAP; folders.</para>
+<note><para>The &IMAP; server must have user level &acl; configured and enabled for this tab to be visible.</para></note>
 <para>The currently active &acl; is shown in the list. It consists of pairs of <guilabel>User Id</guilabel>s and the
  <guilabel>Permissions</guilabel> granted to users identified by that <guilabel>User Id</guilabel>.
  <footnote>
- <para>Note that a single <guilabel>User Id</guilabel> might refer to more than one user. Depending on the &imap;
+ <para>Note that a single <guilabel>User Id</guilabel> might refer to more than one user. Depending on the &IMAP;
  server and its configuration, there may be User Ids that correspond to groups of users, anonymous users, or any user.
- Consult the manual of your specific &imap; server implementation for more information.</para>
+ Consult the manual of your specific &IMAP; server implementation for more information.</para>
  </footnote> &acl;s are settable per-folder.</para>
- <note><para>As with everything else when using <emphasis>disconnected &imap;</emphasis>, you need to sync with the server for
+ <note><para>As with everything else when using <emphasis>disconnected &IMAP;</emphasis>, you need to sync with the server for
  the changes to be transferred to the server.</para></note>
-<para>&imap; &acl;s define a lot of fine-grained permissions that you can grant or deny other users. For the sake of clarity,
+<para>&IMAP; &acl;s define a lot of fine-grained permissions that you can grant or deny other users. For the sake of clarity,
  &kmail; will present them as the following five categories that you can choose from (see <xref linkend="table-acl-summary"/>
- for the details if you already know &imap; &acl;s).</para>
+ for the details if you already know &IMAP; &acl;s).</para>
 <variablelist>
 <varlistentry id="folders-properties-acl-none">
 <term><guilabel>None</guilabel></term>
 <listitem>
 <para>Grants the users identified by <guilabel>User Id</guilabel> no rights at all. This is also the
  default for users not explicitly (or implicitly, as a group) listed in the &acl;. These users will not see this folder in the list of
- &imap; folders presented to them by their mail clients.</para>
+ &IMAP; folders presented to them by their mail clients.</para>
 </listitem></varlistentry>
 <varlistentry id="folders-properties-acl-read">
 <term><guilabel>Read</guilabel></term>
@@ -745,7 +993,7 @@ cannot be restored, so be careful with this setting.</para></warning>
  read just because someone else has already read them.</para>
 </footnote>
 </para>
-<para>These users will see this folder in the list of &imap; folders presented to them by their mail clients.</para>
+<para>These users will see this folder in the list of &IMAP; folders presented to them by their mail clients.</para>
 <para>Use this to create a shared folder that others can read, but not modify.</para>
 <informalexample>
 <para>If you were the editor of a company's news letter, you could create a folder for the purpose of
@@ -774,7 +1022,7 @@ cannot be restored, so be careful with this setting.</para></warning>
 <para>Use this to create a shared folder that everyone has (almost, see <xref linkend="folders-properties-acl-all"/>) the same rights for.</para>
 <informalexample>
 <para>In the <xref linkend="folders-properties-acl-append"/> example, you could assign write rights to a group of people
- acting as moderators, which would then be able to remove off-topic posts, and create sub-topic-folders for high-traffic folders.</para>
+ acting as moderators, who would then be able to remove off-topic posts, and create sub-topic folders for high-traffic folders.</para>
 </informalexample>
 </listitem></varlistentry>
 <varlistentry id="folders-properties-acl-all">
@@ -785,7 +1033,7 @@ cannot be restored, so be careful with this setting.</para></warning>
 <para>This is the default set of rights for the owner of a folder.</para>
 </listitem></varlistentry>
 </variablelist>
-<para><xref linkend="table-acl-summary"/> summarizes the &imap; &acl; rights associated with each permission level.</para>
+<para><xref linkend="table-acl-summary"/> summarizes the &IMAP; &acl; rights associated with each permission level.</para>
 <table id="table-acl-summary">
 <title>&acl; Rights Summary</title>
           <tgroup cols="6">
@@ -878,101 +1126,42 @@ cannot be restored, so be careful with this setting.</para></warning>
         </table>
 </sect3>
 
-<sect3 id="folders-properties-mailinglist">
-<title>Mailing List</title>
-
-<para>If you are going to use the folder for a mailing list open the
-<guilabel>Mailinglist Folder Properties</guilabel> dialog with
-<menuchoice><guimenu>Folder</guimenu> <guimenuitem>Mailing List Management</guimenuitem>
-</menuchoice> from the menu. Then you should
-check <guilabel>Folder holds a mailing list</guilabel> to associate this folder
-with the mailing list. Next you should click on <guilabel>Detect Automatically</guilabel>. &kmail; will then try
-to guess some information about the mailing list from the currently selected
-message. If &kmail; could not determine some addresses then you can add
-the missing information manually. To do this first select the
-<guilabel>Address type</guilabel> for which you want to add an address.
-You can choose between:</para>
-<variablelist>
-<varlistentry id="folders-properties-mailinglist-post">
-<term><guilabel>Post to List</guilabel></term>
-<listitem>
-<para>This address is used for sending messages to the mailing list. This is usually an email address.</para>
-</listitem></varlistentry>
-<varlistentry id="folders-properties-mailinglist-subscribe">
-<term><guilabel>Subscribe to List</guilabel></term>
-<listitem>
-<para>This address is used for subscribing to the mailing list. This can be an email address or the address of a web page.</para>
-</listitem></varlistentry>
-<varlistentry id="folders-properties-mailinglist-unsubscribe">
-<term><guilabel>Unsubscribe From List</guilabel></term>
-<listitem><para>This address is used for unsubscribing from the mailing list. This can be an email address or the address of a web page.</para>
-</listitem></varlistentry>
-<varlistentry id="folders-properties-mailinglist-archive">
-<term><guilabel>List Archives</guilabel></term>
-<listitem><para>This is the address of the archive of the mailing list. This is usually the address of a web page.</para>
-</listitem></varlistentry>
-<varlistentry id="folders-properties-mailinglist-help">
-<term><guilabel>List Help</guilabel></term>
-<listitem>
-<para>This address is used for requesting help for this mailing list. This is usually an email address.</para>
-</listitem></varlistentry>
-</variablelist>
-
-<para>After selecting the appropriate <guilabel>Address type</guilabel> you
-enter the email address or the address of the web page and then click on
-<guilabel>Add</guilabel>. With <guilabel>Remove</guilabel> you can remove
-addresses.</para>
-
-<para>If all addresses have been added then you can execute an action, &eg;
-go to the list archives, by selecting the appropriate
-<guilabel>Address type</guilabel> and then clicking on
-<guilabel>Invoke Handler</guilabel>. If there is an email address and an
-address of a web page for the desired action then you will have to select
-the <guilabel>Preferred handler</guilabel> prior to clicking on
-<guilabel>Invoke Handler</guilabel>. Select <guilabel>KMail</guilabel> if you
-want to send a message to the email address and select
-<guilabel>Browser</guilabel> if you want to go to the web page.</para>
-
-<para>Alternatively to invoking the handler for
-<guilabel>Post to List</guilabel> you can send a new message to the
-mailing list via <menuchoice><guimenu>Message</guimenu><guimenuitem>New
-Message to Mailing-List...</guimenuitem></menuchoice></para>
-</sect3>
-
-<sect3 id="folders-properties-shortcut">
-<title>Shortcut</title>
-<para>You can define a keyboard shortcut to access the folder.</para>
-</sect3>
-
-<sect3 id="folders-properties-maintainance">
-<title>Maintenance</title>
-<para>This tab shows an overview about the folder type and its size, 
-the number of read and unread messages in the folder and allows you to enable
-text indexing.</para>
-</sect3>
 </sect2>
 </sect1>
 
 <sect1 id="filters">
 <title>Message Filters</title>
 <anchor id="filters-id"/>
+<screenshot>
+<screeninfo>The Filter Dialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="filter-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase>The Filter Dialog</phrase>
+    </textobject>
+    <caption>
+      <para>The Filter Creation Dialog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para>&nbsp;</para> <!-- whitespace -->
 
 <para>After using &kmail; for a while, you may find that you have trouble
 sorting out the new messages in your inbox when they arrive. Filters allow you
 to automatically perform certain actions on incoming messages and to manually
 perform actions on selected messages in a folder.</para>
 
-<para>Filters consist of: filter criteria, whose rules are used as
-criteria to determine whether this filter should be applied to a given
-message; and a list of filter actions, which describe what is to be
-done with, or to, the message if the search pattern matches. Read more
-about filter criteria and filter actions in the following
-subsections.</para>
+<para>Filters consist of filter criteria, whose rules are used
+to determine whether this filter should be applied to a given
+message, and a list of filter actions, which describe what is to be
+done with, or to, the message if the search pattern matches.</para>
 
 <note><para>Filters are considered one after the other,
 starting with the first filter in the list. The first one whose
-pattern matches the given message gets executed; you can request that
-the remaining filters also be applied, but the default is to stop
+pattern matches the given message is applied; you can request that
+the remaining filters also be processed, but the default is to stop
 processing at the first matching filter. </para></note>
 
 <para>Usually, filters are used on incoming messages, but they can
@@ -981,25 +1170,25 @@ of messages. To selectively filter messages, select the messages you
 want to filter in the message list and either type <keycombo
 action="simul">&Ctrl;<keycap>J</keycap> </keycombo> or select
 <menuchoice><guimenu>Message</guimenu> <guimenuitem>Apply
-Filter</guimenuitem></menuchoice>: this will apply all filters that
+Filter</guimenuitem></menuchoice>. This will apply the filters (the ones that
 have been marked for manual filtering in the <link
-linkend="filter-dialog">filter dialog</link> to those messages.</para>
+linkend="filter-dialog">advanced filter dialog</link>) to those messages.</para>
 
 <sect2 id="filter-quick">
 <title>Fast Filter Creation</title>
 
 <para>There are two methods for creating a filter; the quick method is
 to use <menuchoice><guimenu>Message</guimenu><guimenuitem>Create
-Filter</guimenuitem></menuchoice> and select a criteria from the submenu: this will call the filter dialog
+Filter</guimenuitem></menuchoice> and select a criterion from the submenu. This will open the filter dialog
 and present you with a new filter which has the first rule of the
 search pattern and the first action (as <guilabel>Move into Folder</guilabel>) 
 preset. In most cases, all you have to do is select the folder where the message
-should be moved to; but you can, of course, edit the filter as you
+should be moved, but you can, of course, edit the filter as you
 like.</para>
 
-<para>When creating a filter on mailing list messages this method 
-will try really hard to find a criterion that
-uniquely identifies messages from that list; If it succeeds, the guessed
+<para>When creating a filter on mailing list messages, this method 
+will try to find a criterion that
+uniquely identifies messages from the list. If it succeeds, the guessed
 name of the list is presented in the
 <menuchoice><guimenu>Message</guimenu><guisubmenu>Create
 Filter</guisubmenu><guimenuitem>Filter on
@@ -1010,6 +1199,7 @@ by calling the filter dialog through
 <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure 
 Filters...</guimenuitem></menuchoice>. The filter dialog is described in
 detail in the following subsection.</para>
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="filter-dialog">
@@ -1026,30 +1216,29 @@ Filter</guisubmenu></menuchoice> or
 Filters...</guimenuitem></menuchoice>.</para>
 
 <para>The dialog is divided into three main sections on the <guilabel>General</guilabel> 
-and <guilabel>Advanced</guilabel> tab:</para>
+and <guilabel>Advanced</guilabel> tabs.</para>
 <variablelist>
 <varlistentry>
 <term><guilabel>Available Filters</guilabel></term>
 <listitem><para>This group contains the list of filters and some action
-buttons to modify the filters, namely: to create new filters; to move them up or 
-down the list; to delete them; or to rename them. If you select
+buttons to modify the filters, namely: create new filters; move them up or 
+down the list; copy one of them; delete them; or rename them. If you select
 a filter from the list, its properties are shown in the right-hand half
 of the dialog.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Filter Criteria</guilabel></term> <listitem><para>In
-this group you can edit the pattern that messages must match for the
-filter to be applied to them. You can select here whether all of the
-defined rules must match or whether it suffices that any one of them
-matches. See <link linkend="filter-criteria">Search Patterns</link>
+this group you can edit the pattern that messages must match before the
+filter is applied to them. You can select whether all of the
+defined rules must match, or whether a single match
+is enough. See <link linkend="filter-criteria">Search Patterns</link>
 below for a detailed description of each search rule type.</para>
 
-<para> You can click on <guibutton>More</guibutton> to get an
-additional (initially empty) rule if you want to define more-complex
-patterns and on <guibutton>Fewer</guibutton> to remove the last
-rule. <guibutton>Clear</guibutton> clears the pattern, &ie; it removes
-all but two rules from screen and resets those two.</para>
-<para>Invalid or empty rules are not evaluated.</para>
+<para> You can click on <guibutton>&nbsp;&plus;&nbsp;</guibutton> to get an
+additional (initially empty) rule if you want to define more complex
+patterns, and on <guibutton>&nbsp;&minus;&nbsp;</guibutton> to remove the selected
+rule. <guibutton>Clear</guibutton> clears the pattern, &ie;, it removes
+all but one rule from the screen and resets it.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -1059,12 +1248,11 @@ messages that match the defined filter criteria. See <link
 linkend="filter-action">Filter Actions</link> below for a detailed
 description of each action type.</para>
 
-<para> You can click on <guibutton>More</guibutton> to get a new,
-empty action (if you want to define more than one action) and on
-<guibutton>Fewer</guibutton> to remove the last
+<para> You can click on <guibutton>&nbsp;&plus;&nbsp;</guibutton> to get a new,
+empty action (if you want to define more than one action), and on
+<guibutton>&nbsp;&minus;&nbsp;</guibutton> to remove the selected
 action. <guibutton>Clear</guibutton> clears the list, &ie; it
 removes all but one action and resets that one.</para>
-<para>Invalid or empty actions are not executed.</para>
 </listitem>
 </varlistentry>
 
@@ -1073,18 +1261,19 @@ removes all but one action and resets that one.</para>
 
 <listitem>
 
-<para>In this group you can define a few advanced options for filters
-that allow you to refine your filtering.</para>
+<para>In this group you can define a few advanced options
+that allow you to fine tune your filtering.</para>
 
 <para>Using the first row of check boxes, you can toggle when the
 filter is applied: the <guilabel>Apply this filter to incoming messages</guilabel>
 option means that the filter is applied to messages when you receive
-them (&ie; on <guiicon>Check Mail</guiicon>).
-The filter can be applied to all messages, to all but online IMAP accounts and
-to a selection of incoming folders.</para>
+them (&ie; on <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-receive.png"
+format="PNG"/></imageobject></inlinemediaobject> Check Mail</guiicon>).
+The filter can be applied to all messages, to all but online IMAP accounts, or
+to particular incoming email accounts.</para>
 <para>The <guilabel>Apply this filter to sent
 messages</guilabel> option means that the filter is applied to
-messages when you send them and the <guilabel>Apply this filter on manual
+messages when you send them, and the <guilabel>Apply this filter on manual
 filtering</guilabel> option controls whether to apply this filter when
 filtering is specifically selected (&ie; via
 <menuchoice><guimenu>Message</guimenu> <guimenuitem>Apply
@@ -1097,98 +1286,116 @@ sending messages</guilabel>.
 </para>
 <para>The <guilabel>If this filter matches, stop processing here</guilabel>
 check box controls whether or not the filters after
-the current filter will be applied, if the current filter matches.</para>
+the current filter will be processed when the current filter matches.</para>
 
 <para>If the <guilabel>Add this filter to the Apply Filter menu</guilabel>
 check box is selected, this filter will be inserted
 in the <menuchoice><guimenu>Message</guimenu> <guimenuitem>Apply
 Filter</guimenuitem></menuchoice> submenu. You can then apply this
-filter to a message. Another way of applying filters is to use
+single filter to a message or a set of messages. If you select this option,
+you may optionally select a keyboard shortcut and insert a special icon
+to invoke this filter from the toolbar.</para>
+
+<para>Another way of applying filters is to use the
 <menuchoice><guimenu>Message</guimenu> <guimenuitem>Apply
 Filters</guimenuitem></menuchoice> menu option, which applies <emphasis>all</emphasis>
-the filters - one after another until they are all used or one of the
-filters that matches has the <guilabel>If the filters matches, stop
-processing here</guilabel>.</para>
+the filters – one after another – until they are all used or one of the
+filters that matches specifies the <guilabel>If this filter matches, stop
+processing here</guilabel> option.</para>
 
 </listitem>
 </varlistentry>
 </variablelist>
 
 <note><para>Filters are automatically named unless you explicitly
-rename them using the <guibutton>Rename...</guibutton> button.
+rename them using the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document-edit.png" format="PNG"/>
+</imageobject></inlinemediaobject> Rename...</guibutton> button.
 The dialog assumes that it should continue auto-naming the filter
 as long as the filter name starts with <quote>&lt;</quote>.
-</para></note>
+</para>
 
-<note>
 <para>If you apply filter changes, via
-<guibutton>OK</guibutton> or <guibutton>Apply</guibutton>, only valid
+<guibutton>OK</guibutton> or <guibutton>Apply</guibutton>, only the valid
 filters are actually copied to the internal filter manager.</para>
 
 <para>Similarly, empty rules and actions are removed from the pattern
-and action list respectively, before the filter is saved.</para>
+and action lists, respectively, before the filter is saved.</para>
 </note>
-
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="filter-criteria">
 <title>Search Patterns</title>
 
 <para>The most common use of filters is to filter on the sender of
-messages; this can be done by choosing <guilabel>From</guilabel>. A
+messages. This can be done by choosing <guilabel>From</guilabel>. A
 good bet for a mailing list would be
-<guilabel>&lt;recipients&gt;</guilabel>, but there are other criteria
+<guilabel>All Recipients</guilabel>, but there are other criteria
 a filter can search for (note that all patterns are interpreted 
-case-insensitively):</para>
+case-insensitively).</para>
 
 <variablelist>
 <varlistentry>
-<term><guilabel>&lt;message&gt;</guilabel></term>
+<term><guilabel>Complete Message</guilabel></term>
 <listitem>
 <para>Searches the whole message (&ie; headers, body and attachments,
-if any);</para>
+if any).</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;body&gt;</guilabel></term>
+<term><guilabel>Body of Message</guilabel></term>
 <listitem>
-<para>Searches the body of the message (&ie; the whole message except the headers);</para>
+<para>Searches the body of the message (&ie; the whole message except the headers).</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;any header&gt;</guilabel></term>
+<term><guilabel>Anywhere in Headers</guilabel></term>
 <listitem>
-<para>Searches the headers of the message;</para>
+<para>Searches all the headers in the message.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;recipients&gt;</guilabel></term>
+<term><guilabel>All Recipients</guilabel></term>
 <listitem>
-<para>Searches the <quote>To</quote> and <quote>CC</quote> header fields of the message;</para>
+<para>Searches the <quote>To</quote> and <quote>CC</quote> header fields of the message.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;size in bytes&gt;</guilabel></term>
+<term><guilabel>Size in Bytes</guilabel></term>
 <listitem>
-<para>Sets upper or lower bounds on the message size;</para>
+<para>Sets upper or lower bounds on the message's size.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;age in days&gt;</guilabel></term>
+<term><guilabel>Age in Days</guilabel></term>
 <listitem>
-<para>Sets upper or lower bounds on the message age;</para>
+<para>Sets upper or lower bounds on the message's age.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>&lt;status&gt;</guilabel></term>
+<term><guilabel>Message Status</guilabel></term>
 <listitem>
-<para>Sets restrictions on the status of the message;</para>
+<para>Sets restrictions on the status of the message (Important / Read / Unread / &etc; 
+see <menuchoice><guimenu>Message</guimenu><guimenuitem>Mark Message &gt;</guimenuitem></menuchoice>).</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>Any other name</term>
+<term><guilabel>Message Tag</guilabel></term>
 <listitem>
-<para>Searches the header field that is given by that name.</para>
+<para>Checks for tagged messages. See <menuchoice><guimenu>Message</guimenu><guimenuitem>Mark Message &gt;</guimenuitem></menuchoice>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Encrypted</guilabel></term>
+<listitem>
+<para>Checks for encrypted messages.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+    <term>Any other value (<guilabel>From</guilabel>, <guilabel>To</guilabel>, <guilabel>Date</guilabel>, &etc;)</term>
+<listitem>
+<para>Searches the header field with that name.</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -1219,6 +1426,18 @@ text.</entry>
 text.</entry>
 </row>
 <row>
+<entry><guilabel>starts with</guilabel>/<guilabel>does not start with</guilabel></entry>
+<entry>most textual search items</entry>
+<entry>Matches if the searched item begins with (or does not begin with) the given
+text.</entry>
+</row>
+<row>
+<entry><guilabel>ends with</guilabel>/<guilabel>does not end with</guilabel></entry>
+<entry>most textual search items</entry>
+<entry>Matches if the searched item ends with (or does not end with) the given
+text.</entry>
+</row>
+<row>
 <entry><guilabel>matches regular expr.</guilabel>/<guilabel>does not match reg. expr.</guilabel></entry>
 <entry>all textual search items</entry>
 <entry>Matches if a part of the searched item matches the given regular 
@@ -1227,25 +1446,25 @@ installed then you can edit the regular expression by clicking on the <guilabel>
 </row>
 <row>
 <entry><guilabel>has an attachment</guilabel>/<guilabel>has no attachment</guilabel></entry>
-<entry><guilabel>&lt;message&gt;</guilabel></entry>
+<entry><guilabel>Complete Message</guilabel></entry>
 <entry>Matches if the message has an attachment (or does not have an attachment).</entry>
 </row>
-<row>
+<!-- <row>
 <entry><guilabel>is in address book</guilabel>/<guilabel>is not in address book</guilabel></entry>
 <entry>most textual search items</entry>
 <entry>Matches if the searched item contains an address that is in your address
 book (or if the searched items contains only unknown addresses). Of course,
 this rule only makes sense for address fields like From or
 <guilabel>&lt;recipients&gt;</guilabel></entry>
-</row>
-<row>
+</row> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<!-- <row>
 <entry><guilabel>is in category</guilabel>/<guilabel>is not in category</guilabel></entry>
 <entry>most textual search items</entry>
 <entry>Matches if the searched item contains an address that is in the
 specified category in your address book (or if the searched item contains
 no address that is in the specified category). Again, this rule only makes
 sense for address fields.</entry>
-</row>
+</row> --> <!-- Can't find this anywhere. @dcb2020292. -->
 <row>
 <entry><guilabel>is equal to</guilabel>/<guilabel>is not equal to</guilabel></entry>
 <entry>numerical search items</entry>
@@ -1278,44 +1497,53 @@ the specified value.</entry>
 </row>
 <row>
 <entry><guilabel>is</guilabel>/<guilabel>is not</guilabel></entry>
-<entry><guilabel>&lt;status&gt;</guilabel></entry>
+<entry><guilabel>Message Status</guilabel></entry>
 <entry>Matches if the message has (or does not have) the specified status.</entry>
+</row>
+<row>
+<entry><guilabel>is after</guilabel>/<guilabel>is before or equal to</guilabel></entry>
+<entry><guilabel>Date</guilabel> header</entry>
+<entry>Matches if the message was sent after (not after) the specified date.</entry>
+</row>
+<row>
+<entry><guilabel>is before</guilabel>/<guilabel>is after or equal to</guilabel></entry>
+<entry><guilabel>Date</guilabel> header</entry>
+<entry>Matches if the message was sent before (not before) the specified date.</entry>
 </row>
 </tbody>
 </tgroup>
 </informaltable>
-
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="filter-action">
 <title>Filter Action</title>
 
-<para>The most common use of filters is to sort incoming messages to
-certain folders; this can be done by choosing <guilabel>Move into
-Folder</guilabel>. Here is a list of all possible actions:</para>
+<para>The most common use of filters is to divert some incoming messages to
+particular folders; this can be done by choosing <guilabel>Move into
+Folder</guilabel>. Here is a list of all possible actions.</para>
 
 <variablelist>
 <varlistentry>
 <term><guilabel>Move Into Folder</guilabel></term>
 <listitem>
-<para>This will file the message into another folder, removing it from
-its current folder if necessary; you cannot, currently 
-use &imap; folders as a target.</para>
-<!-- fixme: still correct? -->
+<para>This will move the message into another folder, and remove it from
+its current folder.</para>
+<!-- fixme: still correct? --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Copy Into Folder</guilabel></term>
 <listitem>
-<para>This will copy the message to another folder.</para>
-<note><para>You currently cannot use &imap;
-folders as a target.</para></note>
+<para>This will copy the message to another folder, and leave the message in the current folder.</para>
+<!-- <note><para>You currently cannot use &IMAP;
+folders as a target.</para></note> --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Set Identity To</guilabel></term>
 <listitem>
-<para>This will set the identity that will be used if you reply to this
+<para>This will set the identity that will be used when you reply to this
 message.</para>
 </listitem>
 </varlistentry>
@@ -1324,6 +1552,13 @@ message.</para>
 <listitem>
 <para>This allows you to mark the message as read or important (flagged), but
 also as forwarded, replied, &etc;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Add Tag</guilabel></term>
+<listitem>
+<para>This will add a tag to the message. You may choose from a list of
+all the tags that have been defined.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -1337,58 +1572,62 @@ receipt) to the sender of the message.</para>
 <term><guilabel>Set Transport To</guilabel></term>
 <listitem>
 <para>This will set the method of transport (&eg; &SMTP;)
-that will be used if you reply to the message.</para>
+that will be used when you reply to the message. You may choose from a list of all your outgoing email accounts.</para>
 </listitem>
 </varlistentry> 
 <varlistentry>
 <term><guilabel>Set Reply-To To</guilabel></term>
 <listitem><para>This will modify the <guilabel>Reply-To</guilabel> field of this
 message. This can be useful for mailing lists that automatically set a Reply-To
-which you do not like.</para>
+address you do not wish to use.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Forward To</guilabel></term>
-<listitem><para>This will forward the message inline (&ie; as if you selected <menuchoice><guimenu>Message</guimenu><guimenuitem>Forward</guimenuitem><guimenuitem>Inline...</guimenuitem></menuchoice>) to another email address. You can select the template to be used when forwarding with this filter with the drop down list.</para>
+<listitem><para>This will forward the message inline (&ie; as if you selected <menuchoice><guimenu>Message</guimenu>
+<guimenuitem>Forward</guimenuitem><guimenuitem>Inline...</guimenuitem></menuchoice>) to another email address. You 
+may select a custom forwarding template if such a template has been defined. If &kaddressbook; is installed, you may choose the
+<quote>Forward To</quote> address from a pop-up window.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Redirect To</guilabel></term>
-<listitem><para>This will redirect the message as-is to another email address.</para>
+<listitem><para>This will redirect the message as-is to another email address. If &kaddressbook; is installed, you may
+choose the <quote>Redirect To</quote> address from a pop-up window.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Confirm Delivery</guilabel></term>
-<listitem><para>Will try to return a message to the sender that
-indicates successful delivery of their message, if the sender requested that.</para> <para>This
-action allows you to select who will get delivery receipts from
-you. <!-- FIXME: removed-->Though you can globally enable the sending of delivery
+<listitem><para>Will return a message to the sender that
+verifies successful delivery of their message, if the sender requested that.</para> 
+<para>This action allows you to select who will get delivery receipts from
+you. Though you can globally enable the sending of delivery
 confirmations in the <guilabel>Configure &kmail;...</guilabel> dialog
 (<link linkend="configure-security"><guilabel>Security</guilabel>
-page</link>) we recommended not to send them to everyone, since this
-makes tracking of spam messages, for example, very easy for the sender.</para>
+page</link>) we do not recommend that you send them to everyone, since this
+makes tracking of spam messages very easy for the spammers.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>Execute Command</guilabel></term>
+<term><guilabel>Execute Command</guilabel> (for advanced users only)</term>
 <listitem>
 <para>This will execute a program, but will not modify the
 message. Specify the full path to the program you want to
-execute; &kmail; will then block until the program returns.
-If you do not want &kmail; to block then append '&amp;' to the command.
-You can feed
-the program with the parts of the mail: <symbol>&percnt;0</symbol>,
+execute; &kmail; will then wait until the program returns.
+If you do not want &kmail; to wait, append '&amp;' to the command.
+You can feed the segments of the message
+into the program one by one: <symbol>&percnt;0</symbol>,
 <symbol>&percnt;1</symbol>, &etc; stand for files representing
-the message parts; for common messages <symbol>&percnt;0</symbol> is the
-text, <symbol>&percnt;1</symbol> the first attachment and so
+the message segments. For common messages, <symbol>&percnt;0</symbol> is the
+plain text message, <symbol>&percnt;1</symbol> the first attachment and so
 on. Additionally, the whole message is fed into the program's
 <acronym>stdin</acronym>; and every occurrence of
 <symbol>&percnt;{foo}</symbol> is replaced by the content of the foo
 header. If you need to identify the message via its storage location in the
-Akonadi store, you can use the %{itemid} or %{itemurl} placeholders to
+Akonadi database, you can use the %{itemid} or %{itemurl} placeholders to
 achieve that.</para>
 
-<!-- fixme: still correct? -->
+<!-- fixme: still correct? --><!-- I think so. But not yet tested. @dcb2020293 -->
 <warning><para>This currently only works if the message has
 <emphasis>at least one</emphasis> attachment. No, not even
 <symbol>&percnt;0</symbol> will work in the general
@@ -1412,9 +1651,12 @@ with this output; if the program does not return output or exits
 with a return code other than 0 (indicating an error occurred), the message
 will not change.  Specify the full path to the program. The same
 substitutions (<symbol>&percnt;n</symbol>,
-<symbol>&percnt;{foo}</symbol> as with <guilabel>execute
-command</guilabel> are performed on the command line.</para>
-<warning><para>Be cautious with this action, as it will easily mess up
+<symbol>&percnt;{foo}</symbol> as with <guilabel>Execute
+Command</guilabel> may be performed on the command line.</para>
+<para>Both the Anti-Spam Wizard and the Anti-Virus Wizard use the <quote>Pipe Through</quote>
+action to check for spam / malware. The commonly available anti-spam and anti-virus programs 
+return the message, and insert an extra header record, if spam (or a virus) is detected.</para>
+<warning><para>Be cautious with this action, as it can damage
 your messages if the filter program returns garbage or extra
 lines.</para></warning>
 </listitem>
@@ -1437,7 +1679,7 @@ given value; if there are already multiple headers with the given
 name (&eg; <quote>Received:</quote> headers), an arbitrary one of them is
 overwritten and the others are left unchanged -- this is a known
 limitation. You may want to combine this filter with the
-<guilabel>remove header</guilabel> filter above to make sure that
+<guilabel>Remove Header</guilabel> filter above to make sure that
 there are no other headers with that name in the message.</para>
 </listitem>
 </varlistentry>
@@ -1453,17 +1695,52 @@ except for occurrences of <userinput>\n</userinput>,
 third form) number or <userinput>0</userinput>. These constructs are
 interpreted as back references to substrings captured with parentheses
 in the search string.</para><para>Analogous restrictions as in the
-<guilabel>add header</guilabel> action apply here, too.</para>
+<guilabel>Add Header</guilabel> action apply here, too.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term><guilabel>Play Sound</guilabel></term>
 <listitem>
-<para>Will play the specified sound.</para>
+<para>Will play the specified sound. A browse button lets you choose a pre-recorded sound (&eg; .wav) file.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Add to Address Book</guilabel></term>
+<listitem>
+<para>If &kaddressbook; is installed, this action will let you specify which header to scan
+(From, To, CC, or BCC), what tag to assign, if any, and which named address book to store the
+addresses in.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Delete Message</guilabel></term>
+<listitem>
+<para>Deletes the selected message(s). Use this option cautiously. Deleted messages cannot be recovered.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Unset Status</guilabel></term>
+<listitem>
+<para>This is the inverse of <guilabel>Mark As</guilabel>, above. Instead of marking the selected
+message as important, read, &etc;, this action will clear the specified flag.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Encrypt</guilabel></term>
+<listitem>
+<para>Will encrypt the selected message(s) with the specified public key. You may choose from any public
+/ private key pairs saved on your key ring.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Decrypt</guilabel></term>
+<listitem>
+<para>Will decrypt the selected message(s). Use this action with caution. &kmail; will decrypt
+messages automatically when you open them for viewing, so you probably don't really need to use this action.</para>
 </listitem>
 </varlistentry>
 </variablelist>
-
+<para>&nbsp;</para> <!-- whitespace -->
 </sect2>
 
 <sect2 id="filter-examples">
@@ -1471,21 +1748,22 @@ in the search string.</para><para>Analogous restrictions as in the
 
 <para>As of yet &kmail; does not highlight or mark mails that
 have an extra <replaceable>Priority:</replaceable> header.
-If I want to flag all <quote>urgent</quote> messages as being
-<emphasis>important</emphasis>, I can use a filter:</para>
+If you want to flag all <quote>urgent</quote> messages as being
+<emphasis>important</emphasis>, you can use a filter:</para>
 
 <procedure>
 <title>Tagging urgent messages as <emphasis>important</emphasis></title>
 <step>
 <para>Open up the <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure
 Filters...</guimenuitem></menuchoice> dialog and click the
-<guiicon>New</guiicon> icon below the <guilabel>Available Filters</guilabel>
+<guiicon><inlinemediaobject><imageobject><imagedata fileref="document-new.png" format="PNG"/>
+</imageobject></inlinemediaobject> New</guiicon> icon below the <guilabel>Available Filters</guilabel>
 list.</para>
 </step>
 <step>
 <para>In the <guilabel>Filter Criteria</guilabel> area, select <guilabel>Anywhere 
 in Headers</guilabel> and <guilabel>contains</guilabel> from the drop down boxes and type
-<userinput>Priority</userinput> in the text field. Select the same criteria 
+<userinput>Priority</userinput> in the text field. Select the same criterion 
 in the next line and type <userinput>urgent</userinput> in the
 text field of the second drop down box.</para>
 <para>So your filter will match all messages containing a
@@ -1500,52 +1778,53 @@ drop down box.</para>
 </step>
 <step>
 <para>Since you want this filter to <emphasis>not</emphasis>
-prevent other filters message rules from being applied,
+prevent other filters' message rules from being applied,
 carefully <emphasis>uncheck</emphasis> the
-<guilabel>If this filter matches, stop processing here</guilabel> option.</para>
+<guilabel>If this filter matches, stop processing here</guilabel> option on the <quote>Advanced</quote> tab.</para>
 </step>
 <step>
 <para>Click on <guibutton>OK</guibutton>, and you are done.</para>
-<para>Just keep in mind to move the <quote>Priority: urgent</quote>
+<para>Just remember to move the <quote>Priority: urgent</quote>
 filter entry to the top of the <guilabel>Available Filters</guilabel>
-list, each time, when you have added another filter, so your
-non-stopping filter will always be applied first.</para>
+list each time you add a new filter, so that your
+flow-through filter is always applied first.</para>
 </step>
 </procedure>
 
-<para>If I am subscribed to the (general) &kde; List, I could create a
-folder for the list (I will call it
+<para>If you are subscribed to the (general) &kde; List, you could create a
+folder for the list (let's call it
 <replaceable>KDE-General</replaceable>) and use a filter to
-automatically transfer new messages from my inbox to my
-<replaceable>KDE-General</replaceable> folder if they are from the
+automatically transfer new messages from your inbox to your
+<replaceable>KDE-General</replaceable> folder if they came from the
 &kde; List. Here is how to create this filter:</para>
 
 <procedure>
 <title>Filtering a mailing list</title>
 <step>
-<para>Try if <menuchoice><guimenu>Message</guimenu><guisubmenu>Create
+<para>Check if <menuchoice><guimenu>Message</guimenu><guisubmenu>Create
 filter</guisubmenu><guimenuitem>Filter on
 Mailing-List...</guimenuitem></menuchoice> can identify the mailing
 list (the name of the list should then appear in the menu item); in
-this case, this works and I am presented a filter that has
+this case, this works and you are presented with a filter that has
 <quote>List-Id <guilabel>contains</guilabel>
-&lt;kde.kde.org&gt;</quote> preset. You select the
+&lt;kde.kde.org&gt;</quote> preset. Then select the
 desired destination folder from the folder pull-down menu in the
 <guilabel>Filter Action</guilabel> group and that is it.</para>
 
 <para>If that does not work, think of a unique way of identifying the
-messages you want to filter. The (almost) unique property of my &kde;
+messages you want to filter. The (almost) unique property of &kde;
 List messages is that they always contain
 <quote>kde@kde.org</quote> in the
-<guilabel>To:</guilabel> or <guilabel>CC:</guilabel> field. It is only
-almost unique, because this fails for cross-posted messages.</para>
+<guilabel>To:</guilabel> or <guilabel>CC:</guilabel> field. It is not
+quite perfect, because this fails for cross-posted messages.</para>
 </step>
 <step>
 <para>Select <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure 
 Filters...</guimenuitem></menuchoice>.</para>
 </step>
 <step>
-<para>Press the <guibutton>New</guibutton> button to create an empty
+<para>Press the <guibutton><inlinemediaobject><imageobject><imagedata fileref="document-new.png"
+format="PNG"/></imageobject></inlinemediaobject></guibutton> button to create an empty
 filter. It will appear as <guilabel>&lt;unknown&gt;</guilabel>.</para>
 </step>
 <step>
@@ -1592,8 +1871,9 @@ the pull-down menus: <guilabel>From</guilabel>,
 </step>
 </procedure>
 
-<para>You now have a filter that transfers all &kde; List messages
+<para>You now have a filter that identifies all &kde; List messages
 that are from <userinput>fj@anywhere.com</userinput>.</para>
+<para>&nbsp;</para> <!-- whitespace -->
 <!-- fixme: trigger with ctrl-j or whenever new mail arrives (unless
 <guilabel>Advanced Options</guilabel> are changed. -->
 </sect2>
@@ -1601,14 +1881,14 @@ that are from <userinput>fj@anywhere.com</userinput>.</para>
 <sect2 id="filter-optimization">
 <title>Filter Optimization</title>
 
-<para>It is important to know that, for example, the order of the
-filters has an  impact on the speed of the filter process. Here are
-some ideas which can help you to improve the filtering:
+<para>It is important to realize that the order of the
+filters has an  impact on the speed of the filtering process. Here are
+some ideas which can help you to improve filter performance.
 </para>
 
 <variablelist>
 <varlistentry>
-<term>Stop filter processing as early as possible:</term>
+<term>Stop filter processing as soon as possible:</term>
 <listitem>
 <para>If you know that a filter finally processes a certain class of 
 messages, please make sure to check the option <guilabel>If this filter 
@@ -1638,7 +1918,7 @@ evaluation of a filter rule. If the rule is based on a message header,
 its evaluation should normally be much faster than the evaluation of 
 a rule based on the complete message.
 </para>
-<para>You should try to keep the filter rules as simple as possible.
+<para>Try to keep the filter rules as simple as possible.
 </para>
 </listitem>
 </varlistentry>
@@ -1647,12 +1927,12 @@ a rule based on the complete message.
 <varlistentry>
 <term>Check the order of your filters:</term>
 <listitem>
-<para>All the different filter actions have a different complexity. 
+<para>The various filter actions have different degrees of complexity. 
 The most expensive filter actions are <guilabel>Pipe Through</guilabel> 
 and <guilabel>Execute Command</guilabel>, because both need external 
 programs to be run. Placing filters containing these filter actions
 behind other filters that can reduce the number of times these complex
-actions are required is useful, if the filter logic does allow
+actions are required is useful, if the filter logic allows
 this.</para> 
 <para>An example is filtering messages from a mailing list and detecting 
 spam messages. For the spam detection you will usually use an external 
@@ -1674,10 +1954,10 @@ messages which were identified as mailing list messages.
 open a viewer for the filter log via <menuchoice><guimenu>Tools</guimenu>
 <guimenuitem>Filter Log Viewer...</guimenuitem></menuchoice>. 
 </para>
-<para>In the viewer, there you can configure  the logging of the filter 
-processing. You can control the detail level of the log, clear the log 
-or save the log into a file. The log can provide valuable information if 
-you need to debug your filtering process.
+<para>In the viewer you can configure logging of the filter 
+process. You can control the level of detail recorded, clear the log, limit the size of the log, 
+and save the log as a file. The log can provide valuable information when 
+you want to improve your filter rules.
 </para>
 </sect2>
 </sect1>
@@ -1695,9 +1975,10 @@ you need to debug your filtering process.
 <action>open a dialog</action> that allows you to create a single archive of the currently selected folder.</para>
 <para>The <guilabel>Folder:</guilabel> shows the currently selected folder, if you wish to change the folder to be archived click the folder icon.
  The <guilabel>Format:</guilabel> drop down menu allows you to choose a format (choices are: zip, tar, tar.bz2, and tar.gz).
- If you would like to change the default name or location, click the folder at the end of <guilabel>Archive File</guilabel>.</para>
- <para>Check the <guilabel>Delete folder and subfolders after completion</guilabel> if you would like everything you archived deleted.
- By default all subfolders will be archived, uncheck <guilabel>Archive all subfolders</guilabel> if you only want to archive the parent folder.</para>
+ If you would like to change the default name or location, click the folder button to the right of <guilabel>Archive File</guilabel>.</para>
+ <para>Check the <guilabel>Delete folder and subfolders after completion</guilabel> button if you would like everything you archived deleted from
+the &kmail; database after the external archive has been saved.
+ By default all subfolders will be archived. Uncheck <guilabel>Archive all subfolders</guilabel> if you only want to archive the parent folder.</para>
 </listitem></varlistentry>
 <varlistentry id="auto-archive">
 <term><menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Automatic Archiving...</guimenuitem></menuchoice></term>
@@ -1705,7 +1986,7 @@ you need to debug your filtering process.
 <para>This is a powerful tool that can be used to assist in backing up your email. Please see <ulink url="help:/akonadi_archivemail_agent">Automatic Archiving</ulink> for details.</para>
 </listitem>
 </varlistentry>
-<varlistentry id="archive-folder">
+<!-- <varlistentry id="archive-folder">
 <term><menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Folder Archive Agent...</guimenuitem></menuchoice></term>
 <listitem>
 <para>This feature allows you to archive single emails to a specified folder.</para>
@@ -1729,7 +2010,7 @@ use this feature with. The first option allows you to enable/disable the folder 
 checkbox. You can set the location of your Archive folder by clicking the folder icon next to
 <guilabel>Folder:</guilabel> and selecting the folder you wish to use. For example, you could create
 a folder called <quote>bill receipts</quote> by clicking the <guibutton>New Subfolder...</guibutton> and typing <userinput>bill receipts</userinput> in
-the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote>Local Folders</quote> or on your &imap; server.</para>
+the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote>Local Folders</quote> or on your &IMAP; server.</para>
 <para>
 You have several choices on how the emails will be archived:
 </para>
@@ -1752,16 +2033,16 @@ Now when you receive a bill receipt, &RMB; the email and select <guimenuitem>Arc
 into your configured archive folder for easy viewing later on.
 </para>
 </listitem>
-</varlistentry>
-</variablelist>
+</varlistentry> --><!-- This feature is no longer available. @dcb2020295 -->
+</variablelist> 
 </sect2>
 <sect2 id="exporting">
 <title>Exporting</title>
 <variablelist>
 <varlistentry id="settingsexport">
-<term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Export &kmail; Data...</guimenuitem></menuchoice></term>
+<term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Import/Export &kmail; Data...</guimenuitem></menuchoice></term>
 <listitem>
-<para>This feature exports settings and local mail to a compressed file. Please see <ulink url="help:/pimsettingexporter">pimsettingexporter</ulink> for details.</para>
+<para>This feature exports settings and local mail to a compressed file. Please see <ulink url="help:/pimdataexporter">pim data exporter</ulink> for details.</para>
 </listitem>
 </varlistentry>
 </variablelist>
@@ -1769,7 +2050,7 @@ into your configured archive folder for easy viewing later on.
 </sect1>
 <sect1 id="import-restore">
 <title>Restore and Import in &kmail;</title>
-<para>This section describes restoring backups and importing in &kmail;</para>
+<para>This section describes restoring backups and importing data into &kmail;.</para>
 
 <sect2 id="restore">
 <title>Restoring backed up email and settings</title>
@@ -1777,8 +2058,8 @@ into your configured archive folder for easy viewing later on.
 <varlistentry id="settingsimport">
 <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Export &kmail; Data...</guimenuitem></menuchoice></term>
 <listitem>
-<para>If you used PIM Setting Exporter to backup local email and or settings, please use it again to import back
-into &kmail;. See <ulink url="help:/pimsettingexporter">PIM Setting Exporter</ulink> for details.</para>
+<para>If you used PIM Data Exporter to backup local email and / or settings, please use it again to restore data
+into &kmail;. See <ulink url="help:/pimdataexporter">PIM Data Exporter</ulink> for details.</para>
 </listitem></varlistentry>
 </variablelist>
 </sect2>
@@ -1787,25 +2068,27 @@ into &kmail;. See <ulink url="help:/pimsettingexporter">PIM Setting Exporter</ul
 <title>Importing options in &kmail;</title>
 
 <para>
-&kmail; has an import wizard to make the transition from another email application extremely easy.
+&kmail; has an import wizard to make the transition from another email application easier.
 </para>
 
 <variablelist>
 <varlistentry id="importing-import-wizard">
 <term><menuchoice>
 <guimenu>Tools</guimenu>
-<guimenuitem>Import Wizard...</guimenuitem>
+<guimenuitem>Import from another Email Client...</guimenuitem>
 </menuchoice></term>
 <listitem>
-<para>This starts the import wizard and try to automatically detect data from another email application.
-In case the mail data you want to import is not found, use the manual import below.</para>
+<para>This starts the import wizard and tries to automatically detect data from another email application.
+    In case the mail data you want to import is not found, use the <guilabel>Manual Selection</guilabel> option.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry id="importing-import-manual">
-<term><menuchoice><guimenu>File</guimenu><guimenuitem>Import Messages...</guimenuitem></menuchoice></term>
+<term><menuchoice><guimenu>File</guimenu><guimenuitem><inlinemediaobject>
+<imageobject><imagedata fileref="document-import.png" format="PNG"/>
+</imageobject></inlinemediaobject> Import Messages...</guimenuitem></menuchoice></term>
 <listitem>
-<para>Start the import wizard and let you select your mail data manually for importing.</para></listitem>
+<para>Starts the import wizard and lets you select the desired data manually.</para></listitem>
 </varlistentry>
 </variablelist>
 
@@ -1821,21 +2104,27 @@ Please read the <ulink url="help:/importwizard">Import Wizard</ulink> documentat
 
 <para>Multiple accounts are used to check for messages from more than one email address
 and/or mail server. Select <menuchoice><guimenu>Settings</guimenu>
-<guimenuitem>Configure &kmail;...</guimenuitem></menuchoice> and click on the
+<guimenuitem><inlinemediaobject><imageobject><imagedata fileref="configurebutton.png" format="PNG"/>
+</imageobject></inlinemediaobject> Configure &kmail;...</guimenuitem></menuchoice> and click on the
 <guilabel>Accounts</guilabel> page to add or change your account settings. See the
 <link linkend="getting-started">Getting started</link> section for more
 information on the settings in the <guilabel>Accounts</guilabel> page.</para>
 
 <para>To check for messages from a particular account, use the
-<menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail
+<menuchoice><guimenu>File</guimenu><guimenuitem><inlinemediaobject>
+<imageobject><imagedata fileref="mail-receive.png" format="PNG"/>
+</imageobject></inlinemediaobject> Check Mail
 In</guimenuitem></menuchoice> submenu to select the account to check
-for mail. You can also press the mouse button on the <guiicon>Check
-Mail</guiicon> icon for some time to get a list of accounts.</para>
+for mail. You can also press and hold the &LMB; on the <guiicon><inlinemediaobject>
+<imageobject><imagedata fileref="mail-receive.png" format="PNG"/>
+</imageobject></inlinemediaobject> Check
+Mail</guiicon> icon (on the toolbar) for a few seconds to get a list of accounts.</para>
 
 </sect1>
 
 <sect1 id="pgp">
 <!-- This section is from Andreas Gungl, 2000-05-21, updated 2002-10-06 by Ingo Kloecker -->
+<!-- Edited and modified by D. Bryant 2020-10-22. -->
 <title>Signing and Encrypting Messages with <application>GnuPG</application></title>
 
 <!--
@@ -1845,7 +2134,7 @@ version of &kmail;. You can still read the introduction to get an overview
 about how to sign/encrypt messages, but the details, especially those of
 the configuration, will differ.</para></note>
 -->
-<para>This is a short introduction on how to setup &kmail;'s
+<para>This is a short introduction on how to set up &kmail;'s
 <application>GnuPG</application> (<application>&GNU; Privacy Guard</application>) support;
 it gives some hints on the use of
 <application>GnuPG</application> too. It is written for people who are beginners in
@@ -1857,32 +2146,30 @@ also check out the <link linkend="pgp-faq">&FAQ; item about
 <application>GnuPG</application></link>.</para>
 
 <warning><para>Attachments will not be signed/encrypted if you are using
-inline OpenPGP: to sign/encrypt attachments, you have to install GnuPG and
-some necessary libraries;
-then, you can decide for each attachment whether it should be signed/encrypted or not.
+inline OpenPGP. To sign/encrypt attachments, you have to install GnuPG and
+some necessary libraries.
+Then, you can decide for each attachment whether it should be signed/encrypted or not.
 </para></warning>
 
-<warning><para>&kmail; has to rely on <application>GnuPG</application>'s
+<!-- <warning><para>&kmail; has to rely on <application>GnuPG</application>'s
 output; this output is often different between different versions of 
 <application>GnuPG</application>, so it is important that you test if encryption
 really works with your setup before you start using it seriously. &kmail; might
-<emphasis>not</emphasis> warn you if something fails -- enable 
+<emphasis>not</emphasis> warn you if something fails - enable 
 <guilabel>Show signed/encrypted text
-after composing</guilabel>.  </para></warning>
+after composing</guilabel>.  </para></warning> --><!-- Removing this warning ... GnuPG is stable now. @dcb2020295 -->
 
-<para>To setup and use <application>GnuPG</application> support in &kmail; it is
-necessary to have <application>GnuPG</application> installed and set up
-properly; of course, we cannot give you a full introduction of
-<application>GnuPG</application> here. We will only mention the steps you have to
-do to get <application>GnuPG</application> going. For details you should have a look at 
-the <ulink url="http://www.gnupg.org/docs.html#guides">The &GNU; Privacy Handbook</ulink>.</para>
+<para>To set up and use <application>GnuPG</application> support in &kmail; it is
+necessary to have <application>GnuPG</application> installed and configured
+properly. Of course, we cannot give you a full introduction to
+<application>GnuPG</application> here. We will only mention the steps you must perform
+to get <application>GnuPG</application> going. For details you should look at 
+<ulink url="https://www.gnupg.org/docs.html#guides">The &GNU; Privacy Handbook</ulink>.</para>
 
-<para>It is certainly a good idea to study this documentation as well as an
-introduction into public key cryptography: there you can learn a lot about
-the basic concepts, which will help you to understand what is going on; also,
+<para>It is certainly a good idea to study the GnuPG documentation as well as an
+introduction to public key cryptography. That way you can learn a lot about
+the basic concepts, which will help you understand what is going on. Also,
 many security related issues you should know about are discussed there.</para>
-
-<para>Now, let us start.</para>
 
 <sect2 id="pgp-preconditions">
 <title>Preconditions</title>
@@ -1891,11 +2178,11 @@ many security related issues you should know about are discussed there.</para>
 <command>gpg</command>. If this is not the case for you,
 just make a symlink.</para>
 
-<para>If you have not done so, you have to generate a key pair (secret and public
-key) for your identity. Either do that using &kgpg; or &kleopatra; or do this at the command line: 
-<userinput><command>gpg</command> <option>--gen-key</option></userinput>: &kmail;
-has no internal support for <application>gpg</application>'s key generation at
-this time. The identity (normally your name followed by your email address
+<para>If you have not yet done so, you must generate a key pair (secret and public
+keys) for your identity. You may do this using &kgpg; or &kleopatra; or at the command line: 
+<userinput><command>gpg</command> <option>--gen-key</option></userinput>. Or you
+can ask &kmail; to create a new key pair when you create
+a new email account. The identity (normally your name followed by your email address
 within brackets, such as <userinput>John Doe
 &lt;john@example.com&gt;</userinput>) and your passphrase are important for the
 co-operation between &kmail; and <application>GnuPG</application>.</para>
@@ -1906,7 +2193,7 @@ co-operation between &kmail; and <application>GnuPG</application>.</para>
 <title><application>GnuPG</application>-Related Settings in &kmail;</title>
 
 <para>Select the <guilabel>Composing</guilabel> tab on
-the <guilabel>Security</guilabel> settings page; there you will find the
+the <guilabel>Security</guilabel> settings page. There you will find the
 following options:</para>
 
 <variablelist>
@@ -1921,24 +2208,25 @@ installed on your system (it is also important to select the correct
 version.)</para>
 </listitem>
 </varlistentry>
--->
+    --><!-- Gpg is used by default. @dcb2020296. -->
 
 <varlistentry>
 <term><guilabel>When encrypting emails, always also encrypt to the certificate of my own identity</guilabel></term>
 <listitem>
 <para>If this option is off and you want to send an encrypted message to somebody,
 then you cannot read this message any longer after you have composed and
-encrypted it. Turn this option on to keep sent encrypted messages readable for
-you too.</para>
+encrypted it. Turn this option on to keep the encrypted messages you send readable for
+you, too.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term><guilabel>Store sent messages encrypted</guilabel></term>
 <listitem>
-<para>When this box is checked, sent messages are stored encrypted like they were 
+<para>When this box is checked, sent messages are stored encrypted, as they were 
 sent. This is not recommended, as you will not be able to read the messages 
-any longer if a necessary certificate expires.</para> 
+any longer if a necessary certificate expires. (Notice that GPG keys do
+not expire, as a general rule; this caution is primarily relevant for x.509 certificate users.)</para> 
 </listitem>
 </varlistentry>
 
@@ -1946,55 +2234,62 @@ any longer if a necessary certificate expires.</para>
 <term><guilabel>Always show the encryption keys for approval</guilabel></term>
 <listitem>
 <para>This will always open a dialog that lets you choose the keys used for
-each recipient when you are sending an encrypted message; if this
-option is off, &kmail; will show this dialog only when it cannot
+each recipient when you are sending an encrypted message. If this
+option is off, &kmail; will show the dialog only when it cannot
 find a key for a recipient or when there are conflicting or unset encryption
 preferences.</para> 
 </listitem>
 </varlistentry>
 
 <varlistentry>
-<term><guilabel>Automatically encrypt messages whenever possible</guilabel></term>
-<listitem><para>If this option is on, &kmail; will automatically encrypt messages
-with the built-in OpenPGP support or the PGP/&MIME;-Plugin provided that,
-for every recipient, a trusted PGP key is found in your keyring and
-you did not tell &kmail; not to encrypt messages sent to
-certain recipients. If in doubt, &kmail; will ask whether the message
-should be encrypted or not.</para></listitem>
+<term><guilabel>When saving as draft, always sign/encrypt as indicated</guilabel></term>
+<listitem><para>If this option is on, &kmail; will automatically encrypt (and / or sign) messages
+that you save in the <guilabel>drafts</guilabel> folder (when you specify signing / encryption).</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>Show sign/encrypt indicator in editor</guilabel></term>
+<listitem><para>If this option is on, &kmail; will display an indicator in the composition window
+to inform you that this message will be signed / encrypted whenever that is the case.</para></listitem>
 </varlistentry>
 
 </variablelist>
 
-<para>Now that you have setup the encryption tool you have to tell &kmail; which
-OpenPGP key you want to use for signing and for encrypting messages;
-to do this go to the <link linkend="configure-identity">Identities configuration</link>
-and set the key that should be used on the <guilabel>Cryptography</guilabel> tab of the
-identity configuration.</para>
+<para>Now that you have set up the encryption tool, you must tell &kmail; which
+OpenPGP key you want to use for signing and encrypting messages.
+To do this go to the <link linkend="configure-identity">Identities configuration</link>
+and set the key that should be used via the <guilabel>Cryptography</guilabel> tab in the
+identity configuration dialog.</para>
 
-<para>Now you are able to sign outgoing messages; to let people send you
-encrypted messages and to let them verify your signature you
-must send them your public key or upload your public key to a public
-<application>GnuPG</application> key server so that they can fetch your key from there.
-To send encrypted messages to other people or to verify their signed
-messages you will need their public keys;  you can store your public key(s) on a
-public <application>GnuPG</application> key server.</para>
+<para>Now you can sign outgoing messages. To let people send you
+encrypted messages, and to let them verify your signature, you
+must send them your public key, or upload your public key to a public
+<application>GnuPG</application> key server (so people can fetch your key from the server).
+To send encrypted messages to other people, or to verify their signed
+messages, you will need their public keys. You can search for public keys on a
+public <application>GnuPG</application> key server. Or you can ask your friends
+to send you one or more of their public keys.</para>
 
 </sect2>
 
 <sect2 id="pgp-sign-your-messages">
 <title>Sign your Messages</title>
 
-<para>You can compose your message as usual in the composer
-window of &kmail;. Before you send the message, check the <guibutton>Sign</guibutton>
-icon on the toolbar of the composer window; then, you can send
+<para>Compose your message as usual in the composer
+window. Before you send the message, check the <guibutton><inlinemediaobject>
+<imageobject><imagedata fileref="document-edit.png" format="PNG"/>
+</imageobject></inlinemediaobject> Sign</guibutton>
+icon on the toolbar of the composer window, or select <menuchoice>
+<guimenu>Options</guimenu><guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="document-edit.png" format="PNG"/></imageobject>
+</inlinemediaobject> Sign Message</guimenuitem></menuchoice>. Then, you can send
 the message. The identity you are using to write the current message needs to 
 be connected to an <guilabel>OpenPGP Key</guilabel> in the <guilabel>Identity</guilabel>
 section of the <guilabel>Configure</guilabel> dialog.
 To sign the message, &kmail; needs to know your <application>GnuPG</application> 
-passphrase: if you did not select <guilabel>Keep passphrase in memory</guilabel> in the
-<guilabel>Security</guilabel> section, &kmail; will ask you for it; otherwise,
-if you have already given the phrase to &kmail;, it will sign the
-message without any further prompt.</para>
+passphrase. You may be asked to supply it, or,
+if you have previously given the phrase to &kmail;, the
+message will be signed automatically.</para>
 
 </sect2>
 
@@ -2002,34 +2297,38 @@ message without any further prompt.</para>
 <title>Encrypt your Messages</title>
 
 <para>To send an encrypted message to somebody whose
-public key you have, you simply create the message in the composer window.
-Before you send the message, check the <guibutton>Encrypt</guibutton> 
-button in the toolbar of the composer window; note
-that you might not have to check the button if <guilabel>Automatically
-encrypt messages whenever possible</guilabel> is selected in
-&kmail;'s configuration (see <link linkend="pgp-sign-your-messages">above</link>).
+public key is on your gpg key ring, simply create the message in the composer window.
+Before you send the message, check the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt</guibutton> 
+button in the toolbar of the composer window (or select <menuchoice>
+<guimenu>Options</guimenu><guimenuitem><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt Message</guimenuitem></menuchoice>).
 Then send the message.</para>
 
 <para>
-If you checked the <guibutton>Encrypt</guibutton> button and &kmail;
-cannot find a matching key for a recipient, it will display a list containing
-all available keys in the <guilabel>Encryption Key Selection</guilabel> dialog;
-if &kmail; finds more than one trusted key for a recipient, it will
-display a list containing all matching keys for this recipient. In both
-cases you can select the key(s) which should be used for encrypting
-this message for the recipient in question.
-Using the <guilabel>Remember choice</guilabel>
-checkbox you can save your selection for future messages.</para>
+If you checked the <guibutton><inlinemediaobject><imageobject>
+<imagedata fileref="document-decrypt.png" format="PNG"/>
+</imageobject></inlinemediaobject> Encrypt</guibutton> button and &kmail;
+cannot find a matching key for a recipient, it will allow you to modify
+your key ring before trying again.
+If &kmail; finds more than one trusted key for a recipient, it will
+display a list containing all matching keys for this recipient. In either
+case you can select the key(s) which should be used for encrypting
+this message for the recipient in question.</para>
 
-<para>If you are using a key for the first time, there are conflicting
+<para>If you are using a key for the first time, if there are conflicting
 Encryption Preferences, or if <guilabel>Always
 show the encryption keys for approval</guilabel> is selected in the
 <guilabel>Security</guilabel> section of &kmail;'s configuration dialog,
-the <guilabel>Encryption Key Approval</guilabel> dialog will appear;
-here, you can select different keys for the recipients and can 
+the <guilabel>Encryption Key Approval</guilabel> dialog will appear.
+You can select different keys for the recipients and can 
 set the <guilabel>Encryption Preference</guilabel> for each recipient.
-The default option, <guilabel>Encrypt whenever encryption is
-possible</guilabel>, will automatically encrypt your message if there is a 
+The option, <guilabel>Encrypt whenever encryption is
+possible</guilabel> (on the <guilabel>Cryptography</guilabel> tab of the
+<menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &kmail;...</guimenuitem>
+</menuchoice> dialog), will automatically encrypt your message if there is a 
 trusted key for each recipient.</para>
 
 <para>As mentioned above, you will not be able to read your own encrypted sent
@@ -2042,43 +2341,45 @@ settings' <guilabel>Security</guilabel> page.</para>
 <sect2 id="pgp-send-your-public-key">
 <title>Send your Public Key</title>
 
-<para>Prepare a message to the person to whom you want to send your public key;
-then, choose, in the composer window's menu,
-<menuchoice><guimenu>Attach</guimenu><guimenuitem>Attach My Public
-Key</guimenuitem></menuchoice>: this will attach the public key you
-defined for the current identity to the message. Now you can send the message.</para>
+<para>Prepare a message to the person to whom you want to send your public key.
+Then choose, in the composer window's menu,
+<menuchoice><guimenu>Attach</guimenu><guimenuitem>Attach Public
+Key</guimenuitem></menuchoice>. This will attach your public key – the one you are
+currently using – to the message.</para>
 
-<para>Remember that it is not safe at all if you sign the message to make sure
-that the receiver will get the correct key: there can be a man-in-the-middle
-attack, as somebody can change the key and sign the message with that other
-key. That is why the recipient should verify the attached key by checking the
-key's fingerprint against the one he received in a secure way from you; have a look
-at the <application>GnuPG</application> documentation for further details.</para>
+<para>Remember that it is not perfectly safe to just sign the message to ensure
+that the receiver gets the correct key. There can (possibly) be a "man-in-the-middle"
+attack: somebody could intercept your message, change the attached key, and then sign the message with that other
+key. The recipient should verify the attached key by checking the
+key's fingerprint against the one he received in a secure way from you.
+Alternatively, just ask him to use the key he received to compose and send an encrypted
+message back to you. If your secret key decrypts that message, he has a copy of your public key. See
+the <application>GnuPG</application> documentation for further details.</para>
 
 </sect2>
 
 <sect2 id="pgp-you-received-an-encrypted-message">
 <title>You received an encrypted Message</title>
 
-<para>All you have to do is to select the message in &kmail;. You will be
-prompted for your passphrase; then, &kmail; will try to decrypt the message and
-show you the plain text if the message had been encrypted with your public
-key: if not, then you will not be able to read it. &kmail; stores the messages
-encrypted, so nobody can read these messages without knowing your passphrase.</para>
+<para>All you have to do is to select the message in &kmail;. You may be
+prompted for your passphrase. Then, &kmail; will decrypt the message and
+show you the plain text if the message was encrypted with your public
+key. If not, you will not be able to read it. By default, &kmail; stores messages
+encrypted, so nobody can read these messages without knowing your passphrase, or, at a minimum, your login password.</para>
 
 </sect2>
 
 <sect2 id="pgp-receiving-a-public-key">
 <title>Receiving a Public Key</title>
 
-<para>You can receive a public key as an attachment or via http, ftp or a floppy.
-Before you can use this key to encrypt a message to the owner of the
+<para>You can receive a public key as an attachment, or via http, ftp, or a floppy.
+Before you use this key to encrypt a message to the owner of the
 key, you should verify the key (check its fingerprint or look for
 trusted signatures); then, you can add this key to your public keyring
 by typing <userinput><command>gpg</command> <option>--import</option>
 <replaceable>filename</replaceable></userinput> at the command line. 
-If the key is not certified with a trusted signature 
-you cannot use it to encrypt messages unless you have signed the key with your key.
+If the key is not certified with another signature that you have already trusted,
+you cannot use it to encrypt messages unless you sign (certify) the key with your own key.
 </para>
 
 </sect2>
@@ -2109,37 +2410,41 @@ Afterwards it will automatically create the appropriate filter rules.
 <varlistentry>
 <term>What are the limitations of the wizard?</term>
 <listitem>
-<para>It can only initially set up the filters for you; and it will provide a 
-standard setup. Manual modifications in existing filters are not considered.
-Instead, these filters are overwritten by the wizard.
+<para>All it can do is set up the filters for you; it will provide a 
+standard setup. Manual modifications that have been applied to existing anti-spam filters are not recognized.
+Instead, such filters are overwritten by the wizard.
 </para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>You can activate the wizard via <menuchoice><guimenu>Tools</guimenu>
-<guisubmenu>Anti-Spam Wizard...</guisubmenu></menuchoice>.</para>
+<guisubmenu>Anti-Spam Wizard...</guisubmenu></menuchoice>. If this choice is not
+available, click <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
+&kmail;...</guisubmenu><guimenuitem>Plugins</guimenuitem></menuchoice> and
+check the box next to <guilabel>Antispam</guilabel>. You will be prompted to
+restart &kmail;; when you do, the wizard will appear on the <guilabel>Tools</guilabel> menu.</para>
 
 <para>The wizard scans for known anti-spam tools on your computer. 
-It is also possible to use the results of spam checks made by your service provider
+It is also possible to use the results of spam checks made by your service provider,
 by evaluating header information which has been added to the messages.
 You can let the wizard prepare &kmail; to use one or more of these in parallel.
-However, note that anti-spam tool operations are usually time consuming.
-&kmail; can appear to be frozen during the scan of messages for spam;
+However, note that anti-spam tool operations are unusually time consuming.
+&kmail; can appear to be frozen during the scan of messages for spam, so
 you may encounter problems with the responsiveness of &kmail;. Please consider 
 deleting the filter rules created by the wizard if the filtering becomes 
-too slow for you. 
-Here are some recommendations regarding the supported tools:</para>
+too slow for you. (This has been a problem with older hardware. It probably won't afflict more modern machines.)</para>
+<para>Here are some observations about a few anti-spam tools.</para>
 
 <variablelist>
 <varlistentry>
   <term>Bogofilter</term>
 <listitem>
-<para>Bogofilter is a bayesian filter, that means its spam detection 
+<para>Bogofilter is a Bayesian filter. Its spam detection ability
 relies on an initial training phase. On the other hand, it's a pretty 
-fast tool. That's why it is recommended to be used by people who 
-primarily want to have fast spam detection, and who won't worry
-about the initial training before the detection rate
+fast tool. That's why it is recommended for people who 
+want fast spam detection, and who aren't worried
+about putting some effort into the initial training, before the detection rate
 increases significantly.
 </para>
 </listitem>
@@ -2147,19 +2452,19 @@ increases significantly.
 <varlistentry>
   <term>SpamAssassin</term>
 <listitem>
-<para>SpamAssassin is a pretty complex tool to use against spam.
+<para>SpamAssassin is a fairly complex tool to use against spam.
 Although its behavior depends heavily on its configuration,
 it can detect spam quite well without any training. However,
-scanning a message takes a little longer compared to pure bayesian 
+scanning a message takes a little longer compared to pure Bayesian 
 filters. Let's say it's not the tool of choice for people without
 some background information about SpamAssassin's capabilities.
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-  <term>Annoyance-Filter</term>
+  <term>Annoyance Filter</term>
 <listitem>
-<para>Perhaps not so often used until distributions pick it up.
+<para>Perhaps not so often used until more distributions pick it up.
 It's clearly a tool for specialists.
 </para>
 </listitem>
@@ -2168,11 +2473,11 @@ It's clearly a tool for specialists.
   <term>GMX Spam Filter</term>
 <listitem>
 <para>If you get your mail via the GMX freemail provider,
-your messages are already scanned for spam. The result of that process is
-documented in a special header field of each message. It's possible to
-use the content of this header field to sort out spam. There is no 
-slowdown in the filtering if only this tool is used, as the messages
-have already been processed.
+your messages have already been scanned for spam. The result of that process is
+documented in a special header field in each message. It's possible to
+use the content of this header field to filter out spam. There is very little
+slowdown in the filtering when this tool is used, as the messages
+have already been processed by the external email server.
 </para>
 </listitem>
 </varlistentry>
@@ -2184,23 +2489,24 @@ have already been processed.
 <sect2 id="spam-wizard-advanced">
 <title>Advanced</title>
 
-<para>Here are the details of how the wizard works: &kmail; can use several 
+<para>&kmail; can use several 
 external tools to detect spam messages; it will try to automatically find 
-out which tools are installed on your system and will show you these
+out which tools are installed on your system, and will display all of these
 in a list. The list is ordered by the average speed of the filtering
 process of the tools. You can mark the tools which you want 
-to be used by &kmail; to detect spam. Of course, you 
-can close the wizard, install a new tool, and restart the wizard again.
+&kmail; to utilize to detect spam. If you want more choices, you 
+can simply close the wizard, install a new tool, then restart the wizard.
 </para>
 
 <para>If you have marked at least one tool, &kmail; is able to provide filters
 which allow the classification of the messages as spam or not spam. It will 
 also provide actions to let you manually classify messages. These actions will 
-be available via the menu and toolbar icons.
+be available in the <menuchoice><guimenu>Message</guimenu><guisubmenu>Apply
+Filter &gt;</guisubmenu></menuchoice> menu item, and also via a pair of icons on the toolbar.
 If any of the tools you selected support Bayesian filtering (&ie; a method 
 to detect spam based on statistical analysis of the messages) then these 
-messages are not only marked but additionally transferred to the tools to
-enable them to learn thereby improving their detection rate.
+messages are not only marked but additionally piped through the tools to
+help them learn, thereby improving their detection rate.
 </para>
 
 <para>On the second page, you will be able to select some additional
@@ -2214,13 +2520,13 @@ then mark the <guilabel>Mark detected spam messages as read</guilabel> option.
 <para>Selecting at least one of the available tools will allow
 the wizard to finish the filter setup. The wizard will not take any
 modifications in existing filters, formerly created by it, into
-consideration but will either append new filters or replace existing filters.
+consideration, but will either append new filters or replace existing filters.
 In any case you may want to inspect the result of this process in the
 <link linkend="filter-dialog">Filter Dialog</link>. 
 The wizard will also create toolbar buttons for marking messages as spam or
-as ham; keep in mind that classifying messages as spam will also move those 
-messages to the folder you had specified for spam messages, if you have
-selected the appropriate option.
+as ham. Keep in mind that classifying messages as spam will also move those 
+messages to the folder you have specified for spam messages, when you
+select the <quote>spam</quote> option.
 </para>
 
 </sect2>
@@ -2231,10 +2537,10 @@ selected the appropriate option.
 <para>The wizard uses information stored in a special configuration file named 
 <filename>kmail.antispamrc</filename> (stored in the global or local &kde;
 config directory). It will first check the global config file and then the local 
-config file: if the local config file contains entries with higher (newer) 
-version numbers per-tool the configuration data from the local file for that 
-tool is used; that way, both administrators and users can update the
-wizard configuration.
+config file. If the local config file contains an entry with a higher (newer) 
+version number, the configuration data from the local file (for that
+tool) is used, so both administrators and users can update the
+wizard's configuration.
 </para>
 
 <para>The local detection of spam messages is achieved by creating 
@@ -2242,7 +2548,7 @@ wizard configuration.
 special filter. Another filter contains rules to check for detected spam 
 messages and actions to mark them and (optionally, depending on the choice 
 in the wizard) to move them into a folder. Both filters are configured to 
-be applied on incoming messages and on manual filtering.
+be applied to incoming messages and for manual filtering.
 </para>
 
 <para>Two filters are needed for the classification of ham and spam. They
@@ -2250,7 +2556,7 @@ contain actions to mark the messages appropriately. As mentioned above, the
 filter for classification as spam can have another supplementary action to
 move the messages into a predefined folder. If the selected tools support
 Bayesian filtering, the wizard will create additional filter actions to pass
-the messages to the tools (via <guilabel>execute command</guilabel> actions)
+the messages to the tools (via <guilabel>Execute Command</guilabel> actions)
 in the appropriate learning mode.
 </para>
 
@@ -2285,44 +2591,49 @@ Afterwards it will automatically create the appropriate filter rules.
 <varlistentry>
 <term>What are the limitations of the wizard?</term>
 <listitem>
-<para>It can only initially set up the filters for you; and it will provide a 
-standard setup. Modifying existing filters is not yet possible.
+<para>All it can do is set up the filters for you; it will provide a 
+standard setup. Manual modifications that have been applied to existing anti-virus filters are not recognized.
+Instead, such filters are overwritten by the wizard.
 </para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>You can activate the wizard via <menuchoice><guimenu>Tools</guimenu>
-<guisubmenu>Anti-Virus Wizard...</guisubmenu></menuchoice>.</para>
+<guisubmenu>Anti-Virus Wizard...</guisubmenu></menuchoice>. If this choice is not
+available, click <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
+&kmail;...</guisubmenu><guimenuitem>Plugins</guimenuitem></menuchoice> and
+check the box next to <guilabel>Antivirus</guilabel>. You will be prompted to
+restart &kmail;; when you do, the wizard will appear on the <guilabel>Tools</guilabel> menu.</para>
 
 </sect2>
 
 <sect2 id="virus-wizard-advanced">
 <title>Advanced</title>
 
-<para>The Anti-Virus Wizard basically works exactly as the 
+<para>The Anti-Virus Wizard basically works the same way as the
 <link linkend="the-anti-spam-wizard">Anti-Spam Wizard</link> does.
-Here are the details of how the wizard works: &kmail; can use several 
-external tools to detect messages containing viruses; it will try to automatically find 
-out which of these tools are installed on your system and will show you the
-result of the search. You can mark the tools which you want
-to be used by &kmail; to detect viruses. Of course, you
-can close the wizard, install a new tool, and restart the wizard again.
+&kmail; can use several 
+external tools to detect messages containing viruses. It will determine 
+which of these tools are installed on your system, and will show you the
+results from the search. You can mark the tools which you want
+&kmail; to use for virus detection. If you want more choices, you 
+can simply close the wizard, install a new tool, then restart the wizard.
 </para>
 
 <para>If you have chosen at least one tool you will be able to select actions
-to be done in &kmail; to messages containing viruses: to let &kmail; detect
-messages containing viruses you definitely should mark the <guilabel>Check messages using the
-anti-virus tools</guilabel> option; if you want messages detected as 
-virus-infected to be moved into a certain folder, select the appropriate folder and
+for &kmail; to perform on messages containing viruses. To let &kmail; detect
+messages containing viruses, you should mark the <guilabel>Check messages using the
+anti-virus tools</guilabel> option. If you want messages infected by a 
+virus to be moved into a certain folder, select the appropriate folder and
 mark the <guilabel>Move detected viral messages to the selected folder</guilabel> 
-option; if messages detected as virus-infected should additionally be marked as read,
-then mark the <guilabel>Additionally, mark detected viral messages as read</guilabel> option.
+option. If such messages should also be marked as read,
+select the <guilabel>Additionally, mark detected viral messages as read</guilabel> option.
 </para>
 
 <para>Selecting at least one of these options will allow
 the wizard to finish the filter setup. The wizard will not take any existing
-filter rules into consideration but will append new rules. In any case you
+filter rules into account, but will append new rules. In any case you
 may want to inspect the result of this process in the 
 <link linkend="filter-dialog">Filter Dialog</link>.
 </para>
@@ -2334,19 +2645,18 @@ may want to inspect the result of this process in the
 
 <para>The wizard uses information stored in a special configuration file named 
 <filename>kmail.antivirusrc</filename> (stored in the global or local &kde;
-config directory). It will first check the global config file and then the local 
-config file: if the local config file contains entries with higher (newer) 
-version numbers per-tool the configuration data from the local file for that 
-tool is used; that way, both administrators and users can update the
-wizard configuration.
+config directory). If the local config file contains an entry with a higher (newer) 
+version number, the configuration data from the local file (for that
+tool) is used, so both administrators and users can update the
+wizard's configuration.
 </para>
 
 <para>The detection of messages containing viruses is achieved by creating 
 <guilabel>pipe through</guilabel> actions per-tool within a 
-special filter. Another filter contains rules to check for detected viral 
-messages and actions to mark them and (optionally, depending on the choice 
+special filter. Another filter contains rules to check for infected 
+messages, and actions to mark them and (optionally, depending on the choice 
 in the wizard) to move them into a folder. Both filters are configured to 
-be applied on incoming messages and on manual filtering.
+be applied to incoming messages and for manual filtering.
 </para>
 
 </sect2>

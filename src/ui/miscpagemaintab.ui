@@ -13,10 +13,17 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0" colspan="2">
-      <widget class="QCheckBox" name="mExcludeImportantFromExpiry">
+     <item row="4" column="0" colspan="2">
+      <widget class="QCheckBox" name="mShowPopupAfterDnD">
        <property name="text">
-        <string>E&amp;xclude important messages from expiry</string>
+        <string>&amp;Ask for action after dragging messages to another folder</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0" colspan="2">
+      <widget class="QCheckBox" name="mEmptyTrashCheck">
+       <property name="text">
+        <string>Empty local &amp;trash folder on program exit</string>
        </property>
       </widget>
      </item>
@@ -39,48 +46,6 @@
      <item row="6" column="1">
       <widget class="QWidget" name="mOnStartupOpenFolder" native="true"/>
      </item>
-     <item row="1" column="1">
-      <widget class="KComboBox" name="mLoopOnGotoUnread">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="whatsThis">
-        <string comment="what's this help">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not loop:&lt;/span&gt; The search will stop at the last message in the current folder.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in current folder:&lt;/span&gt; The search will continue at the top of the message list, but not go to another folder.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all folders:&lt;/span&gt; The search will continue at the top of the message list. If no unread messages are found it will then continue to the next folder.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Similarly, when searching for the previous unread message, the search will start from the bottom of the message list and continue to the previous folder depending on which option is selected.&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all marked folders: &lt;/span&gt;This is the same as &quot;Loop in all folders&quot; except that only folders are taken into account which have been marked with the folder property &quot;Act on new/unread mail in this folder&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>Do not Loop</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Loop in Current Folder</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Loop in All Folders</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Loop in All Marked Folders</string>
-        </property>
-       </item>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="mEnterFolderLabel">
        <property name="sizePolicy">
@@ -97,8 +62,15 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QCheckBox" name="mExcludeImportantFromExpiry">
+       <property name="text">
+        <string>E&amp;xclude important messages from expiry</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="1">
-      <widget class="KComboBox" name="mActionEnterFolder">
+      <widget class="QComboBox" name="mActionEnterFolder">
        <item>
         <property name="text">
          <string>Jump to First Unread Message</string>
@@ -134,6 +106,48 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="mLoopOnGotoUnread">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="whatsThis">
+        <string comment="what's this help">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;https://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;When jumping to the next unread message, it may occur that no more unread messages are below the current message.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not loop:&lt;/span&gt; The search will stop at the last message in the current folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in current folder:&lt;/span&gt; The search will continue at the top of the message list, but not go to another folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all folders:&lt;/span&gt; The search will continue at the top of the message list. If no unread messages are found it will then continue to the next folder.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Similarly, when searching for the previous unread message, the search will start from the bottom of the message list and continue to the previous folder depending on which option is selected.&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loop in all marked folders: &lt;/span&gt;This is the same as &quot;Loop in all folders&quot; except that only folders are taken into account which have been marked with the folder property &quot;Act on new/unread mail in this folder&quot;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Do not Loop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Loop in Current Folder</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Loop in All Folders</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Loop in All Marked Folders</string>
+        </property>
+       </item>
+      </widget>
+     </item>
      <item row="3" column="1">
       <widget class="QSpinBox" name="mDelayedMarkTime">
        <property name="enabled">
@@ -147,20 +161,6 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QCheckBox" name="mShowPopupAfterDnD">
-       <property name="text">
-        <string>&amp;Ask for action after dragging messages to another folder</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0" colspan="2">
-      <widget class="QCheckBox" name="mEmptyTrashCheck">
-       <property name="text">
-        <string>Empty local &amp;trash folder on program exit</string>
-       </property>
-      </widget>
-     </item>
      <item row="6" column="0">
       <widget class="QCheckBox" name="mStartUpFolderCheck">
        <property name="sizePolicy">
@@ -171,6 +171,20 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Open this folder on &amp;startup:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0" colspan="2">
+      <widget class="QCheckBox" name="mDeleteMessagesWithoutConfirmation">
+       <property name="text">
+        <string>Allow deleting messages without confirmation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QCheckBox" name="mEnableFolderDragAndDrop">
+       <property name="text">
+        <string>Enable folders drag and drop</string>
        </property>
       </widget>
      </item>
@@ -191,13 +205,6 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KComboBox</class>
-   <extends>QComboBox</extends>
-   <header>kcombobox.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Агент архівування пошти</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Ukrainian "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Підручник з програми &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>21 вересня 2019 року</date>
+<releaseinfo
+>5.13 (Програми 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Вступ</title>
+
+<para
+>&i18n-archivemailagent; — агент Akonadi, який надає змогу архівувати теки з повідомленнями електронної пошти у автоматичному режимі. </para>
+
+<sect2 id="using-kapp">
+<title
+>Користування програмою &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Скористайтеся пунктом меню <menuchoice
+><guimenu
+>Параметри</guimenu
+><guimenuitem
+>Налаштувати автоматичне архівування...</guimenuitem
+> </menuchoice
+><action
+> у вікні читання повідомлень &kmail;, щоб відкрити діалогове вікно налаштовування автоматичного архівування тек пошти.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>За допомогою цього пункту меню можна відкрити вікно потужного інструмента, який допоможе вам у створенні резервної копії вашої електронної пошти. Щоб скористатися ним, натисніть кнопку <guibutton
+>Додати...</guibutton
+>, щоб відкрити діалогове вікно <guilabel
+>Додавання архіву з поштою</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Діалогове вікно додавання архіву з поштою</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Діалогове вікно додавання архіву з поштою</phrase>
+    </textobject>
+    <caption>
+      <para
+>Діалогове вікно додавання архіву з поштою</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Спочатку виберіть теку, вміст якої слід архівувати.</para
+></listitem>
+<listitem
+><para
+>Виберіть формат, у якому слід зберегти дані, наприклад <literal role="extension"
+>.tar.bz2</literal
+>, зі спадного списку. Назва файла архіву складатиметься з префікса <userinput
+>Archive_</userinput
+>, шляху до вказаної теки у ієрархії тек &kmail;, дати у форматі <userinput
+>рік-місяць-день</userinput
+> та вибраного суфікса назви файла, наприклад <filename
+>Archive_Local Folder_inbox_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Типово, увімкнено варіант <guilabel
+>Архівувати всі підтеки</guilabel
+>. Зніміть позначку з відповідного пункту, якщо ви хочете архівувати лише повідомлення у основній теці.</para
+></listitem>
+<listitem
+><para
+>Ви можете ввести адресу для збереження архіву або натиснути кнопку вибору теки.</para
+></listitem>
+<listitem
+><para
+>Виберіть частоту створення резервних копій за допомогою спадних меню поряд з міткою <guilabel
+>Інтервал створення копій:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Якщо ви не бажаєте надто захаращувати диск, можете встановити обмеження на створення резервних копій за допомогою пункту <guilabel
+>Максимальна кількість записів у архіві:</guilabel
+>.</para
+></listitem>
+</itemizedlist>
+<para
+>Якщо вами було додано нове завдання з архівування або внесено зміни до наявного завдання, програма автоматично виконає відповідні дії, щойно буде закрито діалогове вікно налаштовування. </para>
+
+<para
+>Якщо вами вже було додано завдання з архівування пошти, у діалоговому вікні <guilabel
+>Налаштування агента архівування пошти</guilabel
+> буде показано список завдань, до якого ви зможете внести відповідні зміни. </para>
+<screenshot>
+<screeninfo
+>Налаштування агента архівування пошти</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Налаштування агента архівування пошти</phrase>
+    </textobject>
+    <caption>
+      <para
+>Налаштування агента архівування пошти</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Ви можете скористатися полем для позначки, розташованим ліворуч від кожного з записів, для того, щоб увімкнути або вимкнути відповідне завдання з архівування. </para>
+<para
+>Доступ до діалогового вікна налаштовування програми можна отримати будь-коли за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштування &kmail;...</guimenuitem
+></menuchoice
+> головного вікна програми &kmail;. Далі, слід вибрати сторінку <guilabel
+>Додатки</guilabel
+> і натиснути кнопку налаштовування навпроти пункту <guilabel
+>Агент архівування пошти</guilabel
+>. </para>
+<para
+>За допомогою контекстного меню, яке можна відкрити клацанням правою кнопкою миші, ви можете відкрити теку, що містить архіви або наказати програмі виконати архівування негайно. Програма перезаписуватиме архіви, створені того самого дня раніше, без додаткових сповіщень. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Подяки і ліцензування</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Авторські права на програму належать Laurent Montel montel@kde.org, 2013–2019 </para>
+<para
+>Авторські права на документацію належать Laurent Montel, 2013–2019 </para>
+
+<para
+>Переклад українською: Юрій Чорноіван<email
+>yurchor@ukr.net</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

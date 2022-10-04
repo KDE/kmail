@@ -1,40 +1,25 @@
 /*
-  Copyright (c) 2014-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "savedraftjob.h"
-#include <Akonadi/KMime/MessageStatus>
-#include <AkonadiCore/Item>
-#include <AkonadiCore/ItemCreateJob>
 #include "kmail_debug.h"
-#include <Akonadi/KMime/MessageFlags>
+#include <Akonadi/Item>
+#include <Akonadi/ItemCreateJob>
+#include <Akonadi/MessageFlags>
+#include <Akonadi/MessageStatus>
 
 SaveDraftJob::SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent)
-    : KJob(parent),
-      mMsg(msg),
-      mCollection(col)
+    : KJob(parent)
+    , mMsg(msg)
+    , mCollection(col)
 {
 }
 
-SaveDraftJob::~SaveDraftJob()
-{
-}
+SaveDraftJob::~SaveDraftJob() = default;
 
 void SaveDraftJob::start()
 {
@@ -44,7 +29,7 @@ void SaveDraftJob::start()
     item.setFlag(Akonadi::MessageFlags::Seen);
     Akonadi::MessageFlags::copyMessageFlags(*mMsg, item);
 
-    Akonadi::ItemCreateJob *createJob = new Akonadi::ItemCreateJob(item, mCollection);
+    auto createJob = new Akonadi::ItemCreateJob(item, mCollection);
     connect(createJob, &Akonadi::ItemCreateJob::result, this, &SaveDraftJob::slotStoreDone);
 }
 

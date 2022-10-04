@@ -1,42 +1,36 @@
 /*
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2002 Don Sanders <sanders@kde.org>
+  SPDX-FileCopyrightText: 2002 Don Sanders <sanders@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
-  KMail is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  KMail is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef __KMMAINWIDGET
-#define __KMMAINWIDGET
+#pragma once
 
 #include "kmail_export.h"
-#include "kmreaderwin.h" //for inline actions
 #include "kmkernel.h" // for access to config
+#include "kmreaderwin.h" //for inline actions
 
-#include "mailcommon/foldertreewidget.h"
+#include <MailCommon/FolderTreeWidget>
 
-#include <kxmlguiclient.h>
 #include "messageactions.h"
-#include <kactioncollection.h>
-#include <mailcommon/foldercollection.h>
-
+#include <Akonadi/StandardMailActionManager>
+#include <Akonadi/Tag>
+#include <KActionCollection>
+#include <KXMLGUIClient>
+#include <MailCommon/FolderSettings>
+#include <MessageList/View>
 #include <QPointer>
 #include <QTimer>
-#include <Akonadi/KMime/StandardMailActionManager>
-#include <AkonadiCore/tag.h>
-#include <MessageList/View>
+
+#ifdef WITH_KUSERFEEDBACK
+namespace KUserFeedback
+{
+class NotificationPopup;
+}
+#endif
 
 namespace MailTransport
 {
@@ -63,10 +57,12 @@ class KMMetaFilterActionCommand;
 class CollectionPane;
 class KMCommand;
 class KMMoveCommand;
-class KRecentFilesAction;
+class KMTrashMsgCommand;
+class KRecentFilesMenu;
 class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
+class ZoomLabelWidget;
 
 namespace KIO
 {
@@ -83,28 +79,29 @@ class FolderShortcutActionManager;
 
 namespace KSieveUi
 {
-class SieveDebugDialog;
+class SieveImapPasswordProvider;
 class ManageSieveScriptsDialog;
 class VacationManager;
 }
-
 namespace MailCommon
 {
 class FolderSelectionDialog;
 class FavoriteCollectionWidget;
+class MailFilter;
 }
-
+class QStatusBar;
+class KMailPluginCheckBeforeDeletingManagerInterface;
+class CollectionSwitcherTreeViewManager;
 class KMAIL_EXPORT KMMainWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    typedef QList<KMMainWidget *> PtrList;
-
-    KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient,
+    KMMainWidget(QWidget *parent,
+                 KXMLGUIClient *aGUIClient,
                  KActionCollection *actionCollection,
-                 KSharedConfig::Ptr config = KMKernel::self()->config());
-    virtual ~KMMainWidget();
+                 const KSharedConfig::Ptr &config = KMKernel::self()->config());
+    ~KMMainWidget() override;
     void destruct();
 
     /** Read configuration options before widgets are created. */
@@ -125,66 +122,32 @@ public:
     void writeReaderConfig();
 
     /** Easy access to main components of the window. */
-    KMReaderWin *messageView() const;
+    Q_REQUIRED_RESULT KMReaderWin *messageView() const;
     /** Access to the header list pane. */
     CollectionPane *messageListPane() const;
 
-    QSharedPointer<MailCommon::FolderCollection> currentFolder() const;
+    Q_REQUIRED_RESULT Akonadi::Collection currentCollection() const;
+    Q_REQUIRED_RESULT QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
     static void cleanup();
-    QAction *action(const QString &name)
-    {
-        return mActionCollection->action(name);
-    }
-    KActionMenu *filterMenu() const
-    {
-        return mFilterMenu;
-    }
-    KActionMenu *mailingListActionMenu() const
-    {
-        return mMsgActions->mailingListActionMenu();
-    }
-    QAction *editAction() const
-    {
-        return mMsgActions->editAction();
-    }
-    QAction *sendAgainAction() const
-    {
-        return mSendAgainAction;
-    }
-    QAction *sendQueuedAction() const
-    {
-        return mSendQueued;
-    }
-    KActionMenuTransport *sendQueueViaMenu() const
-    {
-        return mSendActionMenu;
-    }
+    QAction *action(const QString &name);
 
-    KMail::MessageActions *messageActions() const
-    {
-        return mMsgActions;
-    }
+    QAction *sendQueuedAction() const;
+
+    KActionMenuTransport *sendQueueViaMenu() const;
 
     /**
       Returns a list of all KMMainWidgets. Warning, the list itself can be 0.
       @return the list of all main widgets, or 0 if it is not yet initialized
     */
-    static const PtrList *mainWidgetList();
+    static const KMMainWidget *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-    void updateVacationScriptStatus();
-
-    MailCommon::FolderTreeView *folderTreeView() const
-    {
-        return mFolderTreeWidget->folderTreeView();
-    }
+    Q_REQUIRED_RESULT QWidget *dkimWidgetInfo() const;
+    MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
-    KXMLGUIClient *guiClient() const
-    {
-        return mGUIClient;
-    }
+    KXMLGUIClient *guiClient() const;
 
     KMail::TagActionManager *tagActionManager() const;
 
@@ -193,46 +156,37 @@ public:
 
     void updatePaneTagComboBox();
 
-    void clearViewer();
-
     void addRecentFile(const QUrl &mUrl);
     void updateQuickSearchLineText();
 
     void populateMessageListStatusFilterCombo();
     void initializePluginActions();
 
-    Akonadi::Item::List currentSelection() const;
+    Q_REQUIRED_RESULT Akonadi::Item::List currentSelection() const;
 
+    Q_REQUIRED_RESULT QString fullCollectionPath() const;
+
+    void initializeFilterActions(bool clearFilter);
+    /** Clear and create actions for marked filters */
+    void clearFilterActions();
+    /**
+     * Convenience function to get the action collection in a list.
+     *
+     * @return a list of action collections. The list only has one item, and
+     *         that is the action collection of this main widget as returned
+     *         by actionCollection().
+     */
+    Q_REQUIRED_RESULT QList<KActionCollection *> actionCollections() const;
+    void refreshMessageListSelection();
+    Akonadi::StandardMailActionManager *standardMailActionManager() const;
+    QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
+    QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
+    Q_REQUIRED_RESULT QWidget *zoomLabelIndicator() const;
+
+    void clearPluginActions();
+
+    void replyMessageTo(const Akonadi::Item &item, bool replyToAll);
 public Q_SLOTS:
-    // Moving messages around
-    /**
-     * This will ask for a destination folder and move the currently selected
-     * messages (in MessageListView) into it.
-     */
-    void slotMoveSelectedMessageToFolder();
-
-    // Copying messages around
-
-    /**
-     * This will ask for a destination folder and copy the currently selected
-     * messages (in MessageListView) into it.
-     */
-    void slotCopySelectedMessagesToFolder();
-
-    /**
-     * Implements the "move to trash" action
-     */
-    void slotTrashSelectedMessages();
-
-    void slotCheckMail();
-
-    void slotCheckMailOnStartup();
-
-    /**
-      Select the given folder
-      If the folder is 0 the intro is shown
-    */
-    void folderSelected(const Akonadi::Collection &col);
 
     /**
       Open a separate viewer window containing the specified message.
@@ -247,67 +201,71 @@ public Q_SLOTS:
     void slotItemsFetchedForActivation(KMCommand *command);
     void slotMessageStatusChangeRequest(const Akonadi::Item &, const Akonadi::MessageStatus &, const Akonadi::MessageStatus &);
 
-    void slotReplaceMsgByUnencryptedVersion();
+    /** Adds if not existing/removes if existing the tag identified by @p aLabel
+        in all selected messages */
+    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
 
+    void slotSelectCollectionFolder(const Akonadi::Collection &col);
+
+    void slotUpdateConfig();
+Q_SIGNALS:
+    void captionChangeRequest(const QString &caption);
+    void recreateGui();
+
+protected:
+    void showEvent(QShowEvent *event) override;
+
+private:
+    void assignLoadExternalReference();
+    KMail::MessageActions *messageActions() const;
+
+    KActionMenu *filterMenu() const;
+
+    KActionMenu *mailingListActionMenu() const;
+
+    // Moving messages around
+    /**
+     * This will ask for a destination folder and move the currently selected
+     * messages (in MessageListView) into it.
+     */
+    void slotMoveSelectedMessageToFolder();
+
+    // Copying messages around
+
+    /**
+     * This will ask for a destination folder and copy the currently selected
+     * messages (in MessageListView) into it.
+     */
+    void slotCopySelectedMessagesToFolder();
+    /**
+     * Implements the "move to trash" action
+     */
+    void slotTrashSelectedMessages();
+
+    void slotCheckMail();
+    void slotCheckMailOnStartup();
+
+    /** Trigger the dialog for editing out-of-office scripts.  */
+    void slotEditVacation(const QString &serverName);
+
+    void slotStartCheckMail();
+    void slotEndCheckMail();
+    void restoreCollectionFolderViewConfig();
+    /** Update message actions */
+    void updateMessageActions(bool fast = false);
+    void updateMessageActionsDelayed();
     /**
       Update message menu
     */
     void updateMessageMenu();
 
+    void slotRemoveDuplicates();
+
     /**
       Start a timer to update message actions
     */
     void startUpdateMessageActionsTimer();
-
-    /** Update message actions */
-    void updateMessageActions(bool fast = false);
-    void updateMessageActionsDelayed();
-
-    /** Clear and create actions for marked filters */
-    void clearFilterActions();
-    void initializeFilterActions();
-
-    /** Trigger the dialog for editing out-of-office scripts.  */
-    void slotEditVacation(const QString &serverName);
-
-    /** Adds if not existing/removes if existing the tag identified by @p aLabel
-        in all selected messages */
-    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
     void slotSelectMoreMessageTagList();
-
-    /**
-     * Convenience function to get the action collection in a list.
-     *
-     * @return a list of action collections. The list only has one item, and
-     *         that is the action collection of this main widget as returned
-     *         by actionCollection().
-     */
-    QList<KActionCollection *> actionCollections() const;
-
-    QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
-    QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-    Akonadi::StandardMailActionManager *standardMailActionManager() const
-    {
-        return mAkonadiStandardActionManager;
-    }
-
-    void refreshMessageListSelection();
-
-    void slotStartCheckMail();
-    void slotEndCheckMail();
-
-    void slotRemoveDuplicates();
-
-    void slotSelectCollectionFolder(const Akonadi::Collection &col);
-
-    void restoreCollectionFolderViewConfig();
-    void slotUpdateConfig();
-Q_SIGNALS:
-    void messagesTransfered(bool);
-    void captionChangeRequest(const QString &caption);
-    void recreateGui();
-
-protected:
     void setupActions();
     void createWidgets();
     void deleteWidgets();
@@ -315,22 +273,86 @@ protected:
     void newFromTemplate(const Akonadi::Item &);
     void moveSelectedMessagesToFolder(const Akonadi::Collection &dest);
     void copySelectedMessagesToFolder(const Akonadi::Collection &dest);
-
-    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
-
-    KActionCollection *actionCollection() const
-    {
-        return mActionCollection;
-    }
-
+    KActionCollection *actionCollection() const;
     /**
       @return the correct config dialog depending on whether the parent of
       the mainWidget is a KPart or a KMMainWindow.
       When dealing with geometries, use this pointer
     */
-    KSharedConfig::Ptr config();
+    Q_REQUIRED_RESULT KSharedConfig::Ptr config();
 
-protected Q_SLOTS:
+    void checkAkonadiServerManagerState();
+    void updateHtmlMenuEntry();
+
+    void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
+    void updateMoveAction(bool hasUnreadMails);
+
+    void updateAllToTrashAction(qint64 statistics);
+
+    /** Get override character encoding. */
+    Q_REQUIRED_RESULT QString overrideEncoding() const;
+
+    void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
+
+    void copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest);
+
+    /**
+     * Move the messages referenced by the specified set to trash.
+     * The set parameter must not be null and the ownership is passed
+     * to this function.
+     */
+    void trashMessageSelected(MessageList::Core::MessageItemSetReference ref);
+    /**
+     * Set the status of the messages referenced by the specified set, eventually toggling it.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void setMessageSetStatus(const Akonadi::Item::List &select, Akonadi::MessageStatus status, bool toggle);
+    /**
+     * Toggles a tag for the messages referenced by the specified set.
+     * The set parameter must not be null and the ownership is passed to this function.
+     */
+    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
+    /**
+     * This applies setMessageSetStatus() on the current thread.
+     */
+    void setCurrentThreadStatus(Akonadi::MessageStatus status, bool toggle);
+
+    void applyFilters(const Akonadi::Item::List &selectedMessages);
+    void applyFilters(const Akonadi::Collection::List &selectedCols);
+    void applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter);
+
+    /**
+     * Internal helper that creates the folder selection dialog used for the
+     * move and copy to folder actions on demand. Only folders where items can
+     * be added are listed.
+     */
+    MailCommon::FolderSelectionDialog *moveOrCopyToDialog();
+
+    /**
+     * Internal helper that creates the folder selection dialog used for
+     * jumping to folders, or adding them as favourites. All folders are listed.
+     */
+    MailCommon::FolderSelectionDialog *selectFromAllFoldersDialog();
+
+    /**
+     * Internal helper that applies the current settings so the
+     * favorite folder view.
+     */
+    void refreshFavoriteFoldersViewProperties();
+
+    void openFilterDialog(const QByteArray &field, const QString &value);
+
+    void showMessagePopup(const Akonadi::Item &msg,
+                          const QUrl &aUrl,
+                          const QUrl &imageUrl,
+                          const QPoint &aPoint,
+                          bool contactAlreadyExists,
+                          bool uniqueContactFound,
+                          const WebEngineViewer::WebHitTestResult &result);
+
+    void setZoomChanged(qreal zoomFactor);
+
+private Q_SLOTS:
     void updateFileMenu();
     void slotFilter();
     void slotManageSieveScripts();
@@ -345,22 +367,20 @@ protected Q_SLOTS:
     void slotAddFavoriteFolder();
     void slotShowSelectedFolderInPane();
     void slotOverrideHtmlLoadExt();
-    void slotMessageQueuedOrDrafted();
     void slotUseTemplate();
-    void slotDeleteMsg(bool confirmDelete = true);    // completely delete message
     void slotTrashThread();
-    void slotDeleteThread(bool confirmDelete = true);    // completely delete thread
+    void slotDeleteThread(bool confirmDelete); // completely delete thread
     void slotUndo();
     void slotReadOn();
     void slotSaveMsg();
     void slotOpenMsg();
     void slotSaveAttachments();
     void slotJumpToFolder();
-    void slotResendMsg();
     void slotCheckVacation();
     void slotDebugSieve();
     void slotApplyFilters();
-    void slotApplyFiltersOnFolder();
+    void slotApplyFiltersOnFolder(bool recursive);
+    void slotApplyFilterOnFolder(bool recursive);
     void slotExpandThread();
     void slotExpandAllThreads();
     void slotCollapseThread();
@@ -379,9 +399,10 @@ protected Q_SLOTS:
     void slotContactSearchJobForMessagePopupDone(KJob *job);
     void slotSelectAllMessages();
     void slotFocusQuickSearch();
-    bool slotSearch();
+
     void slotIntro();
     void slotShowStartupFolder();
+    void slotCopyDecryptedTo(QAction *action);
 
     /** Message navigation */
     void slotSelectNextMessage();
@@ -423,6 +444,7 @@ protected Q_SLOTS:
     void slotForwardInlineMsg();
     void slotForwardAttachedMessage();
     void slotRedirectMessage();
+    void slotNewMessageToRecipients();
     void slotCustomForwardMsg(const QString &tmpl);
     void slotSubjectFilter();
     void slotFromFilter();
@@ -451,79 +473,13 @@ protected Q_SLOTS:
     void slotCreateNewTab(bool);
     void slotUpdateActionsAfterMailChecking();
     void slotCreateAddressBookContact();
-    void slotOpenRecentMsg(const QUrl &url);
+    void slotOpenRecentMessage(const QUrl &url);
 
-private:
-    void checkAkonadiServerManagerState();
-    void updateHtmlMenuEntry();
-
-    void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
-    void updateMoveAction(bool hasUnreadMails);
-
-    void updateAllToTrashAction(int statistics);
-
-    /** Get Q_DECL_OVERRIDE character encoding. */
-    QString overrideEncoding() const;
-
-    void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
-
-    void copyMessageSelected(const Akonadi::Item::List &selectMsg, const Akonadi::Collection &dest);
-
-    /**
-     * Move the messages referenced by the specified set to trash.
-     * The set parameter must not be null and the ownership is passed
-     * to this function.
-     */
-    void trashMessageSelected(MessageList::Core::MessageItemSetReference ref);
-    /**
-     * Set the status of the messages referenced by the specified set, eventually toggling it.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void setMessageSetStatus(const Akonadi::Item::List &select,
-                             const Akonadi::MessageStatus &status,
-                             bool toggle
-                            );
-    /**
-     * Toggles a tag for the messages referenced by the specified set.
-     * The set parameter must not be null and the ownership is passed to this function.
-     */
-    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
-    /**
-     * This applies setMessageSetStatus() on the current thread.
-     */
-    void setCurrentThreadStatus(const Akonadi::MessageStatus &status, bool toggle);
-
-    void applyFilters(const Akonadi::Item::List &selectedMessages);
-
-    /**
-     * Internal helper that creates the folder selection dialog used for the
-     * move and copy to folder actions on demand. Only folders where items can
-     * be added are listed.
-     */
-    MailCommon::FolderSelectionDialog *moveOrCopyToDialog();
-
-    /**
-     * Internal helper that creates the folder selection dialog used for
-     * jumping to folders, or adding them as favourites. All folders are listed.
-     */
-    MailCommon::FolderSelectionDialog *selectFromAllFoldersDialog();
-
-    /**
-     * Internal helper that applies the current settings so the
-     * favorite folder view.
-     */
-    void refreshFavoriteFoldersViewProperties();
-
-    void openFilterDialog(const QByteArray &field, const QString &value);
-
-    void showMessagePopup(const Akonadi::Item &msg, const QUrl &aUrl, const QUrl &imageUrl, const QPoint &aPoint, bool contactAlreadyExists, bool uniqueContactFound, const WebEngineViewer::WebHitTestResult &result);
-
-private Q_SLOTS:
     void slotMoveMessageToTrash();
     /**
      * Called when a "move to trash" operation is completed
      */
-    void slotTrashMessagesCompleted(KMMoveCommand *command);
+    void slotTrashMessagesCompleted(KMTrashMsgCommand *command);
 
     /**
      * Called when a "move" operation is completed
@@ -543,138 +499,165 @@ private Q_SLOTS:
     void itemsFetchDone(KJob *job);
 
     void slotServerSideSubscription();
-    void slotFetchItemsForFolderDone(KJob *job);
     void slotServerStateChanged(Akonadi::ServerManager::State state);
     void slotArchiveMails();
     void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
     void slotCollectionRemoved(const Akonadi::Collection &col);
     void slotCcFilter();
-    void slotBandwidth(bool b);
     void slotDeleteMessages();
 
     void slotMarkAllMessageAsReadInCurrentFolderAndSubfolder();
     void slotRemoveDuplicateRecursive();
-    void slotExecuteMailAction(MessageViewer::Viewer::MailAction action);
     void slotRedirectCurrentMessage();
     void slotEditCurrentVacation();
     void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
+
 private:
+    void slotSetFocusToViewer();
+    void deleteSelectedMessages(bool confirmDelete); // completely delete message
+    bool showSearchDialog();
+    void clearCurrentFolder();
+    void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void printCurrentMessage(bool preview);
-    void replyCurrentMessageCommand(MessageComposer::ReplyStrategy strategy);
+    void setupUnifiedMailboxChecker();
+    QAction *filterToAction(MailCommon::MailFilter *filter);
+    Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
+    void setShowStatusBarMessage(const QString &msg);
+    void slotRestartAccount();
+    void slotAccountSettings();
+    void updateDisplayFormatMessage();
+    void slotHistorySwitchFolder(const Akonadi::Collection &collection);
+    void redoSwitchFolder();
+    void undoSwitchFolder();
+    void updateMoveAllToTrash();
+    void slotClearFolder();
+    void slotClearCacheDone();
+
     // Message actions
-    QAction *mDeleteAction;
-    QAction *mTrashThreadAction;
-    QAction *mDeleteThreadAction;
-    QAction *mSaveAsAction;
-    QAction *mNewMessageFromTemplateAction;
-    QAction *mSendAgainAction;
-    QAction *mApplyAllFiltersAction;
-    QAction *mSaveAttachmentsAction;
-    QAction *mOpenAction;
-    QAction *mMoveMsgToFolderAction;
-    QAction *mCollectionProperties;
-    QAction *mSendQueued;
-    QAction *mArchiveAction;
-    QAction *mSelectAllMessages;
-    KActionMenuTransport *mSendActionMenu;
+    QAction *mDeleteAction = nullptr;
+    QAction *mTrashThreadAction = nullptr;
+    QAction *mDeleteThreadAction = nullptr;
+    QAction *mSaveAsAction = nullptr;
+    QAction *mApplyAllFiltersAction = nullptr;
+    QAction *mSaveAttachmentsAction = nullptr;
+    QAction *mOpenAction = nullptr;
+    QAction *mMoveMsgToFolderAction = nullptr;
+    QAction *mCollectionProperties = nullptr;
+    QAction *mSendQueued = nullptr;
+    QAction *mArchiveAction = nullptr;
+    QAction *mSelectAllMessages = nullptr;
+    KActionMenuTransport *mSendActionMenu = nullptr;
+    QAction *mRestartAccountSettings = nullptr;
     // Filter actions
-    KActionMenu *mFilterMenu;
-    QAction *mExpireConfigAction;
-    QAction *mApplyFiltersOnFolder;
+    KActionMenu *mFilterMenu = nullptr;
+    QAction *mExpireConfigAction = nullptr;
+    KActionMenu *mApplyFilterFolderActionsMenu = nullptr;
+    KActionMenu *mApplyFilterFolderRecursiveActionsMenu = nullptr;
+    QAction *mApplyAllFiltersFolderAction = nullptr;
+    QAction *mApplyAllFiltersFolderRecursiveAction = nullptr;
     // Custom template actions menu
-    KActionMenu *mTemplateMenu;
+    KActionMenu *mTemplateMenu = nullptr;
 
-    KActionMenu *mThreadStatusMenu, *mApplyFilterActionsMenu;
-    QAction *mCopyActionMenu;
-    QAction *mMoveActionMenu;
-    QAction *mMarkThreadAsReadAction;
-    QAction *mMarkThreadAsUnreadAction;
-    KToggleAction *mToggleThreadImportantAction;
-    KToggleAction *mToggleThreadToActAction;
+    KActionMenu *mThreadStatusMenu = nullptr;
+    KActionMenu *mApplyFilterActionsMenu = nullptr;
+    QAction *mCopyActionMenu = nullptr;
+    QAction *mMoveActionMenu = nullptr;
+    QAction *mCopyDecryptedActionMenu = nullptr;
+    QAction *mMarkThreadAsReadAction = nullptr;
+    QAction *mMarkThreadAsUnreadAction = nullptr;
+    KToggleAction *mToggleThreadImportantAction = nullptr;
+    KToggleAction *mToggleThreadToActAction = nullptr;
 
-    KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
+    KToggleAction *mWatchThreadAction = nullptr;
+    KToggleAction *mIgnoreThreadAction = nullptr;
 
-    MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView;
-    Akonadi::FavoriteCollectionsModel *mFavoritesModel;
-    KMReaderWin  *mMsgView;
-    QSplitter    *mSplitter1;
-    QSplitter *mSplitter2;
-    QSplitter *mFolderViewSplitter;
+    MailCommon::FavoriteCollectionWidget *mFavoriteCollectionsView = nullptr;
+    Akonadi::FavoriteCollectionsModel *mFavoritesModel = nullptr;
+    KMReaderWin *mMsgView = nullptr;
+    QSplitter *mSplitter1 = nullptr;
+    QSplitter *mSplitter2 = nullptr;
+    QSplitter *mFolderViewSplitter = nullptr;
     Akonadi::Collection mTemplateFolder;
-    bool          mLongFolderList;
-    bool          mStartupDone;
-    bool          mWasEverShown;
-    bool mHtmlGlobalSetting;
-    bool mHtmlLoadExtGlobalSetting;
-    bool mFolderHtmlLoadExtPreference;
-    bool mReaderWindowActive;
-    bool mReaderWindowBelow;
-    bool mEnableFavoriteFolderView;
-    bool mEnableFolderQuickSearch;
+    bool mLongFolderList = false;
+    bool mStartupDone = false;
+    bool mWasEverShown = false;
+    bool mHtmlGlobalSetting = false;
+    bool mHtmlLoadExtGlobalSetting = false;
+    bool mFolderHtmlLoadExtPreference = false;
+    bool mReaderWindowActive = true;
+    bool mReaderWindowBelow = true;
+    bool mEnableFavoriteFolderView = false;
+    bool mEnableFolderQuickSearch = false;
 
     QPointer<KMail::SearchWindow> mSearchWin;
 
-    QAction *mExpireFolderAction;
-    QAction *mFolderMailingListPropertiesAction;
-    QAction *mShowFolderShortcutDialogAction;
-    QAction *mArchiveFolderAction;
-    QAction *mMessageNewList;
-    KToggleAction *mPreferHtmlLoadExtAction;
+    QAction *mExpireFolderAction = nullptr;
+    QAction *mFolderMailingListPropertiesAction = nullptr;
+    QAction *mShowFolderShortcutDialogAction = nullptr;
+    QAction *mArchiveFolderAction = nullptr;
+    QAction *mMessageNewList = nullptr;
+    KToggleAction *mPreferHtmlLoadExtAction = nullptr;
 
-    QTimer *menutimer;
-    QTimer *mShowBusySplashTimer;
+    QTimer *menutimer = nullptr;
+    QTimer *mShowBusySplashTimer = nullptr;
 
-    KSieveUi::VacationManager *mVacationManager;
-#if !defined(NDEBUG)
-    QPointer<KSieveUi::SieveDebugDialog> mSieveDebugDialog;
-#endif
-    KActionCollection *mActionCollection;
-    QAction *mToolbarActionSeparator;
-    QVBoxLayout *mTopLayout;
-    bool mDestructed;
+    KSieveUi::VacationManager *mVacationManager = nullptr;
+    KActionCollection *mActionCollection = nullptr;
+    QAction *const mToolbarActionSeparator;
+    QVBoxLayout *mTopLayout = nullptr;
+    bool mDestructed = false;
     QList<QAction *> mFilterMenuActions;
+    QList<QAction *> mFilterFolderMenuActions;
+    QList<QAction *> mFilterFolderMenuRecursiveActions;
     QList<QAction *> mFilterTBarActions;
     QList<KMMetaFilterActionCommand *> mFilterCommands;
 
-    KMail::TagActionManager *mTagActionManager;
-    KMail::FolderShortcutActionManager *mFolderShortcutActionManager;
+    KMail::TagActionManager *mTagActionManager = nullptr;
+    KMail::FolderShortcutActionManager *mFolderShortcutActionManager = nullptr;
     KSharedConfig::Ptr mConfig;
-    KXMLGUIClient *mGUIClient;
+    KXMLGUIClient *mGUIClient = nullptr;
 
-    KMail::MessageActions *mMsgActions;
-    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager;
-    CollectionPane *mMessagePane;
-    QSharedPointer<MailCommon::FolderCollection> mCurrentFolder;
+    KMail::MessageActions *mMsgActions = nullptr;
+    Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
+    CollectionPane *mMessagePane = nullptr;
+    QSharedPointer<MailCommon::FolderSettings> mCurrentFolderSettings;
 
-    MailCommon::FolderTreeWidget *mFolderTreeWidget;
+    MailCommon::FolderTreeWidget *mFolderTreeWidget = nullptr;
 
-    KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator;
-    bool mVacationIndicatorActive;
-    bool mGoToFirstUnreadMessageInSelectedFolder;
+    KMail::VacationScriptIndicatorWidget *mVacationScriptIndicator = nullptr;
+    bool mVacationIndicatorActive = false;
+    bool mGoToFirstUnreadMessageInSelectedFolder = false;
     MessageList::Core::PreSelectionMode mPreSelectionMode;
 
     QTimer mCheckMailTimer;
 
+    KSieveUi::SieveImapPasswordProvider *const mSievePasswordProvider;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
-    QAction *mServerSideSubscription;
-    KRecentFilesAction *mOpenRecentAction;
+    QAction *mServerSideSubscription = nullptr;
+    QAction *mAccountSettings = nullptr;
+    KRecentFilesMenu *mOpenRecentMenu = nullptr;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
-    QAction *mQuickSearchAction;
-    DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu;
-    MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference;
-    QAction *mSearchMessages;
-    KMLaunchExternalComponent *mLaunchExternalComponent;
-    ManageShowCollectionProperties *mManageShowCollectionProperties;
-    QAction *mShowIntroductionAction;
-    KToggleAction *mUseLessBandwidth;
-    QAction *mMarkAllMessageAsReadAndInAllSubFolder;
-    KActionMenuAccount *mAccountActionMenu;
-    QAction *mRemoveDuplicateRecursiveAction;
-};
-
+    QAction *mQuickSearchAction = nullptr;
+    DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;
+    MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference = MessageViewer::Viewer::UseGlobalSetting;
+    QAction *mSearchMessages = nullptr;
+    KMLaunchExternalComponent *const mLaunchExternalComponent;
+    ManageShowCollectionProperties *const mManageShowCollectionProperties;
+    QAction *mShowIntroductionAction = nullptr;
+    QAction *mMarkAllMessageAsReadAndInAllSubFolder = nullptr;
+    KActionMenuAccount *mAccountActionMenu = nullptr;
+    QAction *mRemoveDuplicateRecursiveAction = nullptr;
+    Akonadi::Collection mCurrentCollection;
+    QStatusBar *mCurrentStatusBar = nullptr;
+    ZoomLabelWidget *mZoomLabelIndicator = nullptr;
+#ifdef WITH_KUSERFEEDBACK
+    KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
 #endif
-
+    KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
+    CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
+    QAction *mClearFolderCacheAction = nullptr;
+};

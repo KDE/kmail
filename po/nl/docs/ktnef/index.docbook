@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Het handboek van TNEF bestandsviewer</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+&Freek.de.Kruijf; 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (Applications 16.08)</releaseinfo>
+
+<abstract
+><para
+>De TNEF-bestandsviewer is een toepassing voor <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>-e-mailbijlagen.</para
+></abstract>
+
+<keywordset>
+<keyword
+>e-mail</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Inleiding</title>
+
+	<para
+>De TNEF-bestandsviewer stelt u in staat om gemakkelijk e-mailbijlagen met het TNEF-formaat te behandelen. Deze bijlagen worden gewoonlijk gevonden in e-mails van <trademark class="registered"
+>Microsoft</trademark
+> e-mailservers en hebben de eigenschappen van de e-mail, evenals de actuele bijlagen ingebed.</para>
+		<para
+>Een bijlage in het formaat TNEF heeft het meest de naam <filename
+>winmail.dat</filename
+> of <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Hoofdvenster van TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Hoofdvenster van TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Dit hulpprogramma stelt u in staat om verschillende bewerkingen op deze bijlagen uit te voeren:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Bekijk/open bijlagen met geassocieerde toepassingen.</para
+></listitem>
+		<listitem
+><para
+>Actuele bijlagen uitpakken</para
+></listitem>
+		<listitem
+><para
+>Eigenschappen van bericht bekijken (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Bekijk of pak uit het geformatteerd tekstbericht (in RTF-formaat)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; toont automatisch de inhoud van een TNEF bijlage. U kunt de bijlage openen of opslaan met de acties in het contextmenu.</para>
+<screenshot>
+<screeninfo
+>TNEF bijlage in &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF bijlage in &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Dankbetuigingen en licentie</title>
+
+	<para
+>TNEF-bestandsviewer (KTnef)</para>
+
+	<para
+>Programma copyright 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Programma copyright 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </sect1>
+
+</article>

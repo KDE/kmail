@@ -1,41 +1,32 @@
 /*
-  Copyright (c) 2012-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "identityaddvcarddialog.h"
 
-#include <KComboBox>
 #include <KLocalizedString>
 #include <KSeparator>
 #include <KUrlRequester>
+#include <QComboBox>
 
 #include <QButtonGroup>
-#include <QVBoxLayout>
-#include <QRadioButton>
-#include <QLabel>
 #include <QDialogButtonBox>
-#include <KConfigGroup>
+#include <QLabel>
 #include <QPushButton>
+#include <QRadioButton>
+#include <QVBoxLayout>
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)
+    , mButtonGroup(new QButtonGroup(this))
+    , mComboBox(new QComboBox(this))
+    , mVCardPath(new KUrlRequester(this))
 {
-    setWindowTitle(i18n("Create own vCard"));
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    setWindowTitle(i18nc("@title:window", "Create own vCard"));
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto mainLayout = new QVBoxLayout(this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -43,38 +34,35 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityAddVcardDialog::reject);
     setModal(true);
 
-    QWidget *mainWidget = new QWidget(this);
+    auto mainWidget = new QWidget(this);
     mainLayout->addWidget(mainWidget);
     mainLayout->addWidget(buttonBox);
 
-    QVBoxLayout *vlay = new QVBoxLayout(mainWidget);
-    vlay->setMargin(0);
+    auto vlay = new QVBoxLayout(mainWidget);
+    vlay->setContentsMargins({});
 
-    mButtonGroup = new QButtonGroup(this);
     mButtonGroup->setObjectName(QStringLiteral("buttongroup"));
 
     // row 1: radio button
-    QRadioButton *radio = new QRadioButton(i18n("&With empty fields"), this);
+    auto radio = new QRadioButton(i18n("&With empty fields"), this);
     radio->setChecked(true);
     vlay->addWidget(radio);
-    mButtonGroup->addButton(radio, (int)Empty);
+    mButtonGroup->addButton(radio, static_cast<int>(Empty));
 
     // row 2: radio button
-    QRadioButton *fromExistingVCard = new QRadioButton(i18n("&From existing vCard"), this);
+    auto fromExistingVCard = new QRadioButton(i18n("&From existing vCard"), this);
     vlay->addWidget(fromExistingVCard);
-    mButtonGroup->addButton(fromExistingVCard, (int)FromExistingVCard);
+    mButtonGroup->addButton(fromExistingVCard, static_cast<int>(FromExistingVCard));
 
     // row 3: KUrlRequester
-    QHBoxLayout *hlay = new QHBoxLayout(); // inherits spacing
+    auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
 
-    mVCardPath = new KUrlRequester;
     mVCardPath->setObjectName(QStringLiteral("kurlrequester_vcardpath"));
-    const QString filter = i18n("*.vcf|vCard (*.vcf)\n*|all files (*)");
-    mVCardPath->setFilter(filter);
+    mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
     mVCardPath->setMode(KFile::LocalOnly | KFile::File);
-    QLabel *label = new QLabel(i18n("&vCard path:"), this);
+    auto label = new QLabel(i18n("&vCard path:"), this);
     label->setBuddy(mVCardPath);
     label->setEnabled(false);
     mVCardPath->setEnabled(false);
@@ -85,14 +73,13 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     connect(fromExistingVCard, &QRadioButton::toggled, mVCardPath, &KUrlRequester::setEnabled);
 
     // row 4: radio button
-    QRadioButton *duplicateExistingVCard = new QRadioButton(i18n("&Duplicate existing vCard"), this);
+    auto duplicateExistingVCard = new QRadioButton(i18n("&Duplicate existing vCard"), this);
     vlay->addWidget(duplicateExistingVCard);
-    mButtonGroup->addButton(duplicateExistingVCard, (int)ExistingEntry);
+    mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(ExistingEntry));
 
     // row 5: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mComboBox = new KComboBox(this);
     mComboBox->setObjectName(QStringLiteral("identity_combobox"));
     mComboBox->setEditable(false);
 
@@ -105,18 +92,16 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     hlay->addWidget(mComboBox, 1);
 
     vlay->addWidget(new KSeparator);
-    vlay->addStretch(1);   // spacer
+    vlay->addStretch(1); // spacer
 
     // enable/disable combobox and label depending on the third radio
     // button's state:
     connect(duplicateExistingVCard, &QRadioButton::toggled, label, &QLabel::setEnabled);
-    connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &KComboBox::setEnabled);
+    connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &QComboBox::setEnabled);
     resize(350, 130);
 }
 
-IdentityAddVcardDialog::~IdentityAddVcardDialog()
-{
-}
+IdentityAddVcardDialog::~IdentityAddVcardDialog() = default;
 
 IdentityAddVcardDialog::DuplicateMode IdentityAddVcardDialog::duplicateMode() const
 {
@@ -133,4 +118,3 @@ QUrl IdentityAddVcardDialog::existingVCard() const
 {
     return mVCardPath->url();
 }
-

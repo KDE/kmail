@@ -1,81 +1,57 @@
 /*
   This file is part of KDE Kontact.
 
-  Copyright (c) 2004 Tobias Koenig <tokoe@kde.org>
-  Copyright (c) 2008 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2004 Tobias Koenig <tokoe@kde.org>
+  SPDX-FileCopyrightText: 2008 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-  As a special exception, permission is given to link this program
-  with any edition of Qt, and distribute the resulting executable,
-  without including the source code for Qt in the source distribution.
+  SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
 
 #include "kcmkontactsummary.h"
-
-#include <KontactInterface/Plugin>
-
 #include <KAboutData>
-#include <QIcon>
-#include <KLocalizedString>
-#include <KPluginInfo>
-#include <KService>
-#include <KServiceTypeTrader>
 #include <KConfig>
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KPluginFactory>
+#include <KPluginMetaData>
+#include <KontactInterface/Plugin>
+#include <QIcon>
 
 #include <QLabel>
 #include <QVBoxLayout>
 
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kontactsummary(QWidget *parent, const char *)
-    {
-        return new KCMKontactSummary(parent);
-    }
-}
-
 class PluginItem : public QTreeWidgetItem
 {
 public:
-    PluginItem(const KPluginInfo &info, QTreeWidget *parent)
-        : QTreeWidgetItem(parent), mInfo(info)
+    PluginItem(const KPluginMetaData &info, QTreeWidget *parent)
+        : QTreeWidgetItem(parent)
+        , mInfo(info)
     {
-        setIcon(0, QIcon::fromTheme(mInfo.icon()));
+        setIcon(0, QIcon::fromTheme(mInfo.iconName()));
         setText(0, mInfo.name());
-        setToolTip(0, mInfo.comment());
+        setToolTip(0, mInfo.description());
         setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     }
 
-    KPluginInfo pluginInfo() const
+    Q_REQUIRED_RESULT KPluginMetaData pluginInfo() const
     {
         return mInfo;
     }
 
-    virtual QString text(int column) const
+    Q_REQUIRED_RESULT virtual QString text(int column) const
     {
         if (column == 0) {
             return mInfo.name();
         } else if (column == 1) {
-            return mInfo.comment();
+            return mInfo.description();
         } else {
-            return QString();
+            return {};
         }
     }
 
 private:
-    KPluginInfo mInfo;
+    Q_DISABLE_COPY(PluginItem)
+    const KPluginMetaData mInfo;
 };
 
 PluginView::PluginView(QWidget *parent)
@@ -86,45 +62,42 @@ PluginView::PluginView(QWidget *parent)
     setRootIsDecorated(false);
 }
 
-PluginView::~PluginView()
-{
-}
+PluginView::~PluginView() = default;
 
-KCMKontactSummary::KCMKontactSummary(QWidget *parent)
-    : KCModule(parent)
-{
-    setButtons(NoAdditionalButton);
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
-    QLabel *label =
-        new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
+    : KCModule(parent, args)
+    , mPluginView(new PluginView(this))
+{
+    auto layout = new QVBoxLayout(this);
+    layout->setContentsMargins({});
+
+    auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
     layout->addWidget(label);
 
-    mPluginView = new PluginView(this);
     layout->addWidget(mPluginView);
 
     layout->setStretchFactor(mPluginView, 1);
 
     load();
-    connect(mPluginView, SIGNAL(itemChanged(QTreeWidgetItem*,int)),
-            this, SLOT(changed()));
-
-    KAboutData *about = new KAboutData(QStringLiteral("kontactsummary"),
-                                       i18n("kontactsummary"),
-                                       QString(),
-                                       i18n("KDE Kontact Summary"),
-                                       KAboutLicense::GPL,
-                                       i18n("(c), 2004 Tobias Koenig"));
+    connect(mPluginView, &QTreeWidget::itemChanged, this, &KCMKontactSummary::markAsChanged);
+    auto about = new KAboutData(QStringLiteral("kontactsummary"),
+                                i18n("kontactsummary"),
+                                QString(),
+                                i18n("KDE Kontact Summary"),
+                                KAboutLicense::GPL,
+                                i18n("(c), 2004 Tobias Koenig"));
     about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
     setAboutData(about);
 }
 
 void KCMKontactSummary::load()
 {
-    KService::List offers = KServiceTypeTrader::self()->query(
-                                QStringLiteral("Kontact/Plugin"),
-                                QStringLiteral("[X-KDE-KontactPluginVersion] == %1").arg(KONTACT_PLUGIN_VERSION));
+    const QVector<KPluginMetaData> pluginMetaDatas =
+        KPluginMetaData::findPlugins(QStringLiteral("kontact" QT_STRINGIFY(QT_VERSION_MAJOR)), [](const KPluginMetaData &data) {
+            return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
+        });
 
     QStringList activeSummaries;
 
@@ -139,29 +112,16 @@ void KCMKontactSummary::load()
         activeSummaries << QStringLiteral("kontact_todoplugin");
         activeSummaries << QStringLiteral("kontact_knotesplugin");
         activeSummaries << QStringLiteral("kontact_kmailplugin");
-        activeSummaries << QStringLiteral("kontact_weatherplugin");
-        activeSummaries << QStringLiteral("kontact_newstickerplugin");
-        activeSummaries << QStringLiteral("kontact_plannerplugin");
     }
 
     mPluginView->clear();
 
-    KPluginInfo::List pluginList =
-        KPluginInfo::fromServices(offers, KConfigGroup(&config, "Plugins"));
-    KPluginInfo::List::Iterator it;
-    KPluginInfo::List::Iterator end(pluginList.end());
-    for (it = pluginList.begin(); it != end; ++it) {
-        it->load();
-
-        if (!it->isPluginEnabled()) {
-            continue;
-        }
-
-        QVariant var = it->property(QStringLiteral("X-KDE-KontactPluginHasSummary"));
+    for (auto plugin : std::as_const(pluginMetaDatas)) {
+        QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false);
         if (var.isValid() && var.toBool() == true) {
-            PluginItem *item = new PluginItem(*it, mPluginView);
+            auto item = new PluginItem(plugin, mPluginView);
 
-            if (activeSummaries.contains(it->pluginName())) {
+            if (activeSummaries.contains(plugin.pluginId())) {
                 item->setCheckState(0, Qt::Checked);
             } else {
                 item->setCheckState(0, Qt::Unchecked);
@@ -176,9 +136,9 @@ void KCMKontactSummary::save()
 
     QTreeWidgetItemIterator it(mPluginView);
     while (*it) {
-        PluginItem *item = static_cast<PluginItem *>(*it);
+        auto item = static_cast<PluginItem *>(*it);
         if (item->checkState(0) == Qt::Checked) {
-            activeSummaries.append(item->pluginInfo().pluginName());
+            activeSummaries.append(item->pluginInfo().pluginId());
         }
         ++it;
     }
@@ -187,4 +147,4 @@ void KCMKontactSummary::save()
     KConfigGroup grp(&config, QString());
     grp.writeEntry("ActiveSummaries", activeSummaries);
 }
-
+#include "kcmkontactsummary.moc"

@@ -1,13 +1,10 @@
 /*
   This file is part of KTnef.
 
-  Copyright (C) 2002 Michael Goffioul <kdeprint@swing.be>
-  Copyright (c) 2012 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2002 Michael Goffioul <kdeprint@swing.be>
+  SPDX-FileCopyrightText: 2012 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-or-later
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
@@ -18,40 +15,46 @@
 #include "qwmf.h"
 
 #include <KTNEF/KTNEFAttach>
+#include <KTNEF/KTNEFDefs>
 #include <KTNEF/KTNEFProperty>
 #include <KTNEF/KTNEFPropertySet>
-#include <KTNEF/KTNEFDefs>
 
 #include "ktnef_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 
+#include <KConfigGroup>
+#include <KSharedConfig>
+#include <KWindowConfig>
 #include <QBuffer>
 #include <QDataStream>
-#include <QTreeWidget>
-#include <KSharedConfig>
+#include <QDialogButtonBox>
+#include <QFileDialog>
 #include <QMimeDatabase>
 #include <QMimeType>
-#include <KConfigGroup>
-#include <QDialogButtonBox>
 #include <QPushButton>
+#include <QTreeWidget>
 #include <QVBoxLayout>
-#include <QFileDialog>
+#include <QWindow>
+
+namespace
+{
+static const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";
+}
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
-    : QDialog(parent),
-      mAttach(0)
+    : QDialog(parent)
 {
     setModal(true);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto mainLayout = new QVBoxLayout(this);
 
-    QWidget *mainWidget = new QWidget(this);
+    auto mainWidget = new QWidget(this);
     mUI.setupUi(mainWidget);
     mUI.mProperties->setHeaderHidden(true);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
-    QPushButton *user1Button = new QPushButton;
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);
+    auto user1Button = new QPushButton;
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AttachPropertyDialog::reject);
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
@@ -70,25 +73,23 @@ AttachPropertyDialog::~AttachPropertyDialog()
 
 void AttachPropertyDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "AttachPropertyDialog");
-    const QSize size = group.readEntry("Size", QSize(500, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 700));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AttachPropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "AttachPropertyDialog");
-    group.writeEntry("Size", size());
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
 
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
-    QString s = attach->fileName().isEmpty() ?
-                attach->name() :
-                attach->fileName();
+    QString s = attach->fileName().isEmpty() ? attach->name() : attach->fileName();
     mUI.mFilename->setText(QLatin1String("<b>") + s + QLatin1String("</b>"));
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
@@ -97,8 +98,8 @@ void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
     s.append(i18n(" bytes"));
     mUI.mSize->setText(s);
     QMimeDatabase db;
-    QMimeType mimetype = db.mimeTypeForName(attach->mimeTag());
-    QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Background));
+    const QMimeType mimetype = db.mimeTypeForName(attach->mimeTag());
+    const QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
     if (!pix.isNull()) {
         mUI.mIcon->setPixmap(pix);
     } else {
@@ -119,12 +120,11 @@ void AttachPropertyDialog::slotSave()
     }
 }
 
-void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &props, QTreeWidget *lv,
-        QTreeWidgetItem *item, const QString &prefix)
+void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &props, QTreeWidget *lv, QTreeWidgetItem *item, const QString &prefix)
 {
     QMap<int, KTNEFProperty *>::ConstIterator end(props.constEnd());
     for (QMap<int, KTNEFProperty *>::ConstIterator it = props.begin(); it != end; ++it) {
-        QTreeWidgetItem *newItem = 0;
+        QTreeWidgetItem *newItem = nullptr;
         if (lv) {
             newItem = new QTreeWidgetItem(lv, QStringList((*it)->keyString()));
         } else if (item) {
@@ -137,17 +137,12 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         QVariant value = (*it)->value();
         if (value.type() == QVariant::List) {
             newItem->setExpanded(true);
-            newItem->setText(0,
-                             newItem->text(0) +
-                             QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
+            newItem->setText(0, newItem->text(0) + QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
-            for (QList<QVariant>::ConstIterator lit = value.toList().constBegin();
-                    lit != litEnd; ++lit, ++i) {
+            for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
                 new QTreeWidgetItem(newItem,
-                                    QStringList()
-                                    << QLatin1Char('[')  + QString::number(i) + QLatin1Char(']')
-                                    << QString(KTNEFProperty::formatValue(*lit)));
+                                    QStringList() << QLatin1Char('[') + QString::number(i) + QLatin1Char(']') << QString(KTNEFProperty::formatValue(*lit)));
             }
         } else if (value.type() == QVariant::DateTime) {
             newItem->setText(1, value.toDateTime().toString());
@@ -160,37 +155,31 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
 
 void AttachPropertyDialog::formatPropertySet(KTNEFPropertySet *pSet, QTreeWidget *lv)
 {
-    formatProperties(pSet->properties(), lv, 0, QStringLiteral("prop"));
-    QTreeWidgetItem *item =
-        new QTreeWidgetItem(lv,
-                            QStringList(i18nc("@label", "TNEF Attributes")));
+    formatProperties(pSet->properties(), lv, nullptr, QStringLiteral("prop"));
+    auto item = new QTreeWidgetItem(lv, QStringList(i18nc("@label", "TNEF Attributes")));
     item->setExpanded(true);
-    formatProperties(pSet->attributes(), 0, item, QStringLiteral("attr"));
+    formatProperties(pSet->attributes(), nullptr, item, QStringLiteral("attr"));
 }
 
 bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet, QWidget *parent)
 {
-    QList<QTreeWidgetItem *> list = lv->selectedItems();
-    if (list.isEmpty() || !list.first()) {
-        KMessageBox::error(
-            parent,
-            i18nc("@info",
-                  "Must select an item first."));
+    const QList<QTreeWidgetItem *> list = lv->selectedItems();
+    if (list.isEmpty()) {
+        KMessageBox::error(parent, i18nc("@info", "Must select an item first."));
         return false;
     }
 
-    QTreeWidgetItem *item = list.first();
+    QTreeWidgetItem *item = list.constFirst();
     if (item->text(2).isEmpty()) {
-        KMessageBox::error(
-            parent,
-            i18nc("@info",
-                  "The selected item cannot be saved because it has an empty tag."));
+        KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {
         QString tag = item->text(2);
-        int key = tag.midRef(5).toInt();
-        QVariant prop = (tag.startsWith(QStringLiteral("attr_")) ?
-                         pSet->attribute(key) :
-                         pSet->property(key));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        const int key = tag.midRef(5).toInt();
+#else
+        const int key = QStringView(tag).mid(5).toInt();
+#endif
+        QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);
@@ -207,10 +196,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
                 }
                 f.close();
             } else {
-                KMessageBox::error(
-                    parent,
-                    i18nc("@info",
-                          "Unable to open file for writing, check file permissions."));
+                KMessageBox::error(parent, i18nc("@info", "Unable to open file for writing, check file permissions."));
             }
         }
     }
@@ -230,7 +216,9 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
         rendBuffer.open(QIODevice::ReadOnly);
         QDataStream rendStream(&rendBuffer);
         rendStream.setByteOrder(QDataStream::LittleEndian);
-        quint16 type, w, h;
+        quint16 type;
+        quint16 w;
+        quint16 h;
         rendStream >> type >> w >> w; // read type and skip 4 bytes
         rendStream >> w >> h;
         rendBuffer.close();
@@ -238,8 +226,8 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
         if (type == 1 && w > 0 && h > 0) {
             // Load WMF data
             QWinMetaFile wmfLoader;
-            QByteArray qb = wmf.toByteArray();
-            QBuffer wmfBuffer(&qb);
+            QByteArray qb2 = wmf.toByteArray();
+            QBuffer wmfBuffer(&qb2);
             wmfBuffer.open(QIODevice::ReadOnly);
             if (wmfLoader.load(wmfBuffer)) {
                 pix.scaled(w, h, Qt::KeepAspectRatio);
@@ -251,4 +239,3 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
     }
     return pix;
 }
-

@@ -1,8 +1,13 @@
-add_executable(sievedebugdialog sievedebugdialog.cpp ../../../sieveimapinterface/kmailsieveimapinstanceinterface.cpp)
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
+add_executable(sievedebugdialog sievedebugdialog.cpp)
 
 target_link_libraries(sievedebugdialog
   KF5::KSieve
   KF5::KSieveUi
   KF5::AkonadiCore
   KF5::SyntaxHighlighting
+  kmailprivate
 )
+
+target_link_libraries(sievedebugdialog qt${QT_MAJOR_VERSION}keychain)

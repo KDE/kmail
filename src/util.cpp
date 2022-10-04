@@ -1,69 +1,32 @@
-/*******************************************************************************
-**
-** Filename   : util
-** Created on : 03 April, 2005
-** Copyright  : (c) 2005 Till Adam
-** Email      : <adam@kde.org>
-**
-*******************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2005 Till Adam <adam@kde.org>
 
-/*******************************************************************************
-**
-**   This program is free software; you can redistribute it and/or modify
-**   it under the terms of the GNU General Public License as published by
-**   the Free Software Foundation; either version 2 of the License, or
-**   (at your option) any later version.
-**
-**   It is distributed in the hope that it will be useful, but
-**   WITHOUT ANY WARRANTY; without even the implied warranty of
-**   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-**   General Public License for more details.
-**
-**   You should have received a copy of the GNU General Public License
-**   along with this program; if not, write to the Free Software
-**   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-**   In addition, as a special exception, the copyright holders give
-**   permission to link the code of this program with any edition of
-**   the Qt library by Trolltech AS, Norway (or with modified versions
-**   of Qt that use the same license as Qt), and distribute linked
-**   combinations including the two.  You must obey the GNU General
-**   Public License in all respects for all of the code used other than
-**   Qt.  If you modify this file, you may extend this exception to
-**   your version of the file, but you are not obligated to do so.  If
-**   you do not wish to do so, delete this exception statement from
-**   your version.
-**
-*******************************************************************************/
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 #include "util.h"
 #include "kmkernel.h"
 
-#include <MessageCore/StringUtil>
-#include "MessageComposer/MessageHelper"
 #include "job/handleclickedurljob.h"
+#include <MessageComposer/MessageHelper>
+#include <MessageCore/StringUtil>
 
-#include <kmime/kmime_message.h>
-#include <kmessagebox.h>
-#include <KLocalizedString>
-#include <KProcess>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <KMime/KMimeMessage>
 
-#include <QProcess>
-#include <QFileInfo>
 #include <QAction>
 #include <QStandardPaths>
 
-#include <MailCommon/FolderCollection>
-
 using namespace MailCommon;
-
+using namespace KMail;
 KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
 {
     KMime::Types::Mailbox::List addresses;
     // determine the mailing list posting address
     Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
-        const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCollection, false);
+        const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
         if (fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty()) {
             KMime::Types::Mailbox mailbox;
             mailbox.fromUnicodeString(fd->mailingListPostAddress());
@@ -78,7 +41,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
 {
     Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
-        const QSharedPointer<FolderCollection> fd = FolderCollection::forCollection(parentCollection, false);
+        const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
         if (fd->putRepliesInSameFolder()) {
             return parentCollection.id();
         }
@@ -86,12 +49,13 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
     return -1;
 }
 
-bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderCollection> &folder)
+bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
     if (url.scheme() == QLatin1String("mailto")) {
-        HandleClickedUrlJob *job = new HandleClickedUrlJob;
+        auto job = new HandleClickedUrlJob;
         job->setUrl(url);
         job->setFolder(folder);
+        job->setCurrentCollection(collection);
         job->start();
         return true;
     } else {
@@ -100,10 +64,9 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
     }
 }
 
-bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderCollection> &folder)
+bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
-    const QString handler = (folder->mailingList().handler() == MailingList::KMail)
-                            ? QStringLiteral("mailto") : QStringLiteral("https");
+    const QString handler = (folder->mailingList().handler() == MailingList::KMail) ? QStringLiteral("mailto") : QStringLiteral("https");
 
     QUrl urlToHandle;
     QList<QUrl>::ConstIterator end(lst.constEnd());
@@ -118,49 +81,49 @@ bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPoi
     }
 
     if (!urlToHandle.isEmpty()) {
-        return KMail::Util::handleClickedURL(urlToHandle, folder);
+        return Util::handleClickedURL(urlToHandle, folder, collection);
     } else {
         qCWarning(KMAIL_LOG) << "Can't handle url";
         return false;
     }
 }
 
-bool KMail::Util::mailingListPost(const QSharedPointer<MailCommon::FolderCollection> &fd)
+bool KMail::Util::mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().postUrls(), fd);
+        return KMail::Util::mailingListsHandleURL(fd->mailingList().postUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListSubscribe(const QSharedPointer<MailCommon::FolderCollection> &fd)
+bool KMail::Util::mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().subscribeUrls(), fd);
+        return KMail::Util::mailingListsHandleURL(fd->mailingList().subscribeUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderCollection> &fd)
+bool KMail::Util::mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().unsubscribeUrls(), fd);
+        return KMail::Util::mailingListsHandleURL(fd->mailingList().unsubscribeUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListArchives(const QSharedPointer<MailCommon::FolderCollection> &fd)
+bool KMail::Util::mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().archiveUrls(), fd);
+        return KMail::Util::mailingListsHandleURL(fd->mailingList().archiveUrls(), fd, col);
     }
     return false;
 }
 
-bool KMail::Util::mailingListHelp(const QSharedPointer<MailCommon::FolderCollection> &fd)
+bool KMail::Util::mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col)
 {
     if (fd) {
-        return KMail::Util::mailingListsHandleURL(fd->mailingList().helpUrls(), fd);
+        return KMail::Util::mailingListsHandleURL(fd->mailingList().helpUrls(), fd, col);
     }
     return false;
 }
@@ -177,5 +140,15 @@ void KMail::Util::addQActionHelpText(QAction *action, const QString &text)
     action->setToolTip(text);
     if (action->whatsThis().isEmpty()) {
         action->setWhatsThis(text);
+    }
+}
+
+void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
+{
+    if (action) {
+        action->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
+        action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
+        // Use same text as in Text property. Change it in kf5
+        action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
     }
 }

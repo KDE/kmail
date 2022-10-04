@@ -1,81 +1,79 @@
 /*
-  Copyright (c) 2013-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "configureaccountpage.h"
-#include "dialog/kmknotify.h"
-#include "newmailnotifierinterface.h"
-#include "kmkernel.h"
-#include "settings/kmailsettings.h"
 #include "configagentdelegate.h"
-#include "MessageComposer/MessageComposerSettings"
-#include "MailCommon/AccountConfigOrderDialog"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include "dialog/kmknotify.h"
+#include "kmkernel.h"
+#include "newmailnotifierinterface.h"
+#include "settings/kmailsettings.h"
+#include "undosend/undosendcombobox.h"
+#include <MailCommon/AccountConfigOrderDialog>
+#include <MessageComposer/MessageComposerSettings>
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include <mailtransport/transportmanagementwidget.h>
+#include <MailTransport/TransportManagementWidget>
 using MailTransport::TransportManagementWidget;
-#include "ui_accountspagereceivingtab.h"
-#include "MailCommon/MailUtil"
+#include <MailCommon/MailUtil>
 
-#include <AkonadiCore/agentfilterproxymodel.h>
-#include <AkonadiCore/agentinstancemodel.h>
-#include <AkonadiCore/agenttype.h>
-#include <AkonadiCore/agentmanager.h>
-#include <AkonadiWidgets/agenttypedialog.h>
-#include <AkonadiCore/agentinstancecreatejob.h>
-
+#include "kmail_debug.h"
+#include <Akonadi/AgentConfigurationDialog>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AgentType>
+#include <Akonadi/AgentTypeDialog>
+#include <KConfigGroup>
+#include <KLDAP/LdapConfigureWidget>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KComboBox>
-#include "kmail_debug.h"
+#include <QComboBox>
+#include <identity/identitypage.h>
 
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QMenu>
-#include <KConfigGroup>
+#include <QAbstractItemView>
+#include <QFormLayout>
 #include <QLabel>
+#include <QMenu>
+#include <QProcess>
+
+#include <memory>
 
 QString AccountsPage::helpAnchor() const
 {
     return QStringLiteral("configure-accounts");
 }
 
-AccountsPage::AccountsPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
+    // Identity Tab:
+    auto identityTab = new KMail::IdentityPage();
+    addTab(identityTab, i18nc("@title:tab Tab page where the user configures identities", "Identities"));
+
     //
     // "Receiving" tab:
     //
-    ReceivingTab *receivingTab = new ReceivingTab();
+    auto receivingTab = new AccountsPageReceivingTab();
     addTab(receivingTab, i18nc("@title:tab Tab page where the user configures accounts to receive mail", "Receiving"));
-    connect(receivingTab, &ReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
+    connect(receivingTab, &AccountsPageReceivingTab::accountListChanged, this, &AccountsPage::accountListChanged);
 
     //
     // "Sending" tab:
     //
-    SendingTab *sendingTab = new SendingTab();
+    auto sendingTab = new AccountsPageSendingTab();
     addTab(sendingTab, i18nc("@title:tab Tab page where the user configures accounts to send mail", "Sending"));
+
+    //
+    // "Sending" tab:
+    //
+    auto ldapCompletionTab = new LdapCompetionTab();
+    addTab(ldapCompletionTab, i18nc("@title:tab Tab page where the user configures ldap server", "LDAP server"));
 }
 
-AccountsPageSendingTab::~AccountsPageSendingTab()
-{
-}
+AccountsPageSendingTab::~AccountsPageSendingTab() = default;
 
-QString AccountsPage::SendingTab::helpAnchor() const
+QString AccountsPageSendingTab::helpAnchor() const
 {
     return QStringLiteral("configure-accounts-sending");
 }
@@ -83,86 +81,82 @@ QString AccountsPage::SendingTab::helpAnchor() const
 AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
+    auto formLayout = new QFormLayout(this);
     // label: zero stretch ### FIXME more
-    vlay->addWidget(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
+    formLayout->addRow(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
-    TransportManagementWidget *tmw = new TransportManagementWidget(this);
-    tmw->layout()->setContentsMargins(0, 0, 0, 0);
-    vlay->addWidget(tmw);
-
-    // "Common options" groupbox:
-    QGroupBox *group = new QGroupBox(i18n("Common Options"), this);
-    vlay->addWidget(group);
-
-    // a grid layout for the contents of the "common options" group box
-    QGridLayout *glay = new QGridLayout();
-    group->setLayout(glay);
-    glay->setColumnStretch(2, 10);
+    auto tmw = new TransportManagementWidget(this);
+    tmw->layout()->setContentsMargins({});
+    formLayout->addRow(tmw);
 
     // "confirm before send" check box:
-    mConfirmSendCheck = new QCheckBox(i18n("Confirm &before send"), group);
-    glay->addWidget(mConfirmSendCheck, 0, 0, 1, 2);
+    mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
+    formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
     connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
-    mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling before sending"), group);
-    glay->addWidget(mCheckSpellingBeforeSending, 1, 0, 1, 2);
+    mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
+    formLayout->addRow(QString(), mCheckSpellingBeforeSending);
     connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "send on check" combo:
-    mSendOnCheckCombo = new KComboBox(group);
+    mSendOnCheckCombo = new QComboBox(this);
     mSendOnCheckCombo->setEditable(false);
-    mSendOnCheckCombo->addItems(QStringList()
-                                << i18n("Never Automatically")
-                                << i18n("On Manual Mail Checks")
-                                << i18n("On All Mail Checks"));
-    glay->addWidget(mSendOnCheckCombo, 2, 1);
-    connect(mSendOnCheckCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    mSendOnCheckCombo->addItems(QStringList() << i18n("Never Automatically") << i18n("On Manual Mail Checks") << i18n("On All Mail Checks"));
+    mSendOnCheckCombo->setWhatsThis(i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData()));
+    formLayout->addRow(i18n("Send &messages in outbox folder:"), mSendOnCheckCombo);
+    connect(mSendOnCheckCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
     // "default send method" combo:
-    mSendMethodCombo = new KComboBox(group);
+    mSendMethodCombo = new QComboBox(this);
     mSendMethodCombo->setEditable(false);
-    mSendMethodCombo->addItems(QStringList()
-                               << i18n("Send Now")
-                               << i18n("Send Later"));
-    glay->addWidget(mSendMethodCombo, 3, 1);
-    connect(mSendMethodCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &AccountsPageSendingTab::slotEmitChanged);
+    mSendMethodCombo->addItems(QStringList() << i18n("Send Now") << i18n("Send Later"));
+    formLayout->addRow(i18n("Defa&ult send method:"), mSendMethodCombo);
+    connect(mSendMethodCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
-    // labels:
-    QLabel *l =  new QLabel(i18n("Send &messages in outbox folder:"), group);
-    l->setBuddy(mSendOnCheckCombo);
-    glay->addWidget(l, 2, 0);
+    auto hLayout = new QHBoxLayout;
+    mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
+    hLayout->addWidget(mUndoSend);
+    connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
+        mUndoSendComboBox->setEnabled(state);
+        slotEmitChanged();
+    });
 
-    QString msg = i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8());
-    l->setWhatsThis(msg);
-    mSendOnCheckCombo->setWhatsThis(msg);
-
-    l = new QLabel(i18n("Defa&ult send method:"), group);
-    l->setBuddy(mSendMethodCombo);
-    glay->addWidget(l, 3, 0);
+    mUndoSendComboBox = new UndoSendCombobox(this);
+    mUndoSendComboBox->setEnabled(false);
+    hLayout->addWidget(mUndoSendComboBox);
+    formLayout->addRow(QString(), hLayout);
+    connect(mUndoSendComboBox, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 }
 
-void AccountsPage::SendingTab::doLoadFromGlobalSettings()
+void AccountsPageSendingTab::doLoadFromGlobalSettings()
 {
     mSendOnCheckCombo->setCurrentIndex(KMailSettings::self()->sendOnCheck());
+    loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
+    loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
+    mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
-void AccountsPage::SendingTab::doLoadOther()
+void AccountsPageSendingTab::doLoadOther()
 {
     mSendMethodCombo->setCurrentIndex(MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1);
     loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
     loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
+    mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
-void AccountsPage::SendingTab::save()
+void AccountsPageSendingTab::save()
 {
     KMailSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
     saveCheckBox(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
     saveCheckBox(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
+    saveCheckBox(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate(mSendMethodCombo->currentIndex() == 0);
+    KMailSettings::self()->setUndoSendDelay(mUndoSendComboBox->delay());
 }
 
-QString AccountsPage::ReceivingTab::helpAnchor() const
+QString AccountsPageReceivingTab::helpAnchor() const
 {
     return QStringLiteral("configure-accounts-receiving");
 }
@@ -170,10 +164,9 @@ QString AccountsPage::ReceivingTab::helpAnchor() const
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(QStringLiteral("org.freedesktop.Akonadi.NewMailNotifierAgent"),
-            QStringLiteral("/NewMailNotifierAgent"),
-            QDBusConnection::sessionBus(),
-            this);
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
+    mNewMailNotifierInterface =
+        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
         delete mNewMailNotifierInterface;
@@ -183,14 +176,15 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << QStringLiteral("MailTransport") << QStringLiteral("Notes"));
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList()
+                                                                  << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
 
     KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
         KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
         mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
     }
-    ConfigAgentDelegate *configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
+    auto configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
@@ -198,6 +192,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
+    mAccountsReceiving.mAccountsReceiving->disconnectAddAccountButton();
+    auto accountMenu = new QMenu(this);
+    accountMenu->addAction(i18n("Add Mail Account..."), this, &AccountsPageReceivingTab::slotAddMailAccount);
+    accountMenu->addAction(i18n("Custom Account..."), this, &AccountsPageReceivingTab::slotAddCustomAccount);
+    mAccountsReceiving.mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -206,15 +205,35 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
     mRetrievalHash.clear();
 }
 
+void AccountsPageReceivingTab::slotAddCustomAccount()
+{
+    mAccountsReceiving.mAccountsReceiving->slotAddAccount();
+}
+
+void AccountsPageReceivingTab::slotAddMailAccount()
+{
+    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
+
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
+    if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
+        KMessageBox::error(this,
+                           i18n("Could not start the account wizard. "
+                                "Please make sure you have AccountWizard properly installed."),
+                           i18n("Unable to start account wizard"));
+    }
+}
+
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
 {
-    MailCommon::AccountConfigOrderDialog dlg(this);
-    dlg.exec();
+    if (KMKernel::self()) {
+        MailCommon::AccountConfigOrderDialog dlg(KMKernel::self()->mailCommonSettings(), this);
+        dlg.exec();
+    }
 }
 
 void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const QPoint &pos)
 {
-    QMenu *menu = new QMenu(this);
+    QMenu menu(this);
 
     bool IncludeInManualChecks;
     bool OfflineOnShutdown;
@@ -234,7 +253,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         IncludeInManualChecks = group.readEntry("IncludeInManualChecks", true);
 
         // Keep sync with kmkernel, don't forget to change there.
-        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith(QStringLiteral("akonadi_pop3_resource")) ? true : false);
+        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false);
 
         CheckOnStartup = group.readEntry("CheckOnStartup", false);
         QSharedPointer<RetrievalOptions> opts(new RetrievalOptions(IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup));
@@ -248,36 +267,35 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     }
 
     if (!MailCommon::Util::isVirtualCollection(ident)) {
-        QAction *manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), menu);
+        auto manualMailCheck = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Include in Manual Mail Check"), &menu);
         manualMailCheck->setCheckable(true);
         manualMailCheck->setChecked(IncludeInManualChecks);
         manualMailCheck->setData(ident);
-        menu->addAction(manualMailCheck);
+        menu.addAction(manualMailCheck);
         connect(manualMailCheck, &QAction::toggled, this, &AccountsPageReceivingTab::slotIncludeInCheckChanged);
     }
 
-    QAction *switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), menu);
+    auto switchOffline = new QAction(i18nc("Label to a checkbox, so is either checked/unchecked", "Switch offline on KMail Shutdown"), &menu);
     switchOffline->setCheckable(true);
     switchOffline->setChecked(OfflineOnShutdown);
     switchOffline->setData(ident);
-    menu->addAction(switchOffline);
+    menu.addAction(switchOffline);
     connect(switchOffline, &QAction::toggled, this, &AccountsPageReceivingTab::slotOfflineOnShutdownChanged);
 
-    QAction *checkOnStartup = new QAction(i18n("Check mail on startup"), menu);
+    auto checkOnStartup = new QAction(i18n("Check mail on startup"), &menu);
     checkOnStartup->setCheckable(true);
     checkOnStartup->setChecked(CheckOnStartup);
     checkOnStartup->setData(ident);
-    menu->addAction(checkOnStartup);
+    menu.addAction(checkOnStartup);
 
     connect(checkOnStartup, &QAction::toggled, this, &AccountsPageReceivingTab::slotCheckOnStatupChanged);
 
-    menu->exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
-    delete menu;
+    menu.exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
 }
 
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 {
-    QAction *action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast<QAction *>(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -287,7 +305,7 @@ void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 
 void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 {
-    QAction *action = qobject_cast< QAction * >(sender());
+    auto action = qobject_cast<QAction *>(sender());
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
@@ -297,31 +315,32 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 {
-    QAction *action = qobject_cast< QAction * >(sender());
-    QString ident = action->data().toString();
+    auto action = qobject_cast<QAction *>(sender());
+    const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
     opts->OfflineOnShutdown = checked;
     slotEmitChanged();
 }
 
-void AccountsPage::ReceivingTab::slotEditNotifications()
+void AccountsPageReceivingTab::slotEditNotifications()
 {
-    if (mNewMailNotifierInterface) {
-        mNewMailNotifierInterface->asyncCall(QStringLiteral("showConfigureDialog"), (qlonglong)winId());
+    const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent"));
+    if (instance.isValid()) {
+        std::make_unique<Akonadi::AgentConfigurationDialog>(instance, this)->exec();
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
     }
 }
 
-void AccountsPage::ReceivingTab::doLoadFromGlobalSettings()
+void AccountsPageReceivingTab::doLoadFromGlobalSettings()
 {
     if (mNewMailNotifierInterface) {
         mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
     }
 }
 
-void AccountsPage::ReceivingTab::save()
+void AccountsPageReceivingTab::save()
 {
     // Save Mail notification settings
     if (mNewMailNotifierInterface) {
@@ -329,8 +348,8 @@ void AccountsPage::ReceivingTab::save()
     }
 
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-    QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator it = mRetrievalHash.cbegin();
-    const QHash<QString, QSharedPointer<RetrievalOptions> >::const_iterator itEnd = mRetrievalHash.cend();
+    QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator it = mRetrievalHash.cbegin();
+    const QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator itEnd = mRetrievalHash.cend();
     for (; it != itEnd; ++it) {
         KConfigGroup group;
         KConfig *conf = nullptr;
@@ -348,3 +367,31 @@ void AccountsPage::ReceivingTab::save()
     }
 }
 
+LdapCompetionTab::LdapCompetionTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+    , mLdapConfigureWidget(new KLDAP::LdapConfigureWidget(this))
+{
+    auto layout = new QVBoxLayout(this);
+    layout->setContentsMargins({});
+
+    layout->addWidget(mLdapConfigureWidget);
+
+    connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
+}
+
+LdapCompetionTab::~LdapCompetionTab() = default;
+
+QString LdapCompetionTab::helpAnchor() const
+{
+    return {};
+}
+
+void LdapCompetionTab::save()
+{
+    mLdapConfigureWidget->save();
+}
+
+void LdapCompetionTab::doLoadOther()
+{
+    mLdapConfigureWidget->load();
+}

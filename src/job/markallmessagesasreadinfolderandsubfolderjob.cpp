@@ -1,37 +1,22 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "markallmessagesasreadinfolderandsubfolderjob.h"
-#include <PimCommonAkonadi/FetchRecursiveCollectionsJob>
 #include "kmail_debug.h"
+
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
 
 MarkAllMessagesAsReadInFolderAndSubFolderJob::MarkAllMessagesAsReadInFolderAndSubFolderJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
-MarkAllMessagesAsReadInFolderAndSubFolderJob::~MarkAllMessagesAsReadInFolderAndSubFolderJob()
-{
-
-}
+MarkAllMessagesAsReadInFolderAndSubFolderJob::~MarkAllMessagesAsReadInFolderAndSubFolderJob() = default;
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const Akonadi::Collection &topLevelCollection)
 {
@@ -41,11 +26,17 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::setTopLevelCollection(const A
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
 {
     if (mTopLevelCollection.isValid()) {
-        PimCommon::FetchRecursiveCollectionsJob *fetchJob = new PimCommon::FetchRecursiveCollectionsJob(this);
-        fetchJob->setTopCollection(mTopLevelCollection);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFailed, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed);
-        connect(fetchJob, &PimCommon::FetchRecursiveCollectionsJob::fetchCollectionFinished, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone);
-        fetchJob->start();
+        auto fetchJob = new Akonadi::CollectionFetchJob(mTopLevelCollection, Akonadi::CollectionFetchJob::Recursive, this);
+        fetchJob->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
+        connect(fetchJob, &Akonadi::CollectionFetchJob::finished, this, [this](KJob *job) {
+            if (job->error()) {
+                qCWarning(KMAIL_LOG) << job->errorString();
+                slotFetchCollectionFailed();
+            } else {
+                auto fetch = static_cast<Akonadi::CollectionFetchJob *>(job);
+                slotFetchCollectionDone(fetch->collections());
+            }
+        });
     } else {
         qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
         deleteLater();
@@ -62,7 +53,7 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionDone(const
 {
     Akonadi::MessageStatus messageStatus;
     messageStatus.setRead(true);
-    Akonadi::MarkAsCommand *markAsReadAllJob = new Akonadi::MarkAsCommand(messageStatus, list);
+    auto markAsReadAllJob = new Akonadi::MarkAsCommand(messageStatus, list);
     connect(markAsReadAllJob, &Akonadi::MarkAsCommand::result, this, &MarkAllMessagesAsReadInFolderAndSubFolderJob::slotMarkAsResult);
     markAsReadAllJob->execute();
 }

@@ -1,31 +1,18 @@
 /*
   This file is part of KDE Kontact.
 
-  Copyright (C) 2003 Sven Lüppken <sven@kde.org>
-  Copyright (C) 2003 Tobias König <tokoe@kde.org>
-  Copyright (C) 2003 Daniel Molkentin <molkentin@kde.org>
+  SPDX-FileCopyrightText: 2003 Sven Lüppken <sven@kde.org>
+  SPDX-FileCopyrightText: 2003 Tobias König <tokoe@kde.org>
+  SPDX-FileCopyrightText: 2003 Daniel Molkentin <molkentin@kde.org>
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Library General Public
-  License as published by the Free Software Foundation; either
-  version 2 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Library General Public License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to
-  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA 02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef SUMMARYVIEW_PART_H
-#define SUMMARYVIEW_PART_H
+#pragma once
 
-#include <KParts/ReadOnlyPart>
-#include <kparts/readonlypart.h>
+#include <KParts/Part>
+#include <QDate>
+#include <QMap>
 
 class DropWidget;
 
@@ -42,28 +29,27 @@ class QFrame;
 class QLabel;
 class QVBoxLayout;
 
-class SummaryViewPart : public KParts::ReadOnlyPart
+class SummaryViewPart : public KParts::Part
 {
     Q_OBJECT
 
 public:
-    SummaryViewPart(KontactInterface::Core *core,
-                    const KAboutData &aboutData, QObject *parent = nullptr);
-    ~SummaryViewPart();
+    SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent = nullptr);
+    ~SummaryViewPart() override;
 
 public Q_SLOTS:
     void slotTextChanged();
     void slotAdjustPalette();
-    void setDate(const QDate &newDate);
+    void setDate(QDate newDate);
     void updateSummaries();
 
 Q_SIGNALS:
     void textChanged(const QString &);
 
 protected:
-    bool openFile() Q_DECL_OVERRIDE;
-    void partActivateEvent(KParts::PartActivateEvent *event) Q_DECL_OVERRIDE;
+    void partActivateEvent(KParts::PartActivateEvent *event) override;
 
+    bool event(QEvent *e) override;
 protected Q_SLOTS:
     void slotConfigure();
     void updateWidgets();
@@ -75,23 +61,19 @@ private:
     void saveLayout();
     QString widgetName(QWidget *) const;
 
-    QStringList configModules() const;
     void drawLtoR(QWidget *target, QWidget *widget, int alignment);
     void drawRtoL(QWidget *target, QWidget *widget, int alignment);
 
     QMap<QString, KontactInterface::Summary *> mSummaries;
     QStringList mLeftColumnSummaries;
     QStringList mRightColumnSummaries;
-    KontactInterface::Core *mCore;
-    DropWidget *mFrame;
-    QFrame *mMainWidget;
-    QVBoxLayout *mMainLayout;
-    QVBoxLayout *mLeftColumn;
-    QVBoxLayout *mRightColumn;
-    QLabel *mUsernameLabel;
-    QLabel *mDateLabel;
-    QAction *mConfigAction;
-
+    KontactInterface::Core *mCore = nullptr;
+    DropWidget *mFrame = nullptr;
+    QFrame *mMainWidget = nullptr;
+    QVBoxLayout *mMainLayout = nullptr;
+    QVBoxLayout *mLeftColumn = nullptr;
+    QVBoxLayout *mRightColumn = nullptr;
+    QLabel *mUsernameLabel = nullptr;
+    QLabel *mDateLabel = nullptr;
+    QAction *mConfigAction = nullptr;
 };
-
-#endif

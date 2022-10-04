@@ -1,0 +1,259 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Martin Schlander <mschlander@opensuse.org>, 2013, 2014, 2015, 2016, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2020-07-27 22:48+0200\n"
+"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
+"Language-Team: Danish <kde-i18n-doc@kde.org>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Indstil"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Send senere-agent"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Agent til at sende e-mails senere."
+
+#: sendlaterconfiguredialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-2020 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Ophavsret (C) 2013-2020 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Vedligeholder"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Martin Schlander"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mschlander@opensuse.org"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Til"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Emne"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Send omkring"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Gentaget"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Brev-id"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Ingen breve venter..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Send nu"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Slet"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Ja"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Nej"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Vil du slette det valgte element?"
+msgstr[1] "Vil du slette de valgte elementer?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Slet"
+
+#: sendlaterconfigurewidget.cpp:216
+#, fuzzy, kde-format
+#| msgid "Do you want to remove the messages as well?"
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Vil du også fjerne brevene?"
+msgstr[1] "Vil du også fjerne brevene?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+#| msgid "Remove messages"
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Fjern breve"
+
+#: sendlaterconfigurewidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Slet"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Intet brev fundet."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Intet brev fundet."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Fejl under hentning af brev"
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Kan ikke hente brevet. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Vi kan ikke transportere"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Brevet er ikke et rigtigt brev"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Kan ikke sende brevet."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Brev afsendt"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Der opstod en fejl. Vil du sende det igen?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "En fejl opstod"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Ændr..."
+
+#~ msgid "Remove items"
+#~ msgstr "Fjern elementer"
+
+#~ msgid "Remove"
+#~ msgstr "Fjern"
+
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Send senere"
+
+#, fuzzy
+#~| msgctxt "@title:window"
+#~| msgid "Send Later"
+#~ msgid "Send Later"
+#~ msgstr "Send senere"
+
+#~ msgid "Delay"
+#~ msgstr "Forsinkelse"
+
+#~ msgid "Days"
+#~ msgstr "Dage"
+
+#~ msgid "Weeks"
+#~ msgstr "Uger"
+
+#~ msgid "Months"
+#~ msgstr "Måneder"
+
+#~ msgid "Years"
+#~ msgstr "År"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr "Du kan ikke vælge en dato før den aktuelle dato."
+
+#~ msgid "Send at:"
+#~ msgstr "Send:"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Gentag hver:"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgid "SendLater"
+#~ msgstr "Send senere"
+
+#~ msgid "Put in outbox"
+#~ msgstr "Placér i udbakke"

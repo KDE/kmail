@@ -1,34 +1,18 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "folderarchivecache.h"
-#include "kmail_debug.h"
 #include "folderarchiveaccountinfo.h"
+#include "kmail_debug.h"
 
 FolderArchiveCache::FolderArchiveCache(QObject *parent)
     : QObject(parent)
 {
 }
 
-FolderArchiveCache::~FolderArchiveCache()
-{
-
-}
+FolderArchiveCache::~FolderArchiveCache() = default;
 
 void FolderArchiveCache::clearCache()
 {
@@ -49,37 +33,35 @@ void FolderArchiveCache::clearCacheWithContainsCollection(Akonadi::Collection::I
 
 Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInfo *info)
 {
-    //qCDebug(KMAIL_LOG)<<" Look at Cache ";
+    // qCDebug(KMAIL_LOG)<<" Look at Cache ";
     if (mCache.contains(info->instanceName())) {
-        //qCDebug(KMAIL_LOG)<<"instance name : "<<info->instanceName();
+        // qCDebug(KMAIL_LOG)<<"instance name : "<<info->instanceName();
         switch (info->folderArchiveType()) {
-        case FolderArchiveAccountInfo::UniqueFolder: {
+        case FolderArchiveAccountInfo::UniqueFolder:
             qCDebug(KMAIL_LOG) << "FolderArchiveAccountInfo::UniqueFolder has cache " << mCache.value(info->instanceName()).colId;
             return mCache.value(info->instanceName()).colId;
-        }
         case FolderArchiveAccountInfo::FolderByMonths:
-            //qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByMonths has cache ?";
+            // qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByMonths has cache ?";
             if (mCache.value(info->instanceName()).date.month() != QDate::currentDate().month()) {
-                //qCDebug(KMAIL_LOG)<<"need to remove current cache month is not good";
+                // qCDebug(KMAIL_LOG)<<"need to remove current cache month is not good";
                 mCache.remove(info->instanceName());
                 return -1;
             } else {
                 return mCache.value(info->instanceName()).colId;
             }
         case FolderArchiveAccountInfo::FolderByYears:
-            //qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByYears has cache ?";
+            // qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByYears has cache ?";
             if (mCache.value(info->instanceName()).date.year() != QDate::currentDate().year()) {
-                //qCDebug(KMAIL_LOG)<<"need to remove current cache year is not good";
+                // qCDebug(KMAIL_LOG)<<"need to remove current cache year is not good";
                 mCache.remove(info->instanceName());
                 return -1;
             } else {
                 return mCache.value(info->instanceName()).colId;
             }
-            break;
         }
         return mCache.value(info->instanceName()).colId;
     }
-    //qCDebug(KMAIL_LOG)<<" Don't have cache for this instancename "<<info->instanceName();
+    // qCDebug(KMAIL_LOG)<<" Don't have cache for this instancename "<<info->instanceName();
     return -1;
 }
 
@@ -95,4 +77,3 @@ void FolderArchiveCache::addToCache(const QString &resourceName, Akonadi::Collec
         mCache.insert(resourceName, cache);
     }
 }
-

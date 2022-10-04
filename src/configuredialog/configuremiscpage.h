@@ -1,27 +1,14 @@
 /*
-  Copyright (c) 2013-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREMISCPAGE_H
-#define CONFIGUREMISCPAGE_H
+#pragma once
 
+#include "configuredialog_p.h"
 #include "kmail_export.h"
 #include "ui_miscpagemaintab.h"
-#include "configuredialog_p.h"
-#include "config-kmail.h"
 
 namespace MailCommon
 {
@@ -39,16 +26,16 @@ class MiscPageFolderTab : public ConfigModuleTab
 public:
     explicit MiscPageFolderTab(QWidget *parent = nullptr);
 
-    void save() Q_DECL_OVERRIDE;
-    QString helpAnchor() const;
+    void save() override;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
 
 private:
     Ui_MiscMainTab mMMTab;
-    MailCommon::FolderRequester *mOnStartupOpenFolder;
+    MailCommon::FolderRequester *mOnStartupOpenFolder = nullptr;
 };
 
 class MiscPageInviteTab : public ConfigModuleTab
@@ -56,42 +43,54 @@ class MiscPageInviteTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPageInviteTab(QWidget *parent = nullptr);
-    void save() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    void save() override;
+    void doResetToDefaultsOther() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::InvitationSettings *mInvitationUi;
+    MessageViewer::InvitationSettings *mInvitationUi = nullptr;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit MiscPage(QWidget *parent = nullptr);
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-
-    typedef MiscPageFolderTab FolderTab;
-    typedef MiscPageInviteTab InviteTab;
+    explicit MiscPage(QWidget *parent = nullptr, const QVariantList &args = {});
+    Q_REQUIRED_RESULT QString helpAnchor() const override;
 };
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
 class MiscPagePrintingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
     explicit MiscPagePrintingTab(QWidget *parent = nullptr);
-    void save() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    void save() override;
+    void doResetToDefaultsOther() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::PrintingSettings *mPrintingUi;
+    MessageViewer::PrintingSettings *mPrintingUi = nullptr;
+};
+
+#ifdef WITH_KUSERFEEDBACK
+namespace KUserFeedback
+{
+class FeedbackConfigWidget;
+}
+class KuserFeedBackPageTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit KuserFeedBackPageTab(QWidget *parent = nullptr);
+    void save() override;
+    void doResetToDefaultsOther() override;
+
+private:
+    void doLoadFromGlobalSettings() override;
+    KUserFeedback::FeedbackConfigWidget *mUserFeedbackWidget = nullptr;
 };
 #endif
-
-#endif // CONFIGUREMISCPAGE_H

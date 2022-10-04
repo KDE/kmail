@@ -1,48 +1,32 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "folderarchivemanager.h"
-#include "folderarchiveagentjob.h"
 #include "folderarchiveaccountinfo.h"
+#include "folderarchiveagentjob.h"
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
-#include "helper_p.h"
+
 #include "util.h"
 
-#include <AkonadiCore/AgentManager>
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/CollectionFetchJob>
+#include <Akonadi/AgentManager>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 
-#include <KSharedConfig>
-#include <KNotification>
-#include <KLocalizedString>
-#include <QIcon>
-#include <KIconLoader>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <KNotification>
+#include <KSharedConfig>
 
 #include <QRegularExpression>
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
-    : QObject(parent),
-      mCurrentJob(nullptr)
+    : QObject(parent)
+    , mFolderArchiveCache(new FolderArchiveCache(this))
 {
-    mFolderArchiveCache = new FolderArchiveCache(this);
     load();
 }
 
@@ -58,7 +42,7 @@ void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &coll
 {
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     mFolderArchiveCache->clearCacheWithContainsCollection(collection.id());
-    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
+    for (FolderArchiveAccountInfo *info : std::as_const(mListAccountInfo)) {
         if (info->archiveTopLevel() == collection.id()) {
             info->setArchiveTopLevel(-1);
             KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + info->instanceName());
@@ -70,7 +54,7 @@ void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &coll
 
 FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QString &instanceName) const
 {
-    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
+    for (FolderArchiveAccountInfo *info : std::as_const(mListAccountInfo)) {
         if (info->instanceName() == instanceName) {
             return info;
         }
@@ -80,7 +64,7 @@ FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QStri
 
 void FolderArchiveManager::setArchiveItem(qlonglong itemId)
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(Akonadi::Item(itemId), this);
+    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(itemId), this);
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     job->fetchScope().setFetchRemoteIdentification(true);
     connect(job, &Akonadi::ItemFetchJob::result, this, &FolderArchiveManager::slotFetchParentCollection);
@@ -99,7 +83,7 @@ void FolderArchiveManager::slotFetchParentCollection(KJob *job)
         moveFailed(i18n("No folder returned."));
         qCDebug(KMAIL_LOG) << "Fetch list is empty";
     } else {
-        Akonadi::CollectionFetchJob *jobCol = new Akonadi::CollectionFetchJob(Akonadi::Collection(items.first().parentCollection().id()), Akonadi::CollectionFetchJob::Base, this);
+        auto jobCol = new Akonadi::CollectionFetchJob(Akonadi::Collection(items.first().parentCollection().id()), Akonadi::CollectionFetchJob::Base, this);
         jobCol->setProperty("itemId", items.first().id());
         connect(jobCol, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveManager::slotFetchCollection);
     }
@@ -112,7 +96,7 @@ void FolderArchiveManager::slotFetchCollection(KJob *job)
         qCDebug(KMAIL_LOG) << "cannot fetch collection " << job->errorString();
         return;
     }
-    Akonadi::CollectionFetchJob *jobCol = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto jobCol = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     if (jobCol->collections().isEmpty()) {
         moveFailed(i18n("Unable to return list of folders."));
         qCDebug(KMAIL_LOG) << "List of folder is empty";
@@ -120,14 +104,14 @@ void FolderArchiveManager::slotFetchCollection(KJob *job)
     }
 
     const Akonadi::Item::List itemIds = {Akonadi::Item(jobCol->property("itemId").toLongLong())};
-    setArchiveItems(itemIds, jobCol->collections().first().resource());
+    setArchiveItems(itemIds, jobCol->collections().constFirst().resource());
 }
 
 void FolderArchiveManager::setArchiveItems(const Akonadi::Item::List &items, const QString &instanceName)
 {
     FolderArchiveAccountInfo *info = infoFromInstanceName(instanceName);
     if (info) {
-        FolderArchiveAgentJob *job = new FolderArchiveAgentJob(this, info, items);
+        auto job = new FolderArchiveAgentJob(this, info, items);
         if (mCurrentJob) {
             mJobQueue.enqueue(job);
         } else {
@@ -140,7 +124,7 @@ void FolderArchiveManager::setArchiveItems(const Akonadi::Item::List &items, con
 void FolderArchiveManager::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
     const QString instanceName = instance.name();
-    for (FolderArchiveAccountInfo *info : qAsConst(mListAccountInfo)) {
+    for (FolderArchiveAccountInfo *info : std::as_const(mListAccountInfo)) {
         if (info->instanceName() == instanceName) {
             mListAccountInfo.removeAll(info);
             removeInfo(instanceName);
@@ -161,14 +145,14 @@ void FolderArchiveManager::load()
 {
     qDeleteAll(mListAccountInfo);
     mListAccountInfo.clear();
-    //Be sure to clear cache.
+    // Be sure to clear cache.
     mFolderArchiveCache->clearCache();
 
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     const QStringList accountList = config.groupList().filter(QRegularExpression(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
     for (const QString &account : accountList) {
         KConfigGroup group = config.group(account);
-        FolderArchiveAccountInfo *info = new FolderArchiveAccountInfo(group);
+        auto info = new FolderArchiveAccountInfo(group);
         if (info->enabled()) {
             mListAccountInfo.append(info);
         } else {
@@ -179,11 +163,10 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
-
     KNotification::event(QStringLiteral("folderarchivedone"),
+                         QString(),
                          i18n("Messages archived"),
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));
@@ -192,11 +175,10 @@ void FolderArchiveManager::moveDone()
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
-
     KNotification::event(QStringLiteral("folderarchiveerror"),
+                         QString(),
                          msg,
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));

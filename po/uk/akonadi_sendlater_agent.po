@@ -1,0 +1,295 @@
+# Translation of akonadi_sendlater_agent.po to Ukrainian
+# Copyright (C) 2013-2021 This_file_is_part_of_KDE
+# This file is distributed under the license LGPL version 2.1 or
+# version 3 or later versions approved by the membership of KDE e.V.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_sendlater_agent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-01-02 09:01+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Налаштовування"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Агент відкладеного надсилання"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Агент відкладеного надсилання повідомлень електронної пошти."
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "© Laurent Montel, 2013–%1"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Супровідник"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Юрій Чорноіван"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "yurchor@ukr.net"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Кому"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Тема"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Надіслати приблизно"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Регулярне"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Ід. повідомлення"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "У черзі надсилання немає повідомлень…"
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Надіслати зараз"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Вилучити"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Так"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Ні"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Хочете вилучити позначені пункти?"
+msgstr[1] "Хочете вилучити позначені пункти?"
+msgstr[2] "Хочете вилучити позначені пункти?"
+msgstr[3] "Хочете вилучити позначений пункт?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Вилучення записів"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Хочете вилучити і повідомлення?"
+msgstr[1] "Хочете вилучити і повідомлення?"
+msgstr[2] "Хочете вилучити і повідомлення?"
+msgstr[3] "Хочете вилучити і повідомлення?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Вилучити повідомлення"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Не вилучати"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Не виявлено повідомлення."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Не виявлено повідомлення."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Помилка під час спроби отримання повідомлення."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Не вдалося отримати повідомлення. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Не вдалося створити канал передавання"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Повідомлення не є справжнім повідомленням"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Не вдалося надіслати повідомлення."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Повідомлення надіслано"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Виявлено помилку. Хочете повторити спробу надсилання?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Виявлено помилку"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Надіслати ще раз"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Змінити…"
+
+#~ msgid "Remove items"
+#~ msgstr "Вилучення пунктів"
+
+#~ msgid "Remove"
+#~ msgstr "Вилучити"
+
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Відкладене надсилання"
+
+#~ msgid "Send Later"
+#~ msgstr "Відкладене надсилання"
+
+#~ msgid "Delay"
+#~ msgstr "Затримка"
+
+#~ msgid "Days"
+#~ msgstr "днів"
+
+#~ msgid "Weeks"
+#~ msgstr "тижнів"
+
+#~ msgid "Months"
+#~ msgstr "місяців"
+
+#~ msgid "Years"
+#~ msgstr "років"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr "Не можна визначати дати, що передують поточній даті."
+
+#~ msgid "Send at:"
+#~ msgstr "Надіслати:"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Повторювати кожні"
+
+#~ msgid "SendLater"
+#~ msgstr "Надіслати пізніше"
+
+#~ msgid "Put in outbox"
+#~ msgstr "Розмістити у теці «Вихідні»"
+
+#~ msgid "Recurrence"
+#~ msgstr "Повторення"
+
+#~ msgid "Each:"
+#~ msgstr "Кожні:"
+
+#~ msgid "30 minutes later"
+#~ msgstr "за 30 хвилин"
+
+#~ msgid "1 hour later"
+#~ msgstr "за 1 годину"
+
+#~ msgid "2 hours later"
+#~ msgstr "за 2 години"
+
+#~ msgid "Send around %1"
+#~ msgstr "Надіслати приблизно %1"
+
+#~ msgid "Send Now"
+#~ msgstr "Надіслати зараз"
+
+#~ msgid "Recursive"
+#~ msgstr "Рекурсивно"
+
+#~ msgid "Date"
+#~ msgstr "Дата"
+
+#~ msgid "Open Containing Folder..."
+#~ msgstr "Відкрити теку, яка містить дані…"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "Агент архівування пошти"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "Автоматичне архівування повідомлень електронної пошти."
+
+#~ msgid "Add..."
+#~ msgstr "Додати…"

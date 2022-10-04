@@ -1,39 +1,22 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "createfollowupreminderonexistingmessagejob.h"
 #include "kmail_debug.h"
-#include "MessageComposer/FollowupReminderCreateJob"
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 #include <KMime/Message>
+#include <MessageComposer/FollowupReminderCreateJob>
 
 CreateFollowupReminderOnExistingMessageJob::CreateFollowupReminderOnExistingMessageJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
-CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob()
-{
-
-}
+CreateFollowupReminderOnExistingMessageJob::~CreateFollowupReminderOnExistingMessageJob() = default;
 
 void CreateFollowupReminderOnExistingMessageJob::start()
 {
@@ -47,16 +30,16 @@ void CreateFollowupReminderOnExistingMessageJob::start()
 
 void CreateFollowupReminderOnExistingMessageJob::doStart()
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mMessageItem, this);
+    auto job = new Akonadi::ItemFetchJob(mMessageItem, this);
     job->fetchScope().fetchFullPayload(true);
     connect(job, &KJob::result, this, &CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone);
 }
 
 void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
 {
-    Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     if (fetchJob->items().count() == 1) {
-        mMessageItem = fetchJob->items().first();
+        mMessageItem = fetchJob->items().constFirst();
     } else {
         qCDebug(KMAIL_LOG) << " CreateFollowupReminderOnExistingMessageJob Error during fetch: " << job->errorString();
         deleteLater();
@@ -67,9 +50,9 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    KMime::Message::Ptr msg =  mMessageItem.payload<KMime::Message::Ptr>();
+    auto msg = mMessageItem.payload<KMime::Message::Ptr>();
     if (msg) {
-        MessageComposer::FollowupReminderCreateJob *reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
+        auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);
         if (messageID) {
             const QString messageIdStr = messageID->asUnicodeString();
@@ -105,6 +88,8 @@ void CreateFollowupReminderOnExistingMessageJob::slotReminderDone(KJob *job)
 {
     if (job->error()) {
         qCDebug(KMAIL_LOG) << "CreateFollowupReminderOnExistingMessageJob::slotReminderDone  :" << job->errorString();
+    } else {
+        // TODO update dialog if opened
     }
     deleteLater();
 }
@@ -124,7 +109,7 @@ QDate CreateFollowupReminderOnExistingMessageJob::date() const
     return mDate;
 }
 
-void CreateFollowupReminderOnExistingMessageJob::setDate(const QDate &date)
+void CreateFollowupReminderOnExistingMessageJob::setDate(QDate date)
 {
     mDate = date;
 }
@@ -143,4 +128,3 @@ bool CreateFollowupReminderOnExistingMessageJob::canStart() const
 {
     return mMessageItem.isValid() && mCollection.isValid() && mDate.isValid();
 }
-

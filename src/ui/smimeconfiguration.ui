@@ -169,7 +169,7 @@
         </spacer>
        </item>
        <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout">
+        <layout class="QGridLayout" name="gridLayout3">
          <item row="0" column="0">
           <widget class="QRadioButton" name="honorHTTPProxyRB">
            <property name="whatsThis">

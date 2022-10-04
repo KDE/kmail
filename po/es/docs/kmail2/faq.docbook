@@ -1,0 +1,1470 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<othercredit role="translator"
+> <firstname
+>Juan Manuel</firstname
+> <surname
+>García Molina</surname
+> <affiliation
+><address
+><email
+>juanma@superiodico.net</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+><othercredit role="translator"
+> <firstname
+>Miguel</firstname
+> <surname
+>Revilla Rodríguez</surname
+> <affiliation
+><address
+><email
+>yo@miguelrevilla.com</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> <othercredit role="translator"
+> <firstname
+>Javier</firstname
+> <surname
+>Viñal</surname
+> <affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+> </address
+></affiliation
+> <contrib
+>Traductor</contrib
+> </othercredit
+> 
+</authorgroup>
+<date
+>2013-12-20</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+<title
+>Preguntas más comunes (&FAQ;)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry
+><question
+><para
+>¿Cómo hacer que Firefox sea su navegador predeterminado?</para
+></question>
+<answer>
+  <para
+>Usted quiere pulsar sobre un enlace en &kmail; y lo tiene abierto en <application
+>Firefox</application
+>. En ese momento, se usa otro navegador. Usted quiere cambiar esto.</para>
+  <para
+>Esta solución afectará a todo &kde;, no solo &kmail;: Inicie <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Aplicaciones predeterminadas</guisubmenu
+><guimenuitem
+>Navegador web</guimenuitem
+><guimenuitem
+>Abrir &URL; http y https en el siguiente navegador</guimenuitem
+><guimenuitem
+>firefox</guimenuitem
+></menuchoice
+>.</para>
+  <para
+>Si usted es un administrador y quiere establecer esta opción automáticamente para todos los usuarios, es</para>
+  <itemizedlist>
+    <listitem>
+      <para
+>en su directorio de usuario en <filename
+>$(kde4-config --localprefix)/share/config/kdeglobals</filename
+> añada la línea <userinput
+>BrowserApplication[$e]=!firefox</userinput
+> bajo la categoría <guilabel
+>[General]</guilabel
+> </para>
+    </listitem>
+  </itemizedlist>
+<para
+>Usted también puede emplear el guion en <ulink url="http://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/Modify_KDE_Software_Defaults</ulink
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo controlar su perfil de conexión en itinerancia?</para
+></question>
+<answer>
+  <para
+>Usted establece un <emphasis
+>Perfil de itinerancia</emphasis
+> para acceder a su servidor doméstico mientras está desplazado, pero esto intenta conectar incluso si usted está en casa. La autoconexión está desactivada en las pantallas de configuración.</para>
+  <para
+><menuchoice
+><guimenu
+>Preferencias</guimenu
+><guisubmenu
+>Configurar KMail</guisubmenu
+><guimenuitem
+>Cuentas</guimenuitem
+><guimenuitem
+>Recepción (pestaña)</guimenuitem
+><guimenuitem
+>(seleccione la cuenta a excluir)</guimenuitem
+><guimenuitem
+>Modificar</guimenuitem
+><guimenuitem
+>Opciones de recuperación</guimenuitem
+></menuchoice
+>, desmarcar <guilabel
+>Incluir en comprobación manual de correo</guilabel
+>. Esto excluirá el perfil cuando usted pulse el icono de descargas, pero el perfil estará todavía disponible desde la lista desplegable, haciendo fácil obtener su correo cuando esté fuera de su domicilio.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo almacenar los correos enviados en una carpeta especial?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted quiere almacenar correos en una carpeta especial. Quizás esté usando un servidor &imap; y usted quiere almacenar sus correos en el servidor, no en el cliente.</para>
+  <para
+><emphasis
+>Solución:</emphasis
+> En &kmail;, elija <menuchoice
+><guimenu
+>Preferencias</guimenu
+><guisubmenu
+>Configurar KMail</guisubmenu
+><guimenuitem
+>Identidades</guimenuitem
+><guimenuitem
+>(Elija una identidad)</guimenuitem
+><guimenuitem
+>Modificar</guimenuitem
+><guimenuitem
+>Avanzado</guimenuitem
+><guimenuitem
+>Carpeta-correo-enviado</guimenuitem
+></menuchoice
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo almacenar los correos de la papelera en una carpeta especial?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted quiere almacenar correos en una carpeta especial. Quizás usted esté usando un servidor &imap; y quiere que los correos enviados a la papelera sean almacenados en el servidor, no en el cliente.</para>
+  <para
+>En el diálogo de preferencias seleccione una cuenta &imap; en la página <guilabel
+>Cuentas</guilabel
+>. Pulse sobre <guibutton
+>Modificar</guibutton
+> y cambie la ubicación de la carpeta de papelera en la pestaña <guilabel
+>Avanzado</guilabel
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo almacenar correos cifrados como no cifrados?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted intercambia correo cifrado con un amigo, pero le gustaría almacenarlo descifrado, una vez que haya abierto el mensaje.</para>
+  <para
+><emphasis
+>Solución:</emphasis
+> Para almacenar correos que se hayan descifrado una vez en formato sin cifrar, añada esto a su archivo de configuración <filename
+>kmail2rc</filename
+> en la sección [Reader]:</para>
+  <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+></para>
+  <para
+>Esto podría funcionar solo con <emphasis
+>SMIME</emphasis
+> pero se está trabajando en la implementación para <emphasis
+>OpenPGP</emphasis
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo filtrar correo basura en un servidor &imap;?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted intenta ponerse a leer su correo desde un servidor &imap;, y se pregunta ¿cómo aparecerá el manejo de filtrado y correo basura?</para>
+  <para
+><emphasis
+>Solución:</emphasis
+> La máquina que ya tiene su correo puede ser su servidor &imap;. Usted necesitará configurar una aplicación servidor. <guilabel
+>Dovecot</guilabel
+> es una de ellas, y la guía en las páginas web del proyecto hace fácil configurarla. Esto todavía deja el problema del filtrado, como tiene sentido hacerlo en el servidor (cuando usted apunta &kmail; al servidor usted verá las carpetas que ha creado en el servidor). De nuevo existen opciones, pero una de las mejor conocidas es <guilabel
+>procmail</guilabel
+>. De nuevo hay información muy completa en Internet sobre como configurarlo. Usted le da un conjunto de <quote
+>recetas</quote
+> - aquí hay un ejemplo:</para>
+  <para
+><screen
+><markup
+>    :0
+    * (^To|^CC|^List-ID): .*kde-linux
+    ${MAILDIR}.INBOX.KDE-Lists.kde-users/
+  </markup
+></screen>
+  </para>
+  <para
+>Su usted dispone de carpetas <emphasis
+>maildir</emphasis
+>, cada receta debe terminar con una <quote
+>/</quote
+>. Si sus carpetas son <emphasis
+>mbox</emphasis
+>, solo omita la <quote
+>/</quote
+></para>
+  <para
+>Si usted ha estado usando <guilabel
+>bogofilter</guilabel
+> con &kmail;, ya dispondrá de una <emphasis
+>lista de palabras</emphasis
+>. Esto puede usarse también en el servidor, por lo que usted no tendrá que comenzar el entrenamiento desde cero. El truco es establecer esto antes de las recetas de <guilabel
+>procmail</guilabel
+>:</para>
+  <para
+><screen
+><markup
+>:0fw
+ | bogofilter -e -p
+
+0e
+ { EXITCODE=75 HOST }
+
+0:
+ * ^X-Bogosity: Spam, tests=bogofilter
+ ${MAILDIR}.INBOX.a-Spam/
+
+0e
+ { EXITCODE=75 HOST }
+
+0:
+ * ^X-Bogosity: Unsure, tests=bogofilter
+ ${MAILDIR}.INBOX.a-Unsure/
+
+0e
+ { EXITCODE=75 HOST }
+ </markup
+></screen>
+</para>
+<para
+>Tenga en cuenta que esto va a utilizar un buzón de correo para correo basura y otra para el inseguro - Yo añado una -a- al nombre para asegurar que se ve fácilmente, encima de la lista.</para>
+<para
+>Finalmente, para aumentar el rendimiento, ejecute la siguiente orden ocasionalmente contra el correo basura guardado y los inseguros:</para>
+<para
+><userinput
+>/usr/share/bogofilter/contrib/trainbogo.sh -c -H /home/<replaceable
+>usuario</replaceable
+>/<replaceable
+>Maildir</replaceable
+> /.INBOX.bogotrain_ham/cur/ -S /home/<replaceable
+>usuario</replaceable
+>/<replaceable
+>Maildir</replaceable
+>/.INBOX.bogotrain_spam/cur/</userinput
+></para>
+<para
+>(no olvide comprobar la ruta).</para>
+<para
+>Esta no es una guía completa para configurar un servidor, pero indica cómo configura el servidor para qué funcione como usted espera en &kmail;.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo obtener más espacio de pantalla en &kmail;?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted está usando &kmail; en un portátil y nota que la nueva visualización de <emphasis
+>Agregación</emphasis
+> le deja poco espacio en la pantalla</para>
+  <para
+><emphasis
+>Solución:</emphasis
+> Si usted quiere cambiar el aspecto de modo que un correo use una sola fila en lugar de dos, vaya a <menuchoice
+><guimenu
+>Ver</guimenu
+><guisubmenu
+>Lista de mensajes</guisubmenu
+><guimenuitem
+>Tema</guimenuitem
+></menuchoice
+> y cambie el tema a <guilabel
+>Clásico</guilabel
+>. Si usted quiere desactivar la agrupación por fecha, cambie la agregación mediante <menuchoice
+><guimenu
+>Ver</guimenu
+><guisubmenu
+>Lista de mensajes</guisubmenu
+><guimenuitem
+>Agregación</guimenuitem
+></menuchoice
+> a <guilabel
+>Lista de correo estándar</guilabel
+>. Ahora su &kmail; parecerá exactamente como lo hacía en versiones anteriores.</para>
+
+<para
+>En <menuchoice
+><guimenu
+>Preferencias</guimenu
+><guisubmenu
+>Configurar KMail</guisubmenu
+><guimenuitem
+>Apariencia</guimenuitem
+><guimenuitem
+>Tipos de letra</guimenuitem
+></menuchoice
+> usted puede seleccionar <guilabel
+>Usar tipos de letra personalizados</guilabel
+> y cambiar el ajuste para cada componente de la lista. Esto es cuando usted descubre que su lista de carpetas y los cuerpos de los mensajes usan los tipos de letra que usted quiere, pero la lista de mensajes tiene todavía un tipo de letra demasiado grande.</para>
+
+<para
+>Usted puede efectuar los cambios de tipo de letra pulsando con el botón derecho en los encabezados de lista de mensajes y seleccionando <menuchoice
+><guimenu
+>Tema</guimenu
+><guisubmenu
+>Configurar</guisubmenu
+> <guimenuitem
+>pestaña Apariencia</guimenuitem
+></menuchoice
+>. Cada una de esos encabezados de columna necesitan ser pulsados, y establecer su nuevo tipo de letra personalizado. Al final de esto, la lista de mensajes se visualizará en el mismo tipo de letra que el resto del esquema.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo desconfigurar los consejos emergentes de las carpetas de &kmail;?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Síntoma:</emphasis
+> Usted está usando &kmail; en un portátil y encuentra que los <emphasis
+>consejos emergentes</emphasis
+> sobre carpetas ocultan muchos nombres de carpetas</para>
+  <para
+><emphasis
+>Solución:</emphasis
+> pulsando con el botón derecho en el encabezado de la <guilabel
+>Lista de carpetas</guilabel
+> y deseleccionando <guilabel
+>Mostrar consejos emergentes</guilabel
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo desconfigurar los consejos emergentes de las listas de mensajes de &kmail;?</para
+></question>
+<answer>
+  <para
+>En &kmail;, <menuchoice
+><guimenu
+>Preferencias</guimenu
+><guisubmenu
+>Configurar KMail</guisubmenu
+><guimenuitem
+>Apariencia</guimenuitem
+><guimenuitem
+>Lista de mensajes</guimenuitem
+></menuchoice
+> desmarque <menuchoice
+><guimenu
+>General</guimenu
+><guimenuitem
+>Mostrar consejos emergentes para mensajes y encabezados de grupo</guimenuitem
+></menuchoice
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Cómo eliminar el coloreado alternante de las líneas?</para
+></question>
+<answer>
+  <para
+>En <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Apariencia de la aplicación</guisubmenu
+><guimenuitem
+>Colores</guimenuitem
+><guimenuitem
+>Colores</guimenuitem
+></menuchoice
+>, para cada conjunto de colores, excepto <guilabel
+>Colores comunes</guilabel
+> (que no la tienen), cambie el <guilabel
+>Color de fondo alternativo</guilabel
+> al mismo que <guilabel
+>Color de fondo normal</guilabel
+>.</para>
+  <para
+><emphasis
+>Mandriva</emphasis
+> y <emphasis
+>Mageia</emphasis
+> no usan el nombre <guilabel
+>Preferencias del sistema</guilabel
+>. Como en <guilabel
+>KControl</guilabel
+>, el centro de control de KDE 3, lo nombran <quote
+>Configure su escritorio</quote
+> para distinguirlo de <quote
+>Configure su equipo</quote
+>, o sea, el centro de control de Mandriva/Mageia (MCC). Aparte de este cambio de nombre, el método es como se describe arriba.</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="transfer-mail-and-settings"
+><question>
+<para
+>¿Cómo transferir el correo y las preferencias a otro equipo (o a otra cuenta de usuario en la misma máquina)?</para>
+</question>
+<answer>
+<para
+>Use <menuchoice
+><guimenu
+>Herramientas</guimenu
+><guimenuitem
+>Exportar datos de &kmail;...</guimenuitem
+></menuchoice
+> para exportar e importar preferencias y datos. Por favor, consulte <ulink url="help:/pimsettingexporter"
+>Exportador de preferencias de PIM</ulink
+> para más detalles.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>¿Por qué no puedo copiar correos a una llave USB?</para
+></question>
+<answer
+><para
+><emphasis
+>Síntoma:</emphasis
+> usted está configurando un nuevo equipo y quiere transferir todo su correo. Usted decide copiar todo a una llave USB. La tarea se inicia, entonces usted obtiene un mensaje de fallo general,</para>
+<screen
+>No es posible copiar... Argumento no válido</screen>
+<para
+><emphasis
+>Solución:</emphasis
+> Su llave USB está formateada con <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>(V)FAT</ulink
+>, y esto no puede manejar nombres de carpeta <emphasis
+>maildir</emphasis
+> (o no puede manejar <emphasis
+>permisos</emphasis
+>, lo que puede provocar otros problemas). Usted tiene dos opciones. Bien formatear su llave <acronym
+>USB</acronym
+> como ext2 (en cuyo caso usted debe tener en cuenta que no podrá leerla en &Windows; sin instalar software adicional) o crear una archivo tar con todo su correo, copiarlo a la llave y extraerlo en su nueva máquina.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Por qué mis filtros no se aplican a los mensajes de entrada de mis cuentas &imap;?</para
+></question>
+<answer>
+<para
+>El modo &imap; normal no admite filtrado, pero el nuevo tipo de cuenta &imap; desconectado sí. Puede probarlo para usar filtrado del lado del servidor (pregunte a su administrador cómo instalar filtros en el servidor y en qué formato), ya que &imap; gestionará su correo <emphasis
+>en el servidor</emphasis
+>. Desafortunadamente, aunque existe un lenguaje de filtrado de correo (Sieve, definido en RFC3028), no hay ningún protocolo de acceso estandarizado para instalar o editar guiones de Sieve en el servidor. Si tal protocolo estuviera disponible en el futuro, lo más seguro es que &kmail; lo implemente.</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>¿Qué debo saber si quiero usar<application
+>PGP</application
+>/<application
+>GnuPG</application
+> con &kmail;?</para
+></question>
+
+<answer
+><para
+>&kmail; proporciona una interfaz sencilla y fácil de usar para las funciones básicas de estos programas. Debe conocer cómo funcionan estos programas y qué puede provocar su uso inseguro. Algunas cosas importantes:</para>
+
+<itemizedlist>
+<listitem>
+<para
+><emphasis
+>Ciertamente</emphasis
+> debería probar si el cifrado funciona antes de usarlo. &kmail; se basa parcialmente sobre cadenas de error de <application
+>PGP</application
+>/<application
+>GnuPG</application
+>, que suelen cambiar entre versiones diferentes.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; no cifrará los mensajes con una clave pública que no sea de confianza (sin firmar). Si usted quiere cifrar tal clave, debería comprobar la identidad del propietario de la clave y firmarla solo entonces con su clave secreta. Si usted no quiere o no puede verificar la identidad del propietario de la clave, pero aun así quiere cifrar el mensaje, por favor firme la clave localmente con <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>ID-clave</replaceable
+></userinput
+>.</para>
+</listitem>
+<listitem>
+<para
+>Fiarse de una clave pública externa sin verificarla no es una buena idea.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; no puede cifrar ni firmar adjuntos si usted está usando el apoyo incorporado de OpenPGP. Para adjuntos cifrados y firmados tiene que tener instalados y configurados complementos de cifrado.</para>
+</listitem>
+<listitem>
+<para
+>A partir de GnuPG 1.0.7, usted tiene que configurar su propia clave como de confianza absoluta. Esto es algo que no se hace implícitamente.</para>
+</listitem>
+</itemizedlist>
+</answer>
+</qandaentry>
+
+<qandaentry
+> <question
+><para
+>¿Dónde almacena &kmail; mis preferencias y mis correos?</para
+></question
+> <answer
+> <para
+>Muchas preferencias de &kmail; se almacenan en <filename
+>$(kde4-config --localprefix)/share/config/kmail2rc</filename
+> y las entradas controladas por <emphasis
+>Akonadi</emphasis
+> se almacenan en las siguientes carpetas y directorios:</para>
+<itemizedlist>
+  <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename>
+</para
+></listitem>
+<listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>. </para
+></listitem>
+<listitem
+><para
+><filename
+>$(kde4-config --localprefix)/share/config/nepomukserverrc</filename>
+</para
+></listitem>
+<listitem
+><para
+><filename class="directory"
+>$(kde4-config --localprefix)/share/apps/nepomuk/</filename
+> (&kaddressbook; almacena grupos de contactos en <emphasis
+>Nepomuk</emphasis
+>). </para
+></listitem>
+</itemizedlist>
+<para
+>Tenga en cuenta que algunos de los archivos están ocultos: recuerde también copiar aquellos si usted quiere hacer copias de respaldo de sus correos.</para
+> </answer
+> </qandaentry>
+
+<qandaentry id="faq-index-regeneration">
+<question
+><para
+>¿Por qué regeneró &kmail; el índice de una carpeta?</para
+></question>
+<answer>
+<para
+>&kmail; regenera el índice de una carpeta cuando el índice parece estar desfasado, &ie; si los contenidos de una carpeta son más recientes que el índice. &kmail; regenera el índice en este caso para evitar la pérdida o corrupción de los mensajes. Desafortunadamente, los mensajes que se borren en esos momentos pueden reaparecer y los indicadores de los mensajes (como importante, etc.) pueden perderse al regenerar el índice.</para>
+<para
+>Un índice puede estar desfasado por varios motivos. Los dos más importantes son: <itemizedlist>
+<listitem
+><para
+>Otros programas modificaron los contenidos de la carpeta. Si usted quiere usar &kmail; junto con procmail, por favor lea <link linkend="faq-procmail"
+>este &FAQ;</link
+>. Si quiere usar &kmail; junto con otro cliente de correo, entonces lea <link linkend="faq-other-muas"
+>este &FAQ;</link
+>.</para
+></listitem>
+<listitem
+><para
+>Si su carpeta de correo está en un volumen que se monte vía NFS y si el reloj del servidor NFS no está sincronizado con el reloj de su equipo, el servidor NFS a veces informa de una fecha errónea del archivo de índice. En este caso, &kmail; supone que el índice es obsoleto aunque en realidad no lo esté. Para corregir este problema, usted (o su administrador de sistemas) tendrá que asegurarse que el reloj de su equipo y el de su servidor NFS están siempre sincronizados. Una manera de lograr esto es usar el demonio ntp.</para
+></listitem>
+</itemizedlist>
+</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>¿Por qué no se inicia &kmail;?</para
+></question>
+<answer>
+<para
+><emphasis
+>Síntoma:</emphasis
+> Usted quiere iniciar &kmail; desde un entorno de escritorio minimalista como <ulink url="http://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>. No se inicia.</para>
+<para
+><emphasis
+>Razón:</emphasis
+> usted no dispone de la funcionalidad de <emphasis
+>dbus</emphasis
+>.</para>
+<para
+><emphasis
+>Solución:</emphasis
+> Inicie &kmail; usando un lanzador dbus como este:</para>
+<para
+><userinput
+>dbus-launch kmail</userinput
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+<question
+><para
+>¿Puedo usar &kmail; junto con un cliente de correo diferente, &eg; <application
+>mutt</application
+>?</para
+></question>
+<answer>
+<para
+>Si está usando el formato mbox para sus carpetas, no es posible usar un cliente de correo diferente mientras &kmail; esté en ejecución. Con <application
+>mutt</application
+> también puede haber problemas aunque ambos programas no se ejecuten al mismo tiempo. En este caso, le recomendamos que use el formato maildir, porque debería solucionar todos los problemas.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+<question
+><para
+>¿Cómo puedo convertir mis buzones de correo de mbox a maildir?</para
+></question>
+<answer>
+<para
+>No hay una forma automática de hacer esto. Usted tendrá que crear una carpeta nueva en formato maildir y copiar los mensajes de la carpeta mbox a una carpeta nueva. Recuerde adaptar las reglas de filtrado referentes a la carpeta antigua antes de borrarla.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo puedo eliminar los adjuntos de los mensajes sin borrar los propios mensajes?</para
+></question>
+<answer>
+<para
+>Abrir el menú de contexto con un &RMB;, pulsar sobre un adjunto y seleccionar <guimenuitem
+>Borrar adjunto</guimenuitem
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo puedo hacer que &kmail; compruebe si hay mensajes nuevos al comenzar?</para
+></question>
+<answer>
+<para
+>Si &kmail; debería comprobar si hay mensajes nuevos al inicio, active <guilabel
+>Comprobar correo al inicio</guilabel
+> en la <link linkend="configure-accounts-receiving"
+>página de configuración de «Cuentas»</link
+>. También puede iniciar &kmail; con <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Dónde puedo obtener una lista de cambios entre las distintas versiones de &kmail;?</para
+></question>
+<answer>
+<para
+>La pantalla de bienvenida muestra todos los cambios importantes para su versión. Se muestra cuando selecciona <menuchoice
+><guimenu
+>Ayuda</guimenu
+><guimenuitem
+>Introducción a &kmail;</guimenuitem
+></menuchoice
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Soy uno de esos cuyos correos constan de 100 líneas citadas y una línea escrita por mí. Por algún motivo, esto molesta a los demás. ¿Puede &kmail; ayudarme y hacer mejor la vida de los demás?</para
+></question>
+<answer
+><para
+>Claro que sí. Simplemente, seleccione la parte pertinente del correo original con el ratón antes de responder. En su respuesta, solo se citará esta parte.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Para algunos mensajes, el valor del campo <guilabel
+>Fecha</guilabel
+> es <guilabel
+>desconocido</guilabel
+> o no es correcto.</para
+></question>
+<answer
+><para
+>Probablemente la cabecera <quote
+>Date:</quote
+> (fecha) de estos mensajes esté rota y &kmail; no pueda interpretarla. No es un error de &kmail;, sino del software que envió el correo.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Hay dos guiones sobre mi firma. ¿Qué pasa?</para
+></question>
+<answer>
+<para
+>Para separar la firma del cuerpo del mensaje con dos guiones y un espacio con una sola línea es el uso común. Estos símbolos permiten a los clientes de correo que los reconozcan, recortar las firmas de la respuesta. Si la firma no tiene ya el separador, &kmail; lo añadirá automáticamente.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Hay errores conocidos en &kmail;?</para
+></question>
+<answer>
+<para
+>Puede obtenerse una lista de errores enviados consultando la <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>Página de Bugzilla</ulink
+>. Tenga en cuenta que no todos estos errores son válidos. De todos modos, pensamos que &kmail; es un programa muy robusto.</para>
+<para
+><warning
+><para
+>Sin embargo, no debería ejecutar &kmail; mientras otro cliente de correo esté accediendo ya a los archivos del directorio de correo. Si intentar hacer esto, podría perder mensajes. Tenga presente que, en cualquier caso, debería hacer copias de respaldo de sus mensajes.</para
+></warning
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>&kmail; no muestra correctamente el correo &HTML;.</para
+></question>
+<answer
+><para
+>Las referencias a contenido externo como imágenes están desactivadas de forma predeterminada, porque se pueden usar para determinar si y cuándo se lee un mensaje. La carga de referencias externas se puede activar en la pestaña <guilabel
+>Seguridad</guilabel
+> del diálogo de configuración de &kmail;. Tenga en cuenta que los complementos (como <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; y JavaScript no se mostrarán en &kmail; por razones de seguridad y que no hay ninguna forma de activarlos.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Puedo usar dos versiones diferentes de &kmail; a la vez? ¿Puedo pasar de una versión actual de &kmail; a una anterior?</para
+></question>
+<answer
+><para
+>Solo puede ejecutar una instancia de &kmail; a la vez. También le recomendamos que una vez que se quede con una cierta versión no retroceda a versiones anteriores. Desactualizar a una versión anterior probablemente le cause problemas, &eg; porque los formatos del archivo de índice (index) puede cambiar. La actualización nunca debería suponer un problema.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Reconoce &kmail; archivos con formato uuencode?</para
+></question>
+<answer
+><para
+>Los adjuntos codificados con uuencode no están implementados. Guarde su correo con un adjunto codificado con uuencode y use <command
+>uudecode</command
+> para decodificar el adjunto.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>&kmail; cayó mientras estaba escribiendo un correo... ¿se ha perdido el correo?</para
+></question>
+<answer
+><para
+>&kmail; intenta guardar su correo en <filename class="directory"
+>$(kde4-config --localprefix)/share/apps/kmail/autosave</filename
+> en caso de una caída. La siguiente vez que inicie &kmail;, el editor de correo debería aparecer con su correo de nuevo. Si no ocurre esto, intente abrir <filename class="directory"
+>$(kde4-config --localprefix)/share/apps/kmail/autosave</filename
+> con un editor. Si no hay archivos en esta carpeta, es porque la caída fue tan mala que &kmail; no ha podido guardar su correo.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Cuando intento hacer que una carpeta se ocupe de una lista de correo, de tal forma que al recibir un correo de la lista vaya a esa carpeta.</para
+></question>
+<answer
+><para
+>Asociar una carpeta con una lista de correo no tiene nada que ver con el filtrado de los mensajes de la lista de correo. Usted tiene que añadir manualmente una nueva regla de filtrado. Sin embargo, una vez que usted haya asociado una carpeta con una lista de correo puede usar <menuchoice
+> <guimenu
+>Mensaje</guimenu
+><guimenuitem
+>Responder alista de correo...</guimenuitem
+></menuchoice
+> o <menuchoice
+><guimenu
+>Mensaje</guimenu
+><guimenuitem
+>Nuevo mensaje a lista de correo...</guimenuitem
+></menuchoice
+> y la dirección de correo de la lista se pondrá en el campo <guilabel
+>To:</guilabel
+> (Para:). </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Mi servidor SMTP necesita autenticación... ¿lo admite &kmail;?</para
+></question>
+<answer
+><para
+>La <guilabel
+>Autenticación</guilabel
+> puede establecerse en la pestaña <guilabel
+>Avanzado</guilabel
+> del diálogo de configuración de SMTP. </para
+></answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+<question
+><para
+>¿Puedo usar &kmail; y <application
+>procmail</application
+>?</para
+></question>
+<answer
+><para
+>Sí, pero es importante hacerlo de la forma correcta o podría perder correo. Para usar <application
+>procmail</application
+> y &kmail;, tendrá que configurar &kmail; para que obtenga el correo nuevo de los archivos de «spool» en los que <application
+>procmail</application
+> suelta su correo. <emphasis
+>No</emphasis
+> configure procmail para que entregue el correo en una carpeta de &kmail;, esto no funcionará.</para>
+
+<para
+>Para cada archivo de «spool» de procmail, tiene que crearse una cuenta de la que &kmail; obtendrá el correo nuevo. También necesitará asegurarse que especifica correctamente el nombre del archivo de bloqueo para esta cuenta. Al configurar una cuenta, &kmail; realizará un análisis mínimo de su archivo <filename
+>.procmail</filename
+> e intentará listar cada archivo de «spool» que haya encontrado y también los archivos de bloqueo que están junto al elemento <guilabel
+>archivo de bloque de procmail</guilabel
+>. Procmail permite al usuario especificar archivos de bloqueo de tres formas diferentes, así que no hay una forma de establecer una correspondencia entre los archivos de «spool» y los archivos de bloqueo. Así que queda de su cuenta asegurarse que especifica el archivo de bloque correcto para cada archivo de «spool».</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>La verificación ortográfica no reconoce los caracteres no ingleses.</para
+></question>
+<answer
+><para
+>Antes de que usted pueda usar la corrección ortográfica por primera vez, tiene que configurarla. Puede hacerlo en la ventana del editor con la opción del menú <menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Corrector ortográfico...</guimenuitem
+></menuchoice
+>. Puede configurar allí el diccionario.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo uso mis carpetas de correo de <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+>/... en &kmail;?</para
+></question>
+<answer
+><para
+>Consulte la sección <link linkend="importing-options"
+>Importando en &kmail;</link
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Puedo usar cifrado con mi cuenta POP3 normal (no-<acronym
+>SSL</acronym
+>)?</para
+></question>
+<answer
+><para
+>Si su servidor POP3 tiene un demonio <application
+>ssh</application
+>, use ssh como túnel para su conexión POP3 usando la siguiente orden:</para>
+
+<para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 usuario@servidor</option
+></userinput
+></para>
+
+<para
+>Modifique la configuración de &kmail; para obtener el correo vía POP3 desde <userinput
+>localhost</userinput
+> y ssh servirá de túnel para su conexión. <note
+><para
+>Si ya ha enviado mensajes sin cifrar vía Internet, la única ventaja de usar <application
+>ssh</application
+> es que su <emphasis
+>contraseña</emphasis
+> se mandará cifrada al servidor POP3.</para
+></note>
+
+<!-- fixme: add link to http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html -->
+
+</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+<question
+><para
+>¿Bloquea &kmail; las carpetas que utiliza?</para
+></question>
+<answer
+><para
+>&kmail; no bloquea los archivos de <filename class="directory"
+>~/local/share</filename
+>.</para>
+<para
+>Para evitar el riesgo de perder correo <emphasis
+>si está usando una cuenta local</emphasis
+>, es necesario asegurarse que &kmail; usa el mismo tipo de bloqueo que su agente de reparto de correo.</para>
+
+<para
+>Hay cinco opciones de bloqueo diferentes a su disposición:</para>
+
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Cerrojo de procmail</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>Cerrojo de Mutt</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>Cerrojo privilegiado de Mutt</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (predeterminado)</para
+></listitem>
+<listitem
+><para
+><guilabel
+>ninguna (usar con cuidado)</guilabel
+></para
+></listitem>
+</itemizedlist>
+
+<para
+><guilabel
+>Archivo de bloqueo de procmail</guilabel
+> usará una pequeña utilidad que viene con <application
+>procmail</application
+> llamada <command
+>lockfile</command
+>. Puede usar esto si su carpeta de correo está en una carpeta en la que tenga permisos de escritura. Normalmente, esto no funcionará con su archivo <filename class="directory"
+>/var/spool/mail/usuario</filename
+>. Creará archivos <filename
+>.lock</filename
+> en su cuenta cuando &kmail; esté comprobando si hay correo nuevo. Por favor, tenga en cuenta que esto solo funcionará si tiene instalado <application
+>procmail</application
+> en su sistema.</para>
+
+<para
+><guilabel
+>Cerrojo de Mutt</guilabel
+> y <guilabel
+>Cerrojo privilegiado de Mutt</guilabel
+> usan una pequeña utilidad llamada <command
+>mutt_dotlock</command
+> que viene con <application
+>mutt</application
+>. <guilabel
+>Cerrojo de Mutt</guilabel
+> se puede usar de la misma forma que la opción <guilabel
+>Archivo de bloqueo de procmail</guilabel
+>, con las mismas limitaciones en lo que respecta a las carpetas <filename class="directory"
+>/var/spool/mail/</filename
+>. Sin embargo, la opción <guilabel
+>Cerrojo privilegiado de Mutt</guilabel
+> permite crear archivos de bloqueo en la carpeta <filename class="directory"
+>/var/spool/mail</filename
+>. <command
+>mutt_dotlock</command
+> es un programa con setgid y esta opción solo funcionará en modo setgid. Por favor, tenga en cuenta que estas opciones solo funcionarán si la aplicación <application
+>mutt</application
+> está instalada en su sistema.</para>
+
+<para
+><guilabel
+>FCNTL</guilabel
+> usa la llamada del sistema <function
+>fcntl()</function
+>.</para>
+
+<warning
+><para
+>El uso del bloqueo FCNTL puede causar bloqueos del sistema cuando el archivo de cola de correo se encuentre en un dispositivo montado por NFS.</para
+></warning>
+
+<para
+>Si no quiere usar ningún bloqueo, su opción es <guilabel
+>ninguno</guilabel
+>. Sin embargo, hay riesgo de pérdida de correo cuando no se usa bloqueo.</para>
+
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo dejo los mensajes en el servidor POP3?</para
+></question>
+<answer
+><!--<para
+>See the <link linkend="popfilters"
+>Download filters</link
+> chapter.-->
+<para
+>Si quiere dejar todos los mensajes en el servidor: abra la ventana <menuchoice
+><guimenu
+>Preferencias</guimenu
+><guimenuitem
+>Configurar &kmail;...</guimenuitem
+> </menuchoice
+>. Pulse sobre la página <guilabel
+>Cuentas</guilabel
+>. Seleccione su cuenta de la lista y pulse sobre el botón <guibutton
+>Modificar...</guibutton
+>. Este diálogo contiene la opción que debe activar, <guilabel
+>Dejar los mensajes en el servidor</guilabel
+>.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo inserto automáticamente un texto de pie de página en mis mensajes?</para
+></question>
+<answer
+><para
+>El texto de pie de página también se llama firma (no confundir con la firma de cifrado). Elija <menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar &kmail;...</guimenuitem
+></menuchoice
+>. Busque en la página <guilabel
+>Identidad</guilabel
+> la pestaña<guilabel
+>Firma</guilabel
+> y añada allí su firma. Luego vaya a la pestaña <guilabel
+>General</guilabel
+> de la página <guilabel
+>Editor</guilabel
+> y active <xref linkend="configure-composer-general-append-signature"/></para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo configuro &Sendmail; para que funcione con &kmail; si tengo una conexión por marcación telefónica?</para
+></question>
+
+<answer
+><para
+>Primero debería comprobar si su distribución permite hacer esto. Probablemente ya se haya configurado durante la instalación.</para>
+
+<para
+>Si no fuera el caso, usted puede querer echar un vistazo al <ulink url="http://tldp.org/HOWTO/Mail-Queue.html"
+>Cómo de las colas de correo</ulink
+>.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>He visto algunas demostraciones del control remoto con &kmail;. ¿Hay documentación sobre las interfaces disponibles?</para
+></question>
+<answer
+><para
+>Puede obtener una lista de tales funciones usando esta orden en una shell: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail</option
+></userinput
+>. A continuación puede controlar &kmail; como esto: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. Usted puede utilizar <application
+>qdbusviewer</application
+> para navegar por los métodos disponibles en la interfaz gráfica.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Cuando respondo a un mensaje, solo se cita una parte del mensaje. ¿Por qué?</para
+></question>
+<answer
+><para
+>Puede ocurrir que el mensaje tenga dos guiones y un espacio en una sola línea. Se entiende que este código es el comienzo de la firma. La parte restante del mensaje no se cita, porque cuando usted responde a un mensaje &kmail; quita la firma.</para
+></answer>
+</qandaentry>
+
+
+<qandaentry>
+<question
+><para
+>Solo voy a usar &imap;. ¿Puedo ocultar de la lista de carpetas locales o siempre tengo que mantenerla contraída?</para
+></question>
+<answer
+><para
+>No, no puede ocultarlas. Las carpetas locales funcionan como punto de retorno cuando no puede llegar al servidor &imap;. Aunque solo use &imap;, &kmail; usa la bandeja de salida para enviar los mensajes. Si ocultara todas las carpetas locales, no podría poner en la bandeja de salida los mensajes que no se pudieran enviar. Pero es posible mantener contraída las carpetas locales. Lo que tiene que hacer es ir a <menuchoice
+><guimenu
+>Preferencias</guimenu
+><guimenuitem
+> Configurar &kmail;...</guimenuitem
+></menuchoice
+> y vaya a la sección «Misc». Allí puede configurar la carpeta de inicio. Si pasa a una carpeta en la cuenta &imap;, las carpetas locales permanecerán contraídas cuando se inicie &kmail;. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo vigilar los hilos?</para
+></question>
+<answer
+><para
+>Si usted quiere seguir un hilo, pulse con el botón derecho y elija <menuchoice
+><guimenu
+>Marcar hilo</guimenu
+><guimenuitem
+>Vigilar hilo</guimenuitem
+></menuchoice
+>.</para>
+<para
+>Desde este punto todos los mensajes del hilo que se inicien en este mensaje se marcarán como <guilabel
+>Vigilados</guilabel
+>. </para
+></answer>
+</qandaentry>
+<qandaentry>
+<question
+><para
+>¿Cómo vigilar sus propios hilos?</para
+></question>
+<answer
+><para
+>Esto es útil en caso de que usted esté registrado en una lista de correo como kdepim-users@kde.org y quiere filtrar los hilos en los que participa.</para>
+<itemizedlist>
+  <listitem>
+    <para
+>Crear un filtro para marcar todos sus mensajes entrantes a una lista de correo como vigilados</para>
+    <para
+>Para crear un filtro vaya a:</para>
+    <para
+><menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar filtros</guimenuitem
+></menuchoice
+></para>
+    <itemizedlist>
+      <listitem>
+	<para
+>selecciones <guilabel
+>Coincide con todo lo siguiente</guilabel
+></para>
+      </listitem>
+      <listitem>
+	<para
+>Añada las condiciones: <itemizedlist>
+	    <listitem>
+	      <para
+><menuchoice
+><guimenu
+>Desde</guimenu
+><guisubmenu
+>Contiene</guisubmenu
+><guimenuitem
+></guimenuitem
+></menuchoice
+> <replaceable
+>su-correo@dominio-de-correo</replaceable
+><footnote
+><para
+>remplace <replaceable
+>su-correo@dominio-de-correo</replaceable
+> con su dirección de correo saliente</para
+></footnote>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para
+><menuchoice
+><guimenu
+>Lista de Id.</guimenu
+><guimenuitem
+>Contiene</guimenuitem
+></menuchoice
+> <replaceable
+>lista-ID</replaceable
+><footnote
+><para
+>remplace <replaceable
+>listID</replaceable
+> con el id de una lista de correo específica &eg; (&lt;kdepim-users.kde.org&gt;) o solo un <quote
+>.</quote
+> para incluir el correo saliente a todas las listas de correo <quote
+>.</quote
+> en su id (básicamente todas).</para
+></footnote>
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</para>
+      </listitem>
+      <listitem>
+	<para
+>Bajo <guilabel
+>Filtrar acciones</guilabel
+> elija <menuchoice
+><guimenu
+>Marcar como</guimenu
+><guimenuitem
+>Vigilado</guimenuitem
+></menuchoice
+>. </para>
+      </listitem>
+    </itemizedlist>
+  </listitem>
+  <listitem>
+    <para
+>En la pestaña <guilabel
+>Avanzado</guilabel
+></para>
+    <itemizedlist>
+      <listitem>
+	<para
+>Desmarque <guilabel
+>si este filtro coincide, parar aquí el tratamiento</guilabel
+>, de modo que otros filtros tales como la ordenación de los mensajes entrantes de la lista de correo a subcarpetas podrían ejecutarse.</para>
+      </listitem>
+      <listitem>
+	<para
+>Coloque ese filtro antes de otros filtros que puedan detener el proceso de filtrado, o sencillamente colóquelo al principio. (el cambio del orden de los filtros se hace usando las dos flechas arriba y abajo, bajo la lista <guilabel
+>Filtros disponibles</guilabel
+>) </para>
+      </listitem>
+    </itemizedlist>
+  </listitem>
+  <listitem>
+    <para
+>Crear una búsqueda en los mensajes de lista de correo</para>
+    <para
+>Vaya a la carpeta donde se almacenan sus mensajes de listas de correo (&eg; Carpetas locales/KDE-PIM-USERS) y pulse la tecla <keycap
+>S</keycap
+> o en el menú <menuchoice
+><guimenu
+>Editar</guimenu
+><guimenuitem
+>Buscar mensajes</guimenuitem
+></menuchoice
+>.</para>
+    <itemizedlist>
+      <listitem>
+	<para
+>Seleccione <guilabel
+>Coincide con todo lo siguiente</guilabel
+><footnote
+><para
+>Ponga atención a <guilabel
+>Incluir subcarpetas</guilabel
+>.</para
+></footnote>
+	</para>
+      </listitem>
+      <listitem>
+	<para
+>Añada la condición: <menuchoice
+><guimenu
+>Estado del mensaje</guimenu
+><guisubmenu
+>es</guisubmenu
+><guimenuitem
+>Vigilado</guimenuitem
+></menuchoice
+> </para>
+      </listitem>
+      <listitem>
+	<para
+>Proporcione un nombre informativo a la búsqueda (<guilabel
+>Nombre de carpeta de búsqueda</guilabel
+>) como <replaceable
+>Usuarios-KDE-PIM-Vigilados</replaceable
+> </para>
+      </listitem>
+      <listitem>
+	<para
+>Efectúe la búsqueda. Cuando esté hecha, usted puede cerrar la ventana de búsqueda. </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>Ahora siempre que usted inicie un hilo o participe en uno, está <guilabel
+>Vigilado</guilabel
+>.</para>
+    </listitem>
+</itemizedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>¿Cómo utilizar la traducción de correos?</para
+></question>
+<answer>
+<para
+>Para traducir texto en la ventana del editor. Lea la sección <link linkend="using-the-translator"
+>Uso del traductor incorporado</link
+> </para>
+<para
+>En el panel de previsualización del mensaje, resalte el texto que le gustaría traducir y seleccione <guimenuitem
+>Traducir</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>) desde el menú de contexto del &RMB;. </para>
+</answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

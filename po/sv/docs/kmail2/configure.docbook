@@ -1,0 +1,5361 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-02-13</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Anpassa &kmail;</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Allmän information</title>
+
+<screenshot>
+<screeninfo
+>Dialogrutan Anpassa &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialogrutan Anpassa &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan Anpassa &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail;s inställningsfönster ger dig flera olika sätt att anpassa &kmail;. Du kan nå det via <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Anpassa &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+<para
+>Dialogrutan har flera knappar längst nederkanten.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Hjälp</guibutton
+></term>
+<listitem
+><para
+>Visar &kmail;s handbok (den här manualen) på lämplig sida.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Återställ</guibutton
+></term>
+<listitem
+><para
+>Det här återställer alla ändringar du har gjort sedan du senast sparade inställningarna.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Förval</guibutton
+></term>
+<listitem
+><para
+>Återställer inställningsalternativen på nuvarande sida till sina förvalda värden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Ok</guibutton
+></term>
+<listitem
+><para
+>Det här sparar inställningarna och stänger inställningsdialogrutan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Verkställ</guibutton
+></term>
+<listitem
+><para
+>Det här sparar inställningarna utan att stänga inställningsdialogrutan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Avbryt</guibutton
+></term>
+<listitem
+><para
+>Det här stänger inställningsdialogrutan utan att spara ändringarna du har gjort.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Inställningsdialogrutan är uppdelat i sex delmängder, var och en av dem representerade med en av ikonerna i listan på vänster sida i dialogrutan. Nedan beskrives delmängderna i detalj. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Kontosidan</title>
+
+<para
+>Sidan <guilabel
+>Konton</guilabel
+> presenteras automatiskt när <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Anpassa &kmail;...</guimenuitem
+></menuchoice
+> väljes. Det finns fyra flikar: <guilabel
+>Identiteter</guilabel
+>, <guilabel
+>Ta emot</guilabel
+>, <guilabel
+>Skicka</guilabel
+> och <guilabel
+>LDAP-server</guilabel
+>. (Fliken <guilabel
+>Identiteter</guilabel
+> illustreras i avsnittet <link linkend="configure-generalinfo"
+>Anpassa &kmail;</link
+>ovan.)</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>Fliken Identiteter</title
+>    
+
+<para
+>Du hittar en snabbintroduktion till fliken <guilabel
+>Identiteter</guilabel
+> i avsnittet <link linkend="getting-started"
+>Att komma igång</link
+>.</para>
+
+<para
+>Sidan låter dig skapa en eller flera <emphasis
+>Identiteter</emphasis
+>, dvs. kombinationer av ett namn, en e-postadress och några andra inställningar. Du kan exempelvis skapa en identitet för affärskommunikation och en annan för personlig kommunikation. Om du har mer än en e-postadress, kan du skapa en identitet per adress. Därefter kan du välja en lämplig identitet när du skriver ett nytt brev.</para>
+
+<para
+>Dialogrutan består av en lista med identiteter och knappar för att hantera dem. Efter inledande inställning, visar listan alltid minst en identitet, som då är <guilabel
+>Förvald</guilabel
+> identitet. Klicka på knappen <guibutton
+>Lägg till...</guibutton
+> för att lägga till en ny identitet i identitetslistan.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>Dialogrutan Ny identitet</title>
+<screenshot>
+<screeninfo
+>Dialogrutan Ny identitet</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialogrutan Ny identitet</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan Ny identitet</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Skriv in ett namn på den nya identiteten i redigeringsfältet <guilabel
+>Ny identitet</guilabel
+>. Det är namnet som visas i identitetslistan.</para>
+
+<para
+>Du kan välja hur den nya identiteten initieras genom att markera en av tre alternativknappar.</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Med tomma fält</guilabel
+></term>
+<listitem>
+<para
+>Alla fält i den nya identiteten töms eller ställs in till normalvärden.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Använd värden från systeminställningarna</guilabel
+></term>
+<listitem>
+<para
+>Använder värdena från din standardidentitet.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Kopiera existerande identitet</guilabel
+></term>
+<listitem>
+<para
+>Kopierar alla fält från en befintlig identitet. Du kan välja vilken identitet som kopieras genom att välja motsvarande post i kombinationsrutan <guilabel
+>Existerande identiteter</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Allmänt</title>
+<screenshot>
+<screeninfo
+>Identitet Allmänt</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Allmänt</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Allmänt</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Fliken <guilabel
+>Allmänt</guilabel
+> låter dig ange några grundläggande inställningar för identiteten som för närvarande är markerad.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Ditt namn</guilabel
+></term>
+<listitem>
+<para
+>Skriv in ditt fullständiga namn här (kallas ibland också <emphasis
+>visningsnamn</emphasis
+>). Även om det här fältet inte krävs, bör du skriva in ditt namn här.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organisation</guilabel
+></term>
+<listitem>
+<para
+>Skriv in din organisation här. Fältet är valfritt.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-postadress</guilabel
+></term>
+<listitem>
+<para
+>Skriv in din e-postadress här, t.ex. något som liknar <userinput
+>anna@exempel.se</userinput
+>.</para>
+<example>
+<title
+>E-postadress</title>
+<para
+>Om din adress är <replaceable
+>Anna Johansson &lt;anna@exempel.com&gt;</replaceable
+>, ska du skriva in <userinput
+>Anna Johansson</userinput
+> i fältet <guilabel
+>Ditt namn</guilabel
+> och <userinput
+>anna@exempel.com</userinput
+> i fältet <guilabel
+>E-postadress</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-postalias</guilabel
+></term>
+<listitem>
+<para
+>Fältet innehåller alias-adresser som också hör till identiteten (i motsats till att representera en annan identitet). Du kan definiera flera alias. För att lägga till ett annat alias skriv in en e-postadress i fältet <guilabel
+>E-postalias:</guilabel
+>, och klicka sedan på knappen <guibutton
+>&plus; Lägg till</guibutton
+>.</para>
+<example>
+<title
+>E-postalias</title>
+<para
+>Primär adress: förnamn.efternamn@exempel.se</para>
+<para
+>Alias: förnamn@exempel.se och efternamn@exempel.se</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Kryptografi</title>
+<screenshot>
+<screeninfo
+>Identitet Kryptografi</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Kryptografi</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Kryptografi</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Fliken <guilabel
+>Kryptografi</guilabel
+> låter dig ange &openpgp;- och &smime;-nycklar som hör ihop med identiteten, och välja önskat (kryptografiskt) brevformat att använda.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>OpenPGP-signaturnyckel:</guilabel
+></term>
+<listitem>
+<para
+>Här kan du välja en &openpgp;-nyckel för att signera brev skrivna med den använda identiteten. För enkelhets skull visas bara den korta nyckelidentifieraren för valda nycklar. Att hålla musen över objektet visar mer information i ett verktygstips. Använd kombinationslistan för att välja en befintlig nyckel. Om du önskar skapa ett nytt öppet/privat nyckelpar, välj <guilabel
+>Skapa ett nytt nyckelpar</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>OpenPGP-krypteringsnyckel:</guilabel
+></term>
+<listitem
+><para
+>Här kan du välja en &openpgp;-nyckeln för kryptering av brev när den här identiteten och <xref linkend="configure-security-composing-encrypt-to-self"/> används. Nyckeln används också för funktionen <xref linkend="composer-attach-attach-my-public-key"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>&smime;-signeringscertifikat:</guilabel
+></term>
+<listitem>
+<para
+>Här kan du välja ett x.509-certifikat använt för att signera brev skrivna med den använda identiteten. &kmail; kan inte skapa x.509-certifikat. De ges ut av certifikatutfärdare. Om du har lagt till ett sådant certifikat i din nyckelring, kan &kmail; importera och använda det.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>&smime;-krypteringscertifikat:</guilabel
+></term>
+<listitem>
+<para
+>Här kan du välja ett x.509-certifikat för kryptering av brev när den här identiteten och <xref linkend="configure-security-composing-encrypt-to-self"/> är aktiva.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Format som föredras:</guilabel
+></term>
+<listitem>
+<para
+>Här kan du välja vilket kryptografiskt brevformat som normalt ska användas med den här identiteten. Du kan antingen välja något av de fyra format som &kmail; stöder, eller lämna alternativet med det rekommenderade förvalda värdet <guilabel
+>Vilket som helst</guilabel
+> som väljer rätt format baserat för varje mottagare du anger, och kan skapa flera kopior av brevet, några signerade och/eller krypterade med ett x.509-certifikat, och de andra signerade och/eller krypterade med en &openpgp;-nyckel.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Signera brev automatiskt:</guilabel
+></term>
+<listitem
+><para
+>Att markera rutan gör att &kmail; lägger till din digitala signatur i brev som skrivs av den här identiteten om inte alternativet överskrids manuellt i <guilabel
+>Brevfönster</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Kryptera brev automatiskt:</guilabel
+></term>
+<listitem
+><para
+>Att markera rutan gör att &kmail; krypterar brev som skrivs av den här identiteten när sådan kryptering är möjlig (om inte alternativet överskrids manuellt i <guilabel
+>Brevfönster</guilabel
+>).</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Avancerade inställningar</title>
+
+<screenshot>
+<screeninfo
+>Identitet Avancerat</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Avancerat</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Avancerat</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Fliken  <guilabel
+>Avancerat</guilabel
+> låter dig ange några sällan använda inställningar för identiteten som du för närvarande redigerar.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Svara till-adress:</guilabel
+></term>
+<listitem>
+<para
+>Skriv in adressen dit svar till dina brev ska skickas här. Fältet behövs bara om det skiljer sig från din normala adress (som anges med fälten <guilabel
+>Namn</guilabel
+> och <guilabel
+>E-postadress</guilabel
+> under fliken <link linkend="configure-identity-general"
+><guilabel
+>Allmänt</guilabel
+></link
+>), eftersom svar ändå normalt skickas till avsändarens adress.</para>
+<para
+>Det här fältet är användbart om du vill att svar till dina brev ska skickas någon annanstans än till din vanliga e-postadress, t.ex. om du använder den här identiteten för att skicka e-post från en e-postadress som inte kan ta emot svar.</para>
+<note
+><para
+>Vissa e-postlistor skriver över huvudfältet med sin e-postadress (för att säkerställa att svar skickas till listan istället för enskilda personer). Alltså är det här fältets tillförlitlighet begränsad, och det bör användas med försiktighet.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Adresser med kopia:</guilabel
+></term>
+<listitem>
+<para
+>Skriv in en eller flera valfria adresser åtskilda med kommatecken dit kopior av dina brev ska skickas. När ett brev skapas med den här identiteten fylls fältet <guilabel
+>Kopia</guilabel
+> i med dessa adresser.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Adresser med dold kopia:</guilabel
+></term>
+<listitem>
+<para
+>Skriv in valfria adresser åtskilda med kommatecken dit dolda kopior av dina brev ska skickas. När ett brev skapas med den här identiteten fylls fältet <guilabel
+>Dold kopia</guilabel
+> i med dessa adresser. Om du vill skicka en dold kopia oberoende av inställningen, ska du titta under fliken <link linkend="configure-composer-headers"
+><guilabel
+>Huvuden</guilabel
+> på sidan <guilabel
+>Brevfönster</guilabel
+></link
+> (skapa en egen dold kopia).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Ordlista:</guilabel
+></term>
+<listitem>
+<para
+>Välj standardordlistan för den aktuella identiteten.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Skickade brev-korg:</guilabel
+></term>
+<listitem>
+<para
+>Välj korg där brev ska sparas efter de har skickats från den här identiteten används. Användare av &IMAP; bör fundera på att ändra korgen till en &IMAP;-korg, så att skickade brev lagras på en server istället för i en lokal korg. Därefter kan de komma åt breven från en annan plats.</para>
+<tip
+><para
+>Du kan styra mer detaljerat var skickade brev lagras genom att skapa ett motsvarande <link linkend="filters"
+>brevfilter</link
+> som används på utgående brev.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Utkast-korg:</guilabel
+></term>
+<listitem>
+<para
+>Välj korg där utkast ska lagras när den här identiteten används. Användare av &IMAP; bör fundera på att ändra korgen till en &IMAP;-korg, så att utkast lagras på en server istället för i en lokal korg. På så sätt kan de enkelt fortsätta att arbeta med utkasten från en annan plats.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mallkorg:</guilabel
+></term>
+<listitem>
+<para
+>Välj korgen som mallar ska sparas i när den här identiteten används. Se <link linkend="new-compose-from-templates"
+>Skapa brev från mallar</link
+> för mer information om mallar.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Utgående konto:</guilabel
+></term>
+<listitem>
+<para
+>Skriv in en alternativ &SMTP;-, &Sendmail;- eller &Microsoft; Exchange-server som ska användas när brev skickas från den här identiteten.</para>
+<note
+><para
+>Du måste ställa in servrar för utgående brev först, innan du kan välja dem i listan. Du kan göra detta under fliken <link linkend="configure-accounts-sending"
+><guilabel
+>Skicka</guilabel
+></link
+> på sidan <link linkend="configure-accounts"
+><guilabel
+>Konton</guilabel
+></link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Lägg till mitt visitkort till brevet</guilabel
+></term>
+<listitem>
+<para
+>Välj alternativet om du vill lägga till en visitkortsfil i alla brev som skickas från den här identiteten. En kort dialogruta följer.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>Med tomma fält</guilabel
+></term>
+        <listitem
+><para
+>Alternativet visar en dialogruta precis som <ulink url="help:/kaddressbook/editing-contact-data.html"
+>Lägger till kontaktdata</ulink
+> i adressboken. Skriv in ditt namn, e-postadress, etc., och klicka sedan på <guilabel
+>Ok</guilabel
+> för att skapa ett nytt visitkort.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>Från befintligt visitkort</guilabel
+></term>
+        <listitem
+><para
+>Alternativet visar en dialogruta för katalogbläddring som låter dig välja en .vcf-fil (tips: använd adressboken för att exportera en visitkortsfil som kan användas här).</para
+></listitem>
+        </varlistentry
+>        
+        <varlistentry>
+        <term
+><guilabel
+>Duplicera befintligt visitkort</guilabel
+></term>
+        <listitem
+><para
+>Alternativet visar en kombinationslista med alla andra redan definierade identiteter, så du kan välja visitkortet som hör ihop med en av dem.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Språk för automatisk korrigering:</guilabel
+></term>
+<listitem>
+<para
+>Använd kombinationsrutan för att välja språk som hör ihop med det valfria verktyget för automatisk korrigering när den här identiteten används.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Förvald domän:</guilabel
+></term>
+<listitem>
+<para
+>Fältet fylls normalt i med värdet från filen <filename
+>hostnames</filename
+> (i /etc). <guilabel
+>Brevfönstret</guilabel
+> lägger till domännamnet sist i alla rent lokala e-postadresser som du anger. Funktionen är i huvudsak användbar i &Sendmail;-miljöer.</para>
+<example>
+<title
+>Förvald domän</title>
+<para
+>Standarddomänen inställd till <userinput
+>kde.org</userinput
+>. Adressen "Till:" inställd till <userinput
+>exempel</userinput
+>.</para>
+<para
+><guilabel
+>Brevfönster</guilabel
+> skickar brevet till exempel@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Mallar</title>
+<screenshot>
+<screeninfo
+>Identitet Mallar</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Mallar</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Mallar</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Här kan du skapa och hantera egna mallar som identiteten kan använda när nya brev skrivs, vid svar till någon, eller när brev vidarebefordras på plats. Brevmallarna stöder ersättningskommandon. Du kan helt enkelt skriva in dem, eller välja dem i menyn <guimenu
+>Infoga kommando <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+>. Tre sorters kommandon tillhandahålls.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Originalbrev &gt;</guilabel
+> / <guilabel
+>Nuvarande brev &gt;</guilabel
+></term>
+        <listitem
+><para
+>De här kommandona extraherar information från brevet du svarar på, eller vidarebefordrar, och infogar den informationen i brevfönstret.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Behandla med externa program &gt;</guilabel
+></term>
+        <listitem
+><para
+>De här kommandona skickar brevet som du svarar på via ett externt program, och infogar sedan utmatningen i &kmail;s brevfönster.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Diverse &gt;</guilabel
+></term>
+        <listitem
+><para
+>De här kommandona utför funktioner som att välja ordlistan stavningskontrollen ska använda, eller infoga innehållet i en textfil i brevfönstret.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Fältet <guilabel
+>Citeringsindikator:</guilabel
+> låter dig överskrida den normala tecknet för citeringsindikering "&gt;". Knappen <guibutton
+>Kopiera allmänna mallar</guibutton
+> återställer alla egna mallar definierade här till &kmail;s förvalda. (Du kan åstadkomma samma slutresultat genom att avmarkera kryssrutan <guilabel
+>Använd egna brevmallar för identiteten</guilabel
+> längst upp till vänster i dialogrutan.)</para>
+
+<para
+>Mallar som specificeras här är identitetsspecifika. De överskrider både allmänna mallar, men kan överskridas av korgspecifika mallar om de specificeras.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Brevfot</title>
+<screenshot>
+<screeninfo
+>Identitet Brevfot</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Brevfot</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Brevfot</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Den här fliken låter dig ange en brevfot (som ibland kallas <quote
+>signatur</quote
+> eller <quote
+>friskrivning</quote
+>) som ska läggas till sist i varje skickat brev, från den här identiteten.</para>
+<note
+><para
+>Den här sortens signatur har ingenting att göra med de (digitala) signaturer, diskuterade i avsnittet <link linkend="configure-identity-cryptography"
+>Kryptografi</link
+>. Det är något förvirrande att kalla det för signatur, men eftersom termen redan används överallt, behåller vi nomenklaturen. Kom bara ihåg att dessa "signaturer" och digitala signaturer är två helt skilda saker.</para
+></note>
+
+<para
+>Markera alternativet <guilabel
+>Aktivera brevfot</guilabel
+> om du vill att &kmail; ska lägga till brevfoten när den här identiteten används. För att <emphasis
+>automatiskt</emphasis
+> lägga till den i varje nytt brev, måste du också markera alternativet <guilabel
+>Infoga automatiskt brevfot</guilabel
+> på inställningssidan <guilabel
+>Brev</guilabel
+>.</para>
+
+<para
+>&kmail; kan hämta brevfoten från olika källor. Förvalt värde är <guilabel
+>Inmatningsfält nedan</guilabel
+>. Skriv bara in vad du vill att brevfoten ska vara i textrutan. Om du vill använda rik text, markera kryssrutan <guilabel
+>Använd &HTML;</guilabel
+> nere till vänster. Då visas en formateringsverktygsrad.</para>
+
+<para
+>Det vanliga proceduren på Unix är att läsa texten från en fil som heter <filename
+>.signature</filename
+> i användarens hemkatalog. Filen kan delas mellan flera olika e-postklienter, så samma brevfot används i alla e-postprogram du använder. För att göra det, välj <guilabel
+>Fil</guilabel
+> i kombinationsmenyn <guilabel
+>Hämta brevfotstext från</guilabel
+>. Om du vill redigera filen, klicka på knappen <guilabel
+>Redigera fil</guilabel
+>.</para>
+
+<para
+>&kmail; kan också hämta brevfotens text från utmatningen av ett kommando. Du kan använda program som <command
+>fortune</command
+>, för att skapa en slumpvis vald brevfot för varje nytt brev. Allt som programmet matar ut på <acronym
+>stdout</acronym
+> lagras och används som brevfotens text. Välj alternativet <guilabel
+>Utmatning från kommando</guilabel
+> för att hämta texten från utmatningen av ett kommando. Skriv in kommandot (med fullständig sökväg) i redigeringsfältet <guilabel
+>Ange kommando</guilabel
+>.</para>
+
+<note
+><para
+>På Internet, skiljs brevfoten konventionellt från brevtexten med en rad som bara består av tre tecken <quote
+>-- </quote
+> (streck, streck, mellanslag). Om alternativet <guilabel
+>Lägg till åtskiljare innan brevfot</guilabel
+> har aktiverats i inställningen <guilabel
+>Brevfönster</guilabel
+>, lägger &kmail; automatiskt den här raden före brevfoten (om den inte redan finns).</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Bild</title>
+<screenshot>
+<screeninfo
+>Identitet Bild</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identitet Bild</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identitet Bild</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail; kan skicka en liten (48 x 48 bildpunkter), svartvit bild med låg kvalitet med varje brev. Det kan till exempel vara en bild av dig eller en symbol. Den visas i mottagarens e-postprogram (om det stöds).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Skicka bild med varje brev</guilabel
+></term>
+<listitem>
+<para
+>Markera den här rutan om du vill att &kmail; ska lägga till ett huvud med ett så kallat x-ansikte till brev som skrivs med den här identiteten. Ett x-ansikte är en liten (48 x 48 bildpunkter) svartvit bild som vissa e-postprogram kan visa.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Hämta bild från:</guilabel
+></term>
+<listitem>
+<para
+>Kombinationslistan ger dig två sätt att välja en bild.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Extern källa <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (förval)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Välj fil...</guibutton
+></term>
+<listitem>
+<para
+>Använd knappen för att välja en bildfil som bilden skapas från. Använd en bild med hög kontrast och vara kvadratisk, eller nästan kvadratisk. En ljus bakgrund hjälper till att förbättra resultatet.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Välj från adressbok</guibutton
+></term>
+<listitem>
+<para
+>Du kan använda knappen för att skapa en nedskalad version av bilden du har angivit i adressboken.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Inmatningsfält nedan</guilabel
+></term>
+<listitem>
+<para
+>Använd alternativet för att ange en godtycklig X-Face sträng. Exempel finns tillgängliga på <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>http://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>E-postkonton</title>
+
+<para
+>Du hittar en snabbintroduktion av både konton för att skicka och ta emot i avsnittet <link linkend="setting-up-your-account"
+>Ställa in ditt konto</link
+>.</para>
+
+<para
+>Den här sidan låter dig skapa ett eller flera (inkommande eller utgående) <emphasis
+>konton</emphasis
+>, dvs. kombinationer av e-postservrar, inloggningsinformation och andra inställningar. Normalt skapar du ett utgående konto (använt för att skicka brev) och ett inkommande konto (använt för att hämta brev). Du kan dock skapa så många konton som du vill, och tilldela vart och ett en egen <link linkend="configure-identity"
+>Identitet</link
+>. Eller så kan du ställa in bara en identitet, och bestämma vilket konto som används varje gång du skriver ett brev. Sidan låter dig också ställa in en eller flera <acronym
+>LDAP</acronym
+>-servrar (Lightweight Directory Access Protocol).</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Hämta brev</title>
+<screenshot>
+<screeninfo
+>Konto Hämta brev</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konto Hämta brev</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Konto Hämta brev</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>För grundläggande information, se <link linkend="receiving-mail"
+>Ställa in ditt konto: Hämta brev</link
+>.</para>
+
+<para
+>Kolumnen med knappar till  höger låter dig <guibutton
+>Lägga till...</guibutton
+> ett nytt konto, och <guibutton
+>Ändra</guibutton
+> eller <guilabel
+>Ta bort</guilabel
+> ett befintligt konto. Du bör inte ändra eller ta bort posten <guilabel
+>Lokala korgar</guilabel
+>, vilken normalt finns. Knappen <guilabel
+>Starta om</guilabel
+> simulerar omstart av programmet.</para>
+
+<para
+>Knappen <guibutton
+>Anpassa kontonas ordning...</guibutton
+> visar en dialogruta som låter dig flytta alla IMAP-konton som du har skapat, och gruppen av konton kopplade till <guilabel
+>Lokala korgar</guilabel
+> uppåt eller neråt i listan.</para>
+
+<para
+>Den sammanhangsberoende menyn <guilabel
+>Hämtningsalternativ</guilabel
+> för varje konto låter dig ange om &kmail; ska kontrollera ny post omedelbart efter start. Du kan också välja <guilabel
+>Inkludera i manuell brevkontroll</guilabel
+> och <guilabel
+>Koppla ner när &kmail; stängs av</guilabel
+>. </para>
+
+<para
+>Om <guilabel
+>Detaljerad underrättelse vid ny post</guilabel
+> är aktiverat visar &kmail; antal nya brev i varje korg under förutsättning att du har valt att bli underrättad med en dialogruta. Mer avancerade inställningar av meddelanden, som att visa en dialogruta eller köra ett visst kommando, är tillgängliga via knappen <guibutton
+>Övriga åtgärder</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Skicka brev</title>
+<screenshot>
+<screeninfo
+>Konto Skicka</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konto Skicka</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Konto Skicka</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Fliken <guilabel
+>Skicka</guilabel
+> låter dig definiera nya servrar för utgående brev och ställa in några vanliga alternativ som påverkar alla brev du skickar.</para>
+
+<para
+>För grundläggande information, se <link linkend="sending-mail"
+>Ställa in ditt konto: Skicka brev</link
+>.</para>
+
+<para
+>När du klickar på <guibutton
+>Lägg till...</guibutton
+> eller <guibutton
+>Ändra...</guibutton
+> öppnas antingen dialogrutan <guilabel
+>Skapa utgående konto</guilabel
+> eller <guilabel
+>Anpassa konto</guilabel
+>. För att skicka via &Sendmail; eller liknande program kan du ange ett namn och platsen för &Sendmail;-programmet. För &SMTP; måste du ange <guilabel
+>Namn</guilabel
+>, <guilabel
+>Server för utgående brev</guilabel
+>, och <guilabel
+>Port</guilabel
+> för servern. <guilabel
+>Servern kräver behörighetskontroll</guilabel
+> aktiverar fälten <guilabel
+>Användarnamn</guilabel
+> och <guilabel
+>Lösenord</guilabel
+>. Om du inte vet vad säkerhetsinställningen ska vara, ska du låta &kmail; hitta den bästa inställningen genom att använda <guibutton
+>Detektera automatiskt</guibutton
+> under fliken <guilabel
+>Avancerat</guilabel
+>.</para>
+
+<para
+><guilabel
+>Bekräfta före skickning</guilabel
+> visar en dialogruta för att bekräfta varje gång som du skickar ett brev. <guilabel
+>Kontrollera stavning innan sändning</guilabel
+> utför stavningskontroll innan ett brev skickas.</para>
+
+<para
+><guilabel
+>Skicka brev i utkorgen</guilabel
+> låter dig ange när köade brev, dvs. brev i utkorgen som väntar på att skickas, ska skickas. Du kan välja bland tre alternativ:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Aldrig automatiskt <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>Köade brev skickas bara om du väljer <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Vid manuell postkontroll</guilabel
+></term>
+<listitem
+><para
+>Köade brev skickas efter du har tittat efter nya brev manuellt, t.ex. med <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Titta efter nya brev</guimenuitem
+></menuchoice
+>. Du kan förstås också skicka de köade breven manuellt via <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Vid alla postkontroller</guilabel
+></term>
+<listitem
+><para
+>Köade brev skickas efter varje kontroll av nya brev, dvs. både efter automatiska brevkontroller och efter manuella. Du kan förstås också skicka de köade breven manuellt via <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+><guilabel
+>Förvald metod för att skicka</guilabel
+> låter dig ange vad som händer när ett brev skickas. Om <guilabel
+>Skicka nu</guilabel
+> är valt, skickas brevet till e-postservern omedelbart. Om <guilabel
+>Skicka senare</guilabel
+> är valt, så köas brevet i utkorgen för att skickas senare med kommandot <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+> eller automatiskt när du tittar efter nya brev, beroende på vald inställningen av <guilabel
+>Skicka brev i utkorgen</guilabel
+> ovan.</para>
+
+<para
+>Kryssrutan <guilabel
+>Aktivera ångring av skicka</guilabel
+> låter dig specificera ett tidsintervall (från 10 till 50 sekunder) som du kan avbryta e-postöverföring. Brevet köas, och en liten knapp <guibutton
+>Ångra skicka</guibutton
+> dyker upp i underrättelseområdet. Klicka på knappen (i tid) för att förhindra att brevet skickas.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>LDAP-servrar</title>
+<screenshot>
+<screeninfo
+>LDAP-servrar</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>LDAP-servrar</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken LDAP-server</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Använd dialogrutan för att ställa in alla LDAP-servrar du vill komma åt. Se <ulink url="help:/kaddressbook/configure-ldap-server.html"
+>Adressboken Appendix</ulink
+> för mer detaljerad information.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Utseendesidan</title>
+
+<para
+>Sidan Utseende låter dig justera många aspekter av &kmail;s grafiska användargränssnitt, inklusive färgscheman, teckensnittsval och till och med det fysiska arrangemanget av brevlistan i huvudfönstret.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>Allmänt</title>
+
+<screenshot>
+<screeninfo
+>Utseende Allmänt</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Utseende Allmänt</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Utseende (Allmänt)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Om alternativet <guilabel
+>Stäng brevfönster efter svar eller vidarebefordran</guilabel
+> är aktiverat, stänger &kmail; det separata fönstret när ett brevfönster öppnas (för ett svar, eller för att vidarebefordra brevet). <guilabel
+>Aktivera åtkomsttangent</guilabel
+> är normalt valt. Åtkomsttangenter låter dig använda tangentbordet för funktioner som normalt görs med musen, såsom att följa länkar. För mer information, se <ulink url="help:/konqueror/accesskeys.html"
+>Åtkomsttangenter</ulink
+>.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+ 
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys 
+like <userinput
+>:-)</userinput
+> appearing in the message text to be 
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>Aktivera <guilabel
+>Reducera teckenstorlek för citerad text</guilabel
+> för att visa citerad text (i ett svar) med ett mindre teckensnitt. <guilabel
+>Visa citationstecken för expandera och komprimera</guilabel
+> visar små grafiska komponenter tillsammans med varje del av citerad text. Det låter dig visa (+) eller dölja (-) nästlade citeringar bortom en viss nivå. Det är användbart i utdragna e-postkonversationer där ingen tar bort vad som har gjorts tidigare.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+>Att ändra <guilabel
+>Överskrid teckenkodning</guilabel
+> från dess förvalda värde <guilabel
+>Automatisk</guilabel
+> tvingar användning av den angivna kodningen för alla brev, oavsett vad &MIME;-huvudena anger. <guilabel
+>Minimal teckenstorlek:</guilabel
+> låter dig styra den minsta teckensnitt som &kmail; använder. Ställ in det till ett större värde om du har svårt att läsa riktigt små teckensnitt.</para>
+
+<para
+><guilabel
+>Systembrickan</guilabel
+> tillhandahåller tre sätt att kontrollera &kmail;s interaktion med &kde;:s aktivitetsrad eller panel. Om <guilabel
+>Aktivera ikon i systembrickan</guilabel
+> väljes, visas en liten ikon (<inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+>) i systembrickans område. Om <guilabel
+>Starta minimerad i systembrickan</guilabel
+> är aktiverat, visas bara den här ikonen när &kmail; startas. Att aktivera <guilabel
+>Visa olästa brev i aktivitetsraden</guilabel
+> gör att antalet brev som är olästa visas i &kmail;s verktygsradsknapp.</para>
+
+<para
+>Om ikonen är synlig kan du dölja &kmail;s huvudfönster genom att antingen klicka på ikonen, eller genom att klicka på fönstrets stängningsknapp. Genom att klicka på ikonen kan du göra &kmail;s huvudfönster synligt igen. Om du klickar på ikonen med <mousebutton
+>höger</mousebutton
+> musknapp visas en sammanhangsberoende meny. Du kan titta efter nya brev, skapa ett nytt brev eller avsluta &kmail;. Om det finns några olästa brev, dyker alternativet <guilabel
+>Nya brev i &gt;</guilabel
+> upp, tillsammans med en lista över korgarna som innehåller olästa brev. Om en av korgarna väljes, så öppnas den i &kmail;s huvudfönster. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Teckensnitt</title>
+
+<screenshot>
+<screeninfo
+>Utseende Teckensnitt</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Utseende Allmänt</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Utseende (Teckensnitt)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Den här fliken låter dig skräddarsy teckensnitten som &kmail; använder. Välj <guilabel
+>Använd egna teckensnitt</guilabel
+> för att aktivera dialogrutan. Verkställ för: <guilabel
+>Brevtext</guilabel
+> ställer in teckensnittet för läsrutan. Alternativet <guilabel
+>Brev</guilabel
+> ställer in teckensnittet som nya brev med vanlig text visas medan de skrivs. <guilabel
+>Brevlista</guilabel
+> ändrar teckensnittet som används för att visa brevlistan. Du kan också välja speciella teckensnitt för poster med Olästa brev, Viktigt brev och Brev att åtgärda i brevlistan. <guilabel
+>Utskrift</guilabel
+> ändrar teckensnittet som används vid utskrift. <guilabel
+>Teckensnitt med fast breddsteg</guilabel
+> påverkar visningen av vissa &HTML;-brev.</para>
+
+<para
+><guilabel
+>Visa bara teckensnitt med fast bredd</guilabel
+> begränsar antal tillgängliga teckensnitt. Bara namn på teckensnitt med fast bredd visas när alternativet används.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Färger</title>
+
+<screenshot>
+<screeninfo
+>Utseende Färger</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Utseende Färger</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Utseende (Färger)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Den här fliken låter dig ändra färg på några olika saker genom att dubbelklicka på en post i listrutan. Välj <guilabel
+>Använd egna färger</guilabel
+> för att aktivera funktionen. Välj <guilabel
+>Ändra inte färg från HTML-originalbrevet</guilabel
+> för att bevara färgschemat valt av avsändaren för alla &HTML;-brev.</para>
+
+<para
+><guilabel
+>Återanvänd färger vid djup citering</guilabel
+> startar om citeringens färgläggning på första nivån efter den tredje nivån citering har nåtts. Observera att färger för <guilabel
+>Citerad text</guilabel
+> bara fungerar i läsrutan, inte in brevfönstret. Om du vill att korgar som är nära storleksgränsen (tilldelat utrymme, oftast använt på &IMAP;-servrar) ska visas med en annan färg, kan du ange ett procentvärde som tröskel.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Layout</title>
+<screenshot>
+  <screeninfo
+>Standardlayout</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Standardlayout</phrase>
+      </textobject>
+      <caption>
+        <para
+>Fliken Utseende (layout)</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Den här fliken låter dig välja layout av &kmail;s huvudfönster.</para>
+<para
+>I rutan <guilabel
+>Korglista</guilabel
+> kan du välja mellan <guilabel
+>Lång korglista</guilabel
+> (förvalt alternativ), som använder fönstrets hela höjd, och <guilabel
+>Kort korglista</guilabel
+>. Med alternativet <guilabel
+>Kort</guilabel
+>, om du har valt <guilabel
+>Visa förhandsgranskningsruta för brev under brevlistan</guilabel
+>, upptar brevlistan och korglistan en horisontell remsa, och brevförhandsgranskningsrutan använder hela nedre delen av fönstret. Om du har valt <guilabel
+>Visa förhandsgranskningsruta för brev intill brevlistan</guilabel
+>, upptar brevlistan och korglistan en vertikal remsa, med brevförhandsgranskningsrutan till höger.</para>
+
+<para
+>Välj <guilabel
+>Visa snabbsökningsfältet för korgar</guilabel
+> för att skapa en liten textruta längst upp i korglistan. När du skriver något i den rutan, visas bara korgarna vars namn motsvarar tecknen du skriver in. Rensa rutan för att visa alla korgarna.</para>
+
+<para
+>Rutan <guilabel
+>Visa favoritkorgar</guilabel
+> låter dig ändra hur dina favoritkorgar visas. <guilabel
+>Som ikoner</guilabel
+> använder mycket utrymme, så om du har flera favoritkorgar kan du prova <guilabel
+>Som lista</guilabel
+>. Om du inte bryr dig om favoritkorgar kan funktionen inaktiveras helt och hållet genom att välja <guilabel
+>Aldrig</guilabel
+>.</para>
+
+<para
+><guilabel
+>Korgverktygstips</guilabel
+>, som normalt är på, visar ytterligare information (totalt antal brev, olästa brev och lagringsstorlek) när muspekaren hålls över en korg. Välj <guilabel
+>Aldrig</guilabel
+> för att inaktivera funktionen.</para>
+
+<para
+>I rutan <guilabel
+>Brevförhandsgranskningsruta</guilabel
+> kan du välja var i förhållande till brevlistan som du vill att brevförhandsgranskningsrutan ska dyka upp. Eller kan du ta bort det helt och hållet och bara använda hela skärmläsaren för att visa valda brev (tryck på returtangenten).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Brevlista</title>
+
+<screenshot>
+<screeninfo
+>Utseende Brevlista</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Utseende Brevlista</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Utseende (Brevlista)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Använd dialogrutan för att ändra utseende på brevlistans ruta.</para>
+<para
+>Om du markerar <guilabel
+>Visa verktygstips för brev och grupprubriker</guilabel
+> får du en kort sammanfattning av varje brev (eller grupp: beror på visningsläge) när musmarkören hålls över ett objekt i brevlistan.</para>
+
+<para
+><guilabel
+>Standardsammanställning</guilabel
+> och <guilabel
+>Standardtema</guilabel
+>, kan överskridas genom att använda dialogrutan <guilabel
+>Korgegenskaper</guilabel
+> för varje individuell korg. Att klicka på knappen <guibutton
+>Anpassa</guibutton
+> öppnar en fönster för att anpassa förinställda sammanställningar och teman. Du kan skapa egna scheman på så sätt.</para>
+
+<para
+>Åtta sammanställningslägen och tre teman är förinställda.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standardsammanställning:</guilabel
+> (kombinationslista)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Aktivitet enligt datum, flat</term>
+<listitem
+><para
+>Den här vyn använder grupper ordnade dag för dag. Breven är inte trådade. Exempelvis, under <quote
+>Idag</quote
+> hittar du helt enkelt alla brev som ankom idag. Grupperna visas normalt i omvänd kronologisk ordning betecknade "Idag", "Igår", sedan de fem föregående veckodagarna, följda av yy-mm-dd.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktivitet enligt datum, trådad</term>
+<listitem
+><para
+>Den här vyn använder dag-för-dag grupper. Breven är trådade. Exempelvis, under <quote
+>Idag</quote
+> hittar du alla brev som ankom idag och alla trådar som har varit aktiva idag. Använder samma gruppering som Aktivitet enligt datum, flat.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktuell aktivitet, flat</term>
+<listitem
+><para
+>Den här vyn använder grupper med smarta datumintervall. Breven är trådade. Exempelvis, under <quote
+>Idag</quote
+> hittar du helt enkelt alla brev som ankom idag. Grupperna visas normalt i omvänd kronologisk ordning: "Idag", "Igår", de fem föregående veckodagarna, "Förra veckan", "För två veckor sedan", och sedan månad för månad.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktuell aktivitet, trådad </term>
+<listitem
+><para
+>Den här vyn använder grupper med smarta datumintervall. Breven är trådade. Exempelvis, under <quote
+>Idag</quote
+> hittar du alla brev som ankom idag och alla trådar som har varit aktiva idag. Annars samma som Aktuell aktivitet, flat.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Flat datumvy</term>
+<listitem
+><para
+>Det här är en enkel, gammaldags brevlista sorterad enligt datum. Inga grupper och ingen trådning.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Avsändare/Mottagare, flat</term>
+<listitem
+><para
+>Den här vyn grupperar breven enligt avsändare eller mottagare (beroende på typ av korg). Du kan ange avsändare (eller mottagare) i dialogrutan <menuchoice
+><guimenu
+>Korg</guimenu
+> <guimenuitem
+>Korgegenskaper</guimenuitem
+></menuchoice
+> (fliken "Visa", <guilabel
+>Visa kolumn:</guilabel
+>). Brev är inte trådade.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Vanlig sändlista</term>
+<listitem
+><para
+>Det här är en enkel, gammaldags brevlista: inga grupper och kraftig trådning, ordnade enligt det datum då varje tråd börjar.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Start av trådar</term>
+<listitem
+><para
+>Den här vyn arrangerar breven i trådar och grupperar därefter trådarna enligt användaren som startade dem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+>Knappen <guibutton
+>Anpassa...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+   
+<para
+>Klicka på knappen <guibutton
+>Anpassa...</guibutton
+> för att skapa ett eget tema för brevsammanställning. Välj en befintlig brevsammanställning som liknar den du vill skapa, och klicka på <guibutton
+>Duplicera sammanställning</guibutton
+>. Om ingen är liknande, klicka på knappen <guibutton
+>Ny sammanställning</guibutton
+>. Fliken <guilabel
+>Allmänt</guilabel
+> låter dig ändra <guilabel
+>Namn:</guilabel
+> och <guilabel
+>Beskrivning:</guilabel
+>. Fliken <guilabel
+>Grupper och trådar</guilabel
+> låter dig ställa in flera element för att anpassa sammanställningen.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Gruppering:</guilabel
+> låter dig välja mellan datum, avsändare eller mottagare, eller ingen. Med de smarta alternativen grupperar &kmail; ihop relaterade brev. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Princip för expansion av grupper:</guilabel
+> låter dig ställa in om &kmail; automatiskt expanderar grupperade brev eller inte. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Trådning:</guilabel
+> låter dig bestämma om &kmail; inkluderar referenser och rubrik för att bestämma perfekt trådning. Du kan också stänga av trådning helt och hållet. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Trådens ledare:</guilabel
+> låter dig ändra trådens ledare: det senaste brevet, eller det första. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Princip för expansion av trådar:</guilabel
+> låter dig ändra hur &kmail; bestämmer om en tråd ska expanderas. </para
+></listitem>
+</itemizedlist>
+<para
+>Fliken <guilabel
+>Avancerat</guilabel
+> låter dig ändra <guilabel
+>Strategi för att fylla vyn:</guilabel
+>.Välj "Gynna snabbhet" om du har en långsam anslutning. "Interaktion" visar alla nuvarande konversationer först. "Bakgrundsjobb" sorterar inte alls.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standardtema:</guilabel
+> (kombinationslista)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Klassiskt</term>
+<listitem
+><para
+>Ett enkelt, bakåtkompatibelt, tema med enstaka rader</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Smart</term>
+<listitem
+><para
+>Ett smart tema med flera rader och objekt</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Smart med klickbar status</term>
+<listitem
+><para
+>Ett smart tema med flera rader och objekt med en klickbar statuskolumn</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+>Knappen <guibutton
+>Anpassa...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+  
+<para
+>Klicka på knappen <guibutton
+>Anpassa...</guibutton
+> för att skapa ett eget tema för brevlistan.  Välj ett befintligt tema som liknar det du vill skapa, och klicka sedan på <guibutton
+>Duplicera tema</guibutton
+>. Om ingen är liknande, klicka på knappen <guibutton
+>Nytt tema</guibutton
+>. Fliken <guilabel
+>Allmänt</guilabel
+> låter dig ändra <guilabel
+>Namn:</guilabel
+> och <guilabel
+>Beskrivning:</guilabel
+>.</para>
+
+<para
+>Fliken <guilabel
+>Utseende</guilabel
+> låter dig ställa in synliga kolumner och statusvärden. Högerklicka på kolumnraden och välj <guilabel
+>Lägg till kolumn</guilabel
+> för att lägga till en kolumn. Namnge kolumnen, välj sedan vad kolumnen ska representera med kombinationsrutan <guilabel
+>Klick på rubrik sorterar brev:</guilabel
+>. Förval är att <guilabel
+>Normalt synlig</guilabel
+> är automatiskt markerat. Avmarkera det om du bara vill att kolumnen ska vara tillgänglig i den sammanhangsberoende menyn för den klickbara sorteringsraden. Dra lämplig beteckning från <guilabel
+>Innehållsobjekt</guilabel
+> till kolumnens visningsruta under kolumnraden. Om du exempelvis väljer att lägga till en storlekskolumn ska du dra beteckningen Storlek under storlekskolumnen. Fortsätt att göra det till du har alla kolumner du önskar. Du kan ändra teckensnitt och färg på kolumnobjekt via visningsområdets högerklicksmeny. Flytta, ta bort och ändra storlek på kolumner via högerklicksmenyn för kolumnraden.</para>
+
+<para
+>Fliken <guilabel
+>Avancerat</guilabel
+> låter dig visa rubriker. Du kan också ändra statusikonernas storlek.</para>
+</listitem
+></varlistentry
+> 
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>I rutan <guilabel
+>Datumvisning</guilabel
+> kan du välja ett av tre datumformat (eller skapa ditt eget). <guilabel
+>Standardformat</guilabel
+> visar veckodagen och datumet. <guilabel
+>Lokalt format</guilabel
+> är kortare, och utelämnar veckodagen. <guilabel
+>Smart format</guilabel
+> visar idag, igår, etc. Om du vill skapa ett <guilabel
+>Eget</guilabel
+> datumformat, klicka bara på alternativet <guilabel
+>Information om eget format</guilabel
+> och följ anvisningarna.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>Brevetiketter</title>
+    
+<screenshot>
+<screeninfo
+>Utseende Brevetiketter</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Utseende Brevetiketter</phrase>
+    </textobject>
+    <caption>
+      <para
+>Fliken Utseende (Brevetiketter)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail; ger dig normalt flera sätt att markera brev (viktigt, att åtgärda, födelsedag), som går att komma åt via undermenyn <menuchoice
+><guimenu
+>Brev</guimenu
+> <guisubmenu
+>Markera brev &gt;</guisubmenu
+></menuchoice
+>. Du kan också definiera ytterligare etiketter för att hjälpa dig kategorisera brev.</para>
+
+<para
+>Använd inmatningsfältet <guilabel
+>Tillgängliga etiketter</guilabel
+> för att namnge din speciella etikett. Använd knappen <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> för att lägga till namnet i listan. Använd knappen <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> för att ta bort en etikett. (Etiketten "Födelsedag" är inbyggd, och kan inte tas bort.) Använd piltangenterna upp och ner för att sortera objekt i listan.</para>
+
+<para
+>Markera ett objekt i listan för att aktivera dialogrutan <guilabel
+>Etikettinställningar</guilabel
+>. Du kan välja något eller alla sex alternativen.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Ändra textfärg:</guilabel
+></term>
+        <listitem
+><para
+>Välj alternativet för att visa etiketterade poster i brevlistan med en annan färg. En färgpalett visas när alternativet väljes. Välj en förinställd färg, eller välj "Egen..." för större flexibilitet.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Ändra bakgrundsfärg:</guilabel
+></term>
+        <listitem
+><para
+>Välj alternativet för att ändra bakgrundsfärg på etiketterade poster i brevlistan.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Ändra teckensnitt:</guilabel
+></term>
+        <listitem
+><para
+>Du kan antingen välja fetstil eller ett <emphasis
+>kursivt</emphasis
+> teckensnitt.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Brevetikettikon:</guilabel
+></term>
+        <listitem
+><para
+>Klicka på knappen för att visa en dialogruta för val av ikon. Ikonen visas vid poster i brevlistan med etikett.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Genväg:</guilabel
+></term>
+        <listitem
+><para
+>Använd knappen för att skapa en snabbtangent för att koppla etiketten med valda brev.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Aktivera verktygsradsknapp:</guilabel
+></term>
+        <listitem
+><para
+>Välj alternativet för att lägga till en ny knapp i &kmail;s verktygsrad. Att klicka på knappen etiketterar brevet som för närvarande är markerat.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Alla etiketter som definieras här visas automatiskt som nya alternativ i undermenyn <menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Markera brev &gt;</guisubmenu
+></menuchoice
+>.</para>
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>Brevsidan </title>
+    
+    <para
+>För en beskrivning av hur <guilabel
+>Brevfönstret</guilabel
+>, läs <link linkend="the-composer-window"
+>den här sidan</link
+>. För att ta reda på mer om finjustering av <guilabel
+>Brevfönstrets</guilabel
+> beteende, fortsätt läsa. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Allmänt </title>
+    
+    <screenshot>
+    <screeninfo
+>Brevfönster Allmänt</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Allmänt</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Allmänt)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Dialogrutan låter dig justera sättet som &kmail; hanterar brevfot. Den tillåter dig också att kontrollera vissa formateringsfunktioner, för att justera några alternativ för automatisk komplettering och för att finjustera &kmail;s funktion för att spara automatiskt. </para>
+    
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Infoga automatiskt brevfot</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, inkluderas din brevfot som definierad på <link linkend="configure-identity-signature"
+>identitetssidan</link
+> automatiskt i slutet på varje brev du skapar (dvs. nya brev, svar, etc.). </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Infoga brevfot ovanför citerad text</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerat, infogar &kmail; din brevfot längst upp i brevfönstret, och inte längst ner. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Lägg till åtskiljare innan brevfot</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerat infogar &kmail; "-- " (streck streck mellanslag) innan din brevfot om din brevfot inte börjar på så sätt. (Åtskiljarlinjen är en <emphasis
+>de facto</emphasis
+> Internetstandard.) </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Ta bort brevfot vid svar</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerat, tar &kmail; bort brevfoten från originalbrevet när du skriver ett svar. &kmail; utelämnar förstås brevfoten utan att referera till den här inställningen om du inte har markerat brevfoten och alternativet <guilabel
+>Citera bara markerad text ...</guilabel
+> har markerats. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Citera bara markerad text vid svar</guilabel>
+    </term>
+    <listitem>
+      <para
+>Om markerat citerar &kmail; bara den markerade texten i brevfönstret vid svar, istället för hela brevet. Med det här är det möjligt att snabbt skapa svar som bara citerar de relevanta stycken som du verkligen svarar på. Om alternativet aktiverats och ingenting är markerat, citerar &kmail; hela brevet. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Använd smart citering</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, bryter &kmail; långa rader, men försöker behålla den riktiga citeringen (dvs. <quote
+>&gt;</quote
+> kommer alltid att vara först på raden). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Radbrytning vid kolumn:</guilabel>
+    </term>
+    <listitem>
+      <para
+>Om markerat, väljes radbrytningsalternativet (<menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Radbrytning</guimenuitem
+> </menuchoice
+> i brevfönstret) automatiskt. Använd nummerrutan för att välja maximal radlängd. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Svara eller vidarebefordra med användning av samma visuella format som originalbrevet (vanlig text eller HTML)</guilabel>
+    </term>
+    <listitem>
+      <para
+>Om markerat, aktiverar &kmail; alltid redigeringsverktygsraden för rik text om brevet som du svarar på innehåller ett &HTML; &MIME;-huvud. Om alternativet inte är markerat, behåller brevfönstret verktygsradens tillstånd från föregående session. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Förbättra enkel textversion av &HTML;-brev</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, lägger &kmail; till fotnoter sist i den vanliga textversionen av varje brev skrivet med &HTML;. De här fotnoterna med vanlig text är klickbara länkar som pekar på alla resurser kodade som ankringstaggar (också kallade länkar) i &HTML;-versionen av brevet. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Kräv automatiskt brevhanteringsbekräftelser</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, ställs <xref linkend="composer-options-request-mdn"/> in till <emphasis
+>på</emphasis
+>. Markera bara alternativet om du vet vad du gör. Brevhanteringsbekräftelser anses vara ett otyg (eller ignoreras helt enkelt) av många personer. Det är bättre att bara begära dem när det är nödvändigt. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Använd senaste adresser indexerade från e-post för automatisk komplettering</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, inkluderar &kmail; adresserna från alla dina sparade brev i listan med automatisk komplettering (t.ex. när du börjar skriva i inmatningsfältet Till:). De visas som "Kontakter hittades i data". Om du stänger av det, visas bara matchande poster i adressboken och "Senaste adresser" i listan. Använd nummerrutan för att begränsa antalet objekt som visas i listan. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Använd senaste adresser för automatisk komplettering</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, inkluderar &kmail; adresserna som har använts senast i listan med automatisk komplettering (t.ex. när du börjar skriva i inmatningsfältet Till:). De visas som "Senaste adresser". Om du stänger av det, visas bara matchande poster i adressboken och "Kontakter hittades i data" i listan. Använd nummerrutan för att begränsa antalet objekt som anses vara "Senaste". </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+>Knappen <guibutton
+>Anpassa komplettering ...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>Klicka på knappen för att öppna inställningsdialogrutan för automatisk komplettering. Du kan justera ordningen som objekt visas, lägga till eller ta bort "Senaste" adresser, och skapa en svartlista av adresser som aldrig ska visas vid automatisk komplettering. Observera att dialogrutan kan också visas från en sammanhangsberoende meny genom att klicka med höger musknapp på exempelvis fältet "Till:" i brevfönstret. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Spara automatiskt var</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>En säkerhetskopia av texten i brevfönstret skapas normalt regelbundet. Alternativet låter dig ange hur ofta en säkerhetskopia skapas. Du kan inaktivera att spara automatiskt genom att välja "Spara inte automatiskt". </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>Standardmallar</title>
+    <screenshot>
+    <screeninfo
+>Brevfönstrets standardmallar</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönstrets standardmallar</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönstret (Standardmallar)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Här kan du redigera förvalda brevmallar som används när du skriver ett nytt brev, skriver ett svar, eller vidarebefordrar ett brev. Brevmallar stöder ersättningskommandon, genom att helt enkelt skriva in dem eller välja dem i menyn <guimenu
+>Infoga kommando</guimenu
+>. De är globala (förinställda) mallar. De kan överskridas av mallar per identitet eller per korg, om några sådana anges. De flesta är nöjda med de förvalda standardmallarna. Men om du vill finjustera förvalen, är det här platsen att göra det. </para>
+
+    <para
+>För en mer detaljerad förklaring av mallinställning, se <link linkend="configure-identity-templates"
+>kapitlet Identiteter</link
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>Egna mallar</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Egna mallar</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Egna mallar</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Egna mallar)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Här kan du lägga till, redigera och ta bort egna brevmallar som kan användas när du skriver ett svar eller vidarebefordrar brev. Skapa den egna mallen genom att skriva in namnet i inmatningsrutan och klicka på knappen <guiicon
+>+</guiicon
+>. Det går att koppla en tangentbordskombination till mallen för snabbare åtkomst. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+    
+    <para
+>Brevmallarna stöder ersättningskommandon genom att helt enkelt skriva in dem, eller genom att välja dem i menyn <guimenu
+>Infoga kommando</guimenu
+>. </para>
+    
+    <para
+>Det finns fyra typer av egna mallar, använda för <guilabel
+>Svara</guilabel
+>, <guilabel
+>Svara till alla</guilabel
+>, <guilabel
+>Vidarebefordra</guilabel
+> och <guilabel
+>Generell</guilabel
+>, som kan användas för alla olika åtgärder. Det går inte att koppla en snabbtangent till mallar av typen <guilabel
+>Generell</guilabel
+>. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>Rubrik</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Rubrik</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Rubrik</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Rubrik)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Den här rutan innehåller en lista med prefix för <quote
+>svar</quote
+> och <quote
+>vidarebefordran</quote
+>. Om du tar emot brev som använder annat än standardprefix, kan du lägga till dem här så att &kmail; känner igen dem. &kmail; ignorerar sedan de underliga prefixen vid sortering av brev (och när rubriken för ett svar eller vidarebefordrat brev anges), och byter ut dem mot <quote
+>Re:</quote
+> eller <quote
+>Fwd:</quote
+> om så önskas. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>Teckenuppsättning</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Teckenuppsättning</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Teckenuppsättning</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Teckenuppsättning)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Här kan du hantera de förvalda teckenuppsättningarna som används för dina egna brev. Varje brev som du skickar kontrolleras, för att se om det är skrivet med någon av de listade teckenuppsättningarna, med början längst upp i listan. Om det är det, används den teckenuppsättningen. Om det inte är det, visas en dialogruta som talar om för dig att du måste välja en teckenuppsättning för hand med <menuchoice
+><guimenu
+>Alternativ</guimenu
+> <guisubmenu
+>Ange kodning</guisubmenu
+></menuchoice
+>. </para>
+
+    <para
+>Om du väljer <guilabel
+>Behåll ursprunglig teckenuppsättning vid svar eller vidarebefordran (om möjligt)</guilabel
+>, kommer det ursprungliga brevets teckenuppsättning att behållas, om det nu inte finns tecken som inte kan representeras med den teckenuppsättningen. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>Huvuden</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Sidhuvuden</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Sidhuvuden</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Sidhuvuden)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Markera kryssrutan <guilabel
+>Använd eget suffix för meddelande-id</guilabel
+> om du vill att &kmail; ska skapa meddelande-id med ett eget suffix. Skriv in det önskade suffixet i fältet <guilabel
+>Eget suffix för meddelande-id</guilabel
+>. Försäkra dig om att suffixet som du anger är unikt (i hela webbuniversum). Det bästa du kan göra är att använda namnet på din egen domän, om du har någon. Om du inte markerar <guilabel
+>Använd eget suffix för meddelande-id</guilabel
+> så skapar &kmail; automatiskt hela meddelande-id. Om du inte vet vad det här handlar om, markera då inte alternativet. </para>
+
+    <para
+><guilabel
+>Definiera egna mime-huvudtaggar</guilabel
+> anger de huvuden som &kmail; använder för utgående brev. Du kan både hitta på nya fält och skriva över befintliga. Den här funktionen är bara användbar för experter. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>Bilagor</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Bilagor</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Bilagor</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Bilagor)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Om du måste skicka bilagor med filnamn som innehåller andra tecken än engelska till användare av <application
+>&Microsoft; Outlook</application
+> eller <application
+>&Microsoft; Outlook Express</application
+> kanske du bör markera alternativet <guilabel
+>Namngivning av bilagor som fungerar med Outlook</guilabel
+>. &kmail; kodar då bilagornas namn på ett sätt som inte är enligt standard och förstås av <application
+>&Microsoft; Outlook</application
+>. </para>
+
+    <para
+>När alternativet är markerat, skapar &kmail; brev som inte följer e-poststandarder, och följaktligen är det möjligt att dina brev inte förstås av e-postklienter som följer standarder. Alltså ska du inte aktivera det här alternativet om du inte måste. </para>
+
+    <para
+>Markera kryssrutan <guilabel
+>Aktivera identifiering av saknade bilagor</guilabel
+> om du vill att &kmail; ska varna dig så fort du just ska skicka ett brev utan bilaga även om brevtexten innehåller vissa ord som anger att du ville inkludera en bilaga. Listan med nyckelord kan ändras. </para>
+    
+    <para
+>Använd nummerrutan <guilabel
+>Maximal storlek på bilaga</guilabel
+> för att begränsa storleken på alla bilagor du skickar. Om du försöker bilägga en fil större än den angivna begränsningen, rapporterar &kmail; ett felmeddelande och vägrar lägga till filen. Observera att det är en individuell begränsning, och inte en sammanlagd begränsning. Dessutom kontrolleras filstorleken innan filen konverteras till base 64-kodning, om det är nödvändigt. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>Automatisk korrigering</title>
+    <screenshot>
+    <screeninfo
+>Anpassa automatisk korrigering</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Anpassa automatisk korrigering</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Automatisk korrigering)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Markera alternativet <guilabel
+>Aktivera automatisk korrektion</guilabel
+> för att aktivera automatisk korrigering. Använd kombinationsrutan för att välja språk. Du kan importera inställningar, antingen från <application
+>LibreOffice</application
+> eller en annan installation av &kmail; eller &calligra; via knappen <guibutton
+>Importera... <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guibutton
+>. Om du behöver spara inställningarna för en annan installation eller ett annat program, använd knappen <guibutton
+>Exportera...</guibutton
+>. </para>
+    
+    <para>
+      <variablelist
+><title
+>Alternativ för automatisk korrigering</title>
+        <varlistentry>
+             <term
+><guilabel
+>Enkel automatisk korrigering</guilabel
+></term>
+             <listitem>
+               <para
+>Det här låter dig ställa in &kmail; för att automatiskt korrigera diverse vanliga typografiska fel. Markera rutorna intill funktionerna för automatisk korrigering som du vill aktivera. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Egna citationstecken</guilabel
+></term>
+             <listitem>
+               <para
+>Man kan ersätta dubbla eller enkla citationstecken med "smarta" citationstecken genom att markera lämplig ruta. Man kan också lägga till icke-radbrytande mellanslag innan specifika skiljetecken i fransk text genom att markera det alternativet. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Avancerad automatisk korrigering</guilabel
+></term>
+             <listitem>
+               <para
+>Du kan anpassa automatisk ordersättning genom att markera alternativet. För att ange en egen sträng som kommer att ersättas automatiskt, ange ordet att ersätta i rutan <guilabel
+>Sök</guilabel
+> och ersättningsordet i rutan <guilabel
+>Ersätt</guilabel
+>, klicka sedan på knappen <guibutton
+>Lägg till</guibutton
+>. För att ta bort ett eget ord från listan, markera posten och klicka på <guibutton
+>Ta bort</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Undantag</guilabel
+></term>
+             <listitem>
+               <para
+>Dialogrutan låter dig ange undantag där du kan tala om för &kmail; att ignorera vissa punkter (meningsslut) och två stora bokstäver (t.ex. &kmail;). Ange undantaget och klicka på knappen <guibutton
+>Lägg till</guibutton
+>.  Markera strängen och klicka på <guibutton
+>Ta bort</guibutton
+> för att ta bort undantaget. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+      
+    <para
+>När du väl har gjort alla inställningar av automatisk korrigering, klicka på knappen <guibutton
+>Verkställ</guibutton
+> eller <guibutton
+>Ok</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace --> 
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>Ändra bildstorlek automatiskt</title>
+    <screenshot>
+    <screeninfo
+>Brevfönster Ändra bildstorlek automatisk</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Brevfönster Ändra bildstorlek automatisk</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Brevfönster (Ändra bildstorlek automatisk)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Under vissa omständigheter kan det vara nödvändigt att låta &kmail; automatiskt ändra storlek på bildbilagor i skickade brev (t.ex. på grund av begränsningar i e-postservern). Välj <guilabel
+>Ändra bildstorlek automatiskt</guilabel
+> för att göra det. Det finns flera alternativ som följer med funktionen. </para>
+      
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Allmänt</guilabel
+></term>
+       <listitem>
+         <para
+>Det finns tre alternativ under "Allmänt". Om du vill att proportionen ska bevaras för alla bilder, välj <guilabel
+>Behåll proportion</guilabel
+>. &kmail; frågar dig normalt om du vill ändra storlek innan det görs. Om du vill att programmet ska ändra storlek utan att bli tillfrågad, avmarkera <guilabel
+>Fråga innan storleksändring</guilabel
+>. &kmail; skickar normalt de storleksändrade bilden med <acronym
+>JPG</acronym
+>-format. Om du hellre vill ha sådana bilder skickade med <acronym
+>PNG</acronym
+>-format, välj det i kombinationsrutan <guilabel
+>Återgå till format</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Bild</guilabel
+></term>
+       <listitem>
+         <para
+>Antag att du har en släkting som bara kan ta emot bildfiler av en viss storlek på grund av begränsningar hos e-postleverantören. Då kan du använda alternativet <guilabel
+>Reducera bild till maximal dimension:</guilabel
+> för att välja en storlek att reducera bilden till, och skriva in e-postadressen i filtren på fliken <guilabel
+>Mottagare</guilabel
+>. (Fliken med mottagare beskrivs mer detaljerat nedan.) Om en egen storlek behövs, välj det sista alternativet, <guilabel
+>Egen</guilabel
+>, i kombinationsrutorna för bredd och höjd, och skriv in antal bildpunkter i textrutan. Du kan också förstora bilder genom att välja <guilabel
+>Förstora bild till minimala dimensioner</guilabel
+>. Det sista alternativet låter dig hoppa storleksändring av bilder som är mindre än angiven filstorlek. </para>
+       </listitem>
+     </varlistentry>
+     
+     <varlistentry
+><term
+><guilabel
+>Filnamn</guilabel
+></term>
+       <listitem>
+         
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Källfilter</guilabel
+></term>
+             <listitem>
+               <para
+>Om du vill att storleksändringen ska göras baserat på filens namn, välj lämpligt filter här. Antag att du behöver skicka flera bilder dagligen din chef, och chefen kräver att alla ska ha samma storlek, skulle du kunna namnge alla arbetsbilder arbete-1, arbete-2, etc., och därefter markera <guilabel
+>Inkludera alla filer vars namn innehåller ett av mönstren</guilabel
+> och skriva in arbete i textrutan <guilabel
+>Mönster:</guilabel
+>. Du kan också undanta filer på samma sätt genom att markera <guilabel
+>Undanta alla filer vars namn innehåller ett av mönstren</guilabel
+>. Det normala beteendet är ingen filtrering. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Bildformat</guilabel
+></term>
+             <listitem>
+               <para
+>Markera <guilabel
+>Ändra storlek på alla bilder med ett av dessa format</guilabel
+> för att ange ett specifikt format som bildens storlek ska ändras till. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>När alternativet är aktiverat, måste du klicka på knappen <guibutton
+>Välj format...</guibutton
+>, och sedan välja format i dialogrutan. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Filnamn vid storleksändring</guilabel
+></term>
+             <listitem>
+               <para
+>Markera <guilabel
+>Byt namn på storleksändrade bilder med följande mönster:</guilabel
+> om du vill att namnen på de storleksändrade bilderna ska ändras enligt ett visst mönster. Skriv in mönstret i textrutan. Du kan använda: <simplelist>
+                 <member
+>%t ange aktuell tid</member>
+                 <member
+>%d ange aktuellt datum</member>
+                 <member
+>%n originalfilnamn</member>
+                 <member
+>%e originalfiländelse</member>
+                 <member
+>%x ny filändelse</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         
+         </listitem>
+       </varlistentry>
+     
+       <varlistentry
+><term
+><guilabel
+>Mottagare</guilabel
+></term>
+         <listitem>
+           <para
+>Den här fliken är där du anger mottagare som behöver få storleksändrade bilder. Du måste bestämma om du behöver flera poster eller bara en, och skriva in e-postadressen eller adresserna i textrutan med <quote
+>;</quote
+> som skiljetecken när det finns flera objekt. Du kan också ange vissa mottagare för vilka bildernas storlek inte bör ändras. Det normala är ingen filtrering. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Säkerhetssidan</title>
+  
+  <para
+>Dialogrutan Säkerhet låter dig finjustera vissa rik text (&HTML;) alternativ. Den låter dig också kontrollera krypterings- och avkodningsfunktioner, justera viss inbyggd logik för bedrägeribrev, och ange hur brevhanteringsbekräftelser (också kallade mottagningskvitton) hanteras. Observera att dialogrutan <emphasis
+>inte</emphasis
+> har något att göra med säkerhetsåtgärder för eliminering av virus. Se kapitlet <link linkend="the-anti-virus-wizard"
+>Använda &kmail;: Guiden för eliminering av virus</link
+> om du vill använda eliminering av virus. </para>
+  
+  <sect2 id="configure-security-reading">
+    <title
+>Läsning</title>
+    
+    <screenshot>
+    <screeninfo
+>Säkerhet Läsning</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Säkerhet Läsning</phrase>
+        </textobject>
+        <caption>
+          <para
+>Fliken Säkerhet (Läsning)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+    
+    <para
+>Under den här fliken kan du anpassa säkerhetsalternativ som påverkar hur du läser brev.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>Föredra HTML före oformaterad text</guilabel
+></term>
+	  <listitem>
+            <para
+>Normalt visar &kmail; &HTML;-brev med vanlig text. OM du föredrar att automatiskt visa brev med &HTML;-formatering och layout automatiskt, markera detta alternativ. Vi rekommenderar dock att lämna alternativet avstängt, eftersom säkerhetsproblem med &HTML; kan visa sig. </para>
+            <para
+>Du kan ändå enkelt visa e-post med &HTML;-format genom att klicka på raden som växlar mellan enkelt brev och HTML-brev till vänster i förhandsgranskningsrutan. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Tillåt brev att ladda externa referenser från Internet</guilabel
+></term>
+	  <listitem>
+            <para
+>Om markerat, kan &kmail; läsa in externa bilder, stilmallar etc. från Internet när du visar ett &HTML;-brev. Vi rekommenderar starkt att du lämnar det här alternativet avstängt (även om det inte har någon effekt tills du aktiverar &HTML;). </para>
+            <para
+>Genom att lägga till externa referenser i sina brev, kan personer som skickar skräpbrev upptäcka när du har tittat på deras brev, var du befinner dig, och mycket annan information som loggas på webbservrar. Observera att det här alternativet inte har någon effekt på &Java; eller Javaskript eftersom de inte stöds alls i &kmail;. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>Informerar om brevet som läses är ett misstänkt e-postbedrägeri</guilabel
+></term>
+      <listitem>
+            <para
+>Eftersom e-post har blivit mer populärt, har bedrägerier spritt sig. E-postbedrägerier kan omfatta brev som verkar som om de kom från legitima företag, men i själva verket har länkar till illvilliga webbplatser som begär din personliga information. Det kan leda till identitetsstöld eller värre. Normalt analyserar &kmail; brev efter vanliga bedrägerier, och informerar dig om brevet är ett misstänkt bedrägeri. Vi rekommenderas starkt att behålla funktionen aktiverad. Om du vill inaktivera dessa varningar, avmarkera <guilabel
+>Informerar om brevet som läses är ett misstänkt e-postbedrägeri</guilabel
+>. </para>
+            <para
+>Om legitima brev flaggas (t.ex. från pålitliga vänner), kan du lägga till deras e-postadress i <guilabel
+>Vitlista:</guilabel
+> genom att klicka på knappen <guibutton
+>Lägg till...</guibutton
+> och skriva in en adressen i dialogrutan som dyker upp. Observera att för närvarande kan bara fullständiga e-postadresser vitlistas. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Kontrollera webbadress med Google nätfiskesystem</guilabel
+></term>
+          <listitem>
+            <para
+>Markera alternativet för att tvinga &kmail; att konsultera Googles databas över misstänkta bedrägeriwebbplatser när webbadresser är inbäddade i ett brev, och att varna dig så fort en träff hittas. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Sök igenom e-post för att spåra webbadresser</guilabel
+></term>
+          <listitem>
+            <para
+>Normalt kontrollerar &kmail; automatiskt webbadresser inbäddade i &HTML;-brev, och varnar dig om något av dem verkar försöka följa dig. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Försök avkoda krypterade brev när de visas</guilabel
+></term>
+          <listitem>
+            <para
+>Normalt försöker &kmail; automatiskt avkoda krypterade brev när du tittar på dem. Om du föredrar att göra det manuellt, avmarkera alternativet. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+	      <term
+><guilabel
+>Importera automatiskt nycklar och certifikat</guilabel
+></term>
+	      <listitem>
+	        <para
+>Om markerad, importerar &kmail; automatiskt alla bilagor som innehåller OpenPGP-nycklar i din lokala nyckelring, och alla bilagor som innehåller SMIME-nycklar i din lokala nyckellåda. </para>
+	        <note>
+	          <para
+>Att verifiera &smime;-signaturer omfattar alltid att importera certifikaten som ingår. Alternativet påverkar inte det. Det har heller ingenting att göra med &gpg;:s funktion <option
+>auto-key-retrieve</option
+>, där &gpg; försöker importera okända nycklar från en nyckelserver. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>Brevhanteringsbekräftelser</title>
+        <screenshot>
+          <screeninfo
+>Säkerhet Brevhanteringsbekräftelser</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>Säkerhet Brevhanteringsbekräftelser</phrase>
+              </textobject>
+              <caption>
+                <para
+>Fliken Säkerhet (Brevhanteringsbekräftelser)</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>Brevhanteringsbekräftelser</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>Brevhanteringsbekräftelser är en generalisering av vad som vanligen kallas <quote
+>läsbekräftelse</quote
+>. Brevets författare begär att en hanteringsbekräftelse skickas, och mottagarens e-postprogram skapar ett svar som kan användas av brevets författare för att få reda på vad som hände med brevet. Vanliga typer av hanteringsbekräftelse omfattar <quote
+>visat</quote
+> (dvs. läst), <quote
+>borttaget</quote
+> och <quote
+>vidareskickat</quote
+> (dvs. vidarebefordrat). </para>
+	        <para
+>Följande alternativ (listade som <guilabel
+>Sändningsprincip</guilabel
+>) är tillgängliga för att styra <emphasis
+>när</emphasis
+> &kmail; skickar brevhanteringsbekräftelser. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>Ignorera</guilabel
+> (rekommenderas) </term>
+		    <listitem>
+		      <para
+>Ignorerar eventuell begäran om hanteringsbekräftelser. Inga brevhanteringsbekräftelser skickas någonsin automatiskt. </para>
+		    </listitem>
+          </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Fråga</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Svarar på en begäran bara efter att ha frågat användaren om lov. På detta sätt kan du skicka brevhanteringsbekräftelser för valda brev medan du nekar eller ignorerar dem för andra. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Neka</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Skickar alltid underrättelsen <quote
+>nekad</quote
+>. Det är bara <quote
+>något</quote
+> bättre än att alltid skicka brevhanteringsbekräftelser. Författaren får ändå redan på att brevet har åtgärdats, men kan bara inte avgöra om det togs bort eller lästes etc. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Skicka alltid</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Skickar alltid begärd hanteringsbekräftelse. Det betyder att brevets författare får reda på när brevet åtgärdades, och dessutom vad som hände med det (visades, togs bort, etc.). Det här alternativet avråds starkt från, men eftersom det är vettigt när integritet inte spelar någon roll, t.ex. i hantering av kundrelationer, är det tillgängligt. </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Om du är osäker, experimentera ett tag med <guilabel
+>Fråga</guilabel
+>. Om du sedan finner frågorna från &kmail; irriterande, byt till <guilabel
+>Ignorera</guilabel
+>. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+	    <para
+>Följande alternativ (som listas som <guilabel
+>Citera originalbrevet</guilabel
+>) är tillgängliga för att styra <emphasis
+>hur mycket</emphasis
+> av originalbrevet som &kmail; skickar tillbaka med brevhanteringsbekräftelser. </para>
+        
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Ingenting</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Inga delar av brevet annat än brevidentifikationen och ursprunglig mottagare som krävs inkluderas i svaret med brevhanteringsbekräftelsen. Det bevarar tillräckligt med information för att avsändaren unikt ska kunna identifiera brevet som brevhanteringsbekräftelsen skapades för. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Hela brevet</guilabel>
+            </term>
+            <listitem>
+              <para
+>Bifogar hela brevet till brevhanteringsbekräftelsen. Det är oftast onödigt mycket. Det lägger inte till någon värdefull information som inte enbart kan härledas från brevhuvuden, men vissa insisterar ibland på det, eftersom det är mycket lättare för människor att koppla ihop brevets innehåll (och inte bara huvuden) med det de tidigare skickade. </para>
+            </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Bara huvuden</guilabel>
+            </term>
+            <listitem>
+              <para
+>Bifogar bara huvuden till brevhanteringsbekräftelsen. Det är oftast tillräckligt för att både människor (enligt rubriken) och datorer (enligt brevidentifikation) enkelt kan koppla ihop brevhanteringsbekräftelsen och det ursprungliga brevet. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Om osäker, lämna alternativet inställt till förvalt värde (ingenting). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Skicka inte brevhanteringsbekräftelser som svar på krypterade brev</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Alternativet undertrycker att skicka brevhanteringsbekräftelser om brevet är krypterat (helt eller delvis). Det förhindrar försök att använda &kmail;s brevhanteringsbekräftelser som ett <emphasis
+>orakel</emphasis
+> för att avgöra om du kunde avkoda brevet eller inte. </para>
+	    <para
+>Egentligen behövs inte alternativet, eftersom &kmail; skickar brevhanteringsbekräftelser vare sig brevet kunde avkodas med lyckat resultat eller inte (begäran om hanteringsbekräftelse finns i den okrypterade delen av brevet), men det ger den säkerhetsmedvetna användaren alternativet att antingen alltid skicka dem på begäran (alternativet inte markerat) eller aldrig (alternativet markerat). </para>
+	    <para
+>Om osäker, lämna alternativet markerat (förvalt värde). </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Brevskrivning</title>
+        <screenshot>
+        <screeninfo
+>Säkerhet Brevskrivning</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Säkerhet Brevskrivning</phrase>
+            </textobject>
+            <caption>
+              <para
+>Fliken Säkerhet (Brevskrivning)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+      <para
+>Under den här fliken kan du anpassa säkerhetsrelaterade alternativ för brevskrivning. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Signera automatiskt brev</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, ställs <xref linkend="composer-options-sign-message"/> i brevfönstret normalt in till <emphasis
+>på</emphasis
+>. </para>
+	    <para
+>Du kan dock fortfarande sätta på eller stänga av det för varje enskilt brev. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>När brev krypteras, kryptera också till certifikatet för min egen identitet</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, krypteras också alla brev som är krypterade till mottagarna till dig själv. </para>
+	    <warning>
+	      <para
+>Om du avmarkerar alternativet, kanske du inte längre kan avkoda breven som du skrivit själv och krypterat till andra. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Spara skickade brev krypterade</guilabel>
+	      <footnote>
+	      <para
+>Det här alternativet aktiverar ett sätt att använda brevkryptering som ibland (missvisande) kallas kryptering <quote
+>enbart för överföring</quote
+>. Med det här sättet tas brevets kryptering bort så fort det har nått sin destination. Krypteringen finns bara medan brevet är på väg. </para>
+	      <para
+>&kmail; stöder detta på ett halvhjärtat sätt, eftersom en sådan funktion ska läggas på <emphasis
+>e-postservern</emphasis
+> (<acronym
+>MTA</acronym
+>), inte på <emphasis
+>e-postklienten</emphasis
+> (<acronym
+>MUA</acronym
+>). Därför kan framtida versioner av &kmail; sluta stöda alternativet. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, lagras brev i korgen <guilabel
+>Skickade brev</guilabel
+> precis som du skickade dem (dvs. om de var krypterade lagras de också på samma sätt). </para>
+	    <para
+>Om inte markerad, lagras brev <emphasis
+>alltid</emphasis
+> okrypterade i katalogen <guilabel
+>Skickade brev</guilabel
+>, även om de skickas krypterade. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Visa alltid krypteringsnycklarna för godkännande</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, visas en dialogruta som anger krypteringsnycklarna som kommer att användas för varje mottagare varje gång du krypterar ett brev. Därefter kan du granska valet av nycklar, ändra dem och godkänna eller avbryta krypteringsåtgärden. Vi rekommenderar att du behåller alternativet markerat, eftersom det gör krypteringsprocessen synligare. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Kryptera automatiskt breven om möjligt</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Kallas också <quote
+>opportunistisk kryptering</quote
+>. Om markerad, försöker &kmail; passa ihop mottagare med (OpenPGP eller SMIME) nycklar även om du <emphasis
+>inte</emphasis
+> specifikt begärde kryptering. Om användbara nycklar hittas för alla mottagare, frågar &kmail; om du vill kryptera brevet eller inte. </para>
+	    <para
+>Du rekommenderas starkt att aktivera det, eftersom det gör det verkligt enkelt att använda kryptering. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Signera eller kryptera aldrig när du sparar som utkast</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, försöker inte &kmail; signera och/eller kryptera brev som bara sparas i korgen <guilabel
+>Utkast</guilabel
+>. Det är bekvämare, och ger inte någon större säkerhetsförlust, under förutsättning att utkastkorgen är säker. &IMAP;-användare kanske vill stänga av alternativet, om korgen <guilabel
+>Utkast</guilabel
+> finns på servern. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Diverse</title>
+        <screenshot>
+        <screeninfo
+>Säkerhet Diverse Automatisk korrigering</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Säkerhet Diverse</phrase>
+            </textobject>
+            <caption>
+              <para
+>Fliken Säkerhet (Diverse)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+
+      <para
+>Under den här fliken kan du stänga av eller sätta på varningar som är relaterade till säkerhet. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Varna vid försök att skicka osignerade brev</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, visar &kmail; en varning om ett brev skulle skickas utan digital signatur av någon anledning. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Varna vid försök att skicka okrypterade brev</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, visar &kmail; en varning om ett brev skulle skickas utan att vara krypterat av någon anledning. </para>
+	    <note>
+	      <para
+>Även om det är vanligt att signera alla utgående brev, är det inte vanligt att kryptera dem. Så om inte ditt företag har som policy att aldrig skicka några okrypterade brev, kan det vara en god idé att låta alternativet vara avstängt och lita på <link linkend="configure-security-composing-opportunistic-encryption"
+> opportunistisk kryptering</link
+> för att uppmärksamma dig när du <emphasis
+>skulle kunna</emphasis
+> skicka krypterade brev, men inte begärde det. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Varna om certifikat eller nycklar snart går ut</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerad, varnar &kmail; när ett SMIME-certifikat eller OpenPGP-nyckel som används snart kommer att gå ut. </para>
+	    <para
+>Tidsperioden då en varning innan nyckel eller certifikat går ut ges, kan då ställas in separat för signerings- och krypteringsnycklar, samt (när det gäller SMIME) för slutanvändarcertifikat, mellanliggande certifikat från certifikatutfärdare och rotcertifikat. </para>
+	  </listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	  <term>
+	    <guibutton
+>GnuPG-inställningar ...</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>Klicka på knappen för att visa en omfattande dialogruta som ställer in interaktioner mellan &kmail; och &gpg;, programmet Gnu Privacy Guard. &gpg; är för komplext för att dokumentera här. För detaljerad information hänvisas till <ulink url="https://www.gnupg.org/docs.html#guides"
+>The &GNU; Privacy Handbook</ulink
+>. Om du inte är en kryptografiexpert, bör du troligtvis acceptera de förvalda inställningarna här. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Aktivera alla varningar med &quot;Fråga inte igen&quot;</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Förutom de huvudsakliga varningarna som beskrivs ovan, finns det många varnings- och informationsmeddelanden, som vart och ett innehåller ett alternativ för att inte visa dem igen. Om du skulle vilja aktivera dessa meddelanden igen efter att ha inaktiverat dem, kan du åstadkomma det genom att klicka på den här knappen. <footnote
+> <para
+>Det aktiverar <emphasis
+>alla</emphasis
+> sådana varningar igen i &kmail;. Det är inte särskilt vettigt att tillåta finkornigare val av vilka varningar som ska visas, eftersom du bara kan markera alternativet för att inte visa dem igen nästa gång de dyker upp. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>&smime;-validering</title>
+        <screenshot>
+        <screeninfo
+>Säkerhet (&smime;-validering)</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Säkerhet (&smime;-validering)</phrase>
+            </textobject>
+            <caption>
+              <para
+>Fliken Säkerhet (&smime;-validering)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>Den här fliken innehåller utvalda alternativ från &gpgsm;:s <ulink url="https://linux.die.net/man/1/gpgsm"
+>dynamiska dialogruta för bakgrundsprogram</ulink
+>. Se &gpgsm;:s handbok för en mer detaljerad beskrivning av alternativen. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Validera certifikat med CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om markerat, valideras &smime;-certifikat med certifikatåterkallningslistor (<acronym
+>CRL:er</acronym
+>). Det är förvalt inställningsalternativ. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Direktvalidera certifikat (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om det här alternativet är markerat, valideras SMIME-certifikat direkt med Online Certificates Status Protocol (<acronym
+>OCSP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>Webbadress för OCSP-besvarare:</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Skriv in adressen till servern för direktvalidering av certifikat. Webbadressen börjar oftast med <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Signatur för OCSP-besvarare:</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Välj eller ändra och skriv in SMIME-nyckeln som ska användas. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Ignorera tjänstwebbadress för certifikat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Markera det här alternativet för att hoppa över direktvalidering med OCSP. Alternativet kräver <emphasis
+>dirmngr 0.9.0 eller senare</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Kontrollera inte certifikatpolicy</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Normalt använder <guilabel
+>GnuPG</guilabel
+> filen <filename
+>~/.gnupg/policies.txt</filename
+> för att kontrollera om en certifikatpolicy tillåts. Om alternativet är markerat, kontrolleras inte någon sådan policy. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>Konsultera aldrig en CRL</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om det här alternativet är markerat, används certifikatåterkallningslistor aldrig för att validera SMIME certifikat. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Hämta saknade utgivarcertifikat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Markera det här alternativet om du vill att saknade utgivarcertifikat ska hämtas om nödvändigt. Detta gäller båda valideringsmetoderna, <acronym
+>CRL</acronym
+> och <acronym
+>OCSP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>Utför inte någon &HTTP;-begäran</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Inaktiverar användning av &HTTP; för SMIME helt och hållet. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>Ignorera &HTTP; CRL-distributionsställe för certifikat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Vid sökning efter platsen för en CRL, innehåller certifikatet <quote
+>som ska testas</quote
+> oftast poster med så kallade CRL-distributionsställen (<acronym
+>DS</acronym
+>) vilka är webbadresser som beskriver sättet att komma åt webbadressen. Den första <acronym
+>DS</acronym
+>-posten som hittas används. Med det här alternativet ignoreras alla poster som använder &HTTP;-metoden vid sökning efter en lämplig <acronym
+>DS</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>Använd systemets &HTTP;-proxy</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Om det här alternativet markeras, används värdet på &HTTP;-proxyn som visas till höger (som kommer från miljövariabeln <varname
+>http_proxy</varname
+>) för varje &HTTP;-begäran. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Använd denna proxy för &HTTP;-begäran</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Skriv in platsen för &HTTP;-proxyn som ska användas för varje &HTTP;-begäran som har med &smime; att göra här. Syntaxen är <quote
+>värddator:port</quote
+>, till exempel <emphasis
+>minproxy.någonstans.se:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>Utför inte någon LDAP-begäran</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Inaktivera användning av LDAP för SMIME helt och hållet. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>Ignorera LDAP CRL-distributionsställe för certifikat</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Vid sökning efter platsen för en CRL, innehåller certifikatet <quote
+>som ska testas</quote
+> oftast poster med så kallade CRL-distributionsställen (<acronym
+>DS</acronym
+>) vilka är webbadresser som beskriver sättet att komma åt webbadressen. Den första <acronym
+>DS</acronym
+>-posten som hittas används. Med det här alternativet ignoreras alla poster som använder LDAP-metoden vid sökning efter en lämplig <acronym
+>DS</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Huvudvärddator för LDAP-begäran</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Att skriva in en <acronym
+>LDAP</acronym
+>-server här gör att varje <acronym
+>LDAP</acronym
+>-begäran först går till denna server. Mer exakt överskrider inställningen värddator och port som anges i <acronym
+>LDAP</acronym
+>-webbadressen, och används också om värddator och port har utelämnats från adressen. Andra <acronym
+>LDAP</acronym
+>-servrar används bara om anslutningen till <emphasis
+>proxyn</emphasis
+> misslyckas. Syntaxen är <acronym
+>VÄRDDATOR</acronym
+> eller <acronym
+>VÄRDDATOR:PORT</acronym
+>. Om <acronym
+>PORT</acronym
+> utelämnas, används <quote
+>port 389</quote
+> (den vanliga <acronym
+>LDAP</acronym
+>-porten). </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Sidan Diverse</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>Korgar</title>
+    <screenshot>
+      <screeninfo
+>Diverse Korgar</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverse Korgar</phrase>
+          </textobject>
+          <caption>
+            <para
+>Fliken Diverse (Korgar)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>Undanta viktiga brev från att utgå</guilabel
+></term>
+      <listitem>
+        <para
+>Aktivera alternativet om viktiga brev aldrig ska tas bort automatiskt. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>Vid försök att hitta olästa brev</guilabel
+></term>
+      <listitem>
+        <para
+>Alternativet bestämmer vad som händer om du trycker på ett av genvägarna för att gå till nästa eller föregående olästa brev (t.ex. <keycap
+>Mellanslag</keycap
+>). Om du ber &kmail; för att gå till nästa olästa brev och det inte finns något oläst brev under brevet som för närvarande är markerat, händer följande. <itemizedlist>
+              <listitem>
+                <para
+>Om <guilabel
+>Upprepa inte</guilabel
+> är valt händer ingenting. </para>
+              </listitem>
+              <listitem>
+                <para
+>Om <guilabel
+>Upprepa i aktuell korg</guilabel
+> är markerat söker &kmail; från början i den aktuella korgen efter ett oläst brev. Om inget hittas händer ingenting. </para>
+              </listitem>
+              <listitem>
+                <para
+>Om <guilabel
+>Upprepa i alla korgar</guilabel
+> är markerat söker &kmail; först i den aktuella korgen för ett oläst brev. Om inget hittas söker &kmail; i nästa korg som innehåller olästa brev. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>När en korg öppnas</guilabel
+></term>
+      <listitem>
+        <para
+>Alternativet bestämmer vad som händer när en korg öppnas. <itemizedlist>
+              <listitem>
+                <para
+>Om <guilabel
+>Gå till första olästa brev</guilabel
+> är valt, markerar &kmail; det första brevet markerat som oläst som hittas. </para>
+              </listitem>
+              <listitem>
+                <para
+>Om <guilabel
+>Gå till senast markerade brev</guilabel
+> är valt, markerar &kmail; brevet som var markerat när korgen senast öppnades. </para>
+              </listitem>
+              <listitem>
+                <para
+>Om <guilabel
+>Gå till senaste brev</guilabel
+> är valt, markerar &kmail; det nyaste brevet. </para>
+              </listitem>
+              <listitem>
+                <para
+>Om <guilabel
+>Gå till äldsta brev</guilabel
+> är valt, markerar &kmail; det äldsta brevet. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Markera aktuellt brev som läst efter</guilabel
+></term>
+      <listitem>
+        <para
+>När du väljer ett <guilabel
+>nytt</guilabel
+> eller <guilabel
+>oläst</guilabel
+> brev, ändrar &kmail; brevets status till <guilabel
+>läst</guilabel
+>, efter så många sekunder. Om du stänger av alternativet, behåller brev sin status <guilabel
+>nytt</guilabel
+> eller <guilabel
+>oläst</guilabel
+> tills du justerar det manuellt (via menyn <guilabel
+>Korg</guilabel
+>). </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Fråga efter åtgärd när brev har dragits till en annan korg</guilabel
+></term>
+      <listitem>
+        <para
+>När du drar ett brev till en annan korg, visas en liten meny som frågar om du vill flytta eller kopiera brevet. Om du stänger av det här alternativet, så flyttas brevet omedelbart, utan att menyn visas. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>Öppna den här korgen vid start</guilabel
+></term>
+      <listitem>
+        <para
+>Här kan du ange korgen som ska väljas när du startar &kmail;. Om du bara använder &IMAP;-korgar, kanske du vill ställa in den till din &IMAP;-inkorg. Om du gör det kan du dra ihop de lokala korgarna i korglistan, så förblir de ihopdragna när &kmail; startar. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Töm lokal papperskorg när programmet avslutas</guilabel
+></term>
+      <listitem>
+        <para
+>Papperskorgen rensas på brev när du avslutar &kmail; om det här alternativet är valt. </para>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+      <term
+><guilabel
+>Tillåt att brev tas bort utan bekräftelse</guilabel
+></term>
+      <listitem>
+        <para
+>&kmail;s standardbeteende är att fråga efter bekräftelse när ett brev tas bort. Markera alternativet om du vill hoppa över det verifieringssteget. (Observera att funktionen <guilabel
+>Ta bort</guilabel
+> inte är tillgänglig från &kmail;s menyer. Men du kan lägga till knappen <guibutton
+>Ta bort</guibutton
+> i verktygsraden via dialogrutan <menuchoice
+> <guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa verktygsrader...</guimenuitem
+></menuchoice
+>). </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>Inbjudningar</title>
+    <screenshot>
+      <screeninfo
+>Diverse Inbjudningar</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverse Inbjudningar</phrase>
+          </textobject>
+          <caption>
+            <para
+>Fliken Diverse (Inbjudningar)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Behandla Från:/Till:-huvuden i svar på inbjudningar</guilabel
+></term>
+        <listitem>
+          <para
+>Aktivera det här alternativet för att få <application
+>&Microsoft; Outlook</application
+> att förstå ditt svar på en inbjudning. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skicka inbjudan i brevets text</guilabel
+></term>
+        <listitem>
+          <para
+>Inbjudningar brukar skickas som bilagor till ett brev. Genom att aktivera det här alternativet, skickas inbjudningar i brevets text. Det är nödvändigt när inbjudningar och svar skickas till <application
+>&Microsoft; Outlook</application
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Namngivning av inbjudningar som fungerar med Exchange</guilabel
+></term>
+        <listitem>
+          <para
+><application
+>&Microsoft; Outlook</application
+> har problem att förstå e-post från grupprogram som följer standard, vid användning tillsammans med en &Microsoft; Exchange server. Aktivera det här alternativet för att skicka grupprograminbjudningar på ett format som &Microsoft; Exchange kan avkoda. Inbjudningen skickas som en bilaga kallad <filename
+>ical.ics</filename
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+      
+      <varlistentry>
+        <term
+><guilabel
+>Ta bort inbjudningsbrev efter svaret till dem har skickats</guilabel
+></term>
+        <listitem>
+          <para
+>När det här alternativet är markerat, flyttas mottagna inbjudningsbrev som har besvarats till papperskorgen, så fort svaret har skickats. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>Utskrift</title>
+    <screenshot>
+      <screeninfo
+>Diverse Utskrift</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverse Utskrift</phrase>
+          </textobject>
+          <caption>
+            <para
+>Fliken Diverse (Utskrift)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Den här dialogrutan låter dig finjustera sättet som funktionen <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skriv ut</guimenuitem
+></menuchoice
+> fungerar. </para
+> 
+    
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Skriv bara ut markerad text</guilabel
+></term>
+        <listitem>
+          <para
+>Aktivera alternativet för att tillåta utskrift av bara markerade delar av ett brev. Det förvalda värdet inaktiverar funktionen, så hela brevet skrivs normalt ut. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Följ inställningar av expandera och komprimera citationstecken</guilabel
+></term>
+        <listitem>
+          <para
+>Alternativet är avsett för att interagera med funktionen <guilabel
+>Reducera teckenstorlek för citerad text</guilabel
+> under fliken <link linkend="configure-appearance-general"
+>Utseende, Allmänt</link
+>, men det fungerar för närvarande inte korrekt. Med andra ord, finns det ett fel. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skriv ut bakgrundsfärg och bilder</guilabel
+></term>
+        <listitem>
+          <para
+>Liksom föregående alternativ, finns ett fel här, så &kmail; skriver alltid ut bilder, oberoende av hur alternativet är inställt. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Visa alltid detaljinformation om kryptering och signatur</guilabel
+></term>
+        <listitem>
+          <para
+>Aktivera alternativet för att få &kmail; att skriva ut krypteringsinformaton för krypterade och/eller digitalt signerade brev. </para>
+        </listitem>
+      </varlistentry>
+      
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>Sidan Insticksprogram</title>
+    
+    <para
+>&kmail; innehåller ett stort antal specialfunktioner som kanske kan vara användbara för vissa användare. Du kan välja en eller flera av specialfunktionerna genom att välja den eller dem på inställningssidan "Insticksprogram". Eller, om du inte vill ha eller behöver en viss funktion, kan du spara tid och lagringsutrymme genom att inaktivera motsvarande insticksmodul. </para>
+    
+    <para
+>I många Linux-distributioner är de flesta insticksprogrammen inte inkluderade i det grundläggande &kmail;-paketet. För att få fullständig funktionalitet med insticksprogram, säkerställ att du installerar paketet som heter "kdepim-addons" (eller något liknande). </para>
+    
+    <para
+>Du kan få en grov idé om vad ett visst insticksprogram gör genom att helt enkelt markera insticksprogrammets namn på &kmail;s inställningssida. En kortfattad beskrivning av insticksprogrammets funktion dyker då upp på höger sida av dialogrutan. </para>
+    
+    <para
+>De olika insticksprogrammen som för närvarande är tillgängliga i &kmail; (2021) listas nedan. Observera att uppsättningen "standardinsticksprogram" är baserad på versionen av &kmail; för openSUSE (5.14.2) använd som referens för den här versionen av dokumentationen. De verkliga standardvärdena på ditt system kan vara olika, de beror på distributionen. </para>
+    
+    <para
+>Eftersom ny funktionalitet läggs till då och då, kan den här listan bli längre medan tiden går. Det finns två allmänna regler som styr insticksprogramstrukturen som du kan räkna med, även om det speciella insticksprogrammet som du stöter på inte listas nedan. </para>
+    
+    <para
+>1. Om insticksprogrammet har inställningsbara variabler, kan du öppna inställningsdialogrutan för insticksprogrammet genom att klicka på knappen <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> som visas intill insticksprogrammets namn. </para>
+    
+    <para
+>2. Så snart ett insticksprogram aktiveras eller inaktiveras, måste &kmail; startas om för att önskad(e) ändring(ar) ska få effekt. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>Akonadi och Kontrollera innan sändning</title>
+    <screenshot>
+      <screeninfo
+>Insticksprogrambild nr. ett</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Insticksprogrambild nr. ett</phrase>
+          </textobject>
+          <caption>
+            <para
+>Insticksprogram: Akonadi och Kontrollera innan sändning</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>E-postarkiveringsmodul</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera automatisk arkivering. Se dokumentation av <ulink url="help:/akonadi_archivemail_agent"
+>E-postarkiveringsmodul</ulink
+> för detaljerad information. Du kan också vilja läsa avsnittet <link linkend="archiving"
+>Arkivering</link
+> i handboken. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Påminnelseuppföljningsmodul</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera uppföljningspåminnelser. Se dokumentation av <ulink url="help:/akonadi_archivemail_agent"
+>Påminnelseuppföljningsmodul</ulink
+> för ytterligare information. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Ny brevunderrättelse</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera nya brevunderrättelser. Du kan skräddarsy fälten att visa i det "vanliga" underrättelsemeddelandet. Du kan också välja ljudsignaler (uppläst text, förinspelade ljud), skapa loggfilposter, etc. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skicka senare-modul</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera skicka senare. Se dokumentation av <ulink url="help:/akonadi_sendlater_agent"
+>Skicka senare-modul</ulink
+> för ytterligare information. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Förenad brevlådemodul</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att skapa en uppsättning "förenade" brevlådor. &kmail; skapar automatiskt tre sådana, betecknade Inkorg, Utkast, och Skickat. Om du har definierat både en lokal inkorg och en eller flera &IMAP;-inkorgar, visar &kmail; alla diverse inkorgarna som en konsoliderad virtuell inkorg. Du kan använda inställningsdialogrutan för att skapa ytterligare virtuella brevkorgar, och skräddarsy var och en som du vill. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Lägg automatiskt till kontakter</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till nya adresser i en av dina adressböcker när du skickar e-post till en ny kontakt. Använd inställningsdialogrutan för att koppla adressböcker till identiteter. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Kontrollera innan sändning</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att verkställa några regler innan ett brev faktiskt skickas. Insticksprogrammet är normalt aktiverat, och underrättar dig automatiskt när du försöker skicka mer än en kopia av brevet till samma person. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Bekräfta adress</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera adresskontroll för utgående brev. Använd inställningsdialogrutan för att definiera en vitlista och/eller svartlista för varje definierad identitet. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-composer">
+    <title
+>Brevfönster, Editor</title>
+    <screenshot>
+      <screeninfo
+>Insticksprogrambild nr. två</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Insticksprogrambild nr. två</phrase>
+          </textobject>
+          <caption>
+            <para
+>Brevfönster och Editor</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Öppna externt brevfönster</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tvinga brevfönstret att öppna en extern texteditor när det öppnas. Använd insticksprogrammets inställningsdialogruta för att ange editorn som ska anropas. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Automatisk korrigering</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Korrigera text automatiskt &gt;</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt inaktiverat, och håller uppenbarligen fortfarande på att konstrueras. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Ändra skiftläge</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Ändra skiftläge &gt;</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Infoga brev</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Infoga brev...</guimenuitem
+></menuchoice
+> i brevfönstret. Det låter dig infoga en vald e-postadress från en adressbok i brevtexten med ett enkelt peka och klicka med vänster musknapp. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Infoga icke-radbrytande mellanslag</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Infoga icke-radbrytande mellanslag</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Infoga kort webbadress</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till lite grand icke funktionell kod. Insticksprogrammet håller fortfarande på att konstrueras, och är också normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Infoga specialtecken</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Infoga specialtecken...</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Snabbtext</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Textsnuttar</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Dela text</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Dela brevtext &gt;</guimenuitem
+></menuchoice
+> i brevfönstret. Det finns fyra alternativ: Nextcloud, Pastebin, Blåtand och E-post (visar ett andra brevfönster). Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Zooma text</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Zooma... &gt;</guimenuitem
+></menuchoice
+> i brevfönstret. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+        
+    <sect2 id="configure-plugins-grammar">
+    <title
+>Grammatikkontroll, Huvudstilar</title>
+    <screenshot>
+      <screeninfo
+>Insticksprogrambild nr. tre</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Insticksprogrambild nr. tre</phrase>
+          </textobject>
+          <caption>
+            <para
+>Grammatikkontroll och Huvudstilar</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Fransk grammatikkontroll</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till alternativet <menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Grammatikkontroll (Grammalecte)</guimenuitem
+></menuchoice
+> i brevfönstret. Alternativet är speciellt, bara för det franska språket. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Grammatikkontroll (LanguageTool)</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till alternativet <menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Grammatikkontroll (LanguageTool)</guimenuitem
+></menuchoice
+> i brevfönstret. Det är ett verktyg med flera funktioner, med stöd för grammatikkontroll i många olika språk. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->  
+    
+    <para
+>Följande sex insticksprogram låter dig bestämma vilka rubrikstilar som kan väljas i menyn <guimenu
+>Visa</guimenu
+>. Se <link linkend="the-preview-pane-headers"
+>beskrivningen av de olika sidhuvudvyerna</link
+> i kapitlet "Använda &kmail;" för mer information. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Kortfattad rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "kortfattade" rubriker. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Normal Grantlee rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "Kmail 5.2" rubriker. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Snygg rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "snygga" rubriker. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Grantlee rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "gulliga" rubriker. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Lång rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "långa" rubriker. Insticksprogrammet är normalt inaktiverat. (Långa rubriker liknar vanliga rubriker, men visar en del mindre vanlig rubrikinformation, såsom "Svara till", när sådana rubriker finns.) </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vanlig rubrikstil</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera visning av "vanliga" rubriker. Insticksprogrammet är normalt inaktiverat. (Vanliga rubriker är likadana som snygga rubriker, men utan den skuggade bakgrunden.) </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-misc">
+    <title
+>Brevvisning, Diverse</title>
+    <screenshot>
+      <screeninfo
+>Insticksprogrambild nr. fyra</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Insticksprogrambild nr. fyra</phrase>
+          </textobject>
+          <caption>
+            <para
+>Brevvisning och Diverse</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Följande sex insticksprogram tillhandahåller alla funktioner som bara kan utföras med en knapp i verktygsraden. Använd dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Anpassa verktygsrader... </guimenuitem
+> </menuchoice
+> för att lägga till eller ta bort knapparna i verktygsraden som hör ihop med funktionerna efter du har aktiverat eller inaktiverat ett av insticksprogrammen. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skapa händelse</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tillåta att en kalenderhändelse skapas medan ett brev visas i &kmail;. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skapa anteckning</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tillåta att en anteckning skapas i &kontact; medan ett brev visas i &kmail;. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Skapa uppgift</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tillåta att en uppgift skapas i &korganizer; medan ett brev visas i &kmail;. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Expandera webbadress</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera funktionen "Expandera webbadress". Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Externt skript</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tillåta att ett körbart kommando utförs från verktygsraden. Använd tillhörande inställningsdialogruta för att välja det körbara programmet, och ge det ett namn. Namnet du väljer kan senare läggas till på verktygsraden som en knapp, så att du kan utföra skriptet när som helst. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Översättning</guilabel
+></term>
+        <listitem>
+          <para
+><link linkend="using-the-translator"
+>Översättningsfunktionen</link
+> är normalt tillgänglig i brevfönstret. Använd insticksprogrammet (via verktygsraden) för att göra översättning tillgänglig ifönstret för brevförhandsgranskning. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Följande fyra objekt är egentligen inte insticksprogram: de är inbyggda funktioner i &kmail;. Var och en av dem kan ställas in separat, genom att använda knappen <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> som visas intill funktionens namn. Ingen omstart krävs för att de här inställningsvariablerna ska få effekt. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>DKIM-kontroll</guilabel
+></term>
+        <listitem>
+          <para
+>Dialogrutan låter dig hantera behandling av DomainKeys Identified Mail (DKIM). DKIM är ett kryptografiskt protokoll som kan säkerställa att ett visst brev kom från internetdomänen det hävdar att det kommer från. Om avsändaren har ställt in DKIM riktigt och DKIM är aktiverat här, ser du meddelandet "DKIM giltigt" och ibland namnet på den som signerade brevet i statusraden längst ner i fönstret för brevförhandsgranskning. </para>
+          <note
+><para
+>Om du aktiverar alternativet, säkerställ att standardvärdet ("Ingenting") i nummerrutan med beteckningen "Spara lagrad nyckel" ändras till något annat värde. DKIM-kontrollen fungerar inte riktigt om variabeln är inställd till "Ingenting". </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Papperskorgen utgår</guilabel
+></term>
+        <listitem>
+          <para
+>Använd inställningsdialogrutan för att ange utgångskriterier för papperskorgar. Se dokumentationen av <link linkend="folders-properties-expiry"
+>"Korgegenskaper"</link
+> för mer information. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Korginställningar</guilabel
+></term>
+        <listitem>
+          <para
+>Använd inställningsdialogrutan för att ställa in egna korgegenskaper för flera olika korgar på en gång. Du kan välja korgarna som ska ändras från en trädvy av alla korgar till vänster, och välja egenskaper som ska ställas in från flikarna Allmänt, Visa, Mallar och Utgång i dialogrutan <link linkend="folders-properties-window"
+>"Korgegenskaper"</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gravatar</guilabel
+></term>
+        <listitem>
+          <para
+>Använd inställningsdialogrutan för att aktivera eller inaktivera stöd för Gravatar (globalt igenkänd avatar). </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-tools">
+        <title
+>Verktyg</title>
+
+    <screenshot>
+      <screeninfo
+>Insticksprogrambild nr. fem</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Insticksprogrambild nr. fem</phrase>
+          </textobject>
+          <caption>
+            <para
+>Verktyg och webbgränssnitt</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Antiskräppost</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till <link linkend="the-anti-spam-wizard"
+>Antiskräppost</link
+> i menyn <guimenu
+>Verktyg</guimenu
+>. Insticksprogrammet är normalt inaktiverat. Observera att när du väl har installerat programvara för antiskräppost, kan insticksprogrammet stängas av utan problem. Insticksprogrammet är bara nödvändigt för att installera programvara för antiskräppost, inte för att köra den. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Antivirus</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till <link linkend="the-anti-virus-wizard"
+>Antivirus</link
+> i menyn <guimenu
+>Verktyg</guimenu
+>. Insticksprogrammet är normalt inaktiverat. Observera att när du väl har installerat antivirusprogramvara, kan insticksprogrammet stängas av utan problem. Insticksprogrammet är bara nödvändigt för att installera antivirusprogramvara, inte för att köra den. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Expertinsticksprogram</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till funktionen <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Visa brevstruktur Ctrl+Alt+D</guimenuitem
+></menuchoice
+> i fönstret för brevförhandsgranskning. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Logga aktiviteter</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att aktivera funktionen för aktivitetsloggning, som normalt är inaktiverad. Insticksprogrammet lägger till det nya alternativet <guilabel
+>Logga aktiviteter</guilabel
+> i menyn <guilabel
+>Verktyg</guilabel
+>. I huvudsak avsedd för programutvecklare, den vanliga loggfunktionen tillhandahåller inte särskilt mycket information (bara en tidsstämpel och "Ready" för de flesta händelser). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Reklamblockering</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att lägga till filter från <ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+> i &kmail;. Om du väljer att aktivera insticksprogrammet, var beredd på att spendera en hel del tid på att finjustera inställningsfilen för att verkligen få filtren som du verkligen vill ha. Insticksprogrammet är normalt inaktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Do Not Track</guilabel
+></term>
+        <listitem>
+          <para
+>Välj alternativet för att tvinga &kmail; att skicka en "Do Not Track"-begäran till en fjärrserver när ett &HTML;-brev ber om att ladda ner fjärrinnehåll. Effekten av en "Do Not Track"-begäran beror på policyn webbservern som tar emot begäran har antagit. </para>
+          <para
+>Annonsörer har ögon på allting. &HTML;-kodade brev innehåller ofta en 0 x 0- eller 1 x 1-bildpunkters "bild" (dvs. en "spårningsbildpunkt") som i själva verket är en förklädd spårningswebbadress. När &kmail; hämtar bilddata från en webbserver, måste webbadresserna som är inbäddade i brevet användas. Server kan använda information inbäddad i webbadressen för att dra slutsatsen att du har öppnat brevet, etc. </para>
+          <para
+>Att skicka en "Do Not Track"-begäran kan öka din integritet något. Men det enda säkra sättet att undvika spårningsbildpunkter är att aldrig ladda ner fjärrbilder kodade i &HTML;-brev. Insticksprogrammet är normalt aktiverat. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
+    
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Alternativ utan en representation i användargränssnittet</title>
+<para
+>Förutom alternativen som visas i inställningsdialogrutan, kan vissa alternativ bara ställas in direkt i &kmail;s inställningsfil eller via Kiosk. Dessa så kallade <quote
+>dolda</quote
+> inställningsalternativ kan inte ändras via den vanliga inställningsdialogrutan i &kmail;. Det måste göras genom att ändra inställningsfilen med en texteditor eller programmet <command
+>kwriteconfig</command
+>. Inställningsfilen skrivs med formatet [sektionsnamn] och de följande raderna variablerna och deras inställningar. Om du redigerar filen manuellt måste du lägga till [sektionsnamn] innan variabler läggs till. Programmet <command
+>kwriteconfig</command
+> lägger till sektionen åt dig under förutsättning att du använder väljaren <userinput
+>--group</userinput
+>. </para>
+
+<para
+>&kmail;s inställningsfil kallas <filename
+>kmail2rc</filename
+> och finns i din hemkatalog. Platsen kan variera enligt operativsystem eller distribution, men den kan alltid hittas genom att köra kommandot <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+>. Antag att inställningsfilen finns i <filename
+>/sökväg/till/kmail2rc</filename
+> för avsnittets återstod. </para>
+
+<warning
+><para
+>När alternativen ändras, försäkra dig om att först avsluta &kmail; innan inställningsfilen redigeras. Starta bara om &kmail; efter du har gjort <emphasis
+>och sparat</emphasis
+> dina ändringar av inställninsfilen. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Skicka brevhanteringsbekräftelser med en tom avsändarsträng. Vissa servrar kan vara inställda att förkasta sådana brev, så om du upplever problem när brevhanteringsbekräftelser skickas, försäkra dig då om att alternativet är inställt till false. Lägg till en rad i sektionen <quote
+>[MDN]</quote
+> för att aktivera funktionen:</para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>Standardinställningen <quote
+>false</quote
+> bryter strängt taget mot Internet-standarder, men är inställt på så sätt av praktiska skäl, för att undvika att servrar avvisar brevhanteringsbekräftelser som &kmail; skapar eftersom de anses vara skräppost.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>Alternativet låter dig ställa in att programmet stängs helt och hållet, även om en ikon i systembrickan är inställd, vilket normalt skulle göra att programmet fortsatte köra. För att aktivera funktionen, lägg till en rad under sektionen <quote
+>[General]</quote
+> som lyder: </para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>I versioner tidigare än 1.9 sparade &kmail; alla bilagor på hårddisken med skydd inställt till 600, bara läsbar och skrivbar av filens ägare. Som gensvar till användarkommentarer, gjordes detta inställningsbart i &kmail; version 1.9, med standardvärdet ändrat att följa användarkontots inställda umask när filer sparas på hårddisken. För att aktivera funktionen, lägg till en rad under sektionen <quote
+>[General]</quote
+> som lyder: </para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>När det här alternativet är aktiverat kontrollerar &kmail; om det finns ett aktivt frånvarosvar vid varje start, och visar en varning om det är fallet. För att inaktivera funktionen, lägg till en rad i sektionen <quote
+>[OutOfOffice]</quote
+> som lyder: </para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>Ifall du inte vill att användare ska kunna ladda upp sina egna frånvaroskript till servern kan du lägga till en rad i sektionen <quote
+>[OutOfOffice]</quote
+> som lyder: </para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Om du vill tillåta att användare laddar upp sina egna frånvaroskript, men inte vill att de ska kunna ändra domän att reagera på och inställningen av reaktion på skräpbrev, kan du lägga till en rad i sektionen <quote
+>[OutOfOffice]</quote
+> som lyder: </para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>När semesterskript (frånvaroskript) redigeras, kan användaren ange en domän för att begränsa vart sådana svar skickas. För att ladda inställningen med ett standardvärde, lägg till en rad i sektionen <quote
+>[OutOfOffice]</quote
+> som lyder:</para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>OutOfOfficeDomain=min_epostdomän.se</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain myMailDomain.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Normalt skickas inte frånvarosvar för brev markerade som skräppost. För att överskrida det beteendet, lägg till en rad i sektionen [OutOfOffice] som lyder:</para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>Från version 1.9 kan &kmail; visa e-postprogram eller värdet av X-Mailer från brevhuvudet när snygga brevhuvuden används (se menyn <menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Sidhuvuden</guisubmenu
+></menuchoice
+>). För att aktivera funktionen, lägg till en rad under sektionen <quote
+>[Reader]</quote
+> som lyder:</para>
+<itemizedlist>
+<listitem
+><para
+>Inställningsfil:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/sökväg/till/kmail2rc</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

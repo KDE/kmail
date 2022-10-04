@@ -1,0 +1,289 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sairan Kikkarin <sairan@computer.org>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2013-10-16 03:33+0600\n"
+"Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
+"Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, fuzzy, kde-format
+#| msgid "Configure"
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Баптау"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Кейінірек жіберетін агенті"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Кейінірек эл.поштаны жіберетін агенті."
+
+#: sendlaterconfiguredialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Copyright (C) 2013 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Жетілдірушісі"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Сайран Киккарин"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "sairan@computer.org"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Кімге: "
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Тақырыбы"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Қай мағайында жіберу:"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Қайталануы"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Хат идентификаторы"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Күтіп тұрған хат жоқ."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Қазір жіберу"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Өшіру"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Иә"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Жоқ"
+
+#: sendlaterconfigurewidget.cpp:207
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Таңдалғаның өшірмексіз бе? Жалғастыру керек пе?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Өшіру"
+
+#: sendlaterconfigurewidget.cpp:216
+#, fuzzy, kde-format
+#| msgid "Do you want to remove messages as well?"
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Хаттарды да өшірмексіз бе?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+#| msgid "Remove messages"
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Хаттарды өшіру"
+
+#: sendlaterconfigurewidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Өшіру"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, fuzzy, kde-format
+#| msgid "Not message found."
+msgid "Not message found."
+msgstr "Хат табылмады."
+
+#: sendlaterjob.cpp:67
+#, fuzzy, kde-format
+#| msgid "Not message found."
+msgid "No message found."
+msgstr "Хат табылмады."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Хатты алу кездегі қате."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Хат алынбады. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Тасымалдау жасамады"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Хат шын хат емес"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Хат жіберілмеді."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Хат жіберілді"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Қате табылды. Қайта жібермексіз бе?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Қате табылды."
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Өзгерту..."
+
+#~ msgid "Remove items"
+#~ msgstr "Аталымдарды өшіру"
+
+#~ msgid "Remove"
+#~ msgstr "Өшіру"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Кейінірек жіберу"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgid "Send Later"
+#~ msgstr "Кейінірек жіберу"
+
+#~ msgid "Delay"
+#~ msgstr "Кідіріс"
+
+#~ msgid "Days"
+#~ msgstr "Күн"
+
+#~ msgid "Weeks"
+#~ msgstr "Апта"
+
+#~ msgid "Months"
+#~ msgstr "Ай"
+
+#~ msgid "Years"
+#~ msgstr "Жыл"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr "Бүгінгі күннен бұрынғы күнді таңдауға болмайды."
+
+#~ msgid "Send at:"
+#~ msgstr "Жіберетін кезі:"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Қайталау мезгілі:"
+
+#, fuzzy
+#~| msgid "Send Later"
+#~ msgid "SendLater"
+#~ msgstr "Кейінірек жіберу"
+
+#~ msgid "Put in outbox"
+#~ msgstr "Шығысқа салу"
+
+#~ msgid "Recurrence"
+#~ msgstr "Қайталануы"
+
+#~ msgid "Each:"
+#~ msgstr "Әрбір:"
+
+#~ msgid "30 minutes later"
+#~ msgstr "30 минуттан кейін"
+
+#~ msgid "1 hour later"
+#~ msgstr "1 сағаттан кейін"
+
+#~ msgid "2 hours later"
+#~ msgstr "2 сағаттан кейін"
+
+#~ msgid "Send around %1"
+#~ msgstr "%1 мағайында жіберу"
+
+#~ msgid "Send Now"
+#~ msgstr "Қазір жіберу"
+
+#~ msgid "Recursive"
+#~ msgstr "Рекурсивті"
+
+#~ msgid "Date"
+#~ msgstr "Күні"

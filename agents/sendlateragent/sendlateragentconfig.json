@@ -1,0 +1,5 @@
+{
+    "X-Akonadi-PluginType": "AgentConfig",
+    "X-Akonadi-Library": "sendlateragentconfig",
+    "X-Akonadi-AgentConfig-Type": "akonadi_sendlater_agent"
+}

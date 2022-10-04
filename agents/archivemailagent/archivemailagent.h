@@ -1,32 +1,17 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILAGENT_H
-#define ARCHIVEMAILAGENT_H
+#pragma once
 
-#include <AkonadiAgentBase/agentbase.h>
+#include <Akonadi/AgentBase>
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 class QTimer;
 
 class ArchiveMailManager;
-class ArchiveMailInfo;
 
 class ArchiveMailAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
@@ -34,34 +19,28 @@ class ArchiveMailAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::O
 
 public:
     explicit ArchiveMailAgent(const QString &id);
-    ~ArchiveMailAgent();
+    ~ArchiveMailAgent() override;
 
-    void showConfigureDialog(qlonglong windowId = 0);
-    QString printArchiveListInfo();
+    Q_REQUIRED_RESULT QString printArchiveListInfo() const;
 
     void setEnableAgent(bool b);
-    bool enabledAgent() const;
+    Q_REQUIRED_RESULT bool enabledAgent() const;
 
-    QString printCurrentListInfo();
+    Q_REQUIRED_RESULT QString printCurrentListInfo() const;
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 Q_SIGNALS:
-    void archiveNow(ArchiveMailInfo *info);
     void needUpdateConfigDialogBox();
 
 public Q_SLOTS:
-    void configure(WId windowId) Q_DECL_OVERRIDE;
     void reload();
     void pause();
     void resume();
 
 protected:
-    void doSetOnline(bool online) Q_DECL_OVERRIDE;
+    void doSetOnline(bool online) override;
 
 private:
     void mailCollectionRemoved(const Akonadi::Collection &collection);
-    QTimer *mTimer;
-    ArchiveMailManager *mArchiveManager;
+    QTimer *const mTimer;
+    ArchiveMailManager *const mArchiveManager;
 };
-
-#endif /* ARCHIVEMAILAGENT_H */
-

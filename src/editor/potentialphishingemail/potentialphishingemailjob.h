@@ -1,49 +1,37 @@
 /*
-  Copyright (c) 2015-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
-#ifndef POTENTIALPHISHINGEMAILJOB_H
-#define POTENTIALPHISHINGEMAILJOB_H
+#pragma once
 
+#include "kmail_private_export.h"
 #include <QObject>
 #include <QStringList>
 
-class PotentialPhishingEmailJob : public QObject
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailJob : public QObject
 {
     Q_OBJECT
 public:
     explicit PotentialPhishingEmailJob(QObject *parent = nullptr);
-    ~PotentialPhishingEmailJob();
+    ~PotentialPhishingEmailJob() override;
 
     void setEmailWhiteList(const QStringList &emails);
-    void setEmails(const QStringList &emails);
+    void setPotentialPhishingEmails(const QStringList &emails);
 
-    QStringList potentialPhisingEmails() const;
-    bool start();
+    Q_REQUIRED_RESULT QStringList potentialPhisingEmails() const;
+    Q_REQUIRED_RESULT bool start();
+
+    Q_REQUIRED_RESULT QStringList checkEmails() const;
 
 Q_SIGNALS:
     void potentialPhishingEmailsFound(const QStringList &emails);
 
 private:
+    Q_DISABLE_COPY(PotentialPhishingEmailJob)
     QStringList mEmails;
     QStringList mPotentialPhisingEmails;
     QStringList mEmailWhiteList;
 };
-
-#endif // POTENTIALPHISHINGEMAILJOB_H

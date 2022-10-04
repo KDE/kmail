@@ -1,58 +1,44 @@
 /*
-   Copyright (C) 2014-2016 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
-#define CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H
+#pragma once
 
-#include <QObject>
-#include <AkonadiCore/Collection>
+#include "kmail_private_export.h"
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <QDate>
-#include <AkonadiCore/Item>
+#include <QObject>
 
-class CreateFollowupReminderOnExistingMessageJob : public QObject
+class KMAILTESTS_TESTS_EXPORT CreateFollowupReminderOnExistingMessageJob : public QObject
 {
     Q_OBJECT
 public:
     explicit CreateFollowupReminderOnExistingMessageJob(QObject *parent = nullptr);
-    ~CreateFollowupReminderOnExistingMessageJob();
+    ~CreateFollowupReminderOnExistingMessageJob() override;
 
     void start();
 
-    Akonadi::Collection collection() const;
+    Q_REQUIRED_RESULT Akonadi::Collection collection() const;
     void setCollection(const Akonadi::Collection &collection);
 
-    QDate date() const;
-    void setDate(const QDate &date);
+    Q_REQUIRED_RESULT QDate date() const;
+    void setDate(QDate date);
 
-    Akonadi::Item messageItem() const;
+    Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
     void setMessageItem(const Akonadi::Item &messageItem);
 
-    bool canStart() const;
+    Q_REQUIRED_RESULT bool canStart() const;
 
-private Q_SLOTS:
+private:
+    Q_DISABLE_COPY(CreateFollowupReminderOnExistingMessageJob)
     void itemFetchJobDone(KJob *job);
     void slotReminderDone(KJob *job);
-private:
+
     void doStart();
     Akonadi::Collection mCollection;
     Akonadi::Item mMessageItem;
     QDate mDate;
 };
-
-#endif // CREATEFOLLOWUPREMINDERONEXISTINGMESSAGEJOB_H

@@ -1,0 +1,3733 @@
+<chapter id="using-kmail">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Marcus</firstname
+><surname
+>Gama</surname
+><affiliation
+><address
+><email
+>marcus.gama@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>André Marcelo</firstname
+><surname
+>Alvarenga</surname
+><affiliation
+><address
+><email
+>alvarenga@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>14/12/2013</date>
+<releaseinfo
+>(&kde; 4.12)</releaseinfo>
+</chapterinfo>
+
+<title
+>Usando o &kmail;</title>
+
+<sect1 id="the-mail-reader-window">
+<title
+>A janela principal</title>
+
+<para
+>A janela principal é a janela que aparece quando o &kmail; é iniciado. Ela está dividida em três áreas:</para>
+
+<variablelist>
+<varlistentry>
+<term
+>Lista de pastas (à esquerda)</term>
+<listitem>
+  <screenshot>
+<screeninfo
+>Painel de pastas</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Painel de pastas</phrase>
+    </textobject>
+    <caption>
+      <para
+>Painel de pastas</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Esta área contém a lista das suas pastas de mensagens (outros programas de e-mail poderão chamar de caixas de e-mail). Para selecionar uma pasta, basta clicar nela. As mensagens dentro da pasta irão aparecer então na área de Cabeçalhos. A lista de pastas poderá ser mostrada de forma reduzida, que ocupa apenas um pedaço do lado esquerdo da tela, e uma versão longa que ocupa o lado esquerdo todo, mas consegue mostrar mais pastas. Você poderá alternar entre estas duas visões com a opção <guilabel
+>Aparência</guilabel
+>/<guilabel
+>Disposição</guilabel
+> na janela em <menuchoice
+><guimenu
+>Configuração</guimenu
+><guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+>. A seção no topo do painel de pastas contém ligações para as suas pastas favoritas. As pastas podem ser adicionadas aqui através do menu de contexto <guimenuitem
+>Adicionar nas pastas favoritas</guimenuitem
+>, acionado com o &RMB;. Veja também a <link linkend="folders"
+>Seção das pastas</link
+> para mais informações sobre o uso de pastas.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Lista de mensagens (por padrão, no topo direito)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>Lista de mensagens com exibição da mensagem</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="message.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Lista de mensagens e exibição da mensagem</phrase>
+    </textobject>
+    <caption>
+      <para
+>Lista de mensagens e exibição da mensagem</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Esta área lista a informação dos cabeçalhos (o Estado, o Remetente, o Assunto, a Data e outras colunas opcionais como Tamanho, Sinalizadores de Anexo, Importante, etc) para as mensagens da pasta atualmente selecionada. Clicar num cabeçalho irá selecionar essa mensagem e mostrá-la na área de mensagens; você poderá também selecionar mais de uma mensagem se mantiver a tecla &Ctrl; pressionada ao clicar nas mensagens. Altere a exibição da sua lista de mensagens selecionando <menuchoice
+><guimenu
+>Exibir</guimenu
+><guimenuitem
+>Lista de mensagens</guimenuitem
+> <guimenuitem
+>Tema</guimenuitem
+></menuchoice
+>. Aqui você tem várias opções de escolha.Você poderá ordenar as mensagens pela coluna que deseja usar como critério de ordenação; se você clicar na mesma coluna mais de uma vez, a ordem dos itens irá mudar entre ascendente e descendente e alguns critérios alternativos de ordenação ficarão disponíveis (como ordenar por Estado quando você clica no cabeçalho da coluna Assunto). Clicar com o botão <mousebutton
+>direito</mousebutton
+> do mouse na lista do cabeçalho mostra um menu de contexto que permite-lhe mostrar ou ocultar diversas colunas na lista. </para>
+<itemizedlist>
+  <listitem
+><para
+><guilabel
+>Clássico</guilabel
+> Uma linha simples, compatível com versões anteriores e com colunas ordenadas ao clicar sobre elas.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Inteligente</guilabel
+> Um item multilinhas inteligente, com ícones de status e sem colunas de ordenação.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Inteligente com status clicável</guilabel
+> Um item múltiplo inteligente, com multilinhas e ícones de ordenação clicáveis.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Configurar...</guilabel
+> Permite-lhe personalizar o seu próprio tema da lista de mensagens, &eg;, adicionar ou remover colunas a partir da barra de ordenação.</para
+></listitem>
+</itemizedlist>
+<para
+>Se você escolheu um tema com status clicável, você poderá ordenar as mensagens pela coluna que deseja usar como critério de ordenação; se você clicar na mesma coluna mais de uma vez, a ordem dos itens irá mudar entre ascendente e descendente e alguns critérios alternativos de ordenação ficarão disponíveis (como ordenar por Estado quando você clica no cabeçalho da coluna Assunto). Clicar com o botão &RMB; na lista do cabeçalho mostra um menu de contexto que permite-lhe mostrar ou ocultar diversas colunas na lista. Você pode personalizar as colunas visíveis na barra de ordenação; veja mais detalhes em <link linkend="customize-messagelist-theme"
+>Configurar a aparência da lista de mensagens</link
+>. </para>
+</listitem>
+</varlistentry>
+<varlistentry id="using-message-preview-pane">
+<term
+>Área de previsão de mensagens (por padrão, área inferior direita)</term>
+<listitem
+><para
+>Este painel mostra a mensagem que está selecionada. Logo abaixo, você encontrará opções para ajustar a janela de leitura de acordo com suas preferências.</para>
+<para
+>O topo da janela de leitura contém várias opções. Vá para <menuchoice
+><guimenu
+>Exibir</guimenu
+><guisubmenu
+>Cabeçalhos</guisubmenu
+></menuchoice
+> e experimente-os até encontrar um do seu gosto. Seguem-se alguns detalhes dos diversos cabeçalhos:</para>
+<itemizedlist id="using-header-options">
+  <listitem
+><para
+><guilabel
+>Cabeçalhos empresariais</guilabel
+> Um cabeçalho mínimo com o título, os campos De e Para, e um desenho gráfico.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Cabeçalhos bonitos</guilabel
+> Cabeçalho mínimo com uma notificação de status de spam.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Cabeçalhos resumidos</guilabel
+> O título, e os campos De e data entre parênteses.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Cabeçalhos padrão</guilabel
+> Título, e os campos De e Para.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Cabeçalhos longos</guilabel
+> Título, e os campos De e Para.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Todos os cabeçalhos</guilabel
+> Apresenta tudo o que você quer saber sobre o e-mail, incluindo os servidores por onde passou, as análises de vírus/spam, &etc;</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Cabeçalhos personalizados</guilabel
+> Veja em <link linkend="configure-appearance-message-window"
+>configuração da janela de mensagem</link
+> <guilabel
+>Cabeçalhos:</guilabel
+> para configurar os cabeçalhos personalizados que podem ser selecionados.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Exemplo</guilabel
+> Um exemplo de cabeçalho da opção <guilabel
+>Baixar novos temas...</guilabel
+>.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Exemplo bonito</guilabel
+> Um exemplo de cabeçalho bonito da opção <guilabel
+>Baixar novos temas...</guilabel
+>.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Baixar novos temas...</guilabel
+> Permite-lhe baixar temas personalizados, que foram criados por outros usuários do &kmail;.</para
+></listitem>
+</itemizedlist>
+<para
+>Se preferir ver o seu e-mail no formato &HTML; em vez de texto simples (padrão), clique na barra ao lado esquerdo do painel. O texto na barra irá informá-lo em qual modo está. Se esta barra não estiver visível, você pode ativá-la na caixa de diálogo <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+>, onde poderá ir à aba da <guilabel
+>Janela da mensagem</guilabel
+> e selecionar <guilabel
+>Mostrar barra de status &HTML;</guilabel
+>.</para>
+<para
+>Se quiser alterar como os anexos são mostrados nas suas mensagens, vá para <menuchoice
+><guimenu
+>Exibir</guimenu
+><guisubmenu
+>Anexos</guisubmenu
+></menuchoice
+>. Suas opções são as seguintes:</para>
+<itemizedlist id="using-attachment-view-options">
+  <listitem
+><para
+><guimenuitem
+>Como ícones</guimenuitem
+>, todos os anexos aparecem como ícones na parte inferior da mensagem.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Inteligente</guimenuitem
+> irá mostrar os anexos como ícones, a menos que a mensagem sugira que devam ser apresentados de forma incorporada. Você poderá sugerir que determinados anexos apareçam incorporados nas suas próprias mensagens quando selecionar <guilabel
+>Sugerir visualização automática</guilabel
+> na caixa de diálogo de propriedades dos anexos.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Integrado</guimenuitem
+> mostra o conteúdo dos anexos na parte inferior da mensagem. Os anexos que não puderem ser apresentados, &eg;, os arquivos compactados, ainda serão apresentados como ícones.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Ocultar</guimenuitem
+> não mostrará os anexos.</para
+></listitem>
+</itemizedlist>
+<para
+>Para mensagens complexas, você poderá mostrar a estrutura da mensagem se selecionar a opção <menuchoice
+><guimenu
+>Exibir</guimenu
+><guimenuitem
+>Mostrar a estrutura da mensagem</guimenuitem
+></menuchoice
+>, que aparecerá no visualizador da estrutura da mensagem na parte inferior do painel de visualização.</para>
+<para
+>Você poderá percorrer a mensagem página-a-página usando as teclas <keycap
+>Page Up</keycap
+> e <keycap
+>Page Down</keycap
+>, ou linha-a-linha com as teclas de seta <keycap
+>Para cima</keycap
+> e <keycap
+>Para baixo</keycap
+>. Você também poderá usar os <link linkend="keyboard-shortcuts"
+>atalhos de teclado</link
+> para percorrer suas mensagens sem precisar do mouse.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect1>
+
+<sect1 id="keyboard-shortcuts">
+<title
+>Atalhos de teclado</title>
+
+<para
+>São suportados os seguintes atalhos de teclado na janela principal:</para>
+
+<informaltable>
+<tgroup cols="2">
+<thead>
+<row>
+<entry
+>Atalho de teclado</entry>
+<entry
+>Ação</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><keycap
+>Espaço</keycap
+></entry>
+<entry
+>Desce na mensagem atual ou vai para a próxima mensagem não lida se já estiver no fim.</entry>
+</row>
+<row>
+<entry
+><keycap
+>Seta para direita</keycap
+> ou <keycap
+>N</keycap
+></entry>
+<entry
+>Vai para a próxima mensagem da pasta atual e exibe a previsão da mensagem.</entry>
+</row>
+<row>
+<entry
+><keycap
+>Seta para a esquerda</keycap
+> ou <keycap
+>P</keycap
+></entry>
+<entry
+>Vai para a mensagem anterior da pasta atual e exibe a previsão da mensagem.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>Seta para direita</keycap
+></keycombo
+></entry>
+<entry
+>Rola para baixo a lista de mensagem na pasta atual, a visualização da mensagem não muda.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>Seta para esquerda</keycap
+></keycombo
+></entry>
+<entry
+>Rola para cima a lista de mensagem na pasta atual, a visualização da mensagem não muda.</entry>
+</row>
+<row>
+<entry
+><keycap
+>+</keycap
+></entry>
+<entry
+>Vai para a próxima mensagem não lida da pasta atual.</entry>
+</row>
+<row>
+<entry
+><keycap
+>-</keycap
+></entry>
+<entry
+>Vai para a mensagem não lida anterior da pasta atual.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></entry>
+<entry
+>Vai para a próxima pasta com mensagens não lidas.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></entry>
+<entry
+>Vai para a pasta anterior com mensagens não lidas.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>Seta para cima</keycap
+></keycombo
+></entry>
+<entry
+>Vai para a próxima pasta da lista de pastas (se esta lista estiver com o foco.)</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>Seta para baixo</keycap
+></keycombo
+></entry>
+<entry
+>Vai para a pasta anterior na lista de pastas (se a lista de pastas estiver com o foco.)</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Seta para esquerda</keycap
+></keycombo
+></entry>
+<entry
+>Coloca a pasta anterior em primeiro plano. Use as teclas de atalho <keycombo action="simul"
+>&Ctrl;<keycap
+>Espaço</keycap
+></keycombo
+> para entrar na pasta.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Seta para direita</keycap
+></keycombo
+></entry>
+<entry
+>Coloca a pasta seguinte em primeiro plano. Use as teclas de atalho <keycombo action="simul"
+>&Ctrl;<keycap
+>Espaço</keycap
+></keycombo
+> para entrar na pasta.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Espaço</keycap
+></keycombo
+></entry>
+<entry
+>Entra na pasta que está em primeiro plano, &ie;, a pasta para onde foi usando <keycombo action="simul"
+>&Ctrl;<keycap
+>Seta para esquerda</keycap
+></keycombo
+> e <keycombo action="simul"
+>&Ctrl;<keycap
+>Seta para direita</keycap
+></keycombo
+>.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>Esquerda</keycap
+></keycombo
+> e <keycombo action="simul"
+>&Shift;<keycap
+>Direita</keycap
+></keycombo
+></entry>
+<entry
+>Seleciona as mensagens na área de cabeçalhos, começando pela mensagem atual.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Para mais atalhos de teclado consulte a janela <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar atalhos...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect1>
+
+<sect1 id="the-composer-window">
+<title
+>A janela do compositor</title>
+<para
+>A janela do compositor é usada para criar mensagens novas, de resposta e de encaminhamento; e poderá ser aberta de várias formas. Aqui você encontrará as várias opções para composição de mensagens.</para>
+<sect2 id="composing-a-message">
+<title
+>Escrevendo uma mensagem</title>
+<variablelist>
+  <varlistentry id="compose-new-message"
+><term
+>Nova mensagem...</term>
+  <listitem>
+  <para
+>A janela de composição de uma nova mensagem pode ser aberta das seguintes formas:</para>
+      <itemizedlist>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Arquivo</guimenu
+><guisubmenu
+>Novo</guisubmenu
+><guimenuitem
+>Nova mensagem...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Nova mensagem...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+>O ícone <guiicon
+>Nova</guiicon
+> na barra de ferramentas principal.</para>
+        </listitem>
+      </itemizedlist>
+      <para
+>Para escrever a sua mensagem, preencha os campos apropriados na janela de composição. Use o menu <guimenu
+>Exibir</guimenu
+> para selecionar os campos do cabeçalho que são apresentados. Algumas opções oferecem uma marcação <guibutton
+>Fixo</guibutton
+> que, se estiver assinalada, irá manter de forma permanente a sua seleção como padrão, ao abrir uma nova janela de composição. A lista a seguir descreve os vários cabeçalhos.</para>
+      <itemizedlist id="composer-headers">
+        <listitem>
+          <para
+>A lista <guimenuitem
+>Identidade</guimenuitem
+> permite-lhe selecionar a identidade a ser usada.</para>
+        </listitem>
+        <listitem>
+          <para
+>A lista <guimenuitem
+>Dicionário</guimenuitem
+> permite-lhe escolher um dicionário de sua escolha para usar na verificação ortográfica.</para>
+        </listitem>
+        <listitem>
+          <para
+>A <guimenuitem
+>pasta de Enviados</guimenuitem
+> permite-lhe alterar o local onde salvar os e-mails enviados.</para>
+        </listitem>
+        <listitem>
+          <para
+>O <guimenuitem
+>Transporte de mensagem</guimenuitem
+> permite-lhe selecionar o servidor de envio de e-mails que deseja usar.</para>
+        </listitem>
+        <listitem>
+          <para
+>Os seus campos tradicionais De:, Responder para:, Para: e Assunto:.</para>
+        </listitem>
+        <listitem>
+          <para
+>A opção <guimenuitem
+>Usar fonte de largura fixa</guimenuitem
+> permite-lhe ativar ou desativar as fontes de largura fixa.</para>
+        </listitem>
+        <listitem>
+          <para
+>Os <guimenuitem
+>Trechos</guimenuitem
+> permitem-lhe mostrar a janela de trechos para armazenar e usar as partes de texto de uso frequente.</para>
+        </listitem>
+        <listitem>
+          <para
+>O <guimenuitem
+>Tradutor</guimenuitem
+> permite-lhe traduzir o seu texto dentro da janela de composição.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para
+>Existe uma variedade de atalhos para ajudá-lo a escrever suas mensagens. Os botões <guibutton
+>Selecionar...</guibutton
+> ao lado dos campos <guilabel
+>Para:</guilabel
+>, <guilabel
+>Cc:</guilabel
+> e <guilabel
+>Cco:</guilabel
+> irão carregar o livro de endereços para que você possa selecionar os endereços a partir daí.</para>
+
+<para
+>Quando você começar a escrever um endereço nos campos <guilabel
+>Para:</guilabel
+>/<guilabel
+>Cc:</guilabel
+>/<guilabel
+>Cco:</guilabel
+>, irá aparecer uma lista que mostra os endereços correspondentes que foram usados recentemente e os endereços correspondentes do seu livro de endereços; se não gostar da lista automática, poderá desativá-la com o &RMB; no campo e escolher um modo de complementação diferente.</para>
+
+<para
+>Sempre que quiser adicionar mais de um destinatário a um dos campos, use uma vírgula para separar cada endereço do próximo. Você pode necessitar especificar endereços completos (&ie; <userinput
+>usuario@dominio.com</userinput
+>), mesmo para os usuários locais, dependendo da configuração do seu sistema.</para>
+
+<para
+>Quando terminar a sua mensagem, clique no botão <guiicon
+>Enviar</guiicon
+> (o envelope) para enviar a mensagem agora ou clique no botão <guiicon
+>Fila</guiicon
+> para colocar a mensagem na pasta de envio. Se a sua mensagem ainda não estiver terminada, selecione a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Salvar como rascunho</guimenuitem
+></menuchoice
+>, para permitir a edição posterior. Se quiser imprimir sua mensagem, selecione <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Visualizar impressão</guimenuitem
+></menuchoice
+> para obter uma prévia da mensagem e <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Imprimir</guimenuitem
+></menuchoice
+> para imprimi-la.</para>
+  <para id="send-later"
+>A opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Enviar mais tarde</guimenuitem
+></menuchoice
+> permite-lhe agendar o envio dos seus e-mails em uma data e hora específicas. Veja mais detalhes em <ulink url="help:/akonadi_sendlater_agent"
+>Agente de Envio</ulink
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry id="new-compose-from-templates"
+><term
+><menuchoice
+><guimenu
+>Arquivo</guimenu
+><guisubmenu
+>Nova</guisubmenu
+><guisubmenu
+>Mensagem do modelo</guisubmenu
+> <guimenuitem
+><replaceable
+>Meu super modelo</replaceable
+></guimenuitem
+></menuchoice
+></term>
+  <listitem>
+    <para
+>A composição de uma nova mensagem a partir de um modelo é útil se tiver criado uma excelente mensagem que deseja salvar como modelo para futuras mensagens. Selecione a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Salvar como modelo</guimenuitem
+></menuchoice
+> para que o seu novo modelo seja colocado na pasta <guilabel
+>modelos:</guilabel
+>. Você pode revisar o modelo a qualquer momento, selecionando-o nesta pasta. O modelo salvo irá agora aparecer neste menu para que possa ser usado em novas mensagens. Veja mais detalhes em <link linkend="compose-new-message"
+>Compor nova mensagem</link
+> sobre a composição de mensagens.</para>
+  </listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="encrypt-sign">
+<title
+>Assinar e criptografar as mensagens</title>
+
+<para
+>Se quiser enviar uma mensagem <link linkend="pgp-encrypt-your-messages"
+>criptografada</link
+> ou <link linkend="pgp-sign-your-messages"
+>assinada digitalmente</link
+>, selecione os ícones <guiicon
+>Assinar a Mensagem</guiicon
+> ou <guiicon
+>Criptografar a Mensagem</guiicon
+> da barra de ferramentas. Além disso, você poderá selecionar o formato que deverá ser usado para assinar e/ou criptografar a mensagem. Dependendo dos programas instalados, você pode escolher entre: </para>
+
+<variablelist id="cryptographic-message-formats">
+<varlistentry>
+<term
+><guilabel
+>Qualquer</guilabel
+></term>
+<listitem>
+<para
+>O &kmail; usará um formato que seja compreendido por todos os destinatários da mensagem. O formato preferido dos destinatários pode ser especificado no livro de endereços do &kde;.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP integrado (obsoleto)</guilabel
+></term>
+<listitem>
+<para
+>Este formato está desatualizado. Se você usar este formato, então só o texto da mensagem será assinado e/ou criptografado. <emphasis
+>Os anexos não serão assinados nem criptografados.</emphasis
+> As mensagens em &HTML; não podem ser assinadas neste formato. Você só deverá usar este formato se necessário, &ie;, se enviar mensagens para os usuários de clientes de e-mail que não consigam lidar com os formatos mais avançados.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Este formato é o sucessor do formato de OpenPGP integrado. Se usar este formato, então o texto da mensagem e todos os anexos serão assinados e/ou criptografados (pelo menos por padrão). É o formato recomendado se você usar o OpenPGP.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Este formato é uma alternativa ao OpenPGP/&MIME;. Se usar este formato, então o texto da mensagem e todos os anexos serão assinados e/ou criptografados (pelo menos por padrão). É um formato bastante usado nas organizações.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME; opaco</guilabel
+></term>
+<listitem>
+<para
+>Esta é uma variante do formato S/&MIME;. Só deverá ser usado se for mesmo necessário.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="html-mails">
+<title
+>Criando mensagens em &HTML;</title>
+
+<para
+>Lembre-se de que as mensagens em &HTML; são frequentemente consideradas incômodas. Por isso, você deve evitar o envio de mensagens em &HTML; se possível. Especialmente, você nunca deve enviar mensagens em &HTML; para uma lista de discussão, a não ser que sejam explicitamente permitidas pela lista.</para>
+
+<para
+>Para poder criar mensagens em &HTML;, você terá primeiro de ativar as ferramentas de formatação. Para fazer isso, ative a <guimenuitem
+>Edição de texto formatado</guimenuitem
+> do menu <menuchoice
+><guimenu
+>Opções</guimenu
+></menuchoice
+>. Irá aparecer uma barra de ferramentas com várias opções para formatar a mensagem. Através da caixa de lista combinada, você poderá selecionar entre o texto normal e seis tipos diferentes de listas (três listas com símbolos de tópicos diferentes e três listas numeradas com numerações diferentes). Além disso, você poderá selecionar o tipo de fonte, o seu tamanho, o seu estilo (negrito, itálico, sublinhado) e a sua cor. Por último, você poderá selecionar o alinhamento do texto (à esquerda, centralizado ou à direita).</para>
+
+<para
+>Atualmente ainda não é possível a criação de tabelas e imagens incorporadas.</para>
+
+</sect2>
+
+<sect2 id="attachments">
+<title
+>Adicionando anexos</title>
+
+<para
+>Você poderá anexar os arquivos à sua mensagem com um dos métodos abaixo:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Clique no ícone <guiicon
+>Anexar arquivo</guiicon
+> (clipe de papel) e selecione os arquivos que deseja anexar;</para>
+</listitem>
+<listitem>
+<para
+>Arraste um arquivo da área de trabalho ou de outra pasta para a janela do compositor;</para
+> 
+</listitem>
+<listitem>
+<para
+>Arraste uma mensagem da lista de mensagens do &kmail; para a janela do compositor -- esta mensagem será então anexada;</para>
+</listitem>
+<listitem>
+<para
+>Selecione uma das opções do menu <menuchoice
+><guimenu
+>Anexar</guimenu
+></menuchoice
+>.</para>
+</listitem>
+<listitem>
+  <para
+>Selecione a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Inserir arquivo de texto recente</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Logo que um arquivo seja anexado à sua mensagem, ele aparece na área de anexos na parte inferior da janela do compositor. Você poderá usar o &RMB; para cada anexo para <guimenuitem
+>Abrir</guimenuitem
+>, <guimenuitem
+>Exibir</guimenuitem
+>, <guimenuitem
+>Salvar como...</guimenuitem
+> ou <guimenuitem
+>Remover</guimenuitem
+> o anexo.</para>
+
+<para
+>Use o item das <guimenuitem
+>Propriedades</guimenuitem
+> para abrir a janela de <guilabel
+>Propriedades da Componente da Mensagem</guilabel
+>. O primeiro campo contém o tipo &MIME; do anexo. Tal como o campo do <guilabel
+>Nome</guilabel
+>, este deverá ser preenchido automaticamente com um valor apropriado. Algumas vezes o valor do tipo &MIME; poderá estar errado. Você poderá então indicar qualquer tipo &MIME; ou escolher numa lista de tipos &MIME; conhecidos. Você poderá também selecionar um método de codificação para o seu arquivo na lista de codificações (normalmente, o valor padrão funciona bem). Assinale a opção <guilabel
+>Sugerir a apresentação automática</guilabel
+> se quiser sugerir ao destinatário a apresentação automática (incorporada) deste componente na previsão da mensagem. Se isto funciona ou não, depende do cliente de e-mail do destinatário e da configuração dele.</para>
+
+<para
+>As chaves públicas também podem ser anexadas à sua mensagem com as opções apropriadas do menu <menuchoice
+><guimenu
+>Anexar</guimenu
+></menuchoice
+>. Os anexos de chaves de <application
+>GnuPG</application
+> são tratados como anexos de arquivos.</para>
+
+</sect2>
+
+<sect2 id="checking-the-spelling-of-your-message">
+<title
+>Verificando a ortografia da sua mensagem</title>
+
+<para
+>O &kmail; irá verificar automaticamente a ortografia da sua mensagem (não funciona no modo &HTML;) e mostrar as palavras desconhecidas em vermelho. Se existirem várias palavras desconhecidas, o &kmail; irá desativar a sua verificação. Para selecionar o idioma usado na verificação, use a opção <menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Dicionário</guimenuitem
+></menuchoice
+>. Você poderá desativar a verificação ortográfica automática no menu <menuchoice
+><guimenu
+>Opções</guimenu
+></menuchoice
+>.</para>
+<para
+>Se você precisar escrever mensagens em idiomas diferentes, ative a caixa combinada <guilabel
+>Dicionário</guilabel
+> em <menuchoice
+><guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Dicionário</guimenuitem
+></menuchoice
+> no menu. Usar esta caixa combinada permite que você mude o idioma do verificador ortográfico com um clique de mouse. </para>
+<para
+>Para verificar a ortografia da sua mensagem com um diálogo, selecione a opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Ortografia...</guimenuitem
+></menuchoice
+>. O &kmail; usa o <ulink url="help:sonnet"
+>&sonnet;</ulink
+> para verificar a ortografia, que é a interface para o &kde; do verificador ortográfico <application
+>ispell</application
+> ou do <application
+>aspell</application
+>. Lembre-se de que você primeiro precisa configurar o verificador ortográfico com a opção <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Verificador ortográfico...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+
+<sect2 id="setup-text-snippets">
+<title
+>Configurar a ferramenta de trechos de texto</title>
+<para
+>Ao editar na janela do compositor, você poderá armazenar as partes de texto mais usadas como trechos. Para configurar as capacidades dos trechos de e-mails, selecione a opção <menuchoice
+> <guimenu
+>Exibir</guimenu
+> <guimenuitem
+>Trechos</guimenuitem
+> </menuchoice
+> da barra de menu. Um novo painel aparecerá no lado direito do compositor. </para>
+<para
+>Para adicionar um novo trecho no painel, clique com o botão direito no mesmo e selecione a opção do menu de contexto <menuchoice
+><guimenu
+>Adicionar trecho</guimenu
+></menuchoice
+>. Um diálogo de edição de trechos aparecerá, na qual você poderá adicionar um novo texto e atribuir-lhe um nome. Do mesmo modo, você poderá associar um <guilabel
+>Atalho</guilabel
+> ao trecho. Os trechos poderão ser agrupados e associados a determinado grupo. Se desejar exibir o texto armazenado numa janela de dicas, mantenha o ponteiro do mouse sobre o título do trecho. </para>
+<para
+>A ferramenta <guilabel
+>Trechos</guilabel
+> permite um texto variável em locais predefinidos, sempre que você introduzir um trecho em um arquivo. Para conseguir isto, os <guilabel
+>Trechos</guilabel
+> oferecem o seu próprio mecanismo de variáveis. Você pode inserir variáveis ao texto do trecho propriamente dito, usando os separadores ( $ ) que delimitam os nomes das variáveis. Por exemplo: $nome$, $númerofatura$, $diasemana$. </para>
+<para
+>O separador de variáveis pode ser alterado para outro caractere ao modificar a variável <varname
+>snippetDelimiter</varname
+> na seção [SnippetPart], do arquivo de configuração dos trechos de texto, que pode ser encontrado em $KDEHOME/share/config/kmailsnippetrc . <programlisting
+>snippetDelimiter=$
+</programlisting>
+
+</para>
+
+</sect2>
+<sect2 id="using-the-translator">
+  <title
+>Usando o tradutor incorporado</title>
+  <para
+>A janela de composição do &kmail; 2 oferece um tradutor incorporado que pode ser acessado com a opção <menuchoice
+><guimenu
+>Exibir</guimenu
+><guimenuitem
+>Tradutor</guimenuitem
+></menuchoice
+> a partir da barra de menus. Irá aparecer um novo painel na parte inferior do compositor.</para>
+      <para
+>Para traduzir uma seção de texto, selecione primeiro o texto que deseja traduzir para o campo <guilabel
+>Arraste o texto que deseja traduzir.</guilabel
+>. Selecione o idioma em que o texto está escrito na lista <guilabel
+>De:</guilabel
+>. Selecione o idioma para o qual deseja traduzir na lista <guilabel
+>Para:</guilabel
+> e clique no botão <guibutton
+>Traduzir</guibutton
+>. Seu texto traduzido aparecerá no campo ao lado. Se precisar traduzir no sentido oposto, basta clicar no botão <guibutton
+>Inverter</guibutton
+>. Para apagar todo o texto, clique no botão <guibutton
+>Limpar</guibutton
+>. </para>
+            </sect2>
+</sect1>
+
+<sect1 id="folders">
+<title
+>Pastas de Mensagens</title>
+<screenshot>
+<screeninfo
+>Exemplo de configuração de pasta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exemplo de configuração de pasta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Exemplo de configuração de pasta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>As pastas de mensagens são usadas para organizar as suas mensagens de e-mail. Quando você inicia o &kmail; pela primeira vez, são criadas as <quote
+>Pastas locais</quote
+>, que contém as pastas <guilabel
+>caixa de entrada</guilabel
+>, <guilabel
+>caixa de saída</guilabel
+>, <guilabel
+>enviados</guilabel
+>, <guilabel
+>lixo</guilabel
+>, <guilabel
+>rascunhos</guilabel
+> e <guilabel
+>modelos</guilabel
+>. Cada uma dessas pastas têm funções especiais:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>caixa de entrada:</guilabel
+></term>
+<listitem>
+<para
+>Onde o &kmail; coloca por padrão as suas mensagens, sempre que pedir para verificar o seu e-mail. </para
+><note
+><para
+>As contas &imap; não usarão esta caixa de entrada, pois esta fica localizada no próprio servidor &imap;.</para
+></note>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>caixa de saída:</guilabel
+></term>
+<listitem>
+<para
+>Onde as mensagens são colocadas enquanto ficam à espera de serem enviadas. Lembre-se que não deverá arrastar e soltar mensagens aqui para enviá-las; use em vez disso o ícone <guiicon
+>Enviar</guiicon
+> na janela do compositor.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>enviados:</guilabel
+></term>
+<listitem>
+<para
+>Por padrão, contém as cópias de todas as mensagens que você enviou.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>lixo:</guilabel
+></term>
+<listitem>
+<para
+>Por padrão, contém todas as mensagens que foram movidas para o lixo.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>rascunhos:</guilabel
+></term>
+<listitem>
+<para
+>Contém mensagens que você começou a editar, mas que salvou nesta pasta através da opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Salvar como rascunho</guimenuitem
+></menuchoice
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>modelos:</guilabel
+></term>
+<listitem>
+<para
+>Esta pasta guarda os seus modelos criados com a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Salvar como modelo</guimenuitem
+></menuchoice
+> na janela de composição. Veja mais detalhes em <link linkend="new-compose-from-templates"
+>Novos modelos do compositor</link
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<sect2 id="folder-details">
+<title
+>Criando e usando as pastas</title>
+
+<para
+>Organize os seus e-mails, &eg;, por listas de e-mails, recibos de contas, &etc;, com a criação de pastas novas. Para criar uma nova pasta, selecione a opção <menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Adicionar pasta...</guimenuitem
+></menuchoice
+> ou <guimenuitem
+>Adicionar pasta...</guimenuitem
+> no menu de contexto do &RMB;. Aparecerá uma caixa de diálogo, para que você indique o nome da nova pasta. Cada uma das pastas pode ser totalmente personalizada, &eg;, a forma de exibição, respostas, &etc; Se alguma vez precisar de alterar a configuração de uma pasta, selecione a pasta que deseja modificar no painel de pastas e, então, selecione <guimenuitem
+>Propriedades da pasta</guimenuitem
+> no menu de contexto do &RMB;. Veja mais detalhes em <link linkend="folders-properties-window"
+>Propriedades da pasta</link
+>.</para>
+
+<para
+>Para mover as mensagens de uma pasta para outra, selecione as mensagens que deseja mover e clique em <keycap
+>M</keycap
+> ou <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Mover mensagens para</guimenuitem
+></menuchoice
+>. Irá aparecer uma lista com as pastas; selecione a pasta na lista para onde deseja mover as mensagens. As mensagens podem também ser movidas se arrastá-las da área de Cabeçalhos para a área de Pastas.</para>
+
+<para
+>Se tiver pastas que sejam acessadas com frequência, você pode adicioná-las no painel das suas pastas favoritas, que fica visível no canto superior esquerdo. Adicione-as através do menu de contexto do &RMB; usando a opção <guimenuitem
+>Adicionar nas pastas favoritas</guimenuitem
+>.</para>
+
+<para
+>Você pode criar uma pasta virtual com parâmetros de pesquisa, se executar a opção <menuchoice
+><guimenu
+>Editar</guimenu
+><guimenuitem
+>Localizar mensagens...</guimenuitem
+></menuchoice
+>, <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Localizar mensagens...</guimenuitem
+></menuchoice
+> ou usando o atalho pressionando a tecla <keycap
+>S</keycap
+>. Indique os parâmetros da sua pesquisa na caixa de diálogo. Dê um nome para sua pesquisa no campo de texto inferior <guilabel
+>Nome da pasta de pesquisa:</guilabel
+>, &eg;, <replaceable
+>e-mails com a palavra Blog</replaceable
+>. Clique no botão <guibutton
+>Pesquisar</guibutton
+>. Agora selecione a opção <guibutton
+>Abrir a pasta de pesquisa</guibutton
+>. Sua pasta de resultados aparecerá na parte inferior do painel Pasta.</para>
+
+<para
+>A criação de filtros para mover automaticamente as mensagens para pastas específicas é uma ótima maneira de organizar as mensagens por listas de e-mails, remetente, assunto, &etc; Consulte mais detalhes na seção <link linkend="filters"
+>Filtros</link
+>.</para>
+
+<para
+>No caso de receber e-mails de uma fonte confiável, &eg;, um blog que você acompanha, que esteja formatado em &HTML; e onde deseje ativar a exibição de &HTML; apenas para esses e-mails, pode fazer da seguinte forma: Crie uma pasta nova, configure um <link linkend="filters"
+>filtro</link
+> para colocar esses e-mails na pasta nova, selecione a pasta e depois a opção <menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Formato padrão da mensagem</guimenuitem
+> <guimenuitem
+>Preferir &HTML; ao texto simples</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>Algumas ações comuns com pastas são:</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Mover todas as mensagens para o lixo</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Move</action
+> todas as suas mensagens na pasta selecionada para a pasta lixo.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Arquivar pasta</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Cria um arquivo</action
+> como o conteúdo da pasta. Consulte mais detalhes em <ulink url="folder-archive"
+>Arquivar pasta</ulink
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Excluir pasta</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Remove uma pasta</action
+>, bem como todas as suas mensagens e subpastas.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Remover mensagens duplicadas</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Isto irá <action
+>pesquisar</action
+> na pasta selecionada por e-mailsduplicados e irá <action
+>excluí-los</action
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="folders-properties-window">
+<title
+>Propriedades da Pasta</title>
+<screenshot>
+<screeninfo
+>Exemplo de propriedades de pasta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-properties.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exemplo de propriedades de pasta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Exemplo de propriedades de pasta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>A caixa de diálogo <guilabel
+>Propriedades da pasta</guilabel
+> permite-lhe renomear e indicar todas as suas propriedades. Lembre-se de que a maioria das propriedades só estão disponíveis para as suas próprias pastas e não para as pastas padrão, como a <guilabel
+>caixa de entrada</guilabel
+> &etc; As pastas padrão não podem ser renomeadas.</para>
+
+<sect3 id="folders-properties-general">
+<title
+>Geral</title>
+<para
+>Se você precisa renomear uma pasta, altere o item no campo <guilabel
+>Nome:</guilabel
+>.</para>
+
+<para
+>Assinale a opção <guilabel
+>Atuar no e-mail novo/não lido desta pasta</guilabel
+> se quiser receber notificações sobre novos e-mails que cheguem nesta pasta. Desmarque esta opção nas pastas em que você não deseja receber notificações, como SPAM e lixo.</para>
+<para
+>Ao responder às mensagens desta pasta, assinale a opção <guilabel
+>Manter as respostas nesta pasta</guilabel
+> se quiser que as respostas sejam armazenadas nesta pasta em vez da pasta padrão de e-mails enviados.</para>
+
+<para
+>Assinale <guilabel
+>Ocultar esta pasta na janela de seleção de pastas</guilabel
+> se você não quer que esta pasta seja exibida nas janelas de seleção de pastas como a janela <guimenuitem
+>Ir para a pasta</guimenuitem
+> e <guimenuitem
+>Mover mensagem para</guimenuitem
+>.</para>
+
+<para
+>Por padrão, as novas pastas usam a identidade padrão. Desmarque a opção <guilabel
+>Usar a identidade padrão</guilabel
+> e selecione uma nova na lista <guilabel
+>Identidade do remetente</guilabel
+>. Veja mais informações sobre identidades na <link linkend="configure-identity"
+>Configuração de identidades</link
+>. As respostas às mensagens enviadas diretamente para você ainda irão usar por padrão o endereço <quote
+>Para</quote
+> da mensagem, se for encontrada uma identidade apropriada.</para>
+
+<para
+>Se tiver ativado o groupware, você poderá alterar o conteúdo da pasta, &eg;, de calendário, de notas, &etc;, na lista <guilabel
+>Conteúdo da pasta:</guilabel
+>.</para>
+
+<para
+>Se compartilhar a pasta com outros usuários, você poderá <guilabel
+>Compartilhar o estado não lida por todos os usuários</guilabel
+>, o que irá mostrar o mesmo estado não lido para todos os usuários.</para>
+  <informalexample
+><para
+>Por exemplo, um sistema de relatórios de erros, onde todas as mensagens deverão ser lidas e onde vários usuários são responsáveis por ler os relatórios não lidos.</para
+></informalexample>
+</sect3>
+
+<sect3 id="folders-properties-view">
+<title
+>Exibir</title>
+<para
+>A opção <guilabel
+>Usar ícones personalizados</guilabel
+> permite-lhe escolher ícones que sejam diferentes dos pré-definidos na lista de pastas.</para>
+<para
+>Com o <guilabel
+>Mostrar colunas</guilabel
+>, você poderá definir as colunas visíveis na área de cabeçalhos para Padrão, Remetente ou Destinatário. Isso é útil se você usar uma pasta para salvar as suas próprias mensagens enviadas.</para>
+<para
+>Na seção <guilabel
+>Lista de mensagens</guilabel
+> você pode selecionar e configurar uma <guilabel
+>Agregação</guilabel
+> e <guilabel
+>Tema</guilabel
+> para esta pasta diferente do padrão configurado nas opções do &kmail;. Para mais detalhes, veja a aba <link linkend="configure-appearance-message-list"
+>Lista de mensagens</link
+> na página <guilabel
+>Aparência</guilabel
+>.</para>
+</sect3>
+<sect3 id="folders-properties-retrieval">
+<title
+>Obtenção</title>
+<para
+>Se tiver uma conta que não recebe muitos e-mails e onde você não quer que o &kmail; consulte o servidor com frequência, poderá desmarcar a opção <guilabel
+>Usar as opções da pasta ou da conta principal</guilabel
+> e definir um intervalo mais elevado no campo <guilabel
+>Sincronizar automaticamente após:</guilabel
+>.</para>
+<para
+>Nas <guilabel
+>Opções de recepção</guilabel
+>, você poderá mudar a opção <guilabel
+>Sempre obter as mensagens completas</guilabel
+> para <guilabel
+>Obter o conteúdo das mensagens por solicitação</guilabel
+> se tiver uma conexão lenta. Você pode definir quanto tempo a mensagem permanecerá a nível local no seguinte campo. </para>
+
+</sect3>
+<sect3 id="folders-properties-templates">
+<title
+>Modelos</title>
+<para
+>Nesta aba você pode definir modelos específicos por página para suas pastas personalizadas. Para mais detalhes veja a aba <link linkend="configure-composer-standard-templates"
+>Modelos padrão</link
+> na página <guilabel
+>Compositor</guilabel
+>. </para>
+</sect3>
+
+<sect3 id="folders-properties-expiry">
+<title
+>Expiração</title>
+<para
+>Nesta aba, você pode configurar a limpeza ou exclusão automática das mensagens. Assinale a opção se quiser expirar automaticamente as mensagens lidas ou não lidas, respectivamente. Defina o número de dias no campo incremental. Se não quiser excluir as mensagens de forma permanente, poderá atribuir uma pasta para onde elas serão movimentadas, no campo de texto <guilabel
+>Mover as mensagens expiradas para:</guilabel
+> ou na janela de seleção de pastas. Assim que tiver revisto as mensagens e quiser excluí-las de forma permanente, você poderá ir para as opções de expiração da pasta, da pasta que você escolheu, e marcar a opção <guilabel
+>Excluir permanentemente as mensagens expiradas</guilabel
+>, clicando depois na opção <guibutton
+>Salvar as configurações e expirar agora</guibutton
+>. </para>
+<warning
+><para
+>As mensagens que são apagadas ao serem expiradas não podem ser recuperadas, por isso cuidado com esta opção.</para
+></warning>
+</sect3>
+
+<sect3 id="folders-properties-acl">
+<title
+>Página de Controle de Acesso (apenas &imap;)</title>
+<para
+>Aqui você pode gerenciar listas de controle de acesso (&acl;s) de pastas &imap;.</para>
+<note
+><para
+>O servidor &imap; deverá ter uma &acl; configurada ao nível do usuário e ativa para que esta aba fique visível.</para
+></note>
+<para
+>A &acl; ativa atualmente é mostrada na lista. Ela consiste de pares de <guilabel
+>IDs de Usuário</guilabel
+> e de <guilabel
+>Permissões</guilabel
+> concedidas aos usuários identificados por esses <guilabel
+>IDs de Usuário</guilabel
+>.<footnote
+><para
+> Lembre-se de que um único <guilabel
+>ID de usuário</guilabel
+> poderá referir-se a mais de um usuário. Dependendo do servidor &imap; e da sua configuração, poderão existir IDs de usuário que correspondam a grupos de usuários, usuários anônimos ou qualquer usuário. Consulte o manual da sua implementação específica do servidor &imap; para mais informações.</para
+> </footnote
+> As &acl;s são definidas ao nível da pasta.</para>
+ <note
+><para
+>Como todo o resto, ao usar o <emphasis
+>&imap; desligado</emphasis
+>, você precisa sincronizar-se com o servidor para que as alterações sejam transferidas para o mesmo.</para
+></note>
+<para
+>As &acl;s de &imap; definem um conjunto de permissões precisas que você poderá conceder ou negar a outros usuários. Para esclarecer a situação, o &kmail; irá apresentá-las nas seguintes cinco categorias que você poderá escolher (veja em <xref linkend="table-acl-summary"/> os detalhes se já conhecer as &acl;s do &imap;).</para>
+<variablelist>
+<varlistentry id="folders-properties-acl-none">
+<term
+><guilabel
+>Nenhum</guilabel
+></term>
+<listitem>
+<para
+>Nega aos usuários identificados pelo <guilabel
+>ID do Usuário</guilabel
+> quaisquer direitos. Esta é também a opção padrão para os usuários que não estejam explicitamente (ou implicitamente, dentro de um grupo) listados na &acl;. Estes usuários não irão ver esta pasta na lista de pastas do &imap; apresentadas a eles pelos seus respectivos clientes.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-read">
+<term
+><guilabel
+>Leitura</guilabel
+></term>
+<listitem>
+<para
+>Concede aos usuários identificados pelo <guilabel
+>ID do Usuário</guilabel
+> direitos de leitura. Isto inclui também a possibilidade dos seus clientes de e-mail conseguirem marcar as mensagens como lidas e armazenar esta informação no servidor. <footnote
+> <para
+>Cada usuário tem a sua própria lista de mensagens lidas, como tal, nenhuma das suas mensagens não lidas irá aparecer de repente como lida, só porque alguém já a leu.</para>
+</footnote>
+</para>
+<para
+>Estes usuários irão ver esta pasta na lista de pastas de &imap; apresentadas nos seus clientes.</para>
+<para
+>Utilize isto para criar uma pasta compartilhada que os outros podem ler, mas não modificar.</para>
+<informalexample>
+<para
+>Se você fosse o editor de um boletim de notícias de uma empresa, poderia criar um pasta com a finalidade de distribuir o boletim, atribuir a todos permissões de leitura e gravar o boletim para esta pasta em vez de enviá-lo por e-mail para todo mundo.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-append">
+<term
+><guilabel
+>Anexar</guilabel
+></term>
+<listitem>
+<para
+>(também conhecido como <guilabel
+>Enviar</guilabel
+>)</para>
+<para
+>Concede aos usuários identificados pelo <guilabel
+>ID do Usuário</guilabel
+> direitos de leitura (ler acima) e de publicação nesta pasta.</para>
+<para
+>Utilize isto para criar uma pasta compartilhada que os outros podem ler e para onde podem enviar mensagens, mas que não podem modificar.</para>
+<informalexample>
+<para
+>Se você quisesse criar um fórum de discussão a nível da organização, em vez de usar um formulário na Web ou um servidor de Usenet privado da companhia, você poderia criar um conjunto de pastas (uma por tópico) e dar permissões a todos para ler e publicar. Em vez de publicar num servidor de &nntp; ou escrever as suas mensagens num formulário, as pessoas iriam então escrever mensagens e guardá-las na pasta que se adequasse ao tópico da mensagem.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-write">
+<term
+><guilabel
+>Gravar</guilabel
+></term>
+<listitem>
+<para
+>Concede aos usuários identificados pelo <guilabel
+>ID do Usuário</guilabel
+> direitos de leitura, de publicação (ler acima) e de escrita nesta pasta.</para>
+<para
+>O direito de escrever numa pasta inclui a remoção de mensagens, a criação de subpastas e o armazenamento de outros atributos além dos lida/não lida no servidor (&eg; respondida).</para>
+<para
+>Use isto para criar uma pasta compartilhada sobre a qual todas as pessoas tenham os mesmos direitos (ou quase, veja em <xref linkend="folders-properties-acl-all"/>).</para>
+<informalexample>
+<para
+>No exemplo <xref linkend="folders-properties-acl-append"/>, você poderá atribuir permissões de escrita a um grupo de pessoas que atuem como moderadores, os quais serão então capazes de remover publicações fora do tópico e criar pastas de subtópicos para as pastas com grande movimento.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-all">
+<term
+><guilabel
+>Todos</guilabel
+></term>
+<listitem>
+<para
+>Concede aos usuários identificados pelo <guilabel
+>ID do Usuário</guilabel
+> direitos de leitura, de publicação, de escrita (ler acima) e de administração, &ie; o direito a modificar a &acl; desta pasta.</para>
+<para
+>Este é o conjunto de direitos padrão para o dono de uma pasta.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+><xref linkend="table-acl-summary"/> sumariza os direitos &acl; de &imap; associados a cada nível de permissão.</para>
+<table id="table-acl-summary">
+<title
+>Sumário dos Direitos &acl;</title>
+          <tgroup cols="6">
+            <thead>
+              <row>
+                <entry
+>Direito &acl;</entry>
+                <entry
+><xref linkend="folders-properties-acl-none"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-read"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-append"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-write"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-all"/></entry>
+              </row>
+            </thead>
+            <!--tfoot/-->
+            <tbody>
+              <row>
+                <entry
+>Procurar</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Leitura</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Gravar Visto</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Inserir</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Enviar</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Bandeiras de Escrita</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Criar</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Excluir</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Administrar</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+</sect3>
+
+<sect3 id="folders-properties-mailinglist">
+<title
+>Lista de Discussão</title>
+
+<para
+>Se você vai usar a pasta para uma lista de discussão, abra a janela <guilabel
+>Propriedades de pasta de lista de discussão</guilabel
+> a partir do menu <menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Gerenciamento de listas de discussão</guimenuitem
+></menuchoice
+>. Então você deverá assinalar a opção <guilabel
+>A pasta contém uma lista de discussão</guilabel
+> para associar esta pasta à lista de discussão propriamente dita. A seguir, deverá clicar no botão <guilabel
+>Detectar automaticamente</guilabel
+>. O &kmail; irá então tentar adivinhar algumas informações sobre a lista de discussão da mensagem selecionada. Se o &kmail; não conseguir determinar alguns endereços, então você poderá adicionar a informação que falta manualmente. Para fazer isso, selecione primeiro o <guilabel
+>Tipo de endereço</guilabel
+> para o qual deseja adicionar um endereço. Você poderá optar entre:</para>
+<variablelist>
+<varlistentry id="folders-properties-mailinglist-post">
+<term
+><guilabel
+>Enviar na lista</guilabel
+></term>
+<listitem>
+<para
+>Este endereço é usado para enviar as mensagens para a lista de discussão. Isto é normalmente um endereço de e-mail.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-subscribe">
+<term
+><guilabel
+>Inscrever-se na lista</guilabel
+></term>
+<listitem>
+<para
+>Este endereço é usado para se inscrever na lista de discussão. Isto poderá ser um endereço de e-mail ou de uma página Web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-unsubscribe">
+<term
+><guilabel
+>Cancelar inscrição na lista</guilabel
+></term>
+<listitem
+><para
+>Este endereço é usado para cancelar a inscrição da lista de discussão. Poderá ser um endereço de e-mail ou de uma página Web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-archive">
+<term
+><guilabel
+>Listar arquivos</guilabel
+></term>
+<listitem
+><para
+>Este é o endereço do arquivo da lista de discussão. Isto é normalmente um endereço de uma página Web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-help">
+<term
+><guilabel
+>Ajuda da Lista</guilabel
+></term>
+<listitem>
+<para
+>Este endereço é usado para pedir ajuda para esta lista de discussão. Isto é normalmente um endereço de e-mail.</para>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>Depois de selecionar o <guilabel
+>Tipo de endereço</guilabel
+> apropriado, você deverá introduzir o endereço de e-mail ou da página Web e clicar em <guilabel
+>Adicionar</guilabel
+>. Com o <guilabel
+>Remover</guilabel
+>, você poderá remover os endereços.</para>
+
+<para
+>Se todos os endereços tiverem sido adicionados, você poderá executar uma ação, &eg; ir aos arquivos da lista, se selecionar o <guilabel
+>Tipo de endereço</guilabel
+> apropriado e clicar em <guilabel
+>Invocar ação</guilabel
+>. Se existir um endereço de e-mail e de uma página Web, então você terá de selecionar a <guilabel
+>Ação preferida</guilabel
+> antes de clicar em <guilabel
+>Invocar ação</guilabel
+>. Selecione o <guilabel
+>KMail</guilabel
+> se desejar enviar uma mensagem para o endereço de e-mail ou selecione o <guilabel
+>Navegador</guilabel
+> se quiser ir à página Web.</para>
+
+<para
+>Como alternativa para invocar a opção <guilabel
+>Publicar na Lista</guilabel
+>, você poderá enviar uma mensagem nova para a lista de discussão com a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Nova Mensagem para a Lista...</guimenuitem
+></menuchoice
+></para>
+</sect3>
+
+<sect3 id="folders-properties-shortcut">
+<title
+>Atalho</title>
+<para
+>Você pode definir uma tecla de atalho para acessar a pasta.</para>
+</sect3>
+
+<sect3 id="folders-properties-maintainance">
+<title
+>Manutenção</title>
+<para
+>Esta aba mostra uma visão geral sobre o tipo de pasta e seu tamanho, número de mensagens lidas e não lidas na pasta e permite que você ative a indexação de texto.</para>
+</sect3>
+</sect2>
+</sect1>
+
+<sect1 id="filters">
+<title
+>Filtros de Mensagens</title>
+<anchor id="filters-id"/>
+
+<para
+>Depois de usar um pouco o &kmail;, você poderá concluir que terá alguns problemas para ordenar as mensagens novas na sua caixa de entrada à medida que vão chegando. Os filtros permitem-lhe efetuar automaticamente certas ações nas mensagens recebidas e efetuar manualmente as ações nas mensagens selecionadas de uma pasta.</para>
+
+<para
+>Os filtros consistem em: um padrão de procura, cujas regras são usadas como critério para determinar se este filtro deverá ser aplicado a uma determinada mensagem, e uma lista de ações do filtro, as quais descrevem o que deverá ser feito à mensagem se o padrão de procura corresponder. Leia mais sobre os padrões de procura e as ações de filtragem nas subseções a seguir.</para>
+
+<note
+><para
+>Os filtros são processados um após o outro, começando com o primeiro filtro da lista. O primeiro cujo padrão corresponder à mensagem indicada é executado; você poderá indicar para os filtros restantes serem também aplicados, mas a opção padrão é parar o processamento quando o primeiro filtro corresponder. </para
+></note>
+
+<para
+>Normalmente, os filtros são usados nas mensagens recebidas, mas também podem ser aplicados às mensagens enviadas ou a qualquer mensagem arbitrária ou grupo de mensagens. Para filtrar seletivamente as mensagens, selecione as mensagens que deseja filtrar na lista de mensagens e clique em <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+> </keycombo
+> ou selecione <menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Aplicar filtro</guimenuitem
+></menuchoice
+>: isto irá aplicar todos os filtros que foram marcados para a filtragem manual no <link linkend="filter-dialog"
+>diálogo do filtro</link
+> nessas mensagens.</para>
+
+<sect2 id="filter-quick">
+<title
+>Criação Rápida de Filtros</title>
+
+<para
+>Existem dois métodos para criação de um filtro; o método rápido é usar <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Criar filtro</guimenuitem
+></menuchoice
+> e selecione um critério no submenu: isto irá invocar o diálogo do filtro e irá apresentar-lhe um novo filtro com a primeira regra do padrão de procura e a primeira ação (<guilabel
+>Mover para pasta</guilabel
+>) pré-definidas. Na maioria dos casos, tudo o que terá a fazer é selecionar a pasta para onde a mensagem deverá ser movida, mas você poderá editar o filtro como desejar.</para>
+
+<para
+>Ao criar um filtro nas mensagens das listas de discussão, este método irá tentar a fundo encontrar um critério que identifique de maneira única as mensagens provenientes dessa lista; se ele conseguir, o nome da lista irá aparecer na opção do menu <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guisubmenu
+>Criar um Filtro</guisubmenu
+><guimenuitem
+>Filtro da Lista de Discussão...</guimenuitem
+></menuchoice
+></para>
+
+<para
+>O segundo método é construir manualmente um filtro do zero, invocando o diálogo do filtro através da opção <menuchoice
+><guimenu
+>Configuração</guimenu
+><guimenuitem
+>Configurar os Filtros...</guimenuitem
+></menuchoice
+> A caixa de diálogo de filtros é descrita em detalhes na subseção seguinte.</para>
+</sect2>
+
+<sect2 id="filter-dialog">
+<title
+>Caixa de diálogo Filtro</title>
+<anchor id="filter-dialog-id"/>
+
+<para
+>Esta caixa de diálogo permite-lhe gerenciar e editar sua lista de filtros.</para>
+
+<para
+>Você poderá acessá-lo em <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Criar filtro</guisubmenu
+></menuchoice
+> ou <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar filtros...</guimenuitem
+></menuchoice
+></para>
+
+<para
+>A caixa de diálogo está dividida em três seções principais nas abas <guilabel
+>Geral</guilabel
+> e <guilabel
+>Avançado</guilabel
+>:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Filtros Disponíveis</guilabel
+></term>
+<listitem
+><para
+>Este grupo contém a lista dos filtros e alguns botões de ações para modificá-los, nomeadamente: criar filtros novos; movê-los para cima ou para baixo na lista; apagá-los ou mudar o seu nome. Se você selecionar um filtro da lista, as suas propriedades são apresentadas do lado direito do diálogo.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Critérios do Filtro</guilabel
+></term
+> <listitem
+><para
+>Neste grupo, você poderá editar o padrão a que as mensagens deverão corresponder para que o filtro seja aplicado nelas. Você poderá selecionar se todas as regras deverão ser cumpridas ou se apenas uma delas é suficiente. Veja os <link linkend="filter-criteria"
+>Padrões de Procura</link
+> abaixo para uma descrição detalhada de cada tipo de regra de procura.</para>
+
+<para
+>Você poderá clicar no botão <guibutton
+>Mais</guibutton
+> para adicionar mais uma regra extra (inicialmente em branco) se você quiser definir padrões mais complexos e em <guibutton
+>Menos</guibutton
+> para remover a última regra. O <guibutton
+>Limpar</guibutton
+> apaga o padrão, &ie; remove todas regras, exceto duas, e reinicia essas duas.</para>
+<para
+>As regras vazias ou inválidas não são avaliadas.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ações do Filtro</guilabel
+></term
+> <listitem
+><para
+>Neste grupo, você poderá editar a lista de ações que são aplicadas a todas as mensagens que corresponderem ao critério definido pelo filtro. Veja as <link linkend="filter-action"
+>Ações do Filtro</link
+> abaixo para uma descrição mais detalhada de cada tipo de ação.</para>
+
+<para
+>Você poderá clicar em <guibutton
+>Mais</guibutton
+> para obter uma ação nova e em branco (se quiser definir mais de uma ação) e em <guibutton
+>Menos</guibutton
+> para remover a última ação. O <guibutton
+>Limpar</guibutton
+> apaga a lista, &ie; remove todas as ações, exceto uma, e reinicia esta ação.</para>
+<para
+>As ações inválidas ou vazias não são executadas.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Opções Avançadas</guilabel
+></term>
+
+<listitem>
+
+<para
+>Neste grupo, você poderá definir algumas opções avançadas para os filtros, de modo a refinar a sua filtragem.</para>
+
+<para
+>Se usar a primeira fila de opções, você poderá definir como o filtro é aplicado: a opção <guilabel
+>Aplicar este filtro às mensagens recebidas</guilabel
+> significa que o filtro é aplicado às mensagens logo que você as recebe (&ie; no <guiicon
+>Verificar e-mails</guiicon
+>). O filtro pode ser aplicado a todas as mensagens, a todas contas IMAP online e a uma seleção de pastas de entrada.</para>
+<para
+>A opção <guilabel
+>Aplicar este filtro às mensagens enviadas</guilabel
+> significa que o filtro é aplicado às mensagens logo que você as envia e a opção <guilabel
+>Aplicar este filtro na filtragem manual</guilabel
+> controla se deve aplicar este filtro, quando a filtragem for explicitamente selecionada (&ie; através de <menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Aplicar filtro</guimenuitem
+></menuchoice
+>.)</para>
+<para
+>Se a opção <guilabel
+>Aplicar este filtro às mensagens enviadas</guilabel
+> estiver selecionada, o filtro será acionado <emphasis
+>após</emphasis
+> o envio da mensagem e somente afetará a cópia local. Se a cópia do destinatário também precisar ser modificada, use a opção <guilabel
+>Aplicar este filtro antes de enviar mensagens</guilabel
+>. </para>
+<para
+>A opção <guilabel
+>Se este filtro corresponder, interrompe o processamento aqui</guilabel
+> controla se os filtros após este serão aplicados, se o mesmo for correspondente.</para>
+
+<para
+>Se a opção <guilabel
+>Adicionar este filtro ao menu Aplicar filtro</guilabel
+> for selecionada, este filtro será inserido na opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Aplicar os Filtros</guimenuitem
+></menuchoice
+>. Você poderá então aplicar este filtro a uma mensagem. Outra forma de aplicar os filtros é usar a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Aplicar os Filtros</guimenuitem
+></menuchoice
+>, que aplica <emphasis
+>todos</emphasis
+> os filtros - um após o outro, até que tenham sido todos usados ou até que um tenha correspondido e tenha a opção <guilabel
+>Se o filtro corresponder, interrompe o processamento aqui</guilabel
+> ativada.</para>
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+<note
+><para
+>Os filtros irão obter automaticamente um nome, a menos que você o altere explicitamente com o botão <guibutton
+>Renomear...</guibutton
+>. O diálogo assume que deverá continuar a dar nomes automáticos ao filtro, desde que o nome do filtro comece por <quote
+>&lt;</quote
+>. </para
+></note>
+
+<note>
+<para
+>Se você aplicar alterações aos filtros, através do <guibutton
+>OK</guibutton
+> ou do <guibutton
+>Aplicar</guibutton
+>, só os filtros válidos são de fato copiados para o gerenciador interno de filtros.</para>
+
+<para
+>De mesma forma, as regras e ações vazias são removidas das listas de padrões e ações respectivamente, antes do filtro ser salvo.</para>
+</note>
+
+</sect2>
+
+<sect2 id="filter-criteria">
+<title
+>Padrões de Procura</title>
+
+<para
+>A utilização mais comum dos filtros é filtrar pelo remetente das mensagens; isto pode ser feito se escolher <guilabel
+>From</guilabel
+>. Uma boa aposta para uma lista de discussão serão os <guilabel
+>&lt;destinatários&gt;</guilabel
+>, mas existem outros critérios que um filtro poderá procurar (lembre-se que todos os padrões são interpretados sem distinção de maiúsculas ou minúsculas):</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>&lt;mensagem&gt;</guilabel
+></term>
+<listitem>
+<para
+>Procura na mensagem inteira (&ie;, nos cabeçalhos, corpo e anexos, se existirem);</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;corpo&gt;</guilabel
+></term>
+<listitem>
+<para
+>Procura no corpo da mensagem (&ie;, a mensagem inteira, exceto os cabeçalhos);</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;qualquer cabeçalho&gt;</guilabel
+></term>
+<listitem>
+<para
+>Procura nos cabeçalhos da mensagem;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;destinatários&gt;</guilabel
+></term>
+<listitem>
+<para
+>Procura nos campos <quote
+>To</quote
+> (Para) e <quote
+>CC</quote
+> do cabeçalho da mensagem;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;tamanho em bytes&gt;</guilabel
+></term>
+<listitem>
+<para
+>Define os limites inferior e superior do tamanho da mensagem;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;idade em dias&gt;</guilabel
+></term>
+<listitem>
+<para
+>Define os limites inferior e superior da idade da mensagem;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>&lt;estado&gt;</guilabel
+></term>
+<listitem>
+<para
+>Define restrições no estado da mensagem;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Outro nome qualquer</term>
+<listitem>
+<para
+>Procura no campo do cabeçalho que é identificado por esse nome.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>A lista de regras possíveis depende do que selecionou na primeira lista. As regras disponíveis são:</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry
+>Regra</entry>
+<entry
+>Disponível para</entry>
+<entry
+>Descrição</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><guilabel
+>contém</guilabel
+>/<guilabel
+>não contém</guilabel
+></entry>
+<entry
+>todos os itens de procura textuais</entry>
+<entry
+>Corresponde se o item procurado contém (ou não) o texto fornecido.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>igual</guilabel
+>/<guilabel
+>diferente</guilabel
+></entry>
+<entry
+>a maioria dos itens textuais</entry>
+<entry
+>Corresponde se o item procurado é igual (ou não) ao texto indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>corresponde à expressão regular.</guilabel
+>/<guilabel
+>não corresponde à expressão regular.</guilabel
+></entry>
+<entry
+>todos os itens de procura textuais</entry>
+<entry
+>Corresponde se parte do item procurado fizer correspondência à expressão regular indicada (ou não). Se o editor de expressões regulares estiver instalado, então poderá editar a expressão regular ao clicar no botão <guilabel
+>Editar...</guilabel
+>.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>tem anexos</guilabel
+>/<guilabel
+>não tem anexos</guilabel
+></entry>
+<entry
+><guilabel
+>&lt;mensagem&gt;</guilabel
+></entry>
+<entry
+>Corresponde se a mensagem contiver algum anexo (ou se não contiver nenhum).</entry>
+</row>
+<row>
+<entry
+><guilabel
+>está no livro de endereços</guilabel
+>/<guilabel
+>não está no livro de endereços</guilabel
+></entry>
+<entry
+>a maioria dos itens textuais</entry>
+<entry
+>Corresponde se o item procurado contém pelo menos um endereço que esteja na sua lista de endereços (ou não). Claro, esta regra só faz sentido para os campos dos endereços como o De ou os <guilabel
+>&lt;destinatários&gt;</guilabel
+></entry>
+</row>
+<row>
+<entry
+><guilabel
+>está na categoria</guilabel
+>/<guilabel
+>não está na categoria</guilabel
+></entry>
+<entry
+>a maioria dos itens textuais</entry>
+<entry
+>Corresponde se o item procurado contém pelo menos um endereço que esteja na categoria indicada na sua lista de endereços (ou não). Mais uma vez, esta regra só faz sentido para os campos dos endereços.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>é igual a</guilabel
+>/<guilabel
+>é diferente de</guilabel
+></entry>
+<entry
+>itens de procura numéricos</entry>
+<entry
+>Corresponde se o valor do item de procura é igual (ou não) ao valor indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>é menor que</guilabel
+></entry>
+<entry
+>itens de procura numéricos</entry>
+<entry
+>Corresponde se o valor do item de procura é menor que o valor indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>é maior que</guilabel
+></entry>
+<entry
+>itens de procura numéricos</entry>
+<entry
+>Corresponde se o valor do item de procura é maior que o valor indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>é menor ou igual a</guilabel
+></entry>
+<entry
+>itens de procura numéricos</entry>
+<entry
+>Corresponde se o valor do item de procura é menor ou igual ao valor indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>é maior ou igual a</guilabel
+></entry>
+<entry
+>itens de procura numéricos</entry>
+<entry
+>Corresponde se o valor do item de procura é maior ou igual ao valor indicado.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>está</guilabel
+>/<guilabel
+>não está</guilabel
+></entry>
+<entry
+><guilabel
+>&lt;estado&gt;</guilabel
+></entry>
+<entry
+>Corresponde se a mensagem tiver (ou não) o estado especificado.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+</sect2>
+
+<sect2 id="filter-action">
+<title
+>Ação do filtro</title>
+
+<para
+>A utilização mais comum dos filtros é organizar as mensagens recebidas em certas pastas; isto poderá ser feito com a opção <guilabel
+>Mover para Pasta</guilabel
+>. Aqui está uma lista com todas as ações possíveis:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Mover para a pasta</guilabel
+></term>
+<listitem>
+<para
+>Isto irá enviar a mensagem para outra pasta, removendo-a da sua pasta atual se necessário; você não poderá atualmente usar pastas de &imap; como alvo.</para>
+<!-- fixme: still correct? -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Copiar para a pasta</guilabel
+></term>
+<listitem>
+<para
+>Isto irá copiar a mensagem para outra pasta.</para>
+<note
+><para
+>Você atualmente não pode usar pastas &imap; como um alvo.</para
+></note>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Definir Identidade Para</guilabel
+></term>
+<listitem>
+<para
+>Isto irá configurar a identidade que será usada se responder a esta mensagem.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Marcar Como</guilabel
+></term>
+<listitem>
+<para
+>Isto permite-lhe marcar a mensagem como lida ou importante, mas também como reencaminhada, respondida, &etc;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Enviar MDN Falso</guilabel
+></term>
+<listitem>
+<para
+>Isto irá enviar uma notificação de entrega de mensagem falsa (&ie; uma confirmação de leitura) para o remetente da mensagem.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Definir Transporte Para</guilabel
+></term>
+<listitem>
+<para
+>Isto irá configurar o método de transporte (&eg;, &SMTP;) se você responder à mensagem.</para>
+</listitem>
+</varlistentry
+> 
+<varlistentry>
+<term
+><guilabel
+>Definir Responder Para</guilabel
+></term>
+<listitem
+><para
+>Irá modificar o campo <guilabel
+>Responder Para</guilabel
+> desta mensagem. Isto poderá ser útil para as listas de discussão que definam automaticamente um endereço de resposta que não lhe agrade.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Reenviar Para</guilabel
+></term>
+<listitem
+><para
+>Isto irá encaminhar a mensagem integrada (&ie; como se você tivesse selecionado <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Encaminhar</guimenuitem
+><guimenuitem
+>Integrada...</guimenuitem
+></menuchoice
+>) para outro endereço de e-mail. Você pode selecionar o modelo a ser usado no encaminhamento com este filtro na lista.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Redirecionar Para</guilabel
+></term>
+<listitem
+><para
+>Isto irá redirecionar a mensagem para outro endereço eletrônico.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Confirmar Entrega</guilabel
+></term>
+<listitem
+><para
+>Irá tentar devolver uma mensagem ao remetente que indique uma entrega com sucesso da sua mensagem, se o remetente a pediu.</para
+> <para
+>Esta ação permite-lhe selecionar quem irá receber as confirmações de entrega sua. Ainda que possa ativar globalmente o envio de confirmações na janela <guilabel
+>Configurar o &kmail;...</guilabel
+> (na página <link linkend="configure-security"
+><guilabel
+>Segurança</guilabel
+></link
+>), recomendamos que não as envie para todo mundo, uma vez que isto facilita o registro das mensagens de lixo (spam) para o remetente.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Executar Comando</guilabel
+></term>
+<listitem>
+<para
+>Isto irá executar um programa, mas não irá modificar a mensagem. Especifique a localização completa do programa que deseja executar; o &kmail; irá então ficar bloqueado até que o programa termine. Se você deseja que o &kmail; não fique bloqueado adicione '&amp;' ao comando. Você poderá alimentar o programa com os componentes da mensagem: <symbol
+>&percnt;0</symbol
+>, <symbol
+>&percnt;1</symbol
+>, &etc; correspondem aos arquivos que representam os componentes da mensagem; para as mensagens normais o <symbol
+>&percnt;0</symbol
+> é o texto, o <symbol
+>&percnt;1</symbol
+> é o primeiro anexo e assim por diante. Adicionalmente, a mensagem completa é transferida para o <acronym
+>stdin</acronym
+> do programa; da mesma forma, todas as ocorrências de <symbol
+>&percnt;{foo}</symbol
+> são substituídas pelo conteúdo do cabeçalho foo. Se você precisar identificar a mensagem pelo seu local de armazenamento no Akonadi, você pode usar as chaves %{itemid} ou o %{itemurl} para isso.</para>
+
+<!-- fixme: still correct? -->
+<warning
+><para
+>Isto só funciona atualmente se a mensagem tiver <emphasis
+>pelo menos um</emphasis
+> anexo. Se não, nem mesmo o <symbol
+>&percnt;0</symbol
+> irá funcionar!</para
+></warning>
+
+<tip
+><para
+>Você poderá indicar aqui comandos arbitrariamente complexos, uma vez que o &kmail; usa uma sublinha de comando para executar este comando, como tal, até mesmo este comando irá funcionar (dentro dos seus limites): <userinput
+><command
+>uudecode</command
+> <option
+>-o</option
+> <parameter
+>$(mktemp kmail-uudescodificado.XXXXXX)</parameter
+> &amp;&amp; <command
+>echo</command
+> <parameter
+>$'\a'</parameter
+></userinput
+></para
+></tip>
+<!-- fixme: is this uudecode tip useless now?? -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Enviar Para</guilabel
+></term>
+<listitem>
+<para
+>Isto irá passar a mensagem para um programa: se o programa devolver algum texto de resultado, a mensagem inteira (incluindo os cabeçalhos) será substituída por este texto; se o programa não devolver nenhum resultado ou sair com um código de erro diferente de 0 (o que corresponde a um erro), a mensagem não será alterada. Indique a localização completa do programa. As mesmas substituições (<symbol
+>&percnt;n</symbol
+>, <symbol
+>&percnt;{xpto}</symbol
+> que o <guilabel
+>executar um comando</guilabel
+> são efetuadas na linha de comando.</para>
+<warning
+><para
+>Tenha cuidado com esta ação, uma vez que irá facilmente embaralhar as suas mensagens se o programa do filtro devolver lixo ou linhas extra.</para
+></warning>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Remover Cabeçalho</guilabel
+></term>
+<listitem>
+<para
+>Irá remover todos os campos de cabeçalhos com o nome indicado pela mensagem. Isto é usado principalmente para remover cabeçalhos <quote
+>Reply-To:</quote
+> inválidos.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Adicionar Cabeçalho</guilabel
+></term>
+<listitem>
+<para
+>Se este campo ainda não estiver presente, isto irá adicionar um novo cabeçalho com o nome e valor indicados à mensagem: se já existir um campo do cabeçalho com esse nome, ele é sobreposto com o valor indicado; se já existirem vários cabeçalhos com esse nome (&eg; os cabeçalhos <quote
+>Received:</quote
+>), é sobreposto um deles arbitrariamente e os outros são mantidos inalterados -- esta é uma limitação conhecida. Você poderá desejar combinar estre filtro com o <guilabel
+>remover um cabeçalho</guilabel
+> para se certificar que não existem mais cabeçalhos com esse nome na mensagem.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Reescrever Cabeçalho</guilabel
+></term>
+<listitem>
+<para
+>Irá pesquisar o campo do cabeçalho indicado, modificar o seu conteúdo e escrevê-lo de volta. O texto da procura é sempre interpretado como uma expressão regular com distinção de maiúsculas. O texto de substituição é inserido literalmente, exceto no caso das ocorrências de <userinput
+>\n</userinput
+>, <userinput
+>$n</userinput
+> e <userinput
+>${nn}</userinput
+>, onde o <userinput
+>n</userinput
+> é um número positivo (um único algarismo, exceto no terceiro formato) ou <userinput
+>0</userinput
+>. Estes formatos são interpretados como referências anteriores a subsequências de texto delimitadas entre parênteses no texto da procura.</para
+><para
+>As restrições análogas do <guilabel
+>adicionar um cabeçalho</guilabel
+> aplicam-se também aqui.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Tocar Som</guilabel
+></term>
+<listitem>
+<para
+>Tocará o som indicado.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="filter-examples">
+<title
+>Exemplos de Filtros</title>
+
+<para
+>Neste momento, o &kmail; não realça ou marca os e-mails que tenham um cabeçalho extra de <replaceable
+>Prioridade:</replaceable
+>. Se quiser marcar todas as mensagens <quote
+>urgentes</quote
+> como sendo <emphasis
+>importantes</emphasis
+>, pode usar um filtro:</para>
+
+<procedure>
+<title
+>Marcar as mensagens urgentes como <emphasis
+>importantes</emphasis
+></title>
+<step>
+<para
+>Abra o diálogo <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar filtros...</guimenuitem
+></menuchoice
+> e clique no ícone <guiicon
+>Novo</guiicon
+> na lista de <guilabel
+>Filtros disponíveis</guilabel
+> abaixo.</para>
+</step>
+<step>
+<para
+>Na área dos <guilabel
+>Critérios do filtro</guilabel
+>, selecione <guilabel
+>Em algum lugar no cabeçalho</guilabel
+> e <guilabel
+>contém</guilabel
+> nas listas e digite <userinput
+>Prioridade</userinput
+> no campo de texto. Selecione o mesmo critério para a próxima linha e digite <userinput
+>urgente</userinput
+> no campo de texto da segunda lista.</para>
+<para
+>Como tal, o seu filtro corresponderá a todas as mensagens que contenham um campo do cabeçalho <quote
+>Priority: urgent</quote
+>.</para>
+</step>
+<step>
+<para
+>Passe para a área <guilabel
+>Ações do filtro</guilabel
+>. Selecione <guilabel
+>Marcar como</guilabel
+> na primeira lista, de modo que uma nova lista de marcação seja mostrada à direita. Selecione a opção <guilabel
+>Importante</guilabel
+> nessa lista.</para>
+</step>
+<step>
+<para
+>Considerando que você deseja que este filtro <emphasis
+>não</emphasis
+> impeça as outras regras de filtragem de mensagens de serem aplicadas, <emphasis
+>desmarque</emphasis
+> cuidadosamente a opção <guilabel
+>Se este filtro corresponder, parar o processamento aqui</guilabel
+>.</para>
+</step>
+<step>
+<para
+>Clique em <guibutton
+>OK</guibutton
+>, e está feito.</para>
+<para
+>Lembre-se de mover a entrada do filtro <quote
+>Priority: urgent</quote
+> para o topo da lista de <guilabel
+>Filtros disponíveis</guilabel
+>, a cada vez em que tenha adicionado outro filtro, para que o seu filtro ininterrupto seja sempre aplicado em primeiro lugar.</para>
+</step>
+</procedure>
+
+<para
+>Se eu estiver inscrito à Lista (geral) do &kde;, eu poderia criar uma pasta para a lista (chamarei de <replaceable
+>Geral do KDE</replaceable
+>) e usar um filtro para transferir automaticamente as mensagens novas da minha caixa de entrada para a pasta <replaceable
+>Geral do KDE</replaceable
+> se forem da Lista do &kde;? Aqui está como criar este filtro:</para>
+
+<procedure>
+<title
+>Filtrando uma lista de discussão</title>
+<step>
+<para
+>Experimente se o <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guisubmenu
+>Criar um filtro</guisubmenu
+><guimenuitem
+>Filtro de Lista de Discussão...</guimenuitem
+></menuchoice
+> consegue identificar a lista de discussão (o nome da lista irá aparecer, nesse caso, no item do menu); neste caso, isto funciona e será apresentado um filtro <quote
+>Id da lista <guilabel
+>contém</guilabel
+> &lt;kde.mail.kde.org&gt;</quote
+> pré-definido. Você seleciona então a pasta de destino desejada no menu de pastas do grupo da <guilabel
+>Ação do Filtro</guilabel
+> e é tudo!</para>
+
+<para
+>Se isto não funcionar, pense numa forma única de identificar as mensagens que deseja filtrar. A propriedade (quase) única das minhas mensagens da lista do &kde; é que elas contém sempre <quote
+>kde@kde.org</quote
+> nos campos <guilabel
+>To:</guilabel
+> ou <guilabel
+>Cc:</guilabel
+>. É quase sempre única, porque isto falha nas mensagens com publicações cruzadas.</para>
+</step>
+<step>
+<para
+>Selecione a opção <menuchoice
+><guimenu
+>Configuração</guimenu
+><guimenuitem
+>Configurar os Filtros...</guimenuitem
+></menuchoice
+>.</para>
+</step>
+<step>
+<para
+>Clique no botão <guibutton
+>Novo</guibutton
+> para criar um filtro em branco. Irá aparecer como <guilabel
+>&lt;sem nome&gt;</guilabel
+>.</para>
+</step>
+<step>
+<para
+>Na área dos <guilabel
+>Critérios do filtro</guilabel
+>, selecione <guilabel
+>Todos os destinatários</guilabel
+> na primeira lista, <guilabel
+>contém</guilabel
+> na segunda lista e escreva <userinput
+>kde@kde.org</userinput
+> no campo de texto.</para>
+</step>
+<step>
+<para
+>Passe para a seção <guilabel
+>Ações do Filtro</guilabel
+>. Selecione <guilabel
+>Mover para a pasta</guilabel
+> na primeira lista. Clique no ícone de pasta e uma janela contendo uma lista de pastas aparecerá. Selecione a pasta para onde deseja transferir as mensagens filtradas. Para este exemplo, você iria selecionar a <guilabel
+>Geral do KDE</guilabel
+> nessa lista.</para>
+</step>
+</procedure>
+
+<para
+>Você poderá concluir que irá necessitar de usar critérios mais poderosos para filtrar convenientemente as suas mensagens; por exemplo, você poderá apenas filtrar as mensagens da Lista do &kde; que são escritas pelo seu amigo <replaceable
+>Pedro Morais &lt;pm@exemplo.com&gt;</replaceable
+>. Aqui é onde o resto da seção de critérios começa a funcionar:</para>
+
+<procedure>
+<title
+>Extendendo o filtro</title>
+<step>
+<para
+>Abra a janela para <guilabel
+>Configurar os Filtros...</guilabel
+> e selecione o filtro que criou.</para>
+</step>
+<step>
+<para
+>Uma vez que deseja filtrar todas as mensagens que possuem <replaceable
+>kde@kde.org</replaceable
+> nos campos <guilabel
+>Para:</guilabel
+> ou <guilabel
+>Cc:</guilabel
+> <emphasis
+>e</emphasis
+> que sejam do Pedro, assinale o botão de opção <guibutton
+>Coincidir com todos os seguintes</guibutton
+>.</para>
+</step>
+<step>
+<para
+>Depois, vá para a segunda regra de pesquisa e selecione o seguinte nas listas respectivas: <guilabel
+>De</guilabel
+>, <guilabel
+>contém</guilabel
+>. Em seguida, digite <userinput
+>pm@exemplo.com</userinput
+> no campo de texto.</para>
+</step>
+</procedure>
+
+<para
+>Você agora tem um filtro que transfere todas as mensagens da Lista do &kde; que são do <userinput
+>pm@exemplo.com</userinput
+>.</para>
+<!-- fixme: trigger with ctrl-j or whenever new mail arrives (unless
+<guilabel
+>Advanced Options</guilabel
+> are changed. -->
+</sect2>
+
+<sect2 id="filter-optimization">
+<title
+>Otimização de Filtros</title>
+
+<para
+>É importante saber que, por exemplo, a ordem dos filtros tem um impacto na velocidade do processo de filtragem. Aqui estão algumas ideias que poderão ajudar a melhorar esse processo: </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Pare o processamento do filtro o mais cedo possível:</term>
+<listitem>
+<para
+>Se souber que um filtro processa finalmente uma determinada classe de mensagens, por favor assinale a opção <guilabel
+>Se este filtro corresponder, parar aqui o processamento</guilabel
+> para o filtro. Isto irá evitar a avaliação das regras dos filtros subsequentes. (Veja as opções avançadas no <link linkend="filter-dialog-id"
+>Diálogo de Filtros</link
+>).</para>
+<para
+>Um exemplo é a filtragem de mensagens das listas de discussão através do cabeçalho List-Id em pastas separadas. Se tiver concluído que uma mensagem veio da lista A significa que você poderá evitar a validação do próximo filtro para as mensagens da lista B. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Considere os custos da avaliação das regras do filtro:</term>
+<listitem>
+<para
+>O tempo necessário para avaliar a regra de um filtro depende da forma como a regra é organizada. Em particular, a pesquisa por uma subsequência de texto com a operação <guilabel
+>contém</guilabel
+> é mais rápida que uma correspondência de padrões com a operação <guilabel
+>corresponde à expressão regular</guilabel
+>. </para>
+<para
+>Outra dependência é a quantidade de dados usados para a avaliação de uma regra de filtragem. Se a regra se baseia num cabeçalho da mensagem, a sua avaliação deverá ser normalmente mais rápida do que a avaliação de uma regra com base na mensagem completa. </para>
+<para
+>Você deverá tentar manter as regras do filtro o mais simples possível. </para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>Verifique a ordem dos seus filtros:</term>
+<listitem>
+<para
+>Todas as diferentes ações têm uma complexidade diferente. As ações de filtragem mais dispendiosas são <guilabel
+>Enviar para</guilabel
+> e <guilabel
+>Executar um comando</guilabel
+>, porque ambas necessitam de programas externos para serem executadas. A criação de filtros que contenham estas ações após outros filtros poderá reduzir o número de vezes que são necessárias ações complexas, o que é útil se a lógica do filtro permitir.</para
+> 
+<para
+>Um exemplo é a filtragem de mensagens de uma lista de discussão e a detecção de lixo (spam). Para a detecção de lixo, você irá usar normalmente uma ferramenta externa através de uma ação <guilabel
+>Enviar para</guilabel
+>. A filtragem das mensagens da lista de discussão é feita com o cabeçalho List-Id. Se não quiser validar as mensagens da lista de discussão também, é melhora usar o filtro para as mensagens da lista de discussão antes do filtro para a detecção de lixo. Desta forma, você evita a verificação dispendiosa e lenta de lixo eletrônico sobre todas as mensagens que foram identificadas como pertencentes à lista. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="filter-logging">
+<title
+>Registro de Filtros</title>
+<para
+>Se quiser verificar se os seus filtros funcionam como é pretendido, você poderá abrir um visualizador do registro de filtros com a opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Visualizador do Registro dos Filtros...</guimenuitem
+></menuchoice
+>. </para>
+<para
+>No visualizador, você poderá configurar o registro do processamento do filtro. Você poderá controlar o nível de detalhe do registro, limpar o registro ou salvá-lo num arquivo. Este registro poderá fornecer informações valiosas se você precisar de depurar o seu processo de filtragem. </para>
+</sect2>
+</sect1>
+
+<sect1 id="backups">
+<title
+>Fazendo cópia de segurança do &kmail;</title>
+<para
+>Esta seção descreve várias soluções de cópias de segurança dentro do &kmail;.</para>
+<sect2 id="archiving">
+<title
+>Arquivamento</title>
+<variablelist>
+<varlistentry id="folder-archive">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Arquivar pasta...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Esta funcionalidade também está disponível através da opção <guimenuitem
+>Arquivar pasta...</guimenuitem
+>, do menu de contexto aberto com o &RMB;. Isto irá <action
+>abrir uma caixa de diálogo</action
+> que permite-lhe criar um único arquivo com o conteúdo da pasta selecionada.</para>
+<para
+>O campo <guilabel
+>Pasta:</guilabel
+> mostra a pasta selecionada; caso queira alterar a pasta que será arquivada, clique ícone da mesma. A lista <guilabel
+>Formato:</guilabel
+> permite-lhe escolher um formato (as opções são: zip, tar, tar.bz2 e tar.gz). Se quiser alterar o nome ou local padrão, clique na pasta no fim do <guilabel
+>Arquivo morto</guilabel
+>.</para>
+ <para
+>Assinale a opção <guilabel
+>Excluir a pasta e subpastas após a conclusão</guilabel
+> se desejar que tudo o que foi arquivado seja excluído. Por padrão, todas as subpastas serão arquivadas, mas se quiser arquivar apenas a pasta-mãe, desmarque a opção <guilabel
+>Arquivar todas as subpastas</guilabel
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry id="auto-archive">
+<term
+><menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar o arquivamento automático...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Esta é uma ferramenta poderosa que pode ser usada para auxiliar a realização de cópias de segurança dos seus e-mails. Para mais detalhes, consulte <ulink url="help:/akonadi_archivemail_agent"
+>Arquivamento automático</ulink
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry id="archive-folder">
+<term
+><menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar Agente de Arquivamento de Pastas...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Essa funcionalidade permite-lhe arquivar mensagens individuais em uma pasta específica.</para>
+<para
+>O Arquivamento de Pastas pode ser ativado por conta, de forma a permitir-lhe arquivar e-mails individuais através do menu do botão direito do mouse.</para>
+<screenshot>
+<screeninfo
+>Imagem do Arquivamento de Pastas</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folderarchiveagent.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+</screenshot>
+<para
+>O Arquivamento de Pastas é usado para arquivar e-mails individuais para uma pasta indicada. Por exemplo, você pode precisar arquivar todos os recibos de contas em um único local. O Arquivamento de Pastas pode acomodar facilmente essa necessidade. <action
+>Comece usando a opção <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar o Agente de Arquivamento de Pastas...</guimenuitem
+></menuchoice
+> na janela do leitor do &kmail; para abrir uma caixa de diálogo que permite configurar o agente de arquivamento de pastas.</action
+> </para>
+
+<para
+>Esta caixa de diálogo terá uma aba para cada uma das suas contas configuradas, incluindo as Pastas Locais, e você precisará configurar todas as contas em que você deseja usar esta funcionalidade. A primeira opção permite-lhe ativar/desativar o agente de arquivo de pastas. Está desativado por padrão e, para ativá-lo, assinale a opção <guilabel
+>Ativar</guilabel
+>. Você poderá definir a localização da sua pasta de Arquivamento se clicar no ícone da pasta ao lado de <guilabel
+>Pasta:</guilabel
+> e selecionar a pasta que desejar usar. Por exemplo, você poderá criar uma pasta chamada <quote
+>recibos</quote
+> se clicar em <guibutton
+>Nova subpasta...</guibutton
+> e digitar <quote
+>recibos</quote
+> na caixa de diálogo. Você pode escolher uma localização de pastas em qualquer lado, &eg;, uma pasta nas suas <quote
+>Pastas Locais</quote
+> ou no seu servidor &imap;.</para>
+<para
+>Você tem várias opções para arquivar e-mails: </para>
+<variablelist id="archivefolder-options">
+  <varlistentry>
+  <term
+><guilabel
+>Pasta única</guilabel
+></term>
+  <listitem
+><para
+>Usa a pasta selecionada ordenada por data.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Pasta por meses</guilabel
+></term>
+  <listitem
+><para
+>Cria novas pastas dentro da pasta selecionada separadas por mês.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Pasta por anos</guilabel
+></term>
+  <listitem
+><para
+>Cria novas pastas dentro da pasta selecionada separadas por ano.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+<para
+>Agora, quando receber um novo recibo, você pode clicar com o &RMB; no e-mail e selecionar <guimenuitem
+>Arquivar</guimenuitem
+> no menu. O e-mail será arquivado na sua pasta de arquivamento configurada, para fácil visualização futura. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+<sect2 id="exporting">
+<title
+>Exportando</title>
+<variablelist>
+<varlistentry id="settingsexport">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Exportar dados do &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Esta funcionalidade permite-lhe exportar as definições e os e-mails locais em um arquivo compactado. Para mais detalhes, consulte <ulink url="help:/pimsettingexporter"
+>pimsettingexporter</ulink
+>.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+<sect1 id="import-restore">
+<title
+>Restaurar e importar no &kmail;</title>
+<para
+>Esta seção descreve várias soluções de restauração de cópias de segurança e importação no &kmail;.</para>
+<sect2 id="restore">
+<title
+>Restaurar os e-mails e definições a partir de cópias de segurança</title>
+<variablelist>
+<varlistentry id="settingsimport">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Exportar dados do &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Se você usou a Exportação de Definições PIM para criar uma cópia de segurança dos seus e-mails e definições locais, use-o novamente para trazer de volta ao &kmail;. Para mais detalhes, consulte <ulink url="help:/pimsettingexporter"
+>pimsettingexporter</ulink
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+<sect2 id="importing-options">
+<title
+>Opções de importação no &kmail;</title>
+<variablelist>
+<varlistentry id="importing-import-wizard">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Assistente de importação...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>O &kmail; tem um assistente de importação para tornar mais simples a transição de outro aplicativo de e-mail. Para mais detalhes, consulte a seção <ulink url="help:/importwizard"
+>Assistente de Importação</ulink
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry id="importing-import-kmailcvt">
+<term
+><menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Importar mensagens...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>O &kmail; pode importar facilmente os formatos de arquivo dos aplicativos a seguir, usando a ferramenta <application
+>KMailCVT</application
+>, encontrada em:</para>
+  <simplelist>
+    <member
+>Arquivamento do &kmail;</member>
+    <member
+>mbox(Unix, Evolution)</member>
+    <member
+>Evolution 1.x</member>
+    <member
+>Evolution 2.x</member>
+    <member
+>Evolution 3.x</member>
+    <member
+>&kmail;</member>
+    <member
+>OS X Mail</member>
+    <member
+>Opera</member>
+    <member
+>Sylpheed</member>
+    <member
+>Thunderbird/Mozilla</member>
+    <member
+>The Bat!</member>
+    <member
+>Outlook Express</member>
+    <member
+>Pegasus-Mail</member>
+    <member
+>Lotus Notes</member>
+    <member
+>Texto simples</member>
+  </simplelist>
+  <para
+>Consulte a documentação do <application
+>KMailCVT</application
+> em <ulink url="help:kmailcvt"
+>KMailCVT</ulink
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+</sect1>
+<sect1 id="multiple-accounts">
+<title
+>Usar Várias Contas</title>
+
+<para
+>As várias contas são usadas para verificar as mensagens em mais de um endereço de e-mail e/ou servidor. Selecione a opção <menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+> e clique na página <guilabel
+>Contas</guilabel
+> para adicionar ou alterar a sua configuração de contas. Veja a seção do <link linkend="getting-started"
+>Iniciando o Uso</link
+> para mais informações sobre as opções da página <guilabel
+>Contas</guilabel
+>.</para>
+
+<para
+>Para verificar as mensagens de uma conta em particular, use o submenu <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar E-mail Em</guimenuitem
+></menuchoice
+> para selecionar a conta a pesquisar. Você poderá também clicar com o botão do mouse no ícone <guiicon
+>Verificar E-mail</guiicon
+>, durante algum tempo, para obter uma lista de contas.</para>
+
+</sect1>
+
+<sect1 id="pgp">
+<!-- This section is from Andreas Gungl, 2000-05-21, updated 2002-10-06 by Ingo Kloecker -->
+<title
+>Assinando e Criptografando Mensagens com o <application
+>GnuPG</application
+></title>
+
+<!--
+<note
+><para
+>There have been major changes in the way &kmail; handles 
+signing/encryption. The following introduction applies to the previous
+version of &kmail;. You can still read the introduction to get an overview
+about how to sign/encrypt messages, but the details, especially those of
+the configuration, will differ.</para
+></note>
+-->
+<para
+>Esta é uma breve introdução à configuração do suporte do &kmail; ao <application
+>GnuPG</application
+> (<application
+>&GNU; Privacy Guard</application
+>); ela dá também algumas sugestões sobre a utilização do <application
+>GnuPG</application
+>. É escrito para as pessoas que são principiantes nesta área; se você estiver familiarizado com a utilização do <application
+>GnuPG</application
+>, você poderá saltar a maior parte destes passos.</para>
+
+<para
+>Verifique também, por favor, as <link linkend="pgp-faq"
+>&FAQ; sobre o <application
+>GnuPG</application
+></link
+>.</para>
+
+<warning
+><para
+>Os anexos não serão assinados/criptografados se você estiver usando o suporte de OpenPGP incorporado: para assinar/criptografar os anexos, você terá de instalar o GnuPG e algumas bibliotecas necessárias; aí, poderá decidir, para cada anexo, se deseja criptografá-lo ou não. </para
+></warning>
+
+<warning
+><para
+>O &kmail; tem que se basear no resultado do <application
+>GnuPG</application
+>; este resultado é diferente normalmente entre versões diferentes do <application
+>GnuPG</application
+>, por isso é importante que você teste se a criptografia funciona de fato com a sua configuração, antes de começar a usá-la a sério. O &kmail; poderá <emphasis
+>não</emphasis
+> avisá-lo se algo correr mal -- ative a opção <guilabel
+>Mostrar o texto criptografado/assinado depois de escrevê-lo</guilabel
+>. </para
+></warning>
+
+<para
+>Para configurar e usar o suporte do <application
+>GnuPG</application
+> no &kmail; é necessário ter o <application
+>GnuPG</application
+> instalado e configurado convenientemente; claro que não é possível dar-lhe aqui uma introdução completa ao <application
+>GnuPG</application
+>. Iremos apenas mencionar os passos que você terá de fazer para pôr o <application
+>GnuPG</application
+> funcionando. Para mais detalhes, você deverá dar uma olhada no <ulink url="http://www.gnupg.org/docs.html#guides"
+>Manual de Privacidade da &GNU;</ulink
+>.</para>
+
+<para
+>É com certeza uma boa ideia estudar esta documentação, assim como uma introdução à criptografia por chave pública: aí você poderá aprender bastante sobre os conceitos básicos que o ajudarão a compreender o que acontece; também são discutidos aí vários tópicos relacionados com a segurança.</para>
+
+<para
+>Agora, vamos começar.</para>
+
+<sect2 id="pgp-preconditions">
+<title
+>Pré-condições</title>
+
+<para
+>O &kmail; espera que o executável do seu <application
+>GnuPG</application
+> se chame <command
+>gpg</command
+>. Se não for este o caso, basta criar uma ligação simbólica.</para>
+
+<para
+>Se você ainda não isso, você terá que criar um par de chaves (chave pública e privada) para a sua identidade. Você pode fazer isto usando o &kgpg;, o &kleopatra; ou usando a linha de comando: <userinput
+><command
+>gpg</command
+> <option
+>--gen-key</option
+></userinput
+>. O &kmail; não tem nenhum suporte interno para a geração de chaves do <application
+>gpg</application
+> no momento. A identidade (normalmente o seu nome seguido do seu endereço de e-mail entre sinais de menor e maior, como <userinput
+>José da Silva &lt;jose@exemplo.com&gt;</userinput
+>) e a sua frase-senha são importantes para a cooperação entre o &kmail; e o <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-settings">
+<title
+>Configurações Relacionadas com o <application
+>GnuPG</application
+> no &kmail;</title>
+
+<para
+>Selecione a aba <guilabel
+>Composição</guilabel
+> na página de configuração da <guilabel
+>Segurança</guilabel
+>; nela, você irá encontrar as seguintes opções:</para>
+
+<variablelist>
+<!-- not in 2.0.96?
+<varlistentry>
+<term
+><guilabel
+>Encryption tool</guilabel
+></term>
+<listitem>
+<para
+>Here you can choose if you want to use <application
+>PGP</application
+>,
+<application
+>GnuPG</application
+> or no encryption
+software at all; of course, the program you select has to be
+installed on your system (it is also important to select the correct
+version.)</para>
+</listitem>
+</varlistentry>
+-->
+
+<varlistentry>
+<term
+><guilabel
+>Sempre incluir o certificado da minha própria identidade ao criptografar e-mails</guilabel
+></term>
+<listitem>
+<para
+>Se esta opção estiver desligada e você quiser enviar uma mensagem criptografada, então você não poderá mais ler esta mensagem depois de compô-la e criptografá-la. Ative esta opção para manter as mensagens criptografadas legíveis para você também.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Armazenar as mensagens criptografadas enviadas</guilabel
+></term>
+<listitem>
+<para
+>Quando esta opção está selecionada, mensagens enviadas são armazenadas criptografadas como elas foram enviadas. Isto não é recomendável, uma vez que não será mais capaz de ler as mensagens se um certificado requerido expirar.</para
+> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Sempre mostrar as chaves de criptografia para aprovação</guilabel
+></term>
+<listitem>
+<para
+>Isto irá abrir sempre uma janela que lhe permite escolher as chaves usadas para cada destinatário quando estiver enviando uma mensagem criptografada; se esta opção estiver desligada, o &kmail; irá mostrar esta janela apenas se não conseguir achar uma chave para um destinatário ou quando existirem preferências de criptografia em conflito ou indefinidas.</para
+> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Criptografar automaticamente as mensagens sempre que possível</guilabel
+></term>
+<listitem
+><para
+>Se esta opção estiver ativa, o &kmail; irá criptografar automaticamente as mensagens com o suporte incorporado do OpenPGP ou com o Plugin de PGP/&MIME;, para cada destinatário, desde que exista uma chave de PGP de confiança no seu chaveiro e não tiver dito ao &kmail; para criptografar as mensagens enviadas para certos destinatários. Se estiver em dúvida, o &kmail; irá perguntar se a mensagem deverá ser criptografada ou não.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Agora que tem configurada a ferramenta de criptografia, você tem que dizer ao &kmail; qual chave de OpenPGP deseja usar para assinar e para criptografar as mensagens; para fazer isso, vá à <link linkend="configure-identity"
+>configuração das Identidades</link
+> e indique a chave a ser usada na aba <guilabel
+>Criptografia</guilabel
+> da configuração da identidade.</para>
+
+<para
+>Agora você será capaz de assinar as mensagens enviadas; para permitir às pessoas enviarem-lhe mensagens criptografadas e para deixá-las verificar a sua assinatura, você precisa enviar-lhes a sua chave pública ou enviar a sua chave pública para um servidor de chaves de <application
+>GnuPG</application
+> público, para as que as pessoas possam obter a sua chave a partir daí. Para enviar as mensagens criptografadas para outras pessoas ou para verificar as mensagens assinadas por elas, você precisa das chaves públicas delas; você poderá gravar as suas chaves públicas num servidor público de chaves de <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-sign-your-messages">
+<title
+>Assinar suas Mensagens</title>
+
+<para
+>Você poderá compor a sua mensagem como de costume na janela do compositor do &kmail;. Antes de enviar a mensagem, assinale o ícone <guibutton
+>Assinar</guibutton
+> na barra de ferramentas da janela do compositor; aí, você poderá enviar a mensagem. A identidade que você está usando para escrever a mensagem atual precisa estar conectada a uma <guilabel
+>Chave do OpenPGP</guilabel
+> na seção <guilabel
+>Identidade</guilabel
+> da janela de <guilabel
+>Configuração</guilabel
+>. Para assinar a mensagem, o &kmail; você precisa saber a sua frase-senha do <application
+>GnuPG</application
+>. se não selecionou a opção <guilabel
+>Manter a frase-senha na memória</guilabel
+> na seção de <guilabel
+>Segurança</guilabel
+>, o &kmail; irá pedir-lhe a senha; caso contrário, se você já tiver fornecido a frase-senha ao &kmail;, ele irá assinar a mensagem sem perguntar mais nada.</para>
+
+</sect2>
+
+<sect2 id="pgp-encrypt-your-messages">
+<title
+>Criptografar suas Mensagens</title>
+
+<para
+>Para enviar uma mensagem criptografada para alguém que você tenha uma chave pública, você poderá simplesmente criar a mensagem na janela do compositor. Antes de enviar a mensagem, clique no botão <guibutton
+>Criptografar</guibutton
+> da barra de ferramentas da janela do compositor; lembre-se que você poderá não ter que clicar no botão se a opção <guilabel
+>Criptografar automaticamente as mensagens sempre que possível</guilabel
+> estiver selecionada na configuração do &kmail; (veja <link linkend="pgp-sign-your-messages"
+>em cima</link
+>). Finalmente, envie a mensagem.</para>
+
+<para
+>Se você tiver clicado no botão <guibutton
+>Criptografar</guibutton
+> e o &kmail; não conseguir encontrar uma chave correspondente para o destinatário, ele irá mostrar uma lista com todas as chaves disponíveis na janela de <guilabel
+>Seleção da Chave de Criptografia</guilabel
+>; se o &kmail; encontrar mais de uma chave de confiança para um determinado destinatário, ele irá mostrar uma lista que contém todas as chaves correspondentes para este destinatário. Em qualquer dos casos, você poderá selecionar as chaves que deverão ser usadas para criptografar esta mensagem para o destinatário em questão. Se usar a opção <guilabel
+>Recordar a opção</guilabel
+>, você poderá poupar a sua seleção para as mensagens futuras.</para>
+
+<para
+>Se você estiver usando uma chave pela primeira vez, e existirem Preferências de Criptografia em conflito ou se a opção <guilabel
+>Mostrar sempre as chaves de criptografia para aprovação</guilabel
+> estiver selecionada na seção <guilabel
+>Segurança</guilabel
+> da janela de configuração do &kmail;, a janela de <guilabel
+>Aprovação da Chave de Criptografia</guilabel
+> irá aparecer; aí, você poderá selecionar várias chaves diferentes para os destinatários e definir a <guilabel
+>Preferência de Criptografia</guilabel
+> para cada um. A opção padrão, o <guilabel
+>Criptografar sempre que for possível</guilabel
+>, irá criptografar automaticamente a sua mensagem se existir uma chave de confiança para cada destinatário.</para>
+
+<para
+>Como foi mencionado acima, você não será capaz de ler as suas próprias mensagens criptografadas que enviou se não tiver assinalado a opção <guilabel
+>Quando criptografar os e-mails, sempre criptografar para o certificado da minha própria identidade</guilabel
+> da página de <guilabel
+>Segurança</guilabel
+> da configuração.</para>
+
+</sect2>
+
+<sect2 id="pgp-send-your-public-key">
+<title
+>Enviar sua Chave Pública</title>
+
+<para
+>Prepare uma mensagem para a pessoa para quem deseja enviar a sua chave pública.; depois escolha, no menu da janela do compositor, a opção <menuchoice
+><guimenu
+>Anexar</guimenu
+><guimenuitem
+>Anexar a Minha Chave Pública</guimenuitem
+></menuchoice
+>: isto irá anexar a chave pública que definiu para a identidade atual à mensagem. Depois, poderá então enviar a mensagem.</para>
+
+<para
+>Lembre-se que não é totalmente seguro se você assinar a mensagem, para certificar-se que o destinatário irá receber a chave correta: poderá haver um ataque de um intermediário, uma vez que uma pessoa poderá alterar a chave e assinar a mensagem com essa outra chave. É por isso que o destinatário deverá verificar a chave anexada, analisando a impressão digital da chave com a que recebeu de uma forma segura; dê uma olhada na documentação do <application
+>GnuPG</application
+> para mais detalhes.</para>
+
+</sect2>
+
+<sect2 id="pgp-you-received-an-encrypted-message">
+<title
+>Você recebeu uma mensagem criptografada</title>
+
+<para
+>Tudo o que tem que fazer é selecionar a mensagem no &kmail;. Será pedida a sua frase-senha; então, o &kmail; irá tentar descriptografar a mensagem e mostrar-lhe o texto simples se a mensagem foi criptografada com a sua chave pública; caso contrário, você não será capaz de lê-la. O &kmail; guarda as mensagens criptografadas, por isso ninguém conseguirá ler estas mensagens sem conhecer a sua frase-senha.</para>
+
+</sect2>
+
+<sect2 id="pgp-receiving-a-public-key">
+<title
+>Recebendo uma Chave Pública</title>
+
+<para
+>Você poderá receber uma chave pública como anexo ou via HTTP, FTP ou um disquete. Antes de poder usar esta chave para criptografar uma mensagem para o dono da chave, você deverá verificá-la (analisar a sua impressão digital ou ver as assinaturas de confiança); aí, você poderá adicionar esta chave ao seu chaveiro público se digitar <userinput
+><command
+>gpg</command
+> <option
+>--import</option
+> <replaceable
+>arquivo</replaceable
+></userinput
+> na linha de comando. Se a chave não estiver certificada com uma assinatura de confiança, você não poderá usá-la para criptografar as mensagens, a menos que tenha assinado a chave com a sua chave. </para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-spam-wizard">
+<title
+>O assistente de anti-spam</title>
+
+<sect2 id="spam-wizard-basics">
+<title
+>Fundamentos</title>
+
+<para
+>O &kmail; não tem uma solução de detecção de lixo incorporada: os desenvolvedores acreditam que o uso de ferramentas externas especializadas é a melhor abordagem. O &kmail; usa estas ferramentas através da sua arquitetura de filtros flexível. O assistente de anti-spam ajuda-o na configuração inicial do filtro. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>O que o assistente poderá fazer por você?</term>
+<listitem>
+<para
+>Ele irá fornecer-lhe algumas opções sobre como deseja que a filtragem de lixo seja feita. Depois disso, irá criar automaticamente as regras de filtragem apropriadas. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Quais são as limitações do assistente?</term>
+<listitem>
+<para
+>Só consegue configurar inicialmente os filtros para você e irá fornecer uma configuração padrão. Não é possível fazer modificações manuais de filtros existentes. Em vez disso, estes filtros deve ser sobrescritos pelo assistente. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Você poderá ativar o assistente através da opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Assistente de antispam...</guisubmenu
+></menuchoice
+></para>
+
+<para
+>O assistente pesquisa por ferramentas anti-spam conhecidas em seu computador. É também possível usar os resultados da verificação de spam do seu provedor pela avaliação das informações do cabeçalho que foram adicionadas às mensagens. Você pode deixar o assistente preparar o &kmail; para usar uma ou mais ferramentas ao mesmo tempo. No entanto, observe que as operações das ferramentas anti-spam normalmente consumem tempo. O &kmail; pode parecer congelado durante a pesquisa por mensagens de spam, podendo encontrar problemas na resposta do &kmail;. Considere a exclusão das regras de filtragem criadas pelo assistente, se a filtragem tornar-se muito lenta. Aqui estão algumas recomendações para as ferramentas suportadas:</para>
+
+<variablelist>
+<varlistentry>
+  <term
+>Bogofilter</term>
+<listitem>
+<para
+>O Bogofilter é um filtro bayesiano, o que significa que sua detecção de spam se baseia em uma fase inicial de treinamento. Por outro lado, ele é uma ferramenta bem rápida. Por isso é recomendado para pessoas que desejem principalmente ter uma rápida detecção de spam, e que não se preocupem com um pouco de treinamento inicial, antes da taxa de detecção aumentar significativamente. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>SpamAssassin</term>
+<listitem>
+<para
+>O SpamAssassin é uma ferramenta muito complexa para combate ao spam. Apesar do seu comportamento depender pesadamente de sua configuração, ela pode detectar spam muito bem, sem qualquer treinamento. No entanto, pesquisar uma mensagem leva um pouco mais de tempo, se comparado com os filtros puramente bayesianos. Digamos que ele não é a ferramenta para pessoas sem algum conhecimento básico sobre as capacidades do SpamAssassin. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>Annoyance-Filter</term>
+<listitem>
+<para
+>Apesar de não ser frequentemente usado algumas distribuições o disponibilizam. Ele é claramente uma ferramenta para especialistas. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>Filtro de Spam GMX</term>
+<listitem>
+<para
+>Se você obtém seus e-mails através do provedor GMX freemail, suas mensagens já passaram por verificação de spam. O resultado deste processo é documentado em um campo especial do cabeçalho de cada mensagem. Não existe lentidão na filtragem se apenas esta ferramenta for usada, uma vez que as mensagens já foram processadas. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+</sect2>
+
+<sect2 id="spam-wizard-advanced">
+<title
+>Avançado</title>
+
+<para
+>Aqui estão os detalhes de como o assistente funciona: o &kmail; pode usar várias ferramentas externas para detectar mensagens de spam; ele tentará procurar automaticamente quais ferramentas estão instaladas no seu sistema e irá mostrá-las em uma lista. A lista será ordenada pela velocidade média do processo de filtragem das ferramentas. Você poderá marcar as ferramentas que deseja usar no &kmail; para detecção de spam. Claro que você poderá fechar o assistente, instalar uma ferramenta e iniciar o assistente novamente. </para>
+
+<para
+>Se tiver marcado pelo menos uma ferramenta, o &kmail; será capaz de fornecer filtros que permitem a classificação das mensagens como spam ou não-spam. Ele também fornecerá ações para permitir-lhe a classificação manual das mensagens. Estas ações estarão disponíveis através do menu e pelos ícones da barra de ferramentas. Se alguma das ferramentas selecionadas suportarem filtragem Bayesian (&ie;, um método para detecção de spam, baseado em análise estatística das mensagens), estas mensagens não serão apenas marcadas, mas também transferidas para as ferramentas, de modo que aprendam e possam melhorar as taxas de detecção. </para>
+
+<para
+>Na segunda página, você poderá selecionar algumas ações adicionais a serem realizadas no &kmail;, relacionadas às mensagens de spam: se quiser que as mensagens detectadas como spam sejam movidas para certa pasta, selecione a pasta apropriada e marque a opção <guilabel
+>Mover spam conhecido para:</guilabel
+>; se as mensagens detectadas como spam devem ser adicionalmente marcadas como lidas, marque a opção <guilabel
+>Marcar como lidas as mensagens de spam detectadas</guilabel
+>. </para>
+
+<para
+>Selecionando pelo menos uma das ferramentas disponíveis, será possível concluir a configuração do assistente de filtragem. O assistente não levará em consideração nenhum filtro que já existe, mas adicionará novos filtros ou atualizar os existentes. Em qualquer caso, você pode verificar o resultado deste processo na <link linkend="filter-dialog"
+>Janela do filtro</link
+>. O assistente também criará botões na barra de ferramentas para marcar as mensagens como spam ou não-spam; lembre-se de que a classificação de mensagens como spam irá também mover essas mensagens para a pasta destinada às mensagens de spam, caso tenha selecionado a opção apropriada. </para>
+
+</sect2>
+
+<sect2 id="spam-wizard-details">
+<title
+>Mais alguns detalhes para os usuários avançados</title>
+
+<para
+>O assistente usa a informação gravada num arquivo de configuração especial chamado <filename
+>kmail.antispamrc</filename
+> (gravado no diretório de configuração global e local do &kde;). Ele irá verificar primeiro o arquivo de configuração global e depois o local: se o arquivo de configuração contiver itens com números de versão maiores (mais recentes), por ferramenta, serão usados os dados de configuração do arquivo local para essa ferramenta; desta forma, tanto os administradores como os usuários poderão atualizar a configuração do assistente. </para>
+
+<para
+>A detecção local de mensagens com spam é obtida com a criação de ações <guilabel
+>pipe através</guilabel
+>, por ferramenta, dentro de um filtro especial. Outro filtro contém as regras para verificar as mensagens com spam detectadas e as ações para marcá-las e (opcionalmente, dependendo da escolha no assistente) movê-las para uma pasta. Ambos os filtros são configurados para serem aplicados nas mensagens recebidas e na filtragem manual. </para>
+
+<para
+>São necessários dois filtros para a classificação das mensagens como spam ou não-spam. Eles contêm ações para marcar as mensagens apropriadamente. Como mencionado acima, o filtro para classificação como spam tem outra ação adicional para mover as mensagens para uma pasta predefinida. Se as ferramentas selecionadas suportarem a filtragem Bayesiana, o assistente irá criar ações de filtragem adicionais para passar as mensagens para as ferramentas (ações para <guilabel
+>executar comando</guilabel
+>) no modo de aprendizagem apropriado. </para>
+
+<para
+>Se você deseja ajustar o processo de filtragem, você deve estar interessado no capítulo sobre <link linkend="filter-optimization"
+>Otimização de Filtros</link
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-virus-wizard">
+<title
+>O Assistente de antivírus</title>
+
+<sect2 id="virus-wizard-basics">
+<title
+>Fundamentos</title>
+
+<para
+>O &kmail; não tem uma solução de detecção de vírus incorporada: os desenvolvedores acreditam que o uso de ferramentas externas especializadas é a melhor abordagem. O &kmail; usa estas ferramentas através da sua arquitetura de filtros flexível. O assistente de antivírus ajuda-o na configuração inicial do filtro. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>O que o assistente poderá fazer por você?</term>
+<listitem>
+<para
+>Ele fornece-lhe algumas opções sobre como deseja que a filtragem de vírus seja feita. Depois disso, irá criar automaticamente as regras de filtragem apropriadas. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Quais são as limitações do assistente?</term>
+<listitem>
+<para
+>Só consegue configurar inicialmente os filtros para você e irá fornecer uma configuração-padrão. A modificação dos filtros existentes ainda não é possível. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Você poderá ativar o assistente através da opção <menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Assistente de antivírus...</guisubmenu
+></menuchoice
+>.</para>
+
+</sect2>
+
+<sect2 id="virus-wizard-advanced">
+<title
+>Avançado</title>
+
+<para
+>O Assistente de Anti-Virus funciona exatamente como o <link linkend="the-anti-spam-wizard"
+>Assistente Anti-Spam</link
+>. Aqui estão os detalhes de como o assistente funciona: o &kmail; poderá usar várias ferramentas externas para detectar mensagens que contenham vírus; ele irá tentar procurar quais dessas ferramentas estão instaladas no seu sistema e irá mostrar-lhe o resultado da pesquisa. Você poderá marcar as ferramentas que deseja usar no &kmail; para detectar vírus. Claro que você poderá fechar o assistente, instalar uma nova ferramenta e iniciar o assistente novamente. </para>
+
+<para
+>Se você escolheu pelo menos uma ferramenta, será possível selecionar as ações a serem feitas no &kmail;, relacionadas às mensagens com vírus: para que o &kmail; detecte as mensagens com vírus, você deverá definitivamente assinalar a opção <guilabel
+>Classificar as mensagens com as ferramentas antivírus</guilabel
+>; se quiser que as mensagens sejam movidas para uma determinada pasta, selecione a pasta apropriada e assinale a opção <guilabel
+>Mover as mensagens com vírus detectadas para a pasta selecionada</guilabel
+>; se as mensagens detectadas com vírus deverão ser adicionalmente marcadas como lidas, então marque por favor a opção <guilabel
+>Marcar adicionalmente as mensagens com vírus como lidas</guilabel
+>. </para>
+
+<para
+>Selecionando pelo menos uma destas últimas opções, será possível finalizar a configuração do assistente de filtragem. O assistente não irá considerar nenhuma regra de filtragem existente, mas adicionará novas regras. Em qualquer caso, você pode verificar o resultado deste processo na <link linkend="filter-dialog"
+>Janela do filtro</link
+>. </para>
+
+</sect2>
+
+<sect2 id="virus-wizard-details">
+<title
+>Detalhes</title>
+
+<para
+>O assistente usa a informação gravada num arquivo de configuração especial chamado <filename
+>kmail.antivirusrc</filename
+> (gravado no diretório de configuração global e local do &kde;). Ele irá verificar primeiro o arquivo de configuração global e depois o local: se o arquivo de configuração contiver itens com números de versão maiores (mais recentes), por ferramenta, serão usados os dados de configuração do arquivo local para essa ferramenta; desta forma, tanto os administradores como os usuários poderão atualizar a configuração do assistente. </para>
+
+<para
+>A detecção das mensagens com vírus é obtida com a criação de ações <guilabel
+>enviar para</guilabel
+>, por ferramenta, dentro de um filtro especial. Outro filtro contém as regras a verificar para as mensagens com vírus detectadas e as ações para marcá-las e (opcionalmente, dependendo da escolha no assistente) para movê-las para uma pasta. Ambos os filtros são configurados para serem aplicados nas mensagens recebidas e na filtragem manual. </para>
+
+</sect2>
+
+</sect1>
+
+</chapter>

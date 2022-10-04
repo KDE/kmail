@@ -1,48 +1,17 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "archivemailinfo.h"
 
-#include <KLocalizedString>
 #include "archivemailagent_debug.h"
+#include <KLocalizedString>
 #include <QDir>
 
-ArchiveMailInfo::ArchiveMailInfo()
-    : mLastDateSaved(QDate())
-    , mArchiveAge(1)
-    , mArchiveType(MailCommon::BackupJob::Zip)
-    , mArchiveUnit(ArchiveMailInfo::ArchiveDays)
-    , mSaveCollectionId(-1)
-    , mMaximumArchiveCount(0)
-    , mSaveSubCollection(false)
-    , mIsEnabled(true)
-{
-}
+ArchiveMailInfo::ArchiveMailInfo() = default;
 
 ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
-    : mLastDateSaved(QDate())
-    , mArchiveAge(1)
-    , mArchiveType(MailCommon::BackupJob::Zip)
-    , mArchiveUnit(ArchiveMailInfo::ArchiveDays)
-    , mSaveCollectionId(-1)
-    , mMaximumArchiveCount(0)
-    , mSaveSubCollection(false)
-    , mIsEnabled(true)
 {
     readConfig(config);
 }
@@ -60,9 +29,7 @@ ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
     mIsEnabled = info.isEnabled();
 }
 
-ArchiveMailInfo::~ArchiveMailInfo()
-{
-}
+ArchiveMailInfo::~ArchiveMailInfo() = default;
 
 ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
 {
@@ -75,7 +42,7 @@ ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
     mSaveSubCollection = old.saveSubCollection();
     mPath = old.url();
     mIsEnabled = old.isEnabled();
-    return (*this);
+    return *this;
 }
 
 QString normalizeFolderName(const QString &folderName)
@@ -92,7 +59,7 @@ QString ArchiveMailInfo::dirArchive(bool &dirExit) const
     if (!dir.exists()) {
         dirExit = false;
         dirPath = QDir::homePath();
-        qCDebug(ARCHIVEMAILAGENT_LOG) << " Path doesn't exist" << dir.path();
+        qCWarning(ARCHIVEMAILAGENT_LOG) << " Path doesn't exist" << dir.path();
     } else {
         dirExit = true;
     }
@@ -103,13 +70,12 @@ QUrl ArchiveMailInfo::realUrl(const QString &folderName, bool &dirExist) const
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
     const QString dirPath = dirArchive(dirExist);
 
-    const QString path = dirPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive")
-                         + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
-                         + QDate::currentDate().toString(Qt::ISODate) + QString::fromLatin1(extensions[mArchiveType]);
-    QUrl real(QUrl::fromLocalFile(path));
+    const QString path = dirPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_')
+        + normalizeFolderName(folderName) + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QString::fromLatin1(extensions[mArchiveType]);
+    const QUrl real(QUrl::fromLocalFile(path));
     return real;
 }
 
@@ -117,21 +83,21 @@ QStringList ArchiveMailInfo::listOfArchive(const QString &folderName, bool &dirE
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
     const QString dirPath = dirArchive(dirExist);
 
     QDir dir(dirPath);
 
     QStringList nameFilters;
-    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') +
-                normalizeFolderName(folderName) + QLatin1Char('_') + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
+    nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
+            + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
     const QStringList lst = dir.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
     return lst;
 }
 
 bool ArchiveMailInfo::isValid() const
 {
-    return (mSaveCollectionId != -1);
+    return mSaveCollectionId != -1;
 }
 
 void ArchiveMailInfo::setArchiveAge(int age)
@@ -164,7 +130,7 @@ MailCommon::BackupJob::ArchiveType ArchiveMailInfo::archiveType() const
     return mArchiveType;
 }
 
-void ArchiveMailInfo::setLastDateSaved(const QDate &date)
+void ArchiveMailInfo::setLastDateSaved(QDate date)
 {
     mLastDateSaved = date;
 }
@@ -205,8 +171,8 @@ void ArchiveMailInfo::writeConfig(KConfigGroup &config)
     }
 
     config.writeEntry("saveSubCollection", mSaveSubCollection);
-    config.writeEntry("archiveType", (int)mArchiveType);
-    config.writeEntry("archiveUnit", (int)mArchiveUnit);
+    config.writeEntry("archiveType", static_cast<int>(mArchiveType));
+    config.writeEntry("archiveUnit", static_cast<int>(mArchiveUnit));
     config.writeEntry("saveCollectionId", mSaveCollectionId);
     config.writeEntry("archiveAge", mArchiveAge);
     config.writeEntry("maximumArchiveCount", mMaximumArchiveCount);
@@ -266,13 +232,7 @@ void ArchiveMailInfo::setEnabled(bool b)
 
 bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
 {
-    return saveCollectionId() == other.saveCollectionId() &&
-           saveSubCollection() == other.saveSubCollection() &&
-           url() == other.url() &&
-           archiveType() == other.archiveType() &&
-           archiveUnit() == other.archiveUnit() &&
-           archiveAge() == other.archiveAge() &&
-           lastDateSaved() == other.lastDateSaved() &&
-           maximumArchiveCount() == other.maximumArchiveCount() &&
-           isEnabled() == other.isEnabled();
+    return saveCollectionId() == other.saveCollectionId() && saveSubCollection() == other.saveSubCollection() && url() == other.url()
+        && archiveType() == other.archiveType() && archiveUnit() == other.archiveUnit() && archiveAge() == other.archiveAge()
+        && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled();
 }

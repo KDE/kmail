@@ -1,59 +1,45 @@
 /*
-  Copyright (c) 2012-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "identityeditvcarddialog.h"
 
+#include "kmail_debug.h"
+#include <Akonadi/ContactEditor>
 #include <KContacts/VCardConverter>
 #include <KLocalizedString>
-#include <Akonadi/Contact/ContactEditor>
-#include "kmail_debug.h"
 #include <KMessageBox>
 #include <QStandardPaths>
 
-#include <QHBoxLayout>
-#include <QFile>
-#include <KConfigGroup>
 #include <QDialogButtonBox>
+#include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
+    , mContactEditor(new Akonadi::AkonadiContactEditor(Akonadi::AkonadiContactEditor::CreateMode, Akonadi::AkonadiContactEditor::VCardMode, this))
 {
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mContactEditor = new Akonadi::ContactEditor(Akonadi::ContactEditor::CreateMode, Akonadi::ContactEditor::VCardMode, this);
-
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityEditVcardDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityEditVcardDialog::reject);
 
-    if (QFile(fileName).exists()) {
-        setWindowTitle(i18n("Edit own vCard"));
-        QPushButton *user1Button = new QPushButton;
+    if (QFileInfo::exists(fileName)) {
+        setWindowTitle(i18nc("@title:window", "Edit own vCard"));
+        auto user1Button = new QPushButton;
         buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
         user1Button->setText(i18n("Delete current vCard"));
         connect(user1Button, &QPushButton::clicked, this, &IdentityEditVcardDialog::slotDeleteCurrentVCard);
     } else {
-        setWindowTitle(i18n("Create own vCard"));
+        setWindowTitle(i18nc("@title:window", "Create own vCard"));
     }
 
     topLayout->addWidget(mContactEditor);
@@ -61,16 +47,19 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
     loadVcard(fileName);
 }
 
-IdentityEditVcardDialog::~IdentityEditVcardDialog()
-{
-}
+IdentityEditVcardDialog::~IdentityEditVcardDialog() = default;
 
 void IdentityEditVcardDialog::slotDeleteCurrentVCard()
 {
     if (mVcardFileName.isEmpty()) {
         return;
     }
-    if (KMessageBox::Yes == KMessageBox::questionYesNo(this, i18n("Are you sure you want to delete this vCard?"), i18n("Delete vCard"))) {
+    const int answer = KMessageBox::questionYesNo(this,
+                                                  i18n("Are you sure you want to delete this vCard?"),
+                                                  i18n("Delete vCard"),
+                                                  KStandardGuiItem::del(),
+                                                  KStandardGuiItem::cancel());
+    if (answer == KMessageBox::Yes) {
         if (mVcardFileName.startsWith(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation))) {
             deleteCurrentVcard(true);
         } else {
@@ -130,3 +119,14 @@ QString IdentityEditVcardDialog::saveVcard() const
     return mVcardFileName;
 }
 
+void IdentityEditVcardDialog::reject()
+{
+    const int answer = KMessageBox::questionYesNo(this,
+                                                  i18nc("@info", "Do you really want to cancel?"),
+                                                  i18nc("@title:window", "Confirmation"),
+                                                  KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
+                                                  KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
+    if (answer == KMessageBox::Yes) {
+        QDialog::reject(); // Discard current changes
+    }
+}

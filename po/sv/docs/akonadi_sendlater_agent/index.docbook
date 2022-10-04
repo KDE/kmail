@@ -1,0 +1,195 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Skicka senare-modulen</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Swedish "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Handbok Skicka senare-modul</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Program 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Inledning</title>
+
+<para
+>&i18n-sendlateragent; är en Akonadi-modul som gör det möjligt att skicka e-post en gång eller upprepade gånger. </para>
+
+<sect2 id="using-kapp">
+<title
+>Använda &i18n-sendlateragent;</title>
+
+<para
+>Använd <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka senare</guimenuitem
+></menuchoice
+> i &kmail;s brevfönster för att öppna en dialogruta som låter dig schemalägga brev att skicka vid ett specifikt datum och en specifik tid.</para>
+
+<screenshot>
+<screeninfo
+>Dialogrutan för &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialogrutan för &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan för &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Låt oss anta att du har skapat ett brilliant brev som beskriver uppgifter som du  vill att dina anställda ska göra färdigt medan du är på konferensen, men du kommer att vara på ett flygplan när du vill att brevet ska skickas. Använd den här funktionen för att skicka brevet på ett exakt datum och tid. För att schemalägga brevet att skickas senare, markera först rutan <guilabel
+>Fördröj</guilabel
+> och välj därefter datum och tid i menyn <guilabel
+>Skicka:</guilabel
+>.</para>
+<para
+>Om du behöver skicka ett veckovis påminnelsebrev till dina anställda kan du ställa in att brevet skickas upprepade gånger genom att markera kryssrutan <guilabel
+>Upprepa var</guilabel
+> och välja önskat intervall.</para>
+<para
+>Du kan lägga brevet i köade brev genom att använda knappen <guibutton
+>Skicka senare</guibutton
+> för att schemalägga brevet omedelbart. </para>
+<para
+>Modulen fungerar oberoende av &kmail; och behöver inte någon instans av &kmail; som kör, eller att &kmail; är i uppkopplat läge för att skicka schemalagda brev.</para>
+<para
+>Om du inte har någon nätverksanslutning när ett schemalagt brev skulle ha skickats, rapporterar modulen ett fel och frågar om du vill skicka om det senare.</para>
+<para
+>Vid inloggning i en &kde;-session kontrollerar modulen schemalagda brev och skickar alla brev som är försenade sedan föregående utloggning om det behövs. </para>
+<para
+>För att ändra alternativ för brev, använd <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+> och välj därefter sidan <guilabel
+>Insticksprogram</guilabel
+> i &kmail; och klicka på inställningsknappen för alternativet <guilabel
+>Skicka senare-modul</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Anpassa &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Anpassa &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Anpassa &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Det startar en dialogruta som låter dig ändra och ta bort brev som har skickats med funktionen för att skicka senare.</action>
+</para>
+<para
+>Det är inte möjligt att ändra innehållet (texten, huvuden, etc.) för ett schemalagt brev. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Tack till och licens</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Program copyright 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentation Copyright &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Översättning Stefan Asserhäll <email
+>stefan.asserhall@bredband.net</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

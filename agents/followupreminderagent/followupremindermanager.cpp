@@ -1,45 +1,28 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "followupremindermanager.h"
 #include "followupreminderagent_debug.h"
-#include "FollowupReminder/FollowUpReminderInfo"
-#include "FollowupReminder/FollowUpReminderUtil"
+#include "followupreminderinfo.h"
 #include "followupremindernoanswerdialog.h"
-#include "jobs/followupreminderjob.h"
+#include "followupreminderutil.h"
 #include "jobs/followupreminderfinishtaskjob.h"
-#include <Akonadi/KMime/SpecialMailCollections>
+#include "jobs/followupreminderjob.h"
 
-#include <QIcon>
+#include <Akonadi/SpecialMailCollections>
 
-#include <KConfigGroup>
 #include <KConfig>
-#include <KSharedConfig>
-#include <knotification.h>
+#include <KConfigGroup>
 #include <KLocalizedString>
-#include <KIconLoader>
+#include <KNotification>
 #include <QRegularExpression>
 using namespace FollowUpReminder;
 
 FollowUpReminderManager::FollowUpReminderManager(QObject *parent)
-    : QObject(parent),
-      mInitialize(false)
+    : QObject(parent)
 {
     mConfig = KSharedConfig::openConfig();
 }
@@ -59,18 +42,17 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     const int numberOfItems = itemList.count();
     QList<FollowUpReminder::FollowUpReminderInfo *> noAnswerList;
     for (int i = 0; i < numberOfItems; ++i) {
-
         KConfigGroup group = mConfig->group(itemList.at(i));
 
-        FollowUpReminderInfo *info = new FollowUpReminderInfo(group);
+        auto info = new FollowUpReminderInfo(group);
         if (info->isValid()) {
             if (!info->answerWasReceived()) {
-                mFollowUpReminderInfoList.append(info);
-                if (!mInitialize) {
-                    FollowUpReminderInfo *noAnswerInfo = new FollowUpReminderInfo(*info);
-                    noAnswerList.append(noAnswerInfo);
-                } else {
+                if (mInitialize) {
                     delete info;
+                } else {
+                    mFollowUpReminderInfoList.append(info);
+                    auto noAnswerInfo = new FollowUpReminderInfo(*info);
+                    noAnswerList.append(noAnswerInfo);
                 }
             } else {
                 delete info;
@@ -83,10 +65,22 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
         mInitialize = true;
         if (!mNoAnswerDialog.data()) {
             mNoAnswerDialog = new FollowUpReminderNoAnswerDialog;
-            connect(mNoAnswerDialog.data(), &FollowUpReminderNoAnswerDialog::needToReparseConfiguration, this, &FollowUpReminderManager::slotReparseConfiguration);
+            connect(mNoAnswerDialog.data(),
+                    &FollowUpReminderNoAnswerDialog::needToReparseConfiguration,
+                    this,
+                    &FollowUpReminderManager::slotReparseConfiguration);
         }
         mNoAnswerDialog->setInfo(noAnswerList);
-        mNoAnswerDialog->show();
+        mNoAnswerDialog->wakeUp();
+    }
+}
+
+void FollowUpReminderManager::addReminder(FollowUpReminder::FollowUpReminderInfo *info)
+{
+    if (info->isValid()) {
+        FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminderUtil::defaultConfig(), info, true);
+    } else {
+        delete info;
     }
 }
 
@@ -113,7 +107,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
         break;
     }
 
-    FollowUpReminderJob *job = new FollowUpReminderJob(this);
+    auto job = new FollowUpReminderJob(this);
     connect(job, &FollowUpReminderJob::finished, this, &FollowUpReminderManager::slotCheckFollowUpFinished);
     job->setItem(item);
     job->start();
@@ -121,7 +115,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
 
 void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id)
 {
-    Q_FOREACH (FollowUpReminderInfo *info, mFollowUpReminderInfoList) {
+    for (FollowUpReminderInfo *info : std::as_const(mFollowUpReminderInfoList)) {
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderManager::slotCheckFollowUpFinished info:" << info;
         if (!info) {
             continue;
@@ -131,12 +125,12 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
             info->setAnswerWasReceived(true);
             answerReceived(info->to());
             if (info->todoId() != -1) {
-                FollowUpReminderFinishTaskJob *job = new FollowUpReminderFinishTaskJob(info->todoId(), this);
+                auto job = new FollowUpReminderFinishTaskJob(info->todoId(), this);
                 connect(job, &FollowUpReminderFinishTaskJob::finishTaskDone, this, &FollowUpReminderManager::slotFinishTaskDone);
                 connect(job, &FollowUpReminderFinishTaskJob::finishTaskFailed, this, &FollowUpReminderManager::slotFinishTaskFailed);
                 job->start();
             }
-            //Save item
+            // Save item
             FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), info, true);
             break;
         }
@@ -145,33 +139,33 @@ void FollowUpReminderManager::slotCheckFollowUpFinished(const QString &messageId
 
 void FollowUpReminderManager::slotFinishTaskDone()
 {
-    //TODO
+    qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Done";
 }
 
 void FollowUpReminderManager::slotFinishTaskFailed()
 {
-    //TODO
+    qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Task Failed";
 }
 
 void FollowUpReminderManager::answerReceived(const QString &from)
 {
-    const QPixmap pixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
     KNotification::event(QStringLiteral("mailreceived"),
+                         QString(),
                          i18n("Answer from %1 received", from),
-                         pixmap,
+                         QStringLiteral("kmail"),
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_followupreminder_agent"));
-
 }
 
-QString FollowUpReminderManager::printDebugInfo()
+QString FollowUpReminderManager::printDebugInfo() const
 {
     QString infoStr;
     if (mFollowUpReminderInfoList.isEmpty()) {
+        // Don't translate it. => debug info.
         infoStr = QStringLiteral("No mail");
     } else {
-        Q_FOREACH (FollowUpReminder::FollowUpReminderInfo *info, mFollowUpReminderInfoList) {
+        for (FollowUpReminder::FollowUpReminderInfo *info : std::as_const(mFollowUpReminderInfoList)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }
@@ -181,17 +175,15 @@ QString FollowUpReminderManager::printDebugInfo()
     return infoStr;
 }
 
-QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info)
+QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const
 {
-    QString infoStr;
-    infoStr = QStringLiteral("****************************************");
+    QString infoStr = QStringLiteral("****************************************");
     infoStr += QStringLiteral("Akonadi Item id :%1\n").arg(info->originalMessageItemId());
     infoStr += QStringLiteral("MessageId :%1\n").arg(info->messageId());
     infoStr += QStringLiteral("Subject :%1\n").arg(info->subject());
     infoStr += QStringLiteral("To :%1\n").arg(info->to());
-    infoStr += QStringLiteral("Dead Line :%1\n").arg(info->followUpReminderDate().toString());
+    infoStr += QStringLiteral("Deadline :%1\n").arg(info->followUpReminderDate().toString());
     infoStr += QStringLiteral("Answer received :%1\n").arg(info->answerWasReceived() ? QStringLiteral("true") : QStringLiteral("false"));
     infoStr += QStringLiteral("****************************************\n");
     return infoStr;
 }
-

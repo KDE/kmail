@@ -1,46 +1,32 @@
 /*
-  Copyright (c) 2014-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMAIL_TASK_ATTRIBUTE_H
-#define KMAIL_TASK_ATTRIBUTE_H
+#pragma once
 
-#include <AkonadiCore/Attribute>
-#include <AkonadiCore/Item>
+#include <Akonadi/Attribute>
+#include <Akonadi/Item>
 
 class TaskAttribute : public Akonadi::Attribute
 {
 public:
     TaskAttribute();
-    TaskAttribute(Akonadi::Item::Id id);
-    ~TaskAttribute();
+    explicit TaskAttribute(Akonadi::Item::Id id);
+    ~TaskAttribute() override;
 
-    QByteArray type() const Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QByteArray type() const override;
 
-    TaskAttribute *clone() const Q_DECL_OVERRIDE;
+    TaskAttribute *clone() const override;
 
-    QByteArray serialized() const Q_DECL_OVERRIDE;
+    QByteArray serialized() const override;
 
-    void deserialize(const QByteArray &data) Q_DECL_OVERRIDE;
+    void deserialize(const QByteArray &data) override;
 
     void setTaskId(Akonadi::Item::Id id);
-    Akonadi::Item::Id taskId() const;
+    Q_REQUIRED_RESULT Akonadi::Item::Id taskId() const;
 
 private:
-    Akonadi::Item::Id mId;
+    Akonadi::Item::Id mId = {-1};
 };
-
-#endif

@@ -1,43 +1,37 @@
 /*
- * Copyright (c) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.net>
+ * SPDX-FileCopyrightText: 2016 Klarälvdalens Datakonsult AB, a KDAB Group company <info@kdab.net>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #include "incompleteindexdialog.h"
-#include "ui_incompleteindexdialog.h"
+#include "kmail_debug.h"
 #include "kmkernel.h"
+#include "ui_incompleteindexdialog.h"
 
-#include <QProgressDialog>
 #include <KDescendantsProxyModel>
 #include <KLocalizedString>
+#include <QAbstractItemView>
+#include <QProgressDialog>
 
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
 
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
 
+#include <KConfigGroup>
+#include <KSharedConfig>
+#include <KWindowConfig>
 #include <QDBusInterface>
-#include <QDBusReply>
 #include <QDBusMetaType>
-#include <QTimer>
-#include <QHBoxLayout>
 #include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QTimer>
+#include <QWindow>
+#include <chrono>
 
+using namespace std::chrono_literals;
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QVector<qint64>)
 
@@ -53,7 +47,7 @@ public:
         }
     }
 
-    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE
+    Q_REQUIRED_RESULT QVariant data(const QModelIndex &index, int role) const override
     {
         if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
@@ -65,9 +59,9 @@ public:
         return QSortFilterProxyModel::data(index, role);
     }
 
-    bool setData(const QModelIndex &index, const QVariant &data, int role) Q_DECL_OVERRIDE {
-        if (role == Qt::CheckStateRole)
-        {
+    bool setData(const QModelIndex &index, const QVariant &data, int role) override
+    {
+        if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
                 const qint64 colId = collectionIdForIndex(index);
                 mFilterCollections[colId] = data.value<Qt::CheckState>();
@@ -78,7 +72,7 @@ public:
         return QSortFilterProxyModel::setData(index, data, role);
     }
 
-    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE
+    Q_REQUIRED_RESULT Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         if (index.isValid() && index.column() == 0) {
             return QSortFilterProxyModel::flags(index) | Qt::ItemIsUserCheckable;
@@ -88,7 +82,7 @@ public:
     }
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE
+    Q_REQUIRED_RESULT bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
     {
         const QModelIndex source_idx = sourceModel()->index(source_row, 0, source_parent);
         const qint64 colId = sourceModel()->data(source_idx, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
@@ -96,7 +90,7 @@ protected:
     }
 
 private:
-    qint64 collectionIdForIndex(const QModelIndex &index) const
+    Q_REQUIRED_RESULT qint64 collectionIdForIndex(const QModelIndex &index) const
     {
         return data(index, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
     }
@@ -105,45 +99,66 @@ private:
     QHash<qint64, bool> mFilterCollections;
 };
 
+namespace
+{
+static const char myIncompleteIndexDialogGroupName[] = "IncompleteIndexDialog";
+}
+
 IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
-    , mProgressDialog(0)
-    , mIndexer(0)
 {
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
-    mainLayout->setMargin(0);
-    QWidget *w = new QWidget(this);
+    auto mainLayout = new QHBoxLayout(this);
+    auto w = new QWidget(this);
     mainLayout->addWidget(w);
-    qDBusRegisterMetaType<QVector<qint64> >();
+    qDBusRegisterMetaType<QVector<qint64>>();
 
     mUi->setupUi(w);
 
     Akonadi::EntityTreeModel *etm = KMKernel::self()->entityTreeModel();
-    Akonadi::EntityMimeTypeFilterModel *mimeProxy = new Akonadi::EntityMimeTypeFilterModel(this);
+    auto mimeProxy = new Akonadi::EntityMimeTypeFilterModel(this);
     mimeProxy->addMimeTypeInclusionFilter(Akonadi::Collection::mimeType());
     mimeProxy->setSourceModel(etm);
 
-    KDescendantsProxyModel *flatProxy = new KDescendantsProxyModel(this);
+    auto flatProxy = new KDescendantsProxyModel(this);
     flatProxy->setDisplayAncestorData(true);
     flatProxy->setAncestorSeparator(QStringLiteral(" / "));
     flatProxy->setSourceModel(mimeProxy);
 
-    SearchCollectionProxyModel *proxy = new SearchCollectionProxyModel(unindexedCollections, this);
+    auto proxy = new SearchCollectionProxyModel(unindexedCollections, this);
     proxy->setSourceModel(flatProxy);
 
     mUi->collectionView->setModel(proxy);
 
+    mUi->collectionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     connect(mUi->selectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::selectAll);
     connect(mUi->unselectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::unselectAll);
     mUi->buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("Reindex"));
     mUi->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Search Anyway"));
     connect(mUi->buttonBox, &QDialogButtonBox::accepted, this, &IncompleteIndexDialog::waitForIndexer);
     connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, &IncompleteIndexDialog::reject);
+    readConfig();
 }
 
 IncompleteIndexDialog::~IncompleteIndexDialog()
 {
+    writeConfig();
+}
+
+void IncompleteIndexDialog::readConfig()
+{
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(500, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
+}
+
+void IncompleteIndexDialog::writeConfig()
+{
+    KConfigGroup group(KSharedConfig::openStateConfig(), myIncompleteIndexDialogGroupName);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
+    group.sync();
 }
 
 void IncompleteIndexDialog::selectAll()
@@ -182,11 +197,14 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), QLatin1String("/"),
+    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(),
+                                  QStringLiteral("/"),
                                   QStringLiteral("org.freedesktop.Akonadi.Indexer"),
-                                  QDBusConnection::sessionBus(), this);
+                                  QDBusConnection::sessionBus(),
+                                  this);
 
     if (!mIndexer->isValid()) {
+        qCWarning(KMAIL_LOG) << "Invalid indexer dbus interface ";
         accept();
         return;
     }
@@ -197,13 +215,13 @@ void IncompleteIndexDialog::waitForIndexer()
     }
 
     mProgressDialog = new QProgressDialog(this);
+    mProgressDialog->setWindowTitle(i18nc("@title:window", "Indexing"));
     mProgressDialog->setMaximum(mIndexingQueue.size());
     mProgressDialog->setValue(0);
     mProgressDialog->setLabelText(i18n("Indexing Collections..."));
     connect(mProgressDialog, &QDialog::rejected, this, &IncompleteIndexDialog::slotStopIndexing);
 
-    connect(mIndexer, SIGNAL(currentCollectionChanged(qlonglong)),
-            this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
+    connect(mIndexer, SIGNAL(collectionIndexingFinished(qlonglong)), this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
 
     mIndexer->asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mIndexingQueue));
     mProgressDialog->show();
@@ -219,12 +237,11 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
 {
     const int idx = mIndexingQueue.indexOf(colId);
     if (idx > -1) {
-        mIndexingQueue.removeAll(idx);
-    }
+        mIndexingQueue.removeAt(idx);
+        mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 
-    mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
-
-    if (mIndexingQueue.isEmpty()) {
-        QTimer::singleShot(1000, this, &IncompleteIndexDialog::accept);
+        if (mIndexingQueue.isEmpty()) {
+            QTimer::singleShot(1s, this, &IncompleteIndexDialog::accept);
+        }
     }
 }

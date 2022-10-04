@@ -1,32 +1,18 @@
 /*
   This file is part of KDE Kontact.
 
-  Copyright (C) 2003 Sven Lüppken <sven@kde.org>
-  Copyright (C) 2003 Tobias König <tokoe@kde.org>
-  Copyright (C) 2003 Daniel Molkentin <molkentin@kde.org>
-  Copyright (C) 2008 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2003 Sven Lüppken <sven@kde.org>
+  SPDX-FileCopyrightText: 2003 Tobias König <tokoe@kde.org>
+  SPDX-FileCopyrightText: 2003 Daniel Molkentin <molkentin@kde.org>
+  SPDX-FileCopyrightText: 2008 Allen Winter <winter@kde.org>
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Library General Public
-  License as published by the Free Software Foundation; either
-  version 2 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Library General Public License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to
-  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA 02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "summaryview_part.h"
 #include "dropwidget.h"
-
-#include <Libkdepim/BroadcastStatus>
-using KPIM::BroadcastStatus;
+#include <PimCommon/BroadcastStatus>
+using PimCommon::BroadcastStatus;
 
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
@@ -35,29 +21,30 @@ using KPIM::BroadcastStatus;
 #include <KontactInterface/Plugin>
 #include <KontactInterface/Summary>
 
-#include <QAction>
 #include <KActionCollection>
 #include <KCMultiDialog>
+#include <KConfig>
 #include <KConfigGroup>
-#include <QDialog>
-#include <QIcon>
 #include <KLocalizedString>
 #include <KParts/PartActivateEvent>
-#include <KConfig>
+#include <KPluginMetaData>
+#include <QAction>
 #include <QApplication>
-#include <QDate>
 #include <QHBoxLayout>
+#include <QIcon>
 #include <QLabel>
+#include <QLocale>
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>
-#include <QLocale>
 
-SummaryViewPart::SummaryViewPart(KontactInterface::Core *core,
-                                 const KAboutData &aboutData, QObject *parent)
-    : KParts::ReadOnlyPart(parent), mCore(core), mFrame(nullptr), mConfigAction(nullptr)
+SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
+    : KParts::Part(parent)
+    , mCore(core)
 {
-    Q_UNUSED(aboutData);
+    Q_UNUSED(aboutData)
+    setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
+
     loadLayout();
 
     initGUI(core);
@@ -71,11 +58,10 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core,
     const QString str = i18n("Configure the summary view");
     mConfigAction->setStatusTip(str);
     mConfigAction->setToolTip(str);
-    mConfigAction->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "Choosing this will show a dialog where you can select which "
-              "summaries you want to see and also allow you to configure "
-              "the summaries to your liking."));
+    mConfigAction->setWhatsThis(i18nc("@info:whatsthis",
+                                      "Choosing this will show a dialog where you can select which "
+                                      "summaries you want to see and also allow you to configure "
+                                      "the summaries to your liking."));
 
     setXMLFile(QStringLiteral("kontactsummary_part.rc"));
 
@@ -87,11 +73,6 @@ SummaryViewPart::~SummaryViewPart()
     saveLayout();
 }
 
-bool SummaryViewPart::openFile()
-{
-    return true;
-}
-
 void SummaryViewPart::partActivateEvent(KParts::PartActivateEvent *event)
 {
     // inform the plugins that the part has been activated so that they can
@@ -100,7 +81,7 @@ void SummaryViewPart::partActivateEvent(KParts::PartActivateEvent *event)
         updateSummaries();
     }
 
-    KParts::ReadOnlyPart::partActivateEvent(event);
+    KParts::Part::partActivateEvent(event);
 }
 
 void SummaryViewPart::updateSummaries()
@@ -118,10 +99,9 @@ void SummaryViewPart::updateWidgets()
 
     delete mFrame;
 
-    KIdentityManagement::IdentityManager idm(true, this);
-    const KIdentityManagement::Identity &id = idm.defaultIdentity();
+    const KIdentityManagement::Identity &id = KIdentityManagement::IdentityManager::self()->defaultIdentity();
 
-    QString currentUser = i18n("Summary for %1", id.fullName());
+    const QString currentUser = i18n("Summary for %1", id.fullName());
     mUsernameLabel->setText(QStringLiteral("<b>%1</b>").arg(currentUser));
 
     mSummaries.clear();
@@ -131,11 +111,9 @@ void SummaryViewPart::updateWidgets()
 
     mMainLayout->insertWidget(2, mFrame);
 
-    QStringList activeSummaries;
-
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
-    activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
+    QStringList activeSummaries;
     if (grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
@@ -145,35 +123,31 @@ void SummaryViewPart::updateWidgets()
         activeSummaries << QStringLiteral("kontact_kmailplugin");
         activeSummaries << QStringLiteral("kontact_knotesplugin");
     }
-
     // Collect all summary widgets with a summaryHeight > 0
     QStringList loadedSummaries;
 
     QList<KontactInterface::Plugin *> plugins = mCore->pluginList();
-    QList<KontactInterface::Plugin *>::ConstIterator end = plugins.constEnd();
+    const QList<KontactInterface::Plugin *>::ConstIterator end = plugins.constEnd();
     QList<KontactInterface::Plugin *>::ConstIterator it = plugins.constBegin();
     for (; it != end; ++it) {
         KontactInterface::Plugin *plugin = *it;
-        if (!activeSummaries.contains(plugin->identifier())) {
+        const QString pluginIdentifier{plugin->identifier()};
+        if (!activeSummaries.contains(pluginIdentifier)) {
             continue;
         }
-
         KontactInterface::Summary *summary = plugin->createSummaryWidget(mFrame);
         if (summary) {
             if (summary->summaryHeight() > 0) {
-                mSummaries.insert(plugin->identifier(), summary);
+                mSummaries.insert(pluginIdentifier, summary);
 
-                connect(summary, &KontactInterface::Summary::message,
-                        BroadcastStatus::instance(), &KPIM::BroadcastStatus::setStatusMsg);
-                connect(summary, &KontactInterface::Summary::summaryWidgetDropped,
-                        this, &SummaryViewPart::summaryWidgetMoved);
+                connect(summary, &KontactInterface::Summary::message, BroadcastStatus::instance(), &PimCommon::BroadcastStatus::setStatusMsg);
+                connect(summary, &KontactInterface::Summary::summaryWidgetDropped, this, &SummaryViewPart::summaryWidgetMoved);
 
-                if (!mLeftColumnSummaries.contains(plugin->identifier()) &&
-                        !mRightColumnSummaries.contains(plugin->identifier())) {
-                    mLeftColumnSummaries.append(plugin->identifier());
+                if (!mLeftColumnSummaries.contains(pluginIdentifier) && !mRightColumnSummaries.contains(pluginIdentifier)) {
+                    mLeftColumnSummaries.append(pluginIdentifier);
                 }
 
-                loadedSummaries.append(plugin->identifier());
+                loadedSummaries.append(pluginIdentifier);
             } else {
                 summary->hide();
             }
@@ -198,10 +172,10 @@ void SummaryViewPart::updateWidgets()
     }
 
     // Add vertical line between the two rows of summary widgets.
-    QFrame *vline = new QFrame(mFrame);
+    auto vline = new QFrame(mFrame);
     vline->setFrameStyle(QFrame::VLine | QFrame::Plain);
 
-    QHBoxLayout *layout = new QHBoxLayout(mFrame);
+    auto layout = new QHBoxLayout(mFrame);
 
     int margin = 20; // margin width: insert margins so there is space to dnd a
     // summary when either column is empty. looks nicer too.
@@ -218,22 +192,18 @@ void SummaryViewPart::updateWidgets()
     QStringList::ConstIterator strEnd(mLeftColumnSummaries.constEnd());
     for (strIt = mLeftColumnSummaries.constBegin(); strIt != strEnd; ++strIt) {
         if (mSummaries.contains(*strIt)) {
-            mLeftColumn->addWidget(mSummaries[ *strIt ]);
+            mLeftColumn->addWidget(mSummaries[*strIt]);
         }
     }
     strEnd = mRightColumnSummaries.constEnd();
     for (strIt = mRightColumnSummaries.constBegin(); strIt != strEnd; ++strIt) {
         if (mSummaries.contains(*strIt)) {
-            mRightColumn->addWidget(mSummaries[ *strIt ]);
+            mRightColumn->addWidget(mSummaries[*strIt]);
         }
     }
 
-    QSpacerItem *lspacer = new QSpacerItem(1, 10,
-                                           QSizePolicy::MinimumExpanding,
-                                           QSizePolicy::MinimumExpanding);
-    QSpacerItem *rspacer = new QSpacerItem(1, 10,
-                                           QSizePolicy::MinimumExpanding,
-                                           QSizePolicy::MinimumExpanding);
+    auto lspacer = new QSpacerItem(1, 10, QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    auto rspacer = new QSpacerItem(1, 10, QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     mLeftColumn->addSpacerItem(lspacer);
     mRightColumn->addSpacerItem(rspacer);
 
@@ -258,8 +228,8 @@ void SummaryViewPart::summaryWidgetMoved(QWidget *target, QObject *obj, int alig
             return;
         }
     } else {
-        if ((mLeftColumn->indexOf(target) == -1 && mRightColumn->indexOf(target) == -1) ||
-                (mLeftColumn->indexOf(widget) == -1 && mRightColumn->indexOf(widget) == -1)) {
+        if ((mLeftColumn->indexOf(target) == -1 && mRightColumn->indexOf(target) == -1)
+            || (mLeftColumn->indexOf(widget) == -1 && mRightColumn->indexOf(widget) == -1)) {
             return;
         }
     }
@@ -421,56 +391,30 @@ void SummaryViewPart::slotAdjustPalette()
     }
 }
 
-void SummaryViewPart::setDate(const QDate &newDate)
+void SummaryViewPart::setDate(QDate newDate)
 {
-    QString date(QStringLiteral("<b>%1</b>"));
-    date = date.arg(QLocale().toString(newDate));
+    const QString date = QStringLiteral("<b>%1</b>").arg(QLocale().toString(newDate));
     mDateLabel->setText(date);
 }
 
 void SummaryViewPart::slotConfigure()
 {
-    KCMultiDialog dlg(mMainWidget);
-    dlg.setObjectName(QStringLiteral("ConfigDialog"));
-    dlg.setModal(true);
-
-    QStringList modules = configModules();
-    modules.prepend(QStringLiteral("kcmkontactsummary.desktop"));
-    connect(&dlg, SIGNAL(configCommitted()),
-            this, SLOT(updateWidgets()));
-
-    QStringList::ConstIterator strIt;
-    QStringList::ConstIterator end(modules.constEnd());
-    for (strIt = modules.constBegin(); strIt != end; ++strIt) {
-        dlg.addModule(*strIt);
+    QPointer<KCMultiDialog> dlg = new KCMultiDialog(mMainWidget);
+    dlg->setObjectName(QStringLiteral("ConfigDialog"));
+    dlg->setModal(true);
+    connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
+    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kcms/summary/"));
+    for (const auto &metaData : metaDataList) {
+        dlg->addModule(metaData);
     }
 
-    dlg.exec();
-}
-
-QStringList SummaryViewPart::configModules() const
-{
-    QStringList modules;
-
-    QMap<QString, KontactInterface::Summary *>::ConstIterator it;
-    QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
-    for (it = mSummaries.constBegin(); it != end; ++it) {
-        QStringList cm = it.value()->configModules();
-        QStringList::ConstIterator strIt;
-        QStringList::ConstIterator strEnd(cm.constEnd());
-        for (strIt = cm.constBegin(); strIt != strEnd; ++strIt) {
-            if (!(*strIt).isEmpty() && !modules.contains(*strIt)) {
-                modules.append(*strIt);
-            }
-        }
-    }
-
-    return modules;
+    dlg->exec();
+    delete dlg;
 }
 
 void SummaryViewPart::initGUI(KontactInterface::Core *core)
 {
-    QScrollArea *sa = new QScrollArea(core);
+    auto sa = new QScrollArea(core);
 
     sa->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     sa->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -482,13 +426,14 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);
 
-    //KF5: port it
-    //connect(KGlobalSettings::self(), &KGlobalSettings::kdisplayPaletteChanged, this, &SummaryViewPart::slotAdjustPalette);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    connect(qApp, &QApplication::paletteChanged, this, &SummaryViewPart::slotAdjustPalette);
+#endif
     slotAdjustPalette();
 
     mMainLayout = new QVBoxLayout(mMainWidget);
 
-    QHBoxLayout *hbl = new QHBoxLayout();
+    auto hbl = new QHBoxLayout();
     mMainLayout->addItem(hbl);
     mUsernameLabel = new QLabel(mMainWidget);
     mDateLabel = new QLabel(mMainWidget);
@@ -504,7 +449,7 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
         hbl->addWidget(mUsernameLabel);
     }
 
-    QFrame *hline = new QFrame(mMainWidget);
+    auto hline = new QFrame(mMainWidget);
     hline->setFrameStyle(QFrame::HLine | QFrame::Plain);
     mMainLayout->insertWidget(1, hline);
 
@@ -551,12 +496,22 @@ void SummaryViewPart::saveLayout()
 QString SummaryViewPart::widgetName(QWidget *widget) const
 {
     QMap<QString, KontactInterface::Summary *>::ConstIterator it;
-    QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
+    const QMap<QString, KontactInterface::Summary *>::ConstIterator end(mSummaries.constEnd());
     for (it = mSummaries.constBegin(); it != end; ++it) {
         if (it.value() == widget) {
             return it.key();
         }
     }
 
-    return QString();
+    return {};
+}
+
+bool SummaryViewPart::event(QEvent *e)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    if (e->type() == QEvent::ApplicationPaletteChange) {
+        slotAdjustPalette();
+    }
+#endif
+    return KParts::Part::event(e);
 }

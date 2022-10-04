@@ -1,7 +1,0 @@
-org.kde.pim.kmail kmail (kmail)
-org.kde.pim.sendlateragent kmail (sendlateragent)
-org.kde.pim.archivemailagent kmail (archivemailagent)
-org.kde.pim.followupreminderagent kmail (followupreminderagent)
-org.kde.pim.kmail_plugin kmail (kmail kontact plugins)
-org.kde.pim.mailfilteragent kmail (mailfilter agent)
-

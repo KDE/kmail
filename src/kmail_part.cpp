@@ -1,72 +1,53 @@
 /*
 
     This file is part of KMail.
-    Copyright (c) 2002-2003 Don Sanders <sanders@kde.org>,
-    Copyright (c) 2003      Zack Rusin  <zack@kde.org>,
+    SPDX-FileCopyrightText: 2002-2003 Don Sanders <sanders@kde.org>,
+    SPDX-FileCopyrightText: 2003 Zack Rusin <zack@kde.org>,
     Based on the work of Cornelius Schumacher <schumacher@kde.org>
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-    As a special exception, permission is given to link this program
-    with any edition of Qt, and distribute the resulting executable,
-    without including the source code for Qt in the source distribution.
+    SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
 */
 
 #include "kmail_part.h"
 
-#include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmstartup.h"
-#include "aboutdata.h"
+#include "kmmainwin.h"
 
 #include <QVBoxLayout>
 
-#include <kparts/statusbarextension.h>
-#include <kparts/mainwindow.h>
-#include <kpluginfactory.h>
-#include "kmail_debug.h"
-#include <ksettings/dispatcher.h>
-#include <kmailpartadaptor.h>
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/entitydisplayattribute.h>
-#include <AkonadiCore/changerecorder.h>
-#include "MailCommon/FolderTreeView"
-#include "tag/tagactionmanager.h"
 #include "foldershortcutactionmanager.h"
+#include "kmail_debug.h"
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include "kmmigrateapplication.h"
-
+#endif
+#include "tag/tagactionmanager.h"
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/Collection>
+#include <Akonadi/EntityDisplayAttribute>
+#include <KLocalizedString>
+#include <KParts/GUIActivateEvent>
+#include <KPluginFactory>
 #include <KSharedConfig>
+#include <MailCommon/FolderTreeView>
+#include <kmailpartadaptor.h>
+#include <kparts/mainwindow.h>
+#include <kparts/statusbarextension.h>
 
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
 using namespace KMail;
 
-KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &) :
-    KParts::ReadOnlyPart(parent),
-    mParentWidget(parentWidget)
+KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &)
+    : KParts::ReadOnlyPart(parent)
+    , mParentWidget(parentWidget)
 {
-    setComponentName(QStringLiteral("kmail2"), QStringLiteral("kmail2"));
-
+    setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     KMMigrateApplication migrate;
     migrate.migrate();
-
-    // import i18n data and icons from libraries:
-    KMail::insertLibraryIcons();
-
-    //local, do the init
-    KMKernel *mKMailKernel = new KMKernel();
+#endif
+    // local, do the init
+    auto mKMailKernel = new KMKernel();
     mKMailKernel->init();
     mKMailKernel->setXmlGuiInstanceName(QStringLiteral("kmail2"));
 
@@ -77,26 +58,27 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList 
     mKMailKernel->recoverDeadLetters();
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
-    (void) new KmailpartAdaptor(this);
+    (void)new KmailpartAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMailPart"), this);
 
     // create a canvas to insert our widget
-    QWidget *canvas = new QWidget(parentWidget);
+    auto canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
     canvas->setObjectName(QStringLiteral("canvas"));
     setWidget(canvas);
-    mainWidget = new KMMainWidget(canvas, this, actionCollection(),
-                                  KSharedConfig::openConfig());
+    mainWidget = new KMMainWidget(canvas, this, actionCollection(), KSharedConfig::openConfig());
     mainWidget->setObjectName(QStringLiteral("partmainwidget"));
-    QVBoxLayout *topLayout = new QVBoxLayout(canvas);
+    auto topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
-    topLayout->setMargin(0);
+    topLayout->setContentsMargins({});
     mainWidget->setFocusPolicy(Qt::ClickFocus);
-    KParts::StatusBarExtension *statusBar  = new KParts::StatusBarExtension(this);
+    auto statusBar = new KParts::StatusBarExtension(this);
     statusBar->addStatusBarItem(mainWidget->vacationScriptIndicator(), 2, false);
+    statusBar->addStatusBarItem(mainWidget->zoomLabelIndicator(), 3, false);
+    statusBar->addStatusBarItem(mainWidget->dkimWidgetInfo(), 4, false);
 
     setXMLFile(QStringLiteral("kmail_part.rc"), true);
-    KSettings::Dispatcher::registerComponent(QStringLiteral("kmail2"), mKMailKernel, "slotConfigChanged");
+    connect(mainWidget, &KMMainWidget::captionChangeRequest, this, &KMailPart::setWindowCaption);
 }
 
 KMailPart::~KMailPart()
@@ -116,7 +98,6 @@ void KMailPart::updateQuickSearchText()
 
 bool KMailPart::openFile()
 {
-    mainWidget->show();
     return true;
 }
 
@@ -125,12 +106,18 @@ bool KMailPart::openFile()
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
     KParts::ReadOnlyPart::guiActivateEvent(e);
-    mainWidget->initializeFilterActions();
-    mainWidget->tagActionManager()->createActions();
-    mainWidget->folderShortcutActionManager()->createActions();
-    mainWidget->updateVacationScriptStatus();
-    mainWidget->populateMessageListStatusFilterCombo();
-    mainWidget->initializePluginActions();
+    if (e->activated()) {
+        mainWidget->initializeFilterActions(true);
+        mainWidget->tagActionManager()->createActions();
+        mainWidget->folderShortcutActionManager()->createActions();
+        mainWidget->populateMessageListStatusFilterCombo();
+        mainWidget->initializePluginActions();
+
+        const QString title = mainWidget->fullCollectionPath();
+        if (!title.isEmpty()) {
+            Q_EMIT setWindowCaption(title);
+        }
+    }
 }
 
 void KMailPart::exit()
@@ -138,13 +125,9 @@ void KMailPart::exit()
     delete this;
 }
 
-QWidget *KMailPart::parentWidget() const
-{
-    return mParentWidget;
-}
-
 void KMailPart::save()
 {
     /*TODO*/
 }
+
 #include "kmail_part.moc"

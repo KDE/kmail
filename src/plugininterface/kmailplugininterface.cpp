@@ -1,60 +1,26 @@
 /*
-   Copyright (C) 2015-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmailplugininterface.h"
-#include <KActionCollection>
-#include <kmmainwidget.h>
 #include "kmail_debug.h"
-
-class KMailPluginInterfacePrivate
-{
-public:
-    KMailPluginInterfacePrivate()
-        : kmailPluginInterface(new KMailPluginInterface)
-    {
-    }
-
-    ~KMailPluginInterfacePrivate()
-    {
-        delete kmailPluginInterface;
-    }
-    KMailPluginInterface *kmailPluginInterface;
-};
-
-Q_GLOBAL_STATIC(KMailPluginInterfacePrivate, sInstance)
+#include <kmmainwidget.h>
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
-    : PimCommon::PluginInterface(parent),
-      mMainWindow(nullptr)
+    : PimCommon::PluginInterface(parent)
 {
     setPluginName(QStringLiteral("kmail"));
-    setServiceTypeName(QStringLiteral("KMail/MainViewPlugin"));
+    setPluginDirectory(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kmail/mainview"));
 }
 
-KMailPluginInterface::~KMailPluginInterface()
-{
-
-}
+KMailPluginInterface::~KMailPluginInterface() = default;
 
 KMailPluginInterface *KMailPluginInterface::self()
 {
-    return sInstance->kmailPluginInterface;
+    static KMailPluginInterface s_self;
+    return &s_self;
 }
 
 void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
@@ -62,28 +28,29 @@ void KMailPluginInterface::setMainWidget(KMMainWidget *mainwindow)
     mMainWindow = mainwindow;
 }
 
-void KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *abstractInterface)
+bool KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGenericPluginInterface *abstractInterface)
 {
     if (!mMainWindow) {
         qCCritical(KMAIL_LOG) << "mainwindows not defined";
-        return;
+        return false;
     }
-    PimCommon::GenericPluginInterface *interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
-    PimCommon::GenericPluginInterface::RequireTypes requires = interface->requires();
-    if (requires & PimCommon::GenericPluginInterface::CurrentItems) {
+    auto interface = static_cast<PimCommon::GenericPluginInterface *>(abstractInterface);
+    const PimCommon::GenericPluginInterface::RequireTypes requiresFeatures = interface->requiresFeatures();
+    if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentItems) {
         interface->setItems(mMainWindow->currentSelection());
     }
-    if (requires & PimCommon::GenericPluginInterface::Items) {
+    if (requiresFeatures & PimCommon::GenericPluginInterface::Items) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Items not implemented";
     }
-    if (requires & PimCommon::GenericPluginInterface::CurrentCollection) {
-        if (mMainWindow->currentFolder()) {
-            interface->setCurrentCollection(mMainWindow->currentFolder()->collection());
+    if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentCollection) {
+        if (mMainWindow->currentCollection().isValid()) {
+            interface->setCurrentCollection(mMainWindow->currentCollection());
         } else {
             qCDebug(KMAIL_LOG) << "Current Collection not defined";
         }
     }
-    if (requires & PimCommon::GenericPluginInterface::Collections) {
+    if (requiresFeatures & PimCommon::GenericPluginInterface::Collections) {
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Collection not implemented";
     }
+    return true;
 }

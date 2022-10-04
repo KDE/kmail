@@ -1,40 +1,21 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "potentialphishingdetaildialogtest.h"
 #include "../potentialphishingdetaildialog.h"
 #include "../potentialphishingdetailwidget.h"
-#include <QLabel>
-#include <QListWidget>
-#include <qtest.h>
 #include <QStandardPaths>
+#include <QTest>
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
 {
-
 }
 
-PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest()
-{
-
-}
+PotentialPhishingDetailDialogTest::~PotentialPhishingDetailDialogTest() = default;
 
 void PotentialPhishingDetailDialogTest::initTestCase()
 {
@@ -44,7 +25,7 @@ void PotentialPhishingDetailDialogTest::initTestCase()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    PotentialPhishingDetailWidget *w = dlg.findChild<PotentialPhishingDetailWidget *>(QStringLiteral("potentialphising_widget"));
+    auto w = dlg.findChild<PotentialPhishingDetailWidget *>(QStringLiteral("potentialphising_widget"));
     QVERIFY(w);
 }
 

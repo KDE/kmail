@@ -1,37 +1,28 @@
 /*
-    Copyright (c) 2011 Tobias Koenig <tokoe@kde.org>
+    SPDX-FileCopyrightText: 2011 Tobias Koenig <tokoe@kde.org>
 
-    This library is free software; you can redistribute it and/or modify it
-    under the terms of the GNU Library General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or (at your
-    option) any later version.
-
-    This library is distributed in the hope that it will be useful, but WITHOUT
-    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-    License for more details.
-
-    You should have received a copy of the GNU Library General Public License
-    along with this library; see the file COPYING.LIB.  If not, write to the
-    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    02110-1301, USA.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef MAILFILTERAGENT_H
-#define MAILFILTERAGENT_H
+#pragma once
 
-#include <AkonadiAgentBase/agentbase.h>
+#include <Akonadi/AgentBase>
 
-#include "MailCommon/SearchPattern"
-#include <Collection>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
+#include <MailCommon/SearchPattern>
 
-#include <AkonadiCore/AgentInstance>
+#include <Akonadi/AgentInstance>
 
 class FilterLogDialog;
 class FilterManager;
 class KJob;
 class DummyKernel;
+
+namespace Akonadi
+{
+class Monitor;
+}
 
 class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
 {
@@ -39,27 +30,28 @@ class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::Ob
 
 public:
     explicit MailFilterAgent(const QString &id);
-    ~MailFilterAgent();
+    ~MailFilterAgent() override;
 
-    QString createUniqueName(const QString &nameTemplate);
-    void filterItems(const QList< qint64 > &itemIds, int filterSet);
+    Q_REQUIRED_RESULT QString createUniqueName(const QString &nameTemplate);
+    void filterItems(const QList<qint64> &itemIds, int filterSet);
 
     void filterItem(qint64 item, int filterSet, const QString &resourceId);
     void filter(qint64 item, const QString &filterIdentifier, const QString &resourceId);
-    void applySpecificFilters(const QList< qint64 > &itemIds, int requires, const QStringList &listFilters);
+    void filterCollections(const QList<qint64> &collections, int filterSet);
+    void applySpecificFilters(const QList<qint64> &itemIds, int requiresPart, const QStringList &listFilters);
+    void applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters, int filterSet);
 
     void reload();
 
     void showFilterLogDialog(qlonglong windowId = 0);
-    QString printCollectionMonitored();
-
-    void showConfigureDialog(qlonglong windowId = 0);
+    Q_REQUIRED_RESULT QString printCollectionMonitored() const;
 
     void expunge(qint64 collectionId);
-protected:
-    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
+protected:
+    void itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection) override;
+
+private:
     void initializeCollections();
     void initialCollectionFetchingDone(KJob *);
     void mailCollectionAdded(const Akonadi::Collection &collection, const Akonadi::Collection &parent);
@@ -70,16 +62,21 @@ private Q_SLOTS:
     void itemsReceiviedForFiltering(const Akonadi::Item::List &items);
     void clearMessage();
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
+    void slotItemChanged(const Akonadi::Item &item);
+
 public Q_SLOTS:
-    void configure(WId windowId) Q_DECL_OVERRIDE;
+    void configure(WId windowId) override;
 
 private:
-    FilterManager *m_filterManager;
+    bool isFilterableCollection(const Akonadi::Collection &collection) const;
 
-    FilterLogDialog *m_filterLogDialog;
-    QTimer *mProgressTimer;
-    DummyKernel *mMailFilterKernel;
-    int mProgressCounter;
+    FilterManager *m_filterManager = nullptr;
+
+    FilterLogDialog *m_filterLogDialog = nullptr;
+    QTimer *const mProgressTimer;
+    DummyKernel *mMailFilterKernel = nullptr;
+    int mProgressCounter = 0;
+    Akonadi::Monitor *itemMonitor = nullptr;
+
+    void filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection);
 };
-
-#endif

@@ -1,21 +1,17 @@
 /*
   This file is part of KTnef.
 
-  Copyright (C) 2002 Michael Goffioul <kdeprint@swing.be>
-  Copyright (c) 2012 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2002 Michael Goffioul <kdeprint@swing.be>
+  SPDX-FileCopyrightText: 2012 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-or-later
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  */
 
-#ifndef KTNEFVIEW_H
-#define KTNEFVIEW_H
+#pragma once
 
 #include <QTreeWidget>
 
@@ -31,23 +27,19 @@ class KTNEFView : public QTreeWidget
 
 public:
     explicit KTNEFView(QWidget *parent = nullptr);
-    ~KTNEFView();
+    ~KTNEFView() override;
 
     void setAttachments(const QList<KTNEFAttach *> &list);
     QList<KTNEFAttach *> getSelection();
 
 Q_SIGNALS:
-    void dragRequested(const QList<KTNEFAttach *> &list);
+    void dragRequested(const QList<KTnef::KTNEFAttach *> &list);
 
 protected:
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
-    void startDrag(Qt::DropActions dropAction) Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
-    void adjustColumnWidth();
+    void resizeEvent(QResizeEvent *e) override;
+    void startDrag(Qt::DropActions dropAction) override;
 
 private:
+    void adjustColumnWidth();
     QList<KTNEFAttach *> mAttachments;
 };
-
-#endif

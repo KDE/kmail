@@ -36,7 +36,7 @@
 <date>2016-07-27</date>
 <releaseinfo>5.3.40 (Applications 16.08)</releaseinfo>
 
-<abstract><para>The TNEF File Viewer is an application for <ulink url="http://en.wikipedia.org/wiki/TNEF">TNEF</ulink> mail attachments.</para></abstract>
+<abstract><para>The TNEF File Viewer is an application for <ulink url="https://en.wikipedia.org/wiki/TNEF">TNEF</ulink> mail attachments.</para></abstract>
 
 <keywordset>
 <keyword>mail</keyword>

@@ -1,46 +1,30 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "vacationscriptindicatorwidget.h"
-#include "helper_p.h"
+
 #include "util.h"
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
 #include <QHBoxLayout>
 
 using namespace KMail;
 
 ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
-    : QLabel(parent),
-      mServerName(serverName)
+    : QLabel(parent)
+    , mServerName(serverName)
 {
     setToolTip(serverName);
     setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
-    setStyleSheet(QStringLiteral("background-color: %1;").arg(QColor(Qt::yellow).name()));
+    setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(2, 0, 4, 0);
 }
 
-ServerLabel::~ServerLabel()
-{
-
-}
+ServerLabel::~ServerLabel() = default;
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -58,10 +42,7 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
     setCursor(QCursor(Qt::PointingHandCursor));
 }
 
-VacationLabel::~VacationLabel()
-{
-
-}
+VacationLabel::~VacationLabel() = default;
 
 void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 {
@@ -70,19 +51,18 @@ void VacationLabel::mouseReleaseEvent(QMouseEvent *event)
 }
 
 VacationScriptIndicatorWidget::VacationScriptIndicatorWidget(QWidget *parent)
-    : QWidget(parent),
-      mBoxLayout(nullptr),
-      mInfo(nullptr)
+    : QWidget(parent)
 {
 }
 
-VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget()
-{
-
-}
+VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget() = default;
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)
 {
+    if (serverName.isEmpty()) {
+        return;
+    }
+
     if (active) {
         if (!mServerActive.contains(serverName)) {
             mServerActive.append(serverName);
@@ -99,18 +79,17 @@ void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const Q
 void VacationScriptIndicatorWidget::createIndicator()
 {
     delete mBoxLayout;
-    mBoxLayout = new QHBoxLayout;
-    mBoxLayout->setMargin(0);
+    mBoxLayout = new QHBoxLayout(this);
+    mBoxLayout->setContentsMargins({});
     mBoxLayout->setSpacing(0);
     mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
     connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
-    for (const QString &server : qAsConst(mServerActive)) {
-        ServerLabel *lab = new ServerLabel(server);
+    for (const QString &server : std::as_const(mServerActive)) {
+        auto lab = new ServerLabel(server);
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
     }
-    setLayout(mBoxLayout);
 }
 
 void VacationScriptIndicatorWidget::slotVacationLabelClicked()

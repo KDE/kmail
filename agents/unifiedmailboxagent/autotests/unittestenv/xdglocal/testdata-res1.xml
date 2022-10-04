@@ -1,0 +1,53 @@
+<knut>
+ <collection rid="res1" name="res1" content="inode/directory">
+  <collection rid="res1_inbox" name="res1_inbox" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">inbox</attribute>
+   <item rid="A" mimetype="application/octet-stream">
+    <payload>testmailbody</payload>
+    <attribute type="HEAD">From: &lt;test@user.tst&gt;</attribute>
+    <flag>\SEEN</flag>
+   </item>
+   <item rid="B" mimetype="application/octet-stream">
+    <payload>testmailbody1</payload>
+    <attribute type="HEAD">From: &lt;test1@user.tst&gt;</attribute>
+    <flag>\FLAGGED</flag>
+   </item>
+   <item rid="C" mimetype="application/octet-stream">
+    <payload>testmailbody2</payload>
+    <attribute type="HEAD">From: &lt;test2@user.tst&gt;</attribute>
+   </item>
+  </collection>
+  <collection rid="res1_sent" name="res1_sent" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">sent-mail</attribute>
+   <item rid="D" mimetype="application/octet-stream">
+    <payload>testmailbody3</payload>
+    <attribute type="HEAD">From: &lt;test3@user.tst&gt;</attribute>
+   </item>
+    <item rid="E" mimetype="application/octet-stream">
+    <payload>testmailbody4</payload>
+    <attribute type="HEAD">From: &lt;test4@user.tst&gt;</attribute>
+   </item>
+  </collection>
+  <collection rid="res1_drafts" name="res1_drafts" content="inode/directory,message/rfc822,application/octet-stream">
+   <attribute type="SpecialCollectionAttribute">drafts</attribute>
+   <item rid="F" mimetype="application/octet-stream">
+    <payload>testmailbody5</payload>
+    <attribute type="HEAD">From: &lt;test5@user.tst&gt;</attribute>
+   </item>
+  </collection>
+  <collection rid="res1_foo" name="res1_foo" content="inode/directory,message/rfc822">
+   <item rid="G" mimetype="application/octet-stream">
+    <payload>testmailbody6</payload>
+    <attribute type="HEAD">From: &lt;test6@user.tst&gt;</attribute>
+   </item>
+   <item rid="H" mimetype="application/octet-stream">
+    <payload>testmailbody7</payload>
+    <attribute type="HEAD">From: &lt;test7@user.tst&gt;</attribute>
+   </item>
+   <item rid="I" mimetype="application/octet-stream">
+    <payload>testmailbody8</payload>
+    <attribute type="HEAD">From: &lt;test8@user.tst&gt;</attribute>
+   </item>
+  </collection>
+ </collection>
+</knut>

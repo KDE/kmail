@@ -1,0 +1,157 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>El manual del visualitzador de fitxers TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+&traductor.Antoni.Bella; 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>27 de juliol de 2016</date>
+<releaseinfo
+>5.3.40 (Aplicacions 16.08)</releaseinfo>
+
+<abstract
+><para
+>El visualitzador de fitxers TNEF és una aplicació per als adjunts <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+> del correu.</para
+></abstract>
+
+<keywordset>
+<keyword
+>correu</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Introducció</title>
+
+	<para
+>El visualitzador de fitxers TNEF permet manipular de manera fàcil els adjunts de correu que usen el format TNEF. Aquests adjunts normalment es troben en els correus que venen des de servidors de correu <trademark class="registered"
+>Microsoft</trademark
+> i incrustats en les propietats del correu com a adjunts reals.</para>
+		<para
+>Un adjunt en format TNEF sovint s'anomena <filename
+>winmail.dat</filename
+> o <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>La finestra principal de TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>La finestra principal de TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Aquesta utilitat permet realitzar diverses operacions sobre aquests adjunts:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Veure/obrir fitxers adjunts amb les aplicacions associades.</para
+></listitem>
+		<listitem
+><para
+>Extreure els adjunts reals</para
+></listitem>
+		<listitem
+><para
+>Veure les propietats del missatge (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Veure/extraure el text amb format del missatge (en format RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>El &kmail; mostra automàticament el contingut d'un adjunt TNEF. Podeu obrir o desar els adjunts utilitzant les accions al menú contextual.</para>
+<screenshot>
+<screeninfo
+>Un adjunt TNEF al &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Un adjunt TNEF al &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Crèdits i llicència</title>
+
+	<para
+>Visualitzador de fitxers TNEF (KTnef)</para>
+
+	<para
+>Copyright del programa 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Copyright del programa 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Traductor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </sect1>
+
+</article>

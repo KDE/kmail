@@ -1,70 +1,67 @@
 /*
-  Copyright (c) 2013-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "addemailtoexistingcontactdialog.h"
 #include "kmkernel.h"
 
-#include <Akonadi/Contact/EmailAddressSelectionWidget>
-#include <AkonadiCore/Session>
-#include <AkonadiCore/ItemFetchScope>
-#include <AkonadiCore/EntityDisplayAttribute>
-#include <Akonadi/Contact/ContactsTreeModel>
-#include <AkonadiCore/ChangeRecorder>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/ContactsTreeModel>
+#include <Akonadi/EmailAddressSelectionWidget>
+#include <Akonadi/EntityDisplayAttribute>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/Session>
 
 #include <KContacts/Addressee>
 
 #include <KLocalizedString>
 
-#include <QTreeView>
+#include <KConfigGroup>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
-#include <QVBoxLayout>
 #include <QPushButton>
-
+#include <QTreeView>
+#include <QVBoxLayout>
+#include <QWindow>
+namespace
+{
+static const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
+}
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Select Contact"));
+    setWindowTitle(i18nc("@title:window", "Select Contact"));
     setModal(true);
 
-    Akonadi::Session *session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
+    auto session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
 
     Akonadi::ItemFetchScope scope;
     scope.fetchFullPayload(true);
     scope.fetchAttribute<Akonadi::EntityDisplayAttribute>();
 
-    Akonadi::ChangeRecorder *changeRecorder = new Akonadi::ChangeRecorder(this);
+    auto changeRecorder = new Akonadi::ChangeRecorder(this);
     changeRecorder->setSession(session);
     changeRecorder->fetchCollection(true);
     changeRecorder->setItemFetchScope(scope);
     changeRecorder->setCollectionMonitored(Akonadi::Collection::root());
-    //Just select address no group
+    // Just select address no group
     changeRecorder->setMimeTypeMonitored(KContacts::Addressee::mimeType(), true);
 
-    Akonadi::ContactsTreeModel *model = new Akonadi::ContactsTreeModel(changeRecorder, this);
+    auto model = new Akonadi::ContactsTreeModel(changeRecorder, this);
 
     mEmailSelectionWidget = new Akonadi::EmailAddressSelectionWidget(false, model, this);
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    setLayout(mainLayout);
+    auto mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(mEmailSelectionWidget);
     mEmailSelectionWidget->view()->setSelectionMode(QAbstractItemView::SingleSelection);
     readConfig();
-    connect(mEmailSelectionWidget->view()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AddEmailToExistingContactDialog::slotSelectionChanged);
+    connect(mEmailSelectionWidget->view()->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            &AddEmailToExistingContactDialog::slotSelectionChanged);
     connect(mEmailSelectionWidget->view(), &QTreeView::doubleClicked, this, &AddEmailToExistingContactDialog::slotDoubleClicked);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -94,27 +91,26 @@ void AddEmailToExistingContactDialog::slotSelectionChanged()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myAddEmailToExistingContactDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), "AddEmailToExistingContactDialog");
-    group.writeEntry("Size", size());
+    KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
 
 Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
 {
     Akonadi::Item item;
-    Akonadi::EmailAddressSelection::List lst = mEmailSelectionWidget->selectedAddresses();
+    const Akonadi::EmailAddressSelection::List lst = mEmailSelectionWidget->selectedAddresses();
     if (!lst.isEmpty()) {
         item = lst.at(0).item();
     }
     return item;
 }
-

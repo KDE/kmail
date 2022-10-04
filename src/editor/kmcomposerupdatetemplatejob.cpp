@@ -1,57 +1,35 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "kmcomposerupdatetemplatejob.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 KMComposerUpdateTemplateJob::KMComposerUpdateTemplateJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr),
-      mUoldId(0),
-      mUoid(0),
-      mWasModified(false)
+    : QObject(parent)
 {
-
 }
 
-KMComposerUpdateTemplateJob::~KMComposerUpdateTemplateJob()
-{
-
-}
+KMComposerUpdateTemplateJob::~KMComposerUpdateTemplateJob() = default;
 
 void KMComposerUpdateTemplateJob::start()
 {
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerUpdateTemplateJob::slotFinished);
     parser->setSelection(mTextSelection);
     parser->setAllowDecryption(true);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (!mCustomTemplate.isEmpty()) {
-        parser->process(mCustomTemplate, mMsg, mCollectionForNewMessage);
+        parser->process(mCustomTemplate, mMsg, mCollectionForNewMessage.id());
     } else {
-        parser->processWithIdentity(mUoid, mMsg, mCollectionForNewMessage);
+        parser->processWithIdentity(mUoid, mMsg, mCollectionForNewMessage.id());
     }
 }
 
@@ -94,4 +72,9 @@ void KMComposerUpdateTemplateJob::setUoid(uint uoid)
 void KMComposerUpdateTemplateJob::setIdent(const KIdentityManagement::Identity &ident)
 {
     mIdent = ident;
+}
+
+void KMComposerUpdateTemplateJob::setCollection(const Akonadi::Collection &col)
+{
+    mCollectionForNewMessage = col;
 }

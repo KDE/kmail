@@ -1,0 +1,5 @@
+# Code generation options for kconfig_compiler
+File=settings.kcfg
+ClassName=Settings
+Singleton=true
+Mutators=true

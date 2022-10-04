@@ -1,5 +1,7 @@
 /*
  *   kmail: KDE mail client
+ *   SPDX-FileCopyrightText: 2016 Laurent Montel <montel@kde.org>
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #include "configuredialoglistview.h"
@@ -49,12 +51,10 @@ void ListView::resizeColums()
 
 void ListView::slotContextMenu(const QPoint &pos)
 {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(i18n("Add"), this, &ListView::addHeader);
+    QMenu menu(this);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add"), this, &ListView::addHeader);
     if (currentItem()) {
-        menu->addAction(i18n("Remove"), this, &ListView::removeHeader);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this, &ListView::removeHeader);
     }
-    menu->exec(viewport()->mapToGlobal(pos));
-    delete menu;
+    menu.exec(viewport()->mapToGlobal(pos));
 }
-

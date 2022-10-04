@@ -1,0 +1,3744 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+>&David.Rugge.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <affiliation
+><address
+> <email
+>michel@klaralvdalens-datakonsult.se</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> <affiliation
+><address
+>&Laurent.Montel.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>José</firstname
+><surname
+>Pires</surname
+><affiliation
+><address
+><email
+>zepires@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-11-25</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</chapterinfo>
+
+<title
+>Referência de Comandos e do Menu</title>
+<para
+>Cada item do menu específico do &kmail; é discutido em baixo. Quando existir um atalho de teclado que efectue a função de um dado item do menu, é mostrada a combinação de teclas por omissão em conjunto com o item do menu.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>A Janela de Leitura do &kmail;</title>
+
+<sect2 id="reader-file-menu">
+<title
+>O Menu Ficheiro</title>
+<variablelist>
+<varlistentry id="file-new">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guisubmenu
+>Novo</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Aqui poderá criar vários itens novos da seguinte forma:</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-newmessage">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guisubmenu
+>Novo</guisubmenu
+><guimenuitem
+>Nova Mensagem...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Compõe uma nova mensagem.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-message-from-template">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guisubmenu
+>Novo</guisubmenu
+><guisubmenu
+>Mensagem do Modelo</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cria uma mensagem nova a partir de um dado modelo.</action
+> Veja por favor em <link linkend="new-compose-from-templates"
+>Compor a Partir de Modelos</link
+> para obter mais informações sobre a criação de modelos.</para>
+<para
+>Se não tiver nenhuns modelos gravados, irá ver o item de menu <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Mensagem do Modelo</guisubmenu
+><guimenuitem
+>(sem modelos)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-add-folder">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guisubmenu
+>Novo</guisubmenu
+><guimenuitem
+>Adicionar uma Pasta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cria uma nova pasta.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-new-addressbook-contact">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guisubmenu
+>Novo</guisubmenu
+><guimenuitem
+>Novo Contacto do Livro de Endereços...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de <guilabel
+>Novo Contacto</guilabel
+>.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-open">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Abrir...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre as mensagens de e-mail ou as caixas do correio.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-open-recent">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Abrir um Recente</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre as mensagens usadas recentemente.</action
+> Somente as mensagens que foram gravadas e depois abertas irão aparecer nesta lista.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-save-as">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Gravar Como...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Grava a mensagem apresentada de momento num ficheiro <filename role="extension"
+>.mbox</filename
+>.</action
+>, incluindo todos os cabeçalhos e anexos.</para>
+<para
+>Se quiser gravá-la para um formato diferente &eg; <filename role="extension"
+>.txt</filename
+>, desligue a opção <guilabel
+>Seleccionar automaticamente a extensão do ficheiro (.mbox)</guilabel
+> e certifique-se que muda a extensão do ficheiro.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-import-messages">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Importar Mensagens...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Inicia o <application
+>KmailCVT</application
+></action
+>. Esta aplicação permite-lhe importar as mensagens de vários clientes de correio para o &kmail;.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-print-preview">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Antevisão da Impressão...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Mostra uma janela que apresenta como será impresso o seu e-mail.</action
+></para>
+<note
+><para
+>Isto só ficará activo se estiver configurada alguma impressora e estiver disponível para ser usada.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="file-print">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Imprimir...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra uma janela que lhe permite imprimir a mensagem apresentada de momento.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-expire-all-folders">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Expirar Todas as Pastas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Apaga as mensagens antigas de todas as pastas</action
+>. A remoção irá ocorrer de acordo com as regras da <link linkend="folders-properties-window"
+>janela de Propriedades</link
+> da pasta (o valor por omissão é não apagar as pastas antigas de todo).</para>
+</listitem>
+</varlistentry>
+<varlistentry id="reader-empty-all-trash-folders">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Esvaziar Todas as Pastas de Lixo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Use isto para limpar todas as pastas de lixo</action
+>, &ie; a pasta de lixo local e todas as pastas de lixo que possa ter nos servidores de &imap;.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-work-offline">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Trabalhar Desligado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Configura o &kmail; para o modo desligado.</action
+> Isto desliga todas as tarefas de rede. Isto é útil quando trabalhar com mensagens mas sem ligação à rede. Esta selecção irá mudar para <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Modo Ligado</guimenuitem
+></menuchoice
+>, que deve seleccionar para voltar a estar ligado (para poder enviar e receber mensagens).</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-check-mail">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Verificar o Correio</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Procura por mensagens novas em todas as suas contas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-check-mail-in">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guisubmenu
+>Verificar o Correio Em</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Procura por mensagens novas de uma determinada conta.</action
+> Estas contas irão aparecer no submenu.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-update-folder">
+<term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Actualizar a Pasta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Verifica se chegou correio novo à pasta seleccionada de momento.</action
+></para>
+<note
+><para
+>Isto só estará disponível para as pastas de &imap;.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-update-this-folder-and-all-subfolders">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Actualizar Esta Pasta e Todas as Sub-Pastas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Verifica se chegou correio novo à pasta seleccionada de momento e a todas as suas sub-pastas.</action
+></para>
+<para
+>Também poderá seleccionar várias pastas para que a opção do menu passe a <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Actualizar Estas Pastas e Todas as Suas Sub-Pastas</guimenuitem
+></menuchoice
+></para>
+<note
+><para
+>Isto só estará disponível para as pastas de &imap;.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Enviar as Mensagens em Espera</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Envia as mensagens que estão na sua caixa de saída.</action
+> As mensagens poderão parar à caixa de saída se seleccionar <guibutton
+>Colocar na Fila</guibutton
+> no menu do compositor, se compor uma mensagem no modo desligado e se enviar enquanto não tem nenhuma ligação à Internet.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages-via">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Enviar as Mensagens em Espera Via</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Envia as mensagens que estão na sua caixa de saída para uma conta de envio específica.</action
+> Isto permite-lhe escolher qual o servidor de onde serão enviadas as suas mensagens em espera. Essas contas de envio podem ser configuradas em <menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+> na página <menuchoice
+><guiicon
+>Contas</guiicon
+><guilabel
+>Envio</guilabel
+></menuchoice
+> que aí aparecem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-quit">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Sair</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Sai do &kmail;.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>O Menu Editar</title>
+<para
+>Se o item de menu de que está à procura está em falta, veja por favor o <ulink url="help:/fundamentals/ui.html#menus-edit"
+>menu Editar</ulink
+> dos Fundamentos do &kde;. Os itens abaixo apresentados são específicos do &kmail;.</para>
+<variablelist>
+<varlistentry id="reader-edit-move-to-trash">
+<term
+><menuchoice
+><shortcut
+><keycap
+>Delete</keycap
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Mover para o Lixo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Move as mensagens seleccionadas para a pasta do lixo</action
+>. Se as mensagens já estiverem na pasta do lixo, elas serão removidas de facto.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-move-thread-to-trash">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Delete</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Enviar o Tópico para o Lixo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Envia o tópico seleccionado para a pasta do lixo</action
+>, &eg; uma conversa numa lista de correio.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-messages">
+<term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Procurar as Mensagens...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma janela de pesquisa</action
+> que lhe permite procurar mensagens com certas características, &eg; um dado assunto. Veja por favor os <link linkend="filter-criteria"
+>Critérios de Pesquisa</link
+> para saber mais detalhes sobre as opções de pesquisa.</para>
+<para
+>Os resultados da sua pesquisa irão aparecer na área de texto, onde poderá abrir a opção <guibutton
+>Abrir a Pasta de Pesquisa</guibutton
+> ou seleccionar a mensagem desejada e seleccionar <guibutton
+>Abrir a Mensagem</guibutton
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-in-message">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Procurar na Mensagem...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Procura no texto da mensagem actual por um determinado texto indicado no campo de texto <guilabel
+>Procurar:</guilabel
+>.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-messages">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Seleccionar Todas as Mensagens</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona todas as mensagens na pasta actual.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-text">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Seleccionar Todo o Texto</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona o texto da mensagem visível de momento.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>O Menu Ver</title>
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guisubmenu
+>Lista de Mensagens</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Este menu tem as seguintes opções para alterar a vista sobre a sua lista de mensagens.</para>
+<variablelist>
+<varlistentry id="reader-view-messagelist-sorting">
+<term
+><menuchoice>
+<guisubmenu
+>Ordenação</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Contém opções para personalizar o seu critério de ordenação, da seguinte forma:</para>
+<itemizedlist>
+  <listitem
+><para
+>O <guilabel
+>Critério de Ordenação da Mensagem</guilabel
+> tem várias opções, sendo a maioria delas intuitivas. As seguintes opções poderão não ser imediatamente óbvias, pelo que merecem alguma explicação.</para>
+  <itemizedlist>
+    <listitem
+><para
+>O <guilabel
+>Remetente/Destinatário Inteligente</guilabel
+> irá mostrar o remetente quando estiver a ler na sua pasta de 'a enviar'/'modelos', apresentando o destinatário quando estiver na sua caixa de correio ou em alguma sub-pasta da mesma.</para
+></listitem>
+    <listitem
+><para
+><guilabel
+>Por Estado do Item de Acção</guilabel
+> e <guilabel
+>Por Estado de Importante</guilabel
+> precisam estar definidos antes de poderem ser ordenados. Por favor, veja como <link linkend="reader-mark-messages"
+>Marcar as Mensagens</link
+> para saber mais informações como marcar as suas mensagens.</para
+></listitem>
+  </itemizedlist
+></listitem>
+  <listitem
+><para
+>A <guilabel
+>Direcção da Ordenação da Mensagem</guilabel
+> e <guilabel
+>Direcção de Ordenação do Grupo</guilabel
+> permitem-lhe mudar a direcção da ordenação da sua mensagem ou grupo de mensagens, respectivamente.</para
+></listitem>
+  <listitem
+><para
+>A opção <guilabel
+>A pasta usa sempre esta ordenação</guilabel
+> permite-lhe manter as suas definições de ordenação por pasta.</para
+></listitem>
+</itemizedlist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-aggregation">
+<term
+><menuchoice>
+<guisubmenu
+>Agregação</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe definir a sua vista agregada.</para>
+<para
+><guilabel
+>Configurar...</guilabel
+> Permite-lhe configurar a agregação; por favor, veja mais informações sobre a agregação em <link linkend="configure-appearance-message-list"
+>Configurar a Aparência da Lista de Mensagens</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-theme">
+<term
+><menuchoice>
+<guisubmenu
+>Tema</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe seleccionar um tema.</para>
+<para
+><guilabel
+>Configurar...</guilabel
+> Permite-lhe configurar os temas; por favor, veja mais informações sobre os temas em <link linkend="configure-appearance-message-list"
+>Configurar a Aparência da Lista de Mensagens</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-create-new-tab">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+><guisubmenu
+>Criar uma Nova Página</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Permite-lhe criar uma página separada</action
+> e mostrar então a pasta que desejar nessa página.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-close-tab">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></shortcut
+><guisubmenu
+>Fechar a Página</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Fecha a página seleccionada de momento.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-headers">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guisubmenu
+>Cabeçalhos</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona a sua área de cabeçalhos.</action
+> Veja mais detalhes sobre os cabeçalhos em <link linkend="using-header-options"
+>Opções dos Cabeçalhos</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-attachments">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Anexos</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Muda a forma como os anexos aparecem na <guilabel
+>Área de Antevisão da Mensagem</guilabel
+></action
+> (independente da árvore &MIME;). Veja mais detalhes sobre os anexos em <link linkend="using-attachment-view-options"
+>Opções dos Anexos</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-thread-or-group">
+<term
+><menuchoice
+><shortcut
+><keycap
+>.</keycap
+></shortcut
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Expandir o Tópico / Grupo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Isto irá mostrar o tópico da mensagem actual</action
+>, &ie; todas as mensagens que são respostas à mensagem actual.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-thread-or-group">
+<term
+><menuchoice
+><shortcut
+><keycap
+>,</keycap
+></shortcut
+><guimenu
+>Ver</guimenu
+><guimenuitem
+>Fechar o Tópico / Grupo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Isto irá esconder o tópico da mensagem actual</action
+>, &ie; todas as mensagens que são respostas à mensagem actual.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-all-threads">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ver</guimenu
+> <guimenuitem
+>Expandir Todos os Tópicos</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Expande todos os tópicos da pasta actual.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-all-threads">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ver</guimenu
+> <guimenuitem
+>Fechar Todos os Tópicos</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Fecha todos os tópicos na pasta actual.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-viewsource">
+<term
+><menuchoice
+><shortcut
+><keycap
+>V</keycap
+></shortcut
+> <guimenu
+>Ver</guimenu
+> <guimenuitem
+>Ver o Código</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra a mensagem e os seus cabeçalhos completos num formato de texto simples numa janela nova.</action
+> Isto pode ser útil para descobrir a origem de uma mensagem. </para>
+<note
+><para
+>Você deverá saber que é fácil de falsificar o cabeçalho <literal
+>From:</literal
+> de uma mensagem, mas uma pessoa poderá à mesma perceber que servidores de correio foram usados para enviar a mensagem, olhando para as linhas <literal
+>Received:</literal
+> do cabeçalho.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-show-message-structure">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Mostrar a Estrutura da Mensagem</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Mostra o visualizador da estrutura</action
+>, que é uma parte da janela principal que lhe permite aceder a todas as componentes de uma mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-use-fixed-font">
+<term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>Ver</guimenu
+> <guimenuitem
+>Usar um Tipo de Letra Monoespaçado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Usa um tipo de letra fixo (monoespaçado) para mostrar as mensagens na pasta actual</action
+>. O tipo de letra a ser usado pode ser configurado na secção <link linkend="configure-appearance-fonts"
+>Tipos de Letra</link
+> da secção <guilabel
+>Aparência</guilabel
+> da janela de configuração do &kmail;.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-set-encoding">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guisubmenu
+>Mudar a Codificação</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Permite-lhe escolher a codificação de mensagens a ser usada na Área da Mensagem</action
+>. O valor por omissão, o <guilabel
+>Auto</guilabel
+> deverá funcionar na maioria dos casos.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-zoom">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guisubmenu
+>Ampliação</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Permite ampliar a mensagem na área de mensagens.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>O Menu Ir</title>
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+<term
+><menuchoice
+><shortcut
+><keycap
+>J</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Ir para a Pasta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Irá mostrar uma janela com uma lista de todas as suas pastas</action
+>. Carregue na pasta que deseja ver para apresentá-la na área de visualização da mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Mensagem Seguinte</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona a próxima mensagem na lista de mensagens</action
+>. O atalho de teclado <keycap
+>Direita</keycap
+> também efectua esta acção.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>+</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Mensagem Não-Lida Seguinte</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona a próxima mensagem não lida na lista de mensagens</action
+>. Se não existir nenhuma mensagem não-lida por baixo da mensagem seleccionada de momento, então o comportamento irá depender do valor da opção <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>P</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Mensagem Anterior</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona a mensagem anterior na lista de mensagens.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread">
+<term
+><menuchoice
+><shortcut
+><keycap
+>-</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Mensagem Não-Lida Anterior</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selecciona a mensagem anterior não lida na lista de mensagens</action
+>. Se não existir nenhuma mensagem não-lida por baixo da mensagem seleccionada de momento, então o comportamento irá depender do valor da opção <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-folder">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>+</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Pasta Não-Lida Seguinte</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Vai para a próxima pasta com mensagens não lidas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread-folder">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>-</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Pasta Não-Lida Anterior</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Vai para a pasta anterior com mensagens não-lidas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-text">
+<term
+><menuchoice
+><shortcut
+><keycap
+>Espaço</keycap
+></shortcut
+> <guimenu
+>Ir</guimenu
+> <guimenuitem
+>Texto Não-Lido Seguinte</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Desce na mensagem actual se ainda não chegou ao fim da mesma, em caso contrário vai para a próxima mensagem não-lida.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>O Menu Pasta</title>
+<variablelist>
+<varlistentry id="reader-folder-add-folder">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Adicionar uma Pasta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela de <link linkend="folders-properties-window"
+>Propriedades da Pasta</link
+></action
+>, a qual lhe permite criar uma pasta nova.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Marcar Todas as Mensagens Como Lidas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Muda o estado de todas as mensagens novas e não-lidas da pasta actual para mensagens lidas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder">
+<term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Actualizar as Pastas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Verifica se chegou correio novo à pasta seleccionada de momento.</action
+></para>
+<note
+><para
+>Isto só estará disponível para as pastas de &imap;.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Actualizar Esta Pasta e Todas as Sub-Pastas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Verifica se chegou correio novo à pasta seleccionada de momento e a todas as suas sub-pastas.</action
+></para>
+<note
+><para
+>Isto só estará disponível para as pastas de &imap;.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Enviar Tudo para o Lixo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Move todas as mensagens da pasta seleccionada para a pasta do lixo.</action
+></para>
+<note
+><para
+>Se a pasta seleccionada de momento for um caixote de lixo, irá ver a opção <guilabel
+>Esvaziar o Lixo</guilabel
+>. Veja mais detalhes na secção seguinte, por favor.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-empty-trash">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Esvaziar o Lixo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Apaga de forma permanente todas as mensagens.</action
+></para>
+<note
+><para
+>Só está disponível se a pasta seleccionada de momento for uma pasta de lixo.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-archive-folder">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Arquivar a Pasta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uma janela que lhe permite criar um pacote com a pasta seleccionada de momento</action
+>. Veja mais detalhes em <link linkend="folder-archive"
+>Arquivo da Pasta</link
+>.</para>
+ </listitem>
+</varlistentry>
+<varlistentry id="reader-folder-delete-folder">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Apagar a Pasta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Remove a pasta seleccionada e todo o seu conteúdo, incluindo as subpastas.</action
+></para>
+<warning
+><para
+>Lembre-se que não existe nenhuma forma de aceder ao conteúdo de uma pasta depois de ter sido removida.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-remove-duplicate-messages">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Remover as Mensagens Duplicadas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Procura na pasta mensagens duplicadas e apaga-as.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-apply-all-filters-on-folder">
+<term
+><menuchoice
+><guimenu
+>Ficheiro</guimenu
+> <guimenuitem
+>Aplicar Todos os Filtros sobre a Pasta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Aplica todos os filtros configurados sobre a pasta seleccionada de momento</action
+>. Veja mais informações sobre os filtros na <link linkend="filter-dialog-id"
+>Janela do filtro</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-prefer-html-to-plain-text">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Preferir o HTML ao Texto Simples</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Se isto estiver activo, irá mostrar as mensagens de &html; de facto em &html;.</action
+></para>
+<warning
+><para
+>Por razões de segurança, recomenda-se que só active isto para as pastas só com mensagens de confiança.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-load-external-references">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Carregar as Referências Externas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Se isto estiver activo, irá mostrar as mensagens em &html;, para <action
+>carregar as imagens e outras referências de forma automática</action
+>.</para>
+<warning
+><para
+>Por razões de segurança, recomenda-se que só active isto para as pastas só com mensagens de confiança.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mailing-list-management">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+><guimenuitem
+>Gestão de Listas de Correio...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Isto abre a janela de gestão de listas de correio</action
+>. Veja mais informações sobre as listas de correio na <link linkend="folders-properties-mailinglist"
+>Janela da lista de correio</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-assign-shortcut">
+<term
+><menuchoice
+><guimenu
+>Pasta</guimenu
+> <guimenuitem
+>Atribuir um Atalho...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Isto permite-lhe atribuir um combinação de teclas para a pasta seleccionada de momento.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>O Menu Mensagem</title>
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Nova Mensagem...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a <link linkend="the-composer-window"
+>janela do compositor</link
+></action
+> para que possa escrever uma mensagem nova.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-new-message-to-mailing-list">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Nova Mensagem para a Lista de Correio...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela do compositor para que possa escrever uma mensagem nova</action
+>. Se a pasta actual contiver uma lista de correio ('mailing-list') e tiver um endereço de publicação definido, este endereço será o endereço <guilabel
+>Para:</guilabel
+> por omissão.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply">
+<term
+><menuchoice
+><shortcut
+><keycap
+>R</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Responder...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela do compositor, insere o texto citado da mensagem seleccionada de momento e pré-configura o campo <guilabel
+>Para:</guilabel
+> ou com o endereço da lista de correio (se você responder a uma mensagem da lista de correio) ou com o endereço de resposta preferido do remetente</action
+>. Se quiser controlar o endereço com que o campo <guilabel
+>Para:</guilabel
+> é pré-configurado, então deverá usar a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Resposta Especial</guimenuitem
+></menuchoice
+>. Veja mais informações em <link linkend="reader-message-reply-special"
+>Resposta Especial</link
+>. A sua identidade será automaticamente configurada com a identidade para quem esta mensagem foi enviada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-all">
+<term
+><menuchoice
+><shortcut
+><keycap
+>A</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Responder a Todos...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela do compositor, insere o texto citado da mensagem seleccionada de momento e pré-configura o campo <guilabel
+>Para:</guilabel
+> ou com o endereço da lista de correio (se você responder a uma mensagem da lista de correio) ou com o endereço de resposta preferido do remetente. O campo <guilabel
+>Copiar Para (CC):</guilabel
+> é pré-configurado com os endereços de todos os outros destinatários da mensagem seleccionada de momento, exceptuando os seus próprios endereços</action
+>. A sua identidade será automaticamente configurada com a identidade para quem esta mensagem foi enviada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Resposta Especial</guisubmenu
+><guimenuitem
+>Responder ao Autor...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela de composição, insere o texto citado da mensagem seleccionada de momento e configura o campo <guilabel
+>Para:</guilabel
+> com o endereço de resposta preferido do remetente</action
+>. Por omissão, este irá mostrar automaticamente a sua identidade à pessoa para quem esta mensagem será enviada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+<term
+><menuchoice
+><shortcut
+><keycap
+>L</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Resposta Especial</guisubmenu
+><guimenuitem
+>Responder para a Lista...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela do compositor, insere o texto citado da mensagem seleccionada de momento e pré-configura o campo <guilabel
+>Para:</guilabel
+> ou com o endereço da lista de correio</action
+>. Se você não indicou nenhum endereço da lista de correio para a pasta seleccionada e o &kmail; não conseguir determinar o endereço de envio a partir da mensagem seleccionada, então o campo <guilabel
+>Para:</guilabel
+> estará vazio. A sua identidade será automaticamente configurada com a identidade para quem esta mensagem foi enviada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Resposta Especial</guisubmenu
+><guimenuitem
+>Responder sem Citar...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Funciona como o <guimenuitem
+>Responder...</guimenuitem
+>, excepto que o texto da mensagem seleccionada de momento não será incluído na resposta.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Resposta Especial</guisubmenu
+><guimenuitem
+>Responder com um Modelo Personalizado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Funciona como o <guimenuitem
+>Responder...</guimenuitem
+> com a diferença de uma opção para seleccionar um modelo personalizado previamente configurado na página de modelos personalizados do compositor em <link linkend="configure-composer-custom-templates"
+>Modelos Personalizados</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Resposta Especial</guisubmenu
+><guimenuitem
+>Responder a Todos com um Modelo Personalizado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Funciona como o <guimenuitem
+>Responder a Todos...</guimenuitem
+> com a diferença de uma opção para seleccionar um modelo personalizado previamente configurado na página de modelos personalizados do compositor em <link linkend="configure-composer-custom-templates"
+>Modelos Personalizados</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-as-attachment">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Encaminhar</guisubmenu
+><guimenuitem
+>Como Anexo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Encaminha a mensagem para um novo destinatário</action
+>. A mensagem e os seus anexos tornar-se-ão um anexo da mensagem nova. Os cabeçalhos da mensagem original serão também incluídos na mensagem encaminhada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-inline">
+<term
+><menuchoice
+><shortcut
+><keycap
+>F</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Encaminhar</guisubmenu
+><guimenuitem
+>Incorporado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>O texto da mensagem e alguns campos importantes do cabeçalho serão copiados para o conteúdo da nova mensagem, com texto a marcar a parte encaminhada</action
+>. Os anexos serão encaminhados como anexos da nova mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-redirect">
+<term
+><menuchoice
+><shortcut
+><keycap
+>E</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Encaminhar</guisubmenu
+><guimenuitem
+>Direccionar</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Isto funciona como o encaminhamento, com a diferença que a mensagem fica igual (até o campo <guilabel
+>De:</guilabel
+>). O utilizador que encaminhou a mensagem é adicionado em campos de cabeçalho especiais (<literal
+>Redirect-From</literal
+>, <literal
+>Redirect-Date</literal
+>, <literal
+>Redirect-To</literal
+>, &etc;).</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+><guisubmenu
+>Encaminhar</guisubmenu
+><guimenuitem
+>Com um Modelo Personalizado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Funciona como o <guimenuitem
+>Encaminhar...</guimenuitem
+> com a diferença de uma opção para seleccionar um modelo personalizado previamente configurado em <link linkend="configure-composer-custom-templates"
+>Modelos Personalizados</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-send-again">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar de Novo...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma janela de composição com a mensagem seleccionada de momento, para que possa ser enviada de novo.</action
+></para>
+<note
+><para
+>Isto só está disponível para as mensagens que você já enviou ou, mais precisamente, para as mensagens que têm o estado de <guilabel
+>enviadas</guilabel
+>.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Editar a Mensagem</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Edita a mensagem seleccionada, caso esteja disponível para edição.</action
+></para>
+<note
+><para
+>Só as mensagens nas pastas <guilabel
+>a enviar</guilabel
+> e <guilabel
+>rascunhos</guilabel
+> poderão ser editadas.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-mailing-list">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Lista de Correio</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Oferece várias opções para as mensagens das listas de correio.</para>
+<note
+><para
+>A pasta de trabalho actual deverá estar configurada como uma lista de correio para estas opções estarem disponíveis. Veja por favor mais informações nas <link linkend="folders-properties-mailinglist"
+>Propriedades da Pasta - Lista de Correio</link
+> para saber como configurar as listas de correio.</para
+></note>
+<para
+>As seguintes opções estão disponíveis para as pastas das listas de correio:</para>
+<itemizedlist>
+  <listitem
+><para
+>O <guimenuitem
+>Publicar uma Nova Mensagem (e-mail)</guimenuitem
+> irá configurar o campo <guilabel
+>Para:</guilabel
+> com o endereço configurado em 'Publicar para a Lista'.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Pedir Ajuda (e-mail)</guimenuitem
+> irá configurar o <guilabel
+>Para:</guilabel
+> com o endereço definido em 'Publicar na Lista' e com o texto <literal
+>help</literal
+> no campo <guilabel
+>Assunto:</guilabel
+>.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Inscrever na Lista (Web)</guimenuitem
+> irá abrir o seu navegador Web predefinido com a página de inscrição da lista de correio configurada.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Inscrever na Lista (e-mail)</guimenuitem
+> irá configurar o campo <guilabel
+>Para:</guilabel
+> com o endereço de inscrição na lista de correio e o texto <literal
+>subscribe</literal
+> no campo <guilabel
+>Assunto:</guilabel
+>.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Cancelar a Inscrição na Lista (web)</guimenuitem
+> irá abrir o seu navegador Web predefinido na página Web de cancelamento da inscrição da lista de correio configurada.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Cancelar a Inscrição na Lista (e-mail)</guimenuitem
+> irá configurar o campo <guilabel
+>Para:</guilabel
+> com o endereço de inscrição na lista de correio e o texto <literal
+>unsubscribe</literal
+> no campo <guilabel
+>Assunto:</guilabel
+>.</para
+></listitem>
+</itemizedlist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-copy-message-to">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Copiar a Mensagem Para</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Copia as mensagens seleccionadas para uma dada pasta</action
+>, onde poderá optar entre as pastas recentes, as pastas locais ou uma pasta de uma conta específica.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-move-message-to">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Mover a Mensagem Para</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Igual à cópia da mensagem, exceptuando que <action
+>irá mover de forma permanente a mensagem seleccionada para a pasta indicada.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-messages">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Marcar a Mensagem</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe alterar o estado da mensagem seleccionada para um dos seguintes estados:</para>
+<informaltable
+><tgroup cols="2">
+<thead
+><row
+><entry
+>Estado</entry
+><entry
+>Símbolo</entry
+><entry
+>Significado</entry
+></row
+></thead>
+<tbody>
+<row>
+<entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+></shortcut
+><guimenuitem
+>Marcar a Mensagem como Lida</guimenuitem
+> </menuchoice
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Foi lida uma mensagem.</entry
+></row>
+<row>
+<entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+></shortcut
+> <guimenuitem
+>Marcar a Mensagem como Não-Lida</guimenuitem
+> </menuchoice
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>A mensagem ainda não foi lida.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Marcar a Mensagem Como Importante</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Este estado não será configurado automaticamente pelo &kmail;. Você poderá usar isto à vontade para marcar as mensagens que são de alguma forma importantes para si.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Remover a Marca de Importante</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Remove uma marcação prévia de importante da mensagem.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Marcar a Mensagem como Item de Acção</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Este estado não será configurado automaticamente pelo &kmail;. Você poderá usar isto à vontade para marcar as mensagens que são itens de acção &eg; uma lista de tarefas.</entry
+></row>
+<row
+><entry
+><guimenuitem
+>Remover a Marca de Item de Acção</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Remove a marca de item de acção da mensagem.</entry
+></row>
+</tbody>
+</tgroup
+></informaltable
+></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-thread">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Marcar o Tópico</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe alterar o estado de todas as mensagens de um tópico da seguinte forma:</para>
+<informaltable
+><tgroup cols="2">
+<thead
+><row
+><entry
+>Estado</entry
+><entry
+>Símbolo</entry
+><entry
+>Significado</entry
+></row
+></thead>
+<tbody>
+<row>
+<entry
+><guimenuitem
+>Marcar o Tópico como Lido</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>O tópico inteiro foi lido.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Marcar o Tópico como Não-Lido</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>O tópico ainda não foi lido.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Marcar o Tópico como Importante</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Este estado não será configurado automaticamente pelo &kmail;. Você poderá usar isto à vontade para marcar os tópicos que são de alguma forma importantes para si.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Remover a Marca de Importante do Tópico</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Remove uma marca previamente atribuída de importância do tópico.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Marcar o Tópico como Item de Acção</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Este estado não será configurado automaticamente pelo &kmail;. Você poderá usar isto à vontade para marcar os tópicos que são itens de acção &eg; listas de tarefas.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Remover a Marca de Item de Acção do Tópico</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Remove uma marca de item de acção previamente definida do tópico.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Vigiar o Tópico</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Define o estado de vigia do tópico, que lhe permite ver facilmente os tópicos onde está interessado, seleccionando o estado <guimenu
+>Vigiados</guimenu
+> na lista que aparece na barra de pesquisa rápida.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Ignorar o Tópico</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Permite-lhe ignorar os tópicos por inteiro.</entry
+></row>
+</tbody
+></tgroup
+></informaltable
+></listitem>
+</varlistentry>
+<varlistentry id="message-create-filter">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guisubmenu
+>Criar um Filtro</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a <link linkend="filter-dialog-id"
+>janela dos Filtros</link
+> com um novo filtro adicionado</action
+>. Este filtro novo baseia-se nos campos da mensagem actual, dependendo da opção do sub-menu que escolheu:</para>
+<simplelist>
+  <member
+>Filtro do Assunto...</member>
+  <member
+>Filtro da Origem...</member>
+  <member
+>Filtro do Destino...</member>
+  <member
+>Filtrar pela Lista de Correio...(só fica disponível se a mensagem seleccionada pertencer a uma lista de correio)</member>
+</simplelist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-apply-filter">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Aplicar o Filtro</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Permite-lhe <guimenuitem
+>Aplicar Todos os Filtros</guimenuitem
+></action
+>. Se tiver a filtragem de lixo configurada com o <link linkend="the-anti-spam-wizard"
+>Assistente Anti-Lixo Electrónico</link
+>, as opções <guimenuitem
+>Filtrar e Classificar como Lixo</guimenuitem
+> e <guimenuitem
+>Filtrar e Classificar como NÃO Lixo</guimenuitem
+> ficarão disponíveis para a filtragem de mensagens indesejadas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Criar um Item Por-Fazer/Chamada de Atenção</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de Item Por-Fazer/Chamada de Atenção do &kontact;</action
+> que lhe permite adicionar a mensagem seleccionada como um endereço, incorporada ou incorporada sem anexos.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Adicionar uma Nota...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de Notas do &kontact; para adicionar uma nota à mensagem seleccionada.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-tools-menu">
+<title
+>O Menu Ferramentas</title>
+<variablelist>
+<varlistentry id="reader-tools-find-messages">
+<term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Procurar as Mensagens...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma janela de pesquisa</action
+> que lhe permite procurar mensagens com certas características, &eg; um dado assunto. Veja por favor os <link linkend="filter-criteria"
+>Critérios de Pesquisa</link
+> para saber mais detalhes sobre as opções de pesquisa.</para>
+<para
+>Os resultados da sua pesquisa irão aparecer na área de texto, onde poderá abrir a opção <guibutton
+>Abrir a Pasta de Pesquisa</guibutton
+> ou seleccionar a mensagem desejada e seleccionar <guibutton
+>Abrir a Mensagem</guibutton
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-certificate-manager">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Gestor de Certificados...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Inicia o <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+>, o gestor de certificados do &kde;.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-gnupg-log-viewer">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Visualizador de Registos GnuPG</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Inicia o <ulink url="help:kwatchgnupg"
+><application
+>KWatchGnuPG</application
+></ulink
+></action
+>, uma ferramenta para apresentar o resultado de depuração da aplicação <application
+>GnuPG</application
+>. Se a assinatura, a cifra ou a verificação deixarem de funcionar misteriosamente, você poderá apurar a razão se olhar para o registo.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Editar as Respostas de "Fora do Escritório"...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Lança a janela para <guilabel
+>Configurar as Respostas "Fora do Escritório"</guilabel
+></action
+>, que lhe permitem configurar as notificações de férias.</para>
+<note
+><para
+>A funcionalidade de <guilabel
+>respostas de Fora do Escritório</guilabel
+> baseia-se na filtragem do lado do servidor. Para ser capaz de a usar, terá de configurar a <link linkend="receiving-mail"
+>página de Filtragem</link
+> (veja as opções relevantes para o servidor de Kolab) da sua conta de &imap; configurada.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Depuração do Sieve...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de <guilabel
+>Diagnóstico do Sieve</guilabel
+></action
+>. Esta é útil para resolver problemas com o Sieve, se os estiver a ter de facto.</para>
+<note
+><para
+>Deverá ter o suporte para Sieve no seu servidor de e-mail.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-filter-log-viewer">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Visualizador do Registo do Filtro...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela de visualização para o registo do filtro</action
+>; aqui você poderá encontrar algumas opções para controlar o registo do processo de filtragem. No registo, você irá encontrar alguma informação valiosa sobre quais as regras de filtragem que foram usadas, qual foi o resultado da avaliação destas regras e quais as acções do filtro que foram aplicadas a uma mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-import-wizard">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Assistente de Importação...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela do Assistente de Importação</action
+>, que o conduz na importação simples de definições e de e-mail. Veja mais detalhes por favor no <link linkend="help:/importwizard"
+>Assistente de Importação</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-export-data">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Exportar os Dados do &kmail;...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela da Exportação de Definições PIM</action
+>, que o conduz na importação simples de definições e de e-mail. Veja mais detalhes por favor no <link linkend="help:/pimsettingexporter"
+>Assistente de Exportação</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-account-wizard">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guisubmenu
+>Assistente de Contas...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela do Assistente de Contas</action
+>, que o assiste na definição simples das contas. Veja mais detalhes por favor no <link linkend="account-wizard"
+>Assistente de Contas</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-spam-wizard">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Assistente Anti-Lixo Electrónico...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca o Assistente de Lixo Electrónico</action
+>, que o poderá ajudar na configuração da filtragem de mensagens indesejadas. Veja mais detalhes no <link linkend="the-anti-spam-wizard"
+>Assistente Anti-Lixo Electrónico</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-virus-wizard">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Assistente Anti-Vírus...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca o Assistente de Anti-Vírus</action
+>, que o poderá ajudar na configuração da sondagem de mensagens à procura de vírus. Veja mais detalhes no <link linkend="the-anti-virus-wizard"
+>Assistente de Anti-Vírus</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>O Menu Configuração</title>
+<para
+>Se o item de menu de que está à procura está em falta, veja por favor o <ulink url="help:/fundamentals/ui.html#menus-settings"
+>menu Configuração</ulink
+> dos Fundamentos do &kde;. Os itens abaixo apresentados são específicos do &kmail;.</para>
+<variablelist>
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Mostrar a Barra de Pesquisa Rápida</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Se estiver activa, a barra de Pesquisa Rápida</action
+>, que lhe permite procurar rapidamente por mensagens que correspondam um dado texto de pesquisa, ficará visível.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-filters">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar os Filtros...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre a janela dos <link linkend="filters"
+>Filtros de Mensagens</link
+>.</action
+></para
+></listitem>
+</varlistentry>
+<!--FIXME http://www.aegiap.eu/kdeblog/2013/08/new-in-kdepim-4-12-sieve-12/ -->
+<varlistentry id="settings-manage-sieve-scripts">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar os Filtros do Sieve...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Se o seu servidor de correio suportar o Sieve (filtragem do lado do servidor), iria <action
+>configurar aqui os seus programas</action
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-automatic-archiving">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+><guimenuitem
+>Configurar o Arquivo Automático...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Permite-lhe configurar o arquivo automático</action
+>. Veja mais detalhes por favor no <link linkend="help:/akonadi_archivemail_agent"
+>Arquivo Automático</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar o Agente de Envio Posterior...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uma janela que lhe permite modificar e remover as mensagens que tiverem sido enviadas com a funcionalidade de envio posterior</action
+>. Veja mais detalhes em <link linkend="help:/akonadi_sendlater_agent"
+>Enviar Mais Tarde</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar o Agente de Envio Posterior...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uma janela que lhe permite modificar e remover as mensagens que tiverem sido enviadas com a funcionalidade de envio posterior</action
+>. Veja mais detalhes em <link linkend="help:/akonadi_folderarchive_agent"
+>Enviar Mais Tarde</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar as Notificações...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma janela que lhes permite configurar o que acontece quando chega correio novo</action
+>, &eg; tocar um som ou mostrar uma janela, &etc;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+<sect2>
+<title
+>O Menu Ajuda</title>
+<para
+>O <ulink url="help:/fundamentals/ui.html#menus-help"
+>menu Ajuda</ulink
+> dos Fundamentos do &kde;.</para>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>A Janela do Compositor do &kmail;</title>
+
+<sect2 id="composer-file-menu">
+<title
+>O Menu Mensagem</title>
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Novo Compositor</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma nova janela do compositor.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Nova Janela Principal</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cria uma nova janela principal.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Novo Contacto do Livro de Endereços</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de Novo Contacto do &kontact;</action
+> para adicionar um novo contacto ao seu livro de endereços.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar o Correio</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Envia a mensagem imediatamente</action
+>. Se você usar o &SMTP; para enviar as suas mensagens e o servidor de &SMTP; não estiver acessível, a mensagem será colocada na pasta de saída e você irá obter uma mensagem de erro. Você poderá depois enviar as mensagens na pasta de saída com a opção <menuchoice
+><guimenu
+>Ficheiro</guimenu
+><guimenuitem
+>Enviar Mensagens em Espera</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail-via">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar Mais Tarde</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe seleccionar qual o servidor de envio de correio que deseja usar para enviar a mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar Mais Tarde</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Invoca a janela de envio posterior.</action
+> Veja mais detalhes em <link linkend="send-later"
+>Enviar Mais Tarde</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later-via">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar Mais Tarde Via</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe escolher qual a conta de envio para onde enviar posteriormente a mensagem configurada.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-file">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Gravar como Ficheiro</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Grava a mensagem como um documento de texto.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-draft">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Gravar como Rascunho</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Grava a mensagem na pasta de <guilabel
+>rascunhos</guilabel
+></action
+>, para que você a possa editar e enviar depois.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-template">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Gravar como Modelo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe <action
+>gravar a sua mensagem como um modelo.</action
+> Veja mais detalhes sobre os modelos em <link linkend="new-compose-from-templates"
+>Compor a partir de modelos</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-text-file">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Inserir um Ficheiro de Texto...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Insere o conteúdo de um ficheiro no texto da mensagem</action
+>, a começar na posição do cursor.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-recent-text-file">
+<term
+><menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Inserir um Ficheiro de Texto Recente...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe escolher a partir de uma lista de ficheiros de texto inseridos recentemente para introduzir o conteúdo do mesmo na sua mensagem. Seleccione <guimenuitem
+>Limpar a Lista</guimenuitem
+> para limpar a lista.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-print">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Imprimir...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Imprime o texto actual.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-close">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Fechar</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Fecha esta janela do compositor.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>O Menu Editar</title>
+<para
+>Se o item de menu de que está à procura está em falta, veja por favor o <ulink url="help:/fundamentals/ui.html#menus-edit"
+>menu Editar</ulink
+> dos Fundamentos do &kde;. Os itens abaixo apresentados são específicos do &kmail;.</para>
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Colar como Citação</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cola o texto da área de transferência</action
+> marcado como citação.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-attachment">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Colar como Anexo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cola o texto da área de transferência</action
+> como um anexo.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-without-formatting">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Editar</guimenu
+> <guimenuitem
+>Colar sem Formatação</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Cola o texto da área de transferência</action
+> tal-e-qual e sem qualquer formatação.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-clean-spaces">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Limpar os Espaços</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Esta opção substitui várias quebras de linhas ou espaços com uma única quebra de linha ou espaço. Funciona na selecção actual ou na mensagem completa, se não estiver nada seleccionado.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-add-quote-characters">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Adicionar os Caracteres de Citação</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Antecede o texto seleccionado com caracteres de citação.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-remove-quote-characters">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Remover os Caracteres de Citação</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Remove as marcas de citação à esquerda do texto seleccionado.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Maiúsculas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Converte o texto seleccionado para maiúsculas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Minúsculas</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Converte o texto seleccionado para minúsculas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-insert-special-characters">
+<term
+><menuchoice
+><guimenu
+>Editar</guimenu
+> <guimenuitem
+>Inserir Caracteres Especiais</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Permite-lhe introduzir um carácter especial no compositor.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>O Menu Ver</title>
+
+<para
+>Este menu permite-lhe comutar a visibilidade dos campos do cabeçalho e das outras opções na janela de composição.</para>
+<para
+>Os itens visíveis de momento tem uma marcação ao lado do nome deles no menu.</para>
+
+<para
+>As opções disponíveis são:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>Todos os Campos</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Identidade</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Dicionário</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Pasta de Enviados</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Transporte de Correio</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>De</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Responder Para</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Assunto</guimenuitem
+></para>
+  </listitem>
+</itemizedlist>
+
+<para
+>Veja mais detalhes sobre estas opções em <link linkend="composer-headers"
+>Cabeçalhos do Compositor</link
+>.</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Usar um Tipo de Letra Monoespaçado</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Usa um tipo de letra fixo (monoespaçado) para mostrar a mensagem editada no momento. O tipo de letra a ser usado pode ser configurado na secção <guilabel
+>Aparência</guilabel
+> da janela de configuração do &kmail;.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-view-snippets">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Excertos</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Mostra uma coluna do lado direito da janela de composição que lhe permite usar e criar excertos. Veja mais informações por favor em <link linkend="setup-text-snippets"
+>Excertos</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-view-translator">
+<term
+><menuchoice
+><guimenu
+>Ver</guimenu
+> <guimenuitem
+>Tradutor</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Mostra a ferramenta de tradução no fundo da janela de composição. Veja mais informações por favor em <link linkend="using-the-translator"
+>Usar o Tradutor</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>O Menu Opções</title>
+<para
+>Este menu permite-lhe comutar várias opções para a mensagem actual.</para>
+<para
+>As opções usadas de momento tem uma marcação ao lado do nome deles no menu.</para>
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guimenuitem
+>Urgente</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Altera a prioridade desta mensagem para Urgente. O cliente de e-mail do receptor tem de suportar isto, caso contrário não fará efeito nenhum. O &kmail; em si não suporta as prioridades para as mensagens recebidas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-request-mdn">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guimenuitem
+>Pedir uma Notificação de Entrega...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Se você escolher esta opção, você irá pedir uma mensagem de confirmação logo que a sua mensagem seja obtida e lida pelo destinatário. Isto tem de ser suportado do lado do destinatário para poder funcionar.</para>
+<para
+>Veja a <xref linkend="configure-security-reading-mdns"/> para ter alguma informação de fundo e algumas formas de personalizar as confirmações de leitura que o próprio &kmail; envia.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-sign-message">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guisubmenu
+>Assinar a Mensagem</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Assina digitalmente a mensagem usando o <application
+>OpenPGP</application
+>. Você poderá aprender mais sobre isto no <link linkend="pgp"
+>capítulo sobre OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encrypt-message">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guisubmenu
+>Cifrar a Mensagem</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Cifra a mensagem usando o <application
+>OpenPGP</application
+>. Você poderá aprender mais sobre isto no <link linkend="pgp"
+>capítulo sobre o OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-select-crypto-message-format">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guisubmenu
+>Formato de Cifra da Mensagem</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Escolha o formato de cifra de mensagens usado para assinar e/ou cifrar digitalmente a mensagem. Veja os <link linkend="cryptographic-message-formats"
+>Formatos Criptográficos da Mensagem</link
+> para mais informações.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-rich-text-editing">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guisubmenu
+>Edição de Texto Formatado</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Activa a edição em Texto Formatado/&html;.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encoding">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guisubmenu
+>Codificação</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Altera a codificação desta mensagem. A codificação escolhida irá aparecer no cabeçalho da mensagem resultante. Você poderá usar o <guilabel
+>Auto</guilabel
+> para quase todos os casos. O &kmail; dir-lhe-á se precisa de seleccionar manualmente uma codificação diferente.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-wordwrap">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guimenuitem
+>Mudança de Linha</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Activa a mudança de linha automática. Poderá ser útil desligar esta opção se você quiser colar linhas compridas que não deverão ser repartidas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-automatic-spellchecking">
+<term
+><menuchoice
+><guimenu
+>Opções</guimenu
+> <guimenuitem
+>Verificação Ortográfica Automática</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Activa ou desactiva a verificação ortográfica automática.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>O Menu Anexar</title>
+
+<para
+>Este menu permite-lhe seleccionar as opções dos anexos.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Juntar a Assinatura</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Adiciona a sua assinatura (<quote
+>rodapé</quote
+>) ao fim da mensagem. Veja por favor em <link linkend="configure-identity-signature"
+>Configurar as Assinaturas da Identidade</link
+> mais detalhes sobre a configuração da sua assinatura.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-prepend-signature">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Anteceder a Assinatura</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Antecede a sua assinatura (<quote
+>cabeçalho</quote
+>) ao início da mensagem. Veja por favor em <link linkend="configure-identity-signature"
+>Configurar as Assinaturas da Identidade</link
+> mais detalhes sobre a configuração da sua assinatura.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-cursor-signature">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Juntar a Assinatura na Posição do Cursor</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Insere a sua assinatura na posição actual do cursor na sua mensagem. Veja por favor em <link linkend="configure-identity-signature"
+>Configurar as Assinaturas da Identidade</link
+> mais detalhes sobre a configuração da sua assinatura.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-public-key">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Anexar uma Chave Pública...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Abre a janela para <guilabel
+>Anexar a Chave Pública de OpenPGP</guilabel
+>. Veja mais detalhes por favor em <link linkend="configure-identity-cryptography-openpgp-sign"
+>Configurar a Assinatura Criptográfica de OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attach-my-public-key">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Anexar a Minha Chave Pública</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Anexa a sua chave pública de <application
+>GnuPG</application
+> à sua mensagem.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-file">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guisubmenu
+>Anexar</guisubmenu
+> <guimenuitem
+>Anexar um Ficheiro...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Anexa um ou mais ficheiros à mensagem actual. Por omissão, os anexos não são encriptados; veja mais informações sobre a encriptação e os anexos nos <link linkend="cryptographic-message-formats"
+>Formatos Criptográficos de Mensagens</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-vcard">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guisubmenu
+>Anexar</guisubmenu
+> <guimenuitem
+>Anexar o Próprio vCard</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Anexa o seu próprio vCard à mensagem actual.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-remove-attachment">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Remover o Anexo</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Remove o anexo que está seleccionado na componente de anexos do seu compositor.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-save-attachment">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Gravar o Anexo Como...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Grava o anexo que está seleccionado na janela de anexos num ficheiro.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attachment-properties">
+<term
+><menuchoice
+><guimenu
+>Anexar</guimenu
+> <guimenuitem
+>Propriedades do Anexo</guimenuitem
+> </menuchoice>
+</term>
+<listitem>
+<para
+>Mostra as <link linkend="attachments"
+>propriedades do anexo</link
+> seleccionado na janela de anexos. Também lhe permite assinar/encriptar o anexos. Veja como configurar a encriptação em <link linkend="configure-security-composing"
+>Configurar a Composição da Segurança</link
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>O Menu Ferramentas</title>
+<para
+>Se o item de menu de que está à procura está em falta, veja por favor o <ulink url="help:/fundamentals/ui.html#menus-tools"
+>menu Ferramentas</ulink
+> dos Fundamentos do &kde;. Os itens abaixo apresentados são específicos do &kmail;.</para>
+<variablelist>
+<varlistentry id="composer-tools-select-recipients">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Seleccionar os Destinatários...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Lança a janela para <guilabel
+>Seleccionar o Destinatário</guilabel
+></action
+>, onde poderá escolher entre os seus contactos pessoais.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-addressbook">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Livro de Endereços...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre o <ulink url="help:/kaddressbook"
+>&kaddressbook;</ulink
+></action
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-save-distribution-list">
+<term
+><menuchoice
+><guimenu
+>Ferramentas</guimenu
+> <guimenuitem
+>Gravar a Lista de Distribuição...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Abre uma janela</action
+> que lhe permite gravar os grupos de contactos.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>O Menu Configuração</title>
+<para
+>Se o item de menu de que está à procura está em falta, veja por favor o <ulink url="help:/fundamentals/ui.html#menus-settings"
+>menu Configuração</ulink
+> dos Fundamentos do &kde;. Os itens abaixo apresentados são específicos do &kmail;.</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Verificação Ortográfica...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>Permite-lhe configurar o <ulink url="help:/sonnet/"
+>&sonnet;</ulink
+>, o verificador ortográfico do &kde;.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2>
+<title
+>O Menu Ajuda</title>
+<para
+>O <ulink url="help:/fundamentals/ui.html#menus-help"
+>menu Ajuda</ulink
+> dos Fundamentos do &kde;.</para>
+</sect2>
+</sect1>
+
+</chapter>

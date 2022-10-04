@@ -1,41 +1,29 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "archivejob.h"
-#include "archivemailinfo.h"
-#include "archivemailmanager.h"
 #include "archivemailagent_debug.h"
-#include "MailCommon/MailUtil"
+#include "archivemailinfo.h"
+#include "archivemailkernel.h"
+#include "archivemailmanager.h"
 
 #include <MailCommon/BackupJob>
+#include <MailCommon/MailUtil>
 
-#include <KNotification>
+#include <Akonadi/EntityMimeTypeFilterModel>
+
 #include <KLocalizedString>
-#include <QIcon>
-#include <KIconLoader>
+#include <KNotification>
 
 ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate)
     : MailCommon::ScheduledJob(folder, immediate)
     , mInfo(info)
     , mManager(manager)
 {
-    mPixmap = QIcon::fromTheme(QStringLiteral("kmail")).pixmap(KIconLoader::SizeSmall, KIconLoader::SizeSmall);
+    mDefaultIconName = QStringLiteral("kmail");
 }
 
 ArchiveJob::~ArchiveJob()
@@ -46,7 +34,6 @@ ArchiveJob::~ArchiveJob()
 void ArchiveJob::execute()
 {
     if (mInfo) {
-
         Akonadi::Collection collection(mInfo->saveCollectionId());
         const QString realPath = MailCommon::Util::fullCollectionPath(collection);
         if (realPath.isEmpty()) {
@@ -67,8 +54,9 @@ void ArchiveJob::execute()
         if (!dirExit) {
             mManager->backupDone(mInfo);
             KNotification::event(QStringLiteral("archivemailfolderdoesntexist"),
+                                 QString(),
                                  i18n("Directory does not exist. Please verify settings. Archive postponed."),
-                                 mPixmap,
+                                 mDefaultIconName,
                                  nullptr,
                                  KNotification::CloseOnTimeout,
                                  QStringLiteral("akonadi_archivemail_agent"));
@@ -76,8 +64,8 @@ void ArchiveJob::execute()
             return;
         }
 
-        MailCommon::BackupJob *backupJob = new MailCommon::BackupJob();
-        backupJob->setRootFolder(MailCommon::Util::updatedCollection(collection));
+        auto backupJob = new MailCommon::BackupJob();
+        backupJob->setRootFolder(Akonadi::EntityTreeModel::updatedCollection(mManager->kernel()->collectionModel(), collection));
 
         backupJob->setSaveLocation(archivePath);
         backupJob->setArchiveType(mInfo->archiveType());
@@ -87,8 +75,9 @@ void ArchiveJob::execute()
         backupJob->setRealPath(realPath);
         const QString summary = i18n("Start to archive %1", realPath);
         KNotification::event(QStringLiteral("archivemailstarted"),
+                             QString(),
                              summary,
-                             mPixmap,
+                             mDefaultIconName,
                              nullptr,
                              KNotification::CloseOnTimeout,
                              QStringLiteral("akonadi_archivemail_agent"));
@@ -101,8 +90,9 @@ void ArchiveJob::execute()
 void ArchiveJob::slotError(const QString &error)
 {
     KNotification::event(QStringLiteral("archivemailerror"),
+                         QString(),
                          error,
-                         mPixmap,
+                         mDefaultIconName,
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
@@ -113,8 +103,9 @@ void ArchiveJob::slotError(const QString &error)
 void ArchiveJob::slotBackupDone(const QString &info)
 {
     KNotification::event(QStringLiteral("archivemailfinished"),
+                         QString(),
                          info,
-                         mPixmap,
+                         mDefaultIconName,
                          nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
@@ -131,4 +122,3 @@ MailCommon::ScheduledJob *ScheduledArchiveTask::run()
 {
     return folder().isValid() ? new ArchiveJob(mManager, mInfo, folder(), isImmediate()) : nullptr;
 }
-

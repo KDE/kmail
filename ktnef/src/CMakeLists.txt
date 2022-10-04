@@ -1,25 +1,52 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
+
 configure_file(ktnef-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/ktnef-version.h @ONLY)
 
 add_subdirectory(pics)
+add_executable(ktnef)
 
-set(ktnef_SRCS
+target_sources(ktnef PRIVATE
+    main.cpp
     attachpropertydialog.cpp
     ktnefmain.cpp
     ktnefview.cpp
-    main.cpp
     messagepropertydialog.cpp
     qwmf.cpp
+    attachpropertydialog.h
+    ktnefmain.h
+    ktnefview.h
+    messagepropertydialog.h
+    qwmf.h
+    ktnef.qrc
     )
-qt5_add_resources(ktnef_SRCS ktnef.qrc)
-ecm_qt_declare_logging_category(ktnef_SRCS HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME log_ktnefapps)
+
+ecm_qt_declare_logging_category(ktnef HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
+        DESCRIPTION "kmail-refresh-settings"
+        EXPORT KMAIL
+    )
+
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/hicolor/*-apps-ktnef.png")
-ecm_add_app_icon(ktnef_SRCS ICONS ${ICONS_SRCS})
+ecm_add_app_icon(ktnef ICONS ${ICONS_SRCS})
 
-ki18n_wrap_ui(ktnef_SRCS ui/attachpropertywidgetbase.ui)
+ki18n_wrap_ui(ktnef ui/attachpropertywidgetbase.ui)
 
-add_executable(ktnef ${ktnef_SRCS})
-target_link_libraries(ktnef KF5::Tnef KF5::DBusAddons KF5::Crash)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(ktnef PROPERTIES UNITY_BUILD ON)
+endif()
+
+target_link_libraries(ktnef
+    Qt::Widgets
+    KF5::Tnef
+    KF5::DBusAddons
+    KF5::Crash
+    KF5::I18n
+    KF5::XmlGui
+    KF5::WidgetsAddons
+    KF5::Service
+    KF5::KIOWidgets
+)
 
 
 install(TARGETS ktnef ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

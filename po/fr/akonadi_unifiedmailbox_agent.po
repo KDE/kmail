@@ -1,0 +1,94 @@
+# Simon Depiets <sdepiets@gmail.com>, 2018, 2019.
+# Xavier Besnard <xavier.besnard@neuf.fr>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2021-06-25 08:35+0200\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 21.04.2\n"
+"X-Environment: kde\n"
+"X-Accelerator-Marker: &\n"
+"X-Text-Markup: kde4\n"
+
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Ajouter"
+
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Modifier"
+
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#, kde-format
+msgid "Remove"
+msgstr "Supprimer"
+
+#: settingsdialog.cpp:100
+#, kde-format
+msgid "Do you really want to remove unified mailbox <b>%1</b>?"
+msgstr "Voulez-vous vraiment supprimer la boîte aux lettres <b>%1</b> ?"
+
+#: settingsdialog.cpp:101
+#, kde-format
+msgid "Really Remove?"
+msgstr "Voulez-vous vraiment supprimer ?"
+
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#, kde-format
+msgid "Unified Mailboxes"
+msgstr "Boîtes aux lettres unifiées"
+
+#: unifiedmailboxagent.cpp:168
+#, kde-format
+msgid "Synchronizing unified mailbox %1"
+msgstr "Synchronisation de la boîte aux lettres unifiée %1"
+
+#: unifiedmailboxeditor.cpp:85
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure Unified Mailbox"
+msgstr "Configurer la boîte aux lettres unifiée"
+
+#: unifiedmailboxeditor.cpp:97
+#, kde-format
+msgid "Name:"
+msgstr "Nom :"
+
+#: unifiedmailboxeditor.cpp:102
+#, kde-format
+msgid "Pick icon..."
+msgstr "Choisissez une icône..."
+
+#: unifiedmailboxeditor.cpp:103
+#, kde-format
+msgid "Icon:"
+msgstr "Icône :"
+
+#: unifiedmailboxmanager.cpp:294
+#, kde-format
+msgid "Inbox"
+msgstr "Boîte de réception"
+
+#: unifiedmailboxmanager.cpp:301
+#, kde-format
+msgid "Sent"
+msgstr "Envoyé"
+
+#: unifiedmailboxmanager.cpp:308
+#, kde-format
+msgid "Drafts"
+msgstr "Brouillons"
+
+#~ msgctxt "@title:window"
+#~ msgid "Add an Unified MailBox"
+#~ msgstr "Ajouter une boîte aux lettres unifiée"

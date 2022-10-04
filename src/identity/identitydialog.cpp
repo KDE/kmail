@@ -2,121 +2,95 @@
     identitydialog.cpp
 
     This file is part of KMail, the KDE mail client.
-    Copyright (c) 2002 Marc Mutz <mutz@kde.org>
-    Copyright (C) 2014-2017 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2002 Marc Mutz <mutz@kde.org>
+    SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-    KMail is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License, version 2, as
-    published by the Free Software Foundation.
-
-    KMail is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-
-    In addition, as a special exception, the copyright holders give
-    permission to link the code of this program with any edition of
-    the Qt library by Trolltech AS, Norway (or with modified versions
-    of Qt that use the same license as Qt), and distribute linked
-    combinations including the two.  You must obey the GNU General
-    Public License in all respects for all of the code used other than
-    Qt.  If you modify this file, you may extend this exception to
-    your version of the file, but you are not obligated to do so.  If
-    you do not wish to do so, delete this exception statement from
-    your version.
+    SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "identitydialog.h"
-#include "identityeditvcarddialog.h"
 #include "identityaddvcarddialog.h"
-#include "identityinvalidfolder.h"
+#include "identityeditvcarddialog.h"
 #include "identityfolderrequester.h"
+#include "identityinvalidfolder.h"
 
-#include "MessageComposer/MessageComposerSettings"
+#include <MessageComposer/MessageComposerSettings>
+#include <QGpgME/Job>
+#include <QGpgME/Protocol>
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/IdentityManager>
 
 // other KMail headers:
+#include "kmkernel.h"
+#include "settings/kmailsettings.h"
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>
-#include "mailcommon/folderrequester.h"
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
-#include "settings/kmailsettings.h"
-#include "kmkernel.h"
-#endif
+#include <MailCommon/FolderRequester>
 
-#include "mailcommon/mailkernel.h"
+#include <MailCommon/MailKernel>
 
 #include "job/addressvalidationjob.h"
-#include "MessageComposer/Kleo_Util"
+#include <MessageComposer/Kleo_Util>
 #include <MessageCore/StringUtil>
-#include "TemplateParser/TemplatesConfiguration"
-#include "templatesconfiguration_kfg.h"
+#include <Sonnet/DictionaryComboBox>
+#include <TemplateParser/TemplatesConfiguration>
+#include <templateparser/templatesconfiguration_kfg.h>
 // other kdepim headers:
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/signatureconfigurator.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/SignatureConfigurator>
 
-#include "PimCommon/AutoCorrectionLanguage"
+#include <PimCommon/AutoCorrectionLanguage>
 #include <PimCommon/PimUtil>
 
-#include <LibkdepimAkonadi/AddresseeLineEdit>
+#include <Libkdepim/LineEditCatchReturnKey>
+#include <PimCommonAkonadi/AddresseeLineEdit>
 // libkleopatra:
-#include <Libkleo/KeySelectionCombo>
 #include <Libkleo/DefaultKeyFilter>
 #include <Libkleo/DefaultKeyGenerationJob>
+#include <Libkleo/KeySelectionCombo>
 #include <Libkleo/ProgressDialog>
-
-#include <QGpgME/Protocol>
-#include <QGpgME/Job>
 
 // gpgme++
 #include <gpgme++/keygenerationresult.h>
 
 #include <KEmailAddress>
-#include <Libkdepim/EmailValidator>
-#include <mailtransport/transport.h>
-#include <mailtransport/transportmanager.h>
-#include <mailtransport/transportcombobox.h>
+#include <MailTransport/Transport>
+#include <MailTransport/TransportComboBox>
+#include <MailTransport/TransportManager>
+#include <PimCommon/EmailValidator>
 using MailTransport::TransportManager;
 
 // other KDE headers:
-#include <KLocalizedString>
-#include <kmessagebox.h>
-#include <kfileitem.h>
-#include <qurl.h>
 #include "kmail_debug.h"
-#include <QPushButton>
-#include <kcombobox.h>
-#include <QTabWidget>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <QComboBox>
 #include <QIcon>
-#include <sonnet/dictionarycombobox.h>
-#include <KHelpClient>
+#include <QPushButton>
+#include <QTabWidget>
 
 // Qt headers:
-#include <QLabel>
 #include <QCheckBox>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QFile>
-#include <QHostInfo>
-#include <QToolButton>
-#include <QFileInfo>
 #include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QFormLayout>
+#include <QHostInfo>
+#include <QLabel>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 // other headers:
+#include <algorithm>
 #include <gpgme++/key.h>
 #include <iterator>
-#include <algorithm>
 
-#include <AkonadiCore/entitydisplayattribute.h>
-#include <AkonadiCore/collectionmodifyjob.h>
-#include <QStandardPaths>
-#include <KConfigGroup>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionModifyJob>
+#include <Akonadi/EntityDisplayAttribute>
+#include <Akonadi/SpecialMailCollections>
 #include <QDialogButtonBox>
+#include <QStandardPaths>
 
 using namespace KPIM;
 using namespace MailTransport;
@@ -124,7 +98,6 @@ using namespace MailCommon;
 
 namespace KMail
 {
-
 class KeySelectionCombo : public Kleo::KeySelectionCombo
 {
     Q_OBJECT
@@ -132,24 +105,22 @@ class KeySelectionCombo : public Kleo::KeySelectionCombo
 public:
     enum KeyType {
         SigningKey,
-        EncryptionKey
+        EncryptionKey,
     };
 
-    KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
-    ~KeySelectionCombo();
+    explicit KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, QWidget *parent);
+    ~KeySelectionCombo() override;
 
     void setIdentity(const QString &name, const QString &email);
 
-    void init() Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
-    void onCustomItemSelected(const QVariant &type);
+    void init() override;
 
 private:
+    void onCustomItemSelected(const QVariant &type);
     QString mEmail;
     QString mName;
-    KeyType mKeyType;
-    GpgME::Protocol mProtocol;
+    const KeyType mKeyType;
+    const GpgME::Protocol mProtocol;
 };
 
 class KeyGenerationJob : public QGpgME::Job
@@ -157,32 +128,27 @@ class KeyGenerationJob : public QGpgME::Job
     Q_OBJECT
 
 public:
-    KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
-    ~KeyGenerationJob();
+    explicit KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
+    ~KeyGenerationJob() override;
 
-    void slotCancel() Q_DECL_OVERRIDE;
+    void slotCancel() override;
     void start();
 
-private Q_SLOTS:
-    void keyGenerated(const GpgME::KeyGenerationResult &result);
-
 private:
-    QString mName;
-    QString mEmail;
-    QGpgME::Job *mJob;
+    void keyGenerated(const GpgME::KeyGenerationResult &result);
+    const QString mName;
+    const QString mEmail;
+    QGpgME::Job *mJob = nullptr;
 };
 
 KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
     : QGpgME::Job(parent)
     , mName(name)
     , mEmail(email)
-    , mJob(nullptr)
 {
 }
 
-KeyGenerationJob::~KeyGenerationJob()
-{
-}
+KeyGenerationJob::~KeyGenerationJob() = default;
 
 void KeyGenerationJob::slotCancel()
 {
@@ -194,8 +160,7 @@ void KeyGenerationJob::slotCancel()
 void KeyGenerationJob::start()
 {
     auto job = new Kleo::DefaultKeyGenerationJob(this);
-    connect(job, &Kleo::DefaultKeyGenerationJob::result,
-            this, &KeyGenerationJob::keyGenerated);
+    connect(job, &Kleo::DefaultKeyGenerationJob::result, this, &KeyGenerationJob::keyGenerated);
     job->start(mEmail, mName);
     mJob = job;
 }
@@ -211,10 +176,9 @@ void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
         return;
     }
 
-    KeySelectionCombo *combo = qobject_cast<KeySelectionCombo *>(parent());
+    auto combo = qobject_cast<KeySelectionCombo *>(parent());
     combo->setDefaultKey(QLatin1String(result.fingerprint()));
-    connect(combo, &KeySelectionCombo::keyListingFinished,
-            this, &KeyGenerationJob::done);
+    connect(combo, &KeySelectionCombo::keyListingFinished, this, &KeyGenerationJob::done);
     combo->refreshKeys();
 }
 
@@ -225,9 +189,7 @@ KeySelectionCombo::KeySelectionCombo(KeyType keyType, GpgME::Protocol protocol, 
 {
 }
 
-KeySelectionCombo::~KeySelectionCombo()
-{
-}
+KeySelectionCombo::~KeySelectionCombo() = default;
 
 void KeySelectionCombo::setIdentity(const QString &name, const QString &email)
 {
@@ -244,32 +206,29 @@ void KeySelectionCombo::init()
     keyFilter->setIsOpenPGP(mProtocol == GpgME::OpenPGP ? Kleo::DefaultKeyFilter::Set : Kleo::DefaultKeyFilter::NotSet);
     if (mKeyType == SigningKey) {
         keyFilter->setCanSign(Kleo::DefaultKeyFilter::Set);
+        keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
     } else {
         keyFilter->setCanEncrypt(Kleo::DefaultKeyFilter::Set);
     }
-    keyFilter->setHasSecret(Kleo::DefaultKeyFilter::Set);
     setKeyFilter(keyFilter);
     prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
     if (mProtocol == GpgME::OpenPGP) {
-        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")),
-                         i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
+        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")), i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
     }
 
-    connect(this, &KeySelectionCombo::customItemSelected,
-            this, &KeySelectionCombo::onCustomItemSelected);
+    connect(this, &KeySelectionCombo::customItemSelected, this, &KeySelectionCombo::onCustomItemSelected);
 }
 
 void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 {
     if (type == QLatin1String("no-key")) {
         return;
-    }  else if (type == QLatin1String("generate-new-key")) {
+    } else if (type == QLatin1String("generate-new-key")) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
         auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
         dlg->setModal(true);
         setEnabled(false);
-        connect(job, &KeyGenerationJob::done,
-        this, [this]() {
+        connect(job, &KeyGenerationJob::done, this, [this]() {
             setEnabled(true);
         });
         job->start();
@@ -279,10 +238,10 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle(i18n("Edit Identity"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    setWindowTitle(i18nc("@title:window", "Edit Identity"));
+    auto mainLayout = new QVBoxLayout(this);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     connect(buttonBox->button(QDialogButtonBox::Help), &QPushButton::clicked, this, &IdentityDialog::slotHelp);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
@@ -294,93 +253,99 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: General
     //
     int row = -1;
-    QWidget *page = new QWidget(this);
+    auto page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
-    QVBoxLayout *vlay = new QVBoxLayout(page);
-    vlay->setMargin(0);
+    auto vlay = new QVBoxLayout(page);
+    vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(page);
     mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
     vlay->addWidget(mTabWidget);
 
-    QWidget *tab = new QWidget(mTabWidget);
+    auto tab = new QWidget(mTabWidget);
     mTabWidget->addTab(tab, i18nc("@title:tab General identity settings.", "General"));
-    QGridLayout *glay = new QGridLayout(tab);
-    glay->setRowStretch(3, 1);
-    glay->setColumnStretch(1, 1);
+
+    auto formLayout = new QFormLayout(tab);
 
     // "Name" line edit and label:
     ++row;
-    mNameEdit = new KLineEdit(tab);
-    glay->addWidget(mNameEdit, row, 1);
-    QLabel   *label = new QLabel(i18n("&Your name:"), tab);
+    mNameEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mNameEdit, this);
+    auto label = new QLabel(i18n("&Your name:"), tab);
+    formLayout->addRow(label, mNameEdit);
     label->setBuddy(mNameEdit);
-    glay->addWidget(label, row, 0);
-    QString msg = i18n("<qt><h3>Your name</h3>"
-               "<p>This field should contain your name as you would like "
-               "it to appear in the email header that is sent out;</p>"
-               "<p>if you leave this blank your real name will not "
-               "appear, only the email address.</p></qt>");
+
+    QString msg = i18n(
+        "<qt><h3>Your name</h3>"
+        "<p>This field should contain your name as you would like "
+        "it to appear in the email header that is sent out;</p>"
+        "<p>if you leave this blank your real name will not "
+        "appear, only the email address.</p></qt>");
     label->setWhatsThis(msg);
     mNameEdit->setWhatsThis(msg);
 
     // "Organization" line edit and label:
     ++row;
-    mOrganizationEdit = new KLineEdit(tab);
-    glay->addWidget(mOrganizationEdit, row, 1);
-    label =  new QLabel(i18n("Organi&zation:"), tab);
+    mOrganizationEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mOrganizationEdit, this);
+    label = new QLabel(i18n("Organi&zation:"), tab);
+    formLayout->addRow(label, mOrganizationEdit);
     label->setBuddy(mOrganizationEdit);
-    glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>Organization</h3>"
-               "<p>This field should have the name of your organization "
-               "if you would like it to be shown in the email header that "
-               "is sent out.</p>"
-               "<p>It is safe (and normal) to leave this blank.</p></qt>");
+
+    msg = i18n(
+        "<qt><h3>Organization</h3>"
+        "<p>This field should have the name of your organization "
+        "if you would like it to be shown in the email header that "
+        "is sent out.</p>"
+        "<p>It is safe (and normal) to leave this blank.</p></qt>");
     label->setWhatsThis(msg);
     mOrganizationEdit->setWhatsThis(msg);
 
     // "Email Address" line edit and label:
     // (row 3: spacer)
     ++row;
-    mEmailEdit = new KLineEdit(tab);
-    glay->addWidget(mEmailEdit, row, 1);
+    mEmailEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mEmailEdit, this);
     label = new QLabel(i18n("&Email address:"), tab);
+    formLayout->addRow(label, mEmailEdit);
     label->setBuddy(mEmailEdit);
-    glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>Email address</h3>"
-               "<p>This field should have your full email address.</p>"
-               "<p>This address is the primary one, used for all outgoing mail. "
-               "If you have more than one address, either create a new identity, "
-               "or add additional alias addresses in the field below.</p>"
-               "<p>If you leave this blank, or get it wrong, people "
-               "will have trouble replying to you.</p></qt>");
+
+    msg = i18n(
+        "<qt><h3>Email address</h3>"
+        "<p>This field should have your full email address.</p>"
+        "<p>This address is the primary one, used for all outgoing mail. "
+        "If you have more than one address, either create a new identity, "
+        "or add additional alias addresses in the field below.</p>"
+        "<p>If you leave this blank, or get it wrong, people "
+        "will have trouble replying to you.</p></qt>");
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    KPIM::EmailValidator *emailValidator = new KPIM::EmailValidator(this);
+    auto emailValidator = new PimCommon::EmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
     ++row;
     mAliasEdit = new KEditListWidget(tab);
 
-    KPIM::EmailValidator *emailValidator1 = new KPIM::EmailValidator(this);
+    auto emailValidator1 = new PimCommon::EmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
-    glay->addWidget(mAliasEdit, row, 1);
     label = new QLabel(i18n("Email a&liases:"), tab);
+    formLayout->addRow(label, mAliasEdit);
     label->setBuddy(mAliasEdit);
-    glay->addWidget(label, row, 0, Qt::AlignTop);
-    msg = i18n("<qt><h3>Email aliases</h3>"
-               "<p>This field contains alias addresses that should also "
-               "be considered as belonging to this identity (as opposed "
-               "to representing a different identity).</p>"
-               "<p>Example:</p>"
-               "<table>"
-               "<tr><th>Primary address:</th><td>first.last@example.org</td></tr>"
-               "<tr><th>Aliases:</th><td>first@example.org<br>last@example.org</td></tr>"
-               "</table>"
-               "<p>Type one alias address per line.</p></qt>");
+
+    msg = i18n(
+        "<qt><h3>Email aliases</h3>"
+        "<p>This field contains alias addresses that should also "
+        "be considered as belonging to this identity (as opposed "
+        "to representing a different identity).</p>"
+        "<p>Example:</p>"
+        "<table>"
+        "<tr><th>Primary address:</th><td>first.last@example.org</td></tr>"
+        "<tr><th>Aliases:</th><td>first@example.org<br>last@example.org</td></tr>"
+        "</table>"
+        "<p>Type one alias address per line.</p></qt>");
     label->setToolTip(msg);
     mAliasEdit->setWhatsThis(msg);
 
@@ -388,60 +353,56 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // Tab Widget: Cryptography
     //
     row = -1;
-    mCryptographyTab = tab = new QWidget(mTabWidget);
-    mTabWidget->addTab(tab, i18n("Cryptography"));
-    glay = new QGridLayout(tab);
-    glay->setColumnStretch(1, 1);
+    mCryptographyTab = new QWidget(mTabWidget);
+    mTabWidget->addTab(mCryptographyTab, i18n("Cryptography"));
+    formLayout = new QFormLayout(mCryptographyTab);
 
     // "OpenPGP Signature Key" requester and label:
-    ++row;
-    mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, tab);
-    msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
-               "to digitally sign messages. You can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail will not be able "
-               "to digitally sign emails using OpenPGP; "
-               "normal mail functions will not be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP signing key:"), tab);
+    mPGPSigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::OpenPGP, mCryptographyTab);
+    msg = i18n(
+        "<qt><p>The OpenPGP key you choose here will be used "
+        "to digitally sign messages. You can also use GnuPG keys.</p>"
+        "<p>You can leave this blank, but KMail will not be able "
+        "to digitally sign emails using OpenPGP; "
+        "normal mail functions will not be affected.</p>"
+        "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
+    label = new QLabel(i18n("OpenPGP signing key:"), mCryptographyTab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPGPSigningKeyRequester, row, 1);
+    formLayout->addRow(label, mPGPSigningKeyRequester);
 
     // "OpenPGP Encryption Key" requester and label:
-    ++row;
-    mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, tab);
-    msg = i18n("<qt><p>The OpenPGP key you choose here will be used "
-               "to encrypt messages to yourself and for the \"Attach My Public Key\" "
-               "feature in the composer. You can also use GnuPG keys.</p>"
-               "<p>You can leave this blank, but KMail will not be able "
-               "to encrypt copies of outgoing messages to you using OpenPGP; "
-               "normal mail functions will not be affected.</p>"
-               "<p>You can find out more about keys at <a>http://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP encryption key:"), tab);
+    mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, mCryptographyTab);
+    msg = i18n(
+        "<qt><p>The OpenPGP key you choose here will be used "
+        "to encrypt messages to yourself and for the \"Attach My Public Key\" "
+        "feature in the composer. You can also use GnuPG keys.</p>"
+        "<p>You can leave this blank, but KMail will not be able "
+        "to encrypt copies of outgoing messages to you using OpenPGP; "
+        "normal mail functions will not be affected.</p>"
+        "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
+    label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
     label->setBuddy(mPGPEncryptionKeyRequester);
     mPGPEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPGPEncryptionKeyRequester, row, 1);
+    formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
     // "S/MIME Signature Key" requester and label:
-    ++row;
-    mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, tab);
-    msg = i18n("<qt><p>The S/MIME (X.509) certificate you choose here will be used "
-               "to digitally sign messages.</p>"
-               "<p>You can leave this blank, but KMail will not be able "
-               "to digitally sign emails using S/MIME; "
-               "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME signing certificate:"), tab);
+    mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, mCryptographyTab);
+    msg = i18n(
+        "<qt><p>The S/MIME (X.509) certificate you choose here will be used "
+        "to digitally sign messages.</p>"
+        "<p>You can leave this blank, but KMail will not be able "
+        "to digitally sign emails using S/MIME; "
+        "normal mail functions will not be affected.</p></qt>");
+    label = new QLabel(i18n("S/MIME signing certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMESigningKeyRequester);
     mSMIMESigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mSMIMESigningKeyRequester, row, 1);
+    formLayout->addRow(label, mSMIMESigningKeyRequester);
 
     const QGpgME::Protocol *smimeProtocol = QGpgME::smime();
 
@@ -449,213 +410,184 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSMIMESigningKeyRequester->setEnabled(smimeProtocol);
 
     // "S/MIME Encryption Key" requester and label:
-    ++row;
-    mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, tab);
-    msg = i18n("<qt><p>The S/MIME certificate you choose here will be used "
-               "to encrypt messages to yourself and for the \"Attach My Certificate\" "
-               "feature in the composer.</p>"
-               "<p>You can leave this blank, but KMail will not be able "
-               "to encrypt copies of outgoing messages to you using S/MIME; "
-               "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME encryption certificate:"), tab);
+    mSMIMEEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::CMS, mCryptographyTab);
+    msg = i18n(
+        "<qt><p>The S/MIME certificate you choose here will be used "
+        "to encrypt messages to yourself and for the \"Attach My Certificate\" "
+        "feature in the composer.</p>"
+        "<p>You can leave this blank, but KMail will not be able "
+        "to encrypt copies of outgoing messages to you using S/MIME; "
+        "normal mail functions will not be affected.</p></qt>");
+    label = new QLabel(i18n("S/MIME encryption certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMEEncryptionKeyRequester);
     mSMIMEEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mSMIMEEncryptionKeyRequester, row, 1);
+    formLayout->addRow(label, mSMIMEEncryptionKeyRequester);
 
     label->setEnabled(smimeProtocol);
     mSMIMEEncryptionKeyRequester->setEnabled(smimeProtocol);
 
     // "Preferred Crypto Message Format" combobox and label:
-    ++row;
-    mPreferredCryptoMessageFormat = new KComboBox(tab);
-    mPreferredCryptoMessageFormat->setEditable(false);
+    mPreferredCryptoMessageFormat = new QComboBox(mCryptographyTab);
     QStringList l;
-    l << Kleo::cryptoMessageFormatToLabel(Kleo::AutoFormat)
-      << Kleo::cryptoMessageFormatToLabel(Kleo::InlineOpenPGPFormat)
-      << Kleo::cryptoMessageFormatToLabel(Kleo::OpenPGPMIMEFormat)
-      << Kleo::cryptoMessageFormatToLabel(Kleo::SMIMEFormat)
+    l << Kleo::cryptoMessageFormatToLabel(Kleo::AutoFormat) << Kleo::cryptoMessageFormatToLabel(Kleo::InlineOpenPGPFormat)
+      << Kleo::cryptoMessageFormatToLabel(Kleo::OpenPGPMIMEFormat) << Kleo::cryptoMessageFormatToLabel(Kleo::SMIMEFormat)
       << Kleo::cryptoMessageFormatToLabel(Kleo::SMIMEOpaqueFormat);
     mPreferredCryptoMessageFormat->addItems(l);
-    label = new QLabel(i18nc("preferred format of encrypted messages", "Preferred format:"), tab);
+    label = new QLabel(i18nc("preferred format of encrypted messages", "Preferred format:"), mCryptographyTab);
     label->setBuddy(mPreferredCryptoMessageFormat);
 
-    glay->addWidget(label, row, 0);
-    glay->addWidget(mPreferredCryptoMessageFormat, row, 1);
+    formLayout->addRow(label, mPreferredCryptoMessageFormat);
 
-    ++row;
     mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
-    glay->addWidget(mAutoSign, row, 0);
+    formLayout->addWidget(mAutoSign);
 
-    ++row;
     mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
-    glay->addWidget(mAutoEncrypt, row, 0);
-
-    ++row;
-    glay->setRowStretch(row, 1);
+    formLayout->addWidget(mAutoEncrypt);
 
     //
     // Tab Widget: Advanced
     //
-    row = -1;
     tab = new QWidget(mTabWidget);
-    QVBoxLayout *advancedMainLayout = new QVBoxLayout(tab);
+    auto advancedMainLayout = new QVBoxLayout(tab);
     mIdentityInvalidFolder = new IdentityInvalidFolder(tab);
     advancedMainLayout->addWidget(mIdentityInvalidFolder);
     mTabWidget->addTab(tab, i18nc("@title:tab Advanced identity settings.", "Advanced"));
-    glay = new QGridLayout;
-    advancedMainLayout->addLayout(glay);
-    // the last (empty) row takes all the remaining space
-    glay->setColumnStretch(1, 1);
+    formLayout = new QFormLayout;
+    advancedMainLayout->addLayout(formLayout);
 
     // "Reply-To Address" line edit and label:
-    ++row;
-    mReplyToEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mReplyToEdit->setClearButtonShown(true);
+    mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
+    mReplyToEdit->setClearButtonEnabled(true);
     mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
-    glay->addWidget(mReplyToEdit, row, 1);
     label = new QLabel(i18n("&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
-    glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>Reply-To addresses</h3>"
-               "<p>This sets the <tt>Reply-to:</tt> header to contain a "
-               "different email address to the normal <tt>From:</tt> "
-               "address.</p>"
-               "<p>This can be useful when you have a group of people "
-               "working together in similar roles. For example, you "
-               "might want any emails sent to have your email in the "
-               "<tt>From:</tt> field, but any responses to go to "
-               "a group address.</p>"
-               "<p>If in doubt, leave this field blank.</p></qt>");
+    formLayout->addRow(label, mReplyToEdit);
+    msg = i18n(
+        "<qt><h3>Reply-To addresses</h3>"
+        "<p>This sets the <tt>Reply-to:</tt> header to contain a "
+        "different email address to the normal <tt>From:</tt> "
+        "address.</p>"
+        "<p>This can be useful when you have a group of people "
+        "working together in similar roles. For example, you "
+        "might want any emails sent to have your email in the "
+        "<tt>From:</tt> field, but any responses to go to "
+        "a group address.</p>"
+        "<p>If in doubt, leave this field blank.</p></qt>");
     label->setWhatsThis(msg);
     mReplyToEdit->setWhatsThis(msg);
 
     // "CC addresses" line edit and label:
-    ++row;
-    mCcEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mCcEdit->setClearButtonShown(true);
+    mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
+    mCcEdit->setClearButtonEnabled(true);
     mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
-    glay->addWidget(mCcEdit, row, 1);
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
-    glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>CC (Carbon Copy) addresses</h3>"
-               "<p>The addresses that you enter here will be added to each "
-               "outgoing mail that is sent with this identity.</p>"
-               "<p>This is commonly used to send a copy of each sent message to "
-               "another account of yours.</p>"
-               "<p>To specify more than one address, use commas to separate "
-               "the list of CC recipients.</p>"
-               "<p>If in doubt, leave this field blank.</p></qt>");
+    formLayout->addRow(label, mCcEdit);
+
+    msg = i18n(
+        "<qt><h3>CC (Carbon Copy) addresses</h3>"
+        "<p>The addresses that you enter here will be added to each "
+        "outgoing mail that is sent with this identity.</p>"
+        "<p>This is commonly used to send a copy of each sent message to "
+        "another account of yours.</p>"
+        "<p>To specify more than one address, use commas to separate "
+        "the list of CC recipients.</p>"
+        "<p>If in doubt, leave this field blank.</p></qt>");
     label->setWhatsThis(msg);
     mCcEdit->setWhatsThis(msg);
 
     // "BCC addresses" line edit and label:
-    ++row;
-    mBccEdit = new KPIM::AddresseeLineEdit(tab, true);
-    mBccEdit->setClearButtonShown(true);
+    mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
+    mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
-    glay->addWidget(mBccEdit, row, 1);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
-    glay->addWidget(label, row, 0);
-    msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
-               "<p>The addresses that you enter here will be added to each "
-               "outgoing mail that is sent with this identity. They will not "
-               "be visible to other recipients.</p>"
-               "<p>This is commonly used to send a copy of each sent message to "
-               "another account of yours.</p>"
-               "<p>To specify more than one address, use commas to separate "
-               "the list of BCC recipients.</p>"
-               "<p>If in doubt, leave this field blank.</p></qt>");
+    formLayout->addRow(label, mBccEdit);
+    msg = i18n(
+        "<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
+        "<p>The addresses that you enter here will be added to each "
+        "outgoing mail that is sent with this identity. They will not "
+        "be visible to other recipients.</p>"
+        "<p>This is commonly used to send a copy of each sent message to "
+        "another account of yours.</p>"
+        "<p>To specify more than one address, use commas to separate "
+        "the list of BCC recipients.</p>"
+        "<p>If in doubt, leave this field blank.</p></qt>");
     label->setWhatsThis(msg);
     mBccEdit->setWhatsThis(msg);
 
     // "Dictionary" combo box and label:
-    ++row;
     mDictionaryCombo = new Sonnet::DictionaryComboBox(tab);
-    glay->addWidget(mDictionaryCombo, row, 1);
     label = new QLabel(i18n("D&ictionary:"), tab);
     label->setBuddy(mDictionaryCombo);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDictionaryCombo);
 
     // "Sent-mail Folder" combo box and label:
-    ++row;
     mFccFolderRequester = new IdentityFolderRequester(tab);
+    mFccFolderRequester->setSelectFolderTitleDialog(i18n("Select Send-mail Folder"));
     mFccFolderRequester->setShowOutbox(false);
-    glay->addWidget(mFccFolderRequester, row, 1);
     mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
-    glay->addWidget(mSentMailFolderCheck, row, 0);
     connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccFolderRequester, &MailCommon::FolderRequester::setEnabled);
+    formLayout->addRow(mSentMailFolderCheck, mFccFolderRequester);
 
     // "Drafts Folder" combo box and label:
-    ++row;
     mDraftsFolderRequester = new IdentityFolderRequester(tab);
+    mDraftsFolderRequester->setSelectFolderTitleDialog(i18n("Select Draft Folder"));
     mDraftsFolderRequester->setShowOutbox(false);
-    glay->addWidget(mDraftsFolderRequester, row, 1);
     label = new QLabel(i18n("&Drafts folder:"), tab);
     label->setBuddy(mDraftsFolderRequester);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDraftsFolderRequester);
 
     // "Templates Folder" combo box and label:
-    ++row;
     mTemplatesFolderRequester = new IdentityFolderRequester(tab);
+    mTemplatesFolderRequester->setSelectFolderTitleDialog(i18n("Select Templates Folder"));
     mTemplatesFolderRequester->setShowOutbox(false);
-    glay->addWidget(mTemplatesFolderRequester, row, 1);
     label = new QLabel(i18n("&Templates folder:"), tab);
     label->setBuddy(mTemplatesFolderRequester);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mTemplatesFolderRequester);
 
     // "Special transport" combobox and label:
-    ++row;
     mTransportCheck = new QCheckBox(i18n("Outgoing Account:"), tab);
-    glay->addWidget(mTransportCheck, row, 0);
     mTransportCombo = new TransportComboBox(tab);
-    mTransportCombo->setEnabled(false);   // since !mTransportCheck->isChecked()
-    glay->addWidget(mTransportCombo, row, 1);
+    mTransportCombo->setEnabled(false); // since !mTransportCheck->isChecked()
+    formLayout->addRow(mTransportCheck, mTransportCombo);
+
     connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
-    ++row;
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
-    glay->addWidget(mAttachMyVCard, row, 0);
     mEditVCard = new QPushButton(i18n("Create..."), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
-    glay->addWidget(mEditVCard, row, 1);
+    formLayout->addRow(mAttachMyVCard, mEditVCard);
 
-    ++row;
     mAutoCorrectionLanguage = new PimCommon::AutoCorrectionLanguage(tab);
-    glay->addWidget(mAutoCorrectionLanguage, row, 1);
     label = new QLabel(i18n("Autocorrection language:"), tab);
     label->setBuddy(mAutoCorrectionLanguage);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mAutoCorrectionLanguage);
 
     // "default domain" input field:
-    ++row;
-    QHBoxLayout *hbox = new QHBoxLayout;
-    mDefaultDomainEdit = new KLineEdit(tab);
-    mDefaultDomainEdit->setClearButtonShown(true);
+    auto hbox = new QHBoxLayout;
+    mDefaultDomainEdit = new QLineEdit(tab);
+    new LineEditCatchReturnKey(mDefaultDomainEdit, this);
+    mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
-    QToolButton *restoreDefaultDomainName = new QToolButton;
+    auto restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
     restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
-    glay->addLayout(hbox, row, 1);
     label = new QLabel(i18n("Defaul&t domain:"), tab);
     label->setBuddy(mDefaultDomainEdit);
-    glay->addWidget(label, row, 0);
+    formLayout->addRow(label, mDefaultDomainEdit);
 
     // and now: add QWhatsThis:
-    msg = i18n("<qt><p>The default domain is used to complete email "
-               "addresses that only consist of the user's name."
-               "</p></qt>");
+    msg = i18n(
+        "<qt><p>The default domain is used to complete email "
+        "addresses that only consist of the user's name."
+        "</p></qt>");
     label->setWhatsThis(msg);
     mDefaultDomainEdit->setWhatsThis(msg);
-
-    ++row;
-    glay->setRowStretch(row, 1);
 
     // the last row is a spacer
 
@@ -665,7 +597,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     tab = new QWidget(mTabWidget);
     vlay = new QVBoxLayout(tab);
 
-    QHBoxLayout *tlay = new QHBoxLayout();
+    auto tlay = new QHBoxLayout();
     vlay->addLayout(tlay);
 
     mCustom = new QCheckBox(i18n("&Use custom message templates for this identity"), tab);
@@ -681,7 +613,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay->addWidget(mWidget);
 
-    QHBoxLayout *btns = new QHBoxLayout();
+    auto btns = new QHBoxLayout();
     mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
@@ -704,9 +636,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mXFaceConfigurator = new XFaceConfigurator(mTabWidget);
     mTabWidget->addTab(mXFaceConfigurator, i18n("Picture"));
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     resize(KMailSettings::self()->identityDialogSize());
-#endif
     mNameEdit->setFocus();
 
     connect(mTabWidget, &QTabWidget::currentChanged, this, &IdentityDialog::slotAboutToShow);
@@ -714,9 +644,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
 IdentityDialog::~IdentityDialog()
 {
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     KMailSettings::self()->setIdentityDialogSize(size());
-#endif
 }
 
 void IdentityDialog::slotHelp()
@@ -754,9 +682,12 @@ void IdentityDialog::slotAccepted()
 {
     const QStringList aliases = mAliasEdit->items();
     for (const QString &alias : aliases) {
+        if (alias.trimmed().isEmpty()) {
+            continue;
+        }
         if (!KEmailAddress::isValidSimpleAddress(alias)) {
             const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
-            KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
+            KMessageBox::error(this, errorMsg, i18n("Invalid Email Alias \"%1\"", alias));
             return;
         }
     }
@@ -765,14 +696,15 @@ void IdentityDialog::slotAccepted()
     const QString email = mEmailEdit->text().trimmed();
     if (!KEmailAddress::isValidSimpleAddress(email)) {
         const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
-        KMessageBox::sorry(this, errorMsg, i18n("Invalid Email Address"));
+        KMessageBox::error(this, errorMsg, i18n("Invalid Email Address"));
         return;
     }
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
-    const QString recipients = mReplyToEdit->text().trimmed() + QLatin1String(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
-    AddressValidationJob *job = new AddressValidationJob(recipients, this, this);
-    //Use default Value
+    const QString recipients =
+        mReplyToEdit->text().trimmed() + QLatin1String(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
+    auto job = new AddressValidationJob(recipients, this, this);
+    // Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
     job->setProperty("email", email);
     connect(job, &AddressValidationJob::result, this, &IdentityDialog::slotDelayedButtonClicked);
@@ -821,44 +753,52 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
     QString msg;
     bool err = false;
     if (!keyMatchesEmailAddress(pgpSigningKey, email)) {
-        msg = i18n("One of the configured OpenPGP signing keys does not contain "
-                   "any user ID with the configured email address for this "
-                   "identity (%1).\n"
-                   "This might result in warning messages on the receiving side "
-                   "when trying to verify signatures made with this configuration.", email);
+        msg = i18n(
+            "One of the configured OpenPGP signing keys does not contain "
+            "any user ID with the configured email address for this "
+            "identity (%1).\n"
+            "This might result in warning messages on the receiving side "
+            "when trying to verify signatures made with this configuration.",
+            email);
         err = true;
     } else if (!keyMatchesEmailAddress(pgpEncryptionKey, email)) {
-        msg = i18n("One of the configured OpenPGP encryption keys does not contain "
-                   "any user ID with the configured email address for this "
-                   "identity (%1).", email);
+        msg = i18n(
+            "One of the configured OpenPGP encryption keys does not contain "
+            "any user ID with the configured email address for this "
+            "identity (%1).",
+            email);
         err = true;
     } else if (!keyMatchesEmailAddress(smimeSigningKey, email)) {
-        msg = i18n("One of the configured S/MIME signing certificates does not contain "
-                   "the configured email address for this "
-                   "identity (%1).\n"
-                   "This might result in warning messages on the receiving side "
-                   "when trying to verify signatures made with this configuration.", email);
+        msg = i18n(
+            "One of the configured S/MIME signing certificates does not contain "
+            "the configured email address for this "
+            "identity (%1).\n"
+            "This might result in warning messages on the receiving side "
+            "when trying to verify signatures made with this configuration.",
+            email);
         err = true;
     } else if (!keyMatchesEmailAddress(smimeEncryptionKey, email)) {
-        msg = i18n("One of the configured S/MIME encryption certificates does not contain "
-                   "the configured email address for this "
-                   "identity (%1).", email);
+        msg = i18n(
+            "One of the configured S/MIME encryption certificates does not contain "
+            "the configured email address for this "
+            "identity (%1).",
+            email);
         err = true;
     }
 
     if (err) {
-        if (KMessageBox::warningContinueCancel(this, msg,
+        if (KMessageBox::warningContinueCancel(this,
+                                               msg,
                                                i18n("Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
                                                QStringLiteral("warn_email_not_in_certificate"))
-                != KMessageBox::Continue) {
+            != KMessageBox::Continue) {
             return;
         }
     }
 
-    if (mSignatureConfigurator->isSignatureEnabled() &&
-            mSignatureConfigurator->signatureType() == Signature::FromFile) {
+    if (mSignatureConfigurator->isSignatureEnabled() && mSignatureConfigurator->signatureType() == Signature::FromFile) {
         QFileInfo file(mSignatureConfigurator->filePath());
         if (!file.isReadable()) {
             KMessageBox::error(this, i18n("The signature file is not valid"));
@@ -877,8 +817,7 @@ bool IdentityDialog::checkFolderExists(const QString &folderID)
 
 void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
 {
-
-    setWindowTitle(i18n("Edit Identity \"%1\"", ident.identityName()));
+    setWindowTitle(i18nc("@title:window", "Edit Identity \"%1\"", ident.identityName()));
 
     // "General" tab:
     mNameEdit->setText(ident.fullName());
@@ -892,8 +831,7 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSMIMESigningKeyRequester->setDefaultKey(QLatin1String(ident.smimeSigningKey()));
     mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
-    mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(
-                Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
+    mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
     mAutoSign->setChecked(ident.pgpAutoSign());
     mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
 
@@ -913,29 +851,22 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSentMailFolderCheck->setChecked(!ident.disabledFcc());
     mFccFolderRequester->setEnabled(mSentMailFolderCheck->isChecked());
     bool foundNoExistingFolder = false;
-    if (ident.fcc().isEmpty() ||
-            !checkFolderExists(ident.fcc())) {
+    if (ident.fcc().isEmpty() || !checkFolderExists(ident.fcc())) {
         foundNoExistingFolder = true;
-        mFccFolderRequester->setIsInvalidFolder();
-        mFccFolderRequester->setCollection(CommonKernel->sentCollectionFolder());
+        mFccFolderRequester->setIsInvalidFolder(CommonKernel->sentCollectionFolder());
     } else {
         mFccFolderRequester->setCollection(Akonadi::Collection(ident.fcc().toLongLong()));
     }
-    if (ident.drafts().isEmpty() ||
-            !checkFolderExists(ident.drafts())) {
+    if (ident.drafts().isEmpty() || !checkFolderExists(ident.drafts())) {
         foundNoExistingFolder = true;
-        mDraftsFolderRequester->setIsInvalidFolder();
-        mDraftsFolderRequester->setCollection(CommonKernel->draftsCollectionFolder());
+        mDraftsFolderRequester->setIsInvalidFolder(CommonKernel->draftsCollectionFolder());
     } else {
         mDraftsFolderRequester->setCollection(Akonadi::Collection(ident.drafts().toLongLong()));
     }
 
-    if (ident.templates().isEmpty() ||
-            !checkFolderExists(ident.templates())) {
+    if (ident.templates().isEmpty() || !checkFolderExists(ident.templates())) {
         foundNoExistingFolder = true;
-        mTemplatesFolderRequester->setIsInvalidFolder();
-        mTemplatesFolderRequester->setCollection(CommonKernel->templatesCollectionFolder());
-
+        mTemplatesFolderRequester->setIsInvalidFolder(CommonKernel->templatesCollectionFolder());
     } else {
         mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
@@ -947,13 +878,15 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
-        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        mVcardFilename =
+            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
         QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
-        //Convert path.
-        const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
-        if (QFile(path).exists() && (mVcardFilename != path)) {
+        // Convert path.
+        const QString path =
+            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+        if (QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }
     }
@@ -976,6 +909,21 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     mSignatureConfigurator->setSignature(ident.signature());
     mXFaceConfigurator->setXFace(ident.xface());
     mXFaceConfigurator->setXFaceEnabled(ident.isXFaceEnabled());
+    mXFaceConfigurator->setFace(ident.face());
+    mXFaceConfigurator->setFaceEnabled(ident.isFaceEnabled());
+}
+
+void IdentityDialog::unregisterSpecialCollection(qint64 colId)
+{
+    // ID is not enough to unregister a special collection, we need the
+    // resource set as well.
+    auto fetch = new Akonadi::CollectionFetchJob(Akonadi::Collection(colId), Akonadi::CollectionFetchJob::Base, this);
+    connect(fetch, &Akonadi::CollectionFetchJob::collectionsReceived, this, [](const Akonadi::Collection::List &cols) {
+        if (cols.count() != 1) {
+            return;
+        }
+        Akonadi::SpecialMailCollections::self()->unregisterCollection(cols.first());
+    });
 }
 
 void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
@@ -983,51 +931,74 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     // "General" tab:
     ident.setFullName(mNameEdit->text());
     ident.setOrganization(mOrganizationEdit->text());
-    QString email = mEmailEdit->text();
+    QString email = mEmailEdit->text().trimmed();
     ident.setPrimaryEmailAddress(email);
-    ident.setEmailAliases(mAliasEdit->items());
+    const QStringList aliases = mAliasEdit->items();
+    QStringList result;
+    for (const QString &alias : aliases) {
+        const QString aliasTrimmed = alias.trimmed();
+        if (aliasTrimmed.isEmpty()) {
+            continue;
+        }
+        if (aliasTrimmed == email) {
+            continue;
+        }
+        result.append(alias);
+    }
+    ident.setEmailAliases(result);
     // "Cryptography" tab:
     ident.setPGPSigningKey(mPGPSigningKeyRequester->currentKey().primaryFingerprint());
     ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMESigningKey(mSMIMESigningKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
-    ident.setPreferredCryptoMessageFormat(
-        QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
+    ident.setPreferredCryptoMessageFormat(QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
     ident.setPgpAutoSign(mAutoSign->isChecked());
     ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
     // "Advanced" tab:
     ident.setReplyToAddr(mReplyToEdit->text());
     ident.setBcc(mBccEdit->text());
     ident.setCc(mCcEdit->text());
-    ident.setTransport(mTransportCheck->isChecked() ? QString::number(mTransportCombo->currentTransportId())
-                       : QString());
+    ident.setTransport(mTransportCheck->isChecked() ? QString::number(mTransportCombo->currentTransportId()) : QString());
     ident.setDictionary(mDictionaryCombo->currentDictionaryName());
     ident.setDisabledFcc(!mSentMailFolderCheck->isChecked());
     Akonadi::Collection collection = mFccFolderRequester->collection();
+    if (!ident.fcc().isEmpty()) {
+        unregisterSpecialCollection(ident.fcc().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
-        new Akonadi::CollectionModifyJob(collection);
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection);
     } else {
         ident.setFcc(QString());
     }
 
     collection = mDraftsFolderRequester->collection();
+    if (!ident.drafts().isEmpty()) {
+        unregisterSpecialCollection(ident.drafts().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
-        new Akonadi::CollectionModifyJob(collection);
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection);
     } else {
         ident.setDrafts(QString());
     }
 
     collection = mTemplatesFolderRequester->collection();
+    if (ident.templates().isEmpty()) {
+        unregisterSpecialCollection(ident.templates().toLongLong());
+    }
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
-        Akonadi::EntityDisplayAttribute *attribute =  collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
+        // It will also start a CollectionModifyJob
+        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection);
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setTemplates(QString());
@@ -1036,7 +1007,7 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setAutocorrectionLanguage(mAutoCorrectionLanguage->language());
     updateVcardButton();
     ident.setAttachVcard(mAttachMyVCard->isChecked());
-    //Add default ?
+    // Add default ?
     ident.setDefaultDomainName(mDefaultDomainEdit->text());
 
     // "Templates" tab:
@@ -1052,11 +1023,13 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSignature(mSignatureConfigurator->signature());
     ident.setXFace(mXFaceConfigurator->xface());
     ident.setXFaceEnabled(mXFaceConfigurator->isXFaceEnabled());
-
+    ident.setFace(mXFaceConfigurator->face());
+    ident.setFaceEnabled(mXFaceConfigurator->isFaceEnabled());
 }
+
 void IdentityDialog::slotEditVcard()
 {
-    if (QFile(mVcardFilename).exists()) {
+    if (QFileInfo::exists(mVcardFilename)) {
         editVcard(mVcardFilename);
     } else {
         if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
@@ -1068,10 +1041,9 @@ void IdentityDialog::slotEditVcard()
         if (dlg->exec()) {
             IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
             switch (mode) {
-            case IdentityAddVcardDialog::Empty: {
+            case IdentityAddVcardDialog::Empty:
                 editVcard(mVcardFilename);
                 break;
-            }
             case IdentityAddVcardDialog::ExistingEntry: {
                 KIdentityManagement::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
                 const QString filename = ident.vCardFile();
@@ -1113,13 +1085,12 @@ void IdentityDialog::slotVCardRemoved()
 
 void IdentityDialog::updateVcardButton()
 {
-    if (mVcardFilename.isEmpty() || !QFile(mVcardFilename).exists()) {
+    if (mVcardFilename.isEmpty() || !QFileInfo::exists(mVcardFilename)) {
         mEditVCard->setText(i18n("Create..."));
     } else {
         mEditVCard->setText(i18n("Edit..."));
     }
 }
-
 }
 
 #include "identitydialog.moc"

@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+> E-mailagent voor archiveren</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Het handboek van &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Inleiding</title>
+
+<para
+>&i18n-archivemailagent; is een agent van Akonadi die u in staat stelt e-mailmappen automatisch te archiveren. </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-archivemailagent; gebruiken</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Gebruik <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Automatisch archiveren configureren...</guimenuitem
+> </menuchoice
+><action
+> in het leesvenster van &kmail; om een dialoog te openen om automatisch archivering van e-mailmappen in te stellen.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Dit is een krachtig hulpmiddel dat gebruikt kan worden om te helpen bij het maken van een reservekopie van uw e-mail. Voor gebruik, klik op de knop <guibutton
+>Toevoegen...</guibutton
+> en het dialoogvenster <guilabel
+>Archief van e-mail toevoegen</guilabel
+> zal verschijnen.</para>
+
+<screenshot>
+<screeninfo
+>Dialoog voor E-mail archiveren toevoegen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialoog voor E-mail archiveren toevoegen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialoog voor E-mail archiveren toevoegen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Selecteer eerst de map die u wilt archiveren.</para
+></listitem>
+<listitem
+><para
+>Selecteer het format dat u wilt gebruiken om het in op te slaan. &eg; <literal role="extension"
+>.tar.bz2</literal
+> uit de afrollijst. De bestandsnaam van het archief zal bestaan uit het voorvoegsel <userinput
+>Archive_</userinput
+>, het pad van de geselecteerde map in de mappenlijst van &kmail;, de datum in het format <userinput
+>jaar-maand-dag</userinput
+> en de geselecteerde bestandsextensie &eg; <filename
+>Archive_Local mappen_postvak-in_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Standaard is <guilabel
+>Alle submappen archiveren</guilabel
+> ingeschakeld. Deactiveer dit als u alleen de hoofdmap wilt archiveren.</para
+></listitem>
+<listitem
+><para
+>U kunt de locatie waarin u uw archief wilt opslaan invoeren of klik op de knop <guibutton
+>Bestandsdialoog openen</guibutton
+> om de map te selecteren.</para
+></listitem>
+<listitem
+><para
+>Selecteer hoe vaak u een reservekopie wilt maken via de afrolmenu's naast <guilabel
+>Reservekopie maken elke:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Als u een beperkte ruimte op uw schijf hebt dan kunt u een limiet zetten met <guilabel
+>Maximum aantal archieven:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>Als u een archiveringstaak hebt toegevoegd of gewijzigd zal deze automatisch na het sluiten van de dialoog worden uitgevoerd. </para>
+
+<para
+>Als u al e-mailarchiveringstaken hebt toegevoegd, zal de dialoog <guilabel
+>Agent voor e-mailarchivering instellen</guilabel
+> deze tonen en toestaan ze te wijzigen. </para>
+<screenshot>
+<screeninfo
+>E-mailagent voor archiveren instellen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>E-mailagent voor archiveren instellen</phrase>
+    </textobject>
+    <caption>
+      <para
+>E-mailagent voor archiveren instellen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>U kunt het keuzevakje links van elk item in de lijst gebruiken om deze taak in of uit te schakelen. </para>
+<para
+>Het is mogelijk om tot deze configuratiedialoog elk moment later toegang te krijgen met <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&kmail; instellen...</guimenuitem
+></menuchoice
+> selectaar daarna de pagina <guilabel
+>Plug-ins</guilabel
+> in het hoofdventser van &kmail; en druk op de configuratieknop tegen het item <guilabel
+>Mailagent archiveren</guilabel
+>. </para>
+<para
+>Met het contextmenu, dat komt na met &RMB; klikken op een archiveringstaak, kunt u de map openen met de archieven of de archiveringstaak onmiddellijk starten. Dit overschrijft een bestaand eerder op dezelfde dag aangemaakt archief zonder melding. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Programma copyright 2013-2019 Laurent Montel montel@kde.org </para>
+<para
+>Documentatie Copyright &copy; 2013-2019 Laurent Montel montel@kde.org </para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

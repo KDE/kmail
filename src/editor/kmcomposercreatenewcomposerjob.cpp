@@ -1,55 +1,33 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-
 #include "kmcomposercreatenewcomposerjob.h"
-#include "config-kmail.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 KMComposerCreateNewComposerJob::KMComposerCreateNewComposerJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr),
-      mCurrentIdentity(0)
+    : QObject(parent)
 {
-
 }
 
-KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob()
-{
-
-}
+KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob() = default;
 
 void KMComposerCreateNewComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message());
 
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mCurrentIdentity);
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &KMComposerCreateNewComposerJob::slotCreateNewComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    parser->process(mMsg, mCollectionForNewMessage);
+    parser->process(mMsg, mCollectionForNewMessage.id());
 }
 
 void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosition)
@@ -63,7 +41,7 @@ void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosit
     deleteLater();
 }
 
-void KMComposerCreateNewComposerJob::setCurrentIdentity(const uint &currentIdentity)
+void KMComposerCreateNewComposerJob::setCurrentIdentity(uint currentIdentity)
 {
     mCurrentIdentity = currentIdentity;
 }

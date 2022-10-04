@@ -1,59 +1,42 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "manageshowcollectionproperties.h"
+#include "kmail_debug.h"
 #include "kmmainwidget.h"
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
+#include <Akonadi/CollectionAttributesSynchronizationJob>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/CollectionPropertiesDialog>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <AkonadiCore/CollectionAttributesSynchronizationJob>
-#include "kmail_debug.h"
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiWidgets/CollectionPropertiesDialog>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/AgentInstance>
-#include <AkonadiCore/AgentManager>
 
 Q_DECLARE_METATYPE(KPIM::ProgressItem *)
 Q_DECLARE_METATYPE(Akonadi::Job *)
 Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
 
 ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent)
-    : QObject(parent),
-      mMainWidget(mainWidget)
+    : QObject(parent)
+    , mMainWidget(mainWidget)
+    , mPages({QStringLiteral("MailCommon::CollectionGeneralPage"),
+              QStringLiteral("KMail::CollectionViewPage"),
+              QStringLiteral("Akonadi::CachePolicyPage"),
+              QStringLiteral("KMail::CollectionTemplatesPage"),
+              QStringLiteral("MailCommon::CollectionExpiryPage"),
+              QStringLiteral("PimCommon::CollectionAclPage"),
+              QStringLiteral("KMail::CollectionMailingListPage"),
+              QStringLiteral("KMail::CollectionQuotaPage"),
+              QStringLiteral("KMail::CollectionShortcutPage"),
+              QStringLiteral("Akonadi::CollectionMaintenancePage")})
 {
-    mPages = QStringList() << QStringLiteral("MailCommon::CollectionGeneralPage")
-             << QStringLiteral("KMail::CollectionViewPage")
-             << QStringLiteral("Akonadi::CachePolicyPage")
-             << QStringLiteral("KMail::CollectionTemplatesPage")
-             << QStringLiteral("MailCommon::CollectionExpiryPage")
-             << QStringLiteral("PimCommon::CollectionAclPage")
-             << QStringLiteral("KMail::CollectionMailingListPage")
-             << QStringLiteral("KMail::CollectionQuotaPage")
-             << QStringLiteral("KMail::CollectionShortcutPage")
-             << QStringLiteral("KMail::CollectionMaintenancePage");
-
 }
 
-ManageShowCollectionProperties::~ManageShowCollectionProperties()
-{
-
-}
+ManageShowCollectionProperties::~ManageShowCollectionProperties() = default;
 
 void ManageShowCollectionProperties::slotCollectionProperties()
 {
@@ -77,10 +60,10 @@ void ManageShowCollectionProperties::slotShowFolderShortcutDialog()
 
 void ManageShowCollectionProperties::showCollectionProperties(const QString &pageToShow)
 {
-    if (!mMainWidget->currentFolder()) {
+    if (!mMainWidget->currentCollection().isValid()) {
         return;
     }
-    const Akonadi::Collection col = mMainWidget->currentFolder()->collection();
+    const Akonadi::Collection col = mMainWidget->currentCollection();
     const Akonadi::Collection::Id id = col.id();
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
     if (dlg) {
@@ -101,23 +84,22 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
             progressItem->setUsesBusyIndicator(true);
             progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
-            Akonadi::CollectionAttributesSynchronizationJob *sync
-                = new Akonadi::CollectionAttributesSynchronizationJob(col);
+            auto sync = new Akonadi::CollectionAttributesSynchronizationJob(col);
             sync->setProperty("collectionId", id);
-            sync->setProperty("pageToShow", pageToShow);          // note for dialog later
+            sync->setProperty("pageToShow", pageToShow); // note for dialog later
             sync->setProperty("progressItem", QVariant::fromValue(progressItem));
-            connect(sync, &KJob::result,
-                    this, &ManageShowCollectionProperties::slotCollectionPropertiesContinued);
-            connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                    sync, SLOT(kill()));
-            connect(progressItem.data(), &KPIM::ProgressItem::progressItemCanceled,
-                    KPIM::ProgressManager::instance(), &KPIM::ProgressManager::slotStandardCancelHandler);
+            connect(sync, &KJob::result, this, &ManageShowCollectionProperties::slotCollectionPropertiesContinued);
+            // clang-format off
+            connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
+            // clang-format on
+            connect(progressItem.data(),
+                    &KPIM::ProgressItem::progressItemCanceled,
+                    KPIM::ProgressManager::instance(),
+                    &KPIM::ProgressManager::slotStandardCancelHandler);
             sync->start();
         }
     } else {
-        KMessageBox::information(
-            mMainWidget,
-            i18n("Network is unconnected. Folder information cannot be updated."));
+        KMessageBox::information(mMainWidget, i18n("Network is unconnected. Folder information cannot be updated."));
         showCollectionPropertiesContinued(pageToShow, QPointer<KPIM::ProgressItem>());
     }
 }
@@ -128,17 +110,17 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
     QPointer<KPIM::ProgressItem> progressItem;
 
     if (job) {
-        Akonadi::CollectionAttributesSynchronizationJob *sync
-            = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
+        auto sync = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
         Q_ASSERT(sync);
-        if (sync->property("collectionId") != mMainWidget->currentFolder()->collection().id()) {
+        if (sync->property("collectionId") != mMainWidget->currentCollection().id()) {
             return;
         }
         pageToShow = sync->property("pageToShow").toString();
-        progressItem = sync->property("progressItem").value< QPointer<KPIM::ProgressItem> >();
+        progressItem = sync->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
         if (progressItem) {
-            disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-                       sync, SLOT(kill()));
+            // clang-format off
+            disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
+            // clang-format on
         } else {
             // progressItem does not exist anymore, operation has been canceled
             return;
@@ -154,20 +136,23 @@ void ManageShowCollectionProperties::showCollectionPropertiesContinued(const QSt
         progressItem = KPIM::ProgressManager::createProgressItem(i18n("Retrieving folder properties"));
         progressItem->setUsesBusyIndicator(true);
         progressItem->setCryptoStatus(KPIM::ProgressItem::Unknown);
-        connect(progressItem.data(), &KPIM::ProgressItem::progressItemCanceled,
-                KPIM::ProgressManager::instance(), &KPIM::ProgressManager::slotStandardCancelHandler);
+        connect(progressItem.data(),
+                &KPIM::ProgressItem::progressItemCanceled,
+                KPIM::ProgressManager::instance(),
+                &KPIM::ProgressManager::slotStandardCancelHandler);
     }
 
-    Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentFolder()->collection(),
-            Akonadi::CollectionFetchJob::Base);
+    auto fetch = new Akonadi::CollectionFetchJob(mMainWidget->currentCollection(), Akonadi::CollectionFetchJob::Base);
+    // clang-format off
     connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
+    // clang-format on
     fetch->fetchScope().setIncludeStatistics(true);
     fetch->setProperty("pageToShow", pageToShow);
     fetch->setProperty("progressItem", QVariant::fromValue(progressItem));
-    connect(fetch, &KJob::result,
-            this, &ManageShowCollectionProperties::slotCollectionPropertiesFinished);
-    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)),
-            fetch, SLOT(kill()));
+    connect(fetch, &KJob::result, this, &ManageShowCollectionProperties::slotCollectionPropertiesFinished);
+    // clang-format off
+    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
+    // clang-format on
 }
 
 void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
@@ -176,7 +161,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
         return;
     }
 
-    QPointer<KPIM::ProgressItem> progressItem = job->property("progressItem").value< QPointer<KPIM::ProgressItem> >();
+    auto progressItem = job->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
     // progressItem does not exist anymore, operation has been canceled
     if (!progressItem) {
         return;
@@ -185,21 +170,21 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     progressItem->setComplete();
     progressItem->setStatus(i18n("Done"));
 
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "no collection";
         return;
     }
 
-    const Akonadi::Collection collection = fetch->collections().first();
+    const Akonadi::Collection collection = fetch->collections().constFirst();
 
     QPointer<Akonadi::CollectionPropertiesDialog> dlg = new Akonadi::CollectionPropertiesDialog(collection, mPages, mMainWidget);
     dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
-    connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::accepted, mMainWidget, &KMMainWidget::slotUpdateConfig);
+    connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::settingsSaved, mMainWidget, &KMMainWidget::slotUpdateConfig);
 
     const QString pageToShow = fetch->property("pageToShow").toString();
-    if (!pageToShow.isEmpty()) {                          // show a specific page
+    if (!pageToShow.isEmpty()) { // show a specific page
         dlg->setCurrentPage(pageToShow);
     }
     dlg->show();

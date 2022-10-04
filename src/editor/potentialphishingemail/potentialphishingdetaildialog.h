@@ -1,44 +1,27 @@
 /*
-  Copyright (c) 2015-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
-#ifndef POTENTIALPHISHINGDETAILDIALOG_H
-#define POTENTIALPHISHINGDETAILDIALOG_H
+#pragma once
 
+#include "kmail_private_export.h"
 #include <QDialog>
 class PotentialPhishingDetailWidget;
-class PotentialPhishingDetailDialog : public QDialog
+class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit PotentialPhishingDetailDialog(QWidget *parent = nullptr);
-    ~PotentialPhishingDetailDialog();
+    ~PotentialPhishingDetailDialog() override;
 
     void fillList(const QStringList &lst);
 
-private Q_SLOTS:
-    void slotSave();
-
 private:
+    void slotSave();
     void readConfig();
     void writeConfig();
-    PotentialPhishingDetailWidget *mPotentialPhishingDetailWidget;
+    PotentialPhishingDetailWidget *const mPotentialPhishingDetailWidget;
 };
-
-#endif // POTENTIALPHISHINGDETAILDIALOG_H

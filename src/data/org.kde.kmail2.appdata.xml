@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>org.kde.kmail2.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <developer_name>The KDE Community</developer_name>
+  <developer_name xml:lang="ar">مجتمع كدي</developer_name>
+  <developer_name xml:lang="az">KDE Cəmiyyəti</developer_name>
+  <developer_name xml:lang="bg">KDE Общност</developer_name>
+  <developer_name xml:lang="ca">La comunitat KDE</developer_name>
+  <developer_name xml:lang="ca-valencia">La comunitat KDE</developer_name>
+  <developer_name xml:lang="cs">Komunita KDE</developer_name>
+  <developer_name xml:lang="da">KDE-fællesskabet</developer_name>
+  <developer_name xml:lang="de">Die KDE-Gemeinschaft</developer_name>
+  <developer_name xml:lang="el">Η Κοινότητα του KDE</developer_name>
+  <developer_name xml:lang="en-GB">The KDE Community</developer_name>
+  <developer_name xml:lang="es">La comunidad de KDE</developer_name>
+  <developer_name xml:lang="et">KDE kogukond</developer_name>
+  <developer_name xml:lang="eu">KDE komunitatea</developer_name>
+  <developer_name xml:lang="fi">KDE-yhteisö</developer_name>
+  <developer_name xml:lang="fr">La communauté KDE</developer_name>
+  <developer_name xml:lang="gl">A comunidade de KDE</developer_name>
+  <developer_name xml:lang="ia">Le communitate de KDE</developer_name>
+  <developer_name xml:lang="id">Komunitas KDE</developer_name>
+  <developer_name xml:lang="it">La comunità KDE</developer_name>
+  <developer_name xml:lang="ka">KDE-ის საზოგადოება</developer_name>
+  <developer_name xml:lang="ko">KDE 커뮤니티</developer_name>
+  <developer_name xml:lang="nl">De KDE gemeenschap</developer_name>
+  <developer_name xml:lang="pl">Społeczność KDE</developer_name>
+  <developer_name xml:lang="pt">A Comunidade do KDE</developer_name>
+  <developer_name xml:lang="pt-BR">A comunidade KDE</developer_name>
+  <developer_name xml:lang="ru">Сообщество KDE</developer_name>
+  <developer_name xml:lang="sk">KDE Komunita</developer_name>
+  <developer_name xml:lang="sl">Skupnost KDE</developer_name>
+  <developer_name xml:lang="sv">KDE-gemenskapen</developer_name>
+  <developer_name xml:lang="tr">KDE Topluluğu</developer_name>
+  <developer_name xml:lang="uk">Спільнота KDE</developer_name>
+  <developer_name xml:lang="x-test">xxThe KDE Communityxx</developer_name>
+  <developer_name xml:lang="zh-CN">KDE 社区</developer_name>
+  <developer_name xml:lang="zh-TW">KDE 社群</developer_name>
+  <name>KMail</name>
+  <name xml:lang="ar">بريدك</name>
+  <name xml:lang="az">KMail</name>
+  <name xml:lang="bg">KMail</name>
+  <name xml:lang="bs">KMail</name>
+  <name xml:lang="ca">KMail</name>
+  <name xml:lang="ca-valencia">KMail</name>
+  <name xml:lang="cs">KMail</name>
+  <name xml:lang="da">KMail</name>
+  <name xml:lang="de">KMail</name>
+  <name xml:lang="el">KMail</name>
+  <name xml:lang="en-GB">KMail</name>
+  <name xml:lang="es">KMail</name>
+  <name xml:lang="et">KMail</name>
+  <name xml:lang="eu">KMail</name>
+  <name xml:lang="fi">KMail</name>
+  <name xml:lang="fr">KMail</name>
+  <name xml:lang="gl">KMail</name>
+  <name xml:lang="hu">KMail</name>
+  <name xml:lang="ia">KMail</name>
+  <name xml:lang="id">KMail</name>
+  <name xml:lang="it">KMail</name>
+  <name xml:lang="ka">KMail</name>
+  <name xml:lang="ko">KMail</name>
+  <name xml:lang="lt">KMail</name>
+  <name xml:lang="nb">KMail</name>
+  <name xml:lang="nds">KMail</name>
+  <name xml:lang="nl">KMail</name>
+  <name xml:lang="pl">KMail</name>
+  <name xml:lang="pt">KMail</name>
+  <name xml:lang="pt-BR">KMail</name>
+  <name xml:lang="ro">KMail</name>
+  <name xml:lang="ru">KMail</name>
+  <name xml:lang="sk">KMail</name>
+  <name xml:lang="sl">KMail</name>
+  <name xml:lang="sr">К‑пошта</name>
+  <name xml:lang="sr-Latn">K‑pošta</name>
+  <name xml:lang="sr-ijekavian">К‑пошта</name>
+  <name xml:lang="sr-ijekavianlatin">K‑pošta</name>
+  <name xml:lang="sv">Kmail</name>
+  <name xml:lang="ta">கேமெயில்</name>
+  <name xml:lang="tr">KMail</name>
+  <name xml:lang="uk">KMail</name>
+  <name xml:lang="x-test">xxKMailxx</name>
+  <name xml:lang="zh-CN">KMail</name>
+  <name xml:lang="zh-TW">KMail</name>
+  <summary>A feature-rich email application</summary>
+  <summary xml:lang="ar">تطبيق البريد الإلكترونيّ غني بالمزايا</summary>
+  <summary xml:lang="az">Zəngin imkanları olan e-poçt tətbiqi</summary>
+  <summary xml:lang="bg">Богато на възможности приложение за е-поща</summary>
+  <summary xml:lang="ca">Una aplicació de correu electrònic rica en característiques</summary>
+  <summary xml:lang="ca-valencia">Una aplicació de correu electrònic rica en característiques</summary>
+  <summary xml:lang="cs">Dobře vybavená aplikace na e-maily</summary>
+  <summary xml:lang="da">Et funktionsrigt e-mailprogram</summary>
+  <summary xml:lang="de">Ein E-Mail-Programm mit vielen Funktionen</summary>
+  <summary xml:lang="el">Μία πλούσια σε χαρακτηριστικά εφαρμογή ηλ. αλληλογραφίας</summary>
+  <summary xml:lang="en-GB">A feature-rich email application</summary>
+  <summary xml:lang="es">Una aplicación de correo electrónico rica en funciones</summary>
+  <summary xml:lang="et">Võimalusterohke e-posti rakendus</summary>
+  <summary xml:lang="eu">Ezaugarri asko dituen e-posta aplikazio bat</summary>
+  <summary xml:lang="fi">Sähköpostisovellus.</summary>
+  <summary xml:lang="fr">Une application de courriel riche en fonctionnalités</summary>
+  <summary xml:lang="gl">Unha aplicación de correo electrónico con moitas funcionalidades</summary>
+  <summary xml:lang="ia">Un application de e.posta ric de characteristicas</summary>
+  <summary xml:lang="id">Sebuah aplikasi email yang kaya fitur</summary>
+  <summary xml:lang="it">Un programma di posta elettronica ricco di funzioni</summary>
+  <summary xml:lang="ka">ელფოსტის აპლიკაცია ბევრი ფუნქციით</summary>
+  <summary xml:lang="ko">다기능 이메일 프로그램</summary>
+  <summary xml:lang="nl">Een e-mailtoepassing met veel mogelijkheden</summary>
+  <summary xml:lang="pl">Zaawansowana aplikacja pocztowa</summary>
+  <summary xml:lang="pt">Uma aplicação de e-mail rica em funcionalidades</summary>
+  <summary xml:lang="pt-BR">Um aplicativo de e-mail rico em recursos</summary>
+  <summary xml:lang="ru">Многофункциональное приложение электронной почты</summary>
+  <summary xml:lang="sk">E-mailová aplikácia bohatá na funkcie</summary>
+  <summary xml:lang="sl">Program z veliko funkcijami za elektronsko pošto</summary>
+  <summary xml:lang="sv">Ett funktionsrikt e-postprogram</summary>
+  <summary xml:lang="ta">பல அம்சங்களைக் கொண்ட மின்னஞ்சல் செயலி</summary>
+  <summary xml:lang="tr">Çok özellikli bir e-posta uygulaması</summary>
+  <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
+  <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
+  <summary xml:lang="zh-CN">功能丰富的电子邮件应用程序</summary>
+  <summary xml:lang="zh-TW">多功能的電子郵件應用程式</summary>
+  <description>
+    <p>
+      KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.
+    </p>
+    <p xml:lang="ar">بريدك هو عميل بريد إلكتروني متطور يتكامل جيدًا مع مزودي البريد الإلكتروني المستخدَم على نطاق واسع مثل غ.ميل من غوغل. يوفر العديد من الأدوات والميزات لزيادة إنتاجيتك إلى أقصى حد ويجعل العمل مع حسابات البريد الإلكتروني الكبيرة أمرًا سهلاً وسريعًا. يدعم بريدك مجموعة كبيرة ومتنوعة من بروتوكولات البريد الإلكتروني - POP3 و IMAP و Microsoft Exchange (EWS) والكثير غيرها.</p>
+    <p xml:lang="az">KMail, GMail kimi geniş istifadə olunan e-poçt təminatçıları ilə yaxşı inteqrasiya olunan ən müasir elektron poçt müştərisidir. Səmərəliliyi artırmaq üçün bir çox vasitə və imkanlar təmin edir və böyük e-poçt hesabları ilə işi asan və sürətli edir. KMail, POP3, IMAP, Microsoft Exchange (EWS) və daha çox e-poçt protokolunu dəstəkləyir.</p>
+    <p xml:lang="bg">KMail е най-съвременен имейл клиент, който се интегрира добре с широко използвани доставчици на имейли като Gmail. Той осигурява много инструменти и функции, за да увеличи вашата производителност и да прави работата с големи имейл акаунти лесно и бързо. Kmail поддържа голямо разнообразие от електронни протоколи - POP3, IMAP, Microsoft Exchange (EWS) и др.</p>
+    <p xml:lang="ca">El KMail és un client de correu electrònic d'última generació que s'integra bé amb els proveïdors de correu electrònic àmpliament emprats com el GMail. Proporciona moltes eines i característiques per a maximitzar la productivitat i fer que el treball amb els comptes de correu electrònic sigui fàcil i ràpid. El KMail admet una gran varietat de protocols de correu electrònic: POP3, IMAP, Microsoft Exchange (EWS) i molts més.</p>
+    <p xml:lang="ca-valencia">KMail és un client de correu electrònic d'última generació que s'integra bé amb els proveïdors de correu electrònic àmpliament emprats com GMail. Proporciona moltes eines i característiques per a maximitzar la productivitat i fer que el treball amb els comptes de correu electrònic siga fàcil i ràpid. KMail admet una gran varietat de protocols de correu electrònic: POP3, IMAP, Microsoft Exchange (EWS) i molts més.</p>
+    <p xml:lang="da">KMail er et moderne e-mailprogram som integrerer godt med udbredte e-mailudbydere såsom GMail. Det giver mange værktøjer og funktioner der maksimerer din produktivitet og gør det nemt og hurtigt at arbejde med store e-mailkonti. KMail understøtter en bred vifte af e-mailprotokoller - POP3, IMAP, Microsoft Exchange (EWS) og mere. </p>
+    <p xml:lang="de">KMail ist ein moderner E-Mail-Client, der sich gut mit weit verbreiteten E-Mail-Anbieter wie GMail integriert. Es bietet viele Werkzeuge und Funktionen, um Ihre Produktivität zu maximieren und macht die Arbeit mit großen E-Mail-Konten einfach und schnell. KMail unterstützt eine große Vielfalt an E-Mail-Protokollen - POP3, IMAP, Microsoft Exchange (EWS) und mehr.</p>
+    <p xml:lang="el">Το KMail είναι ένας πελάτης ηλεκτρονικής αλληλογραφίας στην αιχμή της τεχνολογίας και καλή ενσωμάτωση με ευρείας χρήσης παρόχους αλληλογραφίας όπως το GMail. Παρέχει πολλά εργαλεία και χαρακτηριστικά για να μεγιστοποιήσετε την παραγωγικότητά σας και κάνει εύκολη και γρήγορη τη συνεργασία με μεγάλους λογαριασμούς ηλ. αλληλογραφίας. Το KMail υποστηρίζει μια μεγάλη ποικιλία πρωτοκόλλων ηλ. αλληλογραφίας - POP3, IMAP, Microsoft Exchange (EWS) και άλλα.</p>
+    <p xml:lang="en-GB">KMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximise your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.</p>
+    <p xml:lang="es">KMail es un cliente de correo electrónico de última generación que se integra bien con proveedores de correo ampliamente usados, como GMail. Proporciona varias herramientas y funciones para maximizar la productividad y hacer que resulte fácil y rápido trabajar con grandes cuentas de correo. KMail implementa una gran variedad de protocolos de correo electrónico: POP3, IMAP y Microsoft Exchange (EWS), entre otros.</p>
+    <p xml:lang="et">KMail on tipptasemel e-posti klient, mis lõimub kenasti selliste levinud e-posti teenuse pakkujatega, nagu näiteks GMail. See pakub rohkelt tööriistu ja omadusi kasutaja elu hõlbustamiseks ning muudab ka mahukate e-posti kontodega tegelemise hõlpsaks ja kiireks. KMail toetab paljusid e-posti protokolle: POP3, IMAP, Microsoft Exchange (EWS) ja paljusid teisi.</p>
+    <p xml:lang="eu">KMail azken belaunaldiko e-posta bezeroa bat da, GMail gisako erabilera zabaleko e-posta hornitzaileekin ongi bateratzen dena. Produktibitatea maximizatzeko tresna eta ezaugarri asko eskaintzen ditu, eta e-posta kontu handiekin lan egitea erraza eta azkarra da. KMail-ek e-posta protokolo ugari onartzen ditu - POP3, IMAP, Microsoft Exchange (EWS) eta gehiago.</p>
+    <p xml:lang="fi">KMail on nykyaikainen sähköpostiohjelma, joka integroituu hyvin laajalti käytettyihin sähköpostitarjoajiin kuten GMailiin. Se tarjoaa työkaluja ja piirteitä, joilla maksimoit tuottavuutesi ja hallitset vaivatta suuriakin sähköpostitilejä. KMail tukee useita sähköpostiyhteyskäytäntöjä: POP3:a, IMAPia, Microsoft Exchangea (EWS) jne.</p>
+    <p xml:lang="fr">KMail est un client de messagerie tout à fait moderne, s'intégrant parfaitement avec un grand nombre de fournisseurs de service de courriels comme GMail. Il propose de nombreux outils et fonctionnalités pour optimiser votre productivité et rend le travail avec de nombreux comptes de messagerie, facile et rapide. KMail prend en charge un large choix de protocole de courriels comme « POP3 », « IMAP », « EWS » (Microsoft Exchange) et encore plus.</p>
+    <p xml:lang="gl">KMail é un cliente de correo electrónico de última xeración que se integra ben con fornecedores de correo electrónico populares como GMail. Fornece moitas ferramentas para maximizar a produtividade e facilita e acelera o traballo con grandes contas de correo electrónico. KMail é compatíbel cunha gran variedade de protocolos de correo electrónico: POP3, IMAP, Microsoft Exchange (EWS) e máis.</p>
+    <p xml:lang="ia">Kmail es un cliente de e-posta al stato del arte que ben integra fornitores  de eposta largemente usate coo GMail. Il forni multe instrumentos e characteristicas per maximisar tu prodictivitate e face laborar con grande contos de e-posta facile e rapide. Kmail supporta un grande varietate de protocollos de e-posta - POP, IMAP, Microsoft Exchange (EWS) e altere.</p>
+    <p xml:lang="id">KMail adalah klien email canggih yang terintegrasi baik dengan penyedia email yang banyak digunakan seperti GMail. Ini menyediakan banyak alat dan fitur untuk memaksimalkan produktivitas Anda dan membuat bekerja dengan akun email besar mudah dan cepat. KMail mendukung beragam protokol email - POP3, IMAP, Microsoft Exchange (EWS) dan banyak lagi.</p>
+    <p xml:lang="it">KMail è un client di posta elettronica allo stato dell'arte che si integra bene con fornitori di posta molto usati come GMail. Fornisce molti strumenti e funzioni per massimizzare la tua produttività e rendere facile e veloce l'uso di grandi account di posta. KMail supporta un'ampia gamma di protocolli di posta elettronica - POP3, IMAP, Microsoft Exchange (EWS) ed altri.</p>
+    <p xml:lang="ko">KMail은 GMail과 같은 이메일 서비스를 사용하는 최신 이메일 클라이언트입니다. 여러 생산성 향상용 도구와 기능이 있으며 대형 이메일 계정 사용도 쉽고 빠릅니다. KMail은 POP3, IMAP, Microsoft Exchange(EWS) 등 여러 이메일 프로토콜을 지원합니다.</p>
+    <p xml:lang="nl">KMail is een zeer moderne e-mailclient die goed integreert met breed gebruikte e-mailleveranciers zoals GMail. Het biedt vele hulpmiddelen en functies om uw productiviteit te maximaliseren en maakt werken met grote e-mailaccounts gemakkelijk en snel. KMail ondersteunt een grote variëteit van e-mailprotocollen - POP3, IMAP, Microsoft Exchange (EWS) en meer.</p>
+    <p xml:lang="pl">KMail jest pełnowartościowym klientem pocztowym, który współgra z powszechnie wykorzystywanymi dostawcami pocztowymi takimi jak GMail. Zapewnia wiele narzędzi i daje wiele możliwości do maksymalizacji produktywności przez co czyni zarządzanie dużymi kontami pocztowymi łatwym i szybkim. KMail obsługuje różne protokoły pocztowe - POP3, IMAP, Microsoft Exchange (EWS) i więcej.</p>
+    <p xml:lang="pt">O KMail é um cliente de e-mail do estado-da-arte que se integra bem com os fornecedores de e-mail largamente usados, como o GMail. Ele oferece várias ferramentas e funcionalidades para maximizar a sua produtividade e torna simples e rápido o tratamento de contas de correio grandes. O KMail suporta uma grande variedade de protocolos de e-mail - POP3, IMAP, Microsoft Exchange (EWS), entre outros.</p>
+    <p xml:lang="pt-BR">KMail é um cliente de e-mail que se integra muito bem com os provedores de e-mail amplamente utilizados, como o GMail. Ele oferece várias ferramentas e funcionalidades para maximizar a sua produtividade e torna simples e rápido o tratamento de contas de e-mail grandes. O KMail tem suporte a uma grande variedade de protocolos de e-mail - POP3, IMAP, Microsoft Exchange (EWS), entre outros.</p>
+    <p xml:lang="ru">KMail — это современный почтовый клиент, который хорошо интегрируется с широко используемыми службами электронной почты, такими как GMail.  Он предоставляет множество инструментов и функций для обеспечения максимальной производительности, а также упрощает и ускоряет работу с объёмными архивами электронной почты. KMail поддерживает большое количество протоколов электронной почты: POP3, IMAP, Microsoft Exchange (EWS) и многие другие.</p>
+    <p xml:lang="sk">KMail je najmodernejší e-mailový klient, ktorý sa dobre integruje s bežne používanými poskytovateľmi e-mailov, ako je GMail. Poskytuje mnoho nástrojov a funkcií na maximalizáciu vašej produktivity, uľahčuje a zrýchľuje prácu s veľkými e-mailovými účtami. KMail podporuje veľké množstvo e-mailových protokolov - POP3, IMAP, Microsoft Exchange (EWS) a ďalšie.</p>
+    <p xml:lang="sl">KMail je najsodobnejši odjemalec e-pošte, ki je dobro integriran s širokim uporabljeni ponudniki e-pošte, kot je GMail. Ponuja veliko orodij in funkcij za maksimiziranje vaše produktivnosti ter za lahko in hitro delo z veliko e-poštnimi računi. KMail podpira veliko različnih e-poštnih protokolov - POP3, IMAP, Microsoft Exchange (EWS) in druge.</p>
+    <p xml:lang="sv">Kmail är en toppmodern e-postprogram som är väl integrerad med använda i stor utsträckning, såsom GMail. Det tillhandahåller många verktyg och funktioner för att maximera din produktivitet och gör det snabbt och enkelt att arbeta med stora e-postkonton. Kmail stöder ett stort antal e-postprotokoll: POP3, IMAP, Microsoft Exchange (EWS) med flera.</p>
+    <p xml:lang="tr">KMail, yaygın kullanılan e-posta sağlayıcıları ile sorunsuzca çalışan gelişmiş bir e-posta istemcisidir. Üretkenliğinizi artıracak ve büyük e-posta hesaplarıyla çalışmanızı kolaylaştıracak pek çok özellik ve araçla gelir. KMail, geniş bir e-posta protokolü listesini destekler - POP3, IMAP, Microsoft Exchange (EWS) ve çok daha fazlası.</p>
+    <p xml:lang="uk">KMail — самодостатня програма для роботи з електронною поштою, яка дуже просто інтегрується зі службами надання послуг електронної пошти, зокрема GMail. У ній передбачено багато засобів та можливостей максимального сприяння вашій продуктивності. Вона робить роботу із об'ємними архівами електронної пошти простою і швидкою. У KMail передбачено підтримку широкого діапазону протоколів електронної пошти — POP3, IMAP, Microsoft Exchange (EWS) тощо.</p>
+    <p xml:lang="x-test">xxKMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.xx</p>
+    <p xml:lang="zh-CN">KMail 是一款功能先进的电子邮件客户端，能与 GMail 等常用电子邮件服务提供商进行整合。它提供了多种工具，能让您方便快捷地管理包含大量邮件的账户，提高工作效率。KMail 支持各种电子邮件协议，包括 POP3、IMAP、Microsoft Exchange (EWS) 等。</p>
+    <p>Features:</p>
+    <p xml:lang="ar">الميزات:</p>
+    <p xml:lang="az">İmkanlar:</p>
+    <p xml:lang="bg">Функции:</p>
+    <p xml:lang="bs">Svojstva:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="ca-valencia">Característiques:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="da">Funktioner:</p>
+    <p xml:lang="de">Funktionen:</p>
+    <p xml:lang="el">Χαρακτηριστικά:</p>
+    <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="es">Funcionalidades:</p>
+    <p xml:lang="et">Omadused:</p>
+    <p xml:lang="eu">Ezaugarriak:</p>
+    <p xml:lang="fi">Ominaisuudet:</p>
+    <p xml:lang="fr">Fonctionnalités :</p>
+    <p xml:lang="gl">Funcionalidades:</p>
+    <p xml:lang="hu">Szolgáltatások:</p>
+    <p xml:lang="ia">Characteristicas:</p>
+    <p xml:lang="id">Fitur:</p>
+    <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="ka">თვისებები:</p>
+    <p xml:lang="ko">기능:</p>
+    <p xml:lang="lt">Ypatybės:</p>
+    <p xml:lang="nb">Egenskaper:</p>
+    <p xml:lang="nds">Markmalen:</p>
+    <p xml:lang="nl">Mogelijkheden:</p>
+    <p xml:lang="pl">Możliwości:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="pt-BR">Funcionalidades:</p>
+    <p xml:lang="ro">Caracteristici:</p>
+    <p xml:lang="ru">Возможности:</p>
+    <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="sl">Zmožnosti:</p>
+    <p xml:lang="sr">Могућности:</p>
+    <p xml:lang="sr-Latn">Mogućnosti:</p>
+    <p xml:lang="sr-ijekavian">Могућности:</p>
+    <p xml:lang="sr-ijekavianlatin">Mogućnosti:</p>
+    <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="ta">அம்சங்கள்:</p>
+    <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="x-test">xxFeatures:xx</p>
+    <p xml:lang="zh-CN">程序功能：</p>
+    <p xml:lang="zh-TW">功能：</p>
+    <ul>
+      <li>Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
+      <li xml:lang="ar">آمن - يحتوي برنامج بريدك على إعدادات مبدئية آمنة لحماية خصوصيتك، ودعم تشفير كامل من الطرف للطرف الآخر، واكتشاف البريد المزعج.</li>
+      <li xml:lang="az">Təhlükəsiz - KMail, məxfiliyinizi qorumaq üçün təhlükəsiz uçdan uca şifrələmə dəstəyi və spamın aşkar edilməsi xüsusiyyətinə malikdir.</li>
+      <li xml:lang="bg">Сигурност - KMail има сигурни настройки по подразбиране, за да защити вашите лични данни, има и широка поддръжка за двустранно криптиране и откриване на спам.</li>
+      <li xml:lang="ca">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
+      <li xml:lang="ca-valencia">Segur: KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptació extrem a extrem i detecció del correu brossa.</li>
+      <li xml:lang="cs">Bezpečný - KMail má bezpečná výchozí nastavení pro ochranu vašeho soukromí, skvělou podporu šifrování great end-to-end a detekci spamu.</li>
+      <li xml:lang="da">Sikker - KMail har sikre standardindstillinger til at beskytte dit privatliv, glimrende understøttelse af ende-til-ende-kryptering og spam-detektion.</li>
+      <li xml:lang="de">Sicherheit - KMail hat sichere Standardeinstellungen zum Schutz Ihrer Privatsphäre, großartige Unterstützung für Ende-zu-Ende-Verschlüsselung und Spam-Erkennung.</li>
+      <li xml:lang="el">Ασφαλές - Το KMail έχει προκαθορισμένες ρυθμίσεις ασφαλείας για την προστασία του ιδιωτικού σα απορρήτου, πολύ καλή υποστήριξη κρυπτογράφησης στα άκρα και εντοπισμό ανεπιθύμητων μηνυμάτων.</li>
+      <li xml:lang="en-GB">Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
+      <li xml:lang="es">Seguro - KMail dispone de preferencias predeterminadas seguras para proteger su privacidad, una buena implementación de cifrado de extremo a extremo y detección de correo basura.</li>
+      <li xml:lang="et">Turvalisus - KMaili seadistused kaitsevad juba vaikimisi sinu privaatsust ning toetavad suurepäraselt suhtlemise krüptimist ja rämpsposti tuvastamist.</li>
+      <li xml:lang="eu">Segurua - KMail-ek zure pribatutasuna babesteko ezarpen lehenetsi seguruak ditu, muturretik muturrerako zifratze aparta, eta spama antzematea.</li>
+      <li xml:lang="fi">Turvallisuus: KMailin oletusasetukset turvaavat yksityisyytesi, salaavat viestin lähettäjältä vastaanottajalle ja tunnistavat roskapostin.</li>
+      <li xml:lang="fr">Sécuriser - KMail propose des paramètres par défaut de sécurité pour protéger votre vie privée, une prise en charge du chiffrement de bout en bout et la détection du pourriel.</li>
+      <li xml:lang="gl">Seguro — KMail ten unha configuración predeterminada segura para protexer a súa intimidade, unha gran compatibilidade con cifrado de punto a punto, e detección de correo non desexado.</li>
+      <li xml:lang="ia">Secure - KMail ha preferentias predefinite de securitate per proteger tu privacitate, supporto de cryptation fin-a-fin e discoperta de spam.</li>
+      <li xml:lang="id">Aman - KMail memiliki setingan baku yang aman untuk memproteksi privasi Anda, dukungan enkripsi end-to-end yang hebat, dan deteksi spam.</li>
+      <li xml:lang="it">Sicuro - KMail ha impostazioni predefinite sicure per proteggere la tua riservatezza, un notevole supporto per la cifratura tra entrambi i capi della comunicazione (end-to-end), e il rilevamento dello spam.</li>
+      <li xml:lang="ko">보안 - KMail의 기본 설정은 개인 정보 보호, 종단간 암호화 지원, 스팸 감지를 활성화합니다.</li>
+      <li xml:lang="nl">Veilig - KMail heeft veilige standaard instellingen om uw privacy te beschermen, zeer goede ondersteuning van end-to-end encryptie en spamdetectie.</li>
+      <li xml:lang="pl">Bezpieczny - Domyślne ustawienia KMail są bezpieczne, tak aby chronić twoją prywatność, zapewnić dobrą obsługę szyfrowania i wykrywania spamu.</li>
+      <li xml:lang="pt">Seguro - o KMail tem configurações predefinidas seguras para proteger a sua privacidade, um suporte óptimo de encriptação de um extremo ao outro e detecção de lixo electrónico.</li>
+      <li xml:lang="pt-BR">Seguro - O KMail tem configurações predefinidas seguras para proteger a sua privacidade, um excelente suporte para criptografia de ponta-a-ponta e detecção de spam.</li>
+      <li xml:lang="ru">Безопасность — параметры KMail по умолчанию обеспечивают защиту конфиденциальности, отличную поддержку сквозного шифрования и обнаружение нежелательных писем.</li>
+      <li xml:lang="sk">Bezpečný - KMail má bezpečné predvolené nastavenia na ochranu vášho súkromia, skvelú podporu šifrovania end-to-end a detekciu spamu.</li>
+      <li xml:lang="sl">Varno - KMail ima varne privzete nastavitve za zaščito vaše zasebnosti, celovito podporo za šifriranje in odkrivanje neželene pošte.</li>
+      <li xml:lang="sv">Säkert: Kmail har säkra standardinställningar för att skydda din integritet, enastående genomgående krypteringsstöd, och skräppostdetektering.</li>
+      <li xml:lang="tr">Güvenli - KMail öntanımlı ayarları gizliliğinizi korur, uçtan uca şifreleme ve istenmeyen posta algılama desteği sunar.</li>
+      <li xml:lang="uk">Безпека — типові параметри роботи KMail є безпечними, вони захистять ваші конфіденційні дані, забезпечать наскрізне шифрування даних та запобігатимуть появі спаму.</li>
+      <li xml:lang="x-test">xxSecure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.xx</li>
+      <li xml:lang="zh-CN">安全可靠 - KMail 具有安全的默认设置、良好的端到端加密支持、可靠的垃圾邮件检测功能，为您的隐私保驾护航。</li>
+      <li>Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
+      <li xml:lang="ar">قوي - تشمل الميزات الدعم في وضع عدم الاتصال، وهويات متعددة للمرسلين، ودعم الكثير من اللغات، ومرشحات قوية، ووظيفة البحث وإضافة الوسوم، وإدارة القوائم البريدية، وضبط المرن للغاية.</li>
+      <li xml:lang="az">Güclü - Xüsusiyyətlər, oflayn dəstək, göndərənin birdən çox olması, çox dilli dəstək, güclü süzgəc, axtarış və yarlıq təyin etmə funksiyaları, paylaşım siyahısının idarə edilməsi və çox çevik tənzimləələri əhatə edir.</li>
+      <li xml:lang="bg">Мощен - Функции за офлайн поддръжка, множество профили за изпращане, многоезична поддръжка, мощно филтриране, търсене и поставяне на етикети, управление на пощенски списъци и много гъвкава конфигурация.</li>
+      <li xml:lang="ca">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de cerca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
+      <li xml:lang="ca-valencia">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de busca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
+      <li xml:lang="da">Kraftfuld - Funktionerne omfatter offline-understøttelse, flere afsenderidentiteter, understøttelse af flere sprog, kraftfuld filtrering, søgnings- og mærkningsfunktionalitet, mailingliste-håndtering og meget fleksibel konfiguration.</li>
+      <li xml:lang="de">Leistungsstark - Zu den Funktionen gehören Offline-Unterstützung, mehrere Absenderidentitäten, Unterstützung mehrerer Sprachen, leistungsstarke Filter-, Such- und Markierungs-Funktionen, Mailinglistenverwaltung und eine sehr flexible Einrichtung.</li>
+      <li xml:lang="el">Ισχυρό - Οι λειτουργίες περιλαμβάνουν υποστήριξη εκτός σύνδεσης, πολλαλπλές ταυτότητες αποστολέα, πολυγλωσσική υποστήριξη, ισχυρό φιλτράρισμα, λειτουργικότητα αναζήτησης και απόδοσης ετικετών, διαχείριση λίστας αλληλογραφίας και πολύ ευέλικτη διαμόρφωση.</li>
+      <li xml:lang="en-GB">Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
+      <li xml:lang="es">Potente - Sus características incluyen el uso sin conexión, múltiples identidades del remitente, uso de varios idiomas, potente filtrado, funcionalidad de búsqueda y etiquetado, gestión de listas de correo y una configuración muy flexible.</li>
+      <li xml:lang="et">Võimas - paljude omaduste hulka kuuluvad võrguta töötamise toetus, mitme saatja identiteedi võimalus, paljude keelte toetus, võimas filtreerimine, otsimine ja sildistamine, postiloendite haldus ja äärmiselt paindlik seadistamine.</li>
+      <li xml:lang="eu">Ahaltsua - Ezaugarrien artean ditu lerroz kanpo lan egitea, bidaltzaile nortasun anizkoitzak, hizkuntza ugaritarako euskarria, iragazte ahaltsua, bilatzeko eta etiketatzeko funtzionaltasuna, posta-zerrenden kudeaketa eta konfigurazio oso malgua.</li>
+      <li xml:lang="fi">Tehokkuus: Ominaisuuksina mm. verkoton tila, useammat lähettäjähenkilöydet, useiden kielten tuki, tehokas suodatus, haku- ja tunnistetoiminnot, postilistojen hallinta ja monipuoliset asetukset.</li>
+      <li xml:lang="fr">Puissance - Les fonctionnalités proposées sont la prise en charge du mode non connecté, les identités multiples d'émetteurs, la prise en charge multi-langage, un filtrage puissant, une fonctionnalité de recherche et d'étiquetage, la gestion des listes de diffusion et une configuration très flexible.</li>
+      <li xml:lang="gl">Potente — Entre as súas funcionalidades están traballar sen Internet, dispoñer de múltiples identidades de remitente, dispoñibilidade en varios idiomas, potentes funcionalidades de filtro, busca e etiquetado, xestión de listas de correo e gran flexibilidade de configuración.</li>
+      <li xml:lang="ia">Potente - Characteristicas include suporto foras de linea, multiple identitate del mittente (expeditor), supporto multi-lingual, filtrar potente, functionalitate de cerca e marcar, gestion le lista de e-posta e configuration ulte flexibile.</li>
+      <li xml:lang="id">Hebat - Fitur-fitur termasuk dukungan offline, multi identitas pengirim, dukungan multi-bahasa, pemfilteran yang hebat, fungsi pencarian dan penge-tag-an, pengelolaan milis dan konfigurasi yang sangat fleksibel.</li>
+      <li xml:lang="it">Potente - le funzioni includono il supporto per il funzionamento non in linea, identità con mittenti diversi, supporto per diverse lingue, filtri potenti, funzioni di ricerca e assegnazione di etichette, gestione di mailing list e una configurazione davvero flessibile.</li>
+      <li xml:lang="ko">강력함 - 오프라인 지원, 다중 보내는 사람 프로필, 다국어 지원, 강력한 필터, 검색, 태그 기능, 메일링 리스트 관리, 유연한 설정 기능이 있습니다.</li>
+      <li xml:lang="nl">Krachtig - Functies omvatten offline ondersteuning, meerdere identiteiten als verzender, ondersteuning van meerdere talen, krachtige functionaliteit voor filtering, zoeken en taggen, beheer van e-mailijsten en erg flexibele configuratie.</li>
+      <li xml:lang="pl">Zaawansowany - Możliwości uwzględniają obsługę programu bez sieci, wiele tożsamości osoby wysyłającej, wielojęzyczność, filtrowanie, wyszukiwanie, oznaczanie, lista mailingowa oraz elastyczne ustawienia.</li>
+      <li xml:lang="pt">Poderoso - As funcionalidades incluem o suporte desligado, múltiplas identidades de envio, suporte para várias línguas, funcionalidades de filtragem, pesquisa e marcação poderosas, gestão de listas de correio e uma configuração bastante flexível.</li>
+      <li xml:lang="pt-BR">Poderoso - As funcionalidades incluem o suporte offline, múltiplas identidades de envio, suporte para vários idiomas, recursos de filtragem, pesquisa e marcação de etiquetas poderosos, gerenciamento de listas de discussão e uma configuração bastante flexível.</li>
+      <li xml:lang="ru">Многофункциональность — приложение предусматривает работу в автономном режиме, работу с несколькими профилями отправки писем, поддержку нескольких языков, мощную фильтрацию, функции поиска и присваивания меток, работу со списками рассылки и очень гибкую настройку.</li>
+      <li xml:lang="sk">Výkonný - Medzi funkcie patrí podpora offline, viacnásobné identity odosielateľa, podpora viacerých jazykov, výkonné filtrovanie, vyhľadávanie a označovanie, správa zoznamov adries a veľmi flexibilná konfigurácia.</li>
+      <li xml:lang="sl">Zmogljiv - funkcije vključujejo podporo brez povezave, več identitet pošiljatelja, podporo za več jezikov, zmogljivo filtriranje, iskanje in označevanje, upravljanje s poštnimi seznami in zelo prilagodljive nastavitve.</li>
+      <li xml:lang="sv">Kraftfullt: Funktioner omfattar stöd för nerkopplad användning, flera avsändaridentiteter, stöd för flera språk, kraftfull filtrering, sökning och etikettfunktion, hantering av sändlistor och mycket flexibel inställning.</li>
+      <li xml:lang="tr">Güçlü - Çevrimiçi çalışma desteği, çoklu gönderici kimlikleri, çoklu dil desteği, güçlü süzme ve etiketleme yetenekleri, posta listesi yönetimi ve esnek yapılandırma özellikleri sunar.</li>
+      <li xml:lang="uk">Потужність — серед можливостей програми можливість роботи у автономному режимі (без з'єднання із інтернетом), робота із декількома профілями надсилання повідомлень, підтримка багатомовності, потужні можливості з фільтрування, пошуку та встановлення міток, керування повідомленнями зі списків листування та надзвичайна гнучкість у налаштовуванні.</li>
+      <li xml:lang="x-test">xxPowerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.xx</li>
+      <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的筛选、搜索和标记功能、邮件列表管理和灵活的配置。</li>
+      <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
+      <li xml:lang="ar">متكامل - يمكن إضافة دعوات الاجتماعات بسهولة حيث تحمل الأحداث في "منظمك "والإكمال التلقائي للعناوين والصور الرمزية وتفضيلات التشفير من "دفتر عناوينك".</li>
+      <li xml:lang="az">İnteqrasiya olunmuş - Toplantı dəvətlərini KOrganizer tədbirləri kimi, ünvanların avtomatik doldurulmasını, avatarlar və kripto ayarlarını KAdressBook-dan yükləyərək asanlıqla əlavə etmək olar.</li>
+      <li xml:lang="bg">Интеграция - Поканите за срещи могат лесно за бъдат добавени като събития в KOrganizer; автоматичното завършване на адреси, аватари и настройки на криптиране се зареждат от KAddressBook.</li>
+      <li xml:lang="ca">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments al KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
+      <li xml:lang="ca-valencia">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments a KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
+      <li xml:lang="da">Integreret - Mødeinvitationer kan nemt tilføjes som begivenheder til KOrganizer, adressefuldførelse, avatarer og krypto-indstillinger indlæses fra KAddressBook.</li>
+      <li xml:lang="de">Integration - Einladungen zu Besprechungen können einfach als Termine in KOrganizer hinzugefügt werden, automatische Vervollständigung von Adressen, Avatare und Krypto-Einstellungen werden aus KAddressBook geladen.</li>
+      <li xml:lang="el">Ενσωματωμένο - Προσκλήσεις σε συναντήσεις μπορούν αν προστεθούν εύκολα ως γεγονότα στο KOrganizer, αυτόματη συμπλήρωση διευθύνσεων, προσωπικοί βοηθοί και προτιμήσεις κρυπτογράφησης φορτώνονται από το KAddressBook.</li>
+      <li xml:lang="en-GB">Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
+      <li xml:lang="es">Integrado - Las invitaciones a reuniones se pueden añadir fácilmente como eventos en KOrganizer, la completación automática de direcciones, los avatares y las preferencias de cifrado se cargan de KAddressBook.</li>
+      <li xml:lang="et">Lõimimine - kohtumiskutsete hõlpus lisamine sündmustena KOrganizerisse, aadresside automaatne lõpetamine, avatarid ja krüptoeelistused KAddressBookist</li>
+      <li xml:lang="eu">Bateratua - Hitzorduetarako gonbidapenak erraz gehitu daitezke ekitaldi gisa KOrganizer-ren, helbide osatze automatikoa, abatarrak eta zifratze hobespenak KAddressBook-etik zamatzen dira.</li>
+      <li xml:lang="fi">Integrointi: tapaamiskutsut voi helposti lisätä tapahtumiksi KOrganizeriin, täydentää osoitteet automaattisesti ja ladata avatarit ja salauskäytänteet KAddressBookista.</li>
+      <li xml:lang="fr">Intégration - Les invitations à des réunions peuvent être ajoutées comme des évènement dans KOrganizer. L'auto-complètement des adresses, les avatars et les préférences de chiffrement sont chargés à partir de KAddressBook.</li>
+      <li xml:lang="gl">Integrado — As invitacións a reunións poden engadirse facilmente como eventos a KOrganizer, permite completar automaticamente enderezos, e carta as imaxes de usuario e as preferencias criptográficas de KAddressBook.</li>
+      <li xml:lang="ia">Integrate - Invitation de reunion pote esser facilmente addite como eventos in KOrganier, completamento automadic de adresse, avatars e preferentias crypto es cargate ex KAddressBook.</li>
+      <li xml:lang="id">Terintegrasi - Undangan rapat bisa dengan mudah ditambahkan sebagai acara ke dalam KOrganizer, auto-penyelesaian alamat, avatar, dan preferensi crypto yang dimuat dari KAddressBook.</li>
+      <li xml:lang="it">Integrato - gli inviti alle riunioni possono essere aggiunti in modo semplice come eventi in KOrganizer, mentre il completamento automatico degli indirizzi, gli avatar e le preferenze di cifratura sono caricati da KAddressBook.</li>
+      <li xml:lang="ko">통합 - 받은 초대장을 KOrganizer에 행사로 추가하고, KAddressBook에서 주소 자동 완성, 아바타, 암호화 선호도를 선택할 수 있습니다.</li>
+      <li xml:lang="nl">Geïntegreerd - invitaties voor bijeenkomsten kunnen gemakkelijk als afspraken in KOrganizer worden toegevoegd, automatisch aanvullen van adressen, avatars en voorkeuren voor versleuteling worden geladen uit KAddressBook.</li>
+      <li xml:lang="pl">Zintegrowany - Zaproszenia na spotkania można łatwo dodać do wydarzeń w KOrganizerze. Uzupełnianie adresów, awatary i ustawienia kryptograficzne są wczytywane z KsiążkiAdresowej.</li>
+      <li xml:lang="pt">Integrado - Os convites para reuniões podem ser facilmente adicionados como eventos ao KOrganizer; as definições de completação automática de endereços, avatars e encriptação são carregadas a partir do KAddressBook.</li>
+      <li xml:lang="pt-BR">Integrado - Os convites para reuniões podem ser facilmente adicionados como eventos ao KOrganizer, as preferências de completação automática de endereços, avatares e criptografia são carregadas a partir do KAddressBook.</li>
+      <li xml:lang="ru">Интегрированность — приглашения на встречу возможно легко добавлять в KOrganizer в виде событий, а данные автоматического дополнения адресов, аватары и параметры шифрования загружаются из KAddressBook.</li>
+      <li xml:lang="sk">Integrovaný - Pozvánky na schôdzky sa dajú ľahko pridávať, pretože udalosti do KOrganizer sa načítavajú z KAddressBook, automatické dopĺňanie adries, avatary a nastavenia šifrovania.</li>
+      <li xml:lang="sl">Integrirano - vabila na srečanje lahko preprosto dodate kot dogodke v KOrganizer, samodejno dokončanje naslovov, avatarji in nastavitve šifriranja so naložene iz programa KAddressBook.</li>
+      <li xml:lang="sv">Integrerat: Mötesinbjudan kan enkelt läggas till som händelser i Korganizer, automatisk komplettering av adresser, avatarer och kryptoinställningar läses in från adressboken.</li>
+      <li xml:lang="tr">Tümleşik - Toplantı davetleri KOrganizer'a kolaylıkla eklenebilir, adres otomatik tamamlaması, avatarlar ve kripto tercihleri KAddressBook'tan yüklenir.</li>
+      <li xml:lang="uk">Інтеграція — реалізовано можливості простого додавання запрошень на зустрічі як записів подій у KOrganizer, дані автоматичного доповнення адрес, аватари та параметри шифрування завантажуються напряму з KAddressBook.</li>
+      <li xml:lang="x-test">xxIntegrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.xx</li>
+      <li xml:lang="zh-CN">全面整合 - 会议邀请可轻松添加为 KOrganizer 事件，从 KAddressBook 加载地址自动完成数据、头像和加密首选项。</li>
+      <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
+      <li xml:lang="ar">متوافق مع المعايير - يدعم بروتوكولات البريد القياسية ، ودفع البريد الإلكتروني ، والتصفية من جانب الخادم و OpenPGP و PGP / MIME و S / MIME المضمنة.</li>
+      <li xml:lang="az">Standartlara uyğun - Standart poçt protokollarını, e-poçtu göndərir, server tərəfindəki süzgəcləmə və sətır daxili OpenPGP, PGP / MIME və S / MIME əməllərini dəstəkləyir.</li>
+      <li xml:lang="bg">Стандартна съвместимост - поддържа стандартни протоколи за поща, push email, филтриране на сървърно ниво и вградени OpenPGP, PGP/MIME и S/MIME.</li>
+      <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
+      <li xml:lang="ca-valencia">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
+      <li xml:lang="cs">Podporující standardy - Podporuje standardní e-mailové protokoly, push email, filtrování na straně serveru a vložené OpenPGP, PGP/MIME a S/MIME.</li>
+      <li xml:lang="da">Standardoverholdelse - Understøtter standard mailprotokoller, push-e-mail, filtrering på serversiden og indlejret OpenPGP, PGP/MIME og S/MIME.</li>
+      <li xml:lang="de">Standardkonform - Unterstützt Standard-Mail-Protokolle, Push-E-Mail, serverseitige Filterung und Inline OpenPGP, PGP/MIME und S/MIME.</li>
+      <li xml:lang="el">Σε συμμόρφωση με τα πρότυπα - Υποστηρίζει πρότυπα πρωτόκολλα αλληλογραφίας, ώθηση αλληλογραφίας, φιλτράρισμα διακομιστή και εμβόλιμα OpenPGP, PGP/MIME και S/MIME.</li>
+      <li xml:lang="en-GB">Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
+      <li xml:lang="es">Compatible con los estándares - Implementa protocolos estándares de correo, envío de mensajes, filtrado en el servidor, así como OpenPGP, PGP/MIME y S/MIME en línea.</li>
+      <li xml:lang="et">Vastavus standarditele - toetatud on standardsed e-posti protokollid, tõukekirjad, serveripoolne filtreerimine ning Inline OpenPGP, PGP/MIME ja S/MIME.</li>
+      <li xml:lang="eu">Estandarrekin bateragarria - Posta protokolo estandarrak onartzen ditu, e-posta bultzatzea, zerbitzari aldeko iragaztea eta lerro barneko OpenPGP, PGP/MIME eta S/MIME.</li>
+      <li xml:lang="fi">Standardinmukaisuus: Tukee sähköpostin yhteyskäytäntöstandardeja, push-viestejä, palvelinpuolen suodatusta ja OpenPGP-, PGP/MIME- ja S/MIME-upotusta.</li>
+      <li xml:lang="fr">Conformité aux standards - Prend en charge les protocoles standards de messagerie, l'envoi automatique de courriels, le filtrage côté serveur et l'intégration de « OpenPGP », « PGP/MIME » et « S/MIME ».</li>
+      <li xml:lang="gl">Cumpre cos estándares — É compatíbel con protocolos de correo estándar, correo electrónico «push», filtro do lado do servidor e OpenPGP, PGP/MIME e S/MIME entre liñas.</li>
+      <li xml:lang="ia">Compatibile con Standard - Supporta protocollos de posta standard, push email, filtrar de latere servitor e insertate (inline) OpenPGP,PGP/MIME e S/MIME.</li>
+      <li xml:lang="id">Kepatuhan Standar - Mendukung protokol mail standar, push email, pemfilteran sisi server dan OpenPGP inline, PGP/MIME dan S/MIME.</li>
+      <li xml:lang="it">Aderente agli standard - supporta i protocolli di posta elettronica standard, la modalità push per i messaggi di posta, filtri lato server e OpenPGP in linea, PGP/MIME e S/MIME.</li>
+      <li xml:lang="ko">표준 준수 - 표준 이메일 프로토콜, 푸시 이메일, 서버 측 필터링, 인라인 OpenPGP, PGP/MIME, S/MIME을 지원합니다.</li>
+      <li xml:lang="nl">Voldoet aan standaarden - ondersteuning van standaard e-mailprotocollen, push e-mail, filtering aan de kant van de server en inline OpenPGP, PGP/MIME en S/MIME.</li>
+      <li xml:lang="pl">Zgodny ze standardami  - Obsługuje wiele protokołów pocztowych, popychanie poczty, filtrowanie po stronie serwera oraz OpenPGP, PGP/MIME i S/MIME w wierszu.</li>
+      <li xml:lang="pt">Compatível com as Normas - Suporta os protocolos-padrão de correio, filtragem do lado do servidor e OpenPGP, PGP/MIME e S/MIME incorporados.</li>
+      <li xml:lang="pt-BR">Compatibilidade com os Padrões - Suporte aos protocolos-padrão de e-mail, filtragem do lado do servidor e OpenPGP, PGP/MIME e S/MIME integrados.</li>
+      <li xml:lang="ru">Соответствие стандартам — поддержка стандартных почтовых протоколов, push-почты, фильтрации на стороне сервера и встроенных OpenPGP, PGP/MIME и S/MIME.</li>
+      <li xml:lang="sk">Podporuje štandardy - Podporuje štandardné poštové protokoly, push e-mail, filtrovanie na strane servera a inline OpenPGP, PGP/MIME a S/MIME.</li>
+      <li xml:lang="sl">Združljiv s standardi - Podpira standardne poštne protokole, potisno e-pošto, filtriranje pošte na poštnem strežniku in inline OpenPGP, PGP/MIME in S/MIME.</li>
+      <li xml:lang="sv">Standardkompatibelt: Stöder standardiserade e-postprotokoll, push e-post, filtrering på serversidan samt OpenPGP, PGP/MIME och S/MIME på plats.</li>
+      <li xml:lang="tr">Standartlara Uygun - Standart posta protokollerini, itmeli e-postaları, sunucu yanı süzmeyi ve satır içi OpenPGP, PGP/MIME ve S/MIME protokollerini destekler.</li>
+      <li xml:lang="uk">Сумісність зі стандартами — передбачено підтримку стандартних протоколів електронної пошти, надсилання повідомлень, фільтрування на боці сервера та вбудовування OpenPGP, PGP/MIME і S/MIME.</li>
+      <li xml:lang="x-test">xxStandard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.xx</li>
+      <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端筛选和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
+    </ul>
+  </description>
+  <content_rating type="oars-1.1"/>
+  <url type="bugtracker">https://bugs.kde.org/enter_bug.cgi?format=guided&amp;product=kmail2</url>
+  <url type="help">https://docs.kde.org/?application=kmail2</url>
+  <url type="homepage">https://kontact.kde.org/components/kmail/</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://kontact.org/assets/img/appstream/kontact-kmail.png</image>
+    </screenshot>
+  </screenshots>
+  <project_group>KDE</project_group>
+  <provides>
+    <binary>kmail</binary>
+  </provides>
+  <releases>
+    <release version="5.21.1" date="2022-09-08"/>
+    <release version="5.21.0" date="2022-08-18"/>
+    <release version="5.20.3" date="2022-07-07"/>
+    <release version="5.20.2" date="2022-06-09"/>
+  </releases>
+</component>

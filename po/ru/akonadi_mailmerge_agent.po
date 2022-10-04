@@ -1,0 +1,62 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Alexander Yavorsky <kekcuha@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-01-02 00:48+0000\n"
+"PO-Revision-Date: 2022-10-01 14:59+0300\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"Language-Team: Russian <kde-russian@lists.kde.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 21.08.3\n"
+
+#: mailmergeconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Настройка"
+
+#: mailmergeconfiguredialog.cpp:48
+#, kde-format
+msgid "Mail Merge Agent"
+msgstr "Агент объединения почты"
+
+#: mailmergeconfiguredialog.cpp:50
+#, kde-format
+msgid "Merge email addresses agent."
+msgstr "Агент объединения адресов электронной почты."
+
+#: mailmergeconfiguredialog.cpp:52
+#, kde-format
+msgid "Copyright (C) 2021-%1 Laurent Montel"
+msgstr "© Laurent Montel, 2021–%1"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: mailmergeconfiguredialog.cpp:54
+#, kde-format
+msgid "Maintainer"
+msgstr "Сопровождающий"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Александр Яворский"
+
+#: mailmergeconfiguredialog.cpp:57
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kekcuha@gmail.com"

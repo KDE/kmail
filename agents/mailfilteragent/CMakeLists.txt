@@ -1,22 +1,36 @@
-
-add_subdirectory( kconf_update )
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
+add_executable(akonadi_mailfilter_agent)
 
-set(akonadi_mailfilter_agent_SRCS
+qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
+target_sources(akonadi_mailfilter_agent PRIVATE
     dummykernel.cpp
     filterlogdialog.cpp
     filtermanager.cpp
     mailfilteragent.cpp
-    configuredialog.cpp
-    configurewidget.cpp
+    mailfilterpurposemenuwidget.cpp
+    dummykernel.h
+    filterlogdialog.h
+    filtermanager.h
+    mailfilteragent.h
+    mailfilterpurposemenuwidget.h
+    ${akonadi_mailfilter_agent_SRCS}
     )
 
-qt5_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
 
-ecm_qt_declare_logging_category(akonadi_mailfilter_agent_SRCS HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME org.kde.pim.mailfilteragent)
 
-add_executable(akonadi_mailfilter_agent ${akonadi_mailfilter_agent_SRCS})
+ecm_qt_declare_logging_category(akonadi_mailfilter_agent HEADER mailfilteragent_debug.h IDENTIFIER MAILFILTERAGENT_LOG CATEGORY_NAME org.kde.pim.mailfilteragent
+        DESCRIPTION "kmail (mailfilter agent)"
+        OLD_CATEGORY_NAMES log_mailfilteragent
+        EXPORT KMAIL
+    )
+
+
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
+endif()
 
 if( APPLE )
     set_target_properties(akonadi_mailfilter_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
@@ -37,16 +51,10 @@ target_link_libraries(akonadi_mailfilter_agent
     KF5::DBusAddons
     KF5::Notifications
     KF5::WindowSystem
-    KF5::IconThemes
-    KF5::Libkdepim
     KF5::I18n
     )
 
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES mailfilteragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
-
-if(BUILD_TESTING)
-    add_subdirectory(autotests)
-endif()
+install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 

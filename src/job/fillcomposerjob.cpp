@@ -1,48 +1,29 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "fillcomposerjob.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
-#include "messageviewer/messageviewersettings.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
+#include <MessageViewer/MessageViewerSettings>
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 FillComposerJob::FillComposerJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
 {
-
 }
 
-FillComposerJob::~FillComposerJob()
-{
-
-}
+FillComposerJob::~FillComposerJob() = default;
 
 void FillComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message);
-    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager());
+    MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
     if (!mSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mSettings.mCc, "utf-8");
@@ -57,7 +38,7 @@ void FillComposerJob::start()
         mMsg->to()->fromUnicodeString(mSettings.mTo, "utf-8");
     }
     if (mSettings.mIdentity > 0) {
-        KMime::Headers::Generic *h = new KMime::Headers::Generic("X-KMail-Identity");
+        auto h = new KMime::Headers::Generic("X-KMail-Identity");
         h->from7BitString(QByteArray::number(mSettings.mIdentity));
         mMsg->setHeader(h);
     }
@@ -65,7 +46,7 @@ void FillComposerJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &FillComposerJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(KMime::Message::Ptr());
@@ -80,41 +61,40 @@ void FillComposerJob::slotOpenComposer()
     bool noWordWrap = false;
     bool isICalInvitation = false;
     if (!mSettings.mAttachData.isEmpty()) {
-        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics")) &&
-                           mSettings.mAttachType == "text" &&
-                           mSettings.mAttachSubType == "calendar" &&
-                           mSettings.mAttachParamAttr == "method";
+        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics")) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
+            && mSettings.mAttachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && mSettings.mBcc.isEmpty()) {
             mMsg->removeHeader<KMime::Headers::Bcc>();
         }
-        if (isICalInvitation &&
-                MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
+        if (isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
             // KOrganizer invitation caught and to be sent as body instead
             mMsg->setBody(mSettings.mAttachData);
-            mMsg->contentType()->from7BitString(
-                QStringLiteral("text/calendar; method=%1; "
-                               "charset=\"utf-8\"").
-                arg(mSettings.mAttachParamValue).toLatin1());
+            mMsg->contentType()->from7BitString(QStringLiteral("text/calendar; method=%1; "
+                                                               "charset=\"utf-8\"")
+                                                    .arg(mSettings.mAttachParamValue)
+                                                    .toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
-            noWordWrap = true; // we shant word wrap inline invitations
+            noWordWrap = true; // we shouldn't word wrap inline invitations
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;
             msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(mSettings.mAttachCte), "utf-8");
-            msgPart->setBody(mSettings.mAttachData);   //TODO: check if was setBodyEncoded
-            msgPart->contentType()->setMimeType(mSettings.mAttachType + '/' +  mSettings.mAttachSubType);
-            msgPart->contentType()->setParameter(QLatin1String(mSettings.mAttachParamAttr), mSettings.mAttachParamValue);   //TODO: Check if the content disposition parameter needs to be set!
-            if (! MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
+            msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
+            auto ct = msgPart->contentType(); // Create
+            ct->setMimeType(mSettings.mAttachType + '/' + mSettings.mAttachSubType);
+            ct->setParameter(QLatin1String(mSettings.mAttachParamAttr),
+                             mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
+            if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1String(mSettings.mAttachContDisp), "utf-8");
             }
             if (!mSettings.mAttachCharset.isEmpty()) {
                 // qCDebug(KMAIL_LOG) << "Set attachCharset to" << attachCharset;
-                msgPart->contentType()->setCharset(mSettings.mAttachCharset);
+                ct->setCharset(mSettings.mAttachCharset);
             }
 
-            msgPart->contentType()->setName(mSettings.mAttachName, "utf-8");
+            ct->setName(mSettings.mAttachName, "utf-8");
             msgPart->assemble();
             // Don't show the composer window if the automatic sending is checked
             iCalAutoSend = MessageViewer::MessageViewerSettings::self()->automaticSending();
@@ -129,8 +109,7 @@ void FillComposerJob::slotOpenComposer()
 
     KMail::Composer *cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);
     cWin->setMessage(mMsg, false, false, !isICalInvitation /* mayAutoSign */);
-    cWin->setSigningAndEncryptionDisabled(isICalInvitation
-                                          && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
+    cWin->setSigningAndEncryptionDisabled(isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
     if (noWordWrap) {
         cWin->disableWordWrap();
     }
@@ -143,15 +122,9 @@ void FillComposerJob::slotOpenComposer()
         cWin->disableForgottenAttachmentsCheck();
     }
     if (mSettings.mForceShowWindow || (!mSettings.mHidden && !iCalAutoSend)) {
-        cWin->show();
-        // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_WS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
-
+        cWin->showAndActivateComposer();
     } else {
-        // Always disable word wrap when we don't show the composer, since otherwise QTextEdit
+        // Always disable word wrap when we don't show the composer, since otherwise *TextEdit
         // gets the widget size wrong and wraps much too early.
         cWin->disableWordWrap();
         cWin->slotSendNow();

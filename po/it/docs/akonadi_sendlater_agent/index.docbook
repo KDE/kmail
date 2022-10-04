@@ -1,0 +1,195 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agente per l'invio posticipato</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Manuale di &i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Luigi</firstname
+><surname
+>Toscano</surname
+><affiliation
+><address
+><email
+>luigi.toscano@tiscali.it</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introduzione</title>
+
+<para
+>&i18n-sendlateragent; è un'agente Akonadi che ti permette di inviare una volta o ripetutamente i messaggi di posta configurati per l'invio posticipato. </para>
+
+<sect2 id="using-kapp">
+<title
+>Uso di &i18n-sendlateragent;</title>
+
+<para
+>Usa <menuchoice
+><guimenu
+>Messaggio</guimenu
+><guimenuitem
+>Spedisci più tardi</guimenuitem
+></menuchoice
+> nella finestra di composizione di &kmail; per aprire una finestra di dialogo che ti permette di pianificare l'invio dei tuoi messaggi di posta in una specifica data e ora.</para>
+
+<screenshot>
+<screeninfo
+>Finestra di dialogo di &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Finestra di dialogo di &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Finestra di dialogo di &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Immagina di aver preparato un brillante messaggio che evidenzia i compiti che vorresti i tuoi dipendenti completassero mentre sei ad una conferenza, ma nel momento in cui vorresti inviare quel messaggio sarai su un aereo. Usa questa funzione per inviare il messaggio ad un orario (data e ora) specificato. Per pianificare l'invio posticipato del messaggio, per prima cosa marca la casella <guilabel
+>Ritardo</guilabel
+> e quindi seleziona la data e l'ora nel menu <guilabel
+>Invia alle:</guilabel
+>.</para>
+<para
+>Se hai bisogno di inviare un messaggio di promemoria settimanale ai tuoi dipendenti, puoi configurare l'agente per ripetere l'invio del messaggio marcando la casella <guilabel
+>Ripeti ogni</guilabel
+> e selezionando gli intervalli desiderati.</para>
+<para
+>Puoi inserire il messaggio tra quelli in coda selezionando il pulsante <guibutton
+>Spedisci più tardi</guibutton
+> per pianificare immediatamente il messaggio. </para>
+<para
+>Questo agente lavora indipendentemente da &kmail; e non ha bisogno di un'istanza di &kmail; in esecuzione o che &kmail; si trovi in modalità in linea per mandare i messaggi programmati.</para>
+<para
+>Se non disponi di connessione di rete quando un messaggio pianificato deve essere inviato, l'agente segnalerà un errore e chiederà se inviarlo nuovamente più avanti.</para>
+<para
+>All'accesso della sessione &kde; l'agente controlla i messaggi programmati e, se necessario, invia tutti i messaggi scaduti dall'ultima uscita dalla sessione. </para>
+<para
+>Per cambiare le opzioni per i messaggi che hai pianificato per l'invio posticipato usa <menuchoice
+><guimenu
+>Impostazioni</guimenu
+> <guimenuitem
+>Configura &kmail;</guimenuitem
+></menuchoice
+>, quindi seleziona la pagina <guilabel
+>Estensioni</guilabel
+> in &kmail; e premi il pulsante di configurazione relativo all'elemento <guilabel
+>Configura l'agente per l'invio posticipato</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configura l'agente per l'invio posticipato</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configura l'agente per l'invio posticipato</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configura l'agente per l'invio posticipato</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Richiama una finestra di dialogo che ti permette di modificare la programmazione e rimuovere i messaggi di posta che sono stati inviati usando la funzione di invio posticipato.</action>
+</para>
+<para
+>Non è possibile modificare il contenuto (corpo, intestazioni &etc;) di un messaggio pianificato. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Riconoscimenti e licenza</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Copyright del programma 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Copyright della documentazione &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traduzione italiana di Luigi Toscano <email
+>luigi.toscano@tiscali.it</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

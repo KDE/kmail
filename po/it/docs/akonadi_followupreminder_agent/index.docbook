@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Agente per gli avvisi delle azioni da seguire</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Manuale di &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Luigi</firstname
+><surname
+>Toscano</surname
+><affiliation
+><address
+><email
+>luigi.toscano@tiscali.it</email
+></address
+></affiliation
+><contrib
+>Traduzione italiana</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introduzione</title>
+
+<para
+>&i18n-followupreminderagent; è un agente Akonadi che segue i messaggi promemoria </para>
+
+<sect2 id="using-kapp">
+<title
+>Uso del &i18n-followupreminderagent;</title>
+
+<para
+>Usa <menuchoice
+><guimenu
+>Opzioni</guimenu
+><guimenuitem
+>Crea avviso per un'azione da seguire</guimenuitem
+></menuchoice
+> nella finestra di composizione di &kmail; per aprire una finestra di dialogo che ti permette di creare un promemoria per dare un seguito in una certa data alle azioni relativa al messaggio di posta attuale.</para>
+
+<screenshot>
+<screeninfo
+>Finestra di dialogo &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Finestra di dialogo &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Finestra di dialogo &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Premi il pulsante con la freccia in basso relativo al pulsante <guilabel
+>Data</guilabel
+> per selezionare la data dall'oggetto di calendario di &kde;. È anche possibile scegliere il calendario per il promemoria tramite l'elenco a discesa <guilabel
+>Salva cosa da fare in</guilabel
+>.</para>
+<para
+>Per rimuovere i promemoria programmati, usa <menuchoice
+><guimenu
+>Impostazioni</guimenu
+> <guimenuitem
+>Configura &kmail;</guimenuitem
+></menuchoice
+>, quindi seleziona la pagina <guilabel
+>Estensioni</guilabel
+> in &kmail; e premi il pulsante di configurazione relativo all'elemento <guilabel
+>Agente per gli avvisi delle azioni da seguire</guilabel
+>. Quindi usa il menu di contesto accessibile con un clic del &RMB; su un elemento di promemoria per selezionarne l'azione <guimenuitem
+>Elimina</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configura &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configura &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configura &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Riconoscimenti e licenza</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Copyright del programma 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Documentation Copyright &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traduzione italiana di Luigi Toscano <email
+>luigi.toscano@tiscali.it</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

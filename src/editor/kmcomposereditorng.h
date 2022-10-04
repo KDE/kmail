@@ -1,24 +1,12 @@
 /*
-  Copyright (c) 2015-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef KMCOMPOSEREDITORNG_H
-#define KMCOMPOSEREDITORNG_H
+#pragma once
 
-#include "messagecomposer/richtextcomposerng.h"
+#include <MessageComposer/RichTextComposerNg>
 class KMComposerWin;
 namespace KPIMTextEdit
 {
@@ -29,24 +17,24 @@ class KMComposerEditorNg : public MessageComposer::RichTextComposerNg
     Q_OBJECT
 public:
     explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
-    ~KMComposerEditorNg();
+    ~KMComposerEditorNg() override;
 
-    QString smartQuote(const QString &msg) Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QString smartQuote(const QString &msg) override;
 
-    void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) Q_DECL_OVERRIDE;
+    void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) override;
 
     void showSpellConfigDialog(const QString &configFileName);
 
+    Q_REQUIRED_RESULT MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart) override;
 Q_SIGNALS:
     void insertSnippet();
 
 protected:
-    void addExtraMenuEntry(QMenu *menu, QPoint pos) Q_DECL_OVERRIDE;
-    bool canInsertFromMimeData(const QMimeData *source) const Q_DECL_OVERRIDE;
-    void insertFromMimeData(const QMimeData *source) Q_DECL_OVERRIDE;
+    bool processModifyText(QKeyEvent *event) override;
+    void addExtraMenuEntry(QMenu *menu, QPoint pos) override;
+    bool canInsertFromMimeData(const QMimeData *source) const override;
+    void insertFromMimeData(const QMimeData *source) override;
 
 private:
-    KMComposerWin *mComposerWin;
+    KMComposerWin *const mComposerWin;
 };
-
-#endif // KMCOMPOSEREDITORNG_H

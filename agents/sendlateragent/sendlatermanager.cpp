@@ -1,48 +1,32 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "sendlatermanager.h"
-#include "sendlaterinfo.h"
-#include "sendlaterutil.h"
 #include "sendlaterjob.h"
+#include "sendlaterutil.h"
 
-#include "MessageComposer/AkonadiSender"
+#include <MessageComposer/AkonadiSender>
+#include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/Util>
 
-#include <KSharedConfig>
-#include <KConfigGroup>
-#include <KMessageBox>
-#include <KLocalizedString>
 #include "sendlateragent_debug.h"
+#include <KConfigGroup>
+#include <KLocalizedString>
+#include <KMessageBox>
 
 #include <QRegularExpression>
 #include <QStringList>
 #include <QTimer>
 
 SendLaterManager::SendLaterManager(QObject *parent)
-    : QObject(parent),
-      mCurrentInfo(nullptr),
-      mCurrentJob(nullptr),
-      mSender(new MessageComposer::AkonadiSender)
+    : QObject(parent)
+    , mTimer(new QTimer(this))
+    , mSender(new MessageComposer::AkonadiSender)
 {
-    mConfig = KSharedConfig::openConfig();
-    mTimer = new QTimer(this);
+    mConfig = SendLaterUtil::defaultConfig();
     connect(mTimer, &QTimer::timeout, this, &SendLaterManager::slotCreateJob);
 }
 
@@ -58,6 +42,7 @@ void SendLaterManager::stopAll()
     qDeleteAll(mListSendLaterInfo);
     mListSendLaterInfo.clear();
     mCurrentJob = nullptr;
+    mCurrentInfo = nullptr;
 }
 
 void SendLaterManager::load(bool forcereload)
@@ -71,7 +56,7 @@ void SendLaterManager::load(bool forcereload)
     const int numberOfItems = itemList.count();
     for (int i = 0; i < numberOfItems; ++i) {
         KConfigGroup group = mConfig->group(itemList.at(i));
-        SendLater::SendLaterInfo *info = new SendLater::SendLaterInfo(group);
+        auto info = SendLaterUtil::readSendLaterInfo(group);
         if (info->isValid()) {
             mListSendLaterInfo.append(info);
         } else {
@@ -84,19 +69,19 @@ void SendLaterManager::load(bool forcereload)
 void SendLaterManager::createSendInfoList()
 {
     mCurrentInfo = nullptr;
-    std::sort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLater::SendLaterUtil::compareSendLaterInfo);
+    std::sort(mListSendLaterInfo.begin(), mListSendLaterInfo.end(), SendLaterUtil::compareSendLaterInfo);
 
-    //Look at QQueue
+    // Look at QQueue
     if (mSendLaterQueue.isEmpty()) {
         if (!mListSendLaterInfo.isEmpty()) {
-            mCurrentInfo = mListSendLaterInfo.first();
+            mCurrentInfo = mListSendLaterInfo.constFirst();
             const QDateTime now = QDateTime::currentDateTime();
-            const int seconds = now.secsTo(mCurrentInfo->dateTime());
+            const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
             if (seconds > 0) {
-                //qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
+                // qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
                 mTimer->start(seconds * 1000);
             } else {
-                //Create job when seconds <0
+                // Create job when seconds <0
                 slotCreateJob();
             }
         } else {
@@ -104,11 +89,11 @@ void SendLaterManager::createSendInfoList()
             mTimer->stop();
         }
     } else {
-        SendLater::SendLaterInfo *info = searchInfo(mSendLaterQueue.dequeue());
+        MessageComposer::SendLaterInfo *info = searchInfo(mSendLaterQueue.dequeue());
         if (info) {
             mCurrentInfo = info;
             slotCreateJob();
-        } else { //If removed.
+        } else { // If removed.
             createSendInfoList();
         }
     }
@@ -121,9 +106,9 @@ void SendLaterManager::stopTimer()
     }
 }
 
-SendLater::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
+MessageComposer::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
 {
-    Q_FOREACH (SendLater::SendLaterInfo *info, mListSendLaterInfo) {
+    for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
         if (info->itemId() == id) {
             return info;
         }
@@ -134,16 +119,18 @@ SendLater::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id id)
 void SendLaterManager::sendNow(Akonadi::Item::Id id)
 {
     if (!mCurrentJob) {
-        SendLater::SendLaterInfo *info = searchInfo(id);
+        MessageComposer::SendLaterInfo *info = searchInfo(id);
         if (info) {
             mCurrentInfo = info;
             slotCreateJob();
         } else {
             qCDebug(SENDLATERAGENT_LOG) << " can't find info about current id: " << id;
-            itemRemoved(id);
+            if (!itemRemoved(id)) {
+                qCWarning(SENDLATERAGENT_LOG) << "Impossible to remove id" << id;
+            }
         }
     } else {
-        //Add to QQueue
+        // Add to QQueue
         mSendLaterQueue.enqueue(id);
     }
 }
@@ -158,45 +145,58 @@ void SendLaterManager::slotCreateJob()
     mCurrentJob->start();
 }
 
-void SendLaterManager::itemRemoved(Akonadi::Item::Id id)
+bool SendLaterManager::itemRemoved(Akonadi::Item::Id id)
 {
-    if (mConfig->hasGroup(SendLater::SendLaterUtil::sendLaterPattern().arg(id))) {
+    if (mConfig->hasGroup(SendLaterUtil::sendLaterPattern().arg(id))) {
         removeInfo(id);
         mConfig->reparseConfiguration();
         Q_EMIT needUpdateConfigDialogBox();
+        return true;
     }
+    return false;
 }
 
 void SendLaterManager::removeInfo(Akonadi::Item::Id id)
 {
-    KConfigGroup group = mConfig->group(SendLater::SendLaterUtil::sendLaterPattern().arg(id));
+    KConfigGroup group = mConfig->group(SendLaterUtil::sendLaterPattern().arg(id));
     group.deleteGroup();
     group.sync();
 }
 
-void SendLaterManager::sendError(SendLater::SendLaterInfo *info, ErrorType type)
+void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType type)
 {
+    mCurrentJob = nullptr;
     if (info) {
         switch (type) {
         case UnknownError:
         case ItemNotFound:
-            //Don't try to resend it. Remove it.
+            // Don't try to resend it. Remove it.
             removeLaterInfo(info);
             break;
         case MailDispatchDoesntWork:
-            //Force to make online maildispatcher
-            //Don't remove it.
-            MessageComposer::Util::sendMailDispatcherIsOnline(nullptr);
-            //Remove item which create error ?
+            // Force to make online maildispatcher
+            // Don't remove it.
+            if (!MessageComposer::Util::sendMailDispatcherIsOnline(nullptr)) {
+                qCWarning(SENDLATERAGENT_LOG) << " Impossible to make online send dispatcher";
+            }
+            // Remove item which create error ?
             if (!info->isRecurrence()) {
                 removeLaterInfo(info);
             }
             break;
-        default:
-            if (KMessageBox::No == KMessageBox::questionYesNo(nullptr, i18n("An error was found. Do you want to resend it?"), i18n("Error found"))) {
+        case TooManyItemFound:
+        case CanNotFetchItem:
+        case CanNotCreateTransport: {
+            const int answer = KMessageBox::questionYesNo(nullptr,
+                                                          i18n("An error was found. Do you want to resend it?"),
+                                                          i18n("Error found"),
+                                                          KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
+                                                          KStandardGuiItem::cancel());
+            if (answer == KMessageBox::No) {
                 removeLaterInfo(info);
             }
             break;
+        }
         }
     }
     recreateSendList();
@@ -206,14 +206,15 @@ void SendLaterManager::recreateSendList()
 {
     mCurrentJob = nullptr;
     Q_EMIT needUpdateConfigDialogBox();
-    QTimer::singleShot(1000 * 60, this, &SendLaterManager::createSendInfoList);
+    QTimer::singleShot(0, this, &SendLaterManager::createSendInfoList);
 }
 
-void SendLaterManager::sendDone(SendLater::SendLaterInfo *info)
+void SendLaterManager::sendDone(MessageComposer::SendLaterInfo *info)
 {
     if (info) {
         if (info->isRecurrence()) {
-            SendLater::SendLaterUtil::changeRecurrentDate(info);
+            SendLaterUtil::changeRecurrentDate(info);
+            load(true);
         } else {
             removeLaterInfo(info);
         }
@@ -221,19 +222,20 @@ void SendLaterManager::sendDone(SendLater::SendLaterInfo *info)
     recreateSendList();
 }
 
-void SendLaterManager::removeLaterInfo(SendLater::SendLaterInfo *info)
+void SendLaterManager::removeLaterInfo(MessageComposer::SendLaterInfo *info)
 {
     mListSendLaterInfo.removeAll(mCurrentInfo);
+    mCurrentInfo = nullptr;
     removeInfo(info->itemId());
 }
 
-QString SendLaterManager::printDebugInfo()
+QString SendLaterManager::printDebugInfo() const
 {
     QString infoStr;
     if (mListSendLaterInfo.isEmpty()) {
         infoStr = QStringLiteral("No mail");
     } else {
-        Q_FOREACH (SendLater::SendLaterInfo *info, mListSendLaterInfo) {
+        for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
             if (!infoStr.isEmpty()) {
                 infoStr += QLatin1Char('\n');
             }
@@ -243,7 +245,7 @@ QString SendLaterManager::printDebugInfo()
     return infoStr;
 }
 
-QString SendLaterManager::infoToStr(SendLater::SendLaterInfo *info)
+QString SendLaterManager::infoToStr(MessageComposer::SendLaterInfo *info) const
 {
     QString infoStr = QLatin1String("Recusive ") + (info->isRecurrence() ? QStringLiteral("true") : QStringLiteral("false"));
     infoStr += QLatin1String("Item id :") + QString::number(info->itemId());
@@ -258,4 +260,3 @@ MessageComposer::AkonadiSender *SendLaterManager::sender() const
 {
     return mSender;
 }
-

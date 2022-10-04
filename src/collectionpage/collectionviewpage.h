@@ -1,83 +1,47 @@
 /*
-   Copyright (C) 2009-2016 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2009-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef COLLECTIONVIEWPAGE_H
-#define COLLECTIONVIEWPAGE_H
+#pragma once
 
-#include <AkonadiWidgets/collectionpropertiespage.h>
-#include <AkonadiCore/collection.h>
-#include <MailCommon/FolderCollection>
+#include <Akonadi/Collection>
+#include <Akonadi/CollectionPropertiesPage>
+#include <MailCommon/FolderSettings>
 class QCheckBox;
 class QLabel;
-class KComboBox;
 class KIconButton;
-class QRadioButton;
-template <typename T> class QSharedPointer;
+class CollectionViewWidget;
+template<typename T>
+class QSharedPointer;
 
-namespace MessageList
+namespace MailCommon
 {
-namespace Utils
-{
-class AggregationComboBox;
-class ThemeComboBox;
+class CollectionViewWidget;
 }
-}
-
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {
     Q_OBJECT
 public:
     explicit CollectionViewPage(QWidget *parent = nullptr);
-    ~CollectionViewPage();
+    ~CollectionViewPage() override;
 
-    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
-    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
-    void slotChangeIcon(const QString &icon);
-    void slotAggregationCheckboxChanged();
-    void slotThemeCheckboxChanged();
-    void slotSelectFolderAggregation();
-    void slotSelectFolderTheme();
+    void load(const Akonadi::Collection &col) override;
+    void save(Akonadi::Collection &col) override;
 
 private:
+    void slotChangeIcon(const QString &icon);
+
     void init(const Akonadi::Collection &);
-    QSharedPointer<MailCommon::FolderCollection> mFolderCollection;
-    QCheckBox   *mIconsCheckBox;
-    QLabel      *mNormalIconLabel;
-    KIconButton *mNormalIconButton;
-    QLabel      *mUnreadIconLabel;
-    KIconButton *mUnreadIconButton;
-    KComboBox *mShowSenderReceiverComboBox;
-    QCheckBox *mUseDefaultAggregationCheckBox;
-    MessageList::Utils::AggregationComboBox *mAggregationComboBox;
-    QCheckBox *mUseDefaultThemeCheckBox;
-    MessageList::Utils::ThemeComboBox *mThemeComboBox;
-    QRadioButton *mPreferHtmlToText;
-    QRadioButton *mPreferTextToHtml;
-    QRadioButton *mUseGlobalSettings;
-    Akonadi::Collection mCurrentCollection;
-    int mShowSenderReceiverValue;
-    bool mIsLocalSystemFolder;
+    MailCommon::CollectionViewWidget *mCollectionViewWidget = nullptr;
+    QSharedPointer<MailCommon::FolderSettings> mFolderCollection;
+    QCheckBox *mIconsCheckBox = nullptr;
+    QLabel *mNormalIconLabel = nullptr;
+    KIconButton *mNormalIconButton = nullptr;
+    QLabel *mUnreadIconLabel = nullptr;
+    KIconButton *mUnreadIconButton = nullptr;
+    bool mIsLocalSystemFolder = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionViewPageFactory, CollectionViewPage)
-
-#endif /* COLLECTIONVIEWPAGE_H */
-

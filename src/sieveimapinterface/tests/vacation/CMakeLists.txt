@@ -1,8 +1,7 @@
-set(vacation_multi_server_SRCS
-  main.cpp
-  ../../../sieveimapinterface/kmailsieveimapinstanceinterface.cpp
-)
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
+add_executable(vacationmultiservertest main.cpp)
+target_link_libraries(vacationmultiservertest  KF5::KSieveUi KF5::KSieve KF5::I18n KF5::AkonadiCore kmailprivate)
 
-add_executable(vacationmultiservertest ${vacation_multi_server_SRCS} )
-target_link_libraries(vacationmultiservertest  KF5::KSieveUi KF5::KSieve KF5::I18n KF5::AkonadiCore)
 
+target_link_libraries(vacationmultiservertest qt${QT_MAJOR_VERSION}keychain)

@@ -1,0 +1,6 @@
+# Code generation options for kconfig_compiler
+File=mailmergeagentsettings.kcfg
+ClassName=MailMergeAgentSettings
+Singleton=true
+Mutators=true
+

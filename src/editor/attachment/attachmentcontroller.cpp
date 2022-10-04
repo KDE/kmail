@@ -1,39 +1,27 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Parts based on KMail code by:
  * Various authors.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #include "attachmentcontroller.h"
 
 #include "attachmentview.h"
-#include <MailCommon/FolderCollection>
-#include "settings/kmailsettings.h"
 #include "editor/kmcomposerwin.h"
+#include "kmail_debug.h"
 #include "kmkernel.h"
 #include "kmreadermainwin.h"
-#include "mailcommon/mailutil.h"
+#include "settings/kmailsettings.h"
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <KContacts/Addressee>
 #include <KIdentityManagement/Identity>
-#include <AkonadiCore/itemfetchjob.h>
-#include <kcontacts/addressee.h>
-#include <AkonadiCore/ItemFetchScope>
-#include "kmail_debug.h"
+#include <MailCommon/FolderSettings>
+#include <MailCommon/MailUtil>
 
 #include <QGpgME/Protocol>
 
@@ -46,29 +34,25 @@ using namespace MailCommon;
 using namespace MessageCore;
 
 AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer)
-    : AttachmentControllerBase(model, composer, composer->actionCollection()),
-      mComposer(composer),
-      mView(view)
+    : AttachmentControllerBase(model, composer, composer->actionCollection())
+    , mComposer(composer)
+    , mView(view)
 {
-    connect(composer, &KMComposerWin::identityChanged,
-            this, &AttachmentController::identityChanged);
+    connect(composer, &KMComposerWin::identityChanged, this, &AttachmentController::identityChanged);
 
     connect(view, &AttachmentView::contextMenuRequested, this, &AttachmentControllerBase::showContextMenu);
-    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged,
-            this, &AttachmentController::selectionChanged);
-    connect(view, &QAbstractItemView::doubleClicked,
-            this, &AttachmentController::doubleClicked);
+    connect(view->selectionModel(), &QItemSelectionModel::selectionChanged, this, &AttachmentController::selectionChanged);
+    connect(view, &QAbstractItemView::doubleClicked, this, &AttachmentController::doubleClicked);
 
     connect(this, &AttachmentController::refreshSelection, this, &AttachmentController::selectionChanged);
 
     connect(this, &AttachmentController::showAttachment, this, &AttachmentController::onShowAttachment);
     connect(this, &AttachmentController::selectedAllAttachment, this, &AttachmentController::slotSelectAllAttachment);
     connect(model, &MessageComposer::AttachmentModel::attachItemsRequester, this, &AttachmentController::addAttachmentItems);
+    connect(this, &AttachmentController::actionsCreated, this, &AttachmentController::slotActionsCreated);
 }
 
-AttachmentController::~AttachmentController()
-{
-}
+AttachmentController::~AttachmentController() = default;
 
 void AttachmentController::slotSelectAllAttachment()
 {
@@ -94,7 +78,7 @@ void AttachmentController::attachMyPublicKey()
     exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
 }
 
-void AttachmentController::actionsCreated()
+void AttachmentController::slotActionsCreated()
 {
     // Disable public key actions if appropriate.
     identityChanged();
@@ -105,7 +89,7 @@ void AttachmentController::actionsCreated()
 
 void AttachmentController::addAttachmentItems(const Akonadi::Item::List &items)
 {
-    Akonadi::ItemFetchJob *itemFetchJob = new Akonadi::ItemFetchJob(items, this);
+    auto itemFetchJob = new Akonadi::ItemFetchJob(items, this);
     itemFetchJob->fetchScope().fetchFullPayload(true);
     itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(itemFetchJob, &Akonadi::ItemFetchJob::result, mComposer, &KMComposerWin::slotFetchJob);
@@ -117,8 +101,7 @@ void AttachmentController::selectionChanged()
     AttachmentPart::List selectedParts;
     selectedParts.reserve(selectedRows.count());
     for (const QModelIndex &index : selectedRows) {
-        AttachmentPart::Ptr part = mView->model()->data(
-                                       index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+        auto part = mView->model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
         selectedParts.append(part);
     }
     setSelectedParts(selectedParts);
@@ -126,9 +109,18 @@ void AttachmentController::selectionChanged()
 
 void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
 {
-    KMReaderMainWin *win =
-        new KMReaderMainWin(content, MessageViewer::Viewer::Text, QString::fromLatin1(charset));
-    win->show();
+    const QString charsetStr = QString::fromLatin1(charset);
+    if (content->bodyAsMessage()) {
+        KMime::Message::Ptr m(new KMime::Message);
+        m->setContent(content->bodyAsMessage()->encodedContent());
+        m->parse();
+        auto win = new KMReaderMainWin();
+        win->showMessage(charsetStr, m);
+        win->show();
+    } else {
+        auto win = new KMReaderMainWin(content, MessageViewer::Viewer::Text, charsetStr);
+        win->show();
+    }
 }
 
 void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
@@ -140,9 +132,7 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
     // The itemClicked index will contain the column information. But we want to retrieve
     // the AttachmentPart, so we must recreate the QModelIndex without the column information
     const QModelIndex &properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
-    AttachmentPart::Ptr part = mView->model()->data(
-                                   properItemClickedIndex,
-                                   MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+    auto part = mView->model()->data(properItemClickedIndex, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
 
     // We can't edit encapsulated messages, but we can view them.
     if (part->isMessageOrMessageCollection()) {
@@ -151,4 +141,3 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
         editAttachment(part);
     }
 }
-

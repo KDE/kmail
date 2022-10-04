@@ -1,46 +1,35 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef HANDLECLICKEDURLJOB_H
-#define HANDLECLICKEDURLJOB_H
+#pragma once
 
+#include "kmail_private_export.h"
+#include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QSharedPointer>
-#include <MailCommon/FolderCollection>
 
-class HandleClickedUrlJob : public QObject
+class KMAILTESTS_TESTS_EXPORT HandleClickedUrlJob : public QObject
 {
     Q_OBJECT
 public:
     explicit HandleClickedUrlJob(QObject *parent = nullptr);
-    ~HandleClickedUrlJob();
+    ~HandleClickedUrlJob() override;
 
     void start();
 
     void setUrl(const QUrl &url);
-    void setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder);
+    void setFolder(const QSharedPointer<MailCommon::FolderSettings> &folder);
+    void setCurrentCollection(const Akonadi::Collection &currentCollection);
+
 private:
+    Q_DISABLE_COPY(HandleClickedUrlJob)
     void slotOpenComposer();
     QUrl mUrl;
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
-    uint mIdentity;
-    KMime::Message::Ptr mMsg;
+    Akonadi::Collection mCurrentCollection;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
+    uint mIdentity = 0;
+    KMime::Message::Ptr mMsg = nullptr;
 };
-
-#endif // HANDLECLICKEDURLJOB_H

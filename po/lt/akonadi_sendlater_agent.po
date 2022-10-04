@@ -1,0 +1,257 @@
+# Lithuanian translations for l package.
+# Copyright (C) 2014 This_file_is_part_of_KDE
+# This file is distributed under the same license as the l package.
+#
+# Automatically generated, 2014.
+# Liudas Ališauskas <liudas@akmc.lt>, 2015.
+msgid ""
+msgstr ""
+"Project-Id-Version: l 10n\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2015-01-26 13:33+0200\n"
+"Last-Translator: Liudas Ališauskas <liudas@akmc.lt>\n"
+"Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
+"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Lokalize 1.5\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, fuzzy, kde-format
+#| msgid "Configure"
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Konfigūruoti"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Siuntimo vėliau agentas"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Siuntimo vėliau agentas."
+
+#: sendlaterconfiguredialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-2015 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Autorinės teisės (C) 2013-2015 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Prižiūrėtojas"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Liudas Ališauskas"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "liudas@akmc.lt"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Kam"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Tema"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Siųsti apie"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Pasikartojimas"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Laiško identifikatorius"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Nėra laukiančių laiškų..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Siųsti dabar"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Trinti"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Taip"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Ne"
+
+#: sendlaterconfigurewidget.cpp:207
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
+msgstr[1] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
+msgstr[2] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
+msgstr[3] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Trinti"
+
+#: sendlaterconfigurewidget.cpp:216
+#, fuzzy, kde-format
+#| msgid "Do you want to remove messages as well?"
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Ar norite pašalinti ir laiškus?"
+msgstr[1] "Ar norite pašalinti ir laiškus?"
+msgstr[2] "Ar norite pašalinti ir laiškus?"
+msgstr[3] "Ar norite pašalinti ir laiškus?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+#| msgid "Remove messages"
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Pašalinti laiškus"
+
+#: sendlaterconfigurewidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Trinti"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Laiškas nerastas."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Laiškas nerastas."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Klaida gaunant laišką."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Negalima gauti laiško. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Nepavyksta sukurti perdavimo"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Laiškas nėra tikras laiškas."
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Negalima išsiųsti laiško."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Laiškas išsiųstas"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Aptikta klaida. Ar norite siųsti dar kartą?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Aptikta klaida"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Keisti..."
+
+#~ msgid "Remove items"
+#~ msgstr "Pašalinti elementus"
+
+#~ msgid "Remove"
+#~ msgstr "Pašalinti"
+
+#~ msgctxt "@title:window"
+#~ msgid "Send Later"
+#~ msgstr "Siųsti vėliau"
+
+#~ msgid "Send Later"
+#~ msgstr "Siųsti vėliau"
+
+#~ msgid "Delay"
+#~ msgstr "Delsa"
+
+#~ msgid "Days"
+#~ msgstr "Dienos"
+
+#~ msgid "Weeks"
+#~ msgstr "Savaitės"
+
+#~ msgid "Months"
+#~ msgstr "Mėnesiai"
+
+#~ msgid "Years"
+#~ msgstr "Metai"
+
+#~ msgid "You cannot select a date prior to the current date."
+#~ msgstr "Negalite pasirinkti datos ankstesnės nei dabartinė."
+
+#~ msgid "Send at:"
+#~ msgstr "Siųsti:"
+
+#~ msgid "Repeat every:"
+#~ msgstr "Kartoti kas:"

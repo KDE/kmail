@@ -1,54 +1,41 @@
 /*
-  Copyright (c) 2016 Sandro Knauß <sknauss@kde.org>
+  SPDX-FileCopyrightText: 2016 Sandro Knauß <sknauss@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmcommandstest.h"
 #include "kmcommands.h"
 #include "kmkernel.h"
-#include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
-#include <AkonadiCore/Item>
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 
 #include <KMime/Message>
 
-#include <QDebug>
 #include <QEventLoop>
 #include <QLabel>
 #include <QStandardPaths>
-#include <QTest>
 #include <QTemporaryDir>
+#include <QTest>
 
 Akonadi::Item createItem(const KIdentityManagement::Identity &ident)
 {
-    QByteArray data =
-        "From: Konqui <konqui@kde.org>\n"
-        "To: Friends <friends@kde.org>\n"
-        "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
-        "Subject: Sample message\n"
-        "MIME-Version: 1.0\n"
-        "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
-        "Content-type: text/plain; charset=us-ascii\n"
-        "\n"
-        "\n"
-        "This is explicitly typed plain US-ASCII text.\n"
-        "It DOES end with a linebreak.\n"
-        "\n";
+    QByteArray data
+        = "From: Konqui <konqui@kde.org>\n"
+          "To: Friends <friends@kde.org>\n"
+          "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
+          "Subject: Sample message\n"
+          "MIME-Version: 1.0\n"
+          "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
+                                                                    "Content-type: text/plain; charset=us-ascii\n"
+                                                                    "\n"
+                                                                    "\n"
+                                                                    "This is explicitly typed plain US-ASCII text.\n"
+                                                                    "It DOES end with a linebreak.\n"
+                                                                    "\n";
 
     KMime::Message::Ptr msgPtr = KMime::Message::Ptr(new KMime::Message());
     Akonadi::Item item;
@@ -65,7 +52,6 @@ KMCommandsTest::KMCommandsTest(QObject *parent)
     : QObject(parent)
     , mKernel(new KMKernel(parent))
 {
-
 }
 
 KMCommandsTest::~KMCommandsTest()
@@ -105,16 +91,16 @@ void KMCommandsTest::resetIdentities()
 
 void KMCommandsTest::verifyEncryption(bool encrypt)
 {
-    const KMainWindow *w =  mKernel->mainWin();
-    QLabel *encryption = w->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    const KMainWindow *w = mKernel->mainWin();
+    auto encryption = w->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
 }
 
 void KMCommandsTest::verifySignature(bool sign)
 {
-    const KMainWindow *w =  mKernel->mainWin();
-    QLabel *signature = w->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    const KMainWindow *w = mKernel->mainWin();
+    auto signature = w->findChild<QLabel *>(QStringLiteral("signatureindicator"));
     QVERIFY(signature);
     QCOMPARE(signature->isVisible(), sign);
 }
@@ -127,7 +113,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -137,7 +123,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -147,7 +133,7 @@ void KMCommandsTest::testMailtoReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMMailtoReplyCommand *cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
+        auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -162,7 +148,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -172,7 +158,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -182,7 +168,7 @@ void KMCommandsTest::testReply()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
         waitForMainWindowToClose();
@@ -201,7 +187,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -211,7 +197,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(false);
         waitForMainWindowToClose();
@@ -221,9 +207,23 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
         const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
-        KMReplyCommand *cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
+        auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
         cmd->start();
         verifySignature(true);
+        waitForMainWindowToClose();
+    }
+}
+
+void KMCommandsTest::testSendAgain()
+{
+    resetIdentities();
+    {
+        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        Akonadi::Item item(createItem(ident));
+
+        auto cmd(new KMResendMessageCommand(nullptr, item));
+        cmd->start();
+        QVERIFY(!cmd->retrievedMsgs().isEmpty());
         waitForMainWindowToClose();
     }
 }
@@ -240,8 +240,8 @@ void KMCommandsTest::waitForMainWindowToClose()
 int main(int argc, char *argv[])
 {
     QTemporaryDir config;
-    setenv("LC_ALL", "C", 1);
-    setenv("XDG_CONFIG_HOME", config.path().toUtf8(), 1);
+    qputenv("LC_ALL", "C");
+    qputenv("XDG_CONFIG_HOME", config.path().toUtf8());
     QApplication app(argc, argv);
     app.setAttribute(Qt::AA_Use96Dpi, true);
     QTEST_DISABLE_KEYPAD_NAVIGATION

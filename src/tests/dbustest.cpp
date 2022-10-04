@@ -1,11 +1,7 @@
+#include <QDebug>
 
-
-#include <qdebug.h>
-
-#include <QCoreApplication>
-#include <KAboutData>
-#include <KLocalizedString>
 #include <QCommandLineParser>
+#include <QCoreApplication>
 
 #include "kmailinterface.h"
 
@@ -13,20 +9,17 @@ int main(int argc, char **argv)
 {
     qDebug() << "Test KMail D-Bus interface.";
 
-    KAboutData aboutData(QStringLiteral("testKMailDBUS"), i18n("Test for KMail D-Bus interface"), QStringLiteral("0.0"));
     QCoreApplication app(argc, argv);
     QCommandLineParser parser;
-    KAboutData::setApplicationData(aboutData);
     parser.addVersionOption();
     parser.addHelpOption();
-    aboutData.setupCommandLine(&parser);
     parser.process(app);
-    aboutData.processCommandLine(&parser);
 
     OrgKdeKmailKmailInterface kmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-    kmailInterface.openComposer(QStringLiteral("to 1"), QString(), QString(), QStringLiteral("First test"), QStringLiteral("simple openComp call"), 0);
+    kmailInterface.openComposer(QStringLiteral("to 1"), QString(), QString(), QStringLiteral("First test"), QStringLiteral("simple openComp call"), false);
 
-    QDBusReply<QDBusObjectPath> composerDbusPath =  kmailInterface.openComposer(QStringLiteral("to 2"), QString(), QString(), QStringLiteral("Second test"), QStringLiteral("DBUS ref call"), 0);
+    QDBusReply<QDBusObjectPath> composerDbusPath =
+        kmailInterface.openComposer(QStringLiteral("to 2"), QString(), QString(), QStringLiteral("Second test"), QStringLiteral("DBUS ref call"), false);
 
     if (!composerDbusPath.isValid()) {
         qDebug() << "We can't connect to kmail";

@@ -1,28 +1,15 @@
 /*
-    Copyright (c) 2007 Volker Krause <vkrause@kde.org>
+    SPDX-FileCopyrightText: 2007 Volker Krause <vkrause@kde.org>
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAIL_MESSAGEACTIONS_H
-#define KMAIL_MESSAGEACTIONS_H
+#pragma once
 
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
 
-#include <qobject.h>
+#include <QObject>
 
 class QWidget;
 class QAction;
@@ -37,6 +24,7 @@ class QMenu;
 namespace Akonadi
 {
 class Item;
+class StandardMailActionManager;
 }
 
 namespace TemplateParser
@@ -50,7 +38,6 @@ class KUriFilterSearchProviderActions;
 }
 namespace KMail
 {
-
 /**
   Manages common actions that can be performed on one or more messages.
 */
@@ -59,7 +46,7 @@ class MessageActions : public QObject
     Q_OBJECT
 public:
     explicit MessageActions(KActionCollection *ac, QWidget *parent);
-    ~MessageActions();
+    ~MessageActions() override;
     void setMessageView(KMReaderWin *msgView);
 
     /**
@@ -81,11 +68,11 @@ public:
     QAction *forwardInlineAction() const;
     QAction *forwardAttachedAction() const;
     QAction *redirectAction() const;
+    QAction *newToRecipientsAction() const;
 
     KActionMenu *messageStatusMenu() const;
     KActionMenu *forwardMenu() const;
 
-    QAction *editAction() const;
     QAction *annotateAction() const;
     QAction *printAction() const;
     QAction *printPreviewAction() const;
@@ -96,8 +83,19 @@ public:
 
     void addWebShortcutsMenu(QMenu *menu, const QString &text);
 
-    QAction *debugBalooAction() const;
+    QAction *debugAkonadiSearchAction() const;
     QAction *addFollowupReminderAction() const;
+
+    QAction *sendAgainAction() const;
+
+    QAction *newMessageFromTemplateAction() const;
+
+    QAction *editAsNewAction() const;
+
+    QAction *exportToPdfAction() const;
+
+    void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
+    Q_REQUIRED_RESULT Akonadi::Item currentItem() const;
 
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
@@ -108,9 +106,10 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void editCurrentMessage();
-    void annotateMessage();
 
 private:
+    Q_DISABLE_COPY(MessageActions)
+    void annotateMessage();
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction(const QString &item, const QUrl &url);
@@ -120,7 +119,7 @@ private:
     void clearMailingListActions();
 
 private Q_SLOTS:
-    void slotItemModified(const Akonadi::Item   &item, const QSet< QByteArray >   &partIdentifiers);
+    void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
     void slotItemRemoved(const Akonadi::Item &item);
 
     void slotReplyToMsg();
@@ -134,40 +133,45 @@ private Q_SLOTS:
 
     void slotUpdateActionsFetchDone(KJob *job);
     void slotMailingListFilter();
-    void slotDebugBaloo();
+    void slotDebugAkonadiSearch();
 
     void slotAddFollowupReminder();
+    void slotResendMessage();
+    void slotUseTemplate();
+
+    void slotExportToPdf();
+
 private:
     QList<QAction *> mMailListActionList;
-    QWidget *mParent;
     Akonadi::Item mCurrentItem;
     Akonadi::Item::List mVisibleItems;
-    KMReaderWin *mMessageView;
+    QWidget *const mParent;
+    KMReaderWin *mMessageView = nullptr;
 
-    KActionMenu *mReplyActionMenu;
-    QAction *mReplyAction;
-    QAction *mReplyAllAction;
-    QAction *mReplyAuthorAction;
-    QAction *mReplyListAction;
-    QAction *mNoQuoteReplyAction;
-    QAction *mForwardInlineAction;
-    QAction *mForwardAttachedAction;
-    QAction *mRedirectAction;
-    KActionMenu *mStatusMenu;
-    KActionMenu *mForwardActionMenu;
-    KActionMenu *mMailingListActionMenu;
-    QAction *mEditAction;
-    QAction *mAnnotateAction;
-    QAction *mPrintAction;
-    QAction *mPrintPreviewAction;
-    TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu;
-    QAction *mListFilterAction;
-    QAction *mAddFollowupReminderAction;
-    QAction *mDebugBalooAction;
-    KIO::KUriFilterSearchProviderActions *mWebShortcutMenuManager;
+    KActionMenu *const mReplyActionMenu;
+    QAction *const mReplyAction;
+    QAction *const mReplyAllAction;
+    QAction *const mReplyAuthorAction;
+    QAction *const mReplyListAction;
+    QAction *const mNoQuoteReplyAction;
+    QAction *const mForwardInlineAction;
+    QAction *const mForwardAttachedAction;
+    QAction *const mRedirectAction;
+    QAction *const mNewToRecipientsAction;
+    KActionMenu *const mStatusMenu;
+    KActionMenu *const mForwardActionMenu;
+    KActionMenu *const mMailingListActionMenu;
+    QAction *const mAnnotateAction;
+    QAction *const mEditAsNewAction;
+    QAction *mPrintAction = nullptr;
+    QAction *mPrintPreviewAction = nullptr;
+    TemplateParser::CustomTemplatesMenu *mCustomTemplatesMenu = nullptr;
+    QAction *const mListFilterAction;
+    QAction *const mAddFollowupReminderAction;
+    QAction *const mDebugAkonadiSearchAction;
+    QAction *const mSendAgainAction;
+    QAction *const mNewMessageFromTemplateAction;
+    KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
+    QAction *const mExportToPdfAction;
 };
-
 }
-
-#endif
-

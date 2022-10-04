@@ -1,46 +1,28 @@
 /*
-   Copyright (C) 2015-2016 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KACTIONMENUACCOUNT_H
-#define KACTIONMENUACCOUNT_H
+#pragma once
 
 #include <KActionMenu>
 
 class AgentIdentifier
 {
 public:
-    AgentIdentifier()
-        : mIndex(-1)
-    {
-
-    }
+    AgentIdentifier() = default;
 
     AgentIdentifier(const QString &identifier, const QString &name, int index = -1)
-        : mIdentifier(identifier),
-          mName(name),
-          mIndex(index)
+        : mIdentifier(identifier)
+        , mName(name)
+        , mIndex(index)
     {
-
     }
+
     QString mIdentifier;
     QString mName;
-    int mIndex;
+    int mIndex = -1;
 };
 
 class KActionMenuAccount : public KActionMenu
@@ -48,17 +30,15 @@ class KActionMenuAccount : public KActionMenu
     Q_OBJECT
 public:
     explicit KActionMenuAccount(QObject *parent = nullptr);
-    ~KActionMenuAccount();
+    ~KActionMenuAccount() override;
 
     void setAccountOrder(const QStringList &identifier);
 
-private Q_SLOTS:
+private:
     void updateAccountMenu();
     void slotCheckTransportMenu();
     void slotSelectAccount(QAction *act);
-private:
-    QStringList mOrderIdentifier;
-    bool mInitialized;
-};
 
-#endif // KACTIONMENUACCOUNT_H
+    QStringList mOrderIdentifier;
+    bool mInitialized = false;
+};

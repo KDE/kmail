@@ -1,50 +1,61 @@
 /*
-  Copyright (c) 2013-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREACCOUNTPAGE_H
-#define CONFIGUREACCOUNTPAGE_H
+#pragma once
 
-#include "kmail_export.h"
 #include "configuredialog_p.h"
+#include "kmail_export.h"
 #include "ui_accountspagereceivingtab.h"
 
 class QCheckBox;
-class KComboBox;
+class QComboBox;
+class UndoSendCombobox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-
+namespace KLDAP
+{
+class LdapConfigureWidget;
+}
 // subclasses: one class per tab:
 class AccountsPageSendingTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
     explicit AccountsPageSendingTab(QWidget *parent = nullptr);
-    virtual ~AccountsPageSendingTab();
+    ~AccountsPageSendingTab() override;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
+    void save() override;
+
+private:
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
+
+private:
+    QCheckBox *mConfirmSendCheck = nullptr;
+    QCheckBox *mCheckSpellingBeforeSending = nullptr;
+    QComboBox *mSendOnCheckCombo = nullptr;
+    QComboBox *mSendMethodCombo = nullptr;
+    UndoSendCombobox *mUndoSendComboBox = nullptr;
+    QCheckBox *mUndoSend = nullptr;
+};
+
+// subclasses: one class per tab:
+class LdapCompetionTab : public ConfigModuleTab
+{
+    Q_OBJECT
+public:
+    explicit LdapCompetionTab(QWidget *parent = nullptr);
+    ~LdapCompetionTab() override;
     QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
 
 private:
-    QCheckBox   *mConfirmSendCheck;
-    QCheckBox   *mCheckSpellingBeforeSending;
-    KComboBox   *mSendOnCheckCombo;
-    KComboBox   *mSendMethodCombo;
+    KLDAP::LdapConfigureWidget *const mLdapConfigureWidget;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab
@@ -52,9 +63,9 @@ class AccountsPageReceivingTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AccountsPageReceivingTab(QWidget *parent = nullptr);
-    ~AccountsPageReceivingTab();
+    ~AccountsPageReceivingTab() override;
     QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
@@ -66,38 +77,37 @@ private:
     void slotIncludeInCheckChanged(bool checked);
     void slotOfflineOnShutdownChanged(bool checked);
     void slotCheckOnStatupChanged(bool checked);
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
 
     struct RetrievalOptions {
         RetrievalOptions(bool manualCheck, bool offline, bool checkOnStartup)
             : IncludeInManualChecks(manualCheck)
             , OfflineOnShutdown(offline)
-            , CheckOnStartup(checkOnStartup) {}
-        bool IncludeInManualChecks;
-        bool OfflineOnShutdown;
-        bool CheckOnStartup;
+            , CheckOnStartup(checkOnStartup)
+        {
+        }
+
+        bool IncludeInManualChecks = false;
+        bool OfflineOnShutdown = false;
+        bool CheckOnStartup = false;
     };
 
-    QHash<QString, QSharedPointer<RetrievalOptions> > mRetrievalHash;
+    QHash<QString, QSharedPointer<RetrievalOptions>> mRetrievalHash;
 
 private:
+    void slotAddCustomAccount();
+    void slotAddMailAccount();
     Ui_AccountsPageReceivingTab mAccountsReceiving;
-    OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface;
+    OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface = nullptr;
 };
 
 class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AccountsPage(QWidget *parent = nullptr);
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef AccountsPageSendingTab SendingTab;
-    typedef AccountsPageReceivingTab ReceivingTab;
+    explicit AccountsPage(QWidget *parent = nullptr, const QVariantList &args = {});
+    QString helpAnchor() const override;
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);
 };
-
-#endif // CONFIGUREACCOUNTPAGE_H

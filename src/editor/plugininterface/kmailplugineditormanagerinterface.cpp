@@ -1,44 +1,25 @@
 /*
-   Copyright (C) 2015-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmailplugineditormanagerinterface.h"
-#include "messagecomposer/plugineditormanager.h"
-#include "messagecomposer/plugineditor.h"
 #include "kmail_debug.h"
-#include "helper_p.h"
+#include <MessageComposer/PluginComposerInterface>
+#include <MessageComposer/PluginEditor>
+#include <MessageComposer/PluginEditorManager>
 
 #include <QAction>
 #include <QVector>
+#include <QWidget>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
-    : QObject(parent),
-      mRichTextEditor(nullptr),
-      mParentWidget(nullptr),
-      mActionCollection(nullptr)
+    : QObject(parent)
 {
-
 }
 
-KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface()
-{
-
-}
+KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface() = default;
 
 KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
 {
@@ -63,21 +44,31 @@ void KMailPluginEditorManagerInterface::setParentWidget(QWidget *parentWidget)
 void KMailPluginEditorManagerInterface::initializePlugins()
 {
     if (!mListPluginInterface.isEmpty()) {
-        qCDebug(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "Plugin was already initialized. This is a bug";
         return;
     }
     if (!mRichTextEditor) {
-        qCDebug(KMAIL_LOG) << "Missing richtexteditor";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorManagerInterface: Missing richtexteditor";
         return;
     }
+    if (!mParentWidget) {
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorManagerInterface : Parent is null. This is a bug";
+    }
+
     const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     for (MessageComposer::PluginEditor *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
-            MessageComposer::PluginEditorInterface *interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(mActionCollection, this));
+            auto interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(this));
+            auto composerInterface = new MessageComposer::PluginComposerInterface;
+            composerInterface->setComposerViewBase(mComposerInterface);
+            interface->setComposerInterface(composerInterface);
             interface->setRichTextEditor(mRichTextEditor);
             interface->setParentWidget(mParentWidget);
+            interface->createAction(mActionCollection);
             interface->setPlugin(plugin);
             connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
+            connect(interface, &MessageComposer::PluginEditorInterface::message, this, &KMailPluginEditorManagerInterface::message);
+            connect(interface, &MessageComposer::PluginEditorInterface::insertText, this, &KMailPluginEditorManagerInterface::insertText);
             mListPluginInterface.append(interface);
         }
     }
@@ -86,6 +77,30 @@ void KMailPluginEditorManagerInterface::initializePlugins()
 void KMailPluginEditorManagerInterface::slotPluginActivated(MessageComposer::PluginEditorInterface *interface)
 {
     interface->exec();
+}
+
+MessageComposer::ComposerViewBase *KMailPluginEditorManagerInterface::composerInterface() const
+{
+    return mComposerInterface;
+}
+
+void KMailPluginEditorManagerInterface::setComposerInterface(MessageComposer::ComposerViewBase *composerInterface)
+{
+    mComposerInterface = composerInterface;
+}
+
+bool KMailPluginEditorManagerInterface::processProcessKeyEvent(QKeyEvent *event)
+{
+    if (!mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
+            if (static_cast<MessageComposer::PluginEditor *>(interface->plugin())->canProcessKeyEvent()) {
+                if (interface->processProcessKeyEvent(event)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 KActionCollection *KMailPluginEditorManagerInterface::actionCollection() const
@@ -98,20 +113,49 @@ void KMailPluginEditorManagerInterface::setActionCollection(KActionCollection *a
     mActionCollection = actionCollection;
 }
 
-QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::ActionType::Type type)
+QList<QAction *> KMailPluginEditorManagerInterface::actionsType(MessageComposer::PluginActionType::Type type)
 {
     return mActionHash.value(type);
 }
 
-QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorManagerInterface::actionsType()
+void KMailPluginEditorManagerInterface::setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType type)
 {
-    if (mActionHash.isEmpty()) {
-        for (MessageComposer::PluginEditorInterface *interface : qAsConst(mListPluginInterface)) {
-            MessageComposer::ActionType actionType = interface->actionType();
-            MessageComposer::ActionType::Type type = actionType.type();
+    if (!mStatusBarWidget.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
+            if (auto w = interface->statusBarWidget()) {
+                w->setEnabled((interface->applyOnFieldTypes() & type));
+            }
+        }
+    }
+}
+
+QList<QWidget *> KMailPluginEditorManagerInterface::statusBarWidgetList()
+{
+    if (mStatusBarWidget.isEmpty() && !mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
+            if (interface->plugin()->hasStatusBarSupport()) {
+                mStatusBarWidget.append(interface->statusBarWidget());
+            }
+        }
+    }
+    return mStatusBarWidget;
+}
+
+QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEditorManagerInterface::actionsType()
+{
+    if (mActionHash.isEmpty() && !mListPluginInterface.isEmpty()) {
+        for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
+            const MessageComposer::PluginActionType actionType = interface->actionType();
+            MessageComposer::PluginActionType::Type type = actionType.type();
+            const bool needSelectedText = interface->needSelectedText();
+            if (needSelectedText) {
+                // Disable by default as we don't have selection by default.
+                actionType.action()->setEnabled(false);
+                connect(this, &KMailPluginEditorManagerInterface::textSelectionChanged, actionType.action(), &QAction::setEnabled);
+            }
             QList<QAction *> lst = mActionHash.value(type);
             if (!lst.isEmpty()) {
-                QAction *act = new QAction(this);
+                auto act = new QAction(this);
                 act->setSeparator(true);
                 lst << act << actionType.action();
                 mActionHash.insert(type, lst);
@@ -119,10 +163,10 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 mActionHash.insert(type, QList<QAction *>() << actionType.action());
             }
             if (interface->plugin()->hasPopupMenuSupport()) {
-                type = MessageComposer::ActionType::PopupMenu;
-                QList<QAction *> lst = mActionHash.value(type);
+                type = MessageComposer::PluginActionType::PopupMenu;
+                lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
-                    QAction *act = new QAction(this);
+                    auto act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
                     mActionHash.insert(type, lst);
@@ -131,10 +175,10 @@ QHash<MessageComposer::ActionType::Type, QList<QAction *> > KMailPluginEditorMan
                 }
             }
             if (interface->plugin()->hasToolBarSupport()) {
-                type = MessageComposer::ActionType::ToolBar;
-                QList<QAction *> lst = mActionHash.value(type);
+                type = MessageComposer::PluginActionType::ToolBar;
+                lst = mActionHash.value(type);
                 if (!lst.isEmpty()) {
-                    QAction *act = new QAction(this);
+                    auto act = new QAction(this);
                     act->setSeparator(true);
                     lst << act << actionType.action();
                     mActionHash.insert(type, lst);

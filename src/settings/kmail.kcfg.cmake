@@ -40,6 +40,11 @@
         </choices>
         <default>DontLoop</default>
       </entry>
+      <entry name="EnableFolderDnD"  type="Bool">
+        <label></label>
+        <whatsthis></whatsthis>
+        <default>true</default>
+      </entry>
       <entry name="ShowPopupAfterDnD"  type="Bool">
         <label></label>
         <whatsthis></whatsthis>
@@ -77,13 +82,21 @@
     </group>
 
     <group name="General">
-      <entry name="WarnBeforeExpire" type="bool" key="warn-before-expire">
+      <entry name="WarnBeforeExpire" type="Bool" key="warn-before-expire">
         <default>true</default>
       </entry>
       <entry name="SystemTrayEnabled" type="Bool">
         <label>Enable system tray icon</label>
         <default>false</default>
       </entry>
+      <entry name="StartInTray" type="Bool">
+        <label>Start minimized to tray</label>
+        <default>false</default>
+      </entry>
+      <entry name="ShowUnreadInTaskbar" type="Bool">
+      <label>Show Unread Email in TaskBar</label>
+        <default>true</default>
+      </entry>      
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>
@@ -101,6 +114,10 @@
       </entry>
       <entry name="EmptyTrashOnExit" type="Bool" key="empty-trash-on-exit">
         <label>Empty the local trash folder on program exit</label>
+        <default>false</default>
+      </entry>
+      <entry name="DeleteMessageWithoutConfirmation" type="Bool" key="delete-messages-without-confirmation">
+        <label>Delete messages without confirmation</label>
         <default>false</default>
       </entry>
       <entry name="StartSpecificFolderAtStartup" type="Bool" key="startSpecificFolderAtStatup">
@@ -122,15 +139,29 @@
         <label>Specifies whether this is the very first time that the application is run (for internal use only)</label>
         <default>true</default>
       </entry>
-      <entry name="PreviousVersion" type="String" key="previous-version">
-        <label>Specifies the version of the application that was last used (for internal use only)</label>
-        <default code="true">QLatin1String(KDEPIM_VERSION)</default>
-      </entry>
       <entry key="ShowMenuBar" type="Bool">
         <default>true</default>
          <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
         <label></label>
         <whatsthis></whatsthis>
+      </entry>
+
+      <entry key="ReaderShowMenuBar" type="Bool">
+        <default>true</default>
+         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+        <label></label>
+        <whatsthis></whatsthis>
+      </entry>
+
+      <entry key="ComposerShowMenuBar" type="Bool">
+        <default>true</default>
+         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+        <label></label>
+        <whatsthis></whatsthis>
+      </entry>
+      <entry key="AskEnableUnifiedMailboxes" type="Bool">
+        <default>true</default>
+        <label>Whether to ask if users wants to enable Unified Mailboxes if more than one email accounts are detected. We only ever ask once.</label>
       </entry>
     </group>
 <!-- General -->
@@ -174,7 +205,7 @@
       <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
         <default>false</default>
       </entry>
-      <entry name="NeverEncryptDrafts" type="Bool" key="never-encrypt-drafts">
+      <entry name="AlwaysEncryptDrafts" type="Bool" key="always-encrypt-drafts">
         <default>true</default>
       </entry>
 
@@ -277,11 +308,11 @@
       </entry>
       <entry name="ConfigureDialogWidth" type="Int">
         <label>The width of the Configure KMail dialog (for internal use only)</label>
-        <default>0</default>
+        <default>800</default>
       </entry>
       <entry name="ConfigureDialogHeight" type="Int">
         <label>The height of the Configure KMail dialog (for internal use only)</label>
-        <default>0</default>
+        <default>600</default>
       </entry>
       <entry name="FolderViewWidth" type="Int">
         <default>250</default>
@@ -333,13 +364,6 @@
        </choices>
        <default>longlist</default>
       </entry>
-    </group>
-
-    <group name="Reader">
-     <entry name="CloseAfterReplyOrForward" type="Bool">
-       <label>Close message window after replying or forwarding</label>
-       <default>false</default>
-     </entry>
     </group>
 
   <group name="GlobalTemplates">
@@ -409,6 +433,15 @@
    <entry name="FolderWidth" type="Int">
      <label>Specifies the width of the folder field in the Search Window dialog (for internal use only)</label>
      <default>100</default>
+   </entry>
+ </group>
+
+ <group name="UndoSend">
+   <entry name="EnabledUndoSend" type="Bool">
+     <default>false</default>
+   </entry>
+   <entry name="UndoSendDelay" type="Int">
+     <default>10</default>
    </entry>
  </group>
 </kcfg>

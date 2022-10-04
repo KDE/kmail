@@ -1,24 +1,10 @@
 /*
-   Copyright (C) 2016 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H
-#define KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H
+#pragma once
 
 #include <QObject>
 
@@ -33,20 +19,20 @@ class KMailPluginEditorCheckBeforeSendManagerInterface : public QObject
     Q_OBJECT
 public:
     explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = nullptr);
-    ~KMailPluginEditorCheckBeforeSendManagerInterface();
+    ~KMailPluginEditorCheckBeforeSendManagerInterface() override;
 
     QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
-    //TODO add Identity
-    //TODO add Emails
-    //TODO add body ? or editor
+    // TODO add Identity
+    // TODO add Emails
+    // TODO add body ? or editor
 
     void initializePlugins();
-    bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
-private:
-    QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
-    QWidget *mParentWidget;
-};
+    Q_REQUIRED_RESULT bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
 
-#endif // KMAILPLUGINEDITORCHECKBEFORESENDMANAGERINTERFACE_H
+private:
+    Q_DISABLE_COPY(KMailPluginEditorCheckBeforeSendManagerInterface)
+    QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
+    QWidget *mParentWidget = nullptr;
+};

@@ -1,43 +1,36 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "potentialphishingdetaildialog.h"
 #include "potentialphishingdetailwidget.h"
-#include <KSharedConfig>
-#include <KLocalizedString>
 #include <KConfigGroup>
-#include <QVBoxLayout>
-#include <QPushButton>
+#include <KLocalizedString>
+#include <KSharedConfig>
+#include <KWindowConfig>
 #include <QDialogButtonBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QWindow>
 
+namespace
+{
+static const char myPotentialPhishingDetailDialogGroupName[] = "PotentialPhishingDetailDialog";
+}
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)
+    , mPotentialPhishingDetailWidget(new PotentialPhishingDetailWidget(this))
 {
-    setWindowTitle(i18n("Details"));
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    setWindowTitle(i18nc("@title:window", "Details"));
+    auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mPotentialPhishingDetailWidget = new PotentialPhishingDetailWidget(this);
     mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -62,17 +55,17 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
-    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
-    if (sizeDialog.isValid()) {
-        resize(sizeDialog);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(800, 600));
+    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void PotentialPhishingDetailDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishingDetailDialog");
-    group.writeEntry("Size", size());
+    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
 }
 
 void PotentialPhishingDetailDialog::slotSave()
@@ -80,4 +73,3 @@ void PotentialPhishingDetailDialog::slotSave()
     mPotentialPhishingDetailWidget->save();
     accept();
 }
-

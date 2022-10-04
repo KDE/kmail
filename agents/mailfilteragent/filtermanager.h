@@ -1,37 +1,24 @@
 /*
  * kmail: KDE mail client
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef FILTERMANAGER_H
-#define FILTERMANAGER_H
+#pragma once
 
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 
-#include "MailCommon/SearchPattern"
-
+#include <MailCommon/SearchPattern>
+#include <memory>
 namespace MailCommon
 {
 class MailFilter;
 class ItemContext;
 }
 
-class FilterManager: public QObject
+class FilterManager : public QObject
 {
     Q_OBJECT
 
@@ -45,13 +32,14 @@ public:
         Outbound = 0x2,
         Explicit = 0x4,
         BeforeOutbound = 0x8,
-        All = Inbound | BeforeOutbound | Outbound | Explicit
+        AllFolders = 0x16,
+        All = Inbound | BeforeOutbound | Outbound | Explicit | AllFolders,
     };
 
     enum FilterRequires {
         Unknown = 0,
         HeaderMessage = 1,
-        FullMessage = 2
+        FullMessage = 2,
     };
 
     /**
@@ -64,7 +52,7 @@ public:
     /**
      * Destroys the filter manager.
      */
-    virtual ~FilterManager();
+    ~FilterManager() override;
 
     /**
      * Clears the list of filters and deletes them.
@@ -80,7 +68,7 @@ public:
      * Checks for existing filters with the @p name and extend the
      * "name" to "name (i)" until no match is found for i=1..n
      */
-    QString createUniqueName(const QString &name) const;
+    Q_REQUIRED_RESULT QString createUniqueName(const QString &name) const;
 
     /**
      * Process given message item by applying the filter rules one by
@@ -94,13 +82,15 @@ public:
      *
      *  @return true if the filtering was successful, false in case of any error
      */
-    bool process(const Akonadi::Item &item, bool needsFullPayload,
-                 FilterSet set = Inbound,
-                 bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool
+    process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    bool process(const QList<MailCommon::MailFilter *> &mailFilters, const Akonadi::Item &item,
-                 bool needsFullPayload, FilterSet set = Inbound,
-                 bool account = false, const QString &accountId = QString());
+    Q_REQUIRED_RESULT bool process(const QVector<MailCommon::MailFilter *> &mailFilters,
+                                   const Akonadi::Item &item,
+                                   bool needsFullPayload,
+                                   FilterSet set = Inbound,
+                                   bool account = false,
+                                   const QString &accountId = QString());
 
     /**
      * For ad-hoc filters.
@@ -108,12 +98,15 @@ public:
      * Applies @p filter to message @p item.
      * Return codes are as with the above method.
      */
-    bool process(const Akonadi::Item &item, bool needsFullPayload, const MailCommon::MailFilter *filter);
+    Q_REQUIRED_RESULT bool process(const Akonadi::Item &item, bool needsFullPayload, const MailCommon::MailFilter *filter);
 
     void filter(const Akonadi::Item &item, FilterManager::FilterSet set, const QString &resourceId);
     void filter(const Akonadi::Item &item, const QString &filterId, const QString &resourceId);
 
-    void applySpecificFilters(const Akonadi::Item::List &selectedMessages, MailCommon::SearchRule::RequiredPart requiredPart, const QStringList &listFilters);
+    void applySpecificFilters(const Akonadi::Item::List &selectedMessages,
+                              MailCommon::SearchRule::RequiredPart requiredPart,
+                              const QStringList &listFilters,
+                              FilterSet set = Explicit);
 
     /**
      * Applies the filters on the given @p messages.
@@ -123,20 +116,20 @@ public:
     /**
      * Returns whether the configured filters need the full mail content.
      */
-    MailCommon::SearchRule::RequiredPart requiredPart(const QString &id) const;
+    Q_REQUIRED_RESULT MailCommon::SearchRule::RequiredPart requiredPart(const QString &id) const;
 
     void mailCollectionRemoved(const Akonadi::Collection &collection);
     void agentRemoved(const QString &identifier);
 
-#ifndef NDEBUG
+    Q_REQUIRED_RESULT bool hasAllFoldersFilter() const;
+
     /**
      * Outputs all filter rules to console. Used for debugging.
      */
     void dump() const;
-#endif
 
 protected:
-    bool processContextItem(MailCommon::ItemContext context);
+    Q_REQUIRED_RESULT bool processContextItem(MailCommon::ItemContext context);
 
 Q_SIGNALS:
     /**
@@ -155,15 +148,6 @@ Q_SIGNALS:
 private:
     //@cond PRIVATE
     class Private;
-    Private *d;
-
-    Q_PRIVATE_SLOT(d, void itemsFetchJobForFilterDone(KJob *))
-    Q_PRIVATE_SLOT(d, void itemFetchJobForFilterDone(KJob *))
-    Q_PRIVATE_SLOT(d, void moveJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void modifyJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void deleteJobResult(KJob *))
-    Q_PRIVATE_SLOT(d, void slotItemsFetchedForFilter(const Akonadi::Item::List &))
+    std::unique_ptr<Private> const d;
     //@endcond
 };
-
-#endif

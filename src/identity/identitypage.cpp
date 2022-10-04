@@ -1,44 +1,32 @@
 /*
  *   kmail: KDE mail client
- *   Copyright (C) 2000 Espen Sand, espen@kde.org
- *   Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org
+ *   SPDX-FileCopyrightText: 2000 Espen Sand <espen@kde.org>
+ *   SPDX-FileCopyrightText: 2001-2003 Marc Mutz <mutz@kde.org>
  *   Contains code segments and ideas from earlier kmail dialog code.
- *   Copyright (C) 2010 Volker Krause <vkrause@kde.org>
+ *   SPDX-FileCopyrightText: 2010 Volker Krause <vkrause@kde.org>
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License along
- *   with this program; if not, write to the Free Software Foundation, Inc.,
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
 #include "identitypage.h"
 
 #include "identitydialog.h"
-#include "newidentitydialog.h"
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
 #include "kmkernel.h"
+#include "newidentitydialog.h"
 #include "settings/kmailsettings.h"
-#endif
 
 #include <MailCommon/MailKernel>
 
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 
+#include "kmail_debug.h"
+#include <KLocalizedString>
 #include <KMessageBox>
 #include <QMenu>
-#include <KLocalizedString>
-#include "kmail_debug.h"
+
+#include <QTreeWidgetItem>
 
 using namespace KMail;
 
@@ -48,38 +36,35 @@ QString IdentityPage::helpAnchor() const
 }
 
 IdentityPage::IdentityPage(QWidget *parent)
-    : ConfigModule(parent),
-      mIdentityDialog(nullptr),
-      mOldNumberOfIdentities(0),
-      mIdentityManager(nullptr)
+    : ConfigModuleTab(parent)
 {
     if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
         return;
     }
     mIdentityManager = KernelIf->identityManager();
+    connect(mIdentityManager, &KIdentityManagement::IdentityManager::needToReloadIdentitySettings, this, &IdentityPage::load);
 
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
 
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
-    connect(this, SIGNAL(changed(bool)),
-            SLOT(slotIdentitySelectionChanged()));
-    connect(mIPage.mIdentityList, SIGNAL(rename(KMail::IdentityListViewItem*,QString)),  SLOT(slotRenameIdentityFromItem(KMail::IdentityListViewItem*,QString)));
-    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked,  this, &IdentityPage::slotModifyIdentity);
+    connect(this, qOverload<bool>(&IdentityPage::changed), this, &IdentityPage::slotIdentitySelectionChanged);
+    connect(mIPage.mIdentityList,
+            qOverload<KMail::IdentityListViewItem *, const QString &>(&IdentityListView::rename),
+            this,
+            &IdentityPage::slotRenameIdentityFromItem);
+    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
     connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
-    // ### connect dragged(...), ...
 
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
-    connect(mIPage.mRenameButton, &QPushButton::clicked,
-            this, &IdentityPage::slotRenameIdentity);
+    connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
+    load();
 }
 
-IdentityPage::~IdentityPage()
-{
-}
+IdentityPage::~IdentityPage() = default;
 
 void IdentityPage::load()
 {
@@ -108,7 +93,6 @@ void IdentityPage::save()
     mIdentityManager->sort();
     mIdentityManager->commit();
 
-#ifndef KCM_KPIMIDENTITIES_STANDALONE
     if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1) {
         // have more than one identity, so better show the combo in the
         // composer now:
@@ -123,15 +107,13 @@ void IdentityPage::save()
         showHeaders &= ~KMail::Composer::HDR_IDENTITY;
         KMailSettings::self()->setHeaders(showHeaders);
     }
-#endif
 }
 
 void IdentityPage::slotNewIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(
-                mIdentityManager, this));
+    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
     dialog->setObjectName(QStringLiteral("new"));
 
     if (dialog->exec() == QDialog::Accepted && dialog) {
@@ -161,7 +143,7 @@ void IdentityPage::slotNewIdentity()
         KIdentityManagement::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
         QTreeWidgetItem *item = nullptr;
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-            item = mIPage.mIdentityList->selectedItems()[0];
+            item = mIPage.mIdentityList->selectedItems().at(0);
         }
 
         QTreeWidgetItem *newItem = nullptr;
@@ -215,22 +197,36 @@ void IdentityPage::slotRemoveIdentity()
         qCritical() << "Attempted to remove the last identity!";
     }
 
+    const int numberOfIdentity = mIPage.mIdentityList->selectedItems().count();
+    QString identityName;
     IdentityListViewItem *item = nullptr;
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems()[0]);
+    const QList<QTreeWidgetItem *> selectedItems = mIPage.mIdentityList->selectedItems();
+    if (numberOfIdentity == 1) {
+        if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
+            item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().at(0));
+        }
+        if (!item) {
+            return;
+        }
+        identityName = item->identity().identityName();
     }
-    if (!item) {
-        return;
-    }
-
-    const QString msg = i18n("<qt>Do you really want to remove the identity named "
-                             "<b>%1</b>?</qt>", item->identity().identityName());
-    if (KMessageBox::warningContinueCancel(this, msg, i18n("Remove Identity"),
-                                           KGuiItem(i18n("&Remove"),
-                                                   QStringLiteral("edit-delete")))
-            == KMessageBox::Continue) {
-        if (mIdentityManager->removeIdentity(item->identity().identityName())) {
-            delete item;
+    const QString msg = numberOfIdentity == 1
+        ? i18n(
+            "<qt>Do you really want to remove the identity named "
+            "<b>%1</b>?</qt>",
+            identityName)
+        : i18np("Do you really want to remove this %1 identity?", "Do you really want to remove these %1 identities?", numberOfIdentity);
+    if (KMessageBox::warningContinueCancel(this,
+                                           msg,
+                                           i18np("Remove Identity", "Remove Identities", numberOfIdentity),
+                                           KGuiItem(i18n("&Remove"), QStringLiteral("edit-delete")))
+        == KMessageBox::Continue) {
+        for (QTreeWidgetItem *selecteditem : selectedItems) {
+            auto identityItem = dynamic_cast<IdentityListViewItem *>(selecteditem);
+            identityName = identityItem->identity().identityName();
+            if (mIdentityManager->removeIdentity(identityName)) {
+                delete selecteditem;
+            }
             if (mIPage.mIdentityList->currentItem()) {
                 mIPage.mIdentityList->currentItem()->setSelected(true);
             }
@@ -263,8 +259,7 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
     }
 
     const QString newName = text.trimmed();
-    if (!newName.isEmpty() &&
-            !mIdentityManager->shadowIdentities().contains(newName)) {
+    if (!newName.isEmpty() && !mIdentityManager->shadowIdentities().contains(newName)) {
         KIdentityManagement::Identity &ident = item->identity();
         ident.setIdentityName(newName);
         save();
@@ -274,21 +269,20 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
 
 void IdentityPage::slotContextMenu(IdentityListViewItem *item, const QPoint &pos)
 {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(i18n("Add..."), this, &IdentityPage::slotNewIdentity);
+    QMenu menu(this);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &IdentityPage::slotNewIdentity);
     if (item) {
-        menu->addAction(i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
-        menu->addAction(i18n("Rename"), this, SLOT(slotRenameIdentity()));
+        menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("Modify..."), this, &IdentityPage::slotModifyIdentity);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18n("Rename"), this, &IdentityPage::slotRenameIdentity);
         if (mIPage.mIdentityList->topLevelItemCount() > 1) {
-            menu->addAction(i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
+            menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this, &IdentityPage::slotRemoveIdentity);
         }
         if (!item->identity().isDefault()) {
-            menu->addSeparator();
-            menu->addAction(i18n("Set as Default"), this, &IdentityPage::slotSetAsDefault);
+            menu.addSeparator();
+            menu.addAction(i18n("Set as Default"), this, &IdentityPage::slotSetAsDefault);
         }
     }
-    menu->exec(pos);
-    delete menu;
+    menu.exec(pos);
 }
 
 void IdentityPage::slotSetAsDefault()
@@ -312,7 +306,7 @@ void IdentityPage::refreshList()
 {
     const int numberOfTopLevel(mIPage.mIdentityList->topLevelItemCount());
     for (int i = 0; i < numberOfTopLevel; ++i) {
-        IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->topLevelItem(i));
+        auto item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->topLevelItem(i));
         if (item) {
             item->redisplay();
         }
@@ -327,13 +321,14 @@ void IdentityPage::slotIdentitySelectionChanged()
 
 void IdentityPage::updateButtons()
 {
+    const int numSelectedItems = mIPage.mIdentityList->selectedItems().count();
+    mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
+    mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
+    mIPage.mRenameButton->setEnabled(numSelectedItems == 1);
     IdentityListViewItem *item = nullptr;
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
+    if (numSelectedItems > 0) {
         item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
     }
-    mIPage.mRemoveButton->setEnabled(item && mIPage.mIdentityList->topLevelItemCount() > 1);
-    mIPage.mModifyButton->setEnabled(item);
-    mIPage.mRenameButton->setEnabled(item);
-    mIPage.mSetAsDefaultButton->setEnabled(item && !item->identity().isDefault());
+    const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
+    mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
 }
-

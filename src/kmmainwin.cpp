@@ -1,102 +1,150 @@
 /*
  * kmail: KDE mail client
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
+#include "tag/tagactionmanager.h"
+#include "util.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
-#include "libkdepim/broadcaststatus.h"
-#include "util.h"
-#include "tag/tagactionmanager.h"
+#include <PimCommon/BroadcastStatus>
 
-#include <QTimer>
-#include <QAction>
-#include <QStatusBar>
+#include <KConfigGroup>
+#include <KToolBar>
 #include <QApplication>
+#include <QStatusBar>
+#include <QTimer>
 
-#include <KConfigGui>
-#include <QMenuBar>
-#include <KToggleAction>
-#include <KConfigGui>
-#include <KLocalizedString>
-#include <kedittoolbar.h>
-#include <kconfig.h>
-#include <kmessagebox.h>
-#include <kxmlguifactory.h>
-#include <kstringhandler.h>
-#include <kstandardaction.h>
 #include "kmail_debug.h"
+#include <KConfig>
+#include <KConfigGui>
+#include <KEditToolBar>
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KStandardAction>
+#include <KXMLGUIFactory>
+#include <QMenuBar>
 #include <ktip.h>
 
 #include <QLabel>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
-    : KXmlGuiWindow(nullptr),
-      mReallyClose(false)
+    : KXmlGuiWindow(nullptr)
+    , mProgressBar(new KPIM::ProgressStatusBarWidget(statusBar(), this))
+    , mMessageLabel(new QLabel(i18n("Starting...")))
+
 {
     setObjectName(QStringLiteral("kmail-mainwindow#"));
     // Set this to be the group leader for all subdialogs - this means
     // modal subdialogs will only affect this dialog, not the other windows
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // TODO verify on qt6
     setAttribute(Qt::WA_GroupLeader);
+#endif
 
-    resize(700, 500);   // The default size
+    resize(700, 500); // The default size
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
     connect(mKMMainWidget, &KMMainWidget::recreateGui, this, &KMMainWin::slotUpdateGui);
     setCentralWidget(mKMMainWidget);
     setupStatusBar();
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
-        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail"));
+        setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));
     }
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars,
-                                       actionCollection());
+    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars, actionCollection());
 
-    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts,
-                                 actionCollection());
+    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
 
-    mHideMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
+    mShowMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
+    if (menuBar()) {
+        mHamburgerMenu = KStandardAction::hamburgerMenu(nullptr, nullptr, actionCollection());
+        mHamburgerMenu->setShowMenuBarAction(mShowMenuBarAction);
+        mHamburgerMenu->setMenuBar(menuBar());
+        connect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, [this]() {
+            updateHamburgerMenu();
+            // Immediately disconnect. We only need to run this once, but on demand.
+            // NOTE: The nullptr at the end disconnects all connections between
+            // q and mHamburgerMenu's aboutToShowMenu signal.
+            disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
+        });
+    }
 
     KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
 
-    //must be after createGUI, otherwise e.g toolbar settings are not loaded
-    applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
+    // must be after createGUI, otherwise e.g toolbar settings are not loaded
+    setAutoSaveSettings(KMKernel::self()->config()->group("Main Window"));
 
-    connect(KPIM::BroadcastStatus::instance(), SIGNAL(statusMsg(QString)),
-            this, SLOT(displayStatusMsg(QString)));
+    connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, &KMMainWin::displayStatusMessage);
 
-    connect(mKMMainWidget, SIGNAL(captionChangeRequest(QString)),
-            SLOT(setCaption(QString)));
+    connect(mKMMainWidget, &KMMainWidget::captionChangeRequest, this, qOverload<const QString &>(&KMainWindow::setCaption));
 
     mKMMainWidget->updateQuickSearchLineText();
-    mHideMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
+    mShowMenuBarAction->setChecked(KMailSettings::self()->showMenuBar());
     slotToggleMenubar(true);
+    connect(guiFactory(), &KXMLGUIFactory::shortcutsSaved, this, &KMMainWin::slotShortcutSaved);
+
+    mShowFullScreenAction = KStandardAction::fullScreen(nullptr, nullptr, this, actionCollection());
+    actionCollection()->setDefaultShortcut(mShowFullScreenAction, Qt::Key_F11);
+    connect(mShowFullScreenAction, &QAction::toggled, this, &KMMainWin::slotFullScreen);
 }
 
 KMMainWin::~KMMainWin()
 {
-    KConfigGroup grp(KMKernel::self()->config()->group("Main Window"));
-    saveMainWindowSettings(grp);
-    KMKernel::self()->config()->sync();
+    // Avoids a crash if there are any Akonadi jobs running, which may
+    // attempt to display a status message when they are killed.
+    disconnect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, nullptr);
+}
+
+void KMMainWin::slotFullScreen(bool t)
+{
+    KToggleFullScreenAction::setFullScreen(this, t);
+    QMenuBar *mb = menuBar();
+    if (t) {
+        auto b = new QToolButton(mb);
+        b->setDefaultAction(mShowFullScreenAction);
+        b->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Ignored));
+        b->setFont(QFontDatabase::systemFont(QFontDatabase::SmallestReadableFont));
+        mb->setCornerWidget(b, Qt::TopRightCorner);
+        b->setVisible(true);
+        b->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    } else {
+        QWidget *w = mb->cornerWidget(Qt::TopRightCorner);
+        if (w) {
+            w->deleteLater();
+        }
+    }
+}
+
+void KMMainWin::updateHamburgerMenu()
+{
+    auto menu = new QMenu(this);
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Open))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::SaveAs))));
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
+    menu->addSeparator();
+    menu->addAction(actionCollection()->action(QStringLiteral("check_mail")));
+    menu->addAction(actionCollection()->action(QStringLiteral("check_mail_in")));
+    menu->addAction(actionCollection()->action(QStringLiteral("send_queued")));
+    menu->addAction(actionCollection()->action(QStringLiteral("send_queued_via")));
+    menu->addSeparator();
+
+    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_kmail")));
+    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_notifications")));
+    menu->addSeparator();
+
+    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Quit))));
+    mHamburgerMenu->setMenu(menu);
 }
 
 KMMainWidget *KMMainWin::mainKMWidget() const
@@ -104,16 +152,14 @@ KMMainWidget *KMMainWin::mainKMWidget() const
     return mKMMainWidget;
 }
 
-void KMMainWin::displayStatusMsg(const QString &aText)
+void KMMainWin::displayStatusMessage(const QString &aText)
 {
     if (!statusBar() || !mProgressBar->littleProgress()) {
         return;
     }
-    const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width()
-                            - fontMetrics().maxWidth();
+    const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width() - fontMetrics().maxWidth();
 
-    const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight,
-                         statusWidth);
+    const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight, statusWidth);
 
     // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
     // but this code would double the size of the status bar if the user hovers
@@ -128,19 +174,21 @@ void KMMainWin::displayStatusMsg(const QString &aText)
 void KMMainWin::slotToggleMenubar(bool dontShowWarning)
 {
     if (menuBar()) {
-        if (mHideMenuBarAction->isChecked()) {
+        if (mShowMenuBarAction->isChecked()) {
             menuBar()->show();
         } else {
-            if (!dontShowWarning) {
-                const QString accel = mHideMenuBarAction->shortcut().toString();
+            if (!dontShowWarning && (!toolBar()->isVisible() || !toolBar()->actions().contains(mHamburgerMenu))) {
+                const QString accel = mShowMenuBarAction->shortcut().toString();
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
-                                              " You can show it again by typing %1.</qt>", accel),
-                                         i18n("Hide menu bar"), QStringLiteral("HideMenuBarWarning"));
+                                              " You can show it again by typing %1.</qt>",
+                                              accel),
+                                         i18n("Hide menu bar"),
+                                         QStringLiteral("HideMenuBarWarning"));
             }
             menuBar()->hide();
         }
-        KMailSettings::self()->setShowMenuBar(mHideMenuBarAction->isChecked());
+        KMailSettings::self()->setShowMenuBar(mShowMenuBarAction->isChecked());
     }
 }
 
@@ -148,10 +196,11 @@ void KMMainWin::slotEditToolbars()
 {
     KConfigGroup grp = KMKernel::self()->config()->group("Main Window");
     saveMainWindowSettings(grp);
-    KEditToolBar dlg(guiFactory(), this);
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
+    QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
+    connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
 
-    dlg.exec();
+    dlg->exec();
+    delete dlg;
 }
 
 void KMMainWin::slotUpdateGui()
@@ -159,26 +208,26 @@ void KMMainWin::slotUpdateGui()
     // remove dynamically created actions before editing
     mKMMainWidget->clearFilterActions();
     mKMMainWidget->tagActionManager()->clearActions();
+    mKMMainWidget->clearPluginActions();
 
     createGUI(QStringLiteral("kmmainwin.rc"));
     applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
 
     // plug dynamically created actions again
-    mKMMainWidget->initializeFilterActions();
+    mKMMainWidget->initializeFilterActions(false);
     mKMMainWidget->tagActionManager()->createActions();
-    mKMMainWidget->initializePluginActions();
+    // FIXME mKMMainWidget->initializePluginActions();
 }
 
 void KMMainWin::setupStatusBar()
 {
     /* Create a progress dialog and hide it. */
-    mProgressBar = new KPIM::ProgressStatusBarWidget(statusBar(), this);
-    mMessageLabel = new QLabel(i18n("Starting..."));
     mMessageLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     statusBar()->addWidget(mMessageLabel);
 
-    QTimer::singleShot(2000, KPIM::BroadcastStatus::instance(), &KPIM::BroadcastStatus::reset);
-
+    QTimer::singleShot(2s, PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::reset);
+    statusBar()->addPermanentWidget(mKMMainWidget->dkimWidgetInfo());
+    statusBar()->addPermanentWidget(mKMMainWidget->zoomLabelIndicator());
     statusBar()->addPermanentWidget(mKMMainWidget->vacationScriptIndicator());
     statusBar()->addPermanentWidget(mProgressBar->littleProgress());
 }
@@ -196,9 +245,16 @@ bool KMMainWin::restoreDockedState(int n)
     // Override this if the main window was hidden in the system tray
     // when the session was saved.
     KConfigGroup config(KConfigGui::sessionConfig(), QString::number(n));
-    bool show = !config.readEntry("docked", false);
+    const bool show = !config.readEntry("docked", false);
 
     return KMainWindow::restore(n, show);
+}
+
+void KMMainWin::showAndActivateWindow()
+{
+    show();
+    raise();
+    activateWindow();
 }
 
 void KMMainWin::saveProperties(KConfigGroup &config)
@@ -219,7 +275,10 @@ bool KMMainWin::queryClose()
 
 void KMMainWin::slotConfigureShortcuts()
 {
-    if (guiFactory()->configureShortcuts()) {
-        mKMMainWidget->updateQuickSearchLineText();
-    }
+    guiFactory()->showConfigureShortcutsDialog();
+}
+
+void KMMainWin::slotShortcutSaved()
+{
+    mKMMainWidget->updateQuickSearchLineText();
 }

@@ -1,57 +1,44 @@
 /*
-   Copyright (C) 2011-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmknotify.h"
 #include "kmkernel.h"
 
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <KComboBox>
-#include <KNotifyConfigWidget>
-#include <KLocalizedString>
 #include <KConfig>
-#include <KSeparator>
-#include <KIconLoader>
-#include <QStandardPaths>
-#include <QDialogButtonBox>
 #include <KConfigGroup>
+#include <KLocalizedString>
+#include <KNotifyConfigWidget>
+#include <KSeparator>
+#include <KWindowConfig>
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QPushButton>
+#include <QStandardPaths>
+#include <QVBoxLayout>
+#include <QWindow>
 
 using namespace KMail;
 
 KMKnotify::KMKnotify(QWidget *parent)
-    : QDialog(parent), m_changed(false)
+    : QDialog(parent)
+    , m_comboNotify(new QComboBox(this))
+    , m_notifyWidget(new KNotifyConfigWidget(this))
 {
-    setWindowTitle(i18n("Notification"));
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    setWindowTitle(i18nc("@title:window", "Notification"));
+    auto mainLayout = new QVBoxLayout(this);
 
-    m_comboNotify = new KComboBox(false, this);
     m_comboNotify->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     mainLayout->addWidget(m_comboNotify);
 
-    m_notifyWidget = new KNotifyConfigWidget(this);
     mainLayout->addWidget(m_notifyWidget);
     m_comboNotify->setFocus();
 
-    mainLayout->addWidget(new KSeparator);
+    mainLayout->addWidget(new KSeparator(this));
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -60,7 +47,7 @@ KMKnotify::KMKnotify(QWidget *parent)
 
     mainLayout->addWidget(buttonBox);
 
-    connect(m_comboNotify, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &KMKnotify::slotComboChanged);
+    connect(m_comboNotify, &QComboBox::activated, this, &KMKnotify::slotComboChanged);
     connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
     connect(m_notifyWidget, &KNotifyConfigWidget::changed, this, &KMKnotify::slotConfigChanged);
     initCombobox();
@@ -98,19 +85,13 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-
-    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc")
-                                                << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
-                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc")
-                                                << QStringLiteral("akonadi_archivemail_agent.notifyrc")
+    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc") << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
+                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc")
                                                 << QStringLiteral("akonadi_sendlater_agent.notifyrc")
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
-                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc")
-                                                << QStringLiteral("messageviewer.notifyrc");
-    //TODO add other notifyrc here if necessary
-
+                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
     for (const QString &notify : lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QStringLiteral("knotifications5/") + notify);
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications5/") + notify);
 
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
@@ -142,17 +123,16 @@ void KMKnotify::slotOk()
 
 void KMKnotify::readConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    const QSize size = notifyDialog.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
+    KConfigGroup group(KSharedConfig::openStateConfig(), "KMKnotifyDialog");
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void KMKnotify::writeConfig()
 {
     KConfigGroup notifyDialog(KMKernel::self()->config(), "KMKnotifyDialog");
-    notifyDialog.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }
-

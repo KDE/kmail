@@ -1,43 +1,26 @@
 /*
-   Copyright (C) 2016-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
-#include <AkonadiSearch/PIM/indexeditems.h>
+#include <PIM/indexeditems.h>
 
-#include <AkonadiCore/CollectionFetchJob>
-#include <AkonadiCore/CollectionFetchScope>
-#include <AkonadiCore/CollectionStatistics>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/CollectionStatistics>
 
 #include <PimCommon/PimUtil>
 
 CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
-    : QObject(parent),
-      mIndexedItems(indexedItems)
+    : QObject(parent)
+    , mIndexedItems(indexedItems)
 {
-
 }
 
-CheckIndexingJob::~CheckIndexingJob()
-{
-
-}
+CheckIndexingJob::~CheckIndexingJob() = default;
 
 void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
 {
@@ -53,8 +36,7 @@ void CheckIndexingJob::setCollection(const Akonadi::Collection &col)
 void CheckIndexingJob::start()
 {
     if (mCollection.isValid()) {
-        Akonadi::CollectionFetchJob *fetch = new Akonadi::CollectionFetchJob(mCollection,
-                Akonadi::CollectionFetchJob::Base);
+        auto fetch = new Akonadi::CollectionFetchJob(mCollection, Akonadi::CollectionFetchJob::Base);
         fetch->fetchScope().setIncludeStatistics(true);
         connect(fetch, &KJob::result, this, &CheckIndexingJob::slotCollectionPropertiesFinished);
     } else {
@@ -65,7 +47,7 @@ void CheckIndexingJob::start()
 
 void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
 {
-    Akonadi::CollectionFetchJob *fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    auto fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
     Q_ASSERT(fetch);
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "No collection fetched";
@@ -73,13 +55,15 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
         return;
     }
 
-    mCollection = fetch->collections().first();
+    mCollection = fetch->collections().constFirst();
     const qlonglong result = mIndexedItems->indexedItems(mCollection.id());
     bool needToReindex = false;
-    qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count() << "stats.value(mCollection.id())" << result;
+    qCDebug(KMAIL_LOG) << "name :" << mCollection.name() << " mCollection.statistics().count() " << mCollection.statistics().count()
+                       << "stats.value(mCollection.id())" << result;
     if (mCollection.statistics().count() != result) {
         needToReindex = true;
-        qCDebug(KMAIL_LOG) << "Reindex collection :" << "name :" << mCollection.name();
+        qCDebug(KMAIL_LOG) << "Reindex collection :"
+                           << "name :" << mCollection.name();
     }
     askForNextCheck(mCollection.id(), needToReindex);
 }

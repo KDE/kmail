@@ -1,13 +1,10 @@
 /*
   This file is part of KTnef.
 
-  Copyright (C) 2002 Michael Goffioul <kdeprint@swing.be>
-  Copyright (c) 2012 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2002 Michael Goffioul <kdeprint@swing.be>
+  SPDX-FileCopyrightText: 2012 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-or-later
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
@@ -23,28 +20,29 @@
 
 #include <QIcon>
 
-#include <QPixmap>
-#include <QTimer>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QPixmap>
+#include <QTimer>
 
 class Attachment : public QTreeWidgetItem
 {
 public:
     Attachment(QTreeWidget *parent, KTNEFAttach *attach);
-    ~Attachment();
+    ~Attachment() override;
 
-    KTNEFAttach *getAttachment() const
+    Q_REQUIRED_RESULT KTNEFAttach *getAttachment() const
     {
         return mAttach;
     }
 
 private:
-    KTNEFAttach *mAttach;
+    KTNEFAttach *const mAttach;
 };
 
 Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
-    : QTreeWidgetItem(parent, QStringList(attach->name())), mAttach(attach)
+    : QTreeWidgetItem(parent, QStringList(attach->name()))
+    , mAttach(attach)
 {
     setText(2, QString::number(mAttach->size()));
     if (!mAttach->fileName().isEmpty()) {
@@ -52,10 +50,10 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
     }
 
     QMimeDatabase db;
-    QMimeType mimeType = db.mimeTypeForName(mAttach->mimeTag());
+    const QMimeType mimeType = db.mimeTypeForName(mAttach->mimeTag());
     setText(1, mimeType.comment());
 
-    QPixmap pix = AttachPropertyDialog::loadRenderingPixmap(attach, qApp->palette().color(QPalette::Background));
+    QPixmap pix = AttachPropertyDialog::loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
     if (!pix.isNull()) {
         setIcon(0, pix);
     } else {
@@ -63,19 +61,15 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
     }
 }
 
-Attachment::~Attachment()
-{
-}
+Attachment::~Attachment() = default;
 
 //----------------------------------------------------------------------------//
 
 KTNEFView::KTNEFView(QWidget *parent)
     : QTreeWidget(parent)
 {
-    const QStringList headerLabels =
-        (QStringList(i18nc("@title:column file name", "File Name"))
-         << i18nc("@title:column file type", "File Type")
-         << i18nc("@title:column file size", "Size"));
+    const QStringList headerLabels = (QStringList(i18nc("@title:column file name", "File Name"))
+                                      << i18nc("@title:column file type", "File Type") << i18nc("@title:column file size", "Size"));
     setHeaderLabels(headerLabels);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setDragEnabled(true);
@@ -83,19 +77,13 @@ KTNEFView::KTNEFView(QWidget *parent)
     QTimer::singleShot(0, this, &KTNEFView::adjustColumnWidth);
 }
 
-KTNEFView::~KTNEFView()
-{
-}
+KTNEFView::~KTNEFView() = default;
 
 void KTNEFView::setAttachments(const QList<KTNEFAttach *> &list)
 {
     clear();
-    if (!list.isEmpty()) {
-        QList<KTNEFAttach *>::ConstIterator it;
-        QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
-        for (it = list.constBegin(); it != end; ++it) {
-            new Attachment(this, (*it));
-        }
+    for (const auto &s : list) {
+        new Attachment(this, s);
     }
 }
 
@@ -112,15 +100,16 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
 {
     mAttachments.clear();
 
-    QList<QTreeWidgetItem *> list = selectedItems();
+    const QList<QTreeWidgetItem *> list = selectedItems();
     if (list.isEmpty() || !list.first()) {
         return mAttachments;
     }
 
     QList<QTreeWidgetItem *>::const_iterator it;
     QList<QTreeWidgetItem *>::const_iterator end(list.constEnd());
+    mAttachments.reserve(list.count());
     for (it = list.constBegin(); it != end; ++it) {
-        Attachment *a = static_cast<Attachment *>(*it);
+        auto a = static_cast<Attachment *>(*it);
         mAttachments.append(a->getAttachment());
     }
     return mAttachments;
@@ -128,12 +117,12 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
 
 void KTNEFView::startDrag(Qt::DropActions dropAction)
 {
-    Q_UNUSED(dropAction);
+    Q_UNUSED(dropAction)
 
     QTreeWidgetItemIterator it(this, QTreeWidgetItemIterator::Selected);
     QList<KTNEFAttach *> list;
     while (*it) {
-        Attachment *a = static_cast<Attachment *>(*it);
+        auto a = static_cast<Attachment *>(*it);
         list << a->getAttachment();
         ++it;
     }
@@ -149,4 +138,3 @@ void KTNEFView::adjustColumnWidth()
     setColumnWidth(1, w / 2);
     setColumnWidth(2, w / 2);
 }
-

@@ -1,14 +1,17 @@
+/*
+ *   kmail: KDE mail client
+ *   SPDX-FileCopyrightText: 2016 Laurent Montel <montel@kde.org>
+ *   SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 // -*- c++ -*-
 // configuredialog_p.h: classes internal to ConfigureDialog
 // see configuredialog.h for details.
 
-#ifndef _CONFIGURE_DIALOG_PRIVATE_H_
-#define _CONFIGURE_DIALOG_PRIVATE_H_
+#pragma once
 
-#include "kmail_export.h"
 #include "configmodule.h"
-
-#include <kcmodule.h>
+#include "kmail_export.h"
 
 class QTabWidget;
 class ConfigureDialog;
@@ -19,10 +22,12 @@ class ConfigModuleTab : public QWidget
     Q_OBJECT
 public:
     explicit ConfigModuleTab(QWidget *parent = nullptr)
-        : QWidget(parent),
-          mEmitChanges(true)
-    {}
-    ~ConfigModuleTab() {}
+        : QWidget(parent)
+    {
+    }
+
+    ~ConfigModuleTab() override = default;
+
     virtual void save() = 0;
     void defaults();
 Q_SIGNALS:
@@ -31,18 +36,28 @@ Q_SIGNALS:
 public Q_SLOTS:
     void slotEmitChanged();
     void load();
+
 protected:
-    bool mEmitChanges;
+    bool mEmitChanges{true};
+
 private:
     // reimplement this for loading values of settings which are available
     // via GlobalSettings
-    virtual void doLoadFromGlobalSettings() {}
+    virtual void doLoadFromGlobalSettings()
+    {
+    }
+
     // reimplement this for loading values of settings which are not available
     // via GlobalSettings
-    virtual void doLoadOther() {}
+    virtual void doLoadOther()
+    {
+    }
+
     // reimplement this for loading default values of settings which are
     // not available via GlobalSettings (KConfigXT).
-    virtual void doResetToDefaultsOther() {}
+    virtual void doResetToDefaultsOther()
+    {
+    }
 };
 
 /*
@@ -53,21 +68,19 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
 {
     Q_OBJECT
 public:
-    explicit ConfigModuleWithTabs(QWidget *parent = nullptr);
-    ~ConfigModuleWithTabs() {}
+    explicit ConfigModuleWithTabs(QWidget *parent = nullptr, const QVariantList &args = {});
+    ~ConfigModuleWithTabs() override = default;
 
     // don't reimplement any of those methods
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
-    void defaults() Q_DECL_OVERRIDE;
+    void load() override;
+    void save() override;
+    void defaults() override;
 
 protected:
-    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) override;
     void addTab(ConfigModuleTab *tab, const QString &title);
 
 private:
-    QTabWidget *mTabWidget;
-    bool mWasInitialized;
+    QTabWidget *const mTabWidget;
+    bool mWasInitialized = false;
 };
-
-#endif // _CONFIGURE_DIALOG_PRIVATE_H_

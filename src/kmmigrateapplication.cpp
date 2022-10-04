@@ -1,27 +1,15 @@
 /*
-   Copyright (C) 2015-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmmigrateapplication.h"
-#include <MessageComposer/MessageComposerSettings>
-#include <KIdentityManagement/IdentityManager>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <KIdentityManagement/Identity>
+#include <KIdentityManagement/IdentityManager>
 #include <Kdelibs4ConfigMigrator>
+#include <MessageComposer/MessageComposerSettings>
 
 KMMigrateApplication::KMMigrateApplication()
 {
@@ -32,16 +20,18 @@ void KMMigrateApplication::migrate()
 {
     // Migrate to xdg.
     Kdelibs4ConfigMigrator migrate(QStringLiteral("kmail"));
+
     migrate.setConfigFiles(QStringList() << QStringLiteral("kmail2rc") << QStringLiteral("kmail2.notifyrc") << QStringLiteral("kmailsnippetrc")
-                           << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc") << QStringLiteral("kpimcompletionorder")
-                           << QStringLiteral("messageviewer.notifyrc") << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc"));
-    migrate.setUiFiles(QStringList() << QStringLiteral("kmail_part.rc") << QStringLiteral("kmcomposerui.rc") <<  QStringLiteral("kmmainwin.rc")
-                       <<  QStringLiteral("kmreadermainwin.rc"));
+                                         << QStringLiteral("customtemplatesrc") << QStringLiteral("templatesconfigurationrc")
+                                         << QStringLiteral("kpimcompletionorder") << QStringLiteral("messageviewer.notifyrc")
+                                         << QStringLiteral("sievetemplaterc") << QStringLiteral("foldermailarchiverc") << QStringLiteral("kpimbalooblacklist"));
+    migrate.setUiFiles(QStringList() << QStringLiteral("kmail_part.rc") << QStringLiteral("kmcomposerui.rc") << QStringLiteral("kmmainwin.rc")
+                                     << QStringLiteral("kmreadermainwin.rc"));
     migrate.migrate();
 
     // Migrate folders and files.
     if (mMigrator.checkIfNecessary()) {
-        mMigrator.start();
+        (void)mMigrator.start();
     }
 
     // Migrate global "Always encrypt" option to per-identity options
@@ -65,7 +55,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAutoSave.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutoSave);
 
-    //MessageViewer
+    // MessageViewer
     PimCommon::MigrateFileInfo migrateInfoMessageViewer;
     migrateInfoMessageViewer.setFolder(true);
     migrateInfoMessageViewer.setType(QStringLiteral("data"));
@@ -73,7 +63,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoMessageViewer.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoMessageViewer);
 
-    //autocorrect
+    // autocorrect
     PimCommon::MigrateFileInfo migrateInfoAutocorrect;
     migrateInfoAutocorrect.setFolder(true);
     migrateInfoAutocorrect.setType(QStringLiteral("data"));
@@ -81,7 +71,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAutocorrect.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAutocorrect);
 
-    //gravatar
+    // gravatar
     PimCommon::MigrateFileInfo migrateInfoGravatar;
     migrateInfoGravatar.setFolder(true);
     migrateInfoGravatar.setType(QStringLiteral("data"));
@@ -89,7 +79,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoGravatar.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoGravatar);
 
-    //adblock
+    // adblock
     PimCommon::MigrateFileInfo migrateInfoAdblockrules;
     migrateInfoAdblockrules.setFolder(false);
     migrateInfoAdblockrules.setType(QStringLiteral("data"));
@@ -98,7 +88,7 @@ void KMMigrateApplication::initializeMigrator()
     migrateInfoAdblockrules.setVersion(initialVersion);
     mMigrator.insertMigrateInfo(migrateInfoAdblockrules);
 
-    //vcard from identity
+    // vcard from identity
     PimCommon::MigrateFileInfo migrateInfoVCardFromIdentity;
     migrateInfoVCardFromIdentity.setFolder(false);
     migrateInfoVCardFromIdentity.setType(QStringLiteral("data"));
@@ -132,3 +122,4 @@ void KMMigrateApplication::migrateAlwaysEncrypt()
         mgr.commit();
     }
 }
+#endif

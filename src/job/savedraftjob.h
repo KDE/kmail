@@ -1,28 +1,14 @@
 /*
-  Copyright (c) 2014-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
-#ifndef SAVEDRAFTJOB_H
-#define SAVEDRAFTJOB_H
+#pragma once
 
+#include <Akonadi/Collection>
 #include <KJob>
-#include <AkonadiCore/Collection>
 #include <KMime/KMimeMessage>
 
 class SaveDraftJob : public KJob
@@ -30,14 +16,12 @@ class SaveDraftJob : public KJob
     Q_OBJECT
 public:
     explicit SaveDraftJob(const KMime::Message::Ptr &msg, const Akonadi::Collection &col, QObject *parent = nullptr);
-    ~SaveDraftJob();
+    ~SaveDraftJob() override;
 
-    void start() Q_DECL_OVERRIDE;
-private Q_SLOTS:
-    void slotStoreDone(KJob *job);
+    void start() override;
+
 private:
-    KMime::Message::Ptr mMsg;
-    Akonadi::Collection mCollection;
+    void slotStoreDone(KJob *job);
+    KMime::Message::Ptr mMsg = nullptr;
+    const Akonadi::Collection mCollection;
 };
-
-#endif // SAVEDRAFTJOB_H

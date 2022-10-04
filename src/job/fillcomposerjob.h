@@ -1,37 +1,16 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef FILLCOMPOSERJOB_H
-#define FILLCOMPOSERJOB_H
+#pragma once
 
-#include <QObject>
 #include <KMime/Message>
+#include <QObject>
 
-struct FillComposerJobSettings
-{
-    FillComposerJobSettings()
-        : mIdentity(0),
-          mForceShowWindow(false),
-          mHidden(false)
-    {
-
-    }
+struct FillComposerJobSettings {
+    FillComposerJobSettings() = default;
 
     FillComposerJobSettings(bool hidden,
                             const QString &to,
@@ -50,26 +29,26 @@ struct FillComposerJobSettings
                             const QByteArray &attachCharset,
                             unsigned int identity,
                             bool forceShowWindow)
-        : mTo(to),
-          mCc(cc),
-          mBcc(bcc),
-          mSubject(subject),
-          mBody(body),
-          mAttachName(attachName),
-          mAttachCte(attachCte),
-          mAttachData(attachData),
-          mAttachType(attachType),
-          mAttachSubType(attachSubType),
-          mAttachParamAttr(attachParamAttr),
-          mAttachParamValue(attachParamValue),
-          mAttachContDisp(attachContDisp),
-          mAttachCharset(attachCharset),
-          mIdentity(identity),
-          mForceShowWindow(forceShowWindow),
-          mHidden(hidden)
+        : mTo(to)
+        , mCc(cc)
+        , mBcc(bcc)
+        , mSubject(subject)
+        , mBody(body)
+        , mAttachName(attachName)
+        , mAttachCte(attachCte)
+        , mAttachData(attachData)
+        , mAttachType(attachType)
+        , mAttachSubType(attachSubType)
+        , mAttachParamAttr(attachParamAttr)
+        , mAttachParamValue(attachParamValue)
+        , mAttachContDisp(attachContDisp)
+        , mAttachCharset(attachCharset)
+        , mIdentity(identity)
+        , mForceShowWindow(forceShowWindow)
+        , mHidden(hidden)
     {
-
     }
+
     QString mTo;
     QString mCc;
     QString mBcc;
@@ -84,25 +63,23 @@ struct FillComposerJobSettings
     QString mAttachParamValue;
     QByteArray mAttachContDisp;
     QByteArray mAttachCharset;
-    unsigned int mIdentity;
-    bool mForceShowWindow;
-    bool mHidden;
+    unsigned int mIdentity = 0;
+    bool mForceShowWindow = false;
+    bool mHidden = false;
 };
-
 
 class FillComposerJob : public QObject
 {
     Q_OBJECT
 public:
     explicit FillComposerJob(QObject *parent = nullptr);
-    ~FillComposerJob();
+    ~FillComposerJob() override;
     void start();
     void setSettings(const FillComposerJobSettings &settings);
 
 private:
+    Q_DISABLE_COPY(FillComposerJob)
     void slotOpenComposer();
     FillComposerJobSettings mSettings;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
 };
-
-#endif // FILLCOMPOSERJOB_H

@@ -1,107 +1,16 @@
 /*
  *   kmail: KDE mail client
- *   Copyright (C) 2000 Espen Sand, espen@kde.org
- *   Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org
- *   Contains code segments and ideas from earlier kmail dialog code.
+ *   SPDX-FileCopyrightText: 2000 Espen Sand <espen@kde.org>
+ *   SPDX-FileCopyrightText: 2001-2003 Marc Mutz <mutz@kde.org>
+ *   SPDX-FileCopyrightText: 2021-2022 Laurent Montel <montel@kde.org>
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
-// This must be first
-#include "configuredialog/configuredialog.h"
-#include "configuredialog/configuredialog_p.h"
-#include "configuredialog/configuremiscpage.h"
-#include "configuredialog/configuresecuritypage.h"
-#include "configuredialog/configurecomposerpage.h"
-#include "configuredialog/configureappearancepage.h"
 #include "configuredialog/configureaccountpage.h"
+#include "configuredialog/configureappearancepage.h"
+#include "configuredialog/configurecomposerpage.h"
+#include "configuredialog/configuremiscpage.h"
 #include "configuredialog/configurepluginpage.h"
-#include "identity/identitypage.h"
-#include <kcmodule.h>
-
-//----------------------------
-// KCM stuff
-//----------------------------
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_misc(QWidget *parent, const char *)
-    {
-        MiscPage *page = new MiscPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_misc"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_appearance(QWidget *parent, const char *)
-    {
-        AppearancePage *page =
-            new AppearancePage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_appearance"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_composer(QWidget *parent, const char *)
-    {
-        ComposerPage *page = new ComposerPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_composer"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_identity(QWidget *parent, const char *)
-    {
-        KMail::IdentityPage *page = new KMail::IdentityPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_identity"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_accounts(QWidget *parent, const char *)
-    {
-        AccountsPage *page = new AccountsPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_accounts"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_security(QWidget *parent, const char *)
-    {
-        SecurityPage *page = new SecurityPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_security"));
-        return page;
-    }
-}
-
-extern "C"
-{
-    Q_DECL_EXPORT KCModule *create_kmail_config_plugins(QWidget *parent, const char *)
-    {
-        ConfigurePluginPage *page = new ConfigurePluginPage(parent);
-        page->setObjectName(QStringLiteral("kcmkmail_config_plugins"));
-        return page;
-    }
-}
+#include "configuredialog/configuresecuritypage.h"

@@ -1,47 +1,25 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef OPENCOMPOSERHIDDENJOB_H
-#define OPENCOMPOSERHIDDENJOB_H
+#pragma once
 
-#include <QObject>
 #include <KMime/Message>
+#include <QObject>
 
-struct OpenComposerHiddenJobSettings
-{
-    OpenComposerHiddenJobSettings()
-        : mHidden(false)
+struct OpenComposerHiddenJobSettings {
+    OpenComposerHiddenJobSettings() = default;
+
+    OpenComposerHiddenJobSettings(const QString &to, const QString &cc, const QString &bcc, const QString &subject, const QString &body, bool hidden)
+        : mTo(to)
+        , mCc(cc)
+        , mBcc(bcc)
+        , mSubject(subject)
+        , mBody(body)
+        , mHidden(hidden)
     {
-
-    }
-    OpenComposerHiddenJobSettings(const QString &to, const QString &cc,
-                                  const QString &bcc,
-                                  const QString &subject,
-                                  const QString &body, bool hidden)
-        : mTo(to),
-          mCc(cc),
-          mBcc(bcc),
-          mSubject(subject),
-          mBody(body),
-          mHidden(hidden)
-    {
-
     }
 
     QString mTo;
@@ -49,7 +27,7 @@ struct OpenComposerHiddenJobSettings
     QString mBcc;
     QString mSubject;
     QString mBody;
-    bool mHidden;
+    bool mHidden = false;
 };
 
 class OpenComposerHiddenJob : public QObject
@@ -57,14 +35,13 @@ class OpenComposerHiddenJob : public QObject
     Q_OBJECT
 public:
     explicit OpenComposerHiddenJob(QObject *parent = nullptr);
-    ~OpenComposerHiddenJob();
+    ~OpenComposerHiddenJob() override;
     void start();
     void setSettings(const OpenComposerHiddenJobSettings &settings);
 
 private:
+    Q_DISABLE_COPY(OpenComposerHiddenJob)
     void slotOpenComposer();
     OpenComposerHiddenJobSettings mSettings;
-    KMime::Message::Ptr mMsg;
+    KMime::Message::Ptr mMsg = nullptr;
 };
-
-#endif // OPENCOMPOSERHIDDENJOB_H

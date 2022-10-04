@@ -1,0 +1,149 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Agent voor herinneren aan vervolgactie</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Dutch "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Het handboek van &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+&Freek.de.Kruijf; 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Inleiding</title>
+
+<para
+>&i18n-followupreminderagent; is een akonadi-agent die e-mail voor herinneringen over vervolgacties behandelt </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-followupreminderagent; gebruiken</title>
+
+<para
+>De <menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Opvolgherinneraar</guimenuitem
+></menuchoice
+> in het compositievenster van &kmail; om een dialoog te openen die u biedt om een herinnering te maken om aan uw huidige e-mail op een specifieke datum een vervolg te geven.</para>
+
+<screenshot>
+<screeninfo
+>&i18n-followupreminderagent; dialoog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-followupreminderagent; dialoog</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-followupreminderagent; dialoog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Druk op de toets pijltje omlaag tegen het <guilabel
+>Datum</guilabel
+>veld om de datum uit het &kde; agendawidget te selecteren. Het is ook mogelijk uw agenda te kiezen voor de herinnering met de afrollijst <guilabel
+>Taak opslaan in</guilabel
+>.</para>
+<para
+>Om herinneringen die u hebt gepland te verwijderen, gebruik <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&kmail; configureren...</guimenuitem
+></menuchoice
+> selecteer daarna de pagina <guilabel
+>Plug-ins</guilabel
+> in &kmail; en druk op de configuratieknop tegen het item <guilabel
+>Agent voor herinneren aan vervolgactie</guilabel
+>. Gebruik daarna het contextmenu gestart met een &RMB; klik om een herinneringsitem om de <guimenuitem
+>Verwijderen</guimenuitem
+>actie te selecteren . </para>
+
+<screenshot>
+<screeninfo
+>&i18n-followupreminderagent; configureren</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-followupreminderagent; configureren</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-followupreminderagent; configureren</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Dankbetuigingen en licentie</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Programma copyright 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Documentatie Copyright &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+&meld.fouten;&vertaling.freek; &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

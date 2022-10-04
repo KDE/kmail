@@ -1,32 +1,19 @@
 /*
  *   kmail: KDE mail client
- *   Copyright (C) 2000 Espen Sand, espen@kde.org
- *   Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org
+ *   SPDX-FileCopyrightText: 2000 Espen Sand <espen@kde.org>
+ *   SPDX-FileCopyrightText: 2001-2003 Marc Mutz <mutz@kde.org>
  *   Contains code segments and ideas from earlier kmail dialog code.
- *   Copyright (C) 2010 Volker Krause <vkrause@kde.org>
+ *   SPDX-FileCopyrightText: 2010 Volker Krause <vkrause@kde.org>
  *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License along
- *   with this program; if not, write to the Free Software Foundation, Inc.,
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
-#ifndef IDENTITYPAGE_H
-#define IDENTITYPAGE_H
+#pragma once
 
 #include "kmail_export.h"
 
-#include "configuredialog/configmodule.h"
+#include "configuredialog/configuredialog_p.h"
 #include "ui_identitypage.h"
 namespace KIdentityManagement
 {
@@ -39,19 +26,19 @@ class IdentityDialog;
 class IdentityListView;
 class IdentityListViewItem;
 
-class KMAIL_EXPORT IdentityPage : public ConfigModule
+class KMAIL_EXPORT IdentityPage : public ConfigModuleTab
 {
     Q_OBJECT
 public:
     explicit IdentityPage(QWidget *parent = nullptr);
-    ~IdentityPage();
+    ~IdentityPage() override;
 
-    QString helpAnchor() const Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
+    void load();
+    void save() override;
 
-private Q_SLOTS:
+private:
     void slotNewIdentity();
     void slotModifyIdentity();
     void slotRemoveIdentity();
@@ -65,17 +52,13 @@ private Q_SLOTS:
     void slotSetAsDefault();
     void slotIdentitySelectionChanged();
 
-private: // methods
     void refreshList();
     void updateButtons();
 
 private: // data members
     Ui_IdentityPage mIPage;
-    KMail::IdentityDialog   *mIdentityDialog;
-    int                      mOldNumberOfIdentities;
-    KIdentityManagement::IdentityManager *mIdentityManager;
+    KMail::IdentityDialog *mIdentityDialog = nullptr;
+    int mOldNumberOfIdentities = 0;
+    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
 };
-
 }
-
-#endif

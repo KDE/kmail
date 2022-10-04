@@ -1,81 +1,67 @@
 /*
-   Copyright (C) 2015-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef ARCHIVEMAILWIDGET_H
-#define ARCHIVEMAILWIDGET_H
+#pragma once
 
-#include "ui_archivemailwidget.h"
 #include "archivemailinfo.h"
+#include "ui_archivemailwidget.h"
 #include <QTreeWidgetItem>
+
+#include <Akonadi/AgentConfigurationBase>
 
 class ArchiveMailItem : public QTreeWidgetItem
 {
 public:
     explicit ArchiveMailItem(QTreeWidget *parent = nullptr);
-    ~ArchiveMailItem();
+    ~ArchiveMailItem() override;
 
     void setInfo(ArchiveMailInfo *info);
     ArchiveMailInfo *info() const;
 
 private:
-    ArchiveMailInfo *mInfo;
+    ArchiveMailInfo *mInfo = nullptr;
 };
 
-class ArchiveMailWidget : public QWidget
+class ArchiveMailWidget : public Akonadi::AgentConfigurationBase
 {
     Q_OBJECT
 public:
-    explicit ArchiveMailWidget(QWidget *parent = nullptr);
-    ~ArchiveMailWidget();
+    explicit ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
+    ~ArchiveMailWidget() override;
 
     enum ArchiveMailColumn {
         Name = 0,
         LastArchiveDate,
         NextArchive,
-        StorageDirectory
+        StorageDirectory,
     };
 
-    void save();
-    void saveTreeWidgetHeader(KConfigGroup &group);
-    void restoreTreeWidgetHeader(const QByteArray &group);
+    Q_REQUIRED_RESULT bool save() const override;
+    void load() override;
+
     void needReloadConfig();
 
-Q_SIGNALS:
-    void archiveNow(ArchiveMailInfo *info);
+    QSize restoreDialogSize() const override;
+    void saveDialogSize(const QSize &size) override;
 
 private:
-    void load();
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
     bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 
-private:
-    void slotRemoveItem();
+    void slotDeleteItem();
     void slotModifyItem();
     void slotAddItem();
     void updateButtons();
     void slotOpenFolder();
-    void customContextMenuRequested(const QPoint &);
-    void slotArchiveNow();
+    void slotCustomContextMenuRequested(const QPoint &);
     void slotItemChanged(QTreeWidgetItem *item, int);
-    bool mChanged;
-    Ui::ArchiveMailWidget *mWidget;
+
+    bool mChanged = false;
+    Ui::ArchiveMailWidget mWidget;
 };
 
-#endif // ARCHIVEMAILWIDGET_H
+AKONADI_AGENTCONFIG_FACTORY(ArchiveMailAgentConfigFactory, "archivemailagentconfig.json", ArchiveMailWidget)

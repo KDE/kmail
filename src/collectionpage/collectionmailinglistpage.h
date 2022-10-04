@@ -1,38 +1,28 @@
 /*
   This file is part of KMail, the KDE mail client.
-  Copyright (c) 2005 Till Adam <adam@kde.org>
-  Copyright (c) 2011-2017 Montel Laurent <montel@kde.org>
-  Copyright (c) 2012 Jonathan Marten <jjm@keelhaul.me.uk>
+  SPDX-FileCopyrightText: 2005 Till Adam <adam@kde.org>
+  SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2012 Jonathan Marten <jjm@keelhaul.me.uk>
 
-  KMail is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  KMail is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef COLLECTIONMAILINGLISTPAGE_H
-#define COLLECTIONMAILINGLISTPAGE_H
+#pragma once
 
-#include "MessageCore/MailingList"
-#include <MailCommon/FolderCollection>
+#include <MailCommon/FolderSettings>
+#include <MessageCore/MailingList>
 
-#include <AkonadiWidgets/collectionpropertiespage.h>
-#include <AkonadiCore/collection.h>
+#include <Akonadi/Collection>
+#include <Akonadi/CollectionPropertiesPage>
 
 class QCheckBox;
 class QPushButton;
 
-template <typename T> class QSharedPointer;
+template<typename T>
+class QSharedPointer;
 
-class KComboBox;
+class QComboBox;
+class QPushButton;
 class KJob;
 class KEditListWidget;
 class KSqueezedTextLabel;
@@ -42,23 +32,19 @@ class CollectionMailingListPage : public Akonadi::CollectionPropertiesPage
     Q_OBJECT
 public:
     explicit CollectionMailingListPage(QWidget *parent = nullptr);
-    ~CollectionMailingListPage();
+    ~CollectionMailingListPage() override;
 
-    void load(const Akonadi::Collection &col) Q_DECL_OVERRIDE;
-    void save(Akonadi::Collection &col) Q_DECL_OVERRIDE;
+    void load(const Akonadi::Collection &col) override;
+    void save(Akonadi::Collection &col) override;
 
-    bool canHandle(const Akonadi::Collection &col) const Q_DECL_OVERRIDE;
-
-protected:
-    void init(const Akonadi::Collection &);
-
-protected Q_SLOTS:
-    void slotFetchDone(KJob *job);
+    Q_REQUIRED_RESULT bool canHandle(const Akonadi::Collection &col) const override;
 
 private:
+    void slotFetchDone(KJob *job);
+    void init(const Akonadi::Collection &);
     /*
-    * Detects mailing-list related stuff
-    */
+     * Detects mailing-list related stuff
+     */
     void slotDetectMailingList();
     void slotInvokeHandler();
     void slotMLHandling(int element);
@@ -69,20 +55,18 @@ private:
     void fillEditBox();
 
     Akonadi::Collection mCurrentCollection;
-    QSharedPointer<MailCommon::FolderCollection> mFolder;
+    QSharedPointer<MailCommon::FolderSettings> mFolder;
 
-    MailingList   mMailingList;
-    QCheckBox    *mHoldsMailingList;
-    KComboBox    *mMLHandlerCombo;
-    QPushButton  *mDetectButton;
-    KComboBox    *mAddressCombo;
-    KEditListWidget *mEditList;
-    KSqueezedTextLabel *mMLId;
-    QWidget *mGroupWidget;
-    int           mLastItem;
-    bool changed;
+    MailingList mMailingList;
+    QCheckBox *mHoldsMailingList = nullptr;
+    QComboBox *mMLHandlerCombo = nullptr;
+    QPushButton *mDetectButton = nullptr;
+    QComboBox *mAddressCombo = nullptr;
+    KEditListWidget *mEditList = nullptr;
+    KSqueezedTextLabel *mMLId = nullptr;
+    QPushButton *mHandleButton = nullptr;
+    int mLastItem = 0;
+    bool changed = false;
 };
 
 AKONADI_COLLECTION_PROPERTIES_PAGE_FACTORY(CollectionMailingListPageFactory, CollectionMailingListPage)
-
-#endif /* COLLECTIONMAILINGLISTPAGE_H */

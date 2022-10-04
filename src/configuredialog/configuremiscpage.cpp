@@ -1,43 +1,25 @@
 /*
-  Copyright (c) 2013-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "configuremiscpage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
+#include "kmkernel.h"
 #include "settings/kmailsettings.h"
-
 #include <MailCommon/FolderRequester>
-#include "MessageViewer/InvitationSettings"
-#include "MessageViewer/PrintingSettings"
-#include "messageviewer/messageviewersettings.h"
+#include <MessageViewer/InvitationSettings>
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/PrintingSettings>
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
-#include "MessageViewer/PrintingSettings"
-#endif
-
-#include <KCModuleProxy>
-#include <KCModuleInfo>
 #include <KLocalizedString>
-#include <KConfigGroup>
 #include <QHBoxLayout>
 
-#include <WebEngineViewer/NetworkPluginUrlInterceptorConfigureWidget>
-#include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
-#include <WebEngineViewer/NetworkPluginUrlInterceptor>
+#ifdef WITH_KUSERFEEDBACK
+#include <KUserFeedback/FeedbackConfigWidget>
+#endif
 
 using namespace MailCommon;
 QString MiscPage::helpAnchor() const
@@ -45,18 +27,20 @@ QString MiscPage::helpAnchor() const
     return QStringLiteral("configure-misc");
 }
 
-MiscPage::MiscPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+MiscPage::MiscPage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
-    FolderTab *folderTab = new FolderTab();
+    auto folderTab = new MiscPageFolderTab();
     addTab(folderTab, i18n("Folders"));
 
-    InviteTab *inviteTab = new InviteTab();
+    auto inviteTab = new MiscPageInviteTab();
     addTab(inviteTab, i18n("Invitations"));
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
-    MiscPagePrintingTab *printingTab = new MiscPagePrintingTab();
+    auto printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
+#ifdef WITH_KUSERFEEDBACK
+    auto userFeedBackTab = new KuserFeedBackPageTab();
+    addTab(userFeedBackTab, i18n("User Feedback"));
 #endif
 }
 
@@ -69,20 +53,19 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mMMTab.setupUi(this);
-    //replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
-    QHBoxLayout *layout = new QHBoxLayout;
-    layout->setContentsMargins(0, 0, 0, 0);
+    // replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
+    auto layout = new QHBoxLayout;
+    layout->setContentsMargins({});
     mMMTab.mOnStartupOpenFolder->setLayout(layout);
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
 
-    mMMTab.mExcludeImportantFromExpiry->setWhatsThis(
-        i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8()));
+    mMMTab.mExcludeImportantFromExpiry->setWhatsThis(i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8().constData()));
 
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mLoopOnGotoUnread, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mActionEnterFolder, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mDelayedMarkTime, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mLoopOnGotoUnread, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mActionEnterFolder, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mDelayedMarkTime, &QSpinBox::valueChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
@@ -90,10 +73,13 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
+    connect(mMMTab.mDeleteMessagesWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab.mEnableFolderDragAndDrop, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
 }
 
-void MiscPage::FolderTab::doLoadFromGlobalSettings()
+void MiscPageFolderTab::doLoadFromGlobalSettings()
 {
+    loadWidget(mMMTab.mEnableFolderDragAndDrop, KMailSettings::self()->enableFolderDnDItem());
     loadWidget(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     // default = "Loop in current folder"
     loadWidget(mMMTab.mLoopOnGotoUnread, KMailSettings::self()->loopOnGotoUnreadItem());
@@ -103,16 +89,19 @@ void MiscPage::FolderTab::doLoadFromGlobalSettings()
     loadWidget(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     loadWidget(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
     mOnStartupOpenFolder->setEnabled(KMailSettings::self()->startSpecificFolderAtStartup());
+
+    loadWidget(mMMTab.mDeleteMessagesWithoutConfirmation, KMailSettings::self()->deleteMessageWithoutConfirmationItem());
+
     doLoadOther();
 }
 
-void MiscPage::FolderTab::doLoadOther()
+void MiscPageFolderTab::doLoadOther()
 {
     loadWidget(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
     mOnStartupOpenFolder->setCollection(Akonadi::Collection(KMailSettings::self()->startupFolder()));
 }
 
-void MiscPage::FolderTab::save()
+void MiscPageFolderTab::save()
 {
     saveCheckBox(mMMTab.mEmptyTrashCheck, KMailSettings::self()->emptyTrashOnExitItem());
     saveComboBox(mMMTab.mActionEnterFolder, KMailSettings::self()->actionEnterFolderItem());
@@ -125,40 +114,41 @@ void MiscPage::FolderTab::save()
     saveCheckBox(mMMTab.mExcludeImportantFromExpiry, KMailSettings::self()->excludeImportantMailFromExpiryItem());
     saveCheckBox(mMMTab.mShowPopupAfterDnD, KMailSettings::self()->showPopupAfterDnDItem());
     saveCheckBox(mMMTab.mStartUpFolderCheck, KMailSettings::self()->startSpecificFolderAtStartupItem());
+    saveCheckBox(mMMTab.mDeleteMessagesWithoutConfirmation, KMailSettings::self()->deleteMessageWithoutConfirmationItem());
+    saveCheckBox(mMMTab.mEnableFolderDragAndDrop, KMailSettings::self()->enableFolderDnDItem());
 }
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mInvitationUi = new MessageViewer::InvitationSettings(this);
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    auto l = new QHBoxLayout(this);
+    l->setContentsMargins({});
     l->addWidget(mInvitationUi);
     connect(mInvitationUi, &MessageViewer::InvitationSettings::changed, this, &MiscPageInviteTab::slotEmitChanged);
 }
 
-void MiscPage::InviteTab::doLoadFromGlobalSettings()
+void MiscPageInviteTab::doLoadFromGlobalSettings()
 {
     mInvitationUi->doLoadFromGlobalSettings();
 }
 
-void MiscPage::InviteTab::save()
+void MiscPageInviteTab::save()
 {
     mInvitationUi->save();
 }
 
-void MiscPage::InviteTab::doResetToDefaultsOther()
+void MiscPageInviteTab::doResetToDefaultsOther()
 {
     mInvitationUi->doResetToDefaultsOther();
 }
 
-#ifdef WEBENGINEVIEWER_PRINT_SUPPORT
 MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
     mPrintingUi = new MessageViewer::PrintingSettings(this);
-    QHBoxLayout *l = new QHBoxLayout(this);
-    l->setContentsMargins(0, 0, 0, 0);
+    auto l = new QHBoxLayout(this);
+    l->setContentsMargins({});
     l->addWidget(mPrintingUi);
     connect(mPrintingUi, &MessageViewer::PrintingSettings::changed, this, &MiscPagePrintingTab::slotEmitChanged);
 }
@@ -177,4 +167,43 @@ void MiscPagePrintingTab::save()
 {
     mPrintingUi->save();
 }
+
+#ifdef WITH_KUSERFEEDBACK
+KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
+    : ConfigModuleTab(parent)
+{
+    mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
+    auto l = new QHBoxLayout(this);
+    l->setContentsMargins({});
+    l->addWidget(mUserFeedbackWidget);
+    connect(mUserFeedbackWidget, &KUserFeedback::FeedbackConfigWidget::configurationChanged, this, &KuserFeedBackPageTab::slotEmitChanged);
+
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
+}
+
+void KuserFeedBackPageTab::save()
+{
+    if (KMKernel::self()) {
+        // set current active mode + write back the config for future starts
+        KMKernel::self()->userFeedbackProvider()->setTelemetryMode(mUserFeedbackWidget->telemetryMode());
+        KMKernel::self()->userFeedbackProvider()->setSurveyInterval(mUserFeedbackWidget->surveyInterval());
+    }
+}
+
+void KuserFeedBackPageTab::doResetToDefaultsOther()
+{
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
+}
+
+void KuserFeedBackPageTab::doLoadFromGlobalSettings()
+{
+    if (KMKernel::self()) {
+        mUserFeedbackWidget->setFeedbackProvider(KMKernel::self()->userFeedbackProvider());
+    }
+}
+
 #endif

@@ -1,77 +1,62 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "addarchivemaildialog.h"
 #include "widgets/formatcombobox.h"
 #include "widgets/unitcombobox.h"
-#include "MailCommon/FolderRequester"
+#include <MailCommon/FolderRequester>
 
-#include <Collection>
-
+#include <KLineEdit>
 #include <KLocalizedString>
-#include <KComboBox>
-#include <KUrlRequester>
-#include <QSpinBox>
 #include <KSeparator>
+#include <KUrlRequester>
 #include <QIcon>
+#include <QSpinBox>
 
-#include <QGridLayout>
-#include <QLabel>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
 AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent)
-    : QDialog(parent),
-      mInfo(info)
+    : QDialog(parent)
+    , mInfo(info)
 {
     if (info) {
-        setWindowTitle(i18n("Modify Archive Mail"));
+        setWindowTitle(i18nc("@title:window", "Modify Archive Mail"));
     } else {
-        setWindowTitle(i18n("Add Archive Mail"));
+        setWindowTitle(i18nc("@title:window", "Add Archive Mail"));
     }
     setModal(true);
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
+    auto topLayout = new QVBoxLayout(this);
 
-    QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->setMargin(0);
+    auto mainLayout = new QGridLayout;
+    mainLayout->setContentsMargins({});
 
     int row = 0;
 
-    QLabel *folderLabel = new QLabel(i18n("&Folder:"), this);
+    auto folderLabel = new QLabel(i18n("&Folder:"), this);
     mainLayout->addWidget(folderLabel, row, 0);
     mFolderRequester = new MailCommon::FolderRequester(this);
     mFolderRequester->setObjectName(QStringLiteral("folder_requester"));
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
     connect(mFolderRequester, &MailCommon::FolderRequester::folderChanged, this, &AddArchiveMailDialog::slotFolderChanged);
-    if (info) { //Don't autorize to modify folder when we just modify item.
+    if (info) { // Don't autorize to modify folder when we just modify item.
         mFolderRequester->setEnabled(false);
     }
     folderLabel->setBuddy(mFolderRequester);
     mainLayout->addWidget(mFolderRequester, row, 1);
     ++row;
 
-    QLabel *formatLabel = new QLabel(i18n("Format:"), this);
+    auto formatLabel = new QLabel(i18n("Format:"), this);
     formatLabel->setObjectName(QStringLiteral("label_format"));
     mainLayout->addWidget(formatLabel, row, 0);
 
@@ -85,7 +70,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mRecursiveCheckBox->setChecked(true);
     ++row;
 
-    QLabel *pathLabel = new QLabel(i18n("Path:"), this);
+    auto pathLabel = new QLabel(i18n("Path:"), this);
     mainLayout->addWidget(pathLabel, row, 0);
     pathLabel->setObjectName(QStringLiteral("path_label"));
     mPath = new KUrlRequester(this);
@@ -95,11 +80,11 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addWidget(mPath);
     ++row;
 
-    QLabel *dateLabel = new QLabel(i18n("Backup each:"), this);
+    auto dateLabel = new QLabel(i18n("Backup each:"), this);
     dateLabel->setObjectName(QStringLiteral("date_label"));
     mainLayout->addWidget(dateLabel, row, 0);
 
-    QHBoxLayout *hlayout = new QHBoxLayout;
+    auto hlayout = new QHBoxLayout;
     mDays = new QSpinBox(this);
     mDays->setMinimum(1);
     mDays->setMaximum(3600);
@@ -111,7 +96,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addLayout(hlayout, row, 1);
     ++row;
 
-    QLabel *maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
+    auto maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
     mainLayout->addWidget(maxCountlabel, row, 0);
     mMaximumArchive = new QSpinBox(this);
     mMaximumArchive->setMinimum(0);
@@ -125,7 +110,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->setColumnStretch(1, 1);
     mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setDefault(true);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
@@ -144,9 +129,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     resize(500, minimumSize().height());
 }
 
-AddArchiveMailDialog::~AddArchiveMailDialog()
-{
-}
+AddArchiveMailDialog::~AddArchiveMailDialog() = default;
 
 void AddArchiveMailDialog::load(ArchiveMailInfo *info)
 {
@@ -183,7 +166,7 @@ void AddArchiveMailDialog::slotUpdateOkButton()
 
 void AddArchiveMailDialog::slotFolderChanged(const Akonadi::Collection &collection)
 {
-    Q_UNUSED(collection);
+    Q_UNUSED(collection)
     slotUpdateOkButton();
 }
 
@@ -236,4 +219,3 @@ int AddArchiveMailDialog::maximumArchiveCount() const
 {
     return mMaximumArchive->value();
 }
-

@@ -1,0 +1,90 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# Mincho Kondarev <mkondarev@yahoo.de>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"PO-Revision-Date: 2022-05-21 11:37+0200\n"
+"Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
+"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 22.04.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Добавяне"
+
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Модифициране"
+
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#, kde-format
+msgid "Remove"
+msgstr "Премахване"
+
+#: settingsdialog.cpp:100
+#, kde-format
+msgid "Do you really want to remove unified mailbox <b>%1</b>?"
+msgstr ""
+"Наистина ли искате да премахнете унифицирана пощенска кутия <b> %1 </b>?"
+
+#: settingsdialog.cpp:101
+#, kde-format
+msgid "Really Remove?"
+msgstr "Наистина ли да се премахне?"
+
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#, kde-format
+msgid "Unified Mailboxes"
+msgstr "Унифицирани пощенски кутии"
+
+#: unifiedmailboxagent.cpp:168
+#, kde-format
+msgid "Synchronizing unified mailbox %1"
+msgstr "Синхронизиране на унифицирана пощенска кутия %1"
+
+#: unifiedmailboxeditor.cpp:85
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure Unified Mailbox"
+msgstr "Конфигуриране на Унифицирани пощенски кутии"
+
+#: unifiedmailboxeditor.cpp:97
+#, kde-format
+msgid "Name:"
+msgstr "Име:"
+
+#: unifiedmailboxeditor.cpp:102
+#, kde-format
+msgid "Pick icon..."
+msgstr "Избор на икона..."
+
+#: unifiedmailboxeditor.cpp:103
+#, kde-format
+msgid "Icon:"
+msgstr "Икона:"
+
+#: unifiedmailboxmanager.cpp:294
+#, kde-format
+msgid "Inbox"
+msgstr "Входящи"
+
+#: unifiedmailboxmanager.cpp:301
+#, kde-format
+msgid "Sent"
+msgstr "Изпратени"
+
+#: unifiedmailboxmanager.cpp:308
+#, kde-format
+msgid "Drafts"
+msgstr "Чернови"

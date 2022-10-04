@@ -1,42 +1,24 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "newmessagejob.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 NewMessageJob::NewMessageJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
 {
-
 }
 
-NewMessageJob::~NewMessageJob()
-{
-
-}
+NewMessageJob::~NewMessageJob() = default;
 
 void NewMessageJob::start()
 {
@@ -44,7 +26,7 @@ void NewMessageJob::start()
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     mMsg->contentType()->setCharset("utf-8");
-    //set basic headers
+    // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc, "utf-8");
     }
@@ -57,11 +39,11 @@ void NewMessageJob::start()
 
     mMsg->assemble();
 
-    mCollection = mNewMessageJobSettings.mFolder ? mNewMessageJobSettings.mFolder->collection() : Akonadi::Collection();
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    mCollection = mNewMessageJobSettings.mCurrentCollection;
+    auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &NewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
-    parser->process(mMsg, mCollection);
+    parser->process(mMsg, mCollection.id());
 }
 
 void NewMessageJob::slotOpenComposer()
@@ -69,12 +51,17 @@ void NewMessageJob::slotOpenComposer()
     KMail::Composer *win = makeComposer(mMsg, false, false, KMail::Composer::New, mNewMessageJobSettings.mIdentity);
 
     win->setCollectionForNewMessage(mCollection);
-    //Add the attachment if we have one
+    // Add the attachment if we have one
+
     if (!mAttachURL.isEmpty() && mAttachURL.isValid()) {
-        win->addAttachment(mAttachURL, QString());
+        QVector<KMail::Composer::AttachmentInfo> infoList;
+        KMail::Composer::AttachmentInfo info;
+        info.url = mAttachURL;
+        infoList.append(info);
+        win->addAttachment(infoList, false);
     }
 
-    //only show window when required
+    // only show window when required
     if (!mNewMessageJobSettings.mHidden) {
         win->show();
     }

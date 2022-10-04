@@ -1,35 +1,22 @@
 /*
  * kmail: KDE mail client
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
- * Copyright (c) 2001 Aaron J. Seigo <aseigo@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 2001 Aaron J. Seigo <aseigo@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
-#ifndef KMAIL_SEARCHWINDOW_H
-#define KMAIL_SEARCHWINDOW_H
+#pragma once
 
-#include "MailCommon/SearchPattern"
 #include "ui_searchwindow.h"
+#include <MailCommon/SearchPattern>
 
-#include <AkonadiCore/collection.h>
-#include <AkonadiCore/item.h>
-#include <QDialog>
-#include <kxmlguiclient.h>
+#include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <KGuiItem>
+#include <KXMLGUIClient>
+#include <QDialog>
 #include <QTimer>
 
 class QCloseEvent;
@@ -56,15 +43,14 @@ class Message;
 
 namespace KMail
 {
-
 /**
-   * The SearchWindow class provides a dialog for triggering a search on
-   * folders and storing that search as a search folder. It shows the search
-   * results in a listview and allows triggering of operations such as printing
-   * or moving on them.
-   */
+ * The SearchWindow class provides a dialog for triggering a search on
+ * folders and storing that search as a search folder. It shows the search
+ * results in a listview and allows triggering of operations such as printing
+ * or moving on them.
+ */
 class SearchPatternWarning;
-class SearchWindow: public QDialog, public KXMLGUIClient
+class SearchWindow : public QDialog, public KXMLGUIClient
 {
     Q_OBJECT
 
@@ -81,7 +67,7 @@ public:
     /**
      * Destroys the search window.
      */
-    ~SearchWindow();
+    ~SearchWindow() override;
 
     /**
      * Changes the base folder for search operations to a different folder.
@@ -95,14 +81,14 @@ public:
      *
      * @return The list of currently selected search result messages.
      */
-    Akonadi::Item::List selectedMessages() const;
+    Q_REQUIRED_RESULT Akonadi::Item::List selectedMessages() const;
 
     /**
      * Provides access to the currently selected message.
      *
      * @return the currently selected message.
      */
-    Akonadi::Item selectedMessage() const;
+    Q_REQUIRED_RESULT Akonadi::Item selectedMessage() const;
 
     /**
      * Loads a search pattern into the search window, appending its rules to the current one.
@@ -111,14 +97,14 @@ public:
 
 protected:
     /** Reimplemented to react to Escape. */
-    void keyPressEvent(QKeyEvent *) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent *) override;
 
     /** Reimplemented to stop searching when the window is closed */
-    void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *) override;
 
     void createSearchModel();
 
-private Q_SLOTS:
+private:
     void updateCollectionStatistic(Akonadi::Collection::Id, const Akonadi::CollectionStatistics &);
 
     void slotClose();
@@ -156,6 +142,7 @@ private Q_SLOTS:
     void slotSearchCollectionsFetched(KJob *job);
 
     void slotJumpToFolder();
+
 private:
     void doSearch();
     QVector<qint64> checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive);
@@ -163,32 +150,38 @@ private:
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;
     QVector<Akonadi::Collection> mCollectionId;
     Akonadi::SearchQuery mQuery;
-    bool mCloseRequested;
-    int mSortColumn;
-    Qt::SortOrder mSortOrder;
+    Qt::SortOrder mSortOrder = Qt::AscendingOrder;
     Akonadi::Collection mFolder;
-    KJob *mSearchJob;
 
-    KMSearchMessageModel *mResultModel;
     Ui_SearchWindow mUi;
     KGuiItem mStartSearchGuiItem;
     KGuiItem mStopSearchGuiItem;
-    QPushButton *mSearchButton;
+    MailCommon::SearchPattern mSearchPattern;
 
-    QAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
-            *mForwardInlineAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
-            *mSaveAtchAction, *mJumpToFolderAction;
-    KActionMenu *mForwardActionMenu;
+    bool mCloseRequested = false;
+    int mSortColumn = 0;
+
+    KJob *mSearchJob = nullptr;
+    KMSearchMessageModel *mResultModel = nullptr;
+    QPushButton *mSearchButton = nullptr;
+
+    QAction *mReplyAction = nullptr;
+    QAction *mReplyAllAction = nullptr;
+    QAction *mReplyListAction = nullptr;
+    QAction *mSaveAsAction = nullptr;
+    QAction *mForwardInlineAction = nullptr;
+    QAction *mForwardAttachedAction = nullptr;
+    QAction *mPrintAction = nullptr;
+    QAction *mClearAction = nullptr;
+    QAction *mSaveAtchAction = nullptr;
+    QAction *mJumpToFolderAction = nullptr;
+    KActionMenu *mForwardActionMenu = nullptr;
     QTimer mRenameTimer;
     QByteArray mHeaderState;
     // not owned by us
-    KMMainWidget *mKMMainWidget;
-    MailCommon::SearchPattern mSearchPattern;
-    SearchPatternWarning *mSearchPatternWidget;
+    KMMainWidget *const mKMMainWidget;
+    SearchPatternWarning *mSearchPatternWidget = nullptr;
 
-    Akonadi::StandardMailActionManager *mAkonadiStandardAction;
+    Akonadi::StandardMailActionManager *mAkonadiStandardAction = nullptr;
 };
-
 }
-
-#endif

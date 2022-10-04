@@ -1,44 +1,24 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "opencomposerhiddenjob.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
 
-#include <KMime/Message>
 #include <MessageComposer/MessageHelper>
-#include <KStartupInfo>
 
 #include <TemplateParser/TemplateParserJob>
 
 OpenComposerHiddenJob::OpenComposerHiddenJob(QObject *parent)
-    : QObject(parent),
-      mMsg(nullptr)
+    : QObject(parent)
 {
-
 }
 
-OpenComposerHiddenJob::~OpenComposerHiddenJob()
-{
-
-}
+OpenComposerHiddenJob::~OpenComposerHiddenJob() = default;
 
 void OpenComposerHiddenJob::start()
 {
@@ -61,7 +41,7 @@ void OpenComposerHiddenJob::start()
         mMsg->setBody(mSettings.mBody.toUtf8());
         slotOpenComposer();
     } else {
-        TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+        auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &OpenComposerHiddenJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
         parser->process(KMime::Message::Ptr());
@@ -71,19 +51,13 @@ void OpenComposerHiddenJob::start()
 void OpenComposerHiddenJob::slotOpenComposer()
 {
     mMsg->assemble();
-    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New :
-            KMail::Composer::NoTemplate;
+    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New : KMail::Composer::NoTemplate;
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context);
     if (!mSettings.mHidden) {
-        cWin->show();
-        // Activate window - doing this instead of KWindowSystem::activateWindow(cWin->winId());
-        // so that it also works when called from KMailApplication::newInstance()
-#if defined Q_OS_X11 && ! defined K_WS_QTONLY
-        KStartupInfo::setNewStartupId(cWin, KStartupInfo::startupId());
-#endif
+        cWin->showAndActivateComposer();
     } else {
         // Always disable word wrap when we don't show the composer; otherwise,
-        // QTextEdit gets the widget size wrong and wraps much too early.
+        // *TextEdit gets the widget size wrong and wraps much too early.
         cWin->disableWordWrap();
         cWin->slotSendNow();
     }

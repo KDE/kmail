@@ -1,13 +1,10 @@
 /*
   This file is part of KTnef.
 
-  Copyright (C) 2002 Michael Goffioul <kdeprint@swing.be>
-  Copyright (c) 2012 Allen Winter <winter@kde.org>
+  SPDX-FileCopyrightText: 2002 Michael Goffioul <kdeprint@swing.be>
+  SPDX-FileCopyrightText: 2012 Allen Winter <winter@kde.org>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  SPDX-License-Identifier: GPL-2.0-or-later
 
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software Foundation,
@@ -19,39 +16,40 @@
 #include "ktnefview.h"
 #include "messagepropertydialog.h"
 
-#include <KTNEF/KTNEFAttach>
 #include <KTNEF/KTNEFMessage>
 #include <KTNEF/KTNEFParser>
 #include <KTNEF/KTNEFProperty>
 
-#include <KFileItemActions>
-#include <kservice.h>
-#include <QAction>
-#include <KActionCollection>
 #include "ktnef_debug.h"
+#include <KActionCollection>
 #include <KEditToolBar>
+#include <KFileItemActions>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/JobUiDelegateFactory>
+#include <KIO/OpenUrlJob>
 #include <KLocalizedString>
-#include <QMenu>
 #include <KMessageBox>
-#include <KRun>
 #include <KShortcutsDialog>
 #include <KStandardAction>
-#include <QTemporaryFile>
-#include <QStandardPaths>
-#include <QUrl>
+#include <QAction>
 #include <QIcon>
+#include <QMenu>
+#include <QPointer>
+#include <QStandardPaths>
+#include <QTemporaryFile>
+#include <QUrl>
 
-#include <KRecentFilesAction>
 #include <KConfigGroup>
+#include <KRecentFilesMenu>
 
+#include <KSharedConfig>
+#include <QActionGroup>
 #include <QContextMenuEvent>
 #include <QDir>
 #include <QDrag>
-#include <QMimeData>
-#include <KSharedConfig>
-#include <QMimeDatabase>
-#include <QMimeType>
 #include <QFileDialog>
+#include <QMimeData>
+#include <QMimeDatabase>
 #include <QStatusBar>
 
 KTNEFMain::KTNEFMain(QWidget *parent)
@@ -64,9 +62,6 @@ KTNEFMain::KTNEFMain(QWidget *parent)
 
     KConfigGroup config(KSharedConfig::openConfig(), "Settings");
     mDefaultDir = config.readPathEntry("defaultdir", QStringLiteral("/tmp/"));
-
-    config = KConfigGroup(KSharedConfig::openConfig(), "Recent Files");
-    mOpenRecentFileAction->loadEntries(config);
 
     mLastDir = mDefaultDir;
 
@@ -94,19 +89,19 @@ void KTNEFMain::setupActions()
 {
     KStandardAction::quit(this, &KTNEFMain::close, actionCollection());
 
-    QAction *action =
-        KStandardAction::keyBindings(this, &KTNEFMain::slotConfigureKeys, actionCollection());
-    action->setWhatsThis(
-        i18nc("@info:whatsthis",
-              "You will be presented with a dialog where you can configure "
-              "the application-wide shortcuts."));
+    QAction *action = KStandardAction::keyBindings(this, &KTNEFMain::slotConfigureKeys, actionCollection());
+    action->setWhatsThis(i18nc("@info:whatsthis",
+                               "You will be presented with a dialog where you can configure "
+                               "the application-wide shortcuts."));
 
     KStandardAction::configureToolbars(this, &KTNEFMain::slotEditToolbars, actionCollection());
 
     // File menu
     KStandardAction::open(this, &KTNEFMain::openFile, actionCollection());
 
-    mOpenRecentFileAction = KStandardAction::openRecent(this, &KTNEFMain::openRecentFile, actionCollection());
+    mOpenRecentFileMenu = new KRecentFilesMenu(this);
+    actionCollection()->addAction(QStringLiteral("ktnef_file_open_recent"), mOpenRecentFileMenu->menuAction());
+    connect(mOpenRecentFileMenu, &KRecentFilesMenu::urlTriggered, this, &KTNEFMain::openRecentFile);
 
     // Action menu
     QAction *openAction = actionCollection()->addAction(QStringLiteral("view_file"));
@@ -163,12 +158,11 @@ void KTNEFMain::setupActions()
     defFolderAction->setText(i18nc("@action:inmenu", "Default Folder..."));
     defFolderAction->setIcon(QIcon::fromTheme(QStringLiteral("folder-open")));
     connect(defFolderAction, &QAction::triggered, this, &KTNEFMain::optionDefaultDir);
-
 }
 
 void KTNEFMain::slotConfigureKeys()
 {
-    KShortcutsDialog::configure(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
+    KShortcutsDialog::showDialog(actionCollection(), KShortcutsEditor::LetterShortcutsAllowed, this);
 }
 
 void KTNEFMain::setupStatusbar()
@@ -184,11 +178,9 @@ void KTNEFMain::setupTNEF()
 
     setCentralWidget(mView);
 
-    connect(mView, &QTreeWidget::itemSelectionChanged,
-            this, &KTNEFMain::viewSelectionChanged);
+    connect(mView, &QTreeWidget::itemSelectionChanged, this, &KTNEFMain::viewSelectionChanged);
 
-    connect(mView, &QTreeWidget::itemDoubleClicked,
-            this, &KTNEFMain::viewDoubleClicked);
+    connect(mView, &QTreeWidget::itemDoubleClicked, this, &KTNEFMain::viewDoubleClicked);
 }
 
 void KTNEFMain::loadFile(const QString &filename)
@@ -198,26 +190,22 @@ void KTNEFMain::loadFile(const QString &filename)
     if (!mParser->openFile(filename)) {
         mView->setAttachments(QList<KTNEFAttach *>());
         enableExtractAll(false);
-        KMessageBox::error(
-            this,
-            i18nc("@info",
-                  "Unable to open file \"%1\".", filename));
+        KMessageBox::error(this, i18nc("@info", "Unable to open file \"%1\".", filename));
     } else {
         addRecentFile(QUrl::fromLocalFile(filename));
-        QList<KTNEFAttach *> list = mParser->message()->attachmentList();
+        const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QString msg;
-        msg = i18ncp("@info:status",
-                     "%1 attachment found", "%1 attachments found", list.count());
+        msg = i18ncp("@info:status", "%1 attachment found", "%1 attachments found", list.count());
         statusBar()->showMessage(msg);
         mView->setAttachments(list);
-        enableExtractAll((list.count() > 0));
+        enableExtractAll(!list.isEmpty());
         enableSingleAction(false);
     }
 }
 
 void KTNEFMain::openFile()
 {
-    QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File"));
+    const QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File"));
     if (!filename.isEmpty()) {
         loadFile(filename);
     }
@@ -230,10 +218,7 @@ void KTNEFMain::openRecentFile(const QUrl &url)
 
 void KTNEFMain::addRecentFile(const QUrl &url)
 {
-    mOpenRecentFileAction->addUrl(url);
-    KConfigGroup config(KSharedConfig::openConfig(), "Recent Files");
-    mOpenRecentFileAction->saveEntries(config);
-    config.sync();
+    mOpenRecentFileMenu->addUrl(url);
 }
 
 void KTNEFMain::viewFile()
@@ -246,20 +231,18 @@ void KTNEFMain::viewFile()
         if (mimename.isEmpty() || mimename == QLatin1String("application/octet-stream")) {
             qCDebug(KTNEFAPPS_LOG) << "No mime type found in attachment object, trying to guess...";
             QMimeDatabase db;
-            db.mimeTypeForFile(url.path(), QMimeDatabase::MatchExtension).name();
+            mimename = db.mimeTypeForFile(url.path(), QMimeDatabase::MatchExtension).name();
             qCDebug(KTNEFAPPS_LOG) << "Detected mime type: " << mimename;
         } else {
             qCDebug(KTNEFAPPS_LOG) << "Mime type from attachment object: " << mimename;
         }
-
-        KRun::runUrl(url, mimename, this, true);
+        auto job = new KIO::OpenUrlJob(url, mimename);
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->setDeleteTemporaryFile(true);
+        job->start();
     } else {
-        KMessageBox::information(
-            this,
-            i18nc("@info",
-                  "There is no file selected. Please select a file an try again."));
+        KMessageBox::information(this, i18nc("@info", "There is no file selected. Please select a file an try again."));
     }
-
 }
 
 QString KTNEFMain::extractTemp(KTNEFAttach *att)
@@ -279,17 +262,17 @@ QString KTNEFMain::extractTemp(KTNEFAttach *att)
 void KTNEFMain::viewFileAs()
 {
     if (!mView->getSelection().isEmpty()) {
-        QList<QUrl> list;
-        list.append(QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0))));
+        const QList<QUrl> list{QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0)))};
 
         if (!list.isEmpty()) {
-            KRun::displayOpenWithDialog(list, this);
+            // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
+            auto job = new KIO::ApplicationLauncherJob();
+            job->setUrls(list);
+            job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+            job->start();
         }
     } else {
-        KMessageBox::information(
-            this,
-            i18nc("@info",
-                  "There is no file selected. Please select a file an try again."));
+        KMessageBox::information(this, i18nc("@info", "There is no file selected. Please select a file an try again."));
     }
 }
 
@@ -300,7 +283,7 @@ void KTNEFMain::extractFile()
 
 void KTNEFMain::extractFileTo()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(),  mLastDir);
+    const QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         extractTo(dir);
         mLastDir = dir;
@@ -309,19 +292,16 @@ void KTNEFMain::extractFileTo()
 
 void KTNEFMain::extractAllFiles()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(),  mLastDir);
+    QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         mLastDir = dir;
-        dir.append(QLatin1String("/"));
-        QList<KTNEFAttach *> list = mParser->message()->attachmentList();
+        dir.append(QLatin1Char('/'));
+        const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QList<KTNEFAttach *>::ConstIterator it;
         QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
         for (it = list.constBegin(); it != end; ++it) {
             if (!mParser->extractFileTo((*it)->name(), dir)) {
-                KMessageBox::error(
-                    this,
-                    i18nc("@info",
-                          "Unable to extract file \"%1\".", (*it)->name()));
+                KMessageBox::error(this, i18nc("@info", "Unable to extract file \"%1\".", (*it)->name()));
                 return;
             }
         }
@@ -338,7 +318,7 @@ void KTNEFMain::propertiesFile()
 
 void KTNEFMain::optionDefaultDir()
 {
-    const QString dirname = QFileDialog::getExistingDirectory(this, QString(),  mDefaultDir);
+    const QString dirname = QFileDialog::getExistingDirectory(this, QString(), mDefaultDir);
     if (!dirname.isEmpty()) {
         mDefaultDir = dirname;
 
@@ -389,52 +369,41 @@ void KTNEFMain::cleanup()
 void KTNEFMain::extractTo(const QString &dirname)
 {
     QString dir = dirname;
-    if (dir.right(1) != QLatin1String("/")) {
-        dir.append(QLatin1String("/"));
+    if (dir.right(1) != QLatin1Char('/')) {
+        dir.append(QLatin1Char('/'));
     }
-    QList<KTNEFAttach *>list = mView->getSelection();
+    const QList<KTNEFAttach *> list = mView->getSelection();
     QList<KTNEFAttach *>::ConstIterator it;
     QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
     for (it = list.constBegin(); it != end; ++it) {
         if (!mParser->extractFileTo((*it)->name(), dir)) {
-            KMessageBox::error(
-                this,
-                i18nc("@info",
-                      "Unable to extract file \"%1\".", (*it)->name()));
+            KMessageBox::error(this, i18nc("@info", "Unable to extract file \"%1\".", (*it)->name()));
             return;
         }
     }
 }
 
-/* This breaks the saveMainWindowSettings stuff....
-  void KTNEFMain::closeEvent(QCloseEvent *e)
-{
-  e->accept();
-}*/
-
 void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
 {
-    QList<KTNEFAttach *> list = mView->getSelection();
-    if (!list.count()) {
+    const QList<KTNEFAttach *> list = mView->getSelection();
+    if (list.isEmpty()) {
         return;
     }
 
-    QAction *prop = 0;
-    QMenu *menu = new QMenu();
+    QAction *prop = nullptr;
+    QMenu menu(this);
     if (list.count() == 1) {
-        createOpenWithMenu(menu);
-        menu->addSeparator();
+        createOpenWithMenu(&menu);
+        menu.addSeparator();
     }
-    QAction *extract = menu->addAction(i18nc("@action:inmenu", "Extract"));
-    QAction *extractTo = menu->addAction(QIcon::fromTheme(QStringLiteral("archive-extract")),
-                                         i18nc("@action:inmenu", "Extract To..."));
+    QAction *extract = menu.addAction(i18nc("@action:inmenu", "Extract"));
+    QAction *extractTo = menu.addAction(QIcon::fromTheme(QStringLiteral("archive-extract")), i18nc("@action:inmenu", "Extract To..."));
     if (list.count() == 1) {
-        menu->addSeparator();
-        prop = menu->addAction(QIcon::fromTheme(QStringLiteral("document-properties")),
-                               i18nc("@action:inmenu", "Properties"));
+        menu.addSeparator();
+        prop = menu.addAction(QIcon::fromTheme(QStringLiteral("document-properties")), i18nc("@action:inmenu", "Properties"));
     }
 
-    QAction *a = menu->exec(event->globalPos(), 0);
+    QAction *a = menu.exec(event->globalPos(), nullptr);
     if (a) {
         if (a == extract) {
             extractFile();
@@ -444,7 +413,6 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
             propertiesFile();
         }
     }
-    delete menu;
 }
 
 void KTNEFMain::viewDoubleClicked(QTreeWidgetItem *item)
@@ -454,20 +422,19 @@ void KTNEFMain::viewDoubleClicked(QTreeWidgetItem *item)
     }
 }
 
-void KTNEFMain::viewDragRequested(const QList<KTNEFAttach *> &list)
+void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
 {
     QList<QUrl> urlList;
-    QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
-    for (QList<KTNEFAttach *>::ConstIterator it = list.constBegin();
-            it != end; ++it) {
-        urlList << QUrl::fromLocalFile(extractTemp(*it));
+    urlList.reserve(list.count());
+    for (const auto &att : list) {
+        urlList << QUrl::fromLocalFile(extractTemp(att));
     }
 
     if (!list.isEmpty()) {
-        QMimeData *mimeData = new QMimeData;
+        auto mimeData = new QMimeData;
         mimeData->setUrls(urlList);
 
-        QDrag *drag = new QDrag(this);
+        auto drag = new QDrag(this);
         drag->setMimeData(mimeData);
     }
 }
@@ -477,9 +444,10 @@ void KTNEFMain::slotEditToolbars()
     KConfigGroup grp = KSharedConfig::openConfig()->group("MainWindow");
     saveMainWindowSettings(grp);
 
-    KEditToolBar dlg(factory());
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
-    dlg.exec();
+    QPointer<KEditToolBar> dlg = new KEditToolBar(factory());
+    connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KTNEFMain::slotNewToolbarConfig);
+    dlg->exec();
+    delete dlg;
 }
 
 void KTNEFMain::slotNewToolbarConfig()
@@ -500,22 +468,22 @@ void KTNEFMain::slotShowMessageText()
         return;
     }
 
-    QString rtf = mParser->message()->rtfString();
+    const QString rtf = mParser->message()->rtfString();
     if (!rtf.isEmpty()) {
-        QTemporaryFile *tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/") + QLatin1String("ktnef_XXXXXX.rtf"));
+        auto tmpFile =
+            new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/") + QLatin1String("ktnef_XXXXXX.rtf"));
         tmpFile->setAutoRemove(false);
         tmpFile->open();
         tmpFile->setPermissions(QFile::ReadUser);
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
-
-        KRun::runUrl(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"), this, true);
+        auto job = new KIO::OpenUrlJob(QUrl::fromLocalFile(tmpFile->fileName()), QStringLiteral("text/rtf"));
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->setDeleteTemporaryFile(true);
+        job->start();
         delete tmpFile;
     } else {
-        KMessageBox::error(
-            this,
-            i18nc("@info",
-                  "The message does not contain any Rich Text data."));
+        KMessageBox::error(this, i18nc("@info", "The message does not contain any Rich Text data."));
     }
 }
 
@@ -525,18 +493,15 @@ void KTNEFMain::slotSaveMessageText()
         return;
     }
 
-    QString rtf = mParser->message()->rtfString();
-    QString filename = QFileDialog::getSaveFileName(this, QString(), QString(), QString());
+    const QString rtf = mParser->message()->rtfString();
+    const QString filename = QFileDialog::getSaveFileName(this, QString(), QString(), QString());
     if (!filename.isEmpty()) {
         QFile f(filename);
         if (f.open(QIODevice::WriteOnly)) {
             QTextStream t(&f);
             t << rtf;
         } else {
-            KMessageBox::error(
-                this,
-                i18nc("@info",
-                      "Unable to open file \"%1\" for writing, check file permissions.", filename));
+            KMessageBox::error(this, i18nc("@info", "Unable to open file \"%1\" for writing, check file permissions.", filename));
         }
     }
 }
@@ -545,14 +510,12 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
 {
     if (!mView->getSelection().isEmpty()) {
         KTNEFAttach *attach = mView->getSelection().at(0);
-        QUrl url = QUrl::fromLocalFile(QLatin1String("file:") + extractTemp(attach));
-        QList<QUrl> lst;
-        lst.append(url);
-        if (offer) {
-            KRun::runService(*offer, lst, this, false);
-        } else {
-            KRun::displayOpenWithDialog(lst, this, false);
-        }
+        const QUrl url = QUrl::fromLocalFile(extractTemp(attach));
+        const QList<QUrl> lst{url};
+        auto job = new KIO::ApplicationLauncherJob(offer);
+        job->setUrls(lst);
+        job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
+        job->start();
     }
 }
 
@@ -565,7 +528,7 @@ QAction *KTNEFMain::createAppAction(const KService::Ptr &service, bool singleOff
         actionName = i18nc("@item:inmenu Open With, %1 is application name", "%1", actionName);
     }
 
-    QAction *act = new QAction(parent);
+    auto act = new QAction(parent);
     act->setIcon(QIcon::fromTheme(service->icon()));
     act->setText(actionName);
     actionGroup->addAction(act);
@@ -579,12 +542,11 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         return;
     }
     KTNEFAttach *attach = mView->getSelection().at(0);
-    QString mimename(attach->mimeTag());
-
-    const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename, QString());
+    const QString mimename(attach->mimeTag());
+    const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename);
     if (!offers.isEmpty()) {
         QMenu *menu = topMenu;
-        QActionGroup *actionGroup = new QActionGroup(menu);
+        auto actionGroup = new QActionGroup(menu);
         connect(actionGroup, &QActionGroup::triggered, this, &KTNEFMain::slotOpenWithAction);
 
         if (offers.count() > 1) { // submenu 'open with'
@@ -592,13 +554,12 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
             menu->menuAction()->setObjectName(QStringLiteral("openWith_submenu")); // for the unittest
             topMenu->addMenu(menu);
         }
-
-        KService::List::ConstIterator it = offers.constBegin();
-        KService::List::ConstIterator end = offers.constEnd();
-        for (; it != end; ++it) {
-            QAction *act = createAppAction(*it,
+        for (const auto &s : offers) {
+            QAction *act = createAppAction(s,
                                            // no submenu -> prefix single offer
-                                           menu == topMenu, actionGroup, menu);
+                                           menu == topMenu,
+                                           actionGroup,
+                                           menu);
             menu->addAction(act);
         }
 
@@ -609,12 +570,12 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         } else {
             openWithActionName = i18nc("@title:menu", "&Open With...");
         }
-        QAction *openWithAct = new QAction(menu);
+        auto openWithAct = new QAction(menu);
         openWithAct->setText(openWithActionName);
         connect(openWithAct, &QAction::triggered, this, &KTNEFMain::viewFileAs);
         menu->addAction(openWithAct);
     } else { // no app offers -> Open With...
-        QAction *act = new QAction(topMenu);
+        auto act = new QAction(topMenu);
         act->setText(i18nc("@title:menu", "&Open With..."));
         connect(act, &QAction::triggered, this, &KTNEFMain::viewFileAs);
         topMenu->addAction(act);
@@ -623,7 +584,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
 
 void KTNEFMain::slotOpenWithAction(QAction *act)
 {
-    KService::Ptr app = act->data().value<KService::Ptr>();
+    auto app = act->data().value<KService::Ptr>();
 
     openWith(app);
 }

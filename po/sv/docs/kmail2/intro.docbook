@@ -1,0 +1,139 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Bryant</surname
+> </author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2020-08-16</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Inledning</title>
+
+<screenshot>
+<screeninfo
+>Välkomstskärm i &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Välkomstskärm i &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Välkomstskärm i &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>&kmail;-gruppen välkomnar dig till &kmail;, ett användarvänligt e-postprogram av &kde;. Vårt mål är att göra ett program som är både tilltalande och intuitivt utan att offra kraftfullhet. </para>
+
+<para
+>Om du aldrig har ställt in en e-postklient på ett &UNIX;-system tidigare, föreslår vi att du läser igenom avsnittet <link linkend="getting-started"
+>Att komma igång</link
+> först.</para>
+<sect1 id="features">
+<title
+>Några funktioner i &kmail;</title>
+<para
+>Här är en kort beskrivning av de enastående funktionerna tillgängliga i &kmail;</para>
+<itemizedlist>
+<listitem>
+<para
+>Du behöver inte använda musen när du arbetar med &kmail;. Allt kan göras med <link linkend="keyboard-shortcuts"
+>Snabbtangenter</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Även om &kmail; är mycket tillförlitligt bör du ha säkerhetskopior av dina brev, dvs. använd något av export- eller arkiveringsalternativen som listas under <link linkend="backups"
+>Säkerhetskopieringsalternativ</link
+> för att säkerhetskopiera inställningar och e-post regelbundet.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; gör det enkelt att importera e-post från många olika e-postprogram. Alternativen beskrivs i <link linkend="import-restore"
+>Återställ och importera i &kmail;</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Du kan dela upp brev i olika kategorier genom att använda &kmail;s omfattande alternativ för <link linkend="folders"
+>korgar</link
+>. Funktionerna omfattar särskilt hantering för angivna korgar: sändlistor, ACL (bara &IMAP;) och arkivering.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>Du kan komplettera korginställningen med mycket anpassningsbara <link linkend="filters"
+>filter</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Normalt detekterar &kmail; vanliga <link linkend="configure-security-email-scams"
+>bedrägeribrev</link
+>. Du kan också stå emot skräppost och virus med genom att skapa filter som arbetar med externa program för att söka igenom brev när de anländer. Se <link linkend="the-anti-spam-wizard"
+>Guide för eliminering av skräppost</link
+> och <link linkend="the-anti-virus-wizard"
+>Guide för eliminering av virus</link
+> för detaljerad information.</para>
+</listitem>
+<listitem>
+<para
+>Det är enkelt att hantera flera e-postkonton genom att använda olika <link linkend="configure-identity"
+>identiteter</link
+>.</para>
+</listitem>
+</itemizedlist>
+<para
+>Vi hoppas att du blir nöjd med &kmail;!</para>
+<sect2 id="getting-help">
+<title
+>Skaffa hjälp</title>
+ 
+<para
+>&kmail;s hemsida finns på <ulink url="https://userbase.kde.org/KMail"
+>http://userbase.kde.org/KMail</ulink
+>. Där hittar du användbara länkar, t.ex. till användarnas och utvecklarnas e-postlistor, och till gemenskapens Wiki-sidor. Rapportera eventuella fel i &kmail; genom att använda <menuchoice
+><guimenu
+>Hjälp</guimenu
+> <guimenuitem
+>Rapportera fel...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

@@ -1,45 +1,35 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "potentialphishingemailjob.h"
-#include "../../helper_p.h"
+#include "kmail_debug.h"
 #include <KEmailAddress>
+#include <PimCommon/PimUtil>
+
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
 {
-
 }
 
-PotentialPhishingEmailJob::~PotentialPhishingEmailJob()
-{
-
-}
+PotentialPhishingEmailJob::~PotentialPhishingEmailJob() = default;
 
 void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 {
     mEmailWhiteList = emails;
 }
 
-void PotentialPhishingEmailJob::setEmails(const QStringList &emails)
+void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &list)
 {
-    mEmails = emails;
+    mEmails = PimCommon::Util::generateEmailList(list);
+}
+
+QStringList PotentialPhishingEmailJob::checkEmails() const
+{
+    return mEmails;
 }
 
 QStringList PotentialPhishingEmailJob::potentialPhisingEmails() const
@@ -51,15 +41,20 @@ bool PotentialPhishingEmailJob::start()
 {
     mPotentialPhisingEmails.clear();
     if (mEmails.isEmpty()) {
+        Q_EMIT potentialPhishingEmailsFound(mPotentialPhisingEmails);
         deleteLater();
         return false;
     }
-    for (const QString &addr : qAsConst(mEmails)) {
+    for (const QString &addr : std::as_const(mEmails)) {
         if (!mEmailWhiteList.contains(addr.trimmed())) {
-            QString tname, temail;
-            KEmailAddress::extractEmailAddressAndName(addr, temail, tname);    // ignore return value
+            QString tname;
+            QString temail;
+            KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value
             // which is always false
-            if (tname.contains(QLatin1Char('@'))) { //Potential address
+            if (tname.startsWith(QLatin1Char('@'))) { // Special case when name is just @foo <...> it mustn't recognize as a valid email
+                continue;
+            }
+            if (tname.contains(QLatin1Char('@'))) { // Potential address
                 if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
                     tname = tname.mid(1, tname.length() - 2);
                 }

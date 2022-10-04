@@ -1,91 +1,64 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2011-2017 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
  *
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Parts based on KMail code by:
- * Copyright (c) 2003 Ingo Kloecker <kloecker@kde.org>
- * Copyright (c) 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
+ * SPDX-FileCopyrightText: 2003 Ingo Kloecker <kloecker@kde.org>
+ * SPDX-FileCopyrightText: 2007 Thomas McGuire <Thomas.McGuire@gmx.net>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #include "attachmentview.h"
-#include "helper_p.h"
+
 #include "kmkernel.h"
 #include "util.h"
 
 #include <MessageComposer/AttachmentModel>
 
 #include <QContextMenuEvent>
+#include <QDrag>
+#include <QHBoxLayout>
 #include <QHeaderView>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QSortFilterProxyModel>
 #include <QToolButton>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QDrag>
 
-#include <KConfigGroup>
-#include <QIcon>
 #include <KLocalizedString>
+#include <QIcon>
 
+#include <KIO/Global>
 #include <MessageCore/AttachmentPart>
-#include <KFormat>
 using MessageCore::AttachmentPart;
 
 using namespace KMail;
 
-class KMail::AttachmentView::Private
-{
-public:
-    Private(AttachmentView *qq)
-        : model(nullptr), q(qq)
-    {
-        widget = new QWidget();
-        QHBoxLayout *lay = new QHBoxLayout;
-        lay->setMargin(0);
-        widget->setLayout(lay);
-        toolButton = new QToolButton;
-        connect(toolButton, &QAbstractButton::toggled, q, &AttachmentView::slotShowHideAttchementList);
-        toolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
-        toolButton->setAutoRaise(true);
-        toolButton->setCheckable(true);
-        lay->addWidget(toolButton);
-        infoAttachment = new QLabel;
-        infoAttachment->setMargin(0);
-        lay->addWidget(infoAttachment);
-    }
-
-    MessageComposer::AttachmentModel *model;
-    QToolButton *toolButton;
-    QLabel *infoAttachment;
-    QWidget *widget;
-    AttachmentView *q;
-};
-
 AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent)
     : QTreeView(parent)
-    , d(new Private(this))
+    , mModel(model)
+    , mToolButton(new QToolButton(this))
+    , mInfoAttachment(new QLabel(this))
+    , mWidget(new QWidget())
+    , grp(KMKernel::self()->config()->group("AttachmentView"))
 {
-    d->model = model;
+    auto lay = new QHBoxLayout(mWidget);
+    lay->setContentsMargins({});
+    connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
+    mToolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
+    mToolButton->setAutoRaise(true);
+    mToolButton->setCheckable(true);
+    lay->addWidget(mToolButton);
+    mInfoAttachment->setContentsMargins({});
+    mInfoAttachment->setTextFormat(Qt::PlainText);
+    lay->addWidget(mInfoAttachment);
+
     connect(model, &MessageComposer::AttachmentModel::encryptEnabled, this, &AttachmentView::setEncryptEnabled);
     connect(model, &MessageComposer::AttachmentModel::signEnabled, this, &AttachmentView::setSignEnabled);
 
-    QSortFilterProxyModel *sortModel = new QSortFilterProxyModel(this);
+    auto sortModel = new QSortFilterProxyModel(this);
     sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     sortModel->setSourceModel(model);
     setModel(sortModel);
@@ -98,10 +71,11 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     setUniformRowHeights(true);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setDragDropMode(QAbstractItemView::DragDrop);
+    setEditTriggers(QAbstractItemView::EditKeyPressed);
     setDropIndicatorShown(false);
     setSortingEnabled(true);
 
-    header()->setResizeMode(QHeaderView::Interactive);
+    header()->setSectionResizeMode(QHeaderView::Interactive);
     header()->setStretchLastSection(false);
     restoreHeaderState();
     setColumnWidth(0, 200);
@@ -110,25 +84,22 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
 AttachmentView::~AttachmentView()
 {
     saveHeaderState();
-    delete d;
 }
 
 void AttachmentView::restoreHeaderState()
 {
-    KConfigGroup grp(KMKernel::self()->config(), "AttachmentView");
     header()->restoreState(grp.readEntry("State", QByteArray()));
 }
 
 void AttachmentView::saveHeaderState()
 {
-    KConfigGroup grp(KMKernel::self()->config(), "AttachmentView");
     grp.writeEntry("State", header()->saveState());
     grp.sync();
 }
 
 void AttachmentView::contextMenuEvent(QContextMenuEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     Q_EMIT contextMenuRequested();
 }
 
@@ -141,13 +112,14 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         const QModelIndexList selectedIndexes = selectionModel()->selectedRows();
         toRemove.reserve(selectedIndexes.count());
         for (const QModelIndex &index : selectedIndexes) {
-            AttachmentPart::Ptr part = model()->data(
-                                           index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+            auto part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
             toRemove.append(part);
         }
-        for (const AttachmentPart::Ptr &part : qAsConst(toRemove)) {
-            d->model->removeAttachment(part);
+        for (const AttachmentPart::Ptr &part : std::as_const(toRemove)) {
+            mModel->removeAttachment(part);
         }
+    } else {
+        QTreeView::keyPressEvent(event);
     }
 }
 
@@ -175,42 +147,41 @@ void AttachmentView::hideIfEmpty()
 {
     const bool needToShowIt = (model()->rowCount() > 0);
     setVisible(needToShowIt);
-    d->toolButton->setChecked(needToShowIt);
+    mToolButton->setChecked(needToShowIt);
     widget()->setVisible(needToShowIt);
     if (needToShowIt) {
         updateAttachmentLabel();
     } else {
-        d->infoAttachment->clear();
+        mInfoAttachment->clear();
     }
     Q_EMIT modified(true);
 }
 
 void AttachmentView::updateAttachmentLabel()
 {
-    const MessageCore::AttachmentPart::List list = d->model->attachments();
+    const MessageCore::AttachmentPart::List list = mModel->attachments();
     qint64 size = 0;
     for (const MessageCore::AttachmentPart::Ptr &part : list) {
         size += part->size();
     }
-    d->infoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KFormat().formatByteSize(qMax(0LL, size))));
+    mInfoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KIO::convertSize(qMax(0LL, size))));
 }
 
 void AttachmentView::selectNewAttachment()
 {
     if (selectionModel()->selectedRows().isEmpty()) {
-        selectionModel()->select(selectionModel()->currentIndex(),
-                                 QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        selectionModel()->select(selectionModel()->currentIndex(), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
 }
 
 void AttachmentView::startDrag(Qt::DropActions supportedActions)
 {
-    Q_UNUSED(supportedActions);
+    Q_UNUSED(supportedActions)
 
     const QModelIndexList selection = selectionModel()->selectedRows();
     if (!selection.isEmpty()) {
         QMimeData *mimeData = model()->mimeData(selection);
-        QDrag *drag = new QDrag(this);
+        auto drag = new QDrag(this);
         drag->setMimeData(mimeData);
         drag->exec(Qt::CopyAction);
     }
@@ -218,15 +189,15 @@ void AttachmentView::startDrag(Qt::DropActions supportedActions)
 
 QWidget *AttachmentView::widget() const
 {
-    return d->widget;
+    return mWidget;
 }
 
 void AttachmentView::slotShowHideAttchementList(bool show)
 {
     setVisible(show);
     if (show) {
-        d->toolButton->setToolTip(i18n("Hide attachment list"));
+        mToolButton->setToolTip(i18n("Hide attachment list"));
     } else {
-        d->toolButton->setToolTip(i18n("Show attachment list"));
+        mToolButton->setToolTip(i18n("Show attachment list"));
     }
 }

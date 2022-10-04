@@ -1,36 +1,22 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef SENDLATERCONFIGUREDIALOG_H
-#define SENDLATERCONFIGUREDIALOG_H
+#pragma once
 
+#include <Akonadi/Item>
 #include <QDialog>
-#include <AkonadiCore/Item>
 class SendLaterWidget;
 class SendLaterConfigureDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit SendLaterConfigureDialog(QWidget *parent = nullptr);
-    ~SendLaterConfigureDialog();
+    ~SendLaterConfigureDialog() override;
 
-    QList<Akonadi::Item::Id> messagesToRemove() const;
+    Q_REQUIRED_RESULT QVector<Akonadi::Item::Id> messagesToRemove() const;
 
 public Q_SLOTS:
     void slotNeedToReloadConfig();
@@ -42,7 +28,5 @@ private:
     void slotSave();
     void readConfig();
     void writeConfig();
-    SendLaterWidget *mWidget;
+    SendLaterWidget *const mWidget;
 };
-
-#endif // SENDLATERCONFIGUREDIALOG_H

@@ -1,22 +1,10 @@
 /*
-  Copyright (c) 2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
-#ifndef CONFIGUREPLUGINPAGE_H
-#define CONFIGUREPLUGINPAGE_H
+#pragma once
 
 #include "configuredialog_p.h"
 
@@ -29,16 +17,15 @@ class KMAIL_EXPORT ConfigurePluginPage : public ConfigModule
 {
     Q_OBJECT
 public:
-    explicit ConfigurePluginPage(QWidget *parent);
-    ~ConfigurePluginPage();
+    explicit ConfigurePluginPage(QWidget *parent, const QVariantList &args = {});
+    ~ConfigurePluginPage() override;
 
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-    void load() Q_DECL_OVERRIDE;
-    void save() Q_DECL_OVERRIDE;
-    void defaults() Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QString helpAnchor() const override;
+    void load() override;
+    void save() override;
+    void defaults() override;
+
 private:
     void slotConfigureChanged();
-    PimCommon::ConfigurePluginsWidget *mConfigurePlugins;
+    PimCommon::ConfigurePluginsWidget *const mConfigurePlugins;
 };
-
-#endif // CONFIGUREPLUGINPAGE_H

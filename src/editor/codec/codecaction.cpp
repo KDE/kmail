@@ -1,25 +1,12 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 // Own
 #include "codecaction.h"
-#include "helper_p.h"
 
 // KMail
 #include "codecmanager.h"
@@ -27,39 +14,27 @@
 #include <MimeTreeParser/NodeHelper>
 
 #include <KCharsets>
-// Qt
 #include <QTextCodec>
+// Qt
 
 // KDE libs
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QIcon>
-
-class CodecAction::Private
-{
-public:
-    Private(CodecAction::Mode mod, CodecAction *qq)
-        : mode(mod)
-        , q(qq)
-    {
-    }
-
-    const CodecAction::Mode mode;
-    CodecAction *const q;
-};
+#include <QTextCodec>
 
 CodecAction::CodecAction(Mode mode, QObject *parent)
     : KCodecAction(parent, mode == ReaderMode)
-    , d(new Private(mode, this))
+    , mMode(mode)
 {
     if (mode == ComposerMode) {
         // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
         // FIXME is there a better way?
         QList<QAction *> oldActions = actions();
         removeAllActions();
-        addAction(oldActions.takeFirst());   // 'Default'
+        addAction(oldActions.takeFirst()); // 'Default'
         addAction(i18nc("Encodings menu", "us-ascii"));
-        for (QAction *a : qAsConst(oldActions)) {
+        for (QAction *a : std::as_const(oldActions)) {
             addAction(a);
         }
     } else if (mode == ReaderMode) {
@@ -71,14 +46,11 @@ CodecAction::CodecAction(Mode mode, QObject *parent)
     setText(i18nc("Menu item", "Encoding"));
 }
 
-CodecAction::~CodecAction()
-{
-    delete d;
-}
+CodecAction::~CodecAction() = default;
 
-QList<QByteArray> CodecAction::mimeCharsets() const
+QVector<QByteArray> CodecAction::mimeCharsets() const
 {
-    QList<QByteArray> ret;
+    QVector<QByteArray> ret;
     qCDebug(KMAIL_LOG) << "current item" << currentItem() << currentText();
     if (currentItem() == 0) {
         // 'Default' selected: return the preferred charsets.
@@ -106,7 +78,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
 {
     const QList<QAction *> lstActs = root->actions();
     for (QAction *action : lstActs) {
-        KSelectAction *subMenu = qobject_cast<KSelectAction *>(action);
+        auto subMenu = qobject_cast<KSelectAction *>(action);
         if (subMenu) {
             const QString codecNameToSet = selectCharset(subMenu, encoding);
             if (!codecNameToSet.isEmpty()) {
@@ -114,14 +86,12 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
             }
         } else {
             const QString fixedActionText = MimeTreeParser::NodeHelper::fixEncoding(action->text());
-            if (KCharsets::charsets()->codecForName(
-                        KCharsets::charsets()->encodingForName(fixedActionText))
-                    == KCharsets::charsets()->codecForName(encoding)) {
+            if (KCharsets::charsets()->codecForName(KCharsets::charsets()->encodingForName(fixedActionText)) == KCharsets::charsets()->codecForName(encoding)) {
                 return action->text();
             }
         }
     }
-    return QString();
+    return {};
 }
 
 void CodecAction::setCharset(const QByteArray &charset)

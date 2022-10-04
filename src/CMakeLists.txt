@@ -1,7 +1,9 @@
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"kmail\")
 
-qt5_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
-qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
+qt_generate_dbus_interface(kmkernel.h org.kde.kmail.kmail.xml OPTIONS -a)
+qt_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
 
 add_custom_target(kmail_xml ALL
     DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
@@ -9,47 +11,53 @@ add_custom_target(kmail_xml ALL
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
     )
 
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-    ${GPGME_INCLUDES}
-    ${AKONADI_INCLUDE_DIR}
-    )
+if (TARGET KUserFeedbackWidgets)
+    add_definitions(-DWITH_KUSERFEEDBACK)
+endif()
 
-
-
-
-add_subdirectory(about)
 add_subdirectory(pics)
 add_subdirectory(icons)
-add_subdirectory(kcm_kpimidentities)
-add_subdirectory(kconf_update)
 add_subdirectory(kontactplugin)
 
 ########### kmailprivate ###############
 
 
-set(kmailprivate_attributes_LIB_SRCS
-    attributes/taskattribute.cpp
+
+
+set(kmail_common_SRCS)
+ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
+        DESCRIPTION "kmail (kmail)"
+        OLD_CATEGORY_NAMES log_kmail
+        EXPORT KMAIL
     )
 
-set(kmailprivate_folderarchive_LIB_SRCS
+add_library(kmailprivate)
+if (TARGET KUserFeedbackWidgets)
+    target_sources(kmailprivate PRIVATE
+        userfeedback/accountinfosource.cpp
+        userfeedback/plugininfosource.cpp
+        userfeedback/kmailuserfeedbackprovider.cpp
+        userfeedback/accountinfosource.h
+        userfeedback/plugininfosource.h
+        userfeedback/kmailuserfeedbackprovider.h
+        )
+endif()
+
+target_sources(kmailprivate PRIVATE
+    ${kmail_common_SRCS}
+    attributes/taskattribute.cpp
     folderarchive/folderarchiveaccountinfo.cpp
     folderarchive/folderarchiveutil.cpp
     folderarchive/folderarchivecache.cpp
     folderarchive/folderarchiveagentcheckcollection.cpp
     folderarchive/folderarchivemanager.cpp
     folderarchive/folderarchiveagentjob.cpp
-    )
-set(kmailprivate_collectionpage_LIB_SRCS
     collectionpage/collectiontemplatespage.cpp
-    collectionpage/collectionmaintenancepage.cpp
     collectionpage/collectionviewpage.cpp
     collectionpage/collectionquotapage.cpp
     collectionpage/collectionquotawidget.cpp
     collectionpage/collectionmailinglistpage.cpp
     collectionpage/collectionshortcutpage.cpp
-    )
-set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configagentdelegate.cpp
     configuredialog/configuredialoglistview.cpp
     configuredialog/configuredialog.cpp
@@ -61,35 +69,26 @@ set(kmailprivate_configuredialog_LIB_SRCS
     configuredialog/configureaccountpage.cpp
     configuredialog/configurepluginpage.cpp
     configuredialog/colorlistbox.cpp
-    )
-
-set(kmailprivate_configureplugins_LIB_SRCS
     configuredialog/configureplugins/configurepluginslistwidget.cpp
-    )
-
-set(kmailprivate_searchdialog_LIB_SRCS
     searchdialog/kmsearchmessagemodel.cpp
-    searchdialog/kmsearchfilterproxymodel.cpp
     searchdialog/searchpatternwarning.cpp
     searchdialog/kmailsearchpatternedit.cpp
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
     searchdialog/incompleteindexdialog.cpp
-    )
-set(kmailprivate_identity_LIB_SRCS
     identity/identitylistview.cpp
     identity/identitydialog.cpp
     identity/xfaceconfigurator.cpp
+    identity/encodedimagepicker.cpp
     identity/identitypage.cpp
     identity/newidentitydialog.cpp
     identity/identityeditvcarddialog.cpp
     identity/identityaddvcarddialog.cpp
     identity/identityinvalidfolder.cpp
     identity/identityfolderrequester.cpp
-    )
-set(kmailprivate_editor_LIB_SRCS
-    editor/widgets/snippetwidget.cpp
     editor/kmcomposereditorng.cpp
+    editor/subjectlineeditwithautocorrection.cpp
+    editor/subjectlineeditwithautocorrection.h
     editor/composer.cpp
     editor/codec/codecaction.cpp
     editor/codec/codecmanager.cpp
@@ -101,24 +100,20 @@ set(kmailprivate_editor_LIB_SRCS
     editor/kmcomposerglobalaction.cpp
     editor/kmcomposerupdatetemplatejob.cpp
     editor/kmcomposercreatenewcomposerjob.cpp
-    )
-
-set(kmailprivate_warningwidgets_LIB_SRCS
-    warningwidgets/externaleditorwarning.cpp
-    warningwidgets/attachmentmissingwarning.cpp
-    )
-set(kmailprivate_editor_potentialphishingemail_SRCS
+    editor/pimmessagebox.cpp
+    editor/warningwidgets/externaleditorwarning.cpp
+    editor/warningwidgets/attachmentmissingwarning.cpp
+    editor/warningwidgets/incorrectidentityfolderwarning.cpp
+    editor/warningwidgets/attachmentaddedfromexternalwarning.cpp
+    editor/warningwidgets/toomanyrecipientswarning.cpp
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
     editor/potentialphishingemail/potentialphishingdetaildialog.cpp
     editor/potentialphishingemail/potentialphishingdetailwidget.cpp
-    )
-set(kmailprivate_dialogs_LIB_SRCS
     dialog/archivefolderdialog.cpp
     dialog/addemailtoexistingcontactdialog.cpp
     dialog/kmknotify.cpp
-    )
-set(kmailprivate_job_LIB_SRCS
+    dialog/spellcheckerconfigdialog.cpp
     job/addressvalidationjob.cpp
     job/createnewcontactjob.cpp
     job/addemailtoexistingcontactjob.cpp
@@ -138,53 +133,39 @@ set(kmailprivate_job_LIB_SRCS
     job/fillcomposerjob.cpp
     job/createreplymessagejob.cpp
     job/createforwardmessagejob.cpp
-    )
-
-set(kmailprivate_widgets_LIB_SRCS
+    job/dndfromarkjob.cpp
     widgets/collectionpane.cpp
     widgets/vacationscriptindicatorwidget.cpp
     widgets/displaymessageformatactionmenu.cpp
-    widgets/statusbarlabeltoggledstate.cpp
     widgets/kactionmenutransport.cpp
     widgets/kactionmenuaccount.cpp
-    )
-set(kmailprivate_tag_LIB_SRCS
+    widgets/zoomlabelwidget.cpp
     tag/tagactionmanager.cpp
     tag/tagselectdialog.cpp
-    )
-
-
-set(kmailprivate_plugininterface_LIB_SRCS
+    tag/tagmonitormanager.cpp
     plugininterface/kmailplugininterface.cpp
-    )
-
-set(kmailprivate_editor_plugininterface_LIB_SRCS
+    plugininterface/kmailplugincheckbeforedeletingmanagerinterface.cpp
     editor/plugininterface/kmailplugineditormanagerinterface.cpp
     editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.cpp
-    )
-
-set(kmailprivate_checkindexing_LIB_SRCS
+    editor/plugininterface/kmailplugineditorinitmanagerinterface.cpp
+    editor/plugininterface/kmailplugineditorconverttextmanagerinterface.cpp
+    editor/plugininterface/kmailplugingrammareditormanagerinterface.cpp
     search/checkindexingmanager.cpp
     search/checkindexingjob.cpp
-    )
-    
-set(kmailprivate_sieveimapinstanceinterface_LIB_SRCS
     sieveimapinterface/kmailsieveimapinstanceinterface.cpp
-    )
-
-set(kmail_common_SRCS)
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail)
-set(kmailprivate_LIB_SRCS
-    ${kmail_common_SRCS}
+    sieveimapinterface/kmsieveimappasswordprovider.cpp
+    undosend/undosendcombobox.cpp
+    undosend/undosendmanager.cpp
+    undosend/undosendcreatejob.cpp
     kmmainwin.cpp
     settings/kmailsettings.cpp
     kmreaderwin.cpp
     kmsystemtray.cpp
+    unityservicemanager.cpp
     undostack.cpp
     kmkernel.cpp
     kmcommands.cpp
     kmreadermainwin.cpp
-    kmstartup.cpp
     kmmainwidget.cpp
     aboutdata.cpp
     mailserviceimpl.cpp
@@ -195,62 +176,185 @@ set(kmailprivate_LIB_SRCS
     kmlaunchexternalcomponent.cpp
     manageshowcollectionproperties.cpp
     kmmigrateapplication.cpp
-    ${kmailprivate_configureplugins_LIB_SRCS}
-    ${kmailprivate_attributes_LIB_SRCS}
-    ${kmailprivate_tag_LIB_SRCS}
-    ${kmailprivate_job_LIB_SRCS}
-    ${kmailprivate_widgets_LIB_SRCS}
-    ${kmailprivate_dialogs_LIB_SRCS}
-    ${kmailprivate_warningwidgets_LIB_SRCS}
-    ${kmailprivate_folderarchive_LIB_SRCS}
-    ${kmailprivate_collectionpage_LIB_SRCS}
-    ${kmailprivate_configuredialog_LIB_SRCS}
-    ${kmailprivate_searchdialog_LIB_SRCS}
-    ${kmailprivate_identity_LIB_SRCS}
-    ${kmailprivate_editor_LIB_SRCS}
-    ${kmailprivate_editor_potentialphishingemail_SRCS}
-    ${kmailprivate_plugininterface_LIB_SRCS}
-    ${kmailprivate_editor_plugininterface_LIB_SRCS}
-    ${kmailprivate_checkindexing_LIB_SRCS}
-    ${kmailprivate_sieveimapinstanceinterface_LIB_SRCS}
+    kmail.qrc
+
+    attributes/taskattribute.h
+    folderarchive/folderarchiveaccountinfo.h
+    folderarchive/folderarchiveutil.h
+    folderarchive/folderarchivecache.h
+    folderarchive/folderarchiveagentcheckcollection.h
+    folderarchive/folderarchivemanager.h
+    folderarchive/folderarchiveagentjob.h
+    collectionpage/collectiontemplatespage.h
+    collectionpage/collectionviewpage.h
+    collectionpage/collectionquotapage.h
+    collectionpage/collectionquotawidget.h
+    collectionpage/collectionmailinglistpage.h
+    collectionpage/collectionshortcutpage.h
+    configuredialog/configagentdelegate.h
+    configuredialog/configuredialoglistview.h
+    configuredialog/configuredialog.h
+    configuredialog/configuredialog_p.h
+    configuredialog/configuremiscpage.h
+    configuredialog/configuresecuritypage.h
+    configuredialog/configurecomposerpage.h
+    configuredialog/configureappearancepage.h
+    configuredialog/configureaccountpage.h
+    configuredialog/configurepluginpage.h
+    configuredialog/colorlistbox.h
+    configuredialog/configureplugins/configurepluginslistwidget.h
+    searchdialog/kmsearchmessagemodel.h
+    searchdialog/searchpatternwarning.h
+    searchdialog/kmailsearchpatternedit.h
+    searchdialog/searchwindow.h
+    searchdialog/searchdescriptionattribute.h
+    searchdialog/incompleteindexdialog.h
+    identity/identitylistview.h
+    identity/identitydialog.h
+    identity/xfaceconfigurator.h
+    identity/encodedimagepicker.h
+    identity/identitypage.h
+    identity/newidentitydialog.h
+    identity/identityeditvcarddialog.h
+    identity/identityaddvcarddialog.h
+    identity/identityinvalidfolder.h
+    identity/identityfolderrequester.h
+    editor/kmcomposereditorng.h
+    editor/composer.h
+    editor/codec/codecaction.h
+    editor/codec/codecmanager.h
+    editor/kmcomposerwin.h
+    editor/attachment/attachmentcontroller.h
+    editor/attachment/attachmentview.h
+    editor/widgets/cryptostateindicatorwidget.h
+    editor/validatesendmailshortcut.h
+    editor/kmcomposerglobalaction.h
+    editor/kmcomposerupdatetemplatejob.h
+    editor/kmcomposercreatenewcomposerjob.h
+    editor/pimmessagebox.h
+    editor/warningwidgets/externaleditorwarning.h
+    editor/warningwidgets/attachmentmissingwarning.h
+    editor/warningwidgets/incorrectidentityfolderwarning.h
+    editor/warningwidgets/attachmentaddedfromexternalwarning.h
+    editor/warningwidgets/toomanyrecipientswarning.h
+    editor/potentialphishingemail/potentialphishingemailwarning.h
+    editor/potentialphishingemail/potentialphishingemailjob.h
+    editor/potentialphishingemail/potentialphishingdetaildialog.h
+    editor/potentialphishingemail/potentialphishingdetailwidget.h
+    dialog/archivefolderdialog.h
+    dialog/addemailtoexistingcontactdialog.h
+    dialog/kmknotify.h
+    dialog/spellcheckerconfigdialog.h
+    job/addressvalidationjob.h
+    job/createnewcontactjob.h
+    job/addemailtoexistingcontactjob.h
+    job/createtaskjob.h
+    job/savedraftjob.h
+    job/removeduplicatemailjob.h
+    job/createfollowupreminderonexistingmessagejob.h
+    job/removecollectionjob.h
+    job/saveasfilejob.h
+    job/markallmessagesasreadinfolderandsubfolderjob.h
+    job/removeduplicatemessageinfolderandsubfolderjob.h
+    job/handleclickedurljob.h
+    job/composenewmessagejob.h
+    job/opencomposerjob.h
+    job/newmessagejob.h
+    job/opencomposerhiddenjob.h
+    job/fillcomposerjob.h
+    job/createreplymessagejob.h
+    job/createforwardmessagejob.h
+    job/dndfromarkjob.h
+    widgets/collectionpane.h
+    widgets/vacationscriptindicatorwidget.h
+    widgets/displaymessageformatactionmenu.h
+    widgets/kactionmenutransport.h
+    widgets/kactionmenuaccount.h
+    widgets/zoomlabelwidget.h
+    tag/tagactionmanager.h
+    tag/tagselectdialog.h
+    tag/tagmonitormanager.h
+    plugininterface/kmailplugininterface.h
+    plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h
+    editor/plugininterface/kmailplugineditormanagerinterface.h
+    editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h
+    editor/plugininterface/kmailplugineditorinitmanagerinterface.h
+    editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h
+    editor/plugininterface/kmailplugingrammareditormanagerinterface.h
+    search/checkindexingmanager.h
+    search/checkindexingjob.h
+    sieveimapinterface/kmailsieveimapinstanceinterface.h
+    sieveimapinterface/kmsieveimappasswordprovider.h
+    undosend/undosendcombobox.h
+    undosend/undosendmanager.h
+    undosend/undosendcreatejob.h
+    kmmainwin.h
+    settings/kmailsettings.h
+    kmreaderwin.h
+    kmsystemtray.h
+    unityservicemanager.h
+    undostack.h
+    kmkernel.h
+    kmcommands.h
+    kmreadermainwin.h
+    kmmainwidget.h
+    aboutdata.h
+    mailserviceimpl.h
+    secondarywindow.h
+    util.h
+    messageactions.h
+    foldershortcutactionmanager.h
+    kmlaunchexternalcomponent.h
+    manageshowcollectionproperties.h
+    kmmigrateapplication.h
+    historyswitchfolder/collectionswitchertreeview.cpp
+    historyswitchfolder/collectionswitchertreeview.h
+    historyswitchfolder/collectionswitchertreeviewmanager.h
+    historyswitchfolder/collectionswitchertreeviewmanager.cpp
+    historyswitchfolder/collectionswitchermodel.h
+    historyswitchfolder/collectionswitchermodel.cpp
     )
 
-qt5_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml OPTIONS -a)
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
     )
 
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
     )
-qt5_add_dbus_adaptor(kmailprivate_LIB_SRCS
+qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${MAILTRANSPORT_DBUS_SERVICE} mailserviceimpl.h
     KMail::MailServiceImpl
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     )
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
     )
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ../agents/mailmergeagent/org.freedesktop.Akonadi.MailMergeAgent.xml
+    )
+
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
     )
 
-qt5_add_dbus_interfaces(kmailprivate_LIB_SRCS
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
     )
 
-ki18n_wrap_ui(kmailprivate_LIB_SRCS
+
+ki18n_wrap_ui(kmailprivate
     ui/composercryptoconfiguration.ui
     ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
@@ -261,6 +365,8 @@ ki18n_wrap_ui(kmailprivate_LIB_SRCS
     ui/accountspagereceivingtab.ui
     ui/searchwindow.ui
     ui/incompleteindexdialog.ui
+    ui/xfaceconfigurator.ui
+    ui/encodedimagepicker.ui
     )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
@@ -279,8 +385,19 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     editor/custommimeheader/custommimeheader.kcfgc
     )
 
+set(kmail_userfeedback_LIB)
+if (TARGET KUserFeedbackWidgets)
+    set(kmail_userfeedback_LIB KUserFeedbackWidgets)
+endif()
 
-add_library(kmailprivate ${kmailprivate_LIB_SRCS})
+target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
+
+
+pim_target_precompile_headers(kmailprivate PUBLIC ../kmail_pch.h)
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
+endif()
+
 generate_export_header(kmailprivate BASE_NAME kmail)
 target_link_libraries(kmailprivate
     PRIVATE
@@ -296,25 +413,22 @@ target_link_libraries(kmailprivate
     KF5::PimCommon
     KF5::MailCommon
     KF5::TemplateParser
-    KF5::IdentityManagement
+    KF5::IdentityManagementWidgets
     KF5::WindowSystem
     KF5::Notifications
     KF5::GuiAddons
     KF5::Crash
-    KF5::Bookmarks
     KF5::KIOFileWidgets
     KF5::NotifyConfig
     KF5::MailTransportAkonadi
+    KF5::MailTransport
     KF5::KCMUtils
     KF5::Libkleo
     KF5::KSieveUi
-    KF5::LibkdepimAkonadi
     KF5::KIOCore
     KF5::Contacts
     KF5::PimTextEdit
     KF5::MessageViewer
-    KF5::SendLater
-    KF5::FollowupReminder
     KF5::IconThemes
     KF5::XmlGui
     KF5::Completion
@@ -323,7 +437,11 @@ target_link_libraries(kmailprivate
     KF5::AkonadiSearchPIM
     KF5::WebEngineViewer
     KF5::SyntaxHighlighting
+    KF5::GuiAddons
+    ${kmail_userfeedback_LIB}
     )
+target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
+
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
@@ -333,24 +451,44 @@ set_target_properties(kmailprivate
     )
 
 ########### kcm_kmail ###############
-set(kcm_kmail_PART_SRCS kcm_kmail.cpp )
-add_library(kcm_kmail MODULE ${kcm_kmail_PART_SRCS})
-target_link_libraries(kcm_kmail  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
+add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
+target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
+pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
+target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
 
+kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_appearance kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_composer kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_misc kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_plugins kcm_kmail_static)
+
+kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
+target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 
-set(kmailpart_PART_SRCS kmail_part.cpp ${kmail_common_SRCS})
-qt5_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
-qt5_add_dbus_adaptor(kmailpart_PART_SRCS
+set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_common_SRCS})
+qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
+qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
     )
-qt5_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
+qt_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
+pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate
+    KF5::AkonadiCore
+    KF5::I18n
     KF5::PimCommon
-    KF5::LibkdepimAkonadi
     KF5::KCMUtils
     KF5::Parts
     KF5::IconThemes
@@ -366,10 +504,14 @@ add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
     KF5::KontactInterface
     kmailprivate
+    KF5::AkonadiCore
     KF5::PimCommon
     KF5::I18n
     KF5::TemplateParser
+    KF5::Libkdepim
     KF5::Crash
+    KF5::WebEngineViewer
+    ${kmail_userfeedback_LIB}
     )
 
 if(BUILD_TESTING)
@@ -377,42 +519,27 @@ if(BUILD_TESTING)
     add_subdirectory(tests)
     add_subdirectory(folderarchive/autotests/)
     add_subdirectory(editor/potentialphishingemail/autotests)
+    add_subdirectory(editor/warningwidgets/autotests)
     add_subdirectory(sieveimapinterface/tests/)
+    add_subdirectory(undosend/autotests/)
+    add_subdirectory(job/autotests/)
+    add_subdirectory(historyswitchfolder/autotests/)
 endif()
 ########### install files ###############
-
 install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
 install(TARGETS kmail ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(PROGRAMS data/org.kde.kmail.desktop data/kmail_view.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(PROGRAMS data/org.kde.kmail2.desktop data/kmail_view.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
     DESTINATION ${KDE_INSTALL_KCFGDIR}
     )
-install(FILES data/org.kde.kmail.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES
-    data/kmail_config_misc.desktop
-    data/kmail_config_appearance.desktop
-    data/kmail_config_identity.desktop
-    data/kmail_config_accounts.desktop
-    data/kmail_config_composer.desktop
-    data/kmail_config_security.desktop
-    data/kmail_config_plugins.desktop
-    DESTINATION ${KDE_INSTALL_KSERVICES5DIR}
-    )
-install(FILES
-    kmcomposerui.rc
-    kmmainwin.rc
-    kmreadermainwin.rc
-    kmail_part.rc
-    DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kmail2
-    )
-install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY5RCDIR} )
-install(FILES data/dbusmail.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
+install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+
+install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 install(TARGETS
     kmailpart
-    kcm_kmail
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
     )
 install(FILES
@@ -421,5 +548,6 @@ install(FILES
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
     )
 
-install( FILES data/kmail_addattachmentservicemenu.desktop DESTINATION
-    ${KDE_INSTALL_KSERVICES5DIR}/ServiceMenus)
+configure_file(data/org.kde.kmail.service.in org.kde.kmail.service)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.service DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})
+

@@ -1,62 +1,58 @@
 /*
-   Copyright (C) 2013-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "sendlateragent.h"
-#include "sendlatermanager.h"
-#include "sendlaterconfiguredialog.h"
-#include "sendlaterinfo.h"
-#include "sendlaterutil.h"
+#include "sendlateragent_debug.h"
 #include "sendlateragentadaptor.h"
 #include "sendlateragentsettings.h"
+#include "sendlaterconfiguredialog.h"
+#include "sendlatermanager.h"
 #include "sendlaterremovemessagejob.h"
-#include "sendlateragent_debug.h"
-#include <Akonadi/KMime/SpecialMailCollections>
-#include <AgentInstance>
-#include <AgentManager>
-#include <kdbusconnectionpool.h>
-#include <changerecorder.h>
-#include <itemfetchscope.h>
-#include <AkonadiCore/session.h>
-#include <AttributeFactory>
-#include <CollectionFetchScope>
+#include "sendlaterutil.h"
+#include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
+#include <Akonadi/AttributeFactory>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/ServerManager>
+#include <Akonadi/Session>
+#include <Akonadi/SpecialMailCollections>
 #include <KMime/Message>
+#include <QDBusConnection>
 
 #include <KWindowSystem>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
-
+#endif
 #include <QPointer>
+#include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 //#define DEBUG_SENDLATERAGENT 1
 
 SendLaterAgent::SendLaterAgent(const QString &id)
-    : Akonadi::AgentBase(id),
-      mAgentInitialized(false)
+    : Akonadi::AgentBase(id)
+    , mManager(new SendLaterManager(this))
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("sendlateragent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_sendlater_agentrc") << QStringLiteral("akonadi_sendlater_agent.notifyrc"));
     migrate.migrate();
+#endif
 
-    mManager = new SendLaterManager(this);
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);
     new SendLaterAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.SendLaterAgent"));
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
+
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_sendlater_agent"));
+
+    QDBusConnection::sessionBus().registerService(service);
 
     changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
     changeRecorder()->itemFetchScope().setCacheOnly(true);
@@ -67,21 +63,19 @@ SendLaterAgent::SendLaterAgent(const QString &id)
 
     if (SendLaterAgentSettings::enabled()) {
 #ifdef DEBUG_SENDLATERAGENT
-        QTimer::singleShot(1000, this, &SendLaterAgent::slotStartAgent);
+        QTimer::singleShot(1s, this, &SendLaterAgent::slotStartAgent);
 #else
-        QTimer::singleShot(1000 * 60 * 4, this, &SendLaterAgent::slotStartAgent);
+        QTimer::singleShot(4min, this, &SendLaterAgent::slotStartAgent);
 #endif
     }
     // For extra safety, check list every hour, in case we didn't properly get
     // notified about the network going up or down.
-    QTimer *reloadListTimer = new QTimer(this);
+    auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &SendLaterAgent::reload);
-    reloadListTimer->start(1000 * 60 * 60); //1 hour
+    reloadListTimer->start(1h); // 1 hour
 }
 
-SendLaterAgent::~SendLaterAgent()
-{
-}
+SendLaterAgent::~SendLaterAgent() = default;
 
 void SendLaterAgent::slotStartAgent()
 {
@@ -132,7 +126,51 @@ bool SendLaterAgent::enabledAgent() const
 
 void SendLaterAgent::configure(WId windowId)
 {
-    showConfigureDialog((qlonglong)windowId);
+    QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
+    if (windowId) {
+        dialog->setAttribute(Qt::WA_NativeWindow, true);
+        KWindowSystem::setMainWindow(dialog->windowHandle(), windowId);
+    }
+    connect(this, &SendLaterAgent::needUpdateConfigDialogBox, dialog.data(), &SendLaterConfigureDialog::slotNeedToReloadConfig);
+    connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &SendLaterAgent::slotSendNow);
+    if (dialog->exec()) {
+        mManager->load();
+        const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
+        if (!listMessage.isEmpty()) {
+            // Will delete in specific job when done.
+            auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
+            sendlaterremovejob->start();
+        }
+    }
+    delete dialog;
+}
+
+void SendLaterAgent::removeItem(qint64 item)
+{
+    if (mManager->itemRemoved(item)) {
+        reload();
+    }
+}
+
+void SendLaterAgent::addItem(qint64 timestamp,
+                             bool recurrence,
+                             int recurrenceValue,
+                             int recurrenceUnit,
+                             Akonadi::Item::Id id,
+                             const QString &subject,
+                             const QString &to)
+{
+    auto info = new MessageComposer::SendLaterInfo;
+    info->setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));
+    info->setRecurrence(recurrence);
+    info->setRecurrenceEachValue(recurrenceValue);
+    info->setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(recurrenceUnit));
+    info->setItemId(id);
+    info->setSubject(subject);
+    info->setTo(to);
+
+    SendLaterUtil::writeSendLaterInfo(SendLaterUtil::defaultConfig(), info);
+    reload();
 }
 
 void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
@@ -140,38 +178,22 @@ void SendLaterAgent::slotSendNow(Akonadi::Item::Id id)
     mManager->sendNow(id);
 }
 
-void SendLaterAgent::showConfigureDialog(qlonglong windowId)
-{
-    QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
-    if (windowId) {
-#ifndef Q_OS_WIN
-        KWindowSystem::setMainWindow(dialog, windowId);
-#else
-        KWindowSystem::setMainWindow(dialog, (HWND)windowId);
-#endif
-    }
-    connect(this, &SendLaterAgent::needUpdateConfigDialogBox, dialog.data(), &SendLaterConfigureDialog::slotNeedToReloadConfig);
-    connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &SendLaterAgent::slotSendNow);
-    if (dialog->exec()) {
-        mManager->load();
-        QList<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
-        if (!listMessage.isEmpty()) {
-            //Will delete in specific job when done.
-            SendLaterRemoveMessageJob *sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
-            sendlaterremovejob->start();
-        }
-    }
-    delete dialog;
-}
-
 void SendLaterAgent::itemsRemoved(const Akonadi::Item::List &items)
 {
+    bool needToReload = false;
     for (const Akonadi::Item &item : items) {
-        mManager->itemRemoved(item.id());
+        if (mManager->itemRemoved(item.id())) {
+            needToReload = true;
+        }
+    }
+    if (needToReload) {
+        reload();
     }
 }
 
-void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &/*sourceCollection*/, const Akonadi::Collection &destinationCollection)
+void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items,
+                                const Akonadi::Collection & /*sourceCollection*/,
+                                const Akonadi::Collection &destinationCollection)
 {
     if (Akonadi::SpecialMailCollections::self()->specialCollectionType(destinationCollection) != Akonadi::SpecialMailCollections::Trash) {
         return;
@@ -179,10 +201,9 @@ void SendLaterAgent::itemsMoved(const Akonadi::Item::List &items, const Akonadi:
     itemsRemoved(items);
 }
 
-QString SendLaterAgent::printDebugInfo()
+QString SendLaterAgent::printDebugInfo() const
 {
     return mManager->printDebugInfo();
 }
 
 AKONADI_AGENT_MAIN(SendLaterAgent)
-

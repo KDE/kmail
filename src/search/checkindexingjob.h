@@ -1,27 +1,13 @@
 /*
-   Copyright (C) 2016 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef CHECKINDEXINGJOB_H
-#define CHECKINDEXINGJOB_H
+#pragma once
 
+#include <Akonadi/Collection>
 #include <QObject>
-#include <AkonadiCore/Collection>
 namespace Akonadi
 {
 namespace Search
@@ -38,7 +24,7 @@ class CheckIndexingJob : public QObject
     Q_OBJECT
 public:
     explicit CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent = nullptr);
-    ~CheckIndexingJob();
+    ~CheckIndexingJob() override;
 
     void setCollection(const Akonadi::Collection &col);
 
@@ -47,12 +33,10 @@ public:
 Q_SIGNALS:
     void finished(Akonadi::Collection::Id id, bool needToReindex);
 
-private Q_SLOTS:
-    void slotCollectionPropertiesFinished(KJob *job);
 private:
+    Q_DISABLE_COPY(CheckIndexingJob)
+    void slotCollectionPropertiesFinished(KJob *job);
     void askForNextCheck(quint64 id, bool needToReindex = false);
     Akonadi::Collection mCollection;
-    Akonadi::Search::PIM::IndexedItems *mIndexedItems;
+    Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
 };
-
-#endif // CHECKINDEXINGJOB_H

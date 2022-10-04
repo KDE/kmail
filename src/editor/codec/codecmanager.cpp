@@ -1,23 +1,11 @@
 /*
  * This file is part of KMail.
- * Copyright (c) 2009 Constantin Berzan <exit3219@gmail.com>
+ * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
  * Based on KMMsgBase code by:
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 // Own
@@ -30,53 +18,29 @@
 #include <QTextCodec>
 
 // KDE libs
-#include <kcodecaction.h>
-#include <messagecomposer/messagecomposersettings.h>
+#include <MessageComposer/MessageComposerSettings>
 
-class CodecManagerPrivate
+CodecManager::CodecManager()
 {
-public:
-    CodecManagerPrivate();
-    ~CodecManagerPrivate();
-
-    CodecManager *instance;
-    QList<QByteArray> preferredCharsets;
-
-};
-
-Q_GLOBAL_STATIC(CodecManagerPrivate, sInstance)
-
-CodecManagerPrivate::CodecManagerPrivate()
-    : instance(new CodecManager(this))
-{
-    instance->updatePreferredCharsets();
-}
-
-CodecManagerPrivate::~CodecManagerPrivate()
-{
-    delete instance;
-}
-
-CodecManager::CodecManager(CodecManagerPrivate *dd)
-    : d(dd)
-{
+    updatePreferredCharsets();
 }
 
 // static
 CodecManager *CodecManager::self()
 {
-    return sInstance->instance;
+    static CodecManager instance;
+    return &instance;
 }
 
-QList<QByteArray> CodecManager::preferredCharsets() const
+QVector<QByteArray> CodecManager::preferredCharsets() const
 {
-    return d->preferredCharsets;
+    return mPreferredCharsets;
 }
 
 void CodecManager::updatePreferredCharsets()
 {
     const QStringList prefCharsets = MessageComposer::MessageComposerSettings::self()->preferredCharsets();
-    d->preferredCharsets.clear();
+    mPreferredCharsets.clear();
     for (const QString &str : prefCharsets) {
         QByteArray charset = str.toLatin1().toLower();
 
@@ -88,9 +52,7 @@ void CodecManager::updatePreferredCharsets()
             // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
             // is the standard for Internet, and Shift-JIS is the encoding
             // for Windows and Macintosh.
-            if (charset == "jisx0208.1983-0" ||
-                    charset == "eucjp" ||
-                    charset == "shift-jis") {
+            if (charset == "jisx0208.1983-0" || charset == "eucjp" || charset == "shift-jis") {
                 charset = "iso-2022-jp";
                 // TODO wtf is "jis7"?
             }
@@ -100,6 +62,6 @@ void CodecManager::updatePreferredCharsets()
                 charset = "euc-kr";
             }
         }
-        d->preferredCharsets << charset;
+        mPreferredCharsets << charset;
     }
 }

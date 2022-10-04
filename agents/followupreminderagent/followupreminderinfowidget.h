@@ -1,29 +1,15 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef FOLLOWUPREMINDERINFOWIDGET_H
-#define FOLLOWUPREMINDERINFOWIDGET_H
+#pragma once
 
-#include <QWidget>
+#include <Akonadi/Item>
 #include <KConfigGroup>
 #include <QTreeWidgetItem>
-#include <AkonadiCore/Item>
+#include <QWidget>
 class QTreeWidget;
 namespace FollowUpReminder
 {
@@ -34,13 +20,13 @@ class FollowUpReminderInfoItem : public QTreeWidgetItem
 {
 public:
     explicit FollowUpReminderInfoItem(QTreeWidget *parent = nullptr);
-    ~FollowUpReminderInfoItem();
+    ~FollowUpReminderInfoItem() override;
 
     void setInfo(FollowUpReminder::FollowUpReminderInfo *info);
     FollowUpReminder::FollowUpReminderInfo *info() const;
 
 private:
-    FollowUpReminder::FollowUpReminderInfo *mInfo;
+    FollowUpReminder::FollowUpReminderInfo *mInfo = nullptr;
 };
 
 class FollowUpReminderInfoWidget : public QWidget
@@ -48,27 +34,30 @@ class FollowUpReminderInfoWidget : public QWidget
     Q_OBJECT
 public:
     explicit FollowUpReminderInfoWidget(QWidget *parent = nullptr);
-    ~FollowUpReminderInfoWidget();
+    ~FollowUpReminderInfoWidget() override;
 
     void restoreTreeWidgetHeader(const QByteArray &data);
     void saveTreeWidgetHeader(KConfigGroup &group);
 
     void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList);
 
-    bool save();
-
+    Q_REQUIRED_RESULT bool save() const;
     void load();
 
-    QList<qint32> listRemoveId() const;
+    Q_REQUIRED_RESULT QList<qint32> listRemoveId() const;
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
-    void customContextMenuRequested(const QPoint &pos);
+    void slotItemDoubleClicked(QTreeWidgetItem *item);
+    void slotCustomContextMenuRequested(const QPoint &pos);
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
-    void removeItem(const QList<QTreeWidgetItem *> &mailItem);
+    void deleteItems(const QList<QTreeWidgetItem *> &mailItemLst);
     void openShowMessage(Akonadi::Item::Id id);
     enum ItemData {
         AnswerItemId = Qt::UserRole + 1,
-        AnswerItemFound = Qt::UserRole + 2
+        AnswerItemFound = Qt::UserRole + 2,
     };
 
     enum FollowUpReminderColumn {
@@ -77,11 +66,9 @@ private:
         DeadLine,
         AnswerWasReceived,
         MessageId,
-        AnswerMessageId
+        AnswerMessageId,
     };
     QList<qint32> mListRemoveId;
-    QTreeWidget *mTreeWidget;
-    bool mChanged;
+    QTreeWidget *const mTreeWidget;
+    bool mChanged = false;
 };
-
-#endif // FOLLOWUPREMINDERINFOWIDGET_H

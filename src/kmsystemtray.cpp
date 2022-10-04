@@ -1,45 +1,25 @@
-//
-/***************************************************************************
-                          kmsystemtray.cpp  -  description
-                             ------------------
-    begin                : Fri Aug 31 22:38:44 EDT 2001
-    copyright            : (C) 2001 by Ryan Breen
-    email                : ryan@porivo.com
+/*
+   SPDX-FileCopyrightText: 2001 by Ryan Breen <ryan@porivo.com>
+   SPDX-FileCopyrightText: 2010-2022 Laurent Montel <montel@kde.org>
 
-    Copyright (c) 2010-2017 Montel Laurent <montel@kde.org>
- ***************************************************************************/
-
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
+   SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
 #include "settings/kmailsettings.h"
-#include "mailcommon/mailutil.h"
-#include "MailCommon/MailKernel"
-#include "MailCommon/FolderTreeView"
-#include <AkonadiCore/NewMailNotifierAttribute>
+#include "unityservicemanager.h"
+#include <Akonadi/NewMailNotifierAttribute>
+#include <MailCommon/FolderTreeView>
+#include <MailCommon/MailKernel>
+#include <MailCommon/MailUtil>
 
-#include <kiconloader.h>
-#include <kwindowsystem.h>
 #include "kmail_debug.h"
-#include <QMenu>
 #include <KLocalizedString>
-#include <QAction>
-#include <KActionMenu>
-#include "widgets/kactionmenutransport.h"
-#include <KActionCollection>
-#include <QPainter>
+#include <KWindowSystem>
+#include <QMenu>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/EntityTreeModel>
-#include <AkonadiCore/EntityMimeTypeFilterModel>
+#include "widgets/kactionmenutransport.h"
 
 using namespace MailCommon;
 
@@ -57,15 +37,8 @@ using namespace MailCommon;
 using namespace KMail;
 
 KMSystemTray::KMSystemTray(QObject *parent)
-    : KStatusNotifierItem(parent),
-      mIcon(QIcon::fromTheme(QStringLiteral("mail-mark-unread-new"))),
-      mDesktopOfMainWin(0),
-      mCount(0),
-      mIconNotificationsEnabled(true),
-      mNewMessagesPopup(nullptr),
-      mSendQueued(nullptr)
+    : KStatusNotifierItem(parent)
 {
-    qCDebug(KMAIL_LOG) << "Initting systray";
     setToolTipTitle(i18n("KMail"));
     setToolTipIconByName(QStringLiteral("kmail"));
     setIconByName(QStringLiteral("kmail"));
@@ -79,18 +52,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     }
 
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
-    connect(contextMenu(), &QMenu::aboutToShow,
-            this, &KMSystemTray::slotContextMenuAboutToShow);
-
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &KMSystemTray::slotCollectionStatisticsChanged);
-
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &KMSystemTray::initListOfCollection);
-    connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &KMSystemTray::initListOfCollection);
-
-    initListOfCollection();
-
+    connect(contextMenu(), &QMenu::aboutToShow, this, &KMSystemTray::slotContextMenuAboutToShow);
 }
 
 bool KMSystemTray::buildPopupMenu()
@@ -100,14 +62,14 @@ bool KMSystemTray::buildPopupMenu()
         return false;
     }
 
-    if (!contextMenu()) {
-        setContextMenu(new QMenu());
+    if (mBuiltContextMenu) {
+        return true;
     }
 
     contextMenu()->clear();
     contextMenu()->setIcon(qApp->windowIcon());
     contextMenu()->setTitle(i18n("KMail"));
-    QAction *action;
+    QAction *action = nullptr;
     if ((action = mainWidget->action(QStringLiteral("check_mail")))) {
         contextMenu()->addAction(action);
     }
@@ -118,6 +80,12 @@ bool KMSystemTray::buildPopupMenu()
     mSendQueued = mainWidget->sendQueuedAction();
     contextMenu()->addAction(mSendQueued);
     contextMenu()->addAction(mainWidget->sendQueueViaMenu());
+
+    mNewMessagesPopup = new QMenu();
+    mNewMessagesPopup->setTitle(i18n("New Messages In"));
+    mNewMessagesPopup->setEnabled(false);
+    connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
+    contextMenu()->addAction(mNewMessagesPopup->menuAction());
 
     contextMenu()->addSeparator();
     if ((action = mainWidget->action(QStringLiteral("new_message")))) {
@@ -135,38 +103,40 @@ bool KMSystemTray::buildPopupMenu()
     if ((action = mainWidget->action(QStringLiteral("file_quit")))) {
         contextMenu()->addAction(action);
     }
+
+    mBuiltContextMenu = true;
     return true;
 }
 
 KMSystemTray::~KMSystemTray()
 {
+    delete mNewMessagesPopup;
 }
 
-void KMSystemTray::slotGeneralFontChanged()
+void KMSystemTray::initialize(int count)
 {
-    updateSystemTray();
+    updateCount(count);
+    updateStatus(count);
+    updateToolTip(count);
 }
 
 /**
  * Update the count of unread messages.  If there are unread messages,
- * overlay the count on top of a transparent version of the KMail icon.
+ * show the "unread new mail" KMail icon.
  * If there is no unread mail, restore the normal KMail icon.
  */
-void KMSystemTray::updateCount()
+void KMSystemTray::updateCount(int count)
 {
-    if (mCount == 0) {
+    if (count == 0) {
         setIconByName(QStringLiteral("kmail"));
     } else {
-        setIconByPixmap(mIcon);
+        setIconByName(QStringLiteral("mail-mark-unread-new"));
     }
 }
 
-void KMSystemTray::setSystrayIconNotificationsEnabled(bool enabled)
+void KMSystemTray::setUnityServiceManager(UnityServiceManager *unityServiceManager)
 {
-    if (enabled != mIconNotificationsEnabled) {
-        mIconNotificationsEnabled = enabled;
-        updateSystemTray();
-    }
+    mUnityServiceManager = unityServiceManager;
 }
 
 /**
@@ -194,7 +164,7 @@ void KMSystemTray::slotActivated()
         mDesktopOfMainWin = cur.desktop();
     }
 
-    if (wasMinimized  && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
+    if (wasMinimized && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
         KWindowSystem::setOnDesktop(mainWin->winId(), currentDesktop);
     }
 
@@ -211,26 +181,24 @@ void KMSystemTray::slotActivated()
 
 void KMSystemTray::slotContextMenuAboutToShow()
 {
-    // Rebuild popup menu before show to minimize race condition if
+    // Repeat this check before showing the menu, to minimize a race condition if
     // the base KMainWidget is closed.
-    if (!buildPopupMenu()) {
+    if (!kmkernel->getKMMainWidget() || kmkernel->shuttingDown()) {
         return;
     }
 
-    if (mNewMessagesPopup != nullptr) {
-        contextMenu()->removeAction(mNewMessagesPopup->menuAction());
-        delete mNewMessagesPopup;
-        mNewMessagesPopup = nullptr;
+    // Create the context menu the first time.
+    if (!mBuiltContextMenu) {
+        if (!buildPopupMenu()) {
+            return;
+        }
     }
-    mNewMessagesPopup = new QMenu();
+
+    // Update the "New messages in" submenu.
+    mHasUnreadMessage = false;
+    mNewMessagesPopup->clear();
     fillFoldersMenu(mNewMessagesPopup, kmkernel->treeviewModelSelection());
-
-    connect(mNewMessagesPopup, &QMenu::triggered, this, &KMSystemTray::slotSelectCollection);
-
-    if (mCount > 0) {
-        mNewMessagesPopup->setTitle(i18n("New Messages In"));
-        contextMenu()->insertAction(mSendQueued, mNewMessagesPopup->menuAction());
-    }
+    mNewMessagesPopup->setEnabled(mHasUnreadMessage);
 }
 
 void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName, const QModelIndex &parentIndex)
@@ -238,16 +206,16 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        const auto collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
         qint64 count = 0;
-        if (!excludeFolder(collection)) {
-            Akonadi::CollectionStatistics statistics = collection.statistics();
+        if (mUnityServiceManager && !mUnityServiceManager->excludeFolder(collection)) {
+            const Akonadi::CollectionStatistics statistics = collection.statistics();
             count = qMax(0LL, statistics.unreadCount());
             if (count > 0) {
-                if (ignoreNewMailInFolder(collection)) {
+                if (mUnityServiceManager->ignoreNewMailInFolder(collection)) {
                     count = 0;
                 } else {
-                    mCount += count;
+                    mHasUnreadMessage = true;
                 }
             }
         }
@@ -281,63 +249,23 @@ void KMSystemTray::hideKMail()
     }
 }
 
-void KMSystemTray::initListOfCollection()
+void KMSystemTray::updateToolTip(int count)
 {
-    mCount = 0;
-    const QAbstractItemModel *model = kmkernel->collectionModel();
-    if (model->rowCount() == 0) {
-        QTimer::singleShot(1000, this, &KMSystemTray::initListOfCollection);
-        return;
-    }
-    unreadMail(model);
+    setToolTipSubTitle(count == 0 ? i18n("There are no unread messages") : i18np("1 unread message", "%1 unread messages", count));
+}
 
-    if (status() == KStatusNotifierItem::Passive && (mCount > 0)) {
+void KMSystemTray::updateStatus(int count)
+{
+    if (status() == KStatusNotifierItem::Passive && (count > 0)) {
         setStatus(KStatusNotifierItem::Active);
-    } else if (status() == KStatusNotifierItem::Active && (mCount == 0)) {
+    } else if (status() == KStatusNotifierItem::Active && (count == 0)) {
         setStatus(KStatusNotifierItem::Passive);
     }
-
-    //qCDebug(KMAIL_LOG)<<" mCount :"<<mCount;
-    updateCount();
-}
-
-void KMSystemTray::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
-{
-    const int rowCount = model->rowCount(parentIndex);
-    for (int row = 0; row < rowCount; ++row) {
-        const QModelIndex index = model->index(row, 0, parentIndex);
-        const Akonadi::Collection collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-
-        if (!excludeFolder(collection)) {
-
-            const Akonadi::CollectionStatistics statistics = collection.statistics();
-            const qint64 count = qMax(0LL, statistics.unreadCount());
-
-            if (count > 0) {
-                if (!ignoreNewMailInFolder(collection)) {
-                    mCount += count;
-                }
-            }
-        }
-        if (model->rowCount(index) > 0) {
-            unreadMail(model, index);
-        }
-    }
-    // Update tooltip to reflect count of unread messages
-    setToolTipSubTitle(mCount == 0 ? i18n("There are no unread messages")
-                       : i18np("1 unread message",
-                               "%1 unread messages",
-                               mCount));
-}
-
-bool KMSystemTray::hasUnreadMail() const
-{
-    return (mCount != 0);
 }
 
 void KMSystemTray::slotSelectCollection(QAction *act)
 {
-    const Akonadi::Collection::Id id = act->data().value<Akonadi::Collection::Id>();
+    const auto id = act->data().value<Akonadi::Collection::Id>();
     kmkernel->selectCollectionFromId(id);
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (!mainWidget) {
@@ -347,52 +275,4 @@ void KMSystemTray::slotSelectCollection(QAction *act)
     if (mainWin && !mainWin->isVisible()) {
         activate();
     }
-}
-
-void KMSystemTray::updateSystemTray()
-{
-    initListOfCollection();
-}
-
-void KMSystemTray::slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &)
-{
-    //Exclude sent mail folder
-
-    if (CommonKernel->outboxCollectionFolder().id() == id ||
-            CommonKernel->sentCollectionFolder().id() == id ||
-            CommonKernel->templatesCollectionFolder().id() == id ||
-            CommonKernel->trashCollectionFolder().id() == id ||
-            CommonKernel->draftsCollectionFolder().id() == id) {
-        return;
-    }
-    initListOfCollection();
-}
-
-bool KMSystemTray::excludeFolder(const Akonadi::Collection &collection) const
-{
-    if (!collection.isValid() || !collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
-        return true;
-    }
-    if (CommonKernel->outboxCollectionFolder() == collection ||
-            CommonKernel->sentCollectionFolder() == collection ||
-            CommonKernel->templatesCollectionFolder() == collection ||
-            CommonKernel->trashCollectionFolder() == collection ||
-            CommonKernel->draftsCollectionFolder() == collection) {
-        return true;
-    }
-
-    if (MailCommon::Util::isVirtualCollection(collection)) {
-        return true;
-    }
-    return false;
-}
-
-bool KMSystemTray::ignoreNewMailInFolder(const Akonadi::Collection &collection)
-{
-    if (collection.hasAttribute<Akonadi::NewMailNotifierAttribute>()) {
-        if (collection.attribute<Akonadi::NewMailNotifierAttribute>()->ignoreNewMail()) {
-            return true;
-        }
-    }
-    return false;
 }

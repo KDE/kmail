@@ -1,24 +1,11 @@
 /*
  * kmail: KDE mail client
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
-#ifndef __KMMAINWIN
-#define __KMMAINWIN
+#pragma once
 
 #include "kmail_export.h"
 
@@ -27,6 +14,8 @@
 class KMMainWidget;
 class KToggleAction;
 class QLabel;
+class KHamburgerMenu;
+class KToggleFullScreenAction;
 namespace KPIM
 {
 class ProgressStatusBarWidget;
@@ -39,40 +28,40 @@ public:
     // the main window needs to have a name since else restoring the window
     // settings by kwin doesn't work
     explicit KMMainWin(QWidget *parent = nullptr);
-    virtual ~KMMainWin();
+    ~KMMainWin() override;
     KMMainWidget *mainKMWidget() const;
 
     /// Same as KMMainWin::restore(), except that it also restores the docked state,
     /// which we have saved in saveProperties().
-    /// TODO: KDE5: Move to kdelibs, see http://reviewboard.kde.org/r/504
     bool restoreDockedState(int number);
 
+    void showAndActivateWindow();
 public Q_SLOTS:
-    void displayStatusMsg(const QString &);
+    void displayStatusMessage(const QString &);
     void slotEditToolbars();
     void slotUpdateGui();
     void setupStatusBar();
 
 protected:
-
     /// Reimplemented to save the docked state
-    void saveProperties(KConfigGroup &) Q_DECL_OVERRIDE;
+    void saveProperties(KConfigGroup &) override;
 
-    bool queryClose() Q_DECL_OVERRIDE;
+    bool queryClose() override;
 
 protected Q_SLOTS:
     void slotQuit();
 
-private Q_SLOTS:
-    void slotToggleMenubar(bool dontShowWarning = false);
-    void slotConfigureShortcuts();
-
 private:
-    KPIM::ProgressStatusBarWidget *mProgressBar;
-    KMMainWidget *mKMMainWidget;
-    KToggleAction *mHideMenuBarAction;
-    bool mReallyClose;
-    QLabel *mMessageLabel;
+    void slotConfigureShortcuts();
+    void slotToggleMenubar(bool dontShowWarning);
+    void updateHamburgerMenu();
+    void slotShortcutSaved();
+    void slotFullScreen(bool t);
+    KPIM::ProgressStatusBarWidget *const mProgressBar;
+    KMMainWidget *mKMMainWidget = nullptr;
+    KToggleAction *mShowMenuBarAction = nullptr;
+    QLabel *const mMessageLabel;
+    KHamburgerMenu *mHamburgerMenu = nullptr;
+    KToggleFullScreenAction *mShowFullScreenAction = nullptr;
+    bool mReallyClose = false;
 };
-
-#endif

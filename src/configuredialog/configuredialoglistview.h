@@ -1,8 +1,9 @@
 /*
  *   kmail: KDE mail client
+ *   SPDX-FileCopyrightText: 2016 Laurent Montel <montel@kde.org>
+ *   SPDX-License-Identifier: GPL-2.0-or-later
  */
-#ifndef configuredialoglistview_h
-#define configuredialoglistview_h
+#pragma once
 
 #include <QTreeWidget>
 
@@ -17,15 +18,10 @@ Q_SIGNALS:
     void removeHeader();
 
 protected:
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
-    void showEvent(QShowEvent *e) Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
-    void slotContextMenu(const QPoint &pos);
+    void resizeEvent(QResizeEvent *e) override;
+    void showEvent(QShowEvent *e) override;
 
 private:
+    void slotContextMenu(const QPoint &pos);
     void resizeColums();
-
 };
-
-#endif // configuredialoglistview_h

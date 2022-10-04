@@ -1,9 +1,11 @@
 [Desktop Entry]
 Name=KMail view
-Name[ar]=عرض KMail 
+Name[ar]=منظور «بريدك»
+Name[az]=KMail-də baxmaq
+Name[bg]=Изглед на KMail
 Name[bs]=KMail pogled
 Name[ca]=Vista del KMail
-Name[ca@valencia]=Vista del KMail
+Name[ca@valencia]=Vista de KMail
 Name[cs]=KMail pohled
 Name[da]=KMail-visning
 Name[de]=KMail-Ansicht
@@ -11,10 +13,11 @@ Name[el]=Προβολή KMail
 Name[en_GB]=KMail view
 Name[es]=Vista KMail
 Name[et]=KMaili vaade
+Name[eu]=KMail ikuspegia
 Name[fi]=KMail-näkymä
 Name[fr]=KMail view
 Name[ga]=Amharc KMail
-Name[gl]=Vista do KMail
+Name[gl]=Vista de KMail
 Name[hu]=KMail-nézet
 Name[ia]=Vista de KMail
 Name[it]=Visualizzatore di KMail
@@ -54,6 +57,7 @@ Icon=kmail
 NoDisplay=true
 MimeType=message/rfc822;application/mbox;application/x-mimearchive;
 
+X-KDE-Protocols=akonadi
 X-KDE-StartupNotify=true
 X-DBUS-StartupType=Unique
 X-DBUS-ServiceName=org.kde.kmail

@@ -1,42 +1,40 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "composenewmessagejob.h"
-#include "kmkernel.h"
-#include "composer.h"
 #include "editor/kmcomposerwin.h"
+#include "kmkernel.h"
+#include <MessageComposer/Composer>
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 ComposeNewMessageJob::ComposeNewMessageJob(QObject *parent)
-    : QObject(parent),
-      mIdentity(0),
-      mMsg(nullptr)
+    : QObject(parent)
 {
-
 }
 
-ComposeNewMessageJob::~ComposeNewMessageJob()
-{
+ComposeNewMessageJob::~ComposeNewMessageJob() = default;
 
+void ComposeNewMessageJob::setCurrentCollection(const Akonadi::Collection &col)
+{
+    mCurrentCollection = col;
+}
+
+static void copyAddresses(const KMime::Headers::Generics::AddressList *from, KMime::Headers::Generics::AddressList *to)
+{
+    if (!from) { // no such headers to copy from
+        return;
+    }
+
+    const KMime::Types::Mailbox::List mailboxes = from->mailboxes();
+    for (const KMime::Types::Mailbox &mbox : mailboxes) {
+        to->addAddress(mbox);
+    }
 }
 
 void ComposeNewMessageJob::start()
@@ -45,22 +43,33 @@ void ComposeNewMessageJob::start()
 
     mIdentity = mFolder ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
-    TemplateParser::TemplateParserJob *parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage);
+    auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
     connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &ComposeNewMessageJob::slotOpenComposer);
     parser->setIdentityManager(KMKernel::self()->identityManager());
     if (mFolder) {
-        parser->process(mMsg, mFolder->collection());
+        parser->process(mMsg, mCurrentCollection.id());
     } else {
-        parser->process(KMime::Message::Ptr(), Akonadi::Collection());
+        parser->process(KMime::Message::Ptr());
+    }
+
+    if (mRecipientsFrom.isValid()) {
+        // Copy the recipient list from the original message
+        const KMime::Message::Ptr msg = MessageComposer::Util::message(mRecipientsFrom);
+        if (msg) {
+            copyAddresses(msg->to(false), mMsg->to());
+            copyAddresses(msg->cc(false), mMsg->cc());
+            copyAddresses(msg->bcc(false), mMsg->bcc());
+            copyAddresses(msg->replyTo(false), mMsg->replyTo());
+        } else {
+            qCWarning(KMAIL_LOG) << "Original message" << mRecipientsFrom.id() << "not found";
+        }
     }
 }
 
 void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
 {
     KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
-    if (mFolder) {
-        win->setCollectionForNewMessage(mFolder->collection());
-    }
+    win->setCollectionForNewMessage(mCurrentCollection);
 
     if (forceCursorPosition) {
         win->setFocusToEditor();
@@ -69,7 +78,12 @@ void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
     deleteLater();
 }
 
-void ComposeNewMessageJob::setFolder(const QSharedPointer<MailCommon::FolderCollection> &folder)
+void ComposeNewMessageJob::setFolderSettings(const QSharedPointer<MailCommon::FolderSettings> &folder)
 {
     mFolder = folder;
+}
+
+void ComposeNewMessageJob::setRecipientsFromMessage(const Akonadi::Item &from)
+{
+    mRecipientsFrom = from;
 }

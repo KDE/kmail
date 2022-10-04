@@ -1,293 +1,271 @@
 /*
     This file is part of KMail.
 
-    Copyright (c) 2004 Jakob Schr�er <js@camaya.net>
+    SPDX-FileCopyrightText: 2004 Jakob Schröter <js@camaya.net>
 
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Library General Public
-    License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Library General Public License for more details.
-
-    You should have received a copy of the GNU Library General Public License
-    along with this library; see the file COPYING.LIB.  If not, write to
-    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA 02110-1301, USA.
-
-    In addition, as a special exception, the copyright holders give
-    permission to link the code of this program with any edition of
-    the Qt library by Trolltech AS, Norway (or with modified versions
-    of Qt that use the same license as Qt), and distribute linked
-    combinations including the two.  You must obey the GNU General
-    Public License in all respects for all of the code used other than
-    Qt.  If you modify this file, you may extend this exception to
-    your version of the file, but you are not obligated to do so.  If
-    you do not wish to do so, delete this exception statement from
-    your version.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "xfaceconfigurator.h"
+#include "encodedimagepicker.h"
+#include "ui_xfaceconfigurator.h"
 
-#include <Akonadi/Contact/ContactSearchJob>
-#include <KIdentityManagement/kidentitymanagement/identity.h>
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include "kpimtextedit/plaintexteditor.h"
-#include "kpimtextedit/plaintexteditorwidget.h"
-#include <messageviewer/kxface.h>
+#include <MessageViewer/KXFace>
 
-#include <KConfigGroup>
-#include <KJobWidgets>
-#include <kcombobox.h>
 #include <KLocalizedString>
-#include <kmessagebox.h>
-#include <KIO/StoredTransferJob>
+#include <KMessageBox>
 
-#include <QCheckBox>
-#include <QDialog>
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QPushButton>
-#include <QStackedWidget>
-#include <QVBoxLayout>
-#include <QFontDatabase>
-#include <QImageReader>
-#include <QFileDialog>
-using namespace KContacts;
-using namespace KIO;
+#include <QBuffer>
+
 using namespace KMail;
-using namespace MessageViewer;
+using MessageViewer::KXFace;
 
-namespace KMail
-{
+// The size of the PNG used in the Face header must be at most 725 bytes, as
+// explained here: https://quimby.gnus.org/circus/face/
+#define FACE_MAX_SIZE 725
 
 XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     : QWidget(parent)
+    , mUi(new Ui::XFaceConfigurator)
+    , mPngquantProc(new QProcess(this))
 {
-    QVBoxLayout *vlay = new QVBoxLayout(this);
-    vlay->setObjectName(QStringLiteral("main layout"));
-    QHBoxLayout *hlay = new QHBoxLayout();
-    vlay->addLayout(hlay);
+    mUi->setupUi(this);
 
-    // "enable X-Face" checkbox:
-    mEnableCheck = new QCheckBox(i18n("&Send picture with every message"), this);
-    mEnableCheck->setWhatsThis(
-        i18n("Check this box if you want KMail to add a so-called X-Face header to messages "
-             "written with this identity. An X-Face is a small (48x48 pixels) black and "
-             "white image that some mail clients are able to display."));
-    hlay->addWidget(mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter);
+    mPngquantProc->setInputChannelMode(QProcess::ManagedInputChannel);
+    mPngquantProc->setProgram(QLatin1String("pngquant"));
+    mPngquantProc->setArguments(QStringList() << QLatin1String("--strip") << QLatin1String("7") << QLatin1String("-"));
 
-    mXFaceLabel = new QLabel(this);
-    mXFaceLabel->setWhatsThis(
-        i18n("This is a preview of the picture selected/entered below."));
-    mXFaceLabel->setFixedSize(48, 48);
-    mXFaceLabel->setFrameShape(QFrame::Box);
-    hlay->addWidget(mXFaceLabel);
+    mUi->faceConfig->setTitle(i18n("Face"));
+    mUi->xFaceConfig->setTitle(i18n("X-Face"));
+    mUi->faceConfig->setInfo(i18n("More information under <a href=\"https://quimby.gnus.org/circus/face/\">https://quimby.gnus.org/circus/face/</a>."));
+    mUi->xFaceConfig->setInfo(i18n("Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/\">https://ace.home.xs4all.nl/X-Faces/</a>."));
 
-    //     label1 = new QLabel( "X-Face:", this );
-    //     vlay->addWidget( label1 );
+    connect(mUi->enableComboBox, &QComboBox::currentIndexChanged, this, &XFaceConfigurator::modeChanged);
+    connect(mUi->faceConfig, &EncodedImagePicker::imageSelected, this, &XFaceConfigurator::compressFace);
+    connect(mUi->xFaceConfig, &EncodedImagePicker::imageSelected, this, &XFaceConfigurator::compressXFace);
+    connect(mUi->faceConfig, &EncodedImagePicker::sourceChanged, this, &XFaceConfigurator::updateFace);
+    connect(mUi->xFaceConfig, &EncodedImagePicker::sourceChanged, this, &XFaceConfigurator::updateXFace);
+    connect(mPngquantProc, &QProcess::finished, this, &XFaceConfigurator::pngquantFinished);
 
-    // "obtain X-Face from" combo and label:
-    hlay = new QHBoxLayout(); // inherits spacing
-    vlay->addLayout(hlay);
-    KComboBox *sourceCombo = new KComboBox(this);
-    sourceCombo->setEditable(false);
-    sourceCombo->setWhatsThis(
-        i18n("Click on the widgets below to obtain help on the input methods."));
-    sourceCombo->setEnabled(false);   // since !mEnableCheck->isChecked()
-    sourceCombo->addItems(QStringList()
-                          << i18nc("continuation of \"obtain picture from\"",
-                                   "External Source")
-                          << i18nc("continuation of \"obtain picture from\"",
-                                   "Input Field Below"));
-    QLabel *label = new QLabel(i18n("Obtain pic&ture from:"), this);
-    label->setBuddy(sourceCombo);
-    label->setEnabled(false);   // since !mEnableCheck->isChecked()
-    hlay->addWidget(label);
-    hlay->addWidget(sourceCombo, 1);
-
-    // widget stack that is controlled by the source combo:
-    QStackedWidget *widgetStack = new QStackedWidget(this);
-    widgetStack->setEnabled(false);   // since !mEnableCheck->isChecked()
-    vlay->addWidget(widgetStack, 1);
-    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::highlighted), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(sourceCombo, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), widgetStack, &QStackedWidget::setCurrentIndex);
-    connect(mEnableCheck, &QCheckBox::toggled, sourceCombo, &KComboBox::setEnabled);
-    connect(mEnableCheck, &QCheckBox::toggled, widgetStack, &QStackedWidget::setEnabled);
-    connect(mEnableCheck, &QCheckBox::toggled, label, &QLabel::setEnabled);
-    // The focus might be still in the widget that is disabled
-    connect(mEnableCheck, SIGNAL(clicked()),
-            mEnableCheck, SLOT(setFocus()));
-
-    int pageno = 0;
-    // page 0: create X-Face from image file or address book entry
-    QWidget *page = new QWidget(widgetStack);
-    widgetStack->insertWidget(pageno, page);   // force sequential numbers (play safe)
-    QVBoxLayout *page_vlay = new QVBoxLayout(page);
-    page_vlay->setMargin(0);
-    hlay = new QHBoxLayout(); // inherits spacing ??? FIXME really?
-    page_vlay->addLayout(hlay);
-    QPushButton *mFromFileBtn = new QPushButton(i18n("Select File..."), page);
-    mFromFileBtn->setWhatsThis(
-        i18n("Use this to select an image file to create the picture from. "
-             "The image should be of high contrast and nearly quadratic shape. "
-             "A light background helps improve the result."));
-    mFromFileBtn->setAutoDefault(false);
-    page_vlay->addWidget(mFromFileBtn, 1);
-    connect(mFromFileBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFile);
-    QPushButton *mFromAddrbkBtn = new QPushButton(i18n("Set From Address Book"), page);
-    mFromAddrbkBtn->setWhatsThis(
-        i18n("You can use a scaled-down version of the picture "
-             "you have set in your address book entry."));
-    mFromAddrbkBtn->setAutoDefault(false);
-    page_vlay->addWidget(mFromAddrbkBtn, 1);
-    connect(mFromAddrbkBtn, &QPushButton::released, this, &XFaceConfigurator::slotSelectFromAddressbook);
-    QLabel *label1 = new QLabel(i18n("<qt>KMail can send a small (48x48 pixels), low-quality, "
-                                     "monochrome picture with every message. "
-                                     "For example, this could be a picture of you or a glyph. "
-                                     "It is shown in the recipient's mail client (if supported).</qt>"), page);
-    label1->setAlignment(Qt::AlignVCenter);
-    label1->setWordWrap(true);
-    page_vlay->addWidget(label1);
-    page_vlay->addStretch();
-    widgetStack->setCurrentIndex(0);   // since sourceCombo->currentItem() == 0
-
-    // page 1: input field for direct entering
-    ++pageno;
-    page = new QWidget(widgetStack);
-    widgetStack->insertWidget(pageno, page);
-    page_vlay = new QVBoxLayout(page);
-    page_vlay->setMargin(0);
-    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(page);
-    mTextEdit->editor()->setSpellCheckingSupport(false);
-    page_vlay->addWidget(mTextEdit);
-    mTextEdit->editor()->setWhatsThis(i18n("Use this field to enter an arbitrary X-Face string."));
-    mTextEdit->editor()->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    mTextEdit->editor()->setWordWrapMode(QTextOption::WrapAnywhere);
-    mTextEdit->editor()->setSearchSupport(false);
-    QLabel *label2 = new QLabel(i18n("Examples are available at <a "
-                                     "href=\"http://ace.home.xs4all.nl/X-Faces/\">"
-                                     "http://ace.home.xs4all.nl/X-Faces/</a>."), page);
-    label2->setOpenExternalLinks(true);
-    label2->setTextInteractionFlags(Qt::TextBrowserInteraction);
-
-    page_vlay->addWidget(label2);
-
-    connect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &XFaceConfigurator::slotUpdateXFace);
+    // set initial state
+    modeChanged(mUi->enableComboBox->currentIndex());
 }
 
-XFaceConfigurator::~XFaceConfigurator()
-{
-
-}
+XFaceConfigurator::~XFaceConfigurator() = default;
 
 bool XFaceConfigurator::isXFaceEnabled() const
 {
-    return mEnableCheck->isChecked();
+    return mUi->enableComboBox->currentIndex() & SendXFace;
 }
 
 void XFaceConfigurator::setXFaceEnabled(bool enable)
 {
-    mEnableCheck->setChecked(enable);
+    const int currentIndex = mUi->enableComboBox->currentIndex();
+
+    if (enable) {
+        mUi->enableComboBox->setCurrentIndex(currentIndex | SendXFace);
+    } else {
+        mUi->enableComboBox->setCurrentIndex(currentIndex & ~SendXFace);
+    }
+}
+
+bool XFaceConfigurator::isFaceEnabled() const
+{
+    return mUi->enableComboBox->currentIndex() & SendFace;
+}
+
+void XFaceConfigurator::setFaceEnabled(bool enable)
+{
+    const int currentIndex = mUi->enableComboBox->currentIndex();
+
+    if (enable) {
+        mUi->enableComboBox->setCurrentIndex(currentIndex | SendFace);
+    } else {
+        mUi->enableComboBox->setCurrentIndex(currentIndex & ~SendFace);
+    }
 }
 
 QString XFaceConfigurator::xface() const
 {
-    return mTextEdit->editor()->toPlainText();
+    QString str = mUi->xFaceConfig->source().trimmed();
+    str.remove(QStringLiteral("x-face:"), Qt::CaseInsensitive);
+    str = str.trimmed();
+
+    return str;
 }
 
 void XFaceConfigurator::setXFace(const QString &text)
 {
-    mTextEdit->editor()->setPlainText(text);
+    mUi->xFaceConfig->setSource(text);
 }
 
-void XFaceConfigurator::setXfaceFromFile(const QUrl &url)
+QString XFaceConfigurator::face() const
 {
-    auto job = KIO::storedGet(url);
-    KJobWidgets::setWindow(job, this);
-    if (job->exec()) {
-        KXFace xf;
-        mTextEdit->editor()->setPlainText(xf.fromImage(QImage::fromData(job->data())));
+    QString str = mUi->faceConfig->source().trimmed();
+    str.remove(QStringLiteral("face:"), Qt::CaseInsensitive);
+    str = str.trimmed();
+
+    return str;
+}
+
+void XFaceConfigurator::setFace(const QString &text)
+{
+    mUi->faceConfig->setSource(text);
+}
+
+void XFaceConfigurator::modeChanged(int index)
+{
+    mUi->faceConfig->setEnabled(index & SendFace);
+    mUi->xFaceConfig->setEnabled(index & SendXFace);
+
+    switch (index) {
+    case DontSend:
+        mUi->modeInfo->setText(i18n("No image will be sent."));
+        break;
+    case SendFace:
+        mUi->modeInfo->setText(i18n("KMail will send a colored image through the Face header."));
+        break;
+    case SendXFace:
+        mUi->modeInfo->setText(i18n("KMail will send a black-and-white image through the X-Face header."));
+        break;
+    case SendBoth:
+        mUi->modeInfo->setText(i18n("KMail will send both a colored and a black-and-white image."));
+        break;
+    }
+}
+
+void XFaceConfigurator::updateFace()
+{
+    const QString str = face();
+    const QByteArray facearray = QByteArray::fromBase64(str.toUtf8());
+    QImage faceimage;
+
+    faceimage.loadFromData(facearray, "png");
+    mUi->faceConfig->setImage(faceimage);
+}
+
+void XFaceConfigurator::updateXFace()
+{
+    const QString str = xface();
+
+    if (str.isEmpty()) {
+        mUi->xFaceConfig->setImage(QImage());
     } else {
-        KMessageBox::error(this, job->errorString());
+        KXFace xf;
+        mUi->xFaceConfig->setImage(xf.toImage(str));
     }
 }
 
-void XFaceConfigurator::slotSelectFile()
+void XFaceConfigurator::compressFace(const QImage &image)
 {
-    const QList<QByteArray> mimeTypes = QImageReader::supportedImageFormats();
-    QString filter;
-    for (const QByteArray &mime : mimeTypes) {
-        filter += QString::fromLatin1(mime);
-    }
-    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), i18n("Image (%1)", filter));
-    if (!url.isEmpty()) {
-        setXfaceFromFile(url);
+    if (!pngquant(image)) {
+        crunch(image);
     }
 }
 
-void XFaceConfigurator::slotSelectFromAddressbook()
+void XFaceConfigurator::compressFaceDone(const QByteArray &data, bool fromPngquant)
 {
-    using namespace KIdentityManagement;
-
-    IdentityManager manager(true);
-    const Identity defaultIdentity = manager.defaultIdentity();
-    const QString email = defaultIdentity.primaryEmailAddress().toLower();
-
-    Akonadi::ContactSearchJob *job = new Akonadi::ContactSearchJob(this);
-    job->setLimit(1);
-    job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
-    connect(job, &Akonadi::ContactSearchJob::result, this, &XFaceConfigurator::slotDelayedSelectFromAddressbook);
-}
-
-void XFaceConfigurator::slotDelayedSelectFromAddressbook(KJob *job)
-{
-    const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob *>(job);
-
-    if (searchJob->contacts().isEmpty()) {
-        KMessageBox::information(this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture"));
+    if (data.isNull()) {
+        if (fromPngquant) {
+            KMessageBox::error(this, i18n("Failed to reduce image size to fit in header."));
+        } else {
+            KMessageBox::error(this, i18n("Failed to reduce image size to fit in header. Install pngquant to obtain better compression results."));
+        }
         return;
     }
 
-    const Addressee contact = searchJob->contacts().at(0);
-    if (contact.photo().isIntern()) {
-        const QImage photo = contact.photo().data();
-        if (!photo.isNull()) {
-            KXFace xf;
-            mTextEdit->editor()->setPlainText(xf.fromImage(photo));
-        } else {
-            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
-        }
+    mUi->faceConfig->setSource(QString::fromUtf8(data.toBase64()));
 
-    } else {
-        const QUrl url(contact.photo().url());
-        if (!url.isEmpty()) {
-            setXfaceFromFile(url);
-        } else {
-            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
-        }
+    if (!fromPngquant) {
+        KMessageBox::information(this, i18n("Install pngquant to obtain better image quality."));
     }
 }
 
-void XFaceConfigurator::slotUpdateXFace()
+void XFaceConfigurator::compressXFace(const QImage &image)
 {
-    QString str = mTextEdit->editor()->toPlainText();
+    KXFace xf;
+    const QString xFaceString = xf.fromImage(image);
+    mUi->xFaceConfig->setSource(xFaceString);
+}
 
-    if (!str.isEmpty()) {
-        if (str.startsWith(QStringLiteral("x-face:"), Qt::CaseInsensitive)) {
-            str = str.remove(QStringLiteral("x-face:"), Qt::CaseInsensitive);
-            mTextEdit->editor()->setPlainText(str);
+// The builtin image compressor. It's pretty bad and pngquant is preferred when
+// available.
+void XFaceConfigurator::crunch(const QImage &image)
+{
+    QImage output;
+    QByteArray ba;
+    int crunchLevel = 0;
+    int maxCrunchLevel = 6 * 5; // 6 formats, 5 sizes
+
+    const QImage::Format formats[6] = {
+        QImage::Format_RGB32,
+        QImage::Format_RGB888,
+        QImage::Format_RGB16,
+        QImage::Format_RGB666,
+        QImage::Format_RGB555,
+        QImage::Format_RGB444,
+    };
+
+    int sizes[5] = {48, 24, 12, 6, 3};
+
+    while (true) {
+        const QImage::Format targetFormat = formats[crunchLevel % 6];
+        int targetSize = sizes[crunchLevel / 6];
+        output = image;
+
+        if (targetSize != 48) {
+            output = output.scaled(targetSize, targetSize);
         }
-        KXFace xf;
-        const QPixmap p = QPixmap::fromImage(xf.toImage(str));
-        mXFaceLabel->setPixmap(p);
-    } else {
-        mXFaceLabel->clear();
+
+        output = output.scaled(48, 48);
+        ba.clear();
+        QBuffer buffer(&ba);
+
+        buffer.open(QIODevice::WriteOnly);
+        output.convertTo(targetFormat);
+        output.save(&buffer, "PNG", 0);
+
+        if (ba.size() <= FACE_MAX_SIZE) {
+            compressFaceDone(ba, false);
+            break;
+        } else if (crunchLevel < maxCrunchLevel - 1) {
+            crunchLevel += 1;
+        } else {
+            compressFaceDone(QByteArray(), false);
+            break;
+        }
     }
 }
 
-} // namespace KMail
+bool XFaceConfigurator::pngquant(const QImage &image)
+{
+    const QImage small = image.scaled(48, 48);
 
+    mPngquantProc->terminate();
+    mPngquantProc->waitForFinished();
+
+    mPngquantProc->start();
+
+    if (mPngquantProc->waitForStarted()) {
+        small.save(mPngquantProc, "PNG");
+        mPngquantProc->closeWriteChannel();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void XFaceConfigurator::pngquantFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    if (exitCode == 0 && exitStatus == QProcess::NormalExit) {
+        const QByteArray output = mPngquantProc->readAllStandardOutput();
+        compressFaceDone(output, true);
+    } else {
+        const QByteArray errOut = mPngquantProc->readAllStandardError();
+        const QString str = QString::fromLocal8Bit(errOut);
+
+        KMessageBox::error(this, i18n("pngquant exited with code %1: %2", exitCode, str));
+
+        compressFaceDone(QByteArray(), true);
+    }
+}

@@ -1,61 +1,42 @@
 /*
-   Copyright (C) 2011-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#ifndef TAGSELECTDIALOG_H
-#define TAGSELECTDIALOG_H
+#pragma once
 
-#include <QDialog>
-#include <AkonadiCore/Item>
-#include <AkonadiCore/Tag>
 #include "MailCommon/Tag"
+#include "kmail_private_export.h"
+#include <Akonadi/Item>
+#include <Akonadi/Tag>
+#include <QDialog>
+#include <QVector>
 
 class QListWidget;
 class KActionCollection;
-class TagSelectDialog : public QDialog
+class KMAILTESTS_TESTS_EXPORT TagSelectDialog : public QDialog
 {
     Q_OBJECT
 public:
     explicit TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem);
-    ~TagSelectDialog();
-    Akonadi::Tag::List selectedTag() const;
+    ~TagSelectDialog() override;
+    Q_REQUIRED_RESULT Akonadi::Tag::List selectedTag() const;
 
     void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
 
-private Q_SLOTS:
+private:
     void slotAddNewTag();
     void slotTagsFetched(KJob *);
-
-private:
     void writeConfig();
     void readConfig();
     void createTagList(bool updateList);
-    enum ItemType {
-        UrlTag = Qt::UserRole + 1
-    };
-    int mNumberOfSelectedMessages;
-    Akonadi::Item mSelectedItem;
+    enum ItemType { UrlTag = Qt::UserRole + 1 };
+    const int mNumberOfSelectedMessages = -1;
+    const Akonadi::Item mSelectedItem;
 
     Akonadi::Tag::List mCurrentSelectedTags;
-    QList<MailCommon::Tag::Ptr> mTagList;
+    QVector<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection *> mActionCollectionList;
-    QListWidget *mListTag;
+    QListWidget *const mListTag;
 };
-
-#endif /* TAGSELECTDIALOG_H */
-

@@ -1,54 +1,48 @@
 /*
-   Copyright (C) 2014-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "followupreminderagent.h"
-#include "followupremindermanager.h"
-#include "FollowupReminder/FollowUpReminderUtil"
 #include "followupreminderadaptor.h"
-#include "followupreminderinfodialog.h"
 #include "followupreminderagentsettings.h"
-#include <KWindowSystem>
+#include "followupreminderinfo.h"
+#include "followupremindermanager.h"
+
 #include <KMime/Message>
 
-#include <AkonadiCore/ChangeRecorder>
-#include <AkonadiCore/ItemFetchScope>
-#include <kdbusconnectionpool.h>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/ItemFetchScope>
+#include <QDBusConnection>
 
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/ServerManager>
+#include <Akonadi/Session>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
-#include <AkonadiCore/Session>
-#include <AkonadiCore/CollectionFetchScope>
-
-#include <QPointer>
+#endif
 #include "followupreminderagent_debug.h"
 #include <QTimer>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     : Akonadi::AgentBase(id)
+    , mManager(new FollowUpReminderManager(this))
+    , mTimer(new QTimer(this))
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     Kdelibs4ConfigMigrator migrate(QStringLiteral("followupreminderagent"));
     migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_followupreminder_agentrc") << QStringLiteral("akonadi_followupreminder_agent.notifyrc"));
     migrate.migrate();
+#endif
 
     new FollowUpReminderAgentAdaptor(this);
-    KDBusConnectionPool::threadConnection().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
-    KDBusConnectionPool::threadConnection().registerService(QStringLiteral("org.freedesktop.Akonadi.FollowUpReminder"));
-    mManager = new FollowUpReminderManager(this);
+    QDBusConnection::sessionBus().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
+    QDBusConnection::sessionBus().registerService(service);
     setNeedsNetwork(true);
 
     changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
@@ -64,15 +58,12 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
         mManager->load();
     }
 
-    mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &FollowUpReminderAgent::reload);
-    //Reload all each 24hours
-    mTimer->start(24 * 60 * 60 * 1000);
+    // Reload all each 24hours
+    mTimer->start(24h);
 }
 
-FollowUpReminderAgent::~FollowUpReminderAgent()
-{
-}
+FollowUpReminderAgent::~FollowUpReminderAgent() = default;
 
 void FollowUpReminderAgent::setEnableAgent(bool enabled)
 {
@@ -93,31 +84,6 @@ void FollowUpReminderAgent::setEnableAgent(bool enabled)
 bool FollowUpReminderAgent::enabledAgent() const
 {
     return FollowUpReminderAgentSettings::self()->enabled();
-}
-
-void FollowUpReminderAgent::showConfigureDialog(qlonglong windowId)
-{
-    QPointer<FollowUpReminderInfoDialog> dialog = new FollowUpReminderInfoDialog();
-    dialog->load();
-    if (windowId) {
-#ifndef Q_OS_WIN
-        KWindowSystem::setMainWindow(dialog, windowId);
-#else
-        KWindowSystem::setMainWindow(dialog, (HWND)windowId);
-#endif
-    }
-    if (dialog->exec()) {
-        const QList<qint32> lstRemoveItem = dialog->listRemoveId();
-        if (FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(FollowUpReminder::FollowUpReminderUtil::defaultConfig(), lstRemoveItem, true)) {
-            mManager->load();
-        }
-    }
-    delete dialog;
-}
-
-void FollowUpReminderAgent::configure(WId windowId)
-{
-    showConfigureDialog((qulonglong)windowId);
 }
 
 void FollowUpReminderAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)
@@ -141,10 +107,27 @@ void FollowUpReminderAgent::reload()
     }
 }
 
-QString FollowUpReminderAgent::printDebugInfo()
+void FollowUpReminderAgent::addReminder(const QString &messageId,
+                                        Akonadi::Item::Id messageItemId,
+                                        const QString &to,
+                                        const QString &subject,
+                                        QDate followupDate,
+                                        Akonadi::Item::Id todoId)
+{
+    auto info = new FollowUpReminder::FollowUpReminderInfo();
+    info->setMessageId(messageId);
+    info->setOriginalMessageItemId(messageItemId);
+    info->setTo(to);
+    info->setSubject(subject);
+    info->setFollowUpReminderDate(followupDate);
+    info->setTodoId(todoId);
+
+    mManager->addReminder(info);
+}
+
+QString FollowUpReminderAgent::printDebugInfo() const
 {
     return mManager->printDebugInfo();
 }
 
 AKONADI_AGENT_MAIN(FollowUpReminderAgent)
-

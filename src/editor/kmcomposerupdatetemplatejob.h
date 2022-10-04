@@ -1,36 +1,22 @@
 /*
-   Copyright (C) 2017 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
 
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Library General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Library General Public License for more details.
-
-   You should have received a copy of the GNU Library General Public License
-   along with this library; see the file COPYING.LIB.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#ifndef KMCOMPOSERUPDATETEMPLATEJOB_H
-#define KMCOMPOSERUPDATETEMPLATEJOB_H
+#pragma once
 
-#include <QObject>
-#include <KMime/Message>
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 #include <KIdentityManagement/Identity>
+#include <KMime/Message>
+#include <QObject>
 
 class KMComposerUpdateTemplateJob : public QObject
 {
     Q_OBJECT
 public:
     explicit KMComposerUpdateTemplateJob(QObject *parent = nullptr);
-    ~KMComposerUpdateTemplateJob();
+    ~KMComposerUpdateTemplateJob() override;
     void start();
     void setMsg(const KMime::Message::Ptr &msg);
 
@@ -46,20 +32,20 @@ public:
 
     void setIdent(const KIdentityManagement::Identity &ident);
 
+    void setCollection(const Akonadi::Collection &col);
 Q_SIGNALS:
     void updateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
 private:
+    Q_DISABLE_COPY(KMComposerUpdateTemplateJob)
     void slotFinished();
 
     QString mTextSelection;
     QString mCustomTemplate;
     KMime::Message::Ptr mMsg;
     Akonadi::Collection mCollectionForNewMessage;
-    uint mUoldId;
-    uint mUoid;
+    uint mUoldId = 0;
+    uint mUoid = 0;
     KIdentityManagement::Identity mIdent;
-    bool mWasModified;
+    bool mWasModified = false;
 };
-
-#endif // KMCOMPOSERUPDATETEMPLATEJOB_H

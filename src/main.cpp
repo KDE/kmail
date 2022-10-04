@@ -1,47 +1,37 @@
 /*
  * kmail: KDE mail client
- * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
+ * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  *
  */
 
 #include <kontactinterface/pimuniqueapplication.h>
 
-#include "kmkernel.h" //control center
-#include "kmmainwidget.h"
 #include "kmail_options.h"
+#include "kmkernel.h" //control center
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include "kmmigrateapplication.h"
+#endif
 
 #include "kmail_debug.h"
-#include <kmessagebox.h>
 #undef Status // stupid X headers
 
 #include "aboutdata.h"
 
-#include "kmstartup.h"
-
-#ifdef Q_OS_WIN
-#include <unistd.h>
-#include <windows.h>
-#endif
-
-#include <QDir>
-#include <QApplication>
-#include <QSessionManager>
 #include <KCrash>
+#include <KStartupInfo>
+#include <KWindowSystem>
+#include <QApplication>
+#include <QDir>
+#include <QSessionManager>
+#include <QWebEngineUrlScheme>
+
+#ifdef WITH_KUSERFEEDBACK
+#include "userfeedback/kmailuserfeedbackprovider.h"
+#include <KUserFeedback/Provider>
+
+#endif
 
 //-----------------------------------------------------------------------------
 
@@ -50,24 +40,26 @@ class KMailApplication : public KontactInterface::PimUniqueApplication
 public:
     KMailApplication(int &argc, char **argv[])
         : KontactInterface::PimUniqueApplication(argc, argv)
-        , mDelayedInstanceCreation(false)
-        , mEventLoopReached(false)
-    { }
+    {
+    }
 
-    int activate(const QStringList &args, const QString &workindDir) Q_DECL_OVERRIDE;
+    int activate(const QStringList &args, const QString &workingDir) override;
     void commitData(QSessionManager &sm);
     void setEventLoopReached();
-    void delayedInstanceCreation(const QStringList &args, const QString &workindDir);
-protected:
-    bool mDelayedInstanceCreation;
-    bool mEventLoopReached;
+    void delayedInstanceCreation(const QStringList &args, const QString &workingDir);
 
+public Q_SLOTS:
+    int newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory) override;
+
+protected:
+    bool mDelayedInstanceCreation = false;
+    bool mEventLoopReached = false;
 };
 
 void KMailApplication::commitData(QSessionManager &)
 {
     kmkernel->dumpDeadLetters();
-    kmkernel->setShuttingDown(true);   // Prevent further dumpDeadLetters calls
+    kmkernel->setShuttingDown(true); // Prevent further dumpDeadLetters calls
 }
 
 void KMailApplication::setEventLoopReached()
@@ -75,7 +67,24 @@ void KMailApplication::setEventLoopReached()
     mEventLoopReached = true;
 }
 
-int KMailApplication::activate(const QStringList &args, const QString &workindDir)
+int KMailApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
+{
+    if (KWindowSystem::isPlatformX11()) {
+        KStartupInfo::setNewStartupId(kmkernel->mainWin()->windowHandle(), startupId);
+    } else if (KWindowSystem::isPlatformWayland()) {
+        KWindowSystem::setCurrentXdgActivationToken(QString::fromUtf8(startupId));
+    }
+
+    if (!kmkernel->firstInstance() && !arguments.isEmpty()) {
+        // if we're going to create a new window (viewer or composer),
+        // don't bring the mainwindow onto the current desktop
+        return activate(arguments, workingDirectory);
+    } else {
+        return PimUniqueApplication::newInstance(startupId, arguments, workingDirectory);
+    }
+}
+
+int KMailApplication::activate(const QStringList &args, const QString &workingDir)
 {
     // If the event loop hasn't been reached yet, the kernel is probably not
     // fully initialized. Creating an instance would therefore fail, this is why
@@ -95,30 +104,39 @@ int KMailApplication::activate(const QStringList &args, const QString &workindDi
     }
 
     if (!kmkernel->firstInstance() || !qApp->isSessionRestored()) {
-        kmkernel->handleCommandLine(true, args, workindDir);
+        kmkernel->handleCommandLine(true, args, workingDir);
     }
     kmkernel->setFirstInstance(false);
+
+    KWindowSystem::activateWindow(kmkernel->mainWin()->windowHandle());
+
     return 0;
 }
 
-void KMailApplication::delayedInstanceCreation(const QStringList &args, const QString &workindDir)
+void KMailApplication::delayedInstanceCreation(const QStringList &args, const QString &workingDir)
 {
     if (mDelayedInstanceCreation) {
-        activate(args, workindDir);
+        activate(args, workingDir);
     }
 }
 
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_UNIX
-    // enforce xcb plugin fix bug Bug 367598
-    qputenv("QT_QPA_PLATFORM", "xcb");
+    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    // Necessary for "cid" support in kmail.
+    QWebEngineUrlScheme cidScheme("cid");
+    cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored);
+    cidScheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
+    QWebEngineUrlScheme::registerScheme(cidScheme);
+
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail");
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
     KCrash::initialize();
     KMail::AboutData about;
     app.setAboutData(about);
@@ -130,18 +148,23 @@ int main(int argc, char *argv[])
     cmdArgs->process(args);
     about.processCommandLine(cmdArgs);
 
+#ifdef WITH_KUSERFEEDBACK
+    if (cmdArgs->isSet(QStringLiteral("feedback"))) {
+        KMailUserFeedbackProvider userFeedback(nullptr);
+        QTextStream(stdout) << userFeedback.describeDataSources() << '\n';
+        return 0;
+    }
+#endif
+
     if (!KMailApplication::start(args)) {
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
     }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     KMMigrateApplication migrate;
     migrate.migrate();
-
-    // import i18n data and icons from libraries:
-    KMail::insertLibraryIcons();
-
-    //local, do the init
+#endif
+    // local, do the init
     KMKernel kmailKernel;
     kmailKernel.init();
 
@@ -153,7 +176,7 @@ int main(int argc, char *argv[])
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
 
-    //If the instance hasn't been created yet, do that now
+    // If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
     app.delayedInstanceCreation(args, QDir::currentPath());
 

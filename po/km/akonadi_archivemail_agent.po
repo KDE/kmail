@@ -1,0 +1,267 @@
+# translation of archivemailagent.po to Khmer
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2012.
+# Sophea <sophea@khmeros.info>, 2012.
+# sutha <sutha@khmeros.info>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: archivemailagent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"PO-Revision-Date: 2012-12-25 10:57+0700\n"
+"Last-Translator: sutha <sutha@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros>\n"
+"Language: km\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: WordForge 0.8 RC1\n"
+"X-Language: km-KH\n"
+
+#: addarchivemaildialog.cpp:31
+#, fuzzy, kde-format
+#| msgid "Modify Archive Mail"
+msgctxt "@title:window"
+msgid "Modify Archive Mail"
+msgstr "កែសម្រួល​សំបុត្រ​ប័ណ្ណសារ"
+
+#: addarchivemaildialog.cpp:33
+#, fuzzy, kde-format
+#| msgid "Add Archive Mail"
+msgctxt "@title:window"
+msgid "Add Archive Mail"
+msgstr "បន្ថែម​សំបុត្រ​ប័ណ្ណសារ"
+
+#: addarchivemaildialog.cpp:45
+#, kde-format
+msgid "&Folder:"
+msgstr "ថត ៖"
+
+#: addarchivemaildialog.cpp:59
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgid "Format:"
+msgstr "ទ្រង់ទ្រាយ ៖"
+
+#: addarchivemaildialog.cpp:67
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "ទុក​ថត​រង​ទាំងអស់​ក្នុង​ប័ណ្ណសារ"
+
+#: addarchivemaildialog.cpp:73
+#, kde-format
+msgid "Path:"
+msgstr "ផ្លូវ ៖"
+
+#: addarchivemaildialog.cpp:83
+#, kde-format
+msgid "Backup each:"
+msgstr "បម្រុងទុក​នីមួយៗ ៖"
+
+#: addarchivemaildialog.cpp:99
+#, kde-format
+msgid "Maximum number of archive:"
+msgstr "ចំនួន​អតិបរមា​នៃ​ប័ណ្ណសារ ៖"
+
+#: addarchivemaildialog.cpp:104
+#, kde-format
+msgid "unlimited"
+msgstr "មិន​បាន​កំណត់"
+
+#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#, kde-format
+msgctxt "Start of the filename for a mail archive file"
+msgid "Archive"
+msgstr "ប័ណ្ណសារ"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Name"
+msgstr "ឈ្មោះ"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Last archive"
+msgstr "ប័ណ្ណសារ​ចុងក្រោយ"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Next archive in"
+msgstr "ប័ណ្ណសារ​បន្ទាប់​នៅ​ក្នុង"
+
+#: archivemailwidget.cpp:70
+#, kde-format
+msgid "Storage directory"
+msgstr ""
+
+#: archivemailwidget.cpp:89
+#, fuzzy, kde-format
+#| msgid "Configure Archive Mail Agent"
+msgid "Archive Mail Agent"
+msgstr "កំណត់​រចនាសម្ព័ន្ធ​ភ្នាក់ងារ​សំបុត្រ​ប័ណ្ណសារ"
+
+#: archivemailwidget.cpp:91
+#, kde-format
+msgid "Archive emails automatically."
+msgstr ""
+
+#: archivemailwidget.cpp:93
+#, kde-format
+msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgstr ""
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Laurent Montel"
+msgstr ""
+
+#: archivemailwidget.cpp:94
+#, kde-format
+msgid "Maintainer"
+msgstr ""
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: archivemailwidget.cpp:96
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "បន្ថែម..."
+
+#: archivemailwidget.cpp:113
+#, kde-format
+msgid "Open Containing Folder..."
+msgstr "បើក​ថត​ដែល​មាន..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "លុប"
+
+#: archivemailwidget.cpp:166
+#, kde-format
+msgid "Folder: %1"
+msgstr "ថត ៖ %1"
+
+#: archivemailwidget.cpp:188
+#, kde-format
+msgid "Tomorrow"
+msgid_plural "%1 days"
+msgstr[0] ""
+
+#: archivemailwidget.cpp:197
+#, kde-format
+msgid "Archive will be done %1"
+msgstr "ប័ណ្ណសារ​នឹង​រួចរាល់ %1"
+
+#: archivemailwidget.cpp:233
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
+msgid "Do you want to delete the selected items?"
+msgstr "តើ​អ្នក​ចង់​លុប​ធាតុ​ដែល​បាន​ជ្រើស ឬ​​ចង់​​បន្ត​ទៅ​ទៀត ?"
+
+#: archivemailwidget.cpp:234
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "លុប"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid ""
+"Cannot add a second archive for this folder. Modify the existing one instead."
+msgstr "មិន​អាច​បន្ថែម​ប័ណ្ណសារ​ទី​ពីរ​សម្រាប់​ថត​នេះ​បាន​ទេ ។ កែសម្រួល​ប័ណ្ណសារ​ដែល​មាន​រួចហើយ​ជំនួស​វិញ ។"
+
+#: archivemailwidget.cpp:273
+#, kde-format
+msgid "Add Archive Mail"
+msgstr "បន្ថែម​សំបុត្រ​ប័ណ្ណសារ"
+
+#: job/archivejob.cpp:58
+#, kde-format
+msgid "Directory does not exist. Please verify settings. Archive postponed."
+msgstr ""
+
+#: job/archivejob.cpp:76
+#, kde-format
+msgid "Start to archive %1"
+msgstr "ចាប់ផ្ដើម​ទុក​ក្នុង​ប័ណ្ណសារ %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/archivemailwidget.ui:38
+#, kde-format
+msgid "Modify..."
+msgstr "កែសម្រួល..."
+
+#: widgets/formatcombobox.cpp:14
+#, kde-format
+msgid "Compressed Zip Archive (.zip)"
+msgstr "ប័ណ្ណសារ Zip ដែល​បាន​បង្ហាប់ (.zip)"
+
+#: widgets/formatcombobox.cpp:15
+#, kde-format
+msgid "Uncompressed Archive (.tar)"
+msgstr "ប័ណ្ណសារ​ដែល​មិន​បាន​បង្ហាប់ (.tar)"
+
+#: widgets/formatcombobox.cpp:16
+#, kde-format
+msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
+msgstr "ប័ណ្ណសារ Tar ដែល​បាន​បង្ហាប់ BZ2 (.tar.bz2)"
+
+#: widgets/formatcombobox.cpp:17
+#, kde-format
+msgid "GZ-Compressed Tar Archive (.tar.gz)"
+msgstr "ប័ណ្ណសារ Tar ដែល​បាន​បង្ហាប់ GZ (.tar.gz)"
+
+#: widgets/unitcombobox.cpp:13
+#, kde-format
+msgid "Days"
+msgstr "ថ្ងៃ"
+
+#: widgets/unitcombobox.cpp:14
+#, kde-format
+msgid "Weeks"
+msgstr "សប្ដាហ៍"
+
+#: widgets/unitcombobox.cpp:15
+#, kde-format
+msgid "Months"
+msgstr "ខែ"
+
+#: widgets/unitcombobox.cpp:16
+#, kde-format
+msgid "Years"
+msgstr ""
+
+#~ msgid "Remove items"
+#~ msgstr "យក​ធាតុ​ចេញ"
+
+#~ msgid "Remove"
+#~ msgstr "យកចេញ"
+
+#, fuzzy
+#~| msgctxt "Start of the filename for a mail archive file"
+#~| msgid "Archive"
+#~ msgid "Archive now"
+#~ msgstr "ប័ណ្ណសារ"
+
+#~ msgid "Configure Archive Mail Agent"
+#~ msgstr "កំណត់​រចនាសម្ព័ន្ធ​ភ្នាក់ងារ​សំបុត្រ​ប័ណ្ណសារ"
+
+#~ msgid "1 day"
+#~ msgid_plural "%1 days"
+#~ msgstr[0] "%1 ថ្ងៃ"

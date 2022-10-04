@@ -1,45 +1,29 @@
 /*
-  Copyright (c) 2013-2016 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
-#ifndef CONFIGUREAPPEARANCEPAGE_H
-#define CONFIGUREAPPEARANCEPAGE_H
+#pragma once
 
-#include "kmail_export.h"
-#include "configuredialog_p.h"
 #include "MailCommon/Tag"
+#include "configuredialog_p.h"
+#include "kmail_export.h"
 #include <QListWidgetItem>
 
 class QPushButton;
 class QCheckBox;
-class KComboBox;
+class QComboBox;
 class KFontChooser;
 class ColorListBox;
 class QButtonGroup;
 class QGroupBox;
 class QSpinBox;
-class KLineEdit;
+class QLineEdit;
 class QModelIndex;
 class KJob;
 namespace MessageViewer
 {
 class ConfigureWidget;
-}
-namespace Gravatar
-{
-class GravatarConfigWidget;
 }
 
 namespace MessageList
@@ -54,7 +38,7 @@ class ThemeComboBox;
 namespace MailCommon
 {
 class Tag;
-typedef QSharedPointer<Tag> TagPtr;
+using TagPtr = QSharedPointer<Tag>;
 }
 
 namespace MailCommon
@@ -67,24 +51,21 @@ class AppearancePageFontsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageFontsTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
+    void save() override;
 
-private Q_SLOTS:
+private:
     void slotFontSelectorChanged(int);
+    void doLoadOther() override;
+    void doResetToDefaultsOther() override;
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void updateFontSelector();
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    QCheckBox *mCustomFontCheck = nullptr;
+    QComboBox *mFontLocationCombo = nullptr;
+    KFontChooser *mFontChooser = nullptr;
 
-private:
-    QCheckBox    *mCustomFontCheck;
-    KComboBox    *mFontLocationCombo;
-    KFontChooser *mFontChooser;
-
-    int          mActiveFontIndex;
-    QFont        mFont[8];
+    int mActiveFontIndex{-1};
+    QFont mFont[8];
 };
 
 class AppearancePageColorsTab : public ConfigModuleTab
@@ -92,19 +73,20 @@ class AppearancePageColorsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageColorsTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
-    void save() Q_DECL_OVERRIDE;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
+    void save() override;
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
+    void doResetToDefaultsOther() override;
     void loadColor(bool loadFromConfig);
 
 private:
-    QCheckBox    *mCustomColorCheck;
-    ColorListBox *mColorList;
-    QCheckBox    *mRecycleColorCheck;
-    QSpinBox     *mCloseToQuotaThreshold;
+    QCheckBox *mCustomColorCheck = nullptr;
+    ColorListBox *mColorList = nullptr;
+    QCheckBox *mRecycleColorCheck = nullptr;
+    QSpinBox *mCloseToQuotaThreshold = nullptr;
+    QCheckBox *mUseInlineStyle = nullptr;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab
@@ -112,23 +94,23 @@ class AppearancePageLayoutTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageLayoutTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
 
 private: // data
-    QButtonGroup  *mFolderListGroup;
-    QGroupBox     *mFolderListGroupBox;
-    QButtonGroup  *mReaderWindowModeGroup;
-    QGroupBox     *mReaderWindowModeGroupBox;
-    QButtonGroup  *mFolderToolTipsGroup;
-    QGroupBox     *mFolderToolTipsGroupBox;
-    QButtonGroup  *mFavoriteFoldersViewGroup;
-    QGroupBox     *mFavoriteFoldersViewGroupBox;
-    QCheckBox     *mFolderQuickSearchCB;
+    QButtonGroup *mFolderListGroup = nullptr;
+    QGroupBox *mFolderListGroupBox = nullptr;
+    QButtonGroup *mReaderWindowModeGroup = nullptr;
+    QGroupBox *mReaderWindowModeGroupBox = nullptr;
+    QButtonGroup *mFolderToolTipsGroup = nullptr;
+    QGroupBox *mFolderToolTipsGroupBox = nullptr;
+    QButtonGroup *mFavoriteFoldersViewGroup = nullptr;
+    QGroupBox *mFavoriteFoldersViewGroupBox = nullptr;
+    QCheckBox *mFolderQuickSearchCB = nullptr;
 };
 
 class AppearancePageHeadersTab : public ConfigModuleTab
@@ -137,66 +119,49 @@ class AppearancePageHeadersTab : public ConfigModuleTab
 public:
     explicit AppearancePageHeadersTab(QWidget *parent = nullptr);
 
-    QString helpAnchor() const;
+    Q_REQUIRED_RESULT QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private: // methods
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
-    void doLoadOther() Q_DECL_OVERRIDE;
+    void doLoadFromGlobalSettings() override;
+    void doLoadOther() override;
     // virtual void doResetToDefaultsOther();
     void setDateDisplay(int id, const QString &format);
-
-private: // data
-    QCheckBox    *mDisplayMessageToolTips;
-    MessageList::Utils::AggregationComboBox *mAggregationComboBox;
-    MessageList::Utils::ThemeComboBox *mThemeComboBox;
-    QButtonGroup *mDateDisplay;
-    QGroupBox    *mDateDisplayBox;
-    KLineEdit    *mCustomDateFormatEdit;
-    QString       mCustomDateWhatsThis;
-
-private Q_SLOTS:
     void slotLinkClicked(const QString &link);
     void slotSelectDefaultAggregation();
     void slotSelectDefaultTheme();
-};
-
-class AppearancePageReaderTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit AppearancePageReaderTab(QWidget *parent = nullptr);
-
-    QString helpAnchor() const;
-
-    void save() Q_DECL_OVERRIDE;
-
-private:
-    void doLoadOther() Q_DECL_OVERRIDE;
-    void doResetToDefaultsOther() Q_DECL_OVERRIDE;
 
 private: // data
-    QCheckBox *mCloseAfterReplyOrForwardCheck;
-    MessageViewer::ConfigureWidget *mViewerSettings;
-    Gravatar::GravatarConfigWidget *mGravatarConfigWidget;
+    QCheckBox *mDisplayMessageToolTips = nullptr;
+    MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
+    MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
+    QButtonGroup *mDateDisplay = nullptr;
+    QGroupBox *mDateDisplayBox = nullptr;
+    QLineEdit *mCustomDateFormatEdit = nullptr;
+    QString mCustomDateWhatsThis;
 };
 
-class AppearancePageSystemTrayTab : public ConfigModuleTab
+class AppearancePageGeneralTab : public ConfigModuleTab
 {
     Q_OBJECT
 public:
-    explicit AppearancePageSystemTrayTab(QWidget *parent = nullptr);
+    explicit AppearancePageGeneralTab(QWidget *parent = nullptr);
 
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+    void doLoadOther() override;
+    void doResetToDefaultsOther() override;
 
-private:
-    QCheckBox    *mSystemTrayCheck;
+private: // data
+    QCheckBox *mCloseAfterReplyOrForwardCheck = nullptr;
+    MessageViewer::ConfigureWidget *mViewerSettings = nullptr;
+    QCheckBox *mSystemTrayCheck = nullptr;
+    QCheckBox *mStartInTrayCheck = nullptr;
+    QCheckBox *mShowNumberInTaskBar = nullptr;
 };
 
 class TagListWidgetItem : public QListWidgetItem
@@ -205,9 +170,10 @@ public:
     explicit TagListWidgetItem(QListWidget *parent = nullptr);
     explicit TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent = nullptr);
 
-    ~TagListWidgetItem();
+    ~TagListWidgetItem() override;
     void setKMailTag(const MailCommon::Tag::Ptr &tag);
     MailCommon::Tag::Ptr kmailTag() const;
+
 private:
     MailCommon::Tag::Ptr mTag;
 };
@@ -219,11 +185,11 @@ class AppearancePageMessageTagTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit AppearancePageMessageTagTab(QWidget *parent = nullptr);
-    ~AppearancePageMessageTagTab();
+    ~AppearancePageMessageTagTab() override;
 
     QString helpAnchor() const;
 
-    void save() Q_DECL_OVERRIDE;
+    void save() override;
 
 public Q_SLOTS:
     /**Enables/disables Add button according to whether @p aText is empty.
@@ -244,7 +210,7 @@ public Q_SLOTS:
     changes*/
     void slotMoveTagDown();
 
-private Q_SLOTS:
+private:
     /*Handles necessary processing when the selection in the edit box changes.
     Records the unselected tag's information, and applies visual changes
     necessary depending on the description of the new tag. Private since doesn't
@@ -263,28 +229,28 @@ private Q_SLOTS:
     since calling externally decouples the name in the list box from name edit box*/
     void slotNameLineTextChanged(const QString &);
     void slotIconNameChanged(const QString &iconName);
-    void slotRowsMoved(const QModelIndex &,
-                       int sourcestart, int sourceEnd,
-                       const QModelIndex &, int destinationRow);
+    void slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow);
     void slotTagsFetched(KJob *job);
 
     void slotDeleteTagJob(KJob *job);
-private:
-    void doLoadFromGlobalSettings() Q_DECL_OVERRIDE;
+
+    void doLoadFromGlobalSettings() override;
     void swapTagsInListBox(const int first, const int second);
     void updateButtons();
 
 private: // data
+    QLineEdit *mTagAddLineEdit = nullptr;
+    QPushButton *mTagAddButton = nullptr;
+    QPushButton *mTagRemoveButton = nullptr;
+    QPushButton *mTagUpButton = nullptr;
+    QPushButton *mTagDownButton = nullptr;
 
-    KLineEdit *mTagAddLineEdit;
-    QPushButton *mTagAddButton, *mTagRemoveButton,
-                *mTagUpButton, *mTagDownButton;
+    QListWidget *mTagListBox = nullptr;
 
-    QListWidget *mTagListBox;
+    QGroupBox *mTagsGroupBox = nullptr;
+    QGroupBox *mTagSettingGroupBox = nullptr;
 
-    QGroupBox *mTagsGroupBox, *mTagSettingGroupBox;
-
-    MailCommon::TagWidget *mTagWidget;
+    MailCommon::TagWidget *mTagWidget = nullptr;
 
     // So we can compare to mMsgTagList and see if the user changed tags
     QList<MailCommon::TagPtr> mOriginalMsgTagList;
@@ -298,18 +264,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AppearancePage(QWidget *parent = nullptr);
+    explicit AppearancePage(QWidget *parent = nullptr, const QVariantList &args = {});
 
-    QString helpAnchor() const Q_DECL_OVERRIDE;
-
-    // hrmpf. moc doesn't like nested classes with slots/signals...:
-    typedef AppearancePageFontsTab FontsTab;
-    typedef AppearancePageColorsTab ColorsTab;
-    typedef AppearancePageLayoutTab LayoutTab;
-    typedef AppearancePageHeadersTab HeadersTab;
-    typedef AppearancePageReaderTab ReaderTab;
-    typedef AppearancePageSystemTrayTab SystemTrayTab;
-    typedef AppearancePageMessageTagTab MessageTagTab;
+    QString helpAnchor() const override;
 };
-
-#endif // CONFIGUREAPPEARANCEPAGE_H

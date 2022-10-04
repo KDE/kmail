@@ -1,48 +1,33 @@
 /*
-  Copyright (c) 2014-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "createtaskjob.h"
 #include "attributes/taskattribute.h"
-#include <Akonadi/KMime/MessageStatus>
+#include <Akonadi/MessageStatus>
 
-#include <AkonadiCore/ItemFetchJob>
-#include <AkonadiCore/ItemFetchScope>
+#include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
 
-#include <AkonadiCore/ItemModifyJob>
+#include <Akonadi/ItemModifyJob>
 
 #include "kmail_debug.h"
 
 CreateTaskJob::CreateTaskJob(const Akonadi::Item::List &items, QObject *parent)
-    : KJob(parent),
-      mListItem(items)
+    : KJob(parent)
+    , mListItem(items)
 {
 }
 
-CreateTaskJob::~CreateTaskJob()
-{
-}
+CreateTaskJob::~CreateTaskJob() = default;
 
 void CreateTaskJob::start()
 {
     if (mListItem.isEmpty()) {
-        Q_EMIT emitResult();
+        emitResult();
         return;
     }
     fetchItems();
@@ -50,7 +35,7 @@ void CreateTaskJob::start()
 
 void CreateTaskJob::fetchItems()
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(mListItem, this);
+    auto job = new Akonadi::ItemFetchJob(mListItem, this);
     job->fetchScope().fetchFullPayload(true);
     job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     job->fetchScope().fetchAttribute<TaskAttribute>();
@@ -61,14 +46,14 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 {
     if (job->error()) {
         qCDebug(KMAIL_LOG) << job->errorString();
-        Q_EMIT emitResult();
+        emitResult();
         deleteLater();
         return;
     }
-    Akonadi::ItemFetchJob *fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    auto fetchjob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     const Akonadi::Item::List lst = fetchjob->items();
     if (lst.isEmpty()) {
-        Q_EMIT emitResult();
+        emitResult();
         deleteLater();
         return;
     }
@@ -87,7 +72,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
     Akonadi::Item::List itemsToModify;
     for (const Akonadi::Item &it : lst) {
-        //qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
+        // qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
         if (it.isValid()) {
             bool myStatus;
             Akonadi::MessageStatus itemStatus;
@@ -107,20 +92,20 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
             item.clearFlag(flag);
             itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {
-                //Change todo as done.
+                // Change todo as done.
                 item.removeAttribute<TaskAttribute>();
             }
         } else {
             item.setFlag(flag);
             itemsToModify.push_back(item);
-            //TODO add TaskAttribute();
+            // TODO add TaskAttribute();
         }
     }
 
     if (itemsToModify.isEmpty()) {
         slotModifyItemDone(nullptr);
     } else {
-        Akonadi::ItemModifyJob *modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
+        auto modifyJob = new Akonadi::ItemModifyJob(itemsToModify, this);
         modifyJob->disableRevisionCheck();
         modifyJob->setIgnorePayload(true);
         connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &CreateTaskJob::slotModifyItemDone);
@@ -129,7 +114,6 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
 
 void CreateTaskJob::slotModifyItemDone(KJob *job)
 {
-    //TODO
     if (job && job->error()) {
         qCDebug(KMAIL_LOG) << " error " << job->errorString();
     }

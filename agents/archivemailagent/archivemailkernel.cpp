@@ -1,38 +1,25 @@
 /*
-   Copyright (C) 2012-2017 Montel Laurent <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; see the file COPYING.  If not, write to
-   the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.
+   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "archivemailkernel.h"
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/Session>
+#include <KIdentityManagement/IdentityManager>
+#include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/JobScheduler>
-#include <AkonadiCore/session.h>
-#include <AkonadiCore/entitytreemodel.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <AkonadiCore/changerecorder.h>
-#include <KSharedConfig>
 
 ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     : QObject(parent)
 {
     mIdentityManager = new KIdentityManagement::IdentityManager(true, this);
-    Akonadi::Session *session = new Akonadi::Session("Archive Mail Kernel ETM", this);
+    auto session = new Akonadi::Session("Archive Mail Kernel ETM", this);
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
     mFolderCollectionMonitor->monitor()->setChangeRecordingEnabled(false);
@@ -48,6 +35,12 @@ ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     mCollectionModel->setDynamicSortFilter(true);
     mCollectionModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     mJobScheduler = new MailCommon::JobScheduler(this);
+}
+
+ArchiveMailKernel *ArchiveMailKernel::self()
+{
+    static ArchiveMailKernel s_self;
+    return &s_self;
 }
 
 KIdentityManagement::IdentityManager *ArchiveMailKernel::identityManager()
@@ -103,13 +96,12 @@ qreal ArchiveMailKernel::closeToQuotaThreshold()
 QStringList ArchiveMailKernel::customTemplates()
 {
     Q_ASSERT(false);
-    return QStringList();
+    return {};
 }
 
 bool ArchiveMailKernel::excludeImportantMailFromExpiry()
 {
-    Q_ASSERT(false);
-    return true;
+    return false;
 }
 
 Akonadi::Collection::Id ArchiveMailKernel::lastSelectedFolder()
@@ -119,11 +111,11 @@ Akonadi::Collection::Id ArchiveMailKernel::lastSelectedFolder()
 
 void ArchiveMailKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
 {
-    Q_UNUSED(col);
+    Q_UNUSED(col)
 }
 
 void ArchiveMailKernel::expunge(Akonadi::Collection::Id col, bool sync)
 {
-    Q_UNUSED(col);
-    Q_UNUSED(sync);
+    Q_UNUSED(col)
+    Q_UNUSED(sync)
 }

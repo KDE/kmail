@@ -1,50 +1,29 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 
 #include "saveasfilejob.h"
 #include "kmail_debug.h"
-#include <QFileDialog>
-#include <qpointer.h>
-#include <qtextdocumentwriter.h>
-#include <QUrl>
 #include <KLocalizedString>
+#include <QFileDialog>
+#include <QPointer>
 #include <QTextDocument>
+#include <QTextDocumentWriter>
 
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
-    : QObject(parent),
-      mHtmlMode(false),
-      mTextDocument(nullptr),
-      mParentWidget(nullptr)
+    : QObject(parent)
 {
-
 }
 
-SaveAsFileJob::~SaveAsFileJob()
-{
-
-}
+SaveAsFileJob::~SaveAsFileJob() = default;
 
 void SaveAsFileJob::start()
 {
     QPointer<QFileDialog> dlg = new QFileDialog(mParentWidget);
-    dlg->setWindowTitle(i18n("Save File as"));
+    dlg->setWindowTitle(i18nc("@title:window", "Save File as"));
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     QStringList lst;
     if (mHtmlMode) {
@@ -58,11 +37,11 @@ void SaveAsFileJob::start()
         QTextDocumentWriter writer;
         const QString filename = dlg->selectedFiles().at(0);
         writer.setFileName(filename);
-        if (dlg->selectedNameFilter() == QLatin1String("text/plain") || filename.endsWith(QStringLiteral(".txt"))) {
+        if (dlg->selectedNameFilter() == QLatin1String("text/plain") || filename.endsWith(QLatin1String(".txt"))) {
             writer.setFormat("plaintext");
-        } else if (dlg->selectedNameFilter() == QLatin1String("text/html") || filename.endsWith(QStringLiteral(".html"))) {
+        } else if (dlg->selectedNameFilter() == QLatin1String("text/html") || filename.endsWith(QLatin1String(".html"))) {
             writer.setFormat("HTML");
-        } else if (dlg->selectedNameFilter() == QLatin1String("application/vnd.oasis.opendocument.text") || filename.endsWith(QStringLiteral(".odf"))) {
+        } else if (dlg->selectedNameFilter() == QLatin1String("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1String(".odf"))) {
             writer.setFormat("ODF");
         } else {
             writer.setFormat("plaintext");
@@ -89,4 +68,3 @@ void SaveAsFileJob::setParentWidget(QWidget *parentWidget)
 {
     mParentWidget = parentWidget;
 }
-

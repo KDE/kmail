@@ -1,33 +1,21 @@
 /* Windows Meta File Loader
  *
- * Copyright ( C ) 1998 Stefan Taferner
- * Modified 2002 thierry lorthiois
+ * SPDX-FileCopyrightText: 1998 Stefan Taferner
+ * SPDX-FileCopyrightText: 2002 thierry lorthiois
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or ( at your
- * option ) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABLILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy
- * of the GNU General Public License along with this program; if not, write
- * to the Free Software Foundation, Inc, 51 Franklin Street, Fifth Floor,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
-#ifndef qwmf_h
-#define qwmf_h
 
-#include <QString>
-#include <QPainter>
-#include <QMatrix>
+#pragma once
+
 #include <QColor>
 #include <QImage>
+#include <QPainter>
 #include <QRect>
+#include <QString>
+#include <QTransform>
 
 class QBuffer;
-class QString;
 class WmfCmd;
 class WinObjHandle;
 struct WmfPlaceableHeader;
@@ -68,7 +56,7 @@ public:
     /**
      * @return true if the metafile is placeable.
      */
-    bool isPlaceable(void) const
+    Q_REQUIRED_RESULT bool isPlaceable() const
     {
         return mIsPlaceable;
     }
@@ -76,7 +64,7 @@ public:
     /**
      * @return true if the metafile is enhanced.
      */
-    bool isEnhanced(void) const
+    Q_REQUIRED_RESULT bool isEnhanced() const
     {
         return mIsEnhanced;
     }
@@ -84,7 +72,7 @@ public:
     /**
      * @return bounding rectangle
      */
-    QRect bbox(void) const
+    Q_REQUIRED_RESULT QRect bbox() const
     {
         return mBBox;
     }
@@ -177,7 +165,7 @@ public: // should be protected but cannot
     /** end of meta file */
     void end(long /*num*/, short * /*parms*/);
     /** Resolution of the image in dots per inch */
-    int dpi(void) const
+    int dpi() const
     {
         return mDpi;
     }
@@ -215,24 +203,24 @@ protected:
 
 protected:
     QPainter mPainter;
-    bool mIsPlaceable, mIsEnhanced, mValid;
+    bool mIsPlaceable = false;
+    bool mIsEnhanced = false;
+    bool mValid = false;
 
     // coordinate system
-    bool   mAbsoluteCoord;
-    QMatrix  mInternalWorldMatrix;   // memorisation of WMF matrix transformation
+    bool mAbsoluteCoord;
+    QTransform mInternalWorldMatrix; // memorisation of WMF matrix transformation
     QRect mHeaderBoundingBox;
     QRect mBBox;
 
     // information shared between Metafile Functions
     QColor mTextColor;
     int mTextAlign, mRotation;
-    bool mWinding;
+    bool mWinding = false;
 
-    WmfCmd *mFirstCmd;
+    WmfCmd *mFirstCmd = nullptr;
     WinObjHandle **mObjHandleTab;
     QPolygon mPoints;
     int mDpi;
     QPoint mLastPos;
 };
-
-#endif /*qwmf_h*/

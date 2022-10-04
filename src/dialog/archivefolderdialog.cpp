@@ -1,45 +1,33 @@
-/* Copyright 2009 Klarälvdalens Datakonsult AB
+/*
+   SPDX-FileCopyrightText: 2009 Klarälvdalens Datakonsult AB
+   SPDX-FileCopyrightText: 2020-2022 Laurent Montel <montel@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation; either version 2 of
-   the License or (at your option) version 3 or any later version
-   accepted by the membership of KDE e.V. (or its successor approved
-   by the membership of KDE e.V.), which shall act as a proxy
-   defined in Section 14 of version 3 of the license.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KDE-Accepted-GPL
 */
+
 #include "archivefolderdialog.h"
 
-#include "MailCommon/BackupJob"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "MailCommon/FolderRequester"
-#include "MessageViewer/MessageViewerUtil"
+#include <MailCommon/BackupJob>
+#include <MailCommon/FolderRequester>
+#include <MessageViewer/MessageViewerUtil>
 
-#include <AkonadiCore/Collection>
+#include <Akonadi/Collection>
 
 #include <KLocalizedString>
-#include <kcombobox.h>
-#include <kurlrequester.h>
-#include <kmessagebox.h>
+#include <KMessageBox>
 #include <KSeparator>
+#include <KUrlRequester>
+#include <QComboBox>
 
-#include <qlabel.h>
-#include <qcheckbox.h>
-#include <QGridLayout>
-#include <QStandardPaths>
-#include <QMimeDatabase>
-#include <KConfigGroup>
+#include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QMimeDatabase>
 #include <QPushButton>
+#include <QStandardPaths>
 #include <QVBoxLayout>
 
 using namespace KMail;
@@ -48,21 +36,22 @@ using namespace MailCommon;
 QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
 {
     QString currentPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QDir dir(currentPath);
+    const QDir dir(currentPath);
     if (!dir.exists()) {
         currentPath = QDir::homePath();
     }
-    return currentPath + QLatin1Char('/') +
-           i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_') + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
+    return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
+        + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
-    : QDialog(parent), mParentWidget(parent)
+    : QDialog(parent)
+    , mParentWidget(parent)
 {
     setObjectName(QStringLiteral("archive_folder_dialog"));
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
-    QVBoxLayout *topLayout = new QVBoxLayout(this);
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    auto topLayout = new QVBoxLayout(this);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     mOkButton = buttonBox->button(QDialogButtonBox::Ok);
     mOkButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &ArchiveFolderDialog::slotAccepted);
@@ -70,17 +59,17 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mOkButton->setDefault(true);
     mOkButton->setText(i18nc("@action", "Archive"));
     setModal(true);
-    QWidget *mainWidget = new QWidget(this);
+    auto mainWidget = new QWidget(this);
     topLayout->addWidget(mainWidget);
     topLayout->addWidget(buttonBox);
-    QGridLayout *mainLayout = new QGridLayout(mainWidget);
-    mainLayout->setMargin(0);
+    auto mainLayout = new QGridLayout(mainWidget);
+    mainLayout->setContentsMargins({});
 
     int row = 0;
 
-    // TODO: Explaination label
+    // TODO: Explanation label
 
-    QLabel *folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
+    auto folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
     mainLayout->addWidget(folderLabel, row, 0);
     mFolderRequester = new FolderRequester(mainWidget);
     mFolderRequester->setMustBeReadWrite(false);
@@ -90,9 +79,9 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mainLayout->addWidget(mFolderRequester, row, 1);
     row++;
 
-    QLabel *formatLabel = new QLabel(i18n("F&ormat:"), mainWidget);
+    auto formatLabel = new QLabel(i18n("F&ormat:"), mainWidget);
     mainLayout->addWidget(formatLabel, row, 0);
-    mFormatComboBox = new KComboBox(mainWidget);
+    mFormatComboBox = new QComboBox(mainWidget);
     formatLabel->setBuddy(mFormatComboBox);
 
     // These combobox values have to stay in sync with the ArchiveType enum from BackupJob!
@@ -101,11 +90,11 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mFormatComboBox->addItem(i18n("BZ2-Compressed Tar Archive (.tar.bz2)"));
     mFormatComboBox->addItem(i18n("GZ-Compressed Tar Archive (.tar.gz)"));
     mFormatComboBox->setCurrentIndex(2);
-    connect(mFormatComboBox, static_cast<void (KComboBox::*)(int)>(&KComboBox::activated), this, &ArchiveFolderDialog::slotFixFileExtension);
+    connect(mFormatComboBox, &QComboBox::activated, this, &ArchiveFolderDialog::slotFixFileExtension);
     mainLayout->addWidget(mFormatComboBox, row, 1);
     row++;
 
-    QLabel *fileNameLabel = new QLabel(i18n("&Archive File:"), mainWidget);
+    auto fileNameLabel = new QLabel(i18n("&Archive File:"), mainWidget);
     mainLayout->addWidget(fileNameLabel, row, 0);
     mUrlRequester = new KUrlRequester(mainWidget);
     mUrlRequester->setMode(KFile::LocalOnly | KFile::File);
@@ -142,13 +131,9 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
 bool canRemoveFolder(const Akonadi::Collection &col)
 {
-    const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection(col, false);
-    return folder
-           && col.isValid()
-           && !col.isVirtual()
-           && (col.rights() & Akonadi::Collection::CanDeleteCollection)
-           && !folder->isStructural()
-           && !folder->isSystemFolder();
+    const QSharedPointer<FolderSettings> folder = FolderSettings::forCollection(col, false);
+    return !folder.isNull() && col.isValid() && !col.isVirtual() && (col.rights() & Akonadi::Collection::CanDeleteCollection) && !folder->isStructural()
+        && !folder->isSystemFolder();
 }
 
 void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
@@ -171,7 +156,7 @@ void ArchiveFolderDialog::setFolder(const Akonadi::Collection &defaultCollection
     mFolderRequester->setCollection(defaultCollection);
     // TODO: what if the file already exists?
     mUrlRequester->setUrl(QUrl::fromLocalFile(standardArchivePath(defaultCollection.name())));
-    const QSharedPointer<FolderCollection> folder = FolderCollection::forCollection(defaultCollection, false);
+    const QSharedPointer<FolderSettings> folder = FolderSettings::forCollection(defaultCollection, false);
     mDeleteCheckBox->setEnabled(allowToDeleteFolders(defaultCollection));
     mOkButton->setEnabled(defaultCollection.isValid() && folder && !folder->isStructural());
 }
@@ -183,12 +168,11 @@ void ArchiveFolderDialog::slotAccepted()
     }
 
     if (!mFolderRequester->hasCollection()) {
-        KMessageBox::information(this, i18n("Please select the folder that should be archived."),
-                                 i18n("No folder selected"));
+        KMessageBox::information(this, i18n("Please select the folder that should be archived."), i18n("No folder selected"));
         return;
     }
 
-    MailCommon::BackupJob *backupJob = new MailCommon::BackupJob(mParentWidget);
+    auto backupJob = new MailCommon::BackupJob(mParentWidget);
     backupJob->setRootFolder(mFolderRequester->collection());
     backupJob->setSaveLocation(mUrlRequester->url());
     backupJob->setArchiveType(static_cast<BackupJob::ArchiveType>(mFormatComboBox->currentIndex()));
@@ -202,17 +186,17 @@ void ArchiveFolderDialog::slotFixFileExtension()
 {
     const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = { ".zip", ".tar", ".tar.bz2", ".tar.gz" };
+    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
 
     QString fileName = mUrlRequester->url().path();
-    if (fileName.isEmpty())
-        fileName = standardArchivePath(mFolderRequester->hasCollection() ?
-                                       mFolderRequester->collection().name() : QString());
+    if (fileName.isEmpty()) {
+        fileName = standardArchivePath(mFolderRequester->hasCollection() ? mFolderRequester->collection().name() : QString());
+    }
 
     QMimeDatabase db;
     const QString extension = db.suffixForFileName(fileName);
     if (!extension.isEmpty()) {
-        fileName = fileName.left(fileName.length() - extension.length() - 1);
+        fileName.truncate(fileName.length() - extension.length() - 1);
     }
 
     // Now, we've got a filename without an extension, simply append the correct one
@@ -224,4 +208,3 @@ void ArchiveFolderDialog::slotUrlChanged(const QString &url)
 {
     mOkButton->setEnabled(!url.isEmpty());
 }
-

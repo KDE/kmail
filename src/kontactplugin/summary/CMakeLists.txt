@@ -1,31 +1,29 @@
-
+# SPDX-FileCopyrightText: none
+# SPDX-License-Identifier: BSD-3-Clause
 ########### next target ###############
 
-set(kontact_summaryplugin_PART_SRCS summaryview_plugin.cpp summaryview_part.cpp dropwidget.cpp)
-qt5_add_resources(kontact_summaryplugin_PART_SRCS summaryview.qrc)
+set(kontact_summaryplugin_PART_SRCS summaryview_plugin.cpp summaryview_part.cpp dropwidget.cpp summaryview.qrc
+    summaryview_plugin.h summaryview_part.h dropwidget.h)
 
-qt5_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
+qt_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
+configure_file(summaryplugin.json.cmake ${CMAKE_CURRENT_BINARY_DIR}/summaryplugin.json)
 
 add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
+pim_target_precompile_headers(kontact_summaryplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_summaryplugin kmail_xml)
 
-target_link_libraries(kontact_summaryplugin KF5::KCMUtils  KF5::IdentityManagement KF5::KontactInterface KF5::Libkdepim KF5::ConfigCore)
+target_link_libraries(kontact_summaryplugin KF5::KCMUtils KF5::I18n KF5::IdentityManagement KF5::KontactInterface KF5::PimCommon KF5::ConfigCore)
 
 ########### next target ###############
 
-set(kcm_kontactsummary_PART_SRCS kcmkontactsummary.cpp)
+add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp kcmkontactsummary.h)
+pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-add_library(kcm_kontactsummary MODULE ${kcm_kontactsummary_PART_SRCS})
-
-target_link_libraries(kcm_kontactsummary KF5::KCMUtils Qt5::Widgets KF5::KCMUtils KF5::I18n KF5::KontactInterface)
+target_link_libraries(kcmkontactsummary KF5::I18n Qt::Widgets KF5::I18n KF5::KontactInterface)
 
 ########### install files ###############
 
-install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(TARGETS kcm_kontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR})
+install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kontact)
+install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary)
 
-install(FILES summaryplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR}/kontact)
-install(FILES kcmkontactsummary.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
-install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kontactsummary)
-
-install(FILES summary.setdlg DESTINATION ${KDE_INSTALL_DATADIR}/kontact/ksettingsdialog)
+install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kontactsummary)

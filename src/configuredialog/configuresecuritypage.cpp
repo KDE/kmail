@@ -1,79 +1,72 @@
 /*
-  Copyright (c) 2013-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
 
-  This program is free software; you can redistribute it and/or modify it
-  under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "configuresecuritypage.h"
-#include "PimCommon/ConfigureImmutableWidgetUtils"
+#include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "messageviewer/messageviewersettings.h"
-#include "MessageComposer/MessageComposerSettings"
-#include <WebEngineViewer/CheckPhishingUrlCache>
-#include <MailCommon/FolderCollection>
 #include "settings/kmailsettings.h"
+#include <MailCommon/FolderSettings>
+#include <MessageComposer/MessageComposerSettings>
+#include <MessageViewer/MessageViewerSettings>
+#include <MessageViewer/RemoteContentConfigureDialog>
+#include <WebEngineViewer/CheckPhishingUrlCache>
 
 #include "kmkernel.h"
 
-#include <QGpgME/Protocol>
-#include <QGpgME/CryptoConfig>
 #include <Libkleo/KeyRequester>
 #include <Libkleo/KeySelectionDialog>
+#include <QGpgME/CryptoConfig>
+#include <QGpgME/Protocol>
 
-#include <KLocalizedString>
-#include <KCMultiDialog>
-#include <KMessageBox>
-#include <QWhatsThis>
-#include <QDBusConnection>
 #include "kmail_debug.h"
+#include <KLocalizedString>
+#include <KMessageBox>
+#include <KPluginMetaData>
+
+#include <QButtonGroup>
+#include <QDBusConnection>
+#include <QPointer>
+#include <QWhatsThis>
 
 QString SecurityPage::helpAnchor() const
 {
     return QStringLiteral("configure-security");
 }
 
-SecurityPage::SecurityPage(QWidget *parent)
-    : ConfigModuleWithTabs(parent)
+SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, args)
 {
     //
     // "Reading" tab:
     //
-    GeneralTab *generalTab = new GeneralTab(); //  @TODO: rename
+    auto generalTab = new SecurityPageGeneralTab();
     addTab(generalTab, i18n("Reading"));
 
-    addTab(new MDNTab(), i18n("Message Disposition Notifications"));
+    addTab(new SecurityPageMDNTab(), i18n("Message Disposition Notifications"));
 
     //
     // "Composing" tab:
     //
-    ComposerCryptoTab *composerCryptoTab = new ComposerCryptoTab();
+    auto composerCryptoTab = new SecurityPageComposerCryptoTab();
     addTab(composerCryptoTab, i18n("Composing"));
 
     //
     // "Warnings" tab:
     //
-    WarningTab *warningTab = new WarningTab();
+    auto warningTab = new SecurityPageWarningTab();
     addTab(warningTab, i18n("Miscellaneous"));
 
     //
     // "S/MIME Validation" tab:
     //
-    SMimeTab *sMimeTab = new SMimeTab();
+    auto sMimeTab = new SecurityPageSMimeTab();
     addTab(sMimeTab, i18n("S/MIME Validation"));
 }
 
-QString SecurityPage::GeneralTab::helpAnchor() const
+QString SecurityPageGeneralTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-reading");
 }
@@ -83,6 +76,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
 {
     mSGTab.setupUi(this);
 
+    connect(mSGTab.mConfigureExternalReference, &QPushButton::clicked, this, &SecurityPageGeneralTab::slotOpenExternalReferenceExceptions);
     connect(mSGTab.mHtmlMailCheck, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.mExternalReferences, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.labelWarnHTML, &QLabel::linkActivated, this, &SecurityPageGeneralTab::slotLinkClicked);
@@ -94,8 +88,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
     connect(mSGTab.mScamDetection, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
     connect(mSGTab.mCheckUrl, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
+    connect(mSGTab.mCheckMailUrlTracking, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
     connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mSGTab.scamWhiteList->setAddDialogLabel(i18n("Email Address:"));
+    mSGTab.scamWhiteList->setRemoveDialogLabel(i18n("Do you want to remove this email address?"));
+}
+
+void SecurityPageGeneralTab::slotOpenExternalReferenceExceptions()
+{
+    MessageViewer::RemoteContentConfigureDialog dlg(this);
+    dlg.exec();
 }
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
@@ -107,7 +109,7 @@ void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
     }
 }
 
-void SecurityPage::GeneralTab::doLoadOther()
+void SecurityPageGeneralTab::doLoadOther()
 {
     loadWidget(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
     loadWidget(mSGTab.mExternalReferences, MessageViewer::MessageViewerSettings::self()->htmlLoadExternalItem());
@@ -117,22 +119,29 @@ void SecurityPage::GeneralTab::doLoadOther()
     loadWidget(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     loadWidget(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
     loadWidget(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
+    loadWidget(mSGTab.mCheckMailUrlTracking, MessageViewer::MessageViewerSettings::self()->mailTrackingUrlEnabledItem());
 }
 
-void SecurityPage::GeneralTab::save()
+void SecurityPageGeneralTab::save()
 {
     if (MessageViewer::MessageViewerSettings::self()->htmlMail() != mSGTab.mHtmlMailCheck->isChecked()) {
-        if (KMessageBox::warningContinueCancel(this, i18n("Changing the global "
-                                               "HTML setting will override all folder specific values."), QString(),
-                                               KStandardGuiItem::cont(), KStandardGuiItem::cancel(), QStringLiteral("htmlMailOverride")) == KMessageBox::Continue) {
+        if (KMessageBox::warningContinueCancel(this,
+                                               i18n("Changing the global "
+                                                    "HTML setting will override all folder specific values."),
+                                               QString(),
+                                               KStandardGuiItem::cont(),
+                                               KStandardGuiItem::cancel(),
+                                               QStringLiteral("htmlMailOverride"))
+            == KMessageBox::Continue) {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
-                for (const Akonadi::Collection &collection : kmkernel->allFolders()) {
-                    KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderCollection::configGroupName(collection));
-                    //Old config
+                const auto allFolders = kmkernel->allFolders();
+                for (const Akonadi::Collection &collection : allFolders) {
+                    KConfigGroup config(KMKernel::self()->config(), MailCommon::FolderSettings::configGroupName(collection));
+                    // Old config
                     config.deleteEntry("htmlMailOverride");
                     config.deleteEntry("displayFormatOverride");
-                    MailCommon::FolderCollection::resetHtmlFormat();
+                    MailCommon::FolderSettings::resetHtmlFormat();
                 }
             }
         }
@@ -144,12 +153,13 @@ void SecurityPage::GeneralTab::save()
     saveCheckBox(mSGTab.mScamDetection, MessageViewer::MessageViewerSettings::self()->scamDetectionEnabledItem());
     saveSimpleStringListEditor(mSGTab.scamWhiteList, MessageViewer::MessageViewerSettings::self()->scamDetectionWhiteListItem());
     saveCheckBox(mSGTab.mCheckUrl, MessageViewer::MessageViewerSettings::self()->checkPhishingUrlItem());
+    saveCheckBox(mSGTab.mCheckMailUrlTracking, MessageViewer::MessageViewerSettings::self()->mailTrackingUrlEnabledItem());
     if (!mSGTab.mCheckUrl->isChecked()) {
         WebEngineViewer::CheckPhishingUrlCache::self()->clearCache();
     }
 }
 
-QString SecurityPage::MDNTab::helpAnchor() const
+QString SecurityPageMDNTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-mdn");
 }
@@ -161,7 +171,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "ignore", "ask", "deny", "always send" radiobuttons
     mMDNGroup = new QButtonGroup(this);
-    connect(mMDNGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mMDNGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mMDNGroup->addButton(mUi.radioIgnore, 0);
     mMDNGroup->addButton(mUi.radioAsk, 1);
     mMDNGroup->addButton(mUi.radioDeny, 2);
@@ -169,7 +179,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
     // "Original Message quote" radiobuttons
     mOrigQuoteGroup = new QButtonGroup(this);
-    connect(mOrigQuoteGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &SecurityPageMDNTab::slotEmitChanged);
+    connect(mOrigQuoteGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mOrigQuoteGroup->addButton(mUi.radioNothing, 0);
     mOrigQuoteGroup->addButton(mUi.radioFull, 1);
     mOrigQuoteGroup->addButton(mUi.radioHeaders, 2);
@@ -185,7 +195,7 @@ void SecurityPageMDNTab::slotLinkClicked(const QString &link)
     }
 }
 
-void SecurityPage::MDNTab::doLoadOther()
+void SecurityPageMDNTab::doLoadOther()
 {
     int num = MessageViewer::MessageViewerSettings::self()->defaultPolicy();
     if (num < 0 || num >= mMDNGroup->buttons().count()) {
@@ -200,14 +210,14 @@ void SecurityPage::MDNTab::doLoadOther()
     loadWidget(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
-void SecurityPage::MDNTab::save()
+void SecurityPageMDNTab::save()
 {
     MessageViewer::MessageViewerSettings::self()->setDefaultPolicy(mMDNGroup->checkedId());
     MessageViewer::MessageViewerSettings::self()->setQuoteMessage(mOrigQuoteGroup->checkedId());
     saveCheckBox(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
-QString SecurityPage::ComposerCryptoTab::helpAnchor() const
+QString SecurityPageComposerCryptoTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-composing");
 }
@@ -219,7 +229,7 @@ SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab(QWidget *parent)
     mWidget->setupUi(this);
     connect(mWidget->mEncToSelf, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mNeverEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mAlwaysEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
     connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
 }
@@ -229,41 +239,40 @@ SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
     delete mWidget;
 }
 
-void SecurityPage::ComposerCryptoTab::doLoadOther()
+void SecurityPageComposerCryptoTab::doLoadOther()
 {
     // If you change default values, sync messagecomposer.cpp too
 
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
 
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
-void SecurityPage::ComposerCryptoTab::save()
+void SecurityPageComposerCryptoTab::save()
 {
     saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    saveCheckBox(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    saveCheckBox(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
 }
 
-void SecurityPage::ComposerCryptoTab::doLoadFromGlobalSettings()
+void SecurityPageComposerCryptoTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
     loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
 
-    loadWidget(mWidget->mNeverEncryptWhenSavingInDrafts, KMailSettings::self()->neverEncryptDraftsItem());
+    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
-
 }
 
-QString SecurityPage::WarningTab::helpAnchor() const
+QString SecurityPageWarningTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-warnings");
 }
@@ -277,13 +286,12 @@ SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
     connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
     connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->warnReceiverNotInCertificateCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignKeyExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrKeyExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrChainCertExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignChainCertExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignRootCertExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrRootCertExpiresSB, static_cast<void (KPluralHandlingSpinBox::*)(int)>(&KPluralHandlingSpinBox::valueChanged), this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnSignRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
 
     connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageWarningTab::slotConfigureGnupg);
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageWarningTab::slotReenableAllWarningsClicked);
@@ -294,16 +302,14 @@ SecurityPageWarningTab::~SecurityPageWarningTab()
     delete mWidget;
 }
 
-void SecurityPage::WarningTab::doLoadFromGlobalSettings()
+void SecurityPageWarningTab::doLoadFromGlobalSettings()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    loadWidget(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
     // The "-int" part of the key name is because there used to be a separate boolean
     // config entry for enabling/disabling. This is done with the single bool value now.
-    mWidget->warnGroupBox->setChecked(
-        MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
+    mWidget->warnGroupBox->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
 
     loadWidget(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnSignChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDaysItem());
@@ -311,19 +317,16 @@ void SecurityPage::WarningTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
-
 }
 
-void SecurityPage::WarningTab::doLoadOther()
+void SecurityPageWarningTab::doLoadOther()
 {
     loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    loadWidget(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
     // The "-int" part of the key name is because there used to be a separate boolean
     // config entry for enabling/disabling. This is done with the single bool value now.
-    mWidget->warnGroupBox->setChecked(
-        MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
+    mWidget->warnGroupBox->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
 
     loadWidget(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
     mWidget->mWarnSignKeyExpiresSB->setSuffix(ki18np(" day", " days"));
@@ -343,14 +346,12 @@ void SecurityPage::WarningTab::doLoadOther()
     mWidget->enableAllWarningsPB->setEnabled(true);
 }
 
-void SecurityPage::WarningTab::save()
+void SecurityPageWarningTab::save()
 {
     saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
     saveCheckBox(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
-    saveCheckBox(mWidget->warnReceiverNotInCertificateCB, MessageComposer::MessageComposerSettings::self()->cryptoWarnRecvNotInCertItem());
 
-    MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(
-        mWidget->warnGroupBox->isChecked());
+    MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(mWidget->warnGroupBox->isChecked());
 
     saveSpinBox(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
     saveSpinBox(mWidget->mWarnSignChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDaysItem());
@@ -360,18 +361,24 @@ void SecurityPage::WarningTab::save()
     saveSpinBox(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-void SecurityPage::WarningTab::slotReenableAllWarningsClicked()
+void SecurityPageWarningTab::slotReenableAllWarningsClicked()
 {
     KMessageBox::enableAllMessages();
     mWidget->enableAllWarningsPB->setEnabled(false);
 }
 
-void SecurityPage::WarningTab::slotConfigureGnupg()
+void SecurityPageWarningTab::slotConfigureGnupg()
 {
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
-    KPageWidgetItem *page = dlg->addModule(QStringLiteral("kleopatra_config_gnupgsystem"));
+    dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
+    KPageWidgetItem *page = nullptr;
+    const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kcms/kleopatra")),
+                                                        QStringLiteral("kleopatra_config_gnupgsystem"));
+    if (plugin.isValid()) {
+        page = dlg->addModule(plugin);
+    }
     if (!page) {
-        QLabel *info = new QLabel(i18n("The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
+        auto info = new QLabel(i18n("The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
         QFont font = info->font();
         font.setBold(true);
         info->setFont(font);
@@ -382,29 +389,26 @@ void SecurityPage::WarningTab::slotConfigureGnupg()
     delete dlg;
 }
 
-QString SecurityPage::SMimeTab::helpAnchor() const
+QString SecurityPageSMimeTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-smime-validation");
 }
 
 SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mWidget(new Ui::SMimeConfiguration)
 {
-    mWidget = new Ui::SMimeConfiguration;
     mWidget->setupUi(this);
 
     // Button-group for exclusive radiobuttons
-    QButtonGroup *bg = new QButtonGroup(this);
+    auto bg = new QButtonGroup(this);
     bg->addButton(mWidget->CRLRB);
     bg->addButton(mWidget->OCSPRB);
 
     // Settings for the keyrequester custom widget
-    mWidget->OCSPResponderSignature->setAllowedKeys(
-        Kleo::KeySelectionDialog::SMIMEKeys
-        | Kleo::KeySelectionDialog::TrustedKeys
-        | Kleo::KeySelectionDialog::ValidKeys
-        | Kleo::KeySelectionDialog::SigningKeys
-        | Kleo::KeySelectionDialog::PublicKeys);
+    mWidget->OCSPResponderSignature->setAllowedKeys(Kleo::KeySelectionDialog::SMIMEKeys | Kleo::KeySelectionDialog::TrustedKeys
+                                                    | Kleo::KeySelectionDialog::ValidKeys | Kleo::KeySelectionDialog::SigningKeys
+                                                    | Kleo::KeySelectionDialog::PublicKeys);
     mWidget->OCSPResponderSignature->setMultipleKeysEnabled(false);
 
     mConfig = QGpgME::cryptoConfig();
@@ -431,7 +435,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     connect(mWidget->ignoreHTTPDPCB, &QCheckBox::toggled, this, &SecurityPageSMimeTab::slotUpdateHTTPActions);
 
     // Button-group for exclusive radiobuttons
-    QButtonGroup *bgHTTPProxy = new QButtonGroup(this);
+    auto bgHTTPProxy = new QButtonGroup(this);
     bgHTTPProxy->addButton(mWidget->honorHTTPProxyRB);
     bgHTTPProxy->addButton(mWidget->useCustomHTTPProxyRB);
 
@@ -462,56 +466,78 @@ struct SMIMECryptoConfigEntries {
     explicit SMIMECryptoConfigEntries(QGpgME::CryptoConfig *config)
         : mConfig(config)
     {
-
         // Checkboxes
-        mCheckUsingOCSPConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mEnableOCSPsendingConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDoNotCheckCertPolicyConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-policy-checks"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mNeverConsultConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("disable-crl-checks"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mFetchMissingConfigEntry = configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("auto-issuer-key-retrieve"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mCheckUsingOCSPConfigEntry =
+            configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mEnableOCSPsendingConfigEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDoNotCheckCertPolicyConfigEntry = configEntry(QStringLiteral("gpgsm"),
+                                                       QStringLiteral("Security"),
+                                                       QStringLiteral("disable-policy-checks"),
+                                                       QGpgME::CryptoConfigEntry::ArgType_None,
+                                                       false);
+        mNeverConsultConfigEntry = configEntry(QStringLiteral("gpgsm"),
+                                               QStringLiteral("Security"),
+                                               QStringLiteral("disable-crl-checks"),
+                                               QGpgME::CryptoConfigEntry::ArgType_None,
+                                               false);
+        mFetchMissingConfigEntry = configEntry(QStringLiteral("gpgsm"),
+                                               QStringLiteral("Security"),
+                                               QStringLiteral("auto-issuer-key-retrieve"),
+                                               QGpgME::CryptoConfigEntry::ArgType_None,
+                                               false);
         // dirmngr-0.9.0 options
-        mIgnoreServiceURLEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ignore-ocsp-service-url"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mIgnoreHTTPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("ignore-http-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDisableHTTPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("disable-http"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mHonorHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("honor-http-proxy"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreServiceURLEntry = configEntry(QStringLiteral("dirmngr"),
+                                             QStringLiteral("OCSP"),
+                                             QStringLiteral("ignore-ocsp-service-url"),
+                                             QGpgME::CryptoConfigEntry::ArgType_None,
+                                             false);
+        mIgnoreHTTPDPEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("ignore-http-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableHTTPEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("disable-http"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mHonorHTTPProxy =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("honor-http-proxy"), QGpgME::CryptoConfigEntry::ArgType_None, false);
 
-        mIgnoreLDAPDPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ignore-ldap-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDisableLDAPEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("disable-ldap"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreLDAPDPEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ignore-ldap-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableLDAPEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("disable-ldap"), QGpgME::CryptoConfigEntry::ArgType_None, false);
         // Other widgets
-        mOCSPResponderURLConfigEntry = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-responder"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mOCSPResponderSignature = configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-signer"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mCustomHTTPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("http-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mCustomLDAPProxy = configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderURLConfigEntry =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-responder"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderSignature =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-signer"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomHTTPProxy =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("http-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomLDAPProxy =
+            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
     }
 
-    QGpgME::CryptoConfigEntry *configEntry(const QString &componentName,
-                                           const QString &groupName,
-                                           const QString &entryName,
-                                           int argType,
-                                           bool isList);
+    QGpgME::CryptoConfigEntry *configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int argType, bool isList);
 
     // Checkboxes
-    QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry;
-    QGpgME::CryptoConfigEntry *mEnableOCSPsendingConfigEntry;
-    QGpgME::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry;
-    QGpgME::CryptoConfigEntry *mNeverConsultConfigEntry;
-    QGpgME::CryptoConfigEntry *mFetchMissingConfigEntry;
-    QGpgME::CryptoConfigEntry *mIgnoreServiceURLEntry;
-    QGpgME::CryptoConfigEntry *mIgnoreHTTPDPEntry;
-    QGpgME::CryptoConfigEntry *mDisableHTTPEntry;
-    QGpgME::CryptoConfigEntry *mHonorHTTPProxy;
-    QGpgME::CryptoConfigEntry *mIgnoreLDAPDPEntry;
-    QGpgME::CryptoConfigEntry *mDisableLDAPEntry;
+    QGpgME::CryptoConfigEntry *mCheckUsingOCSPConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mEnableOCSPsendingConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDoNotCheckCertPolicyConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mNeverConsultConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mFetchMissingConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreServiceURLEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreHTTPDPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDisableHTTPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mHonorHTTPProxy = nullptr;
+    QGpgME::CryptoConfigEntry *mIgnoreLDAPDPEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mDisableLDAPEntry = nullptr;
     // Other widgets
-    QGpgME::CryptoConfigEntry *mOCSPResponderURLConfigEntry;
-    QGpgME::CryptoConfigEntry *mOCSPResponderSignature;
-    QGpgME::CryptoConfigEntry *mCustomHTTPProxy;
-    QGpgME::CryptoConfigEntry *mCustomLDAPProxy;
+    QGpgME::CryptoConfigEntry *mOCSPResponderURLConfigEntry = nullptr;
+    QGpgME::CryptoConfigEntry *mOCSPResponderSignature = nullptr;
+    QGpgME::CryptoConfigEntry *mCustomHTTPProxy = nullptr;
+    QGpgME::CryptoConfigEntry *mCustomLDAPProxy = nullptr;
 
-    QGpgME::CryptoConfig *mConfig;
+    QGpgME::CryptoConfig *mConfig = nullptr;
 };
 
-void SecurityPage::SMimeTab::doLoadOther()
+void SecurityPageSMimeTab::doLoadOther()
 {
     if (!mConfig) {
         setEnabled(false);
@@ -585,20 +611,18 @@ void SecurityPage::SMimeTab::doLoadOther()
     slotUpdateHTTPActions();
 }
 
-void SecurityPage::SMimeTab::slotUpdateHTTPActions()
+void SecurityPageSMimeTab::slotUpdateHTTPActions()
 {
     mWidget->ignoreHTTPDPCB->setEnabled(!mWidget->disableHTTPCB->isChecked());
 
     // The proxy settings only make sense when "Ignore HTTP CRL DPs of certificate" is checked.
-    bool enableProxySettings = !mWidget->disableHTTPCB->isChecked()
-                               && mWidget->ignoreHTTPDPCB->isChecked();
+    bool enableProxySettings = !mWidget->disableHTTPCB->isChecked() && mWidget->ignoreHTTPDPCB->isChecked();
     mWidget->systemHTTPProxy->setEnabled(enableProxySettings);
     mWidget->useCustomHTTPProxyRB->setEnabled(enableProxySettings);
     mWidget->honorHTTPProxyRB->setEnabled(enableProxySettings);
     mWidget->customHTTPProxy->setEnabled(enableProxySettings && mWidget->useCustomHTTPProxyRB->isChecked());
 
-    if (!mWidget->useCustomHTTPProxyRB->isChecked() &&
-            !mWidget->honorHTTPProxyRB->isChecked()) {
+    if (!mWidget->useCustomHTTPProxyRB->isChecked() && !mWidget->honorHTTPProxyRB->isChecked()) {
         mWidget->honorHTTPProxyRB->setChecked(true);
     }
 }
@@ -611,7 +635,7 @@ static void saveCheckBoxToKleoEntry(QCheckBox *cb, QGpgME::CryptoConfigEntry *en
     }
 }
 
-void SecurityPage::SMimeTab::save()
+void SecurityPageSMimeTab::save()
 {
     if (!mConfig) {
         return;
@@ -644,7 +668,7 @@ void SecurityPage::SMimeTab::save()
         e.mOCSPResponderSignature->setStringValue(txt);
     }
 
-    //dirmngr-0.9.0 options
+    // dirmngr-0.9.0 options
     saveCheckBoxToKleoEntry(mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry);
     saveCheckBoxToKleoEntry(mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry);
     saveCheckBoxToKleoEntry(mWidget->disableHTTPCB, e.mDisableHTTPEntry);
@@ -670,10 +694,10 @@ void SecurityPage::SMimeTab::save()
 }
 
 QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &componentName,
-        const QString &groupName,
-        const QString &entryName,
-        int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
-        bool isList)
+                                                                 const QString &groupName,
+                                                                 const QString &entryName,
+                                                                 int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
+                                                                 bool isList)
 {
     QGpgME::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
@@ -681,10 +705,18 @@ QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &
         return nullptr;
     }
     if (entry->argType() != argType || entry->isList() != isList) {
-        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5").arg(componentName, groupName, entryName).arg(entry->argType()).arg(entry->isList());
+        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5")
+                                    .arg(componentName, groupName, entryName)
+                                    .arg(entry->argType())
+                                    .arg(entry->isList());
         return nullptr;
     }
     return entry;
+}
+
+namespace
+{
+static const char myGpgSettingsDialogGroupName[] = "GpgSettingsDialog";
 }
 
 GpgSettingsDialog::GpgSettingsDialog(QWidget *parent)
@@ -700,7 +732,7 @@ GpgSettingsDialog::~GpgSettingsDialog()
 
 void GpgSettingsDialog::readConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
     const QSize size = group.readEntry("Size", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -709,7 +741,7 @@ void GpgSettingsDialog::readConfig()
 
 void GpgSettingsDialog::saveConfig()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "GpgSettingsDialog");
+    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
     group.writeEntry("Size", size());
     group.sync();
 }

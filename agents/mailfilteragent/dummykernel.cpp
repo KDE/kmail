@@ -1,20 +1,20 @@
 #include "dummykernel.h"
 
-#include <KIdentityManagement/kidentitymanagement/identitymanager.h>
-#include <MessageComposer/AkonadiSender>
-#include <MailCommon/FolderCollectionMonitor>
-#include <AkonadiCore/session.h>
-#include <AkonadiCore/entitytreemodel.h>
-#include <AkonadiCore/entitymimetypefiltermodel.h>
-#include <AkonadiCore/changerecorder.h>
+#include <Akonadi/ChangeRecorder>
+#include <Akonadi/EntityMimeTypeFilterModel>
+#include <Akonadi/EntityTreeModel>
+#include <Akonadi/Session>
+#include <KIdentityManagement/IdentityManager>
 #include <KSharedConfig>
+#include <MailCommon/FolderCollectionMonitor>
+#include <MessageComposer/AkonadiSender>
 
 DummyKernel::DummyKernel(QObject *parent)
     : QObject(parent)
 {
     mMessageSender = new MessageComposer::AkonadiSender(this);
     mIdentityManager = new KIdentityManagement::IdentityManager(true, this);
-    Akonadi::Session *session = new Akonadi::Session("MailFilter Kernel ETM", this);
+    auto session = new Akonadi::Session("MailFilter Kernel ETM", this);
 
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
@@ -84,7 +84,7 @@ qreal DummyKernel::closeToQuotaThreshold()
 QStringList DummyKernel::customTemplates()
 {
     Q_ASSERT(false);
-    return QStringList();
+    return {};
 }
 
 bool DummyKernel::excludeImportantMailFromExpiry()
@@ -101,7 +101,7 @@ Akonadi::Collection::Id DummyKernel::lastSelectedFolder()
 
 void DummyKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
 {
-    Q_UNUSED(col);
+    Q_UNUSED(col)
 }
 
 void DummyKernel::expunge(Akonadi::Collection::Id id, bool sync)

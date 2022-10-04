@@ -1,49 +1,33 @@
 /*
-  Copyright (c) 2015-2017 Montel Laurent <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
 
-  This library is free software; you can redistribute it and/or modify it
-  under the terms of the GNU Library General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or (at your
-  option) any later version.
-
-  This library is distributed in the hope that it will be useful, but WITHOUT
-  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
-  License for more details.
-
-  You should have received a copy of the GNU Library General Public License
-  along with this library; see the file COPYING.LIB.  If not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA.
+  SPDX-License-Identifier: LGPL-2.0-or-later
 
 */
 #include "potentialphishingdetailwidget.h"
 
 #include <KConfigGroup>
-#include <qboxlayout.h>
-#include <qlabel.h>
-#include <qlistwidget.h>
-#include <KSharedConfig>
 #include <KLocalizedString>
+#include <KSharedConfig>
+#include <QLabel>
+#include <QListWidget>
+#include <QVBoxLayout>
 
 PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
+    , mListWidget(new QListWidget(this))
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->setMargin(0);
-    QLabel *lab = new QLabel(i18n("Select email to put in whitelist:"), this);
+    auto mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins({});
+    auto lab = new QLabel(i18n("Select email to put in whitelist:"), this);
     lab->setObjectName(QStringLiteral("label"));
     mainLayout->addWidget(lab);
 
-    mListWidget = new QListWidget(this);
     mListWidget->setObjectName(QStringLiteral("list_widget"));
     mainLayout->addWidget(mListWidget);
 }
 
-PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget()
-{
-
-}
+PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget() = default;
 
 void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 {
@@ -51,7 +35,7 @@ void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
     QStringList emailsAdded;
     for (const QString &mail : lst) {
         if (!emailsAdded.contains(mail)) {
-            QListWidgetItem *item = new QListWidgetItem(mListWidget);
+            auto item = new QListWidgetItem(mListWidget);
             item->setCheckState(Qt::Unchecked);
             item->setText(mail);
             emailsAdded << mail;
