@@ -42,7 +42,7 @@ msgstr "Segur que voleu eliminar la bústia unificada <b>%1</b>?"
 #: settingsdialog.cpp:101
 #, kde-format
 msgid "Really Remove?"
-msgstr "L'elimine realment?"
+msgstr "Voleu eliminar-lo realment?"
 
 #: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
 #, kde-format

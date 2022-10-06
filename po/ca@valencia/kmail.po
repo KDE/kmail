@@ -820,7 +820,7 @@ msgstr "Primer pla de la barra d'estat HTML - Missatge HTML"
 #: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "&Use custom colors"
-msgstr "&Utilitza colors personalitzats"
+msgstr "Utilit&za colors personalitzats"
 
 #: configuredialog/configureappearancepage.cpp:324
 #, kde-format
@@ -886,7 +886,7 @@ msgstr "Format està&ndard (%1)"
 #: configuredialog/configureappearancepage.cpp:564
 #, kde-format
 msgid "Locali&zed format (%1)"
-msgstr "Format l&ocalisat (%1)"
+msgstr "Format l&ocalitzat (%1)"
 
 #: configuredialog/configureappearancepage.cpp:565
 #, kde-format
@@ -1440,7 +1440,7 @@ msgstr "Este joc de caràcters no està admés."
 #: configuredialog/configurecomposerpage.cpp:846
 #, kde-format
 msgid "&Use custom message-id suffix"
-msgstr "&Utilitza el sufix personalitzat d'identificador del missatge"
+msgstr "Utilit&za el sufix personalitzat d'identificador del missatge"
 
 #: configuredialog/configurecomposerpage.cpp:858
 #, kde-format
@@ -1647,7 +1647,7 @@ msgstr "Connectors de conversió de text"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
 #, kde-format
 msgid "Misc"
-msgstr "Miscelànea"
+msgstr "Miscel·lània"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:266
 #, kde-format
@@ -1677,7 +1677,7 @@ msgstr "Edició"
 #: configuredialog/configuresecuritypage.cpp:60
 #, kde-format
 msgid "Miscellaneous"
-msgstr "Miscelànea"
+msgstr "Miscel·lània"
 
 #: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
@@ -1972,7 +1972,7 @@ msgstr "A la cua"
 #: editor/kmcomposerwin.cpp:1219
 #, kde-format
 msgid "Save as &Draft"
-msgstr "&Anomena i guarda esborrany"
+msgstr "Anomena i gu&arda com a esborrany"
 
 #: editor/kmcomposerwin.cpp:1221
 #, kde-format
@@ -1992,7 +1992,7 @@ msgstr "Guarda el correu en la carpeta de plantilles"
 #: editor/kmcomposerwin.cpp:1230
 #, kde-format
 msgid "Save as &File"
-msgstr "Anomena i guarda &fitxer"
+msgstr "Anomena i guarda com a fi&txer"
 
 #: editor/kmcomposerwin.cpp:1231
 #, kde-format
@@ -2249,7 +2249,7 @@ msgstr "Torna a de&sar com a plantilla"
 #: editor/kmcomposerwin.cpp:1994
 #, kde-format
 msgid "&Save as Draft"
-msgstr "&Anomena i guarda esborrany"
+msgstr "Anomena i gu&arda com a esborrany"
 
 #: editor/kmcomposerwin.cpp:1995
 #, kde-format
@@ -3226,7 +3226,7 @@ msgstr ""
 #: identity/identitydialog.cpp:603
 #, kde-format
 msgid "&Use custom message templates for this identity"
-msgstr "&Utilitza plantilles de missatges personalitzades per a esta identitat"
+msgstr "Utilit&za plantilles de missatges personalitzades per a esta identitat"
 
 #: identity/identitydialog.cpp:617
 #, kde-format
@@ -3445,7 +3445,7 @@ msgstr "Identitat &nova:"
 #: identity/newidentitydialog.cpp:76
 #, kde-format
 msgid "&Use System Settings values"
-msgstr "&Utilitza els valors de Configuració del sistema"
+msgstr "Utilit&za els valors de Configuració del sistema"
 
 #: identity/newidentitydialog.cpp:81
 #, kde-format
@@ -3763,7 +3763,7 @@ msgstr ""
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
 #, kde-format
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #. i18n: ectx: Menu (file_new)
 #: kmail_part.rc:10 kmmainwin.rc:10
@@ -3782,7 +3782,7 @@ msgstr "&Edita"
 #: kmail_part.rc:73 kmcomposerui.rc:66 kmmainwin.rc:73 kmreadermainwin.rc:27
 #, kde-format
 msgid "&View"
-msgstr "&Visualitza"
+msgstr "Vi&sualitza"
 
 #. i18n: ectx: Menu (go)
 #: kmail_part.rc:97 kmmainwin.rc:97
@@ -4435,7 +4435,7 @@ msgstr "Salta fins a la carpeta"
 #: kmmainwidget.cpp:2828
 #, kde-format
 msgid "Save &As..."
-msgstr "&Anomena i guarda..."
+msgstr "Anomena i gu&arda..."
 
 #: kmmainwidget.cpp:2839
 #, kde-format
@@ -4566,7 +4566,7 @@ msgstr "&Assigna una drecera..."
 #: kmmainwidget.cpp:3014
 #, kde-format
 msgid "&Expiration Settings"
-msgstr "&Configuració de la caducitat"
+msgstr "Con&figuració de la caducitat"
 
 #: kmmainwidget.cpp:3039
 #, kde-format
@@ -4709,7 +4709,7 @@ msgstr "Aplica tots els &filtres"
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
-msgstr "&Expandix la conversa/grup"
+msgstr "Ex&pandix la conversa/grup"
 
 #: kmmainwidget.cpp:3197
 #, kde-format
@@ -4720,7 +4720,7 @@ msgstr "Expandix la conversa o grup actual"
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
-msgstr "&Reduïx la conversa/grup"
+msgstr "Red&uix la conversa/grup"
 
 #: kmmainwidget.cpp:3204
 #, kde-format
@@ -4859,7 +4859,7 @@ msgstr "Gestiona els scripts de «&Sieve»..."
 #: kmmainwidget.cpp:3311
 #, kde-format
 msgid "&Add Account..."
-msgstr "&Afig un compte..."
+msgstr "Afi&g un compte..."
 
 #: kmmainwidget.cpp:3316
 #, kde-format
@@ -5011,7 +5011,7 @@ msgstr "Elimina els duplicats en esta carpeta i totes les seues subcarpetes"
 #: kmmainwidget.cpp:3529 kmmainwidget.cpp:4044
 #, kde-format
 msgid "Account &Settings"
-msgstr "&Configuració del compte"
+msgstr "Con&figuració del compte"
 
 #: kmmainwidget.cpp:3533
 #, kde-format
@@ -6598,7 +6598,7 @@ msgstr "Afig una identitat nova"
 #: ui/identitypage.ui:27
 #, kde-format
 msgid "&Add..."
-msgstr "&Afig..."
+msgstr "Afi&g..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -6616,7 +6616,7 @@ msgstr "Canvia el nom la identitat seleccionada"
 #: ui/identitypage.ui:53
 #, kde-format
 msgid "&Rename"
-msgstr "&Canvia el nom"
+msgstr "Ca&nvia el nom"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
 #: ui/identitypage.ui:63

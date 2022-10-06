@@ -209,25 +209,25 @@ msgstr "%1"
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
-msgstr "&Obri amb"
+msgstr "O&bri amb"
 
 #: ktnefmain.cpp:569
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
-msgstr "&Altres..."
+msgstr "Al&tres..."
 
 #: ktnefmain.cpp:571 ktnefmain.cpp:579
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With..."
-msgstr "&Obri amb..."
+msgstr "O&bri amb..."
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
 #, kde-format
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #. i18n: ectx: Menu (action)
 #: ktnefui.rc:9
