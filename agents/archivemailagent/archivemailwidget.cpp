@@ -66,8 +66,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     mWidget.setupUi(w);
     parent->layout()->addWidget(w);
 
-    QStringList headers;
-    headers << i18n("Name") << i18n("Last archive") << i18n("Next archive in") << i18n("Storage directory");
+    const QStringList headers = QStringList{i18n("Name"), i18n("Last archive"), i18n("Next archive in"), i18n("Storage directory")};
     mWidget.treeWidget->setHeaderLabels(headers);
     mWidget.treeWidget->setObjectName(QStringLiteral("treewidget"));
     mWidget.treeWidget->setSortingEnabled(true);
