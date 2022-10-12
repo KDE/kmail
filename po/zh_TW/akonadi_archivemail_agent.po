@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"POT-Creation-Date: 2022-10-12 00:47+0000\n"
 "PO-Revision-Date: 2019-01-19 19:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -73,116 +73,116 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "歸檔"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "名稱"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "上次歸檔"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "下次歸檔時間："
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "儲存目錄"
 
-#: archivemailwidget.cpp:89
+#: archivemailwidget.cpp:88
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "歸檔郵件代理程式"
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:90
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "自動歸檔電子郵件。"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:92
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2019 Laurent Montel"
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2019 Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Maintainer"
 msgstr "維護者"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Franklin Weng"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "franklin@goodhorse.idv.tw"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "新增..."
 
-#: archivemailwidget.cpp:113
+#: archivemailwidget.cpp:112
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "開啟存放資料夾..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "刪除"
 
-#: archivemailwidget.cpp:166
+#: archivemailwidget.cpp:165
 #, kde-format
 msgid "Folder: %1"
 msgstr "資料夾：%1"
 
-#: archivemailwidget.cpp:188
+#: archivemailwidget.cpp:187
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "%1 天"
 
-#: archivemailwidget.cpp:197
+#: archivemailwidget.cpp:196
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "歸檔將完成 %1"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:232
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "您確定要刪除選取的項目嗎？"
 
-#: archivemailwidget.cpp:234
+#: archivemailwidget.cpp:233
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "刪除"
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr "同一個資料夾無法新增第二個歸檔。將改為變更現有的歸檔。"
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "新增郵件歸檔"
