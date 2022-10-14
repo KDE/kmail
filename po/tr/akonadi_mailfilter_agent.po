@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-26 00:46+0000\n"
-"PO-Revision-Date: 2022-04-15 13:05+0300\n"
+"PO-Revision-Date: 2022-10-13 06:17+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.1\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -67,10 +67,10 @@ msgid ""
 "given."
 msgstr ""
 "Uygulanan süzgeçlerin süzgeç kurallarının değerlendirmesi ile ilgili olarak "
-"günlük kayıtlarından geribildirim alabilirsiniz: bu seçeneğin seçili olması "
-"her bir süzgeç kuralı hakkında ayrıntılı geribildirim almanızı; ayrıca "
-"verilen tek bir süzgeç için tüm kuralların değerlendirilme sonucu hakkında "
-"geribildirim almanızı sağlayacaktır."
+"günlük kayıtlarından geri bildirim alabilirsiniz: Bu seçeneğin seçili "
+"olması, her bir süzgeç kuralı için ayrıntılı geri bildirim sağlar; "
+"alternatif olarak, tek bir süzgecin tüm kurallarının değerlendirilmesi "
+"hakkında geri bildirim de verilecektir."
 
 #: filterlogdialog.cpp:113
 #, kde-format
