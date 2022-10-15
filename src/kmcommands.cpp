@@ -119,6 +119,7 @@
 #include <QFontDatabase>
 #include <QProgressDialog>
 #include <QStandardPaths>
+#include <kwidgetsaddons_version.h>
 
 using KMail::SecondaryWindow;
 using MailTransport::TransportManager;
@@ -904,15 +905,23 @@ KMCommand::Result KMForwardCommand::execute()
     if (msgList.count() >= 2) {
         // ask if they want a mime digest forward
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        int answer = KMessageBox::questionTwoActionsCancel(parentWidget(),
+#else
         int answer = KMessageBox::questionYesNoCancel(parentWidget(),
-                                                      i18n("Do you want to forward the selected messages as "
-                                                           "attachments in one message (as a MIME digest) or as "
-                                                           "individual messages?"),
-                                                      QString(),
-                                                      KGuiItem(i18n("Send As Digest")),
-                                                      KGuiItem(i18n("Send Individually")));
+#endif
+                                                           i18n("Do you want to forward the selected messages as "
+                                                                "attachments in one message (as a MIME digest) or as "
+                                                                "individual messages?"),
+                                                           QString(),
+                                                           KGuiItem(i18n("Send As Digest")),
+                                                           KGuiItem(i18n("Send Individually")));
 
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        if (answer == KMessageBox::ButtonCode::PrimaryAction) {
+#else
         if (answer == KMessageBox::Yes) {
+#endif
             Akonadi::Item firstItem(msgList.first());
             MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message),
                                      firstItem.id(),
@@ -926,7 +935,11 @@ KMCommand::Result KMForwardCommand::execute()
             win->show();
             delete fwdMsg.second;
             return OK;
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        } else if (answer == KMessageBox::ButtonCode::SecondaryAction) { // NO MIME DIGEST, Multiple forward
+#else
         } else if (answer == KMessageBox::No) { // NO MIME DIGEST, Multiple forward
+#endif
             Akonadi::Item::List::const_iterator it;
             Akonadi::Item::List::const_iterator end(msgList.constEnd());
 

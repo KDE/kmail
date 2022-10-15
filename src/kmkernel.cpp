@@ -114,6 +114,7 @@ using KMail::MailServiceImpl;
 #include <KUserFeedback/Provider>
 #endif
 #include <chrono>
+#include <kwidgetsaddons_version.h>
 
 using namespace std::chrono_literals;
 //#define DEBUG_SCHEDULER 1
@@ -941,15 +942,23 @@ bool KMKernel::askToGoOnline()
 
     if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) {
         s_askingToGoOnline = true;
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        int rc = KMessageBox::questionTwoActions(KMKernel::self()->mainWin(),
+#else
         int rc = KMessageBox::questionYesNo(KMKernel::self()->mainWin(),
-                                            i18n("KMail is currently in offline mode. "
-                                                 "How do you want to proceed?"),
-                                            i18n("Online/Offline"),
-                                            KGuiItem(i18n("Work Online")),
-                                            KGuiItem(i18n("Work Offline")));
+#endif
+                                                 i18n("KMail is currently in offline mode. "
+                                                      "How do you want to proceed?"),
+                                                 i18n("Online/Offline"),
+                                                 KGuiItem(i18n("Work Online")),
+                                                 KGuiItem(i18n("Work Offline")));
 
         s_askingToGoOnline = false;
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+        if (rc == KMessageBox::ButtonCode::SecondaryAction) {
+#else
         if (rc == KMessageBox::No) {
+#endif
             return false;
         } else {
             kmkernel->resumeNetworkJobs();

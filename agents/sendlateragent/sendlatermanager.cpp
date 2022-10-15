@@ -20,6 +20,7 @@
 #include <QRegularExpression>
 #include <QStringList>
 #include <QTimer>
+#include <kwidgetsaddons_version.h>
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent)
@@ -187,12 +188,20 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
         case TooManyItemFound:
         case CanNotFetchItem:
         case CanNotCreateTransport: {
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+            const int answer = KMessageBox::questionTwoActions(nullptr,
+#else
             const int answer = KMessageBox::questionYesNo(nullptr,
-                                                          i18n("An error was found. Do you want to resend it?"),
-                                                          i18n("Error found"),
-                                                          KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
-                                                          KStandardGuiItem::cancel());
+#endif
+                                                               i18n("An error was found. Do you want to resend it?"),
+                                                               i18n("Error found"),
+                                                               KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
+                                                               KStandardGuiItem::cancel());
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
+            if (answer == KMessageBox::ButtonCode::SecondaryAction) {
+#else
             if (answer == KMessageBox::No) {
+#endif
                 removeLaterInfo(info);
             }
             break;
