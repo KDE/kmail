@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2021-07-18 13:30+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -17,29 +17,29 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 20.12.3\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#: settingsdialog.cpp:54 settingsdialog.cpp:138
 #, kde-format
 msgid "Add"
 msgstr "추가"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#: settingsdialog.cpp:69 settingsdialog.cpp:142
 #, kde-format
 msgid "Modify"
 msgstr "수정"
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:91 settingsdialog.cpp:144
 #, kde-format
 msgid "Remove"
 msgstr "삭제"
 
-#: settingsdialog.cpp:100
+#: settingsdialog.cpp:106
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 "통합 편지함 <b>%1</b>을(를) 삭제하시겠습니까?|/|통합 편지함 <b>%1</b>$[을를 "
 "%1] 삭제하시겠습니까?"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:107
 #, kde-format
 msgid "Really Remove?"
 msgstr "정말 삭제하시겠습니까?"

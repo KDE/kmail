@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2022-05-21 11:37+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -17,28 +17,28 @@ msgstr ""
 "X-Generator: Lokalize 22.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#: settingsdialog.cpp:54 settingsdialog.cpp:138
 #, kde-format
 msgid "Add"
 msgstr "Добавяне"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#: settingsdialog.cpp:69 settingsdialog.cpp:142
 #, kde-format
 msgid "Modify"
 msgstr "Модифициране"
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:91 settingsdialog.cpp:144
 #, kde-format
 msgid "Remove"
 msgstr "Премахване"
 
-#: settingsdialog.cpp:100
+#: settingsdialog.cpp:106
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 "Наистина ли искате да премахнете унифицирана пощенска кутия <b> %1 </b>?"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:107
 #, kde-format
 msgid "Really Remove?"
 msgstr "Наистина ли да се премахне?"

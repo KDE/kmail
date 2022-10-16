@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-12 00:47+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2022-01-02 07:36+0100\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -74,109 +74,109 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arxiu"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "Nom"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "Últim arxivament"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "Proper arxivament d'ací a"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "Directori d'emmagatzematge"
 
-#: archivemailwidget.cpp:88
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Agent d'arxivat de correu"
 
-#: archivemailwidget.cpp:90
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Arxiva automàticament els correus electrònics."
 
-#: archivemailwidget.cpp:92
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1, Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "Mantenidor"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Josep M. Ferrer,Antoni Bella"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "txemaq@gmail.com,antonibella5@yahoo.com"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Afig..."
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Obri la carpeta contenidora..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Suprimix"
 
-#: archivemailwidget.cpp:165
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "Carpeta: %1"
 
-#: archivemailwidget.cpp:187
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Demà"
 msgstr[1] "%1 dies"
 
-#: archivemailwidget.cpp:196
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "L'arxivament es farà %1"
 
-#: archivemailwidget.cpp:232
+#: archivemailwidget.cpp:237
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Voleu suprimir els elements seleccionats?"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:238
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Suprimix elements"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -184,7 +184,7 @@ msgstr ""
 "No s'ha pogut afegir un segon arxiu per a esta carpeta. En lloc d'açò, "
 "modifiqueu l'arxiu existent."
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "Afig un arxiu de correu"

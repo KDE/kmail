@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-12 00:47+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2022-09-12 11:12+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -71,115 +71,115 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "არქივი"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "სახელი"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr ""
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr ""
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr ""
 
-#: archivemailwidget.cpp:88
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr ""
 
-#: archivemailwidget.cpp:90
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr ""
 
-#: archivemailwidget.cpp:92
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr ""
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "წამყვანი პროგრამისტი"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Temuri Doghonadze"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Temuri.doghonadze@gmail.com"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "დამატება..."
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "წაშლა"
 
-#: archivemailwidget.cpp:165
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "საქაღალდე: %1"
 
-#: archivemailwidget.cpp:187
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "ხვალ"
 msgstr[1] "%1 დღეში"
 
-#: archivemailwidget.cpp:196
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 
-#: archivemailwidget.cpp:232
+#: archivemailwidget.cpp:237
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr ""
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:238
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr ""
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid "Add Archive Mail"
 msgstr ""

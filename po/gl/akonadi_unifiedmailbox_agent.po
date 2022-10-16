@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2018-11-17 20:34+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <kde-i18n-doc@kde.org>\n"
@@ -16,27 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#: settingsdialog.cpp:54 settingsdialog.cpp:138
 #, kde-format
 msgid "Add"
 msgstr "Engadir"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#: settingsdialog.cpp:69 settingsdialog.cpp:142
 #, kde-format
 msgid "Modify"
 msgstr "Modificar"
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:91 settingsdialog.cpp:144
 #, kde-format
 msgid "Remove"
 msgstr "Retirar"
 
-#: settingsdialog.cpp:100
+#: settingsdialog.cpp:106
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Seguro que quere retirar a caixa de correo unificada <b>%1</b>?"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:107
 #, kde-format
 msgid "Really Remove?"
 msgstr "Retirar? Seguro?"

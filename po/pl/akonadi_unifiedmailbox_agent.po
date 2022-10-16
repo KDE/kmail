@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2021-07-11 08:39+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.1\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#: settingsdialog.cpp:54 settingsdialog.cpp:138
 #, kde-format
 msgid "Add"
 msgstr "Dodaj"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#: settingsdialog.cpp:69 settingsdialog.cpp:142
 #, kde-format
 msgid "Modify"
 msgstr "Zmień"
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:91 settingsdialog.cpp:144
 #, kde-format
 msgid "Remove"
 msgstr "Usuń"
 
-#: settingsdialog.cpp:100
+#: settingsdialog.cpp:106
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Czy na pewno chcesz usunąć połączoną skrzynkę pocztową <b>%1</b>?"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:107
 #, kde-format
 msgid "Really Remove?"
 msgstr "Czy na pewno usunąć?"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-12 00:47+0000\n"
+"POT-Creation-Date: 2022-10-16 00:47+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -69,87 +69,87 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Archív"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "Názov"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "Posledný archív"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "Ďalší archív za"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "Adresár úložiska"
 
-#: archivemailwidget.cpp:88
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Archivovať agenta pošty"
 
-#: archivemailwidget.cpp:90
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Archivovať e-maily automaticky."
 
-#: archivemailwidget.cpp:92
+#: archivemailwidget.cpp:93
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2021 Laurent Montel"
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2021 Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "Správca"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Roman Paholík"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "wizzardsk@gmail.com"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Pridať..."
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Otvoriť obsahujúci priečinok..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Odstrániť"
 
-#: archivemailwidget.cpp:165
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "Priečinok: %1"
 
-#: archivemailwidget.cpp:187
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -157,24 +157,24 @@ msgstr[0] "Zajtra"
 msgstr[1] "%1 dni"
 msgstr[2] "%1 dní"
 
-#: archivemailwidget.cpp:196
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Archív bude hotový %1"
 
-#: archivemailwidget.cpp:232
+#: archivemailwidget.cpp:237
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Chcete vymazať vybrané položky?"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:238
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Odstrániť"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -182,7 +182,7 @@ msgstr ""
 "Nemôžem pridať druhý archív do tohto priečinka. Namiesto toho zmením "
 "existujúci."
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:281
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "Pridať archívny mail"
