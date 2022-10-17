@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-16 00:47+0000\n"
-"PO-Revision-Date: 2022-09-07 19:14+0200\n"
+"PO-Revision-Date: 2022-10-16 09:08+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -5138,10 +5138,9 @@ msgid "Restart Akonadi"
 msgstr "Reinicia Akonadi"
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "Reinicia el compte"
+msgstr "Reinicia"
 
 #: kmmainwidget.cpp:4907
 #, kde-format
@@ -6042,8 +6041,8 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
-"Especifica el nombre de camps de capçalera MIME personalitzats a inserir en "
-"els missatges (només per a ús intern)"
+"Especifica el nombre de camps de capçalera MIME personalitzats que s'han "
+"d'inserir en els missatges (només per a ús intern)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.cmake:112
@@ -6077,7 +6076,7 @@ msgstr "Permet iniciar una carpeta específica"
 #: settings/kmail.kcfg.cmake:128
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr "Especifica la carpeta a obrir en iniciar el programa"
+msgstr "Especifica la carpeta que s'ha d'obrir en iniciar el programa"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
 #: settings/kmail.kcfg.cmake:135
@@ -7344,12 +7343,12 @@ msgid ""
 "used.  With this option all entries using the HTTP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"Quan es busca la ubicació d'una CRL, el certificat a comprovar usualment "
-"conté el que es coneix com a entrades «punt de distribució (DP -Distribution "
-"Point-) CRL», les quals són els URL que descriuen la manera d'accedir a "
-"l'URL. La primera entrada DP que es trobe és la que s'utilitzarà. Amb esta "
-"opció, totes les entrades que empren l'esquema HTTP seran ignorades quan "
-"s'estiga buscant un DP adequat."
+"Quan es busca la ubicació d'una CRL, el certificat que es comprovarà "
+"usualment conté el que es coneix com a entrades «punt de distribució (DP -"
+"Distribution Point-) CRL», les quals són els URL que descriuen la manera "
+"d'accedir a l'URL. La primera entrada DP que es trobe és la que "
+"s'utilitzarà. Amb esta opció, totes les entrades que empren l'esquema HTTP "
+"seran ignorades quan s'estiga buscant un DP adequat."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
@@ -7421,12 +7420,12 @@ msgid ""
 "used.  With this option all entries using the LDAP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"Quan es busca la ubicació d'una CRL, el certificat a comprovar usualment "
-"conté el que es coneix com a entrades «punt de distribució (DP -Distribution "
-"Point-) CRL», les quals són els URL que descriuen la manera d'accedir a "
-"l'URL. La primera entrada DP que es trobe és la que s'utilitzarà. Amb esta "
-"opció, totes les entrades que empren l'esquema LDAP seran ignorades quan "
-"s'estiga buscant un DP adequat."
+"Quan es busca la ubicació d'una CRL, el certificat que es comprovarà "
+"usualment conté el que es coneix com a entrades «punt de distribució (DP -"
+"Distribution Point-) CRL», les quals són els URL que descriuen la manera "
+"d'accedir a l'URL. La primera entrada DP que es trobe és la que "
+"s'utilitzarà. Amb esta opció, totes les entrades que empren l'esquema LDAP "
+"seran ignorades quan s'estiga buscant un DP adequat."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237

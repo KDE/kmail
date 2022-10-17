@@ -5141,10 +5141,9 @@ msgid "Restart Akonadi"
 msgstr "Reiniciar o Akonadi"
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "Reiniciar a Conta"
+msgstr "Reiniciar"
 
 #: kmmainwidget.cpp:4907
 #, kde-format

@@ -5097,7 +5097,7 @@ msgid "Restart Akonadi"
 msgstr "Käynnistä Akonadi uudelleen"
 
 #: kmmainwidget.cpp:4896
-#, kde-format
+#, fuzzy, kde-format
 msgid "Restart"
 msgstr "Käynnistä uudelleen"
 
