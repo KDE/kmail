@@ -717,7 +717,7 @@ void KMOpenMsgCommand::slotDataArrived(KIO::Job *, const QByteArray &data)
         return;
     }
 
-    mMsgString.append(QString::fromLatin1(data.data()));
+    mMsgString.append(data.data());
 }
 
 void KMOpenMsgCommand::doesNotContainMessage()
@@ -747,8 +747,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             return;
         }
         int startOfMessage = 0;
-        if (mMsgString.startsWith(QLatin1String("From "))) {
-            startOfMessage = mMsgString.indexOf(QLatin1Char('\n'));
+        if (mMsgString.startsWith("From ")) {
+            startOfMessage = mMsgString.indexOf('\n');
             if (startOfMessage == -1) {
                 doesNotContainMessage();
                 return;
@@ -759,10 +759,10 @@ void KMOpenMsgCommand::slotResult(KJob *job)
 
         // check for multiple messages in the file
         bool multipleMessages = true;
-        int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+        int endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         while (endOfMessage != -1) {
             auto msg = new KMime::Message;
-            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
             msg->parse();
             if (!msg->hasContent()) {
                 delete msg;
@@ -773,13 +773,13 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             KMime::Message::Ptr mMsg(msg);
             listMessages << mMsg;
             startOfMessage = endOfMessage + 1;
-            endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+            endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         }
         if (endOfMessage == -1) {
             endOfMessage = mMsgString.length();
             multipleMessages = false;
             auto msg = new KMime::Message;
-            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
             msg->parse();
             if (!msg->hasContent()) {
                 delete msg;

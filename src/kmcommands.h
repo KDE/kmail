@@ -306,7 +306,7 @@ private:
     void doesNotContainMessage();
     static const int MAX_CHUNK_SIZE = 64 * 1024;
     QUrl mUrl;
-    QString mMsgString;
+    QByteArray mMsgString;
     KIO::TransferJob *mJob = nullptr;
     const QString mEncoding;
     KMMainWidget *mMainWidget = nullptr;
