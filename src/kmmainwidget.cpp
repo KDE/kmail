@@ -1295,7 +1295,7 @@ bool KMMainWidget::showSearchDialog()
     }
 
     mSearchWin->show();
-    KWindowSystem::activateWindow(mSearchWin->winId());
+    KWindowSystem::activateWindow(mSearchWin->windowHandle());
     return true;
 }
 

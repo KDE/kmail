@@ -172,7 +172,7 @@ void KMSystemTray::slotActivated()
         KWindowSystem::setOnAllDesktops(mainWin->winId(), true);
     }
 
-    KWindowSystem::activateWindow(mainWin->winId());
+    KWindowSystem::activateWindow(mainWin->windowHandle());
 
     if (wasMinimized) {
         kmkernel->raise();
