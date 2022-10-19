@@ -5200,8 +5200,7 @@ msgid "Restart Akonadi"
 msgstr "Ré-initialiser Akonadi"
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgid "Restart"
 msgstr "Redémarrer"
 
