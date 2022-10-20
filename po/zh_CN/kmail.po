@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-16 00:47+0000\n"
-"PO-Revision-Date: 2022-10-02 15:49\n"
+"PO-Revision-Date: 2022-10-19 13:22\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1175,6 +1175,8 @@ msgid ""
 "select this on a per-message basis using \"Options - Request Disposition "
 "Notification\""
 msgstr ""
+"默认情况下，撰写邮件时会请求消息处置通知(MDN)。您可以在每封邮件中修改此选"
+"项，“选项 - 请求消息处置通知”。"
 
 #: configuredialog/configurecomposerpage.cpp:326
 #, kde-format
@@ -4917,10 +4919,9 @@ msgid "Restart Akonadi"
 msgstr ""
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "重新启动账户"
+msgstr ""
 
 #: kmmainwidget.cpp:4907
 #, kde-format

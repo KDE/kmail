@@ -1879,8 +1879,8 @@ msgstr "KMail2"
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
-"Seleccioneu el diccionari a utilitzar en verificar l'ortografia d'este "
-"missatge"
+"Seleccioneu el diccionari que s'ha d'utilitzar en verificar l'ortografia "
+"d'este missatge"
 
 #: editor/kmcomposerwin.cpp:312
 #, kde-format
@@ -1892,7 +1892,9 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:317
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
-msgstr "Seleccioneu el compte d'eixida a utilitzar per a enviar este missatge"
+msgstr ""
+"Seleccioneu el compte d'eixida que s'ha d'utilitzar per a enviar este "
+"missatge"
 
 #: editor/kmcomposerwin.cpp:325
 #, kde-format

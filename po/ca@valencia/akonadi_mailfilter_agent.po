@@ -113,9 +113,10 @@ msgid ""
 "until the limit is no longer exceeded. "
 msgstr ""
 "En arreplegar dades de registre s'utilitza memòria per a guardar-les "
-"temporalment. Ací podeu limitar la quantitat màxima de memòria a utilitzar: "
-"si la mida de les dades de registre arreplegades excedix este límit, llavors "
-"es descartaran les dades més antigues fins que ja no s'excedisca el límit. "
+"temporalment. Ací podeu limitar la quantitat màxima de memòria que "
+"s'utilitzarà: si la mida de les dades de registre arreplegades excedix este "
+"límit, llavors es descartaran les dades més antigues fins que ja no "
+"s'excedisca el límit. "
 
 #: filterlogdialog.cpp:318
 #, kde-format
