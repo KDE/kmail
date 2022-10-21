@@ -554,8 +554,6 @@ private:
     // helper method for rethinkFields
     Q_REQUIRED_RESULT int calcColumnWidth(int which, long allShowing, int width) const;
 
-    Q_REQUIRED_RESULT inline bool encryptToSelf() const;
-
 private:
     enum CryptoKeyState {
         NoState = 0,

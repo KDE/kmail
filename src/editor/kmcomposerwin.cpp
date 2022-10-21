@@ -2061,11 +2061,6 @@ void KMComposerWin::autoSaveMessage(bool force)
     }
 }
 
-bool KMComposerWin::encryptToSelf() const
-{
-    return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
-}
-
 void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type)
 {
     setEnabled(true);
@@ -2531,7 +2526,7 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
     }
     // check if the user wants to encrypt messages to himself and if he defined
     // an encryption key for the current identity
-    else if (encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey) {
+    else if (encrypt && !mLastIdentityHasEncryptionKey) {
         if (setByUser) {
             KMessageBox::error(this,
                                i18n("<qt><p>You have requested that messages be "
