@@ -108,8 +108,12 @@ private:
     QComboBox *mPreferredCryptoMessageFormat = nullptr;
     QGroupBox *mAutocrypt = nullptr;
     QCheckBox *mAutocryptPrefer = nullptr;
+    QGroupBox *mOverrideDefault = nullptr;
+    QCheckBox *mPGPSameKey = nullptr;
     QCheckBox *mAutoSign = nullptr;
     QCheckBox *mAutoEncrypt = nullptr;
+    QCheckBox *mWarnNotEncrypt = nullptr;
+    QCheckBox *mWarnNotSign = nullptr;
     // "advanced" tab:
     QLineEdit *mReplyToEdit = nullptr;
     QLineEdit *mBccEdit = nullptr;

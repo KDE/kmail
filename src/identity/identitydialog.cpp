@@ -454,26 +454,25 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mAutocryptPrefer = new QCheckBox(i18n("Let others know you prefer encryption"));
     vlay->addWidget(mAutocryptPrefer);
 
-    auto groupBox = new QGroupBox(i18n("Overwrite global settings for security defaults"));
-    groupBox->setCheckable(true);
-    groupBox->setChecked(false);
+    mOverrideDefault = new QGroupBox(i18n("Overwrite global settings for security defaults"));
+    mOverrideDefault->setCheckable(true);
+    mOverrideDefault->setChecked(false);
     label = new QLabel(i18n("Overwrite defaults:"), tab);
-    formLayout->addRow(label, groupBox);
+    formLayout->addRow(label, mOverrideDefault);
 
-    vlay = new QVBoxLayout(groupBox);
+    vlay = new QVBoxLayout(mOverrideDefault);
 
-    mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
+    mAutoSign = new QCheckBox(i18n("Sign messages"));
     vlay->addWidget(mAutoSign);
 
-    mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
+    mAutoEncrypt = new QCheckBox(i18n("Encrypt messages when possible"));
     vlay->addWidget(mAutoEncrypt);
 
-    auto checkBox = new QCheckBox(i18n("Warn when trying to send unsigned messages"));
-    vlay->addWidget(checkBox);
+    mWarnNotSign = new QCheckBox(i18n("Warn when trying to send unsigned messages"));
+    vlay->addWidget(mWarnNotSign);
 
-    checkBox = new QCheckBox(i18n("Warn when trying to send unencrypted messages"));
-    vlay->addWidget(checkBox);
-
+    mWarnNotEncrypt = new QCheckBox(i18n("Warn when trying to send unencrypted messages"));
+    vlay->addWidget(mWarnNotEncrypt);
 
     //
     // Tab Widget: Advanced
@@ -862,8 +861,19 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
     mAutocrypt->setChecked(ident.autocryptEnabled());
-    mAutoSign->setChecked(ident.pgpAutoSign());
-    mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
+    mAutocryptPrefer->setChecked(ident.autocryptPrefer());
+    mOverrideDefault->setChecked(ident.encryptionOverride());
+    if (!ident.encryptionOverride()) {
+        mAutoSign->setChecked(ident.pgpAutoSign());
+        mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
+        mWarnNotSign->setChecked(ident.warnNotSign());
+        mWarnNotEncrypt->setChecked(ident.warnNotEncrypt());
+    } else {
+        mAutoEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoAutoEncrypt());
+        mAutoSign->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoAutoSign());
+        mWarnNotEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted());
+        mWarnNotSign->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned());
+    }
 
     // "Advanced" tab:
     mReplyToEdit->setText(ident.replyToAddr());
@@ -983,8 +993,12 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setPreferredCryptoMessageFormat(QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
     ident.setAutocryptEnabled(mAutocrypt->isChecked());
+    ident.setAutocryptPrefer(mAutocryptPrefer->isChecked());
+    ident.setEncryptionOverride(mOverrideDefault->isChecked());
     ident.setPgpAutoSign(mAutoSign->isChecked());
     ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
+    ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
+    ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
     // "Advanced" tab:
     ident.setReplyToAddr(mReplyToEdit->text());
     ident.setBcc(mBccEdit->text());
