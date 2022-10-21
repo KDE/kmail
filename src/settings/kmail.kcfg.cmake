@@ -277,6 +277,10 @@
        <label>Show crypto label indicator</label>
        <default>true</default>
       </entry>
+      <entry name="ShowCryptoOwnertrust" type="Bool">
+       <label>Show crypto ownertrust icons</label>
+       <default>false</default>
+      </entry>
       <entry name="CheckSendDefaultActionShortcut" type="Bool">
        <label>Validate Send Default Shortcut</label>
        <default>false</default>
