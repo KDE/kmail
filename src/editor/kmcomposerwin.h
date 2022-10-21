@@ -431,6 +431,8 @@ public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
     const KIdentityManagement::Identity &identity() const;
+    Q_REQUIRED_RESULT bool pgpAutoSign() const;
+    Q_REQUIRED_RESULT bool pgpAutoEncrypt() const;
 
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck() override;
