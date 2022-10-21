@@ -14,7 +14,7 @@
 #include "identityfolderrequester.h"
 #include "identityinvalidfolder.h"
 
-#include <MessageComposer/MessageComposerSettings>
+
 #include <QGpgME/Job>
 #include <QGpgME/Protocol>
 
@@ -31,6 +31,7 @@
 
 #include "job/addressvalidationjob.h"
 #include <MessageComposer/Kleo_Util>
+#include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/StringUtil>
 #include <Sonnet/DictionaryComboBox>
 #include <TemplateParser/TemplatesConfiguration>
@@ -367,12 +368,44 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to digitally sign emails using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP key:"), mCryptographyTab);
+    label = new QLabel(i18n("OpenPGP signing key:"), mCryptographyTab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    formLayout->addRow(label, mPGPSigningKeyRequester);
+    auto vbox = new QVBoxLayout;
+    mPGPSameKey = new QCheckBox(i18n("Use same key for encryption and signing"));
+    vbox->addWidget(mPGPSigningKeyRequester);
+    vbox->addWidget(mPGPSameKey);
+    formLayout->addRow(label, vbox);
+
+    connect(mPGPSameKey, &QCheckBox::toggled, this, [=](bool checked) {
+        mPGPEncryptionKeyRequester->setVisible(!checked);
+        formLayout->labelForField(mPGPEncryptionKeyRequester)->setVisible(!checked);
+        const auto label = qobject_cast<QLabel *>(formLayout->labelForField(vbox));
+        if (checked) {
+            label->setText(i18n("OpenPGP key:"));
+            const auto key = mPGPSigningKeyRequester->currentKey();
+            if (!key.isBad()) {
+                mPGPEncryptionKeyRequester->setCurrentKey(key);
+            } else if (mPGPSigningKeyRequester->currentData() == QLatin1String("no-key")) {
+                mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
+            }
+        } else {
+            label->setText(i18n("OpenPGP signing key:"));
+        }
+    });
+    connect(mPGPSigningKeyRequester, &KeySelectionCombo::currentKeyChanged, this, [&](const GpgME::Key &key) {
+        if (mPGPSameKey->isChecked()) {
+            mPGPEncryptionKeyRequester->setCurrentKey(key);
+        }
+    });
+    connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant& type) {
+        if (mPGPSameKey->isChecked() && type == QLatin1String("no-key")) {
+            mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
+        }
+    });
+
 
     // "OpenPGP Encryption Key" requester and label:
     mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, mCryptographyTab);
@@ -384,13 +417,12 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to encrypt copies of outgoing messages to you using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    //label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
-    //label->setBuddy(mPGPEncryptionKeyRequester);
-    //label->setWhatsThis(msg);
-    //mPGPEncryptionKeyRequester->setWhatsThis(msg);
-    mPGPEncryptionKeyRequester->setVisible(false);
+    label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
+    label->setBuddy(mPGPEncryptionKeyRequester);
+    label->setWhatsThis(msg);
+    mPGPEncryptionKeyRequester->setWhatsThis(msg);
 
-    //formLayout->addRow(label, mPGPEncryptionKeyRequester);
+    formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
     // "S/MIME Signature Key" requester and label:
     mSMIMESigningKeyRequester = new KeySelectionCombo(KeySelectionCombo::SigningKey, GpgME::CMS, mCryptographyTab);
@@ -856,6 +888,9 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setDefaultKey(QLatin1String(ident.pgpSigningKey()));
     mPGPEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.pgpEncryptionKey()));
+
+    mPGPSameKey->setChecked(ident.pgpSigningKey() == ident.pgpEncryptionKey());
+
     mSMIMESigningKeyRequester->setDefaultKey(QLatin1String(ident.smimeSigningKey()));
     mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
