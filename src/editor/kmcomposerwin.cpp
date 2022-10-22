@@ -1409,7 +1409,7 @@ void KMComposerWin::setupActions()
     mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
     mLastEncryptActionState = false;
-    mLastSignActionState = ident.pgpAutoSign();
+    mLastSignActionState = pgpAutoSign();
 
     changeCryptoAction();
 
@@ -1585,7 +1585,7 @@ void KMComposerWin::changeCryptoAction()
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
         setEncryption(false);
-        setSigning((canOpenPGPSign || canSMIMESign) && ident.pgpAutoSign());
+        setSigning((canOpenPGPSign || canSMIMESign) && pgpAutoSign());
     }
 }
 
@@ -2070,11 +2070,6 @@ void KMComposerWin::autoSaveMessage(bool force)
     }
 }
 
-bool KMComposerWin::encryptToSelf() const
-{
-    return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
-}
-
 void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type)
 {
     setEnabled(true);
@@ -2099,6 +2094,26 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 const KIdentityManagement::Identity &KMComposerWin::identity() const
 {
     return KMKernel::self()->identityManager()->identityForUoidOrDefault(currentIdentity());
+}
+
+bool KMComposerWin::pgpAutoEncrypt() const
+{
+    const auto ident = identity();
+    if (ident.encryptionOverride()) {
+        return ident.pgpAutoEncrypt();
+    } else {
+        return MessageComposer::MessageComposerSettings::self()->cryptoAutoEncrypt();
+    }
+}
+
+bool KMComposerWin::pgpAutoSign() const
+{
+    const auto ident = identity();
+    if (ident.encryptionOverride()) {
+        return ident.pgpAutoSign();
+    } else {
+        return MessageComposer::MessageComposerSettings::self()->cryptoAutoSign();
+    }
 }
 
 Kleo::CryptoMessageFormat KMComposerWin::cryptoMessageFormat() const
@@ -2540,7 +2555,7 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
     }
     // check if the user wants to encrypt messages to himself and if he defined
     // an encryption key for the current identity
-    else if (encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey) {
+    else if (encrypt && !mLastIdentityHasEncryptionKey) {
         if (setByUser) {
             KMessageBox::error(this,
                                i18n("<qt><p>You have requested that messages be "
@@ -3465,7 +3480,7 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
 
     // Update encryption status of all recipients, if encryption state is not set by user
     const bool setByUser = mEncryptAction->property("setByUser").toBool();
-    if (!setByUser && ident.pgpAutoEncrypt()) {
+    if (!setByUser && pgpAutoEncrypt()) {
         const auto lst = mComposerBase->recipientsEditor()->lines();
         for (auto line : lst) {
             slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
@@ -3796,7 +3811,7 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     }
 
     // Same if auto-encryption is not enabled in current identity settings
-    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    if (!pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
         return;
     }
 
@@ -3847,7 +3862,7 @@ void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *lin
     }
 
     // Same if auto-encryption is not enabled in current identity settings
-    if (!identity().pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    if (!pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
         return;
     }
 

@@ -355,10 +355,9 @@ qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
 
 
 ki18n_wrap_ui(kmailprivate
-    ui/composercryptoconfiguration.ui
-    ui/warningconfiguration.ui
     ui/smimeconfiguration.ui
     ui/miscpagemaintab.ui
+    ui/securitypageencryptiontab.ui
     ui/securitypagegeneraltab.ui
     ui/securitypagemdntab.ui
     ui/identitypage.ui
