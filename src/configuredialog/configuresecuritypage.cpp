@@ -228,6 +228,7 @@ SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
 
     connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mShowCryptoOwnertrust, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    mWidget->mShowCryptoOwnertrust->setVisible(false);
 
     connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
