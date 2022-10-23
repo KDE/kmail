@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -398,7 +398,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -555,7 +555,7 @@ msgstr ""
 "mida soovid kausta valimiseks kasutada.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "Mallid"
@@ -1741,31 +1741,26 @@ msgstr "Kirja kättesaamise/lugemise kinnitused"
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
-msgid "Composing"
-msgstr "Koostamine"
+msgid "Encryption"
+msgstr "Krüptimine"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "Muu"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME kontrollimine"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "E-posti aadress:"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Do you want to remove selected item?"
 msgid "Do you want to remove this email address?"
 msgstr "Kas eemaldada valitud element?"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1773,26 +1768,24 @@ msgstr ""
 "Globaalsete HTML-seadete muutmine tühistab konkreetsetele kaustadele "
 "rakendatud seaded."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " päev"
 msgstr[1] " päeva"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG seadistused..."
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1800,23 +1793,23 @@ msgid ""
 msgstr ""
 "Moodul puudub. Palun kontrolli paigaldust. Seda moodulit pakub Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG seadistamise mooduli tõrge"
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Selle valiku korral on vajalik dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "puhverserver puudub"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Süsteemi aktiivne seadistus: %1)"
@@ -2020,7 +2013,7 @@ msgid "Send"
 msgstr "Saada"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "Saada &hiljem"
@@ -2276,13 +2269,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr "Peida menüüriba"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Rida: %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " Veerg: %1 "
@@ -2346,72 +2339,72 @@ msgstr ""
 msgid "Close Composer"
 msgstr "Redaktori sulgemine"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "Kirja automaatne salvestamine nurjus"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "Kirja saatmine nurjus"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Faili lisamine"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "L&isa kirjasisese pildina"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Lis&a kaasatud failina"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Kaasatud faili nimi:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Manusel peab nimi olema"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "Vigane manuse nimi"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Lisa kirja URL"
 msgstr[1] "Lisa kirja URL-id"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Lis&a fail manusena"
 msgstr[1] "Lis&a failid manusena"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Lisa lõikepuhvri tekst kaasatud failina"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "nimetu"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2423,12 +2416,12 @@ msgstr ""
 "identiteedile ei ole selleks määratud ühtki (OpenPGP või S/MIME) krüptovõtit."
 "</p><p>Palun vali kasutatavad võtmed identiteedi seadistuses.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Määramata krüptovõti"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2439,12 +2432,12 @@ msgstr ""
 "OpenPGP või S/MIME allkirjastamisvõti.</p><p>Palun vali kasutatav võti "
 "identiteedi seadistustes.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "Määramata allkirjastamisvõti"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2455,7 +2448,7 @@ msgstr ""
 "posti aadressi kehtestada kõigile identiteetidele, et sa ei peaks seda iga "
 "kirja korral aina uuesti sisestama."
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2464,65 +2457,65 @@ msgstr ""
 "Vaja on sisestada vähemalt üks saaja kas väljale Kellele: või koopia või "
 "pimekoopia väljale."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Sa ei sisestanud saajat. Kas saata kiri ikkagi teele?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "Saaja on määramata"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "S&aada nagu on"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "&Ei, ma sisestan teema"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Sa ei sisestanud teemat. Kas saata kiri ilma teemata?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Teema sisestamata"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Ei, ma sisestan teema"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Mustandi krüptimiseks on vaja määrata vähemalt üks saaja."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "Kirja saatmine..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "Saada kinnitus"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "Saada k&ohe"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2531,22 +2524,22 @@ msgstr ""
 "Proovid saata kirja rohkem kui %1 saajale. Kas sellest hoolimata saata kiri "
 "ära?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "Liiga palju saajaid"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Saada nagu on"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&Muuda saajaid"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2554,42 +2547,42 @@ msgid ""
 msgstr ""
 "HTML-režiimi väljalülitamisel läheb vormindus kaotsi. Kas tõesti jätkata?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Kas kaotada vormindus?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Kaota vorming"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Lisa märkekeele lihttekst"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
@@ -2598,7 +2591,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse üliturvalist krüptimist (krüptovõti on "
 "täielikult usaldusväärne). Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
@@ -2607,7 +2600,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse keskmiselt turvalist krüptimist (krüptovõti on "
 "kesise usaldusväärsusega). Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
@@ -2616,7 +2609,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse vähese turvalisusega krüptimist (krüptovõti ei "
 "ole usaldusväärne) Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2626,7 +2619,7 @@ msgstr ""
 "Kiri sellele saajale küll krüptitakse, aga selle turvalisus on teadmata "
 "(krüptovõtme kontroll nurjus). Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Redaktoriplugina teave"
@@ -2916,49 +2909,49 @@ msgstr "&Luuakse olemasoleva vCardi kloon"
 msgid "&Existing identities:"
 msgstr "&Olemasolevad identiteedid:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "Viga uue võtmepaari genereerimisel: %1"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr "Võtme genereerimise tõrge"
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr "Võti puudub"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "Genereeri uus võtmepaar"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "Uue võtmepaari genereerimine..."
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Identiteedi muutmine"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Üldine"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "&Sinu nimi:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2969,12 +2962,12 @@ msgstr ""
 "see peab esinema saadetava e-kirja päises.</p><p>Kui jätad selle tühjaks, ei "
 "näidata sinu nime, vaid ainult e-posti aadressi.</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "&Organisatsioon:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2986,12 +2979,12 @@ msgstr ""
 "p><p>Täiesti turvaline (ja igati normaalne) on see väli tühjaks jätta.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-posti aadress:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3006,12 +2999,12 @@ msgstr ""
 "allpool aliasaadressid.</p><p>Kui jätad selle tühjaks või sisestad valesti, "
 "on teistel lausa võimatu sulle vastata.</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "&E-posti aliased:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3028,12 +3021,12 @@ msgstr ""
 "ee<br>perekonnanimi@kuskil.ee</td></tr></table><p>Kirjuta igale reale üks "
 "aliasaadress.</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "Krüptograafia"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3048,12 +3041,23 @@ msgstr ""
 "Tavalisi e-kirja võimalusi see valik ei puuduta.</p><p>Rohkem infot võtmete "
 "kohta leiab internetis aadressilt <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP allkirjastamisvõti:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "OpenPGP võti 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3070,12 +3074,12 @@ msgstr ""
 "võimalusi see valik ei puuduta.</p><p>Rohkem infot võtmete kohta leiab "
 "internetis aadressilt <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP krüptovõti:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3088,12 +3092,12 @@ msgstr ""
 "sellisel juhul kirju S/MIME-ga signeerida. Tavalisi e-kirja võimalusi see "
 "valik ei puuduta.</p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME allkirja sertifikaat:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3108,39 +3112,82 @@ msgstr ""
 "sellisel juhul kirju S/MIME-ga krüptida. Tavalisi e-kirja võimalusi see "
 "valik ei puuduta.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME krüptosertifikaat:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Eelistatud vorming:"
 
-#: identity/identitydialog.cpp:443
-#, kde-format
-msgid "Automatically sign messages"
-msgstr "Kirjad allkirjastatakse automaatselt"
+#: identity/identitydialog.cpp:477
+#, fuzzy, kde-format
+#| msgid "Enable Subscriptions?"
+msgid "Enable Autocrypt"
+msgstr "Kas lubada tellimine?"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
 #, kde-format
-msgid "Automatically encrypt messages when possible"
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+#| msgid "Overwrite &All"
+msgid "Overwrite defaults:"
+msgstr "Kirjut&a kõik üle"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "Allkir&jasta kiri"
+
+#: identity/identitydialog.cpp:500
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "Kirjad k&rüptitakse automaatselt, kui vähegi võimalik"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "H&oiatus allkirjastamata kirja saatmise korral"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "&Hoiatus krüptimata kirjade saatmise puhul"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Muu"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&Vastamise aadress:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3158,12 +3205,12 @@ msgstr ""
 "posti aadress, aga vastused lähevad grupi aadressile.</p><p>Kui kahtled, "
 "jäta see väli tühjaks.</p></qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "&Koopia aadressid:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3179,12 +3226,12 @@ msgstr ""
 "p><p>Rohkem kui ühe aadressi määramiseks eralda need komadega.</p><p>Kui sa "
 "ei ole kindel, mida teha, jäta see väli tühjaks.</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "Sala&koopia aadressid:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3201,75 +3248,75 @@ msgstr ""
 "eralda need komadega.</p><p>Kui sa ei ole kindel, mida teha, jäta see väli "
 "tühjaks.</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&Sõnaraamat:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Saadetud kirjade ka&ust"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Saadetud kir&jade kaust:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 #| msgid "Select Date"
 msgid "Select Draft Folder"
 msgstr "Kuupäeva valimine"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Mustan&dite kaust:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 #| msgid "Multiple Folders"
 msgid "Select Templates Folder"
 msgstr "Mitu kausta"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "&Mallide kaust:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Väljuvate kirjade konto:"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Oma vCardi lisamine kirjale"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "Loo..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Automaatkorrektuuri keel:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Vaikedomeeni nime taastamine"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "&Vaikedomeen:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3278,38 +3325,38 @@ msgstr ""
 "<qt><p>Vaikedomeeni kasutatakse e-posti aadressi lõpetamiseks, mis koosneb "
 "ainult kasutajanimest.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Kohandat&ud kirjamallide kasutamine selle identiteedi puhul"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Globaalsete mallide kopeerimine"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "Allkiri"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "Pilt"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Sobimatu e-posti alias \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Sobimatu e-posti aadress"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3322,7 +3369,7 @@ msgstr ""
 "Selle tulemuseks võivad olla hoiatusteated saaja poolel, kui ta püüab selle "
 "seadistusega loodud allkirja kontrollida."
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3331,7 +3378,7 @@ msgstr ""
 "Üks seadistatud OpenPGP krüptovõtmeid ei sisalda ühtki määratud e-posti "
 "aadressiga kasutaja ID-d sellele identiteedile (%1)."
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3344,7 +3391,7 @@ msgstr ""
 "Selle tulemuseks võivad olla hoiatusteated saaja poolel, kui ta püüab selle "
 "seadistusega loodud allkirja kontrollida."
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3353,23 +3400,23 @@ msgstr ""
 "Üks seadistatud S/MIME krüptosertifikaate ei sisalda ühtki määratud e-posti "
 "aadressiga kasutaja ID-d sellele identiteedile (%1)."
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-posti aadressi ei leitud võtmest/sertifikaadist"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Allkirjafail ei ole kehtiv"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteedi \"%1\" muutmine"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3378,7 +3425,7 @@ msgstr ""
 "Mõningaid identiteedile määratud kohandatud kaustu ei ole (enam) olemas. "
 "Seepärast kasutatakse tavalisi kaustu."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "Muuda..."
@@ -6268,122 +6315,129 @@ msgstr "Kõigi viimati kasutatud kodeeringute nimekiri"
 msgid "Show crypto label indicator"
 msgstr "Krüptopealdise indikaatori näitamine"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Show crypto ownertrust icons"
+msgstr "Krüptopealdise indikaatori näitamine"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Saatmise vaikimisi kiirklahvi valideerimine"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "Identiteedidialoogi suurus (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "Otsinguakna laius (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "Otsinguakna kõrgus (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "KMaili seadistustedialoogi laius (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "KMaili seadistustedialoogi kõrgus (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "Kirja eelvaatluse paneel"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Kirja eelvaatluse paneeli ei näidata"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Kirja eelvaatluse paneel allpool kirjade nimekirja"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Kirja eelvaatluse paneel kirjade nimekirja kõrval"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "Kaustade nimekiri"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "Pikk kaustade nimekiri"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "Lühike kaustade nimekiri"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "Uue kirja kirjamall"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "Vastuse kirjamall"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Kõigile vastamise kirjamall"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "Edasisaatmise kirjamall"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "Tsitaadimärgid"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Reegli näitamisel kasutatava reegli määramine"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6392,7 +6446,7 @@ msgstr ""
 "Otsingudialoogi koguvälja laiuse määramine (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6401,7 +6455,7 @@ msgstr ""
 "Otsingudialoogi teemavälja laiuse määramine (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6410,7 +6464,7 @@ msgstr ""
 "Otsingudialoogi saatjavälja laiuse määramine (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6419,7 +6473,7 @@ msgstr ""
 "Otsingudialoogi saajavälja laiuse määramine (ainult sisemiseks kasutamiseks)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6429,7 +6483,7 @@ msgstr ""
 "kasutamiseks)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6508,103 +6562,6 @@ msgstr "Ü&ksikasjalik uutest kirjadest teatamine"
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "&Muud tegevused..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "Krüptimine"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"Selle sisselülitamisel ei krüptita kirja/faili mitte ainult saaja avaliku "
-"võtmega, vaid ka sinu võtmega. See võimaldab sul kirja/faili ka hiljem lahti "
-"krüptida. Üldiselt on see mõttekas sisse lülitada."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr ""
-"Kir&jade krüptimisel krüptitakse alati ka minu enda identiteedi "
-"sertifikaadiga"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "Märgi, kui soovid salvestada krüptitud kirju"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Kirjad salvestatakse krüptitult</h1>\n"
-"Selle valiku korral salvestatakse saadetud kirjad krüptitult, nagu nad olid "
-"saadetud. See ei ole soovitatav, sest sa ei suuda neid sõnumeid enam lugeda, "
-"kui vajalik sertifikaat aegub.\n"
-"<p>\n"
-"Siiski võivad olla kohalikud reeglid, mis sunnivad sind selle valiku sisse "
-"lülitama. Kui sa ei ole kindel, küsi järgi oma süsteemi administraatorilt.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "Saadetud kirjad salv&estatakse krüptitult"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"Selle sisselülitamisel näitab rakendus alati avalike võtmete nimekirja, "
-"millest saad valida selle, mida soovid krüptimiseks kasutada. Kui see ei ole "
-"sisse lülitatud, näitab rakendus dialoogi ainult siis, kui ei suudeta leida "
-"õiget võtit või kui kasutamiskõlblikke võtmeid on mitu."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "Alati palutakse valida va&jalik krüptovõti"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-"&Mustandina salvestamisel allkirjastatakse/krüptitakse vastavalt määratule"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "Krüptimise/allkirjastamise indikaatori näitamine redaktoris"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6933,6 +6890,245 @@ msgstr "A&va otsingukaust"
 #, kde-format
 msgid "Open &Message"
 msgstr "Ava ki&ri"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "Sea vaikeväärtuseks"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "Krüptitud kiri"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "Märgi, kui soovid salvestada krüptitud kirju"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Kirjad salvestatakse krüptitult</h1>\n"
+"Selle valiku korral salvestatakse saadetud kirjad krüptitult, nagu nad olid "
+"saadetud. See ei ole soovitatav, sest sa ei suuda neid sõnumeid enam lugeda, "
+"kui vajalik sertifikaat aegub.\n"
+"<p>\n"
+"Siiski võivad olla kohalikud reeglid, mis sunnivad sind selle valiku sisse "
+"lülitama. Kui sa ei ole kindel, küsi järgi oma süsteemi administraatorilt.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "Krüptitud kiri"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "Allkir&jasta kiri"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt all messages when possible"
+msgstr "Kirjad k&rüptitakse automaatselt, kui vähegi võimalik"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Encryption indicators"
+msgstr "Krüptopealdise indikaatori näitamine"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show sign/encrypt indicator in editor"
+msgid "Show sign/encrypt indicator"
+msgstr "Krüptimise/allkirjastamise indikaatori näitamine redaktoris"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "Alati palutakse valida va&jalik krüptovõti"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "&Hoiatus, kui sertifikaat/võti peagi aegub (täpsusta lävi allpool)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "Lõ&ppkasutaja sertifikaatidel/võtmetel:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "Vali siin päevade arv"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Hoiatus, kui ahela mõni sertifikaat aegub</h1>\n"
+"Vali minimaalne päevade arv, mille kestel kõik ahelasse kuuluvad "
+"sertifikaadid peavad veel kehtima enne hoiatuse näitamist.\n"
+"<p>\n"
+"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Hoiatus, kui krüptimissertifikaat aegub</h1>\n"
+"Vali minimaalne päevade arv, mille kestel krüptimissertifikaat peab veel "
+"kehtima, ilma et hoiatust näidataks.\n"
+"<p>\n"
+"SPHINX soovitab määrata väärtuseks 14 päeva.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For &root certificates:"
+msgid "For own certificates:"
+msgstr "&Juursertifikaatidel:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</p></qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Hoiatus, kui juursertifikaat aegub</h1>\n"
+"Vali minimaalne päevade arv, mille kestel juursertifikaat peab veel kehtima, "
+"enne kui näidatakse hoiatust.\n"
+"<p>\n"
+"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, kde-format
+msgid "For &root certificates:"
+msgstr "&Juursertifikaatidel:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Hoiatus, kui juursertifikaat aegub</h1>\n"
+"Vali minimaalne päevade arv, mille kestel juursertifikaat peab veel kehtima, "
+"enne kui näidatakse hoiatust.\n"
+"<p>\n"
+"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "SK sertifikaatidel:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "GnuPG seadistused..."
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "Kõigi \"Rohkem ei pärita\" hoiatuste taaslubamine"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7504,233 +7700,6 @@ msgstr ""
 "Süntaks on \"MASIN\" või \"MASIN:PORT\". Kui PORT ära jätta, kasutatakse "
 "porti 389 (standardne LDAP port)."
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "Märgi, kui soovid hoiatust enne allkirjastamata kirja saatmist"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus allkirjastamata kirjade saatmise korral</h1>\n"
-"Selle valiku korral näidatakse sulle hoiatust, kui püüad saata "
-"allkirjastamata kirja või selle mõnda osa.\n"
-"<p>\n"
-"Soovitatav on see valik maksimaalse ühtluse nimel sisse lülitada.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "H&oiatus allkirjastamata kirja saatmise korral"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr ""
-"Märgi, kui soovid, et krüptimata kirjade saatmise puhul sind hoiatataks."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus krüptimata kirjade saatmise puhul</h1>\n"
-"Selle valiku korral hoiatatakse sind, kui proovid saata kirja tervikuna või "
-"selle mõnda osa krüptimata.\n"
-"<p>\n"
-"Maksimaalse ühtluse huvides on soovitatav see sisse lülitada.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "&Hoiatus krüptimata kirjade saatmise puhul"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "&Hoiatus, kui sertifikaat/võti peagi aegub (täpsusta lävi allpool)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "Allkirjastamisel"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "Krüptimisel"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "Vali siin päevade arv"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus, kui allkirja sertifikaat aegub</h1>\n"
-"Vali minimaalne päevade arv, mille kestel allkirja sertifikaat peab veel "
-"kehtima, enne kui näidatakse hoiatust.\n"
-"<p>\n"
-"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus, kui krüptimissertifikaat aegub</h1>\n"
-"Vali minimaalne päevade arv, mille kestel krüptimissertifikaat peab veel "
-"kehtima, ilma et hoiatust näidataks.\n"
-"<p>\n"
-"SPHINX soovitab määrata väärtuseks 14 päeva.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus, kui ahela mõni sertifikaat aegub</h1>\n"
-"Vali minimaalne päevade arv, mille kestel kõik ahelasse kuuluvad "
-"sertifikaadid peavad veel kehtima enne hoiatuse näitamist.\n"
-"<p>\n"
-"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus, kui SK sertifikaat aegub</h1>\n"
-"Vali minimaalne päevade arv, mille kestel SK sertifikaat peab veel kehtima, "
-"enne kui näidatakse hoiatust.\n"
-"<p>\n"
-"SPHINX soovitab määrata väärtuseks 14 päeva.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Hoiatus, kui juursertifikaat aegub</h1>\n"
-"Vali minimaalne päevade arv, mille kestel juursertifikaat peab veel kehtima, "
-"enne kui näidatakse hoiatust.\n"
-"<p>\n"
-"SPHINX soovitab väärtuseks määrata 14 päeva.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, kde-format
-msgid "For &root certificates:"
-msgstr "&Juursertifikaatidel:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "SK sertifikaatidel:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "Lõ&ppkasutaja sertifikaatidel/võtmetel:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "GnuPG seadistused..."
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "Kõigi \"Rohkem ei pärita\" hoiatuste taaslubamine"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -7894,6 +7863,134 @@ msgstr[1] "Puhkuseteade on serverites aktiveeritud"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Suurendus: %1%"
+
+#~ msgid "Composing"
+#~ msgstr "Koostamine"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Muu"
+
+#~ msgid "Automatically sign messages"
+#~ msgstr "Kirjad allkirjastatakse automaatselt"
+
+#~ msgid "Encrypting"
+#~ msgstr "Krüptimine"
+
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "Selle sisselülitamisel ei krüptita kirja/faili mitte ainult saaja avaliku "
+#~ "võtmega, vaid ka sinu võtmega. See võimaldab sul kirja/faili ka hiljem "
+#~ "lahti krüptida. Üldiselt on see mõttekas sisse lülitada."
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr ""
+#~ "Kir&jade krüptimisel krüptitakse alati ka minu enda identiteedi "
+#~ "sertifikaadiga"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "Saadetud kirjad salv&estatakse krüptitult"
+
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "Selle sisselülitamisel näitab rakendus alati avalike võtmete nimekirja, "
+#~ "millest saad valida selle, mida soovid krüptimiseks kasutada. Kui see ei "
+#~ "ole sisse lülitatud, näitab rakendus dialoogi ainult siis, kui ei suudeta "
+#~ "leida õiget võtit või kui kasutamiskõlblikke võtmeid on mitu."
+
+#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
+#~ msgstr ""
+#~ "&Mustandina salvestamisel allkirjastatakse/krüptitakse vastavalt määratule"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "Märgi, kui soovid hoiatust enne allkirjastamata kirja saatmist"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Hoiatus allkirjastamata kirjade saatmise korral</h1>\n"
+#~ "Selle valiku korral näidatakse sulle hoiatust, kui püüad saata "
+#~ "allkirjastamata kirja või selle mõnda osa.\n"
+#~ "<p>\n"
+#~ "Soovitatav on see valik maksimaalse ühtluse nimel sisse lülitada.\n"
+#~ "</p></qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr ""
+#~ "Märgi, kui soovid, et krüptimata kirjade saatmise puhul sind hoiatataks."
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Hoiatus krüptimata kirjade saatmise puhul</h1>\n"
+#~ "Selle valiku korral hoiatatakse sind, kui proovid saata kirja tervikuna "
+#~ "või selle mõnda osa krüptimata.\n"
+#~ "<p>\n"
+#~ "Maksimaalse ühtluse huvides on soovitatav see sisse lülitada.\n"
+#~ "</p></qt>"
+
+#~ msgid "For Signing"
+#~ msgstr "Allkirjastamisel"
+
+#~ msgid "For Encryption"
+#~ msgstr "Krüptimisel"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Hoiatus, kui allkirja sertifikaat aegub</h1>\n"
+#~ "Vali minimaalne päevade arv, mille kestel allkirja sertifikaat peab veel "
+#~ "kehtima, enne kui näidatakse hoiatust.\n"
+#~ "<p>\n"
+#~ "SPHINX soovitab väärtuseks määrata 14 päeva.\n"
+#~ "</p></qt>"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Hoiatus, kui SK sertifikaat aegub</h1>\n"
+#~ "Vali minimaalne päevade arv, mille kestel SK sertifikaat peab veel "
+#~ "kehtima, enne kui näidatakse hoiatust.\n"
+#~ "<p>\n"
+#~ "SPHINX soovitab määrata väärtuseks 14 päeva.\n"
+#~ "</p></qt>"
 
 #, fuzzy
 #~| msgctxt "@title:window"
@@ -12584,9 +12681,6 @@ msgstr "Suurendus: %1%"
 #~ msgid "&Overwrite"
 #~ msgstr "&Kirjuta üle"
 
-#~ msgid "Overwrite &All"
-#~ msgstr "Kirjut&a kõik üle"
-
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -12757,9 +12851,6 @@ msgstr "Suurendus: %1%"
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "Vali kaasatav avalik võti."
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "OpenPGP võti 0x%1"
 
 #, fuzzy
 #~| msgid ""
@@ -13780,9 +13871,6 @@ msgstr "Suurendus: %1%"
 #~ msgid "inbox"
 #~ msgstr "sisenevad"
 
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "Kas lubada tellimine?"
-
 #~ msgctxt "@info"
 #~ msgid ""
 #~ "Currently subscriptions are not used for server <resource>%1</resource>."
@@ -14070,9 +14158,6 @@ msgstr "Suurendus: %1%"
 
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "Palun oota, kuni kirja lahti krüptitakse..."
-
-#~ msgid "Encrypted message"
-#~ msgstr "Krüptitud kiri"
 
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "Krüptitud kiri (lahtikrüptimine pole võimalik)"
@@ -16040,9 +16125,6 @@ msgstr "Suurendus: %1%"
 
 #~ msgid "Security"
 #~ msgstr "Turvalisus"
-
-#~ msgid "Encryption"
-#~ msgstr "Krüptimine"
 
 #~ msgid "&None"
 #~ msgstr "&Puudub"

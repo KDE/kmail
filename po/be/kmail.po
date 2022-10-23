@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -426,7 +426,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -590,7 +590,7 @@ msgstr ""
 "клавіш, якую жадаеце прывязаць да гэтай тэчкі.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, fuzzy, kde-format
 msgid "Templates"
 msgstr "Шаблоны"
@@ -1765,45 +1765,37 @@ msgid "Message Disposition Notifications"
 msgstr "Апавяшчэнні аб апрацоўцы паведамленняў"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-msgid "Composing"
-msgstr "Складанне"
+#, kde-format
+msgid "Encryption"
+msgstr "Шыфраванне"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, fuzzy, kde-format
-#| msgid "Miscellaneous"
-msgid "Miscellaneous"
-msgstr "Рознае"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, fuzzy, kde-format
 msgid "S/MIME Validation"
 msgstr "Праверка S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "Адрас электроннай пошты"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>Вы сапраўды жадаеце выдаліць увасабленне <b>%1</b>?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "Змена глабальных налад дыскусій адаб'ецца на параметрах усіх тэчак."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, fuzzy, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1811,37 +1803,37 @@ msgstr[0] " дзень"
 msgstr[1] " дні"
 msgstr[2] " дзён"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Настаўленні"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, fuzzy, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Гэты параметр патрабуе ўсталяванага пакета dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, fuzzy, kde-format
 msgid "no proxy"
 msgstr "няма проксі-сервера"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, fuzzy, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(сістэмныя налады: %1)"
@@ -2063,7 +2055,7 @@ msgid "Send"
 msgstr "Даслаць"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "Даслаць &пазней"
@@ -2333,14 +2325,14 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Радок: %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " Калонка: %1 "
@@ -2406,53 +2398,53 @@ msgstr "Захаваць паведамленне як чарнавік або �
 msgid "Close Composer"
 msgstr "Зачыніць акно рэдактара"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Autosave Message Failed"
 msgstr "Аўтазапіс схібіў."
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Sending Message Failed"
 msgstr "Аўтазапіс схібіў."
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, fuzzy, kde-format
 #| msgid "Insert File Content"
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Уставіць файл"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add as &Attachment"
 msgstr "Дадаць як далучэнне"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Назва далучэння:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid Attachment Name"
 msgstr "&Уключыць подпіс"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, fuzzy, kde-format
 #| msgid "Encrypted message"
 msgid "Add URL into Message"
@@ -2461,7 +2453,7 @@ msgstr[0] "Зашыфраванае паведамленне"
 msgstr[1] "Зашыфраванае паведамленне"
 msgstr[2] "Зашыфраванае паведамленне"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add File as &Attachment"
@@ -2470,17 +2462,17 @@ msgstr[0] "Дадаць як далучэнне"
 msgstr[1] "Дадаць як далучэнне"
 msgstr[2] "Дадаць як далучэнне"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, fuzzy, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Зьмяшчае далучэнне"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "безназоўны"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2492,12 +2484,12 @@ msgstr ""
 "няма ключоў для шыфравання (OpenPGP або S/MIME).</p><p>Вылучыце ключы ў "
 "дыялогу налады профіля.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, fuzzy, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Не паказаны ключ шыфравання"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2508,12 +2500,12 @@ msgstr ""
 "магчымасці падпісвання вашых паведамленняў.</p><p>Вы можаце паказаць "
 "выкарыстоўваны ключ у канфігурацыі профіля.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, fuzzy, kde-format
 msgid "Undefined Signing Key"
 msgstr "Не паказаны ключ подпісу"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, fuzzy, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2524,160 +2516,160 @@ msgstr ""
 "Акрамя таго, вы можаце паказаць свой адрас адпраўніка ва ўсіх профілях, каб "
 "не ўводзіць яго ўручную пры складанні кожнага ліста."
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Варта паказаць хоць бы аднаго адрасата."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Вы не паказалі тэму. Адправіць паведамленне без тэмы?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, fuzzy, kde-format
 #| msgid "No Name Specified"
 msgid "No To: specified"
 msgstr "Імя не ўказаная"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "Д&аслаць як ёсць"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "&Указаць тэму"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, fuzzy, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Вы не паказалі тэму. Адправіць паведамленне без тэмы?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Тэма не ўказаная"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Указаць тэму"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Варта паказаць хоць бы аднаго адрасата."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, fuzzy, kde-format
 msgid "About to send email..."
 msgstr "Паведамленне гатова да адпраўкі..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "Даслаць пацверджанне"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "&Даслаць зараз"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "<адрасаты>"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Даслаць як ёсць"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, fuzzy, kde-format
 #| msgid "Additional Recipients"
 msgid "&Edit Recipients"
 msgstr "Дадатковыя адрасаты"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Lose Formatting"
 msgstr "Даслаць пацверджанне"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, fuzzy, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Паведамленне ў выглядзе звычайнага тэксту"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2685,7 +2677,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -2986,53 +2978,53 @@ msgstr "&Дубляваць існуючае ўвасабленне"
 msgid "&Existing identities:"
 msgstr "&Існуючыя ўвасабленні:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, fuzzy, kde-format
 #| msgid "Error while trying to rename folder %1"
 msgid "Error while generating new key pair: %1"
 msgstr "Немагчыма перайменаваць тэчку %1"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "Увядзіце новае ключавое слова:"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Рэдагаваць увасабленне"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Агульныя"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "&Ваша імя:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3044,12 +3036,12 @@ msgstr ""
 "</p><p>Калі вы пакінеце гэтае поле пустым, у якія адпраўляюцца вамі "
 "паведамленнях будзе бачны толькі ваш e-mail.</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Устано&ва:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3060,12 +3052,12 @@ msgstr ""
 "працуеце, калі вы жадаеце, каб яно дадавалася ў загалоўкі лістоў, якія "
 "адпраўляюцца вамі.</p><p>Можна пакінуць гэтае поле пустым.</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "&Адрас электроннай пошты:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3078,13 +3070,13 @@ msgstr ""
 "запоўніце яго няправільна, у якія адказваюць вам паўстануць цяжкасці.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "&Адрас электроннай пошты:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3095,13 +3087,13 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, fuzzy, kde-format
 #| msgid "Cryptograph&y"
 msgid "Cryptography"
 msgstr "Крыптаграф&ія"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3116,12 +3108,23 @@ msgstr ""
 "p><p>Падрабязней аб ключах можна прачытаць на <a>http://www.gnupg.org</a></"
 "p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Ключ OpenPGP для подпісу:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "Ключ OpenPGP 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3138,12 +3141,12 @@ msgstr ""
 "p><p>Падрабязней аб ключах можна прачытаць на <a>http://www.gnupg.org</a></"
 "p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Ключ OpenPGP для шыфравання:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3155,12 +3158,12 @@ msgstr ""
 "p><p>Калі пакінуць гэтае поле пустым, то можна будзе адпраўляць звычайную "
 "пошту, для якой не патрабуецца шыфраванне.</p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Сертыфікат S/MIME для подпісу:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3174,41 +3177,79 @@ msgstr ""
 "гэтае поле пустым, то можна будзе адпраўляць звычайную пошту, для якой не "
 "патрабуецца шыфраванне.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "Сертыфікат S/MIME для шыфравання:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, fuzzy, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Упадабаны фармат шыфравання:"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:477
 #, fuzzy, kde-format
-#| msgid "&Automatically sign messages"
-msgid "Automatically sign messages"
-msgstr "Падпісваць паведамленні &аўтаматычна"
+msgid "Enable Autocrypt"
+msgstr "Падпіска"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
+#, kde-format
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+#| msgid "Overwrite File?"
+msgid "Overwrite defaults:"
+msgstr "Перазапісаць файл?"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "&Падпiсаць паведамленне"
+
+#: identity/identitydialog.cpp:500
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
-msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "Аўтаматычна зашыфроўваць &паведамленні калі гэта магчыма"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+msgid "Warn when trying to send unsigned messages"
+msgstr "Папярэджваць пры адпраўцы непадпісанага паведамлення"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+msgid "Warn when trying to send unencrypted messages"
+msgstr "Папярэджваць пры адпраўцы незашыфраванага паведамлення"
+
+#: identity/identitydialog.cpp:516
 #, fuzzy, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Асаблівы"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Адрас для &адказу:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3225,12 +3266,12 @@ msgstr ""
 "паказваць агульны адрас, а не асабісты, паказваны ў поле <tt>From:</tt>.</p> "
 "<p>Калі вам гэта не трэба, пакіньце гэта пустым.</p></qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, fuzzy, kde-format
 msgid "&CC addresses:"
 msgstr "Адрас утоенай копіі:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3247,12 +3288,12 @@ msgstr ""
 "адпраўлення дзід паведамлення на іншыя ўліковыя запісы.</p><p>Калі не "
 "ўпэўненыя, пакіньце дадзенае поле пустым.</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, fuzzy, kde-format
 msgid "&BCC addresses:"
 msgstr "Адрас утоенай копіі:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3269,80 +3310,80 @@ msgstr ""
 "адпраўлення дзід паведамлення на іншыя ўліковыя запісы.</p><p>Калі не "
 "ўпэўненыя, пакіньце дадзенае поле пустым.</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "С&лоўнік:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Т&эчка дасланай пошты"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&Тэчка дасланай пошты:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Draft Folder"
 msgstr "Выбраць стыль"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Тэчка &чарнавікоў:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgid "Select Templates Folder"
 msgstr "Тэчка"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Trash folder:"
 msgid "&Templates folder:"
 msgstr "&Тэчка сметніку:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Наставіць рахунак"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "Дадаць 'загаловак' да паведамлення"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Перайменаваць..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "Выбраць &мову:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, fuzzy, kde-format
 msgid "Restore default domain name"
 msgstr "Імя дамена па змаўчанні:"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, fuzzy, kde-format
 msgid "Defaul&t domain:"
 msgstr "Імя дамена па змаўчанні:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3351,41 +3392,41 @@ msgstr ""
 "<qt><p>Імя дамена па змаўчанні будзе скарыстана для дадатку адрасу e-mail, "
 "які змяшчае толькі імя карыстальніка.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Паказаць свой суфікс у Message-Id"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, fuzzy, kde-format
 #| msgid "&Replace"
 msgid "&Copy Global Templates"
 msgstr "&Замяніць"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "Подпіс"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "&Выява"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Некарэктны адрас электроннай пошты"
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Некарэктны адрас электроннай пошты"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3399,7 +3440,7 @@ msgstr ""
 "Гэта можа выклікаць з'яўленне папераджальных паведамленняў у атрымальнікаў "
 "пры спробе праверкі подпісу."
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3408,7 +3449,7 @@ msgstr ""
 "Адзін з наладжаных ключоў OpenPGP для подпісу не ўтрымоўвае ідэнтыфікатар "
 "карыстальніка з адрасам электроннай пошты для гэтага профіля (%1)."
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3422,7 +3463,7 @@ msgstr ""
 "Гэта можа выклікаць з'яўленне папераджальных паведамленняў у атрымальнікаў "
 "пры спробе праверкі подпісу."
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3431,24 +3472,24 @@ msgstr ""
 "Адзін з наладжаных сертыфікатаў S/MIME для подпісу не ўтрымоўвае адрасы "
 "электроннай пошты для гэтага профіля (%1)."
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, fuzzy, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Адрас E-mail не знойдзены ў ключы/сертыфікаце"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Несапраўдны файл подпісу"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Рэдагаваць увасабленне \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3457,7 +3498,7 @@ msgstr ""
 "Вылучаная для профіля \"%1\" тэчка чарнавікоў больш не існуе. Будзе "
 "скарыстаная тэчка па змаўчанні."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "Рэдагаваць..."
@@ -6560,129 +6601,136 @@ msgstr ""
 msgid "Show crypto label indicator"
 msgstr "Паказваць &значкі крыптаграфіі"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Show crypto ownertrust icons"
+msgstr "Паказваць &значкі крыптаграфіі"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, fuzzy, kde-format
 msgid "Message Preview Pane"
 msgstr "Прагляд паведамлення"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, fuzzy, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Адключыць"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, fuzzy, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Паказваць ніжэй спісу паведамленняў"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, fuzzy, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Паказваць справа ад спісу паведамленняў"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "Спіс тэчак"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, fuzzy, kde-format
 #| msgid "Lon&g folder list"
 msgid "Long folder list"
 msgstr "Доў&гі спіс тэчак"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, fuzzy, kde-format
 #| msgid "Shor&t folder list"
 msgid "Short folder list"
 msgstr "Каро&ткі спіс тэчак"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, fuzzy, kde-format
 #| msgid "Message List - New Messages"
 msgid "Message template for new message"
 msgstr "Спіс паведамленняў - новыя паведамленні"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, fuzzy, kde-format
 #| msgid "Message List - New Messages"
 msgid "Message template for reply"
 msgstr "Спіс паведамленняў - новыя паведамленні"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, fuzzy, kde-format
 #| msgid "Message List - New Messages"
 msgid "Message template for reply to all"
 msgstr "Спіс паведамленняў - новыя паведамленні"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, fuzzy, kde-format
 #| msgid "Message List - New Messages"
 msgid "Message template for forward"
 msgstr "Спіс паведамленняў - новыя паведамленні"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, fuzzy, kde-format
 #| msgid "Add &Quote Characters"
 msgid "Quote characters"
 msgstr "Дадаць сымбалі &цытавання"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6690,7 +6738,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6698,7 +6746,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6706,7 +6754,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6714,7 +6762,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6722,7 +6770,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6806,106 +6854,6 @@ msgstr "Падрабязнае абвяшчэнне аб прыходзе пош
 #| msgid "Other Actio&ns"
 msgid "Other Actio&ns..."
 msgstr "Іншыя дзеян&ні"
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "Шыфраванне"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, fuzzy, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"Пры ўключэнні гэтай опцыі паведамленне або файл будуць падпісаныя не толькі "
-"адчыненым ключом атрымальніка, але і вашым ключом. Рэкамендуецца так і "
-"рабіць, каб мець магчымасць расшыфраваць паведамленне або файл пасля."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr ""
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, fuzzy, kde-format
-msgid "Check to store messages encrypted "
-msgstr "Адзначце для захоўвання паведамленняў у зашыфраваным выглядзе"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Захоўваць паведамленні зашыфраванымі</h1>\n"
-"\n"
-"Калі ўсталяваны гэты параметр, адпраўленыя паведамленні захоўваюцца ў "
-"зашыфраваным выглядзе, нібы яны былі адпраўленыя. Гэта не рэкамендуецца, "
-"паколькі вы не зможаце прачытаць адпраўленыя паведамленні пасля заканчэння "
-"тэрміна дзеяння сертыфікатаў.\n"
-"\n"
-"<p>\n"
-"\n"
-"Нягледзячы на гэта, лакальныя правілы могуць патрабаваць, каб гэты параметр "
-"быў усталяваны. Пракансультуйцеся са сваім сістэмным адміністратарам.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "Захоўваць дасланыя паведамленні зашыф&раванымі"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, fuzzy, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"Калі опцыя ўключаная, вам заўсёды будзе паказаны ўвесь спіс ключоў для "
-"шыфравання. У адваротным выпадку, выбар ключа будзе паказаны толькі ў "
-"выпадку, калі не атрымоўваецца знайсці правільны ключ або можна выкарыстаць "
-"любы ключ з некалькіх магчымых."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, fuzzy, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "Заўсёды паказваць ключы шыфравання для пацверджання"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, fuzzy, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "Паказваць зашыфраваны/падпісаны тэкст"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -7207,6 +7155,262 @@ msgstr "Выдаліць пошук"
 #| msgid "Open Message"
 msgid "Open &Message"
 msgstr "Адкрыць паведамленне"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+msgid "Security defaults"
+msgstr "Зрабіць асноўным"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "Зашыфраванае паведамленне"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, fuzzy, kde-format
+msgid "Check to store messages encrypted "
+msgstr "Адзначце для захоўвання паведамленняў у зашыфраваным выглядзе"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"\n"
+"<h1>Захоўваць паведамленні зашыфраванымі</h1>\n"
+"\n"
+"Калі ўсталяваны гэты параметр, адпраўленыя паведамленні захоўваюцца ў "
+"зашыфраваным выглядзе, нібы яны былі адпраўленыя. Гэта не рэкамендуецца, "
+"паколькі вы не зможаце прачытаць адпраўленыя паведамленні пасля заканчэння "
+"тэрміна дзеяння сертыфікатаў.\n"
+"\n"
+"<p>\n"
+"\n"
+"Нягледзячы на гэта, лакальныя правілы могуць патрабаваць, каб гэты параметр "
+"быў усталяваны. Пракансультуйцеся са сваім сістэмным адміністратарам.\n"
+"\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "Зашыфраванае паведамленне"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "Sign all message &parts"
+msgid "Sign all messages"
+msgstr "Падпiсваць усе &часткі паведамлення"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt &messages whenever possible"
+msgid "Encrypt all messages when possible"
+msgstr "Аўтаматычна зашыфроўваць &паведамленні калі гэта магчыма"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Encryption Configuration"
+msgid "Encryption indicators"
+msgstr "Канфігурацыя шыфравання"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+msgid "Show sign/encrypt indicator"
+msgstr "Паказваць зашыфраваны/падпісаны тэкст"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+msgid "Always approve encryption keys before send"
+msgstr "Заўсёды паказваць ключы шыфравання для пацверджання"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, fuzzy, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr ""
+"Папярэджваць аб хуткім заканчэнні тэрміна дзеяння сертыфікатаў і ключоў"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, fuzzy, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "Для карыстацкіх сертыфікатаў або ключоў:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "Выбраць колькасьць дзён тут"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"\n"
+"<h1>Папярэджваць, калі тэрмін дзеяння сертыфіката ў ланцужку мінае</h1>\n"
+"\n"
+"Вылучыце мінімальную колькасць дзён, у плыні якіх усе сертыфікаты\n"
+"\n"
+"павінны быць сапраўдныя без высновы папярэджання.\n"
+"\n"
+"<p>\n"
+"\n"
+"Рэкамендуемы параметр SPHINX 14 дзён.\n"
+"\n"
+"</qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"\n"
+"<h1>Папярэджваць, калі тэрмін дзеяння сертыфіката шыфравання мінае</h1>\n"
+"\n"
+"Усталюеце мінімальную колькасць дзён, у плыні якіх сертыфікат будзе "
+"сапраўдным без высновы папярэджання.\n"
+"\n"
+"<p>\n"
+"\n"
+"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
+"\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+msgid "For own certificates:"
+msgstr "Для каранёвых сертыфікатаў:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"\n"
+"<h1>Папярэджваць аб заканчэнні тэрміна дзеяння каранёвага сертыфіката</h1>\n"
+"\n"
+"Пакажыце колькасць дзён да канчатка тэрміна дзеяння каранёвага сертыфіката, "
+"за якое павінна выводзіцца папярэджанне.\n"
+"\n"
+"<p>\n"
+"\n"
+"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
+"\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, fuzzy, kde-format
+msgid "For &root certificates:"
+msgstr "Для каранёвых сертыфікатаў:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"\n"
+"<h1>Папярэджваць аб заканчэнні тэрміна дзеяння каранёвага сертыфіката</h1>\n"
+"\n"
+"Пакажыце колькасць дзён да канчатка тэрміна дзеяння каранёвага сертыфіката, "
+"за якое павінна выводзіцца папярэджанне.\n"
+"\n"
+"<p>\n"
+"\n"
+"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
+"\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, fuzzy, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "Для сертыфікатаў прамежкавых СА:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, fuzzy, kde-format
+#| msgid "&Sending"
+msgid "GnuPG Settings..."
+msgstr "&Настаўленні"
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, fuzzy, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "Уключыць усе адключаныя папярэджанні"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7761,273 +7965,6 @@ msgstr ""
 "\"адрас_сервера:порт\". Калі порт не паказаны, разумеецца стандартны порт "
 "LDAP 389."
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, fuzzy, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "Выснова папярэджання аб спробе адпраўкі непадпісаных паведамленняў."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць пры адпраўцы непадпісанага паведамлення</h1>\n"
-"\n"
-"Калі ўключаны гэты параметр, пры спробе адпраўкі непадпісанага паведамлення "
-"або частак паведамлення будзе выводзіцца папярэджанне.\n"
-"\n"
-"<p>\n"
-"\n"
-"Для максімальнай надзейнасці рэкамендуецца ўключыць гэты параметр.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, fuzzy, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "Папярэджваць пры адпраўцы непадпісанага паведамлення"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, fuzzy, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "Паказ папярэджання пры адпраўцы незашыфраваных паведамленняў."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць пры спробе адпраўкі незашыфраванага паведамлення</h1>\n"
-"\n"
-"Калі ўсталяваны гэты параметр, вы будзеце папярэджаныя аб спробах\n"
-"\n"
-"адправіць паведамленне або яго частка ў незашыфраваным выглядзе.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуецца для максімальнай цэласнасці мець гэты параметр включеным.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, fuzzy, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "Папярэджваць пры адпраўцы незашыфраванага паведамлення"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, fuzzy, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr ""
-"Папярэджваць аб хуткім заканчэнні тэрміна дзеяння сертыфікатаў і ключоў"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, fuzzy, kde-format
-#| msgid "For signing"
-msgid "For Signing"
-msgstr "Для падпісання"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, fuzzy, kde-format
-#| msgid "For encryption"
-msgid "For Encryption"
-msgstr "Для шыфравання"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "Выбраць колькасьць дзён тут"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць аб заканчэнні тэрміна дзеяння сертыфіката подпісу</h1>\n"
-"\n"
-"Пакажыце колькасць дзён да канчатка тэрміна дзеяння сертыфіката, за якое "
-"павінна выводзіцца папярэджанне.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць, калі тэрмін дзеяння сертыфіката шыфравання мінае</h1>\n"
-"\n"
-"Усталюеце мінімальную колькасць дзён, у плыні якіх сертыфікат будзе "
-"сапраўдным без высновы папярэджання.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць, калі тэрмін дзеяння сертыфіката ў ланцужку мінае</h1>\n"
-"\n"
-"Вылучыце мінімальную колькасць дзён, у плыні якіх усе сертыфікаты\n"
-"\n"
-"павінны быць сапраўдныя без высновы папярэджання.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуемы параметр SPHINX 14 дзён.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць аб заканчэнні тэрміна дзеяння сертыфіката CA</h1>\n"
-"\n"
-"Пакажыце колькасць дзён да канчатка тэрміна дзеяння сертыфіката CA, за якое "
-"павінна выводзіцца папярэджанне.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"\n"
-"<h1>Папярэджваць аб заканчэнні тэрміна дзеяння каранёвага сертыфіката</h1>\n"
-"\n"
-"Пакажыце колькасць дзён да канчатка тэрміна дзеяння каранёвага сертыфіката, "
-"за якое павінна выводзіцца папярэджанне.\n"
-"\n"
-"<p>\n"
-"\n"
-"Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
-"\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, fuzzy, kde-format
-msgid "For &root certificates:"
-msgstr "Для каранёвых сертыфікатаў:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, fuzzy, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "Для сертыфікатаў прамежкавых СА:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, fuzzy, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "Для карыстацкіх сертыфікатаў або ключоў:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, fuzzy, kde-format
-#| msgid "&Sending"
-msgid "GnuPG Settings..."
-msgstr "&Настаўленні"
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, fuzzy, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "Уключыць усе адключаныя папярэджанні"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -8194,6 +8131,161 @@ msgstr[2] "Змяніць адказы \"па-за офісам\"..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Composing"
+#~ msgstr "Складанне"
+
+#, fuzzy
+#~| msgid "Miscellaneous"
+#~ msgid "Miscellaneous"
+#~ msgstr "Рознае"
+
+#, fuzzy
+#~| msgid "&Automatically sign messages"
+#~ msgid "Automatically sign messages"
+#~ msgstr "Падпісваць паведамленні &аўтаматычна"
+
+#~ msgid "Encrypting"
+#~ msgstr "Шыфраванне"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "Пры ўключэнні гэтай опцыі паведамленне або файл будуць падпісаныя не "
+#~ "толькі адчыненым ключом атрымальніка, але і вашым ключом. Рэкамендуецца "
+#~ "так і рабіць, каб мець магчымасць расшыфраваць паведамленне або файл "
+#~ "пасля."
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "Захоўваць дасланыя паведамленні зашыф&раванымі"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "Калі опцыя ўключаная, вам заўсёды будзе паказаны ўвесь спіс ключоў для "
+#~ "шыфравання. У адваротным выпадку, выбар ключа будзе паказаны толькі ў "
+#~ "выпадку, калі не атрымоўваецца знайсці правільны ключ або можна "
+#~ "выкарыстаць любы ключ з некалькіх магчымых."
+
+#, fuzzy
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "Выснова папярэджання аб спробе адпраўкі непадпісаных паведамленняў."
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "\n"
+#~ "<h1>Папярэджваць пры адпраўцы непадпісанага паведамлення</h1>\n"
+#~ "\n"
+#~ "Калі ўключаны гэты параметр, пры спробе адпраўкі непадпісанага "
+#~ "паведамлення або частак паведамлення будзе выводзіцца папярэджанне.\n"
+#~ "\n"
+#~ "<p>\n"
+#~ "\n"
+#~ "Для максімальнай надзейнасці рэкамендуецца ўключыць гэты параметр.\n"
+#~ "\n"
+#~ "</qt>"
+
+#, fuzzy
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "Паказ папярэджання пры адпраўцы незашыфраваных паведамленняў."
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "\n"
+#~ "<h1>Папярэджваць пры спробе адпраўкі незашыфраванага паведамлення</h1>\n"
+#~ "\n"
+#~ "Калі ўсталяваны гэты параметр, вы будзеце папярэджаныя аб спробах\n"
+#~ "\n"
+#~ "адправіць паведамленне або яго частка ў незашыфраваным выглядзе.\n"
+#~ "\n"
+#~ "<p>\n"
+#~ "\n"
+#~ "Рэкамендуецца для максімальнай цэласнасці мець гэты параметр включеным.\n"
+#~ "\n"
+#~ "</qt>"
+
+#, fuzzy
+#~| msgid "For signing"
+#~ msgid "For Signing"
+#~ msgstr "Для падпісання"
+
+#, fuzzy
+#~| msgid "For encryption"
+#~ msgid "For Encryption"
+#~ msgstr "Для шыфравання"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "\n"
+#~ "<h1>Папярэджваць аб заканчэнні тэрміна дзеяння сертыфіката подпісу</h1>\n"
+#~ "\n"
+#~ "Пакажыце колькасць дзён да канчатка тэрміна дзеяння сертыфіката, за якое "
+#~ "павінна выводзіцца папярэджанне.\n"
+#~ "\n"
+#~ "<p>\n"
+#~ "\n"
+#~ "Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
+#~ "\n"
+#~ "</qt>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "\n"
+#~ "<h1>Папярэджваць аб заканчэнні тэрміна дзеяння сертыфіката CA</h1>\n"
+#~ "\n"
+#~ "Пакажыце колькасць дзён да канчатка тэрміна дзеяння сертыфіката CA, за "
+#~ "якое павінна выводзіцца папярэджанне.\n"
+#~ "\n"
+#~ "<p>\n"
+#~ "\n"
+#~ "Рэкамендуемае SPHINX значэнне - 14 дзён.\n"
+#~ "\n"
+#~ "</qt>"
 
 #, fuzzy
 #~| msgid "Select Folder"
@@ -13503,11 +13595,6 @@ msgstr ""
 #~ msgstr "&Перазапісаць"
 
 #, fuzzy
-#~| msgid "Overwrite File?"
-#~ msgid "Overwrite &All"
-#~ msgstr "Перазапісаць файл?"
-
-#, fuzzy
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -13698,9 +13785,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "Вылучыце адчынены ключ, які варта ўкласці."
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "Ключ OpenPGP 0x%1"
 
 #, fuzzy
 #~ msgid ""
@@ -14679,10 +14763,6 @@ msgstr ""
 #~ msgstr "Уваходныя"
 
 #, fuzzy
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "Падпіска"
-
-#, fuzzy
 #~ msgctxt "@info"
 #~ msgid ""
 #~ "Currently subscriptions are not used for server <resource>%1</resource>."
@@ -15056,9 +15136,6 @@ msgstr ""
 #~ "Дачакайцеся канчатка перасылання %n паведамленняў\n"
 #~ "\n"
 #~ "Дачакайцеся канчатка перасылання %n паведамленняў"
-
-#~ msgid "Encrypted message"
-#~ msgstr "Зашыфраванае паведамленне"
 
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "Зашыфраванае паведамленне (расшыфроўка немагчымая)"
@@ -17169,9 +17246,6 @@ msgstr ""
 #~| msgid "S&ecurity"
 #~ msgid "Security"
 #~ msgstr "Б&яспека"
-
-#~ msgid "Encryption"
-#~ msgstr "Шыфраванне"
 
 #~ msgid "&None"
 #~ msgstr "&Няма"
@@ -20780,9 +20854,6 @@ msgstr ""
 #~ "\n"
 #~ "%2"
 
-#~ msgid "Encryption Configuration"
-#~ msgstr "Канфігурацыя шыфравання"
-
 #~ msgid "Encryption &algorithm:"
 #~ msgstr "&Альгарытм шыфравання:"
 
@@ -21225,9 +21296,6 @@ msgstr ""
 #~ msgid "Send certificate c&hain with root"
 #~ msgstr "Адпраўляць ланцужок сертыфікатаў з каранёвым"
 
-#~ msgid "Sign all message &parts"
-#~ msgstr "Падпiсваць усе &часткі паведамлення"
-
 #, fuzzy
 #~ msgid "Check to have all message parts signed by default"
 #~ msgstr "Усталюеце, каб па змаўчанні падпісваліся ўсе часткі паведамлення"
@@ -21601,10 +21669,6 @@ msgstr ""
 
 #~ msgid "Move to:"
 #~ msgstr "Перанесці ў:"
-
-#, fuzzy
-#~ msgid "Set Default"
-#~ msgstr "Зрабіць асноўным"
 
 #, fuzzy
 #~ msgid "smtp (Default)"

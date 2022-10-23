@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2022-07-11 10:41+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -385,7 +385,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Veel bugs met IMAP gerepareerd"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -540,7 +540,7 @@ msgstr ""
 "toets(e)n die u aan deze map wilt koppelen.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "Sjablonen"
@@ -1678,30 +1678,25 @@ msgstr "Ontvangst- en gelezenbevestigingen"
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
-msgid "Composing"
-msgstr "Opstellen"
+msgid "Encryption"
+msgstr "Versleuteling"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "Diversen"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME-validatie"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "E-mailadres:"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Wilt u dit e-mailadres verwijderen?"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1709,25 +1704,23 @@ msgstr ""
 "Het wijzigen van de globale HTML-instellingen zal alle map-specifieke "
 "instellingen overschrijven."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] "   dag"
 msgstr[1] " dagen"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG-instellingen"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1736,23 +1729,23 @@ msgstr ""
 "De module ontbreekt. Controleer uw installatie. Deze module wordt geleverd "
 "door Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Fout in configuratiemodule GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Deze optie vereist dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "geen proxy"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Huidige systeeminstelling: %1)"
@@ -1962,7 +1955,7 @@ msgid "Send"
 msgstr "Verzenden"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "&Later verzenden"
@@ -2219,13 +2212,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr "Menubalk verbergen"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Regel: %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " Kolom: %1 "
@@ -2288,72 +2281,72 @@ msgstr "Wilt u het bericht verwerpen of opslaan voor later?"
 msgid "Close Composer"
 msgstr "Opsteller afsluiten"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "Automatisch opslaan van bericht is mislukt"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "Verzenden van bericht is mislukt"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Bestand invoegen"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "Als &inline-afbeelding toevoegen"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Als bijl&age toevoegen"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Naam van de bijlage:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Naam van bijlage mag niet leeg zijn"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "Ongeldige naam van bijlage"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "URL toevoegen aan bericht"
 msgstr[1] "URL's toevoegen aan bericht als &tekst"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Bestand als bijl&age toevoegen"
 msgstr[1] "Bestanden als bijl&age toevoegen"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Inhoud klembord als bijlage toevoegen"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "naamloos"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2366,12 +2359,12 @@ msgstr ""
 "(OpenPGP of S/MIME).</p> <p>Selecteer a.u.b. de te gebruiken sleutel(s) in "
 "de identiteitsinstellingen.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Niet gedefinieerd versleutelingtype"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2382,12 +2375,12 @@ msgstr ""
 "MIME-sleutel opgeven die hiervoor kan worden gebruikt.</p> <p>Selecteer a.u."
 "b. de te gebruiken sleutel(s) in de identiteitsinstellingen.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "Niet gedefinieerde sleutel voor ondertekening"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2398,7 +2391,7 @@ msgstr ""
 "mailadressen voor alle identiteiten instellen, zodat u die niet voor ieder "
 "bericht hoeft in te voeren."
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2406,42 +2399,42 @@ msgid ""
 msgstr ""
 "U moet tenminste één geadresseerde opgeven in het veld Aan-, CC- of BCC-veld."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Het Aan:-veld is leeg. Het bericht toch verzenden?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "Geen Aan: opgegeven"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "Zo &verzenden"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "&Specify the To field"
 msgstr "Het Aan-veld &invullen"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Er is geen onderwerp opgegeven. Het bericht toch verzenden?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Geen onderwerp opgegeven"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Onderwerp opgeven"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2450,22 +2443,22 @@ msgstr ""
 "U moet tenminste één geadresseerde opgeven om een concept te kunnen "
 "versleutelen."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "Staat op het punt een bericht te verzenden..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "Bevestiging verzenden"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "Nu ver&zenden"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2474,22 +2467,22 @@ msgstr ""
 "U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
 "het bericht wel worden verstuurd?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "Te veel geadresseerden"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "Zo &verzenden"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "Geadresseerden b&ewerken"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2498,22 +2491,22 @@ msgstr ""
 "HTML-modus uitschakelen veroorzaakt dat de tekst alle opmaak verliest. Echt "
 "doen?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Opmaak verliezen?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Losse opmaak"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Markering als platte tekst toevoegen"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2522,7 +2515,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2531,7 +2524,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft geen voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
@@ -2539,7 +2532,7 @@ msgstr ""
 "Roddelsleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is "
 "niet geverifieerd."
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
@@ -2548,7 +2541,7 @@ msgstr ""
 "Voor deze ontvanger zal hoge beveiligingsversleuteling worden gebruikt (de "
 "encryptiesleutel is volledig vertrouwd). Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
@@ -2558,7 +2551,7 @@ msgstr ""
 "(de encryptiesleutel is marginaal vertrouwd). Klik op het pictogram voor "
 "details."
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
@@ -2567,7 +2560,7 @@ msgstr ""
 "Voor deze ontvanger zal lage beveiligingsversleuteling worden gebruikt (de "
 "encryptiesleutel wordt niet vertrouwd) Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2578,7 +2571,7 @@ msgstr ""
 "beveiliging van de encryptie is onbekend (de encryptiesleutel kon niet "
 "geverifieerd worden). klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Plug-in-informatie over bewerker"
@@ -2871,49 +2864,49 @@ msgstr "Bestaande vCard &dupliceren"
 msgid "&Existing identities:"
 msgstr "&Bestaande identiteiten:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "Fout bij genereren van nieuw sleutelpaar: %1 "
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr "Fout bij aanmaken van sleutel"
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr "Geen sleutel"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "Een nieuw sleutelpaar genereren"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "Bezig een nieuw sleutelpaar aan te maken..."
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Identiteit bewerken"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Algemeen"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "N&aam:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2924,12 +2917,12 @@ msgstr ""
 "in de kop van de berichten die u verzendt.</p> <p>Als u dit veld leeglaat, "
 "zal uw echte naam niet worden genoemd, maar alleen het e-mailadres.</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Organi&satie:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2940,12 +2933,12 @@ msgstr ""
 "wilt laten vermelden in de kop van de berichten die u verzendt.</p> "
 "<p>Gewoonlijk wordt dit veld leeg gelaten.</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-mailadres:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2961,12 +2954,12 @@ msgstr ""
 "leeg laat, of er een onjuist e-mailadres inzet,  kunnen de personen aan wie "
 "u een e-mail stuurt deze niet beantwoorden.</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "E-mail&alias:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2983,12 +2976,12 @@ msgstr ""
 "th><td>eerste@example.org<br>laatste@example.org</td></tr></table><p>Typ één "
 "aliasadres per regel.</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "Cryptografie"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3004,12 +2997,23 @@ msgstr ""
 "hinder van ondervinden.</p><p>U vindt meer informatie over sleutels op "
 "<a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-ondertekeningssleutel:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "OpenPGP-sleutel 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3027,12 +3031,12 @@ msgstr ""
 "hier geen hinder van ondervinden.</p><p>U vindt meer informatie over "
 "sleutels op <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-versleutelingssleutel:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3045,12 +3049,12 @@ msgstr ""
 "maar KMail zal dan niet uw berichten digitaal ondertekenen met S/MIME. "
 "Normale e-mailfuncties zullen hier geen hinder van ondervinden.</p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-ondertekeningscertificaat:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3066,39 +3070,82 @@ msgstr ""
 "berichten naar uzelf te versleutelen met S/MIME. Dit heeft geen invloed op "
 "de overige e-mailfuncties.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-versleutelingscertificaat:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Voorkeursformaat:"
 
-#: identity/identitydialog.cpp:443
-#, kde-format
-msgid "Automatically sign messages"
-msgstr "Berichten automatisch ondertekenen"
+#: identity/identitydialog.cpp:477
+#, fuzzy, kde-format
+#| msgid "Enable Subscriptions?"
+msgid "Enable Autocrypt"
+msgstr "Inschrijvingen inschakelen?"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
 #, kde-format
-msgid "Automatically encrypt messages when possible"
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+#| msgid "Overwrite &All"
+msgid "Overwrite defaults:"
+msgstr "&Alles overschrijven"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "Bericht onderte&kenen"
+
+#: identity/identitydialog.cpp:500
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "Berichten automatisch versleutelen, indien mogelijk"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "Waarsch&uwen bij het verzenden van niet-ondertekende berichten"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "&Waarschuwen bij het verzenden van niet-versleutelde berichten"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Geavanceerd"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Antwoo&rdadres:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3116,12 +3163,12 @@ msgstr ""
 "mailadres wordt gestuurd.</p><p>Als u twijfelt, laat dan dit veld leeg.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "&Cc-adressen:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3138,12 +3185,12 @@ msgstr ""
 "<p>Om meer dan één adres op te geven scheidt u de geadresseerden door een "
 "komma.</p><p>Als u twijfelt, laat dit veld dan leeg.</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&BCC-adres:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3162,72 +3209,72 @@ msgstr ""
 "geadresseerden gescheiden door een komma.</p><p>Als u twijfelt, laat dit "
 "veld dan leeg.</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "W&oordenboek:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Map Verzonden e-mail selecteren"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Map voor verzonden berich&ten:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Map voor concepten selecteren"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "&Map voor concepten:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Map voor sjablonen selecteren"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "Sja&bloonmap:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Uitgaand account:"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Mijn vCard in bericht bijvoegen"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "Aanmaken..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Autocorrectietaal:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Standaard domeinnaam herstellen"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "S&tandaarddomein:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3236,38 +3283,38 @@ msgstr ""
 "<qt> <p>Het standaard domein wordt gebruikt om e-mailadressen die alleen "
 "bestaan uit een gebruikersnaam aan te vullen.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Aangepaste berichtsjablonen gebr&uiken voor deze identiteit"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "Globale sjablonen &kopiëren"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "Handtekening"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "Afbeelding"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ongeldige e-mailalias \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Ongeldig e-mailadres"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3280,7 +3327,7 @@ msgstr ""
 "Dit kan leiden tot waarschuwingen aan de kant van de ontvanger wanneer u "
 "probeert om handtekeningen te verifiëren met deze instellingen."
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3289,7 +3336,7 @@ msgstr ""
 "Één van de ingestelde OpenPGP-sleutels voor versleuteling bevat geen "
 "gebruikers-id met een e-mailadres voor deze identiteit (%1)."
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3302,7 +3349,7 @@ msgstr ""
 "Dit kan leiden tot waarschuwingen aan de kant van de ontvanger wanneer u "
 "probeert om handtekeningen te verifiëren met deze instellingen."
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3311,23 +3358,23 @@ msgstr ""
 "Één van de ingestelde S/MIME-versleutelingscertificaten bevat geen ingesteld "
 "e-mailadres voor deze identiteit (%1)."
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mailadres werd niet gevonden in sleutels/certificaten"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Het handtekeningsbestand is ongeldig"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteit \"%1\" bewerken"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3336,7 +3383,7 @@ msgstr ""
 "Enige eigen mappen voor identiteit bestaan niet (meer); in plaats daarvan "
 "zullen de standaard mappen worden gebruikt."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "Bewerken..."
@@ -6244,122 +6291,129 @@ msgstr "Een lijst met alle recent gebruikte coderingen"
 msgid "Show crypto label indicator"
 msgstr "Indicator voor cryptolabel tonen"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Show crypto ownertrust icons"
+msgstr "Indicator voor cryptolabel tonen"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Valideer standaard sneltoets voor verzenden"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "De grootte van de identiteitsdialoog (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "De breedte van het zoekvenster (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "De hoogte van het zoekvenster (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "De breedte van de dialoog KMail instellen (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "De hoogte van de dialoog KMail instellen (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "Berichtvoorbeeldvak"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Geen berichtvoorbeeldvak tonen"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Berichtvoorbeeldvak tonen onder de berichtenlijst"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Berichtvoorbeeldvak naast de berichtenlijst tonen"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "Mappenlijst"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "Lange mappenlijst"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "Korte mappenlijst"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "Berichtsjabloon voor nieuw bericht"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "Berichtsjabloon voor antwoorden"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Berichtsjabloon voor allen beantwoorden"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "Berichtsjabloon voor doorsturen"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "Aanhaaltekens"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Specificeert het gebruikte beleid bij het weergeven van het beleid"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6369,7 +6423,7 @@ msgstr ""
 "(alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6379,7 +6433,7 @@ msgstr ""
 "(alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6389,7 +6443,7 @@ msgstr ""
 "(alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6399,7 +6453,7 @@ msgstr ""
 "(alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6409,7 +6463,7 @@ msgstr ""
 "voor intern gebruik)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6488,106 +6542,6 @@ msgstr "Gedeta&illeerde notificatie bij nieuwe e-mail"
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "Overi&ge acties..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "Versleuteling"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"Wanneer deze optie aan staat, zal het bericht/bestand niet alleen "
-"versleuteld worden met de publieke sleutel van de geadresseerde, maar ook "
-"met uw eigen sleutel. Dit maakt het u mogelijk om het bericht/bestand op een "
-"later tijdstip te ontcijferen. Gewoonlijk is dit een goed idee."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr ""
-"Bij het versleutelen van e-mailberichten, altijd ook versle&utelen naar het "
-"certificaat van mijn eigen identiteit"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "Selecteer dit om berichten versleuteld op te slaan"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Berichten versleuteld opslaan</h1>\n"
-"Als deze optie is geselecteerd, dan worden verzonden berichten met dezelfde "
-"versleuteling opgeslagen als waarmee ze zijn verzonden. Dit is niet aan te "
-"bevelen, omdat u de berichten niet meer kunt lezen als een benodigd "
-"certificaat verloopt.\n"
-"<p>\n"
-"Maar er kunnen lokale regels zijn die vereisen dat u deze optie inschakelt. "
-"Bij twijfel, neem contact op met uw lokale systeembeheerder.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "Verzonden berichten v&ersleuteld opslaan"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"Wanneer deze optie is geselecteerd, zal de toepassing altijd een lijst tonen "
-"van alle beschikbare publieke sleutels waarin u die sleutel kunt kiezen die "
-"u wilt gebruiken voor de versleuteling. Wanneer deze optie uit staat, zal de "
-"toepassing enkel een dialoogvenster tonen wanneer de juiste sleutel niet "
-"wordt gevonden of wanneer er meerdere sleutels zijn die kunnen worden "
-"gebruikt."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "Altijd de sleutels voor &goedkeuring tonen"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr "Bij op&slaan als concept, zoals aangegeven ondertekenen/versleutelen"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "Indicator voor ondertekening/versleuteling in bewerker tonen"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6914,6 +6868,249 @@ msgstr "&Zoekmap openen"
 #, kde-format
 msgid "Open &Message"
 msgstr "&Bericht openen"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "Als standaard instellen"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "Versleuteld bericht"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "Selecteer dit om berichten versleuteld op te slaan"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Berichten versleuteld opslaan</h1>\n"
+"Als deze optie is geselecteerd, dan worden verzonden berichten met dezelfde "
+"versleuteling opgeslagen als waarmee ze zijn verzonden. Dit is niet aan te "
+"bevelen, omdat u de berichten niet meer kunt lezen als een benodigd "
+"certificaat verloopt.\n"
+"<p>\n"
+"Maar er kunnen lokale regels zijn die vereisen dat u deze optie inschakelt. "
+"Bij twijfel, neem contact op met uw lokale systeembeheerder.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "Versleuteld bericht"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "Bericht onderte&kenen"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt all messages when possible"
+msgstr "Berichten automatisch versleutelen, indien mogelijk"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Encryption indicators"
+msgstr "Indicator voor cryptolabel tonen"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show sign/encrypt indicator in editor"
+msgid "Show sign/encrypt indicator"
+msgstr "Indicator voor ondertekening/versleuteling in bewerker tonen"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "Altijd de sleutels voor &goedkeuring tonen"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr ""
+"Waarschuwen wanneer een certificaat/sle&utel binnenkort zal verlopen "
+"(drempelwaarden hieronder instellen)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "Voor certificaten/&sleutels voor eindgebruikers:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "Selecteer hier het aantal dagen"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Waarschuwen als een certificaat in de keten verloopt</h1>\n"
+"Selecteer het minimum aantal dagen dat alle certificaten in de keten nog "
+"geldig moeten zijn voordat er wordt gewaarschuwd.\n"
+"<p>\n"
+"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Waarschuwen als het versleutelingscertificaat verloopt</h1>\n"
+"Selecteer het minimum aantal dagen dat het versleutelingscertificaat nog "
+"geldig moet zijn voordat u wordt gewaarschuwd.\n"
+"<p>\n"
+"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For &root certificates:"
+msgid "For own certificates:"
+msgstr "Voor &rootcertificaten:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</p></qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Waarschuwen als het hoofdcertificaat verloopt</h1>\n"
+"Selecteer het minimum aantal dagen dat een broncertificaat geldig moet zijn "
+"voordat er wordt gewaarschuwd.\n"
+"<p>\n"
+"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, kde-format
+msgid "For &root certificates:"
+msgstr "Voor &rootcertificaten:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Waarschuwen als het hoofdcertificaat verloopt</h1>\n"
+"Selecteer het minimum aantal dagen dat een broncertificaat geldig moet zijn "
+"voordat er wordt gewaarschuwd.\n"
+"<p>\n"
+"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "Voor CA-tussencertificaten:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "GnuPG-instellingen..."
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr ""
+"Alle \"Deze vraag niet meer stellen\"-waarschuwingen opnieuw inschakelen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7475,239 +7672,6 @@ msgstr ""
 "De syntaxis is \"HOST\" of \"HOST:POORT\". Wanneer POORT wordt weggelaten "
 "zal poort 389 (de standaard LDAP-poort) worden gebruikt."
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr ""
-"Selecteer dit als u wilt worden gewaarschuwd als ongetekende berichten "
-"worden verstuurd."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen bij het versturen van niet-ondertekende berichten</h1>\n"
-"Als deze optie is geselecteerd wordt u gewaarschuwd wanneer u een bericht of "
-"een deel ervan wilt versturen dat niet is ondertekend.\n"
-"<p>\n"
-"Voor maximale veiligheid wordt aanbevolen om deze optie aan te laten.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "Waarsch&uwen bij het verzenden van niet-ondertekende berichten"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr ""
-"Selecteer dit als u gewaarschuwd wilt worden voor het verzenden van niet "
-"versleutelde berichten."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen bij het versturen van niet-versleutelde berichten</h1>\n"
-"Als deze optie is geselecteerd wordt u gewaarschuwd wanneer u een bericht of "
-"een deel ervan wilt versturen dat niet is versleuteld.\n"
-"<p>\n"
-"Voor maximale veiligheid wordt aanbevolen om deze optie aan te laten.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "&Waarschuwen bij het verzenden van niet-versleutelde berichten"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr ""
-"Waarschuwen wanneer een certificaat/sle&utel binnenkort zal verlopen "
-"(drempelwaarden hieronder instellen)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "Voor ondertekening"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "Voor versleuteling"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "Selecteer hier het aantal dagen"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen als ondertekeningscertificaat verloopt</h1>\n"
-"Selecteer het minimum aantal dagen dat het ondertekeningscertificaat nog "
-"geldig moet zijn voordat er wordt gewaarschuwd.\n"
-"<p>\n"
-"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen als het versleutelingscertificaat verloopt</h1>\n"
-"Selecteer het minimum aantal dagen dat het versleutelingscertificaat nog "
-"geldig moet zijn voordat u wordt gewaarschuwd.\n"
-"<p>\n"
-"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen als een certificaat in de keten verloopt</h1>\n"
-"Selecteer het minimum aantal dagen dat alle certificaten in de keten nog "
-"geldig moeten zijn voordat er wordt gewaarschuwd.\n"
-"<p>\n"
-"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen als een CA-certificaat verloopt</h1>\n"
-"Selecteer het minimum aantal dagen dat een CA-certificaat geldig moet zijn "
-"voordat er wordt gewaarschuwd.\n"
-"<p>\n"
-"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Waarschuwen als het hoofdcertificaat verloopt</h1>\n"
-"Selecteer het minimum aantal dagen dat een broncertificaat geldig moet zijn "
-"voordat er wordt gewaarschuwd.\n"
-"<p>\n"
-"De aanbevolen instelling voor SPHINX is 14 dagen.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, kde-format
-msgid "For &root certificates:"
-msgstr "Voor &rootcertificaten:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "Voor CA-tussencertificaten:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "Voor certificaten/&sleutels voor eindgebruikers:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "GnuPG-instellingen..."
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr ""
-"Alle \"Deze vraag niet meer stellen\"-waarschuwingen opnieuw inschakelen"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, kde-format
@@ -7858,6 +7822,140 @@ msgstr[1] "Afwezigheidsantwoord actief op servers"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoomen: %1%"
+
+#~ msgid "Composing"
+#~ msgstr "Opstellen"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Diversen"
+
+#~ msgid "Automatically sign messages"
+#~ msgstr "Berichten automatisch ondertekenen"
+
+#~ msgid "Encrypting"
+#~ msgstr "Versleuteling"
+
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "Wanneer deze optie aan staat, zal het bericht/bestand niet alleen "
+#~ "versleuteld worden met de publieke sleutel van de geadresseerde, maar ook "
+#~ "met uw eigen sleutel. Dit maakt het u mogelijk om het bericht/bestand op "
+#~ "een later tijdstip te ontcijferen. Gewoonlijk is dit een goed idee."
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr ""
+#~ "Bij het versleutelen van e-mailberichten, altijd ook versle&utelen naar "
+#~ "het certificaat van mijn eigen identiteit"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "Verzonden berichten v&ersleuteld opslaan"
+
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "Wanneer deze optie is geselecteerd, zal de toepassing altijd een lijst "
+#~ "tonen van alle beschikbare publieke sleutels waarin u die sleutel kunt "
+#~ "kiezen die u wilt gebruiken voor de versleuteling. Wanneer deze optie uit "
+#~ "staat, zal de toepassing enkel een dialoogvenster tonen wanneer de juiste "
+#~ "sleutel niet wordt gevonden of wanneer er meerdere sleutels zijn die "
+#~ "kunnen worden gebruikt."
+
+#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
+#~ msgstr ""
+#~ "Bij op&slaan als concept, zoals aangegeven ondertekenen/versleutelen"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr ""
+#~ "Selecteer dit als u wilt worden gewaarschuwd als ongetekende berichten "
+#~ "worden verstuurd."
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Waarschuwen bij het versturen van niet-ondertekende berichten</h1>\n"
+#~ "Als deze optie is geselecteerd wordt u gewaarschuwd wanneer u een bericht "
+#~ "of een deel ervan wilt versturen dat niet is ondertekend.\n"
+#~ "<p>\n"
+#~ "Voor maximale veiligheid wordt aanbevolen om deze optie aan te laten.\n"
+#~ "</p></qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr ""
+#~ "Selecteer dit als u gewaarschuwd wilt worden voor het verzenden van niet "
+#~ "versleutelde berichten."
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Waarschuwen bij het versturen van niet-versleutelde berichten</h1>\n"
+#~ "Als deze optie is geselecteerd wordt u gewaarschuwd wanneer u een bericht "
+#~ "of een deel ervan wilt versturen dat niet is versleuteld.\n"
+#~ "<p>\n"
+#~ "Voor maximale veiligheid wordt aanbevolen om deze optie aan te laten.\n"
+#~ "</p></qt>"
+
+#~ msgid "For Signing"
+#~ msgstr "Voor ondertekening"
+
+#~ msgid "For Encryption"
+#~ msgstr "Voor versleuteling"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Waarschuwen als ondertekeningscertificaat verloopt</h1>\n"
+#~ "Selecteer het minimum aantal dagen dat het ondertekeningscertificaat nog "
+#~ "geldig moet zijn voordat er wordt gewaarschuwd.\n"
+#~ "<p>\n"
+#~ "De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+#~ "</p></qt>"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Waarschuwen als een CA-certificaat verloopt</h1>\n"
+#~ "Selecteer het minimum aantal dagen dat een CA-certificaat geldig moet "
+#~ "zijn voordat er wordt gewaarschuwd.\n"
+#~ "<p>\n"
+#~ "De aanbevolen instelling voor SPHINX is 14 dagen.\n"
+#~ "</p></qt>"
 
 #~| msgctxt "@title:window"
 #~| msgid "Select Contact"
@@ -12674,9 +12772,6 @@ msgstr "Zoomen: %1%"
 #~ msgid "&Overwrite"
 #~ msgstr "&Overschrijven"
 
-#~ msgid "Overwrite &All"
-#~ msgstr "&Alles overschrijven"
-
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -12854,9 +12949,6 @@ msgstr "Zoomen: %1%"
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "Selecteer de publieke sleutel die moet worden bijgesloten."
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "OpenPGP-sleutel 0x%1"
 
 #, fuzzy
 #~| msgid ""
@@ -14142,9 +14234,6 @@ msgstr "Zoomen: %1%"
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "Wacht even terwijl het bericht wordt ontcijfert..."
 
-#~ msgid "Encrypted message"
-#~ msgstr "Versleuteld bericht"
-
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "Versleuteld bericht (ontcijferen onmogelijk)"
 
@@ -15407,9 +15496,6 @@ msgstr "Zoomen: %1%"
 #~ msgid "inbox"
 #~ msgstr "postvak-in"
 
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "Inschrijvingen inschakelen?"
-
 #~ msgctxt "@info"
 #~ msgid ""
 #~ "Currently subscriptions are not used for server <resource>%1</resource>."
@@ -16206,9 +16292,6 @@ msgstr "Zoomen: %1%"
 
 #~ msgid "Security"
 #~ msgstr "Beveiliging"
-
-#~ msgid "Encryption"
-#~ msgstr "Versleuteling"
 
 #~ msgid "&None"
 #~ msgstr "G&een"

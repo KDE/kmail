@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -400,7 +400,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -555,7 +555,7 @@ msgstr ""
 "បន្ទាប់មក​សង្កត់​គ្រាប់ចុច​ដែលអ្នកចង់​ឲ្យ​ភ្ជាប់​ជាមួយ​ថតនេះ ។</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "ពុម្ព"
@@ -1714,33 +1714,29 @@ msgid "Message Disposition Notifications"
 msgstr "ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, kde-format
-msgid "Composing"
-msgstr "ការ​តែង"
+#, fuzzy, kde-format
+#| msgid "Encrypting"
+msgid "Encryption"
+msgstr "កំពុង​អ៊ិនគ្រីប"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "ផ្សេងៗ"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "ការធ្វើ​សុពល​កម្ម S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global HTML setting will override all folder specific values."
@@ -1748,48 +1744,46 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "ការ​ផ្លាស់ប្ដូរ​​ការកំណត់​ HTML សកល នឹង​បដិសេធ​រាល់​តម្លៃ​ជាក់លាក់​របស់​ថត​ទាំងអស់ ។"
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ថ្ងៃ"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ការ​កំណត់ GnuPG​..."
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ជម្រើស​នេះ​ទាមទារ dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "គ្មាន​ប្រូកស៊ី"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(ការ​កំណត់​ប្រព័ន្ធ​បច្ចុប្បន្ន ៖ %1)"
@@ -1999,7 +1993,7 @@ msgid "Send"
 msgstr "ផ្ញើ"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "ផ្ញើពេលក្រោយ"
@@ -2257,13 +2251,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " បន្ទាត់ ៖ %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " ជួរឈរ ៖ %1 "
@@ -2323,50 +2317,50 @@ msgstr "តើអ្នកចង់​រក្សាទុក​សារ​ស
 msgid "Close Composer"
 msgstr "បិទ​កម្មវិធី​តែង"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "បាន​បរាជ័យ​ក្នុង​​ការ​រក្សាទុក​សារ​​ស្វ័យប្រវត្តិ"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "បាន​បរាជ័យ​ក្នុងការ​ផ្ញើសារ"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, fuzzy, kde-format
 #| msgid "&Insert Text File..."
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "បញ្ចូល​ឯកសារ​អត្ថបទ..."
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "បន្ថែម​ជា​រូបភាព​ក្នុង​តួ"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "បន្ថែម​ជា​ឯកសារ​ភ្ជាប់"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "ឈ្មោះ​ឯកសារ​ភ្ជាប់ ៖"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Attachment Name"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, fuzzy, kde-format
 #| msgid "Add URL into Message &Text"
 #| msgid_plural "Add URLs into Message &Text"
@@ -2374,23 +2368,23 @@ msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "បន្ថែម URLs ទៅ​ក្នុង​អត្ថបទ​សារ"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "បន្ថែម​ឯកសារ​ជា​ឯកសារ​ភ្ជាប់"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "បញ្ចូល​អត្ថបទ​ក្ដារ​តម្បៀត​ខ្ទាស់​ជា​ឯកសារ​ភ្ជាប់"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "​គ្មាន​ឈ្មោះ"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2402,12 +2396,12 @@ msgstr ""
 "បច្ចុប្បន្ន​ មិនកំណត់​សោការអ៊ិនគ្រីប (OpenPGP or S/MIME) ដែលត្រូវប្រើ​សម្រាប់​វាឡើយ ។</"
 "p><p>សូមជ្រើស​សោ​ដើម្បី​ប្រើ​នៅក្នុង​ការកំណត់រចនាសម្ព័ន្ធ​អត្តសញ្ញាណ​ ។</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "កូនសោ​អ៊ិនគ្រីប​មិន​បាន​កំណត់"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2418,12 +2412,12 @@ msgstr ""
 "MIME) ដែលត្រូវប្រើសិន ។</p><p>សូមជ្រើស​សោ​ដើម្បី​ប្រើ​នៅក្នុង​ការកំណត់​រចនា​សម្ព័ន្ធ​អត្តសញ្ញាណ ។</p></"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "កូនសោ​ចុះហត្ថលេខា​មិន​បាន​កំណត់"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2433,7 +2427,7 @@ msgstr ""
 "អ្នកត្រូវតែ​បញ្ចូល​​​អាសយដ្ឋាន​អ៊ីមែល​របស់អ្នក​នៅក្នុងវាល មក​ពី ៖ ។ អ្នក​ក៏គួរតែកំណត់​អាសយដ្ឋាន​អ៊ីមែល​​របស់អ្នក​"
 "សម្រាប់​អត្តសញ្ញាណ​ទាំងអស់ ដូចច្នេះ​អ្នក​​មិនត្រូវ​បញ្ចូល​វា​នៅគ្រប់​សារទាំងអស់​នោះទេ ។"
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2442,150 +2436,150 @@ msgstr ""
 "អ្នក​ត្រូវ​តែ​បញ្ជាក់​យ៉ាង​ហោចណាស់​អ្នក​ទទួល​ម្នាក់ ​​នៅ​ក្នុង​វាល​ ជូន​ចំពោះ ៖ ឬ​វាល ចម្លង​ជូន ឬ​ចម្លង​ជា​សម្ងាត់​"
 "ជូន ។"
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "ជូន​ចំពោះ ៖ វាល​គឺ​ទទេ ។ អញ្ចឹង​ផ្ញើសារដែរ​​ឬទេ ?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "គ្មាន​ ជូន​ចំពោះ ៖ បាន​បញ្ជាក់"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "ផ្ញើអញ្ចឹង"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "បញ្ជាក់​ប្រធានបទ"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "អ្នក​មិនបាន​បញ្ជាក់ប្រធានបទ​ឡើយ ។ អញ្ចឹង​ផ្ញើសារ​ឬ ?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "មិន​បាន​បញ្ជាក់​ប្រធានបទ​ឡើយ"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "បញ្ជាក់​ប្រធានបទ"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "អ្នក​ត្រូវ​តែ​បញ្ជាក់​យ៉ាង​ហោចណាស់​អ្នក​ទទួល​ម្នាក់ ដើម្បី​អាច​អ៊ីនគ្រិប​សេចក្ដី​ព្រាង​បាន ។"
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "ប្រុង​នឹង​ផ្ញើ​សំបុត្រ​ហើយ..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "ផ្ញើ​ឥឡូវ"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "អ្នក​កំពុង​ព្យាយាម​ផ្ញើ​សំបុត្រ​ទៅ​អ្នក​ទទួល​ច្រើនជាង %1 ។ អញ្ចឹង​ផ្ញើសារ​ទេ ?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "មាន​អ្នក​ទទួលច្រើន​ពេក"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "ផ្ញើអញ្ចឹង"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "កែសម្រួល​អ្នក​ទទួល"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "បិទ​របៀប HTML នឹង​ធ្វើ​ឲ្យ​​អត្ថបទ​បាត់​ការ​ធ្វើទ្រង់ទ្រាយ ។ តើ​អ្នក​ប្រាកដ​ដែរឬទេ ?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "បាត់បង់កា​រធ្វើទ្រង់ទ្រាយ ?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "បាត់បង់​ការ​ធ្វើ​ទ្រង់ទ្រាយ"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "បន្ថែម​អត្ថបទ​ធម្មតា​របស់ Markup"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2593,7 +2587,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Plugin Editor Information"
@@ -2881,51 +2875,51 @@ msgstr "ស្ទួន vcard ដែល​មាន​ស្រាប់"
 msgid "&Existing identities:"
 msgstr "អត្ត​សញ្ញាណ​ដែល​មាន​ស្រាប់ ៖"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr ""
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "កែសម្រួល​អត្តសញ្ញាណ"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "ទូទៅ"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "ឈ្មោះ​របស់​អ្នក ៖"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2936,12 +2930,12 @@ msgstr ""
 "នៅក្នុង​​ក្បាល​អ៊ីមែល​ដែល​ត្រូវផ្ញើចេញ ។</p><p>ប្រសិនបើ​អ្នក​ទុក​វា​ឲ្យ​ទទេ​ឈ្មោះ​ពិត​របស់​អ្នក​នឹង​មិន​បង្ហាញ​ទេ "
 "បង្ហាញ​តែ​អាសយដ្ឋាន​អ៊ីមែល​ប៉ុណ្ណោះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "ស្ថាប័ន ៖"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2952,12 +2946,12 @@ msgstr ""
 "ក្នុង​បឋមកថា​អ៊ីមែល​ដែល​ត្រូវ​បាន​ផ្ញើ​ចេញ ។</p><p>វា​មាន​សុវត្ថិភាព (និង​ធម្មតា) ដើម្បីទុក​ឲ្យ​ទំនេរ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "​អាសយដ្ឋាន​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2971,12 +2965,12 @@ msgstr ""
 "មួយ បង្កើត​អត្តសញ្ញា​ថ្មី ឬ​បន្ថែម​អាសយដ្ឋាន​ក្លែងក្លាយ​ថ្មី​នៅ​ក្នុង​វាល​ខាង​ក្រោម ។</p><p>ប្រសិនបើ​អ្នក​ទុក​"
 "ឲ្យ​វា​ទំនេរ ឬ​ដាក់​វា​ខុស នោះ​អ្នក​ទទួល​​នឹង​មាន​បញ្ហា​ក្នុង​ការ​ឆ្លើយតប​មក​អ្នក​វិញ ។</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2992,12 +2986,12 @@ msgstr ""
 "tr><tr><th>ឈ្មោះ​ក្លែងក្លាយ ៖</th><td>first@example.org<br>last@example.org</"
 "td></tr></table><p>វាយ​អាសយដ្ឋាន​ក្លែងក្លាយ​មួយ​ក្នុង​មួយ​បន្ទាត់ ។</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "កូដសាស្ត្រ"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3017,12 +3011,23 @@ msgstr ""
 "ចុះហត្ថលេខា​អ៊ីមែល​តាមលក្ខណៈ​ឌីជីថល​ដោយប្រើ​ OpenPGP បានឡើយ ។ មុខងារ​សំបុត្រ​ធម្មតា នឹង​មិនត្រូវបាន​"
 "ប៉ះពាល់ឡើយ ។</p><p>អ្នកអាច​ស្វែងយល់​បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgid "OpenPGP key:"
+msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
+
+#: identity/identitydialog.cpp:413
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3045,12 +3050,12 @@ msgstr ""
 "អ្នក ដោយ OpenPGP បានទេ មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពានល់ ។</p><p>អ្នក​អាច​ស្វែងយល់​"
 "បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "កូនសោ​អ៊ិនគ្រីប OpenPGP ៖"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3063,12 +3068,12 @@ msgstr ""
 "អ៊ីមែលដោយប្រើ S/MIME តាមលក្ខណៈ​ឌីជីថល​បាន​ឡើយ ។ មុខងារ​សំបុត្រ​​ធម្មតា​នឹងមិនត្រូវបាន​ប៉ះពាល់ឡើយ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការចុះហត្ថលេខា S/MIME ៖"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3082,41 +3087,81 @@ msgstr ""
 "វា​ឲ្យ​នៅ​ទទេ ប៉ុន្តែ​ KMail នឹង​មិន​អាច​អ៊ិនគ្រីប​ច្បាប់​ចម្លង​នៃ​សារ​ផ្ញើ​ចេញ​ទៅ​ឲ្យអ្នក​ដោយ​ប្រើ S/MIME ។ "
 "មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពាល់ឡើយ ។</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការអ៊ិនគ្រីប S/MIME ៖"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "ទ្រង់ទ្រាយ​ដែល​ពេញចិត្ត ៖"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:477
 #, fuzzy, kde-format
-#| msgid "&Automatically sign messages"
-msgid "Automatically sign messages"
-msgstr "ចុះហត្ថលេខា​លើសារ​ដោយស្វ័យប្រវត្តិ"
+#| msgid "Encrypt"
+msgid "Enable Autocrypt"
+msgstr "​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
+#, kde-format
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, kde-format
+msgid "Overwrite defaults:"
+msgstr ""
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "ចុះហត្ថលេខា​លើសារ"
+
+#: identity/identitydialog.cpp:500
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
-msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "អ៊ិនគ្រីប​សារ​ដោយស្វ័យប្រវត្តិ​នៅពេល​ណា​ក៏ដោយ​ឲ្យ​តែ​អាច​ធ្វើ​ទៅ​បាន"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "ព្រមាន​ នៅ​ពេល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "​កម្រិត​ខ្ពស់"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "ឆ្លើយតប​ទៅកាន់​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3132,12 +3177,12 @@ msgstr ""
 "ទៅ មាន​អ៊ីមែល​របស់​អ្នក​នៅ​ក្នុង​វាល <tt>មក​ពី ៖</tt> ប៉ុន្តែ​ចង់​ឲ្យ​ការ​ឆ្លើយតប​នានា​ចូល​ទៅ​អាសយដ្ឋាន​"
 "ក្រុម ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វា​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "អាសយដ្ឋាន​ចម្លង​ជូន ៖"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3153,12 +3198,12 @@ msgstr ""
 "សូម​ប្រើ​សញ្ញា​ក្បៀស (,) ដើម្បី​បំបែក​បញ្ជី​អ្នក​ទទួល​ច្បាប់​ចម្លង​ជូន ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វាល​នេះ​នៅ​"
 "ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "ចម្លងជា​សម្ងាត់​ជូន​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3175,78 +3220,78 @@ msgstr ""
 "ជាងមួយ សូម​ប្រើ​សញ្ញាក្បៀស ដើម្បី​បំបែក​អ្នក​ទទួល​ច្បាប់ចម្លង​សម្ងាត់​របស់​អ្នក ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​"
 "វាល​នេះ​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "វចនានុក្រម ៖"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "ថត សំបុត្រផ្ញើចេញ"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "ថត សំបុត្រ​ផ្ញើចេញ ៖"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgid "Select Draft Folder"
 msgstr "ជ្រើស​ពុម្ពអក្សរ"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "ថត សេចក្ដី​ព្រាង ៖"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Select Templates Folder"
 msgstr "លុប​ថត"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "ថត​ពុម្ព ៖"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "គណនី​ចេញ ៖"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, fuzzy, kde-format
 #| msgid "Attach my vcard to message"
 msgid "Attach my vCard to message"
 msgstr "ភ្ជាប់​ជាមួយ​ vcard ទៅ​កាន់​សារ"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "បាន​បង្កើត..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, fuzzy, kde-format
 #| msgid "Autocorrection Language:"
 msgid "Autocorrection language:"
 msgstr "ភាសា​​ការ​កែ​ស្វ័យប្រវត្តិ ៖"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3255,38 +3300,38 @@ msgstr ""
 "<qt><p>ដែន​លំនាំដើម​គឺត្រូវបាន​ប្រើ​ដើម្បី​បំពេញ​អាសយដ្ឋាន​អ៊ីមែល​​ដែលមាន​តែ​ឈ្មោះរបស់អ្នកប្រើ​ប៉ុណ្ណោះ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ប្រើ​ពុម្ព​សារ​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ​នេះ"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "ចម្លង​ពុម្ព​សកល"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "​ហត្ថលេខា"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "រូបភាព"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល​មិន​ត្រឹមត្រូវ \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3299,7 +3344,7 @@ msgstr ""
 "ការនេះ​អាច​មានលទ្ធផល​នៅក្នុង​សារព្រមាន​នៅលើ​ផ្នែក​ការទទួល​នៅពេល​ដែលកំពុង​ព្យាយាមផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការកំណត់​រចនាសម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3308,7 +3353,7 @@ msgstr ""
 "កូនសោ​អ៊ិនគ្រីប​ OpenPGP ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​មិន​មាន​លេខ​សម្គាល់​របស់​អ្នក​ប្រើ​ណាមួយ​ដែល​បាន​ភ្ជាប់​ជា​មួយ​​"
 "អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​រចនា​សម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ​ឡើយ ។"
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3321,7 +3366,7 @@ msgstr ""
 "ការ​នេះ​​អាច​មាន​លទ្ធផល​នៅ​ក្នុង​សារ​ព្រមាន​នៅ​លើ​ផ្នែក​ទទួល​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការ​កំណត់​រចនា​សម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3330,24 +3375,24 @@ msgstr ""
 "វិញ្ញាបនបត្រ​អ៊ិនគ្រីប​ S/MIME ដែលបានកំណត់​រចនាសម្ព័ន្ធ​មួយ មិន​មាន​អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​​"
 "រចនាសម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ ។"
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "រក​អាសយដ្ឋាន​អ៊ីមែល​នៅក្នុង សោ/វិញ្ញាបនបត្រ​មិឃើញឡើយ"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ឯកសារ​ហត្ថលេខា​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "កែសម្រួល​អត្តសញ្ញាណ \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3359,7 +3404,7 @@ msgstr ""
 "មិនមាន​ថត​សេចក្ដីព្រាង​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ \"%1\" (តទៅទៀត​ឡើយ) ។ ដូច្នេះ ថត​សេចក្ដីព្រាង​"
 "លំនាំដើម​នឹងត្រូវបានប្រើ ។"
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "កែសម្រួល..."
@@ -6307,122 +6352,128 @@ msgstr "បញ្ជី​របស់​ការ​អ៊ីនកូ​ដដ
 msgid "Show crypto label indicator"
 msgstr ""
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr ""
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "កុំ​បង្ហាញ​ស្លាបព្រិល​សារ​មើលជា​មុន"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​​មើល​សារ​ជា​មុន​ខាង​ក្រោម​បញ្ជី​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ​ជាមុន​នៅ​ជាប់នឹង​បញ្ជីសារ"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "បញ្ជី​ថត"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "បញ្ជី​ថត​សារ​វែង"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "បញ្ជី​ថត​ខ្លី"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "ពុម្ពសារ​​សម្រាប់​សារ​ថ្មី"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប​ទៅ​អ្នក​ទាំងអស់"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "ពុម្ព​សារ​សម្រាប់​បញ្ជូន​បន្ត"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "តួអក្សរ​សម្រង់"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "បញ្ជាក់​ថាតើ​ គោលនយោបាយ​ត្រូវ​បាន​ប្រើ​នៅពេល​បង្ហាញ​គោលនយោបាយ​ដែរឬទេ"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6430,7 +6481,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6439,7 +6490,7 @@ msgstr ""
 "បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6447,7 +6498,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6455,7 +6506,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6464,7 +6515,7 @@ msgstr ""
 "បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6547,100 +6598,6 @@ msgstr "ជូនដំណឹងលម្អិត"
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "សកម្មភាព​ផ្សេងទៀត..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "កំពុង​អ៊ិនគ្រីប"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"នៅពេល​ដែល​បានបើក​ជម្រើស​នេះ សារ​/ឯកសារ នឹងមិនត្រឹមតែ​ត្រូវបាន​អ៊ិនគ្រីប​ដោយប្រើ​សោ​សាធារណៈ​របស់​អ្នក​ទទួល​"
-"ប៉ុណ្ណោះទេ ប៉ុន្តែ​វាក៏ត្រូវបាន​ប្រើ​ជាមួយ​សោ​របស់អ្នក​ផងដែរ ។ វា​នឹងអនុញ្ញាត​ឲ្យអ្នក​ឌិគ្រីប​សារ​/ឯកសារ​"
-"នៅពេលក្រោយ ។ ជាទូទៅ​នេះ​ជា​គំនិត​ដ៏ល្អ ។"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr "នៅ​ពេល​អ៊ីនគ្រិប​អ៊ីមែល តែងតែ​អ៊ីនគ្រិប​វិញ្ញាបនបត្រ​នៃ​អត្តសញ្ញាណ​ផ្ទាល់​របស់​ខ្ញុំ"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "ធីក​ដើម្បី​ទុក​សារ​ បានអ៊ិនគ្រីប"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ទុក​សារ​​បាន​អ៊ិនគ្រីប</h1>\n"
-"នៅ​ពេល​ដែល​បាន​ធីក​ប្រអប់​នេះ សារដែលបានផ្ញើគឺត្រូវបាន​ទុក​ សារ​ដែល​បាន​អ៊ិនគ្រីប ដូចដែល​ពួកវា​ត្រូវ​បាន​ផ្ញើ "
-"។ វា​មិន​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឡើយ ដែល​អ្នក​នឹង​មិន​អាច​អាន​សារ​បាន​ទៅ​មុខ​ទៀត​ទេ ប្រសិនបើ​វិញ្ញាបនបត្រ​ដែល​"
-"ចាំបាច់​ផុត​កំណត់ ។\n"
-"<p>\n"
-"ទោះជា​យ៉ាងណា​ក៏ដោយ ប្រហែល​ជា​មាន​​ច្បាប់​មូលដ្ឋាន​ដែល​តម្រូវ​ឲ្យ​អ្នក​បើក​ជម្រើស​នេះ ។ នៅ​ពេល​​ដែល​ឋិត​ក្នុង​"
-"មន្ទិលសង្ស័យ សូម​ពិនិត្យ​ជាមួយ​អ្នកគ្រប់គ្រង​មូលដ្ឋាន​របស់​អ្នក ។\n"
-"</p></qt>​"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "ទុក​សារ​ដែលបាន​ផ្ញើ​ បាន​អ៊ិនគ្រីប"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"នៅពេល​ដែល​បាន​បើក​ជម្រើស​នេះ កម្មវិធី​នឹង​បង្ហាញបញ្ជី​នៃ​សោសាធារណៈ​ដល់អ្នកជានិច្ច​ពី​សោ​មួយណាដែលបាន​"
-"ជ្រើសមួយ​ដែល​វា​នឹង​ប្រើ​ដើម្បី​ធ្វើការអ៊ិនគ្រីប ។ ប្រសិនបើ​វា​បិទ នោះកម្មវិធី​នឹង​បានតែ​បង្ហាញ​ប្រអប់ប៉ុណ្ណោះ "
-"ប្រសិនបើវា​មិនអាច​រក​សោ​ដែល​ត្រឹមត្រូវបានទេ ឬ ប្រសិនបើមាន​​សោ​មួយចំនួន​ដែលអាចប្រើ​បាន ។"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "បង្ហាញ​សោ​អ៊ិនគ្រីប​ដើម្បី​អនុម័ត​ជានិច្ច"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, fuzzy, kde-format
-#| msgid "Show signed/encrypted text after composing"
-msgid "Show sign/encrypt indicator in editor"
-msgstr "បង្ហាញ​អត្ថបទ​ដែលបាន​​ចុះហត្ថលេខា/បាន​អ៊ិនគ្រីប​បន្ទាប់ពីការតែង"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -7007,6 +6964,244 @@ msgstr "បើក​ថត​ស្វែងរក"
 #, kde-format
 msgid "Open &Message"
 msgstr "បើក​សារ"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "​កំណត់​ជា​លំនាំដើម"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted Messages"
+msgid "Encrypt draft messages"
+msgstr "សារ​ដែល​បាន​អ៊ិនគ្រីប"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "ធីក​ដើម្បី​ទុក​សារ​ បានអ៊ិនគ្រីប"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>ទុក​សារ​​បាន​អ៊ិនគ្រីប</h1>\n"
+"នៅ​ពេល​ដែល​បាន​ធីក​ប្រអប់​នេះ សារដែលបានផ្ញើគឺត្រូវបាន​ទុក​ សារ​ដែល​បាន​អ៊ិនគ្រីប ដូចដែល​ពួកវា​ត្រូវ​បាន​ផ្ញើ "
+"។ វា​មិន​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឡើយ ដែល​អ្នក​នឹង​មិន​អាច​អាន​សារ​បាន​ទៅ​មុខ​ទៀត​ទេ ប្រសិនបើ​វិញ្ញាបនបត្រ​ដែល​"
+"ចាំបាច់​ផុត​កំណត់ ។\n"
+"<p>\n"
+"ទោះជា​យ៉ាងណា​ក៏ដោយ ប្រហែល​ជា​មាន​​ច្បាប់​មូលដ្ឋាន​ដែល​តម្រូវ​ឲ្យ​អ្នក​បើក​ជម្រើស​នេះ ។ នៅ​ពេល​​ដែល​ឋិត​ក្នុង​"
+"មន្ទិលសង្ស័យ សូម​ពិនិត្យ​ជាមួយ​អ្នកគ្រប់គ្រង​មូលដ្ឋាន​របស់​អ្នក ។\n"
+"</p></qt>​"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted Messages"
+msgid "Encry&pt sent messages"
+msgstr "សារ​ដែល​បាន​អ៊ិនគ្រីប"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "ចុះហត្ថលេខា​លើសារ"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt &messages whenever possible"
+msgid "Encrypt all messages when possible"
+msgstr "អ៊ិនគ្រីប​សារ​ដោយស្វ័យប្រវត្តិ​នៅពេល​ណា​ក៏ដោយ​ឲ្យ​តែ​អាច​ធ្វើ​ទៅ​បាន"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgid "Encryption indicators"
+msgstr "វិញ្ញាបនបត្រ​ការអ៊ិនគ្រីប S/MIME ៖"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show signed/encrypted text after composing"
+msgid "Show sign/encrypt indicator"
+msgstr "បង្ហាញ​អត្ថបទ​ដែលបាន​​ចុះហត្ថលេខា/បាន​អ៊ិនគ្រីប​បន្ទាប់ពីការតែង"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "បង្ហាញ​សោ​អ៊ិនគ្រីប​ដើម្បី​អនុម័ត​ជានិច្ច"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, fuzzy, kde-format
+#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "ព្រមាន ប្រសិនបើ​វញ្ញាបនបត្រ/សោ ជិតផុតកំណត់ (កំណត់​រចនាសម្ព័ន្ធ​កម្រិតពន្លឺ​ខាងក្រោម)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, fuzzy, kde-format
+#| msgid "For end-user certificates/keys:"
+msgid "For end-user certificates/&keys:"
+msgstr "សម្រាប់​សោ/​វិញ្ញាបនបត្រ​អ្នកប្រើ ៖"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "ជ្រើស​ចំនួន​ថ្ងៃ​នៅទីនេះ"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>ព្រមាន​ ប្រសិនបើ​វិញ្ញាបនបត្រ​នៅក្នុង​លំដាប់​ផុតកំណត់</h1>\n"
+"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បរមា​ ដែល​វិញ្ញាបនបត្រ​នៅក្នុង​លំដាប់​គួរតែត្រឹមត្រូវ​ដោយគ្មាន​ការប្រកាស់​ការព្រមាន ។\n"
+"<p>\n"
+"ការកំណត់​ SPHINX ដែលបាន​ផ្ដល់អនុសាសន៍គឺ 14 ថ្ងៃ ។\n"
+"</p></qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>ព្រមាន ប្រសិន​បើ​ការ​អ៊ិនគ្រីប​វិញ្ញាបនបត្រ​ផុត​កំណត់</h1>\n"
+"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បបរមា​ការ​អ៊ិនគ្រីប​វិញ្ញាបនបត្រ​គួរ​តែ​ត្រឹមត្រូវ ដោយ​គ្មាន​ចេញ​សេចក្ដី​ព្រមាន ។\n"
+"<p>\n"
+"មាន​កា​រកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ ១៤ ថ្ងៃ ។\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For own certificates:"
+msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</p></qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>ព្រមាន​ប្រសិន​បើ​វិញ្ញាបនបត្រ​ដើម​ផុត​កំណត់</h1>\n"
+"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បបរមា ដែល​វិញ្ញាបនបត្រ​ដើម​គួរតែ​ត្រឹមត្រូវ​ក្រៅពី​ការប្រកាស​ការព្រមាន ។\n"
+"<p>\n"
+"ការកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For &root certificates:"
+msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>ព្រមាន​ប្រសិន​បើ​វិញ្ញាបនបត្រ​ដើម​ផុត​កំណត់</h1>\n"
+"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បបរមា ដែល​វិញ្ញាបនបត្រ​ដើម​គួរតែ​ត្រឹមត្រូវ​ក្រៅពី​ការប្រកាស​ការព្រមាន ។\n"
+"<p>\n"
+"ការកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ CA មធ្យម ៖"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "ការ​កំណត់ GnuPG​..."
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "បើកការ​ព្រមាន \"កុំសួរម្ដងទៀត\" ឡើងវិញ"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7572,230 +7767,6 @@ msgstr ""
 "វាក្យ​សម្ពន្ធ គឺ \"HOST\" ឬ \"HOST:PORT\" ។ ប្រសិនបើបានលុប PORT នោះ​ច្រក 389 (ច្រក LDAP "
 "ខ្នាតគំរូ) ត្រូវបាន​ប្រើ ។"
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "ពិនិត្យ​មើល​ដើម្បី​ទទួល​យក​ការព្រមាន​នៅពេល​ដែល​កំពុង​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា ។"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា</h1>\n"
-"ប្រសិនបើ​បាន​ធីក​ប្រអប់​នេះ អ្នក​នឹង​ត្រូវ​បាន​ព្រមាន​នៅ​ពេល​ដែល​អ្នក​ព្យាយាម​ផ្ញើ​សារ​មួយ​ផ្នែក​ ឬ​ ទាំង​មូល​ដែល​"
-"មិនបាន​​ចុះហត្ថលេខានោះ ។\n"
-"<p>\n"
-"វា​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឲ្យ​ទុក​ជម្រើស​នេះ​នៅ​បើក​សម្រាប់​ការ​រួមបញ្ចូល​គ្នា​អតិបរមា ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "ធីក​ដើម្បី​ទទួល​យក​ការ​ព្រមាន នៅ​ពេល​​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប ។"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប</h1>\n"
-"ប្រសិនបើ​បាន​ធីក​ប្រអប់​​នេះ អ្នក​នឹង​ត្រូវ​បាន​ព្រមាន​នៅ​ពេល​ដែល​ព្យាយាម​ផ្ញើ​ផ្នែក ឬ សារ​ទាំងមូល​ដែល​មិន​បាន​"
-"អ៊ិនគ្រីប ។\n"
-"<p>\n"
-"វា​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឲ្យ​ទុក​ជម្រើស​នេះ​នៅ​បើក​សម្រាប់​ការ​រួម​បញ្ចូល​គ្នា​អតិបរមា ។\n"
-"</p></qt>​"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "ព្រមាន​ នៅ​ពេល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, fuzzy, kde-format
-#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "ព្រមាន ប្រសិនបើ​វញ្ញាបនបត្រ/សោ ជិតផុតកំណត់ (កំណត់​រចនាសម្ព័ន្ធ​កម្រិតពន្លឺ​ខាងក្រោម)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "សម្រាប់​ការចុះ​ហត្ថលេខា"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "សម្រាប់​ការបម្លែង​ជាកូដ"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "ជ្រើស​ចំនួន​ថ្ងៃ​នៅទីនេះ"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន​ប្រសិនបើ​វិញ្ញាបនបត្រ​ហត្ថលេខា​ផុតកំណត់</h1>\n"
-"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បរមា​ ដែល​វិញ្ញាបនបត្រ​ហត្ថលេខា​គួរ​តែ​ត្រឹមត្រូវ​ដោយក្រៅពីការប្រកាស់ការព្រមាន ។\n"
-"<p>\n"
-"ការកំណត់​ SPHINX ដែលបានផ្ដល់អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន ប្រសិន​បើ​ការ​អ៊ិនគ្រីប​វិញ្ញាបនបត្រ​ផុត​កំណត់</h1>\n"
-"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បបរមា​ការ​អ៊ិនគ្រីប​វិញ្ញាបនបត្រ​គួរ​តែ​ត្រឹមត្រូវ ដោយ​គ្មាន​ចេញ​សេចក្ដី​ព្រមាន ។\n"
-"<p>\n"
-"មាន​កា​រកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ ១៤ ថ្ងៃ ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន​ ប្រសិនបើ​វិញ្ញាបនបត្រ​នៅក្នុង​លំដាប់​ផុតកំណត់</h1>\n"
-"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បរមា​ ដែល​វិញ្ញាបនបត្រ​នៅក្នុង​លំដាប់​គួរតែត្រឹមត្រូវ​ដោយគ្មាន​ការប្រកាស់​ការព្រមាន ។\n"
-"<p>\n"
-"ការកំណត់​ SPHINX ដែលបាន​ផ្ដល់អនុសាសន៍គឺ 14 ថ្ងៃ ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន​​ ប្រសិន​បើ​វិញ្ញាបនបត្រ CA ផុត​កំណត់</h1>\n"
-"ជ្រើស​ចំនួន​ថ្ងៃ​​អប្បបរមា​ដែល​វិញ្ញាបនបត្រ CA គួរ​តែ​ត្រឹមត្រូវ​​ដោយ​គ្មាន​ការ​ប្រកាស​ការព្រមាន ។\n"
-"<p>\n"
-"ការកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>ព្រមាន​ប្រសិន​បើ​វិញ្ញាបនបត្រ​ដើម​ផុត​កំណត់</h1>\n"
-"ជ្រើស​ចំនួន​ថ្ងៃ​អប្បបរមា ដែល​វិញ្ញាបនបត្រ​ដើម​គួរតែ​ត្រឹមត្រូវ​ក្រៅពី​ការប្រកាស​ការព្រមាន ។\n"
-"<p>\n"
-"ការកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, fuzzy, kde-format
-#| msgid "For root certificates:"
-msgid "For &root certificates:"
-msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ CA មធ្យម ៖"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, fuzzy, kde-format
-#| msgid "For end-user certificates/keys:"
-msgid "For end-user certificates/&keys:"
-msgstr "សម្រាប់​សោ/​វិញ្ញាបនបត្រ​អ្នកប្រើ ៖"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "ការ​កំណត់ GnuPG​..."
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "បើកការ​ព្រមាន \"កុំសួរម្ដងទៀត\" ឡើងវិញ"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -7963,6 +7934,123 @@ msgstr[0] "កា​រឆ្លើយតប​នៅ​ក្រៅ​ការ
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "ពង្រីក"
+
+#~ msgid "Composing"
+#~ msgstr "ការ​តែង"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "ផ្សេងៗ"
+
+#, fuzzy
+#~| msgid "&Automatically sign messages"
+#~ msgid "Automatically sign messages"
+#~ msgstr "ចុះហត្ថលេខា​លើសារ​ដោយស្វ័យប្រវត្តិ"
+
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "នៅពេល​ដែល​បានបើក​ជម្រើស​នេះ សារ​/ឯកសារ នឹងមិនត្រឹមតែ​ត្រូវបាន​អ៊ិនគ្រីប​ដោយប្រើ​សោ​សាធារណៈ​របស់​អ្នក​"
+#~ "ទទួល​ប៉ុណ្ណោះទេ ប៉ុន្តែ​វាក៏ត្រូវបាន​ប្រើ​ជាមួយ​សោ​របស់អ្នក​ផងដែរ ។ វា​នឹងអនុញ្ញាត​ឲ្យអ្នក​ឌិគ្រីប​សារ​/"
+#~ "ឯកសារ​នៅពេលក្រោយ ។ ជាទូទៅ​នេះ​ជា​គំនិត​ដ៏ល្អ ។"
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr "នៅ​ពេល​អ៊ីនគ្រិប​អ៊ីមែល តែងតែ​អ៊ីនគ្រិប​វិញ្ញាបនបត្រ​នៃ​អត្តសញ្ញាណ​ផ្ទាល់​របស់​ខ្ញុំ"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "ទុក​សារ​ដែលបាន​ផ្ញើ​ បាន​អ៊ិនគ្រីប"
+
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "នៅពេល​ដែល​បាន​បើក​ជម្រើស​នេះ កម្មវិធី​នឹង​បង្ហាញបញ្ជី​នៃ​សោសាធារណៈ​ដល់អ្នកជានិច្ច​ពី​សោ​មួយណាដែលបាន​"
+#~ "ជ្រើសមួយ​ដែល​វា​នឹង​ប្រើ​ដើម្បី​ធ្វើការអ៊ិនគ្រីប ។ ប្រសិនបើ​វា​បិទ នោះកម្មវិធី​នឹង​បានតែ​បង្ហាញ​"
+#~ "ប្រអប់ប៉ុណ្ណោះ ប្រសិនបើវា​មិនអាច​រក​សោ​ដែល​ត្រឹមត្រូវបានទេ ឬ ប្រសិនបើមាន​​សោ​មួយចំនួន​ដែលអាចប្រើ​បាន ។"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "ពិនិត្យ​មើល​ដើម្បី​ទទួល​យក​ការព្រមាន​នៅពេល​ដែល​កំពុង​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា ។"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា</h1>\n"
+#~ "ប្រសិនបើ​បាន​ធីក​ប្រអប់​នេះ អ្នក​នឹង​ត្រូវ​បាន​ព្រមាន​នៅ​ពេល​ដែល​អ្នក​ព្យាយាម​ផ្ញើ​សារ​មួយ​ផ្នែក​ ឬ​ ទាំង​មូល​"
+#~ "ដែល​មិនបាន​​ចុះហត្ថលេខានោះ ។\n"
+#~ "<p>\n"
+#~ "វា​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឲ្យ​ទុក​ជម្រើស​នេះ​នៅ​បើក​សម្រាប់​ការ​រួមបញ្ចូល​គ្នា​អតិបរមា ។\n"
+#~ "</p></qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "ធីក​ដើម្បី​ទទួល​យក​ការ​ព្រមាន នៅ​ពេល​​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប ។"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>ព្រមាន នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប</h1>\n"
+#~ "ប្រសិនបើ​បាន​ធីក​ប្រអប់​​នេះ អ្នក​នឹង​ត្រូវ​បាន​ព្រមាន​នៅ​ពេល​ដែល​ព្យាយាម​ផ្ញើ​ផ្នែក ឬ សារ​ទាំងមូល​ដែល​មិន​"
+#~ "បាន​អ៊ិនគ្រីប ។\n"
+#~ "<p>\n"
+#~ "វា​ត្រូវ​បាន​ផ្ដល់​អនុសាសន៍​ឲ្យ​ទុក​ជម្រើស​នេះ​នៅ​បើក​សម្រាប់​ការ​រួម​បញ្ចូល​គ្នា​អតិបរមា ។\n"
+#~ "</p></qt>​"
+
+#~ msgid "For Signing"
+#~ msgstr "សម្រាប់​ការចុះ​ហត្ថលេខា"
+
+#~ msgid "For Encryption"
+#~ msgstr "សម្រាប់​ការបម្លែង​ជាកូដ"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>ព្រមាន​ប្រសិនបើ​វិញ្ញាបនបត្រ​ហត្ថលេខា​ផុតកំណត់</h1>\n"
+#~ "ជ្រើស​ចំនួន​ថ្ងៃ​អប្បរមា​ ដែល​វិញ្ញាបនបត្រ​ហត្ថលេខា​គួរ​តែ​ត្រឹមត្រូវ​ដោយក្រៅពីការប្រកាស់ការព្រមាន ។\n"
+#~ "<p>\n"
+#~ "ការកំណត់​ SPHINX ដែលបានផ្ដល់អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
+#~ "</p></qt>"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>ព្រមាន​​ ប្រសិន​បើ​វិញ្ញាបនបត្រ CA ផុត​កំណត់</h1>\n"
+#~ "ជ្រើស​ចំនួន​ថ្ងៃ​​អប្បបរមា​ដែល​វិញ្ញាបនបត្រ CA គួរ​តែ​ត្រឹមត្រូវ​​ដោយ​គ្មាន​ការ​ប្រកាស​ការព្រមាន ។\n"
+#~ "<p>\n"
+#~ "ការកំណត់ SPHINX ដែល​បាន​ផ្ដល់​អនុសាសន៍​គឺ 14 ថ្ងៃ ។\n"
+#~ "</p></qt>"
 
 #, fuzzy
 #~| msgid "Select Font"

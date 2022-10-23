@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -402,7 +402,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -554,7 +554,7 @@ msgid ""
 msgstr "<qt>按底下的按鈕，並按下您要設定的熱鍵。</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "樣本"
@@ -1721,33 +1721,29 @@ msgid "Message Disposition Notifications"
 msgstr "信件處理通知"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, kde-format
-msgid "Composing"
-msgstr "編輯信件中"
+#, fuzzy, kde-format
+#| msgid "Encrypting"
+msgid "Encryption"
+msgstr "加密"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "雜項"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME 確認"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "電子郵件地址"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "您確定要移除標籤 %1 嗎？"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1756,48 +1752,46 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改變全域的同主題討論串設定，將會覆蓋過個別資料夾之前的同主題設定。"
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " 天"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "這個選項需要 dirmngr 版本 >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "沒有 proxy"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(目前的系統設定: %1)"
@@ -2003,7 +1997,7 @@ msgid "Send"
 msgstr "傳送"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "稍後傳送(&L)"
@@ -2260,13 +2254,13 @@ msgstr "<qt>這會完全隱藏選單列。您可以按下 %1 重新顯示選單�
 msgid "Hide menu bar"
 msgstr "隱藏選單列"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " 行：%1"
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " 欄位：%1"
@@ -2325,71 +2319,71 @@ msgstr "您要放棄此信件，還是存下稍後使用？"
 msgid "Close Composer"
 msgstr "關閉信件編輯器"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "自動儲存信件失敗"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "傳送信件失敗。"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "插入檔案"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "新增為內含影像(&I)"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "以附件加入(&A)"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "附件名稱："
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, fuzzy, kde-format
 #| msgid "Invalid date"
 msgid "Invalid Attachment Name"
 msgstr "不合法的日期"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "新增網址到信件內"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "附加檔案(&A)"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "插入剪貼簿的文字成附件(&H)"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "未命名"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2400,12 +2394,12 @@ msgstr ""
 "<qt> <p>您要求對自己加密，但目前的身份並未定義 OpenPGP 或 S/MIME 的加密金鑰或"
 "憑證。</p> <p>請在身份設定處選擇您要使用的金鑰。</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "未定義的加密金鑰"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2415,12 +2409,12 @@ msgstr ""
 "<qt><p>為了要簽署信件，您必須指定加密用的 OpenPGP 金鑰或 S/MIME 憑證。</p> "
 "<p>請在身份設定處選擇要使用的金鑰或憑證。</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "未定義的簽署金鑰"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2430,157 +2424,157 @@ msgstr ""
 "您必須在「寄件者」欄位中填入自己的電子郵件地址。您應該在身份設定中設定電子信"
 "件地址，這樣就不必每次送信都重新填寫。"
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "您必須在收件者、副本或密件副本欄位中指定最少一位收件者。"
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "您沒有指定收件者。確定要送出訊息？"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "沒有指定收件者"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "就這樣送吧(&E)"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "感謝提醒(&S)"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "您沒有寫主題。確定要送出訊息？"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "沒有主題"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "感謝提醒(&S)"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "您必須指定最少一位收件者，才能加密草稿。"
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "即將傳送信件..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "傳送確認"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "立即傳送(&S)"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "您正試圖傳送電子郵件給多於 %1 個收件者。確定要傳送嗎？"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "太多收件者"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "就這樣送吧(&S)"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "編輯收件者(&E)"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "關閉 HTML 模式會造成失去文字排版格式。您確定要這樣做嗎？"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "要拿掉排版格式嗎？"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "遺失格式"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "新增標記純文字"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2588,7 +2582,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -2876,52 +2870,52 @@ msgstr "複製現有的 vCard(&D)"
 msgid "&Existing identities:"
 msgstr "現有身份(&E)："
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, fuzzy, kde-format
 #| msgid "Error while trying to rename folder %1"
 msgid "Error while generating new key pair: %1"
 msgstr "更改資料夾 %1 的名稱時發生錯誤"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "輸入新的關鍵字："
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "編輯身份"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "一般"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "您的姓名(&Y)："
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2931,12 +2925,12 @@ msgstr ""
 "<qt><h3>您的姓名</h3><p>這個欄位是您想要顯示在信件標頭中的名稱。</p> <p>如果"
 "空白，則標頭中只會顯示您的電子郵件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "組織(&Z)："
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2946,12 +2940,12 @@ msgstr ""
 "<qt><h3>組織</h3><p>如果您要在信件標頭中顯示您所工作的單位名稱，請填寫在這個"
 "欄位。</p><p>這個欄位留空白並沒有影響。</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "電子郵件地址(&E)："
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2965,12 +2959,12 @@ msgstr ""
 "可以建立一個新的身份，或是在下方的欄位中加入別名。</p><p>如果填寫錯誤或留空"
 "白，收信人就無法回信給您了。</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "電子郵件地址別名(&L)："
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2985,12 +2979,12 @@ msgstr ""
 "td></tr> <tr><th>別名：</th><td>first@example.org<br/>last@example.org</td></"
 "tr></table> <p>每一行輸入一個別名。</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "加密"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3009,12 +3003,23 @@ msgstr ""
 "位您可以留白，但 KMail 就無法簽署數位簽章。</p> <p>更多詳細資料請參閱"
 "<a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "簽署用的 OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgid "OpenPGP key:"
+msgstr "簽署用的 OpenPGP 金鑰："
+
+#: identity/identitydialog.cpp:413
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3035,12 +3040,12 @@ msgstr ""
 "用 GnuPG 金鑰。</p> <p>您可以將這個欄位留白，不過 KMail 就無法用 OpenPGP 加"
 "密。</p> <p>更多詳細資料請參閱<a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "加密用的 OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3051,12 +3056,12 @@ msgstr ""
 "<qt><p>您選擇的 S/MIME (X.509) 憑證是用來簽署數位簽章的。</p> <p>您可以將這個"
 "欄位留白，但 KMail 就無法使用 S/MIME 來簽署您的信件。</p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 簽署憑證："
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3069,40 +3074,81 @@ msgstr ""
 "用 GnuPG 金鑰。</p> <p>您可以將這個欄位留白，不過 KMail 就無法用 S/MIME 加"
 "密。</p> <p>更多詳細資料請參閱<a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 加密憑證："
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "預設格式："
 
-#: identity/identitydialog.cpp:443
-#, kde-format
-msgid "Automatically sign messages"
-msgstr "自動簽署信件"
+#: identity/identitydialog.cpp:477
+#, fuzzy, kde-format
+#| msgid "Encrypt"
+msgid "Enable Autocrypt"
+msgstr "加密"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
+#, kde-format
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, kde-format
+msgid "Overwrite defaults:"
+msgstr ""
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "簽署信件(&S)"
+
+#: identity/identitydialog.cpp:500
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
-msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "可能的話，自動加密信件(&M)"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "送出未簽署信件時提出警告(&U)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "送出未加密信件時提出警告(&W)"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "進階"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "回信地址(&R)："
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3116,12 +3162,12 @@ msgstr ""
 "如果您要讓回信送到跟發信不同的位置，您可以設定這個欄位。</p> <p>如果不懂得怎"
 "麼使用，請留白即可。</p></qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "副本地址(&C)："
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3135,12 +3181,12 @@ msgstr ""
 "副本。</p> <p>通常是用來發送信件備份給自己其他的帳號。</p> <p>若要發送給一個"
 "以上的地址，請用逗號隔開。</p> <p>如果不懂得怎麼使用，請留白即可。</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "密件副本(&B)："
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3155,113 +3201,113 @@ msgstr ""
 "<p>若要發送給一個以上的地址，請用逗號隔開。</p> <p>如果不懂得怎麼使用，請留白"
 "即可。</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "字典(&I)："
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "寄件備份(&S)"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "寄件備份(&F)："
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 #| msgid "Select folders..."
 msgid "Select Draft Folder"
 msgstr "選擇資料夾..."
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "草稿夾(&D)："
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgid "Select Templates Folder"
 msgstr "樣本資料夾(&T)："
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "樣本資料夾(&T)："
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "外送帳號："
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "將我的 vCard 加入信件"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "建立..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "自動修正語言："
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Restore default domain name"
 msgstr "回復預設網域名稱"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "預設域名(&T)："
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr "<qt><p>預設域名是用來補齊所輸入的電子郵件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "此身份使用自訂的信件樣本(&U)"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "複製全域樣本(&C)"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "簽名"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "圖片"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "不合法的電子郵件地址別名 \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "不合法的電子郵件地址"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3273,7 +3319,7 @@ msgstr ""
 "(%1)。\n"
 "這樣可能導致收件人確認數位簽章時會接獲警告。"
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3282,7 +3328,7 @@ msgstr ""
 "其中一個 OpenPGP 加密金鑰未含有任何屬於這個身份的使用者代號與電子郵件地址"
 "(%1)。"
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3294,7 +3340,7 @@ msgstr ""
 "(%1)。\n"
 "這樣可能導致收件人確認數位簽章時會接獲警告。"
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3303,24 +3349,24 @@ msgstr ""
 "其中一個 S/MIME 加密金鑰未含有任何屬於這個身份的使用者代號與電子郵件地址"
 "(%1)。"
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "在金鑰或憑證中找不到電子郵件地址"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "簽章已經過期。"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "編輯身份 %1"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3330,7 +3376,7 @@ msgid ""
 "folders will be used."
 msgstr "您所設定的草稿資料夾 %1 已不存在。因此改為使用預設的資料夾。"
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "編輯..."
@@ -6226,122 +6272,129 @@ msgstr "所有最近使用的編碼清單"
 msgid "Show crypto label indicator"
 msgstr "顯示加密指示器"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Show crypto ownertrust icons"
+msgstr "顯示加密指示器"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "確認傳送預設捷徑"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "身份對話框大小（只內部使用）"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "搜尋視窗寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "搜尋視窗高度（只內部使用）"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "設定 KMail 對話框寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "設定 KMail 對話框高度（只內部使用）"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "信件預覽"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "不顯示信件預覽"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "顯示在信件列表下方"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "顯示在信件列表右方"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "資料夾清單"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "資料夾長列表"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "資料夾短列表"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "新信件的樣本"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "回覆信件的樣本"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "全部回覆信件的樣本"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "轉寄信件的樣本"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "加入引言符號"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "指定顯示政策時使用的政策"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6349,7 +6402,7 @@ msgid ""
 msgstr "指定在搜尋視窗對話框中的收藏欄位寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6357,7 +6410,7 @@ msgid ""
 msgstr "指定在搜尋視窗對話框中的主旨欄位寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6365,7 +6418,7 @@ msgid ""
 msgstr "指定在搜尋視窗對話框中的寄件者欄位寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6373,7 +6426,7 @@ msgid ""
 msgstr "指定在搜尋視窗對話框中的收件者欄位寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6381,7 +6434,7 @@ msgid ""
 msgstr "指定在搜尋視窗對話框中的日期欄位寬度（只內部使用）"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6460,96 +6513,6 @@ msgstr "詳細的新信件通知(&I)"
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "其他動作(&N)..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "加密"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"這個選項勾選之後，信件不只會用收件者的公開金鑰加密，也會用您自己的公開金鑰加"
-"密。您自己稍後可以自行解密。我們通常都建議這樣做。"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr "加密信件時，總是以我自己身份的憑證來加密(&Y)"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "勾選這個選項，您可以儲存加密過後的信件。"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>儲存加密過後的信件</h1>\n"
-"這個選項被勾選之後，寄件備份中的信件會保持加密。我們不建議這樣做，因為如果憑"
-"證過期之後，您將再也無法檢視您送出過的內容。\n"
-"<p>\n"
-"但是，有可能您的管理員會要求您這樣做。如果不確定，請與您的系統管理員聯絡。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "保存加密過後的已送出信件(&P)"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"這個選項被勾選之後，系統在每次您要加密時，都會顯示清單讓您選擇要使用的公開金"
-"鑰。反之，則系統只會在它找不到正確的金鑰，或者是有多重選擇的時候才會要求您選"
-"擇。"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "每次都確認使用的加密金鑰(&F)"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "在編輯器內顯示簽署/加密指示器"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6910,6 +6873,242 @@ msgstr "開啟搜尋資料夾(&S)"
 #, kde-format
 msgid "Open &Message"
 msgstr "開啟訊息(&M)"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "設成預設"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted Messages"
+msgid "Encrypt draft messages"
+msgstr "加密信件"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "勾選這個選項，您可以儲存加密過後的信件。"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>儲存加密過後的信件</h1>\n"
+"這個選項被勾選之後，寄件備份中的信件會保持加密。我們不建議這樣做，因為如果憑"
+"證過期之後，您將再也無法檢視您送出過的內容。\n"
+"<p>\n"
+"但是，有可能您的管理員會要求您這樣做。如果不確定，請與您的系統管理員聯絡。\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted Messages"
+msgid "Encry&pt sent messages"
+msgstr "加密信件"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "簽署信件(&S)"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt &messages whenever possible"
+msgid "Encrypt all messages when possible"
+msgstr "可能的話，自動加密信件(&M)"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Encryption indicators"
+msgstr "顯示加密指示器"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show sign/encrypt indicator in editor"
+msgid "Show sign/encrypt indicator"
+msgstr "在編輯器內顯示簽署/加密指示器"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "每次都確認使用的加密金鑰(&F)"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, fuzzy, kde-format
+#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "憑證或金鑰即將到期時提出警告（於下方設定）"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, fuzzy, kde-format
+#| msgid "For end-user certificates/keys:"
+msgid "For end-user certificates/&keys:"
+msgstr "用於使用者端憑證或金鑰："
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "在這裡選擇天數"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>憑證鍊中的憑證逾期前提出警告</h1>\n"
+"您可以設定在憑證鍊中的任一憑證在幾天後可能逾期時提出警告。\n"
+"<p>\n"
+"SPHINX 設定的建議為十四天。\n"
+"</p></qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>加密憑證逾期警告</h1>\n"
+"選擇加密憑證在幾天內逾期時提出警告。\n"
+"<p>\n"
+"SPHINX 設定建議為十四天。\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For own certificates:"
+msgstr "用於根憑證："
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</p></qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>根憑證逾期警告</h1>\n"
+"選擇根憑證在幾天後逾期時提出警告。\n"
+"<p>\n"
+"SPHINX 設定建議為十四天。\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For &root certificates:"
+msgstr "用於根憑證："
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>根憑證逾期警告</h1>\n"
+"選擇根憑證在幾天後逾期時提出警告。\n"
+"<p>\n"
+"SPHINX 設定建議為十四天。\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "用於中介 CA 憑證："
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "GnuPG 設定"
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "把所有「不要再問我」的警告通通再打開"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7444,228 +7643,6 @@ msgstr ""
 "送到此伺服器。除非無法連到這個伺服器，才會考慮其他的 LDAP 伺服器。 語法是「主"
 "機」或「主機：埠號」。如果沒有寫埠號的話，預設使用 389（預設的 LDAP 埠號）。"
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "勾選此選項，在送出未簽署信件時提出警告"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>送出未簽署信件時提出警告</h1>\n"
-"勾選此選項的話，送出部份或全部未簽署的信件時會提出警告。\n"
-"<p>\n"
-"建議使用此選項。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "送出未簽署信件時提出警告(&U)"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "勾選此選項，在送出未加密信件時提出警告。"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>送出未加密信件時提出警告</h1>\n"
-"這個選項被勾選的話，在送出未加密信件前會提出警告。\n"
-"<p>\n"
-"建議您使用此選項。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "送出未加密信件時提出警告(&W)"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, fuzzy, kde-format
-#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "憑證或金鑰即將到期時提出警告（於下方設定）"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "用於簽署"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "用於加密"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "在這裡選擇天數"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>簽署憑證逾期警告</h1>\n"
-"選擇簽署憑證在幾天後逾期時提出警告。\n"
-"<p>\n"
-"SPHINX 設定建議為十四天。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>加密憑證逾期警告</h1>\n"
-"選擇加密憑證在幾天內逾期時提出警告。\n"
-"<p>\n"
-"SPHINX 設定建議為十四天。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>憑證鍊中的憑證逾期前提出警告</h1>\n"
-"您可以設定在憑證鍊中的任一憑證在幾天後可能逾期時提出警告。\n"
-"<p>\n"
-"SPHINX 設定的建議為十四天。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>CA 憑證逾期警告</h1>\n"
-"選擇 CA 憑證在幾天後逾期時提出警告。\n"
-"<p>\n"
-"SPHINX 設定建議為十四天。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>根憑證逾期警告</h1>\n"
-"選擇根憑證在幾天後逾期時提出警告。\n"
-"<p>\n"
-"SPHINX 設定建議為十四天。\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, fuzzy, kde-format
-#| msgid "For root certificates:"
-msgid "For &root certificates:"
-msgstr "用於根憑證："
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "用於中介 CA 憑證："
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, fuzzy, kde-format
-#| msgid "For end-user certificates/keys:"
-msgid "For end-user certificates/&keys:"
-msgstr "用於使用者端憑證或金鑰："
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "GnuPG 設定"
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "把所有「不要再問我」的警告通通再打開"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -7826,6 +7803,118 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "縮放"
+
+#~ msgid "Composing"
+#~ msgstr "編輯信件中"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "雜項"
+
+#~ msgid "Automatically sign messages"
+#~ msgstr "自動簽署信件"
+
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "這個選項勾選之後，信件不只會用收件者的公開金鑰加密，也會用您自己的公開金鑰"
+#~ "加密。您自己稍後可以自行解密。我們通常都建議這樣做。"
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr "加密信件時，總是以我自己身份的憑證來加密(&Y)"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "保存加密過後的已送出信件(&P)"
+
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "這個選項被勾選之後，系統在每次您要加密時，都會顯示清單讓您選擇要使用的公開"
+#~ "金鑰。反之，則系統只會在它找不到正確的金鑰，或者是有多重選擇的時候才會要求"
+#~ "您選擇。"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "勾選此選項，在送出未簽署信件時提出警告"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>送出未簽署信件時提出警告</h1>\n"
+#~ "勾選此選項的話，送出部份或全部未簽署的信件時會提出警告。\n"
+#~ "<p>\n"
+#~ "建議使用此選項。\n"
+#~ "</p></qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "勾選此選項，在送出未加密信件時提出警告。"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>送出未加密信件時提出警告</h1>\n"
+#~ "這個選項被勾選的話，在送出未加密信件前會提出警告。\n"
+#~ "<p>\n"
+#~ "建議您使用此選項。\n"
+#~ "</p></qt>"
+
+#~ msgid "For Signing"
+#~ msgstr "用於簽署"
+
+#~ msgid "For Encryption"
+#~ msgstr "用於加密"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>簽署憑證逾期警告</h1>\n"
+#~ "選擇簽署憑證在幾天後逾期時提出警告。\n"
+#~ "<p>\n"
+#~ "SPHINX 設定建議為十四天。\n"
+#~ "</p></qt>"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>CA 憑證逾期警告</h1>\n"
+#~ "選擇 CA 憑證在幾天後逾期時提出警告。\n"
+#~ "<p>\n"
+#~ "SPHINX 設定建議為十四天。\n"
+#~ "</p></qt>"
 
 #, fuzzy
 #~| msgid "Select Contact"

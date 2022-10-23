@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -431,7 +431,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -597,7 +597,7 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "แม่แบบ"
@@ -1732,34 +1732,27 @@ msgstr "การแจ้งให้ทราบก่อนจัดการ
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
-msgid "Composing"
-msgstr "การเขียนจดหมาย"
+msgid "Encryption"
+msgstr "การเข้ารหัส"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, fuzzy, kde-format
-#| msgctxt "Miscellaneous template commands menu"
-#| msgid "Miscellaneous"
-msgid "Miscellaneous"
-msgstr "เบ็ดเตล็ด"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "ความถูกต้องของ S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "ที่อยู่อีเมล"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1768,48 +1761,46 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "กำลังเปลี่ยนการตั้งค่าทั่วไปของการทำเธรด ที่จะกำหนดใช้กับทุกโฟลเดอร์"
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " วัน"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ตั้งค่า"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ตัวเลือกนี้ต้องการใช้โปรแกรม dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ไม่ใช้พร็อกซี"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(การตั้งค่าปัจจุบันของระบบ: %1)"
@@ -2026,7 +2017,7 @@ msgid "Send"
 msgstr "ส่ง"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "ส่งภายหลัง"
@@ -2289,13 +2280,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " บรรทัด: %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " คอลัมน์: %1 "
@@ -2355,77 +2346,77 @@ msgstr "คุณต้องการละทิ้งการเขียน
 msgid "Close Composer"
 msgstr "ปิดหน้าต่างเขียนจดหมาย"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 #| msgid "Autosaving Message Failed"
 msgid "Autosave Message Failed"
 msgstr "ล้มเหลวในการบันทึกอัตโนมัติ"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 #| msgid "Autosaving Message Failed"
 msgid "Sending Message Failed"
 msgstr "ล้มเหลวในการบันทึกอัตโนมัติ"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, fuzzy, kde-format
 #| msgid "Insert File Content"
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "แทรกเนื้อหาจากแฟ้ม"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add as &Attachment"
 msgstr "เพิ่มเป็นสิ่งที่แนบมาด้วย"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "ชื่อของสิ่งที่แนบมาด้วย:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, fuzzy, kde-format
 #| msgid "Invalid signature."
 msgid "Invalid Attachment Name"
 msgstr "ลายเซ็นใช้ไม่ได้"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, fuzzy, kde-format
 #| msgid "Quoted Message Text"
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "ข้อความจดหมายที่อ้างถึง"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "เพิ่มเป็นสิ่งที่แนบมาด้วย"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "แทรกข้อความจากคลิปบอร์ดเข้ามาเป็นสิ่งที่แนบมาด้วย"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "ยังไม่มีชื่อ"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2434,12 +2425,12 @@ msgid ""
 "identity configuration.</p></qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "กุญแจการเข้ารหัสยังไม่มีการนิยาม"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2447,12 +2438,12 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "ยังไม่ได้กำหนดกุญแจการเซ็น"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2460,7 +2451,7 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2470,43 +2461,43 @@ msgid ""
 "as BCC."
 msgstr "คุณต้องระบุผู้รับอย่างน้อยหนึ่งตัวในช่อง ถึง: หรือช่อง สำเนาถึง หรือ ซ่อนสำเนาถึง"
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "คุณยังไม่ได้ระบุว่าจะส่งถึงใครในช่อง ถึง: ทำการส่งต่อไปหรือไม่ ?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "ยังไม่ได้กำหนดช่อง ถึง:"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "ทำการส่ง"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "ไม่ ให้กำหนดชื่อเรื่องก่อน"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "คุณยังไม่ได้ระบุชื่อเรื่อง ทำการส่งต่อไปหรือไม่ ?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "ยังไม่ได้กำหนดชื่อเรื่อง"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "ไม่ ให้กำหนดชื่อเรื่องก่อน"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2516,109 +2507,109 @@ msgid ""
 "draft."
 msgstr "คุณต้องระบุผู้รับอย่างน้อยหนึ่งตัวในช่อง ถึง: หรือช่อง สำเนาถึง หรือ ซ่อนสำเนาถึง"
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "เกี่ยวกับการส่งจดหมาย..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "ยืนยันการส่ง"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "ส่งทันที"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "มีผู้รับมากเกินไป"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "ทำการส่ง"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "แ&ก้ไขส่วนของผู้รับ"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Lose Formatting"
 msgstr "ข้อมูลการล็อกอิน"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgid "Add Markup Plain Text"
 msgstr "จดหมายเป็นข้อความธรรมดา"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2626,7 +2617,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -2927,52 +2918,52 @@ msgstr "การแสดงตัวผู้ใช้ซ้ำกัน"
 msgid "&Existing identities:"
 msgstr "การแสดงตัวผู้ใช้ที่มีอยู่:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, fuzzy, kde-format
 #| msgid "Error while trying to rename folder %1"
 msgid "Error while generating new key pair: %1"
 msgstr "มีข้อผิดพลาดขณะเขียนไปยังโฟลเดอร์ %1"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "เติมคีย์เวิร์ดใหม่:"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "แก้ไขการแสดงตัว"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "ค่าทั่วไป"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "ชื่อของ&คุณ:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2980,12 +2971,12 @@ msgid ""
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "อ&งค์กร:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2993,12 +2984,12 @@ msgid ""
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "ที่อยู่&อีเมล:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3008,13 +2999,13 @@ msgid ""
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "ที่อยู่&อีเมล:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3025,12 +3016,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "การเข้ารหัส"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3040,12 +3031,23 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "กุญแจ OpenPGP สำหรับเซ็น:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "กุญแจ OpenPGP 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3056,12 +3058,12 @@ msgid ""
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "กุญแจ OpenPGP สำหรับใช้เข้ารหัส:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3070,12 +3072,12 @@ msgid ""
 "not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "ใบรับรองการเซ็น S/MIME:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3085,42 +3087,83 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "ใบรับรองการเข้ารหัส S/MIME:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "รูปแบบการเข้ารหัสจดหมายที่ควรใช้:"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:477
 #, fuzzy, kde-format
-#| msgid "&Automatically sign messages"
-msgid "Automatically sign messages"
-msgstr "เซ็นจดหมายโดยอัตโนมัติ"
+#| msgid "Enable Subscriptions?"
+msgid "Enable Autocrypt"
+msgstr "เปิดใช้การบอกรับ ?"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
+#, kde-format
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+#| msgid "Overwrite &All"
+msgid "Overwrite defaults:"
+msgstr "เขียนทับทั้ง&หมด"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "เซ็&นจดหมาย"
+
+#: identity/identitydialog.cpp:500
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
-msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "ทำการเข้ารหัสจดหมายหากสามารถทำได้โดยอัตโนมัติ"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "แจ้งเตือนเมื่อพยายามจะส่งจดหมายที่ยังไม่ได้เซ็น"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "แจ้งเตือนเมื่อพยายามส่งจดหมายที่ไม่ได้เข้ารหัสไว้"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "ตัวเลือกขั้นสูง"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "ที่อยู่สำหรับตอบกลับ:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3131,13 +3174,13 @@ msgid ""
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "ที่อยู่ ซ่อนสำเนาถึง:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3148,12 +3191,12 @@ msgid ""
 "blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "ที่อยู่ ซ่อนสำเนาถึง:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3164,80 +3207,80 @@ msgid ""
 "list of BCC recipients.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "พจนานุกรม:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "โฟลเดอร์จดหมายที่&ส่งแล้ว"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "โฟลเดอร์จดหมายที่ส่งแล้ว:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Draft Folder"
 msgstr "เลือกรูปแบบ"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "โฟลเดอร์ฉบับร่าง:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 #| msgid "Cut Folder"
 msgid "Select Templates Folder"
 msgstr "ตัดโฟลเดอร์"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "โฟลเดอร์แม่แบบ:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "ปรับแต่งบัญชีผู้ใช้"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "เพิ่ม 'ส่วนหัว' ไปยังจดหมาย"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "เปลี่ยนชื่อ..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "เลือกภาษา:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "โดเมนปริยาย:"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "โดเมนปริยาย:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3246,39 +3289,39 @@ msgstr ""
 "<qt><p>โดเมนปริยายจะถูกใช้สำหรับการเติมที่อยู่อีเมลให้สมบูรณ์ "
 "โดยจะประกอบด้วยชื่อของผู้ใช้เท่านั้น</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ใ&ช้แม่แบบจดหมายที่กำหนดเองสำหรับการแสดงตัวนี้"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&คัดลอกแม่แบบส่วนรวม"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "ลายเซ็น"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "รูปภาพ"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "ที่อยู่อีเมลไม่ถูกต้อง"
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "ที่อยู่อีเมลไม่ถูกต้อง"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3287,14 +3330,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3303,31 +3346,31 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "ไม่พบที่อยู่อีเมลในกุญแจ/ใบรับรองอิเล็กทรอนิกส์"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "แฟ้มลายเซ็นใช้งานไม่ได้"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "แก้ไขการแสดงตัว \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3339,7 +3382,7 @@ msgstr ""
 "ยังไม่มีโฟลเดอร์กำหนดเองของฉบับร่างสำหรับการแสดงตัว \"%1\" (ในตอนนี้); "
 "ดังนั้นจะทำการใช้โฟลเดอร์ฉบับร่างตัวปริยายแทน"
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "แก้ไข..."
@@ -6312,122 +6355,129 @@ msgstr ""
 msgid "Show crypto label indicator"
 msgstr "แสดงไอคอนสื่อถึงการเข้ารหัส"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Show crypto ownertrust icons"
+msgstr "แสดงไอคอนสื่อถึงการเข้ารหัส"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "ส่วนแสดงเนื้อหาจดหมาย"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "ไม่ต้องแสดงส่วนแสดงเนื้อหาจดหมาย"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "แสดงส่วนแสดงเนื้อหาจดหมายใต้รายการจดหมาย"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "แสดงส่วนแสดงเนื้อหาจดหมายถัดจากรายการจดหมาย"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "รายการโฟลเดอร์"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "รายการโฟลเดอร์แบบยาว"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "รายการโฟลเดอร์แบบสั้น"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "แม่แบบจดหมายสำหรับจดหมายใหม่"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "แม่แบบจดหมายสำหรับตอบกลับ"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "แม่แบบจดหมายสำหรับตอบกลับทั้งหมด"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "แม่แบบจดหมายสำหรับส่งต่อ"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "อักขระอ้างถึง"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6435,7 +6485,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6443,7 +6493,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6451,7 +6501,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6459,7 +6509,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6467,7 +6517,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6553,85 +6603,6 @@ msgstr "แจ้งรายละเอียดให้ทราบเมื
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "การกระ&ทำอื่น ๆ ..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "การเข้ารหัส"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr ""
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "เลือกเพื่อให้มีการจัดเก็บจดหมายที่เข้ารหัสไว้"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "จัดเก็บจดหมายเข้ารหัสที่ส่งแล้ว"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "แสดงกุญแจเข้ารหัสสำหรับการอนุญาตเสมอ"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, fuzzy, kde-format
-#| msgid "Show s&igned/encrypted text after composing"
-msgid "Show sign/encrypt indicator in editor"
-msgstr "แสดงข้อความลายเซ็น/การเข้ารหัสหลังจากเขียนจดหมาย"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6932,6 +6903,204 @@ msgstr "เปิดกล่องการค้นหา"
 #, kde-format
 msgid "Open &Message"
 msgstr "เปิด&จดหมาย"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "ตั้งเป็นค่าปริยาย"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "จดหมายถูกเข้ารหัสไว้"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "เลือกเพื่อให้มีการจัดเก็บจดหมายที่เข้ารหัสไว้"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "จดหมายถูกเข้ารหัสไว้"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "เซ็&นจดหมาย"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt &messages whenever possible"
+msgid "Encrypt all messages when possible"
+msgstr "ทำการเข้ารหัสจดหมายหากสามารถทำได้โดยอัตโนมัติ"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Encryption indicators"
+msgstr "แสดงไอคอนสื่อถึงการเข้ารหัส"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show s&igned/encrypted text after composing"
+msgid "Show sign/encrypt indicator"
+msgstr "แสดงข้อความลายเซ็น/การเข้ารหัสหลังจากเขียนจดหมาย"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "แสดงกุญแจเข้ารหัสสำหรับการอนุญาตเสมอ"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, fuzzy, kde-format
+#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "แจ้งเตือนหากใบรับรอง/กุญแจต่าง ๆ จะหมดอายุในเร็ว ๆ นี้ (ปรับระดับด้านล่างนี้)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, fuzzy, kde-format
+#| msgid "For end-user certificates/keys:"
+msgid "For end-user certificates/&keys:"
+msgstr "สำหรับใบรับรอง/กุญแจต่าง ๆ ของผู้ใช้:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "เลือกจำนวนของวันที่นี่"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For own certificates:"
+msgstr "สำหรับใบรับรองราก:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, fuzzy, kde-format
+#| msgid "For root certificates:"
+msgid "For &root certificates:"
+msgstr "สำหรับใบรับรองราก:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "สำหรับใบรับรองของผู้ให้บริการออกใบรับรอง:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, fuzzy, kde-format
+#| msgid "&Settings"
+msgid "GnuPG Settings..."
+msgstr "ตั้งค่า"
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "เปิดใช้การแจ้งเตือน \"ไม่ต้องถามอีก\" ทั้งหมดอีกครั้ง"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7450,187 +7619,6 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "เลือกเพื่อให้มีการแจ้งเตือนเมื่อพยายามจะส่งจดหมายที่ยังไม่ได้เซ็น"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "แจ้งเตือนเมื่อพยายามจะส่งจดหมายที่ยังไม่ได้เซ็น"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "เช็คเพื่อให้มีการเตือนเมื่อมีการส่งจดหมายที่ไม่ได้เข้ารหัสไว้"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "แจ้งเตือนเมื่อพยายามส่งจดหมายที่ไม่ได้เข้ารหัสไว้"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, fuzzy, kde-format
-#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "แจ้งเตือนหากใบรับรอง/กุญแจต่าง ๆ จะหมดอายุในเร็ว ๆ นี้ (ปรับระดับด้านล่างนี้)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "ใช้สำหรับการเซ็น"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "ใช้สำหรับการเข้ารหัส"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "เลือกจำนวนของวันที่นี่"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, fuzzy, kde-format
-#| msgid "For root certificates:"
-msgid "For &root certificates:"
-msgstr "สำหรับใบรับรองราก:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "สำหรับใบรับรองของผู้ให้บริการออกใบรับรอง:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, fuzzy, kde-format
-#| msgid "For end-user certificates/keys:"
-msgid "For end-user certificates/&keys:"
-msgstr "สำหรับใบรับรอง/กุญแจต่าง ๆ ของผู้ใช้:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, fuzzy, kde-format
-#| msgid "&Settings"
-msgid "GnuPG Settings..."
-msgstr "ตั้งค่า"
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "เปิดใช้การแจ้งเตือน \"ไม่ต้องถามอีก\" ทั้งหมดอีกครั้ง"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, kde-format
@@ -7795,6 +7783,38 @@ msgstr[0] "ตอบกลับเมื่อไม่อยู่ที่อ
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Composing"
+#~ msgstr "การเขียนจดหมาย"
+
+#, fuzzy
+#~| msgctxt "Miscellaneous template commands menu"
+#~| msgid "Miscellaneous"
+#~ msgid "Miscellaneous"
+#~ msgstr "เบ็ดเตล็ด"
+
+#, fuzzy
+#~| msgid "&Automatically sign messages"
+#~ msgid "Automatically sign messages"
+#~ msgstr "เซ็นจดหมายโดยอัตโนมัติ"
+
+#~ msgid "Encrypting"
+#~ msgstr "การเข้ารหัส"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "จัดเก็บจดหมายเข้ารหัสที่ส่งแล้ว"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "เลือกเพื่อให้มีการแจ้งเตือนเมื่อพยายามจะส่งจดหมายที่ยังไม่ได้เซ็น"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "เช็คเพื่อให้มีการเตือนเมื่อมีการส่งจดหมายที่ไม่ได้เข้ารหัสไว้"
+
+#~ msgid "For Signing"
+#~ msgstr "ใช้สำหรับการเซ็น"
+
+#~ msgid "For Encryption"
+#~ msgstr "ใช้สำหรับการเข้ารหัส"
 
 #, fuzzy
 #~| msgid "Select Font"
@@ -11213,9 +11233,6 @@ msgstr ""
 #~ msgid "&Overwrite"
 #~ msgstr "เขียนทับ"
 
-#~ msgid "Overwrite &All"
-#~ msgstr "เขียนทับทั้ง&หมด"
-
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -11357,9 +11374,6 @@ msgstr ""
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "เลือกกุญแจสาธารณะที่จะแนบเข้าไปด้วย"
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "กุญแจ OpenPGP 0x%1"
 
 #, fuzzy
 #~| msgid ""
@@ -12103,9 +12117,6 @@ msgstr ""
 #~ msgid "inbox"
 #~ msgstr "จดหมายเข้า"
 
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "เปิดใช้การบอกรับ ?"
-
 #, fuzzy
 #~| msgid "Local changes will be lost when unsubscribing"
 #~ msgctxt "@title:window"
@@ -12372,9 +12383,6 @@ msgstr ""
 #~| msgid_plural "Please wait while the %1 messages are transferred"
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "โปรดรอขณะที่กำลังส่งถ่ายจดหมาย %1 ฉบับ"
-
-#~ msgid "Encrypted message"
-#~ msgstr "จดหมายถูกเข้ารหัสไว้"
 
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "จดหมายถูกเข้ารหัสไว้ (ไม่สามารถถอดรหัสได้)"
@@ -13851,9 +13859,6 @@ msgstr ""
 #~| msgid "S&ecurity"
 #~ msgid "Security"
 #~ msgstr "ความปลอดภัย"
-
-#~ msgid "Encryption"
-#~ msgstr "การเข้ารหัส"
 
 #~ msgid "&None"
 #~ msgstr "ไม่มี"

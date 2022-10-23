@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
-"PO-Revision-Date: 2022-09-04 21:30+0400\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
+"PO-Revision-Date: 2022-10-22 18:16+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 21.12.3\n"
 "X-POOTLE-MTIME: 1381756262.0\n"
 
 #, kde-format
@@ -372,7 +372,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "أصلح العديد من علَّل IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -526,7 +526,7 @@ msgstr ""
 "واضغط المفتاح/المفاتيح التي تريد ربطها بهذا المجلّد.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "القوالب"
@@ -1635,41 +1635,34 @@ msgstr "إخطارات ترتيب الرّسائل"
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
-msgid "Composing"
-msgstr "الكتابة"
+msgid "Encryption"
+msgstr "التشفير"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "متنوّع"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "تحقّق S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "عنوان البريد الإلكترونيّ:"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "أتريد إزالة عنوان هذا البريد؟"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "تغيير إعداد HTML العموميّ سيلغي كلّ القيم الخاصّة بالمجلّد."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1680,36 +1673,36 @@ msgstr[3] " أيّام"
 msgstr[4] " يومًا"
 msgstr[5] " يوم"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "إعدادات GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "الوحدة ناقصة. رجاءً افحص التّثبيت لديك. توفّر «كليوپترا» هذه الوحدة."
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "خطأ في وحدة ضبط GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "يتطلّب هذا الخيار الإصدارة 0.9.0 فأعلى من dirmngr"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "لا وكيل"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(إعداد النّظام الحاليّ: %1)"
@@ -1917,7 +1910,7 @@ msgid "Send"
 msgstr "أرسل"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "أرسل لا&حقًا"
@@ -2172,13 +2165,13 @@ msgstr "<qt>سيخفي هذا شريط القوائم نهائيًّا. يمكن
 msgid "Hide menu bar"
 msgstr "أخفِ شريط القوائم"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " السّطر: %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " العمود: %1 "
@@ -2237,48 +2230,48 @@ msgstr "أتريد حفظ الرّسالة لوقت لاحق أو إهمالها
 msgid "Close Composer"
 msgstr "أغلق الكاتب"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "فشل حفظ الرّسالة آليًّا"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "فشل إرسال الرّسالة"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "أدرج ملفًّا"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "أضف كصورة &سياقيّة"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "أضف ك&مرفق"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "اسم المرفق:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "لا يُمكن أن يكُون اسم المُرفق فارغ"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "اسم مرفق غير صالح"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
@@ -2289,7 +2282,7 @@ msgstr[3] "أضف المسارات في الرّسالة"
 msgstr[4] "أضف المسارات في الرّسالة"
 msgstr[5] "أضف المسارات في الرّسالة"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
@@ -2300,17 +2293,17 @@ msgstr[3] "أضف الملفّات &كملحقات"
 msgstr[4] "أضف الملفّات &كملحقات"
 msgstr[5] "أضف الملفّات &كملحقات"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "أدرج نصّ الحافظة كمرفق"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "غير معنون"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2322,12 +2315,12 @@ msgstr ""
 "تعمية (OpenPGP أو S/MIME) لذلك.</p><p>فضلًا حدّد المفتاح/المفاتيح التي ستُستخدم "
 "وذلك في ضبط الهويّة.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "مفتاح تعمية غير معرّف"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2337,12 +2330,12 @@ msgstr ""
 "<qt><p>لتوقّع هذه الرّسالة عليك أوّلًا تعريف مفتاح توقيع (OpenPGP أو S/MIME) "
 "ليُستخدم.</p><p>فضلًا اختر المفتاح الذي سيُستخدم وذلك في ضبط الهويّة.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "مفتاح توقيع غير معرّف"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2352,7 +2345,7 @@ msgstr ""
 "عليك إدخال بريدك الإلكترونيّ في حقل ”من:“. يحبّذ أيضًا تحديد بريدك الإلكترونيّ "
 "لكلّ الهويّات، لألّا تدخلها في كلّ رسالة."
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2361,64 +2354,64 @@ msgstr ""
 "عليك تحديد مستلم واحد على الأقلّ، إمّا في حقل ”إلى:“، أو ”ن‌ك:“ (نسخة كربونيّة) "
 "أو ”ن‌ك‌م:“ (نسخة كربونيّة مخفيّة)."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "حقل ”إلى:“ فارغ. أأرسل الرّسالة بأيّ حال؟"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "لم يحدّد ”إلى:“"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "أ&رسلها هكذا"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&حدّد حقل إلى"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "لم تحدّد موضوعًا. أأرسل الرّسالة بأيّ حال؟"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "لم يحدّد موضوع"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&حدّد الموضوع"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "عليك تحديد مستلم واحد على الأقل لتعمّي مسودّة."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "على وشك إرسال الرّسالة..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "أرسل تأكيد"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "أ&رسل الآن"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2426,44 +2419,44 @@ msgid ""
 msgstr ""
 "أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "مستلمون كثر"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "أ&رسلها هكذا"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&حرّر المستلمين"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "تعطيل وضع HTML سيتسبّب للنّصّ بخسارة تنسيقه. أأنت متأكّد؟"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "أنخسر التّنسيق؟"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "اخسر التّنسيق"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "أضف توصيف نص صرف"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2472,7 +2465,7 @@ msgstr ""
 "يستخدم المفتاح المعمَّى بشكل آليٍّ لهذا المستخدم، هذا المفتاح غير موثَّق، يُفضِّل "
 "المستقبل ردود  مُعمَّاة."
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2481,13 +2474,13 @@ msgstr ""
 "يستخدم المفتاح المعمَّى بشكل آليٍّ لهذا المستخدم، هذا المفتاح غير موثَّق، لا يُفضِّل "
 "المستقبل ردود  مُعمَّاة."
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr "يستخدم مفتاح الثرثرة الآليّ لهذا المستخدم، هذا المفتاح غير موثَّق."
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
@@ -2496,7 +2489,7 @@ msgstr ""
 "سيستخدم التطبيق تشفير عالي الحماية لهذا المستلم (مفتاح التَّشفيرموثُوق كُلِّيّا). "
 "اِضْغط على الأيقونة للتَّفاصيل."
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
@@ -2505,7 +2498,7 @@ msgstr ""
 "سيستخدم التطبيق تشفير مُتوسط الحماية لهذا المستلم ( مفتاح التَّشفير موثُوق "
 "جُزئِيا ) . اِضغط على الأيقونة للتَّفاصيل."
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
@@ -2514,7 +2507,7 @@ msgstr ""
 "سيستخدم التطبيق تشفير منخفض الحماية لهذا المسْتلم (مفتاح التَّشفير غير موثُوق) . "
 "اِضغط على الأيقونة للتَّفاصيل."
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2524,7 +2517,7 @@ msgstr ""
 "سيعمّى بريد هذا المستلم، ولكن أمان التَّعمية مجهول (لا يمكن التَّحقُّق من سلامة "
 "مفتاح التَّعمية). اضغط على الأيقونة للتَّفاصيل."
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "معلومات محرّر الملحقات"
@@ -2802,49 +2795,49 @@ msgstr "&كرّر vCard الموجودة"
 msgid "&Existing identities:"
 msgstr "الهويّات ال&موجودة:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "خطأ أثناء توليد زوج مفاتيح جديد: %1"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr "خطأ أثناء توليد المفتاح"
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr "لا مفتاح"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "ولّد زوج مفاتيح جديد"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "يولّد زوج مفاتيح جديد..."
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "حرّر الهويّة"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "عامّ"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "اسم&ك:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2855,12 +2848,12 @@ msgstr ""
 "المُرسل،</p><p>إن تركته فارغًا فلن يظهر اسمك الحقيقيّ، وسيظهر بريدك الإلكترونيّ "
 "فقط.</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "المن&ظّمة:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2870,12 +2863,12 @@ msgstr ""
 "<qt><h3>المنظّمة</h3><p>على هذا الحقل احتواء اسم منظّمتك إن أردته أن يظهر في "
 "ترويسة البريد المُرسل.</p><p>من الآمن (والطّبيعيّ) أن تترك هذا فارغًا.</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "ال&بريد الإلكترونيّ:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2890,12 +2883,12 @@ msgstr ""
 "</p><p>إن تركت هذا فارغًا، أو خاطئًا، فسيواجه الآخرين مشكلة في الرّدّ عليك.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "&كُنَى البريد:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2911,12 +2904,12 @@ msgstr ""
 "tr><tr><th>الكُنَى:</th><td>first@example.org<br>last@example.org</td></tr></"
 "table><p>أدخل عُنوان كُنيَة واحد لكلّ سطر.</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "التّعمية"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2931,12 +2924,23 @@ msgstr ""
 "العاديَّة. </p><p> تستطيع معرفة المزيد حول المفاتيح في <a>https://www.gnupg."
 "org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "مفتاح توقيع OpenPGP:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "مفتاح OpenPGP 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -2952,12 +2956,12 @@ msgstr ""
 "OpenPGP؛ لن تتأثَّر وظائف البريد العاديَّة. </p><p> تستطيع معرفة المزيد حول "
 "المفاتيح في <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "مفتاح تعمية OpenPGP:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -2969,12 +2973,12 @@ msgstr ""
 "p><p>تستطيع ترك هذا الحقل فارغ،لكن لن يكون بمقدور بريدك توقيع البريد رقميًّا "
 "باستخدام S/MIME; لن تتأثَّر وظائف البريد العاديَّة.</p></qt>"
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "شهادة توقيع S/MIME:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -2988,39 +2992,82 @@ msgstr ""
 "بريدك تعمية نسخ الرَّسائل الصَّادرة لك باستخدام S/MIME; لن تتأثر وظائف البريد "
 "العاديَّة.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "شهادة تعمية S/MIME:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "النّسق المفضّل:"
 
-#: identity/identitydialog.cpp:443
-#, kde-format
-msgid "Automatically sign messages"
-msgstr "وقّع الرّسائل آليًّا"
+#: identity/identitydialog.cpp:477
+#, fuzzy, kde-format
+#| msgid "Enable Subscriptions?"
+msgid "Enable Autocrypt"
+msgstr "أأمكن الاشتراكات؟"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
 #, kde-format
-msgid "Automatically encrypt messages when possible"
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+#| msgid "Overwrite &All"
+msgid "Overwrite defaults:"
+msgstr "اكتب فوق ال&كل"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "و&قّع الرّسالة"
+
+#: identity/identitydialog.cpp:500
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "عمِّ  الرّسائل آليًّا عند الإمكان"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "حذَّرني عند محاولة إرسال رسائل &غير موقَّعة"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "ح&ذّرني عند محاولة إرسال الرّسائل دون تعمية"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "متقدّم"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "عنوان الرّ&دّ على:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3037,12 +3084,12 @@ msgstr ""
 "إلكتروني إلى بريدك الإلكتروني في الحقل <tt> من: </tt> ،ولكن أي ردود تذهب إلى "
 "عنوان المجموعة. </p> <p> إذا كنت في شك ، فاترك هذا الحقل فارغ. </p> </qt> "
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "ع&ناوين ن‌ك:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3057,12 +3104,12 @@ msgstr ""
 "مرسلة لحسابك الآخر.</p><p>لتحدِّد أكثر من عنوان،استخدم الفواصل لفصل قائمة "
 "مستلمي CC.</p><p>إذا لم تكن متأكد، اترك هذا الحقل فارغ</p></qt>"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "ع&ناوين ن‌ك‌م:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3078,72 +3125,72 @@ msgstr ""
 "p><p>لتحدِّد أكثر من حساب، استخدم الفواصل لفصل قائمة مستلمي BBC. إذا كنت غير "
 "متأكد، اترك هذا الحقل فارغ.</p></qt>"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "ال&قاموس:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "حدّد مجلّد البريد المُرسل"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&مجلّد البريد المُرسل:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "حدّد مجلَّد المسوَّدة"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "مجلّد ال&مسودّات:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "حدّد مجلَّد القوالب"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "مجلّد ال&قوالب:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "حساب الصّادر:"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "أرفق vCard خاصّتي إلى الرّسالة"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "أنشئ..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "لغة التّصحيح الآليّ:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Restore default domain name"
 msgstr "استعد اسم المجال المبدئيّ"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "المجال ال&مبدئيّ:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3152,38 +3199,38 @@ msgstr ""
 "<qt><p>سيستخدم  النطاق المبدئيّ لإكمال عناوين البريد الإلكتروني التي تتألَّف من "
 "اسم  المستخدم فقط.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ا&ستخدم قوالب رسائل مخصّصة لهذه الهويّة"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "ا&نسخ القوالب العموميّة"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "التّوقيع"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "الصّورة"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "كنية بريد غير صالحة \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "عنوان البريد الإلكترونيّ غير صالح"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3196,7 +3243,7 @@ msgstr ""
 "سيُنتج هذا رسائل تحذير من جانب المستقبل عند محاولة التَّحَقُّق من  التَّواقيع  "
 "المُعدة بهذه الإعدادات."
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3205,7 +3252,7 @@ msgstr ""
 "أحد مفاتيح تعمية OpenPGP المضبوطة لا تحوي أيّ مستخدم بالبريد الإلكترونيّ "
 "المضبوط لهذه الهويّة (%1)."
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3218,7 +3265,7 @@ msgstr ""
 "سيُنتج هذا رسائل تحذير من جهة المستقبل عند محاولة التَّحَقُّق من التَّواقيع  المُعدة "
 "بهذه الإعدادات."
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3227,23 +3274,23 @@ msgstr ""
 "أحد شهادات تعمية S/MIME المضبوطة لا تحوي عنوان البريد الإلكترونيّ المضبوط "
 "لهذه الهويّة (%1)."
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "لم يجد عُنوان البريد الإلكترونيّ في المفتاح/الشَّهادات"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ملفّ التّوقيع غير صالح"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "حرّر هوية \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3252,7 +3299,7 @@ msgstr ""
 "مجلّد المسودّات المخصّص للهويّة غير موجود (بعد الآن)، لذلك سيُستخدم مجلّد المسودّات "
 "المبدئيّ."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "حرّر..."
@@ -5059,10 +5106,9 @@ msgid "Restart Akonadi"
 msgstr "أعد تشغيل اكوندا"
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "أعد تشغيل الحساب"
+msgstr "أعد التّشغيل"
 
 #: kmmainwidget.cpp:4907
 #, kde-format
@@ -6144,122 +6190,129 @@ msgstr "قائمة بجميع الترميزات المستخدمة مؤخرا"
 msgid "Show crypto label indicator"
 msgstr "اعرض مؤشر التعمية"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Show crypto ownertrust icons"
+msgstr "اعرض مؤشر التعمية"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "تحقق سلامة اختصار أرسل المبدئي"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "حجم حواري الهويَّة (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "عرض نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "ارتفاع نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "عرض حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "ارتفاع حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "لوحة معاينة الرِّسالة"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "لا تُظهر لوحة معاينة الرِّسالة"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "أظهر لوحة معاينة الرِّسالة أسفل قائمة الرسائل"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "أظهر لوحة معاينة الرِّسالة بعد قائمة الرسائل"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "قائمة المجلّدات"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, kde-format
 msgid "Long folder list"
 msgstr "قائمة مجلَّدات طويلة"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, kde-format
 msgid "Short folder list"
 msgstr "قائمة مجلَّدات قصيرة"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, kde-format
 msgid "Message template for new message"
 msgstr "قالب رسالة الرسائل الجديدة"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, kde-format
 msgid "Message template for reply"
 msgstr "قالب رسالة الردّ"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "قالب رسالة الردّ على الكل"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, kde-format
 msgid "Message template for forward"
 msgstr "قالب رسالة التمرير"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
 msgstr "محارف الاقتباس"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "تحدَّد السياسة المستخدمة عند عرض السياسة"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6267,7 +6320,7 @@ msgid ""
 msgstr "تحدَّد عرض حقل المجموعة في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6275,7 +6328,7 @@ msgid ""
 msgstr "تحدَّد عرض حقل  الموضوع في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6283,7 +6336,7 @@ msgid ""
 msgstr "تحدَّد عرض حقل المرسل في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6291,7 +6344,7 @@ msgid ""
 msgstr "تحدَّد عرض حقل المستلم  في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6299,7 +6352,7 @@ msgid ""
 msgstr "تحدَّد عرض حقل  التاريخ في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6376,100 +6429,6 @@ msgstr "إشعار بريد جديد &مفصل"
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "إ&جراءات أخرى..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "التّعمية"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"عندما يكون هذا الخيار مفعل، ستعمى الرسالة/الملف بالمفتاح العام للمستقبِل "
-"ومفتاحك، سيمكنك هذا من فك تعمية الرسالة/الملف في وقت لاحق، هذه فكرة جيِّدة "
-"عمومًا."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr "عند تعمية البريد ، عمِّي دائمًا شهادة الهويَّة الخاصَّة بي"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "اختر هذا لتخزين الرَّسائل معمَّاة "
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>خزّن الرَّسائل مُعمّاة</h1>\n"
-"عندما يكون هذا الخيار محدَّد، ستُخزَّن الرَّسائل المُرسلة مُعَمَّاةً كما أُرسلت، هذا غير "
-"منصوح به، لأنّه لن يكون بمقدورك قراءة الرَّسائل بعد الآن إذا انتهت صلاحيَّة "
-"الشَّهادة الضَّروريَّة.\n"
-"<p>\n"
-"مع ذلك، ربما يكون هناك شروط داخليه قد تُطلب منك لتفعيل هذا الخيار، إِذا كنت "
-"غير متأكد، تحقَّق من مسؤولك. \n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "&خزّن الرَّسائل المرسلةَ معمَّاة"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"عندما يكون هذا الخِيار مُفعَّل، سيعرض لك التَّطبيق دائمًا قائمة بالمفاتيح العامَّة "
-"التي تستطيع اختيار أحدها للتَّعمية. إذا كان هذا الخِيار معطل؛ سيعرض التَّطبيق "
-"الحواريّ فقط إذا لم يستطع العثور على المفتاح الصحيح أو إذا كان هناك عدة "
-"مفاتيح يمكن استخدامها."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "ا&عرض دائمًا مفاتيح التَّعمية للتَّأكيد"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr "عند ال&حفظ كمسودة وقع/ عمِّ كما هو محدد"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "اعرض مؤشر وقّع/عمّي في المحرر"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6793,6 +6752,246 @@ msgstr "افتح مجلّد الب&حث"
 #, kde-format
 msgid "Open &Message"
 msgstr "افتح الرّ&سالة"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgid "Security defaults"
+msgstr "اضبطها كمبدئيّة"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "رسالة مشفرة"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "اختر هذا لتخزين الرَّسائل معمَّاة "
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>خزّن الرَّسائل مُعمّاة</h1>\n"
+"عندما يكون هذا الخيار محدَّد، ستُخزَّن الرَّسائل المُرسلة مُعَمَّاةً كما أُرسلت، هذا غير "
+"منصوح به، لأنّه لن يكون بمقدورك قراءة الرَّسائل بعد الآن إذا انتهت صلاحيَّة "
+"الشَّهادة الضَّروريَّة.\n"
+"<p>\n"
+"مع ذلك، ربما يكون هناك شروط داخليه قد تُطلب منك لتفعيل هذا الخيار، إِذا كنت "
+"غير متأكد، تحقَّق من مسؤولك. \n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "رسالة مشفرة"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign all messages"
+msgstr "و&قّع الرّسالة"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt all messages when possible"
+msgstr "عمِّ  الرّسائل آليًّا عند الإمكان"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Encryption indicators"
+msgstr "اعرض مؤشر التعمية"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show sign/encrypt indicator in editor"
+msgid "Show sign/encrypt indicator"
+msgstr "اعرض مؤشر وقّع/عمّي في المحرر"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "ا&عرض دائمًا مفاتيح التَّعمية للتَّأكيد"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr ""
+"حذرني إذا كانت صَلاحيَّة الشَّهادات/ ال&مفاتيح ستنتهي قريبًا (اضبط العتبات بالأسفل)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "&مفاتيح / شهادات للمستخدم النِّهائيِّ:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "اختر عدد الأيّام هنا"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>حذَّرني إذا انتهت صلاحية الشَّهادة في  السِّلسلة </h1>\n"
+"حدَّد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها  جميع الشَّهادات في السِّلسلة "
+"سارية المفعول بدون إصدار تحذير.\n"
+"<p>\n"
+"إعداد سفنكس المنصوح به 14 يوم.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة التعمية</h1>\n"
+"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة التعمية سارية المفعول "
+"بدون إِصدار تحذير.\n"
+"<p>\n"
+"إعداد سفنكس المنصوح به 14 يوم.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For &root certificates:"
+msgid "For own certificates:"
+msgstr "لشهادات ال&جذر:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</p></qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة الجذر</h1>\n"
+"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شهادة الجذر سارية المفعول بدون "
+"إِصدار تحذير.\n"
+"<p>\n"
+"إعداد سفنكس المنصوح به 14 يوم.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, kde-format
+msgid "For &root certificates:"
+msgstr "لشهادات ال&جذر:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة الجذر</h1>\n"
+"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شهادة الجذر سارية المفعول بدون "
+"إِصدار تحذير.\n"
+"<p>\n"
+"إعداد سفنكس المنصوح به 14 يوم.\n"
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "لشهادات CA المتوسِّطة:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "إعدادات GnuPG..."
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "أعد تفعيل كلّ تحذيرات ”لا تسألني مجدّدًا“"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7327,231 +7526,6 @@ msgstr ""
 "فشل الاتصال ب 'الوكيل'بنية الأمر \"HOST\" أو \"HOST:PORT\". إذا حُذف المنفذ، "
 "سيستخدم منفذ 389 (منفذ LADP معياري)."
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "أشّر عليه لتحذيرك عند إرسال رَّسائل دون توقيع."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذرني عند إرسال رسائل غير موقعة</h1>\n"
-"إذا كان هذا الصندوق مفعل، ستحذر عند إرسال جزء أو كامل الرسالة بدون توقيع<p>\n"
-"من الموصى به ترك هذا الخيار مفعل لأقصى سلامة ممكنة.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "حذَّرني عند محاولة إرسال رسائل &غير موقَّعة"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "أشّر عليه لتحذيرك عند إرسال الرّسائل دون تعمية."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذرني عند محاولة إرسال رسائل دون تعمية</h1>\n"
-"إذا كان هذا الصندوق مفعل، ستحذر عند محاولة إرسال جزء أو كامل الرسالة دون "
-"تعمية .\n"
-"<p>\n"
-"ينصح بترك هذا الخيار مفعل لأقصى سلامة ممكنة.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "ح&ذّرني عند محاولة إرسال الرّسائل دون تعمية"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr ""
-"حذرني إذا كانت صَلاحيَّة الشَّهادات/ ال&مفاتيح ستنتهي قريبًا (اضبط العتبات بالأسفل)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "للتّوقيع"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "للتّعمية"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "اختر عدد الأيّام هنا"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة  التَّوقيع</h1>\n"
-"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة التَّوقيع سارية المفعول "
-"بدون إِصدار تحذير.\n"
-"<p>\n"
-"إعداد سفنكس المنصوح به 14 يوم.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة التعمية</h1>\n"
-"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة التعمية سارية المفعول "
-"بدون إِصدار تحذير.\n"
-"<p>\n"
-"إعداد سفنكس المنصوح به 14 يوم.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذَّرني إذا انتهت صلاحية الشَّهادة في  السِّلسلة </h1>\n"
-"حدَّد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها  جميع الشَّهادات في السِّلسلة "
-"سارية المفعول بدون إصدار تحذير.\n"
-"<p>\n"
-"إعداد سفنكس المنصوح به 14 يوم.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>CA حذَّرني إذا انتهت صلاحيَّة شهادة</h1>\n"
-"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة CA سارية المفعول بدون "
-"إِصدار تحذير.\n"
-"<p>\n"
-"إعداد سفنكس المنصوح به 14 يوم.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>حذَّرني إذا انتهت صلاحيَّة شهادة الجذر</h1>\n"
-"حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شهادة الجذر سارية المفعول بدون "
-"إِصدار تحذير.\n"
-"<p>\n"
-"إعداد سفنكس المنصوح به 14 يوم.\n"
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, kde-format
-msgid "For &root certificates:"
-msgstr "لشهادات ال&جذر:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "لشهادات CA المتوسِّطة:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "&مفاتيح / شهادات للمستخدم النِّهائيِّ:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "إعدادات GnuPG..."
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "أعد تفعيل كلّ تحذيرات ”لا تسألني مجدّدًا“"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, kde-format
@@ -7708,6 +7682,129 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid "Composing"
+#~ msgstr "الكتابة"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "متنوّع"
+
+#~ msgid "Automatically sign messages"
+#~ msgstr "وقّع الرّسائل آليًّا"
+
+#~ msgid "Encrypting"
+#~ msgstr "التّعمية"
+
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "عندما يكون هذا الخيار مفعل، ستعمى الرسالة/الملف بالمفتاح العام للمستقبِل "
+#~ "ومفتاحك، سيمكنك هذا من فك تعمية الرسالة/الملف في وقت لاحق، هذه فكرة جيِّدة "
+#~ "عمومًا."
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr "عند تعمية البريد ، عمِّي دائمًا شهادة الهويَّة الخاصَّة بي"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "&خزّن الرَّسائل المرسلةَ معمَّاة"
+
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "عندما يكون هذا الخِيار مُفعَّل، سيعرض لك التَّطبيق دائمًا قائمة بالمفاتيح العامَّة "
+#~ "التي تستطيع اختيار أحدها للتَّعمية. إذا كان هذا الخِيار معطل؛ سيعرض التَّطبيق "
+#~ "الحواريّ فقط إذا لم يستطع العثور على المفتاح الصحيح أو إذا كان هناك عدة "
+#~ "مفاتيح يمكن استخدامها."
+
+#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
+#~ msgstr "عند ال&حفظ كمسودة وقع/ عمِّ كما هو محدد"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "أشّر عليه لتحذيرك عند إرسال رَّسائل دون توقيع."
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>حذرني عند إرسال رسائل غير موقعة</h1>\n"
+#~ "إذا كان هذا الصندوق مفعل، ستحذر عند إرسال جزء أو كامل الرسالة بدون "
+#~ "توقيع<p>\n"
+#~ "من الموصى به ترك هذا الخيار مفعل لأقصى سلامة ممكنة.\n"
+#~ "</p></qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "أشّر عليه لتحذيرك عند إرسال الرّسائل دون تعمية."
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>حذرني عند محاولة إرسال رسائل دون تعمية</h1>\n"
+#~ "إذا كان هذا الصندوق مفعل، ستحذر عند محاولة إرسال جزء أو كامل الرسالة دون "
+#~ "تعمية .\n"
+#~ "<p>\n"
+#~ "ينصح بترك هذا الخيار مفعل لأقصى سلامة ممكنة.\n"
+#~ "</p></qt>"
+
+#~ msgid "For Signing"
+#~ msgstr "للتّوقيع"
+
+#~ msgid "For Encryption"
+#~ msgstr "للتّعمية"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>حذَّرني إذا انتهت صلاحيَّة شهادة  التَّوقيع</h1>\n"
+#~ "حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة التَّوقيع سارية المفعول "
+#~ "بدون إِصدار تحذير.\n"
+#~ "<p>\n"
+#~ "إعداد سفنكس المنصوح به 14 يوم.\n"
+#~ "</p></qt>"
+
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>CA حذَّرني إذا انتهت صلاحيَّة شهادة</h1>\n"
+#~ "حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شَّهادة CA سارية المفعول بدون "
+#~ "إِصدار تحذير.\n"
+#~ "<p>\n"
+#~ "إعداد سفنكس المنصوح به 14 يوم.\n"
+#~ "</p></qt>"
 
 #, fuzzy
 #~| msgid "Select Contact"
@@ -12240,9 +12337,6 @@ msgstr "التكبير: %1٪"
 #~ msgid "&Overwrite"
 #~ msgstr "كتابة &فوقية"
 
-#~ msgid "Overwrite &All"
-#~ msgstr "اكتب فوق ال&كل"
-
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -12415,9 +12509,6 @@ msgstr "التكبير: %1٪"
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "حدِد المفتاح العلني المبغي إضافته."
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "مفتاح OpenPGP 0x%1"
 
 #, fuzzy
 #~| msgid ""
@@ -13399,9 +13490,6 @@ msgstr "التكبير: %1٪"
 #~ msgid "inbox"
 #~ msgstr "صندوق الوارد"
 
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "أأمكن الاشتراكات؟"
-
 #, fuzzy
 #~| msgid ""
 #~| "Currently subscriptions are not used for server %1\n"
@@ -13726,9 +13814,6 @@ msgstr "التكبير: %1٪"
 #, fuzzy
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "رجاء أنتطر بينما رسالة هو"
-
-#~ msgid "Encrypted message"
-#~ msgstr "رسالة مشفرة"
 
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "رسالة مشفرة ( فك التشفير غير ممكن )"
@@ -15661,9 +15746,6 @@ msgstr "التكبير: %1٪"
 #~| msgid "S&ecurity"
 #~ msgid "Security"
 #~ msgstr "الأ&من"
-
-#~ msgid "Encryption"
-#~ msgstr "التشفير"
 
 #~ msgid "&None"
 #~ msgstr "&بدون"

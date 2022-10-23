@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2022-10-18 21:50+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -421,7 +421,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "பல IMAP பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -575,7 +575,7 @@ msgstr ""
 "செய்தபின் நீங்கள் பயன்படுத்த விரும்பும் விசைகளை அழுத்துங்கள்.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr "வார்ப்புருகள்"
@@ -1710,30 +1710,25 @@ msgstr "அஞ்சல் பெற்றதன் உறுதிப்பா�
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
-msgid "Composing"
-msgstr "அஞ்சலெழுதுவது"
+msgid "Encryption"
+msgstr "மறையாக்கம்"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr "மற்றவை"
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME உறுதிப்பாடு"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "மின்னஞ்சல் முகவரி:"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "நீங்கள் இந்த மின்னஞ்சல் முகவரியை நீக்க விரும்புகிறீர்களா?"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1741,48 +1736,46 @@ msgstr ""
 "பொதுவான HTML விருப்பத்தை மாற்றல், தனிப்பட்ட அடைவுகளுக்கான இவ்வமைப்பை பொருட்படுத்தாதவாறு "
 "செய்யும்."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " நாள்"
 msgstr[1] " நாட்கள்"
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG அமைப்புகள்"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "இந்த கூறை காணவில்லை. இதனை நிறுவியதை சரிபாருங்கள். இக்கூறை Kleopatra வழங்கும்."
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG அமைப்பு கூறில் சிக்கல்"
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "இவ்விருப்பத்திற்கு dirmngr >= 0.9.0 தேவை"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "பதிலி இல்லை"
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(தற்போதைய கணினி அமைப்பு: %1)"
@@ -1988,7 +1981,7 @@ msgid "Send"
 msgstr "அ&னுப்பு"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "பி&றகு அனுப்பு"
@@ -2245,13 +2238,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr "பட்டிப் பட்டையை மறை"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " வரி:%1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " நெடுவரிசை:%1 "
@@ -2314,72 +2307,72 @@ msgstr "அஞ்சலை கைவிட வேண்டுமா, அல்�
 msgid "Close Composer"
 msgstr "அஞ்சலெழுதும் இடத்தை மூடுதல்"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "தானாக சேமித்தல் தோல்வியடைந்தது"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "அஞ்சலை அனுப்புதல் தோல்வியடைந்தது"
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "கோப்பை நுழைத்தல்"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "உரையுடன் &ஒருங்கிணைந்த படமாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "&உடனிணைப்பாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "உடனிணைப்பின் பெயர்:"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "உடனிணைப்பின் பெயர் காலியாக இருக்கக்கூடாது"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "உடனிணைப்பின் பெயர் செல்லுபடியாகாதது"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "அஞ்சலில் இணைய முகவரியை சேர்"
 msgstr[1] "அஞ்சலில் இணைய முகவரிகளை சேர்"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "கோப்பை &உடனிணைப்பாக சேர்"
 msgstr[1] "கோப்புகளை &உடனிணைப்புகளாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "பிடிப்புப்பலகையிலுள்ள உரையை உடனிணைப்பாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "பெயரிடப்படாதது"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2391,12 +2384,12 @@ msgstr ""
 "(OpenPGP அல்லது S/MIME) சாவியையும் குறிப்பிடவில்ல.</p><p> முதலில் அடையாள "
 "அமைப்புகளில் சென்று, பயன்படுத்த வேண்டிய சாவியை தேர்வு செய்யுங்கள்.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "குறிப்பிடப்படாத மறையாக்க சாவி"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2407,12 +2400,12 @@ msgstr ""
 "MIME) சாவியை நீங்கள் குறிப்பிட வேண்டும்.</p><p> முதலில் அடையாள அமைப்புகளில் சென்று, "
 "பயன்படுத்த வேண்டிய சாவியை தேர்வு செய்யுங்கள்.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "குறிப்பிடப்படாத கையொப்ப சாவி"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2422,7 +2415,7 @@ msgstr ""
 "அனுப்புநர் புலத்தில் உங்கள் மின்னஞ்சல் முகவரியை உள்ளிட வேண்டும். ஒவ்வொரு அஞ்சலுக்கும் இதை "
 "நிரப்புவதற்கு பதிலாக, நீங்கள் அடையாள அமைப்புகளில் இம்முகவரியை அமைக்கலாம்."
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2431,64 +2424,64 @@ msgstr ""
 "குறைந்தபட்சம் ஒரு பெறுநரையாவது நீங்கள் குறிப்பிட வேண்டும். அது பெறுநர் புலத்திலோ, நகல் "
 "புலத்திலோ, மறைநகல் புலத்திலோ இருக்கலாம்."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "பெறுநர் புலம் காலியாக உள்ளது. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "No To: specified"
 msgstr "பெறுநர் குறிப்பிடப்படவில்லை"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "&அப்படியே அனுப்பு."
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&பெறுநர் புலத்தை நிரப்பவிடு"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "நீங்கள் அஞ்சலுக்கான தலைப்பை குறிப்பிடவில்லை. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "தலைப்பு குறிப்பிடப்படவில்லை"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "தலைப்பை &குறிப்பிடு"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "வரைவை மறையாக்கம் செய்ய, ஒரு பெறுநரையாவது நீங்கள் குறிப்பிட வேண்டும்."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "அஞ்சல் அனுப்பப்படவிருக்கிறது…"
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgid "Send Confirmation"
 msgstr "அஞ்சலனுப்புவதன் உறுதிப்பாடு"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "&இப்போது அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2497,22 +2490,22 @@ msgstr ""
 "நீங்கள் %1-க்கு அதிகமான பெறுநர்களுக்கு இந்த அஞ்சலை அனுப்ப முயற்சிக்கிறீர்கள். உறுதியாக "
 "அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Too many recipients"
 msgstr "அதிகப்படியான பெறுநர்கள்"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "&Send as Is"
 msgstr "&அப்படியே அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "பெறுநர்களை &மாற்று"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2520,63 +2513,63 @@ msgid ""
 msgstr ""
 "HTML பயன்முறையை முடக்கினால், உரை அதன் வடிவமைப்பை இழக்கும். உறுதியாக முடக்க வேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "வடிவமைப்பை இழக்கலாமா?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, kde-format
 msgid "Lose Formatting"
 msgstr "வடிவமைப்பை இழ"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "சாதாரண உரையில் markup-ஐ சேர்"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2584,7 +2577,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "செருகுநிரல் திருத்தி விவரங்கள்"
@@ -2868,49 +2861,49 @@ msgstr "ஏற்கனவேயுள்ள vCard-ஐ &நகலெடு"
 msgid "&Existing identities:"
 msgstr "&ஏற்கனவேயுள்ள அடையாளங்கள்:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "புதிய சாவி ஜோடியை உருவாக்குவதில் சிக்கல்: %1"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr "சாவியை உருவாக்குவதில் சிக்கல்"
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr "சாவி இல்லை"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "புதிய சாவி ஜோடியை உருவாக்கு"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "புதிய சாவி ஜோடி உருவாக்கப்படுகிறது…"
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "அடையாளத்தை திருத்து"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "பொதுவானவை"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "&உங்கள் பெயர்:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2921,12 +2914,12 @@ msgstr ""
 "எவ்வாறு அமைய வேண்டுமோ, அவ்வாறே இப்புலத்தில் உள்ளிடுங்கள்.</p><p>இதை காலியாக விட்டால், "
 "உங்கள் மின்னஞ்சல் முகவரியே அப்புலங்களில் பயன்படுத்தப்படும்.</p></qt>."
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "&நிறுவனம்:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2937,12 +2930,12 @@ msgstr ""
 "நிறுவனத்தின் பெயர் காட்டப்பட வேண்டுமெனின், அதை இப்புலத்தில் உள்ளிடுங்கள்.</p><p>இதை "
 "காலியாக விடல் பாதுகாப்பானதே (மேலும் விசித்திரமாக கருதப்படாது).</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "&மின்னஞ்சல் முகவரி:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2957,12 +2950,12 @@ msgstr ""
 "கூடுதல் முகவரிகளை மாற்றுமுகவரிகளாக கீழே உள்ளிடுங்கள்.</p><p>இது வெற்றாகவோ, தவறாகவோ "
 "இருந்தால், மக்கள் உங்களுக்கு பதிலளிப்பதில் சிரமப்படுவார்கள்.</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, kde-format
 msgid "Email a&liases:"
 msgstr "மா&ற்று மின்னஞ்சல் முகவரிகள்:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2973,12 +2966,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr "மறைக்குறியாக்கம்"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2999,12 +2992,23 @@ msgstr ""
 "மறைக்குறியீட்டு கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</"
 "p><p>சாவிகள் பற்றி மேலும் <a>http://www.gnupg.org</a>அறியலாம்</p></qt>."
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP கையொப்ப சாவி:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "OpenPGP விசை 0x%1 "
+
+#: identity/identitydialog.cpp:413
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3027,12 +3031,12 @@ msgstr ""
 "கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</p>சாவிகள் பற்றி மேலும் "
 "<a>http://www.gnupg.org</a>அறியலாம்</qt>."
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP மறையாக்க சாவி:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3046,12 +3050,12 @@ msgstr ""
 "மறைக்குறியீட்டு கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</"
 "p><p>சாவிகள் பற்றி மேலும் <a>http://www.gnupg.org</a>அறியலாம்</p></qt>."
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME கையொப்ப சான்றிதழ்:"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3066,39 +3070,80 @@ msgstr ""
 "மறைக்குறியீட்டு கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</"
 "p><p>சாவிகள் பற்றி மேலும் <a>http://www.gnupg.org</a>அறியலாம்</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME மறையாக்க சான்றிதழ்:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "முதன்மையான வகை:"
 
-#: identity/identitydialog.cpp:443
-#, kde-format
-msgid "Automatically sign messages"
-msgstr "அஞ்சல்களுக்கு தானாக டிஜிட்டல் கையொப்பமிடு"
+#: identity/identitydialog.cpp:477
+#, fuzzy, kde-format
+msgid "Enable Autocrypt"
+msgstr "சந்தா"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
 #, kde-format
-msgid "Automatically encrypt messages when possible"
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
+#, fuzzy, kde-format
+msgid "Overwrite defaults:"
+msgstr "&மேல்எழுது"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "அ&ஞ்சலுக்கு கையொப்பமிடு"
+
+#: identity/identitydialog.cpp:500
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt messages when possible"
 msgstr "முடிந்தால் அஞ்சல்களை மறையாக்கம் செய்"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "&கையொப்பமிடாத அஞ்சல்களை அனுப்பும் போது எச்சரி"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "&மறையாக்கப்படாத அஞ்சல்களை அனுப்பும்போது எச்சரி"
+
+#: identity/identitydialog.cpp:516
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "மேம்பட்டவை"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&பதிலளிக்க வேண்டிய முகவரி:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3115,12 +3160,12 @@ msgstr ""
 "<tt>அனுப்புநர்</tt> புலத்தில் உங்கள் மின்னஞ்சல் முகவரியும், வரும் பதில்கள் குழு முகவரிக்கு "
 "போக வைக்கலாம். </p><p>சந்தேகமிருந்தால், இந்த புலத்தை வெற்றாக விடவும்.</p></qt>"
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, kde-format
 msgid "&CC addresses:"
 msgstr "&நகல் முகவரிகள்:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3131,12 +3176,12 @@ msgid ""
 "blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&மறைநகல் முகவரிகள்:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3147,72 +3192,72 @@ msgid ""
 "list of BCC recipients.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&அகராதி:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "அனுப்பியுள்ள அஞ்சலுக்கான அடைவை தேர்வு செய்தல்"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "அ&னுப்பியுள்ள அஞ்சலுக்கான அடைவு:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "வரைவுகளுக்கான அடைவை தேர்வு செய்தல்"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "&வரைவுகளுக்கான அடைவு:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "வார்ப்புருகளுக்கான அடைவை தேர்வு செய்தல்"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgid "&Templates folder:"
 msgstr "&வார்ப்புருகளுக்கான அடைவு:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "அஞ்சலனுப்பும் கணக்கு:"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "அஞ்சலுடன் என் vCard-ஐ இணை"
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, kde-format
 msgid "Create..."
 msgstr "உருவாக்கு…"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "தான்திருத்த மொழி:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Restore default domain name"
 msgstr "இயல்பிருப்பு ஆள்கள பெயரை மீட்டமை"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "&இயல்பிருப்பு ஆள்களம்:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3221,38 +3266,38 @@ msgstr ""
 "<qt><p>பயனர் பெயரை மட்டும் கொண்ட மின்னஞ்சல் முகவிரிகளை நிறைவு செய்ய இந்த ஆள்களம் "
 "பயன்படுத்தப்படும்.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&இந்த அடையாளத்திற்கு தனிப்பட்ட அஞ்சல் வார்ப்புருகளை பயன்படுத்து"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "பொதுவான வார்ப்புருகளை &நகலெடு"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Signature"
 msgstr "கையொப்பம்"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, kde-format
 msgid "Picture"
 msgstr "படம்"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "செல்லுபடியாகாத மாற்று மின்னஞ்சல் முகவரி \"%1\""
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "செல்லுபடியாகாத மின்னஞ்சல் முகவரி"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3261,7 +3306,7 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3270,7 +3315,7 @@ msgstr ""
 "கட்டமைக்கப்பட்ட OpenPGP மறையாக்க விசைகள் பயனர் அடையாளத்தை மின்னஞ்சல் முகவரியோடு இந்த "
 "அடையாளத்திற்காக கட்டமைக்கப்படவில்லை (%1)."
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3283,7 +3328,7 @@ msgstr ""
 "இது கட்டமைப்பு உருவாக்கிய கையெழுத்தை பரிசோதிக்கும் போது எச்சரிக்கை செய்தியை பெற "
 "விளைவிக்கும்."
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3292,23 +3337,23 @@ msgstr ""
 "ஒரு கட்டமைக்கப்பட்ட S/MIME கையெழுத்து சான்றிதழில் கட்டமைக்கப்பட்ட மின்னஞ்சல் முகவரி "
 "அடையாளத்திற்காக இருக்காது (%1)."
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "சாவி/சான்றிதழ்களில் மின்னஞ்சல் முகவரி கண்டுபிடிக்கப்படவில்லை"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "கையொப்ப கோப்பு செல்லுபடியாகாத‍து"
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" அடையாளத்தை திருத்து"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3317,7 +3362,7 @@ msgstr ""
 "இந்த அடையாளத்திற்கான தனிப்பட்ட அடைவுகளில் சில இப்போதில்லை; ஆகவே, இயல்பிருப்பு அடைவுகளே "
 "பயன்படுத்தப்படுவன."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "திருத்து…"
@@ -6173,127 +6218,134 @@ msgstr ""
 msgid "Show crypto label indicator"
 msgstr "க்ரிப்டோ சின்னங்களை காட்டு"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Show crypto ownertrust icons"
+msgstr "க்ரிப்டோ சின்னங்களை காட்டு"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "செய்தி முன்பார்வை பட்டி"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, fuzzy, kde-format
 #| msgid "&Do not show a message preview pane"
 msgid "Do not show a message preview pane"
 msgstr "செய்தி முன்பார்வை திரை காண்பிக்காதே."
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, fuzzy, kde-format
 #| msgid "Show the message preview pane belo&w the message list"
 msgid "Show the message preview pane below the message list"
 msgstr "செய்தி முன்பார்வை திரையை செய்தி பட்டியலுக்கு கீழ் காண்பி"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, fuzzy, kde-format
 #| msgid "Show the message preview pane ne&xt to the message list"
 msgid "Show the message preview pane next to the message list"
 msgstr "செய்தி முன்பார்வை திரையை செய்தி பட்டியலுக்கு அடுத்து காண்பி"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, fuzzy, kde-format
 #| msgid "Lon&g folder list"
 msgid "Long folder list"
 msgstr "நீளமான அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, fuzzy, kde-format
 #| msgid "Shor&t folder list"
 msgid "Short folder list"
 msgstr "குறுகிய அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, fuzzy, kde-format
 msgid "Message template for new message"
 msgstr "செய்தி பட்டியல் - புதிய செய்திகள்"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, fuzzy, kde-format
 msgid "Message template for reply"
 msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, fuzzy, kde-format
 msgid "Message template for reply to all"
 msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, fuzzy, kde-format
 msgid "Message template for forward"
 msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, fuzzy, kde-format
 msgid "Quote characters"
 msgstr "&மேற்கோள் எழுத்துக்களை சேர்"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6301,7 +6353,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6309,7 +6361,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6317,7 +6369,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6325,7 +6377,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6333,7 +6385,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6410,111 +6462,6 @@ msgstr "&புதிய அஞ்சலுக்கான விவரமான
 #, kde-format
 msgid "Other Actio&ns..."
 msgstr "&மற்ற செயல்கள்..."
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, kde-format
-msgid "Encrypting"
-msgstr "மறையாக்கம்"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, fuzzy, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-"இந்த விருப்பத்தேர்வுகள் செயல்படுத்தப்பட்டால், செய்தி/கோப்பு காண்பவரின் கண்களில் இருந்து "
-"மறைவிடக்கப்பட இயலாது, மேலும் தங்களின் விசையிலும் இவ்வாறே நிகழும். இவ்வாறு செய்வதன் மூலம் "
-"தாங்கள் செய்தி/கோப்பினை பிற்காலத்தில் காணச்செய்யலாம். இவையே பொதுவாக நல்ல யோசனையாக "
-"அமையும்."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr "&அஞ்சல்களை மறையாக்கும்போது, என் சான்றிதழுடனும் சேர்த்து மறையாக்கு"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "அஞ்சல்களை மறையாக்கம் செய்தபடியே சேமிக்க இதை குறிக்கவும் "
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Store Messages Encrypted</h1>\n"
-#| "When this box is checked, sent messages are stored encrypted like they "
-#| "were sent. This is not recommended, as you will not be able to read the "
-#| "messages any longer if a necessary certificate expires.\n"
-#| "<p>\n"
-#| "However, there may be local rules that require you to turn this option "
-#| "on. When in doubt, check with your local administrator.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>செய்திகளை மறைக்குறியீட்டி சேமி</h1>\n"
-"இந்தப் பெட்டியை தேர்வு செய்தால்,  அனுப்பப்பட்ட செய்திகள், அனுப்பியபடியே மறைகுறியீட்டபடி "
-"சேமிக்கப்படும்.  இது பரிந்துரைக்கப்படுவதில்லை, ஏனென்றால் தேவையான ஒரு சான்றிதழ் காலம் "
-"கடந்துவிட்டால் அச்செய்திகளை உங்களால் படிக்க முடியாது.\n"
-"<p>\n"
-"ஆனாலும், உங்கள் உள்ளாமை விதிகள் உங்களை இதை தேர்வு செய்ய சொல்லலாம். சந்தேகமிருந்தால், உங்கள் "
-"உள்ளாமை நிர்வாகியிடம் கேட்கவும்.\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "&அனுப்பிய அஞ்சல்களை மறையாக்கம் செய்து சேமி"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, fuzzy, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-"இந்த விருப்பத்தேர்வுகள் செயலாக்கப்பட்டால், இந்தப் பயன்பாடு தங்களுக்கு  மறைவிடக்கச் செய்ய "
-"உதவும் அனைத்து பொது விசைகளின் பட்டியலைக் காண்பிக்கும். அவைகள் செயல் நிறுத்தப்பட்டால் தாங்கள் "
-"உரையாடல் பெட்டியை மட்டுமே காண இயலும் சரியான விசையையோ அல்லது பலவற்றையோ செயல்படுத்த "
-"இயலாது."
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr "மறையாக்க சாவிகளை ஏற்க கோரி &எப்போதும் காட்டு"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr "வரைவாக சேமிக்கும்போது குறிப்பிட்டபடி மறையாக்கம் செய்/கையொப்பமிடு"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr "உரைத்திருத்தியில் மறையாக்கம்/கையொப்ப நிலையை காட்டு"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6801,6 +6748,275 @@ msgstr "&தேடல் அடைவை திற"
 #, kde-format
 msgid "Open &Message"
 msgstr "அ&ஞ்சலை திற"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+msgid "Security defaults"
+msgstr "முன்னிருப்பாக அமை"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "மறைகுறியிடப்பட்ட செய்தி"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "அஞ்சல்களை மறையாக்கம் செய்தபடியே சேமிக்க இதை குறிக்கவும் "
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Store Messages Encrypted</h1>\n"
+#| "When this box is checked, sent messages are stored encrypted like they "
+#| "were sent. This is not recommended, as you will not be able to read the "
+#| "messages any longer if a necessary certificate expires.\n"
+#| "<p>\n"
+#| "However, there may be local rules that require you to turn this option "
+#| "on. When in doubt, check with your local administrator.\n"
+#| "</qt>"
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>செய்திகளை மறைக்குறியீட்டி சேமி</h1>\n"
+"இந்தப் பெட்டியை தேர்வு செய்தால்,  அனுப்பப்பட்ட செய்திகள், அனுப்பியபடியே மறைகுறியீட்டபடி "
+"சேமிக்கப்படும்.  இது பரிந்துரைக்கப்படுவதில்லை, ஏனென்றால் தேவையான ஒரு சான்றிதழ் காலம் "
+"கடந்துவிட்டால் அச்செய்திகளை உங்களால் படிக்க முடியாது.\n"
+"<p>\n"
+"ஆனாலும், உங்கள் உள்ளாமை விதிகள் உங்களை இதை தேர்வு செய்ய சொல்லலாம். சந்தேகமிருந்தால், உங்கள் "
+"உள்ளாமை நிர்வாகியிடம் கேட்கவும்.\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "மறைகுறியிடப்பட்ட செய்தி"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "Sign all message &parts"
+msgid "Sign all messages"
+msgstr "&செய்திப் பகுதிகளை கையொப்பமிடு"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+#| msgid "Automatically encrypt messages when possible"
+msgid "Encrypt all messages when possible"
+msgstr "முடிந்தால் அஞ்சல்களை மறையாக்கம் செய்"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Encryption Configuration"
+msgid "Encryption indicators"
+msgstr "மறையாக்க கட்டமைப்பு"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show sign/encrypt indicator in editor"
+msgid "Show sign/encrypt indicator"
+msgstr "உரைத்திருத்தியில் மறையாக்கம்/கையொப்ப நிலையை காட்டு"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, fuzzy, kde-format
+#| msgid "Always show the encryption keys &for approval"
+msgid "Always approve encryption keys before send"
+msgstr "மறையாக்க சாவிகளை ஏற்க கோரி &எப்போதும் காட்டு"
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "சான்றிதழ்கள் / சாவிகள் காலாவதி ஆகபோகும்போது எச்சரி (வரம்புகளை கீழே அமையுங்கள்)"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "பயனர் சான்றிதழ்களுக்கு / &சாவிகளுக்கு:"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "எத்தனை நாட்களென்பதை இங்கு தேர்ந்தெடுங்கள்"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+#| "Select the minimum number of days all certificates in the chain should be "
+#| "valid without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
+"குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக்கொள்ளவும்.\n"
+"<p>\n"
+"SPHINX அமைப்புகள் 14 நாளுக்கு பரிந்துரைக்கப்படுகிறது.\n"
+"</qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Encryption Certificate Expires</h1>\n"
+#| "Select the minimum number of days the encryption certificate should be "
+#| "valid without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>மறைக்குறியீடு சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"எச்சரிக்கை கொடுக்காமல் மறைக்குறியீட்டு சான்றிதழ் செல்லுபடியாக இருக்க வேண்டிய குறைந்தபட்ச "
+"நாட்களை தேர்வு செய்யுங்கள்.\n"
+"<p>\n"
+"பரிந்துரைக்கப்பட்ட SPHINX  அமைப்பு - 14 நாட்கள்.\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+#| msgid "For &root certificates:"
+msgid "For own certificates:"
+msgstr "&மூல (root) சான்றிதழ்களுக்கு:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
+"<p>\n"
+"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, kde-format
+msgid "For &root certificates:"
+msgstr "&மூல (root) சான்றிதழ்களுக்கு:"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>\n"
+#| "<h1>Warn If Root Certificate Expires</h1>\n"
+#| "Select the minimum number of days the root certificate should be valid "
+#| "without issuing a warning.\n"
+#| "<p>\n"
+#| "The recommended SPHINX setting is 14 days.\n"
+#| "</qt>"
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
+"<p>\n"
+"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "இடைநிலை CA சான்றிதழ்களுக்கு:"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, kde-format
+msgid "GnuPG Settings..."
+msgstr "GnuPG அமைப்புகள்..."
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr "'மீண்டும் கேட்காதே' என்று முடக்கிய அனைத்து எச்சரிக்கைகளையும் மறுபடியும் இயக்கு"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7347,284 +7563,6 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "கையொப்பமிடாத அஞ்சல்களை அனுப்பும்போது எச்சரிக்கையெழுப்ப இதை குறியுங்கள்."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-#| "If this box is checked, you will be warned when you try to send parts of "
-#| "or the whole message unsigned.\n"
-#| "<p>\n"
-#| "It is recommended to leave this option turned on for maximum integrity.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>கையெழுத்திடாத தகவலை அனுப்ப முயன்றால் எச்சரி</h1>\n"
-"இந்த பெட்டி தேர்ந்தெடுத்திருந்தால், அனைத்து தகவலும் கையெழுத்திடாதவையை அனுப்ப முயன்றால் "
-"எச்சரிக்கை செய்.\n"
-"<p>\n"
-"அதிக சவுகரியத்திற்கு இந்தப் பெட்டியை தேர்ந்தெடுப்பது பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "&கையொப்பமிடாத அஞ்சல்களை அனுப்பும் போது எச்சரி"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "மறையாக்கம் செய்யாத அஞ்சல்களை அனுப்பும்போது எச்சரிக்க இதை குறியுங்கள்."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-#| "If this box is checked, you will be warned when you try to send parts of "
-#| "or the whole message unencrypted.\n"
-#| "<p>\n"
-#| "It is recommended to leave this option turned on for maximum integrity.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>மறைகுறியீடப்படா செய்திகளை அனுப்ப முயற்சிக்கும் பொழுது எச்சரி</h1>\n"
-"இப்பெட்டி தேர்ந்தெடுக்கப்பட்டால், நீங்கள் பகுதிகளோ, முழு செய்தியோ மறைக்குறியீடப்படாமல் அனுப்ப "
-"முயற்சித்தால் எச்சரிக்கப்படுவீர்கள்.\n"
-"<p>\n"
-"அதிகபட்ச சுத்தமிருக்க இந்த தேர்வு இருக்க பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "&மறையாக்கப்படாத அஞ்சல்களை அனுப்பும்போது எச்சரி"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "சான்றிதழ்கள் / சாவிகள் காலாவதி ஆகபோகும்போது எச்சரி (வரம்புகளை கீழே அமையுங்கள்)"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, kde-format
-msgid "For Signing"
-msgstr "கையொப்பமிடுவதற்கானவை"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, kde-format
-msgid "For Encryption"
-msgstr "மறையாக்கத்திற்கானவை"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "எத்தனை நாட்களென்பதை இங்கு தேர்ந்தெடுங்கள்"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Signature Certificate Expires</h1>\n"
-#| "Select the minimum number of days the signature certificate should be "
-#| "valid without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
-"குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக் கொள்ளவும்.\n"
-"<p>\n"
-"SPHINX அமைப்புகள் 14 நாளுக்குப் பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Encryption Certificate Expires</h1>\n"
-#| "Select the minimum number of days the encryption certificate should be "
-#| "valid without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>மறைக்குறியீடு சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
-"எச்சரிக்கை கொடுக்காமல் மறைக்குறியீட்டு சான்றிதழ் செல்லுபடியாக இருக்க வேண்டிய குறைந்தபட்ச "
-"நாட்களை தேர்வு செய்யுங்கள்.\n"
-"<p>\n"
-"பரிந்துரைக்கப்பட்ட SPHINX  அமைப்பு - 14 நாட்கள்.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-#| "Select the minimum number of days all certificates in the chain should be "
-#| "valid without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
-"குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக்கொள்ளவும்.\n"
-"<p>\n"
-"SPHINX அமைப்புகள் 14 நாளுக்கு பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If CA Certificate Expires</h1>\n"
-#| "Select the minimum number of days the CA certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
-"குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக்கொள்ளவும்.\n"
-"<p>\n"
-"SPHINX அமைப்புகள் 14 நாளுக்கு பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
-"எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
-"<p>\n"
-"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, kde-format
-msgid "For &root certificates:"
-msgstr "&மூல (root) சான்றிதழ்களுக்கு:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "இடைநிலை CA சான்றிதழ்களுக்கு:"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "பயனர் சான்றிதழ்களுக்கு / &சாவிகளுக்கு:"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "GnuPG அமைப்புகள்..."
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "'மீண்டும் கேட்காதே' என்று முடக்கிய அனைத்து எச்சரிக்கைகளையும் மறுபடியும் இயக்கு"
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -7776,6 +7714,167 @@ msgstr[1] "Edit \"Out of Office\" Replies..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "உருப்பெருக்கம்: %1%"
+
+#~ msgid "Composing"
+#~ msgstr "அஞ்சலெழுதுவது"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "மற்றவை"
+
+#~ msgid "Automatically sign messages"
+#~ msgstr "அஞ்சல்களுக்கு தானாக டிஜிட்டல் கையொப்பமிடு"
+
+#~ msgid "Encrypting"
+#~ msgstr "மறையாக்கம்"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, the message/file will not only be encrypted "
+#~ "with the receiver's public key, but also with your key. This will enable "
+#~ "you to decrypt the message/file at a later time. This is generally a good "
+#~ "idea."
+#~ msgstr ""
+#~ "இந்த விருப்பத்தேர்வுகள் செயல்படுத்தப்பட்டால், செய்தி/கோப்பு காண்பவரின் கண்களில் இருந்து "
+#~ "மறைவிடக்கப்பட இயலாது, மேலும் தங்களின் விசையிலும் இவ்வாறே நிகழும். இவ்வாறு செய்வதன் "
+#~ "மூலம் தாங்கள் செய்தி/கோப்பினை பிற்காலத்தில் காணச்செய்யலாம். இவையே பொதுவாக நல்ல "
+#~ "யோசனையாக அமையும்."
+
+#~ msgid ""
+#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
+#~ "identity"
+#~ msgstr "&அஞ்சல்களை மறையாக்கும்போது, என் சான்றிதழுடனும் சேர்த்து மறையாக்கு"
+
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "&அனுப்பிய அஞ்சல்களை மறையாக்கம் செய்து சேமி"
+
+#, fuzzy
+#~ msgid ""
+#~ "When this option is enabled, the application will always show you a list "
+#~ "of public keys from which you can choose the one it will use for "
+#~ "encryption. If it is off, the application will only show the dialog if it "
+#~ "cannot find the right key or if there are several which could be used."
+#~ msgstr ""
+#~ "இந்த விருப்பத்தேர்வுகள் செயலாக்கப்பட்டால், இந்தப் பயன்பாடு தங்களுக்கு  மறைவிடக்கச் செய்ய "
+#~ "உதவும் அனைத்து பொது விசைகளின் பட்டியலைக் காண்பிக்கும். அவைகள் செயல் நிறுத்தப்பட்டால் "
+#~ "தாங்கள் உரையாடல் பெட்டியை மட்டுமே காண இயலும் சரியான விசையையோ அல்லது பலவற்றையோ "
+#~ "செயல்படுத்த இயலாது."
+
+#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
+#~ msgstr "வரைவாக சேமிக்கும்போது குறிப்பிட்டபடி மறையாக்கம் செய்/கையொப்பமிடு"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "கையொப்பமிடாத அஞ்சல்களை அனுப்பும்போது எச்சரிக்கையெழுப்ப இதை குறியுங்கள்."
+
+#, fuzzy
+#~| msgid ""
+#~| "<qt>\n"
+#~| "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~| "If this box is checked, you will be warned when you try to send parts of "
+#~| "or the whole message unsigned.\n"
+#~| "<p>\n"
+#~| "It is recommended to leave this option turned on for maximum integrity.\n"
+#~| "</qt>"
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>கையெழுத்திடாத தகவலை அனுப்ப முயன்றால் எச்சரி</h1>\n"
+#~ "இந்த பெட்டி தேர்ந்தெடுத்திருந்தால், அனைத்து தகவலும் கையெழுத்திடாதவையை அனுப்ப முயன்றால் "
+#~ "எச்சரிக்கை செய்.\n"
+#~ "<p>\n"
+#~ "அதிக சவுகரியத்திற்கு இந்தப் பெட்டியை தேர்ந்தெடுப்பது பரிந்துரைக்கப்படுகிறது.\n"
+#~ "</qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "மறையாக்கம் செய்யாத அஞ்சல்களை அனுப்பும்போது எச்சரிக்க இதை குறியுங்கள்."
+
+#, fuzzy
+#~| msgid ""
+#~| "<qt>\n"
+#~| "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~| "If this box is checked, you will be warned when you try to send parts of "
+#~| "or the whole message unencrypted.\n"
+#~| "<p>\n"
+#~| "It is recommended to leave this option turned on for maximum integrity.\n"
+#~| "</qt>"
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>மறைகுறியீடப்படா செய்திகளை அனுப்ப முயற்சிக்கும் பொழுது எச்சரி</h1>\n"
+#~ "இப்பெட்டி தேர்ந்தெடுக்கப்பட்டால், நீங்கள் பகுதிகளோ, முழு செய்தியோ மறைக்குறியீடப்படாமல் "
+#~ "அனுப்ப முயற்சித்தால் எச்சரிக்கப்படுவீர்கள்.\n"
+#~ "<p>\n"
+#~ "அதிகபட்ச சுத்தமிருக்க இந்த தேர்வு இருக்க பரிந்துரைக்கப்படுகிறது.\n"
+#~ "</qt>"
+
+#~ msgid "For Signing"
+#~ msgstr "கையொப்பமிடுவதற்கானவை"
+
+#~ msgid "For Encryption"
+#~ msgstr "மறையாக்கத்திற்கானவை"
+
+#, fuzzy
+#~| msgid ""
+#~| "<qt>\n"
+#~| "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~| "Select the minimum number of days the signature certificate should be "
+#~| "valid without issuing a warning.\n"
+#~| "<p>\n"
+#~| "The recommended SPHINX setting is 14 days.\n"
+#~| "</qt>"
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
+#~ "குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக் கொள்ளவும்.\n"
+#~ "<p>\n"
+#~ "SPHINX அமைப்புகள் 14 நாளுக்குப் பரிந்துரைக்கப்படுகிறது.\n"
+#~ "</qt>"
+
+#, fuzzy
+#~| msgid ""
+#~| "<qt>\n"
+#~| "<h1>Warn If CA Certificate Expires</h1>\n"
+#~| "Select the minimum number of days the CA certificate should be valid "
+#~| "without issuing a warning.\n"
+#~| "<p>\n"
+#~| "The recommended SPHINX setting is 14 days.\n"
+#~| "</qt>"
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
+#~ "குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக்கொள்ளவும்.\n"
+#~ "<p>\n"
+#~ "SPHINX அமைப்புகள் 14 நாளுக்கு பரிந்துரைக்கப்படுகிறது.\n"
+#~ "</qt>"
 
 #, fuzzy
 #~ msgid "Select from Contacts..."
@@ -11916,10 +12015,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ msgid "&Overwrite"
 #~ msgstr "&மேல்எழுது"
 
-#, fuzzy
-#~ msgid "Overwrite &All"
-#~ msgstr "&மேல்எழுது"
-
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -12101,9 +12196,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "இணைக்க வேண்டிய பொது சாவியை தேர்ந்தெடுக்கவும்"
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "OpenPGP விசை 0x%1 "
 
 #, fuzzy
 #~| msgid ""
@@ -12849,10 +12941,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ msgstr "உட்பெட்டி"
 
 #, fuzzy
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "சந்தா"
-
-#, fuzzy
 #~| msgid "Mail"
 #~ msgctxt ""
 #~ "%1 is a 'Contact Owner' or simlar action. %2 is a protocol normally web "
@@ -13107,9 +13195,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #, fuzzy
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "செய்தி மாற்றப்படும் பொழுது தயவு செய்து காத்திருக்கவும்"
-
-#~ msgid "Encrypted message"
-#~ msgstr "மறைகுறியிடப்பட்ட செய்தி"
 
 #~ msgid "Encrypted message (decryption not possible)"
 #~ msgstr "மறைக்குறியிட்ட செய்தி (வழிகுறியிட முடியாது)"
@@ -14819,9 +14904,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~| msgid "S&ecurity"
 #~ msgid "Security"
 #~ msgstr "பாதுகாப்பு"
-
-#~ msgid "Encryption"
-#~ msgstr "மறையாக்கம்"
 
 #~ msgid "&None"
 #~ msgstr "&எதுவும் இல்லை"
@@ -17868,9 +17950,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ "%1:\n"
 #~ "%2  என்ற குறிப்புடன் முன்கட்டளை வெளியேறியது"
 
-#~ msgid "Encryption Configuration"
-#~ msgstr "மறையாக்க கட்டமைப்பு"
-
 #~ msgid "Encryption &algorithm:"
 #~ msgstr "மறைக்கும் படிமுறையைசெய்யும் "
 
@@ -18208,9 +18287,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ msgid "Send certificate c&hain with root"
 #~ msgstr "&மூலத்துடன் சான்றிதழ் சங்கிலியை அனுப்பு"
 
-#~ msgid "Sign all message &parts"
-#~ msgstr "&செய்திப் பகுதிகளை கையொப்பமிடு"
-
 #~ msgid "Check to have all message parts signed by default"
 #~ msgstr ""
 #~ "எல்லா செய்திப் பகுதிகளும் முன்னிருப்பின்படி கையொப்பமிடபட்டுள்ளதா என்று சோதனையிடு"
@@ -18497,10 +18573,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 
 #~ msgid "Move to:"
 #~ msgstr "இங்கு நகர்த்தவும்"
-
-#, fuzzy
-#~ msgid "Set Default"
-#~ msgstr "முன்னிருப்பாக அமை"
 
 #, fuzzy
 #~ msgid "smtp (Default)"

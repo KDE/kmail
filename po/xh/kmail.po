@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-10-23 00:44+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -407,7 +407,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2319 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -567,7 +567,7 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Templates"
 msgstr ""
@@ -1742,32 +1742,27 @@ msgstr "Iposi Entsha Eqatshelweyo"
 
 #: configuredialog/configuresecuritypage.cpp:54
 #, fuzzy, kde-format
-msgid "Composing"
-msgstr "Umqambi"
+msgid "Encryption"
+msgstr "Ufihlo"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, kde-format
-msgid "Miscellaneous"
-msgstr ""
-
-#: configuredialog/configuresecuritypage.cpp:66
 #, kde-format
 msgid "S/MIME Validation"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "Idilesi ye Email"
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1778,48 +1773,46 @@ msgstr ""
 "Ukutshintsha uthungelwano lwelizwe lonke izicwangciso zizakubhala ngaphezulu "
 "onke amaxabiso enwadi ekhankanyiweyo enenkcukacha."
 
-#: configuredialog/configuresecuritypage.cpp:332
-#: configuredialog/configuresecuritypage.cpp:335
-#: configuredialog/configuresecuritypage.cpp:337
-#: configuredialog/configuresecuritypage.cpp:339
-#: configuredialog/configuresecuritypage.cpp:342
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:300
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:373
+#: configuredialog/configuresecuritypage.cpp:337
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Ithumela"
 
-#: configuredialog/configuresecuritypage.cpp:381
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:386
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:453
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:592 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:594
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
@@ -2033,7 +2026,7 @@ msgid "Send"
 msgstr "&Thumela"
 
 #: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3091
 #, kde-format
 msgid "Send &Later"
 msgstr "Thumela &Kamva"
@@ -2295,14 +2288,14 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3561
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Ilayini: %1"
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3563
+#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
 #, kde-format
 msgid " Column: %1 "
 msgstr " Umhlathi: %1"
@@ -2361,73 +2354,73 @@ msgstr "Ufuna ukulahla umyalezo okanye ukuyigcina ngezesha elizayo?"
 msgid "Close Composer"
 msgstr "&Umqambi Omtsha"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 msgid "Autosave Message Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 msgid "Sending Message Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: editor/kmcomposerwin.cpp:2241
+#: editor/kmcomposerwin.cpp:2256
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Ngenisa Ifayile"
 
-#: editor/kmcomposerwin.cpp:2303
+#: editor/kmcomposerwin.cpp:2318
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2319
 #, fuzzy, kde-format
 msgid "Add as &Attachment"
 msgstr "Yongeza Uncamathiselo..."
 
-#: editor/kmcomposerwin.cpp:2319 editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
 #, fuzzy, kde-format
 msgid "Name of the attachment:"
 msgstr "Uncamathelo: "
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2340
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid Attachment Name"
 msgstr "&Yenza utyikityo"
 
-#: editor/kmcomposerwin.cpp:2376
+#: editor/kmcomposerwin.cpp:2391
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Umyalezo ofihliweyo"
 msgstr[1] "Umyalezo ofihliweyo"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2392
 #, fuzzy, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Yongeza Uncamathiselo..."
 msgstr[1] "Yongeza Uncamathiselo..."
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2438
 #, fuzzy, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Uncamathelo: "
 
-#: editor/kmcomposerwin.cpp:2520
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "unnamed"
 msgstr "ayinikwanga gama"
 
-#: editor/kmcomposerwin.cpp:2546
+#: editor/kmcomposerwin.cpp:2561
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2436,12 +2429,12 @@ msgid ""
 "identity configuration.</p></qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2553
+#: editor/kmcomposerwin.cpp:2568
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Isitshixo Esingachazwanga Sosebenziso ngokufihlisa"
 
-#: editor/kmcomposerwin.cpp:2617
+#: editor/kmcomposerwin.cpp:2632
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2452,12 +2445,12 @@ msgstr ""
 "OpenPGP esizakusetyenziselwa le.<br>Ungachaza isitshixo seOpenPGP "
 "engasetyenziswa nesazisi esikhoyo oluku qwalaselo isazisi.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2624
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "Isitshixo Sotyikityo Esingachazwanga"
 
-#: editor/kmcomposerwin.cpp:2783
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2465,157 +2458,157 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2792
+#: editor/kmcomposerwin.cpp:2807
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2817
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2819
 #, fuzzy, kde-format
 msgid "No To: specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2805 editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
 #, fuzzy, kde-format
 msgid "S&end as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2821
 #, fuzzy, kde-format
 msgid "&Specify the To field"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2828
+#: editor/kmcomposerwin.cpp:2843
 #, fuzzy, kde-format
 msgid "&Specify the Subject"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2892
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:3073
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "About to send email..."
 msgstr "Ilungisele ukuthumela i email..."
 
-#: editor/kmcomposerwin.cpp:3074
+#: editor/kmcomposerwin.cpp:3089
 #, fuzzy, kde-format
 msgid "Send Confirmation"
 msgstr "Thumela Uqinisekiso"
 
-#: editor/kmcomposerwin.cpp:3075
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgid "&Send Now"
 msgstr "&Thumela Ngoku"
 
-#: editor/kmcomposerwin.cpp:3164
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3180
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "Abekho abamkeli."
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3181
 #, fuzzy, kde-format
 msgid "&Send as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3182
 #, fuzzy, kde-format
 msgid "&Edit Recipients"
 msgstr "Abamkeli abangasebenziyo."
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3229
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3230
 #, fuzzy, kde-format
 msgid "Lose Formatting"
 msgstr "Ulwazi lobuntu bakho"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3231
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgid "Add Markup Plain Text"
 msgstr "Umyalezo njengo Mbhalo Ocacileyo"
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3925
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3950
+#: editor/kmcomposerwin.cpp:3965
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3956
+#: editor/kmcomposerwin.cpp:3971
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3977
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3969
+#: editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2623,7 +2616,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:4018
 #, fuzzy, kde-format
 msgid "Plugin Editor Information"
 msgstr "Ulwazi lobuntu bakho"
@@ -2906,50 +2899,50 @@ msgstr "&Isiphindo sesazisi esikhoyo"
 msgid "&Existing identities:"
 msgstr "&Iinkcazo ezikhoyo:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:175
 #, fuzzy, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "Izicwangciso Zeencwadi ezinenkcukacha"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:176
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:218
 #, fuzzy, kde-format
 msgid "Generate a new key pair"
 msgstr "Ngenisa impendulo entsha yesimaphambili:"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:230
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:243
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Hlela Uchazo"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:268
 #, fuzzy, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "&Ngokubanzi"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid "&Your name:"
 msgstr "&Igama lakho:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:281
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2957,12 +2950,12 @@ msgid ""
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Um&butho:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:298
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2970,12 +2963,12 @@ msgid ""
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "&Email address:"
 msgstr "&Idilesi ye email:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:316
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2985,13 +2978,13 @@ msgid ""
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:336
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "&Idilesi ye email:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:341
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3002,12 +2995,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:359
 #, kde-format
 msgid "Cryptography"
 msgstr ""
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:365
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3017,12 +3010,23 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
 #, fuzzy, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Isitshixo se OpenPGP:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:377
+#, kde-format
+msgid "Use same key for encryption and signing"
+msgstr ""
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+#| msgid "OpenPGP key 0x%1"
+msgid "OpenPGP key:"
+msgstr "Isitshixo se PGP 0x%1"
+
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3033,12 +3037,12 @@ msgid ""
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:420
 #, fuzzy, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Isitshixo se OpenPGP:"
 
-#: identity/identitydialog.cpp:396
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3047,12 +3051,12 @@ msgid ""
 "not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:401
+#: identity/identitydialog.cpp:435
 #, fuzzy, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Ithumela Iziqinisekiso"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3062,39 +3066,79 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "&Khetha isiqinisekiso:"
 
-#: identity/identitydialog.cpp:438
+#: identity/identitydialog.cpp:472
 #, fuzzy, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Ekhethwayo"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:477
 #, fuzzy, kde-format
-msgid "Automatically sign messages"
-msgstr "&Tyikitya ngokuzenzekela imiyalezo usebenzisa i OpenPGP"
+msgid "Enable Autocrypt"
+msgstr "Inkcazelo"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:481
+#, kde-format
+msgid "Autocrypt:"
+msgstr ""
+
+#: identity/identitydialog.cpp:486
+#, kde-format
+msgid "Let others know you prefer encryption"
+msgstr ""
+
+#: identity/identitydialog.cpp:489
+#, kde-format
+msgid "Overwrite global settings for security defaults"
+msgstr ""
+
+#: identity/identitydialog.cpp:492
 #, fuzzy, kde-format
-msgid "Automatically encrypt messages when possible"
+msgid "Overwrite defaults:"
+msgstr "Ngenisa Ifayile"
+
+#: identity/identitydialog.cpp:497
+#, fuzzy, kde-format
+#| msgid "&Sign Message"
+msgid "Sign messages"
+msgstr "&Tyikitya Umyalezo"
+
+#: identity/identitydialog.cpp:500
+#, fuzzy, kde-format
+msgid "Encrypt messages when possible"
 msgstr "Fihla imiyalezo ngokuzenzekelayo &anini na xa kunokwenzeka"
 
-#: identity/identitydialog.cpp:456
+#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#, fuzzy, kde-format
+#| msgid "Warn when trying to send &unsigned messages"
+msgid "Warn when trying to send unsigned messages"
+msgstr "Lumkisa xa uzama ukuthumela &imiyalezo engatyikitywanga"
+
+#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
+#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#, fuzzy, kde-format
+#| msgid "&Warn when trying to send unencrypted messages"
+msgid "Warn when trying to send unencrypted messages"
+msgstr "&Lumkisiwe ngexesha ibizama ukuthumela umyalezo oguqulelwe kwi khowudi"
+
+#: identity/identitydialog.cpp:516
 #, fuzzy, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "&Ukubheka phambili"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:524
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&Phendula-Kwidilesi:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3105,13 +3149,13 @@ msgid ""
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:545
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "&Iidilesi ze BCC:"
 
-#: identity/identitydialog.cpp:490
+#: identity/identitydialog.cpp:550
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3127,12 +3171,12 @@ msgstr ""
 "ekuthumeleni ukhuphelo lomyalezo ngamnye othunyelwe   kwenye i akhawunti "
 "yakho.</p><p>Ukuba uyathandabuza, shiya elibala lingenanto.</p></qt> "
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&Iidilesi ze BCC:"
 
-#: identity/identitydialog.cpp:509
+#: identity/identitydialog.cpp:569
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3148,75 +3192,75 @@ msgstr ""
 "ekuthumeleni ukhuphelo lomyalezo ngamnye othunyelwe   kwenye i akhawunti "
 "yakho.</p><p>Ukuba uyathandabuza, shiya elibala lingenanto.</p></qt> "
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 msgid "D&ictionary:"
 msgstr "&Indawo ekuyo:"
 
-#: identity/identitydialog.cpp:529
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Incwadi eneenkcukacha Yeposi-Ethunyelwey&o"
 
-#: identity/identitydialog.cpp:531
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Incwadi eneenkcukacha yeposi-&ethunyelweyo:"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:597
 #, fuzzy, kde-format
 msgid "Select Draft Folder"
 msgstr "Khetha umhlathi(imi):"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "&Imizobo yenncwadi eneenkcukacha:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:605
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Incwadi eneenkcukacha"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 msgid "&Templates folder:"
 msgstr "&Incwadi eneenkcukacha yenkunkuma:"
 
-#: identity/identitydialog.cpp:552
+#: identity/identitydialog.cpp:612
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Qwalasela i Akhawunti"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:619
 #, fuzzy, kde-format
 msgid "Attach my vCard to message"
 msgstr "Yongeza 'isihloko' k umyalezo."
 
-#: identity/identitydialog.cpp:560 identity/identitydialog.cpp:1089
+#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Nika igama kwakhona..."
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:625
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "Khetha &ulwimi:"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:637
 #, fuzzy, kde-format
 msgid "Restore default domain name"
 msgstr "Indawo yokwendalo:"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:640
 #, fuzzy, kde-format
 msgid "Defaul&t domain:"
 msgstr "Indawo yokwendalo:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:646
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3225,38 +3269,38 @@ msgstr ""
 "<qt><p>Indawo yokungagqibekanga isetyenziselwe ukugqiba iidilesi ze email "
 "ezine gama lomsebenzisi.</p></qt>"
 
-#: identity/identitydialog.cpp:603
+#: identity/identitydialog.cpp:663
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Sebenzisa umyalezo wesiko onesimamva se-id "
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:677
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Buyisela"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:690
 #, fuzzy, kde-format
 msgid "Signature"
 msgstr "&Utyikityo"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:697
 #, fuzzy, kde-format
 msgid "Picture"
 msgstr "&Utyikityo"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Yongeza Idilesi ye Email"
 
-#: identity/identitydialog.cpp:699 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 msgid "Invalid Email Address"
 msgstr "Yongeza Idilesi ye Email"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3265,14 +3309,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3281,31 +3325,31 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:842
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:792
+#: identity/identitydialog.cpp:852
 #, fuzzy, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "&Idilesi ye email ye CA ekhupha iziqinisekiso"
 
-#: identity/identitydialog.cpp:804
+#: identity/identitydialog.cpp:864
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Utyikityo luphelelwe lixesha."
 
-#: identity/identitydialog.cpp:820
+#: identity/identitydialog.cpp:880
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Hlela Uchazo \"%1\" "
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:949
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3315,7 +3359,7 @@ msgstr ""
 "Ngoko ke incwadi eneenkcukacha engagqibekanga esezakulungiswa iza "
 "kusetyenziswa."
 
-#: identity/identitydialog.cpp:1091
+#: identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Edit..."
 msgstr "Hlela..."
@@ -6215,122 +6259,129 @@ msgstr ""
 msgid "Show crypto label indicator"
 msgstr "Bonisa iimpawu zemifanekiso &ze crypto"
 
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Show crypto ownertrust icons"
+msgstr "Bonisa iimpawu zemifanekiso &ze crypto"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.cmake:285
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:298
+#: settings/kmail.kcfg.cmake:302
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:306
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:310
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:314
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:318
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:340
+#: settings/kmail.kcfg.cmake:344
 #, fuzzy, kde-format
 msgid "Message Preview Pane"
 msgstr "Umyalezo njengo Mbhalo Ocacileyo"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
+#: settings/kmail.kcfg.cmake:347
 #, fuzzy, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Sukubonisa izincamathiselo kumbonisi womyalezo"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
+#: settings/kmail.kcfg.cmake:350
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
+#: settings/kmail.kcfg.cmake:353
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:356
+#: settings/kmail.kcfg.cmake:360
 #, kde-format
 msgid "Folder List"
 msgstr "Uluhlu Lwencwadi eneenkcukacha"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
+#: settings/kmail.kcfg.cmake:363
 #, fuzzy, kde-format
 msgid "Long folder list"
 msgstr "Uluhlu lwencwadi eneenkcukacha"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
+#: settings/kmail.kcfg.cmake:366
 #, fuzzy, kde-format
 msgid "Short folder list"
 msgstr "Uluhlu lwencwadi eneenkcukacha"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:371
+#: settings/kmail.kcfg.cmake:375
 #, fuzzy, kde-format
 msgid "Message template for new message"
 msgstr "Uluhlu Lomyalezo - Umhla Wendawo"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:376
+#: settings/kmail.kcfg.cmake:380
 #, fuzzy, kde-format
 msgid "Message template for reply"
 msgstr "&Phawula Umyalezo njengobhekiswe phambili"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:381
+#: settings/kmail.kcfg.cmake:385
 #, fuzzy, kde-format
 msgid "Message template for reply to all"
 msgstr "&Phawula Umyalezo njengobhekiswe phambili"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:386
+#: settings/kmail.kcfg.cmake:390
 #, fuzzy, kde-format
 msgid "Message template for forward"
 msgstr "&Phawula Umyalezo njengobhekiswe phambili"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:391
+#: settings/kmail.kcfg.cmake:395
 #, fuzzy, kde-format
 msgid "Quote characters"
 msgstr "&Susa Inkonzo"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:406
+#: settings/kmail.kcfg.cmake:410
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:414
+#: settings/kmail.kcfg.cmake:418
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6338,7 +6389,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:422
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6346,7 +6397,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:426
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6354,7 +6405,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:430
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6362,7 +6413,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:434
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6370,7 +6421,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:438
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
@@ -6448,92 +6499,6 @@ msgstr "Iposi Entsha Eqatshelweyo"
 #| msgid "Other Actio&ns"
 msgid "Other Actio&ns..."
 msgstr "Ezinye Iintshu&kumo"
-
-#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
-#: ui/composercryptoconfiguration.ui:17
-#, fuzzy, kde-format
-msgid "Encrypting"
-msgstr "Ufihlo"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:23
-#, kde-format
-msgid ""
-"When this option is enabled, the message/file will not only be encrypted "
-"with the receiver's public key, but also with your key. This will enable you "
-"to decrypt the message/file at a later time. This is generally a good idea."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mEncToSelf)
-#: ui/composercryptoconfiguration.ui:26
-#, kde-format
-msgid ""
-"When encrypting emails, always also encr&ypt to the certificate of my own "
-"identity"
-msgstr ""
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:33
-#, kde-format
-msgid "Check to store messages encrypted "
-msgstr "Khangela ukuze ugcine imiyalezo efihliweyo"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:41
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Store Messages Encrypted</h1>\n"
-"When this box is checked, sent messages are stored encrypted like they were "
-"sent. This is not recommended, as you will not be able to read the messages "
-"any longer if a necessary certificate expires.\n"
-"<p>\n"
-"However, there may be local rules that require you to turn this option on. "
-"When in doubt, check with your local administrator.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Gcina Imiyalezo Efihliweyo</h1>\n"
-"Xa le bhokisi ikhangelwe, imiyalezo ethunyelweyo igcinwa iguqulelwe kwi "
-"khowudi ngokungathi ibithunyelwe. Oku akunconywa, njengo kuba ungazuku kwazi "
-"ukufunda imiyalezo kwakhona ukuba isiqinisekiso esiyimfuneko siyaphelelwa.\n"
-"<p>\n"
-"Nokuba, kungabakho imithetho yobulali efuna wena uvule olukhetho. Xa "
-"ukwintandabuzo, khangela nomphathi weekhomputha wakho wobulali. </qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
-#: ui/composercryptoconfiguration.ui:44
-#, fuzzy, kde-format
-msgid "Store sent messages encry&pted"
-msgstr "Gcina imiyalezo &efihliweyo"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:54
-#, kde-format
-msgid ""
-"When this option is enabled, the application will always show you a list of "
-"public keys from which you can choose the one it will use for encryption. If "
-"it is off, the application will only show the dialog if it cannot find the "
-"right key or if there are several which could be used."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/composercryptoconfiguration.ui:57
-#, kde-format
-msgid "Always show the encryption keys &for approval"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
-#: ui/composercryptoconfiguration.ui:64
-#, kde-format
-msgid "When sa&ving as draft, sign/encrypt as indicated"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
-#: ui/composercryptoconfiguration.ui:71
-#, kde-format
-msgid "Show sign/encrypt indicator in editor"
-msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
@@ -6844,6 +6809,231 @@ msgstr "Abamkeli abangasebenziyo."
 #, fuzzy, kde-format
 msgid "Open &Message"
 msgstr "Umyalezo"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
+#: ui/securitypageencryptiontab.ui:17
+#, fuzzy, kde-format
+msgid "Security defaults"
+msgstr "Cwangcisa Njengokwendalo"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#: ui/securitypageencryptiontab.ui:23
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encrypt draft messages"
+msgstr "Umyalezo ofihliweyo"
+
+#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:33
+#, kde-format
+msgid "Check to store messages encrypted "
+msgstr "Khangela ukuze ugcine imiyalezo efihliweyo"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:41
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Store Messages Encrypted</h1>\n"
+"When this box is checked, sent messages are stored encrypted like they were "
+"sent. This is not recommended, as you will not be able to read the messages "
+"any longer if a necessary certificate expires.\n"
+"<p>\n"
+"However, there may be local rules that require you to turn this option on. "
+"When in doubt, check with your local administrator.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Gcina Imiyalezo Efihliweyo</h1>\n"
+"Xa le bhokisi ikhangelwe, imiyalezo ethunyelweyo igcinwa iguqulelwe kwi "
+"khowudi ngokungathi ibithunyelwe. Oku akunconywa, njengo kuba ungazuku kwazi "
+"ukufunda imiyalezo kwakhona ukuba isiqinisekiso esiyimfuneko siyaphelelwa.\n"
+"<p>\n"
+"Nokuba, kungabakho imithetho yobulali efuna wena uvule olukhetho. Xa "
+"ukwintandabuzo, khangela nomphathi weekhomputha wakho wobulali. </qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#: ui/securitypageencryptiontab.ui:44
+#, fuzzy, kde-format
+#| msgid "Encrypted message"
+msgid "Encry&pt sent messages"
+msgstr "Umyalezo ofihliweyo"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
+#: ui/securitypageencryptiontab.ui:54
+#, fuzzy, kde-format
+#| msgid "Sign all message &parts"
+msgid "Sign all messages"
+msgstr "Tyikitya zonke iingxenye &zomyalezo"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
+#: ui/securitypageencryptiontab.ui:64
+#, fuzzy, kde-format
+msgid "Encrypt all messages when possible"
+msgstr "Fihla imiyalezo ngokuzenzekelayo &anini na xa kunokwenzeka"
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
+#: ui/securitypageencryptiontab.ui:74
+#, fuzzy, kde-format
+#| msgid "Encryption Configuration"
+msgid "Encryption indicators"
+msgstr "Uqwalaselo Lofihlo"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#: ui/securitypageencryptiontab.ui:80
+#, fuzzy, kde-format
+#| msgid "Show crypto &icons"
+msgid "Show sign/encrypt indicator"
+msgstr "Bonisa iimpawu zemifanekiso &ze crypto"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#: ui/securitypageencryptiontab.ui:90
+#, kde-format
+msgid "Show encryption key ownertrust level"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
+#: ui/securitypageencryptiontab.ui:100
+#, kde-format
+msgid "Alerts"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
+#: ui/securitypageencryptiontab.ui:106
+#, kde-format
+msgid "Always approve encryption keys before send"
+msgstr ""
+
+#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
+#: ui/securitypageencryptiontab.ui:127
+#, fuzzy, kde-format
+msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
+msgstr "&Lumkisa ukuba isiqinisekiso se CA siphelelwa ngaphatsi kwe"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: ui/securitypageencryptiontab.ui:139
+#, fuzzy, kde-format
+msgid "For end-user certificates/&keys:"
+msgstr "&Sukuthumela iziqinisekiso"
+
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
+#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#, kde-format
+msgid "Select the number of days here"
+msgstr "Khetha inani lee ntsuku apha"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:169
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
+"Select the minimum number of days all certificates in the chain should be "
+"valid without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Lumkisa Ukuba I Siqinisekiso Kwi Tyathanga Siphelelwe</h1>\n"
+"Khetha ubuncinane benani leentsuku kwiziqinisektyathangaiso zonke ezikwi  "
+"zimele ukuba zisebenze ngaphandle kokukhupha isilumkiso.\n"
+"<p>\n"
+"Isicwangciso se SPHINX sizi ntsuku ezi 14. \n"
+"</qt>"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:205
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Encryption Certificate Expires</h1>\n"
+"Select the minimum number of days the encryption certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Lumkisa Ukuba Ufihla Uphelelo lwexesha</h1>\n"
+"Khetha ubuncinane benani lweentsuku ekumele isiqinisekiso esiguqulelwe kwi "
+"khowudi sisebenze ngaphandle kokukhupa isilumkiso. <p>\n"
+"Isicwangciso esinconywayo se SPHINX sizi ntsuku ezi 14.\n"
+"</qt>"
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel7)
+#: ui/securitypageencryptiontab.ui:221
+#, fuzzy, kde-format
+msgid "For own certificates:"
+msgstr "&Sukuthumela iziqinisekiso"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#: ui/securitypageencryptiontab.ui:245
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 30 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Lumkisa Ukuba Ingcambu Yesiqinisekiso Iyaphelelwa</h1>\n"
+"Khetha ibuncinane benani leentsuku zengcambu yesiqinisekiso ekumele isebenze "
+"ngazo ngaphandle koku khupha isilumkiso.\n"
+"<p>\n"
+"Isicwangciso esinconywayo seSPHINX sizi ntsuku ezi 14.\n"
+"</qt> "
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
+#: ui/securitypageencryptiontab.ui:261
+#, fuzzy, kde-format
+msgid "For &root certificates:"
+msgstr "&Sukuthumela iziqinisekiso"
+
+#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#: ui/securitypageencryptiontab.ui:307
+#, fuzzy, kde-format
+msgid ""
+"<qt>\n"
+"<h1>Warn If Root Certificate Expires</h1>\n"
+"Select the minimum number of days the root certificate should be valid "
+"without issuing a warning.\n"
+"<p>\n"
+"The recommended SPHINX setting is 14 days.\n"
+"</p></qt>"
+msgstr ""
+"<qt>\n"
+"<h1>Lumkisa Ukuba Ingcambu Yesiqinisekiso Iyaphelelwa</h1>\n"
+"Khetha ibuncinane benani leentsuku zengcambu yesiqinisekiso ekumele isebenze "
+"ngazo ngaphandle koku khupha isilumkiso.\n"
+"<p>\n"
+"Isicwangciso esinconywayo seSPHINX sizi ntsuku ezi 14.\n"
+"</qt> "
+
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ui/securitypageencryptiontab.ui:323
+#, fuzzy, kde-format
+msgid "For intermediate CA certificates:"
+msgstr "&Sukuthumela iziqinisekiso"
+
+#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
+#: ui/securitypageencryptiontab.ui:354
+#, fuzzy, kde-format
+msgid "GnuPG Settings..."
+msgstr "&Ithumela"
+
+#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
+#: ui/securitypageencryptiontab.ui:393
+#, kde-format
+msgid "Re-enable All \"Do not Ask Again\" Warnings"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7355,232 +7545,6 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:17
-#, kde-format
-msgid "Check to be warned when sending unsigned messages."
-msgstr "Khangela ukuze ulumkiswe xa uthumela imiyalezo engatyikitywanga."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:25
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unsigned.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Xa Uzama Uku Thumela Imiyalezo Engekatyikitywa</h1>\n"
-"Ukuba le bhokisi ikhangelwe, uzaku lumkiswa xa uzama ukuthumela iindawana ze "
-"okanye wonke umyalezo ungatyikitywanga.\n"
-"<p>\n"
-"Kuyanconywa ukushiya olukhetho luvulekele ubukhulu bokuhlanganisela "
-"ndawonye. \n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: ui/warningconfiguration.ui:28
-#, kde-format
-msgid "Warn when trying to send &unsigned messages"
-msgstr "Lumkisa xa uzama ukuthumela &imiyalezo engatyikitywanga"
-
-#. i18n: ectx: property (toolTip), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:38
-#, kde-format
-msgid "Check to be warned when sending unencrypted messages."
-msgstr "Khangela ukuze ulunkiswe xa uthumela kwimiyalezo engathunyelwanga."
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:46
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-"If this box is checked, you will be warned when you try to send parts of or "
-"the whole message unencrypted.\n"
-"<p>\n"
-"It is recommended to leave this option turned on for maximum integrity.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Xa Uzama Ukuthumela Umyalezo Ongafihlwanga</h1>\n"
-"Ukuba le bhokisi ijongiwe, uzaku lumkiswa xa uzama ukuthumela iindawana "
-"okanye wonke umyalezo uguqulelwe kwi khowudi.\n"
-"<p>\n"
-"Kuyacetyiswa ukushiya olu khetho luvulekele ubuninzi bophelelo.\n"
-"</qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: ui/warningconfiguration.ui:49
-#, kde-format
-msgid "&Warn when trying to send unencrypted messages"
-msgstr "&Lumkisiwe ngexesha ibizama ukuthumela umyalezo oguqulelwe kwi khowudi"
-
-#. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/warningconfiguration.ui:59
-#, fuzzy, kde-format
-msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "&Lumkisa ukuba isiqinisekiso se CA siphelelwa ngaphatsi kwe"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2)
-#: ui/warningconfiguration.ui:68
-#, fuzzy, kde-format
-msgid "For Signing"
-msgstr "Sebenzisela U&yikityo"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
-#: ui/warningconfiguration.ui:81
-#, fuzzy, kde-format
-msgid "For Encryption"
-msgstr "Ufihlo"
-
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:100 ui/warningconfiguration.ui:136
-#: ui/warningconfiguration.ui:172 ui/warningconfiguration.ui:202
-#: ui/warningconfiguration.ui:232 ui/warningconfiguration.ui:268
-#, kde-format
-msgid "Select the number of days here"
-msgstr "Khetha inani lee ntsuku apha"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignKeyExpiresSB)
-#: ui/warningconfiguration.ui:108
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Signature Certificate Expires</h1>\n"
-"Select the minimum number of days the signature certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Ukuba Utyikityo Lwesiqinisekiso Luyaphelelwa</h1>\n"
-"Khetha ubuncinane benani leentsuku zotyikityo lwesiqinisekiso ekumele "
-"zisebenze ngaphandle kokukhupha isilumkiso.\n"
-"<p>\n"
-"Isicwangciso se SPHINX esiconywayo sizi ntsuku ezi 14.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/warningconfiguration.ui:144
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Encryption Certificate Expires</h1>\n"
-"Select the minimum number of days the encryption certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Ukuba Ufihla Uphelelo lwexesha</h1>\n"
-"Khetha ubuncinane benani lweentsuku ekumele isiqinisekiso esiguqulelwe kwi "
-"khowudi sisebenze ngaphandle kokukhupa isilumkiso. <p>\n"
-"Isicwangciso esinconywayo se SPHINX sizi ntsuku ezi 14.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/warningconfiguration.ui:180
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-"Select the minimum number of days all certificates in the chain should be "
-"valid without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Ukuba I Siqinisekiso Kwi Tyathanga Siphelelwe</h1>\n"
-"Khetha ubuncinane benani leentsuku kwiziqinisektyathangaiso zonke ezikwi  "
-"zimele ukuba zisebenze ngaphandle kokukhupha isilumkiso.\n"
-"<p>\n"
-"Isicwangciso se SPHINX sizi ntsuku ezi 14. \n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignChainCertExpiresSB)
-#: ui/warningconfiguration.ui:210
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If CA Certificate Expires</h1>\n"
-"Select the minimum number of days the CA certificate should be valid without "
-"issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Ukuba Isiqinisekiso Se CA Siyaphelelwa</h1>\n"
-"Khetha ubuncinane benani leentsuku ekumele isiqinisekiso seCA sisebenze "
-"ngazo ngaphandle koku khupha isilumkiso.\n"
-"<p>\n"
-"Isicwangciso se SPHINX esiconywayo sizi ntsuku ezi 14.\n"
-"</qt>"
-
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnSignRootCertExpiresSB)
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/warningconfiguration.ui:240 ui/warningconfiguration.ui:276
-#, fuzzy, kde-format
-msgid ""
-"<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
-"<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
-"</p></qt>"
-msgstr ""
-"<qt>\n"
-"<h1>Lumkisa Ukuba Ingcambu Yesiqinisekiso Iyaphelelwa</h1>\n"
-"Khetha ibuncinane benani leentsuku zengcambu yesiqinisekiso ekumele isebenze "
-"ngazo ngaphandle koku khupha isilumkiso.\n"
-"<p>\n"
-"Isicwangciso esinconywayo seSPHINX sizi ntsuku ezi 14.\n"
-"</qt> "
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/warningconfiguration.ui:292
-#, fuzzy, kde-format
-msgid "For &root certificates:"
-msgstr "&Sukuthumela iziqinisekiso"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/warningconfiguration.ui:305
-#, fuzzy, kde-format
-msgid "For intermediate CA certificates:"
-msgstr "&Sukuthumela iziqinisekiso"
-
-#. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/warningconfiguration.ui:318
-#, fuzzy, kde-format
-msgid "For end-user certificates/&keys:"
-msgstr "&Sukuthumela iziqinisekiso"
-
-#. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/warningconfiguration.ui:365
-#, fuzzy, kde-format
-msgid "GnuPG Settings..."
-msgstr "&Ithumela"
-
-#. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/warningconfiguration.ui:404
-#, kde-format
-msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr ""
-
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
 #, fuzzy, kde-format
@@ -7732,6 +7696,105 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Composing"
+#~ msgstr "Umqambi"
+
+#, fuzzy
+#~ msgid "Automatically sign messages"
+#~ msgstr "&Tyikitya ngokuzenzekela imiyalezo usebenzisa i OpenPGP"
+
+#, fuzzy
+#~ msgid "Store sent messages encry&pted"
+#~ msgstr "Gcina imiyalezo &efihliweyo"
+
+#~ msgid "Check to be warned when sending unsigned messages."
+#~ msgstr "Khangela ukuze ulumkiswe xa uthumela imiyalezo engatyikitywanga."
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unsigned.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Lumkisa Xa Uzama Uku Thumela Imiyalezo Engekatyikitywa</h1>\n"
+#~ "Ukuba le bhokisi ikhangelwe, uzaku lumkiswa xa uzama ukuthumela iindawana "
+#~ "ze okanye wonke umyalezo ungatyikitywanga.\n"
+#~ "<p>\n"
+#~ "Kuyanconywa ukushiya olukhetho luvulekele ubukhulu bokuhlanganisela "
+#~ "ndawonye. \n"
+#~ "</qt>"
+
+#~ msgid "Check to be warned when sending unencrypted messages."
+#~ msgstr "Khangela ukuze ulunkiswe xa uthumela kwimiyalezo engathunyelwanga."
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
+#~ "If this box is checked, you will be warned when you try to send parts of "
+#~ "or the whole message unencrypted.\n"
+#~ "<p>\n"
+#~ "It is recommended to leave this option turned on for maximum integrity.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Lumkisa Xa Uzama Ukuthumela Umyalezo Ongafihlwanga</h1>\n"
+#~ "Ukuba le bhokisi ijongiwe, uzaku lumkiswa xa uzama ukuthumela iindawana "
+#~ "okanye wonke umyalezo uguqulelwe kwi khowudi.\n"
+#~ "<p>\n"
+#~ "Kuyacetyiswa ukushiya olu khetho luvulekele ubuninzi bophelelo.\n"
+#~ "</qt>"
+
+#, fuzzy
+#~ msgid "For Signing"
+#~ msgstr "Sebenzisela U&yikityo"
+
+#, fuzzy
+#~ msgid "For Encryption"
+#~ msgstr "Ufihlo"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the signature certificate should be "
+#~ "valid without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Lumkisa Ukuba Utyikityo Lwesiqinisekiso Luyaphelelwa</h1>\n"
+#~ "Khetha ubuncinane benani leentsuku zotyikityo lwesiqinisekiso ekumele "
+#~ "zisebenze ngaphandle kokukhupha isilumkiso.\n"
+#~ "<p>\n"
+#~ "Isicwangciso se SPHINX esiconywayo sizi ntsuku ezi 14.\n"
+#~ "</qt>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt>\n"
+#~ "<h1>Warn If CA Certificate Expires</h1>\n"
+#~ "Select the minimum number of days the CA certificate should be valid "
+#~ "without issuing a warning.\n"
+#~ "<p>\n"
+#~ "The recommended SPHINX setting is 14 days.\n"
+#~ "</p></qt>"
+#~ msgstr ""
+#~ "<qt>\n"
+#~ "<h1>Lumkisa Ukuba Isiqinisekiso Se CA Siyaphelelwa</h1>\n"
+#~ "Khetha ubuncinane benani leentsuku ekumele isiqinisekiso seCA sisebenze "
+#~ "ngazo ngaphandle koku khupha isilumkiso.\n"
+#~ "<p>\n"
+#~ "Isicwangciso se SPHINX esiconywayo sizi ntsuku ezi 14.\n"
+#~ "</qt>"
 
 #, fuzzy
 #~ msgid "Select from Contacts..."
@@ -10775,10 +10838,6 @@ msgstr ""
 #~ msgstr "Ifayile eneligama sele ikhona. Ufuna ukubhala ngaphezulu kwayo?"
 
 #, fuzzy
-#~ msgid "Overwrite &All"
-#~ msgstr "Ngenisa Ifayile"
-
-#, fuzzy
 #~ msgid ""
 #~ "The part %1 of the message is encrypted. Do you want to keep the "
 #~ "encryption when saving?"
@@ -10924,9 +10983,6 @@ msgstr ""
 
 #~ msgid "Select the public key which should be attached."
 #~ msgstr "Khetha isitshixo sikawonke-wonke esinokuncamathiselwa."
-
-#~ msgid "OpenPGP key 0x%1"
-#~ msgstr "Isitshixo se PGP 0x%1"
 
 #, fuzzy
 #~ msgid "Exporting key..."
@@ -11582,10 +11638,6 @@ msgstr ""
 #~ msgstr "ibhokisi engaphakathi"
 
 #, fuzzy
-#~ msgid "Enable Subscriptions?"
-#~ msgstr "Inkcazelo"
-
-#, fuzzy
 #~| msgid "Mail"
 #~ msgctxt ""
 #~ "%1 is a 'Contact Owner' or simlar action. %2 is a protocol normally web "
@@ -11809,9 +11861,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Please wait while the message is being decrypted..."
 #~ msgstr "Nceda linda ngelixa umyalezo uthunyelwe"
-
-#~ msgid "Encrypted message"
-#~ msgstr "Umyalezo ofihliweyo"
 
 #, fuzzy
 #~ msgid "Reason: %1"
@@ -16031,9 +16080,6 @@ msgstr ""
 #~ "Ayikwazanga ukubhala kwifayile:\n"
 #~ "%1"
 
-#~ msgid "Encryption Configuration"
-#~ msgstr "Uqwalaselo Lofihlo"
-
 #~ msgid "Encryption &algorithm:"
 #~ msgstr "Ufihlo lwe &agorithm:"
 
@@ -16411,9 +16457,6 @@ msgstr ""
 #~ msgid "Send certificate c&hain with root"
 #~ msgstr "Thumela itya&thanga lesiqinisekiso ngengcambu"
 
-#~ msgid "Sign all message &parts"
-#~ msgstr "Tyikitya zonke iingxenye &zomyalezo"
-
 #~ msgid "Check to have all message parts signed by default"
 #~ msgstr ""
 #~ "Khangela ukuze ube nazo zonke iindawana zomyalezo zityikityiwe ngokwendalo"
@@ -16738,10 +16781,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Move to:"
 #~ msgstr "&Yiya Ku"
-
-#, fuzzy
-#~ msgid "Set Default"
-#~ msgstr "Cwangcisa Njengokwendalo"
 
 #, fuzzy
 #~ msgid "smtp (Default)"
