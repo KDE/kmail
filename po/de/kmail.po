@@ -1673,7 +1673,8 @@ msgid "Message Disposition Notifications"
 msgstr "Empfangs- und Lesebenachrichtigungen"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Encryption"
 msgid "Encryption"
 msgstr "Verschlüsselung"
 

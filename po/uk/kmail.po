@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-23 00:44+0000\n"
-"PO-Revision-Date: 2022-10-16 08:45+0300\n"
+"PO-Revision-Date: 2022-10-23 09:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1669,8 +1669,7 @@ msgid "Message Disposition Notifications"
 msgstr "Сповіщення про долю повідомлення"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Шифрування"
 
@@ -3017,13 +3016,12 @@ msgstr "Ключ OpenPGP для підписів:"
 #: identity/identitydialog.cpp:377
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Використовувати один ключ для шифрування та підписування"
 
 #: identity/identitydialog.cpp:387
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Ключ OpenPGP для підписів:"
+msgstr "Ключ OpenPGP:"
 
 #: identity/identitydialog.cpp:413
 #, kde-format
@@ -3095,56 +3093,51 @@ msgid "Preferred format:"
 msgstr "Основний формат:"
 
 #: identity/identitydialog.cpp:477
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Зашифрувати"
+msgstr "Увімкнути автошифрування"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Автошифрування:"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Повідомити іншим, що ви надаєте перевагу шифруванню"
 
 #: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Перезаписати загальні параметри для типового захисту"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Перезаписати типове:"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Підписати п&овідомлення"
+msgstr "Підписувати повідомлення"
 
 #: identity/identitydialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Автоматично шифрувати повідомлення, якщо можливо"
+msgstr "Шифрувати повідомлення, якщо можливо"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Попереджувати при спробі надіслати &непідписане повідомлення"
+msgstr "Попереджувати при спробі відіслати непідписане повідомлення"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Поперед&жати при надсиланні незашифрованих повідомлень"
+msgstr "Попереджати при надсиланні незашифрованих повідомлень"
 
 #: identity/identitydialog.cpp:516
 #, kde-format
@@ -6329,10 +6322,9 @@ msgstr "Показувати індикатор мітки шифрування"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Показувати індикатор мітки шифрування"
+msgstr "Показувати піктограми довіри до власника ключа"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6912,17 +6904,15 @@ msgstr "Відкрити &повідомлення"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Встановити як типовий"
+msgstr "Типове для захисту"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Зашифровані повідомлення"
+msgstr "Шифрувати чернетки повідомлень"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6957,57 +6947,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Зашифровані повідомлення"
+msgstr "Ши&фрувати надіслані повідомлення"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Підписати п&овідомлення"
+msgstr "Підписувати усі повідомлення"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Автоматично шифрувати повідомлення, якщо можливо"
+msgstr "Шифрувати усі повідомлення, якщо можливо"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Показувати індикатор мітки шифрування"
+msgstr "Індикатори шифрування"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Показувати індикатор підписування або шифрування у редакторі"
+msgstr "Показувати індикатор підписування/шифрування"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Показувати рівень довіри до власника ключа шифрування"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Сигнали"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Завжди показувати ключі шифрування &для схвалення"
+msgstr "Завжди затверджувати ключі шифрування до надсилання"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7074,22 +7058,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Для &кореневих сертифікатів:"
+msgstr "Для власних сертифікатів:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7100,11 +7075,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Попереджати, якщо кореневий сертифікат втратить чинність</h1>\n"
-"Виберіть мінімальну кількість днів, протягом яких кореневий повинен бути "
+"<h1>Попереджати, якщо власні сертифікати втратять чинність</h1>\n"
+"Виберіть мінімальну кількість днів, протягом яких власний повинен бути "
 "чинним, щоб програма не показувала попередження.\n"
 "<p>\n"
-"Рекомендоване значення у SPHINX — 14 днів.\n"
+"Рекомендоване значення у SPHINX — 30 днів.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)

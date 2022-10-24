@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-23 00:44+0000\n"
-"PO-Revision-Date: 2022-10-20 12:43+0300\n"
+"PO-Revision-Date: 2022-10-23 11:21+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1651,8 +1651,7 @@ msgid "Message Disposition Notifications"
 msgstr "İleti Okundu Bildirimleri"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Şifreleme"
 
@@ -2958,13 +2957,12 @@ msgstr "OpenPGP imzalama anahtarı:"
 #: identity/identitydialog.cpp:377
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Şifreleme ve imzalama için aynı anahtarı kullan"
 
 #: identity/identitydialog.cpp:387
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP imzalama anahtarı:"
+msgstr "OpenPGP anahtarı:"
 
 #: identity/identitydialog.cpp:413
 #, kde-format
@@ -3033,56 +3031,51 @@ msgid "Preferred format:"
 msgstr "Tercih edilen biçim:"
 
 #: identity/identitydialog.cpp:477
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Şifrele"
+msgstr "Otomatik Şifrelemeyi Etkinleştir"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Otomatik şifrele:"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Başkalarının şifreleme yeğlediğinizi bilmesine izin ver"
 
 #: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Güvenlik öntanımlıları global ayarlarının üzerine yaz"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Öntanımlıların üzerine yaz:"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "İletiyi İm&zala"
+msgstr "İletileri imzala"
 
 #: identity/identitydialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Mümkün olduğunda iletileri şifrele"
+msgstr "Olabildiğince iletileri şifrele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "İm&zasız ileti gönderilmeye çalışıldığında uyar"
+msgstr "İmzasız ileti gönderilmeye çalışıldığında uyar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Şi&frelenmemiş ileti gönderilmeye çalışıldığında uyar"
+msgstr "Şifrelenmemiş ileti gönderilmeye çalışıldığında uyar"
 
 #: identity/identitydialog.cpp:516
 #, kde-format
@@ -6215,14 +6208,13 @@ msgstr "En son kullanılan kodlamaların listesi"
 #: settings/kmail.kcfg.cmake:277
 #, kde-format
 msgid "Show crypto label indicator"
-msgstr "Şifreleme simgelerini göster"
+msgstr "Şifreleme etiketi göstergesini göster"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Şifreleme simgelerini göster"
+msgstr "Şifreleme sahip güveni simgelerini göster"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6795,17 +6787,15 @@ msgstr "&İletiyi Aç"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Öntanımlı olarak ayarla"
+msgstr "Güvenlik öntanımlıları"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Şifrelenmiş İletiler"
+msgstr "Taslakları şifrele"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6839,57 +6829,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Şifrelenmiş İletiler"
+msgstr "Gö&nderilmiş iletileri şifrele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "İletiyi İm&zala"
+msgstr "Tüm iletileri imzala"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Mümkün olduğunda iletileri şifrele"
+msgstr "Olabildiğince tüm iletileri şifrele"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Şifreleme simgelerini göster"
+msgstr "Şifreleme göstergeleri"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Düzenleyicide imzala/şifrele belirtecini göster"
+msgstr "İmza/Şifreleme göstergelerini göster"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Sahip güven düzeyi şifreleme anahtarını göster"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alarmlar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Onaylamak için şifreleme anahtarlarını her zaman göster"
+msgstr "Gönderme öncesi şifreleme anahtarlarını her zaman onayla"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6956,22 +6940,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "K&ök sertifikalar için:"
+msgstr "Kendi sertifikaları için:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6982,11 +6957,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Eğer Yönetici Sertifikası Süresi Dolarsa Uyar</h1>\n"
-"Yönetici sertifikasının bir uyarı göstermemesi için geçerli olması gereken "
+"<h1>Eğer Kendi Sertifikası Süresi Dolarsa Uyar</h1>\n"
+"Kendi sertifikasının bir uyarı göstermemesi için geçerli olması gereken "
 "asgari gün sayısını seçin.\n"
 "<p>\n"
-"Önerilen SPHINX ayarı 14 gündür.\n"
+"Önerilen SPHINX ayarı 30 gündür.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
