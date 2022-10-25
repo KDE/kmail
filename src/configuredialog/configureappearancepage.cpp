@@ -17,7 +17,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageList/ThemeConfigButton>
 #include <messagelist/messagelistsettings.h>
 
-#include "util.h"
 #include <MailCommon/FolderTreeWidget>
 
 #include "kmmainwidget.h"

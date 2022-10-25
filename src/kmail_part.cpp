@@ -11,7 +11,6 @@
 #include "kmail_part.h"
 
 #include "kmmainwidget.h"
-#include "kmmainwin.h"
 
 #include <QVBoxLayout>
 

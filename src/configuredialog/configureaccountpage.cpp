@@ -6,7 +6,6 @@
 
 #include "configureaccountpage.h"
 #include "configagentdelegate.h"
-#include "dialog/kmknotify.h"
 #include "kmkernel.h"
 #include "newmailnotifierinterface.h"
 #include "settings/kmailsettings.h"

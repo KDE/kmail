@@ -7,10 +7,8 @@
 #include "kmcomposereditorng.h"
 #include "dialog/spellcheckerconfigdialog.h"
 #include "job/dndfromarkjob.h"
-#include "kmail_debug.h"
 #include "kmcomposerwin.h"
 #include "kmkernel.h"
-#include "util.h"
 
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <KToggleAction>

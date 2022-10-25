@@ -10,7 +10,6 @@
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/MessageFolderAttribute>
 
-#include "kmail_debug.h"
 #include <KIconButton>
 #include <KLocalizedString>
 #include <QCheckBox>

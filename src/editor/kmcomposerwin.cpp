@@ -28,7 +28,6 @@
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
 #include "editor/warningwidgets/toomanyrecipientswarning.h"
 #include "job/addressvalidationjob.h"
-#include "job/createnewcontactjob.h"
 #include "job/dndfromarkjob.h"
 #include "job/saveasfilejob.h"
 #include "job/savedraftjob.h"
@@ -38,8 +37,6 @@
 #include "kmcomposerglobalaction.h"
 #include "kmcomposerupdatetemplatejob.h"
 #include "kmkernel.h"
-#include "kmmainwidget.h"
-#include "kmmainwin.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "settings/kmailsettings.h"
 #include "undosend/undosendmanager.h"

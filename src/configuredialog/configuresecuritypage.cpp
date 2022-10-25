@@ -7,7 +7,6 @@
 #include "configuresecuritypage.h"
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "settings/kmailsettings.h"
 #include <MailCommon/FolderSettings>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageViewer/MessageViewerSettings>
