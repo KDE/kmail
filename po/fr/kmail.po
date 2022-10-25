@@ -28,7 +28,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-23 00:44+0000\n"
-"PO-Revision-Date: 2022-07-11 22:04+0200\n"
+"PO-Revision-Date: 2022-10-24 13:47+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
 "Language: fr\n"
@@ -36,7 +36,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 22.08.2\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -1698,8 +1698,7 @@ msgid "Message Disposition Notifications"
 msgstr "Accusés de réception"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-#| msgid "Encryption"
+#, kde-format
 msgid "Encryption"
 msgstr "Chiffrement"
 
@@ -3035,13 +3034,12 @@ msgstr "Clé de signature OpenPGP :"
 #: identity/identitydialog.cpp:377
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Utiliser la même clé pour le chiffrement et la signature"
 
 #: identity/identitydialog.cpp:387
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Clé OpenPGP 0x%1"
+msgstr "Clé « OpenPGP » :"
 
 #: identity/identitydialog.cpp:413
 #, kde-format
@@ -3112,57 +3110,53 @@ msgid "Preferred format:"
 msgstr "Format préféré :"
 
 #: identity/identitydialog.cpp:477
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Activer les inscriptions ?"
+msgstr "Activer le chiffrement automatique"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Chiffrement automatique :"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Indiquer aux autres que vous préférez un chiffrement"
 
 #: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
+"Écraser les paramètres globaux par les paramètres de sécurité par défaut"
 
 #: identity/identitydialog.cpp:492
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Tout écr&aser"
+msgstr "Écraser les paramètres par défaut :"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Signer le message"
+msgstr "Signer les messages"
 
 #: identity/identitydialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Chiffrer automatiquement les messages si possible"
+msgstr "Chiffrer les messages lorsque possible"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "A&vertir lorsqu'on essaye d'envoyer des messages non signés"
+msgstr "Émettre une alarme lors d'une tentative d'envoi de messages non signés"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "A&vertir lorsqu'on essaye d'envoyer des messages non chiffrés"
+msgstr ""
+"Émettre une alarme lors d'une tentative d'envoi de messages non chiffrés"
 
 #: identity/identitydialog.cpp:516
 #, kde-format
@@ -6353,10 +6347,11 @@ msgstr "Afficher l'indicateur de chiffrement"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Afficher l'indicateur de chiffrement"
+msgstr ""
+"Afficher les icônes du niveau de confiance de l'utilisateur envers la "
+"cryptographie"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6942,17 +6937,15 @@ msgstr "Ouvrir le &message"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Définir par défaut"
+msgstr "Paramètres de sécurité par défaut"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Message chiffré"
+msgstr "Chiffrer les messages en brouillon"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6987,57 +6980,52 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Message chiffré"
+msgstr "Chiffrer les messa&ges envoyés"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Signer le message"
+msgstr "Signer tous les messages"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Chiffrer automatiquement les messages si possible"
+msgstr "Chiffrer tous les messages lorsque possible"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Afficher l'indicateur de chiffrement"
+msgstr "Indicateurs de chiffrement"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Afficher l'indicateur signer / chiffrer dans l'éditeur"
+msgstr "Afficher l'indicateur de signature / chiffrement"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
 msgstr ""
+"Afficher le niveau de confiance de l'utilisateur envers la clé de chiffrement"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alarmes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Toujours afficher les clés de chi&ffrement"
+msgstr "Toujours approuver les clés de chiffrement avant envoi"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7107,10 +7095,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Pour les certificats &racines :"
+msgstr "Pour vos propres certificats :"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245

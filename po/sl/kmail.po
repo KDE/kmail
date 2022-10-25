@@ -12,15 +12,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-23 00:44+0000\n"
-"PO-Revision-Date: 2022-10-17 07:49+0200\n"
+"PO-Revision-Date: 2022-10-24 07:51+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
 "X-Generator: Poedit 3.1.1\n"
 
@@ -1653,8 +1653,7 @@ msgid "Message Disposition Notifications"
 msgstr "Obvestila o usodi sporočil"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Šifriranje"
 
@@ -2968,13 +2967,12 @@ msgstr "Podpisovalni ključ OpenPGP:"
 #: identity/identitydialog.cpp:377
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Uporabi isti ključ za šifriranje in podpisovanje"
 
 #: identity/identitydialog.cpp:387
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Podpisovalni ključ OpenPGP:"
+msgstr "Ključ OpenPGP:"
 
 #: identity/identitydialog.cpp:413
 #, kde-format
@@ -3043,54 +3041,49 @@ msgid "Preferred format:"
 msgstr "Prednostna oblika:"
 
 #: identity/identitydialog.cpp:477
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Šifriraj"
+msgstr "Omogoči samodejno šifriranje"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Samodejno šifriranje:"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Daj drugim vedeti, da imate raje šifrirano"
 
 #: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Prepišite globalne privzete varnostne nastavitve"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Prepišite privzete nastavitve:"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Podpiši sporočilo"
+msgstr "Podpiši sporočila"
 
 #: identity/identitydialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Samodejno šifriraj sporočila, če je mogoče"
+msgstr "Šifriraj sporočila, če je mogoče"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "Opozori pri poskusu pošiljanja nepodpisanih sporočil"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Opozori pri poskusu pošiljanja nešifriranih sporočil"
 
@@ -6259,10 +6252,9 @@ msgstr "Pokaži oznako šifriranja"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Pokaži oznako šifriranja"
+msgstr "Pokaži ikone šifriranja zaupanja"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6836,17 +6828,15 @@ msgstr "Odpri sporočilo"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Nastavi kot privzeto"
+msgstr "Privzete nastavitve varnosti"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Šifrirana sporočila"
+msgstr "Šifriraj osnutke sporočil"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6880,57 +6870,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Šifrirana sporočila"
+msgstr "Šifriraj poslana sporočila"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Podpiši sporočilo"
+msgstr "Podpiši vsa sporočila"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Samodejno šifriraj sporočila, če je mogoče"
+msgstr "Šifriraj vsa sporočila, če je mogoče"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Pokaži oznako šifriranja"
+msgstr "Indikatorji šifriranja"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "V urejevalniku pokaži kazalnik podpisano/šifrirano"
+msgstr "Prikazuj indikator podpisano/šifrirano"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Prikazuj raven zaupanja lastnega ključa"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Opozorila"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Vedno prikaži šifrirne ključe za odobritev"
+msgstr "Vedno odobri šifrirne ključe pred pošiljanjem"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6997,22 +6981,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Za ko&renska potrdila:"
+msgstr "Za lastna potrdila:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7023,11 +6998,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Opozori, če korensko potrdilo preteče</h1>\n"
-"Izberite najmanjše število dni, ko mora biti korensko potrdilo veljavno, ne "
-"da bi bilo podano opozorilo.\n"
+"<h1>Opozori, če lastno potrdilo preteče</h1>\n"
+"Izberite najmanjše število dni, ko mora biti lastno potrdilo veljavno, ne da "
+"bi bilo podano opozorilo.\n"
 "<p>\n"
-"Priporočena nastavitev za SPHINX je 14 dni.\n"
+"Priporočena nastavitev za SPHINX je 30 dni.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-23 00:44+0000\n"
-"PO-Revision-Date: 2022-10-16 09:08+0200\n"
+"PO-Revision-Date: 2022-10-23 10:33+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -1670,8 +1670,7 @@ msgid "Message Disposition Notifications"
 msgstr "Notificacions de processament del missatge (MDN)"
 
 #: configuredialog/configuresecuritypage.cpp:54
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Encriptació"
 
@@ -2366,7 +2365,7 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr ""
 "<qt> <p>Per a poder signar este missatge primer haureu de definir la clau de "
-"signatura a utilitzar (OpenPGP o S/MIME).</p><p>Escolliu la clau que "
+"signatura que s'utilitzarà (OpenPGP o S/MIME).</p><p>Escolliu la clau que "
 "s'utilitzarà en la configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2639
@@ -2504,8 +2503,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"Per a este destinatari s'utilitza la clau d'encriptació automàtic. Esta clau "
-"no està verificada. El destinatari preferix respostes encriptades."
+"Per a este destinatari s'utilitza la clau d'Autocrypt. Esta clau no està "
+"verificada. El destinatari preferix respostes encriptades."
 
 #: editor/kmcomposerwin.cpp:3925
 #, kde-format
@@ -2513,16 +2512,16 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"Per a este destinatari s'utilitza la clau d'encriptació automàtic. Esta clau "
-"no està verificada. El destinatari no preferix respostes encriptades."
+"Per a este destinatari s'utilitza la clau d'Autocrypt. Esta clau no està "
+"verificada. El destinatari no preferix respostes encriptades."
 
 #: editor/kmcomposerwin.cpp:3932
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
-"Per a este destinatari s'utilitza la clau de xafarderia per a l'encriptació "
-"automàtic. Esta clau no està verificada."
+"Per a este destinatari s'utilitza la clau de xafarderia d'Autocrypt. Esta "
+"clau no està verificada."
 
 #: editor/kmcomposerwin.cpp:3965
 #, kde-format
@@ -2997,13 +2996,12 @@ msgstr "Clau de signatura OpenPGP:"
 #: identity/identitydialog.cpp:377
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Utilitza la mateixa clau per a l'encriptació i la signatura"
 
 #: identity/identitydialog.cpp:387
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Clau de signatura OpenPGP:"
+msgstr "Clau OpenPGP:"
 
 #: identity/identitydialog.cpp:413
 #, kde-format
@@ -3073,56 +3071,53 @@ msgid "Preferred format:"
 msgstr "Format preferit:"
 
 #: identity/identitydialog.cpp:477
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Encripta"
+msgstr "Activa l'Autocrypt"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Permet que els altres coneguen que preferiu l'encriptació"
 
 #: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
+"Paràmetres globals de sobreescriptura per als valors predeterminats de "
+"seguretat"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Paràmetres de sobreescriptura:"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Signa el missatge"
+msgstr "Signatura dels missatges"
 
 #: identity/identitydialog.cpp:500
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Encripta automàticament els missatges sempre que siga possible"
+msgstr "Encripta els missatges sempre que siga possible"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Avisa &si s'intenten enviar missatges sense signar"
+msgstr "Avisa si s'intenten enviar missatges sense signar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Avisa si s'in&tenten enviar missatges sense encriptar"
+msgstr "Avisa si s'intenten enviar missatges sense encriptar"
 
 #: identity/identitydialog.cpp:516
 #, kde-format
@@ -6284,10 +6279,9 @@ msgstr "Mostra l'indicador de l'etiqueta de criptografia"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Mostra l'indicador de l'etiqueta de criptografia"
+msgstr "Mostra icones de confiança del propietari de criptografia"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6866,17 +6860,15 @@ msgstr "Obri un &missatge"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Establix com a predeterminada"
+msgstr "Valors predeterminats de seguretat"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Missatges encriptats"
+msgstr "Encripta els esborranys dels missatges"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6912,57 +6904,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Missatges encriptats"
+msgstr "Encri&pta els missatges enviats"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Signa el missatge"
+msgstr "Signa tots els missatges"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Encripta automàticament els missatges sempre que siga possible"
+msgstr "Encripta tots els missatges sempre que siga possible"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Mostra l'indicador de l'etiqueta de criptografia"
+msgstr "Indicadors d'encriptació"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Mostra l'indicador de signat/encriptat en l'editor"
+msgstr "Mostra l'indicador de signatura/encriptació"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Mostra el nivell de confiança del propietari de la clau d'encriptació"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alertes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Mostra sempre les claus d'encriptació &per a aprovar-les"
+msgstr "Aprova sempre les claus d'encriptació abans d'enviar"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7002,7 +6988,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca un certificat de la cadena</h1>\n"
-"Selecciona el nombre mínim de dies que haurien de ser vàlids tots els "
+"Seleccioneu el nombre mínim de dies que haurien de ser vàlids tots els "
 "certificats de la cadena sense emetre un avís.\n"
 "<p>\n"
 "El valor recomanat d'SPHINX és de 14 dies.\n"
@@ -7022,30 +7008,21 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca el certificat d'encriptació</h1>\n"
-"Selecciona el nombre mínim de dies que el certificat d'encriptació ha de ser "
-"vàlid sense emetre un avís.\n"
+"Seleccioneu el nombre mínim de dies que el certificat d'encriptació ha de "
+"ser vàlid sense emetre un avís.\n"
 "<p>\n"
 "L'opció recomanada d'SPHINX és de 14 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Per a certificats a&rrel:"
+msgstr "Per als certificats propis:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7056,11 +7033,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Avisa si caduca el certificat arrel</h1>\n"
-"Selecciona el nombre mínim de dies que el certificat arrel hauria de ser "
+"<h1>Avisa si caduca el certificat propi</h1>\n"
+"Seleccioneu el nombre mínim de dies que el certificat propi hauria de ser "
 "vàlid sense emetre un avís.\n"
 "<p>\n"
-"L'opció recomanada d'SPHINX és de 14 dies.\n"
+"L'opció recomanada d'SPHINX és de 30 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7083,7 +7060,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca el certificat arrel</h1>\n"
-"Selecciona el nombre mínim de dies que el certificat arrel hauria de ser "
+"Seleccioneu el nombre mínim de dies que el certificat arrel hauria de ser "
 "vàlid sense emetre un avís.\n"
 "<p>\n"
 "L'opció recomanada d'SPHINX és de 14 dies.\n"
@@ -7807,131 +7784,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "Composing"
-#~ msgstr "Edició"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Miscel·lània"
-
-#~ msgid "Automatically sign messages"
-#~ msgstr "Signa automàticament els missatges"
-
-#~ msgid ""
-#~ "When this option is enabled, the message/file will not only be encrypted "
-#~ "with the receiver's public key, but also with your key. This will enable "
-#~ "you to decrypt the message/file at a later time. This is generally a good "
-#~ "idea."
-#~ msgstr ""
-#~ "Quan està activada esta opció, el missatge o fitxer no solament "
-#~ "s'encriptarà amb la clau pública del destinatari, sinó també amb la "
-#~ "vostra clau. Açò us permetrà desencriptar el missatge o fitxer més tard. "
-#~ "Generalment és una bona idea."
-
-#~ msgid ""
-#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
-#~ "identity"
-#~ msgstr ""
-#~ "En encriptar els correus, també &encripta sempre amb el certificat de la "
-#~ "meua pròpia identitat"
-
-#~ msgid "Store sent messages encry&pted"
-#~ msgstr "Emmagatzema els missatges que s'envien encri&ptats"
-
-#~ msgid ""
-#~ "When this option is enabled, the application will always show you a list "
-#~ "of public keys from which you can choose the one it will use for "
-#~ "encryption. If it is off, the application will only show the dialog if it "
-#~ "cannot find the right key or if there are several which could be used."
-#~ msgstr ""
-#~ "Quan esta opció està activada, l'aplicació sempre vos mostrarà una llista "
-#~ "de claus públiques d'on podeu triar la que s'utilitzarà per a "
-#~ "l'encriptació. Si no està activada, l'aplicació només mostrarà el diàleg "
-#~ "si no pot trobar la clau correcta o si n'hi ha diverses que podrien "
-#~ "utilitzar-se."
-
-#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
-#~ msgstr "En &guardar com a esborrany, signa/encripta com s'indica"
-
-#~ msgid "Check to be warned when sending unsigned messages."
-#~ msgstr ""
-#~ "Marqueu-la perquè se vos avise quan s'envien missatges sense signar."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unsigned.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisa si s'intenten enviar missatges sense signar</h1>\n"
-#~ "Si es marca esta casella, se vos avisarà quan intenteu enviar parts del "
-#~ "missatge o el missatge sencer sense signar.\n"
-#~ "<p>\n"
-#~ "Per tal d'aconseguir un màxim d'integritat es recomana deixar esta opció "
-#~ "activada.\n"
-#~ "</p></qt>"
-
-#~ msgid "Check to be warned when sending unencrypted messages."
-#~ msgstr "Marqueu-la per a ser avisat quan envieu missatges sense encriptar."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unencrypted.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisa si s'intenten enviar missatges sense encriptar</h1>\n"
-#~ "Si es marca esta casella, farà que se vos avise quan intenteu enviar "
-#~ "alguna de les parts del missatge sense encriptar.\n"
-#~ "<p>\n"
-#~ "Es recomana deixar esta opció activada per a aconseguir un màxim "
-#~ "d'integritat.\n"
-#~ "</p></qt>"
-
-#~ msgid "For Signing"
-#~ msgstr "Per a la signatura"
-
-#~ msgid "For Encryption"
-#~ msgstr "Per a l'encriptació"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the signature certificate should be "
-#~ "valid without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisa si caduca el certificat de la signatura</h1>\n"
-#~ "Selecciona el nombre mínim de dies que el certificat de la signatura "
-#~ "hauria de ser vàlid sense emetre un avís.\n"
-#~ "<p>\n"
-#~ "L'opció recomanada d'SPHINX és de 14 dies.\n"
-#~ "</p></qt>"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If CA Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the CA certificate should be valid "
-#~ "without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisa si caduca el certificat de la CA</h1>\n"
-#~ "Selecciona el nombre mínim de dies que el certificat de la CA hauria de "
-#~ "ser vàlid sense emetre un avís.\n"
-#~ "<p>\n"
-#~ "L'opció recomanada d'SPHINX és de 14 dies.\n"
-#~ "</p></qt>"
