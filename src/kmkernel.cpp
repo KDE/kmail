@@ -98,8 +98,6 @@ using KMail::MailServiceImpl;
 
 #include <MailCommon/ResourceReadConfigFile>
 
-#include "kmailinterface.h"
-#include "util.h"
 #include <KLocalizedString>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/MailKernel>

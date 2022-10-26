@@ -7,7 +7,6 @@
 
 #include "archivefolderdialog.h"
 
-#include "kmkernel.h"
 #include "kmmainwidget.h"
 #include <MailCommon/BackupJob>
 #include <MailCommon/FolderRequester>

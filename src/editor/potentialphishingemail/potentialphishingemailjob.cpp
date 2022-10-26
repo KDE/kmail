@@ -6,7 +6,6 @@
 */
 
 #include "potentialphishingemailjob.h"
-#include "kmail_debug.h"
 #include <KEmailAddress>
 #include <PimCommon/PimUtil>
 

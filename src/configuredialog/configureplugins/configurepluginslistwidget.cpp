@@ -8,7 +8,6 @@
 
 #include "../../plugininterface/kmailplugininterface.h"
 #include "kmail_debug.h"
-#include "util.h"
 #include <Akonadi/ServerManager>
 #include <KLocalizedString>
 #include <KSharedConfig>

@@ -14,7 +14,6 @@
 #include "followupreminderinterface.h"
 #include "mailmergeagentinterface.h"
 #include "sendlateragentinterface.h"
-#include "util.h"
 #include <MailCommon/FilterManager>
 
 #include <KDialogJobUiDelegate>
@@ -22,7 +21,6 @@
 #include <KIO/CommandLauncherJob>
 #include <QPointer>
 
-#include "kmail_debug.h"
 #include <QProcess>
 #include <QStandardPaths>
 

@@ -8,7 +8,6 @@
 
 #include "kmcommands.h"
 #include "kmkernel.h"
-#include "kmmainwidget.h"
 #include "kmreaderwin.h"
 #include "settings/kmailsettings.h"
 #include "util.h"
@@ -48,6 +47,7 @@
 
 #include <Akonadi/Collection>
 #include <Akonadi/EntityAnnotationsAttribute>
+#include <Akonadi/StandardMailActionManager>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
 #include <QVariant>

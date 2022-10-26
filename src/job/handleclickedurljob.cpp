@@ -5,7 +5,6 @@
 */
 
 #include "handleclickedurljob.h"
-#include "editor/kmcomposerwin.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KMime/Message>

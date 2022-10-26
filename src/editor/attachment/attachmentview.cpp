@@ -14,7 +14,6 @@
 #include "attachmentview.h"
 
 #include "kmkernel.h"
-#include "util.h"
 
 #include <MessageComposer/AttachmentModel>
 

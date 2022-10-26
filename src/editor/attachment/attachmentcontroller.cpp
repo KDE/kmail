@@ -13,9 +13,7 @@
 #include "attachmentview.h"
 #include "editor/kmcomposerwin.h"
 #include "kmail_debug.h"
-#include "kmkernel.h"
 #include "kmreadermainwin.h"
-#include "settings/kmailsettings.h"
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <KContacts/Addressee>

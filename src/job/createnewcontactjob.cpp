@@ -6,7 +6,6 @@
 */
 
 #include "createnewcontactjob.h"
-#include "util.h"
 
 #include <PimCommon/BroadcastStatus>
 

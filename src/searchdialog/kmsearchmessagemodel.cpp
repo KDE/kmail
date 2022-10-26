@@ -16,7 +16,6 @@
 #include <Akonadi/MessageParts>
 #include <KMime/KMimeMessage>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QApplication>
 #include <QColor>

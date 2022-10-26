@@ -12,7 +12,6 @@
 #include "identitypage.h"
 
 #include "identitydialog.h"
-#include "kmkernel.h"
 #include "newidentitydialog.h"
 #include "settings/kmailsettings.h"
 
@@ -21,7 +20,6 @@
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QMenu>

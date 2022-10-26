@@ -21,7 +21,6 @@
 #include <KIdentityManagement/IdentityManager>
 
 // other KMail headers:
-#include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>

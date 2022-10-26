@@ -9,8 +9,6 @@
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
 
-#include "util.h"
-
 #include <Akonadi/AgentManager>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/ItemFetchJob>

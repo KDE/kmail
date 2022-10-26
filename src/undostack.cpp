@@ -10,11 +10,9 @@
 #include "undostack.h"
 
 #include "kmkernel.h"
-#include "kmmainwin.h"
 #include <Akonadi/ItemMoveJob>
 #include <KJob>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 

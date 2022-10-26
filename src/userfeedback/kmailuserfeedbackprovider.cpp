@@ -6,7 +6,6 @@
 
 #include "kmailuserfeedbackprovider.h"
 #include "userfeedback/accountinfosource.h"
-#include "userfeedback/plugininfosource.h"
 #include <KUserFeedback/ApplicationVersionSource>
 #include <KUserFeedback/LocaleInfoSource>
 #include <KUserFeedback/PlatformInfoSource>

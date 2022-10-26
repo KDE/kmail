@@ -5,7 +5,6 @@
 */
 
 #include "newmessagejob.h"
-#include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include <MessageComposer/Composer>
 

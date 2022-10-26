@@ -12,7 +12,6 @@
 #include "codecmanager.h"
 
 // KMail
-#include "kmkernel.h"
 
 // Qt
 #include <QTextCodec>

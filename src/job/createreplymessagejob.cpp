@@ -7,7 +7,6 @@
 #include "createreplymessagejob.h"
 
 #include "../util.h"
-#include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>

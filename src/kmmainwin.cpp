@@ -9,7 +9,6 @@
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
-#include "util.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
@@ -20,7 +19,6 @@
 #include <QStatusBar>
 #include <QTimer>
 
-#include "kmail_debug.h"
 #include <KConfig>
 #include <KConfigGui>
 #include <KEditToolBar>

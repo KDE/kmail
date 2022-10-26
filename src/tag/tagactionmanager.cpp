@@ -11,7 +11,6 @@
 
 #include <MailCommon/AddTagDialog>
 
-#include "kmail_debug.h"
 #include <Akonadi/Monitor>
 #include <KActionCollection>
 #include <KActionMenu>
