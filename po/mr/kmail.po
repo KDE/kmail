@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-23 00:44+0000\n"
+"POT-Creation-Date: 2022-10-26 00:47+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -400,7 +400,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2334 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2331 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -561,24 +561,24 @@ msgstr ""
 msgid "Templates"
 msgstr "नमूने"
 
-#: collectionpage/collectionviewpage.cpp:35
+#: collectionpage/collectionviewpage.cpp:34
 #, kde-format
 msgctxt "@title:tab View settings for a folder."
 msgid "View"
 msgstr "दृश्य"
 
-#: collectionpage/collectionviewpage.cpp:56
+#: collectionpage/collectionviewpage.cpp:55
 #, kde-format
 msgid "Use custom &icons"
 msgstr "ऐच्छिक चिन्हे वापरा (&I)"
 
-#: collectionpage/collectionviewpage.cpp:60
+#: collectionpage/collectionviewpage.cpp:59
 #, kde-format
 msgctxt "Icon used for folders with no unread messages."
 msgid "&Normal:"
 msgstr "सामान्य (&N):"
 
-#: collectionpage/collectionviewpage.cpp:73
+#: collectionpage/collectionviewpage.cpp:72
 #, kde-format
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
@@ -589,109 +589,109 @@ msgstr "न वाचलेले (&U):"
 msgid "Retrieval Options"
 msgstr "पुनःप्राप्तीचा पर्याय"
 
-#: configuredialog/configureaccountpage.cpp:52
+#: configuredialog/configureaccountpage.cpp:51
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "ओळख (&I)"
 
-#: configuredialog/configureaccountpage.cpp:58
+#: configuredialog/configureaccountpage.cpp:57
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "घेत आहे"
 
-#: configuredialog/configureaccountpage.cpp:65
+#: configuredialog/configureaccountpage.cpp:64
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "पाठवत आहे"
 
-#: configuredialog/configureaccountpage.cpp:71
+#: configuredialog/configureaccountpage.cpp:70
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:86
+#: configuredialog/configureaccountpage.cpp:85
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
 msgstr "बाहेर जाणारी खाती(किमान एक तरी वाढवा):"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:92
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "&Confirm action"
 msgstr "मंजूरी पाठवा"
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:93
 #, fuzzy, kde-format
 #| msgid "Check spelling before sending"
 msgid "Before sending:"
 msgstr "पाठविण्यापूर्वी वर्णलेखन तपासा"
 
-#: configuredialog/configureaccountpage.cpp:97
+#: configuredialog/configureaccountpage.cpp:96
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgid "Check spelling"
 msgstr "पाठविण्यापूर्वी वर्णलेखन तपासा"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Never Automatically"
 msgstr "स्वयंचलितरित्या कधीही नाही"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "स्वहस्ते मेल तपासताना"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "सर्व मेल तपासताना"
 
-#: configuredialog/configureaccountpage.cpp:106
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "संदेश आउटबॉक्स संचयीकेत पाठवा (&M)"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:111
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
 #, kde-format
 msgid "Send Now"
 msgstr "आता पाठवा"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Send Later"
 msgstr "नंतर पाठवा"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "मूलभूत पाठविण्याची पद्धत (&U):"
 
-#: configuredialog/configureaccountpage.cpp:117
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:196
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Add Mail Account..."
 msgstr "सूचना/नोंद वाढवा..."
 
-#: configuredialog/configureaccountpage.cpp:198
+#: configuredialog/configureaccountpage.cpp:197
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Custom Account..."
 msgstr "खात्यांची क्रमवारी सानुकूल करा"
 
-#: configuredialog/configureaccountpage.cpp:220
+#: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:156
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
@@ -700,248 +700,248 @@ msgid ""
 "properly installed."
 msgstr "खाते(account) विझार्ड चालू करू शकलो नाही. तुमची संचमांडणी/प्रतिस्थापन तपासा."
 
-#: configuredialog/configureaccountpage.cpp:222
+#: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:158
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr " खाते(account) विझार्ड चालू करू शकत नाही"
 
-#: configuredialog/configureaccountpage.cpp:270
+#: configuredialog/configureaccountpage.cpp:269
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "स्वहस्ते मेल तपासताना अंतर्भूत करा"
 
-#: configuredialog/configureaccountpage.cpp:278
+#: configuredialog/configureaccountpage.cpp:277
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "के-मेल बंद होताना ऑफलाइन करा"
 
-#: configuredialog/configureaccountpage.cpp:285
+#: configuredialog/configureaccountpage.cpp:284
 #, kde-format
 msgid "Check mail on startup"
 msgstr "प्रारंभवेळी मेल तपासा"
 
-#: configuredialog/configureaccountpage.cpp:332
+#: configuredialog/configureaccountpage.cpp:331
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:86
+#: configuredialog/configureappearancepage.cpp:85
 #, kde-format
 msgid "General"
 msgstr "सामान्य"
 
-#: configuredialog/configureappearancepage.cpp:93
+#: configuredialog/configureappearancepage.cpp:92
 #, kde-format
 msgid "Fonts"
 msgstr "फॉन्ट"
 
-#: configuredialog/configureappearancepage.cpp:99
+#: configuredialog/configureappearancepage.cpp:98
 #, kde-format
 msgid "Colors"
 msgstr "रंग"
 
-#: configuredialog/configureappearancepage.cpp:105
+#: configuredialog/configureappearancepage.cpp:104
 #, kde-format
 msgid "Layout"
 msgstr "रचना"
 
-#: configuredialog/configureappearancepage.cpp:111
-#: configuredialog/configureappearancepage.cpp:132
+#: configuredialog/configureappearancepage.cpp:110
+#: configuredialog/configureappearancepage.cpp:131
 #, kde-format
 msgid "Message List"
 msgstr "संदेश यादी"
 
-#: configuredialog/configureappearancepage.cpp:117
+#: configuredialog/configureappearancepage.cpp:116
 #, kde-format
 msgid "Message Tags"
 msgstr "संदेश टॅग्स"
 
-#: configuredialog/configureappearancepage.cpp:131
+#: configuredialog/configureappearancepage.cpp:130
 msgid "Message Body"
 msgstr "संदेश मसूदा"
 
-#: configuredialog/configureappearancepage.cpp:133
+#: configuredialog/configureappearancepage.cpp:132
 msgid "Message List - Unread Messages"
 msgstr "संदेश यादी - न वाचलेले संदेश"
 
-#: configuredialog/configureappearancepage.cpp:134
+#: configuredialog/configureappearancepage.cpp:133
 msgid "Message List - Important Messages"
 msgstr "संदेश यादी - महत्वपूर्ण संदेश"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:134
 msgid "Message List - Action Item Messages"
 msgstr "संदेश यादी - क्रिया घटक संदेश"
 
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
 msgstr "ठराविक रुंदीचे फॉन्ट"
 
-#: configuredialog/configureappearancepage.cpp:137
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Composer"
 msgstr "संपादक"
 
-#: configuredialog/configureappearancepage.cpp:138
+#: configuredialog/configureappearancepage.cpp:137
 msgid "Printing Output"
 msgstr "छपाई आउटपुट"
 
-#: configuredialog/configureappearancepage.cpp:149
+#: configuredialog/configureappearancepage.cpp:148
 #, kde-format
 msgid "&Use custom fonts"
 msgstr "ऐच्छिक फॉन्ट वापरा (&U)"
 
-#: configuredialog/configureappearancepage.cpp:167
+#: configuredialog/configureappearancepage.cpp:166
 #, kde-format
 msgid "Apply &to:"
 msgstr "याकरिता लागू करा (&T):"
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Quoted Text - First Level"
 msgstr "उल्लेखित मजकूर – पहिली पायरी"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - Second Level"
 msgstr "उल्लेखित मजकूर –दुसरी पायरी"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Quoted Text - Third Level"
 msgstr "उल्लेखित मजकूर – तिसरी पायरी"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:305
 msgid "Link"
 msgstr "लिंक"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:306
 msgid "Unread Message"
 msgstr "न वाचलेला संदेश"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:307
 msgid "Important Message"
 msgstr "महत्वपूर्ण संदेश"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:308
 msgid "Action Item Message"
 msgstr "क्रिया घटक संदेश"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:309
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "HTML स्थितीदर्शक पट्टीची पार्श्वभूमी-HTML संदेश नाहीत"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:310
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "HTML स्थितीदर्शक पट्टीचा पुढील भाग-HTML संदेश नाहीत"
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:311
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "HTML स्थितीदर्शक पट्टीची पार्श्वभूमी –HTML संदेश"
 
-#: configuredialog/configureappearancepage.cpp:313
+#: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr " HTML स्थितीदर्शक पट्टीचा पुढील भाग-HTML संदेश "
 
-#: configuredialog/configureappearancepage.cpp:321
+#: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "&Use custom colors"
 msgstr "ऐच्छिक रंग वापरा (&U)"
 
-#: configuredialog/configureappearancepage.cpp:325
+#: configuredialog/configureappearancepage.cpp:324
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:338
+#: configuredialog/configureappearancepage.cpp:337
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "गहन उद्धृत केलेल्या मजकुराचे रंग पुन्हा द्या (&Q)"
 
-#: configuredialog/configureappearancepage.cpp:346
+#: configuredialog/configureappearancepage.cpp:345
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr "कोटाच्या मर्यादेजवळ"
 
-#: configuredialog/configureappearancepage.cpp:352
+#: configuredialog/configureappearancepage.cpp:351
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:469
+#: configuredialog/configureappearancepage.cpp:468
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "संचयीका पट्कन शोधायचे प्रक्षेत्र दाखवा"
 
-#: configuredialog/configureappearancepage.cpp:476
+#: configuredialog/configureappearancepage.cpp:475
 #, kde-format
 msgid "Show Favorite Folders View"
 msgstr "आवडत्या संचयीकांची माहिती दाखवा"
 
-#: configuredialog/configureappearancepage.cpp:481
-#: configuredialog/configureappearancepage.cpp:509
+#: configuredialog/configureappearancepage.cpp:480
+#: configuredialog/configureappearancepage.cpp:508
 #, kde-format
 msgid "Never"
 msgstr "कधीही नाही"
 
-#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:485
 #, fuzzy, kde-format
 #| msgid "As Icons"
 msgid "As icons"
 msgstr "चिन्हा प्रमाणे"
 
-#: configuredialog/configureappearancepage.cpp:491
+#: configuredialog/configureappearancepage.cpp:490
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:500
+#: configuredialog/configureappearancepage.cpp:499
 #, kde-format
 msgid "Folder Tooltips"
 msgstr "संचयीका टूलटिप्स "
 
-#: configuredialog/configureappearancepage.cpp:505
+#: configuredialog/configureappearancepage.cpp:504
 #, kde-format
 msgid "Always"
 msgstr "नेहमी"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:563
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "प्रमाणित स्वरूप (&N) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:564
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "स्थानिक स्वरूप (&Z) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:565
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "नक्षीदार स्वरूप (&M) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:567
+#: configuredialog/configureappearancepage.cpp:566
 msgid "C&ustom format:"
 msgstr "ऐच्छिक स्वरूप (&U):"
 
-#: configuredialog/configureappearancepage.cpp:590
+#: configuredialog/configureappearancepage.cpp:589
 #, fuzzy, kde-format
 #| msgid "Default Aggregation:"
 msgid "Default aggregation:"
 msgstr "मूलभूत एकीकरण :"
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 #| msgid "Default Theme:"
 msgid "Default theme:"
 msgstr "मूलभूत शैली.:"
 
-#: configuredialog/configureappearancepage.cpp:645
+#: configuredialog/configureappearancepage.cpp:644
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">ऐच्छिक स्वरूप माहिती...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:651
+#: configuredialog/configureappearancepage.cpp:650
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -987,93 +987,93 @@ msgstr ""
 "\" येईल.</li><li>Z-अंकीय रुपात आंतरराष्ट्रीय कालविभाग (-०५००)</li></"
 "ul><p><strong>इतर समाविष्ट अक्षरे/खुणा यांच्याकडे दुर्लक्ष केले जाईल.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:688
+#: configuredialog/configureappearancepage.cpp:687
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "दिनांक प्रदर्शन"
 
-#: configuredialog/configureappearancepage.cpp:796
+#: configuredialog/configureappearancepage.cpp:795
 #, kde-format
 msgid "Message Window"
 msgstr "संदेश चौकट"
 
-#: configuredialog/configureappearancepage.cpp:803
+#: configuredialog/configureappearancepage.cpp:802
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 "एकमेव/एकाच संदेशासाठीची खिडकी त्याला उत्तर दिल्यावर वा तो पुढे पाठविल्यावर बंद करा"
 
-#: configuredialog/configureappearancepage.cpp:811
+#: configuredialog/configureappearancepage.cpp:810
 #, kde-format
 msgid "System Tray"
 msgstr "प्रणाली ट्रे"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:817 settings/kmail.kcfg.cmake:89
+#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:89
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "प्रणाली ट्रे चिन्ह कार्यान्वित करा"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:821 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:93
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:838
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show unread email in Taskbar"
 msgstr "न वाचलेले मेल प्रणाली ट्रे मध्ये दर्शवा"
 
-#: configuredialog/configureappearancepage.cpp:907
+#: configuredialog/configureappearancepage.cpp:906
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "उपलब्ध टॅग्स (&V)"
 
-#: configuredialog/configureappearancepage.cpp:920
+#: configuredialog/configureappearancepage.cpp:919
 #, kde-format
 msgid "Add new tag"
 msgstr "नवीन टॅग जोडा"
 
-#: configuredialog/configureappearancepage.cpp:925
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "Remove selected tag"
 msgstr "निवडलेला टॅग काढून टाका"
 
-#: configuredialog/configureappearancepage.cpp:934
+#: configuredialog/configureappearancepage.cpp:933
 #, kde-format
 msgid "Increase tag priority"
 msgstr "टॅग प्राधान्यता वाढवा"
 
-#: configuredialog/configureappearancepage.cpp:940
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "टॅग प्राधान्यता कमी करा"
 
-#: configuredialog/configureappearancepage.cpp:962
+#: configuredialog/configureappearancepage.cpp:961
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "टॅग संयोजना (&G)"
 
-#: configuredialog/configureappearancepage.cpp:1137
+#: configuredialog/configureappearancepage.cpp:1136
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove tag '%1'?"
 msgstr "तुम्हाला '%1' हे खाते काढून टाकायचे आहे का?"
 
-#: configuredialog/configureappearancepage.cpp:1138
+#: configuredialog/configureappearancepage.cpp:1137
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "काढून टाका"
 
-#: configuredialog/configureappearancepage.cpp:1183
-#: configuredialog/configureappearancepage.cpp:1218
+#: configuredialog/configureappearancepage.cpp:1182
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "We can not create tag. A tag with same name already exists."
 msgid "We cannot create tag. A tag with same name already exists."
@@ -1707,40 +1707,40 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:46
+#: configuredialog/configuresecuritypage.cpp:45
 #, kde-format
 msgid "Reading"
 msgstr "वाचत आहे"
 
-#: configuredialog/configuresecuritypage.cpp:48
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "संदेशाची स्वयंचलीत सूचना"
 
-#: configuredialog/configuresecuritypage.cpp:54
+#: configuredialog/configuresecuritypage.cpp:53
 #, fuzzy, kde-format
 #| msgid "Encrypting"
 msgid "Encryption"
 msgstr "सांकेतीकरण"
 
-#: configuredialog/configuresecuritypage.cpp:60
+#: configuredialog/configuresecuritypage.cpp:59
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME व्हेलिडेशन"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:86
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "इमेल पत्ता"
 
-#: configuredialog/configuresecuritypage.cpp:88
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "तुम्हाला '%1' हे खाते काढून टाकायचे आहे का?"
 
-#: configuredialog/configuresecuritypage.cpp:123
+#: configuredialog/configuresecuritypage.cpp:122
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global HTML setting will override all folder specific values."
@@ -1750,47 +1750,47 @@ msgstr ""
 "HTML ची बदलणारी जागतीक मांडणी संचयीकेची विशिष्ट मूल्ये दुर्लक्षित करेल/त्यांची पायमल्ली "
 "करेल."
 
-#: configuredialog/configuresecuritypage.cpp:294
-#: configuredialog/configuresecuritypage.cpp:296
-#: configuredialog/configuresecuritypage.cpp:298
-#: configuredialog/configuresecuritypage.cpp:300
+#: configuredialog/configuresecuritypage.cpp:293
+#: configuredialog/configuresecuritypage.cpp:295
+#: configuredialog/configuresecuritypage.cpp:297
+#: configuredialog/configuresecuritypage.cpp:299
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " दिवस"
 msgstr[1] " दिवस"
 
-#: configuredialog/configuresecuritypage.cpp:337
+#: configuredialog/configuresecuritypage.cpp:336
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr " GnuPG संयोजना"
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:344
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:350
+#: configuredialog/configuresecuritypage.cpp:349
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:417
+#: configuredialog/configuresecuritypage.cpp:416
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ह्या पर्यायाला dirmngr >= 0.9.0 ची जरूरी आहे"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:555 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "प्रॉक्सी नाही"
 
-#: configuredialog/configuresecuritypage.cpp:558
+#: configuredialog/configuresecuritypage.cpp:557
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(वर्तमान प्रणाली संयोजना : %1)"
@@ -1919,395 +1919,395 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "एन्कोडिंग"
 
-#: editor/kmcomposerwin.cpp:278 kmail_part.cpp:44 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
 msgstr "के-मेल"
 
-#: editor/kmcomposerwin.cpp:305
+#: editor/kmcomposerwin.cpp:302
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "ह्या संदेशाचे स्पेलिंग तपासतेवेळी वापरण्याचा शब्दकोश निवडा"
 
-#: editor/kmcomposerwin.cpp:312
+#: editor/kmcomposerwin.cpp:309
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "ह्या संदेशाची प्रत संग्रहित करण्यासाठी पाठविलेल्या मेलची संचयीका निवडा."
 
-#: editor/kmcomposerwin.cpp:317
+#: editor/kmcomposerwin.cpp:314
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "हा संदेश पाठविण्यासाठी बहिर्गामी खाते निवडा"
 
-#: editor/kmcomposerwin.cpp:325
+#: editor/kmcomposerwin.cpp:322
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "ह्या संदेशासाठी:\"From:\" ईमेलपत्ता निश्चीत करा "
 
-#: editor/kmcomposerwin.cpp:341
+#: editor/kmcomposerwin.cpp:338
 #, kde-format
 msgid "&Identity:"
 msgstr "ओळख (&I):"
 
-#: editor/kmcomposerwin.cpp:342
+#: editor/kmcomposerwin.cpp:339
 #, kde-format
 msgid "&Dictionary:"
 msgstr "शब्दकोश (&D):"
 
-#: editor/kmcomposerwin.cpp:343
+#: editor/kmcomposerwin.cpp:340
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "पाठविलेल्या मेल्सची संचयीका (&S)"
 
-#: editor/kmcomposerwin.cpp:344
+#: editor/kmcomposerwin.cpp:341
 #, kde-format
 msgid "&Mail transport:"
 msgstr "मेल वाहतुक (&M):"
 
-#: editor/kmcomposerwin.cpp:345
+#: editor/kmcomposerwin.cpp:342
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "पासून (&F):"
 
-#: editor/kmcomposerwin.cpp:346
+#: editor/kmcomposerwin.cpp:343
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "विषय (&U):"
 
-#: editor/kmcomposerwin.cpp:417
+#: editor/kmcomposerwin.cpp:414
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "संपादक"
 
-#: editor/kmcomposerwin.cpp:1171 editor/kmcomposerwin.cpp:1205
+#: editor/kmcomposerwin.cpp:1168 editor/kmcomposerwin.cpp:1202
 #, kde-format
 msgid "&Send Mail"
 msgstr "मेल पाठवा (&S)"
 
-#: editor/kmcomposerwin.cpp:1178 editor/kmcomposerwin.cpp:1211
+#: editor/kmcomposerwin.cpp:1175 editor/kmcomposerwin.cpp:1208
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "याद्वारे मेल पाठवा (&S)"
 
-#: editor/kmcomposerwin.cpp:1180
+#: editor/kmcomposerwin.cpp:1177
 #, kde-format
 msgid "Send"
 msgstr "पाठवा"
 
-#: editor/kmcomposerwin.cpp:1183 editor/kmcomposerwin.cpp:1195
-#: editor/kmcomposerwin.cpp:3091
+#: editor/kmcomposerwin.cpp:1180 editor/kmcomposerwin.cpp:1192
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgid "Send &Later"
 msgstr "नंतर पाठवा (&L)"
 
-#: editor/kmcomposerwin.cpp:1189 editor/kmcomposerwin.cpp:1202
+#: editor/kmcomposerwin.cpp:1186 editor/kmcomposerwin.cpp:1199
 #, kde-format
 msgid "Send &Later Via"
 msgstr "द्वारे नंतर पाठवा (&L)"
 
-#: editor/kmcomposerwin.cpp:1191
+#: editor/kmcomposerwin.cpp:1188
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "रांगेत ठेवा"
 
-#: editor/kmcomposerwin.cpp:1220
+#: editor/kmcomposerwin.cpp:1217
 #, kde-format
 msgid "Save as &Draft"
 msgstr "मसुदा म्हणून संग्रहित करा (&D)"
 
-#: editor/kmcomposerwin.cpp:1222
+#: editor/kmcomposerwin.cpp:1219
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "ईमेल मसुदा संचयीकेत संग्रहित करा"
 
-#: editor/kmcomposerwin.cpp:1226
+#: editor/kmcomposerwin.cpp:1223
 #, kde-format
 msgid "Save as &Template"
 msgstr "प्रमाणित मजकूर म्हणून संग्रहित करा (&T)"
 
-#: editor/kmcomposerwin.cpp:1227
+#: editor/kmcomposerwin.cpp:1224
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "प्रमाणित मजकूर संचयीकेत ईमेल संग्रहित करा"
 
-#: editor/kmcomposerwin.cpp:1231
+#: editor/kmcomposerwin.cpp:1228
 #, kde-format
 msgid "Save as &File"
 msgstr "फाईल म्हणून संग्रहित करा (&F)"
 
-#: editor/kmcomposerwin.cpp:1232
+#: editor/kmcomposerwin.cpp:1229
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "ईमेल मजकूर म्हणून किंवा html फाईल म्हून संग्रहित करा"
 
-#: editor/kmcomposerwin.cpp:1236
+#: editor/kmcomposerwin.cpp:1233
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "मजकूर फाईल समाविष्ट करा (&I)..."
 
-#: editor/kmcomposerwin.cpp:1240
+#: editor/kmcomposerwin.cpp:1237
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "अलिकडील मजकूर फाईल समाविष्ट करा (&I)"
 
-#: editor/kmcomposerwin.cpp:1250 kmmainwidget.cpp:2888
+#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2888
 #, kde-format
 msgid "&Address Book"
 msgstr "पत्ता पुस्तक (&A)"
 
-#: editor/kmcomposerwin.cpp:1251
+#: editor/kmcomposerwin.cpp:1248
 #, kde-format
 msgid "Open Address Book"
 msgstr "पत्ते नोंदवही उघडा"
 
-#: editor/kmcomposerwin.cpp:1258
+#: editor/kmcomposerwin.cpp:1255
 #, kde-format
 msgid "&New Composer"
 msgstr "नवीन रचनाकार (&N)"
 
-#: editor/kmcomposerwin.cpp:1264
+#: editor/kmcomposerwin.cpp:1261
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "प्राप्तकर्ते निवडा (&R)..."
 
-#: editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:1264
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "वितरण यादी संग्रहित करा (&D)..."
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1285
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "अटॅचमेंट प्रमाणे चिटकवा (&H)"
 
-#: editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1289
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "मोकळ्या जागा (&E)"
 
-#: editor/kmcomposerwin.cpp:1296
+#: editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "निश्चीत केलेली अक्षरमुद्रा वापरा (&X)"
 
-#: editor/kmcomposerwin.cpp:1302
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "तातडीचे (&U)"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1301
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "स्वयंचलीत अधिसूचनेसाठी विनंती करा (&R)"
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1305
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgid "&Request Delivery Confirmation"
 msgstr "स्वयंचलीत अधिसूचनेसाठी विनंती करा (&R)"
 
-#: editor/kmcomposerwin.cpp:1315
+#: editor/kmcomposerwin.cpp:1312
 #, kde-format
 msgid "&Wordwrap"
 msgstr "शब्दओघ (&W)"
 
-#: editor/kmcomposerwin.cpp:1320
+#: editor/kmcomposerwin.cpp:1317
 #, kde-format
 msgid "&Snippets"
 msgstr "स्निपेट्स (&S)"
 
-#: editor/kmcomposerwin.cpp:1325
+#: editor/kmcomposerwin.cpp:1322
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "स्वयंचलीत स्पेलिंग तपासणी (&A)"
 
-#: editor/kmcomposerwin.cpp:1341
+#: editor/kmcomposerwin.cpp:1338
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgid "Rich Text Editing"
 msgstr "रचना/रूपरेषा गमवा"
 
-#: editor/kmcomposerwin.cpp:1343
+#: editor/kmcomposerwin.cpp:1340
 #, kde-format
 msgid "Rich Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1344
+#: editor/kmcomposerwin.cpp:1341
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1348
+#: editor/kmcomposerwin.cpp:1345
 #, kde-format
 msgid "&All Fields"
 msgstr "सर्व प्रक्षेत्रे (&A)"
 
-#: editor/kmcomposerwin.cpp:1351
+#: editor/kmcomposerwin.cpp:1348
 #, kde-format
 msgid "&Identity"
 msgstr "ओळख (&I)"
 
-#: editor/kmcomposerwin.cpp:1354
+#: editor/kmcomposerwin.cpp:1351
 #, kde-format
 msgid "&Dictionary"
 msgstr "शब्दकोश (&D)"
 
-#: editor/kmcomposerwin.cpp:1357
+#: editor/kmcomposerwin.cpp:1354
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "पाठविलेल्या संदेशांची संचयीका (&S)"
 
-#: editor/kmcomposerwin.cpp:1360
+#: editor/kmcomposerwin.cpp:1357
 #, kde-format
 msgid "&Mail Transport"
 msgstr "मेल वाहतुक (&M)"
 
-#: editor/kmcomposerwin.cpp:1363
+#: editor/kmcomposerwin.cpp:1360
 #, kde-format
 msgid "&From"
 msgstr "पासून (&F)"
 
-#: editor/kmcomposerwin.cpp:1366
+#: editor/kmcomposerwin.cpp:1363
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "विषय (&U)"
 
-#: editor/kmcomposerwin.cpp:1371
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgid "Append S&ignature"
 msgstr "हस्ताक्षर जोडा (&I)"
 
-#: editor/kmcomposerwin.cpp:1375
+#: editor/kmcomposerwin.cpp:1372
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "स्वाक्षरी आधी जोडा (&E)"
 
-#: editor/kmcomposerwin.cpp:1379
+#: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "कर्सरच्या जागेवर स्वाक्षरी समाविष्ट करा (&U)"
 
-#: editor/kmcomposerwin.cpp:1394
+#: editor/kmcomposerwin.cpp:1391
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "स्पेलिंग तपासणारा (&S)"
 
-#: editor/kmcomposerwin.cpp:1395
+#: editor/kmcomposerwin.cpp:1392
 #, kde-format
 msgid "Spellchecker"
 msgstr "स्पेलिंग तपासणारा"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1396
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "संदेशाचे संकेतीकरण करा (&E)"
 
-#: editor/kmcomposerwin.cpp:1400
+#: editor/kmcomposerwin.cpp:1397
 #, kde-format
 msgid "Encrypt"
 msgstr "कुटलिपीबद्ध करा"
 
-#: editor/kmcomposerwin.cpp:1402
+#: editor/kmcomposerwin.cpp:1399
 #, kde-format
 msgid "&Sign Message"
 msgstr "संदेशावर स्वाक्षरी करा (&S)"
 
-#: editor/kmcomposerwin.cpp:1403
+#: editor/kmcomposerwin.cpp:1400
 #, kde-format
 msgid "Sign"
 msgstr "स्वाक्षरी"
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1422
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "सांकेतिक लिपीतील संदेशाची रूपरेखा (&C)"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1425
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "ह्या गुप्त लिपीतील सांदेशासाठी आराखडा निवडा"
 
-#: editor/kmcomposerwin.cpp:1433
+#: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder..."
 msgstr "संदेश शोधा (&F)..."
 
-#: editor/kmcomposerwin.cpp:1467
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "Configure KMail..."
 msgstr "के-मेल चे संयोजन करा"
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:183 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:183 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1500 kmmainwin.cpp:186 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:186 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3576
+#: editor/kmcomposerwin.cpp:1598 editor/kmcomposerwin.cpp:3573
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " ओळ : %1 "
 
-#: editor/kmcomposerwin.cpp:1604 editor/kmcomposerwin.cpp:3578
+#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3575
 #, kde-format
 msgid " Column: %1 "
 msgstr " स्तंभ: %1 "
 
-#: editor/kmcomposerwin.cpp:1609
+#: editor/kmcomposerwin.cpp:1606
 #, kde-format
 msgid "OVR"
 msgstr "OVR"
 
-#: editor/kmcomposerwin.cpp:1609
+#: editor/kmcomposerwin.cpp:1606
 #, kde-format
 msgid "INS"
 msgstr "INS"
 
-#: editor/kmcomposerwin.cpp:1617
+#: editor/kmcomposerwin.cpp:1614
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "स्पेलिंग तपासणी: चालू"
 
-#: editor/kmcomposerwin.cpp:1617
+#: editor/kmcomposerwin.cpp:1614
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "स्पेलिंग तपासणी; बंद"
 
-#: editor/kmcomposerwin.cpp:1995
+#: editor/kmcomposerwin.cpp:1992
 #, kde-format
 msgid "Re&save as Template"
 msgstr "प्रमाणित मजकूर म्हणून राखीव ठेवा (&S)"
 
-#: editor/kmcomposerwin.cpp:1995
+#: editor/kmcomposerwin.cpp:1992
 #, kde-format
 msgid "&Save as Draft"
 msgstr "मसुदा म्हणून संग्रहित करा (&S)"
 
-#: editor/kmcomposerwin.cpp:1996
+#: editor/kmcomposerwin.cpp:1993
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr "प्रमाणित मजकुराच्या संचयीकेत हा संदेश राखून ठेवा"
 
-#: editor/kmcomposerwin.cpp:1998
+#: editor/kmcomposerwin.cpp:1995
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2316,60 +2316,60 @@ msgstr ""
 "मसुद्याच्या संचयीकेत हा संदेश संग्रहित करा. नंतर तो संपादन करून नंतरच्या काळात तो पाठविता "
 "येईल."
 
-#: editor/kmcomposerwin.cpp:2006
+#: editor/kmcomposerwin.cpp:2003
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "हा संदेश पुढील काळासाठी संग्रहित करावयाचा आहे की काढून टाकावयाचा आहे?"
 
-#: editor/kmcomposerwin.cpp:2007
+#: editor/kmcomposerwin.cpp:2004
 #, kde-format
 msgid "Close Composer"
 msgstr "रचना/जुळविणारी प्रणाली बंद करा "
 
-#: editor/kmcomposerwin.cpp:2079
+#: editor/kmcomposerwin.cpp:2076
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "स्वयंचालीत पद्धतीने संदेश संग्रहित करण्याचे काम यशस्वी झाले नाही"
 
-#: editor/kmcomposerwin.cpp:2079
+#: editor/kmcomposerwin.cpp:2076
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "संदेश पाठविण्याचे काम यशस्वी झाले नाही"
 
-#: editor/kmcomposerwin.cpp:2256
+#: editor/kmcomposerwin.cpp:2253
 #, fuzzy, kde-format
 #| msgid "&Insert Text File..."
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "मजकूर फाईल समाविष्ट करा (&I)..."
 
-#: editor/kmcomposerwin.cpp:2318
+#: editor/kmcomposerwin.cpp:2315
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "इनलाईन प्रतिमा म्हणून समाविष्ट करा (&I)"
 
-#: editor/kmcomposerwin.cpp:2319
+#: editor/kmcomposerwin.cpp:2316
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "अटॅचमेंट प्रमाणे जोडा (&A)"
 
-#: editor/kmcomposerwin.cpp:2334 editor/kmcomposerwin.cpp:2438
+#: editor/kmcomposerwin.cpp:2331 editor/kmcomposerwin.cpp:2435
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "अटॅचमेंटचे नाव :"
 
-#: editor/kmcomposerwin.cpp:2340
+#: editor/kmcomposerwin.cpp:2337
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2340
+#: editor/kmcomposerwin.cpp:2337
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Attachment Name"
 msgstr "अवैध इमेल पत्ता"
 
-#: editor/kmcomposerwin.cpp:2391
+#: editor/kmcomposerwin.cpp:2388
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "Add URL into Message"
@@ -2377,24 +2377,24 @@ msgid_plural "Add URLs into Message"
 msgstr[0] "संदेश संपादित करा (&E)"
 msgstr[1] "संदेश संपादित करा (&E)"
 
-#: editor/kmcomposerwin.cpp:2392
+#: editor/kmcomposerwin.cpp:2389
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "अटॅचमेंट प्रमाणे फाईल जोडा (&A)"
 msgstr[1] "अटॅचमेंट प्रमाणे फाईल्स जोडा (&A)"
 
-#: editor/kmcomposerwin.cpp:2438
+#: editor/kmcomposerwin.cpp:2435
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "अटॅचमेंट प्रमाणे क्लिपबोर्ड मजकूर अंतर्भूत करा"
 
-#: editor/kmcomposerwin.cpp:2535
+#: editor/kmcomposerwin.cpp:2532
 #, kde-format
 msgid "unnamed"
 msgstr "निनावी"
 
-#: editor/kmcomposerwin.cpp:2561
+#: editor/kmcomposerwin.cpp:2558
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2406,12 +2406,12 @@ msgstr ""
 "ऑनलाईन ओळख (OpenPGP or S/MIME) सांकेतीकरणाच्या कळीचा तपशील देऊ शकत नाही.</"
 "p><p>ह्या ऑनलाईन ओळखीच्या मांडणीसाठी कळ निवडा.</p></qt> "
 
-#: editor/kmcomposerwin.cpp:2568
+#: editor/kmcomposerwin.cpp:2565
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "तपशील नसलेली सांकेतीकरणाची कळ"
 
-#: editor/kmcomposerwin.cpp:2632
+#: editor/kmcomposerwin.cpp:2629
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2422,12 +2422,12 @@ msgstr ""
 "(OpenPGP or S/MIME) तपशील द्यावा लागेल.</p><p> ऑनलाईन ओळख मांडणीमध्ये वापरण्यासाठी "
 "कळ निवडा.</p></qt> "
 
-#: editor/kmcomposerwin.cpp:2639
+#: editor/kmcomposerwin.cpp:2636
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "तपशील/ओळख नसलेली स्वाक्षरीची कळ"
 
-#: editor/kmcomposerwin.cpp:2798
+#: editor/kmcomposerwin.cpp:2795
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2438,7 +2438,7 @@ msgstr ""
 "ओळखींसाठी तुमचा ईमेल पत्ता प्रविष्ट केला पाहिजे ज्यामुळे तुम्हाला प्रत्येक संदेशासाठी तो "
 "पुन्हापुन्हा नोंदवायला लागणार नाही."
 
-#: editor/kmcomposerwin.cpp:2807
+#: editor/kmcomposerwin.cpp:2804
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2447,43 +2447,43 @@ msgstr ""
 "कडे: प्रक्षेत्र किंवा CC म्हणून किंवा  BCC म्हणून तुम्ही किमान एका प्राप्तकर्त्याचे नाव नमूद केले "
 "पाहिजे. "
 
-#: editor/kmcomposerwin.cpp:2817
+#: editor/kmcomposerwin.cpp:2814
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "कडे: हे प्रक्षेत्र रिकामे आहे. असे असूनही संदेश पाठवायचा का?"
 
-#: editor/kmcomposerwin.cpp:2819
+#: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "No To: specified"
 msgstr "ला नको: नमूद केले आहे"
 
-#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2817 editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "S&end as Is"
 msgstr "आहे तसे पाठवा (&E)"
 
-#: editor/kmcomposerwin.cpp:2821
+#: editor/kmcomposerwin.cpp:2818
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "विषय नमूद करा (&S)"
 
-#: editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2836
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "तुम्ही विषय नमूद केलेला नाही. असे असूनही संदेश पाठवायचा का? "
 
-#: editor/kmcomposerwin.cpp:2841
+#: editor/kmcomposerwin.cpp:2838
 #, kde-format
 msgid "No Subject Specified"
 msgstr "कोणताही विषय नमूद केलेला नाही"
 
-#: editor/kmcomposerwin.cpp:2843
+#: editor/kmcomposerwin.cpp:2840
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "विषय नमूद करा (&S)"
 
-#: editor/kmcomposerwin.cpp:2892
+#: editor/kmcomposerwin.cpp:2889
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2492,22 +2492,22 @@ msgstr ""
 "मसुदा सांकेतिक लिपीत लिहिण्यासाठी तुम्ही किमान एका प्राप्तकर्त्याचे नाव नमूद/निश्चीत केले "
 "पाहिजे."
 
-#: editor/kmcomposerwin.cpp:3088
+#: editor/kmcomposerwin.cpp:3085
 #, kde-format
 msgid "About to send email..."
 msgstr "ईमेल पाठविण्याच्या बेतातच आहे..."
 
-#: editor/kmcomposerwin.cpp:3089
+#: editor/kmcomposerwin.cpp:3086
 #, kde-format
 msgid "Send Confirmation"
 msgstr "मंजूरी पाठवा"
 
-#: editor/kmcomposerwin.cpp:3090
+#: editor/kmcomposerwin.cpp:3087
 #, kde-format
 msgid "&Send Now"
 msgstr "आता पाठवा (&S)"
 
-#: editor/kmcomposerwin.cpp:3179
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2516,22 +2516,22 @@ msgstr ""
 "तुम्ही %1 पेक्षा जास्त प्राप्तकर्त्यांना मेल पाठवायचा प्रयत्न करीत आहात. तरीही संदेश "
 "पाठवायचा का? "
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Too many recipients"
 msgstr "खूपच जास्त प्राप्तकर्ते"
 
-#: editor/kmcomposerwin.cpp:3181
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgid "&Send as Is"
 msgstr "आहे तसे पाठवा (&S)"
 
-#: editor/kmcomposerwin.cpp:3182
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "प्राप्तकर्ते संपादन करा (&E)"
 
-#: editor/kmcomposerwin.cpp:3227
+#: editor/kmcomposerwin.cpp:3224
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2540,63 +2540,63 @@ msgstr ""
 "HTML पद्धत/रीत बंद करण्याने मजकुराच्या आराखड्यावर/रुपरेषेवर परिणाम होईल. तुम्हाला पद्धत "
 "बंद करण्याविषयी खात्री आहे?"
 
-#: editor/kmcomposerwin.cpp:3229
+#: editor/kmcomposerwin.cpp:3226
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "ही रचना/रूपरेषा गमवा?"
 
-#: editor/kmcomposerwin.cpp:3230
+#: editor/kmcomposerwin.cpp:3227
 #, kde-format
 msgid "Lose Formatting"
 msgstr "रचना/रूपरेषा गमवा"
 
-#: editor/kmcomposerwin.cpp:3231
+#: editor/kmcomposerwin.cpp:3228
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "खुणा केलेला/दर्जेदार साध मजकूर वाढवा"
 
-#: editor/kmcomposerwin.cpp:3921
+#: editor/kmcomposerwin.cpp:3918
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3925
+#: editor/kmcomposerwin.cpp:3922
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3932
+#: editor/kmcomposerwin.cpp:3929
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3965
+#: editor/kmcomposerwin.cpp:3962
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3971
+#: editor/kmcomposerwin.cpp:3968
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3977
+#: editor/kmcomposerwin.cpp:3974
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3984
+#: editor/kmcomposerwin.cpp:3981
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2604,7 +2604,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4018
+#: editor/kmcomposerwin.cpp:4015
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Plugin Editor Information"
