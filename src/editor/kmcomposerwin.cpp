@@ -550,7 +550,7 @@ KMComposerWin::ModeType KMComposerWin::modeType() const
     return mModeType;
 }
 
-void KMComposerWin::setModeType(const ModeType &modeType)
+void KMComposerWin::setModeType(KMComposerWin::ModeType modeType)
 {
     mModeType = modeType;
 }
@@ -2836,8 +2836,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                            i18n("You did not specify a subject. "
                                                                 "Send message anyway?"),
                                                            i18n("No Subject Specified"),
-                                                           KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
-                                                           KGuiItem(i18n("&Specify the Subject"), QLatin1String("edit-rename")));
+                                                           KGuiItem(i18n("S&end as Is"), QStringLiteral("mail-send")),
+                                                           KGuiItem(i18n("&Specify the Subject"), QStringLiteral("edit-rename")));
 #if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             if (rc == KMessageBox::ButtonCode::SecondaryAction) {
 #else

@@ -442,7 +442,7 @@ public: // kmcommand
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 
     Q_REQUIRED_RESULT ModeType modeType() const;
-    void setModeType(const ModeType &modeType);
+    void setModeType(KMComposerWin::ModeType modeType);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
