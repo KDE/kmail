@@ -502,7 +502,6 @@ void SearchWindow::doSearch()
         attribute->setRemoteSearchEnabled(false);
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
-        qDebug() << " CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
     } else {
         const QString searchString =
             respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
