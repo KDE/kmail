@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-26 00:47+0000\n"
-"PO-Revision-Date: 2022-10-23 10:33+0200\n"
+"POT-Creation-Date: 2022-10-27 00:47+0000\n"
+"PO-Revision-Date: 2022-10-26 08:43+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -534,7 +534,7 @@ msgstr ""
 "associar amb esta carpeta.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:684
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Templates"
 msgstr "Plantilles"
@@ -664,7 +664,7 @@ msgid "Custom Account..."
 msgstr "Personalitza un compte..."
 
 #: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:156
+#: kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -674,7 +674,7 @@ msgstr ""
 "estiga instal·lat correctament."
 
 #: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:158
+#: kmlaunchexternalcomponent.cpp:156
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "No s'ha pogut iniciar l'assistent de comptes"
@@ -1371,12 +1371,12 @@ msgstr "&Prefixos per a l'assumpte en reenviar"
 msgid "Remo&ve"
 msgstr "&Elimina"
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "Afig..."
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:275
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "Modifica..."
@@ -1574,7 +1574,7 @@ msgstr ""
 msgid "Add"
 msgstr "Afig"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:278
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:276
 #, kde-format
 msgid "Remove"
 msgstr "Elimina"
@@ -1599,62 +1599,62 @@ msgstr "Imprimix"
 msgid "User Feedback"
 msgstr "Comentaris de l'usuari"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:190
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Connectors de comprovacions abans d'enviar"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:197
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Connectors de l'editor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:203
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Connectors de comprovació de la gramàtica"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:213
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Connectors d'eines"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:220
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Connectors de l'editor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, kde-format
 msgid "Message Viewer"
 msgstr "Visor de missatges"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:236
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Connectors del motor web"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:244
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Connector d'estil de la capçalera"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:251
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Connectors de conversió de text"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Misc"
 msgstr "Miscel·lània"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:266
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Connectors «Confirma la supressió dels correus electrònics»"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:288
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Agents d'Akonadi"
@@ -1754,75 +1754,75 @@ msgstr "Seleccioneu el contacte"
 msgid "Select"
 msgstr "Selecciona"
 
-#: dialog/archivefolderdialog.cpp:43
+#: dialog/archivefolderdialog.cpp:42
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arxiu"
 
-#: dialog/archivefolderdialog.cpp:52
+#: dialog/archivefolderdialog.cpp:51
 #, kde-format
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arxiva la carpeta"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
 msgstr "Arxiva"
 
-#: dialog/archivefolderdialog.cpp:72
+#: dialog/archivefolderdialog.cpp:71
 #, kde-format
 msgid "&Folder:"
 msgstr "&Carpeta:"
 
-#: dialog/archivefolderdialog.cpp:82
+#: dialog/archivefolderdialog.cpp:81
 #, kde-format
 msgid "F&ormat:"
 msgstr "F&ormat:"
 
-#: dialog/archivefolderdialog.cpp:88
+#: dialog/archivefolderdialog.cpp:87
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr "Arxiu comprimit amb ZIP (.zip)"
 
-#: dialog/archivefolderdialog.cpp:89
+#: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr "Arxiu sense comprimir (.tar)"
 
-#: dialog/archivefolderdialog.cpp:90
+#: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr "Arxiu TAR comprimit amb BZ2 (.tar.bz2)"
 
-#: dialog/archivefolderdialog.cpp:91
+#: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "Arxiu TAR comprimit amb GZ (.tar.gz)"
 
-#: dialog/archivefolderdialog.cpp:97
+#: dialog/archivefolderdialog.cpp:96
 #, kde-format
 msgid "&Archive File:"
 msgstr "Fitxer d'&arxiu:"
 
-#: dialog/archivefolderdialog.cpp:109
+#: dialog/archivefolderdialog.cpp:108
 #, kde-format
 msgid "&Delete folder and subfolders after completion"
 msgstr "Sup&rimix les carpetes i subcarpetes després de finalitzar"
 
-#: dialog/archivefolderdialog.cpp:113
+#: dialog/archivefolderdialog.cpp:112
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Arxiva totes les subcarpetes"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "Seleccioneu la carpeta que s'ha d'arxivar."
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "No folder selected"
 msgstr "Cap carpeta seleccionada"
@@ -1833,19 +1833,19 @@ msgctxt "@title:window"
 msgid "Notification"
 msgstr "Notificació"
 
-#: editor/attachment/attachmentview.cpp:167
+#: editor/attachment/attachmentview.cpp:166
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
 msgstr[0] "1 adjunt (%2)"
 msgstr[1] "%1 adjunts (%2)"
 
-#: editor/attachment/attachmentview.cpp:199
+#: editor/attachment/attachmentview.cpp:198
 #, kde-format
 msgid "Hide attachment list"
 msgstr "Oculta la llista d'adjunts"
 
-#: editor/attachment/attachmentview.cpp:201
+#: editor/attachment/attachmentview.cpp:200
 #, kde-format
 msgid "Show attachment list"
 msgstr "Mostra la llista d'adjunts"
@@ -1862,7 +1862,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Codificació"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2191,16 +2191,16 @@ msgstr "Crea un recordatori de seguiment..."
 msgid "Configure KMail..."
 msgstr "Configura KMail..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:183 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Ocultarà la barra de menús completament. La podeu tornar a mostrar "
+"<qt>Ocultarà completament la barra de menús. La podeu tornar a mostrar "
 "prement %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:186 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Oculta la barra de menús"
@@ -2767,27 +2767,27 @@ msgstr ""
 msgid "Cannot move messages."
 msgstr "No s'han pogut moure els missatges."
 
-#: folderarchive/folderarchivemanager.cpp:76
+#: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "No s'ha pogut recuperar la carpeta. Error notificat: %1"
 
-#: folderarchive/folderarchivemanager.cpp:83
+#: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
 msgid "No folder returned."
 msgstr "No s'ha retornat la carpeta."
 
-#: folderarchive/folderarchivemanager.cpp:95
+#: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "No s'ha pogut recuperar la carpeta pare. Error notificat: %1"
 
-#: folderarchive/folderarchivemanager.cpp:101
+#: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
 msgid "Unable to return list of folders."
 msgstr "No s'ha pogut retornar la llista de carpetes."
 
-#: folderarchive/folderarchivemanager.cpp:168
+#: folderarchive/folderarchivemanager.cpp:166
 #, kde-format
 msgid "Messages archived"
 msgstr "Missatges arxivats"
@@ -2853,49 +2853,49 @@ msgstr "&Duplica una vCard existent"
 msgid "&Existing identities:"
 msgstr "Identitats e&xistents:"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "S'ha produït un error en generar un parell nou de claus: %1"
 
-#: identity/identitydialog.cpp:176
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Key Generation Error"
 msgstr "S'ha produït un error en generar la clau"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:215
 #, kde-format
 msgid "No key"
 msgstr "Sense clau"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:217
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "Genera un parell nou de claus"
 
-#: identity/identitydialog.cpp:230
+#: identity/identitydialog.cpp:229
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "S'està generant un parell nou de claus..."
 
-#: identity/identitydialog.cpp:243
+#: identity/identitydialog.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Edició de la identitat"
 
-#: identity/identitydialog.cpp:268
+#: identity/identitydialog.cpp:267
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "General"
 
-#: identity/identitydialog.cpp:276
+#: identity/identitydialog.cpp:275
 #, kde-format
 msgid "&Your name:"
 msgstr "El &vostre nom:"
 
-#: identity/identitydialog.cpp:281
+#: identity/identitydialog.cpp:280
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2907,12 +2907,12 @@ msgstr ""
 "p><p>Si el deixeu en blanc, el vostre nom real no apareixerà, tan sols "
 "l'adreça de correu electrònic.</p></qt>"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:292
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Or&ganització:"
 
-#: identity/identitydialog.cpp:298
+#: identity/identitydialog.cpp:297
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2924,12 +2924,12 @@ msgstr ""
 "electrònic que envieu.</p><p>És segur (i normal) deixar este espai en blanc."
 "</p></qt>"
 
-#: identity/identitydialog.cpp:311
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid "&Email address:"
 msgstr "A&dreça de correu:"
 
-#: identity/identitydialog.cpp:316
+#: identity/identitydialog.cpp:315
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2945,12 +2945,12 @@ msgstr ""
 "p><p>Si deixeu açò en blanc, o malament, la gent tindrà problemes per a "
 "respondre-vos.</p></qt>"
 
-#: identity/identitydialog.cpp:336
+#: identity/identitydialog.cpp:335
 #, kde-format
 msgid "Email a&liases:"
 msgstr "Àlies de correu electrònic:"
 
-#: identity/identitydialog.cpp:341
+#: identity/identitydialog.cpp:340
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2967,12 +2967,12 @@ msgstr ""
 "tr><tr><th>Àlies:</th><td>nom@exemple.org<br>cognom@exemple.org</td></tr></"
 "table><p>Escriviu un àlies d'adreça per línia.</p></qt>"
 
-#: identity/identitydialog.cpp:359
+#: identity/identitydialog.cpp:358
 #, kde-format
 msgid "Cryptography"
 msgstr "Criptografia"
 
-#: identity/identitydialog.cpp:365
+#: identity/identitydialog.cpp:364
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2988,22 +2988,22 @@ msgstr ""
 "p>Trobareu més informació quant a les claus a <a>https://www.gnupg.org</a></"
 "qt>"
 
-#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Clau de signatura OpenPGP:"
 
-#: identity/identitydialog.cpp:377
+#: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr "Utilitza la mateixa clau per a l'encriptació i la signatura"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:386
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "Clau OpenPGP:"
 
-#: identity/identitydialog.cpp:413
+#: identity/identitydialog.cpp:412
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3021,12 +3021,12 @@ msgstr ""
 "</p><p>Trobareu més informació quant a les claus a <a>https://www.gnupg.org</"
 "a></p></qt>"
 
-#: identity/identitydialog.cpp:420
+#: identity/identitydialog.cpp:419
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Clau d'encriptació OpenPGP:"
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:429
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3039,12 +3039,12 @@ msgstr ""
 "no serà capaç de signar digitalment correus electrònics utilitzant S/MIME. "
 "Les funcions normals del correu no se'n veuran afectades.</p></qt>"
 
-#: identity/identitydialog.cpp:435
+#: identity/identitydialog.cpp:434
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Certificat de signatura S/MIME:"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:448
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3059,78 +3059,78 @@ msgstr ""
 "les còpies dels missatges d'eixida a vós mateix utilitzant S/MIME. Les "
 "funcions normals del correu no es veuran afectades.</p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:454
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "Certificat d'encriptació S/MIME:"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:471
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Format preferit:"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Activa l'Autocrypt"
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
 msgstr "Autocrypt:"
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr "Permet que els altres coneguen que preferiu l'encriptació"
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 "Paràmetres globals de sobreescriptura per als valors predeterminats de "
 "seguretat"
 
-#: identity/identitydialog.cpp:492
+#: identity/identitydialog.cpp:491
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr "Paràmetres de sobreescriptura:"
 
-#: identity/identitydialog.cpp:497
+#: identity/identitydialog.cpp:496
 #, kde-format
 msgid "Sign messages"
 msgstr "Signatura dels missatges"
 
-#: identity/identitydialog.cpp:500
+#: identity/identitydialog.cpp:499
 #, kde-format
 msgid "Encrypt messages when possible"
 msgstr "Encripta els missatges sempre que siga possible"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "Avisa si s'intenten enviar missatges sense signar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Avisa si s'intenten enviar missatges sense encriptar"
 
-#: identity/identitydialog.cpp:516
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Avançat"
 
-#: identity/identitydialog.cpp:524
+#: identity/identitydialog.cpp:523
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Adreça de &Respon-a:"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3148,12 +3148,12 @@ msgstr ""
 "però que qualsevol resposta es dirigisca a un grup d'adreces.</p><p>Si en "
 "dubteu, deixeu este camp en blanc.</p></qt>"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:544
 #, kde-format
 msgid "&CC addresses:"
 msgstr "Adre&ces CC:"
 
-#: identity/identitydialog.cpp:550
+#: identity/identitydialog.cpp:549
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3170,12 +3170,12 @@ msgstr ""
 "adreça utilitzeu comes per a separar la llista de destinataris CC</p><p>Si "
 "en dubteu, deixeu este camp en blanc.</p></qt>"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "Adreces &BCC:"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:568
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3193,72 +3193,72 @@ msgstr ""
 "separar la llista de destinataris BCC</p><p>Si en dubteu, deixeu este camp "
 "en blanc.</p></qt>"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "D&ictionary:"
 msgstr "D&iccionari:"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Seleccioneu la carpeta de correu enviat"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Carpeta del correu &enviat:"
 
-#: identity/identitydialog.cpp:597
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Seleccioneu la carpeta d'esborranys"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Carpeta dels esb&orranys:"
 
-#: identity/identitydialog.cpp:605
+#: identity/identitydialog.cpp:604
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Seleccioneu la carpeta de plantilles"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:606
 #, kde-format
 msgid "&Templates folder:"
 msgstr "Carpeta de les plan&tilles:"
 
-#: identity/identitydialog.cpp:612
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Compte eixint:"
 
-#: identity/identitydialog.cpp:619
+#: identity/identitydialog.cpp:618
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Adjunta la meua vCard al missatge"
 
-#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
 #, kde-format
 msgid "Create..."
 msgstr "Crea..."
 
-#: identity/identitydialog.cpp:625
+#: identity/identitydialog.cpp:624
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Idioma de correcció automàtica:"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:636
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Restaura el nom de domini predeterminat"
 
-#: identity/identitydialog.cpp:640
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "&Domini predeterminat:"
 
-#: identity/identitydialog.cpp:646
+#: identity/identitydialog.cpp:645
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3267,38 +3267,38 @@ msgstr ""
 "<qt><p>El nom de domini predeterminat s'utilitza per a la compleció de les "
 "adreces de correu que tan sols consistisquen en un nom d'usuari.</p></qt>"
 
-#: identity/identitydialog.cpp:663
+#: identity/identitydialog.cpp:662
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Utilit&za plantilles de missatges personalitzades per a esta identitat"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:676
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Copia les plantilles globals"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:689
 #, kde-format
 msgid "Signature"
 msgstr "Signatura"
 
-#: identity/identitydialog.cpp:697
+#: identity/identitydialog.cpp:696
 #, kde-format
 msgid "Picture"
 msgstr "Imatge"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Àlies de correu no vàlid «%1»"
 
-#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Adreça de correu no vàlida"
 
-#: identity/identitydialog.cpp:817
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3311,7 +3311,7 @@ msgstr ""
 "Açò pot provocar missatges d'avís en la banda receptora en provar de "
 "verificar signatures fetes amb esta configuració."
 
-#: identity/identitydialog.cpp:826
+#: identity/identitydialog.cpp:825
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3320,7 +3320,7 @@ msgstr ""
 "Una de les claus d'encriptació configurades a OpenPGP no conté cap ID de "
 "l'usuari amb l'adreça de correu configurada per a esta identitat (%1)."
 
-#: identity/identitydialog.cpp:833
+#: identity/identitydialog.cpp:832
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3333,7 +3333,7 @@ msgstr ""
 "Açò pot provocar missatges d'avís en la banda receptora en provar de "
 "verificar signatures fetes amb esta configuració."
 
-#: identity/identitydialog.cpp:842
+#: identity/identitydialog.cpp:841
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3342,23 +3342,23 @@ msgstr ""
 "Un dels certificats d'encriptació configurats a l'S/MIME no conté l'adreça "
 "de correu configurada per a esta identitat (%1)."
 
-#: identity/identitydialog.cpp:852
+#: identity/identitydialog.cpp:851
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "No s'ha trobat l'adreça de correu en la clau/certificat"
 
-#: identity/identitydialog.cpp:864
+#: identity/identitydialog.cpp:863
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "El fitxer de signatura no és vàlid"
 
-#: identity/identitydialog.cpp:880
+#: identity/identitydialog.cpp:879
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edició de la identitat «%1»"
 
-#: identity/identitydialog.cpp:949
+#: identity/identitydialog.cpp:948
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3367,7 +3367,7 @@ msgstr ""
 "No hi ha cap carpeta personalitzada per a la identitat, per tant, "
 "s'utilitzarà la carpeta d'esborranys predeterminada."
 
-#: identity/identitydialog.cpp:1171
+#: identity/identitydialog.cpp:1170
 #, kde-format
 msgid "Edit..."
 msgstr "Edita..."
@@ -3423,7 +3423,7 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "No la cancel·les"
 
-#: identity/identitylistview.cpp:78
+#: identity/identitylistview.cpp:76
 #, kde-format
 msgctxt ""
 "%1: identity name. Used in the config dialog, section Identity, to indicate "
@@ -3431,46 +3431,46 @@ msgctxt ""
 msgid "%1 (Default)"
 msgstr "%1 (Predeterminada)"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Identity Name"
 msgstr "Nom de la identitat"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Email Address"
 msgstr "Adreça de correu"
 
-#: identity/identitypage.cpp:215
+#: identity/identitypage.cpp:213
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Segur que voleu eliminar la identitat anomenada <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:218
+#: identity/identitypage.cpp:216
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Segur que voleu eliminar esta identitat %1?"
 msgstr[1] "Segur que voleu eliminar estes identitats %1?"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:219
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Elimina la identitat"
 msgstr[1] "Elimina les identitats"
 
-#: identity/identitypage.cpp:222
+#: identity/identitypage.cpp:220
 #, kde-format
 msgid "&Remove"
 msgstr "&Elimina"
 
-#: identity/identitypage.cpp:276
+#: identity/identitypage.cpp:274
 #, kde-format
 msgid "Rename"
 msgstr "Canvia el nom"
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:280
 #, kde-format
 msgid "Set as Default"
 msgstr "Establix com a predeterminada"
@@ -3583,23 +3583,23 @@ msgstr[0] "La llista de distribució «%2» està buida, no es pot utilitzar."
 msgstr[1] ""
 "Les llistes de distribució «%2» estan buides, no es poden utilitzar."
 
-#: job/createnewcontactjob.cpp:64
+#: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Afig a la llibreta d'adreces"
 
-#: job/createnewcontactjob.cpp:118
+#: job/createnewcontactjob.cpp:117
 #, kde-format
 msgid "Contact created successfully"
 msgstr "El contacte s'ha creat correctament"
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "El contacte no s'ha pogut emmagatzemar: %1"
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, kde-format
 msgid "Failed to store contact"
 msgstr "No s'ha pogut emmagatzemar el contacte"
@@ -4012,31 +4012,31 @@ msgstr "Barra d'eines HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra d'eines de direcció del text"
 
-#: kmkernel.cpp:818
+#: kmkernel.cpp:816
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "S'ha establit que KMail estiga desconnectat; s'han suspés tots els treballs "
 "de xarxa"
 
-#: kmkernel.cpp:838 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
 #, kde-format
 msgid "Send Email"
 msgstr "Envia el correu"
 
-#: kmkernel.cpp:839 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
 #, kde-format
 msgid "Impossible to send email"
 msgstr "És impossible enviar el correu"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:869
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "S'ha establit que KMail estiga connectat; s'han représ tots els treballs de "
 "xarxa"
 
-#: kmkernel.cpp:873
+#: kmkernel.cpp:871
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4045,40 +4045,40 @@ msgstr ""
 "S'ha establit que KMail estiga connectat; es reprendran tots els treballs de "
 "xarxa en detectar-se una connexió de xarxa"
 
-#: kmkernel.cpp:950
+#: kmkernel.cpp:948
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail està actualment en el mode desconnectat. Com voleu continuar?"
 
-#: kmkernel.cpp:952
+#: kmkernel.cpp:950
 #, kde-format
 msgid "Online/Offline"
 msgstr "Connectat/desconnectat"
 
-#: kmkernel.cpp:953 kmmainwidget.cpp:2369
+#: kmkernel.cpp:951 kmmainwidget.cpp:2369
 #, kde-format
 msgid "Work Online"
 msgstr "Treballa en línia"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2366
+#: kmkernel.cpp:952 kmmainwidget.cpp:2366
 #, kde-format
 msgid "Work Offline"
 msgstr "Treballa desconnectat"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:980
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "S'ha detectat una connexió de xarxa, s'han représ tots els treballs de xarxa"
 
-#: kmkernel.cpp:985
+#: kmkernel.cpp:983
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "No s'ha detectat cap connexió de xarxa, s'han suspés tots els treballs de "
 "xarxa"
 
-#: kmkernel.cpp:1080
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4087,12 +4087,12 @@ msgstr ""
 "No s'ha pogut obrir el fitxer de guardada automàtica a %1.\n"
 "Motiu: %2"
 
-#: kmkernel.cpp:1081
+#: kmkernel.cpp:1079
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "No s'ha pogut obrir el fitxer de guardada automàtica"
 
-#: kmkernel.cpp:1628
+#: kmkernel.cpp:1626
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4102,7 +4102,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Estes %1 identitats s'han canviat per a utilitzar el transport predeterminat:"
 
-#: kmkernel.cpp:1652
+#: kmkernel.cpp:1650
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4111,17 +4111,17 @@ msgstr[0] "Esta identitat s'ha canviat per a utilitzar el transport modificat:"
 msgstr[1] ""
 "Estes %1 identitats s'han canviat per a utilitzar el transport modificat:"
 
-#: kmkernel.cpp:1667
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "Sending messages"
 msgstr "S'estan enviant els missatges"
 
-#: kmkernel.cpp:1668
+#: kmkernel.cpp:1666
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "S'està iniciant el procés d'enviament..."
 
-#: kmkernel.cpp:1747
+#: kmkernel.cpp:1745
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4130,33 +4130,33 @@ msgstr ""
 "El recurs %1 està trencat.\n"
 "%2"
 
-#: kmkernel.cpp:1923 kmkernel.cpp:1929
+#: kmkernel.cpp:1921 kmkernel.cpp:1927
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:44
+#: kmlaunchexternalcomponent.cpp:42
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "L'agent d'arxiu de correu no està registrat."
 
-#: kmlaunchexternalcomponent.cpp:56
+#: kmlaunchexternalcomponent.cpp:54
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "L'agent d'enviar més tard no està registrat."
 
-#: kmlaunchexternalcomponent.cpp:68
+#: kmlaunchexternalcomponent.cpp:66
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "L'agent de fusió de correu no està registrat."
 
-#: kmlaunchexternalcomponent.cpp:80
+#: kmlaunchexternalcomponent.cpp:78
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "L'agent de recordatoris de seguiment no està registrat."
 
-#: kmlaunchexternalcomponent.cpp:93
+#: kmlaunchexternalcomponent.cpp:91
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4165,12 +4165,12 @@ msgstr ""
 "No s'ha pogut iniciar el gestor de certificats. Comproveu que Kleopatra "
 "estiga instal·lat correctament."
 
-#: kmlaunchexternalcomponent.cpp:95
+#: kmlaunchexternalcomponent.cpp:93
 #, kde-format
 msgid "KMail Error"
 msgstr "S'ha produït un error a KMail"
 
-#: kmlaunchexternalcomponent.cpp:108
+#: kmlaunchexternalcomponent.cpp:106
 #, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
@@ -4179,12 +4179,12 @@ msgstr ""
 "No s'ha pogut iniciar l'assistent d'importació. Comproveu que ImportWizard "
 "estiga instal·lat correctament."
 
-#: kmlaunchexternalcomponent.cpp:110 kmmainwidget.cpp:325
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:325
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "No s'ha pogut iniciar l'assistent d'importació"
 
-#: kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:121
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4193,12 +4193,12 @@ msgstr ""
 "No s'ha pogut iniciar el programa «Exportador de dades PIM». Comproveu la "
 "instal·lació."
 
-#: kmlaunchexternalcomponent.cpp:125
+#: kmlaunchexternalcomponent.cpp:123
 #, kde-format
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "No s'ha pogut iniciar el programa «Exportador de dades PIM»"
 
-#: kmlaunchexternalcomponent.cpp:143
+#: kmlaunchexternalcomponent.cpp:141
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4207,7 +4207,7 @@ msgstr ""
 "No s'ha pogut iniciar ImportWizard. Comproveu que ImportWizard estiga "
 "instal·lat correctament."
 
-#: kmlaunchexternalcomponent.cpp:145
+#: kmlaunchexternalcomponent.cpp:143
 #, kde-format
 msgid "Unable to start ImportWizard"
 msgstr "No s'ha pogut iniciar ImportWizard"
@@ -4272,7 +4272,7 @@ msgstr "Fes que &caduque"
 msgid "Empty Trash"
 msgstr "Buida la paperera"
 
-#: kmmainwidget.cpp:1466 util.cpp:152
+#: kmmainwidget.cpp:1466 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "Mou a la paperera"
@@ -4561,7 +4561,7 @@ msgstr "Missatges ajornats..."
 msgid "Followup Reminder Messages..."
 msgstr "Missatges de recordatori de seguiment..."
 
-#: kmmainwidget.cpp:2963 util.cpp:149
+#: kmmainwidget.cpp:2963 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5191,12 +5191,12 @@ msgstr "Reinicia"
 msgid "Akonadi restarted."
 msgstr "S'ha reiniciat Akonadi."
 
-#: kmmainwin.cpp:42
+#: kmmainwin.cpp:40
 #, kde-format
 msgid "Starting..."
 msgstr "S'està iniciant..."
 
-#: kmreadermainwin.cpp:481 util.cpp:149
+#: kmreadermainwin.cpp:481 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Mou a la paperera"
@@ -5836,32 +5836,32 @@ msgstr "Indexació"
 msgid "Indexing Collections..."
 msgstr "S'estan indexant les col·leccions..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:77
-#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:76
+#: searchdialog/kmsearchmessagemodel.cpp:83
 #, kde-format
 msgid "From"
 msgstr "De"
 
-#: searchdialog/kmsearchmessagemodel.cpp:78
-#: searchdialog/kmsearchmessagemodel.cpp:85
+#: searchdialog/kmsearchmessagemodel.cpp:77
+#: searchdialog/kmsearchmessagemodel.cpp:84
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "A"
 
-#: searchdialog/kmsearchmessagemodel.cpp:79
-#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:78
+#: searchdialog/kmsearchmessagemodel.cpp:85
 #, kde-format
 msgid "Date"
 msgstr "Data"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:80
+#: searchdialog/kmsearchmessagemodel.cpp:87
 #, kde-format
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: searchdialog/kmsearchmessagemodel.cpp:141
+#: searchdialog/kmsearchmessagemodel.cpp:140
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -5956,32 +5956,32 @@ msgstr ""
 "Conté una condició que no es pot utilitzar amb un nombre de caràcters "
 "inferior a 4."
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, kde-format
 msgid "Searching..."
 msgstr "S'està buscant..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "La busca no ha pogut obtindre cap resultat. %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "La busca ha fallat."
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "S'ha finalitzat la busca."
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "S'ha parat la busca."
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -5992,21 +5992,21 @@ msgstr ""
 "freqüent per a açò, és que ja existix una altra carpeta de busca amb el "
 "mateix nom. Error retornat «%1»."
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Copia un missatge"
 msgstr[1] "Copia %1 missatges"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Retalla un missatge"
 msgstr[1] "Retalla %1 missatges"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, kde-format
 msgid "Checking index status..."
 msgstr "S'està verificant l'estat de l'índex..."
@@ -6461,43 +6461,43 @@ msgstr ""
 "Especifica l'amplària del camp de la carpeta en el diàleg de la finestra de "
 "busca (només per a ús intern)"
 
-#: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:202
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "Etiqueta del missatge: %1"
 
-#: tag/tagactionmanager.cpp:156
+#: tag/tagactionmanager.cpp:155
 #, kde-format
 msgid "Add new tag..."
 msgstr "Afig una etiqueta nova..."
 
-#: tag/tagactionmanager.cpp:169
+#: tag/tagactionmanager.cpp:168
 #, kde-format
 msgid "More..."
 msgstr "Més..."
 
-#: tag/tagactionmanager.cpp:189
+#: tag/tagactionmanager.cpp:188
 #, kde-format
 msgid "Tag not Found"
 msgstr "No s'ha trobat l'etiqueta"
 
-#: tag/tagactionmanager.cpp:205
+#: tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Canvia l'etiqueta del missatge: %1"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Selecció d'etiquetes"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:52
 #, kde-format
 msgid "Add New Tag..."
 msgstr "Afig una etiqueta nova..."
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:66
 #, kde-format
 msgid "Search tag..."
 msgstr "Busca una etiqueta..."
@@ -7705,24 +7705,24 @@ msgstr "5 minuts"
 msgid "Undo send"
 msgstr "Desfés l'enviament"
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, kde-format
 msgid "Move To Trash"
 msgstr "Mou a la paperera"
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Mou el missatge"
 msgstr[1] "Mou els missatges"
 
-#: undostack.cpp:103
+#: undostack.cpp:101
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "No hi ha res a desfer."
 
-#: undostack.cpp:110
+#: undostack.cpp:108
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "No s'ha pogut moure el missatge. %1"
@@ -7747,7 +7747,7 @@ msgstr "Informació dels connectors"
 msgid "Plugins used in KMail."
 msgstr "Connectors emprats en KMail."
 
-#: util.cpp:152
+#: util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-26 00:47+0000\n"
+"POT-Creation-Date: 2022-10-27 00:47+0000\n"
 "PO-Revision-Date: 2010-01-13 18:47+0200\n"
 "Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -593,7 +593,7 @@ msgstr ""
 "piekārtot šai mapei.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:684
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Templates"
 msgstr "Sagataves"
@@ -731,7 +731,7 @@ msgid "Custom Account..."
 msgstr "Pielāgota..."
 
 #: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:156
+#: kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -742,7 +742,7 @@ msgstr ""
 "instalāciju."
 
 #: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:158
+#: kmlaunchexternalcomponent.cpp:156
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start account wizard"
@@ -1435,12 +1435,12 @@ msgstr "Pār&sūtītas temata prefiksi"
 msgid "Remo&ve"
 msgstr "Aiz&vākt"
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "Pievienot..."
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:275
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "Rediģēt..."
@@ -1645,7 +1645,7 @@ msgstr ""
 msgid "Add"
 msgstr "&Pievienot"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:278
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:276
 #, kde-format
 msgid "Remove"
 msgstr "Izņemt"
@@ -1672,70 +1672,70 @@ msgstr "Drukas izvads"
 msgid "User Feedback"
 msgstr "Lietotāja ID"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:190
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Check Before Send Plugins"
 msgstr "&Pārtraukt sūtīšanu"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:197
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Composer Plugins"
 msgstr "Vēstuļu rakstītājs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:203
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Grammar Checker Plugins"
 msgstr "&Pārtraukt sūtīšanu"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:213
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Tools Plugins"
 msgstr "Vēstuļu rakstītājs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:220
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Editor Plugins"
 msgstr "Vēstuļu rakstītājs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, fuzzy, kde-format
 #| msgid "Message Structure Viewer"
 msgid "Message Viewer"
 msgstr "Vēstules struktūras skatītājs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:236
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:244
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Header Style Plugins"
 msgstr "&Pārtraukt sūtīšanu"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:251
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Text Conversion Plugins"
 msgstr "Vēstuļu rakstītājs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Misc"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:266
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:288
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Akonadi Agents"
 msgstr ""
@@ -1842,20 +1842,20 @@ msgstr "Izvēlēties fontu"
 msgid "Select"
 msgstr "Iezīmēt visu tekstu"
 
-#: dialog/archivefolderdialog.cpp:43
+#: dialog/archivefolderdialog.cpp:42
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arhīvs"
 
-#: dialog/archivefolderdialog.cpp:52
+#: dialog/archivefolderdialog.cpp:51
 #, fuzzy, kde-format
 #| msgid "Archive Folder"
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arhivēt mapi"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -1863,59 +1863,59 @@ msgctxt "@action"
 msgid "Archive"
 msgstr "Arhīvs"
 
-#: dialog/archivefolderdialog.cpp:72
+#: dialog/archivefolderdialog.cpp:71
 #, kde-format
 msgid "&Folder:"
 msgstr "&Mape:"
 
-#: dialog/archivefolderdialog.cpp:82
+#: dialog/archivefolderdialog.cpp:81
 #, kde-format
 msgid "F&ormat:"
 msgstr "F&ormāts:"
 
-#: dialog/archivefolderdialog.cpp:88
+#: dialog/archivefolderdialog.cpp:87
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr "Saspiests Zip arhīvs (.zip)"
 
-#: dialog/archivefolderdialog.cpp:89
+#: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr "Nesaspiests arhīvs (.tar)"
 
-#: dialog/archivefolderdialog.cpp:90
+#: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr "BZ2-saspiests Tar arhīvs (.tar.bz2)"
 
-#: dialog/archivefolderdialog.cpp:91
+#: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-saspiests Tar arhīvs (.tar.gz)"
 
-#: dialog/archivefolderdialog.cpp:97
+#: dialog/archivefolderdialog.cpp:96
 #, kde-format
 msgid "&Archive File:"
 msgstr "&Arhīva fails:"
 
-#: dialog/archivefolderdialog.cpp:109
+#: dialog/archivefolderdialog.cpp:108
 #, fuzzy, kde-format
 #| msgid "&Delete folders after completion"
 msgid "&Delete folder and subfolders after completion"
 msgstr "&Dzēst mapes pēc pabeigšanas"
 
-#: dialog/archivefolderdialog.cpp:113
+#: dialog/archivefolderdialog.cpp:112
 #, fuzzy, kde-format
 #| msgid "Archive Folder"
 msgid "Archive all subfolders"
 msgstr "Arhivēt mapi"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "Izvēlieties arhivējamo mapi."
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "No folder selected"
 msgstr "Nav norādīta mape"
@@ -1927,7 +1927,7 @@ msgctxt "@title:window"
 msgid "Notification"
 msgstr "Jaunu vēstuļu paziņojums"
 
-#: editor/attachment/attachmentview.cpp:167
+#: editor/attachment/attachmentview.cpp:166
 #, fuzzy, kde-format
 #| msgctxt "filename for the %1-th unnamed attachment"
 #| msgid "attachment.%1"
@@ -1937,13 +1937,13 @@ msgstr[0] "pielikums.%1"
 msgstr[1] "pielikums.%1"
 msgstr[2] "pielikums.%1"
 
-#: editor/attachment/attachmentview.cpp:199
+#: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
 #| msgid "Hide attachment list."
 msgid "Hide attachment list"
 msgstr "Slēpt pielikumu sarakstu."
 
-#: editor/attachment/attachmentview.cpp:201
+#: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
 #| msgid "Hide attachment list."
 msgid "Show attachment list"
@@ -1962,7 +1962,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kodējums"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2296,14 +2296,14 @@ msgstr "&Meklēt vēstules..."
 msgid "Configure KMail..."
 msgstr "Konfigurēt KMail..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:183 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:186 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
@@ -2868,31 +2868,31 @@ msgstr ""
 msgid "Cannot move messages."
 msgstr "Kopēt vai pārvietot vēstules uz %1"
 
-#: folderarchive/folderarchivemanager.cpp:76
+#: folderarchive/folderarchivemanager.cpp:74
 #, fuzzy, kde-format
 #| msgid "Unable to create subfolder for folder '%1'."
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "Neizdevās izveidot apakšmapi mapei '%1'."
 
-#: folderarchive/folderarchivemanager.cpp:83
+#: folderarchive/folderarchivemanager.cpp:81
 #, fuzzy, kde-format
 #| msgid "No folder selected"
 msgid "No folder returned."
 msgstr "Nav norādīta mape"
 
-#: folderarchive/folderarchivemanager.cpp:95
+#: folderarchive/folderarchivemanager.cpp:93
 #, fuzzy, kde-format
 #| msgid "Unable to create subfolder for folder '%1'."
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "Neizdevās izveidot apakšmapi mapei '%1'."
 
-#: folderarchive/folderarchivemanager.cpp:101
+#: folderarchive/folderarchivemanager.cpp:99
 #, fuzzy, kde-format
 #| msgid "Unable to retrieve a message for folder '%1'."
 msgid "Unable to return list of folders."
 msgstr "Neizdevās iegūt vēstuli no mapes '%1'."
 
-#: folderarchive/folderarchivemanager.cpp:168
+#: folderarchive/folderarchivemanager.cpp:166
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info:tooltip Formats to something like 'Messages received Yesterday'"
@@ -2963,52 +2963,52 @@ msgstr "&Kopēt esošu identitāti"
 msgid "&Existing identities:"
 msgstr "&Esošās identitātes:"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, fuzzy, kde-format
 #| msgid "Error while trying to rename folder %1"
 msgid "Error while generating new key pair: %1"
 msgstr "Kļūda pārdēvējot mapi %1"
 
-#: identity/identitydialog.cpp:176
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:215
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:217
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "Ievadiet jaunu atslēgas vārdu:"
 
-#: identity/identitydialog.cpp:230
+#: identity/identitydialog.cpp:229
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:243
+#: identity/identitydialog.cpp:242
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Rediģēt identitāti"
 
-#: identity/identitydialog.cpp:268
+#: identity/identitydialog.cpp:267
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Pamata"
 
-#: identity/identitydialog.cpp:276
+#: identity/identitydialog.cpp:275
 #, kde-format
 msgid "&Your name:"
 msgstr "&Jūsu vārds:"
 
-#: identity/identitydialog.cpp:281
+#: identity/identitydialog.cpp:280
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3019,12 +3019,12 @@ msgstr ""
 "nosūtīto vēstuļu galvenē.</p><p>Ja atstāsiet tukšu, jūsu īstais vārds "
 "neparādīsiesm būs tikai e-pasta adrese.</p></qt>"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:292
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Organi&zācija:"
 
-#: identity/identitydialog.cpp:298
+#: identity/identitydialog.cpp:297
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3035,12 +3035,12 @@ msgstr ""
 "parādīsies nosūtīto vēstuļu galvenē.</p><p>Droši varat šo atstāt tukšu.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:311
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-pasta adrese:"
 
-#: identity/identitydialog.cpp:316
+#: identity/identitydialog.cpp:315
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3057,13 +3057,13 @@ msgstr ""
 "p><p>Ja atstāsiet tukšu, vai ievadīsiet nepareizi, nevarēsiet saņemt "
 "atbildes vēstules.</p></qt>"
 
-#: identity/identitydialog.cpp:336
+#: identity/identitydialog.cpp:335
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "&E-pasta adrese:"
 
-#: identity/identitydialog.cpp:341
+#: identity/identitydialog.cpp:340
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3074,12 +3074,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:359
+#: identity/identitydialog.cpp:358
 #, kde-format
 msgid "Cryptography"
 msgstr "Kriptogrāfija"
 
-#: identity/identitydialog.cpp:365
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3100,23 +3100,23 @@ msgstr ""
 "pasta lietošanai.</p><p>Vairāk par atslēgām varat uzzināt <a>http://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP parakstīšanas atslēga:"
 
-#: identity/identitydialog.cpp:377
+#: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:386
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "OpenPGP atslēga 0x%1"
 
-#: identity/identitydialog.cpp:413
+#: identity/identitydialog.cpp:412
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3140,12 +3140,12 @@ msgstr ""
 "lietošanai.</p><p>Vairāk par atslēgām varat uzzināt <a>http://www.gnupg.org</"
 "a></p></qt>"
 
-#: identity/identitydialog.cpp:420
+#: identity/identitydialog.cpp:419
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP šfirēšanas atslēga:"
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:429
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3158,12 +3158,12 @@ msgstr ""
 "parakstīt jūsu vēstules ar S/MIME, tas netraucēs ikdienas pasta lietošanai.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:435
+#: identity/identitydialog.cpp:434
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME parakstīšanas sertifikāts:"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:448
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3177,83 +3177,83 @@ msgstr ""
 "iespējai.</p><p>Varat atstāt šo tukšu, bet tad KMail nevarēs parakstīt jūsu "
 "vēstules, tas netraucēs ikdienas pasta lietošanai.</p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:454
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME šifrēšanas sertifikāts:"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Vēlamais vēstuļu šifrēšanas formāts:"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:476
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgid "Enable Autocrypt"
 msgstr "Ieslēgt pierakstīšanos?"
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:492
+#: identity/identitydialog.cpp:491
 #, fuzzy, kde-format
 #| msgid "Overwrite &All"
 msgid "Overwrite defaults:"
 msgstr "Pārrakstīt &visu"
 
-#: identity/identitydialog.cpp:497
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "Parak&stīt vēstuli"
 
-#: identity/identitydialog.cpp:500
+#: identity/identitydialog.cpp:499
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "Automātiski ši&frēt vēstules, kad vien iespējams"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Brīdināt, ja mēģina sūtīt ne&parakstītu vēstuli"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Brīdināt, ja mēģina sūtīt neparakstītas vēstules"
 
-#: identity/identitydialog.cpp:516
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Paplašināti"
 
-#: identity/identitydialog.cpp:524
+#: identity/identitydialog.cpp:523
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "A&tbildēt-uz edrese:"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3269,13 +3269,13 @@ msgstr ""
 "<tt>No:</tt> laukā ir norādīta jūsu adrese, bet atbildes tiek sūtītas uz "
 "gupas adresi.</p><p>Ja šaubāties, atstājiet tukšu.</p></qt>"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:544
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "&BCC adreses:"
 
-#: identity/identitydialog.cpp:550
+#: identity/identitydialog.cpp:549
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3299,12 +3299,12 @@ msgstr ""
 "vēstules kopiju citam jūsu kontam.</p><p>Lai norādītu vairākas adreses, "
 "atdaliet tās ar komatiem.</p><p>Ja šaubāties, atstājiet tukšu.</p></qt>"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&BCC adreses:"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:568
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3320,79 +3320,79 @@ msgstr ""
 "vēstules kopiju citam jūsu kontam.</p><p>Lai norādītu vairākas adreses, "
 "atdaliet tās ar komatiem.</p><p>Ja šaubāties, atstājiet tukšu.</p></qt>"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&Vārdnīca:"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:588
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "No&sūtītā pasta mape:"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Nosūtītā pasta &mape:"
 
-#: identity/identitydialog.cpp:597
+#: identity/identitydialog.cpp:596
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgid "Select Draft Folder"
 msgstr "Izvēlēties fontu"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Me&lnrakstu mape:"
 
-#: identity/identitydialog.cpp:605
+#: identity/identitydialog.cpp:604
 #, fuzzy, kde-format
 #| msgid "Multiple Folders"
 msgid "Select Templates Folder"
 msgstr "Vairākas mapes"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:606
 #, kde-format
 msgid "&Templates folder:"
 msgstr "&Sagatavju mape:"
 
-#: identity/identitydialog.cpp:612
+#: identity/identitydialog.cpp:611
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Konfigurēt kontu"
 
-#: identity/identitydialog.cpp:619
+#: identity/identitydialog.cpp:618
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "Pievienot vēstulei 'galveni'"
 
-#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Pārdēvēt..."
 
-#: identity/identitydialog.cpp:625
+#: identity/identitydialog.cpp:624
 #, kde-format
 msgid "Autocorrection language:"
 msgstr ""
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:636
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "Noklusē&tais domēns:"
 
-#: identity/identitydialog.cpp:640
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Noklusē&tais domēns:"
 
-#: identity/identitydialog.cpp:646
+#: identity/identitydialog.cpp:645
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3401,39 +3401,39 @@ msgstr ""
 "<qt><p>Noklusētais domēns tiek izmantots e-pasta adrešu automātiskai "
 "pabeigšanai, ja adresē norādīts tikai lietotāja vārds.</p></qt>"
 
-#: identity/identitydialog.cpp:663
+#: identity/identitydialog.cpp:662
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Lietot pielāgotas vēstuļu sagataves šai identitātei"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:676
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Kopēt globālās sagataves"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:689
 #, kde-format
 msgid "Signature"
 msgstr "Paraksts"
 
-#: identity/identitydialog.cpp:697
+#: identity/identitydialog.cpp:696
 #, kde-format
 msgid "Picture"
 msgstr "Attēls"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Nederīga e-pasta adrese"
 
-#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Nederīga e-pasta adrese"
 
-#: identity/identitydialog.cpp:817
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3446,7 +3446,7 @@ msgstr ""
 "Tas var izraisīt brīdinājuma paziņojumus saņēmējam mēģinot pārbaudīt šādu "
 "parakstu."
 
-#: identity/identitydialog.cpp:826
+#: identity/identitydialog.cpp:825
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3455,7 +3455,7 @@ msgstr ""
 "Viena no norādītajām OpenPGP parakstīšanas atslēgām nesatur lietotāja ID ar "
 "konfigurēto e-pasta adresi kā tās identitāti (%1)."
 
-#: identity/identitydialog.cpp:833
+#: identity/identitydialog.cpp:832
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3468,7 +3468,7 @@ msgstr ""
 "Tas var izraisīt brīdinājuma paziņojumus saņēmējam mēģinot pārbaudīt šādu "
 "parakstu."
 
-#: identity/identitydialog.cpp:842
+#: identity/identitydialog.cpp:841
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3477,24 +3477,24 @@ msgstr ""
 "Viens no norādītajiem S/MIME šifrēšanas sertifikātiem nesatur lietotāja ID "
 "ar konfigurēto e-pasta adresi kā tās identitāti (%1)."
 
-#: identity/identitydialog.cpp:852
+#: identity/identitydialog.cpp:851
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Atslēgā/Sertifikātā nav arasta e-pasta adrese"
 
-#: identity/identitydialog.cpp:864
+#: identity/identitydialog.cpp:863
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Paraksta fails nav derīgs"
 
-#: identity/identitydialog.cpp:880
+#: identity/identitydialog.cpp:879
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Rediģēt identitāti \"%1\""
 
-#: identity/identitydialog.cpp:949
+#: identity/identitydialog.cpp:948
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3506,7 +3506,7 @@ msgstr ""
 "Pielāgotā identitātes \"%1\" melnrakstu mape (vairs) nepastāv, tāpēc tiks "
 "izmantota noklusētā melnrakstu mape."
 
-#: identity/identitydialog.cpp:1171
+#: identity/identitydialog.cpp:1170
 #, kde-format
 msgid "Edit..."
 msgstr "Rediģēt..."
@@ -3574,7 +3574,7 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "Neieslēgt"
 
-#: identity/identitylistview.cpp:78
+#: identity/identitylistview.cpp:76
 #, kde-format
 msgctxt ""
 "%1: identity name. Used in the config dialog, section Identity, to indicate "
@@ -3582,23 +3582,23 @@ msgctxt ""
 msgid "%1 (Default)"
 msgstr "%1 (noklusējuma)"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Identity Name"
 msgstr "Identitātes nosaukums"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Email Address"
 msgstr "E-pasta adrese"
 
-#: identity/identitypage.cpp:215
+#: identity/identitypage.cpp:213
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Vai tiešām vēlaties noņemt identitāti <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:218
+#: identity/identitypage.cpp:216
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3607,7 +3607,7 @@ msgstr[0] "<qt>Vai tiešām vēlaties noņemt identitāti <b>%1</b>?</qt>"
 msgstr[1] "<qt>Vai tiešām vēlaties noņemt identitāti <b>%1</b>?</qt>"
 msgstr[2] "<qt>Vai tiešām vēlaties noņemt identitāti <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:219
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3616,18 +3616,18 @@ msgstr[0] "Noņemt identitāti"
 msgstr[1] "Noņemt identitāti"
 msgstr[2] "Noņemt identitāti"
 
-#: identity/identitypage.cpp:222
+#: identity/identitypage.cpp:220
 #, kde-format
 msgid "&Remove"
 msgstr "Aiz&vākt"
 
-#: identity/identitypage.cpp:276
+#: identity/identitypage.cpp:274
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgid "Rename"
 msgstr "Pā&rdēvēt"
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:280
 #, kde-format
 msgid "Set as Default"
 msgstr "Iestatīt kā noklusējuma"
@@ -3747,25 +3747,25 @@ msgstr[0] "Adresātu saraksts \"%1\" ir tukšs, to nevar izmantot."
 msgstr[1] "Adresātu saraksts \"%1\" ir tukšs, to nevar izmantot."
 msgstr[2] "Adresātu saraksts \"%1\" ir tukšs, to nevar izmantot."
 
-#: job/createnewcontactjob.cpp:64
+#: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Pievienot adrešu grāmatai"
 
-#: job/createnewcontactjob.cpp:118
+#: job/createnewcontactjob.cpp:117
 #, fuzzy, kde-format
 #| msgid "Messages deleted successfully."
 msgid "Contact created successfully"
 msgstr "Vēstules veiksmīgi izdzēstas."
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, fuzzy, kde-format
 #| msgid "Failed to parse vCard."
 msgid "Failed to store contact"
@@ -4197,29 +4197,29 @@ msgstr "HTML rīkjosla"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:818
+#: kmkernel.cpp:816
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ir pārslēgta nesaistes režīmā; visas tīkla darbības ir atliktas"
 
-#: kmkernel.cpp:838 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:839 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Grasās sūtīt pastu..."
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:869
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail ir pārslēgta tiešsaistes režīmā; visas tīkla darbības atsāktas"
 
-#: kmkernel.cpp:873
+#: kmkernel.cpp:871
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4227,52 +4227,52 @@ msgid ""
 "connection is detected"
 msgstr "KMail ir pārslēgta tiešsaistes režīmā; visas tīkla darbības atsāktas"
 
-#: kmkernel.cpp:950
+#: kmkernel.cpp:948
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail pašlaik atrodas nesaistes režīmā. Ko jūs vēlaties darīt tālāk?"
 
-#: kmkernel.cpp:952
+#: kmkernel.cpp:950
 #, kde-format
 msgid "Online/Offline"
 msgstr "Tiešsaisne/Bezsaiste"
 
-#: kmkernel.cpp:953 kmmainwidget.cpp:2369
+#: kmkernel.cpp:951 kmmainwidget.cpp:2369
 #, kde-format
 msgid "Work Online"
 msgstr "Strādāt tiešsaitē"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2366
+#: kmkernel.cpp:952 kmmainwidget.cpp:2366
 #, kde-format
 msgid "Work Offline"
 msgstr "Strādāt nesaistē"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:980
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "KMail ir pārslēgta tiešsaistes režīmā; visas tīkla darbības atsāktas"
 
-#: kmkernel.cpp:985
+#: kmkernel.cpp:983
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail ir pārslēgta nesaistes režīmā; visas tīkla darbības ir atliktas"
 
-#: kmkernel.cpp:1080
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:1081
+#: kmkernel.cpp:1079
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Opening Autosave File Failed"
 msgstr "Neizdevās automātiski saglabāt"
 
-#: kmkernel.cpp:1628
+#: kmkernel.cpp:1626
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4283,7 +4283,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Šīs %1 identitāšu ir izmainītas, lai izmantotu noklusēto transportu:"
 
-#: kmkernel.cpp:1652
+#: kmkernel.cpp:1650
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4292,51 +4292,51 @@ msgstr[0] "Šī %1 identitāte ir izmainīta, lai izmantotu mainīto transportu:
 msgstr[1] "Šīs %1 identitātes ir izmainītas, lai izmantotu mainīto transportu:"
 msgstr[2] "Šīs %1 identitāšu ir izmainītas, lai izmantotu mainīto transportu:"
 
-#: kmkernel.cpp:1667
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "Sending messages"
 msgstr "Sūta vēstules"
 
-#: kmkernel.cpp:1668
+#: kmkernel.cpp:1666
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "Sāk sūtīšanas procesu..."
 
-#: kmkernel.cpp:1747
+#: kmkernel.cpp:1745
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1923 kmkernel.cpp:1929
+#: kmkernel.cpp:1921 kmkernel.cpp:1927
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:44
+#: kmlaunchexternalcomponent.cpp:42
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:56
+#: kmlaunchexternalcomponent.cpp:54
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:68
+#: kmlaunchexternalcomponent.cpp:66
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:80
+#: kmlaunchexternalcomponent.cpp:78
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:93
+#: kmlaunchexternalcomponent.cpp:91
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4346,12 +4346,12 @@ msgstr ""
 "Neizdevās palaist sertifikātu pārvaldnieku. Lūdzu pārbaudiet savu "
 "instalāciju."
 
-#: kmlaunchexternalcomponent.cpp:95
+#: kmlaunchexternalcomponent.cpp:93
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail kļūda"
 
-#: kmlaunchexternalcomponent.cpp:108
+#: kmlaunchexternalcomponent.cpp:106
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4361,13 +4361,13 @@ msgstr ""
 "Neizdevās palaist sertifikātu pārvaldnieku. Lūdzu pārbaudiet jūsu "
 "instalāciju."
 
-#: kmlaunchexternalcomponent.cpp:110 kmmainwidget.cpp:325
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:325
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start import wizard"
 msgstr "Neizdevās izveidot kontu"
 
-#: kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:121
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4377,13 +4377,13 @@ msgstr ""
 "Neizdevās palaist sertifikātu pārvaldnieku. Lūdzu pārbaudiet jūsu "
 "instalāciju."
 
-#: kmlaunchexternalcomponent.cpp:125
+#: kmlaunchexternalcomponent.cpp:123
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Neizdevās izveidot kontu"
 
-#: kmlaunchexternalcomponent.cpp:143
+#: kmlaunchexternalcomponent.cpp:141
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4393,7 +4393,7 @@ msgstr ""
 "Neizdevās palaist sertifikātu pārvaldnieku. Lūdzu pārbaudiet jūsu "
 "instalāciju."
 
-#: kmlaunchexternalcomponent.cpp:145
+#: kmlaunchexternalcomponent.cpp:143
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start ImportWizard"
@@ -4461,7 +4461,7 @@ msgstr "Izņemt v&eco"
 msgid "Empty Trash"
 msgstr "Iztukšot miskasti"
 
-#: kmmainwidget.cpp:1466 util.cpp:152
+#: kmmainwidget.cpp:1466 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "Pārvietot uz miskasti"
@@ -4763,7 +4763,7 @@ msgstr "Dzēš vēstules..."
 msgid "Followup Reminder Messages..."
 msgstr "&Meklēt vēstules..."
 
-#: kmmainwidget.cpp:2963 util.cpp:149
+#: kmmainwidget.cpp:2963 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5414,12 +5414,12 @@ msgstr "Identitātes nosaukums"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:42
+#: kmmainwin.cpp:40
 #, kde-format
 msgid "Starting..."
 msgstr "Startē..."
 
-#: kmreadermainwin.cpp:481 util.cpp:149
+#: kmreadermainwin.cpp:481 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Pārvietot uz &miskasti"
@@ -6107,14 +6107,14 @@ msgstr "Indekss:"
 msgid "Indexing Collections..."
 msgstr "Konfigurēt pabeigšanas kārtību..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:77
-#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:76
+#: searchdialog/kmsearchmessagemodel.cpp:83
 #, kde-format
 msgid "From"
 msgstr "No"
 
-#: searchdialog/kmsearchmessagemodel.cpp:78
-#: searchdialog/kmsearchmessagemodel.cpp:85
+#: searchdialog/kmsearchmessagemodel.cpp:77
+#: searchdialog/kmsearchmessagemodel.cpp:84
 #, fuzzy, kde-format
 #| msgctxt "Email recipient"
 #| msgid "To"
@@ -6122,21 +6122,21 @@ msgctxt "Receiver of the email"
 msgid "To"
 msgstr "Kam"
 
-#: searchdialog/kmsearchmessagemodel.cpp:79
-#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:78
+#: searchdialog/kmsearchmessagemodel.cpp:85
 #, kde-format
 msgid "Date"
 msgstr "Datums"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:80
+#: searchdialog/kmsearchmessagemodel.cpp:87
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu Goto previous unread message."
 #| msgid "Previous"
 msgid "Preview"
 msgstr "Iepriekšējā"
 
-#: searchdialog/kmsearchmessagemodel.cpp:141
+#: searchdialog/kmsearchmessagemodel.cpp:140
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@title:column, folder (e.g. email)"
@@ -6236,32 +6236,32 @@ msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching..."
 msgstr "Startē..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, fuzzy, kde-format
 #| msgid "Copy or Move Messages to %1"
 msgid "Cannot get search result. %1"
 msgstr "Kopēt vai pārvietot vēstules uz %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, fuzzy, kde-format
 #| msgid "Search canceled"
 msgid "Search failed."
 msgstr "Meklēšana pārtraukta"
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, fuzzy, kde-format
 #| msgctxt "@info:status Number of folders for which update is completed."
 #| msgid " completed"
 msgid "Search complete."
 msgstr " pabeigti"
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
@@ -6269,7 +6269,7 @@ msgstr " pabeigti"
 msgid "Search stopped."
 msgstr "Meklēt"
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6277,7 +6277,7 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, fuzzy, kde-format
 #| msgid "Copy Messages"
 msgid "Copy Message"
@@ -6286,7 +6286,7 @@ msgstr[0] "Kopēt vēstules"
 msgstr[1] "Kopēt vēstules"
 msgstr[2] "Kopēt vēstules"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, fuzzy, kde-format
 #| msgid "Cut Messages"
 msgid "Cut Message"
@@ -6295,7 +6295,7 @@ msgstr[0] "Izgriezt vēstules"
 msgstr[1] "Izgriezt vēstules"
 msgstr[2] "Izgriezt vēstules"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status..."
@@ -6724,49 +6724,49 @@ msgid ""
 "internal use only)"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:202
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 #| msgid "Message Tag %1"
 msgid "Message Tag: %1"
 msgstr "Vēstules tags %1"
 
-#: tag/tagactionmanager.cpp:156
+#: tag/tagactionmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgid "Add new tag..."
 msgstr "Pievienot jaunu tagu"
 
-#: tag/tagactionmanager.cpp:169
+#: tag/tagactionmanager.cpp:168
 #, fuzzy, kde-format
 #| msgid "Configure..."
 msgid "More..."
 msgstr "Konfigurēt..."
 
-#: tag/tagactionmanager.cpp:189
+#: tag/tagactionmanager.cpp:188
 #, kde-format
 msgid "Tag not Found"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:205
+#: tag/tagactionmanager.cpp:204
 #, fuzzy, kde-format
 #| msgid "Toggle Message Tag %1"
 msgid "Toggle Message Tag: %1"
 msgstr "Pārslēgt vēstules tagu %1"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Select Transport"
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Izvēlieties transportu"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:52
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgid "Add New Tag..."
 msgstr "Pievienot jaunu tagu"
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:66
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
@@ -8107,13 +8107,13 @@ msgstr " min"
 msgid "Undo send"
 msgstr ""
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Pārvietot uz miskasti"
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
@@ -8122,12 +8122,12 @@ msgstr[0] "Jauna vēstule..."
 msgstr[1] "Jauna vēstule..."
 msgstr[2] "Jauna vēstule..."
 
-#: undostack.cpp:103
+#: undostack.cpp:101
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Nav ko atcelt."
 
-#: undostack.cpp:110
+#: undostack.cpp:108
 #, fuzzy, kde-format
 #| msgid "Copy or Move Messages to %1"
 msgid "Cannot move message. %1"
@@ -8155,7 +8155,7 @@ msgstr "Pieteikšanās informācija"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:152
+#: util.cpp:151
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-26 00:47+0000\n"
+"POT-Creation-Date: 2022-10-27 00:47+0000\n"
 "PO-Revision-Date: 2022-10-24 22:29+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -526,7 +526,7 @@ msgstr ""
 "واضغط المفتاح/المفاتيح التي تريد ربطها بهذا المجلّد.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:684
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Templates"
 msgstr "القوالب"
@@ -656,7 +656,7 @@ msgid "Custom Account..."
 msgstr "خصّص الحساب..."
 
 #: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:156
+#: kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -665,7 +665,7 @@ msgstr ""
 "تعذّر بدء مرشد الحسابات. رجاءً تحقّق من أنّ ”مرشد الحسابات“ مثبّت كما ينبغي."
 
 #: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:158
+#: kmlaunchexternalcomponent.cpp:156
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "تعذّر بدء مرشّد الحسابات"
@@ -1341,12 +1341,12 @@ msgstr "بادئات عنوان التّم&رير"
 msgid "Remo&ve"
 msgstr "أز&ل"
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "أضف..."
 
-#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:275
+#: configuredialog/configurecomposerpage.cpp:678 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "عدّل..."
@@ -1538,7 +1538,7 @@ msgstr ""
 msgid "Add"
 msgstr "أضف"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:278
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:276
 #, kde-format
 msgid "Remove"
 msgstr "أزل"
@@ -1563,62 +1563,62 @@ msgstr "الطّباعة"
 msgid "User Feedback"
 msgstr "مشاركة بياناتك"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:190
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "ملحقات التحقّق قبل الإرسال"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:197
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, kde-format
 msgid "Composer Plugins"
 msgstr "ملحقات المؤلّف"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:203
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "ملحقات مُدقِّق القواعد"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:213
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
 #, kde-format
 msgid "Tools Plugins"
 msgstr "ملحقات الأدوات"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:220
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
 #, kde-format
 msgid "Editor Plugins"
 msgstr "ملحقات المحرّر"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, kde-format
 msgid "Message Viewer"
 msgstr "عارض الرّسائل"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:236
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "ملحقات محرّك الوبّ"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:244
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "ملحقات أنماط التّرويسات"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:251
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "ملحقات تحويل النَّص"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Misc"
 msgstr "متنوّع"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:266
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "ملحقات تأكيد حذف البريد الإلكترونيِّ"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:288
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "عملاء «أكونادي»"
@@ -1718,75 +1718,75 @@ msgstr "انتقِ مراسلا"
 msgid "Select"
 msgstr "حدّد"
 
-#: dialog/archivefolderdialog.cpp:43
+#: dialog/archivefolderdialog.cpp:42
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "أرشيف"
 
-#: dialog/archivefolderdialog.cpp:52
+#: dialog/archivefolderdialog.cpp:51
 #, kde-format
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "أرشف مجلّدًا"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
 msgstr "أرشف"
 
-#: dialog/archivefolderdialog.cpp:72
+#: dialog/archivefolderdialog.cpp:71
 #, kde-format
 msgid "&Folder:"
 msgstr "الم&جلّد:"
 
-#: dialog/archivefolderdialog.cpp:82
+#: dialog/archivefolderdialog.cpp:81
 #, kde-format
 msgid "F&ormat:"
 msgstr "ال&نّسق:"
 
-#: dialog/archivefolderdialog.cpp:88
+#: dialog/archivefolderdialog.cpp:87
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr "أرشيف Zip مضغوط (‎.zip)"
 
-#: dialog/archivefolderdialog.cpp:89
+#: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr "أرشيف غير مضغوط (‎.tar)"
 
-#: dialog/archivefolderdialog.cpp:90
+#: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr "أرشيف Tar مضغوط ب‍BZ2 ‏(‎.tar.bz2)"
 
-#: dialog/archivefolderdialog.cpp:91
+#: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "أرشيف Tar مضغوط ب‍GZ ‏(‎.tar.gz)"
 
-#: dialog/archivefolderdialog.cpp:97
+#: dialog/archivefolderdialog.cpp:96
 #, kde-format
 msgid "&Archive File:"
 msgstr "ملفّ الأر&شيف:"
 
-#: dialog/archivefolderdialog.cpp:109
+#: dialog/archivefolderdialog.cpp:108
 #, kde-format
 msgid "&Delete folder and subfolders after completion"
 msgstr "ا&حذف المجلّد وكلّ مجلّداته الفرعيّة عند الاكتمال"
 
-#: dialog/archivefolderdialog.cpp:113
+#: dialog/archivefolderdialog.cpp:112
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "أرشف كلّ المجلّدات الفرعيّة"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "فضلًا اختر مجلّدًا تريد أرشفته."
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "No folder selected"
 msgstr "لم تختر مجلّدًا"
@@ -1797,7 +1797,7 @@ msgctxt "@title:window"
 msgid "Notification"
 msgstr "إخطار"
 
-#: editor/attachment/attachmentview.cpp:167
+#: editor/attachment/attachmentview.cpp:166
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
@@ -1808,12 +1808,12 @@ msgstr[3] "%1 مرفقات (%2)"
 msgstr[4] "%1 مرفقًا (%2)"
 msgstr[5] "%1 مرفق (%2)"
 
-#: editor/attachment/attachmentview.cpp:199
+#: editor/attachment/attachmentview.cpp:198
 #, kde-format
 msgid "Hide attachment list"
 msgstr "أخفِ قائمة المرفقات"
 
-#: editor/attachment/attachmentview.cpp:201
+#: editor/attachment/attachmentview.cpp:200
 #, kde-format
 msgid "Show attachment list"
 msgstr "أظهر قائمة المرفقات"
@@ -1830,7 +1830,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "التّرميز"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2153,14 +2153,14 @@ msgstr "أنشئ تذكير بالمتابعة…"
 msgid "Configure KMail..."
 msgstr "اضبط «بريدك»..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:183 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr "<qt>سيخفي هذا شريط القوائم نهائيًّا. يمكنك إظهاره مجدّدًا بكتابة %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:186 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr "أخفِ شريط القوائم"
@@ -2710,27 +2710,27 @@ msgstr "المجلّد %1 للقراءة فقط. رجاءً افحص ضبط ال
 msgid "Cannot move messages."
 msgstr "تعذّر نقل الرّسائل."
 
-#: folderarchive/folderarchivemanager.cpp:76
+#: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "تعذّر جلب المجلّد. الخطأ كان: %1"
 
-#: folderarchive/folderarchivemanager.cpp:83
+#: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
 msgid "No folder returned."
 msgstr "لم يُرجع مجلّد."
 
-#: folderarchive/folderarchivemanager.cpp:95
+#: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "تعذّر جلب المجلّد الأبّ. الخطأ كان: %1"
 
-#: folderarchive/folderarchivemanager.cpp:101
+#: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
 msgid "Unable to return list of folders."
 msgstr "تعذّر إرجاع قائمة المجلّدات."
 
-#: folderarchive/folderarchivemanager.cpp:168
+#: folderarchive/folderarchivemanager.cpp:166
 #, kde-format
 msgid "Messages archived"
 msgstr "أُرشفت الرّسائل"
@@ -2795,49 +2795,49 @@ msgstr "&كرّر vCard الموجودة"
 msgid "&Existing identities:"
 msgstr "الهويّات ال&موجودة:"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "خطأ أثناء توليد زوج مفاتيح جديد: %1"
 
-#: identity/identitydialog.cpp:176
+#: identity/identitydialog.cpp:175
 #, kde-format
 msgid "Key Generation Error"
 msgstr "خطأ أثناء توليد المفتاح"
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:215
 #, kde-format
 msgid "No key"
 msgstr "لا مفتاح"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:217
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "ولّد زوج مفاتيح جديد"
 
-#: identity/identitydialog.cpp:230
+#: identity/identitydialog.cpp:229
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "يولّد زوج مفاتيح جديد..."
 
-#: identity/identitydialog.cpp:243
+#: identity/identitydialog.cpp:242
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "حرّر الهويّة"
 
-#: identity/identitydialog.cpp:268
+#: identity/identitydialog.cpp:267
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "عامّ"
 
-#: identity/identitydialog.cpp:276
+#: identity/identitydialog.cpp:275
 #, kde-format
 msgid "&Your name:"
 msgstr "اسم&ك:"
 
-#: identity/identitydialog.cpp:281
+#: identity/identitydialog.cpp:280
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2848,12 +2848,12 @@ msgstr ""
 "المُرسل،</p><p>إن تركته فارغًا فلن يظهر اسمك الحقيقيّ، وسيظهر بريدك الإلكترونيّ "
 "فقط.</p></qt>"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:292
 #, kde-format
 msgid "Organi&zation:"
 msgstr "المن&ظّمة:"
 
-#: identity/identitydialog.cpp:298
+#: identity/identitydialog.cpp:297
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2863,12 +2863,12 @@ msgstr ""
 "<qt><h3>المنظّمة</h3><p>على هذا الحقل احتواء اسم منظّمتك إن أردته أن يظهر في "
 "ترويسة البريد المُرسل.</p><p>من الآمن (والطّبيعيّ) أن تترك هذا فارغًا.</p></qt>"
 
-#: identity/identitydialog.cpp:311
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid "&Email address:"
 msgstr "ال&بريد الإلكترونيّ:"
 
-#: identity/identitydialog.cpp:316
+#: identity/identitydialog.cpp:315
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2883,12 +2883,12 @@ msgstr ""
 "</p><p>إن تركت هذا فارغًا، أو خاطئًا، فسيواجه الآخرين مشكلة في الرّدّ عليك.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:336
+#: identity/identitydialog.cpp:335
 #, kde-format
 msgid "Email a&liases:"
 msgstr "&كُنَى البريد:"
 
-#: identity/identitydialog.cpp:341
+#: identity/identitydialog.cpp:340
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2904,12 +2904,12 @@ msgstr ""
 "tr><tr><th>الكُنَى:</th><td>first@example.org<br>last@example.org</td></tr></"
 "table><p>أدخل عُنوان كُنيَة واحد لكلّ سطر.</p></qt>"
 
-#: identity/identitydialog.cpp:359
+#: identity/identitydialog.cpp:358
 #, kde-format
 msgid "Cryptography"
 msgstr "التّعمية"
 
-#: identity/identitydialog.cpp:365
+#: identity/identitydialog.cpp:364
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2924,22 +2924,22 @@ msgstr ""
 "العاديَّة. </p><p> تستطيع معرفة المزيد حول المفاتيح في <a>https://www.gnupg."
 "org</a></p></qt>"
 
-#: identity/identitydialog.cpp:371 identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "مفتاح توقيع OpenPGP:"
 
-#: identity/identitydialog.cpp:377
+#: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr "استخدم نفس المفتاح للتعمية والتوقيع"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:386
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "مفتاح OpenPGP:"
 
-#: identity/identitydialog.cpp:413
+#: identity/identitydialog.cpp:412
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -2955,12 +2955,12 @@ msgstr ""
 "OpenPGP؛ لن تتأثَّر وظائف البريد العاديَّة. </p><p> تستطيع معرفة المزيد حول "
 "المفاتيح في <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:420
+#: identity/identitydialog.cpp:419
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "مفتاح تعمية OpenPGP:"
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:429
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -2972,12 +2972,12 @@ msgstr ""
 "p><p>تستطيع ترك هذا الحقل فارغ،لكن لن يكون بمقدور بريدك توقيع البريد رقميًّا "
 "باستخدام S/MIME; لن تتأثَّر وظائف البريد العاديَّة.</p></qt>"
 
-#: identity/identitydialog.cpp:435
+#: identity/identitydialog.cpp:434
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "شهادة توقيع S/MIME:"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:448
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -2991,76 +2991,76 @@ msgstr ""
 "بريدك تعمية نسخ الرَّسائل الصَّادرة لك باستخدام S/MIME; لن تتأثر وظائف البريد "
 "العاديَّة.</p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:454
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "شهادة تعمية S/MIME:"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:471
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "النّسق المفضّل:"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "مكّن التعمية الآلية"
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
 msgstr "التعمية الآلية:"
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr "مكن الآري من معرفة تعميتك المفضلة"
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "استبدل الإعدادات العامة لمبدئيات الأمن"
 
-#: identity/identitydialog.cpp:492
+#: identity/identitydialog.cpp:491
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr "مبدئيات الاستبدال:"
 
-#: identity/identitydialog.cpp:497
+#: identity/identitydialog.cpp:496
 #, kde-format
 msgid "Sign messages"
 msgstr "وقّع الرسائل"
 
-#: identity/identitydialog.cpp:500
+#: identity/identitydialog.cpp:499
 #, kde-format
 msgid "Encrypt messages when possible"
 msgstr "عمِّ  الرّسائل عند الإمكان"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "حذَّرني عند محاولة إرسال رسائل غير موقَّعة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:506 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "حذّرني عند محاولة إرسال الرّسائل دون تعمية"
 
-#: identity/identitydialog.cpp:516
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "متقدّم"
 
-#: identity/identitydialog.cpp:524
+#: identity/identitydialog.cpp:523
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "عنوان الرّ&دّ على:"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3077,12 +3077,12 @@ msgstr ""
 "إلكتروني إلى بريدك الإلكتروني في الحقل <tt> من: </tt> ،ولكن أي ردود تذهب إلى "
 "عنوان المجموعة. </p> <p> إذا كنت في شك ، فاترك هذا الحقل فارغ. </p> </qt> "
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:544
 #, kde-format
 msgid "&CC addresses:"
 msgstr "ع&ناوين ن‌ك:"
 
-#: identity/identitydialog.cpp:550
+#: identity/identitydialog.cpp:549
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3097,12 +3097,12 @@ msgstr ""
 "مرسلة لحسابك الآخر.</p><p>لتحدِّد أكثر من عنوان،استخدم الفواصل لفصل قائمة "
 "مستلمي CC.</p><p>إذا لم تكن متأكد، اترك هذا الحقل فارغ</p></qt>"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "ع&ناوين ن‌ك‌م:"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:568
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3118,72 +3118,72 @@ msgstr ""
 "p><p>لتحدِّد أكثر من حساب، استخدم الفواصل لفصل قائمة مستلمي BBC. إذا كنت غير "
 "متأكد، اترك هذا الحقل فارغ.</p></qt>"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "D&ictionary:"
 msgstr "ال&قاموس:"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "حدّد مجلّد البريد المُرسل"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&مجلّد البريد المُرسل:"
 
-#: identity/identitydialog.cpp:597
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "حدّد مجلَّد المسوَّدة"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "مجلّد ال&مسودّات:"
 
-#: identity/identitydialog.cpp:605
+#: identity/identitydialog.cpp:604
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "حدّد مجلَّد القوالب"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:606
 #, kde-format
 msgid "&Templates folder:"
 msgstr "مجلّد ال&قوالب:"
 
-#: identity/identitydialog.cpp:612
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "حساب الصّادر:"
 
-#: identity/identitydialog.cpp:619
+#: identity/identitydialog.cpp:618
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "أرفق vCard خاصّتي إلى الرّسالة"
 
-#: identity/identitydialog.cpp:620 identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
 #, kde-format
 msgid "Create..."
 msgstr "أنشئ..."
 
-#: identity/identitydialog.cpp:625
+#: identity/identitydialog.cpp:624
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "لغة التّصحيح الآليّ:"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:636
 #, kde-format
 msgid "Restore default domain name"
 msgstr "استعد اسم المجال المبدئيّ"
 
-#: identity/identitydialog.cpp:640
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "المجال ال&مبدئيّ:"
 
-#: identity/identitydialog.cpp:646
+#: identity/identitydialog.cpp:645
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3192,38 +3192,38 @@ msgstr ""
 "<qt><p>سيستخدم  النطاق المبدئيّ لإكمال عناوين البريد الإلكتروني التي تتألَّف من "
 "اسم  المستخدم فقط.</p></qt>"
 
-#: identity/identitydialog.cpp:663
+#: identity/identitydialog.cpp:662
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ا&ستخدم قوالب رسائل مخصّصة لهذه الهويّة"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:676
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "ا&نسخ القوالب العموميّة"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:689
 #, kde-format
 msgid "Signature"
 msgstr "التّوقيع"
 
-#: identity/identitydialog.cpp:697
+#: identity/identitydialog.cpp:696
 #, kde-format
 msgid "Picture"
 msgstr "الصّورة"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "كنية بريد غير صالحة \"%1\""
 
-#: identity/identitydialog.cpp:759 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "عنوان البريد الإلكترونيّ غير صالح"
 
-#: identity/identitydialog.cpp:817
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3236,7 +3236,7 @@ msgstr ""
 "سيُنتج هذا رسائل تحذير من جانب المستقبل عند محاولة التَّحَقُّق من  التَّواقيع  "
 "المُعدة بهذه الإعدادات."
 
-#: identity/identitydialog.cpp:826
+#: identity/identitydialog.cpp:825
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3245,7 +3245,7 @@ msgstr ""
 "أحد مفاتيح تعمية OpenPGP المضبوطة لا تحوي أيّ مستخدم بالبريد الإلكترونيّ "
 "المضبوط لهذه الهويّة (%1)."
 
-#: identity/identitydialog.cpp:833
+#: identity/identitydialog.cpp:832
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3258,7 +3258,7 @@ msgstr ""
 "سيُنتج هذا رسائل تحذير من جهة المستقبل عند محاولة التَّحَقُّق من التَّواقيع  المُعدة "
 "بهذه الإعدادات."
 
-#: identity/identitydialog.cpp:842
+#: identity/identitydialog.cpp:841
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3267,23 +3267,23 @@ msgstr ""
 "أحد شهادات تعمية S/MIME المضبوطة لا تحوي عنوان البريد الإلكترونيّ المضبوط "
 "لهذه الهويّة (%1)."
 
-#: identity/identitydialog.cpp:852
+#: identity/identitydialog.cpp:851
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "لم يجد عُنوان البريد الإلكترونيّ في المفتاح/الشَّهادات"
 
-#: identity/identitydialog.cpp:864
+#: identity/identitydialog.cpp:863
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ملفّ التّوقيع غير صالح"
 
-#: identity/identitydialog.cpp:880
+#: identity/identitydialog.cpp:879
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "حرّر هوية \"%1\""
 
-#: identity/identitydialog.cpp:949
+#: identity/identitydialog.cpp:948
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3292,7 +3292,7 @@ msgstr ""
 "مجلّد المسودّات المخصّص للهويّة غير موجود (بعد الآن)، لذلك سيُستخدم مجلّد المسودّات "
 "المبدئيّ."
 
-#: identity/identitydialog.cpp:1171
+#: identity/identitydialog.cpp:1170
 #, kde-format
 msgid "Edit..."
 msgstr "حرّر..."
@@ -3348,7 +3348,7 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "لا تُلغ"
 
-#: identity/identitylistview.cpp:78
+#: identity/identitylistview.cpp:76
 #, kde-format
 msgctxt ""
 "%1: identity name. Used in the config dialog, section Identity, to indicate "
@@ -3356,22 +3356,22 @@ msgctxt ""
 msgid "%1 (Default)"
 msgstr "%1 (المبدئيّ)"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Identity Name"
 msgstr "اسم الهويّة"
 
-#: identity/identitylistview.cpp:106
+#: identity/identitylistview.cpp:104
 #, kde-format
 msgid "Email Address"
 msgstr "عنوان البريد الإلكترونيّ"
 
-#: identity/identitypage.cpp:215
+#: identity/identitypage.cpp:213
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>أتريد حقًّا حذف الهويّة المسمَّاة <b>%1</b>؟</qt>"
 
-#: identity/identitypage.cpp:218
+#: identity/identitypage.cpp:216
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3382,7 +3382,7 @@ msgstr[3] "أتريد حقًّا حذف هذه  %1 الهويّات؟"
 msgstr[4] "أتريد حقًّا حذف هذه  %1 هوية؟"
 msgstr[5] "أتريد حقًّا حذف هذه  %1 هوية؟"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:219
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3393,17 +3393,17 @@ msgstr[3] "أزل الهويّة"
 msgstr[4] "أزل الهويّة"
 msgstr[5] "أزل الهويّة"
 
-#: identity/identitypage.cpp:222
+#: identity/identitypage.cpp:220
 #, kde-format
 msgid "&Remove"
 msgstr "أ&زل"
 
-#: identity/identitypage.cpp:276
+#: identity/identitypage.cpp:274
 #, kde-format
 msgid "Rename"
 msgstr "أعد التّسمية"
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:280
 #, kde-format
 msgid "Set as Default"
 msgstr "اضبطها كمبدئيّة"
@@ -3517,23 +3517,23 @@ msgstr[3] "قوائم التّجميع %2 فارغة ولا يمكن استخد�
 msgstr[4] "قوائم التّجميع %2 فارغة ولا يمكن استخدامها."
 msgstr[5] "قوائم التّجميع %2 فارغة ولا يمكن استخدامها."
 
-#: job/createnewcontactjob.cpp:64
+#: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "أضف إلى دفتر العناوين"
 
-#: job/createnewcontactjob.cpp:118
+#: job/createnewcontactjob.cpp:117
 #, kde-format
 msgid "Contact created successfully"
 msgstr "أُنشئ المتراسل بنجاح"
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "تعذّر تخزين المتراسل: %1"
 
-#: job/createnewcontactjob.cpp:123 kmreaderwin.cpp:877
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:877
 #, kde-format
 msgid "Failed to store contact"
 msgstr "فشل تخزين المتراسل"
@@ -3944,64 +3944,64 @@ msgstr "شريط أدوات HTML"
 msgid "Text Direction Toolbar"
 msgstr "شريط أدوات اتّجاه النّصّ"
 
-#: kmkernel.cpp:818
+#: kmkernel.cpp:816
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "«بريدك» في وضع عدم الاتّصال، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:838 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
 #, kde-format
 msgid "Send Email"
 msgstr "أرسل بريدًا"
 
-#: kmkernel.cpp:839 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
 #, kde-format
 msgid "Impossible to send email"
 msgstr "تعذَّر إرسال البريد"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:869
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "«بريدك» متّصل بالإنترنت، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:873
+#: kmkernel.cpp:871
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "«بريدك» متّصل بالإنترنت، ستُستكمل كلّ مهامّ الشّبكة عند اكتشاف شبكة"
 
-#: kmkernel.cpp:950
+#: kmkernel.cpp:948
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "«بريدك» في وضع عدم الاتّصال حاليًّا. أتريد المتابعة؟"
 
-#: kmkernel.cpp:952
+#: kmkernel.cpp:950
 #, kde-format
 msgid "Online/Offline"
 msgstr "متّصل/غير متّصل"
 
-#: kmkernel.cpp:953 kmmainwidget.cpp:2369
+#: kmkernel.cpp:951 kmmainwidget.cpp:2369
 #, kde-format
 msgid "Work Online"
 msgstr "اعمل متّصلًا"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2366
+#: kmkernel.cpp:952 kmmainwidget.cpp:2366
 #, kde-format
 msgid "Work Offline"
 msgstr "اعمل بلا اتّصال"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:980
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "اكتُشف اتّصال بالشّبكة، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:985
+#: kmkernel.cpp:983
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "لم يُكتشف أيّ اتّصال بالشّبكة، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:1080
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4010,12 +4010,12 @@ msgstr ""
 "فشل فتح الملفّ المحفوظ آليًّا في %1.\n"
 "السّبب: %2"
 
-#: kmkernel.cpp:1081
+#: kmkernel.cpp:1079
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "فشل فتح الملفّ المحفوظ آليًّا"
 
-#: kmkernel.cpp:1628
+#: kmkernel.cpp:1626
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4027,7 +4027,7 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل الافتر
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 
-#: kmkernel.cpp:1652
+#: kmkernel.cpp:1650
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4039,17 +4039,17 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل المعدّ
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 
-#: kmkernel.cpp:1667
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "Sending messages"
 msgstr "يرسل الرّسائل"
 
-#: kmkernel.cpp:1668
+#: kmkernel.cpp:1666
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "يمهّد عمليّة الإرسال..."
 
-#: kmkernel.cpp:1747
+#: kmkernel.cpp:1745
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4058,45 +4058,45 @@ msgstr ""
 "المورد %1 معطوب.\n"
 "%2"
 
-#: kmkernel.cpp:1923 kmkernel.cpp:1929
+#: kmkernel.cpp:1921 kmkernel.cpp:1927
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:44
+#: kmlaunchexternalcomponent.cpp:42
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "لم يسجّل عميل أرشفة البريد."
 
-#: kmlaunchexternalcomponent.cpp:56
+#: kmlaunchexternalcomponent.cpp:54
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "لم يسجل وكيل الإرسال اللاحق."
 
-#: kmlaunchexternalcomponent.cpp:68
+#: kmlaunchexternalcomponent.cpp:66
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "لم يُسجِّل وكيل دمج البريد."
 
-#: kmlaunchexternalcomponent.cpp:80
+#: kmlaunchexternalcomponent.cpp:78
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "لم يُسجِّل وكيل تذكير بالمتابعة."
 
-#: kmlaunchexternalcomponent.cpp:93
+#: kmlaunchexternalcomponent.cpp:91
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr "تعذّر بدء مدير الشّهادات، فضلًا تحقّق من أنّ 'Kleopatra' مثبّت كما ينبغي."
 
-#: kmlaunchexternalcomponent.cpp:95
+#: kmlaunchexternalcomponent.cpp:93
 #, kde-format
 msgid "KMail Error"
 msgstr "خطأ «بريدك»"
 
-#: kmlaunchexternalcomponent.cpp:108
+#: kmlaunchexternalcomponent.cpp:106
 #, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
@@ -4104,12 +4104,12 @@ msgid ""
 msgstr ""
 "تعذّر بدء مرشد الاستيراد. فضلًا تحقّق من أنّ  مرشد الاستيراد مثبّت كما ينبغي."
 
-#: kmlaunchexternalcomponent.cpp:110 kmmainwidget.cpp:325
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:325
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "تعذّر بدء مرشّد الاستيراد"
 
-#: kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:121
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4117,12 +4117,12 @@ msgid ""
 msgstr ""
 "تعذّر بدء برنامج \"مصدّر بيانات إدارة البيانات الشخصية\". فضلًا تحقّق من تثبيتك."
 
-#: kmlaunchexternalcomponent.cpp:125
+#: kmlaunchexternalcomponent.cpp:123
 #, kde-format
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "تعذّر بدء برنامج ”مصدّر بيانات إدارة البيانات الشخصية“"
 
-#: kmlaunchexternalcomponent.cpp:143
+#: kmlaunchexternalcomponent.cpp:141
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4130,7 +4130,7 @@ msgid ""
 msgstr ""
 "تعذّر بدء مرشد الاستيراد. فضلًا تحقّق من أنّ مرشد الاستيراد مثبّت كما ينبغي."
 
-#: kmlaunchexternalcomponent.cpp:145
+#: kmlaunchexternalcomponent.cpp:143
 #, kde-format
 msgid "Unable to start ImportWizard"
 msgstr "تعذّر بدء مرشد الاستيراد"
@@ -4192,7 +4192,7 @@ msgstr "اح&ذفه نهائيًّا"
 msgid "Empty Trash"
 msgstr "أفرغ المهملات"
 
-#: kmmainwidget.cpp:1466 util.cpp:152
+#: kmmainwidget.cpp:1466 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "انقل إلى المهملات"
@@ -4483,7 +4483,7 @@ msgstr "رسائل متأخرة..."
 msgid "Followup Reminder Messages..."
 msgstr "رسائل تذكير بالمتابعة ..."
 
-#: kmmainwidget.cpp:2963 util.cpp:149
+#: kmmainwidget.cpp:2963 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5108,12 +5108,12 @@ msgstr "أعد التّشغيل"
 msgid "Akonadi restarted."
 msgstr "انتهت عملية إعادة تشغيل اكوندا"
 
-#: kmmainwin.cpp:42
+#: kmmainwin.cpp:40
 #, kde-format
 msgid "Starting..."
 msgstr "يبدأ..."
 
-#: kmreadermainwin.cpp:481 util.cpp:149
+#: kmreadermainwin.cpp:481 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "ا&نقل إلى المهملات"
@@ -5746,32 +5746,32 @@ msgstr "يفهرس"
 msgid "Indexing Collections..."
 msgstr "يفهرس التّجميعات..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:77
-#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:76
+#: searchdialog/kmsearchmessagemodel.cpp:83
 #, kde-format
 msgid "From"
 msgstr "من"
 
-#: searchdialog/kmsearchmessagemodel.cpp:78
-#: searchdialog/kmsearchmessagemodel.cpp:85
+#: searchdialog/kmsearchmessagemodel.cpp:77
+#: searchdialog/kmsearchmessagemodel.cpp:84
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "إلى"
 
-#: searchdialog/kmsearchmessagemodel.cpp:79
-#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:78
+#: searchdialog/kmsearchmessagemodel.cpp:85
 #, kde-format
 msgid "Date"
 msgstr "التّاريخ"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:80
+#: searchdialog/kmsearchmessagemodel.cpp:87
 #, kde-format
 msgid "Preview"
 msgstr "معاينة"
 
-#: searchdialog/kmsearchmessagemodel.cpp:141
+#: searchdialog/kmsearchmessagemodel.cpp:140
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -5868,32 +5868,32 @@ msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "لا يمكن استخدام شرط ضمّن لأقل من ٤ محارف."
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, kde-format
 msgid "Searching..."
 msgstr "يبحث..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "تعذّر إيجاد أيّة نتائج. %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "فشل البحث."
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "اكتمل البحث."
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "أُوقف البحث."
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -5903,7 +5903,7 @@ msgstr ""
 "هناك مشكله بإعادة تسمية مجلد بحثك، السبب الشائع لهذا وجود مجلد أخر  بنفس "
 "الاسم. الخطأ يرجع \"%1\"."
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -5914,7 +5914,7 @@ msgstr[3] "انسخ %1 رسائل"
 msgstr[4] "انسخ %1 رسالة"
 msgstr[5] "انسخ %1 رسالة"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -5925,7 +5925,7 @@ msgstr[3] "قُص %1رسائل"
 msgstr[4] "قُص %1رسالة"
 msgstr[5] "قُص %1رسالة"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, kde-format
 msgid "Checking index status..."
 msgstr "يفحص حالة الفهرسة..."
@@ -6351,43 +6351,43 @@ msgid ""
 "internal use only)"
 msgstr "تحدَّد عرض حقل المجلد في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
-#: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:202
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "وسم الرسالة: %1"
 
-#: tag/tagactionmanager.cpp:156
+#: tag/tagactionmanager.cpp:155
 #, kde-format
 msgid "Add new tag..."
 msgstr "أضف وسمًا جديدًا..."
 
-#: tag/tagactionmanager.cpp:169
+#: tag/tagactionmanager.cpp:168
 #, kde-format
 msgid "More..."
 msgstr "المزيد..."
 
-#: tag/tagactionmanager.cpp:189
+#: tag/tagactionmanager.cpp:188
 #, kde-format
 msgid "Tag not Found"
 msgstr "الوسم غير موجود"
 
-#: tag/tagactionmanager.cpp:205
+#: tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "بدل وسم الرسالة: %1"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "حدد الوسوم"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:52
 #, kde-format
 msgid "Add New Tag..."
 msgstr "أضف وسمًا جديدًا..."
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:66
 #, kde-format
 msgid "Search tag..."
 msgstr "ابحث عن وسم..."
@@ -7570,12 +7570,12 @@ msgstr "5 دقائق"
 msgid "Undo send"
 msgstr "تراجُع عن الإرْسال"
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, kde-format
 msgid "Move To Trash"
 msgstr "انقل إلى المهملات"
 
-#: undostack.cpp:49
+#: undostack.cpp:47
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -7586,12 +7586,12 @@ msgstr[3] "اُنقل الرَّسائل"
 msgstr[4] "اُنقل الرَّسائل"
 msgstr[5] "اُنقل الرَّسائل"
 
-#: undostack.cpp:103
+#: undostack.cpp:101
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "لا شيء للتَّراجع عنه."
 
-#: undostack.cpp:110
+#: undostack.cpp:108
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "تعذّر نقل الرّسالة. %1"
@@ -7616,7 +7616,7 @@ msgstr "معلومات الملحقات"
 msgid "Plugins used in KMail."
 msgstr "الملحقات المستخدمة في بريدك."
 
-#: util.cpp:152
+#: util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
