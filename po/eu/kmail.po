@@ -1,6 +1,6 @@
 # Translation for kmail.po to Euskara/Basque (eu).
-# Copyright (C) 2003-2011, Free Software Foundation, Inc.
-# Copyright (C) 2012-2022, This file is copyright:
+# Copyright (C) 2003-2011 Free Software Foundation, Inc.
+# Copyright (C) 2012-2022 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 # KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
 #
@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-27 00:47+0000\n"
-"PO-Revision-Date: 2022-10-17 06:08+0200\n"
+"PO-Revision-Date: 2022-10-27 06:34+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -2974,13 +2974,12 @@ msgstr "OpenPGP sindadura gakoa:"
 #: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Erabili gako bera zifratzeko eta sinatzeko"
 
 #: identity/identitydialog.cpp:386
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP gakoa 0x%1"
+msgstr "OpenPGP gakoa:"
 
 #: identity/identitydialog.cpp:412
 #, kde-format
@@ -3048,57 +3047,51 @@ msgid "Preferred format:"
 msgstr "Formatu hobetsia:"
 
 #: identity/identitydialog.cpp:476
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Harpidetzak gaitu?"
+msgstr "Gaitu zifratze-automatikoa"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Zifratze-automatikoa:"
 
 #: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Jakinarazi besteei zifratzea nahiago duzula"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Gainidatzi segurtasun lehenespenen ezarpen orokorrak"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Overwrite File?"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Gainidatzi fitxategia?"
+msgstr "Gainidatzi lehenespenak:"
 
 #: identity/identitydialog.cpp:496
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Sinatu mezua"
+msgstr "Sinatu mezuak"
 
 #: identity/identitydialog.cpp:499
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Zifratu mezuak automatikoki posible denean"
+msgstr "Zifratu mezuak ahal denean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Abisatu sinatu &gabeko mezuak bidaltzean"
+msgstr "Abisatu sinatu gabeko mezuak bidaltzen saiatzean"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Abisatu enkriptatu gabeko mezuak bidaltzean"
+msgstr "Abisatu zifratu gabeko mezuak bidaltzen saiatzean"
 
 #: identity/identitydialog.cpp:515
 #, kde-format
@@ -6226,10 +6219,9 @@ msgstr "Erakutsi zifratze etiketa adierazlea"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Erakutsi zifratze etiketa adierazlea"
+msgstr "Erakutsi jabearekiko-konfiantza zifratze ikonoak"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6808,17 +6800,15 @@ msgstr "Ireki &mezua"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Ezarri lehenetsi gisa"
+msgstr "Segurtasun lehenespenak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Enkriptatutako mezua"
+msgstr "Zifratu zirriborro mezuak"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6852,57 +6842,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Enkriptatutako mezua"
+msgstr "Zi&fratu bidalitako mezuak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Sinatu mezua"
+msgstr "Sinatu mezu guztiak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Zifratu mezuak automatikoki posible denean"
+msgstr "Zifratu mezu guztiak ahal denean"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Erakutsi zifratze etiketa adierazlea"
+msgstr "Zifratze adierazleak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Erakutsi sinatu/zifratu adierazlea editorean"
+msgstr "Erakutsi sinadura/zifratze adierazlea"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Erakutsi zifratzeko gakoaren jabearekiko-konfiantza maila"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alertak"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Beti erakutsi enkriptatze-gakoak &berresteko"
+msgstr "Beti onetsi zifratze-gakoak bidali aurretik"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6970,22 +6954,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "E&rroko ziurtagirietarako:"
+msgstr "Ziurtagiri propioetarako:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6996,11 +6971,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Abisatu erroko ziurtagiria iraungitzen bada</h1>\n"
-"Hautatu, abisurik igorri gabe, erroko ziurtagiriari baliozkoa izaten "
+"<h1>Abisatu erroko ziurtagiriak iraungitzen badira</h1>\n"
+"Hautatu, abisurik igorri gabe, erroko ziurtagiria baliozkoa izaten "
 "jarraitzeko gutxienez gelditu behar zaion egun kopurua.\n"
 "<p>\n"
-"SPHINX ezarpena gomendatua 14 egunekoa da.\n"
+"SPHINX ezarpena gomendatua 30 egunekoa da.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
