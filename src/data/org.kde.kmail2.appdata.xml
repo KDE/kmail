@@ -348,9 +348,9 @@
     <binary>kmail</binary>
   </provides>
   <releases>
+    <release version="5.21.3" date="2022-11-03"/>
     <release version="5.21.2" date="2022-10-13"/>
     <release version="5.21.1" date="2022-09-08"/>
     <release version="5.21.0" date="2022-08-18"/>
-    <release version="5.20.3" date="2022-07-07"/>
   </releases>
 </component>
