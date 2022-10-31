@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-27 00:47+0000\n"
-"PO-Revision-Date: 2022-10-22 05:28\n"
+"PO-Revision-Date: 2022-10-30 07:48\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -1598,10 +1598,9 @@ msgid "Message Disposition Notifications"
 msgstr "信件处理回执"
 
 #: configuredialog/configuresecuritypage.cpp:53
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
-msgstr "加密"
+msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:59
 #, kde-format
@@ -2862,10 +2861,9 @@ msgid "Use same key for encryption and signing"
 msgstr ""
 
 #: identity/identitydialog.cpp:386
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP 签名密钥："
+msgstr ""
 
 #: identity/identitydialog.cpp:412
 #, kde-format
@@ -2929,10 +2927,9 @@ msgid "Preferred format:"
 msgstr "首选格式："
 
 #: identity/identitydialog.cpp:476
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "加密"
+msgstr ""
 
 #: identity/identitydialog.cpp:480
 #, kde-format
@@ -2955,30 +2952,26 @@ msgid "Overwrite defaults:"
 msgstr ""
 
 #: identity/identitydialog.cpp:496
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "给信件签名(&S)"
+msgstr ""
 
 #: identity/identitydialog.cpp:499
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "尽可能自动加密信件"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "试图发送未签名信件时警告(&U)"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "试图发送未加密信件时警告(&W)"
+msgstr ""
 
 #: identity/identitydialog.cpp:515
 #, kde-format
@@ -6020,10 +6013,9 @@ msgstr "显示加密标签指示"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "显示加密标签指示"
+msgstr ""
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6579,17 +6571,15 @@ msgstr "打开信件(&M)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "设置为默认"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "加密的信件"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6622,38 +6612,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "加密的信件"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "给信件签名(&S)"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "尽可能自动加密信件"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "显示加密标签指示"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "在编辑器显示签名/加密状态"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
@@ -6669,10 +6654,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "总是显示备选的加密密钥(&F)"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6736,22 +6720,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "对根(&R)证书："
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6761,12 +6736,6 @@ msgid ""
 "The recommended SPHINX setting is 30 days.\n"
 "</p></qt>"
 msgstr ""
-"<qt>\n"
-"<h1>若根证书过期则警告</h1>\n"
-"选择根证书被认为合法而不给出警告的最小天数。\n"
-"<p>\n"
-"SPHINX 推荐设置为 14 天。\n"
-"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -7469,117 +7438,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Composing"
-#~ msgstr "编写"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "杂项"
-
-#~ msgid "Automatically sign messages"
-#~ msgstr "自动签名信件"
-
-#~ msgid ""
-#~ "When this option is enabled, the message/file will not only be encrypted "
-#~ "with the receiver's public key, but also with your key. This will enable "
-#~ "you to decrypt the message/file at a later time. This is generally a good "
-#~ "idea."
-#~ msgstr ""
-#~ "如果启用此项，KMail 不仅会用收件人的公钥加密信件/文件，还会使用您的密钥。"
-#~ "如此就允许您以后自行解密信件/文件，通常来说这是个好主意。"
-
-#~ msgid ""
-#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
-#~ "identity"
-#~ msgstr "加密信件时，同时用我的身份加密证书(&Y)"
-
-#~ msgid "Store sent messages encry&pted"
-#~ msgstr "加密存储已发信件(&P)"
-
-#~ msgid ""
-#~ "When this option is enabled, the application will always show you a list "
-#~ "of public keys from which you can choose the one it will use for "
-#~ "encryption. If it is off, the application will only show the dialog if it "
-#~ "cannot find the right key or if there are several which could be used."
-#~ msgstr ""
-#~ "如果启用此项，程序将总是会显示一份公钥列表，供您从中选用作加密。如果关闭此"
-#~ "项，只当您无法找到正确的公钥，或是只有部分公钥可用时程序才会显示此对话框。"
-
-#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
-#~ msgstr "保存(&V)为草稿时，按照指示进行签名和/或加密"
-
-#~ msgid "Check to be warned when sending unsigned messages."
-#~ msgstr "选中此选项会在发送未签名信件时得到警告。"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unsigned.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>试图发送未签名信件时警告</h1>\n"
-#~ "如果选中此选项，当您试图发送未签名的信件部分或整个信件时将会得到警告。\n"
-#~ "<p>\n"
-#~ "推荐您打开此选项以获得最高安全级别。\n"
-#~ "</p></qt>"
-
-#~ msgid "Check to be warned when sending unencrypted messages."
-#~ msgstr "选中此选项会在发送未加密信件时得到警告。"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unencrypted.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>试图发送未加密信件时警告</h1>\n"
-#~ "如果选中此选项，当您试图发送未加密的信件部分或整个信件时将会得到警告。\n"
-#~ "<p>\n"
-#~ "推荐您打开此选项以获得最高安全级别。\n"
-#~ "</p></qt>"
-
-#~ msgid "For Signing"
-#~ msgstr "为签名"
-
-#~ msgid "For Encryption"
-#~ msgstr "为加密"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the signature certificate should be "
-#~ "valid without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>若签名证书过期则警告</h1>\n"
-#~ "选择签名证书被认为有效而不给出警告的最小天数。\n"
-#~ "<p>\n"
-#~ "SPHINX 推荐设置为 14 天。\n"
-#~ "</p></qt>"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If CA Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the CA certificate should be valid "
-#~ "without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>若 CA 证书过期则警告</h1>\n"
-#~ "选择 CA 证书被认为有效而不给出警告的最小天数。\n"
-#~ "<p>\n"
-#~ "SPHINX 推荐设置为 14 天。\n"
-#~ "</p></qt>"
