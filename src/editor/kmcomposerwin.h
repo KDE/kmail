@@ -694,6 +694,7 @@ private:
     TooManyRecipientsWarning *const mTooMyRecipientWarning;
     NearExpiryWarning *const mNearExpiryWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
+    QTimer *mRunKeyResolverTimer = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;
     bool mCheckForForgottenAttachments = true;

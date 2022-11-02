@@ -375,6 +375,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
 
+    mRunKeyResolverTimer = new QTimer(this);
+    mRunKeyResolverTimer->setSingleShot(true);
+    mRunKeyResolverTimer->setInterval(500ms);
+    connect(mRunKeyResolverTimer, &QTimer::timeout, this, &KMComposerWin::runKeyResolver);
+
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
     mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);
@@ -4066,12 +4071,12 @@ bool KMComposerWin::sign() const
 
 void KMComposerWin::slotRecipientEditorFocusChanged()
 {
-    // Encryption is possible not possible to find encryption keys.
     if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
     if (mKeyCache->initialized()) {
+        mRunKeyResolverTimer->stop();
         runKeyResolver();
     }
 }
@@ -4118,7 +4123,7 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
     }
 
     if (mKeyCache->initialized()) {
-        runKeyResolver();
+        mRunKeyResolverTimer->start();
     }
 }
 
@@ -4134,7 +4139,7 @@ void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *lin
     }
 
     if (mKeyCache->initialized()) {
-        runKeyResolver();
+        mRunKeyResolverTimer->start();
     }
 }
 
