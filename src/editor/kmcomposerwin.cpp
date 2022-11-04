@@ -3721,12 +3721,19 @@ void KMComposerWin::slotEncryptionButtonIconUpdate()
     mBtnEncrypt->setChecked(hasOverride || state);
     mEncryptAction->setChecked(hasOverride || state);
 
+    mBtnEncrypt->setEnabled(acceptedSolution || state);
+    mEncryptAction->setEnabled(acceptedSolution || state);
+
     auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));
     QString tooltip;
     if (state) {
-        tooltip = i18nc("@info:tooltip", "Encrypt");
+        tooltip = i18nc("@info:tooltip", "Encrypt Message");
     } else {
-        tooltip = i18nc("@info:tooltip", "Not Encrypt");
+        if (mBtnEncrypt->isEnabled()) {
+            tooltip = i18nc("@info:tooltip", "Not encrypt message");
+        } else {
+            tooltip = i18nc("@info:tooltip", "Cannot encrypt message. You need to use Encryption button to resolve the keys first.");
+        }
         icon = QIcon::fromTheme(QStringLiteral("document-decrypt"));
     }
 
