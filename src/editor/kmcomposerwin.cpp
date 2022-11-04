@@ -3793,8 +3793,10 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                 Q_UNREACHABLE();
         }
 
-        if (keyState == NoKey && showAllIcons) {
-            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+        if (keyState == NoKey) {
+            if (showAllIcons) {
+                line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+            }
         } else if (trustLevel == Kleo::Level0 && encrypt) {
             line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), tooltip);
         } else if (showPositiveIcons) {
