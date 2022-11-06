@@ -10,6 +10,18 @@
             "hidden": true
         },
         {
+            "name": "dev-mold",
+            "displayName": "Build as debug + using mold linker",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=mold"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+        {
             "name": "dev",
             "displayName": "Build as debug",
             "cacheVariables": {
@@ -150,6 +162,10 @@
         {
             "name": "dev",
             "configurePreset": "dev"
+        },
+        {
+            "name": "dev-mold",
+            "configurePreset": "dev-mold"
         },
         {
             "name": "dev-qt6",
