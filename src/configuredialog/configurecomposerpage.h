@@ -23,9 +23,12 @@ namespace TemplateParser
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-namespace PimCommon
+namespace PimCommonAutoCorrection
 {
 class AutoCorrectionWidget;
+}
+namespace PimCommon
+{
 class SimpleStringListEditor;
 }
 namespace MessageComposer
@@ -208,7 +211,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    PimCommon::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+    PimCommonAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;
 };
 
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab

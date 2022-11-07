@@ -51,7 +51,7 @@ namespace MessageComposer
 {
 class MessageSender;
 }
-namespace PimCommon
+namespace PimCommonAutoCorrection
 {
 class AutoCorrection;
 }
@@ -476,7 +476,7 @@ public:
 
     void updatePaneTagComboBox();
 
-    Q_REQUIRED_RESULT PimCommon::AutoCorrection *composerAutoCorrection();
+    Q_REQUIRED_RESULT PimCommonAutoCorrection::AutoCorrection *composerAutoCorrection();
 
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
@@ -612,7 +612,7 @@ private:
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-    PimCommon::AutoCorrection *mAutoCorrection = nullptr;
+    PimCommonAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
     FolderArchiveManager *const mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;

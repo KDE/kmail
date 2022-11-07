@@ -15,8 +15,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageComposer/ImageScalingWidget>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/MessageCoreSettings>
-#include <PimCommon/AutoCorrectionWidget>
 #include <PimCommon/SimpleStringListEditor>
+#include <PimCommonAutoCorrection/AutoCorrectionWidget>
 #include <TemplateParser/CustomTemplates>
 #include <TemplateParser/TemplatesConfiguration>
 #include <templateparser/globalsettings_templateparser.h>
@@ -1180,12 +1180,12 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
-    autocorrectionWidget = new PimCommon::AutoCorrectionWidget(this);
+    autocorrectionWidget = new PimCommonAutoCorrection::AutoCorrectionWidget(this);
     if (KMKernel::self()) {
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
     }
     vlay->addWidget(autocorrectionWidget);
-    connect(autocorrectionWidget, &PimCommon::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+    connect(autocorrectionWidget, &PimCommonAutoCorrection::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const

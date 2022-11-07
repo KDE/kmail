@@ -7,7 +7,7 @@
 #include "kmcomposerglobalaction.h"
 #include "kmcomposerwin.h"
 
-#include <PimCommon/LineEditWithAutoCorrection>
+#include <PimCommonAutoCorrection/LineEditWithAutoCorrection>
 
 #include <KLineEdit>
 
@@ -28,8 +28,8 @@ void KMComposerGlobalAction::slotUndo()
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->undo();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->undo();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->undo();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
@@ -44,8 +44,8 @@ void KMComposerGlobalAction::slotRedo()
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->redo();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->redo();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->redo();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
@@ -60,8 +60,8 @@ void KMComposerGlobalAction::slotCut()
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->cut();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->cut();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->cut();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
@@ -76,8 +76,8 @@ void KMComposerGlobalAction::slotCopy()
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->copy();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->copy();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->copy();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
@@ -91,8 +91,8 @@ void KMComposerGlobalAction::slotPaste()
     if (!fw) {
         return;
     }
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->paste();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->paste();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->paste();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
@@ -107,8 +107,8 @@ void KMComposerGlobalAction::slotMarkAll()
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->selectAll();
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->selectAll();
     } else if (::qobject_cast<KLineEdit *>(fw)) {
         static_cast<KLineEdit *>(fw)->selectAll();
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
@@ -123,8 +123,8 @@ void KMComposerGlobalAction::slotInsertEmoticon(const QString &str)
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->insertPlainText(str);
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->insertPlainText(str);
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->insertPlainText(str);
     }
@@ -140,8 +140,8 @@ void KMComposerGlobalAction::slotInsertText(const QString &str)
         return;
     }
 
-    if (::qobject_cast<PimCommon::LineEditWithAutoCorrection *>(fw)) {
-        static_cast<PimCommon::LineEditWithAutoCorrection *>(fw)->insertPlainText(str);
+    if (::qobject_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)) {
+        static_cast<PimCommonAutoCorrection::LineEditWithAutoCorrection *>(fw)->insertPlainText(str);
     } else if (::qobject_cast<KMComposerEditorNg *>(fw)) {
         static_cast<QTextEdit *>(fw)->insertPlainText(str);
     }
