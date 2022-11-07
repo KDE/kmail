@@ -1516,7 +1516,7 @@ msgstr "Ha&bilita la detecció de la falta d'adjunts"
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
-"Reconeix qualsevol de les següents paraules clau com a intenció d'afegir un "
+"Reconeix qualsevol de les paraules clau següents com a intenció d'afegir un "
 "adjunt:"
 
 #: configuredialog/configurecomposerpage.cpp:1118
@@ -4993,7 +4993,7 @@ msgstr "Apunta a la primera carpeta"
 #: kmmainwidget.cpp:3461
 #, kde-format
 msgid "Focus on Last Folder"
-msgstr "Apunta a l'última carpeta"
+msgstr "Focus en l'última carpeta"
 
 #: kmmainwidget.cpp:3467
 #, kde-format
