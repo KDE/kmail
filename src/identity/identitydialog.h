@@ -53,7 +53,7 @@ namespace TemplateParser
 class TemplatesConfiguration;
 }
 
-namespace PimCommon
+namespace PimCommonAutoCorrection
 {
 class AutoCorrectionLanguage;
 }
@@ -127,7 +127,7 @@ private:
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
-    PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+    PimCommonAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
     QLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:

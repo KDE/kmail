@@ -52,9 +52,9 @@ using KMail::MailServiceImpl;
 #include <MessageCore/MessageCoreSettings>
 #include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
-#include <PimCommon/AutoCorrection>
 #include <PimCommon/NetworkManager>
-#include <PimCommon/PimCommonSettings>
+#include <PimCommonAutoCorrection/AutoCorrection>
+#include <PimCommonAutoCorrection/PimCommonSettings>
 #include <gravatar/gravatarsettings.h>
 #include <messagelist/messagelistsettings.h>
 
@@ -152,7 +152,7 @@ KMKernel::KMKernel(QObject *parent)
     // would be unexpected
     KMailSettings::self();
 
-    mAutoCorrection = new PimCommon::AutoCorrection();
+    mAutoCorrection = new PimCommonAutoCorrection::AutoCorrection();
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
 
     // cberzan: this crap moved to CodecManager ======================
@@ -1296,7 +1296,7 @@ void KMKernel::slotSyncConfig()
 {
     saveConfig();
     // Laurent investigate why we need to reload them.
-    PimCommon::PimCommonSettings::self()->load();
+    PimCommonAutoCorrection::PimCommonSettings::self()->load();
     MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
@@ -1311,7 +1311,7 @@ void KMKernel::slotSyncConfig()
 
 void KMKernel::saveConfig()
 {
-    PimCommon::PimCommonSettings::self()->save();
+    PimCommonAutoCorrection::PimCommonSettings::self()->save();
     MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
@@ -1442,8 +1442,8 @@ KSharedConfig::Ptr KMKernel::config()
 
         mMailCommonSettings->setSharedConfig(mySelf->mConfig);
         mMailCommonSettings->load();
-        PimCommon::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
-        PimCommon::PimCommonSettings::self()->load();
+        PimCommonAutoCorrection::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
+        PimCommonAutoCorrection::PimCommonSettings::self()->load();
         Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
         Gravatar::GravatarSettings::self()->load();
     }
@@ -1995,7 +1995,7 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
     }
 }
 
-PimCommon::AutoCorrection *KMKernel::composerAutoCorrection()
+PimCommonAutoCorrection::AutoCorrection *KMKernel::composerAutoCorrection()
 {
     return mAutoCorrection;
 }
