@@ -7,8 +7,8 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <PimCommonAutoCorrection/LineEditWithAutoCorrection>
-class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimCommonAutoCorrection::LineEditWithAutoCorrection
+#include <PimCommon/LineEditWithAutoCorrection>
+class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimCommon::LineEditWithAutoCorrection
 {
     Q_OBJECT
 public:
