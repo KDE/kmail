@@ -246,9 +246,3 @@ msgstr "Mesos"
 #, kde-format
 msgid "Years"
 msgstr "Anys"
-
-#~ msgid "Remove items"
-#~ msgstr "Elimina els elements"
-
-#~ msgid "Remove"
-#~ msgstr "Elimina"
