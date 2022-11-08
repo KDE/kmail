@@ -10,7 +10,7 @@
 #include <QMimeData>
 
 SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *parent, const QString &configFile)
-    : PimCommonAutoCorrection::LineEditWithAutoCorrection(parent, configFile)
+    : PimCommon::LineEditWithAutoCorrection(parent, configFile)
 {
     setActivateLanguageMenu(false);
     setToolTip(i18n("Set a subject for this message"));
@@ -26,5 +26,5 @@ void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
         event->accept();
         return;
     }
-    PimCommonAutoCorrection::LineEditWithAutoCorrection::dropEvent(event);
+    PimCommon::LineEditWithAutoCorrection::dropEvent(event);
 }

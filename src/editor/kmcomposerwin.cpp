@@ -467,8 +467,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
-    mUpdateWindowTitleConnection =
-        connect(mEdtSubject, &PimCommonAutoCorrection::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
+    mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
