@@ -138,7 +138,7 @@
 #include <PimCommon/CustomToolsPluginManager>
 #include <PimCommon/CustomToolsWidgetng>
 #include <PimCommon/KActionMenuChangeCase>
-#include <PimCommonAutoCorrection/LineEditWithAutoCorrection>
+#include <PimCommon/LineEditWithAutoCorrection>
 
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
