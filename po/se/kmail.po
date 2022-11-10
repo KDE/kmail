@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-27 00:47+0000\n"
+"POT-Creation-Date: 2022-11-09 02:24+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -2474,8 +2474,8 @@ msgstr ""
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
 #, kde-format
 msgid ""
-"Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"Found potential phishing email addresses <a "
+"href=\"phishingdetails\">(details...)</a>"
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -5114,8 +5114,8 @@ msgstr ""
 #: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
-"Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
-"\">here</a> to go online . . .</p>"
+"Account is currently in offline mode. Click <a href=\"kmail:"
+"goResourceOnline\">here</a> to go online . . .</p>"
 msgstr ""
 
 #: kmreaderwin.cpp:887
@@ -6353,8 +6353,8 @@ msgctxt "what's this help"
 msgid ""
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"https://www.w3.org/TR/"
 "REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
-"\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
+"css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
 "weight:400; font-style:normal;\">\n"
@@ -6384,8 +6384,8 @@ msgid ""
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Loop in all marked folders: </span>This is the same as \"Loop "
 "in all folders\" except that only folders are taken into account which have "
-"been marked with the folder property \"Act on new/unread mail in this folder"
-"\".</p></body></html>"
+"been marked with the folder property \"Act on new/unread mail in this "
+"folder\".</p></body></html>"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
