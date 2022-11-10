@@ -54,7 +54,7 @@ using KMail::MailServiceImpl;
 #include <MessageViewer/MessageViewerSettings>
 #include <PimCommon/NetworkManager>
 #include <PimCommonAutoCorrection/AutoCorrection>
-#include <PimCommonAutoCorrection/PimCommonSettings>
+#include <PimCommonAutoCorrection/PimCommonAutoCorrectionSettings>
 #include <gravatar/gravatarsettings.h>
 #include <messagelist/messagelistsettings.h>
 
@@ -1296,7 +1296,7 @@ void KMKernel::slotSyncConfig()
 {
     saveConfig();
     // Laurent investigate why we need to reload them.
-    PimCommonAutoCorrection::PimCommonSettings::self()->load();
+    PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->load();
     MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
@@ -1311,7 +1311,7 @@ void KMKernel::slotSyncConfig()
 
 void KMKernel::saveConfig()
 {
-    PimCommonAutoCorrection::PimCommonSettings::self()->save();
+    PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->save();
     MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
@@ -1442,8 +1442,8 @@ KSharedConfig::Ptr KMKernel::config()
 
         mMailCommonSettings->setSharedConfig(mySelf->mConfig);
         mMailCommonSettings->load();
-        PimCommonAutoCorrection::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
-        PimCommonAutoCorrection::PimCommonSettings::self()->load();
+        PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
+        PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->load();
         Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
         Gravatar::GravatarSettings::self()->load();
     }
