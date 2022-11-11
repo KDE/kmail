@@ -3549,7 +3549,7 @@ msgstr "KMail enviarà una imatge en color i una en blanc i negre."
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
 msgstr ""
-"No s'ha pogut reduir la mida de la imatge perquè s'adapte a la capçalera."
+"No s'ha pogut reduir la mida de la imatge perquè s'adapte en la capçalera."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
@@ -3557,7 +3557,7 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
-"No s'ha pogut reduir la mida de la imatge perquè s'adapte a la capçalera. "
+"No s'ha pogut reduir la mida de la imatge perquè s'adapte en la capçalera. "
 "Instal·leu «pngquant» per a obtindre millors resultats de compressió."
 
 #: identity/xfaceconfigurator.cpp:180
@@ -3667,8 +3667,8 @@ msgstr ""
 "<qt>Segur que voleu suprimir la carpeta buida <resource>%1</resource> i "
 "totes les seues subcarpetes? Estes subcarpetes podrien no estar buides i els "
 "seus continguts també seran descartats. <p><b>Cal tindre en compte</b> que "
-"els missatges descartats no es guardaran a la carpeta Paperera i seran "
-"eliminats de forma permanent.</p></qt>"
+"els missatges descartats no es guardaran a dins de la carpeta Paperera i "
+"seran eliminats de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:83
 #, kde-format
@@ -3679,8 +3679,8 @@ msgid ""
 msgstr ""
 "<qt>Segur que voleu suprimir la carpeta buida <resource>%1</resource>, i "
 "descartar tot el seu contingut? <p><b>Cal tindre en compte</b> que els "
-"missatges descartats no es guardaran a la carpeta Paperera i seran eliminats "
-"de forma permanent.</p></qt>"
+"missatges descartats no es guardaran a dins de la carpeta Paperera i seran "
+"eliminats de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:90
 #, kde-format
@@ -3692,8 +3692,8 @@ msgid ""
 msgstr ""
 "<qt>Segur que voleu suprimir la carpeta buida <resource>%1</resource> i "
 "totes les seues subcarpetes, descartant tot el seu contingut? <p><b>Cal "
-"tindre en compte</b> que els missatges descartats no es guardaran a la "
-"carpeta Paperera i seran eliminats de forma permanent.</p></qt>"
+"tindre en compte</b> que els missatges descartats no es guardaran a dins de "
+"la carpeta Paperera i seran eliminats de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:97
 #, kde-format
@@ -6753,8 +6753,8 @@ msgstr ""
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">De manera similar, en "
 "buscar els missatges anteriors sense llegir, la busca s'iniciarà des de baix "
-"de tot de la llista de missatges i continuarà a la carpeta anterior depenent "
-"de quina opció s'haja seleccionat.</p>\n"
+"de tot de la llista de missatges i continuarà fins la carpeta anterior "
+"depenent de quina opció s'haja seleccionat.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Recorre totes les carpetes marcades: </span>Açò és el mateix "
