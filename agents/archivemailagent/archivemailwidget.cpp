@@ -24,7 +24,6 @@
 #include <KSharedConfig>
 #include <QLocale>
 #include <QMenu>
-#include <kwidgetsaddons_version.h>
 
 namespace
 {
@@ -229,20 +228,12 @@ bool ArchiveMailWidget::save() const
 void ArchiveMailWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const int answer = KMessageBox::warningTwoActions(parentWidget(),
-#else
-    const int answer = KMessageBox::warningYesNo(parentWidget(),
-#endif
                                                       i18n("Do you want to delete the selected items?"),
                                                       i18nc("@title:window", "Delete Items"),
                                                       KStandardGuiItem::del(),
                                                       KStandardGuiItem::cancel());
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (answer == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-    if (answer == KMessageBox::No) {
-#endif
         return;
     }
 

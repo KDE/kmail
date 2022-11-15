@@ -17,7 +17,6 @@
 #include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <kwidgetsaddons_version.h>
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
@@ -55,20 +54,12 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     if (mVcardFileName.isEmpty()) {
         return;
     }
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const int answer = KMessageBox::questionTwoActions(this,
-#else
-    const int answer = KMessageBox::questionYesNo(this,
-#endif
                                                        i18n("Are you sure you want to delete this vCard?"),
                                                        i18n("Delete vCard"),
                                                        KStandardGuiItem::del(),
                                                        KStandardGuiItem::cancel());
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (answer == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-    if (answer == KMessageBox::Yes) {
-#endif
         if (mVcardFileName.startsWith(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation))) {
             deleteCurrentVcard(true);
         } else {
@@ -130,20 +121,12 @@ QString IdentityEditVcardDialog::saveVcard() const
 
 void IdentityEditVcardDialog::reject()
 {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const int answer = KMessageBox::questionTwoActions(this,
-#else
-    const int answer = KMessageBox::questionYesNo(this,
-#endif
                                                        i18nc("@info", "Do you really want to cancel?"),
                                                        i18nc("@title:window", "Confirmation"),
                                                        KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
                                                        KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (answer == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-    if (answer == KMessageBox::Yes) {
-#endif
         QDialog::reject(); // Discard current changes
     }
 }

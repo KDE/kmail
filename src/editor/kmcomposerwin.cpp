@@ -190,7 +190,6 @@
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
 #include <chrono>
-#include <kwidgetsaddons_version.h>
 
 using namespace std::chrono_literals;
 
@@ -1995,11 +1994,7 @@ bool KMComposerWin::queryClose()
                                              : i18n("Save this message in the Drafts folder. "
                                                     "It can then be edited and sent at a later time."));
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         const int rc = KMessageBox::warningTwoActionsCancel(this,
-#else
-        const int rc = KMessageBox::warningYesNoCancel(this,
-#endif
                                                             i18n("Do you want to save the message for later or discard it?"),
                                                             i18n("Close Composer"),
                                                             KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
@@ -2007,11 +2002,7 @@ bool KMComposerWin::queryClose()
                                                             KStandardGuiItem::cancel());
         if (rc == KMessageBox::Cancel) {
             return false;
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         } else if (rc == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-        } else if (rc == KMessageBox::Yes) {
-#endif
             // doSend will close the window. Just return false from this method
             if (istemplate) {
                 slotSaveTemplate();
@@ -2806,21 +2797,13 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
                 return;
             } else {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
                 const int rc = KMessageBox::questionTwoActions(this,
-#else
-                const int rc = KMessageBox::questionYesNo(this,
-#endif
                                                                i18n("To: field is empty. "
                                                                     "Send message anyway?"),
                                                                i18n("No To: specified"),
                                                                KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
                                                                KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
                 if (rc == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-                if (rc == KMessageBox::No) {
-#endif
                     return;
                 }
             }
@@ -2828,21 +2811,13 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
         if (subject().isEmpty()) {
             mEdtSubject->setFocus();
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             const int rc = KMessageBox::questionTwoActions(this,
-#else
-            const int rc = KMessageBox::questionYesNo(this,
-#endif
                                                            i18n("You did not specify a subject. "
                                                                 "Send message anyway?"),
                                                            i18n("No Subject Specified"),
                                                            KGuiItem(i18n("S&end as Is"), QStringLiteral("mail-send")),
                                                            KGuiItem(i18n("&Specify the Subject"), QStringLiteral("edit-rename")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             if (rc == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-            if (rc == KMessageBox::No) {
-#endif
                 return;
             }
         }
@@ -3077,27 +3052,15 @@ void KMComposerWin::slotSendNow()
 
 void KMComposerWin::confirmBeforeSend()
 {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
-#else
-    const int rc = KMessageBox::warningYesNoCancel(mMainWidget,
-#endif
                                                         i18n("About to send email..."),
                                                         i18n("Send Confirmation"),
                                                         KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
                                                         KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (rc == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-    if (rc == KMessageBox::Yes) {
-#endif
         doSend(MessageComposer::MessageSender::SendImmediate);
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     } else if (rc == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-    } else if (rc == KMessageBox::No) {
-#endif
         doSend(MessageComposer::MessageSender::SendLater);
     }
 }
@@ -3167,21 +3130,12 @@ bool KMComposerWin::checkRecipientNumber() const
 {
     const int thresHold = KMailSettings::self()->recipientThreshold();
     if (KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         if (KMessageBox::questionTwoActions(mMainWidget,
-#else
-        if (KMessageBox::questionYesNo(mMainWidget,
-
-#endif
                                             i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
                                             i18n("Too many recipients"),
                                             KGuiItem(i18n("&Send as Is")),
                                             KGuiItem(i18n("&Edit Recipients")))
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-            == KMessageBox::No) {
-#endif
             return false;
         }
     }
@@ -3216,11 +3170,7 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
     bool forcePlainTextMarkup = false;
     if (confirmation == MessageComposer::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->composerControler()->isFormattingUsed()
         && !mForceDisableHtml) {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         int choice = KMessageBox::warningTwoActionsCancel(this,
-#else
-        int choice = KMessageBox::warningYesNoCancel(this,
-#endif
                                                           i18n("Turning HTML mode off "
                                                                "will cause the text to lose the formatting. Are you sure?"),
                                                           i18n("Lose the formatting?"),
@@ -3233,18 +3183,10 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
         case KMessageBox::Cancel:
             enableHtml();
             return;
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         case KMessageBox::ButtonCode::SecondaryAction:
-#else
-        case KMessageBox::No:
-#endif
             forcePlainTextMarkup = true;
             break;
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         case KMessageBox::ButtonCode::PrimaryAction:
-#else
-        case KMessageBox::Yes:
-#endif
             break;
         }
     }

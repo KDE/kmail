@@ -15,7 +15,6 @@
 #include <QIcon>
 #include <QMenu>
 #include <QPointer>
-#include <kwidgetsaddons_version.h>
 
 namespace
 {
@@ -204,37 +203,21 @@ void SendLaterWidget::slotDeleteItem()
         return;
     }
     const int numberOfItems(listItems.count());
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     int answer = KMessageBox::warningTwoActions(this,
-#else
-    int answer = KMessageBox::warningYesNo(this,
-#endif
                                                 i18np("Do you want to delete the selected item?", "Do you want to delete the selected items?", numberOfItems),
                                                 i18nc("@title:window", "Delete Items"),
                                                 KStandardGuiItem::del(),
                                                 KStandardGuiItem::cancel());
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     if (answer == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-    if (answer == KMessageBox::No) {
-#endif
         return;
     }
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     answer = KMessageBox::warningTwoActions(this,
-#else
-    answer = KMessageBox::warningYesNo(this,
-#endif
                                             i18np("Do you want to delete the message as well?", "Do you want to delete the messages as well?", numberOfItems),
                                             i18nc("@title:window", "Delete Messages"),
                                             KStandardGuiItem::del(),
                                             KGuiItem(i18nc("@action:button", "Do Not Delete"), QStringLiteral("dialog-cancel")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
     const bool deleteMessage = (answer == KMessageBox::ButtonCode::PrimaryAction);
-#else
-    const bool deleteMessage = (answer == KMessageBox::Yes);
-#endif
 
     for (QTreeWidgetItem *item : listItems) {
         if (deleteMessage) {

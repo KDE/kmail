@@ -187,7 +187,6 @@
 
 using namespace std::chrono_literals;
 #include <chrono>
-#include <kwidgetsaddons_version.h>
 
 using namespace KMime;
 using namespace Akonadi;
@@ -302,21 +301,13 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (kmkernel->firstStart()) {
         const QStringList listOfMailerFound = MailCommon::Util::foundMailer();
         if (!listOfMailerFound.isEmpty()) {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             const int answer = KMessageBox::questionTwoActionsList(this,
-#else
-            const int answer = KMessageBox::questionYesNoList(this,
-#endif
                                                                    i18n("Another mailer was found on system. Do you want to import data from it?"),
                                                                    listOfMailerFound,
                                                                    QString(),
                                                                    KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
                                                                    KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             if (answer == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-            if (answer == KMessageBox::Yes) {
-#endif
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
                 if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,
@@ -4847,11 +4838,7 @@ void KMMainWidget::setupUnifiedMailboxChecker()
             return;
         }
 
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         const auto answer = KMessageBox::questionTwoActions(
-#else
-        const auto answer = KMessageBox::questionYesNo(
-#endif
             this,
             i18n("You have more than one email account set up.\nDo you want to enable the Unified Mailbox feature to "
                  "show unified content of your inbox, sent and drafts folders?\n"
@@ -4859,11 +4846,7 @@ void KMMainWidget::setupUnifiedMailboxChecker()
             i18n("Enable Unified Mailboxes?"),
             KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
             KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         if (answer == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-        if (answer == KMessageBox::Yes) {
-#endif
             iface.call(QStringLiteral("setEnableAgent"), true);
         }
     };
@@ -4889,17 +4872,12 @@ void KMMainWidget::slotClearCacheDone()
     if (akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
         if (KMessageBox::questionTwoActions(this,
                                             i18n("Do you want to restart Akonadi?"),
                                             i18n("Restart Akonadi"),
                                             KGuiItem(i18n("Restart")),
                                             KStandardGuiItem::cancel())
             == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-        if (KMessageBox::questionYesNo(this, i18n("Do you want to restart Akonadi?"), i18n("Restart Akonadi")) == KMessageBox::Yes) {
-
-#endif
             auto process = new QProcess(this);
             process->setProgram(QStandardPaths::findExecutable(QStringLiteral("akonadictl")));
             process->setArguments(QStringList() << QStringLiteral("restart"));

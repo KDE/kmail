@@ -24,7 +24,6 @@
 #include <QMenu>
 #include <QWindow>
 
-#include <kwidgetsaddons_version.h>
 #include <memory>
 
 namespace
@@ -97,21 +96,12 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
         if (!indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
             const auto mailbox = item->data().value<UnifiedMailbox *>();
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             if (KMessageBox::warningTwoActions(this,
-#else
-            if (KMessageBox::warningYesNo(this,
-
-#endif
                                                i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
                                                i18n("Really Remove?"),
                                                KStandardGuiItem::remove(),
                                                KStandardGuiItem::cancel())
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
                 == KMessageBox::ButtonCode::PrimaryAction) {
-#else
-                == KMessageBox::Yes) {
-#endif
                 mBoxModel->removeRow(item->row());
                 mBoxManager.removeBox(mailbox->id());
                 mBoxManager.saveBoxes();

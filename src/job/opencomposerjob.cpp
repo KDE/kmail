@@ -17,7 +17,6 @@
 #include <QFile>
 #include <QMimeDatabase>
 #include <TemplateParser/TemplateParserJob>
-#include <kwidgetsaddons_version.h>
 
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)
@@ -113,20 +112,12 @@ void OpenComposerJob::slotOpenComposer()
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             const int answer = KMessageBox::questionTwoActions(nullptr,
-#else
-            const int answer = KMessageBox::questionYesNo(nullptr,
-#endif
                                                                i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
                                                                i18n("Attach Folder"),
                                                                KGuiItem(i18nc("@action:button", "Attach"), QStringLiteral("dialog-ok")),
                                                                KGuiItem(i18nc("@action:button", "Do Not Attach"), QStringLiteral("dialog-cancel")));
-#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 100, 0)
             if (answer == KMessageBox::ButtonCode::SecondaryAction) {
-#else
-            if (answer == KMessageBox::No) {
-#endif
                 continue;
             }
         }
