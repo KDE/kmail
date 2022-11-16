@@ -4,7 +4,7 @@
 # Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005, 2009.
 # Giovanni Venturi <jumpyj@tiscali.it>, 2005, 2006.
 # Alessandro Pasotti <ale.pas@tiscalinet.it>, 2006.
-# Vincenzo Reale <smart2128vr@gmail.com>, 2007, 2008, 2010.
+# Vincenzo Reale <smart2128vr@gmail.com>, 2007, 2008, 2010, 2022.
 # Nicola Ruggero <nicola@nxnt.org>, 2007.
 # Luigi Toscano <luigi.toscano@tiscali.it>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
 msgid ""
@@ -12,15 +12,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-07-16 19:42+0200\n"
-"Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
+"PO-Revision-Date: 2022-11-06 16:34+0100\n"
+"Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1666,8 +1666,7 @@ msgid "Message Disposition Notifications"
 msgstr "Notifiche delle disposizioni sul messaggio"
 
 #: configuredialog/configuresecuritypage.cpp:53
-#, fuzzy, kde-format
-#| msgid "Encryption"
+#, kde-format
 msgid "Encryption"
 msgstr "Cifratura"
 
@@ -2997,13 +2996,12 @@ msgstr "Chiave di firma OpenPGP:"
 #: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Usa la stessa chiave per la cifratura e per la firma"
 
 #: identity/identitydialog.cpp:386
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Chiave OpenPGP 0x%1"
+msgstr "Chiave OpenPGP:"
 
 #: identity/identitydialog.cpp:412
 #, kde-format
@@ -3076,57 +3074,51 @@ msgid "Preferred format:"
 msgstr "Formato preferito:"
 
 #: identity/identitydialog.cpp:476
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Abilita sottoscrizione?"
+msgstr "Abilita Autocrypt"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Fai sapere agli altri che preferisci la cifratura"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Sovrascrivi le impostazioni globali per le impostazioni di sicurezza"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Sovr&ascrivi tutti"
+msgstr "Sovrascrivi i valori predefiniti:"
 
 #: identity/identitydialog.cpp:496
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Firma il messaggio"
+msgstr "Firma i messaggi"
 
 #: identity/identitydialog.cpp:499
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Cifra automaticamente i messaggi quando possibile"
+msgstr "Cifra i messaggi quando possibile"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Avverti prima di cercare di spedire messaggi &non firmati"
+msgstr "Avverti prima di spedire messaggi non firmati"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Avverti prima di cercare di spedire messaggi non cifrati"
+msgstr "Avverti prima di spedire messaggi non cifrati"
 
 #: identity/identitydialog.cpp:515
 #, kde-format
@@ -5201,8 +5193,7 @@ msgid "Restart Akonadi"
 msgstr "Riavvia Akonadi"
 
 #: kmmainwidget.cpp:4896
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgid "Restart"
 msgstr "Riavvia"
 
@@ -6290,7 +6281,7 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:265
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr "Un eleenco di tutti gli URL usati recentemente"
+msgstr "Un elenco di tutti gli URL usati recentemente"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.cmake:271
@@ -6306,10 +6297,9 @@ msgstr "Mostra indicatore della crittografia"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Mostra indicatore della crittografia"
+msgstr "Mostra le icone di fiducia della cifratura del proprietario"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6890,17 +6880,15 @@ msgstr "Apri &messaggio"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Imposta come predefinito"
+msgstr "Sicurezza predefinita"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Messaggio cifrato"
+msgstr "Cifra i messaggi in bozza"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6935,57 +6923,52 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Messaggio cifrato"
+msgstr "Cifra i messaggi in&viati"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Firma il messaggio"
+msgstr "Firma tutti i messaggi"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Cifra automaticamente i messaggi quando possibile"
+msgstr "Cripta tutti i messaggi quando possibile"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Mostra indicatore della crittografia"
+msgstr "Indicatori di cifratura"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Mostra indicatore di firma/cifratura nell'editor"
+msgstr "Mostra indicatore di firma/cifratura"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
 msgstr ""
+"Mostra il livello di attendibilità del proprietario della chiave di cifratura"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Avvisi"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Mostra sempre le chiavi di cifratura &per l'approvazione"
+msgstr "Approva sempre le chiavi di cifratura prima dell'invio"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7052,22 +7035,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Per i certificati di &radice:"
+msgstr "Per i propri certificati:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7078,11 +7052,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Avverti se il certificato di radice è in scadenza</h1>\n"
-"Seleziona il numero minimo di giorni nei quali il certificato di radice "
-"dovrebbe essere valido prima di mostrare un avvertimento.\n"
+"<h1>Avverti se i tuoi certificati scadono</h1>\n"
+"Seleziona il numero minimo di giorni nei quali il certificato dovrebbe "
+"essere valido prima di mostrare un avvertimento.\n"
 "<p>\n"
-"L'impostazione SPHINX raccomandata è di 14 giorni.\n"
+"L'impostazione SPHINX consigliata è di 30 giorni.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
