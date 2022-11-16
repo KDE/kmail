@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2022-02-20 22:22+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -60,82 +60,82 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde@peremen.name"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "To"
 msgstr "받는 사람"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Subject"
 msgstr "제목"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Send around"
 msgstr "보낼 시간"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Recurrent"
 msgstr "반복됨"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Message Id"
 msgstr "메시지 ID"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:68
 #, kde-format
 msgid "No messages waiting..."
 msgstr "대기 중인 메시지 없음..."
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgid "Send now"
 msgstr "지금 보내기"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "삭제"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "Yes"
 msgstr "예"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "No"
 msgstr "아니요"
 
-#: sendlaterconfigurewidget.cpp:212
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "선택한 항목을 삭제하시겠습니까?"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:208
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "항목 삭제"
 
-#: sendlaterconfigurewidget.cpp:229
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "메시지도 같이 삭제하시겠습니까?"
 
-#: sendlaterconfigurewidget.cpp:230
+#: sendlaterconfigurewidget.cpp:217
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "메시지 삭제"
 
-#: sendlaterconfigurewidget.cpp:232
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -181,17 +181,17 @@ msgstr "메시지를 보낼 수 없습니다."
 msgid "Message sent"
 msgstr "메시지 보냄"
 
-#: sendlatermanager.cpp:196
+#: sendlatermanager.cpp:191
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "오류가 발생했습니다. 메시지를 다시 보내시겠습니까?"
 
-#: sendlatermanager.cpp:197
+#: sendlatermanager.cpp:192
 #, kde-format
 msgid "Error found"
 msgstr "오류 발생"
 
-#: sendlatermanager.cpp:198
+#: sendlatermanager.cpp:193
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

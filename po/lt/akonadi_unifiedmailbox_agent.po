@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2018-11-09 04:02+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 
-#: settingsdialog.cpp:54 settingsdialog.cpp:138
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
 msgid "Add"
 msgstr ""
 
-#: settingsdialog.cpp:69 settingsdialog.cpp:142
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
 #, kde-format
 msgid "Modify"
 msgstr ""
 
-#: settingsdialog.cpp:91 settingsdialog.cpp:144
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
 #, kde-format
 msgid "Remove"
 msgstr ""
 
-#: settingsdialog.cpp:106
+#: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 
-#: settingsdialog.cpp:107
+#: settingsdialog.cpp:101
 #, kde-format
 msgid "Really Remove?"
 msgstr ""

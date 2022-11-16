@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2022-05-21 11:33+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -70,109 +70,109 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Архив"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "Име"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "Последен архив"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "Следващ архив в"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "Директория за съхранение"
 
-#: archivemailwidget.cpp:89
+#: archivemailwidget.cpp:88
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Агент за архивиране на поща"
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:90
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Автоматично архивиране на имейли."
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:92
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Maintainer"
 msgstr "Поддръжка"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Минчо Кондарев"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mkondarev@yahoo.de"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Добавяне..."
 
-#: archivemailwidget.cpp:113
+#: archivemailwidget.cpp:112
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Отваряне на съдържащата папка..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Изтриване"
 
-#: archivemailwidget.cpp:166
+#: archivemailwidget.cpp:165
 #, kde-format
 msgid "Folder: %1"
 msgstr "Папка: %1"
 
-#: archivemailwidget.cpp:188
+#: archivemailwidget.cpp:187
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Утре"
 msgstr[1] "%1 дни"
 
-#: archivemailwidget.cpp:197
+#: archivemailwidget.cpp:196
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Архивирането ще бъде извършено %1"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:232
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Искате ли да изтриете избраните елементи?"
 
-#: archivemailwidget.cpp:238
+#: archivemailwidget.cpp:233
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Изтриване на елементи"
 
-#: archivemailwidget.cpp:281
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -180,7 +180,7 @@ msgstr ""
 "Не може да се добави втори архив за тази папка. Вместо това променете "
 "съществуващия."
 
-#: archivemailwidget.cpp:281
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "Добавяне на архивна поща"

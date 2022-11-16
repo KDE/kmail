@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2022-10-01 14:59+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -67,58 +67,58 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "exclusion@gmail.com,gammaray@basealt.ru"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "To"
 msgstr "Кому"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Send around"
 msgstr "Назначенное время"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Recurrent"
 msgstr "С повторением"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Message Id"
 msgstr "Идентификатор письма"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:68
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Нет писем, ожидающих отправки"
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgid "Send now"
 msgstr "Отправить сейчас"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Удалить"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "Yes"
 msgstr "Да"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "No"
 msgstr "Нет"
 
-#: sendlaterconfigurewidget.cpp:212
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -127,13 +127,13 @@ msgstr[1] "Удалить выбранные записи?"
 msgstr[2] "Удалить выбранные записи?"
 msgstr[3] "Удалить выбранную запись?"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:208
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Удаление записей"
 
-#: sendlaterconfigurewidget.cpp:229
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -142,13 +142,13 @@ msgstr[1] "Также удалить сообщения?"
 msgstr[2] "Также удалить сообщения?"
 msgstr[3] "Также удалить сообщение?"
 
-#: sendlaterconfigurewidget.cpp:230
+#: sendlaterconfigurewidget.cpp:217
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Удаление сообщений"
 
-#: sendlaterconfigurewidget.cpp:232
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -194,17 +194,17 @@ msgstr "Отправить сообщение не удалось."
 msgid "Message sent"
 msgstr "Сообщение отправлено"
 
-#: sendlatermanager.cpp:196
+#: sendlatermanager.cpp:191
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "При отправке сообщения произошла ошибка. Хотите повторить отправку?"
 
-#: sendlatermanager.cpp:197
+#: sendlatermanager.cpp:192
 #, kde-format
 msgid "Error found"
 msgstr "Ошибка при отправке"
 
-#: sendlatermanager.cpp:198
+#: sendlatermanager.cpp:193
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

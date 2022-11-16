@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2015-01-26 13:33+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@akmc.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -65,58 +65,58 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "liudas@akmc.lt"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "To"
 msgstr "Kam"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Send around"
 msgstr "Siųsti apie"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Recurrent"
 msgstr "Pasikartojimas"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Message Id"
 msgstr "Laiško identifikatorius"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:68
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Nėra laukiančių laiškų..."
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgid "Send now"
 msgstr "Siųsti dabar"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Trinti"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "Yes"
 msgstr "Taip"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "No"
 msgstr "Ne"
 
-#: sendlaterconfigurewidget.cpp:212
+#: sendlaterconfigurewidget.cpp:207
 #, fuzzy, kde-format
 #| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected item?"
@@ -126,14 +126,14 @@ msgstr[1] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
 msgstr[2] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
 msgstr[3] "Ar norite pašalinti pažymėtus elementus? Ar norite tęsti?"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:208
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Trinti"
 
-#: sendlaterconfigurewidget.cpp:229
+#: sendlaterconfigurewidget.cpp:216
 #, fuzzy, kde-format
 #| msgid "Do you want to remove messages as well?"
 msgid "Do you want to delete the message as well?"
@@ -143,14 +143,14 @@ msgstr[1] "Ar norite pašalinti ir laiškus?"
 msgstr[2] "Ar norite pašalinti ir laiškus?"
 msgstr[3] "Ar norite pašalinti ir laiškus?"
 
-#: sendlaterconfigurewidget.cpp:230
+#: sendlaterconfigurewidget.cpp:217
 #, fuzzy, kde-format
 #| msgid "Remove messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Pašalinti laiškus"
 
-#: sendlaterconfigurewidget.cpp:232
+#: sendlaterconfigurewidget.cpp:219
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action:button"
@@ -197,17 +197,17 @@ msgstr "Negalima išsiųsti laiško."
 msgid "Message sent"
 msgstr "Laiškas išsiųstas"
 
-#: sendlatermanager.cpp:196
+#: sendlatermanager.cpp:191
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Aptikta klaida. Ar norite siųsti dar kartą?"
 
-#: sendlatermanager.cpp:197
+#: sendlatermanager.cpp:192
 #, kde-format
 msgid "Error found"
 msgstr "Aptikta klaida"
 
-#: sendlatermanager.cpp:198
+#: sendlatermanager.cpp:193
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

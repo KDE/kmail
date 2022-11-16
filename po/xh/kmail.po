@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-09 00:49+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -407,7 +407,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2331 kmreaderwin.cpp:299 kmsystemtray.cpp:42
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
 #: kmsystemtray.cpp:71
 #, kde-format
 msgid "KMail"
@@ -745,232 +745,232 @@ msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:85
+#: configuredialog/configureappearancepage.cpp:84
 #, fuzzy, kde-format
 msgid "General"
 msgstr "&Ngokubanzi"
 
-#: configuredialog/configureappearancepage.cpp:92
+#: configuredialog/configureappearancepage.cpp:91
 #, fuzzy, kde-format
 msgid "Fonts"
 msgstr "Umxholo"
 
-#: configuredialog/configureappearancepage.cpp:98
+#: configuredialog/configureappearancepage.cpp:97
 #, fuzzy, kde-format
 msgid "Colors"
 msgstr "Imiba&la"
 
-#: configuredialog/configureappearancepage.cpp:104
+#: configuredialog/configureappearancepage.cpp:103
 #, fuzzy, kde-format
 msgid "Layout"
 msgstr "&Ubeko"
 
-#: configuredialog/configureappearancepage.cpp:110
-#: configuredialog/configureappearancepage.cpp:131
+#: configuredialog/configureappearancepage.cpp:109
+#: configuredialog/configureappearancepage.cpp:130
 #, kde-format
 msgid "Message List"
 msgstr "Uluhlu Lomyalezo"
 
-#: configuredialog/configureappearancepage.cpp:116
+#: configuredialog/configureappearancepage.cpp:115
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message Tags"
 msgstr "&Umyalezo"
 
-#: configuredialog/configureappearancepage.cpp:130
+#: configuredialog/configureappearancepage.cpp:129
 msgid "Message Body"
 msgstr "Umyalezo Wesiqu"
 
-#: configuredialog/configureappearancepage.cpp:132
+#: configuredialog/configureappearancepage.cpp:131
 #, fuzzy
 msgid "Message List - Unread Messages"
 msgstr "Umyalezo Ongafundwanga &Olandelayo"
 
-#: configuredialog/configureappearancepage.cpp:133
+#: configuredialog/configureappearancepage.cpp:132
 #, fuzzy
 msgid "Message List - Important Messages"
 msgstr "Umyalezo obalulekileyo"
 
-#: configuredialog/configureappearancepage.cpp:134
+#: configuredialog/configureappearancepage.cpp:133
 #, fuzzy
 msgid "Message List - Action Item Messages"
 msgstr "Uluhlu Lomyalezo - Umhla Wendawo"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:134
 msgid "Fixed Width Font"
 msgstr "Ububanzi Obungatshintshiyo Bohlobo Lamagama"
 
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Composer"
 msgstr "Umqambi"
 
-#: configuredialog/configureappearancepage.cpp:137
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Printing Output"
 msgstr "Imveliso Yoshicilelo"
 
-#: configuredialog/configureappearancepage.cpp:148
+#: configuredialog/configureappearancepage.cpp:147
 #, kde-format
 msgid "&Use custom fonts"
 msgstr "&Sebenzisa uhlobo lwamagama esiko"
 
-#: configuredialog/configureappearancepage.cpp:166
+#: configuredialog/configureappearancepage.cpp:165
 #, kde-format
 msgid "Apply &to:"
 msgstr "Faka &ku:"
 
-#: configuredialog/configureappearancepage.cpp:302
+#: configuredialog/configureappearancepage.cpp:301
 msgid "Quoted Text - First Level"
 msgstr "Umbhalo Ocatshuliweyo - Umphakamo Wokuqala"
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Quoted Text - Second Level"
 msgstr "Okubhaliweyo Okubhaliweyo - Umphakamo Wesibini"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - Third Level"
 msgstr "Okubhaliweyo Okucatshuliweyo - Umphakamo Wesithathu"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Link"
 msgstr "Ikhonkco"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:305
 #, fuzzy
 msgid "Unread Message"
 msgstr "Umyalezo ongafundwanga"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:306
 #, fuzzy
 msgid "Important Message"
 msgstr "Umyalezo obalulekileyo"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:307
 #, fuzzy
 msgid "Action Item Message"
 msgstr "Umyalezo obalulekileyo"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:308
 #, fuzzy
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "Isimo se bar sendawo yangasemva - Akukho myalezo we HTML"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:309
 #, fuzzy
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "Isimo se bar sendawo yangaphambili - Akukho myalezo we HTML"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:310
 #, fuzzy
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "Isimo se bar se HTML sendawo yangasemva - umyalezo we HTML"
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:311
 #, fuzzy
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Isimo se bar yendawo yangaphambili - umyalezo we HTML"
 
-#: configuredialog/configureappearancepage.cpp:320
+#: configuredialog/configureappearancepage.cpp:319
 #, kde-format
 msgid "&Use custom colors"
 msgstr "&Sebenzisa imibala yesiko"
 
-#: configuredialog/configureappearancepage.cpp:324
+#: configuredialog/configureappearancepage.cpp:323
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:337
+#: configuredialog/configureappearancepage.cpp:336
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "Phinda wenze imibala kucatshulo &olunzulu"
 
-#: configuredialog/configureappearancepage.cpp:345
+#: configuredialog/configureappearancepage.cpp:344
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:351
+#: configuredialog/configureappearancepage.cpp:350
 #, kde-format
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:467
 #, fuzzy, kde-format
 msgid "Show folder quick search field"
 msgstr "&Phendla"
 
-#: configuredialog/configureappearancepage.cpp:475
+#: configuredialog/configureappearancepage.cpp:474
 #, fuzzy, kde-format
 msgid "Show Favorite Folders View"
 msgstr "Uluhlu lwencwadi eneenkcukacha"
 
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:479
+#: configuredialog/configureappearancepage.cpp:507
 #, fuzzy, kde-format
 #| msgid "Receiver"
 msgid "Never"
 msgstr "Umamakeli"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:484
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&As Icons"
 msgid "As icons"
 msgstr "&Njengeemphawu zemifanekiso"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:489
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:499
+#: configuredialog/configureappearancepage.cpp:498
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder Tooltips"
 msgstr "Uluhlu Lwencwadi eneenkcukacha"
 
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:503
 #, fuzzy, kde-format
 #| msgid "Always"
 msgid "Always"
 msgstr "Soloko"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:562
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Umga&ngatho wefomathi (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:563
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Ifomati yobulal&i (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:564
 #, fuzzy, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Ifoma&ti entle (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:565
 #, fuzzy
 msgid "C&ustom format:"
 msgstr "&Iqhelekile:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:588
 #, fuzzy, kde-format
 msgid "Default aggregation:"
 msgstr "Ci&ma"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:606
 #, fuzzy, kde-format
 msgid "Default theme:"
 msgstr "Ci&ma"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:643
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:649
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1040,91 +1040,91 @@ msgstr ""
 "ngesakhiwo sexesha (-0500)</Ii></uI><p><strong> lonke olunye ungeno lwezinto "
 "ezimele ezinye aluzukuhoywa. </strong></p></qt>  "
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:686
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "Uboniso Lomhla"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:794
 #, fuzzy, kde-format
 msgid "Message Window"
 msgstr "Umzimba womyalezo"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:801
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:809
 #, kde-format
 msgid "System Tray"
 msgstr ""
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:89
+#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:89
 #, fuzzy, kde-format
 msgid "Enable system tray icon"
 msgstr "Iposi Entsha Eqatshelweyo"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:819 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:93
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:837
 #, fuzzy, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "S&oloko"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:905
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Amacebo ococo olwelo Afumanekayo"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:918
 #, kde-format
 msgid "Add new tag"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:923
 #, fuzzy, kde-format
 msgid "Remove selected tag"
 msgstr "Cima Imiyalezo"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:932
 #, kde-format
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:938
 #, kde-format
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:961
+#: configuredialog/configureappearancepage.cpp:960
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Ithumela"
 
-#: configuredialog/configureappearancepage.cpp:1136
+#: configuredialog/configureappearancepage.cpp:1130
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1137
+#: configuredialog/configureappearancepage.cpp:1131
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "&Susa"
 
-#: configuredialog/configureappearancepage.cpp:1182
-#: configuredialog/configureappearancepage.cpp:1217
+#: configuredialog/configureappearancepage.cpp:1176
+#: configuredialog/configureappearancepage.cpp:1211
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -1840,7 +1840,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3516
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1943,484 +1943,484 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Ukusebenzisa ikhowudi"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
+#: editor/kmcomposerwin.cpp:274 kmail_part.cpp:43 kmmainwin.cpp:58
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:302
+#: editor/kmcomposerwin.cpp:301
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:309
+#: editor/kmcomposerwin.cpp:308
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:314
+#: editor/kmcomposerwin.cpp:313
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:322
+#: editor/kmcomposerwin.cpp:321
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:338
+#: editor/kmcomposerwin.cpp:337
 #, kde-format
 msgid "&Identity:"
 msgstr "&Uchazo:"
 
-#: editor/kmcomposerwin.cpp:339
+#: editor/kmcomposerwin.cpp:338
 #, fuzzy, kde-format
 msgid "&Dictionary:"
 msgstr "&Inkcazelo:"
 
-#: editor/kmcomposerwin.cpp:340
+#: editor/kmcomposerwin.cpp:339
 #, fuzzy, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "Incwadi eneenkcukacha yeposi-ethunyelw&eyo:"
 
-#: editor/kmcomposerwin.cpp:341
+#: editor/kmcomposerwin.cpp:340
 #, fuzzy, kde-format
 msgid "&Mail transport:"
 msgstr "Uthuthu lwepo&si:"
 
-#: editor/kmcomposerwin.cpp:342
+#: editor/kmcomposerwin.cpp:341
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:343
+#: editor/kmcomposerwin.cpp:342
 #, fuzzy, kde-format
 #| msgid "S&ubject:"
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Umxholo: "
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:413
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Umqambi"
 
-#: editor/kmcomposerwin.cpp:1168 editor/kmcomposerwin.cpp:1202
+#: editor/kmcomposerwin.cpp:1167 editor/kmcomposerwin.cpp:1201
 #, fuzzy, kde-format
 msgid "&Send Mail"
 msgstr "&Thumela iposi"
 
-#: editor/kmcomposerwin.cpp:1175 editor/kmcomposerwin.cpp:1208
+#: editor/kmcomposerwin.cpp:1174 editor/kmcomposerwin.cpp:1207
 #, fuzzy, kde-format
 msgid "&Send Mail Via"
 msgstr "&Thumela iposi"
 
-#: editor/kmcomposerwin.cpp:1177
+#: editor/kmcomposerwin.cpp:1176
 #, fuzzy, kde-format
 msgid "Send"
 msgstr "&Thumela"
 
-#: editor/kmcomposerwin.cpp:1180 editor/kmcomposerwin.cpp:1192
-#: editor/kmcomposerwin.cpp:3088
+#: editor/kmcomposerwin.cpp:1179 editor/kmcomposerwin.cpp:1191
+#: editor/kmcomposerwin.cpp:3059
 #, kde-format
 msgid "Send &Later"
 msgstr "Thumela &Kamva"
 
-#: editor/kmcomposerwin.cpp:1186 editor/kmcomposerwin.cpp:1199
+#: editor/kmcomposerwin.cpp:1185 editor/kmcomposerwin.cpp:1198
 #, fuzzy, kde-format
 msgid "Send &Later Via"
 msgstr "Thumela &Kamva"
 
-#: editor/kmcomposerwin.cpp:1188
+#: editor/kmcomposerwin.cpp:1187
 #, fuzzy, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "&Ufolo"
 
-#: editor/kmcomposerwin.cpp:1217
+#: editor/kmcomposerwin.cpp:1216
 #, fuzzy, kde-format
 msgid "Save as &Draft"
 msgstr "Gcina njengomsebenzi omele ukwenziwa"
 
-#: editor/kmcomposerwin.cpp:1219
+#: editor/kmcomposerwin.cpp:1218
 #, fuzzy, kde-format
 #| msgid "Search in &all local folders"
 msgid "Save email in Draft folder"
 msgstr "Phendla kuzo &zonke iincwadi ezineenkcukacha zobulali"
 
-#: editor/kmcomposerwin.cpp:1223
+#: editor/kmcomposerwin.cpp:1222
 #, fuzzy, kde-format
 msgid "Save as &Template"
 msgstr "Gcina njengomsebenzi omele ukwenziwa"
 
-#: editor/kmcomposerwin.cpp:1224
+#: editor/kmcomposerwin.cpp:1223
 #, fuzzy, kde-format
 msgid "Save email in Template folder"
 msgstr "Gcina njengomsebenzi omele ukwenziwa"
 
-#: editor/kmcomposerwin.cpp:1228
+#: editor/kmcomposerwin.cpp:1227
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save as &File"
 msgstr "Gcina Kwifayile"
 
-#: editor/kmcomposerwin.cpp:1229
+#: editor/kmcomposerwin.cpp:1228
 #, kde-format
 msgid "Save email as text or html file"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1233
+#: editor/kmcomposerwin.cpp:1232
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
 msgid "&Insert Text File..."
 msgstr "&Faka Ifayile..."
 
-#: editor/kmcomposerwin.cpp:1237
+#: editor/kmcomposerwin.cpp:1236
 #, fuzzy, kde-format
 msgid "&Insert Recent Text File"
 msgstr "Ngenisa Ifayile"
 
-#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2888
+#: editor/kmcomposerwin.cpp:1246 kmmainwidget.cpp:2879
 #, kde-format
 msgid "&Address Book"
 msgstr "&Incwadi Yedilesi"
 
-#: editor/kmcomposerwin.cpp:1248
+#: editor/kmcomposerwin.cpp:1247
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
 msgid "Open Address Book"
 msgstr "Vula kwi Ncwadi Yedilesi"
 
-#: editor/kmcomposerwin.cpp:1255
+#: editor/kmcomposerwin.cpp:1254
 #, kde-format
 msgid "&New Composer"
 msgstr "&Umqambi Omtsha"
 
-#: editor/kmcomposerwin.cpp:1261
+#: editor/kmcomposerwin.cpp:1260
 #, fuzzy, kde-format
 msgid "Select &Recipients..."
 msgstr "Abamkeli abangasebenziyo."
 
-#: editor/kmcomposerwin.cpp:1264
+#: editor/kmcomposerwin.cpp:1263
 #, fuzzy, kde-format
 msgid "Save &Distribution List..."
 msgstr "Uluhlu lonikezelo"
 
-#: editor/kmcomposerwin.cpp:1285
+#: editor/kmcomposerwin.cpp:1284
 #, fuzzy, kde-format
 msgid "Paste as Attac&hment"
 msgstr "Uncamathelo: "
 
-#: editor/kmcomposerwin.cpp:1289
+#: editor/kmcomposerwin.cpp:1288
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "&Coca Izithuba"
 
-#: editor/kmcomposerwin.cpp:1293
+#: editor/kmcomposerwin.cpp:1292
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "Se&benzisa Ubungakanani bamagama Obungatshintshiyo"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1298
 #, fuzzy, kde-format
 #| msgid "&Urgent"
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Ingxamisekile"
 
-#: editor/kmcomposerwin.cpp:1301
+#: editor/kmcomposerwin.cpp:1300
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1305
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1312
+#: editor/kmcomposerwin.cpp:1311
 #, kde-format
 msgid "&Wordwrap"
 msgstr "&Usongelo lwegama"
 
-#: editor/kmcomposerwin.cpp:1317
+#: editor/kmcomposerwin.cpp:1316
 #, kde-format
 msgid "&Snippets"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1322
+#: editor/kmcomposerwin.cpp:1321
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1338
+#: editor/kmcomposerwin.cpp:1337
 #, fuzzy, kde-format
 msgid "Rich Text Editing"
 msgstr "Ulwazi lobuntu bakho"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgid "Rich Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1341
+#: editor/kmcomposerwin.cpp:1340
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1345
+#: editor/kmcomposerwin.cpp:1344
 #, kde-format
 msgid "&All Fields"
 msgstr "&Yonke Imihlaba"
 
-#: editor/kmcomposerwin.cpp:1348
+#: editor/kmcomposerwin.cpp:1347
 #, kde-format
 msgid "&Identity"
 msgstr "&Uchazo"
 
-#: editor/kmcomposerwin.cpp:1351
+#: editor/kmcomposerwin.cpp:1350
 #, kde-format
 msgid "&Dictionary"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1354
+#: editor/kmcomposerwin.cpp:1353
 #, fuzzy, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "Incwadi eneenkcukacha Yeposi-Ethunyelwey&o"
 
-#: editor/kmcomposerwin.cpp:1357
+#: editor/kmcomposerwin.cpp:1356
 #, kde-format
 msgid "&Mail Transport"
 msgstr "&Uthutho Lweposi"
 
-#: editor/kmcomposerwin.cpp:1360
+#: editor/kmcomposerwin.cpp:1359
 #, kde-format
 msgid "&From"
 msgstr "&Ivela"
 
-#: editor/kmcomposerwin.cpp:1363
+#: editor/kmcomposerwin.cpp:1362
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Umxholo: "
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1367
 #, kde-format
 msgid "Append S&ignature"
 msgstr "&Yongeza Utyikityo"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1371
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgid "Pr&epend Signature"
 msgstr "&Yongeza Utyikityo"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1375
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1390
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "&Umkhangeli wopelo..."
 
-#: editor/kmcomposerwin.cpp:1392
+#: editor/kmcomposerwin.cpp:1391
 #, kde-format
 msgid "Spellchecker"
 msgstr "Umkhangeli wopelo"
 
-#: editor/kmcomposerwin.cpp:1396
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&Fihla Umyalezo"
 
-#: editor/kmcomposerwin.cpp:1397
+#: editor/kmcomposerwin.cpp:1396
 #, kde-format
 msgid "Encrypt"
 msgstr "Fihla"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1398
 #, kde-format
 msgid "&Sign Message"
 msgstr "&Tyikitya Umyalezo"
 
-#: editor/kmcomposerwin.cpp:1400
+#: editor/kmcomposerwin.cpp:1399
 #, kde-format
 msgid "Sign"
 msgstr "Tyikitya"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1424
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1430
+#: editor/kmcomposerwin.cpp:1429
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder..."
 msgstr "&Fumana Imiyalezo..."
 
-#: editor/kmcomposerwin.cpp:1464
+#: editor/kmcomposerwin.cpp:1463
 #, fuzzy, kde-format
 msgid "Configure KMail..."
 msgstr "Qwa&lasela..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1493 kmmainwin.cpp:181 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1496 kmmainwin.cpp:184 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1598 editor/kmcomposerwin.cpp:3573
+#: editor/kmcomposerwin.cpp:1597 editor/kmcomposerwin.cpp:3515
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Ilayini: %1"
 
-#: editor/kmcomposerwin.cpp:1601 editor/kmcomposerwin.cpp:3575
+#: editor/kmcomposerwin.cpp:1600 editor/kmcomposerwin.cpp:3517
 #, kde-format
 msgid " Column: %1 "
 msgstr " Umhlathi: %1"
 
-#: editor/kmcomposerwin.cpp:1606
+#: editor/kmcomposerwin.cpp:1605
 #, kde-format
 msgid "OVR"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1606
+#: editor/kmcomposerwin.cpp:1605
 #, kde-format
 msgid "INS"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1614
+#: editor/kmcomposerwin.cpp:1613
 #, fuzzy, kde-format
 msgid "Spellcheck: on"
 msgstr "Umkhangeli wopelo"
 
-#: editor/kmcomposerwin.cpp:1614
+#: editor/kmcomposerwin.cpp:1613
 #, fuzzy, kde-format
 msgid "Spellcheck: off"
 msgstr "Umkhangeli wopelo"
 
-#: editor/kmcomposerwin.cpp:1992
+#: editor/kmcomposerwin.cpp:1991
 #, fuzzy, kde-format
 msgid "Re&save as Template"
 msgstr "&Buyisela"
 
-#: editor/kmcomposerwin.cpp:1992
+#: editor/kmcomposerwin.cpp:1991
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Gcina njengo Mzombo "
 
-#: editor/kmcomposerwin.cpp:1993
+#: editor/kmcomposerwin.cpp:1992
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1995
+#: editor/kmcomposerwin.cpp:1994
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2003
+#: editor/kmcomposerwin.cpp:1998
 #, fuzzy, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Ufuna ukulahla umyalezo okanye ukuyigcina ngezesha elizayo?"
 
-#: editor/kmcomposerwin.cpp:2004
+#: editor/kmcomposerwin.cpp:1999
 #, fuzzy, kde-format
 msgid "Close Composer"
 msgstr "&Umqambi Omtsha"
 
-#: editor/kmcomposerwin.cpp:2076
+#: editor/kmcomposerwin.cpp:2067
 #, fuzzy, kde-format
 msgid "Autosave Message Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: editor/kmcomposerwin.cpp:2076
+#: editor/kmcomposerwin.cpp:2067
 #, fuzzy, kde-format
 msgid "Sending Message Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: editor/kmcomposerwin.cpp:2253
+#: editor/kmcomposerwin.cpp:2244
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Ngenisa Ifayile"
 
-#: editor/kmcomposerwin.cpp:2315
+#: editor/kmcomposerwin.cpp:2306
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2316
+#: editor/kmcomposerwin.cpp:2307
 #, fuzzy, kde-format
 msgid "Add as &Attachment"
 msgstr "Yongeza Uncamathiselo..."
 
-#: editor/kmcomposerwin.cpp:2331 editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2322 editor/kmcomposerwin.cpp:2426
 #, fuzzy, kde-format
 msgid "Name of the attachment:"
 msgstr "Uncamathelo: "
 
-#: editor/kmcomposerwin.cpp:2337
+#: editor/kmcomposerwin.cpp:2328
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2337
+#: editor/kmcomposerwin.cpp:2328
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid Attachment Name"
 msgstr "&Yenza utyikityo"
 
-#: editor/kmcomposerwin.cpp:2388
+#: editor/kmcomposerwin.cpp:2379
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Umyalezo ofihliweyo"
 msgstr[1] "Umyalezo ofihliweyo"
 
-#: editor/kmcomposerwin.cpp:2389
+#: editor/kmcomposerwin.cpp:2380
 #, fuzzy, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Yongeza Uncamathiselo..."
 msgstr[1] "Yongeza Uncamathiselo..."
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2426
 #, fuzzy, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Uncamathelo: "
 
-#: editor/kmcomposerwin.cpp:2532
+#: editor/kmcomposerwin.cpp:2523
 #, kde-format
 msgid "unnamed"
 msgstr "ayinikwanga gama"
 
-#: editor/kmcomposerwin.cpp:2558
+#: editor/kmcomposerwin.cpp:2549
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2429,12 +2429,12 @@ msgid ""
 "identity configuration.</p></qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2565
+#: editor/kmcomposerwin.cpp:2556
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Isitshixo Esingachazwanga Sosebenziso ngokufihlisa"
 
-#: editor/kmcomposerwin.cpp:2629
+#: editor/kmcomposerwin.cpp:2620
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2445,12 +2445,12 @@ msgstr ""
 "OpenPGP esizakusetyenziselwa le.<br>Ungachaza isitshixo seOpenPGP "
 "engasetyenziswa nesazisi esikhoyo oluku qwalaselo isazisi.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2636
+#: editor/kmcomposerwin.cpp:2627
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "Isitshixo Sotyikityo Esingachazwanga"
 
-#: editor/kmcomposerwin.cpp:2795
+#: editor/kmcomposerwin.cpp:2786
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2458,157 +2458,157 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2795
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:2814
+#: editor/kmcomposerwin.cpp:2801
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2816
+#: editor/kmcomposerwin.cpp:2803
 #, fuzzy, kde-format
 msgid "No To: specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2817 editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2804 editor/kmcomposerwin.cpp:2818
 #, fuzzy, kde-format
 msgid "S&end as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:2818
+#: editor/kmcomposerwin.cpp:2805
 #, fuzzy, kde-format
 msgid "&Specify the To field"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2836
+#: editor/kmcomposerwin.cpp:2815
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2838
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2819
 #, fuzzy, kde-format
 msgid "&Specify the Subject"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2889
+#: editor/kmcomposerwin.cpp:2864
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:3085
+#: editor/kmcomposerwin.cpp:3056
 #, kde-format
 msgid "About to send email..."
 msgstr "Ilungisele ukuthumela i email..."
 
-#: editor/kmcomposerwin.cpp:3086
+#: editor/kmcomposerwin.cpp:3057
 #, fuzzy, kde-format
 msgid "Send Confirmation"
 msgstr "Thumela Uqinisekiso"
 
-#: editor/kmcomposerwin.cpp:3087
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "&Send Now"
 msgstr "&Thumela Ngoku"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3135
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "Abekho abamkeli."
 
-#: editor/kmcomposerwin.cpp:3178
+#: editor/kmcomposerwin.cpp:3136
 #, fuzzy, kde-format
 msgid "&Send as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:3179
+#: editor/kmcomposerwin.cpp:3137
 #, fuzzy, kde-format
 msgid "&Edit Recipients"
 msgstr "Abamkeli abangasebenziyo."
 
-#: editor/kmcomposerwin.cpp:3224
+#: editor/kmcomposerwin.cpp:3174
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3226
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3227
+#: editor/kmcomposerwin.cpp:3177
 #, fuzzy, kde-format
 msgid "Lose Formatting"
 msgstr "Ulwazi lobuntu bakho"
 
-#: editor/kmcomposerwin.cpp:3228
+#: editor/kmcomposerwin.cpp:3178
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgid "Add Markup Plain Text"
 msgstr "Umyalezo njengo Mbhalo Ocacileyo"
 
-#: editor/kmcomposerwin.cpp:3918
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3922
+#: editor/kmcomposerwin.cpp:3864
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3929
+#: editor/kmcomposerwin.cpp:3871
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3962
+#: editor/kmcomposerwin.cpp:3904
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
 "is fully trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3968
+#: editor/kmcomposerwin.cpp:3910
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3974
+#: editor/kmcomposerwin.cpp:3916
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
 "is untrusted). Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3981
+#: editor/kmcomposerwin.cpp:3923
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2616,7 +2616,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4015
+#: editor/kmcomposerwin.cpp:3957
 #, fuzzy, kde-format
 msgid "Plugin Editor Information"
 msgstr "Ulwazi lobuntu bakho"
@@ -2842,7 +2842,7 @@ msgid "Folder Shortcut %1"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1825
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -2865,7 +2865,7 @@ msgid "No picture set for your address book entry."
 msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:43
+#: identity/identityeditvcarddialog.cpp:42
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
@@ -3364,56 +3364,56 @@ msgstr ""
 msgid "Edit..."
 msgstr "Hlela..."
 
-#: identity/identityeditvcarddialog.cpp:37
+#: identity/identityeditvcarddialog.cpp:36
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Guqula kancinci i Akhawunti"
 
-#: identity/identityeditvcarddialog.cpp:40
+#: identity/identityeditvcarddialog.cpp:39
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Delete current vCard"
 msgstr "Wisa umsonto okhoyo"
 
-#: identity/identityeditvcarddialog.cpp:63
+#: identity/identityeditvcarddialog.cpp:58
 #, fuzzy, kde-format
 #| msgid "Are you sure you want to empty the trash folder?"
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Uqinisekile ukuba ufuna ukuchitha inkukuma yencwadi eneenkcukacha? "
 
-#: identity/identityeditvcarddialog.cpp:64
-#: identity/identityeditvcarddialog.cpp:88
+#: identity/identityeditvcarddialog.cpp:59
+#: identity/identityeditvcarddialog.cpp:79
 #, fuzzy, kde-format
 msgid "Delete vCard"
 msgstr "Ci&ma"
 
-#: identity/identityeditvcarddialog.cpp:88
+#: identity/identityeditvcarddialog.cpp:79
 #, fuzzy, kde-format
 msgid "We cannot delete vCard file."
 msgstr ""
 "Ayikwazi ukwenza ngaxesha linye ulawulo lweposi lwencwadi eneenkcukacha. "
 
-#: identity/identityeditvcarddialog.cpp:138
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: identity/identityeditvcarddialog.cpp:139
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Thumela Uqinisekiso"
 
-#: identity/identityeditvcarddialog.cpp:140
+#: identity/identityeditvcarddialog.cpp:127
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Ulwazi lobuntu bakho"
 
-#: identity/identityeditvcarddialog.cpp:141
+#: identity/identityeditvcarddialog.cpp:128
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -3603,25 +3603,25 @@ msgstr ""
 msgid "Failed to store contact"
 msgstr "Uncamathelo: "
 
-#: job/opencomposerjob.cpp:121
+#: job/opencomposerjob.cpp:116
 #, fuzzy, kde-format
 #| msgid "Are you sure you want to empty the trash folder?"
 msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Uqinisekile ukuba ufuna ukuchitha inkukuma yencwadi eneenkcukacha? "
 
-#: job/opencomposerjob.cpp:122
+#: job/opencomposerjob.cpp:117
 #, fuzzy, kde-format
 msgid "Attach Folder"
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: job/opencomposerjob.cpp:123
+#: job/opencomposerjob.cpp:118
 #, fuzzy, kde-format
 #| msgid "&Attach"
 msgctxt "@action:button"
 msgid "Attach"
 msgstr "&Ncamathisela"
 
-#: job/opencomposerjob.cpp:124
+#: job/opencomposerjob.cpp:119
 #, fuzzy, kde-format
 #| msgid "&Attach"
 msgctxt "@action:button"
@@ -3841,14 +3841,14 @@ msgid "F&older"
 msgstr "&Incwadi eneenkcukacha"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3382 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3373 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Fak&a Amacebo okucoca ulwelo"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3387 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3378 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -3874,7 +3874,7 @@ msgid "&Forward"
 msgstr "&Phambili:"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3199 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3190 kmmainwin.rc:188
 #, fuzzy, kde-format
 msgid "A&pply Filter"
 msgstr "Fak&a Amacebo okucoca ulwelo"
@@ -3904,80 +3904,80 @@ msgstr "&Isandi esiphezulu"
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:297
+#: kmcommands.cpp:296
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Nceda linda"
 
-#: kmcommands.cpp:300 kmcommands.cpp:364
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Nceda linda ngelixa umyalezo uthunyelwe"
 msgstr[1] "Nceda linda ngelixa imiyalezo %1 ithunyelwe"
 
-#: kmcommands.cpp:511
+#: kmcommands.cpp:510
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Gcina Kwifayile"
 
-#: kmcommands.cpp:696
+#: kmcommands.cpp:695
 #, fuzzy, kde-format
 msgid "Open Message"
 msgstr "Umyalezo"
 
-#: kmcommands.cpp:696
+#: kmcommands.cpp:695
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Umyalezo"
 
-#: kmcommands.cpp:725
+#: kmcommands.cpp:724
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "&Phelisa imiyalezo emidala"
 
-#: kmcommands.cpp:798
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:917
+#: kmcommands.cpp:912
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "Thumela ifolisiwe"
 
-#: kmcommands.cpp:918
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1313
+#: kmcommands.cpp:1300
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Cima Imiyalezo"
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1310
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1531 kmcommands.cpp:1663
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1531 kmcommands.cpp:1673
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Cima Imiyalezo"
@@ -4012,78 +4012,78 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:816
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:835 kmmainwidget.cpp:2371 kmmainwidget.cpp:2387
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Thumela iposi"
 
-#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:836 kmmainwidget.cpp:2372 kmmainwidget.cpp:2388
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Ilungisele ukuthumela i email..."
 
-#: kmkernel.cpp:869
+#: kmkernel.cpp:868
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:870
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:948
+#: kmkernel.cpp:943
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:950
+#: kmkernel.cpp:945
 #, kde-format
 msgid "Online/Offline"
 msgstr ""
 
-#: kmkernel.cpp:951 kmmainwidget.cpp:2369
+#: kmkernel.cpp:946 kmmainwidget.cpp:2360
 #, fuzzy, kde-format
 msgid "Work Online"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:952 kmmainwidget.cpp:2366
+#: kmkernel.cpp:947 kmmainwidget.cpp:2357
 #, fuzzy, kde-format
 msgid "Work Offline"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:980
+#: kmkernel.cpp:971
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:983
+#: kmkernel.cpp:974
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:1078
+#: kmkernel.cpp:1069
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:1079
+#: kmkernel.cpp:1070
 #, fuzzy, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmkernel.cpp:1626
+#: kmkernel.cpp:1617
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4091,7 +4091,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1650
+#: kmkernel.cpp:1641
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4099,25 +4099,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1665
+#: kmkernel.cpp:1656
 #, fuzzy, kde-format
 msgid "Sending messages"
 msgstr "Tyikitya Imiyalezo"
 
-#: kmkernel.cpp:1666
+#: kmkernel.cpp:1657
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "Yazisa uqhubekeko lomthumeli..."
 
-#: kmkernel.cpp:1745
+#: kmkernel.cpp:1736
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1921 kmkernel.cpp:1927
+#: kmkernel.cpp:1912 kmkernel.cpp:1918
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4164,7 +4164,7 @@ msgid ""
 msgstr ""
 "Ayikwazanga ukuqala umphathi wesiqinisekiso. Nceda hlola ufakelo lwakho!"
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:325
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:316
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start import wizard"
@@ -4198,76 +4198,76 @@ msgstr ""
 msgid "Unable to start ImportWizard"
 msgstr "Ayikwazi ukwenza i akhawunti"
 
-#: kmmainwidget.cpp:310
+#: kmmainwidget.cpp:305
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 
-#: kmmainwidget.cpp:313
+#: kmmainwidget.cpp:308
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "&Ibalulekile"
 
-#: kmmainwidget.cpp:314
+#: kmmainwidget.cpp:309
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "&Sukufihla"
 
-#: kmmainwidget.cpp:323
+#: kmmainwidget.cpp:314
 #, fuzzy, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
 "Ayikwazanga ukuqala umphathi wesiqinisekiso. Nceda hlola ufakelo lwakho!"
 
-#: kmmainwidget.cpp:1378
+#: kmmainwidget.cpp:1369
 #, kde-format
 msgid "No Subject"
 msgstr "Akukho Mholo"
 
-#: kmmainwidget.cpp:1391
+#: kmmainwidget.cpp:1382
 #, fuzzy, kde-format
 msgid "(no templates)"
 msgstr "&Sebenzisa umyalezo wesiko onesimamva se-id "
 
-#: kmmainwidget.cpp:1443
+#: kmmainwidget.cpp:1434
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr ""
 "Le ncwadi ineenkcukacha ayinazinketho ezicwangcisiweyo eziphelelwa lixesha"
 
-#: kmmainwidget.cpp:1449
+#: kmmainwidget.cpp:1440
 #, fuzzy, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "Uqinisekile ukuba ufuna ukuphelisa le ncwadi eneenkcukacha \"%1\"?"
 
-#: kmmainwidget.cpp:1450
+#: kmmainwidget.cpp:1441
 #, kde-format
 msgid "Expire Folder"
 msgstr "Phelisa Incwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:1450
+#: kmmainwidget.cpp:1441
 #, kde-format
 msgid "&Expire"
 msgstr "&Phelisa"
 
-#: kmmainwidget.cpp:1466
+#: kmmainwidget.cpp:1457
 #, kde-format
 msgid "Empty Trash"
 msgstr "Chitha Inkunkuma"
 
-#: kmmainwidget.cpp:1466 util.cpp:151
+#: kmmainwidget.cpp:1457 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "Yiya Kwinkunkuma"
 
-#: kmmainwidget.cpp:1467
+#: kmmainwidget.cpp:1458
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Uqinisekile ukuba ufuna ukuchitha inkukuma yencwadi eneenkcukacha? "
 
-#: kmmainwidget.cpp:1469
+#: kmmainwidget.cpp:1460
 #, fuzzy, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4276,27 +4276,27 @@ msgstr ""
 "Uqinisekile ukuba ufuna ukuya ukususa yonke imiyalezo esuka kwi ncwadi "
 "eneenkcukacha \"%1\"? uyise enkukumeni?"
 
-#: kmmainwidget.cpp:1492
+#: kmmainwidget.cpp:1483
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Yisa yonke imiyalezo enkukumeni "
 
-#: kmmainwidget.cpp:1546
+#: kmmainwidget.cpp:1537
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Uqinisekile ukuba ufuna ukuphelisa yonke imiyalezo emidala?"
 
-#: kmmainwidget.cpp:1547
+#: kmmainwidget.cpp:1538
 #, fuzzy, kde-format
 msgid "Expire Old Messages?"
 msgstr "Phelisa Imiyalezo emidala?"
 
-#: kmmainwidget.cpp:1548
+#: kmmainwidget.cpp:1539
 #, kde-format
 msgid "Expire"
 msgstr "Phelisa"
 
-#: kmmainwidget.cpp:1573
+#: kmmainwidget.cpp:1564
 #, fuzzy, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4307,17 +4307,17 @@ msgstr ""
 "\"spam\" kwaye kungandisa okunokwenzeka ethi umatshini wakho uzakuvumelana "
 "ngenye ekhoyo kunye nezenzo ezilindelekileyo zokhuseleko."
 
-#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
+#: kmmainwidget.cpp:1567 kmmainwidget.cpp:4664
 #, kde-format
 msgid "Security Warning"
 msgstr "Isilumkiso Sokhuseleko"
 
-#: kmmainwidget.cpp:1577
+#: kmmainwidget.cpp:1568
 #, kde-format
 msgid "Load External References"
 msgstr ""
 
-#: kmmainwidget.cpp:1649
+#: kmmainwidget.cpp:1640
 #, fuzzy, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4332,417 +4332,417 @@ msgstr[1] ""
 "<qt>Ufuna ngokwenene ukucima %1 imiyalezo ekhethiweyo?<br>Xa icimiwe, "
 "ayikwazi ukubuyiselwa!</qt>"
 
-#: kmmainwidget.cpp:1654
+#: kmmainwidget.cpp:1645
 #, fuzzy, kde-format
 msgid "Delete Messages"
 msgstr "Cima Imiyalezo"
 
-#: kmmainwidget.cpp:1654
+#: kmmainwidget.cpp:1645
 #, fuzzy, kde-format
 msgid "Delete Message"
 msgstr "Cima Imiyalezo"
 
-#: kmmainwidget.cpp:1669
+#: kmmainwidget.cpp:1660
 #, fuzzy, kde-format
 msgid "Moving messages..."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1671 kmmainwidget.cpp:1865
+#: kmmainwidget.cpp:1662 kmmainwidget.cpp:1856
 #, fuzzy, kde-format
 msgid "Deleting messages..."
 msgstr "Cima Imiyalezo"
 
-#: kmmainwidget.cpp:1686 kmmainwidget.cpp:1885
+#: kmmainwidget.cpp:1677 kmmainwidget.cpp:1876
 #, fuzzy, kde-format
 msgid "Messages deleted successfully."
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmmainwidget.cpp:1688
+#: kmmainwidget.cpp:1679
 #, fuzzy, kde-format
 msgid "Messages moved successfully."
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmmainwidget.cpp:1693 kmmainwidget.cpp:1898
+#: kmmainwidget.cpp:1684 kmmainwidget.cpp:1889
 #, fuzzy, kde-format
 msgid "Deleting messages failed."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1695 kmmainwidget.cpp:1911
+#: kmmainwidget.cpp:1686 kmmainwidget.cpp:1902
 #, fuzzy, kde-format
 msgid "Deleting messages canceled."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1699
+#: kmmainwidget.cpp:1690
 #, fuzzy, kde-format
 msgid "Moving messages failed."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1701
+#: kmmainwidget.cpp:1692
 #, fuzzy, kde-format
 msgid "Moving messages canceled."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1767
+#: kmmainwidget.cpp:1758
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:1794
+#: kmmainwidget.cpp:1785
 #, fuzzy, kde-format
 msgid "Copying messages..."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1802
+#: kmmainwidget.cpp:1793
 #, fuzzy, kde-format
 msgid "Messages copied successfully."
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmmainwidget.cpp:1805
+#: kmmainwidget.cpp:1796
 #, fuzzy, kde-format
 msgid "Copying messages failed."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1807
+#: kmmainwidget.cpp:1798
 #, fuzzy, kde-format
 msgid "Copying messages canceled."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1817
+#: kmmainwidget.cpp:1808
 #, fuzzy, kde-format
 #| msgid "Copy Message to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Khuphela Umyalezo Kwincwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:1862
+#: kmmainwidget.cpp:1853
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
 msgid "Moving messages to trash..."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1869
+#: kmmainwidget.cpp:1860
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
 msgid "Deleting and moving messages to trash..."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1882
+#: kmmainwidget.cpp:1873
 #, fuzzy, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmmainwidget.cpp:1889
+#: kmmainwidget.cpp:1880
 #, fuzzy, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmmainwidget.cpp:1895
+#: kmmainwidget.cpp:1886
 #, fuzzy, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1902
+#: kmmainwidget.cpp:1893
 #, fuzzy, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmmainwidget.cpp:1908
+#: kmmainwidget.cpp:1899
 #, fuzzy, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:1915
+#: kmmainwidget.cpp:1906
 #, fuzzy, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:2186
+#: kmmainwidget.cpp:2177
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "&Incwadi eneenkcukacha engenanto"
 
-#: kmmainwidget.cpp:2837
+#: kmmainwidget.cpp:2828
 #, kde-format
 msgid "Save &As..."
 msgstr "Gcina &Njenge..."
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2839
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "&Phelisa Zonke Iincwadi ezineenkcukacha"
 
-#: kmmainwidget.cpp:2853
+#: kmmainwidget.cpp:2844
 #, kde-format
 msgid "Check &Mail"
 msgstr "Khangela &IPosi"
 
-#: kmmainwidget.cpp:2861
+#: kmmainwidget.cpp:2852
 #, fuzzy, kde-format
 #| msgid "Check Mail &In"
 msgid "Check Mail In"
 msgstr "Khangel&a Iposi Kwi"
 
-#: kmmainwidget.cpp:2863 kmmainwidget.cpp:2864
+#: kmmainwidget.cpp:2854 kmmainwidget.cpp:2855
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
 msgid "Check Mail"
 msgstr "Khangela &IPosi"
 
-#: kmmainwidget.cpp:2868
+#: kmmainwidget.cpp:2859
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&Thumela Imiyalezo Efolisiweyo"
 
-#: kmmainwidget.cpp:2876
+#: kmmainwidget.cpp:2867
 #, kde-format
 msgid "Online status (unknown)"
 msgstr ""
 
-#: kmmainwidget.cpp:2881
+#: kmmainwidget.cpp:2872
 #, fuzzy, kde-format
 msgid "Send Queued Messages Via"
 msgstr "&Thumela Imiyalezo Efolisiweyo"
 
-#: kmmainwidget.cpp:2897
+#: kmmainwidget.cpp:2888
 #, fuzzy, kde-format
 msgid "Certificate Manager"
 msgstr "Umphathi Wesiqinisekiso"
 
-#: kmmainwidget.cpp:2907
+#: kmmainwidget.cpp:2898
 #, fuzzy, kde-format
 msgid "&Import Messages..."
 msgstr "&Phendla imiyalezo..."
 
-#: kmmainwidget.cpp:2917
+#: kmmainwidget.cpp:2908
 #, fuzzy, kde-format
 msgid "&Debug Sieve..."
 msgstr "&Gcina..."
 
-#: kmmainwidget.cpp:2924
+#: kmmainwidget.cpp:2915
 #, fuzzy, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "Yenza ucoco lolwelo &Olusuka ku..."
 
-#: kmmainwidget.cpp:2929
+#: kmmainwidget.cpp:2920
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2934
+#: kmmainwidget.cpp:2925
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr ""
 
-#: kmmainwidget.cpp:2940
+#: kmmainwidget.cpp:2931
 #, fuzzy, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "Qwalasela Amacebo Okucoca &Ulwelo..."
 
-#: kmmainwidget.cpp:2946
+#: kmmainwidget.cpp:2937
 #, fuzzy, kde-format
 msgid "Delayed Messages..."
 msgstr "Cima Imiyalezo"
 
-#: kmmainwidget.cpp:2952
+#: kmmainwidget.cpp:2943
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "&Fumana Imiyalezo..."
 
-#: kmmainwidget.cpp:2963 util.cpp:148
+#: kmmainwidget.cpp:2954 util.cpp:148
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Ci&ma"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2959 kmmainwidget.cpp:4003
 #, fuzzy, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Yiya Kwinkunkuma"
 
-#: kmmainwidget.cpp:2972
+#: kmmainwidget.cpp:2963
 #, fuzzy, kde-format
 msgid "Move thread to trashcan"
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2966 kmmainwidget.cpp:4003
 #, fuzzy, kde-format
 msgid "Delete T&hread"
 msgstr "Ci&ma"
 
-#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:2972 kmmainwidget.cpp:4005
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Fumana Imiyalezo..."
 
-#: kmmainwidget.cpp:2986
+#: kmmainwidget.cpp:2977
 #, kde-format
 msgid "Select &All Messages"
 msgstr "&Khetha Yonke Imiyalezo"
 
-#: kmmainwidget.cpp:2993
+#: kmmainwidget.cpp:2984
 #, fuzzy, kde-format
 msgid "&Mailing List Management..."
 msgstr "Uluhlu lomyalezo"
 
-#: kmmainwidget.cpp:3001
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:3005
+#: kmmainwidget.cpp:2996
 #, fuzzy, kde-format
 msgid "&Assign Shortcut..."
 msgstr "Qwalasela Amacebo Okucoca &Ulwelo..."
 
-#: kmmainwidget.cpp:3023
+#: kmmainwidget.cpp:3014
 #, fuzzy, kde-format
 msgid "&Expiration Settings"
 msgstr "&Iinkcazo ezikhoyo:"
 
-#: kmmainwidget.cpp:3048
+#: kmmainwidget.cpp:3039
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "&Archive Folder..."
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: kmmainwidget.cpp:3056
+#: kmmainwidget.cpp:3047
 #, kde-format
 msgid "Load E&xternal References"
 msgstr ""
 
-#: kmmainwidget.cpp:3079
+#: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
 msgid "Copy Message To..."
 msgstr "&Umyalezo Omtsha..."
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3072
 #, fuzzy, kde-format
 msgid "Move Message To..."
 msgstr "&Umyalezo Omtsha..."
 
-#: kmmainwidget.cpp:3086
+#: kmmainwidget.cpp:3077
 #, kde-format
 msgid "&New Message..."
 msgstr "&Umyalezo Omtsha..."
 
-#: kmmainwidget.cpp:3088
+#: kmmainwidget.cpp:3079
 #, fuzzy, kde-format
 #| msgid "New"
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Entsha"
 
-#: kmmainwidget.cpp:3096
+#: kmmainwidget.cpp:3087
 #, fuzzy, kde-format
 msgid "Message From &Template"
 msgstr "Bonisa imiyalezo &phi"
 
-#: kmmainwidget.cpp:3102
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "Imiyalezo Emitsha k&u Luhlu-Lweposi..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3099
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Yenza Icebo lokucoca ulwelo"
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3103
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "Icebo lokucoca Ulwelo &Kumxholo..."
 
-#: kmmainwidget.cpp:3119
+#: kmmainwidget.cpp:3110
 #, kde-format
 msgid "Filter on &From..."
 msgstr "Yenza ucoco lolwelo &Olusuka ku..."
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3116
 #, kde-format
 msgid "Filter on &To..."
 msgstr "Yenza ucoco lolwelo &Ku..."
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3122
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "Yenza ucoco lolwelo &Ku..."
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Phawula U&msonto"
 
-#: kmmainwidget.cpp:3142
+#: kmmainwidget.cpp:3133
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Phawula Umsonto njengo &Fundiweyo"
 
-#: kmmainwidget.cpp:3145
+#: kmmainwidget.cpp:3136
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Phawula nyonke imiyalezo ekumsonto okhethiweyo njenge fundiweyo"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3139
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Phawula Umsonto njengo &Ngafundwanga"
 
-#: kmmainwidget.cpp:3151
+#: kmmainwidget.cpp:3142
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Phawula yonke imiyalezo ekhethiweyo yomzonto njenge ngafundwanga"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3148
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Phawula Umsonto njengo &Balulekileyo"
 
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3151
 #, fuzzy, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Umyalezo obalulekileyo"
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3154
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &New"
 msgid "Mark Thread as &Action Item"
 msgstr "Phawula Umsonto njengo &Mtsha"
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3157
 #, fuzzy, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "Umyalezo obalulekileyo"
 
-#: kmmainwidget.cpp:3170
+#: kmmainwidget.cpp:3161
 #, fuzzy, kde-format
 msgid "&Watch Thread"
 msgstr "Phawula U&msonto"
 
-#: kmmainwidget.cpp:3174
+#: kmmainwidget.cpp:3165
 #, fuzzy, kde-format
 msgid "&Ignore Thread"
 msgstr "Wisa Umsonto"
 
-#: kmmainwidget.cpp:3182 kmreadermainwin.cpp:478
+#: kmmainwidget.cpp:3173 kmreadermainwin.cpp:478
 #, fuzzy, kde-format
 msgid "Save A&ttachments..."
 msgstr "&Gcina Izincamatheliso Njenge..."
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3181
 #, fuzzy, kde-format
 msgid "Copy Decrypted To..."
 msgstr "&Umyalezo Omtsha..."
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3185
 #, fuzzy, kde-format
 msgid "Appl&y All Filters"
 msgstr "Fak&a Amacebo okucoca ulwelo"
 
-#: kmmainwidget.cpp:3203
+#: kmmainwidget.cpp:3194
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -4750,13 +4750,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Yandisa Umsonto"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3197
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "Yandisa umsonto okhoyo"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3201
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -4764,123 +4764,123 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Wisa Umsonto"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3204
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "Wisa umsonto okhoyo"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3208
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Ya&ndisa Yonke Imisoto"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3211
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Yandisa yonke imiyalezo kwiincwadi enenkcukacha ekhoyo."
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3215
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Wi&sa Yonke Imisonto"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3218
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Wisa yonke imisonto ekhoyo kwincwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3222
 #, fuzzy, kde-format
 msgid "&Display Message"
 msgstr "&Bonisa ibhokisi yemiyalezo"
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3229
 #, kde-format
 msgid "&Next Message"
 msgstr "&Umyalezo Olandelayo"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgid "Go to the next message"
 msgstr "Yiya kumyalezo olandelayo"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3236
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Umyalezo Ongafundwanga &Olandelayo"
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3244
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr ""
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Yiya kumyalezo olandelayo ongafundwanga"
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3249
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Umyalezo Odlulileyo"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3251
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Yiya kumyalezo odlulileyo"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3256
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Umyalezo &Ongafundwanga Odlulileyo"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3264
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "&Umyalezo Odlulileyo"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Yiya kumyalezo ongafundwanga"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Incwadi enenkcukacha &Elandelayo Engafundwanga"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Yiya kwincwadi eneenkcukacha elandelayo enemiyalezo engekafundwanga"
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3278
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Incwadi eneenkcukacha &Engafundwanga Edlulileyo"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Yiya kwincwadi eneenkcukacha edlulileyo nemiyalezo engafundwanga"
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3287
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Umbhalo Olandelayo &Ongafundwanga"
 
-#: kmmainwidget.cpp:3299
+#: kmmainwidget.cpp:3290
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Yiya kumbhalo ongafundwanga olandelayo"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4889,248 +4889,248 @@ msgstr ""
 "Khangela ujongise ezantsi naphezulu umyalezo okhoyo. Ukuba ekugqibeleni "
 "komyalezo okhoyo, yiya kumyalezo ongekafundwa."
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "Qwalasela Amacebo Okucoca &Ulwelo..."
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3306
 #, fuzzy, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Amacebo ococo olwelo Afumanekayo"
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3311
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "Yongeza i Akhawunti"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3316
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "Ulwaziso lwe &KMail"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3318
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Bonisa Iphepha Lolwamkelo lwe KMail"
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3325
 #, fuzzy, kde-format
 msgid "Configure &Notifications..."
 msgstr "Qwalasela Amacebo Okucoca &Ulwelo..."
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3332
 #, fuzzy, kde-format
 msgid "&Configure KMail..."
 msgstr "Qwa&lasela..."
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3339
 #, fuzzy, kde-format
 msgid "Expire..."
 msgstr "Phelisa"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3345
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "Add Favorite Folder..."
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3351
 #, fuzzy, kde-format
 msgid "Serverside Subscription..."
 msgstr "Inkcazelo"
 
-#: kmmainwidget.cpp:3366 kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3357 kmmainwidget.cpp:3365
 #, fuzzy, kde-format
 msgid "Apply All Filters"
 msgstr "Fak&a Amacebo okucoca ulwelo"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3383
 #, fuzzy, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "Qwa&lasela..."
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3389
 #, fuzzy, kde-format
 msgid "New AddressBook Contact..."
 msgstr "&Incwadi Yedilesi..."
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Khuphela Umyalezo Kwincwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:3424
+#: kmmainwidget.cpp:3415
 #, fuzzy, kde-format
 msgid "Jump to Folder..."
 msgstr "&Incwadi eneenkcukacha engenanto"
 
-#: kmmainwidget.cpp:3430
+#: kmmainwidget.cpp:3421
 #, kde-format
 msgid "Abort Current Operation"
 msgstr ""
 
-#: kmmainwidget.cpp:3436
+#: kmmainwidget.cpp:3427
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Jolisa Kwincwadi eneenkcukacha Elandelayo"
 
-#: kmmainwidget.cpp:3442
+#: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Jolisa Kwincwadi eneenkcukacha Edlulileyo"
 
-#: kmmainwidget.cpp:3448
+#: kmmainwidget.cpp:3439
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Khetha Incwadi eneenkcukacha Ngokujolisa "
 
-#: kmmainwidget.cpp:3455
+#: kmmainwidget.cpp:3446
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "Jolisa Kwincwadi eneenkcukacha Elandelayo"
 
-#: kmmainwidget.cpp:3461
+#: kmmainwidget.cpp:3452
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "Jolisa Kwincwadi eneenkcukacha Elandelayo"
 
-#: kmmainwidget.cpp:3467
+#: kmmainwidget.cpp:3458
 #, fuzzy, kde-format
 msgid "Focus on Next Message"
 msgstr "Jolisa Kwincwadi eneenkcukacha Elandelayo"
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3464
 #, fuzzy, kde-format
 msgid "Focus on Previous Message"
 msgstr "Jolisa Kwincwadi eneenkcukacha Edlulileyo"
 
-#: kmmainwidget.cpp:3479
+#: kmmainwidget.cpp:3470
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "&Khetha Yonke Imiyalezo"
 
-#: kmmainwidget.cpp:3485
+#: kmmainwidget.cpp:3476
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "&Khetha Yonke Imiyalezo"
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3482
 #, fuzzy, kde-format
 msgid "Select Message with Focus"
 msgstr "Khetha Incwadi eneenkcukacha Ngokujolisa "
 
-#: kmmainwidget.cpp:3498
+#: kmmainwidget.cpp:3489
 #, fuzzy, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "&Phendla"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3497
 #, fuzzy, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Jolisa Kwincwadi eneenkcukacha Edlulileyo"
 
-#: kmmainwidget.cpp:3512
+#: kmmainwidget.cpp:3503
 #, fuzzy, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Jolisa Kwincwadi eneenkcukacha Elandelayo"
 
-#: kmmainwidget.cpp:3519
+#: kmmainwidget.cpp:3510
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:3529
+#: kmmainwidget.cpp:3520
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3538 kmmainwidget.cpp:4053
+#: kmmainwidget.cpp:3529 kmmainwidget.cpp:4044
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&Ithumela"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3533
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:3547
+#: kmmainwidget.cpp:3538
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "Incwadi eneenkcukacha &Engafundwanga Edlulileyo"
 
-#: kmmainwidget.cpp:3554
+#: kmmainwidget.cpp:3545
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Cima Incwadi eneenkcukacha"
 
-#: kmmainwidget.cpp:3582
+#: kmmainwidget.cpp:3573
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:3991
 #, fuzzy, kde-format
 msgid "&Delete Search"
 msgstr "&Cima Incwadi enenkcukacha"
 
-#: kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:4005
 #, fuzzy, kde-format
 msgid "Edit Search..."
 msgstr "Hlela..."
 
-#: kmmainwidget.cpp:4051
+#: kmmainwidget.cpp:4042
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Qwa&lasela..."
 
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4053
 #, fuzzy, kde-format
 msgid "E&mpty Trash"
 msgstr "Chitha Inkunkuma"
 
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Hambisa Yonke Imiyalezo Esemonakalweni"
 
-#: kmmainwidget.cpp:4136
+#: kmmainwidget.cpp:4127
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4138
+#: kmmainwidget.cpp:4129
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4195
+#: kmmainwidget.cpp:4186
 #, fuzzy, kde-format
 msgid "Filter %1"
 msgstr "Iintshukumo Yecebo lokucoca ulwelo"
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4653
 #, fuzzy, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Inkcazelo"
 
-#: kmmainwidget.cpp:4670
+#: kmmainwidget.cpp:4661
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5141,12 +5141,12 @@ msgstr ""
 "\"spam\" kwaye kungandisa okunokwenzeka ethi umatshini wakho uzakuvumelana "
 "ngenye ekhoyo kunye nezenzo ezilindelekileyo zokhuseleko."
 
-#: kmmainwidget.cpp:4674
+#: kmmainwidget.cpp:4665
 #, kde-format
 msgid "Use HTML"
 msgstr ""
 
-#: kmmainwidget.cpp:4856
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5156,40 +5156,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4859
+#: kmmainwidget.cpp:4846
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4860
+#: kmmainwidget.cpp:4847
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4848
 #, fuzzy, kde-format
 msgid "Cancel"
 msgstr "Irhoxisiwe."
 
-#: kmmainwidget.cpp:4894 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4876
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4877
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:4896
+#: kmmainwidget.cpp:4878
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:4907
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

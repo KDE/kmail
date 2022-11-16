@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-10-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2020-09-20 09:44+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -17,28 +17,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 20.04.2\n"
 
-#: settingsdialog.cpp:54 settingsdialog.cpp:138
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: settingsdialog.cpp:69 settingsdialog.cpp:142
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
 #, kde-format
 msgid "Modify"
 msgstr "Τροποποίηση"
 
-#: settingsdialog.cpp:91 settingsdialog.cpp:144
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
 #, kde-format
 msgid "Remove"
 msgstr "Αφαίρεση"
 
-#: settingsdialog.cpp:106
+#: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 "Θέλετε πράγματι να αφαιρέσετε το ενοποιημένο γραμματοκιβώτιο <b>%1</b>;"
 
-#: settingsdialog.cpp:107
+#: settingsdialog.cpp:101
 #, kde-format
 msgid "Really Remove?"
 msgstr "Στ' αλήθεια να αφαιρεθεί;"
