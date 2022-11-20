@@ -56,7 +56,7 @@
 #include <Akonadi/MessageFlags>
 #include <kpimtextedit/kpimtextedit-texttospeech.h>
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEdit/TextToSpeech>
+#include <KPIMTextEditTextToSpeech/TextToSpeech>
 #endif
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>
@@ -740,7 +740,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
+        if (KPIMTextEditTextToSpeech::TextToSpeech::self()->isReady()) {
             menu->addSeparator();
             menu->addAction(mReaderWin->speakTextAction());
         }

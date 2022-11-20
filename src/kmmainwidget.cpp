@@ -38,7 +38,7 @@
 #include "widgets/kactionmenutransport.h"
 #include <kpimtextedit/kpimtextedit-texttospeech.h>
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEdit/TextToSpeech>
+#include <KPIMTextEditTextToSpeech/TextToSpeech>
 #endif
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
@@ -2713,7 +2713,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
+        if (KPIMTextEditTextToSpeech::TextToSpeech::self()->isReady()) {
             menu.addSeparator();
             menu.addAction(mMsgView->speakTextAction());
         }
