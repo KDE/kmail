@@ -114,7 +114,7 @@ using KMail::MailServiceImpl;
 #include <chrono>
 
 using namespace std::chrono_literals;
-//#define DEBUG_SCHEDULER 1
+// #define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
 static KMKernel *mySelf = nullptr;

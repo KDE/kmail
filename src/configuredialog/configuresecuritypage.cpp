@@ -250,7 +250,6 @@ SecurityPageEncryptionTab::~SecurityPageEncryptionTab()
 
 void SecurityPageEncryptionTab::doLoadFromGlobalSettings()
 {
-
     loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());
@@ -271,10 +270,8 @@ void SecurityPageEncryptionTab::doLoadFromGlobalSettings()
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-
 void SecurityPageEncryptionTab::doLoadOther()
 {
-
     loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     loadWidget(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());
@@ -303,7 +300,6 @@ void SecurityPageEncryptionTab::doLoadOther()
 
 void SecurityPageEncryptionTab::save()
 {
-
     saveCheckBox(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
     saveCheckBox(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());

@@ -24,7 +24,7 @@ inline QString sendLaterItemPattern()
 }
 }
 
-//#define DEBUG_MESSAGE_ID
+// #define DEBUG_MESSAGE_ID
 
 SendLaterItem::SendLaterItem(QTreeWidget *parent)
     : QTreeWidgetItem(parent)

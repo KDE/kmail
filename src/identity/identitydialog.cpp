@@ -14,7 +14,6 @@
 #include "identityfolderrequester.h"
 #include "identityinvalidfolder.h"
 
-
 #include <QGpgME/Job>
 #include <QGpgME/Protocol>
 
@@ -90,8 +89,8 @@ using MailTransport::TransportManager;
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/SpecialMailCollections>
 #include <QDialogButtonBox>
-#include <QStandardPaths>
 #include <QGroupBox>
+#include <QStandardPaths>
 
 using namespace KPIM;
 using namespace MailTransport;
@@ -399,12 +398,11 @@ IdentityDialog::IdentityDialog(QWidget *parent)
             mPGPEncryptionKeyRequester->setCurrentKey(key);
         }
     });
-    connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant& type) {
+    connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant &type) {
         if (mPGPSameKey->isChecked() && type == QLatin1String("no-key")) {
             mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
         }
     });
-
 
     // "OpenPGP Encryption Key" requester and label:
     mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, mCryptographyTab);
