@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-11-10 21:18+0300\n"
+"PO-Revision-Date: 2022-11-21 22:32+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2443,7 +2443,7 @@ msgstr "&Böyle Gönder"
 #: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgid "&Edit Recipients"
-msgstr "Alıcıları &Düzenle"
+msgstr "Alıcıları Dü&zenle"
 
 #: editor/kmcomposerwin.cpp:3224
 #, kde-format
@@ -3774,7 +3774,7 @@ msgstr "Yeni"
 #: kmail_part.rc:48 kmcomposerui.rc:26 kmmainwin.rc:48 kmreadermainwin.rc:18
 #, kde-format
 msgid "&Edit"
-msgstr "&Düzen"
+msgstr "Dü&zen"
 
 #. i18n: ectx: Menu (view)
 #: kmail_part.rc:73 kmcomposerui.rc:66 kmmainwin.rc:73 kmreadermainwin.rc:27
@@ -3844,7 +3844,7 @@ msgstr "&Araçlar"
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
-msgstr "A&yarlar"
+msgstr "Ayar&lar"
 
 #. i18n: ectx: Menu (help)
 #: kmail_part.rc:237 kmmainwin.rc:240
@@ -5002,7 +5002,7 @@ msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Yinelenmiş Girişleri Kaldır"
 #: kmmainwidget.cpp:3538 kmmainwidget.cpp:4053
 #, kde-format
 msgid "Account &Settings"
-msgstr "Hesap A&yarları"
+msgstr "Hesap Ayar&ları"
 
 #: kmmainwidget.cpp:3542
 #, kde-format
@@ -5643,7 +5643,7 @@ msgstr "Not Ekle..."
 #: messageactions.cpp:76
 #, kde-format
 msgid "&Edit As New"
-msgstr "Y&eni Olarak Düzenle"
+msgstr "Yeni Olarak Dü&zenle"
 
 #: messageactions.cpp:77
 #, kde-format
