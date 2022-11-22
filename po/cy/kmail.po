@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-22 00:47+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -576,7 +576,7 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:681
 #, kde-format
 msgid "Templates"
 msgstr ""
@@ -1807,46 +1807,46 @@ msgstr ""
 "Bydd newid y gosodiad edafu eang yn anwybyddu pob gwerth sy'n benodol i "
 "blygell."
 
-#: configuredialog/configuresecuritypage.cpp:293
-#: configuredialog/configuresecuritypage.cpp:295
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
+#: configuredialog/configuresecuritypage.cpp:290
+#: configuredialog/configuresecuritypage.cpp:292
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:336
+#: configuredialog/configuresecuritypage.cpp:332
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Anfon"
 
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:349
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:416
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:555 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:557
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
@@ -2955,54 +2955,54 @@ msgstr "D&yblygu dynodiad sy'n bodoli"
 msgid "&Existing identities:"
 msgstr "Dynodiadau &sy'n bodoli:"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:173
 #, fuzzy, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr ""
 "Gwall wrth ysgrifennu'r ffeil:\n"
 " %1"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:215
+#: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:217
+#: identity/identitydialog.cpp:216
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "Rhowch allweddair newydd:"
 
-#: identity/identitydialog.cpp:229
+#: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Golygu Dynodiad"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Cyffredinol"
 
-#: identity/identitydialog.cpp:275
+#: identity/identitydialog.cpp:274
 #, kde-format
 msgid "&Your name:"
 msgstr "&Eich enw:"
 
-#: identity/identitydialog.cpp:280
+#: identity/identitydialog.cpp:279
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3013,12 +3013,12 @@ msgstr ""
 "iddo ymddangos ym mhenawd yr ebost a anfonir.</p><p>Os gadewch hwn yn wag, "
 "ni ddengys eich enw go iawn, ond cyfeiriad ebost yn unig.</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:291
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Mu&diad:"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:296
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3033,12 +3033,12 @@ msgstr ""
 "iddo ei ddangos ym mhenawd yr ebost a anfonir.</p><p>Mae'n ddiogel (ac "
 "arferol) i adael hwn yn wag.</p></qt>"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:309
 #, kde-format
 msgid "&Email address:"
 msgstr "C&yfeiriad ebost:"
 
-#: identity/identitydialog.cpp:315
+#: identity/identitydialog.cpp:314
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3055,13 +3055,13 @@ msgstr ""
 "llawn.</p><p>Os gadewch hwn yn wag, neu roi un anghywir, bydd pawb yn cael "
 "trafferth wrth ateb i chi.</p></qt>"
 
-#: identity/identitydialog.cpp:335
+#: identity/identitydialog.cpp:334
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "C&yfeiriad ebost:"
 
-#: identity/identitydialog.cpp:340
+#: identity/identitydialog.cpp:339
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3072,13 +3072,13 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:358
+#: identity/identitydialog.cpp:357
 #, fuzzy, kde-format
 #| msgid "Cryptograph&y"
 msgid "Cryptography"
 msgstr "C&êl-ysgrifennaeth"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:363
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3093,23 +3093,23 @@ msgstr ""
 "ysgrifol.  Ni fydd effaith ar swyddogaethau ebostio arferol.</p>Gallwch "
 "ddarganfod mwy ynglyn ag allweddau wrth <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:369 identity/identitydialog.cpp:393
 #, fuzzy, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Allwedd OpenPGP:"
 
-#: identity/identitydialog.cpp:376
+#: identity/identitydialog.cpp:375
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:385
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "Allwedd OpenPGP 0x%1"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:410
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3125,12 +3125,12 @@ msgstr ""
 "ysgrifol.  Ni fydd effaith ar swyddogaethau ebostio arferol.</p>Gallwch "
 "ddarganfod mwy ynglyn ag allweddau wrth <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:419
+#: identity/identitydialog.cpp:417
 #, fuzzy, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Allwedd OpenPGP:"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:427
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3144,12 +3144,12 @@ msgstr ""
 "ysgrifol.  Ni fydd effaith ar swyddogaethau ebostio arferol.</p>Gallwch "
 "ddarganfod mwy ynglyn ag allweddau wrth <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:432
 #, fuzzy, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Anfon Tystysgrifau"
 
-#: identity/identitydialog.cpp:448
+#: identity/identitydialog.cpp:446
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3164,81 +3164,81 @@ msgstr ""
 "ysgrifol.  Ni fydd effaith ar swyddogaethau ebostio arferol.</p>Gallwch "
 "ddarganfod mwy ynglyn ag allweddau wrth <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:454
+#: identity/identitydialog.cpp:452
 #, fuzzy, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "&Dewis tystysgrif:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:469
 #, fuzzy, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "ail-ysgrifennu penawd"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:474
 #, fuzzy, kde-format
 msgid "Enable Autocrypt"
 msgstr "Tanysgrifiad"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:478
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:489
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
 msgid "Overwrite defaults:"
 msgstr "Trosysgrifo'r Ffeil?"
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:494
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "Llof&odi Neges"
 
-#: identity/identitydialog.cpp:499
+#: identity/identitydialog.cpp:497
 #, fuzzy, kde-format
 msgid "Encrypt messages when possible"
 msgstr "Cêl-ysgrifennu negeseuon yn ymysgogol lle &bo'n bosibl."
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Rhybuddio wrth geisio anfon negeseuon &heb eu llofnodi"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Rhy&buddio wrth geisio anfon negeseuon heb eu cêl-ysgrifo"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:513
 #, fuzzy, kde-format
 #| msgid "Advanced"
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Uwch"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:521
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&Cyfeiriad Ateb-I:"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:525
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3256,13 +3256,13 @@ msgstr ""
 "fynd i gyfeiriad cylch.</p><p>Os mewn amheuaeth, gadewch y maes yma'n wag.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:544
+#: identity/identitydialog.cpp:542
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "Cyfeiriadau &BCC:"
 
-#: identity/identitydialog.cpp:549
+#: identity/identitydialog.cpp:547
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3278,12 +3278,12 @@ msgstr ""
 "copi o bob neges anfonedig i gyfrif arall sy'n biau i chi.</p><p>Os mewn "
 "amheuaeth, gadewch y maes yma'n wag.</p></qt>"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "Cyfeiriadau &BCC:"
 
-#: identity/identitydialog.cpp:568
+#: identity/identitydialog.cpp:566
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3299,77 +3299,77 @@ msgstr ""
 "copi o bob neges anfonedig i gyfrif arall sy'n biau i chi.</p><p>Os mewn "
 "amheuaeth, gadewch y maes yma'n wag.</p></qt>"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&Geiriadur:"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:586
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "&Plygell Ebostau Anfonedig"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&Plygell ebost a anfonwyd:"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:594
 #, fuzzy, kde-format
 msgid "Select Draft Folder"
 msgstr "Dewis Ffeil Sŵn"
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Plygell &brasluniau:"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:602
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Plygell"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:604
 #, fuzzy, kde-format
 msgid "&Templates folder:"
 msgstr "Plygell S&bwriel:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:609
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Ffurfweddu Cyfrif"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 msgid "Attach my vCard to message"
 msgstr "Ychwanegu 'penawd' i'r neges."
 
-#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:617 identity/identitydialog.cpp:1166
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Ailenwi..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:622
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "Dewis i&aith:"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:634
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "Parth &rhagosod:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Parth &rhagosod:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:643
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3378,40 +3378,40 @@ msgstr ""
 "<qt><p>Defnyddir y parth rhagosod i gwblhau cyfeiriadau ebost sy'n cynnwys "
 "enw'r defnyddiwr yn unig.</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:660
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Defnyddio ôlddodiad dynodiad neges addasiedig."
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:674
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Amnewid"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:687
 #, kde-format
 msgid "Signature"
 msgstr "Llofnod"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "&Llun"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:747
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Cyfeiriad Ebost Annilys"
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Cyfeiriad Ebost Annilys"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:814
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3420,14 +3420,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:823
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:830
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3436,31 +3436,31 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:839
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:849
 #, fuzzy, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Cy&feiriad ebost y CA sy'n cyhoeddi tystysgrifau:"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:861
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Mae'r llofnod wedi darfod."
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:877
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Golygu Dynodiad \"%1\""
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:946
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3469,7 +3469,7 @@ msgstr ""
 "Nid yw'r blygell addasiedig drafftiau ar gyfer dynodiad \"%1\" mewn "
 "bodolaeth (dim mwy).  Felly defnyddir y blygell ragosod drafftiau."
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1168
 #, kde-format
 msgid "Edit..."
 msgstr "Golygu..."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-22 00:47+0000\n"
 "PO-Revision-Date: 2022-01-14 14:39+0100\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -518,7 +518,7 @@ msgstr ""
 "tlačítko a stisknutím požadované kombinace kláves.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:681
 #, kde-format
 msgid "Templates"
 msgstr "Šablony"
@@ -1643,10 +1643,10 @@ msgstr ""
 "Změna globálního nastavení pro HTML přepíše všechny hodnoty, specifické pro "
 "složky."
 
-#: configuredialog/configuresecuritypage.cpp:293
-#: configuredialog/configuresecuritypage.cpp:295
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
+#: configuredialog/configuresecuritypage.cpp:290
+#: configuredialog/configuresecuritypage.cpp:292
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
 #, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1654,36 +1654,36 @@ msgstr[0] " dne"
 msgstr[1] " dny"
 msgstr[2] " dnů"
 
-#: configuredialog/configuresecuritypage.cpp:336
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Nastavení GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:349
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:416
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Tato volba vyžaduje dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:555 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "žádná proxy"
 
-#: configuredialog/configuresecuritypage.cpp:557
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Aktuální nastavení systému: %1)"
@@ -2759,49 +2759,49 @@ msgstr "&Duplikovat existující vizitku"
 msgid "&Existing identities:"
 msgstr "&Existující identity:"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:173
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "Chyba při generování nového páru klíčů: %1"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Key Generation Error"
 msgstr "Chyba při generování klíče"
 
-#: identity/identitydialog.cpp:215
+#: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
 msgstr "Žád&ný klíč"
 
-#: identity/identitydialog.cpp:217
+#: identity/identitydialog.cpp:216
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "Generovat nový pár klíčů"
 
-#: identity/identitydialog.cpp:229
+#: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "Generuje se nový pár klíčů..."
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:241
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Upravit identitu"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Obecné"
 
-#: identity/identitydialog.cpp:275
+#: identity/identitydialog.cpp:274
 #, kde-format
 msgid "&Your name:"
 msgstr "Vaše &jméno:"
 
-#: identity/identitydialog.cpp:280
+#: identity/identitydialog.cpp:279
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2813,12 +2813,12 @@ msgstr ""
 "toto zanecháte prázdné, vaše skutečné jméno se neobjeví, objeví se pouze e-"
 "mailová adresa.</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:291
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Or&ganizace:"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:296
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2829,12 +2829,12 @@ msgstr ""
 "jak byste chtěli, aby se zobrazilo v hlavičce e-mailu, který bude odeslán.</"
 "p><p>Je bezpečné (a běžné) zanechat pole prázdné.</p></qt>"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:309
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-mailová adresa:"
 
-#: identity/identitydialog.cpp:315
+#: identity/identitydialog.cpp:314
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2844,12 +2844,12 @@ msgid ""
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:335
+#: identity/identitydialog.cpp:334
 #, kde-format
 msgid "Email a&liases:"
 msgstr "Emai&lové přezdívky:"
 
-#: identity/identitydialog.cpp:340
+#: identity/identitydialog.cpp:339
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2860,12 +2860,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:358
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgid "Cryptography"
 msgstr "Šifrování"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:363
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2880,23 +2880,23 @@ msgstr ""
 "ovlivněny.</p> <p>O klíčích můžete nalézt více na adrese <a>https://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:369 identity/identitydialog.cpp:393
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Podepisovací klíč OpenPGP:"
 
-#: identity/identitydialog.cpp:376
+#: identity/identitydialog.cpp:375
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:385
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "Podepisovací klíč OpenPGP:"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:410
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -2913,12 +2913,12 @@ msgstr ""
 "zachovány.</p> <p>Více se můžete o klíčích dozvědět na adrese <a>https://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:419
+#: identity/identitydialog.cpp:417
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Šifrovací klíč OpenPGP:"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:427
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -2931,12 +2931,12 @@ msgstr ""
 "KMail nebude schopen podepisovat zprávy pomocí S/MIME. Běžné poštovní funkce "
 "zůstanou zachovány.</p></qt>"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:432
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Podepisovací S/MIME certifikát:"
 
-#: identity/identitydialog.cpp:448
+#: identity/identitydialog.cpp:446
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -2950,81 +2950,81 @@ msgstr ""
 "můžete nechat nevyplněnou, ale nebude možné pro vás šifrovat kopie odchozí "
 "pošty pomocí S/MIME. Běžné poštovní funkce zůstanou zachovány.</p></qt>"
 
-#: identity/identitydialog.cpp:454
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "Šifrovací S/MIME certifikát:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:469
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Preferovaný formát:"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:474
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "Šifrovat"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:478
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:489
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr ""
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:494
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "Podep&sat zprávu"
 
-#: identity/identitydialog.cpp:499
+#: identity/identitydialog.cpp:497
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt messages when possible"
 msgid "Encrypt messages when possible"
 msgstr "Automaticky šifrovat zprávy, pokud je to možné"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "&Upozornění před odesláním nepodepsaných zpráv"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Upozornění před pokusem odeslat nešifrovanou zprávu"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Rozšířené"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:521
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Ad&resa pro odpovědi:"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:525
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3042,12 +3042,12 @@ msgstr ""
 "aby šly na adresu skupiny.</p><p>Pokud nevíte, zanechte pole prázdné.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:544
+#: identity/identitydialog.cpp:542
 #, kde-format
 msgid "&CC addresses:"
 msgstr "Adresy &CC:"
 
-#: identity/identitydialog.cpp:549
+#: identity/identitydialog.cpp:547
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3063,12 +3063,12 @@ msgstr ""
 "</p><p>Více adres můžete zadat tak, že je oddělíte čárkou.</p><p>Pokud si "
 "nejste jisti, ponechte pole prázdné.</p></qt>"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "Adresy pro s&kryté kopie:"
 
-#: identity/identitydialog.cpp:568
+#: identity/identitydialog.cpp:566
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3085,72 +3085,72 @@ msgstr ""
 "adres můžete zadat tak, že je oddělíte čárkou.</p><p>Pokud si nejste jisti, "
 "ponechte pole prázdné.</p></qt>"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgid "D&ictionary:"
 msgstr "S&lovník:"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:586
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Vyberte složku pro odeslanou poštu"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Složka odeslanýc&h zpráv:"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:594
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Vyberte složku konceptů"
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Složka kon&ceptů:"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:602
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Vyberte složku šablon"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:604
 #, kde-format
 msgid "&Templates folder:"
 msgstr "S&ložka se šablonami:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:609
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Odchozí účet:"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Přiložit ke zprávě moji vizitku"
 
-#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:617 identity/identitydialog.cpp:1166
 #, kde-format
 msgid "Create..."
 msgstr "Vytvořit..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:622
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Jazyk pro automatickou opravu:"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:634
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Obnovit výchozí název domény"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Implici&tní doména:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:643
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3159,38 +3159,38 @@ msgstr ""
 "<qt><p>Implicitní doména se používá pro doplňování e-mailové adresy, je-li "
 "zadáno pouze jméno uživatele.</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Po&užít vlastní šablony zpráv pro tuto identitu"
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:674
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Kopírovat globální šablony"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:687
 #, kde-format
 msgid "Signature"
 msgstr "Podpis"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:694
 #, kde-format
 msgid "Picture"
 msgstr "Obrázek"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:747
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Neplatná e-mailová přezdívka \"%1\""
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Neplatná e-mailová adresa"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:814
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3203,7 +3203,7 @@ msgstr ""
 "To může na straně příjemce vyvolat varování během ověřování podpisů "
 "vytvořených s touto konfigurací."
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:823
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3212,7 +3212,7 @@ msgstr ""
 "Jeden z nastavených OpenPGP šifrovacích klíčů neobsahuje žádné ID uživatele "
 "s e-mailovou adresou této identity (%1)."
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:830
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3225,7 +3225,7 @@ msgstr ""
 "To může na straně příjemce vyvolat varování během ověřování podpisů "
 "vytvořených s touto konfigurací."
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:839
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3234,30 +3234,30 @@ msgstr ""
 "Jeden z nastavených S/MIME šifrovacích certifikátů neobsahuje nastavenou e-"
 "mailovou adresu této identity (%1)."
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:849
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mailová adresa nenalezena v klíči/certifikátech"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:861
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Soubor s podpisem není platný"
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:877
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Upravit identitu \"%1\""
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:946
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1168
 #, kde-format
 msgid "Edit..."
 msgstr "Upravit..."

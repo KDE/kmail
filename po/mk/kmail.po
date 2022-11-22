@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2022-11-22 00:47+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -587,7 +587,7 @@ msgstr ""
 "сакате да ги придружите на оваа папка.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:681
 #, kde-format
 msgid "Templates"
 msgstr ""
@@ -1835,10 +1835,10 @@ msgstr ""
 "Менувањето на глобалните поставувања за нишките ќе ги пребрише сите "
 "вредности специфични за папките."
 
-#: configuredialog/configuresecuritypage.cpp:293
-#: configuredialog/configuresecuritypage.cpp:295
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
+#: configuredialog/configuresecuritypage.cpp:290
+#: configuredialog/configuresecuritypage.cpp:292
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
 #, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1846,36 +1846,36 @@ msgstr[0] " ден"
 msgstr[1] " дена"
 msgstr[2] " дена"
 
-#: configuredialog/configuresecuritypage.cpp:336
+#: configuredialog/configuresecuritypage.cpp:332
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Испраќање"
 
-#: configuredialog/configuresecuritypage.cpp:344
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:349
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:416
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Оваа опција побарува dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:555 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "без прокси"
 
-#: configuredialog/configuresecuritypage.cpp:557
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Тековно поставување на системот: %1)"
@@ -3032,53 +3032,53 @@ msgstr "&Дуплирај го постоечкиот идентитет"
 msgid "&Existing identities:"
 msgstr "Посто&ечки идентитети:"
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:173
 #, fuzzy, kde-format
 #| msgid "Error while trying to rename folder %1"
 msgid "Error while generating new key pair: %1"
 msgstr "Грешка при обидот да се преименува папката %1"
 
-#: identity/identitydialog.cpp:175
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:215
+#: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:217
+#: identity/identitydialog.cpp:216
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new key pair"
 msgstr "Внесете нов клучен збор:"
 
-#: identity/identitydialog.cpp:229
+#: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Уредете идентитет"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Општо"
 
-#: identity/identitydialog.cpp:275
+#: identity/identitydialog.cpp:274
 #, kde-format
 msgid "&Your name:"
 msgstr "&Вашето име:"
 
-#: identity/identitydialog.cpp:280
+#: identity/identitydialog.cpp:279
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3090,12 +3090,12 @@ msgstr ""
 "оставите ова празно вашето име нема да се појавува туку само е-поштенската "
 "адреса.</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:291
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Органи&зација:"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:296
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3110,12 +3110,12 @@ msgstr ""
 "организација ако сакате тоа да се појавува во заглавието на пораката што се "
 "испраќа.</p><p>Вообичаено е ова да се остави празно.</p></qt>"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:309
 #, kde-format
 msgid "&Email address:"
 msgstr "&Е-поштенска адреса:"
 
-#: identity/identitydialog.cpp:315
+#: identity/identitydialog.cpp:314
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3132,13 +3132,13 @@ msgstr ""
 "е-поштенска адреса.</p><p>Ако го оставите ова празно или ако го погрешите "
 "другите нема да можат да ви одговорат.</p></qt>"
 
-#: identity/identitydialog.cpp:335
+#: identity/identitydialog.cpp:334
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "&Е-поштенска адреса:"
 
-#: identity/identitydialog.cpp:340
+#: identity/identitydialog.cpp:339
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3149,13 +3149,13 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:358
+#: identity/identitydialog.cpp:357
 #, fuzzy, kde-format
 #| msgid "Cryptograph&y"
 msgid "Cryptography"
 msgstr "Криптограф&ија"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:363
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3177,23 +3177,23 @@ msgstr ""
 "бидат нарушени.</p><p>Повеќе за клучевите може да научите на <a>http://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:369 identity/identitydialog.cpp:393
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-клуч за потпишување:"
 
-#: identity/identitydialog.cpp:376
+#: identity/identitydialog.cpp:375
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:385
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "OpenPGP-клуч 0x%1"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:410
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3218,12 +3218,12 @@ msgstr ""
 "нема да бидат нарушени.</p><p>Повеќе за клучевите може да научите на "
 "<a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:419
+#: identity/identitydialog.cpp:417
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-клуч за криптирање:"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:427
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3236,12 +3236,12 @@ msgstr ""
 "КПошта нема да може да ги потпишува пораките дигитално со помош на S/MIME. "
 "Нормалните поштенски функции нема да бидат нарушени.</p></qt>"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:432
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-сертификат за потпишување:"
 
-#: identity/identitydialog.cpp:448
+#: identity/identitydialog.cpp:446
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3256,59 +3256,59 @@ msgstr ""
 "да може да ги криптира копиите од излезните пораки на вас со помош на S/"
 "MIME. Нормалните поштенски функции нема да бидат нарушени.</p></qt>"
 
-#: identity/identitydialog.cpp:454
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-сертификат за потпишување:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:469
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Претпочитан крипто-формат на порака:"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:474
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "Криптирај"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:478
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:489
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
 msgid "Overwrite defaults:"
 msgstr "Запишувате врз датотека?"
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:494
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Потпиши ја пораката"
 
-#: identity/identitydialog.cpp:499
+#: identity/identitydialog.cpp:497
 #, fuzzy, kde-format
 #| msgid "Automatically import keys and certificates"
 msgid "Encrypt messages when possible"
 msgstr "Автоматски внеси ги клучевите и сертификатите"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "to be continued with \"do not loop\", \"loop in current folder\", and "
@@ -3318,7 +3318,7 @@ msgid "Warn when trying to send unsigned messages"
 msgstr "При обид за пронаоѓање на непрочитани пораки:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "to be continued with \"do not loop\", \"loop in current folder\", and "
@@ -3327,19 +3327,19 @@ msgstr "При обид за пронаоѓање на непрочитани п
 msgid "Warn when trying to send unencrypted messages"
 msgstr "При обид за пронаоѓање на непрочитани пораки:"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:513
 #, fuzzy, kde-format
 #| msgid "Advanced"
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Напредно"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:521
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Адреса за одгово&р:"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:525
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3356,13 +3356,13 @@ msgstr ""
 "адреса во полето <tt>Од:</tt>, но сите одговори да одат на некоја групна "
 "адреса.</p><p>Ако не сте сигурни оставете го ова поле празно.</p></qt>"
 
-#: identity/identitydialog.cpp:544
+#: identity/identitydialog.cpp:542
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "Адреси за &слепа копија (BCC):"
 
-#: identity/identitydialog.cpp:549
+#: identity/identitydialog.cpp:547
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3388,12 +3388,12 @@ msgstr ""
 "за одвојување на адресите на примачите на слепата копија.</p><p>Ако не сте "
 "сигурни оставете го ова поле празно.</p></qt>"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "Адреси за &слепа копија (BCC):"
 
-#: identity/identitydialog.cpp:568
+#: identity/identitydialog.cpp:566
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3411,79 +3411,79 @@ msgstr ""
 "за одвојување на адресите на примачите на слепата копија.</p><p>Ако не сте "
 "сигурни оставете го ова поле празно.</p></qt>"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgid "D&ictionary:"
 msgstr "Речн&ик:"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:586
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Папка со и&спратена пошта"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&Папка за испратена пошта:"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:594
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Draft Folder"
 msgstr "Изберете стил"
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Папка со &нацрти:"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:602
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Папка"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:604
 #, fuzzy, kde-format
 msgid "&Templates folder:"
 msgstr "&Корпа за отпадоци:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:609
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Конфигурирајте сметка"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "Го додава „header“ на пораката"
 
-#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:617 identity/identitydialog.cpp:1166
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Преименувај..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:622
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "Изберете &јазик:"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:634
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "Стандард&ен домен:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Стандард&ен домен:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:643
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3492,40 +3492,40 @@ msgstr ""
 "<qt><p>Стандардниот домен се користи за да се довршат е-поштенските адреси "
 "што се состојат само од корисничко име.</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:660
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Користи сопствена наставка за ид. на порака"
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:674
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "За&мени"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:687
 #, kde-format
 msgid "Signature"
 msgstr "Потпис"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "С&лика"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:747
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Невалидна е-пошт. адреса"
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Невалидна е-пошт. адреса"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:814
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3538,7 +3538,7 @@ msgstr ""
 "Ова може да предизвика пораки со предупредување на приемната страна при обид "
 "за се верификуваат потписите направени со оваа конфигурација."
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:823
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3547,7 +3547,7 @@ msgstr ""
 "Еден од конфигурираните OpenPGP-клучеви за криптирање не содржи никаков ид. "
 "на корисник со конфигурираната е-пошт адреса за овој идентитет (%1)."
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:830
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3560,7 +3560,7 @@ msgstr ""
 "Ова може да предизвика пораки со предупредување на приемната страна при обид "
 "за се верификуваат потписите направени со оваа конфигурација."
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:839
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3569,24 +3569,24 @@ msgstr ""
 "Еден од конфигурираните S/MIME-сертификати за криптирање не ја содржи "
 "конфигурираната е-пошт адреса за овој идентитет (%1)."
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:849
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Не е пронајдена е-пошт. адреса во клучевите/сертификатите"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:861
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Датотеката со потпис не е валидна"
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:877
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Уредете го идентитетот „%1“"
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:946
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3598,7 +3598,7 @@ msgstr ""
 "Сопствената папка за нацрти за идентитетот „%1“ не постои (повеќе). Поради "
 "тоа ќе се користи стандардната папка за нацрти."
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1168
 #, fuzzy, kde-format
 msgid "Edit..."
 msgstr "Излези"
