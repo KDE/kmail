@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-11-21 22:32+0300\n"
+"PO-Revision-Date: 2022-11-22 17:17+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3786,7 +3786,7 @@ msgstr "&Görünüm"
 #: kmail_part.rc:97 kmmainwin.rc:97
 #, kde-format
 msgid "&Go"
-msgstr "&Git"
+msgstr "G&it"
 
 #. i18n: ectx: Menu (folder)
 #: kmail_part.rc:111 kmmainwin.rc:111
@@ -4842,7 +4842,7 @@ msgstr ""
 #: kmmainwidget.cpp:3309
 #, kde-format
 msgid "Configure &Filters..."
-msgstr "&Süzgeçleri Yapılandır..."
+msgstr "S&üzgeçleri Yapılandır..."
 
 #: kmmainwidget.cpp:3315
 #, kde-format
