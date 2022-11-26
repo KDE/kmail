@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-22 00:47+0000\n"
-"PO-Revision-Date: 2022-07-29 16:22+0200\n"
+"PO-Revision-Date: 2022-11-25 22:10+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.03.70\n"
+"X-Generator: Lokalize 22.08.2\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -2981,13 +2981,12 @@ msgstr "Klucz podpisu OpenPGP:"
 #: identity/identitydialog.cpp:375
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Użyj tego samego klucza do szyfrowania i podpisywania"
 
 #: identity/identitydialog.cpp:385
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Klucz PGP 0x%1"
+msgstr "Klucz OpenPGP:"
 
 #: identity/identitydialog.cpp:410
 #, kde-format
@@ -3057,57 +3056,51 @@ msgid "Preferred format:"
 msgstr "Wybierany format:"
 
 #: identity/identitydialog.cpp:474
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Włączyć subskrypcje?"
+msgstr "Włączyć samoszyfrowanie"
 
 #: identity/identitydialog.cpp:478
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Samoszyfrowanie:"
 
 #: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Daj innym znać, że wolisz szyfrowane wiadomości"
 
 #: identity/identitydialog.cpp:486
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Zastąp globalne ustawienia domyślne zabezpieczeń"
 
 #: identity/identitydialog.cpp:489
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Zastąp &wszystko"
+msgstr "Zastąp domyślne ustawienia:"
 
 #: identity/identitydialog.cpp:494
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Podpi&sz wiadomość"
+msgstr "Podpisz wiadomość"
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Samoczynnie odszyfrowuj wiadomości, jeśli to możliwe"
+msgstr "Szyfruj wiadomości, jeśli to możliwe"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "&Ostrzeż przed wysłaniem niepodpisanej wiadomości"
+msgstr "Ostrzeż przed wysłaniem niepodpisanej wiadomości"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Ostrzeż przed wysłaniem niezaszyfrowanej wiadomości"
+msgstr "Ostrzeż przed wysłaniem niezaszyfrowanej wiadomości"
 
 #: identity/identitydialog.cpp:513
 #, kde-format
@@ -6250,10 +6243,9 @@ msgstr "Pokaż wskaźnik etykiety kryptograficznej"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Pokaż wskaźnik etykiety kryptograficznej"
+msgstr "Pokaż ikony zaufanie kryptograficzne właściciela"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6829,17 +6821,15 @@ msgstr "Otwórz wiado&mość"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Ustaw jako domyślną"
+msgstr "Domyślne ustawienia zabezpieczeń"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Wiadomość zaszyfrowana"
+msgstr "Zaszyfruj robocze wiadomości"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6873,57 +6863,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Wiadomość zaszyfrowana"
+msgstr "&Zaszyfruj wysyłane wiadomości"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Podpi&sz wiadomość"
+msgstr "Podpisz wszystkie wiadomości"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Samoczynnie odszyfrowuj wiadomości, jeśli to możliwe"
+msgstr "Szyfruj wszystkie wiadomości, jeśli to możliwe"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Pokaż wskaźnik etykiety kryptograficznej"
+msgstr "Wskaźnik szyfrowania"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Pokaż wskaźnik podpisana/zaszyfrowana w oknie tworzenia wiadomości"
+msgstr "Pokaż wskaźnik podpisz/zaszyfruj"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Pokaż poziom zaufania właściciela do szyfrowania kluczem"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Ostrzeżenia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Pokaż klucze szy&frujące celem potwierdzenia"
+msgstr "Zawsze zatwierdzaj klucze szyfrowania przed wysyłaniem"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6987,22 +6971,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Dla ce&rtyfikatów głównych:"
+msgstr "Dla własnych certyfikatów:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7013,10 +6988,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Ostrzegaj, jeśli główny certyfikat traci ważność</h1>\n"
-"Wybierz minimalną liczbę dni, przez którą główny certyfikat ma być ważny bez "
-"wystosowywania ostrzeżenia.<p>\n"
-"Zalecane ustawienie SPHINX to 14 dni.\n"
+"<h1>Ostrzeż jeśli własny certyfikat traci ważność</h1>\n"
+"Wybierz liczbę dni do upłynięcia ważności certyfikatu, przed, którą nie będą "
+"wyświetlane ostrzeżenia.\n"
+"<p>\n"
+"Zalecane ustawienie SPHINX to 30 dni.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
