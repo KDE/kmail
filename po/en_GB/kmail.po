@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-07-22 14:38+0100\n"
+"PO-Revision-Date: 2022-11-26 15:05+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English <kde-l10n-en_gb@kde.org>\n"
 "Language: en_GB\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.04.3\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2962,13 +2962,12 @@ msgstr "OpenPGP signing key:"
 #: identity/identitydialog.cpp:376
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Use same key for encryption and signing"
 
 #: identity/identitydialog.cpp:386
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP key 0x%1"
+msgstr "OpenPGP key:"
 
 #: identity/identitydialog.cpp:412
 #, kde-format
@@ -3037,57 +3036,51 @@ msgid "Preferred format:"
 msgstr "Preferred format:"
 
 #: identity/identitydialog.cpp:476
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Enable Subscriptions?"
+msgstr "Enable Autocrypt"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Let others know you prefer encryption"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Overwrite global settings for security defaults"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Overwrite &All"
+msgstr "Overwrite defaults:"
 
 #: identity/identitydialog.cpp:496
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Sign Message"
+msgstr "Sign messages"
 
 #: identity/identitydialog.cpp:499
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Automatically encrypt messages when possible"
+msgstr "Encrypt messages when possible"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Warn when trying to send &unsigned messages"
+msgstr "Warn when trying to send unsigned messages"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Warn when trying to send unencrypted messages"
+msgstr "Warn when trying to send unencrypted messages"
 
 #: identity/identitydialog.cpp:515
 #, kde-format
@@ -6212,10 +6205,9 @@ msgstr "Show crypto label indicator"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:281
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Show crypto label indicator"
+msgstr "Show crypto ownertrust icons"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:285
@@ -6789,17 +6781,15 @@ msgstr "Open &Message"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Set as Default"
+msgstr "Security defaults"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Encrypted message"
+msgstr "Encrypt draft messages"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6833,57 +6823,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Encrypted message"
+msgstr "Encry&pt sent messages"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Sign Message"
+msgstr "Sign all messages"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Automatically encrypt messages when possible"
+msgstr "Encrypt all messages when possible"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Show crypto label indicator"
+msgstr "Encryption indicators"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Show sign/encrypt indicator in editor"
+msgstr "Show sign/encrypt indicator"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Show encryption key ownertrust level"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alerts"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Always show the encryption keys &for approval"
+msgstr "Always approve encryption keys before send"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6949,22 +6933,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "For &root certificates:"
+msgstr "For own certificates:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6975,11 +6950,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Warn If Root Certificate Expires</h1>\n"
-"Select the minimum number of days the root certificate should be valid "
-"without issuing a warning.\n"
+"<h1>Warn If own Certificates Expires</h1>\n"
+"Select the minimum number of days own certificate should be valid without "
+"issuing a warning.\n"
 "<p>\n"
-"The recommended SPHINX setting is 14 days.\n"
+"The recommended SPHINX setting is 30 days.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
