@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-22 00:47+0000\n"
-"PO-Revision-Date: 2022-07-15 11:56+0200\n"
+"PO-Revision-Date: 2022-11-28 16:15+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2993,7 +2993,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
-msgstr "Clave de signatura de OpenPGP:"
+msgstr "OpenPGP Key"
 
 #: identity/identitydialog.cpp:410
 #, kde-format
@@ -3092,7 +3092,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
-msgstr "&Signa message"
+msgstr "Signa messages"
 
 #: identity/identitydialog.cpp:497
 #, fuzzy, kde-format
@@ -5173,7 +5173,7 @@ msgstr "Re-Initia Akonadi"
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart"
-msgstr "Re-Initia conto"
+msgstr "Re-Initia"
 
 #: kmmainwidget.cpp:4885
 #, kde-format
@@ -6934,7 +6934,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alertas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
