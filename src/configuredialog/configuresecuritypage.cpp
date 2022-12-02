@@ -25,10 +25,12 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KMessageBox>
 #include <KPluginMetaData>
 
+#include <KWindowConfig>
 #include <QButtonGroup>
 #include <QDBusConnection>
 #include <QPointer>
 #include <QWhatsThis>
+#include <QWindow>
 
 QString SecurityPage::helpAnchor() const
 {
@@ -691,16 +693,16 @@ GpgSettingsDialog::~GpgSettingsDialog()
 
 void GpgSettingsDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
     KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void GpgSettingsDialog::saveConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

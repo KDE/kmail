@@ -12,12 +12,14 @@
 #include <KHelpMenu>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QWindow>
 
 namespace
 {
@@ -75,15 +77,16 @@ void MailMergeConfigureDialog::slotSave()
 
 void MailMergeConfigureDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(800, 600));
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
-    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
-    if (sizeDialog.isValid()) {
-        resize(sizeDialog);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void MailMergeConfigureDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
+    group.sync();
 }
