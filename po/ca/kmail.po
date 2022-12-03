@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-22 00:47+0000\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
 "PO-Revision-Date: 2022-10-26 08:43+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -380,8 +380,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "S'han esmenat molts errors en l'IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
-#: kmsystemtray.cpp:71
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -1660,37 +1660,37 @@ msgstr "Connectors «Confirma la supressió dels correus electrònics»"
 msgid "Akonadi Agents"
 msgstr "Agents de l'Akonadi"
 
-#: configuredialog/configuresecuritypage.cpp:45
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Reading"
 msgstr "Lectura"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Notificacions de processament del missatge (MDN)"
 
-#: configuredialog/configuresecuritypage.cpp:53
+#: configuredialog/configuresecuritypage.cpp:55
 #, kde-format
 msgid "Encryption"
 msgstr "Encriptatge"
 
-#: configuredialog/configuresecuritypage.cpp:59
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "Validació S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:86
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Email Address:"
 msgstr "Adreça de correu:"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:89
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Voleu eliminar aquesta adreça de correu electrònic?"
 
-#: configuredialog/configuresecuritypage.cpp:122
+#: configuredialog/configuresecuritypage.cpp:124
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1698,23 +1698,23 @@ msgstr ""
 "Canviar la configuració global de l'HTML sobreescriurà els valors específics "
 "de les carpetes."
 
-#: configuredialog/configuresecuritypage.cpp:290
 #: configuredialog/configuresecuritypage.cpp:292
 #: configuredialog/configuresecuritypage.cpp:294
 #: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " dia"
 msgstr[1] " dies"
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Configuració del GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:342
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1723,23 +1723,23 @@ msgstr ""
 "Manca el mòdul. Verifiqueu aquesta instal·lació. Aquest mòdul és "
 "proporcionat pel Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Error del mòdul de configuració del GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:412
+#: configuredialog/configuresecuritypage.cpp:414
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Aquesta opció necessita dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "sense intermediari"
 
-#: configuredialog/configuresecuritypage.cpp:553
+#: configuredialog/configuresecuritypage.cpp:555
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Opció actual del sistema: %1)"
@@ -5396,17 +5396,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "El contacte s'ha modificat correctament"
 
-#: kmsystemtray.cpp:85
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Missatges nous a"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "There are no unread messages"
 msgstr "No hi ha missatges sense llegir"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

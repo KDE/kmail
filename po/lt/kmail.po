@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-22 00:47+0000\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -396,8 +396,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
-#: kmsystemtray.cpp:71
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -1675,40 +1675,40 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:45
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Reading"
 msgstr "Skaitymas"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Pranešimai apie laiškų pristatymą"
 
-#: configuredialog/configuresecuritypage.cpp:53
+#: configuredialog/configuresecuritypage.cpp:55
 #, fuzzy, kde-format
 #| msgid "Encrypting"
 msgid "Encryption"
 msgstr "Šifravimas"
 
-#: configuredialog/configuresecuritypage.cpp:59
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME tikrinimas"
 
-#: configuredialog/configuresecuritypage.cpp:86
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "El. pašto adresas"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:89
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "Ar norite pašalinti žymę: „%1“?"
 
-#: configuredialog/configuresecuritypage.cpp:122
+#: configuredialog/configuresecuritypage.cpp:124
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global HTML setting will override all folder specific values."
@@ -1718,10 +1718,10 @@ msgstr ""
 "Pakeičiant globalius HTML nustatymus, bus anuliuotos visos specifinės "
 "aplankų reikšmės."
 
-#: configuredialog/configuresecuritypage.cpp:290
 #: configuredialog/configuresecuritypage.cpp:292
 #: configuredialog/configuresecuritypage.cpp:294
 #: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1730,37 +1730,37 @@ msgstr[1] " dienos"
 msgstr[2] " dienų"
 msgstr[3] " diena"
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:334
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG nuostatos..."
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:342
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:412
+#: configuredialog/configuresecuritypage.cpp:414
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Šiai parinkčiai reikia dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "be įgaliotojo serverio"
 
-#: configuredialog/configuresecuritypage.cpp:553
+#: configuredialog/configuresecuritypage.cpp:555
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Esamas sistemos nustatymas: %1)"
@@ -5446,17 +5446,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Kontaktas sėkmingai pakeistas"
 
-#: kmsystemtray.cpp:85
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Nauji laiškai aplanke"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Neskaitytų laiškų nėra"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

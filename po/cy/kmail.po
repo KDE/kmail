@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-22 00:47+0000\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -417,8 +417,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
-#: kmsystemtray.cpp:71
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -1764,39 +1764,39 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:45
+#: configuredialog/configuresecuritypage.cpp:47
 #, fuzzy, kde-format
 msgid "Reading"
 msgstr "&Anfon"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Hysbysiadau Lleoliad Neges"
 
-#: configuredialog/configuresecuritypage.cpp:53
+#: configuredialog/configuresecuritypage.cpp:55
 #, kde-format
 msgid "Encryption"
 msgstr "Cêl-ysgrifaeth"
 
-#: configuredialog/configuresecuritypage.cpp:59
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:86
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "Cyfeiriad Ebost"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:89
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:122
+#: configuredialog/configuresecuritypage.cpp:124
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1807,46 +1807,46 @@ msgstr ""
 "Bydd newid y gosodiad edafu eang yn anwybyddu pob gwerth sy'n benodol i "
 "blygell."
 
-#: configuredialog/configuresecuritypage.cpp:290
 #: configuredialog/configuresecuritypage.cpp:292
 #: configuredialog/configuresecuritypage.cpp:294
 #: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:334
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Anfon"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:342
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:412
+#: configuredialog/configuresecuritypage.cpp:414
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:553
+#: configuredialog/configuresecuritypage.cpp:555
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
@@ -5524,17 +5524,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."
 
-#: kmsystemtray.cpp:85
+#: kmsystemtray.cpp:95
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "Negeseuon Newydd Yn..."
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "Darfod negeseuon &heb eu darllen"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

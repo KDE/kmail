@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-22 00:47+0000\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -431,8 +431,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
-#: kmsystemtray.cpp:71
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "จัดการจดหมาย-K"
@@ -1720,39 +1720,39 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:45
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Reading"
 msgstr "การอ่านจดหมาย"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "การแจ้งให้ทราบก่อนจัดการจดหมาย"
 
-#: configuredialog/configuresecuritypage.cpp:53
+#: configuredialog/configuresecuritypage.cpp:55
 #, kde-format
 msgid "Encryption"
 msgstr "การเข้ารหัส"
 
-#: configuredialog/configuresecuritypage.cpp:59
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "ความถูกต้องของ S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:86
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "ที่อยู่อีเมล"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:89
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:122
+#: configuredialog/configuresecuritypage.cpp:124
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1761,46 +1761,46 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "กำลังเปลี่ยนการตั้งค่าทั่วไปของการทำเธรด ที่จะกำหนดใช้กับทุกโฟลเดอร์"
 
-#: configuredialog/configuresecuritypage.cpp:290
 #: configuredialog/configuresecuritypage.cpp:292
 #: configuredialog/configuresecuritypage.cpp:294
 #: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " วัน"
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:334
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ตั้งค่า"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:342
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:412
+#: configuredialog/configuresecuritypage.cpp:414
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ตัวเลือกนี้ต้องการใช้โปรแกรม dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ไม่ใช้พร็อกซี"
 
-#: configuredialog/configuresecuritypage.cpp:553
+#: configuredialog/configuresecuritypage.cpp:555
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(การตั้งค่าปัจจุบันของระบบ: %1)"
@@ -5469,18 +5469,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "ย้ายจดหมายเรียบร้อยแล้ว"
 
-#: kmsystemtray.cpp:85
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "จดหมายใหม่ใน"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, fuzzy, kde-format
 #| msgid "KMail - There are no unread messages"
 msgid "There are no unread messages"
 msgstr "KMail - ไม่มีจดหมายที่ยังไม่ได้อ่าน"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

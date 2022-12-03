@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-22 00:47+0000\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
 "PO-Revision-Date: 2022-11-28 16:15+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -366,8 +366,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "Corregite plure de defectos de IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:42
-#: kmsystemtray.cpp:71
+#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -1647,38 +1647,38 @@ msgstr "Confirma que il dele messages de e-posta"
 msgid "Akonadi Agents"
 msgstr "Agentes de Akonadi:"
 
-#: configuredialog/configuresecuritypage.cpp:45
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Reading"
 msgstr "Leger"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Notificationes de disposition de messages"
 
-#: configuredialog/configuresecuritypage.cpp:53
+#: configuredialog/configuresecuritypage.cpp:55
 #, fuzzy, kde-format
 #| msgid "Encrypting"
 msgid "Encryption"
 msgstr "Cryptar"
 
-#: configuredialog/configuresecuritypage.cpp:59
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "Validation de S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:86
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Email Address:"
 msgstr "Adresse de E-Posta:"
 
-#: configuredialog/configuresecuritypage.cpp:87
+#: configuredialog/configuresecuritypage.cpp:89
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Tu vole remover iste adresse de e-posta?"
 
-#: configuredialog/configuresecuritypage.cpp:122
+#: configuredialog/configuresecuritypage.cpp:124
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1686,23 +1686,23 @@ msgstr ""
 "Modificar le preferentia de HTML global il supplantara omne valor specific "
 "del dossier."
 
-#: configuredialog/configuresecuritypage.cpp:290
 #: configuredialog/configuresecuritypage.cpp:292
 #: configuredialog/configuresecuritypage.cpp:294
 #: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " die"
 msgstr[1] "dies"
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Preferentias de GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:342
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1711,23 +1711,23 @@ msgstr ""
 "Le modulo es mancante. Pro favor tu verifica tu installation. Iste modulo es "
 "fornite per Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Error de modulo de configurar de GnuGPG"
 
-#: configuredialog/configuresecuritypage.cpp:412
+#: configuredialog/configuresecuritypage.cpp:414
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Iste operation require dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "necun proxy"
 
-#: configuredialog/configuresecuritypage.cpp:553
+#: configuredialog/configuresecuritypage.cpp:555
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Preferentia currente de systema: %1)"
@@ -5382,17 +5382,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Contacto modificate con successo"
 
-#: kmsystemtray.cpp:85
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Nove message in"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Il non ha alcun messages non legite"
 
-#: kmsystemtray.cpp:254
+#: kmsystemtray.cpp:287
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
