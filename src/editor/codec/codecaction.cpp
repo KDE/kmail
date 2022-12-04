@@ -86,7 +86,7 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
             }
         } else {
             const QString fixedActionText = MimeTreeParser::NodeHelper::fixEncoding(action->text());
-            if (KCharsets::charsets()->codecForName(KCharsets::charsets()->encodingForName(fixedActionText)) == KCharsets::charsets()->codecForName(encoding)) {
+            if (QTextCodec::codecForName(KCharsets::charsets()->encodingForName(fixedActionText).toLatin1()) == QTextCodec::codecForName(encoding.toLatin1())) {
                 return action->text();
             }
         }
