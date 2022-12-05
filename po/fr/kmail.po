@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:47+0000\n"
+"POT-Creation-Date: 2022-12-05 00:48+0000\n"
 "PO-Revision-Date: 2022-10-25 15:43+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -1351,20 +1351,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:654
 #: configuredialog/configurecomposerpage.cpp:737
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "A&dd..."
 msgstr "Ajo&uter..."
 
 #: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:891
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Re&move"
 msgstr "Su&pprimer"
 
 #: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Mod&ify..."
 msgstr "Mod&ifier..."
@@ -1458,56 +1458,56 @@ msgstr ""
 "&Utiliser le jeu de caractères du message d'origine pour répondre ou "
 "transmettre (si possible)."
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgid "This charset is not supported."
 msgstr "Ce jeu de caractères n'est pas géré."
 
-#: configuredialog/configurecomposerpage.cpp:846
+#: configuredialog/configurecomposerpage.cpp:845
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Utiliser un suffixe personnalisé pour le champ « Message-Id »"
 
-#: configuredialog/configurecomposerpage.cpp:858
+#: configuredialog/configurecomposerpage.cpp:857
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "Suffi&xe personnalisé pour le champ « Message-Id » :"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:869
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "Définir des champs d'en-tête MIME personnalisés :"
 
-#: configuredialog/configurecomposerpage.cpp:878
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nom"
 
-#: configuredialog/configurecomposerpage.cpp:879
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valeur"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:886
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Nouveau"
 
-#: configuredialog/configurecomposerpage.cpp:900
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "No&m :"
 
-#: configuredialog/configurecomposerpage.cpp:910
+#: configuredialog/configurecomposerpage.cpp:909
 #, kde-format
 msgid "&Value:"
 msgstr "Valeu&r :"
 
-#: configuredialog/configurecomposerpage.cpp:1049
+#: configuredialog/configurecomposerpage.cpp:1048
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1515,17 +1515,17 @@ msgstr ""
 "« Content-Type » n'est pas une chaîne permise. Cette en-tête ne sera pas "
 "enregistrée."
 
-#: configuredialog/configurecomposerpage.cpp:1049
+#: configuredialog/configurecomposerpage.cpp:1048
 #, kde-format
 msgid "Invalid header"
 msgstr "En-tête non valable"
 
-#: configuredialog/configurecomposerpage.cpp:1090
+#: configuredialog/configurecomposerpage.cpp:1089
 #, kde-format
 msgid "Outlook-compatible attachment naming"
 msgstr "Nommage de la pièce jointe compatible avec Outlook"
 
-#: configuredialog/configurecomposerpage.cpp:1093
+#: configuredialog/configurecomposerpage.cpp:1092
 #, kde-format
 msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
@@ -1534,50 +1534,50 @@ msgstr ""
 "Activez cette option pour rendre compréhensibles au programme Outlook(tm) "
 "les noms des pièces jointes contenant des caractères non anglais"
 
-#: configuredialog/configurecomposerpage.cpp:1101
+#: configuredialog/configurecomposerpage.cpp:1100
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Acti&ver la détection des pièces jointes manquantes"
 
-#: configuredialog/configurecomposerpage.cpp:1107
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Reconnaître n'importe lequel des mots clés suivants comme intention "
 "d'attacher un fichier :"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Saisissez un nouveau mot clé :"
 
-#: configuredialog/configurecomposerpage.cpp:1119
+#: configuredialog/configurecomposerpage.cpp:1118
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Voulez-vous vraiment supprimer le texte de pièce jointe ?"
 
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:1119
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Mot pour pièce jointe :"
 
-#: configuredialog/configurecomposerpage.cpp:1128
+#: configuredialog/configurecomposerpage.cpp:1127
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "Taille de pièce jointe maximale :"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1134
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ko"
 
-#: configuredialog/configurecomposerpage.cpp:1137
+#: configuredialog/configurecomposerpage.cpp:1136
 #, kde-format
 msgid "No limit"
 msgstr "Pas de limite"
 
-#: configuredialog/configurecomposerpage.cpp:1166
+#: configuredialog/configurecomposerpage.cpp:1165
 #, kde-format
 msgid ""
 "You have chosen to encode attachment names containing non-English characters "

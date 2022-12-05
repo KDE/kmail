@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:47+0000\n"
+"POT-Creation-Date: 2022-12-05 00:48+0000\n"
 "PO-Revision-Date: 2022-11-11 12:41+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1306,20 +1306,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:654
 #: configuredialog/configurecomposerpage.cpp:737
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "A&dd..."
 msgstr "Əlavə e&din..."
 
 #: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:891
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Re&move"
 msgstr "Sil&mək"
 
 #: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Mod&ify..."
 msgstr "Dəy&işdirin..."
@@ -1413,73 +1413,73 @@ msgstr ""
 "Cavab verərkən və ya yönləndirərkən orijinal simvol dəsti saxla&nılsın (əgər "
 "mümkündürsə)"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgid "This charset is not supported."
 msgstr "Bu simvol dəsti dəstəklənmir."
 
-#: configuredialog/configurecomposerpage.cpp:846
+#: configuredialog/configurecomposerpage.cpp:845
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "Fərdi məktub İD sonluğunu is&tifadə edin"
 
-#: configuredialog/configurecomposerpage.cpp:858
+#: configuredialog/configurecomposerpage.cpp:857
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "Fərdi məktub &İD sonluğu:"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:869
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "Fərdi mime başlıqları sahələrini müəyyən edir:"
 
-#: configuredialog/configurecomposerpage.cpp:878
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Ad"
 
-#: configuredialog/configurecomposerpage.cpp:879
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Dəyər"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:886
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Yeni"
 
-#: configuredialog/configurecomposerpage.cpp:900
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Ad:"
 
-#: configuredialog/configurecomposerpage.cpp:910
+#: configuredialog/configurecomposerpage.cpp:909
 #, kde-format
 msgid "&Value:"
 msgstr "&Dəyər:"
 
-#: configuredialog/configurecomposerpage.cpp:1049
+#: configuredialog/configurecomposerpage.cpp:1048
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type' icazə verilən sətir deyil. Bu başlıq saxlanılmayacaqdır."
 
-#: configuredialog/configurecomposerpage.cpp:1049
+#: configuredialog/configurecomposerpage.cpp:1048
 #, kde-format
 msgid "Invalid header"
 msgstr "Yolverilməz başlıq"
 
-#: configuredialog/configurecomposerpage.cpp:1090
+#: configuredialog/configurecomposerpage.cpp:1089
 #, kde-format
 msgid "Outlook-compatible attachment naming"
 msgstr "Outlook ilə uyğun qoşmanın adı"
 
-#: configuredialog/configurecomposerpage.cpp:1093
+#: configuredialog/configurecomposerpage.cpp:1092
 #, kde-format
 msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
@@ -1488,49 +1488,49 @@ msgstr ""
 "Outlook(tm) xidmətinin ingiliscə olmayan simvollardan ibarət  qoşma adını "
 "tanıması üçün bu parametri aktiv edin"
 
-#: configuredialog/configurecomposerpage.cpp:1101
+#: configuredialog/configurecomposerpage.cpp:1100
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Çatışmayan qoşmaların aşkarla&nmasını aktiv edin"
 
-#: configuredialog/configurecomposerpage.cpp:1107
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Aşağıdakı açar sözlərdən birini bir fayl əlavə etmək niyyəti kimi tanıyın:"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Yeni açar sözü daxil edin:"
 
-#: configuredialog/configurecomposerpage.cpp:1119
+#: configuredialog/configurecomposerpage.cpp:1118
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Bu qoşma sözü silmək istəyirsiniz?"
 
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:1119
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Əlavə söz:"
 
-#: configuredialog/configurecomposerpage.cpp:1128
+#: configuredialog/configurecomposerpage.cpp:1127
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "Qoşmanın ən böyük ölçüsü:"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1134
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1137
+#: configuredialog/configurecomposerpage.cpp:1136
 #, kde-format
 msgid "No limit"
 msgstr "Məhdudiyyətsiz"
 
-#: configuredialog/configurecomposerpage.cpp:1166
+#: configuredialog/configurecomposerpage.cpp:1165
 #, kde-format
 msgid ""
 "You have chosen to encode attachment names containing non-English characters "
