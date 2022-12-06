@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-10-24 06:09+0200\n"
+"PO-Revision-Date: 2022-12-04 11:44+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -115,11 +115,11 @@ msgstr ""
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
-msgstr ""
+msgstr "პაჩი PGP-სთვის"
 
 #: aboutdata.cpp:49
 msgid "Crypto support"
-msgstr ""
+msgstr "დაშიფვრის მხარდაჭერა"
 
 #: aboutdata.cpp:50
 msgid "Improved internal program documentation"
@@ -143,7 +143,7 @@ msgstr ""
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
-msgstr ""
+msgstr "GnuPG -ის მხარდაჭერა"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
@@ -231,7 +231,7 @@ msgstr ""
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
-msgstr ""
+msgstr "ანტივირუსის მხარდაჭერა"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
@@ -239,11 +239,11 @@ msgstr ""
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
-msgstr ""
+msgstr "შეცდომების გასწორება"
 
 #: aboutdata.cpp:125
 msgid "Several patches"
-msgstr ""
+msgstr "რამდენიმე პაჩი"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
@@ -736,7 +736,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:148
 #, kde-format
 msgid "&Use custom fonts"
-msgstr ""
+msgstr "&ხელით მითითებული ფონტების გამოყენება"
 
 #: configuredialog/configureappearancepage.cpp:166
 #, kde-format
@@ -761,11 +761,11 @@ msgstr "Ბმული"
 
 #: configuredialog/configureappearancepage.cpp:306
 msgid "Unread Message"
-msgstr ""
+msgstr "წაუკითხავი შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:307
 msgid "Important Message"
-msgstr ""
+msgstr "მნიშვნელოვანი შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:308
 msgid "Action Item Message"
@@ -831,12 +831,12 @@ msgstr "არასდროს"
 #: configuredialog/configureappearancepage.cpp:485
 #, kde-format
 msgid "As icons"
-msgstr ""
+msgstr "როგორც ხატულები"
 
 #: configuredialog/configureappearancepage.cpp:490
 #, kde-format
 msgid "As list"
-msgstr ""
+msgstr "როგორც სია"
 
 #: configuredialog/configureappearancepage.cpp:499
 #, kde-format
@@ -851,17 +851,17 @@ msgstr "ყოველთვის"
 #: configuredialog/configureappearancepage.cpp:563
 #, kde-format
 msgid "Sta&ndard format (%1)"
-msgstr ""
+msgstr "&სტანდარტული ფორმატი (%1)"
 
 #: configuredialog/configureappearancepage.cpp:564
 #, kde-format
 msgid "Locali&zed format (%1)"
-msgstr ""
+msgstr "&ლოკალიზებული ფორმატი (%1)"
 
 #: configuredialog/configureappearancepage.cpp:565
 #, kde-format
 msgid "Smart for&mat (%1)"
-msgstr ""
+msgstr "&ჭკვიანი ფორმატი (%1)"
 
 #: configuredialog/configureappearancepage.cpp:566
 msgid "C&ustom format:"
@@ -875,7 +875,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default theme:"
-msgstr ""
+msgstr "ნაგულისხმები თემა:"
 
 #: configuredialog/configureappearancepage.cpp:644
 #, kde-format
@@ -950,7 +950,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:906
 #, kde-format
 msgid "A&vailable Tags"
-msgstr ""
+msgstr "&ხელმისაწვდომი ჭდეები"
 
 #: configuredialog/configureappearancepage.cpp:919
 #, kde-format
@@ -960,12 +960,12 @@ msgstr "ახალი ჭდის დამატება"
 #: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "Remove selected tag"
-msgstr ""
+msgstr "მონიშნული ჭდის წაშლა"
 
 #: configuredialog/configureappearancepage.cpp:933
 #, kde-format
 msgid "Increase tag priority"
-msgstr ""
+msgstr "ჭდის პრიორიტეტის გაზრდა"
 
 #: configuredialog/configureappearancepage.cpp:939
 #, kde-format
@@ -1199,7 +1199,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:410
 #, kde-format
 msgid "Configure Completion..."
-msgstr ""
+msgstr "დასრულების მორგება..."
 
 #: configuredialog/configurecomposerpage.cpp:419
 #, kde-format
@@ -1680,22 +1680,22 @@ msgstr "&ფორმატი:"
 #: dialog/archivefolderdialog.cpp:87
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
-msgstr ""
+msgstr "შეკუმშული Zip არქივი (.zip)"
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
-msgstr ""
+msgstr "შეუკუმშავი არქივი (.tar)"
 
 #: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
-msgstr ""
+msgstr "BZ2-ით შეკუმშული Tar არქივი (.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
-msgstr ""
+msgstr "GZ-ით შეკუმშული Tar არქივი (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:96
 #, kde-format
@@ -1710,7 +1710,7 @@ msgstr ""
 #: dialog/archivefolderdialog.cpp:112
 #, kde-format
 msgid "Archive all subfolders"
-msgstr ""
+msgstr "ყველა ქვესაქაღალდის დაარქივება"
 
 #: dialog/archivefolderdialog.cpp:170
 #, kde-format
@@ -1937,7 +1937,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
-msgstr ""
+msgstr "&გადაუდებელი"
 
 #: editor/kmcomposerwin.cpp:1301
 #, kde-format
@@ -1982,12 +1982,12 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1345
 #, kde-format
 msgid "&All Fields"
-msgstr ""
+msgstr "&ყველა ველი"
 
 #: editor/kmcomposerwin.cpp:1348
 #, kde-format
 msgid "&Identity"
-msgstr ""
+msgstr "&იდენტიფიკაცია"
 
 #: editor/kmcomposerwin.cpp:1351
 #, kde-format
@@ -2002,7 +2002,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1357
 #, kde-format
 msgid "&Mail Transport"
-msgstr ""
+msgstr "&ელფოსტის ტრანსპორტი"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2018,12 +2018,12 @@ msgstr "&თემა"
 #: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgid "Append S&ignature"
-msgstr ""
+msgstr "&ხელმოწერის ბოლოში მიწერა"
 
 #: editor/kmcomposerwin.cpp:1372
 #, kde-format
 msgid "Pr&epend Signature"
-msgstr ""
+msgstr "ხელმოწერის &თავში დამატება"
 
 #: editor/kmcomposerwin.cpp:1376
 #, kde-format
@@ -2086,6 +2086,8 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
+"<qt>მენიუს ზოლი მთლიანად დაიმალება. მისი თავიდან საჩვენებლად დააწექით: %1.</"
+"qt>"
 
 #: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
 #, kde-format
@@ -2453,12 +2455,12 @@ msgstr ""
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
 msgid "Configure shortcut"
-msgstr ""
+msgstr "მალსახმობის მორგება"
 
 #: editor/validatesendmailshortcut.cpp:32
 #, kde-format
 msgid "Remove Shortcut"
-msgstr ""
+msgstr "მალსახმობის წაშლა"
 
 #: editor/validatesendmailshortcut.cpp:33
 #, kde-format
@@ -2673,7 +2675,7 @@ msgstr ""
 #: identity/identityaddvcarddialog.cpp:65
 #, kde-format
 msgid "&vCard path:"
-msgstr ""
+msgstr "&vCard -ის ბილიკი:"
 
 #: identity/identityaddvcarddialog.cpp:76
 #, kde-format
@@ -2807,7 +2809,7 @@ msgstr ""
 #: identity/identitydialog.cpp:386
 #, kde-format
 msgid "OpenPGP key:"
-msgstr ""
+msgstr "OpenPGP -ის გასაღები:"
 
 #: identity/identitydialog.cpp:412
 #, kde-format
@@ -3355,7 +3357,7 @@ msgstr ""
 #: job/opencomposerjob.cpp:122
 #, kde-format
 msgid "Attach Folder"
-msgstr ""
+msgstr "საქაღალდის მიმაგრება"
 
 #: job/opencomposerjob.cpp:123
 #, kde-format
@@ -3367,12 +3369,12 @@ msgstr "მიმაგრება"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr ""
+msgstr "არ მიამაგრო"
 
 #: job/removecollectionjob.cpp:56
 #, kde-format
 msgid "Delete Search"
-msgstr ""
+msgstr "ძებნის წაშლა"
 
 #: job/removecollectionjob.cpp:58
 #, kde-format
@@ -3433,14 +3435,14 @@ msgstr "&წაშლა"
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:69
 #, kde-format
 msgid "Removing duplicates"
-msgstr ""
+msgstr "დუბლიკატების წაშლა"
 
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
 #: manageshowcollectionproperties.cpp:171
 #, kde-format
 msgid "Done"
-msgstr ""
+msgstr "მზადაა"
 
 #: job/removeduplicatemailjob.cpp:62
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
@@ -3586,7 +3588,7 @@ msgstr ""
 #: kmail_part.rc:154 kmcomposerui.rc:6 kmmainwin.rc:154 kmreadermainwin.rc:40
 #, kde-format
 msgid "&Message"
-msgstr ""
+msgstr "&შეტყობინება"
 
 #. i18n: ectx: Menu (reply_special)
 #: kmail_part.rc:162 kmmainwin.rc:162 kmreadermainwin.rc:47
@@ -3842,7 +3844,7 @@ msgstr ""
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
-msgstr ""
+msgstr "%1: %2"
 
 #: kmlaunchexternalcomponent.cpp:42
 #, kde-format
@@ -4602,7 +4604,7 @@ msgstr ""
 #: kmmainwidget.cpp:3334
 #, kde-format
 msgid "Configure &Notifications..."
-msgstr ""
+msgstr "&შეტყობინებების მორგება..."
 
 #: kmmainwidget.cpp:3341
 #, kde-format
@@ -4804,7 +4806,7 @@ msgstr ""
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
-msgstr ""
+msgstr "ძებნა... <%1>"
 
 #: kmmainwidget.cpp:4670
 #, kde-format
@@ -4817,7 +4819,7 @@ msgstr ""
 #: kmmainwidget.cpp:4674
 #, kde-format
 msgid "Use HTML"
-msgstr ""
+msgstr "HTML-ის გამოყენება"
 
 #: kmmainwidget.cpp:4856
 #, kde-format
@@ -5032,7 +5034,7 @@ msgstr ""
 #: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
-msgstr ""
+msgstr "მოითმინეთ . . ."
 
 #: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
@@ -5152,7 +5154,7 @@ msgstr "ახალი შეტყობინებები"
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr ""
+msgstr "<qt><b>%1</b><br/>Total: %2<br/>წაუკითხავი: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:155
 #, kde-format
@@ -5528,7 +5530,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
-msgstr ""
+msgstr "შეტყობინებების პოვნა"
 
 #: searchdialog/searchwindow.cpp:88
 #, kde-format
@@ -5619,17 +5621,17 @@ msgstr ""
 #: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
-msgstr ""
+msgstr "ძებნის შეცდომა."
 
 #: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
-msgstr ""
+msgstr "ძებნა დასრულდა."
 
 #: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
-msgstr ""
+msgstr "ძებნა გაჩერდა."
 
 #: searchdialog/searchwindow.cpp:674
 #, kde-format
@@ -5656,7 +5658,7 @@ msgstr[1] "%1 შეტყობინების ამოჭრა"
 #: searchdialog/searchwindow.cpp:910
 #, kde-format
 msgid "Checking index status..."
-msgstr ""
+msgstr "ინდექსის სტატუსის შემოწმება..."
 
 #: secondarywindow.cpp:63
 #, kde-format
@@ -6606,7 +6608,7 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:23
 #, kde-format
 msgid "HTML Messages"
-msgstr ""
+msgstr "HTML შეტყობინებები"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:29
