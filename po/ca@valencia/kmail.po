@@ -5038,7 +5038,7 @@ msgstr "Amplia la selecció al missatge següent"
 #: kmmainwidget.cpp:3510
 #, kde-format
 msgid "Move Message to Folder"
-msgstr "Mou el missatge a la carpeta"
+msgstr "Mou el missatge cap a la carpeta"
 
 #: kmmainwidget.cpp:3520
 #, kde-format
