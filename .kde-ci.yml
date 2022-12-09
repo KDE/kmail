@@ -48,3 +48,4 @@ Dependencies:
     'frameworks/kwindowsystem': '@latest'
     'frameworks/kxmlgui': '@latest'
     'frameworks/kiconthemes': '@latest'
+    'third-party/qtkeychain': '@latest'
