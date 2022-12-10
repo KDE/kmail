@@ -57,7 +57,7 @@ private:
     void updateHamburgerMenu();
     void slotShortcutSaved();
     void slotFullScreen(bool t);
-    KPIM::ProgressStatusBarWidget *const mProgressBar;
+    KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mShowMenuBarAction = nullptr;
     QLabel *const mMessageLabel;
