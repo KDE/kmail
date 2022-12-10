@@ -77,7 +77,6 @@
 #include <KCursorSaver>
 
 #include <Libkleo/KeySelectionDialog>
-#include <Libkleo/ProgressDialog>
 
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/FolderRequester>
