@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-05 00:48+0000\n"
+"POT-Creation-Date: 2022-12-11 00:48+0000\n"
 "PO-Revision-Date: 2022-07-13 12:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -369,7 +369,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "다양한 IMAP 버그 수정"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2322 kmreaderwin.cpp:299 kmsystemtray.cpp:52
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1813,330 +1813,330 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "인코딩"
 
-#: editor/kmcomposerwin.cpp:274 kmail_part.cpp:43 kmmainwin.cpp:58
+#: editor/kmcomposerwin.cpp:273 kmail_part.cpp:43 kmmainwin.cpp:61
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:301
+#: editor/kmcomposerwin.cpp:300
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "이 메시지의 맞춤법 검사 사전 선택"
 
-#: editor/kmcomposerwin.cpp:308
+#: editor/kmcomposerwin.cpp:307
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "이 메시지의 사본을 저장할 보낸 편지함 폴더 선택"
 
-#: editor/kmcomposerwin.cpp:313
+#: editor/kmcomposerwin.cpp:312
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "이 메시지를 보낼 계정 선택"
 
-#: editor/kmcomposerwin.cpp:321
+#: editor/kmcomposerwin.cpp:320
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "이 메시지의 \"보낸 사람\" 주소 설정"
 
-#: editor/kmcomposerwin.cpp:337
+#: editor/kmcomposerwin.cpp:336
 #, kde-format
 msgid "&Identity:"
 msgstr "프로필(&I):"
 
-#: editor/kmcomposerwin.cpp:338
+#: editor/kmcomposerwin.cpp:337
 #, kde-format
 msgid "&Dictionary:"
 msgstr "사전(&D):"
 
-#: editor/kmcomposerwin.cpp:339
+#: editor/kmcomposerwin.cpp:338
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "보낸 편지함 폴더(&S):"
 
-#: editor/kmcomposerwin.cpp:340
+#: editor/kmcomposerwin.cpp:339
 #, kde-format
 msgid "&Mail transport:"
 msgstr "전송 방법(&M):"
 
-#: editor/kmcomposerwin.cpp:341
+#: editor/kmcomposerwin.cpp:340
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "보낸 사람(&F):"
 
-#: editor/kmcomposerwin.cpp:342
+#: editor/kmcomposerwin.cpp:341
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "제목(&U):"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "작성기"
 
-#: editor/kmcomposerwin.cpp:1167 editor/kmcomposerwin.cpp:1201
+#: editor/kmcomposerwin.cpp:1166 editor/kmcomposerwin.cpp:1200
 #, kde-format
 msgid "&Send Mail"
 msgstr "메일 보내기(&S)"
 
-#: editor/kmcomposerwin.cpp:1174 editor/kmcomposerwin.cpp:1207
+#: editor/kmcomposerwin.cpp:1173 editor/kmcomposerwin.cpp:1206
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "다음으로 메일 보내기(&S)"
 
-#: editor/kmcomposerwin.cpp:1176
+#: editor/kmcomposerwin.cpp:1175
 #, kde-format
 msgid "Send"
 msgstr "보내기"
 
-#: editor/kmcomposerwin.cpp:1179 editor/kmcomposerwin.cpp:1191
-#: editor/kmcomposerwin.cpp:3059
+#: editor/kmcomposerwin.cpp:1178 editor/kmcomposerwin.cpp:1190
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "Send &Later"
 msgstr "나중에 보내기(&L)"
 
-#: editor/kmcomposerwin.cpp:1185 editor/kmcomposerwin.cpp:1198
+#: editor/kmcomposerwin.cpp:1184 editor/kmcomposerwin.cpp:1197
 #, kde-format
 msgid "Send &Later Via"
 msgstr "다음으로 나중에 보내기(&L)"
 
-#: editor/kmcomposerwin.cpp:1187
+#: editor/kmcomposerwin.cpp:1186
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "대기열에 추가"
 
-#: editor/kmcomposerwin.cpp:1216
+#: editor/kmcomposerwin.cpp:1215
 #, kde-format
 msgid "Save as &Draft"
 msgstr "임시 보관함에 저장(&D)"
 
-#: editor/kmcomposerwin.cpp:1218
+#: editor/kmcomposerwin.cpp:1217
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "임시 보관함 폴더에 이메일 저장"
 
-#: editor/kmcomposerwin.cpp:1222
+#: editor/kmcomposerwin.cpp:1221
 #, kde-format
 msgid "Save as &Template"
 msgstr "템플릿으로 저장(&T)"
 
-#: editor/kmcomposerwin.cpp:1223
+#: editor/kmcomposerwin.cpp:1222
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "템플릿 폴더에 이메일 저장"
 
-#: editor/kmcomposerwin.cpp:1227
+#: editor/kmcomposerwin.cpp:1226
 #, kde-format
 msgid "Save as &File"
 msgstr "파일로 저장(&F)"
 
-#: editor/kmcomposerwin.cpp:1228
+#: editor/kmcomposerwin.cpp:1227
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "이메일을 텍스트나 HTML 파일로 저장"
 
-#: editor/kmcomposerwin.cpp:1232
+#: editor/kmcomposerwin.cpp:1231
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "텍스트 파일 삽입(&I)..."
 
-#: editor/kmcomposerwin.cpp:1236
+#: editor/kmcomposerwin.cpp:1235
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "최근 텍스트 파일 삽입(&I)"
 
-#: editor/kmcomposerwin.cpp:1246 kmmainwidget.cpp:2879
+#: editor/kmcomposerwin.cpp:1245 kmmainwidget.cpp:2879
 #, kde-format
 msgid "&Address Book"
 msgstr "주소록(&A)"
 
-#: editor/kmcomposerwin.cpp:1247
+#: editor/kmcomposerwin.cpp:1246
 #, kde-format
 msgid "Open Address Book"
 msgstr "주소록 열기"
 
-#: editor/kmcomposerwin.cpp:1254
+#: editor/kmcomposerwin.cpp:1253
 #, kde-format
 msgid "&New Composer"
 msgstr "새 작성기(&N)"
 
-#: editor/kmcomposerwin.cpp:1260
+#: editor/kmcomposerwin.cpp:1259
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "받는 사람 선택(&R)..."
 
-#: editor/kmcomposerwin.cpp:1263
+#: editor/kmcomposerwin.cpp:1262
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "분배 목록 저장(&D)..."
 
-#: editor/kmcomposerwin.cpp:1284
+#: editor/kmcomposerwin.cpp:1283
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "첨부 파일로 붙여넣기(&H)"
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1287
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "빈 공백 정리(&E)"
 
-#: editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1291
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "고정폭 글꼴 사용(&X)"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1297
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "긴급(&U)"
 
-#: editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "읽음 확인 요청(&R)"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "&Request Delivery Confirmation"
 msgstr "배달 확인 요청(&R)"
 
-#: editor/kmcomposerwin.cpp:1311
+#: editor/kmcomposerwin.cpp:1310
 #, kde-format
 msgid "&Wordwrap"
 msgstr "자동 줄 바꿈(&W)"
 
-#: editor/kmcomposerwin.cpp:1316
+#: editor/kmcomposerwin.cpp:1315
 #, kde-format
 msgid "&Snippets"
 msgstr "스니펫(&S)"
 
-#: editor/kmcomposerwin.cpp:1321
+#: editor/kmcomposerwin.cpp:1320
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "자동 맞춤법 검사(&A)"
 
-#: editor/kmcomposerwin.cpp:1337
+#: editor/kmcomposerwin.cpp:1336
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "서식 있는 텍스트 편집"
 
-#: editor/kmcomposerwin.cpp:1339
+#: editor/kmcomposerwin.cpp:1338
 #, kde-format
 msgid "Rich Text"
 msgstr "서식 있는 텍스트"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr "서식 있는 텍스트 편집 모드 전환"
 
-#: editor/kmcomposerwin.cpp:1344
+#: editor/kmcomposerwin.cpp:1343
 #, kde-format
 msgid "&All Fields"
 msgstr "모든 필드(&A)"
 
-#: editor/kmcomposerwin.cpp:1347
+#: editor/kmcomposerwin.cpp:1346
 #, kde-format
 msgid "&Identity"
 msgstr "프로필(&I)"
 
-#: editor/kmcomposerwin.cpp:1350
+#: editor/kmcomposerwin.cpp:1349
 #, kde-format
 msgid "&Dictionary"
 msgstr "사전(&D)"
 
-#: editor/kmcomposerwin.cpp:1353
+#: editor/kmcomposerwin.cpp:1352
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "보낸 편지함 폴더(&S)"
 
-#: editor/kmcomposerwin.cpp:1356
+#: editor/kmcomposerwin.cpp:1355
 #, kde-format
 msgid "&Mail Transport"
 msgstr "전송 방법(&M)"
 
-#: editor/kmcomposerwin.cpp:1359
+#: editor/kmcomposerwin.cpp:1358
 #, kde-format
 msgid "&From"
 msgstr "보내는 사람(&F)"
 
-#: editor/kmcomposerwin.cpp:1362
+#: editor/kmcomposerwin.cpp:1361
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "제목(&U)"
 
-#: editor/kmcomposerwin.cpp:1367
+#: editor/kmcomposerwin.cpp:1366
 #, kde-format
 msgid "Append S&ignature"
 msgstr "뒤에 서명 추가(&I)"
 
-#: editor/kmcomposerwin.cpp:1371
+#: editor/kmcomposerwin.cpp:1370
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "앞에 서명 추가(&E)"
 
-#: editor/kmcomposerwin.cpp:1375
+#: editor/kmcomposerwin.cpp:1374
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "커서 위치에 서명 추가(&U)"
 
-#: editor/kmcomposerwin.cpp:1390
+#: editor/kmcomposerwin.cpp:1389
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "맞춤법 검사기(&S)..."
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1390
 #, kde-format
 msgid "Spellchecker"
 msgstr "맞춤법 검사기"
 
-#: editor/kmcomposerwin.cpp:1395
+#: editor/kmcomposerwin.cpp:1394
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "메시지 암호화(&E)"
 
-#: editor/kmcomposerwin.cpp:1396
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgid "Encrypt"
 msgstr "암호화"
 
-#: editor/kmcomposerwin.cpp:1398
+#: editor/kmcomposerwin.cpp:1397
 #, kde-format
 msgid "&Sign Message"
 msgstr "메시지에 서명(&S)"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1398
 #, kde-format
 msgid "Sign"
 msgstr "서명"
 
-#: editor/kmcomposerwin.cpp:1421
+#: editor/kmcomposerwin.cpp:1420
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "암호화 메시지 형식(&C)"
 
-#: editor/kmcomposerwin.cpp:1424
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "이 메시지의 암호화 형식 선택"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1428
 #, kde-format
 msgid "Create Follow Up Reminder..."
 msgstr "후속 작업 알림 만들기..."
 
-#: editor/kmcomposerwin.cpp:1463
+#: editor/kmcomposerwin.cpp:1462
 #, kde-format
 msgid "Configure KMail..."
 msgstr "KMail 설정..."
 
-#: editor/kmcomposerwin.cpp:1493 kmmainwin.cpp:181 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1492 kmmainwin.cpp:184 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2144,53 +2144,53 @@ msgid ""
 msgstr ""
 "<qt>메뉴 표시줄을 완전히 숨깁니다. %1 키를 눌러서 다시 볼 수 있습니다.</qt>"
 
-#: editor/kmcomposerwin.cpp:1496 kmmainwin.cpp:184 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1495 kmmainwin.cpp:187 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr "메뉴 표시줄 숨기기"
 
-#: editor/kmcomposerwin.cpp:1597 editor/kmcomposerwin.cpp:3515
+#: editor/kmcomposerwin.cpp:1596 editor/kmcomposerwin.cpp:3514
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " 줄: %1"
 
-#: editor/kmcomposerwin.cpp:1600 editor/kmcomposerwin.cpp:3517
+#: editor/kmcomposerwin.cpp:1599 editor/kmcomposerwin.cpp:3516
 #, kde-format
 msgid " Column: %1 "
 msgstr " 칸: %1"
 
-#: editor/kmcomposerwin.cpp:1605
+#: editor/kmcomposerwin.cpp:1604
 #, kde-format
 msgid "OVR"
 msgstr "수정"
 
-#: editor/kmcomposerwin.cpp:1605
+#: editor/kmcomposerwin.cpp:1604
 #, kde-format
 msgid "INS"
 msgstr "삽입"
 
-#: editor/kmcomposerwin.cpp:1613
+#: editor/kmcomposerwin.cpp:1612
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "맞춤법 검사: 켜짐"
 
-#: editor/kmcomposerwin.cpp:1613
+#: editor/kmcomposerwin.cpp:1612
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "맞춤법 검사: 꺼짐"
 
-#: editor/kmcomposerwin.cpp:1991
+#: editor/kmcomposerwin.cpp:1990
 #, kde-format
 msgid "Re&save as Template"
 msgstr "템플릿으로 다시 저장(&S)"
 
-#: editor/kmcomposerwin.cpp:1991
+#: editor/kmcomposerwin.cpp:1990
 #, kde-format
 msgid "&Save as Draft"
 msgstr "임시 보관함에 저장(&S)"
 
-#: editor/kmcomposerwin.cpp:1992
+#: editor/kmcomposerwin.cpp:1991
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2198,7 +2198,7 @@ msgid ""
 msgstr ""
 "템플릿 폴더에 이 메시지를 저장하여 나중에 다시 사용할 수 있도록 합니다."
 
-#: editor/kmcomposerwin.cpp:1994
+#: editor/kmcomposerwin.cpp:1993
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2207,80 +2207,80 @@ msgstr ""
 "임시 보관함 폴더에 이 메시지를 저장하여 나중에 다시 편집해서 보낼 수 있도록 "
 "합니다."
 
-#: editor/kmcomposerwin.cpp:1998
+#: editor/kmcomposerwin.cpp:1997
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "메시지 작성을 취소하거나, 나중에 보내려고 저장하시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:1999
+#: editor/kmcomposerwin.cpp:1998
 #, kde-format
 msgid "Close Composer"
 msgstr "작성기 닫기"
 
-#: editor/kmcomposerwin.cpp:2067
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "메시지 자동 저장 실패"
 
-#: editor/kmcomposerwin.cpp:2067
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "메시지 전송 실패"
 
-#: editor/kmcomposerwin.cpp:2244
+#: editor/kmcomposerwin.cpp:2243
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "파일 삽입"
 
-#: editor/kmcomposerwin.cpp:2306
+#: editor/kmcomposerwin.cpp:2305
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "인라인 그림으로 추가(&I)"
 
-#: editor/kmcomposerwin.cpp:2307
+#: editor/kmcomposerwin.cpp:2306
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "첨부 파일로 추가(&A)"
 
-#: editor/kmcomposerwin.cpp:2322 editor/kmcomposerwin.cpp:2426
+#: editor/kmcomposerwin.cpp:2321 editor/kmcomposerwin.cpp:2425
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "첨부 파일 이름:"
 
-#: editor/kmcomposerwin.cpp:2328
+#: editor/kmcomposerwin.cpp:2327
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "첨부 파일 이름이 비어 있을 수 없음"
 
-#: editor/kmcomposerwin.cpp:2328
+#: editor/kmcomposerwin.cpp:2327
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "잘못된 첨부 이름"
 
-#: editor/kmcomposerwin.cpp:2379
+#: editor/kmcomposerwin.cpp:2378
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "URL을 메시지에 추가"
 
-#: editor/kmcomposerwin.cpp:2380
+#: editor/kmcomposerwin.cpp:2379
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "첨부 파일로 파일 추가(&A)"
 
-#: editor/kmcomposerwin.cpp:2426
+#: editor/kmcomposerwin.cpp:2425
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "클립보드 텍스트를 첨부 파일로 추가"
 
-#: editor/kmcomposerwin.cpp:2523
+#: editor/kmcomposerwin.cpp:2522
 #, kde-format
 msgid "unnamed"
 msgstr "이름 없음"
 
-#: editor/kmcomposerwin.cpp:2549
+#: editor/kmcomposerwin.cpp:2548
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2292,12 +2292,12 @@ msgstr ""
 "화할 OpenPGP 키나 S/MIME 인증서가 없습니다.</p> <p>프로필 설정에서 암호화 키"
 "를 선택하십시오.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2556
+#: editor/kmcomposerwin.cpp:2555
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "암호화 키가 정의되지 않음"
 
-#: editor/kmcomposerwin.cpp:2620
+#: editor/kmcomposerwin.cpp:2619
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2307,12 +2307,12 @@ msgstr ""
 "<qt><p>이 메시지에 서명하려면 OpenPGP 키나 S/MIME 인증서를 선택해야 합니다.</"
 "p><p>프로필 설정에서 암호화 키를 선택하십시오.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2627
+#: editor/kmcomposerwin.cpp:2626
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "서명 키가 정의되지 않음"
 
-#: editor/kmcomposerwin.cpp:2786
+#: editor/kmcomposerwin.cpp:2785
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2322,7 +2322,7 @@ msgstr ""
 "보낸 사람 필드에 이메일 주소를 입력하십시오. 메시지를 보낼 때마다 입력하지 않"
 "도록 모든 프로필에 이메일 주소를 지정할 수 있습니다."
 
-#: editor/kmcomposerwin.cpp:2795
+#: editor/kmcomposerwin.cpp:2794
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2331,42 +2331,42 @@ msgstr ""
 "메시지를 받을 사람을 받는 사람, 참조, 숨은 참조 중 최소한 한 곳에 입력해야 합"
 "니다."
 
-#: editor/kmcomposerwin.cpp:2801
+#: editor/kmcomposerwin.cpp:2800
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "받는 사람이 비어 있습니다. 그래도 보내시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:2803
+#: editor/kmcomposerwin.cpp:2802
 #, kde-format
 msgid "No To: specified"
 msgstr "받는 사람이 지정되지 않음"
 
-#: editor/kmcomposerwin.cpp:2804 editor/kmcomposerwin.cpp:2818
+#: editor/kmcomposerwin.cpp:2803 editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "S&end as Is"
 msgstr "그대로 보내기(&E)"
 
-#: editor/kmcomposerwin.cpp:2805
+#: editor/kmcomposerwin.cpp:2804
 #, kde-format
 msgid "&Specify the To field"
 msgstr "받는 사람 필드 지정(&S)"
 
-#: editor/kmcomposerwin.cpp:2815
+#: editor/kmcomposerwin.cpp:2814
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "제목이 비어 있습니다. 그래도 보내시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:2817
+#: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "No Subject Specified"
 msgstr "제목이 지정되지 않음"
 
-#: editor/kmcomposerwin.cpp:2819
+#: editor/kmcomposerwin.cpp:2818
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "제목 입력(&S)"
 
-#: editor/kmcomposerwin.cpp:2864
+#: editor/kmcomposerwin.cpp:2863
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2375,66 +2375,66 @@ msgstr ""
 "임시 보관함에 저장할 메시지를 암호화하려면 최소한 한 사람의 받는 사람을 지정"
 "해야 합니다."
 
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3055
 #, kde-format
 msgid "About to send email..."
 msgstr "편지를 보내려고 하는 중..."
 
-#: editor/kmcomposerwin.cpp:3057
+#: editor/kmcomposerwin.cpp:3056
 #, kde-format
 msgid "Send Confirmation"
 msgstr "전송 확인"
 
-#: editor/kmcomposerwin.cpp:3058
+#: editor/kmcomposerwin.cpp:3057
 #, kde-format
 msgid "&Send Now"
 msgstr "지금 보내기(&S)"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3133
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "%1명 이상에게 메일을 보내려고 하고 있습니다. 그래도 보내시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:3135
+#: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid "Too many recipients"
 msgstr "받는 사람이 너무 많음"
 
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3135
 #, kde-format
 msgid "&Send as Is"
 msgstr "그대로 보내기(&S)"
 
-#: editor/kmcomposerwin.cpp:3137
+#: editor/kmcomposerwin.cpp:3136
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "받는 사람 편집(&E)"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3173
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "HTML 모드를 비활성화하면 서식이 없어집니다. 계속 진행하시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3175
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "서식을 삭제하시겠습니까?"
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid "Lose Formatting"
 msgstr "서식 삭제"
 
-#: editor/kmcomposerwin.cpp:3178
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "마크업 일반 텍스트 추가"
 
-#: editor/kmcomposerwin.cpp:3860
+#: editor/kmcomposerwin.cpp:3859
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2443,7 +2443,7 @@ msgstr ""
 "이 수신자에게 자동 암호화 키를 사용합니다. 이 키는 검증되지 않았습니다. 수신"
 "자는 암호화된 답장을 받기를 선호합니다."
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3863
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2452,14 +2452,14 @@ msgstr ""
 "이 수신자에게 자동 암호화 키를 사용합니다. 이 키는 검증되지 않았습니다. 수신"
 "자는 암호화된 답장을 받지 않기를 선호합니다."
 
-#: editor/kmcomposerwin.cpp:3871
+#: editor/kmcomposerwin.cpp:3870
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
 "이 수신자에게 자동 암호화 가십 키를 사용합니다. 이 키는 검증되지 않았습니다."
 
-#: editor/kmcomposerwin.cpp:3904
+#: editor/kmcomposerwin.cpp:3903
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
@@ -2468,7 +2468,7 @@ msgstr ""
 "이 사람에게 보내는 이메일은 높은 단계의 암호화를 사용합니다(암호화 키를 완전"
 "히 믿음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
-#: editor/kmcomposerwin.cpp:3910
+#: editor/kmcomposerwin.cpp:3909
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
@@ -2477,7 +2477,7 @@ msgstr ""
 "이 사람에게 보내는 이메일은 중간 단계의 암호화를 사용합니다(암호화 키를 어느 "
 "정도 믿음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
-#: editor/kmcomposerwin.cpp:3916
+#: editor/kmcomposerwin.cpp:3915
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
@@ -2486,7 +2486,7 @@ msgstr ""
 "이 사람에게 보내는 이메일은 낮은 단계의 암호화를 사용합니다(암호화 키를 믿지 "
 "않음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
-#: editor/kmcomposerwin.cpp:3923
+#: editor/kmcomposerwin.cpp:3922
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2496,7 +2496,7 @@ msgstr ""
 "이 사람에게 보내는 이메일을 암호화하지만, 암호화 강도를 확인할 수 없습니다(암"
 "호화 키를 검증할 수 없음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
-#: editor/kmcomposerwin.cpp:3957
+#: editor/kmcomposerwin.cpp:3956
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "플러그인 편집기 정보"
@@ -5070,7 +5070,7 @@ msgstr "계정 다시 시작"
 msgid "Akonadi restarted."
 msgstr "Akonadi를 다시 시작했습니다."
 
-#: kmmainwin.cpp:40
+#: kmmainwin.cpp:39
 #, kde-format
 msgid "Starting..."
 msgstr "시작하는 중..."
