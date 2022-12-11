@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-09 02:24+0000\n"
+"POT-Creation-Date: 2022-12-11 02:43+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -1916,7 +1916,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "編碼"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:61
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2242,14 +2242,14 @@ msgstr "新增回覆提醒..."
 msgid "Configure KMail..."
 msgstr "設定 KMail..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:184 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr "<qt>這會完全隱藏選單列。您可以按下 %1 重新顯示選單列。</qt>"
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:187 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr "隱藏選單列"
@@ -5194,7 +5194,7 @@ msgstr "自訂帳號順序..."
 msgid "Akonadi restarted."
 msgstr "Akonadi 代碼："
 
-#: kmmainwin.cpp:40
+#: kmmainwin.cpp:39
 #, kde-format
 msgid "Starting..."
 msgstr "啟始中..."

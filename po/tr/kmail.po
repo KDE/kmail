@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-09 02:24+0000\n"
-"PO-Revision-Date: 2022-11-24 17:03+0300\n"
+"POT-Creation-Date: 2022-12-11 02:43+0000\n"
+"PO-Revision-Date: 2022-12-10 18:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -803,19 +803,19 @@ msgstr "Eylem Ögesi İletisi"
 
 #: configuredialog/configureappearancepage.cpp:309
 msgid "HTML Status Bar Background - No HTML Message"
-msgstr "HTML Durum Çubuğu Arkaplanı - HTML Olmayan İleti"
+msgstr "HTML Durum Çubuğu Arka Planı - HTML Olmayan İleti"
 
 #: configuredialog/configureappearancepage.cpp:310
 msgid "HTML Status Bar Foreground - No HTML Message"
-msgstr "HTML Durum Çubuğu Önplanı - HTML Olmayan İleti"
+msgstr "HTML Durum Çubuğu Ön Planı - HTML Olmayan İleti"
 
 #: configuredialog/configureappearancepage.cpp:311
 msgid "HTML Status Bar Background - HTML Message"
-msgstr "HTML Durum Çubuğu Arkaplanı - HTML İletisi"
+msgstr "HTML Durum Çubuğu Arka Planı - HTML İletisi"
 
 #: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Foreground - HTML Message"
-msgstr "HTML Durum Çubuğu Önplanı - HTML İletisi"
+msgstr "HTML Durum Çubuğu Ön Planı - HTML İletisi"
 
 #: configuredialog/configureappearancepage.cpp:320
 #, kde-format
@@ -1842,7 +1842,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kodlama"
 
-#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:58
+#: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:61
 #: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2165,7 +2165,7 @@ msgstr "Hatırlatıcı Takip Etme Oluştur..."
 msgid "Configure KMail..."
 msgstr "KMail Uygulamasını Yapılandır..."
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:181 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:184 kmreadermainwin.cpp:526
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2174,7 +2174,7 @@ msgstr ""
 "<qt>Bu, menü çubuğunu tümüyle gizleyecektir. %1 ile yeniden "
 "gösterebilirsiniz.</qt>"
 
-#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:184 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1497 kmmainwin.cpp:187 kmreadermainwin.cpp:529
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menü çubuğunu gizle"
@@ -5138,7 +5138,7 @@ msgstr "Yeniden Başlat"
 msgid "Akonadi restarted."
 msgstr "Akonadi yeniden başlatıldı."
 
-#: kmmainwin.cpp:40
+#: kmmainwin.cpp:39
 #, kde-format
 msgid "Starting..."
 msgstr "Başlatılıyor..."
@@ -5269,7 +5269,7 @@ msgstr "Eklenti desteği"
 
 #: kmreaderwin.cpp:267
 msgid "New HTML renderer (QtWebEngine)"
-msgstr "Yeni HTML Motoru (QtWebEngine)"
+msgstr "Yeni HTML sunucu (QtWebEngine)"
 
 #: kmreaderwin.cpp:268
 msgid "Added Check for Phishing URL"
@@ -6063,7 +6063,7 @@ msgid ""
 "Specifies whether the folders will expire in the background (for internal "
 "use only)"
 msgstr ""
-"Klasörlerin süresinin arkaplanda dolacağını belirtir (sadece dahili "
+"Klasörlerin süresinin arka planda dolacağını belirtir (yalnızca dahili "
 "kullanımda)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
