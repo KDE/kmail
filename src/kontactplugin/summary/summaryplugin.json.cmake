@@ -16,7 +16,6 @@
         "Description[ia]": "Plug-in pro Kontact SummaryView",
         "Description[id]": "Plugin Kontact SummaryView",
         "Description[it]": "Estensione vista sommario per Kontact",
-        "Description[ka]": "Kontact -ის დამატება SummaryView",
         "Description[ko]": "Kontact 요약 보기 플러그인",
         "Description[nl]": "Kontact SummaryView-plug-in",
         "Description[pl]": "Wtyczka Kontact do wyświetlania podsumowania",
