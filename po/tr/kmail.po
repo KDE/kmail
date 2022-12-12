@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-11 00:48+0000\n"
-"PO-Revision-Date: 2022-12-10 18:45+0300\n"
+"PO-Revision-Date: 2022-12-11 20:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3983,7 +3983,7 @@ msgstr "E-posta gönderimi olanaksız"
 #: kmkernel.cpp:868
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr "KMail çevrimiçi olarak ayarlandı; tüm ağ işlemleri devam ettiriliyor"
+msgstr "KMail çevrimiçi olarak ayarlandı; tüm ağ işlemleri sürdürülüyor"
 
 #: kmkernel.cpp:870
 #, kde-format
@@ -3992,7 +3992,7 @@ msgid ""
 "connection is detected"
 msgstr ""
 "KMail çevrimiçi olarak ayarlandı; ağ bağlantısı tespit edildiğinde tüm ağ "
-"işlemlerine devam edilecek"
+"işlemlerini sürdürülecek"
 
 #: kmkernel.cpp:943
 #, kde-format
@@ -4019,7 +4019,7 @@ msgstr "Çevrimdışı Çalış"
 #: kmkernel.cpp:971
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
-msgstr "Ağ bağlantısı tespit edildi, tüm ağ görevlerine devam ediliyor"
+msgstr "Ağ bağlantısı tespit edildi, tüm ağ görevlerini sürdürülüyor"
 
 #: kmkernel.cpp:974
 #, kde-format
@@ -6672,7 +6672,7 @@ msgstr ""
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Geçerli klasörde döngüye gir:</span> Arama, ileti listesinin "
-"başından devam edecek ve başka bir klasöre geçmeyecektir.</p>\n"
+"başından sürecek ve başka bir klasöre geçmeyecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Tüm klasörlerde döngüye gir:</span> Arama, ileti listesinin "
