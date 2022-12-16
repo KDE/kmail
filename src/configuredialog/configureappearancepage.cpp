@@ -621,7 +621,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
                               .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
                               .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
         } else {
-            buttonLabel = i18n(label);
+            buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName).toString();
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
             auto hbox = new QWidget(this);
