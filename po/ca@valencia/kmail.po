@@ -2941,7 +2941,7 @@ msgstr ""
 "<qt><h3>Adreça de correu</h3><p>Este camp hauria de contindre tota la vostra "
 "adreça de correu electrònic.</p><p>Esta adreça és la primària, utilitzada "
 "per als correus ixents. Si teniu més d'una adreça, podeu o bé, crear una "
-"nova identitat, o afegir àlies d'adreces addicionals en el camp de davall.</"
+"identitat nova, o afegir àlies d'adreces addicionals en el camp de davall.</"
 "p><p>Si deixeu açò en blanc, o malament, la gent tindrà problemes per a "
 "respondre-vos.</p></qt>"
 
