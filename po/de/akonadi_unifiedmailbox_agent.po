@@ -1,20 +1,22 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kmail package.
 # Burkhard Lück <lueck@hube-lueck.de>, 2018, 2020, 2021.
+# Frank Steinmetzger <dev-kde@felsenfleischer.de>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-16 00:47+0000\n"
-"PO-Revision-Date: 2021-06-28 11:47+0200\n"
-"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"PO-Revision-Date: 2022-12-13 23:34+0100\n"
+"Last-Translator: Frank Steinmetzger <dev-kde@felsenfleischer.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 22.12.0\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
@@ -80,7 +82,7 @@ msgstr "Posteingang"
 #: unifiedmailboxmanager.cpp:301
 #, kde-format
 msgid "Sent"
-msgstr "Versendete Nachrichten"
+msgstr "Versendet"
 
 #: unifiedmailboxmanager.cpp:308
 #, kde-format
