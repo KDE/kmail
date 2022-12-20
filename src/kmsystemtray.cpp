@@ -24,9 +24,7 @@
 #include "kwindowsystem_version.h"
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
 #define HAVE_X11 1
-#if KWINDOWSYSTEM_VERSION >= QT_VERSION_CHECK(5, 101, 0)
 #include <KX11Extras>
-#endif
 #else
 #define HAVE_X11 0
 #endif
@@ -168,21 +166,6 @@ void KMSystemTray::slotActivated()
     KWindowInfo cur = KWindowInfo(mainWin->winId(), NET::WMDesktop);
 
     const bool wasMinimized = cur.isMinimized();
-#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 101, 0)
-    const int currentDesktop = KWindowSystem::currentDesktop();
-
-    if (cur.valid()) {
-        mDesktopOfMainWin = cur.desktop();
-    }
-
-    if (wasMinimized && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
-        KWindowSystem::setOnDesktop(mainWin->winId(), currentDesktop);
-    }
-
-    if (mDesktopOfMainWin == NET::OnAllDesktops) {
-        KWindowSystem::setOnAllDesktops(mainWin->winId(), true);
-    }
-#else
 #ifdef HAVE_X11
     const int currentDesktop = KX11Extras::currentDesktop();
 
@@ -197,7 +180,6 @@ void KMSystemTray::slotActivated()
     if (mDesktopOfMainWin == NET::OnAllDesktops) {
         KX11Extras::setOnAllDesktops(mainWin->winId(), true);
     }
-#endif
 #endif
     KWindowSystem::activateWindow(mainWin->windowHandle());
 
@@ -271,12 +253,8 @@ void KMSystemTray::hideKMail()
     if (mainWin) {
         mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         // iconifying is unnecessary, but it looks cooler
-#if KWINDOWSYSTEM_VERSION < QT_VERSION_CHECK(5, 101, 0)
-        KWindowSystem::minimizeWindow(mainWin->winId());
-#else
 #ifdef HAVE_X11
         KX11Extras::minimizeWindow(mainWin->winId());
-#endif
 #endif
         mainWin->hide();
     }
