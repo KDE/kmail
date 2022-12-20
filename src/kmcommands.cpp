@@ -35,7 +35,6 @@
 #include "kmail_debug.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
-#include "settings/kmailsettings.h"
 #include "util.h"
 #include "widgets/collectionpane.h"
 
