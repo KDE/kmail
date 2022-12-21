@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 00:48+0000\n"
+"POT-Creation-Date: 2022-12-21 00:47+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -389,8 +389,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
-#: kmsystemtray.cpp:81
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:49
+#: kmsystemtray.cpp:78
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -2848,7 +2848,7 @@ msgid "Folder Shortcut %1"
 msgstr "Skratka pre priečinok %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3947,13 +3947,13 @@ msgstr "&Pomocník"
 msgid "Main Toolbar"
 msgstr "Hlavný panel nástrojov"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:295
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Prosím čakajte"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:298 kmcommands.cpp:362
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -3961,32 +3961,32 @@ msgstr[0] "Prosím, počkajte, kým sa prenesie %1 správa"
 msgstr[1] "Prosím, počkajte, kým sa prenesú %1 správy"
 msgstr[2] "Prosím, počkajte, kým sa prenesie %1 správ"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:509
 #, kde-format
 msgid "Save To File"
 msgstr "Uložiť do súboru"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Open Message"
 msgstr "Otvoriť správu"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Message"
 msgstr "Správa"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:723
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Súbor neobsahuje správu."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Súbor obsahuje niekoľko správ. Zobrazí sa iba prvá z nich."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:907
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -3995,32 +3995,32 @@ msgstr ""
 "Chcete preposlať vybrané správy ako prílohy v jednej správe (ako mime "
 "zhrnutie) alebo ako jednotlivé správy?"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:911
 #, kde-format
 msgid "Send As Digest"
 msgstr "Poslať ako zhrnutie"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
 msgstr "Poslať jednotlivo"
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1299
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrujú sa správy"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1309
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtruje sa správa %1 z %2"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1517 kmcommands.cpp:1649
 #, kde-format
 msgid "Moving messages"
 msgstr "Presun správ"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1517 kmcommands.cpp:1659
 #, kde-format
 msgid "Deleting messages"
 msgstr "Odstraňovanie správ"
@@ -5431,17 +5431,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Kontakty zmenené úspešne"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:92
 #, kde-format
 msgid "New Messages In"
 msgstr "Nové správy v"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Žiadne neprečítané správy"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

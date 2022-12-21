@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 00:48+0000\n"
+"POT-Creation-Date: 2022-12-21 00:47+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -417,8 +417,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
-#: kmsystemtray.cpp:81
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:49
+#: kmsystemtray.cpp:78
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -2898,7 +2898,7 @@ msgid "Folder Shortcut %1"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4016,80 +4016,80 @@ msgstr "&Blîp"
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:295
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Disgwyliwch"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:298 kmcommands.cpp:362
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Disgwyliwch tra trosglwyddir y neges."
 msgstr[1] "Disgwyliwch tra trosglwyddir y %1 o negeseuon."
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:509
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Cadw i Ffeil"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, fuzzy, kde-format
 msgid "Open Message"
 msgstr "&Neges Nesaf"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Neges"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:723
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "nid yw'n cynnwys"
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:907
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:911
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "Anfon Heb ei Lofnodi?"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1299
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Dileu Negeseuon"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1309
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Symud neges %3 o %2 oddiwrth %1."
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1517 kmcommands.cpp:1649
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Methwyd symud y negeseuon."
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1517 kmcommands.cpp:1659
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Dileu Negeseuon"
@@ -5524,17 +5524,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:92
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "Negeseuon Newydd Yn..."
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "Darfod negeseuon &heb eu darllen"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 00:48+0000\n"
+"POT-Creation-Date: 2022-12-21 00:47+0000\n"
 "PO-Revision-Date: 2022-11-25 22:10+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -374,8 +374,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "Naprawa wiele błędów IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
-#: kmsystemtray.cpp:81
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:49
+#: kmsystemtray.cpp:78
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -2786,7 +2786,7 @@ msgid "Folder Shortcut %1"
 msgstr "Skrót katalogu %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3881,13 +3881,13 @@ msgstr "Pomo&c"
 msgid "Main Toolbar"
 msgstr "Główny pasek narzędzi"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:295
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Proszę czekać"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:298 kmcommands.cpp:362
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -3895,32 +3895,32 @@ msgstr[0] "Wiadomość jest przesyłana"
 msgstr[1] "%1 wiadomości są przesyłane"
 msgstr[2] "%1 wiadomości jest przesyłanych"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:509
 #, kde-format
 msgid "Save To File"
 msgstr "Zapisz do pliku"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Open Message"
 msgstr "Otwórz wiadomość"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Message"
 msgstr "Wiadomość"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:723
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Ten plik nie zawiera wiadomości."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Plik zawiera wiele wiadomości. Wyświetlono tylko pierwszą."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:907
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -3929,32 +3929,32 @@ msgstr ""
 "Czy przekazać wiadomości jako załączniki w jednej wiadomości jako raport "
 "MIME, czy jako osobne wiadomości?"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:911
 #, kde-format
 msgid "Send As Digest"
 msgstr "Wyślij jako kondensat"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
 msgstr "Wyślij osobno"
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1299
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrowanie wiadomości"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1309
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrowanie wiadomości %1 z %2"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1517 kmcommands.cpp:1649
 #, kde-format
 msgid "Moving messages"
 msgstr "Przenoszenie wiadomości"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1517 kmcommands.cpp:1659
 #, kde-format
 msgid "Deleting messages"
 msgstr "Usuwanie wiadomości"
@@ -5364,17 +5364,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Pomyślnie zmieniono kontakt"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:92
 #, kde-format
 msgid "New Messages In"
 msgstr "Nowe wiadomości w"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Brak nieprzeczytanych wiadomości"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

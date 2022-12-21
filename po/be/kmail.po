@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 00:48+0000\n"
+"POT-Creation-Date: 2022-12-21 00:47+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -426,8 +426,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
-#: kmsystemtray.cpp:81
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:49
+#: kmsystemtray.cpp:78
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -2921,7 +2921,7 @@ msgid "Folder Shortcut %1"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4073,14 +4073,14 @@ msgstr "&Дапамога"
 msgid "Main Toolbar"
 msgstr "Галоўная панель начыння"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:295
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Калі ласка, пачакайце"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:298 kmcommands.cpp:362
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -4103,67 +4103,67 @@ msgstr[2] ""
 "\n"
 "Дачакайцеся канчатка перасылання %n паведамленняў"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:509
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Захаваць у файле"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Open Message"
 msgstr "Адкрыць паведамленне"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Паведамленне"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:723
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Файл не змяшчае паведамлення."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:796
 #, fuzzy, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Гэты файл утрымоўвае некалькі паведамленняў. Паказана толькі першае."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:907
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:911
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "Даслаць непадпісаным?"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1299
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Filtering messages"
 msgstr "Выдаленне паведамленняў"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1309
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Перамяшчэнне паведамлення %3 з %2 з %1."
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1517 kmcommands.cpp:1649
 #, kde-format
 msgid "Moving messages"
 msgstr "Перанос паведамленняў"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1517 kmcommands.cpp:1659
 #, kde-format
 msgid "Deleting messages"
 msgstr "Выдаленне паведамленняў"
@@ -5710,18 +5710,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Паведамленні перанесены паспяхова"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:92
 #, kde-format
 msgid "New Messages In"
 msgstr "Новыя паведамленні ў"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, fuzzy, kde-format
 #| msgid "There are no unread messages"
 msgid "There are no unread messages"
 msgstr "Усе паведамленні прачытаныя"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

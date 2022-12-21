@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 00:48+0000\n"
+"POT-Creation-Date: 2022-12-21 00:47+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -406,8 +406,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:52
-#: kmsystemtray.cpp:81
+#: editor/kmcomposerwin.cpp:2321 kmreaderwin.cpp:299 kmsystemtray.cpp:49
+#: kmsystemtray.cpp:78
 #, kde-format
 msgid "KMail"
 msgstr "ਕੇਮੇਲ"
@@ -2808,7 +2808,7 @@ msgid "Folder Shortcut %1"
 msgstr "ਫੋਲਡਰ ਸ਼ਾਰਟਕੱਟ %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1812
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3903,80 +3903,80 @@ msgstr "ਮੱਦਦ(&H)"
 msgid "Main Toolbar"
 msgstr "ਮੇਨ ਟੂਲਬਾਰ"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:295
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "ਉਡੀਕੋ ਜੀ"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:298 kmcommands.cpp:362
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "ਸੁਨੇਹਾ ਟਰਾਂਸਫਰ ਹੋਣ ਤੱਕ ਉਡੀਕੋ ਜੀ"
 msgstr[1] "%1 ਸੁਨੇਹੇ ਟਰਾਂਸਫਰ ਹੋਣ ਤੱਕ ਉਡੀਕੋ ਜੀ"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:509
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, kde-format
 msgid "Open Message"
 msgstr "ਸੁਨੇਹਾ ਖੋਲ੍ਹੋ"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "ਸੁਨੇਹਾ(&M)"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:723
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "ਫਾਇਲ ਵਿੱਚ ਇੱਕ ਸੁਨੇਹਾ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "ਫਾਇਲ ਵਿੱਚ ਕਈ ਸੁਨੇਹੇ ਹਨ। ਸਿਰਫ਼ ਪਹਿਲਾਂ ਸੁਨੇਹਾ ਹੀ ਵੇਖਾਇਆ ਜਾਵੇਗਾ।"
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:907
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:911
 #, kde-format
 msgid "Send As Digest"
 msgstr "ਡਿਜ਼ੀਟ ਵਾਂਗ ਭੇਜੋ"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
 msgstr "ਵੱਖ ਵੱਖ ਭੇਜੋ"
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1299
 #, kde-format
 msgid "Filtering messages"
 msgstr "ਸੁਨੇਹੇ ਫਿਲਟਰ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1309
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%2 ਵਿੱਚੋਂ %1 ਸੁਨੇਹੇ ਫਿਲਟਰ ਕੀਤੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1517 kmcommands.cpp:1649
 #, kde-format
 msgid "Moving messages"
 msgstr "ਸੁਨੇਹੇ ਭੇਜੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1517 kmcommands.cpp:1659
 #, kde-format
 msgid "Deleting messages"
 msgstr "ਸੁਨੇਹੇ ਹਟਾਏ ਜਾ ਰਹੇ ਹਨ"
@@ -5426,17 +5426,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "ਸੁਨੇਹੇ ਸਫਲਤਾਪੂਰਕ ਭੇਜੇ ਗਏ"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:92
 #, kde-format
 msgid "New Messages In"
 msgstr "ਨਵਾਂ ਸੁਨੇਹੇ ਹਨ"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "There are no unread messages"
 msgstr "ਕੋਈ ਵੀ ਨਾ-ਪੜ੍ਹਿਆ ਸੁਨੇਹਾ ਨਹੀਂ ਹੈ"
 
-#: kmsystemtray.cpp:287
+#: kmsystemtray.cpp:264
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
