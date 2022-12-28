@@ -139,7 +139,6 @@
 
 #include <KAcceleratorManager>
 #include <KActionMenu>
-#include <KCharsets>
 #include <KMessageBox>
 #include <KStandardShortcut>
 #include <KWindowSystem>

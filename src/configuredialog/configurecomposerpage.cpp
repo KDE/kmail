@@ -28,7 +28,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 using PimCommon::RecentAddresses;
 
 #include "kmail_debug.h"
-#include <KCharsets>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluralHandlingSpinBox>

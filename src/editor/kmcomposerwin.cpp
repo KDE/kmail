@@ -149,7 +149,6 @@
 // KDE Frameworks includes
 #include <KActionCollection>
 #include <KActionMenu>
-#include <KCharsets>
 #include <KConfigGroup>
 #include <KEditToolBar>
 #include <KEmailAddress>
