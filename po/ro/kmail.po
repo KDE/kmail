@@ -1746,7 +1746,7 @@ msgid "Message Disposition Notifications"
 msgstr "Notificări prelucrare mesaj"
 
 #: configuredialog/configuresecuritypage.cpp:53
-#, kde-format
+#, fuzzy, kde-format
 msgid "Encryption"
 msgstr "Criptare"
 
