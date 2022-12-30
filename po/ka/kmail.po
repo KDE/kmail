@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-12-29 00:53+0000\n"
-"PO-Revision-Date: 2022-12-04 13:45+0100\n"
+"PO-Revision-Date: 2022-12-29 10:09+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -545,7 +545,7 @@ msgstr "მიღების პარამეტრები"
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
-msgstr ""
+msgstr "იდენტიფიკატორები"
 
 #: configuredialog/configureaccountpage.cpp:57
 #, kde-format
@@ -625,17 +625,17 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Enable Undo Send"
-msgstr ""
+msgstr "გაგზავნის გაუქმების ჩართვა"
 
 #: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Add Mail Account..."
-msgstr ""
+msgstr "ელფოსტის ახალი ანგარიშის დამატება…"
 
 #: configuredialog/configureaccountpage.cpp:197
 #, kde-format
 msgid "Custom Account..."
-msgstr ""
+msgstr "ანგარიშის ხელით მითითება...."
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:154
@@ -666,7 +666,7 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:284
 #, kde-format
 msgid "Check mail on startup"
-msgstr ""
+msgstr "გაშვებისას ელფოსტის შემოწმება"
 
 #: configuredialog/configureaccountpage.cpp:331
 #, kde-format
@@ -1531,7 +1531,7 @@ msgstr "შეტყობინების ნახვა"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
-msgstr ""
+msgstr "Webengine -ის დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
@@ -1896,7 +1896,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2878
 #, kde-format
 msgid "&Address Book"
-msgstr ""
+msgstr "&მისამართების წიგნი"
 
 #: editor/kmcomposerwin.cpp:1245
 #, kde-format
@@ -3730,7 +3730,7 @@ msgstr "&მიმაგრება"
 #: kmcomposerui.rc:132
 #, kde-format
 msgid "HTML Toolbar"
-msgstr ""
+msgstr "HTML -ის პანელი"
 
 #. i18n: ectx: ToolBar (directionToolBar)
 #: kmcomposerui.rc:168
@@ -4589,7 +4589,7 @@ msgstr ""
 #: kmmainwidget.cpp:3310
 #, kde-format
 msgid "&Add Account..."
-msgstr ""
+msgstr "&ანგარიშის დამატება..."
 
 #: kmmainwidget.cpp:3315
 #, kde-format
@@ -4709,7 +4709,7 @@ msgstr ""
 #: kmmainwidget.cpp:3488
 #, kde-format
 msgid "Set Focus to Quick Search"
-msgstr ""
+msgstr "ფოკუსის სწრაფ ძებნაზე დაყენება"
 
 #: kmmainwidget.cpp:3496
 #, kde-format
@@ -4940,12 +4940,12 @@ msgstr ""
 #: kmreaderwin.cpp:172
 #, kde-format
 msgid "&Find in Message..."
-msgstr ""
+msgstr "&შეტყობინებაში მოძებნა..."
 
 #: kmreaderwin.cpp:178
 #, kde-format
 msgid "Save Image On Disk..."
-msgstr ""
+msgstr "გამოსახულების დისკზე შენახვა..."
 
 #: kmreaderwin.cpp:184
 #, kde-format
