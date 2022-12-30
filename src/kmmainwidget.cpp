@@ -4047,7 +4047,7 @@ void KMMainWidget::updateFolderMenu()
     for (auto a : std::as_const(mFilterFolderMenuRecursiveActions)) {
         a->setEnabled(folderIsValid);
     }
-    if (mCurrentCollection.resource() == QLatin1String("akonadi_unifiedmailbox_agent")) {
+    if (mAccountSettings && mCurrentCollection.resource() == QLatin1String("akonadi_unifiedmailbox_agent")) {
         mAccountSettings->setText(i18n("Configure Unified Mailbox"));
     } else {
         mAccountSettings->setText(i18n("Account &Settings"));
