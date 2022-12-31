@@ -3393,6 +3393,14 @@ void KMMainWidget::setupActions()
     QAction *act = actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"));
     connect(act, &QAction::triggered, this, &KMMainWidget::slotUndo);
 
+    mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
+    actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
+    connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
+
+    mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
+    actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
+    connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
+
     menutimer = new QTimer(this);
     menutimer->setObjectName(QStringLiteral("menutimer"));
     menutimer->setSingleShot(true);
@@ -3525,13 +3533,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 
-    mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
-    actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
-    connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
-
-    mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
-    actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
-    connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
     {
         QList<QAction *> listActions;
         auto act = new QAction(i18n("Previous Selected Folder"), this); // TODO fix me i18n
