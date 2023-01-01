@@ -1,6 +1,6 @@
 /*
    SPDX-FileCopyrightText: 2001 by Ryan Breen <ryan@porivo.com>
-   SPDX-FileCopyrightText: 2010-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2010-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
