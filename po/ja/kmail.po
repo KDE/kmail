@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 02:43+0000\n"
+"POT-Creation-Date: 2023-01-01 03:43+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1821,7 +1821,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "フォルダをアーカイブ"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3533
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -4438,7 +4438,7 @@ msgstr ""
 "既知または今後予想されるその他のセキュリティ上の問題によって、あなたのシステ"
 "ムが危険にさらされる可能性が増します。"
 
-#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
+#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4674
 #, kde-format
 msgid "Security Warning"
 msgstr "セキュリティ警告"
@@ -4698,7 +4698,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "メッセージを完全に削除(&D)"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4013
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "スレッドをごみ箱に移動(&O)"
@@ -4708,12 +4708,12 @@ msgstr "スレッドをごみ箱に移動(&O)"
 msgid "Move thread to trashcan"
 msgstr "スレッドをごみ箱に移動"
 
-#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4013
 #, kde-format
 msgid "Delete T&hread"
 msgstr "スレッドを削除(&H)"
 
-#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4015
 #, kde-format
 msgid "&Find Messages..."
 msgstr "メッセージを検索(&F)..."
@@ -5097,187 +5097,187 @@ msgstr "KMail を設定(&C)..."
 msgid "New AddressBook Contact..."
 msgstr "アドレス帳で開く"
 
-#: kmmainwidget.cpp:3418
-#, kde-format
-msgid "Copy Message to Folder"
-msgstr "メッセージをフォルダにコピー"
-
-#: kmmainwidget.cpp:3424
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "フォルダへジャンプ..."
-
-#: kmmainwidget.cpp:3430
-#, kde-format
-msgid "Abort Current Operation"
-msgstr "現在の操作を中断"
-
-#: kmmainwidget.cpp:3436
-#, kde-format
-msgid "Focus on Next Folder"
-msgstr "次のフォルダにフォーカス"
-
-#: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Focus on Previous Folder"
-msgstr "前のフォルダにフォーカス"
-
-#: kmmainwidget.cpp:3448
-#, kde-format
-msgid "Select Folder with Focus"
-msgstr "フォルダをフォーカスで選択"
-
-#: kmmainwidget.cpp:3455
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
-msgid "Focus on First Folder"
-msgstr "次のフォルダにフォーカス"
-
-#: kmmainwidget.cpp:3461
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
-msgid "Focus on Last Folder"
-msgstr "次のフォルダにフォーカス"
-
-#: kmmainwidget.cpp:3467
-#, kde-format
-msgid "Focus on Next Message"
-msgstr "次のメッセージにフォーカス"
-
-#: kmmainwidget.cpp:3473
-#, kde-format
-msgid "Focus on Previous Message"
-msgstr "前のメッセージにフォーカス"
-
-#: kmmainwidget.cpp:3479
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
-msgid "Select First Message"
-msgstr "すべてのメッセージを選択(&A)"
-
-#: kmmainwidget.cpp:3485
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
-msgid "Select Last Message"
-msgstr "すべてのメッセージを選択(&A)"
-
-#: kmmainwidget.cpp:3491
-#, kde-format
-msgid "Select Message with Focus"
-msgstr "メッセージをフォーカスで選択"
-
-#: kmmainwidget.cpp:3498
-#, kde-format
-msgid "Set Focus to Quick Search"
-msgstr "クイック検索をフォーカス"
-
-#: kmmainwidget.cpp:3506
-#, kde-format
-msgid "Extend Selection to Previous Message"
-msgstr "前のメッセージまで選択"
-
-#: kmmainwidget.cpp:3512
-#, kde-format
-msgid "Extend Selection to Next Message"
-msgstr "次のメッセージまで選択"
-
-#: kmmainwidget.cpp:3519
-#, kde-format
-msgid "Move Message to Folder"
-msgstr "メッセージをフォルダに移動"
-
-#: kmmainwidget.cpp:3529
-#, kde-format
-msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
-
-#: kmmainwidget.cpp:3534
-#, kde-format
-msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
-
-#: kmmainwidget.cpp:3538 kmmainwidget.cpp:4053
+#: kmmainwidget.cpp:3406 kmmainwidget.cpp:4054
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "設定(&S)"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3410
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Restart Account"
 msgstr "ノートを追加..."
 
-#: kmmainwidget.cpp:3547
+#: kmmainwidget.cpp:3426
+#, kde-format
+msgid "Copy Message to Folder"
+msgstr "メッセージをフォルダにコピー"
+
+#: kmmainwidget.cpp:3432
+#, kde-format
+msgid "Jump to Folder..."
+msgstr "フォルダへジャンプ..."
+
+#: kmmainwidget.cpp:3438
+#, kde-format
+msgid "Abort Current Operation"
+msgstr "現在の操作を中断"
+
+#: kmmainwidget.cpp:3444
+#, kde-format
+msgid "Focus on Next Folder"
+msgstr "次のフォルダにフォーカス"
+
+#: kmmainwidget.cpp:3450
+#, kde-format
+msgid "Focus on Previous Folder"
+msgstr "前のフォルダにフォーカス"
+
+#: kmmainwidget.cpp:3456
+#, kde-format
+msgid "Select Folder with Focus"
+msgstr "フォルダをフォーカスで選択"
+
+#: kmmainwidget.cpp:3463
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgid "Focus on First Folder"
+msgstr "次のフォルダにフォーカス"
+
+#: kmmainwidget.cpp:3469
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgid "Focus on Last Folder"
+msgstr "次のフォルダにフォーカス"
+
+#: kmmainwidget.cpp:3475
+#, kde-format
+msgid "Focus on Next Message"
+msgstr "次のメッセージにフォーカス"
+
+#: kmmainwidget.cpp:3481
+#, kde-format
+msgid "Focus on Previous Message"
+msgstr "前のメッセージにフォーカス"
+
+#: kmmainwidget.cpp:3487
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgid "Select First Message"
+msgstr "すべてのメッセージを選択(&A)"
+
+#: kmmainwidget.cpp:3493
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgid "Select Last Message"
+msgstr "すべてのメッセージを選択(&A)"
+
+#: kmmainwidget.cpp:3499
+#, kde-format
+msgid "Select Message with Focus"
+msgstr "メッセージをフォーカスで選択"
+
+#: kmmainwidget.cpp:3506
+#, kde-format
+msgid "Set Focus to Quick Search"
+msgstr "クイック検索をフォーカス"
+
+#: kmmainwidget.cpp:3514
+#, kde-format
+msgid "Extend Selection to Previous Message"
+msgstr "前のメッセージまで選択"
+
+#: kmmainwidget.cpp:3520
+#, kde-format
+msgid "Extend Selection to Next Message"
+msgstr "次のメッセージまで選択"
+
+#: kmmainwidget.cpp:3527
+#, kde-format
+msgid "Move Message to Folder"
+msgstr "メッセージをフォルダに移動"
+
+#: kmmainwidget.cpp:3537
+#, kde-format
+msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+msgstr ""
+
+#: kmmainwidget.cpp:3542
+#, kde-format
+msgid "Remove Duplicates in This Folder and All its Subfolder"
+msgstr ""
+
+#: kmmainwidget.cpp:3548
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "前の未読フォルダ(&O)"
 
-#: kmmainwidget.cpp:3554
+#: kmmainwidget.cpp:3555
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "フォルダを削除"
 
-#: kmmainwidget.cpp:3582
+#: kmmainwidget.cpp:3583
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "お気に入りフォルダを追加"
 
-#: kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:4001
 #, kde-format
 msgid "&Delete Search"
 msgstr "検索を削除(&D)"
 
-#: kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:4015
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Edit Search..."
 msgstr "開始..."
 
-#: kmmainwidget.cpp:4051
+#: kmmainwidget.cpp:4052
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "KMail を設定..."
 
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ごみ箱を空にする(&M)"
 
 # ACCELERATOR changed by translator
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "すべてのメッセージをごみ箱に移動(&G)"
 
-#: kmmainwidget.cpp:4136
+#: kmmainwidget.cpp:4137
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4138
+#: kmmainwidget.cpp:4139
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4195
+#: kmmainwidget.cpp:4196
 #, kde-format
 msgid "Filter %1"
 msgstr "フィルタ %1"
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4663
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "開始..."
 
-#: kmmainwidget.cpp:4670
+#: kmmainwidget.cpp:4671
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5288,12 +5288,12 @@ msgstr ""
 "今後予想されるその他のセキュリティ上の問題によって、あなたのシステムが危険に"
 "さらされる可能性が増します。"
 
-#: kmmainwidget.cpp:4674
+#: kmmainwidget.cpp:4675
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML を使う"
 
-#: kmmainwidget.cpp:4856
+#: kmmainwidget.cpp:4857
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5303,40 +5303,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4859
+#: kmmainwidget.cpp:4860
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4860
+#: kmmainwidget.cpp:4861
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4862
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4894 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4901
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "アカウント「%1」を削除しますか？"
 
-#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4896 kmmainwidget.cpp:4901
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Restart Akonadi"
 msgstr "ノートを追加..."
 
-#: kmmainwidget.cpp:4896
+#: kmmainwidget.cpp:4897
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Restart"
 msgstr "ノートを追加..."
 
-#: kmmainwidget.cpp:4907
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

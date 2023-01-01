@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-11 02:43+0000\n"
+"POT-Creation-Date: 2023-01-01 03:43+0000\n"
 "PO-Revision-Date: 2022-11-18 11:12+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1749,7 +1749,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arhiviraj mapo"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3525
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3533
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4301,7 +4301,7 @@ msgstr ""
 "količina neželene pošte. Poveča se lahko tudi verjetnost, da bo vaš sistem "
 "izkoriščen z obstoječimi in prihodnjimi varnostnimi zlorabami."
 
-#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
+#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4674
 #, kde-format
 msgid "Security Warning"
 msgstr "Varnostno opozorilo"
@@ -4551,7 +4551,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Izbriši"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4013
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Premakni nit v smeti"
@@ -4561,12 +4561,12 @@ msgstr "Premakni nit v smeti"
 msgid "Move thread to trashcan"
 msgstr "Premakni nit v smeti"
 
-#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4012
+#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4013
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Izbriši nit"
 
-#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4015
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Najdi sporočila..."
@@ -4938,174 +4938,174 @@ msgstr "Uvozi/izvozi podatke programa KMail ..."
 msgid "New AddressBook Contact..."
 msgstr "Nov stik imenika ..."
 
-#: kmmainwidget.cpp:3418
-#, kde-format
-msgid "Copy Message to Folder"
-msgstr "Kopiraj sporočilo v mapo"
-
-#: kmmainwidget.cpp:3424
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "Pojdi v mapo ..."
-
-#: kmmainwidget.cpp:3430
-#, kde-format
-msgid "Abort Current Operation"
-msgstr "Prekliči trenutno opravilo"
-
-#: kmmainwidget.cpp:3436
-#, kde-format
-msgid "Focus on Next Folder"
-msgstr "Žarišče na naslednji mapi"
-
-#: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Focus on Previous Folder"
-msgstr "Žarišče na prejšnji mapi"
-
-#: kmmainwidget.cpp:3448
-#, kde-format
-msgid "Select Folder with Focus"
-msgstr "Izberite mapo z žariščem"
-
-#: kmmainwidget.cpp:3455
-#, kde-format
-msgid "Focus on First Folder"
-msgstr "Žarišče na prvi mapi"
-
-#: kmmainwidget.cpp:3461
-#, kde-format
-msgid "Focus on Last Folder"
-msgstr "Žarišče na zadnji mapi"
-
-#: kmmainwidget.cpp:3467
-#, kde-format
-msgid "Focus on Next Message"
-msgstr "Žarišče na naslednjem sporočilu"
-
-#: kmmainwidget.cpp:3473
-#, kde-format
-msgid "Focus on Previous Message"
-msgstr "Žarišče na predhodnem sporočilu"
-
-#: kmmainwidget.cpp:3479
-#, kde-format
-msgid "Select First Message"
-msgstr "Izberi prvo sporočilo"
-
-#: kmmainwidget.cpp:3485
-#, kde-format
-msgid "Select Last Message"
-msgstr "Izberi zadnje sporočilo"
-
-#: kmmainwidget.cpp:3491
-#, kde-format
-msgid "Select Message with Focus"
-msgstr "Izberi sporočilo z žariščem"
-
-#: kmmainwidget.cpp:3498
-#, kde-format
-msgid "Set Focus to Quick Search"
-msgstr "Postavi žarišče na hitro iskanje"
-
-#: kmmainwidget.cpp:3506
-#, kde-format
-msgid "Extend Selection to Previous Message"
-msgstr "Razširi izbor na predhodno sporočilo"
-
-#: kmmainwidget.cpp:3512
-#, kde-format
-msgid "Extend Selection to Next Message"
-msgstr "Razširi izbor na naslednje sporočilo"
-
-#: kmmainwidget.cpp:3519
-#, kde-format
-msgid "Move Message to Folder"
-msgstr "Premakni sporočilo v mapo"
-
-#: kmmainwidget.cpp:3529
-#, kde-format
-msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr "Označi vsa sporočila v tej mapi in podmapah kot prebrana"
-
-#: kmmainwidget.cpp:3534
-#, kde-format
-msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr "Odstrani dvojnike iz te mape in njenih podmap"
-
-#: kmmainwidget.cpp:3538 kmmainwidget.cpp:4053
+#: kmmainwidget.cpp:3406 kmmainwidget.cpp:4054
 #, kde-format
 msgid "Account &Settings"
 msgstr "Na&stavitve računa"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3410
 #, kde-format
 msgid "Restart Account"
 msgstr "Znova zaženi račun"
 
-#: kmmainwidget.cpp:3547
+#: kmmainwidget.cpp:3426
+#, kde-format
+msgid "Copy Message to Folder"
+msgstr "Kopiraj sporočilo v mapo"
+
+#: kmmainwidget.cpp:3432
+#, kde-format
+msgid "Jump to Folder..."
+msgstr "Pojdi v mapo ..."
+
+#: kmmainwidget.cpp:3438
+#, kde-format
+msgid "Abort Current Operation"
+msgstr "Prekliči trenutno opravilo"
+
+#: kmmainwidget.cpp:3444
+#, kde-format
+msgid "Focus on Next Folder"
+msgstr "Žarišče na naslednji mapi"
+
+#: kmmainwidget.cpp:3450
+#, kde-format
+msgid "Focus on Previous Folder"
+msgstr "Žarišče na prejšnji mapi"
+
+#: kmmainwidget.cpp:3456
+#, kde-format
+msgid "Select Folder with Focus"
+msgstr "Izberite mapo z žariščem"
+
+#: kmmainwidget.cpp:3463
+#, kde-format
+msgid "Focus on First Folder"
+msgstr "Žarišče na prvi mapi"
+
+#: kmmainwidget.cpp:3469
+#, kde-format
+msgid "Focus on Last Folder"
+msgstr "Žarišče na zadnji mapi"
+
+#: kmmainwidget.cpp:3475
+#, kde-format
+msgid "Focus on Next Message"
+msgstr "Žarišče na naslednjem sporočilu"
+
+#: kmmainwidget.cpp:3481
+#, kde-format
+msgid "Focus on Previous Message"
+msgstr "Žarišče na predhodnem sporočilu"
+
+#: kmmainwidget.cpp:3487
+#, kde-format
+msgid "Select First Message"
+msgstr "Izberi prvo sporočilo"
+
+#: kmmainwidget.cpp:3493
+#, kde-format
+msgid "Select Last Message"
+msgstr "Izberi zadnje sporočilo"
+
+#: kmmainwidget.cpp:3499
+#, kde-format
+msgid "Select Message with Focus"
+msgstr "Izberi sporočilo z žariščem"
+
+#: kmmainwidget.cpp:3506
+#, kde-format
+msgid "Set Focus to Quick Search"
+msgstr "Postavi žarišče na hitro iskanje"
+
+#: kmmainwidget.cpp:3514
+#, kde-format
+msgid "Extend Selection to Previous Message"
+msgstr "Razširi izbor na predhodno sporočilo"
+
+#: kmmainwidget.cpp:3520
+#, kde-format
+msgid "Extend Selection to Next Message"
+msgstr "Razširi izbor na naslednje sporočilo"
+
+#: kmmainwidget.cpp:3527
+#, kde-format
+msgid "Move Message to Folder"
+msgstr "Premakni sporočilo v mapo"
+
+#: kmmainwidget.cpp:3537
+#, kde-format
+msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+msgstr "Označi vsa sporočila v tej mapi in podmapah kot prebrana"
+
+#: kmmainwidget.cpp:3542
+#, kde-format
+msgid "Remove Duplicates in This Folder and All its Subfolder"
+msgstr "Odstrani dvojnike iz te mape in njenih podmap"
+
+#: kmmainwidget.cpp:3548
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "Predhodno izbrana mapa"
 
-#: kmmainwidget.cpp:3554
+#: kmmainwidget.cpp:3555
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "Naslednja izbrana mapa"
 
-#: kmmainwidget.cpp:3582
+#: kmmainwidget.cpp:3583
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Dodaj priljubljeno mapo"
 
-#: kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:4001
 #, kde-format
 msgid "&Delete Search"
 msgstr "Izbriši iskanje"
 
-#: kmmainwidget.cpp:4014
+#: kmmainwidget.cpp:4015
 #, kde-format
 msgid "Edit Search..."
 msgstr "Uredi iskanje ..."
 
-#: kmmainwidget.cpp:4051
+#: kmmainwidget.cpp:4052
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Nastavi poenoten poštni nabiralnik"
 
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Izprazni smeti"
 
-#: kmmainwidget.cpp:4062
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Premakni vsa sporočila v smeti"
 
-#: kmmainwidget.cpp:4136
+#: kmmainwidget.cpp:4137
 #, kde-format
 msgid "&Undo"
 msgstr "Razveljavi"
 
-#: kmmainwidget.cpp:4138
+#: kmmainwidget.cpp:4139
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Razveljavi: \"%1\""
 
-#: kmmainwidget.cpp:4195
+#: kmmainwidget.cpp:4196
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4663
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Poišči... <%1>"
 
-#: kmmainwidget.cpp:4670
+#: kmmainwidget.cpp:4671
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5116,12 +5116,12 @@ msgstr ""
 "pošte. Poveča se lahko tudi verjetnost, da bo vaš sistem izkoriščen z "
 "obstoječimi in prihodnjimi varnostnimi zlorabami."
 
-#: kmmainwidget.cpp:4674
+#: kmmainwidget.cpp:4675
 #, kde-format
 msgid "Use HTML"
 msgstr "Uporabi HTML"
 
-#: kmmainwidget.cpp:4856
+#: kmmainwidget.cpp:4857
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5136,37 +5136,37 @@ msgstr ""
 "Nastavite lahko poenotene nabiralnike, ali jih ustvarite po meri ali\n"
 "to funkcijo v celoti onemogočite v nastavitvah vtičnika KMail."
 
-#: kmmainwidget.cpp:4859
+#: kmmainwidget.cpp:4860
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Ali želite omogočiti poenotene poštne nabiralnike?"
 
-#: kmmainwidget.cpp:4860
+#: kmmainwidget.cpp:4861
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Omogoči poenotene poštne nabiralnike"
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4862
 #, kde-format
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: kmmainwidget.cpp:4894 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4901
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Ali želite ponovno zagnati Akonadi?"
 
-#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4896 kmmainwidget.cpp:4901
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Ponovno zaženi Akonadi"
 
-#: kmmainwidget.cpp:4896
+#: kmmainwidget.cpp:4897
 #, kde-format
 msgid "Restart"
 msgstr "Znova zaženi"
 
-#: kmmainwidget.cpp:4907
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi ponovno zagnan."
