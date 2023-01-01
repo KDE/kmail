@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-29 00:53+0000\n"
+"POT-Creation-Date: 2023-01-01 00:58+0000\n"
 "PO-Revision-Date: 2022-12-11 20:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1746,7 +1746,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Klasörü Arşivle"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3515
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3523
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4273,7 +4273,7 @@ msgstr ""
 "savunmasız yapar ve sisteminizin güvenlik açıklarını sezen programlarla "
 "saldırıya uğramasına sebep olabilir."
 
-#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4664
 #, kde-format
 msgid "Security Warning"
 msgstr "Güvenlik Uyarısı"
@@ -4517,7 +4517,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Sil"
 
-#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4003
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Tartışmayı Çöpe Taşı"
@@ -4527,12 +4527,12 @@ msgstr "&Tartışmayı Çöpe Taşı"
 msgid "Move thread to trashcan"
 msgstr "Tartışmayı çöp kutusuna taşı"
 
-#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4003
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Ta&rtışmayı Sil"
 
-#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4005
 #, kde-format
 msgid "&Find Messages..."
 msgstr "İ&leti Bul..."
@@ -4904,174 +4904,174 @@ msgstr "KMail Verisini İçe/Dışa Aktar..."
 msgid "New AddressBook Contact..."
 msgstr "Yeni Adres Defteri Kişisi..."
 
-#: kmmainwidget.cpp:3408
-#, kde-format
-msgid "Copy Message to Folder"
-msgstr "İletiyi Klasöre Kopyala"
-
-#: kmmainwidget.cpp:3414
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "Klasöre Geç..."
-
-#: kmmainwidget.cpp:3420
-#, kde-format
-msgid "Abort Current Operation"
-msgstr "Geçerli İşlem Hakkında"
-
-#: kmmainwidget.cpp:3426
-#, kde-format
-msgid "Focus on Next Folder"
-msgstr "Sonraki Klasöre Odaklan"
-
-#: kmmainwidget.cpp:3432
-#, kde-format
-msgid "Focus on Previous Folder"
-msgstr "Önceki Klasöre Odaklan"
-
-#: kmmainwidget.cpp:3438
-#, kde-format
-msgid "Select Folder with Focus"
-msgstr "Klasörü Odaklanarak Seç"
-
-#: kmmainwidget.cpp:3445
-#, kde-format
-msgid "Focus on First Folder"
-msgstr "Sonraki İlk Klasöre Odaklan"
-
-#: kmmainwidget.cpp:3451
-#, kde-format
-msgid "Focus on Last Folder"
-msgstr "Sonraki Son Klasöre Odaklan"
-
-#: kmmainwidget.cpp:3457
-#, kde-format
-msgid "Focus on Next Message"
-msgstr "Sonraki İletiye Odaklan"
-
-#: kmmainwidget.cpp:3463
-#, kde-format
-msgid "Focus on Previous Message"
-msgstr "Önceki İletiye Odaklan"
-
-#: kmmainwidget.cpp:3469
-#, kde-format
-msgid "Select First Message"
-msgstr "Odaklanan İlk İletiyi Seç"
-
-#: kmmainwidget.cpp:3475
-#, kde-format
-msgid "Select Last Message"
-msgstr "Odaklanan Son İletiyi Seç"
-
-#: kmmainwidget.cpp:3481
-#, kde-format
-msgid "Select Message with Focus"
-msgstr "Odaklanan İletiyi Seç"
-
-#: kmmainwidget.cpp:3488
-#, kde-format
-msgid "Set Focus to Quick Search"
-msgstr "Hızlı Aramayı Odakla"
-
-#: kmmainwidget.cpp:3496
-#, kde-format
-msgid "Extend Selection to Previous Message"
-msgstr "Seçimi Önceki İletiye Genişlet"
-
-#: kmmainwidget.cpp:3502
-#, kde-format
-msgid "Extend Selection to Next Message"
-msgstr "Seçimi Sonraki İletiye Genişlet"
-
-#: kmmainwidget.cpp:3509
-#, kde-format
-msgid "Move Message to Folder"
-msgstr "İletiyi Klasöre Taşı"
-
-#: kmmainwidget.cpp:3519
-#, kde-format
-msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki İletileri Okundu İşaretle"
-
-#: kmmainwidget.cpp:3524
-#, kde-format
-msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Yinelenmiş Girişleri Kaldır"
-
-#: kmmainwidget.cpp:3528 kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:3396 kmmainwidget.cpp:4044
 #, kde-format
 msgid "Account &Settings"
 msgstr "Hesap Ayar&ları"
 
-#: kmmainwidget.cpp:3532
+#: kmmainwidget.cpp:3400
 #, kde-format
 msgid "Restart Account"
 msgstr "Hesabı Yeniden Başlat"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3416
+#, kde-format
+msgid "Copy Message to Folder"
+msgstr "İletiyi Klasöre Kopyala"
+
+#: kmmainwidget.cpp:3422
+#, kde-format
+msgid "Jump to Folder..."
+msgstr "Klasöre Geç..."
+
+#: kmmainwidget.cpp:3428
+#, kde-format
+msgid "Abort Current Operation"
+msgstr "Geçerli İşlem Hakkında"
+
+#: kmmainwidget.cpp:3434
+#, kde-format
+msgid "Focus on Next Folder"
+msgstr "Sonraki Klasöre Odaklan"
+
+#: kmmainwidget.cpp:3440
+#, kde-format
+msgid "Focus on Previous Folder"
+msgstr "Önceki Klasöre Odaklan"
+
+#: kmmainwidget.cpp:3446
+#, kde-format
+msgid "Select Folder with Focus"
+msgstr "Klasörü Odaklanarak Seç"
+
+#: kmmainwidget.cpp:3453
+#, kde-format
+msgid "Focus on First Folder"
+msgstr "Sonraki İlk Klasöre Odaklan"
+
+#: kmmainwidget.cpp:3459
+#, kde-format
+msgid "Focus on Last Folder"
+msgstr "Sonraki Son Klasöre Odaklan"
+
+#: kmmainwidget.cpp:3465
+#, kde-format
+msgid "Focus on Next Message"
+msgstr "Sonraki İletiye Odaklan"
+
+#: kmmainwidget.cpp:3471
+#, kde-format
+msgid "Focus on Previous Message"
+msgstr "Önceki İletiye Odaklan"
+
+#: kmmainwidget.cpp:3477
+#, kde-format
+msgid "Select First Message"
+msgstr "Odaklanan İlk İletiyi Seç"
+
+#: kmmainwidget.cpp:3483
+#, kde-format
+msgid "Select Last Message"
+msgstr "Odaklanan Son İletiyi Seç"
+
+#: kmmainwidget.cpp:3489
+#, kde-format
+msgid "Select Message with Focus"
+msgstr "Odaklanan İletiyi Seç"
+
+#: kmmainwidget.cpp:3496
+#, kde-format
+msgid "Set Focus to Quick Search"
+msgstr "Hızlı Aramayı Odakla"
+
+#: kmmainwidget.cpp:3504
+#, kde-format
+msgid "Extend Selection to Previous Message"
+msgstr "Seçimi Önceki İletiye Genişlet"
+
+#: kmmainwidget.cpp:3510
+#, kde-format
+msgid "Extend Selection to Next Message"
+msgstr "Seçimi Sonraki İletiye Genişlet"
+
+#: kmmainwidget.cpp:3517
+#, kde-format
+msgid "Move Message to Folder"
+msgstr "İletiyi Klasöre Taşı"
+
+#: kmmainwidget.cpp:3527
+#, kde-format
+msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki İletileri Okundu İşaretle"
+
+#: kmmainwidget.cpp:3532
+#, kde-format
+msgid "Remove Duplicates in This Folder and All its Subfolder"
+msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Yinelenmiş Girişleri Kaldır"
+
+#: kmmainwidget.cpp:3538
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "Önceki Seçili Klasör"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3545
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "Sonraki Seçili Klasör"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3573
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Sık Kullanılanlara Ekle"
 
-#: kmmainwidget.cpp:3990
+#: kmmainwidget.cpp:3991
 #, kde-format
 msgid "&Delete Search"
 msgstr "Aramayı &Sil"
 
-#: kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:4005
 #, kde-format
 msgid "Edit Search..."
 msgstr "Aramayı Düzenle..."
 
-#: kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:4042
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Birleştirilmiş Posta Kutusunu Yapılandır"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Çö&p Kutusunu Boşalt"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Tüm İletileri &Çöp Kutusuna Taşı"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4127
 #, kde-format
 msgid "&Undo"
 msgstr "&Geri Al"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4129
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Geri Al: \"%1\""
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "Filter %1"
 msgstr "Süzgeç %1"
 
-#: kmmainwidget.cpp:4652
+#: kmmainwidget.cpp:4653
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Ara... <%1>"
 
-#: kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:4661
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5082,12 +5082,12 @@ msgstr ""
 "ve sisteminizin güvenlik açıklarını sezen programlarla saldırıya uğramasına "
 "sebep olabilir."
 
-#: kmmainwidget.cpp:4664
+#: kmmainwidget.cpp:4665
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML Kullan"
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5103,37 +5103,37 @@ msgstr ""
 "Birleştirilmiş posta kutuları oluşturabilir, özel kutular yaratabilir\n"
 "veya özelliği KMail'in Eklentiler ayarlarından tümüyle kapatabilirsiniz."
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4846
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Birleştirilmiş Posta Kutuları Etkinleştirilsin mi?"
 
-#: kmmainwidget.cpp:4846
+#: kmmainwidget.cpp:4847
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Birleştirilmiş Posta Kutularını Etkinleştir"
 
-#: kmmainwidget.cpp:4847
+#: kmmainwidget.cpp:4848
 #, kde-format
 msgid "Cancel"
 msgstr "İ&ptal"
 
-#: kmmainwidget.cpp:4875
+#: kmmainwidget.cpp:4876
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi'yi yeniden başlatmak istiyor musunuz?"
 
-#: kmmainwidget.cpp:4876
+#: kmmainwidget.cpp:4877
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Akonadi'yi Yeniden Başlat"
 
-#: kmmainwidget.cpp:4877
+#: kmmainwidget.cpp:4878
 #, kde-format
 msgid "Restart"
 msgstr "Yeniden Başlat"
 
-#: kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi yeniden başlatıldı."

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-29 00:53+0000\n"
+"POT-Creation-Date: 2023-01-01 00:58+0000\n"
 "PO-Revision-Date: 2022-07-13 12:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1718,7 +1718,7 @@ msgid "Archive Folder"
 msgstr "폴더를 파일로 압축"
 
 # 이 기능은 압축 파일을 생성하므로 Archive를 직역하지 않음.
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3515
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3523
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4209,7 +4209,7 @@ msgstr ""
 "HTML 메시지의 외부 참조를 불러 오면 스팸에 더 취약해질 수 있으며 다양한 보안 "
 "위협에 시스템이 노출될 가능성이 높아집니다."
 
-#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4664
 #, kde-format
 msgid "Security Warning"
 msgstr "보안 경고"
@@ -4450,7 +4450,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "삭제(&D)"
 
-#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4003
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "스레드를 휴지통으로 이동(&O)"
@@ -4460,12 +4460,12 @@ msgstr "스레드를 휴지통으로 이동(&O)"
 msgid "Move thread to trashcan"
 msgstr "스레드를 휴지통으로 이동"
 
-#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4003
 #, kde-format
 msgid "Delete T&hread"
 msgstr "스레드 삭제(&H)"
 
-#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4005
 #, kde-format
 msgid "&Find Messages..."
 msgstr "메시지 찾기(&F)..."
@@ -4837,174 +4837,174 @@ msgstr "KMail 데이터 가져오기/내보내기..."
 msgid "New AddressBook Contact..."
 msgstr "새 주소록 연락처..."
 
-#: kmmainwidget.cpp:3408
-#, kde-format
-msgid "Copy Message to Folder"
-msgstr "메시지를 폴더로 복사"
-
-#: kmmainwidget.cpp:3414
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "폴더로 이동..."
-
-#: kmmainwidget.cpp:3420
-#, kde-format
-msgid "Abort Current Operation"
-msgstr "현재 작업 중단"
-
-#: kmmainwidget.cpp:3426
-#, kde-format
-msgid "Focus on Next Folder"
-msgstr "다음 폴더에 초점 맞춤"
-
-#: kmmainwidget.cpp:3432
-#, kde-format
-msgid "Focus on Previous Folder"
-msgstr "이전 폴더에 초점 맞춤"
-
-#: kmmainwidget.cpp:3438
-#, kde-format
-msgid "Select Folder with Focus"
-msgstr "초점이 맞은 폴더 선택"
-
-#: kmmainwidget.cpp:3445
-#, kde-format
-msgid "Focus on First Folder"
-msgstr "첫 폴더에 초점 맞춤"
-
-#: kmmainwidget.cpp:3451
-#, kde-format
-msgid "Focus on Last Folder"
-msgstr "마지막 폴더에 초점 맞춤"
-
-#: kmmainwidget.cpp:3457
-#, kde-format
-msgid "Focus on Next Message"
-msgstr "다음 메시지에 초점 맞춤"
-
-#: kmmainwidget.cpp:3463
-#, kde-format
-msgid "Focus on Previous Message"
-msgstr "이전 메시지에 초점 맞춤"
-
-#: kmmainwidget.cpp:3469
-#, kde-format
-msgid "Select First Message"
-msgstr "첫 메시지 선택"
-
-#: kmmainwidget.cpp:3475
-#, kde-format
-msgid "Select Last Message"
-msgstr "마지막 메시지 선택"
-
-#: kmmainwidget.cpp:3481
-#, kde-format
-msgid "Select Message with Focus"
-msgstr "초점이 맞은 메시지 선택"
-
-#: kmmainwidget.cpp:3488
-#, kde-format
-msgid "Set Focus to Quick Search"
-msgstr "빠른 검색에 초점 맞춤"
-
-#: kmmainwidget.cpp:3496
-#, kde-format
-msgid "Extend Selection to Previous Message"
-msgstr "이전 메시지로 선택 확장"
-
-#: kmmainwidget.cpp:3502
-#, kde-format
-msgid "Extend Selection to Next Message"
-msgstr "다음 메시지로 선택 확장"
-
-#: kmmainwidget.cpp:3509
-#, kde-format
-msgid "Move Message to Folder"
-msgstr "메시지를 폴더로 이동"
-
-#: kmmainwidget.cpp:3519
-#, kde-format
-msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr "이 폴더와 모든 하위 폴더의 메시지를 읽은 것으로 표시"
-
-#: kmmainwidget.cpp:3524
-#, kde-format
-msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr "이 폴더와 모든 하위 폴더의 중복 메시지 삭제"
-
-#: kmmainwidget.cpp:3528 kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:3396 kmmainwidget.cpp:4044
 #, kde-format
 msgid "Account &Settings"
 msgstr "계정 설정(&S)"
 
-#: kmmainwidget.cpp:3532
+#: kmmainwidget.cpp:3400
 #, kde-format
 msgid "Restart Account"
 msgstr "계정 다시 시작"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3416
+#, kde-format
+msgid "Copy Message to Folder"
+msgstr "메시지를 폴더로 복사"
+
+#: kmmainwidget.cpp:3422
+#, kde-format
+msgid "Jump to Folder..."
+msgstr "폴더로 이동..."
+
+#: kmmainwidget.cpp:3428
+#, kde-format
+msgid "Abort Current Operation"
+msgstr "현재 작업 중단"
+
+#: kmmainwidget.cpp:3434
+#, kde-format
+msgid "Focus on Next Folder"
+msgstr "다음 폴더에 초점 맞춤"
+
+#: kmmainwidget.cpp:3440
+#, kde-format
+msgid "Focus on Previous Folder"
+msgstr "이전 폴더에 초점 맞춤"
+
+#: kmmainwidget.cpp:3446
+#, kde-format
+msgid "Select Folder with Focus"
+msgstr "초점이 맞은 폴더 선택"
+
+#: kmmainwidget.cpp:3453
+#, kde-format
+msgid "Focus on First Folder"
+msgstr "첫 폴더에 초점 맞춤"
+
+#: kmmainwidget.cpp:3459
+#, kde-format
+msgid "Focus on Last Folder"
+msgstr "마지막 폴더에 초점 맞춤"
+
+#: kmmainwidget.cpp:3465
+#, kde-format
+msgid "Focus on Next Message"
+msgstr "다음 메시지에 초점 맞춤"
+
+#: kmmainwidget.cpp:3471
+#, kde-format
+msgid "Focus on Previous Message"
+msgstr "이전 메시지에 초점 맞춤"
+
+#: kmmainwidget.cpp:3477
+#, kde-format
+msgid "Select First Message"
+msgstr "첫 메시지 선택"
+
+#: kmmainwidget.cpp:3483
+#, kde-format
+msgid "Select Last Message"
+msgstr "마지막 메시지 선택"
+
+#: kmmainwidget.cpp:3489
+#, kde-format
+msgid "Select Message with Focus"
+msgstr "초점이 맞은 메시지 선택"
+
+#: kmmainwidget.cpp:3496
+#, kde-format
+msgid "Set Focus to Quick Search"
+msgstr "빠른 검색에 초점 맞춤"
+
+#: kmmainwidget.cpp:3504
+#, kde-format
+msgid "Extend Selection to Previous Message"
+msgstr "이전 메시지로 선택 확장"
+
+#: kmmainwidget.cpp:3510
+#, kde-format
+msgid "Extend Selection to Next Message"
+msgstr "다음 메시지로 선택 확장"
+
+#: kmmainwidget.cpp:3517
+#, kde-format
+msgid "Move Message to Folder"
+msgstr "메시지를 폴더로 이동"
+
+#: kmmainwidget.cpp:3527
+#, kde-format
+msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+msgstr "이 폴더와 모든 하위 폴더의 메시지를 읽은 것으로 표시"
+
+#: kmmainwidget.cpp:3532
+#, kde-format
+msgid "Remove Duplicates in This Folder and All its Subfolder"
+msgstr "이 폴더와 모든 하위 폴더의 중복 메시지 삭제"
+
+#: kmmainwidget.cpp:3538
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "이전 선택한 폴더"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3545
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "다음 선택한 폴더"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3573
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "즐겨찾는 폴더 추가"
 
-#: kmmainwidget.cpp:3990
+#: kmmainwidget.cpp:3991
 #, kde-format
 msgid "&Delete Search"
 msgstr "검색 삭제(&D)"
 
-#: kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:4005
 #, kde-format
 msgid "Edit Search..."
 msgstr "검색 편집..."
 
-#: kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:4042
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "통합된 받은 편지함 설정"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "휴지통 비우기(&M)"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "모든 메시지를 휴지통으로 이동(&M)"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4127
 #, kde-format
 msgid "&Undo"
 msgstr "실행 취소(&U)"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4129
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "실행 취소: \"%1\"(&U)"
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "Filter %1"
 msgstr "필터 %1"
 
-#: kmmainwidget.cpp:4652
+#: kmmainwidget.cpp:4653
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "검색... <%1>"
 
-#: kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:4661
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5014,12 +5014,12 @@ msgstr ""
 "메시지에 HTML을 사용하면 스팸에 더 취약해질 수 있으며 다양한 보안 위협에 시스"
 "템이 노출될 가능성이 높아집니다."
 
-#: kmmainwidget.cpp:4664
+#: kmmainwidget.cpp:4665
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML 사용"
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5034,38 +5034,38 @@ msgstr ""
 "KMail 플러그인 설정에서 통합된 받은 편지함을 설정하거나, 새로운 편지함을 만들"
 "거나, 기능을 다시 끌 수 있습니다."
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4846
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "통합된 받은 편지함을 사용하시겠습니까?"
 
-#: kmmainwidget.cpp:4846
+#: kmmainwidget.cpp:4847
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "통합된 받은 편지함 사용"
 
-#: kmmainwidget.cpp:4847
+#: kmmainwidget.cpp:4848
 #, kde-format
 msgid "Cancel"
 msgstr "취소"
 
-#: kmmainwidget.cpp:4875
+#: kmmainwidget.cpp:4876
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi를 다시 시작하시겠습니까?"
 
-#: kmmainwidget.cpp:4876
+#: kmmainwidget.cpp:4877
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Akonadi 다시 시작"
 
-#: kmmainwidget.cpp:4877
+#: kmmainwidget.cpp:4878
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart"
 msgstr "계정 다시 시작"
 
-#: kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi를 다시 시작했습니다."

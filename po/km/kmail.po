@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-29 00:53+0000\n"
+"POT-Creation-Date: 2023-01-01 00:58+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1814,7 +1814,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "​ថត​​ប័ណ្ណសារ"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3515
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3523
 #, fuzzy, kde-format
 #| msgid "Archive"
 msgctxt "@action"
@@ -4364,7 +4364,7 @@ msgstr ""
 "ហើយ អាច​បង្កើន​ភាព​ដែល​ដូច​គ្នា ដែលប្រព័ន្ធ​របស់​អ្នក​នឹង​ត្រូវបាន​ស្រុះស្រួល​ដោយការបង្ហាញ​ផ្សេងទៀត និង "
 "ការទាញ​យក​សុវត្ថិភាព​ដែល​បាន​ស្មានទុក ។"
 
-#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4664
 #, kde-format
 msgid "Security Warning"
 msgstr "ព្រមាន​អំពី​សុវត្ថិភាព"
@@ -4614,7 +4614,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "លុប"
 
-#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2958 kmmainwidget.cpp:4003
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ផ្លាស់ទី​សែស្រឡាយ​ទៅ​ធុងសំរាម"
@@ -4624,12 +4624,12 @@ msgstr "ផ្លាស់ទី​សែស្រឡាយ​ទៅ​ធុង
 msgid "Move thread to trashcan"
 msgstr "ផ្លាស់ទី​ខ្សែស្រឡាយ​ទៅ​ធុងសំរាម"
 
-#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2965 kmmainwidget.cpp:4003
 #, kde-format
 msgid "Delete T&hread"
 msgstr "លុប​ខ្សែស្រឡាយ"
 
-#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:2971 kmmainwidget.cpp:4005
 #, kde-format
 msgid "&Find Messages..."
 msgstr "រក​សារ..."
@@ -5005,186 +5005,186 @@ msgstr "នាំចេញ​ទិន្នន័យ KMail ..."
 msgid "New AddressBook Contact..."
 msgstr "ទាក់ទង​សៀវភៅ​អាសយដ្ឋាន​ថ្មី..."
 
-#: kmmainwidget.cpp:3408
-#, kde-format
-msgid "Copy Message to Folder"
-msgstr "ចម្លង​សារ​ទៅ​ថត"
-
-#: kmmainwidget.cpp:3414
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "លោត​ទៅ​ថត..."
-
-#: kmmainwidget.cpp:3420
-#, kde-format
-msgid "Abort Current Operation"
-msgstr "បោះបង់​ប្រតិបត្តិការ​បច្ចុប្បន្ន"
-
-#: kmmainwidget.cpp:3426
-#, kde-format
-msgid "Focus on Next Folder"
-msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
-
-#: kmmainwidget.cpp:3432
-#, kde-format
-msgid "Focus on Previous Folder"
-msgstr "ផ្ដោត​ទៅលើ​ថត​មុន"
-
-#: kmmainwidget.cpp:3438
-#, kde-format
-msgid "Select Folder with Focus"
-msgstr "ជ្រើស​ថត​ដោយមាន​ការផ្ដោត"
-
-#: kmmainwidget.cpp:3445
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
-msgid "Focus on First Folder"
-msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
-
-#: kmmainwidget.cpp:3451
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
-msgid "Focus on Last Folder"
-msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
-
-#: kmmainwidget.cpp:3457
-#, kde-format
-msgid "Focus on Next Message"
-msgstr "ផ្ដោត​ទៅលើ​សារបន្ទាប់"
-
-#: kmmainwidget.cpp:3463
-#, kde-format
-msgid "Focus on Previous Message"
-msgstr "ផ្ដោត​ទៅលើ​សារមុន"
-
-#: kmmainwidget.cpp:3469
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
-msgid "Select First Message"
-msgstr "ជ្រើស​សារទាំងអស់"
-
-#: kmmainwidget.cpp:3475
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
-msgid "Select Last Message"
-msgstr "ជ្រើស​សារទាំងអស់"
-
-#: kmmainwidget.cpp:3481
-#, kde-format
-msgid "Select Message with Focus"
-msgstr "ជ្រើស​សារ​ដោយមាន​ការផ្ដោត"
-
-#: kmmainwidget.cpp:3488
-#, kde-format
-msgid "Set Focus to Quick Search"
-msgstr "កំណត់​កា​រផ្ដោត​លើ​ការ​ស្វែងរក​រហ័ស"
-
-#: kmmainwidget.cpp:3496
-#, kde-format
-msgid "Extend Selection to Previous Message"
-msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​មុន"
-
-#: kmmainwidget.cpp:3502
-#, kde-format
-msgid "Extend Selection to Next Message"
-msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​បន្ទាប់"
-
-#: kmmainwidget.cpp:3509
-#, kde-format
-msgid "Move Message to Folder"
-msgstr "ផ្លាស់ទី​សារ​ទៅ​ថត"
-
-#: kmmainwidget.cpp:3519
-#, kde-format
-msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
-
-#: kmmainwidget.cpp:3524
-#, kde-format
-msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
-
-#: kmmainwidget.cpp:3528 kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:3396 kmmainwidget.cpp:4044
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "ការ​កំណត់"
 
-#: kmmainwidget.cpp:3532
+#: kmmainwidget.cpp:3400
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Account"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3416
+#, kde-format
+msgid "Copy Message to Folder"
+msgstr "ចម្លង​សារ​ទៅ​ថត"
+
+#: kmmainwidget.cpp:3422
+#, kde-format
+msgid "Jump to Folder..."
+msgstr "លោត​ទៅ​ថត..."
+
+#: kmmainwidget.cpp:3428
+#, kde-format
+msgid "Abort Current Operation"
+msgstr "បោះបង់​ប្រតិបត្តិការ​បច្ចុប្បន្ន"
+
+#: kmmainwidget.cpp:3434
+#, kde-format
+msgid "Focus on Next Folder"
+msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
+
+#: kmmainwidget.cpp:3440
+#, kde-format
+msgid "Focus on Previous Folder"
+msgstr "ផ្ដោត​ទៅលើ​ថត​មុន"
+
+#: kmmainwidget.cpp:3446
+#, kde-format
+msgid "Select Folder with Focus"
+msgstr "ជ្រើស​ថត​ដោយមាន​ការផ្ដោត"
+
+#: kmmainwidget.cpp:3453
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgid "Focus on First Folder"
+msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
+
+#: kmmainwidget.cpp:3459
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgid "Focus on Last Folder"
+msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
+
+#: kmmainwidget.cpp:3465
+#, kde-format
+msgid "Focus on Next Message"
+msgstr "ផ្ដោត​ទៅលើ​សារបន្ទាប់"
+
+#: kmmainwidget.cpp:3471
+#, kde-format
+msgid "Focus on Previous Message"
+msgstr "ផ្ដោត​ទៅលើ​សារមុន"
+
+#: kmmainwidget.cpp:3477
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgid "Select First Message"
+msgstr "ជ្រើស​សារទាំងអស់"
+
+#: kmmainwidget.cpp:3483
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgid "Select Last Message"
+msgstr "ជ្រើស​សារទាំងអស់"
+
+#: kmmainwidget.cpp:3489
+#, kde-format
+msgid "Select Message with Focus"
+msgstr "ជ្រើស​សារ​ដោយមាន​ការផ្ដោត"
+
+#: kmmainwidget.cpp:3496
+#, kde-format
+msgid "Set Focus to Quick Search"
+msgstr "កំណត់​កា​រផ្ដោត​លើ​ការ​ស្វែងរក​រហ័ស"
+
+#: kmmainwidget.cpp:3504
+#, kde-format
+msgid "Extend Selection to Previous Message"
+msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​មុន"
+
+#: kmmainwidget.cpp:3510
+#, kde-format
+msgid "Extend Selection to Next Message"
+msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​បន្ទាប់"
+
+#: kmmainwidget.cpp:3517
+#, kde-format
+msgid "Move Message to Folder"
+msgstr "ផ្លាស់ទី​សារ​ទៅ​ថត"
+
+#: kmmainwidget.cpp:3527
+#, kde-format
+msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+msgstr ""
+
+#: kmmainwidget.cpp:3532
+#, kde-format
+msgid "Remove Duplicates in This Folder and All its Subfolder"
+msgstr ""
+
+#: kmmainwidget.cpp:3538
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "ថត​មិនទាន់អាន​មុន"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3545
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "លុប​ថត"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3573
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "បន្ថែម​ថត​សំណព្វ"
 
-#: kmmainwidget.cpp:3990
+#: kmmainwidget.cpp:3991
 #, kde-format
 msgid "&Delete Search"
 msgstr "លុប​ការស្វែងរក"
 
-#: kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:4005
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Edit Search..."
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:4042
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ KMail..."
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "សម្អាត​ធុងសំរាម"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4053
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ផ្លាស់ទី​សារ​ទាំងអស់​ទៅកាន់ធុងសំរាម"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4127
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4129
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "Filter %1"
 msgstr "តម្រង %1"
 
-#: kmmainwidget.cpp:4652
+#: kmmainwidget.cpp:4653
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:4661
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5195,12 +5195,12 @@ msgstr ""
 "បង្កើន​ភាព​ដែលដូចគ្នា ដែលប្រព័ន្ធរបស់អ្នកនឹងត្រូវបាន​ស្រុះស្រួល​ដោយការបង្ហាញ​ផ្សេងទៀត និង ការទាញយក​"
 "សុវត្ថិភាពដែលបាន​ស្មានទុក ។"
 
-#: kmmainwidget.cpp:4664
+#: kmmainwidget.cpp:4665
 #, kde-format
 msgid "Use HTML"
 msgstr "ប្រើ HTML"
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5210,40 +5210,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4846
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4846
+#: kmmainwidget.cpp:4847
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4847
+#: kmmainwidget.cpp:4848
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4875
+#: kmmainwidget.cpp:4876
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: kmmainwidget.cpp:4876
+#: kmmainwidget.cpp:4877
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Akonadi"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:4877
+#: kmmainwidget.cpp:4878
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
