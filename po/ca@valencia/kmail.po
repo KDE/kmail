@@ -2530,7 +2530,8 @@ msgid ""
 "is fully trusted). Click the icon for details."
 msgstr ""
 "S'emprarà encriptació d'alta seguretat per a este destinatari (la clau "
-"d'encriptació és de plena confiança). Feu clic en la icona per a més detalls."
+"d'encriptació és de plena confiança). Per a més detalls, feu clic damunt de "
+"la icona."
 
 #: editor/kmcomposerwin.cpp:3908
 #, kde-format
@@ -2539,8 +2540,8 @@ msgid ""
 "key is marginally trusted). Click the icon for details."
 msgstr ""
 "S'emprarà encriptació de seguretat mitjana per a este destinatari (la clau "
-"d'encriptació és de confiança parcial). Feu clic en la icona per a més "
-"detalls."
+"d'encriptació és de confiança parcial). Per a més detalls, feu clic damunt "
+"de la icona."
 
 #: editor/kmcomposerwin.cpp:3914
 #, kde-format
@@ -2549,8 +2550,8 @@ msgid ""
 "is untrusted). Click the icon for details."
 msgstr ""
 "S'emprarà encriptació de baixa seguretat per a este destinatari (la clau "
-"d'encriptació és de confiança no fiable). Feu clic en la icona per a més "
-"detalls."
+"d'encriptació és de confiança no fiable). Per a més detalls, feu clic damunt "
+"de la icona."
 
 #: editor/kmcomposerwin.cpp:3921
 #, kde-format
@@ -2561,7 +2562,7 @@ msgid ""
 msgstr ""
 "El correu electrònic per a este destinatari serà encriptat, però la "
 "seguretat de l'encriptació és desconeguda (la clau d'encriptació no s'ha "
-"pogut verificar). Feu clic en la icona per a més detalls."
+"pogut verificar). Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3955
 #, kde-format
