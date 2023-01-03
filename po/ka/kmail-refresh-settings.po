@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-02 01:04+0000\n"
-"PO-Revision-Date: 2022-08-21 06:09+0200\n"
+"PO-Revision-Date: 2023-01-02 05:19+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,13 +31,12 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: main.cpp:32 main.cpp:34
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
-msgstr ""
+msgstr "KMail -ის დამხმარე პარამეტრების განახლებისთვის"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2023 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:37
 #, kde-format
@@ -78,29 +77,29 @@ msgstr "გასუფთავება"
 #: refreshsettingscleanuppage.cpp:50
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
-msgstr ""
+msgstr "მოძველებული \"TipOfDay\" პარამეტრების წაშლა: დასრულდა"
 
 #: refreshsettingscleanuppage.cpp:62
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
-msgstr ""
+msgstr "ფაილში '%1' ფანჯრის პარამეტრების წაშლა: დასრულდა"
 
 #: refreshsettingscleanuppage.cpp:74
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
-msgstr ""
+msgstr "'%1'-ში ფილტრის პარამეტრების წაშლა: დასრულდა"
 
 #: refreshsettingscleanuppage.cpp:90
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
-msgstr ""
+msgstr "პარამეტრების ფაილში '%1' საქაღალდის პარამეტრების გასუფთავება: დასრულდა"
 
 #: refreshsettingscleanuppage.cpp:146
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
-msgstr ""
+msgstr "პარამეტრების ფაილში '%1' ფანჯრის ზომების გასუფთავება: დასრულდა"
 
 #: refreshsettingsfirstpage.cpp:18
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
-msgstr ""
+msgstr "მის გამოყენებამდე საჭიროა KMail/Kontact-ის დახურვა."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-01 00:58+0000\n"
-"PO-Revision-Date: 2023-01-01 07:03+0100\n"
+"PO-Revision-Date: 2023-01-02 05:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -147,19 +147,19 @@ msgstr "GnuPG -ის მხარდაჭერა"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
-msgstr ""
+msgstr "ძირითადი მონაწილე"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
-msgstr ""
+msgstr "გასწორდა სხვადასხვა შეცდომები"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
-msgstr ""
+msgstr "ასინქრონული პროცესების გაუმჯობესება"
 
 #: aboutdata.cpp:75
 msgid "Enhanced configuration dialogs"
-msgstr ""
+msgstr "გაუმჯობესებული მორგების ფანჯრები"
 
 #: aboutdata.cpp:76
 msgid "Notes/calendar integration"
@@ -315,7 +315,7 @@ msgstr ""
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
-msgstr ""
+msgstr "X-Face -ის მხარდაჭერა"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
@@ -335,7 +335,7 @@ msgstr ""
 
 #: aboutdata.cpp:181
 msgid "IM status indicator"
-msgstr ""
+msgstr "IM სტატუსის მაჩვენებელი"
 
 #: aboutdata.cpp:182
 msgid "Improve layout of recipients editor"
@@ -367,7 +367,7 @@ msgstr "KMail"
 #: aboutdata.cpp:196
 #, kde-format
 msgid "KDE Email Client"
-msgstr ""
+msgstr "KDE -ის ელფოსტის კლიენტი"
 
 #: aboutdata.cpp:198
 #, kde-format
@@ -589,7 +589,7 @@ msgstr "მართლწერის შემოწმება"
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Never Automatically"
-msgstr ""
+msgstr "არასდროს ავტომატურად"
 
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
@@ -723,7 +723,7 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:134
 msgid "Fixed Width Font"
-msgstr ""
+msgstr "ფიქსირებული სიგანის ფონტი"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Composer"
@@ -1428,7 +1428,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "Enter new key word:"
-msgstr "შეიყვანეთ ახალი საკვანძო სიტყვა"
+msgstr "შეიყვანეთ ახალი საკვანძო სიტყვა:"
 
 #: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format

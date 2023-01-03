@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2019, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail-refresh-settings\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-02 01:04+0000\n"
-"PO-Revision-Date: 2022-01-02 09:01+0200\n"
+"PO-Revision-Date: 2023-01-02 08:51+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -36,10 +36,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Допоміжна програма KMail для оновлення параметрів"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
-msgstr "© Laurent Montel <montel@kde.org>, 2019–2022"
+msgstr "© Laurent Montel <montel@kde.org>, 2019–2023"
 
 #: main.cpp:37
 #, kde-format
