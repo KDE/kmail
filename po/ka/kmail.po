@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-01 00:58+0000\n"
-"PO-Revision-Date: 2023-01-02 05:24+0100\n"
+"PO-Revision-Date: 2023-01-03 07:38+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -179,7 +179,7 @@ msgstr ""
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
-msgstr ""
+msgstr "გაასწორა ძალიან ბევრი შეცდომა"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
@@ -191,11 +191,11 @@ msgstr ""
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
-msgstr ""
+msgstr "Bugzilla -ის მოვლა"
 
 #: aboutdata.cpp:99
 msgid "Improved execution speed"
-msgstr ""
+msgstr "გაშვების აჩქარება"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
@@ -211,11 +211,11 @@ msgstr ""
 
 #: aboutdata.cpp:109
 msgid "Bug fixes, code cleanup"
-msgstr ""
+msgstr "შეცდომების გასწორება, კოდის გასუფთავება"
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
-msgstr ""
+msgstr "LDAP -ის მხარდაჭერა და მისი მოვლა"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
-msgstr ""
+msgstr "დოკუმენტაცია. ჯერ კიდევ აქტიურია"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
@@ -745,15 +745,15 @@ msgstr "&გადატარება:"
 
 #: configuredialog/configureappearancepage.cpp:301
 msgid "Quoted Text - First Level"
-msgstr ""
+msgstr "ციტირებული ტექსტი - პირველი დონე"
 
 #: configuredialog/configureappearancepage.cpp:302
 msgid "Quoted Text - Second Level"
-msgstr ""
+msgstr "ციტირებული ტექსტი - მეორე დონე"
 
 #: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - Third Level"
-msgstr ""
+msgstr "ციტირებული ტექსტი - მესამე დონე"
 
 #: configuredialog/configureappearancepage.cpp:304
 msgid "Link"
@@ -1443,7 +1443,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1126
 #, kde-format
 msgid "Maximum Attachment Size:"
-msgstr ""
+msgstr "მიბმული ფაილის მაქსიმალური ზომა:"
 
 #: configuredialog/configurecomposerpage.cpp:1133
 #, kde-format
@@ -1506,22 +1506,22 @@ msgstr ""
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, kde-format
 msgid "Composer Plugins"
-msgstr ""
+msgstr "გაგზავნის დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
 msgid "Grammar Checker Plugins"
-msgstr ""
+msgstr "მართლწერის შემოწმების დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
 #, kde-format
 msgid "Tools Plugins"
-msgstr ""
+msgstr "ხელსაწყოს დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
 #, kde-format
 msgid "Editor Plugins"
-msgstr ""
+msgstr "რედაქტორის დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, kde-format
@@ -1536,12 +1536,12 @@ msgstr "Webengine -ის დამატებები"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
 msgid "Header Style Plugins"
-msgstr ""
+msgstr "თავსართის სტილის დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, kde-format
 msgid "Text Conversion Plugins"
-msgstr ""
+msgstr "ტექსტის გადაყვანის დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
@@ -1551,12 +1551,12 @@ msgstr "სხვანი"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
-msgstr ""
+msgstr "ელფოსტების წაშლის დადასტურების დამატებები"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Akonadi Agents"
-msgstr ""
+msgstr "Akonadi -ის აგენტები"
 
 #: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
@@ -1576,7 +1576,7 @@ msgstr "დაშიფრვა"
 #: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
-msgstr ""
+msgstr "S/MIME -ის გადამოწმება"
 
 #: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
@@ -1801,7 +1801,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:338
 #, kde-format
 msgid "&Mail transport:"
-msgstr ""
+msgstr "&ელფოსტის ტრანსპორტი:"
 
 #: editor/kmcomposerwin.cpp:339
 #, kde-format
@@ -2279,7 +2279,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:2802 editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "S&end as Is"
-msgstr ""
+msgstr "&გაგზავნა, როგორც არის"
 
 #: editor/kmcomposerwin.cpp:2803
 #, kde-format

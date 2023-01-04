@@ -3,7 +3,7 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011, 2012.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vpelcak@suse.cz>, 2021, 2022.
+# Vit Pelcak <vit@pelcak.org>, 2021, 2022.
 #
 msgid ""
 msgstr ""
@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-01 00:58+0000\n"
 "PO-Revision-Date: 2022-01-14 14:39+0100\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -1615,8 +1615,7 @@ msgid "Message Disposition Notifications"
 msgstr "Upozornění na naložení se zprávou"
 
 #: configuredialog/configuresecuritypage.cpp:55
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Šifrování"
 
@@ -2891,10 +2890,9 @@ msgid "Use same key for encryption and signing"
 msgstr ""
 
 #: identity/identitydialog.cpp:385
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Podepisovací klíč OpenPGP:"
+msgstr ""
 
 #: identity/identitydialog.cpp:410
 #, kde-format
@@ -2962,10 +2960,9 @@ msgid "Preferred format:"
 msgstr "Preferovaný formát:"
 
 #: identity/identitydialog.cpp:474
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Šifrovat"
+msgstr ""
 
 #: identity/identitydialog.cpp:478
 #, kde-format
@@ -2988,30 +2985,26 @@ msgid "Overwrite defaults:"
 msgstr ""
 
 #: identity/identitydialog.cpp:494
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Podep&sat zprávu"
+msgstr ""
 
 #: identity/identitydialog.cpp:497
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Automaticky šifrovat zprávy, pokud je to možné"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "&Upozornění před odesláním nepodepsaných zpráv"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Upozornění před pokusem odeslat nešifrovanou zprávu"
+msgstr ""
 
 #: identity/identitydialog.cpp:513
 #, kde-format
@@ -5046,10 +5039,9 @@ msgid "Restart Akonadi"
 msgstr "Restartovat Akonadi"
 
 #: kmmainwidget.cpp:4878
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "Restartovat účet"
+msgstr "Restartovat"
 
 #: kmmainwidget.cpp:4885
 #, kde-format
@@ -6637,17 +6629,15 @@ msgstr "Otevřít &zprávu"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Nastavit jako výchozí"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Zašifrované zprávy"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6681,38 +6671,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Zašifrované zprávy"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Podep&sat zprávu"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Automaticky šifrovat zprávy, pokud je to možné"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "S/MIME encryption certificate:"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Šifrovací S/MIME certifikát:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Zobrazit v editoru ukazatel zašifrovaný/podepsaný"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
@@ -6728,10 +6713,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Vždy zobrazit ši&frovací klíče ke schválení"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6797,22 +6781,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Pro kořenové ce&rtifikáty:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6822,13 +6797,6 @@ msgid ""
 "The recommended SPHINX setting is 30 days.\n"
 "</p></qt>"
 msgstr ""
-"<qt>\n"
-"<h1>Varování při vypršení kořenového certifikátu</h1>\n"
-"Zvolte minimální počet dnů, po které bude kořenový certifikát považován za "
-"platný a nebudou generována varování.\n"
-"<p>\n"
-"Doporučená hodnota SPHINX je 14 dnů.\n"
-"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -7567,126 +7535,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgid "Composing"
-#~ msgstr "Psaní"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Různé"
-
-#~ msgid "Automatically sign messages"
-#~ msgstr "Automaticky podepisovat zprávy"
-
-#~ msgid ""
-#~ "When this option is enabled, the message/file will not only be encrypted "
-#~ "with the receiver's public key, but also with your key. This will enable "
-#~ "you to decrypt the message/file at a later time. This is generally a good "
-#~ "idea."
-#~ msgstr ""
-#~ "Pokud je tato volba povolena, nebude zpráva či soubor zašifrována pouze "
-#~ "veřejným klíčem příjemce, ale i vaším klíčem. To vám umožní pozdější "
-#~ "rozšifrování zprávy či souboru. Obvykle je výhodné tuto volbu používat."
-
-#~ msgid ""
-#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
-#~ "identity"
-#~ msgstr ""
-#~ "Pokaždé, když se šifrují zprávy, zašif&rovat i certifikát mé identity"
-
-#~ msgid "Store sent messages encry&pted"
-#~ msgstr "Ukládat odeslané z&právy šifrovaně"
-
-#~ msgid ""
-#~ "When this option is enabled, the application will always show you a list "
-#~ "of public keys from which you can choose the one it will use for "
-#~ "encryption. If it is off, the application will only show the dialog if it "
-#~ "cannot find the right key or if there are several which could be used."
-#~ msgstr ""
-#~ "Pokud je zapnuta tato volba, program vždy zobrazí seznam veřejných klíčů, "
-#~ "ze kterých můžete vybrat klíč k zašifrování. Pokud je volba vypnuta, "
-#~ "zobrazí se dialog pouze tehdy, pokud aplikace nemůže najít správný klíč "
-#~ "nebo je možností několik."
-
-#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
-#~ msgstr "Při ukládání konceptu podepsal/zašifrovat podle nastavení"
-
-#~ msgid "Check to be warned when sending unsigned messages."
-#~ msgstr ""
-#~ "Zvolte, pokud si přejete být upozorněni při odesílání nepodepsaných zpráv."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unsigned.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Upozornění při pokusu o odeslání nepodepsané zprávy</h1>\n"
-#~ "Pokud je toto políčko zaškrtnuté, budete upozorněni, pokud budete "
-#~ "odesílat zprávu (nebo část zprávy), jež není podepsána.\n"
-#~ "<p>\n"
-#~ "Pro maximální bezpečnost je doporučeno ponechat tuto volbu zapnutou.\n"
-#~ "</p></qt>"
-
-#~ msgid "Check to be warned when sending unencrypted messages."
-#~ msgstr "Zvolte pro upozornění před pokusem odeslat nešifrovanou zprávu."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unencrypted.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Upozornění při pokusu o odeslání nezašifrované zprávy</h1>\n"
-#~ "Pokud je toto políčko zaškrtnuté, budete upozorněni, pokud budete "
-#~ "odesílat zprávu (nebo část zprávy), jež není zašifrována.\n"
-#~ "<p>\n"
-#~ "Pro maximální bezpečnost je doporučeno ponechat tuto volbu zapnutou.\n"
-#~ "</p></qt>"
-
-#~ msgid "For Signing"
-#~ msgstr "Pro podepisování"
-
-#~ msgid "For Encryption"
-#~ msgstr "Pro šifrování"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the signature certificate should be "
-#~ "valid without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Varování při vypršení certifikátu podpisu</h1>\n"
-#~ "Zvolte minimální počet dnů, po které bude CA certifikát považován za "
-#~ "platný a nebudou generována varování.\n"
-#~ "<p>\n"
-#~ "Doporučená hodnota SPHINX je 14 dnů.\n"
-#~ "</p></qt>"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If CA Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the CA certificate should be valid "
-#~ "without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Varování při vypršení certifikátu certifikační autority (CA)</h1>\n"
-#~ "Zvolte minimální počet dnů, po které bude CA certifikát považován za "
-#~ "platný a nebudou generována varování.\n"
-#~ "<p>\n"
-#~ "Doporučená hodnota SPHINX je 14 dnů.\n"
-#~ "</p></qt>"
