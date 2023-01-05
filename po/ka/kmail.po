@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-01 00:58+0000\n"
-"PO-Revision-Date: 2023-01-03 07:38+0100\n"
+"PO-Revision-Date: 2023-01-04 09:00+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -111,7 +111,7 @@ msgstr ""
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
-msgstr ""
+msgstr "გაფრთხილებები საათთან"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -403,7 +403,7 @@ msgstr "Browser-ი"
 #: collectionpage/collectionmailinglistpage.cpp:81
 #, kde-format
 msgid "Preferred handler:"
-msgstr ""
+msgstr "რჩეული დამმუშავებელი:"
 
 #: collectionpage/collectionmailinglistpage.cpp:93
 #, kde-format
@@ -599,7 +599,7 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On All Mail Checks"
-msgstr ""
+msgstr "ელფოსტის შემოწმებისას"
 
 #: configuredialog/configureaccountpage.cpp:105
 #, kde-format
@@ -1720,7 +1720,7 @@ msgstr ""
 #: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "No folder selected"
-msgstr ""
+msgstr "საქაღალდე არჩეული არაა"
 
 #: dialog/kmknotify.cpp:30
 #, kde-format
@@ -1796,7 +1796,7 @@ msgstr "&ლექსიკონი:"
 #: editor/kmcomposerwin.cpp:337
 #, kde-format
 msgid "&Sent-Mail folder:"
-msgstr ""
+msgstr "&გაგზავნილი ელფოსტის საქაღალდე:"
 
 #: editor/kmcomposerwin.cpp:338
 #, kde-format
@@ -1957,7 +1957,7 @@ msgstr "&სიტყვების გადატანა"
 #: editor/kmcomposerwin.cpp:1314
 #, kde-format
 msgid "&Snippets"
-msgstr ""
+msgstr "&ფრაზები"
 
 #: editor/kmcomposerwin.cpp:1319
 #, kde-format
@@ -1997,7 +1997,7 @@ msgstr "&ლექსიკონი"
 #: editor/kmcomposerwin.cpp:1351
 #, kde-format
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "&გაგზავნილი ელფოსტის საქაღალდე"
 
 #: editor/kmcomposerwin.cpp:1354
 #, kde-format
@@ -2053,7 +2053,7 @@ msgstr "დაშიფრვა"
 #: editor/kmcomposerwin.cpp:1396
 #, kde-format
 msgid "&Sign Message"
-msgstr ""
+msgstr "&შეტყობინების ხელმოწერა"
 
 #: editor/kmcomposerwin.cpp:1397
 #, kde-format
@@ -2333,12 +2333,12 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:3133
 #, kde-format
 msgid "Too many recipients"
-msgstr ""
+msgstr "მეტისმეტად ბევრი მიმღები"
 
 #: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid "&Send as Is"
-msgstr ""
+msgstr "&გაგზავნა, როგორც არის"
 
 #: editor/kmcomposerwin.cpp:3135
 #, kde-format
