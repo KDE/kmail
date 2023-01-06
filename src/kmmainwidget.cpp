@@ -2096,8 +2096,7 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
     auto command = new KMReplyCommand(this, msg, MessageComposer::ReplyAll, text, false, tmpl);
-    command->setReplyAsHtml(messageView()->htmlMail());
-
+    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
     command->start();
 }
 
@@ -4745,7 +4744,7 @@ void KMMainWidget::slotRedirectCurrentMessage()
 void KMMainWidget::replyMessageTo(const Akonadi::Item &item, bool replyToAll)
 {
     auto command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
-    command->setReplyAsHtml(messageView()->htmlMail());
+    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
     command->start();
 }
 
