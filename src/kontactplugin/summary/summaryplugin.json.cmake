@@ -9,6 +9,7 @@
         "Description[cs]": "Modul souhrnu pro aplikaci Kontact",
         "Description[de]": "Übersichts-Modul für Kontact",
         "Description[en_GB]": "Kontact SummaryView Plugin",
+        "Description[eo]": "Kontact ResumRigardo-Kromprogramo",
         "Description[es]": "Complemento de vista de resumen para Kontact",
         "Description[eu]": "Kontact-eko laburpen ikuspegirako plugina",
         "Description[fi]": "Kontactin yhteenvetonäkymäliitännäinen",
