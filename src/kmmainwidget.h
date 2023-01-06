@@ -521,7 +521,6 @@ private:
     void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
-    void printCurrentMessage(bool preview);
     void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
