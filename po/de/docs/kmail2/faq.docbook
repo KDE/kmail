@@ -2,1480 +2,771 @@
 
 <chapterinfo>
 <authorgroup>
-<author
->&Daniel.Naber; &Daniel.Naber.mail;</author>
-<author
->&David.Rugge; &David.Rugge.mail;</author>
-<author
->&David.Bryant; &David.Bryant.mail;</author>
-<othercredit role="translator"
-><firstname
->Matthias</firstname
-><surname
->Kiefer</surname
-> <affiliation
-><address
-><email
->matthias.kiefer@gmx.de</email
-></address
-></affiliation
-> <contrib
->Deutsche Übersetzung</contrib
-></othercredit
-> <othercredit role="translator"
-><firstname
->Alexander</firstname
-><surname
->Gretencord</surname
-> <affiliation
-><address
-><email
->arutha@gmx.de</email
-></address
-></affiliation
-> <contrib
->Überarbeitung</contrib
-></othercredit
-> <othercredit role="translator"
-><firstname
->Frank</firstname
-><surname
->Schütte</surname
-> <affiliation
-><address
-><email
->F.Schuette@t-online.de</email
-></address
-></affiliation
-> <contrib
->Überarbeitung ab Version 1.3</contrib
-></othercredit
-><othercredit role="translator"
-><firstname
->Matthias Kalle</firstname
-><surname
->Dalheimer</surname
-> <affiliation
-><address
-><email
->kalle@kdab.net</email
-></address
-></affiliation
-> <contrib
->Krypto-Übersetzung</contrib
-></othercredit
-> 
+<author>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author>&David.Rugge; &David.Rugge.mail;</author>
+<author>&David.Bryant; &David.Bryant.mail;</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
-<date
->2021-04-09</date>
-<releaseinfo
->5.14.2 (Anwendungen 20.04.2)</releaseinfo>
+<date>2021-04-09</date>
+<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
-<title
->Häufig gestellte Fragen (Frequently Asked Questions &FAQ;)</title>
-<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
-> -->
+<title>Frequently Asked Questions (&FAQ;)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section> -->
 
 <qandaset id="faq-set">
 
 <qandaentry>
-  <question
-><para
->Wie stelle ich Firefox als meinen Standard-Browser ein?</para
-></question>
+  <question><para>How can I set Firefox as my default browser?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie möchten eine Verknüpfung in &kmail; mit dem Programm <application
->Firefox</application
-> öffnen. Zurzeit wird ein anderer Browser benutzt, das möchten Sie ändern.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Die Änderung des Standard-Browsers betrifft Ihr gesamtes &kde;-System, nicht nur &kmail;. Öffnen Sie in den &systemsettings; die <guilabel
->Standard-Anwendungen</guilabel
-> und geben auf der Seite <guilabel
->Webbrowser</guilabel
-> <application
->Firefox Web Browser</application
-> ein.</para>
+    <para><emphasis>Problem:</emphasis> You want to click on a link in &kmail; and have the link opened in 
+    <application>Firefox</application>. At the moment, another browser is used. You want to change this.</para>
+    <para><emphasis>Solution:</emphasis> This change will affect all of &kde;, not just &kmail;. Select <menuchoice> 
+    <guimenu>&systemsettings;</guimenu><guisubmenu>Default Applications</guisubmenu><guimenuitem>Web 
+    Browser</guimenuitem><guimenuitem>Mozilla Firefox</guimenuitem></menuchoice>.</para>
     
-    <para
->Möchten Sie als Systemverwalter diese Einstellung automatisch für alle Benutzer festlegen, müssen Sie folgendes ändern:</para>
+    <para>If you are an administrator and want to make this setting automatically for your users, do this.</para>
     <itemizedlist>
       <listitem>
-        <para
->Führen Sie <screen
-># qtpaths --paths ConfigLocation</screen
-> in einem terminal aus. Dann werden die Pfade zu den Einrichtungsdateien der KDE-Anwendungen angezeigt. Verwenden Sie den Pfad, der im Persönlichen Ordner der Benutzer beginnt, suchen Sie nach der Datei <filename
->kdeglobals</filename
-> und fügen diese Zeile im Abschnitt <guilabel
->[General]</guilabel
-> hinzu:</para>
-        <para
-><userinput
->BrowserApplication[$e]=firefox.desktop</userinput>
+        <para>Run <screen># qtpaths --paths ConfigLocation</screen> in a terminal. This will display the path(s) leading to
+        configuration files for KDE programs in your system. Use the path starting in each user's Home directory, and
+        locate the file named <filename>kdeglobals</filename>, then add this line under category 
+        <guilabel>[General]</guilabel>:</para>
+        <para><userinput>BrowserApplication[$e]=firefox.desktop</userinput>
         </para>
       </listitem>
     </itemizedlist>
-    <para
->Sie können außerdem auch das Skript <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
->Tutorials/Modify KDE Software Defaults</ulink
-> benutzen.</para>
-    <note
-><para
->Der tatsächliche Speicherort der Einrichtungsvariablen hängt von Ihrer Distribution ab. Daher funktionieren möglicherweise einige der Anweisungen zur Änderung der Einrichtungsvariablen nicht wie im &kde;-Wiki beschrieben. Fragen Sie im einem öffentlichen Forum Ihrer Distribution nach Hilfe.</para
-></note>
-    <para
->&nbsp;</para>
+    <para>You can also try the script in 
+    <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults">Tutorials/
+    Modify_KDE_Software_Defaults</ulink></para>
+    <note><para>The actual physical location of configuration variables is distribution dependent. Do not
+    be surprised if some of the instructions about modifying configuration variables documented in the &kde; wiki
+    will not work for you. The public forum (online) for your distro is a good place to seek help.</para></note>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie steuere ich die Verbindung für ein Roaming-Profil?</para
-></question>
+  <question><para>How do I control my Roaming profile's connection?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie haben ein <emphasis
->Roaming-Profil</emphasis
->, um von unterwegs auf Ihren Server zuzugreifen. Die Verbindung erfolgt aber auch über das Roaming-Profil, wenn Sie direkt am Netzwerk angeschlossen sind. Die automatische Verbindung ist in den Einstellungen abgeschaltet.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Gehen Sie im Einrichtungsdialog von &kmail; auf der Seite <guilabel
->Zugänge</guilabel
-> zur Karteikarte <guilabel
->Empfang</guilabel
->. Öffnen Sie die <guilabel
->Abrufeinstellungen</guilabel
-> der betroffenen Ressource und schalten Sie <guilabel
->Bei manueller Prüfung einbeziehen</guilabel
-> ab. Wenn Sie nun im Hauptfenster <guilabel
->Nach E-Mail sehen</guilabel
-> auswählen, ist diese Ressource nicht eingeschlossen. Um sie von unterwegs zu benutzen, wählen Sie sie aus dem Untermenü von <guilabel
->Nach E-Mail sehen in</guilabel
-> direkt aus.</para
-><para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You set up a <emphasis>Roaming profile</emphasis> so you can access your
+    home server while you are on the road, but it keeps trying to connect even when you are at home. 
+    Auto-connection is disabled in the setup screens.</para>
+    <para><emphasis>Solution:</emphasis> Navigate to <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
+    KMail</guisubmenu><guimenuitem>Accounts</guimenuitem><guimenuitem>Receiving (tab)</guimenuitem>
+    <guimenuitem>(select the account to exclude)</guimenuitem><guimenuitem>Retrieval Options</guimenuitem> 
+    </menuchoice>, then uncheck <guilabel>Include in Manual Mail Check</guilabel>. This will exclude that profile 
+    when you hit the download icon, but the account will still be available from the drop-down list, making it easy 
+    to retrieve your mail when away from home.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie speichere ich gesendete Nachrichten in einem speziellen Ordner? </para
-></question>
+  <question><para>How do I store sent messages in a special folder?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
->: Sie möchten gesendete Nachrichten in einem bestimmten Ordner speichern. Sie benutzen zum Beispiel einen &IMAP;-Server und möchten die gesendeten Nachrichten auf dem Server und nicht auf dem Rechner speichern.</para>
-    <para
-><emphasis
->Lösung</emphasis
->: Gehen Sie im Einrichtungsdialog von &kmail; auf der Seite <guilabel
->Zugänge</guilabel
-> zur Karteikarte <guilabel
->Identitäten</guilabel
->. Wählen Sie die richtige Identität aus und drücken Sie auf den Knopf <guilabel
->Ändern</guilabel
->. Im Dialog wählen Sie dann auf der Karteikarte <guilabel
->Erweitert</guilabel
-> den gewünschten <guilabel
->Ordner für versendete Nachrichten</guilabel
-> aus.</para>
-    <para
->Alternativ können Sie <guilabel
->Ordner für versendete Nachrichten</guilabel
-> aus dem Menü <guimenu
->Ansicht</guimenu
-> im Editorfenster verwenden, um die Voreinstellung für eine bestimmte Nachricht zu überschreiben.</para
-><para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You want to store the messages you have sent in a special folder. Maybe you
+    are using an &IMAP; server and wish to store your sent mail on the server, not in a local folder.</para>
+    <para><emphasis>Solution:</emphasis> In &kmail;, navigate to 
+    <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
+    KMail</guisubmenu><guimenuitem>Identities</guimenuitem><guimenuitem>(Choose an 
+    identity)</guimenuitem><guimenuitem>Modify</guimenuitem><guimenuitem>Advanced</guimenuitem><guimenuitem>Sent-mail 
+    folder</guimenuitem></menuchoice> and select the folder you want to use.</para>
+    <para>Alternatively, you can use the <guilabel>Sent-Mail Folder</guilabel> field (accessible via the
+    <guimenu>View</guimenu> menu in the composer window) to override the default sent mail folder for a particular 
+    message.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie verschiebe ich gelöschte Nachrichten in einem speziellen Ordner? </para
-></question>
+  <question><para>How do I move trash email messages to a special folder?</para></question>
   <answer>
-    <para
-><emphasis
->Problem</emphasis
->: Sie möchten gelöschte Nachrichten in einem bestimmten Ordner speichern. Sie benutzen zum Beispiel einen &IMAP;-Server und möchten die gelöschten E-Mails auf dem Server und nicht auf dem lokalen Rechner speichern.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Im Einstellungsdialog wählen Sie ein &IMAP;-Konto auf der Seite <guilabel
->Zugänge</guilabel
->. Klicken Sie auf <guibutton
->Ändern</guibutton
-> und ändern Sie den Ordner für den Papierkorb auf der Karteikarte <guilabel
->Erweitert</guilabel
->.</para
-><para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You want to store trash in a special folder. Maybe you are using an &IMAP; 
+    server and want trashed email messages to be stored on the server, not locally.</para>
+    <para><emphasis>Solution:</emphasis> In the settings dialog select an &IMAP; account on the 
+    <guilabel>Accounts</guilabel> page. Click on <guibutton>Modify</guibutton> and change the
+    trash folder location via the <guilabel>Advanced</guilabel> tab.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #5 -->
 <qandaentry>
-  <question
-><para
->Wie speichere ich verschlüsselte Nachrichten im Klartext?</para
-></question>
+  <question><para>How can I store encrypted messages in unencrypted form?</para></question>
   <answer>
-    <para
-><emphasis
->Problem</emphasis
->: Sie tauschen eine verschlüsselte E-Mail mit einem Freund aus, möchten aber Ihre eigene Kopie unverschlüsselt speichern, nachdem Sie die Nachricht geöffnet haben.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Um bereits entschlüsselte Dateien unverschlüsselt im Klartext zu speichern, fügen Sie folgendes zum Abschnitt [Reader] in Ihrer Einrichtungsdatei <filename
->kmail2rc</filename
-> hinzu:</para>
-    <para
-><userinput
->store-displayed-messages-unencrypted=true</userinput
->.</para
-><para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You exchange encrypted mail with a friend, but would like to store your 
+    own copy unencrypted, once you have opened the message.</para>
+    <para><emphasis>Solution:</emphasis> To store emails that have been decrypted once in unencrypted format 
+    thereafter, add this item to your <filename>kmail2rc</filename> configuration file, in the [Reader] section:</para>
+    <para><userinput>store-displayed-messages-unencrypted=true</userinput>.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich Spam auf einem &IMAP;-Server filtern?</para
-></question>
+  <question><para>How do I filter spam on an &IMAP; server?</para></question>
   <!--FIXME replace this with a link to the sieve section?-->
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie möchten in Zukunft Ihre E-Mails auf einem &IMAP;-Server lesen, und möchten wissen, wie Filtern und Spam-Bearbeitung funktioniert.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Der Rechner auf dem sich bereits Ihre E-Mails befinden, kann der neue &IMAP;-Server werden. Dazu müssen Sie ein Serverprogramm wie <application
->Dovecot</application
-> installieren und einrichten. Anleitungen finden Sie auf der Projektseite. Nun müssen Sie noch das Filtern einrichten, das sollte natürlich auf dem Server stattfinden. Wenn Sie in &kmail; den Server als Ressource einstellen, sehen Sie alle Ordner, die Sie auf dem Server erstellt haben. Eines der besten Programme für die Filterung ist <application
->Procmail</application
-> oder <application
->Imapfilter</application
->. Zu diesen Programmen finden Sie viele Informationen im Internet.</para>
-    <para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You intend to read your mail from an &IMAP; server, and wonder how 
+    filtering and spam handling will occur.</para>
+    <para><emphasis>Solution:</emphasis> The machine that already has your mail can become your &IMAP; server. You will 
+    have to configure a server application. <application>Dovecot</application> is one such, and the guidance on the 
+    project web pages make it relatively simple to set up. That still leaves you with the problem of filtering, as 
+    it makes sense to do that on the server (when you point &kmail; at the server you will see the folders that have 
+    been created on that system). There are several options. One of the best known is
+    <application>Procmail</application>. Another one is <application>Imapfilter</application>. There is plenty of 
+    information on the internet about setting these up. Further discussion of these OSS packages is beyond the scope 
+    of &kmail;'s documentation.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie nutze ich den Platz im Fenster von &kmail; besser aus?</para
-></question>
+  <question><para>How can I get more screen space in &kmail;?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie benutzen &kmail; auf einem Laptop oder Notebook und stellen fest, dass die neue Anzeige der <emphasis
->Zusammenstellung</emphasis
-> zu viel Platz benötigt.</para>
+    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the new 
+    <emphasis>Aggregation</emphasis> display leaves you too little screen space.</para>
 
-    <para
-><emphasis
->Lösung:</emphasis
-> Wenn Sie für die Ansicht der E-Mail in der Nachrichtenliste nur eine statt zwei Zeilen verwenden möchten, wählen Sie im Menü <menuchoice
-><guimenu
->Ansicht</guimenu
-><guisubmenu
->Nachrichtenliste</guisubmenu
-> <guimenuitem
->Design</guimenuitem
-></menuchoice
->. Ändern Sie das Design zu <guilabel
->Klassisch</guilabel
->. Möchten Sie die Gruppierung nach Datum ausschalten, ändern Sie die Zusammenstellung mit <menuchoice
-><guimenu
->Ansicht</guimenu
-><guisubmenu
->Nachrichtenliste</guisubmenu
-> <guimenuitem
->Zusammenstellung</guimenuitem
-></menuchoice
-> auf <guilabel
->Standard-Nachrichtenliste</guilabel
->. Dann wird die Nachrichtenliste wie in früheren Versionen von &kmail; angezeigt.</para>
+    <para><emphasis>Solution:</emphasis>If you want to change the message list so each message uses a single line 
+    instead of two  lines, go to  <menuchoice><guimenu>View</guimenu><guisubmenu>Message List</guisubmenu> 
+    <guimenuitem>Theme</guimenuitem></menuchoice> and change the theme to <guilabel>Classic</guilabel>. If 
+    you want to disable grouping by date, change the aggregation using <menuchoice><guimenu>View</guimenu> 
+    <guisubmenu>Message List</guisubmenu><guimenuitem>Aggregation</guimenuitem></menuchoice> to <guilabel>Standard 
+    Mailing List</guilabel>. Now your &kmail; will look exactly like it did in early versions of the program.</para>
 
-    <para
->Gehen Sie im Einrichtungsdialog von &kmail; auf der Seite <guilabel
->Erscheinungsbild</guilabel
-> zur Karteikarte <guilabel
->Schriftarten</guilabel
->. Aktivieren Sie <guilabel
->Eigene Schriftarten benutzen</guilabel
->. Dann können Sie für die Nachrichtenliste Schriftart, -stil und -größe nach Ihren Wünschen einstellen.</para>
-    <para
->&nbsp;</para>
+    <para>In <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure &kmail;</guisubmenu> 
+    <guimenuitem>Appearance</guimenuitem><guimenuitem>Fonts</guimenuitem></menuchoice> you can select 
+    <guilabel>Use custom fonts</guilabel> to change the setting for the message list. You can also set
+    the font size in the <guilabel>Use custom fonts</guilabel> dialog.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich in &kmail; Kurzinfos für Ordner abschalten?</para
-></question>
+  <question><para>How can I turn &kmail; folder tool tips off?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie benutzen &kmail; auf einem Laptop oder Notebook und stellen fest, dass die Kurzinfos, die beim Verweilen des Mauszeigers auf den Ordnern angezeigt werden, zu viele Ordnernamen verdecken.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> Klicken Sie mit der &RMBn; auf die Kopfzeile der <guilabel
->Ordnerliste</guilabel
-> und deaktivieren Sie <guilabel
->Kurzinfos anzeigen</guilabel
->.</para>
-    <para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the 
+    <emphasis>tooltips</emphasis> that pop up hide too many folder names</para>
+    <para><emphasis>Solution:</emphasis> Right-click on the "Name" header above the <guilabel>Folder
+    List</guilabel> and check <guilabel>Never</guilabel> under <guilabel>Display Tooltips</guilabel>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie schalte ich die Anzeige der Kurzinfos in der Nachrichtenliste ab?</para
-></question>
+  <question><para>How can I hide the message list tool tips?</para></question>
   <answer>
-    <para
->Öffnen Sie im Einrichtungsdialog von &kmail; die Karteikarte <guilabel
->Nachrichtenliste</guilabel
-> auf der Seite <guilabel
->Erscheinungsbild</guilabel
-> und schalten Sie hier die Einstellung <guilabel
->Kurzinfos für Nachrichten und Zusammenfassungsüberschriften aktivieren</guilabel
-> aus.</para>
-    <para
->Alternativ klicken Sie mit der &RMBn; auf die Kopfzeile der <guilabel
->Nachrichtenliste</guilabel
-> und deaktivieren Sie <guilabel
->Kurzinfos anzeigen</guilabel
->.</para>
-    <note
-><para
->Die Kopfzeile über der Nachrichtenliste wird beim Design <guilabel
->Intelligent</guilabel
-> nicht angezeigt.</para
-></note>
-    <para
->&nbsp;</para>
+    <para>On &kmail;, <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
+    KMail</guisubmenu><guimenuitem>Appearance</guimenuitem><guimenuitem>Message List</guimenuitem>
+    </menuchoice> tab, uncheck <menuchoice><guimenu>General</guimenu><guimenuitem>Display tooltips
+    for messages and group headers</guimenuitem></menuchoice></para>
+    <para>Alternatively, right-click one of the headers above the message list and clear the
+    check box labeled <guilabel>Display Tooltips</guilabel>.</para>
+    <note><para>The headers above the message list do not appear if you have chosen the "Smart" theme.</para></note>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- <qandaentry>
-<question
-><para
->How can I remove alternate line colorings?</para
-></question>
+<question><para>How can I remove alternate line colorings?</para></question>
 <answer>
-<para
->In <menuchoice
-><guimenu
->&systemsettings;</guimenu
-><guisubmenu
->Application 
-Appearance</guisubmenu
-><guimenuitem
->Colors</guimenuitem
-><guimenuitem
->Colors</guimenuitem
-></menuchoice
->, for each color 
-set except <guilabel
->Common Colors</guilabel
-> (which doesn't have it), change the <guilabel
->Alternate 
-Background</guilabel
-> to be the same as the <guilabel
->Normal Background</guilabel
->.</para>
-<para
-><emphasis
->Mandriva</emphasis
-> and <emphasis
->Mageia</emphasis
-> doesn't use the name <guilabel
->System 
-Settings</guilabel
->.  As in <guilabel
->KControl</guilabel
->, the KDE 3 control centre, they name it <quote
->Configure your 
-Desktop</quote
-> to distinguish it from <quote
->Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+<para>In <menuchoice><guimenu>&systemsettings;</guimenu><guisubmenu>Application 
+Appearance</guisubmenu><guimenuitem>Colors</guimenuitem><guimenuitem>Colors</guimenuitem></menuchoice>, for each color 
+set except <guilabel>Common Colors</guilabel> (which doesn't have it), change the <guilabel>Alternate 
+Background</guilabel> to be the same as the <guilabel>Normal Background</guilabel>.</para>
+<para><emphasis>Mandriva</emphasis> and <emphasis>Mageia</emphasis> doesn't use the name <guilabel>System 
+Settings</guilabel>.  As in <guilabel>KControl</guilabel>, the KDE 3 control centre, they name it <quote>Configure your 
+Desktop</quote> to distinguish it from <quote>Configure your Computer</quote>, a.k.a. the Mandriva/Mageia Control 
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
-</qandaentry
-> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+</qandaentry> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
 
 <!-- FAQ #10 -->
 <qandaentry id="transfer-mail-and-settings">
   <question>
-    <para
->Wie übertrage ich meine E-Mails und Einstellungen auf einen anderen Rechner oder zu einem anderen Benutzer auf demselben Rechner?</para>
+    <para>How do I transfer my mail and settings to another computer (or to another user account on the same 
+    machine)?</para>
   </question>
   <answer>
-    <para
->Benutzen Sie <menuchoice
-><guimenu
->Extras</guimenu
-><guimenuitem
->&kmail;-Daten im-/exportieren</guimenuitem
-></menuchoice
->, um Einstellungen und Daten zu exportieren und zu importieren. Weitere  Details finden Sie unter <ulink url="help:/pimsettingexporter"
->PIM-Daten-Export</ulink
->.</para
-><para
->&nbsp;</para>
+    <para>Use <menuchoice><guimenu>Tools</guimenu><guimenuitem>Import/Export &kmail; Data...</guimenuitem></menuchoice> 
+    to import and export settings and data. Please see <ulink url="help:/pimsettingexporter">PIM Setting
+    Exporter</ulink> for details.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Warum kann ich meine E-Mails nicht auf einen USB-Stick kopieren?</para
-></question>
+  <question><para>Why can't I copy my email folders to a USB stick?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie richten einen neuen Rechner ein und möchten Ihre gesamten E-Mails darauf übertragen. Dazu kopieren Sie alle Dateien auf einen USB-Stick. Das Kopieren startet, bricht aber mit dieser Fehlermeldung ab:</para>
-    <screen
->Kopieren nicht möglich ............ Ungültiges Argument</screen>
+    <para><emphasis>Problem:</emphasis> You are setting up a new computer and want to transfer all your mail. You 
+    decide to copy everything to a USB stick. The job starts, then you get a failure message:</para>
+    <screen>Unable to copy ............ Invalid argument</screen>
     
-    <para
-><emphasis
->Lösung</emphasis
->: Der USB-Stick ist mit <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
->VFAT</ulink
-> formatiert, das für <emphasis
->maildir</emphasis
->-Ordnernamen und <emphasis
->Berechtigungen</emphasis
-> nicht geeignet ist. Entweder formatieren Sie den <acronym
->USB</acronym
->-Stick als ext2- oder ext3/4-Dateisystem, dann kann der USB-Stick auf &Windows;-Betriebssystemen ohne zusätzliche Software nicht benutzt werden, oder Sie erstellen für die gesamte E-Mail ein .tar- oder .zip-Archiv, kopieren es auf den USB-Stick und packen dann das Archiv auf dem neuen Rechner wieder aus.</para
-><para
->&nbsp;</para>
+    <para><emphasis>Solution:</emphasis> Your usb stick is <ulink 
+    url="http://wiki.linuxquestions.org/wiki/VFAT">VFAT</ulink> formatted, and therefore it can't handle 
+    <emphasis>maildir</emphasis> folder names (nor can it handle <emphasis>permissions</emphasis>, which can
+    cause many other problems). You have two choices. Either format your <acronym>USB</acronym> stick as
+    ext2 (or ext3 / 4 -- in which case you should be aware it can't be read by &Windows; without
+    installing additional software) or create a .tar or .zip file of your mail, then copy that to
+    the stick and extract the archive on the new host.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Warum werden meine Filter nicht auf eingehende Nachrichten von &IMAP;-Postfächern angewandt?</para
-></question>
+  <question><para>Why are my filters not applied to incoming messages from &IMAP; accounts?</para></question>
   <answer>
-    <para
->Der normale &IMAP;-Modus unterstützt keine Filter, wohl aber der neue Zugangstyp <quote
->disconnected &IMAP;</quote
->. Sie können es mit serverseitiger Filterung probieren (fragen Sie Ihren Administrator, wie und in welchem Format Filter auf dem Server installiert werden können), weil es bei  &IMAP; nur darum geht, Nachrichten <emphasis
->auf dem Server</emphasis
-> zu verwalten. Gehen Sie im Einrichtungsdialog zur Karteikarte <guilabel
->Empfang</guilabel
-> auf der Seite <guilabel
->Zugänge</guilabel
-> und wählen ein &IMAP;-Konto aus. Klicken sie dann auf <guibutton
->Bearbeiten</guibutton
-> und richten Sie auf der Karteikarte <guilabel
->Filtern</guilabel
-> die serverseitige Filterung mit der Programmsprache <ulink url="http://sieve.info/"
->Sieve</ulink
-> ein, wenn Ihr &IMAP;-Server Sieve unterstützt.</para>
-    <para
->&nbsp;</para>
+    <para>Normal &IMAP; mode does not support filtering, but the new
+    disconnected &IMAP; account type does. You could try to use server-side
+    filtering (ask your admin how to install filters on the server, and in
+    which format), since &IMAP; is all about managing your email <emphasis>on the
+    server</emphasis>. See <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
+    &kmail;...</guisubmenu><guimenuitem>Receiving</guimenuitem><guimenuitem>(some &IMAP;
+    account)</guimenuitem></menuchoice>, then click <guilabel>Modify...</guilabel> and the
+    <guilabel>Filtering</guilabel> tab to configure server side filtering using the <ulink
+    url="http://sieve.info/">Sieve</ulink> programming language (if your &IMAP; server supports it).</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry id="pgp-faq">
-<question
-><para
->Warum sollte ich <application
->PGP</application
->/<application
->GnuPG</application
-> mit &kmail; verwenden?</para
-></question>
+<question><para>What should I know if I want to use
+<application>PGP</application>/<application>GnuPG</application> with
+&kmail;?</para></question>
 
   <answer>
-    <para
->&kmail; unterstützt die grundlegenden Funktionen dieser Programme auf einfache Weise. Dennoch sollte man diese beiden Programme grundlegend verstehen und die Stellen kennen, die deren Verwendung unsicher machen kann. Einige wichtige Dinge:</para>
+    <para>&kmail; provides a simple and easy-to-use interface for the basic
+    functions of these programs; still, you should understand how these programs
+    work, and what might make their use insecure. Some important issues:</para>
 
     <itemizedlist>
       <listitem>
-        <para
->Man sollte <emphasis
->unbedingt</emphasis
-> testen, ob die Verschlüsselung funktioniert, bevor man sie verwendet. &kmail; ist teilweise auf die Fehlermeldungen von <application
->PGP</application
->/<application
->GnuPG</application
-> angewiesen. Diese können sich aber von Version zu Version ändern.</para>
+        <para>You <emphasis>really</emphasis> should test if encryption works
+        before you use it. &kmail; partly relies on
+        <application>PGP</application>/<application>GnuPG</application>'s error strings,
+        which often change between different versions.</para>
       </listitem>
       
       <listitem>
-        <para
->&kmail; verschlüsselt Nachrichten nicht mit nicht vertrauenswürdigen (unsignierten) Schlüsseln. Falls man einen solchen Schlüssel zur Verschlüsselung verwenden möchte, sollte man die Identität des Besitzers überprüfen und erste danach den Schlüssel mit dem eigenen geheimen Schlüssel signieren. Falls man die Identität nicht überprüfen kann, die Nachricht aber dennoch verschlüsseln will, sollte man sie lokal durch <userinput
-><command
->gpg</command
-><option
->--lsign</option
-> <replaceable
->SchlüsselID</replaceable
-></userinput
-> signieren.</para>
+        <para>&kmail; will not encrypt messages with an untrusted (unsigned) public key. If
+        you want to encrypt to such a key you should check the identity of the key owner and
+        only then sign the key with your secret key. If you do not want to or cannot check the
+        identity of the key owner, but nevertheless want to encrypt the message, then please
+        sign the key locally with <userinput><command>gpg</command>
+        <option>--lsign</option> <replaceable>keyID</replaceable></userinput>.</para>
       </listitem>
       
       <listitem>
-        <para
->Einem fremden öffentlichen Schlüssel ohne Überprüfung zu vertrauen ist keine gute Idee.</para>
+        <para>Trusting a foreign public key without checking it is not a good idea.</para>
       </listitem>
       
       <listitem>
-        <para
->Seit GnuPG 1.0.7 muss man selbst dem eigenen Schlüssel das Attribut uneingeschränktes Vertrauen des Besitzers geben. Das wird nicht mehr automatisch durchgeführt.</para>
+        <para>Starting with GnuPG 1.0.7 you have to set your own key to
+        ultimate owner trust: it is no longer implicitly done for you.</para>
       </listitem>
     </itemizedlist>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wo speichert &kmail; die Benutzereinstellungen und meine Nachrichten?</para
-></question>
+  <question><para>Where does &kmail; save my settings and my mail?</para></question>
   <answer>
-    <para
->Die meisten Einstellungen für &kmail; werden in <filename
->~/.config/kmail2rc</filename
-> gespeichert&nbsp;.</para>
-    <para
->Die Einträge für <emphasis
->Akonadi</emphasis
-> werden in diesen Ordnern gespeichert:</para>
+    <para>Most &kmail; settings are stored in <filename>~/.config/kmail2rc</filename>&nbsp;.</para>
+    <para>The <emphasis>Akonadi</emphasis>-controlled entries are stored in these folders:</para>
       <itemizedlist>
-        <listitem
-><para
-><filename class="directory"
->~/.local/share/</filename
->.</para
-></listitem>
-        <listitem
-><para
-><filename class="directory"
->~/.config/akonadi/</filename
->.</para
-></listitem>
+        <listitem><para><filename class="directory">~/.local/share/</filename>.</para></listitem>
+        <listitem><para><filename class="directory">~/.config/akonadi/</filename>.</para></listitem>
       </itemizedlist>
-    <para
->Beachten Sie dass einige der Dateien versteckt sind. Kopieren Sie auch diese versteckten Dateien, wenn Sie Ihre E-Mails sichern oder archivieren möchten. Benutzen Sie daher besser den <ulink url="help:/pimdataexporter"
->PIM-Daten-Export</ulink
->, um Ihre e-Mails und Einstellungen zu sichern.</para
-><para
->&nbsp;</para
-> 
+    <para>Note that some of the files are hidden: remember to also copy those if you want to backup or
+    archive your mails. To be safe, use <ulink url="help:/pimdataexporter">PIM Data Exporter</ulink>
+    to back up your mail and your settings.</para><para>&nbsp;</para> 
   </answer>
 </qandaentry>
 
 <!-- FAQ #15 -->
 <qandaentry id="faq-index-regeneration">
-  <question
-><para
->Warum erzeugt &kmail; die Index-Datei eines Ordners neu?</para
-></question>
+  <question><para>Why did &kmail; regenerate the index of a folder?</para></question>
   <answer>
-    <para
->&kmail; erzeugt die Index-Datei eines Ordners immer dann neu, wenn dieser Index veraltet erscheint, &ie; wenn der Inhalt eines Ordners neuer als die Index-Datei ist. &kmail; erzeugt die Index-Datei in diesem Fall neu, um den Verlust oder die Zerstörung von Daten zu verhindern.</para>
-    <para
->Ein veralteter Index kann mehrere Gründe haben. Die zwei wichtigsten sind: <itemizedlist>
-        <listitem
-><para
->Ein anderes Programm hat den Inhalt des Ordners verändert. Falls man &kmail; zusammen mit einem anderen Programm wie procmail verwendet, sollte man <link linkend="faq-procmail"
->diese &FAQ;</link
-> lesen. Falls man &kmail; zusammen mit einem anderen E-Mail-Programm verwendet, sollte man <link linkend="faq-other-muas"
->diese &FAQ;</link
-> ebenfalls lesen.</para
-></listitem>
-        <listitem
-><para
->Falls sich der Mail-Ordner in einem per NFS eingebundenen Dateisystem befindet und die Uhr des NFS-Servers nachgeht, dann erzeugt der NFS-Server bisweilen ein falsches Datum für die Index-Datei. In diesem Fall geht &kmail; davon aus, das der Index veraltet ist, obwohl er das natürlich nicht ist. Um dieses Problem zu beheben muss der Systemverwalter sicher stellen, das die Uhr des NFS-Servers und die Uhr des lokalen Rechners synchronisiert sind. Dazu kann man unter anderem den ntp-Dämon verwenden.</para
-></listitem>
+    <para>&kmail; regenerates the index of a folder whenever the index appears to be
+    out of date, &ie; whenever the contents of a folder are newer than the
+    index. &kmail; regenerates the index in this case in order to prevent
+    the loss or corruption of messages.</para>
+    <para>An outdated index can have several causes; these are the most common.
+      <itemizedlist>
+        <listitem><para>Some other program modified the contents of the folder. If you want
+        to use &kmail; together with procmail then please read <link
+        linkend="faq-procmail">this &FAQ;</link>. If you want to use &kmail; together with
+        another email client then please read <link
+        linkend="faq-other-muas">this &FAQ;</link>.</para></listitem>
+        <listitem><para>If your mail folder is on a volume which is
+        mounted via NFS, and if the clock in the NFS server is behind the
+        clock in your computer, then the NFS server sometimes reports the wrong
+        file date for the index file. In this case &kmail; concludes that the index
+        is outdated, although in reality it is not. To fix this problem
+        you (or your system administrator) have to make sure that the clock in
+        the NFS server and the clock in your computer are always in sync. One
+        way to achieve this is to use the ntp daemon.</para></listitem>
       </itemizedlist>
     </para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Warum startet &kmail; nicht?</para
-></question>
+  <question><para>Why doesn't &kmail; start up?</para></question>
   <answer>
-    <para
-><emphasis
->Problem:</emphasis
-> Sie möchten &kmail; in einer minimalen Arbeitsumgebung wie zum Beispiel <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
->fvwm2</ulink
-> starten, aber es funktioniert nicht.</para>
-    <para
-><emphasis
->Lösung:</emphasis
-> &kmail; hat keine Verbindung zum <emphasis
->&DBus;</emphasis
->-System. Starten Sie &kmail; in einem Terminal mit dbus-launch:</para>
-    <screen
-># dbus-launch kmail</screen
-><para
->&nbsp;</para>
+    <para><emphasis>Problem:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink 
+    url="https://en.wikipedia.org/wiki/Fvwm2">fvwm2</ulink>. It does not start.</para>
+    <para><emphasis>Solution:</emphasis> This happens because you are missing <emphasis>dbus</emphasis> 
+    functionality. Start &kmail; from a terminal window using dbus-launch, like this:</para>
+    <screen># dbus-launch kmail</screen><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry id="faq-other-muas">
-  <question
-><para
->Kann ich &kmail; mit einem anderen Programm wie &eg; <application
->mutt</application
-> verwenden?</para
-></question>
+  <question><para>Can I use &kmail; together with a different email client, &eg;,
+  <application>mutt</application>?</para></question>
   <answer>
-    <para
->Falls Sie das mbox-Format für die Nachrichtenordner benutzen, kann kein anderes E-Mail-Programm verwendet werden, wenn &kmail; läuft. Mit <application
->mutt</application
-> kann es zusätzliche Probleme geben, auch wenn beide Programme nicht gleichzeitig laufen. In diesem Fall sollten Sie das Maildir-Format verwenden, wenn Sie &kmail; mit <application
->mutt</application
-> benutzen möchten.</para>
-    <para
->&nbsp;</para>
+    <para>If you're using the mbox format for your folders it is not
+    possible to use a different email client while &kmail; is running.
+    With <application>mutt</application>, there may also be problems
+    even if both programs are not running at the same time. We recommend you
+    use the maildir format if you want to use mutt with &kmail;.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
-<qandaentry
-><!-- Valid for 4.12-->
-  <question
-><para
->Wie kann ich meine Postfächer vom mbox- in das Maildir-Format konvertieren?</para
-></question>
+<qandaentry><!-- Valid for 4.12-->
+  <question><para>How can I convert my mailboxes from mbox to maildir?</para></question>
   <answer>
-    <para
->Es gibt keine automatisierte Konvertierung. Man muss einen neuen Nachrichtenordner im Maildir-Format erstellen und die Nachrichten vom mbox-Ordner in diesen neuen Ordner kopieren. Man darf nicht vergessen, alle Filterregeln auf die neuen Ordner umzustellen, bevor man seine alten Ordner entfernt.</para
-><para
->&nbsp;</para>
+    <para>There is no automated way to do that. You must create a new folder
+    in maildir format, then copy the messages from the mbox folder into this
+    new folder. Remember to adapt any filter rules connected with the old folder before
+    you delete it.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich Anhänge von einer Nachricht entfernen, ohne die zugehörige selbst Nachricht zu entfernen?</para
-></question>
+  <question><para>How can I remove attachments from a message without removing
+  the message itself?</para></question>
   <answer>
-    <para
->Öffnen Sie das Kontextmenü durch Klicken mit der &RMB; auf einen Anhang und wählen Sie <guimenuitem
->Anhang entfernen</guimenuitem
-></para>
-    <para
->&nbsp;</para>
+    <para>Open the context menu with a &RMB; click on an attachment and 
+    select <guimenuitem>Delete Attachment</guimenuitem>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #20 -->
 <qandaentry>
-  <question
-><para
->Wie kann ich &kmail; so einrichten, dass beim Programmstart neue Nachrichten abgerufen werden?</para
-></question>
+  <question><para>How can I make &kmail; check for new messages at startup?</para></question>
   <answer>
-    <para
->Wenn &kmail; beim Starten immer nach neuen Nachrichten sehen soll, dann schalten Sie die Option <guilabel
->Beim Start nach E-Mail sehen</guilabel
-> auf der Seite <link linkend="configure-accounts-receiving"
->Zugänge</link
-> ein. Alternativ starten Sie &kmail; mit <command
->kmail <option
->--check</option
-></command
->.</para>
-    <para
->&nbsp;</para>
+    <para>If &kmail; should always check for new messages at startup then
+    enable <guilabel>Check mail on startup</guilabel> on the
+    <link linkend="configure-accounts-receiving">Accounts configuration page</link>.
+    Alternatively, start &kmail; with <command>kmail <option>--check</option></command>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wo kann ich eine Liste der Veränderungen einsehen, die von Version zu Version in &kmail; vorgenommen wurden?</para
-></question>
+  <question><para>Where can I find a list of changes between one version of &kmail; and the next one?</para></question>
   <answer>
-    <para
->Der Begrüßungsbildschirm führt alle wichtigen Änderungen für diese Version auf. Er wird angezeigt, wenn Sie <menuchoice
-><guimenu
->Hilfe</guimenu
-><guimenuitem
->Einführung zu &kmail;</guimenuitem
-></menuchoice
-> auswählen.</para>
-    <para
->&nbsp;</para>
+    <para>The welcome screen lists all important changes for your version. It is displayed when you
+    select <menuchoice><guimenu>Help</guimenu><guimenuitem>&kmail; Introduction</guimenuitem></menuchoice>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Meine Nachrichten bestehen häufig aus mehr als 100 zitierten Zeilen und einer einzigen selbst geschriebenen Zeile. Aus für mich unerfindlichen Gründen ärgern sich andere Zeitgenossen darüber. Kann &kmail; hier für Abhilfe sorgen?</para
-></question>
+  <question><para>I'm one of those people whose messages consist of 100 quoted lines
+  and one line written by myself. For some odd reason, this annoys other people. Can
+  &kmail; help me and make everyone's life better?</para></question>
   <answer>
-    <para
->Aber sicher. Man wählt einfach den wichtigen Teil der Nachricht mit der Maus aus, bevor man antwortet. Dann wird nur dieser Teil der originalen Nachricht in der Antwort zitiert.</para
-><para
->&nbsp;</para>
+    <para>Sure. Just select a short, relevant piece of the original message
+    with the mouse before you click "reply". Only this part of the original message
+    will be quoted by the composer.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Bei einigen Nachrichten lautet der Eintrag im Feld <guilabel
->Datum</guilabel
-> <guilabel
->unbekannt</guilabel
->. Warum ist das Datum falsch?</para
-></question>
+  <question><para>Why do some messages exhibit a value of "unknown"
+  in the <guilabel>Date</guilabel> field? Why is the date sometimes incorrect?</para></question>
   <answer>
-    <para
->Wahrscheinlich ist der <quote
->Date:</quote
->-Vorspann dieser Nachrichten defekt und kann von &kmail; nicht interpretiert werden. Dies ist kein Fehler in &kmail;, sondern in der Software, die die Nachricht versendet hat.</para
-><para
->&nbsp;</para>
+    <para>Most likely, the "Date:" header of these messages is
+    broken and &kmail; cannot interpret it. That is not a bug in &kmail;,
+    but in the software that sent the mail.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Meine Signatur wird immer unterhalb von zwei Strichen eingefügt. Wie kommt das?</para
-></question>
+  <question><para>My signature has two dashes above it. What's up?</para></question>
   <answer>
-    <para
->Zwei Striche und ein Leerzeichen in einer eigenen Zeile vor der Signatur sind ein üblicher E-Mail-Standard. Mit diesem Symbolen können E-Mail-Programme die Signaturen in Antworten abtrennen. Falls diese Zeichen nicht bereits im Signaturtext enthalten sind, stellt &kmail; diese automatisch dem Signaturtext voran.</para
-><para
->&nbsp;</para>
+    <para>Separating the signature from the message body with two dashes and a space
+    on a single line is common usage. These symbols permit mail clients that recognize
+    them to trim the signature from a reply. If your signature does not include
+    this separator, &kmail; will automatically add it.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #25 -->
 <qandaentry>
-  <question
-><para
->Gibt es bekannte Fehler in &kmail;?</para
-></question>
+  <question><para>Are there any known bugs in &kmail;?</para></question>
   <answer>
-    <para
->Eine Liste bisher bekannter Fehler finden Sie mit dieser <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
->Abfrage</ulink
->.</para>
-    <warning
-><para
->Sie sollten &kmail; nicht starten, während ein anderes E-Mail-Programm auf die Dateien im Mailordner zugreift. Ansonsten verlieren Sie eventuell Nachrichten. Es wird empfohlen, immer Sicherheitskopien seiner Nachrichten und wichtigen Daten anzufertigen.</para
-></warning
-><para
->&nbsp;</para>
+    <para>There are quite a few, as you can see by querying the &kmail; <ulink
+    url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2">Bugzilla page</ulink>.
+    As of this writing (April, 2021) roughly 70% of the reported bugs are unconfirmed,
+    or irreproducible. All in all we think &kmail; is a robust piece of software.</para>
+    <warning><para>You should not run &kmail; while another email client is already
+    accessing the files in the mail directory; if you do, you may lose messages. Note that
+    you should make backups of your messages -- and all your important data -- regularly.
+    That's just good digital hygiene.</para></warning><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Warum zeigt &kmail; &HTML;-Nachrichten nicht korrekt an?</para
-></question>
+  <question><para>Why doesn't &kmail; display &HTML; mail properly?</para></question>
   <answer>
-    <para
->Referenzen auf externe Inhalte wie Bilder sind als Voreinstellung abgeschaltet, weil man damit verfolgen kann, ob und wann Sie eine Nachricht lesen. Das Laden externer Referenzen kann auf der Karteikarte <guilabel
->Sicherheit</guilabel
-> im Konfigurationsdialog von &kmail; aktiviert werden. Außerdem werden Module (wie <trademark class="registered"
->Adobe</trademark
-> <application
->Flash</application
->), &Java; und JavaScript in &kmail; aus Sicherheitsgründen grundsätzlich nicht angezeigt werden und es gibt keinen Weg, das zu ändern.</para
-><para
->&nbsp;</para>
+    <para>References to external content, like images, are disabled by
+    default, as spammers can use them to track whether and when you read a message.
+    Loading external references can be activated in the <guilabel>Security</guilabel>
+    tab in &kmail;'s configuration dialog. Plugins (like <trademark
+    class="registered">Adobe</trademark> <application>Flash</application>),
+    &Java; and JavaScript will not be displayed in &kmail; for security reasons,
+    and there is no way to activate them.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Kann man verschiedene Versionen von &kmail; parallel verwenden? Kann man von einer aktuellen Version auf eine ältere Version von &kmail; zurück gehen?</para
-></question>
+  <question><para>Can I use two different versions of &kmail; at the same time? Can I go
+  back from a current version of &kmail; to an older one?</para></question>
   <answer>
-    <para
->Man kann nur eine Instanz von &kmail; starten. Wir empfehlen außerdem, nicht zwischen verschiedenen Versionen hin- und herzuwechseln, sondern bei einer bestimmten Version zu bleiben. Zurück gehen zu einer älteren Version kann Problem bringen, da sich vielleicht das Format der Indexdateien geändert hat. Auf eine aktuellere Version zu wechseln, sollte nie ein Problem darstellen.</para>
-    <para
->&nbsp;</para>
+    <para>You should only run one instance of &kmail; at a time. We also recommend
+    that you stick to a certain version and not switch back and forth between different versions.
+    Downgrading to an older version may work, but will probably cause problems because, for instance, 
+    the index file formats have been changed. Upgrading should never be a problem.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Unterstützt &kmail; Dateien im Format „UUencode“?</para
-></question>
+  <question><para>Does &kmail; support uuencoded files?</para></question>
   <answer>
-    <para
->Anhänge in der Kodierung UUencode werden nicht unterstützt. Speichern Sie einen solchen Anhang einer E-Mail und benutzen Sie dann den Befehl <command
->uudecode</command
-> zur Dekodierung.</para
-><para
->&nbsp;</para>
+    <para>Uuencoded attachments are not supported. Save mail with uuencoded attachments,
+    then use <command>uudecode</command> to decode the attachments.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->&kmail; ist beim Schreiben einer E-Mail abgestürzt. Ist diese E-Mail jetzt verloren?</para
-></question>
+  <question><para>&kmail; crashed while I was composing a message. Is that message lost now?</para></question>
   <answer>
-    <para
->&kmail; versucht im Falle eines Absturzes, die Nachricht unter <filename class="directory"
->~/.local/share/kmail2/autosave/</filename
-> zu sichern. Beim nächsten Start von &kmail; sollte der <guilabel
->E-Mail-Editor</guilabel
-> mit dieser Nachricht wieder erscheinen. Falls nicht, können Sie versuchen, <filename class="directory"
->~/.local/share/kmail2/autosave/</filename
-> mit einem Editor zu öffnen. Wenn diese Datei nicht existiert, war der Absturz so schlimm, das &kmail; die Nachricht nicht sichern konnte.</para
-><para
->&nbsp;</para>
+    <para>&kmail; tries to save your mail to
+    <filename class="directory">~/.local/share/kmail2/autosave/</filename>
+    in case of a crash. The next time you start &kmail; the mail composer should appear with your
+    message again; If it does not, try to open the files in <filename 
+    class="directory">~/.local/share/kmail2/autosave/</filename> with an editor. If there are no files in
+    that folder then the crash was so bad that &kmail; could not save your message.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #30 -->
 <qandaentry>
-  <question
-><para
->ich habe einen Ordner mit einer Mailingliste verknüpft, aber Nachrichten von der Liste werden nicht in diesem Ordner gespeichert. Warum funktioniert das nicht?</para
-></question>
+  <question><para>I set up a folder to be mailing list aware, but messages from the list
+  aren't being saved in that folder. What's wrong?</para></question>
   <answer>
-    <para
->Einen Ordner mit einer Liste zu verknüpfen hat nichts mit dem Filtern von Nachrichten dieser Liste zu tun. Man muss eine Filterregel manuell hinzufügen. Sobald man allerdings einen Ordner mit einer Liste verknüpft hat, kann man <menuchoice
-><guimenu
->Nachricht</guimenu
-><guimenuitem
->An Mailingliste antworten ...</guimenuitem
-></menuchoice
-> oder <menuchoice
-><guimenu
->Nachricht</guimenu
-><guimenuitem
->Neue Nachricht ...</guimenuitem
-></menuchoice
-> verwenden. In diesen Fällen wird die Adresse der Mailingliste automatisch in das Feld <guilabel
->An:</guilabel
-> eingetragen.</para
-><para
->&nbsp;</para>
+    <para>Associating a folder with a mailing list has nothing to do with filtering the mailing list messages
+    &mdash; you have to add a new filter rule manually. However, once you have associated a folder with a mailing list
+    you can use <menuchoice><guimenu>Message</guimenu><guimenuitem>Reply to Mailing-List...</guimenuitem></menuchoice>
+    or <menuchoice><guimenu>Message</guimenu><guimenuitem>New Message to Mailing-List...</guimenuitem></menuchoice>
+    and the mailing list address will be set in the <guilabel>To:</guilabel> field.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Mein SMTP-Server verlangt eine Authentisierung. Wird das von &kmail; unterstützt?</para
-></question>
+  <question><para>My SMTP server requires authentication. Does &kmail; support this?</para></question>
   <answer>
-    <para
->Die <guilabel
->Authentifizierung</guilabel
-> kann auf der Karteikarte <guilabel
->Erweitert</guilabel
-> des Einrichtungsdialogs für <link linkend="configure-accounts-sending"
->SMTP</link
-> eingestellt werden.</para>
-    <para
->&nbsp;</para>
+    <para><guilabel>Authentication</guilabel> can be set in the <guilabel>Advanced</guilabel> tab
+    of the <link linkend="configure-accounts-sending">SMTP configuration dialog</link>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry id="faq-procmail">
-  <question
-><para
->Kann ich &kmail; und <application
->procmail</application
-> verwenden?</para
-></question>
+  <question><para>Can I use &kmail; and <application>procmail</application>?</para></question>
   <answer>
-    <para
->Ja, aber die korrekte Verwendung ist wichtig, damit man keine E-Mails verliert. Um <application
->procmail</application
-> und &kmail; zusammen zu verwenden, muss man &kmail; so konfigurieren, dass es neue Nachrichten aus der Spool-Datei abholt, in die sie von procmail abgelegt werden. <application
->procmail</application
-> darf <emphasis
->nicht</emphasis
-> so konfiguriert werden, dass es Nachrichten direkt in den Ordnern von &kmail; ablegt. Das kann nicht funktionieren.</para>
+    <para>Yes, but it is important to do it the right way or you might lose
+    mail. To use <application>procmail</application> and &kmail; you must
+    set up &kmail; to fetch new mail from the spoolfiles in which 
+    <application>procmail</application> drops your mail. Do <emphasis>not</emphasis>
+    set up procmail to deliver mail to a &kmail; folder. This cannot work.</para>
 
-    <para
->Man muss für jede Spool-Datei von procmail ein eigenes E-Mail-Konto anlegen, aus dem &kmail; neue Nachrichten holt. Außerdem muss die richtige Sperrdatei für dieses Konto angegeben werden. Wenn man ein Konto einrichtet, versucht &kmail;, die Konfigurationsdatei von procmail nach Sperrdatei-Einträgen abzusuchen. Es zeigt dann alle Spool-Dateien und die gefundenen Sperrdateien unter <guilabel
->procmail-Sperrdatei</guilabel
-> an. procmail erlaubt allerdings drei verschiedene Wege, um Sperrdateien zu erstellen. Daher gibt es keine direkte Zuordnung von Spool-Dateien zu Sperrdateien. Daher muss der Benutzer sicherstellen, dass die richtige Sperrdatei für eine Spool-Datei ausgewählt ist.</para
-><para
->&nbsp;</para>
+    <para>For each procmail spoolfile you must then create an account
+    from which &kmail; will fetch new mail. You also need to specify
+    the right lockfile name for this account. When setting up an
+    account, &kmail; will do some minimal parsing on your
+    <filename>.procmail</filename> file, and will try to list every
+    spoolfile it has found, and also the lockfiles next to the
+    <guilabel>procmail lockfile</guilabel> item. Procmail lets the user
+    specify lockfiles in three different ways, so there is no way to
+    establish a correspondence between the spoolfiles and lockfiles; it's
+    really up to you to make sure the right lockfile for each
+    spoolfile has been specified.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Warum erkennt die Rechtschreibprüfung keine nicht-englischen Buchstaben?</para
-></question>
+  <question><para>Spellchecking does not recognize non-English characters. Why?</para></question>
   <answer>
-    <para
->Vor der ersten Verwendung muss die Rechtschreibprüfung eingerichtet werden. Öffnen Sie im E-Mail-Editor den Menüeintrag <menuchoice
-><guimenu
->Einstellungen</guimenu
-> <guimenuitem
->Rechtschreibprüfung ...</guimenuitem
-></menuchoice
-> und wählen Sie hier das passende Wörterbuch aus.</para
-><para
->&nbsp;</para>
+    <para>Before you can use spellchecking, you must configure it. You can do so in the composer
+    window, under <menuchoice><guimenu>Settings</guimenu><guimenuitem>Spellchecker...</guimenuitem>
+    </menuchoice>. You can choose a dictionary there.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie verwende ich meine <application
->Eudora</application
->/&Netscape;/<application
->Outlook</application
->/... Mail-Ordner in &kmail;?</para
-></question>
+  <question><para>How do I use my <application>Eudora</application>/&Netscape;/<application>Outlook</application>/...
+  mail folders in  &kmail;?</para></question>
   <answer>
-    <para
->Informationen dazu finden Sie im Abschnitt <link linkend="importing-options"
->Wiederherstellen und Import in &kmail;</link
->.</para>
-    <para
->&nbsp;</para>
+    <para>See the section <link linkend="importing-options">Restore and Import in &kmail;</link>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #35 -->
 <qandaentry>
-  <question
-><para
->Kann ich Verschlüsselung auf meinem normalen ( nicht <acronym
->SSL</acronym
->) POP3-Konto verwenden?</para
-></question>
+  <question><para>Can I use encryption with my normal (non-<acronym>SSL</acronym>) POP3 account?</para></question>
   <answer>
-    <para
->Wenn der POP3-Server einen <application
->ssh</application
->-Dämon  hat, kann man ssh verwenden mit dem folgenden Befehl verwenden, um eine getunnelte Verbindung zum POP3-Server herzustellen:</para>
+    <para>If your POP3 server runs an <application>ssh</application> daemon, you
+    can use ssh to tunnel your POP3 connection using the following command:</para>
 
-    <para
-><userinput
-><command
->ssh</command
-> <option
->-L 11000:127.0.0.1:110 Benutzer@Rechner</option
-></userinput
-></para>
+    <para><userinput><command>ssh</command> <option>-L 11000:127.0.0.1:110
+    user@host</option></userinput></para>
 
-    <para
->Konfiguriert man nun &kmail;, die neue Mail per POP3 von <userinput
->localhost</userinput
-> abzuholen, stellt ssh automatisch eine getunnelte Verbindung her. </para>
+    <para>Modify your &kmail; configuration to fetch the mail via POP3 from 
+        <userinput>localhost</userinput> and ssh will tunnel the connection for you.
+    </para>
 
-    <note
-><para
->Falls bereits nicht verschlüsselte Nachrichten über das Internet gesendet wurden, ist der einzige Vorteil von <application
->ssh</application
->, dass das <emphasis
->Passwort</emphasis
-> verschlüsselt zum POP3-Server gesendet wird.</para
-></note>
+    <note><para>If non-encrypted messages have already been sent
+    via the Internet, the only advantage of using <application>ssh</application> is
+    that your <emphasis>password</emphasis> will be sent encrypted to the POP3
+    server.</para></note>
 
-    <para
->Weitere Informationen zu Einrichtung von <application
->ssh</application
-> finden Sie auf dieser <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
->Webseite</ulink
->.</para>
-    <para
->&nbsp;</para>
+    <para>
+    For more details on setting up ssh, see <ulink
+    url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html">this web page</ulink>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry id="faq-file-locking">
-  <question
-><para
->Sperrt &kmail; die verwendeten Ordner?</para
-></question>
+  <question><para>Does &kmail; lock the folders it uses?</para></question>
   <answer>
-    <para
->&kmail; sperrt die Dateien in <filename class="directory"
->~/local/share</filename
-> nicht.</para>
-    <para
->Um das Risiko von Datenverlusten zu vermeiden, falls man ein <emphasis
->lokales Konto</emphasis
-> verwendet, ist es erforderlich, das &kmail; denselben Sperr-Mechanismus wie das E-Mail-Verteilungsprogramm verwendet.</para>
+    <para>&kmail; does not lock the files in <filename
+    class="directory">~.local/share</filename>.</para>
+    <para>To avoid the risk of losing mail <emphasis>when using a local
+    account,</emphasis> it is necessary to ensure that &kmail; uses the
+    same locking mechanism as your mail delivery agent.</para>
 
-    <para
->Für das Sperren gibt es fünf unterschiedliche Optionen:</para>
+    <para>There are five different locking options you can use:</para>
 
       <itemizedlist>
-        <listitem
-><para
-><guilabel
->Procmail-Sperrdatei</guilabel
-></para
-></listitem>
-        <listitem
-><para
-><guilabel
->Mutt dotlock</guilabel
-></para
-></listitem>
-        <listitem
-><para
-><guilabel
->Mutt dotlock privileged</guilabel
-></para
-></listitem>
-        <listitem
-><para
-><guilabel
->FCNTL</guilabel
-> (Standard)</para
-></listitem>
-        <listitem
-><para
-><guilabel
->Keine (mit Vorsicht zu benutzen)</guilabel
-></para
-></listitem>
+        <listitem><para><guilabel>Procmail lockfile</guilabel></para></listitem>
+        <listitem><para><guilabel>Mutt dotlock</guilabel></para></listitem>
+        <listitem><para><guilabel>Mutt dotlock privileged</guilabel></para></listitem>
+        <listitem><para><guilabel>FCNTL</guilabel> (default)</para></listitem>
+        <listitem><para><guilabel>none (use with care)</guilabel></para></listitem>
       </itemizedlist>
 
-    <para
->Die <guilabel
->Procmail lockfile</guilabel
-> verwendet ein kleines Programm mit Namen <command
->lockfile</command
->, das zu <application
->procmail</application
-> gehört. Dieses kann man verwenden, falls sich die Mail-Ordner in einem Ordner befinden, auf den man Schreibzugriff hat. Das funktioniert normalerweise nicht in <filename class="directory"
->/var/spool/mail/user</filename
->. Es erzeugt Dateien mit Namen <filename
->.lock</filename
-> für das eigene Konto, wenn &kmail; nach neuen Nachrichten sucht. Diese Option funktioniert nur dann, wenn <application
->procmail</application
-> auf dem System installiert ist.</para>
+    <para><guilabel>Procmail lockfile</guilabel> uses a small utility that comes
+    with <application>procmail</application> called <command>lockfile</command>. You
+    can use this if your mail folder is in a folder where you have write
+    permission.  This will not work on your <filename
+    class="directory">/var/spool/mail/user</filename> file in most cases.  It will
+    create <filename>.lock</filename> files on your account when &kmail; is checking
+    for new mail. Please note that this will only work if
+    <application>procmail</application> is installed on your system.</para>
 
-    <para
-><guilabel
->Mutt dotlock</guilabel
-> und <guilabel
->Mutt dotlock privileged</guilabel
-> verwenden beide ein kleines Programm mit dem Namen <command
->mutt_dotlock</command
->, das mit <application
->mutt</application
-> ausgeliefert wird. <guilabel
->Mutt dotlock</guilabel
-> kann auf die gleiche Weise verwendet werden wie die <guilabel
->Procmail Sperrdatei</guilabel
->-Option, mit der gleichen Einschränkung in Bezug auf die <filename class="directory"
->/var/spool/mail/</filename
->-Ordner. Das Programm <guilabel
->Mutt dotlock privileged</guilabel
-> kann darüber hinaus Sperrdateien im Ordner <filename class="directory"
->/var/spool/mail</filename
-> anlegen. <command
->mutt_dotlock</command
-> ist ein setgid-Programm und diese Option wird im Modus setgid ausgeführt. Diese Optionen funktionieren natürlich nur dann, wenn <application
->mutt</application
-> auf dem System installiert ist.</para>
+    <para><guilabel>Mutt dotlock</guilabel> and <guilabel>Mutt dotlock
+    privileged</guilabel> both use a small utility that comes with
+    <application>mutt</application> called <command>mutt_dotlock</command>.
+    <guilabel>Mutt dotlock</guilabel> can be used in the same way as the
+    <guilabel>Procmail lockfile</guilabel> option, with the same limitation
+    with respect to the <filename class="directory">/var/spool/mail/</filename>
+    folders. The <guilabel>Mutt dotlock privileged</guilabel> option can create
+    lock files in the <filename class="directory">/var/spool/mail</filename> folder.
+    <command>mutt_dotlock</command> is a setgid program and this option will
+    run it in setgid mode. Please note that these options will only work if
+    <application>mutt</application> is installed on your system.</para>
 
-    <para
->Die Standardoption <guilabel
->FCNTL</guilabel
-> verwendet den <function
->fcntl()</function
->-Systemaufruf.</para>
+    <para><guilabel>FCNTL</guilabel> uses the
+    <function>fcntl()</function> system call.</para>
 
-    <warning
-><para
->Die Verwendung von FCNTL-Sperrung kann das Einfrieren des Rechners zur Folge haben, wenn sich die Mail-Spooldatei auf einem per NFS eingebundenen Geräte befindet.</para
-></warning>
+    <warning><para>Using FCNTL locking might cause system lockups when the mail
+    spool file is on an NFS mounted device.</para></warning>
 
-    <para
->Falls man auf Sperrungen verzichten will, kann man die Option <guilabel
->keine</guilabel
-> verwenden. Es besteht allerdings in diesem Fall die Gefahr von Datenverlusten.</para
-><para
->&nbsp;</para>
+    <para>If you do not want to use any locking, the <guilabel>none</guilabel> option
+    is available. However, there are risks of losing mail when no locking is
+    used.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich die Nachrichten auf dem POP3-Server lassen?</para
-></question>
+  <question><para>How do I leave messages on the POP3 server?</para></question>
   <answer>
-    <para
->Falls Sie alle Nachrichten auf dem Server belassen möchten, wählen Sie <menuchoice
-><guimenu
->Einstellungen</guimenu
-><guimenuitem
->&kmail; einrichten ...</guimenuitem
-></menuchoice
->. Gehen Sie dort zur Seite <guilabel
->Zugänge</guilabel
->. Wählen Sie auf der Karteikarte <guilabel
->Empfang</guilabel
-> das gewünschte Postfach aus und drücken Sie den Knopf <guibutton
->Bearbeiten ...</guibutton
->. Dieser Dialog enthält auf der Karteikarte <guilabel
->Erweiterte Einstellungen</guilabel
-> die Option <guilabel
->Abgeholte Nachrichten auf dem Server lassen</guilabel
->, die Sie aktivieren müssen.</para
-><para
->&nbsp;</para>
+    <para>If you want to leave all messages on the server, open the
+    <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &kmail;...</guimenuitem>
+    </menuchoice> window. Click on the <guilabel>Accounts</guilabel> page. Select your
+    account from the account list and click the <guibutton>Modify...</guibutton>
+    button. This dialog contains the <guilabel>Leave fetched messages on the server</guilabel>
+    setting (Advanced tab) which you can enable.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich automatisch einen Text am Ende der Nachricht einfügen?</para
-></question>
+  <question><para>How do I automatically insert a text footer within my
+  messages?</para></question>
   <answer>
-    <para
->Der Fußnotentext wird Signatur genannt (nicht mit kryptografischen Signaturen zu verwechseln). Wählen Sie <menuchoice
-><guimenu
->Einstellungen</guimenu
-> <guimenuitem
->&kmail; einrichten...</guimenuitem
-></menuchoice
->. Schauen Sie im Abschnitt <guilabel
->Identität</guilabel
-> auf der Seite <guilabel
->Signatur</guilabel
-> nach und geben Sie die gewünschte Signatur hier ein. Wechseln Sie dann zur Karteikarte <guilabel
->Allgemein</guilabel
-> auf der Seite <guilabel
->E-Mail-Editor</guilabel
-> und aktivieren Sie <xref linkend="configure-composer-general-append-signature"/>.</para>
-    <para
->&nbsp;</para>
+    <para>The text footer is also called a signature (not to be confused
+    with a cryptographic signature). Select <menuchoice><guimenu>Settings</guimenu>
+    <guimenuitem>Configure &kmail;...</guimenuitem></menuchoice>. Look in the
+    <guilabel>Identity</guilabel> page for the <guilabel>Signature</guilabel>
+    tab and add your signature there. Then go to the <guilabel>General</guilabel>
+    tab on the <guilabel>Composer</guilabel> page and enable
+    <xref linkend="configure-composer-general-append-signature"/>.</para>
+    <para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich bei einer Wählverbindung zum Internet &Sendmail; für &kmail; konfigurieren?</para
-></question>
+  <question><para>How do I set up &Sendmail; to work with
+  &kmail; if I have a  dial-up connection?</para></question>
   <answer>
-    <para
->Zuerst sollten Sie überprüfen, ob die eigene Distribution das automatisch erledigen kann. Meisten passiert das bereits während der Installation.</para>
+    <para>First you should check to see if your distribution
+    can do this for you. It probably has already been set up during
+    installation.</para>
 
-    <para
->Wenn das nicht der Fall sein sollte, können Sie auf <ulink url="https://www.tldp.org/HOWTO/Mail-Queue.html"
->Mail Queue HOWTO</ulink
-> nachschauen.</para
-><para
->&nbsp;</para>
+    <para>If that is not the case, you may want to have a look at <ulink
+    url="https://www.tldp.org/HOWTO/Mail-Queue.html">the Mail Queue
+    HOWTO</ulink>.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <!-- FAQ #40 -->
 <qandaentry>
-  <question
-><para
->Ich habe Demonstrationen mit Fernsteuerung von &kmail; gesehen. Gibt es Unterlagen über die verfügbaren Schnittstellen?</para
-></question>
+  <question><para>I've seen demonstrations of remote control behavior with &kmail;.
+  Is there any documentation on the available interfaces?</para></question>
   <answer>
-    <para
->Sie können eine Liste der verfügbaren Funktion mit folgendem Befehl in einer Shell erhalten: <userinput
-><command
->qdbus</command
-> <option
->org.kde.kmail /KMail</option
-></userinput
->. Dann können Sie &kmail; mit diesen Funktionen wie im Folgenden steuern: <userinput
-><command
->qdbus</command
-> <option
->org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
-></userinput
->. Es gibt außerdem auch das Programm <application
->qdbusviewer</application
->, das eine grafische Benutzeroberfläche zur Anzeige aller verfügbaren Funktionen bietet.</para
-><para
->&nbsp;</para>
+    <para>You can get a list of functions by using this command in a shell:
+    <userinput><command>qdbus</command><option>org.kde.kmail /KMail</option></userinput>.
+    Then you can control &kmail; like this: <userinput><command>qdbus</command>
+    <option>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option></userinput>. You
+    can also use <application>qdbusviewer</application> to browse available methods in
+    a graphical interface.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wenn ich auf eine E-Mail antworte, wird nur ein Teil der Nachricht zitiert. Wie kommt das?</para
-></question>
+  <question><para>When I reply to a message, only a part of the message is quoted. How come?</para></question>
   <answer>
-    <para
->Dies kann passieren, wenn die Nachricht zwei Bindestriche und ein Leerzeichen in einer einzelnen Zeile enthält. Diese Zeichenfolge wird als Beginn einer Signatur gewertet. Der nachfolgende Teil der Nachricht wird nicht zitiert, da &kmail; beim Antworten die Signatur abschneidet.</para
-><para
->&nbsp;</para>
+    <para>This can happen when the message contains two dashes and a space on a single line. This is seen
+    as the start of a signature. The remainder of the message will not be quoted, because when you reply
+    to a message, &kmail; strips the signature.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Ich benutze ausschließlich &IMAP;. Kann ich die Lokalen Ordner irgendwie loswerden oder zumindest erreichen, dass diese immer eingeklappt sind?</para
-></question>
+  <question><para>I am only using &IMAP;. Can I get rid of those Local Folders in
+  the folder list, or at least keep them collapsed all the time?</para></question>
   <answer>
-    <para
->Loswerden können Sie diese Ordner nicht. Die Lokalen Ordner fungieren als Notlösung, wenn der &IMAP;-Server nicht erreichbar ist. Auch wenn Sie ausschließlich &IMAP; benutzen, benötigt &kmail; den Postausgang zum Versenden von Nachrichten. Würden alle lokalen Ordner ausgeblendet, wären Sie nicht in der Lage Nachrichten, die aus irgendeinem Grund nicht versendet werden können, aus dem Postausgang zu entfernen oder zu korrigieren. Sie können aber die Ordner eingeklappt lassen. Dazu müssen Sie <menuchoice
-><guimenu
->Einstellungen</guimenu
-><guimenuitem
->&kmail; einrichten ...</guimenuitem
-></menuchoice
-> auswählen und zur Seite <quote
->Diverses</quote
-> gehen. Dort können Sie den Ordner einstellen, der beim Programmstart geöffnet ist. Ändern Sie diese Einstellung so, dass sie auf einen &IMAP;-Zugang verweist, bleiben die Lokalen Ordner beim Start von &kmail; eingeklappt.</para
-><para
->&nbsp;</para>
+    <para>No, you cannot get rid of them. The local folders function as a fallback when the &IMAP; server
+    is unreachable. Although you only use &IMAP;, &kmail; uses the outbox for sending the messages. If we
+    hide all local folders you will not be able to fix messages in the outbox which cannot be send for some
+    reason. But it is possible to keep the local folders collapsed. What you have to do is go to
+    <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &kmail;...</guimenuitem></menuchoice>
+    and go to the section Misc. There you can set up the folder on startup. If you change that to a folder on
+    the &IMAP; account, the Local Folders will stay collapsed when &kmail; starts.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie kann ich bestimmte Diskussionen überwachen?</para
-></question>
+  <question><para>How can I watch a particular thread?</para></question>
   <answer>
-    <para
->Möchten Sie eine Gruppe überwachen, klicken sie mit der &RMBn; darauf und wählen im Kontextmenü <menuchoice
-><guimenu
->Gruppe markieren</guimenu
-><guimenuitem
->Gruppe überwachen</guimenuitem
-></menuchoice
->.</para>
-    <para
->Jetzt werden alle E-Mails in dieser Gruppe, die nach der markierten Nachricht eintreffen, als <guilabel
->Überwacht</guilabel
-> markiert.</para
-><para
->&nbsp;</para>
+    <para>If you want to follow a thread, right click and choose <menuchoice><guimenu>Mark Thread</guimenu>
+    <guimenuitem>Watch Thread</guimenuitem></menuchoice>.</para>
+    <para>From this point on all messages on the thread that starts in this message will be marked as
+    <guilabel>Watched</guilabel>.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
 <qandaentry>
-  <question
-><para
->Wie überwache ich Diskussionen mit eigenen Beiträgen?</para
-></question>
+  <question><para>How can I watch my own threads?</para></question>
   <answer>
-    <para
->Dies ist zum Beispiel nützlich, wenn Sie eine Mailingliste wie kdepim-users@kde.org abonniert haben und alle Diskussionen filtern möchten, an denen Sie teilnehmen.</para>
+    <para>This is useful in case you are registered to a mailing list such as
+    kdepim-users@kde.org and want to filter out the threads you participate in.</para>
       <itemizedlist>
         <listitem>
-          <para
->Erstellen Sie einen Filter der alle Ihre eingehenden Nachrichten an Mailinglisten als <quote
->Überwacht</quote
-> markiert</para>
-          <para
->Diesen Filter erstellen Sie mit:</para>
-          <para
-><menuchoice
-><guimenu
->Einstellungen</guimenu
-> <guimenuitem
->Filter einrichten ...</guimenuitem
-></menuchoice
-></para>
+          <para>Create a filter to mark all your incoming messages to a mailing list as Watched</para>
+          <para>To create a filter go to:</para>
+          <para><menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Filters</guimenuitem></menuchoice></para>
             <itemizedlist>
               <listitem>
-	            <para
->Wählen Sie <guilabel
-> Alle folgenden Bedingungen müssen zutreffen</guilabel
-></para>
+	            <para>select <guilabel>Match all of the following</guilabel></para>
               </listitem>
               <listitem>
-	            <para
->Fügen Sie diese Bedingungen hinzu: <itemizedlist>
+	            <para>Add the conditions:
+	              <itemizedlist>
 	                <listitem>
-	                  <para
-><menuchoice
-><guimenu
->Von</guimenu
-><guisubmenu
->enthält</guisubmenu
-><guimenuitem
-></guimenuitem
-></menuchoice
-> <replaceable
->ihremail@maildomain</replaceable
-> <footnote
-><para
->Ersetzen Sie <replaceable
->ihremail@maildomain</replaceable
->&nbsp;mit Ihrer E-Mail-Adresse für Versand</para
-></footnote
-></para>
+	                  <para><menuchoice><guimenu>From</guimenu><guisubmenu>Contains</guisubmenu><guimenuitem>
+                      </guimenuitem></menuchoice> <replaceable>yourmail@maildomain</replaceable>
+                      <footnote><para>replace <replaceable>yourmail@maildomain</replaceable>&nbsp;with your
+                      outgoing mail address</para></footnote></para>
 	                </listitem>
 	                <listitem>
-	                  <para
-><menuchoice
-><guimenu
->List-Id</guimenu
-><guimenuitem
->enthält</guimenuitem
-></menuchoice
-> <replaceable
->listID</replaceable
-><footnote
-><para
->Ersetzen Sie <replaceable
->listID</replaceable
-> mit der Kennung einer Mailingliste wie &eg;  (&lt;kdepim-users.kde.org&gt;) oder mit <quote
->.</quote
-> um alle ausgehenden E-Mails an Mailinglisten zu erfassen, die ein <quote
->.</quote
-> in der Kennung enthalten. Das trifft im Prinzip auf alle Listen zu.</para
-></footnote
-></para>
+	                  <para><menuchoice><guimenu>List-Id</guimenu><guimenuitem>Contains</guimenuitem></menuchoice> 
+                      <replaceable>listID</replaceable><footnote><para>replace <replaceable>listID</replaceable> with
+                      a specific mailing list id (&eg;, &lt;kdepim-users.kde.org&gt;) or just a <quote>.</quote> to include
+                      outgoing mail to all mailing lists with <quote>.</quote> in their id (basically all of them).</para></footnote></para>
 	                </listitem>
 	              </itemizedlist>
 	            </para>
               </listitem>
               <listitem>
-	            <para
->Unter <guilabel
->Filteraktionen</guilabel
-> wählen Sie <menuchoice
-><guimenu
->Markieren als</guimenu
-><guimenuitem
->Überwacht</guimenuitem
-></menuchoice
->.</para>
+	            <para>Under <guilabel>Filter Actions</guilabel> choose <menuchoice><guimenu>Mark As</guimenu>
+                <guimenuitem>Watched</guimenuitem></menuchoice>.</para>
               </listitem>
             </itemizedlist>
           </listitem>
           <listitem>
-            <para
->Auf der Karteikarte <guilabel
->Erweitert</guilabel
->.</para>
+            <para>In the <guilabel>Advanced</guilabel> tab.</para>
               <itemizedlist>
                 <listitem>
-	              <para
->Schalten Sie <guilabel
->Bearbeitung hier beenden, falls Filterbedingung zutrifft</guilabel
-> ab, damit andere Filter wie zum Beispiel zum Sortieren von eingehenden Nachrichten von der Mailingliste in Unterordner noch ausgeführt werden.</para>
+	              <para>Uncheck <guilabel>if this filter matches, stop processing here</guilabel>, so that other
+                  filters such as sorting the incoming messages from the mailing list to sub-folders will execute.</para>
                 </listitem>
                 <listitem>
-	              <para
->Stellen Sie diesen Filter vor jeden anderen Filter, der die weitere Filterung abbricht oder setzen Sie ihn einfach an die erste Stelle. Die Reihenfolge der Filter können Sie mit den Knöpfen <guilabel
->Nach oben</guilabel
-> und <guilabel
->Nach unten</guilabel
-> unter der Liste <guilabel
->Vorhandene Filter</guilabel
-> ändern.</para>
+	              <para>Place that filter before other filters that may stop the filtering process, or simply put it first.
+                  (Changing the filters' order is done using the two arrows up and down, under the <guilabel>Available
+                  filters</guilabel> list.)</para>
                 </listitem>
               </itemizedlist>
             </listitem>
             <listitem>
-              <para
->Erstellen Sie eine Suche nach Nachrichten von Mailinglisten</para>
-              <para
->Gehen Sie in den Ordner in dem die Nachrichten der Mailingliste gespeichert sind (&eg; Lokale Ordner/KDE-PIM-USERS) und drücken Sie die Taste <keycap
->S</keycap
-> oder wählen im Menü <menuchoice
-><guimenu
->Bearbeiten</guimenu
-><guimenuitem
->Nachrichten suchen ...</guimenuitem
-></menuchoice
->:</para>
+              <para>Create a search on mailing list messages</para>
+              <para>Go to the folder where your mailing list messages are stored (&eg;, Local Folders/KDE-PIM-USERS)
+              and hit <keycap>S</keycap> key or in the menu <menuchoice><guimenu>Edit</guimenu><guimenuitem>Find
+              Messages</guimenuitem></menuchoice>:</para>
                 <itemizedlist>
                   <listitem>
-	                <para
->Wählen Sie <guilabel
->Alle folgenden Bedingungen müssen zutreffen</guilabel
-><footnote
-><para
->Aktivieren Sie <guilabel
->Unterordner einbeziehen</guilabel
->.</para
-></footnote
-></para>
+	                <para>Select <guilabel>Match all of the following</guilabel><footnote><para>Pay attention
+                    to the <guilabel>Include sub-folders</guilabel>.</para></footnote></para>
                   </listitem>
                   <listitem>
-	                <para
->Fügen Sie die Bedingung <menuchoice
-><guimenu
->Nachrichten-Status</guimenu
-><guisubmenu
->ist gleich</guisubmenu
-><guimenuitem
->Überwacht</guimenuitem
-></menuchoice
-> hinzu.</para>
+	                <para>Add the condition: <menuchoice><guimenu>Message Status</guimenu><guisubmenu>is</guisubmenu>
+                    <guimenuitem>Watched</guimenuitem></menuchoice></para>
                   </listitem>
                   <listitem>
-	                <para
->Geben Sie eine Bezeichnung in <guilabel
->Suchordner-Name</guilabel
-> wie zum Beispiel <replaceable
->KDE-PIM-USERS-Watched</replaceable
-> ein. </para>
+	                <para>Give the search an informative name (<guilabel>Search folder name</guilabel>) like
+                    <replaceable>KDE-PIM-USERS-Watched</replaceable></para>
                   </listitem>
                   <listitem>
-	                <para
->Führen Sie die Suche durch. Nach dem Ende der Suche können Sie den Dialog „Suchen“ schließen.</para>
+	                <para>Make the search.  After it is done you can close the search window.</para>
                   </listitem>
                 </itemizedlist>
-              <para
->Wenn Sie jetzt eine Diskussion beginnen oder daran Teilnehmen, wird sie als <guilabel
->Überwacht</guilabel
-> markiert.</para>
+              <para>Now whenever you start a thread or participate in one, it is <guilabel>Watched</guilabel>.</para>
         </listitem>
       </itemizedlist>
   </answer>
@@ -1483,25 +774,13 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 
 <!-- FAQ #45 -->
 <qandaentry>
-  <question
-><para
->Wie kann ich E-Mails übersetzen?</para
-></question>
+  <question><para>How can I use E-Mail Translation?</para></question>
   <answer>
-    <para
->Informationen zum übersetzen von Text im E-Mail-Editor finden Sie im Abschnitt <link linkend="using-the-translator"
->Das eingebaute Übersetzungsmodul verwenden</link
-></para>
-    <para
->Im Nachrichtenvorschaubereich markieren Sie den Text, den Sie übersetzen möchten und wählen dann <guimenuitem
->Übersetzen</guimenuitem
-> (<keycombo action="simul"
->&Ctrl;&Alt;<keycap
->T</keycap
-></keycombo
->) aus dem Kontextmenü der &RMBn;.</para
-><para
->&nbsp;</para>
+    <para>To translate text in the composer window read the section 
+    <link linkend="using-the-translator">Using the Built-in Translator</link></para>
+    <para>In the message preview pane highlight the text you would like to translate and select 
+    <guimenuitem>Translate</guimenuitem> (<keycombo action="simul">&Ctrl;&Alt;<keycap>T</keycap></keycombo>)
+    from the &RMB; context menu.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 

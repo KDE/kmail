@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-01 00:58+0000\n"
-"PO-Revision-Date: 2023-01-04 09:00+0100\n"
+"PO-Revision-Date: 2023-01-05 05:22+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -311,7 +311,7 @@ msgstr ""
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
-msgstr ""
+msgstr "HTML-ის უკეთესი მხარდაჭერა"
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
@@ -331,7 +331,7 @@ msgstr ""
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
-msgstr ""
+msgstr "MS Windows®-ზე გადატანა"
 
 #: aboutdata.cpp:181
 msgid "IM status indicator"

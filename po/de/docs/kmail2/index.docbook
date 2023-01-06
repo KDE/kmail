@@ -9,20 +9,17 @@
   <!ENTITY kmail-troubleshooting SYSTEM "troubleshooting.docbook">
   <!ENTITY kmail-credits-and-licenses SYSTEM "credits-and-licenses.docbook">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % German "INCLUDE"
-> <!-- change language only here -->
+  <!ENTITY % English "INCLUDE" > <!-- change language only here -->
 ]>
 <book id="kmail" lang="&language;">
 <bookinfo>
-<title
->Das Handbuch zu &kmail;</title>
+<title>The &kmail; Handbook</title>
 
  <!-- Note:
 * please do not mix up the formatting more than necessary so that
   "cvs diff" makes useful output
 * no short forms
-* use <warning
-> instead of <caution>
+* use <warning> instead of <caution>
 -->
 
 <!-- TODO:
@@ -39,12 +36,8 @@
 * fix my adverb vs. adjective mistakes
 
 * coherent wording for section / tab / ...
-* <menuchoice
-><guimenu
->xxx , or is <guimenu
->xxx enough?
-* <guiicon
-> vs. <guibutton>
+* <menuchoice><guimenu>xxx , or is <guimenu>xxx enough?
+* <guiicon> vs. <guibutton>
 * spelling:  popup vs pop up, frontend vs front end
 
 * message vs. mail vs. email -> using "message" everywhere
@@ -54,154 +47,80 @@
 -->
 
 <authorgroup>
-<author
->&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author>
+&Daniel.Naber;
+&Daniel.Naber.mail;
+</author>
 
-<author
->&David.Rugge; &David.Rugge.mail; </author>
+<author>
+&David.Rugge;
+&David.Rugge.mail;
+</author>
 
-<author
->&Laurent.Montel; &Laurent.Montel.mail; </author>
+<author>
+&Laurent.Montel;
+&Laurent.Montel.mail;
+</author>
 
-<author
->&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author>
+&Scarlett.Clark;
+&Scarlett.Clark.mail;
+</author>
 
-<author
->&David.Bryant; &David.Bryant.mail; </author>
+<author>
+&David.Bryant;
+&David.Bryant.mail;
+</author>
 
-<othercredit role="translator"
-><firstname
->Matthias</firstname
-><surname
->Kiefer</surname
-> <affiliation
-><address
-><email
->matthias.kiefer@gmx.de</email
-></address
-></affiliation
-> <contrib
->Deutsche Übersetzung</contrib
-></othercredit
-> <othercredit role="translator"
-><firstname
->Alexander</firstname
-><surname
->Gretencord</surname
-> <affiliation
-><address
-><email
->arutha@gmx.de</email
-></address
-></affiliation
-> <contrib
->Überarbeitung</contrib
-></othercredit
-> <othercredit role="translator"
-><firstname
->Frank</firstname
-><surname
->Schütte</surname
-> <affiliation
-><address
-><email
->F.Schuette@t-online.de</email
-></address
-></affiliation
-> <contrib
->Überarbeitung ab Version 1.3</contrib
-></othercredit
-> <othercredit role="translator"
-><firstname
->Matthias Kalle</firstname
-><surname
->Dalheimer</surname
-> <affiliation
-><address
-><email
->kalle@kdab.net</email
-></address
-></affiliation
-> <contrib
->Krypto-Übersetzung</contrib
-></othercredit
-> 
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
 </authorgroup>
 
 <copyright>
-<year
->1999</year>
-<year
->2000</year>
-<year
->2001</year>
-<year
->2002</year>
-<holder
->&David.Rugge;</holder>
+<year>1999</year>
+<year>2000</year>
+<year>2001</year>
+<year>2002</year>
+<holder>&David.Rugge;</holder>
 </copyright>
 <copyright>
-<year
->2003</year>
-<holder
->&Daniel.Naber;</holder>
+<year>2003</year>
+<holder>&Daniel.Naber;</holder>
 </copyright>
 <copyright>
-<year
->2004</year>
-<holder
->&Daniel.Naber;</holder>
-<holder
->&Ingo.Kloecker;</holder>
+<year>2004</year>
+<holder>&Daniel.Naber;</holder>
+<holder>&Ingo.Kloecker;</holder>
 </copyright>
 <copyright>
-<year
->2013</year>
-<holder
->&Laurent.Montel;</holder>
+<year>2013</year>
+<holder>&Laurent.Montel;</holder>
 </copyright>
 <copyright>
-<year
->2020</year>
-<holder
->&David.Bryant;</holder>
+<year>2020</year>
+<holder>&David.Bryant;</holder>
 </copyright>
 
-<legalnotice
->&FDLNotice;</legalnotice>
-<date
->2020-08-14</date>
-<releaseinfo
->5.14.2 (Anwendungen 20.04.2)</releaseinfo>
+<legalnotice>&FDLNotice;</legalnotice>
+<date>2020-08-14</date>
+<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
 
 <abstract>
 
-<para
->&kmail; ist das leistungsstarke und benutzerfreundliche E-Mail-Programm von &kde;.</para>
+<para>&kmail; is &kde;'s powerful and user friendly email client.</para>
 
 </abstract>
 
 <keywordset>
-<keyword
->KDE</keyword>
-<keyword
->E-Mail</keyword>
-<keyword
->e-mail</keyword>
-<keyword
->Client</keyword>
-<keyword
->POP3</keyword>
-<keyword
->IMAP</keyword>
-<keyword
->PGP</keyword>
-<keyword
->GnuPG</keyword>
-<keyword
->GPG</keyword>
-<keyword
->Kolab</keyword>
+<keyword>KDE</keyword>
+<keyword>Mail</keyword>
+<keyword>email</keyword>
+<keyword>Client</keyword>
+<keyword>POP3</keyword>
+<keyword>IMAP</keyword>
+<keyword>PGP</keyword>
+<keyword>GnuPG</keyword>
+<keyword>GPG</keyword>
+<keyword>Kolab</keyword>
 </keywordset>
 </bookinfo>
 
