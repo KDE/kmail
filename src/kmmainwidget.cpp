@@ -4730,38 +4730,6 @@ void KMMainWidget::slotUpdateConfig()
     updateDisplayFormatMessage();
 }
 
-void KMMainWidget::printCurrentMessage(bool preview)
-{
-    bool result = false;
-    if (messageView() && messageView()->viewer()) {
-        if (MessageViewer::MessageViewerSettings::self()->printSelectedText()) {
-            result = messageView()->printSelectedText(preview);
-        }
-    }
-    if (!result) {
-        const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
-        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
-
-        const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
-
-        KMPrintCommandInfo commandInfo;
-        commandInfo.mMsg = currentItem;
-        commandInfo.mHeaderStylePlugin = messageView()->viewer()->headerStylePlugin();
-        commandInfo.mFormat = messageView()->viewer()->displayFormatMessageOverwrite();
-        commandInfo.mHtmlLoadExtOverride = messageView()->viewer()->htmlLoadExternal();
-        commandInfo.mPrintPreview = preview;
-        commandInfo.mUseFixedFont = useFixedFont;
-        commandInfo.mOverrideFont = overrideEncoding;
-        commandInfo.mShowSignatureDetails =
-            messageView()->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-        commandInfo.mShowEncryptionDetails =
-            messageView()->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-
-        auto command = new KMPrintCommand(this, commandInfo);
-        command->start();
-    }
-}
-
 void KMMainWidget::slotRedirectCurrentMessage()
 {
     if (messageView() && messageView()->viewer()) {
