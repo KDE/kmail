@@ -78,8 +78,8 @@ void IdentityPage::load()
     for (KIdentityManagement::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
         item = new IdentityListViewItem(mIPage.mIdentityList, item, *it);
     }
-    if (mIPage.mIdentityList->currentItem()) {
-        mIPage.mIdentityList->currentItem()->setSelected(true);
+    if (auto currentItem = mIPage.mIdentityList->currentItem()) {
+        currentItem->setSelected(true);
     }
 }
 
