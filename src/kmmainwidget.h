@@ -516,7 +516,7 @@ private Q_SLOTS:
 private:
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete); // completely delete message
-    bool showSearchDialog();
+    Q_REQUIRED_RESULT bool showSearchDialog();
     void clearCurrentFolder();
     void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
