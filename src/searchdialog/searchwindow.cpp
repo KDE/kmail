@@ -512,7 +512,6 @@ void SearchWindow::doSearch()
         searchJob->setRecursive(recursive);
         searchJob->setRemoteSearchEnabled(false);
         mSearchJob = searchJob;
-        qDebug() << " SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss";
     }
 
     connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);
