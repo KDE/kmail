@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-01 03:43+0000\n"
+"POT-Creation-Date: 2023-01-07 03:38+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1837,7 +1837,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Kausta arhiveerimine"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3533
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3532
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -2069,7 +2069,7 @@ msgstr "L&isa tekstifail..."
 msgid "&Insert Recent Text File"
 msgstr "L&isa viimati kasutatud tekstifail"
 
-#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2888
+#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2887
 #, kde-format
 msgid "&Address Book"
 msgstr "&Aadressiraamat"
@@ -3905,14 +3905,14 @@ msgid "F&older"
 msgstr "Ka&ust"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3382 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3381 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Rakenda filtrid kaustale"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3387 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3386 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -3938,7 +3938,7 @@ msgid "&Forward"
 msgstr "&Edasisaatmine"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3199 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3198 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Rakenda f&ilter"
@@ -4081,12 +4081,12 @@ msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail töötab võrguühenduseta, kõik võrguga seotud toimingud lükatakse edasi"
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:836 kmmainwidget.cpp:2379 kmmainwidget.cpp:2395
 #, kde-format
 msgid "Send Email"
 msgstr "Kirja saatmine"
 
-#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:837 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Kirja ei ole võimalik saata"
@@ -4115,12 +4115,12 @@ msgstr "KMail on praegu võrguühenduseta režiimis. Mida soovid ette võtta?"
 msgid "Online/Offline"
 msgstr "Võrgus/Võrgust ära"
 
-#: kmkernel.cpp:951 kmmainwidget.cpp:2369
+#: kmkernel.cpp:951 kmmainwidget.cpp:2368
 #, kde-format
 msgid "Work Online"
 msgstr "Töötamine võrgus"
 
-#: kmkernel.cpp:952 kmmainwidget.cpp:2366
+#: kmkernel.cpp:952 kmmainwidget.cpp:2365
 #, kde-format
 msgid "Work Offline"
 msgstr "Töötamine võrguta"
@@ -4376,7 +4376,7 @@ msgstr ""
 "haavatamaks ja võib suurendada tõenäosust, et sinu süsteemile võivad kahju "
 "tekitada nii praegused kui tulevased turvaohud."
 
-#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4674
+#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
 #, kde-format
 msgid "Security Warning"
 msgstr "Turvahoiatus"
@@ -4523,417 +4523,417 @@ msgstr "Kirjade viskamine prügikasti katkestati."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Kirjade kustutamine või viskamine prügikasti katkestati."
 
-#: kmmainwidget.cpp:2186
+#: kmmainwidget.cpp:2185
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Liikumine kausta"
 
-#: kmmainwidget.cpp:2837
+#: kmmainwidget.cpp:2836
 #, kde-format
 msgid "Save &As..."
 msgstr "&Salvesta kui..."
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2847
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "&Kustuta aegunud kirjad kõigist kaustadest"
 
-#: kmmainwidget.cpp:2853
+#: kmmainwidget.cpp:2852
 #, kde-format
 msgid "Check &Mail"
 msgstr "Kontrolli &posti"
 
-#: kmmainwidget.cpp:2861
+#: kmmainwidget.cpp:2860
 #, kde-format
 msgid "Check Mail In"
 msgstr "Kontrolli posti"
 
-#: kmmainwidget.cpp:2863 kmmainwidget.cpp:2864
+#: kmmainwidget.cpp:2862 kmmainwidget.cpp:2863
 #, kde-format
 msgid "Check Mail"
 msgstr "Kontrolli posti"
 
-#: kmmainwidget.cpp:2868
+#: kmmainwidget.cpp:2867
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "Saada &järjekorras ootavad kirjad"
 
-#: kmmainwidget.cpp:2876
+#: kmmainwidget.cpp:2875
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Olekuteade (tundmatu)"
 
-#: kmmainwidget.cpp:2881
+#: kmmainwidget.cpp:2880
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Saada järjekorras ootavad kirjad kasutades"
 
-#: kmmainwidget.cpp:2897
+#: kmmainwidget.cpp:2896
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Sertifikaadihaldur"
 
-#: kmmainwidget.cpp:2907
+#: kmmainwidget.cpp:2906
 #, kde-format
 msgid "&Import Messages..."
 msgstr "K&irjade importimine..."
 
-#: kmmainwidget.cpp:2917
+#: kmmainwidget.cpp:2916
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "&Sieve silumine..."
 
-#: kmmainwidget.cpp:2924
+#: kmmainwidget.cpp:2923
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "Filtrilo&gi näitaja..."
 
-#: kmmainwidget.cpp:2929
+#: kmmainwidget.cpp:2928
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr "&Import teistest e-posti klientidest..."
 
-#: kmmainwidget.cpp:2934
+#: kmmainwidget.cpp:2933
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "Puhkuseteate muutmine..."
 
-#: kmmainwidget.cpp:2940
+#: kmmainwidget.cpp:2939
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "A&utomaatse arhiveerimise seadistamine..."
 
-#: kmmainwidget.cpp:2946
+#: kmmainwidget.cpp:2945
 #, kde-format
 msgid "Delayed Messages..."
 msgstr "Edasilükatud kirjad..."
 
-#: kmmainwidget.cpp:2952
+#: kmmainwidget.cpp:2951
 #, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "Vastamise meeldetuletused..."
 
-#: kmmainwidget.cpp:2963 util.cpp:148
+#: kmmainwidget.cpp:2962 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Kustuta"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4013
+#: kmmainwidget.cpp:2967 kmmainwidget.cpp:4012
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Liiguta lõi&m prügikasti"
 
-#: kmmainwidget.cpp:2972
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Liiguta lõim prügikasti"
 
-#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4013
+#: kmmainwidget.cpp:2974 kmmainwidget.cpp:4012
 #, kde-format
 msgid "Delete T&hread"
 msgstr "&Kustuta lõim"
 
-#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4015
+#: kmmainwidget.cpp:2980 kmmainwidget.cpp:4014
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Otsi kirjadest..."
 
-#: kmmainwidget.cpp:2986
+#: kmmainwidget.cpp:2985
 #, kde-format
 msgid "Select &All Messages"
 msgstr "&Vali kõik kirjad"
 
-#: kmmainwidget.cpp:2993
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "&Postiloendi haldus..."
 
-#: kmmainwidget.cpp:3001
+#: kmmainwidget.cpp:3000
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:3005
+#: kmmainwidget.cpp:3004
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "&Omista kiirklahv..."
 
-#: kmmainwidget.cpp:3023
+#: kmmainwidget.cpp:3022
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "A&egumisseadistused"
 
-#: kmmainwidget.cpp:3048
+#: kmmainwidget.cpp:3047
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "&Arhiveeri kaust..."
 
-#: kmmainwidget.cpp:3056
+#: kmmainwidget.cpp:3055
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "&Väliste viidete laadimine"
 
-#: kmmainwidget.cpp:3079
+#: kmmainwidget.cpp:3078
 #, kde-format
 msgid "Copy Message To..."
 msgstr "Kopeeri kiri..."
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3080
 #, kde-format
 msgid "Move Message To..."
 msgstr "Liiguta kiri..."
 
-#: kmmainwidget.cpp:3086
+#: kmmainwidget.cpp:3085
 #, kde-format
 msgid "&New Message..."
 msgstr "&Uus kiri..."
 
-#: kmmainwidget.cpp:3088
+#: kmmainwidget.cpp:3087
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Uus"
 
-#: kmmainwidget.cpp:3096
+#: kmmainwidget.cpp:3095
 #, kde-format
 msgid "Message From &Template"
 msgstr "&Kiri malli põhjal"
 
-#: kmmainwidget.cpp:3102
+#: kmmainwidget.cpp:3101
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "Uus ki&ri postiloendisse..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3107
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Loo filter"
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3111
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "&Teema järgi..."
 
-#: kmmainwidget.cpp:3119
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgid "Filter on &From..."
 msgstr "S&aatja järgi..."
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3124
 #, kde-format
 msgid "Filter on &To..."
 msgstr "Saa&ja järgi..."
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Filter on &Cc..."
 msgstr "Koo&pia saaja järgi..."
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Lõi&me märgistus"
 
-#: kmmainwidget.cpp:3142
+#: kmmainwidget.cpp:3141
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Märgi lõim l&oetuks"
 
-#: kmmainwidget.cpp:3145
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Märgi kõik kirjad valitud lõimes loetuks"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Märgi lõim &lugemata lõimeks"
 
-#: kmmainwidget.cpp:3151
+#: kmmainwidget.cpp:3150
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Märgi kõik kirjad valitud lõimes lugemata kirjadeks"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3156
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Märgi lõim &tähtsaks lõimeks"
 
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3159
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Eemalda &tähtsa lõime märge"
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3162
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Märgi lõim ülesan&deks"
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3165
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "Eemalda ülesan&de märge"
 
-#: kmmainwidget.cpp:3170
+#: kmmainwidget.cpp:3169
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Jälgi lõi&me"
 
-#: kmmainwidget.cpp:3174
+#: kmmainwidget.cpp:3173
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Ignoreeri lõime"
 
-#: kmmainwidget.cpp:3182 kmreadermainwin.cpp:478
+#: kmmainwidget.cpp:3181 kmreadermainwin.cpp:478
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "&Salvesta kaasatud failid..."
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3189
 #, kde-format
 msgid "Copy Decrypted To..."
 msgstr "Kopeeri lahti krüptitud ..."
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3193
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Rakenda kõik &filtrid"
 
-#: kmmainwidget.cpp:3203
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Ava lõim/grupp"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3205
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Avab aktiivse lõime või grupi"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Sulge lõim/grupp"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Sulgeb aktiivse lõime või grupi"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "A&va kõik lõimed"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Avab kõik aktiivse kausta lõimed"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Sul&ge kõik lõimed"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Sulgeb kõik aktiivse kausta lõimed"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "&Display Message"
 msgstr "&Näita kirja"
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgid "&Next Message"
 msgstr "&Järgmine kiri"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "Go to the next message"
 msgstr "Liigu järgmisele kirjale"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3244
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Jä&rgmine lugemata kiri"
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Järgmine"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3253
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Liigu järgmisele lugemata kirjale"
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3257
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Eelmine kiri"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Liigu eelmisele kirjale"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3264
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Ee&lmine lugemata kiri"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3272
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Eelmine"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3273
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Liigu eelmisele lugemata kirjale"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Jär&gmine lugemata kaust"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Liigu järgmisse lugemata kirjadega kausta"
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Eel&mine lugemata kaust"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3291
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Liigu eelmisesse lugemata kirjadega kausta"
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Järgm&ine lugemata tekst"
 
-#: kmmainwidget.cpp:3299
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Liigu järgmisele lugemata tekstile"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4942,242 +4942,242 @@ msgstr ""
 "Kerib aktiivset kirja. Aktiivse kirja lõppu jõudes liigub järgmisele "
 "lugemata kirjale."
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3308
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "&Filtrite seadistamine..."
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "&Sieve skriptide haldamine..."
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3319
 #, kde-format
 msgid "&Add Account..."
 msgstr "&Konto lisamine ..."
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3324
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "&KMaili sissejuhatus"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "KMaili tervituslehekülje näitamine"
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "&Märguannete seadistamine..."
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3340
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "KMaili &seadistamine..."
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3347
 #, kde-format
 msgid "Expire..."
 msgstr "Kirjade aegumine..."
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "Lisa lemmikkaust..."
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3359
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "Serveripoolne tellimine..."
 
-#: kmmainwidget.cpp:3366 kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3365 kmmainwidget.cpp:3373
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Rakenda kõik filtrid"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3391
 #, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "KMaili andmete import/eksport..."
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3397
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "Uus aadressiraamatu kontakt..."
 
-#: kmmainwidget.cpp:3406 kmmainwidget.cpp:4054
+#: kmmainwidget.cpp:3405 kmmainwidget.cpp:4053
 #, kde-format
 msgid "Account &Settings"
 msgstr "Konto &seadistused"
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgid "Restart Account"
 msgstr "Taaskäivita konto"
 
-#: kmmainwidget.cpp:3426
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Kopeeri kiri kausta"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "Hüppa kausta..."
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Loobu käesolevast tegevusest"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Liigu järgmisesse kausta"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3449
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Liigu eelmisesse kausta"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3455
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Vali aktiivne kaust"
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3462
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "Liigu esimesse kausta"
 
-#: kmmainwidget.cpp:3469
+#: kmmainwidget.cpp:3468
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "Liigu viimasesse kausta"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3474
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Liigu järgmisele kirjale"
 
-#: kmmainwidget.cpp:3481
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Liigu eelmisele kirjale"
 
-#: kmmainwidget.cpp:3487
+#: kmmainwidget.cpp:3486
 #, kde-format
 msgid "Select First Message"
 msgstr "Vali esimene kiri"
 
-#: kmmainwidget.cpp:3493
+#: kmmainwidget.cpp:3492
 #, kde-format
 msgid "Select Last Message"
 msgstr "Vali viimane kiri"
 
-#: kmmainwidget.cpp:3499
+#: kmmainwidget.cpp:3498
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Vali aktiivne kiri"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3505
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "Fookus kiirotsingule"
 
-#: kmmainwidget.cpp:3514
+#: kmmainwidget.cpp:3513
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Laienda valikut eelmisele kirjale"
 
-#: kmmainwidget.cpp:3520
+#: kmmainwidget.cpp:3519
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Laienda valikut järgmisele kirjale"
 
-#: kmmainwidget.cpp:3527
+#: kmmainwidget.cpp:3526
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Liiguta kiri kausta"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3536
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Märgi selles kaustas ja kõigis alamkaustades kõik kirjad loetuks"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3541
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Eemalda topeltkirjad selles kaustas ja kõigis selle alamkaustades"
 
-#: kmmainwidget.cpp:3548
+#: kmmainwidget.cpp:3547
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "Eel&mine lugemata kaust"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3554
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Kausta kustutamine"
 
-#: kmmainwidget.cpp:3583
+#: kmmainwidget.cpp:3582
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Lemmikkausta lisamine"
 
-#: kmmainwidget.cpp:4001
+#: kmmainwidget.cpp:4000
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Kustuta otsing"
 
-#: kmmainwidget.cpp:4015
+#: kmmainwidget.cpp:4014
 #, kde-format
 msgid "Edit Search..."
 msgstr "Muuda otsingut..."
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4051
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgid "Configure Unified Mailbox"
 msgstr "Luba ühendpostkastid"
 
-#: kmmainwidget.cpp:4063
+#: kmmainwidget.cpp:4062
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Tühjenda &prügikast"
 
-#: kmmainwidget.cpp:4063
+#: kmmainwidget.cpp:4062
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Liiguta kõik kirjad prügikasti"
 
-#: kmmainwidget.cpp:4137
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "&Undo"
 msgstr "&Võta tagasi"
 
-#: kmmainwidget.cpp:4139
+#: kmmainwidget.cpp:4138
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Võta tagasi: \"%1\""
 
-#: kmmainwidget.cpp:4196
+#: kmmainwidget.cpp:4195
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:4662
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Otsing...<%1>"
 
-#: kmmainwidget.cpp:4671
+#: kmmainwidget.cpp:4670
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5188,12 +5188,12 @@ msgstr ""
 "võib suurendada tõenäosust, et sinu süsteemile võivad kahju tekitada nii "
 "praegused kui tulevased turvaohud."
 
-#: kmmainwidget.cpp:4675
+#: kmmainwidget.cpp:4674
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML-i kasutamine"
 
-#: kmmainwidget.cpp:4857
+#: kmmainwidget.cpp:4824
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5208,39 +5208,39 @@ msgstr ""
 "Ühendpostkasti saab seadistada, luua neid omatahtsi või ka selle võimaluse "
 "täielikult välja lülitada KMaili pluginate seadistustes."
 
-#: kmmainwidget.cpp:4860
+#: kmmainwidget.cpp:4827
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Kas lubada ühendpostkaste?"
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4828
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Luba ühendpostkastid"
 
-#: kmmainwidget.cpp:4862
+#: kmmainwidget.cpp:4829
 #, kde-format
 msgid "Cancel"
 msgstr "Loobu"
 
-#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4862 kmmainwidget.cpp:4868
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Kas eemaldada silt \"%1\"?"
 
-#: kmmainwidget.cpp:4896 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4863 kmmainwidget.cpp:4868
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart Akonadi"
 msgstr "Taaskäivita konto"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4864
 #, kde-format
 msgid "Restart"
 msgstr "Käivita uuesti"
 
-#: kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:4875
 #, fuzzy, kde-format
 #| msgid "Akonadi Agents"
 msgid "Akonadi restarted."

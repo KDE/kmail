@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-01 03:43+0000\n"
+"POT-Creation-Date: 2023-01-07 03:38+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1898,7 +1898,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "&Папкаи нав..."
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3533
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3532
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgctxt "@action"
@@ -2147,7 +2147,7 @@ msgstr "&Гузоштани файл..."
 msgid "&Insert Recent Text File"
 msgstr "Гузоштани файл"
 
-#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2888
+#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2887
 #, kde-format
 msgid "&Address Book"
 msgstr "&Китоби адресӣ"
@@ -4046,14 +4046,14 @@ msgid "F&older"
 msgstr "П&апка"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3382 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3381 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Истифода аз &филтрҳо"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3387 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3386 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -4079,7 +4079,7 @@ msgid "&Forward"
 msgstr "&Фиристониш"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3199 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3198 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Истифода аз &филтр"
@@ -4222,13 +4222,13 @@ msgstr ""
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
+#: kmkernel.cpp:836 kmmainwidget.cpp:2379 kmmainwidget.cpp:2395
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:837 kmmainwidget.cpp:2381 kmmainwidget.cpp:2397
+#: kmkernel.cpp:837 kmmainwidget.cpp:2380 kmmainwidget.cpp:2396
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4256,12 +4256,12 @@ msgstr ""
 msgid "Online/Offline"
 msgstr ""
 
-#: kmkernel.cpp:951 kmmainwidget.cpp:2369
+#: kmkernel.cpp:951 kmmainwidget.cpp:2368
 #, kde-format
 msgid "Work Online"
 msgstr ""
 
-#: kmkernel.cpp:952 kmmainwidget.cpp:2366
+#: kmkernel.cpp:952 kmmainwidget.cpp:2365
 #, kde-format
 msgid "Work Offline"
 msgstr ""
@@ -4522,7 +4522,7 @@ msgstr ""
 "метавонад эҳтимолоти онро, ки низоми шумо бо ёрии тарзи шикасти аллакай "
 "мавҷудбуда ва ояндавии нуқсонро низ баландтар кунад."
 
-#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4674
+#: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
 #, kde-format
 msgid "Security Warning"
 msgstr "Огоҳии низоми амният"
@@ -4691,300 +4691,300 @@ msgstr "Гузаронидани иттилоот барҳам дода шуд."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Гузаронидани иттилоот барҳам дода шуд."
 
-#: kmmainwidget.cpp:2186
+#: kmmainwidget.cpp:2185
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Ба ин папка копӣ кардан"
 
-#: kmmainwidget.cpp:2837
+#: kmmainwidget.cpp:2836
 #, kde-format
 msgid "Save &As..."
 msgstr "Нигоҳ доштан &ҳамчун..."
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2847
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "Озод намудани папкаҳо аз &иттилоотҳои кӯҳнашуда"
 
-#: kmmainwidget.cpp:2853
+#: kmmainwidget.cpp:2852
 #, kde-format
 msgid "Check &Mail"
 msgstr "Озмоиши &почта"
 
-#: kmmainwidget.cpp:2861
+#: kmmainwidget.cpp:2860
 #, fuzzy, kde-format
 #| msgid "Check Mail &In"
 msgid "Check Mail In"
 msgstr "&Озмоиши почта дар қуттии"
 
-#: kmmainwidget.cpp:2863 kmmainwidget.cpp:2864
+#: kmmainwidget.cpp:2862 kmmainwidget.cpp:2863
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
 msgid "Check Mail"
 msgstr "Озмоиши &почта"
 
-#: kmmainwidget.cpp:2868
+#: kmmainwidget.cpp:2867
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "Фиристодани &аз навбат"
 
-#: kmmainwidget.cpp:2876
+#: kmmainwidget.cpp:2875
 #, kde-format
 msgid "Online status (unknown)"
 msgstr ""
 
-#: kmmainwidget.cpp:2881
+#: kmmainwidget.cpp:2880
 #, fuzzy, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Фиристодани &аз навбат"
 
-#: kmmainwidget.cpp:2897
+#: kmmainwidget.cpp:2896
 #, fuzzy, kde-format
 #| msgid "Certificate Manager..."
 msgid "Certificate Manager"
 msgstr "Идоракунӣ бо сертификатҳо..."
 
-#: kmmainwidget.cpp:2907
+#: kmmainwidget.cpp:2906
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
 msgid "&Import Messages..."
 msgstr "&Содироти хатҳо..."
 
-#: kmmainwidget.cpp:2917
+#: kmmainwidget.cpp:2916
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr ""
 
-#: kmmainwidget.cpp:2924
+#: kmmainwidget.cpp:2923
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "Маҷалаи &амали филтрҳо..."
 
-#: kmmainwidget.cpp:2929
+#: kmmainwidget.cpp:2928
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2934
+#: kmmainwidget.cpp:2933
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "Тағйири ҷавобҳо \"берун аз офис\"..."
 
-#: kmmainwidget.cpp:2940
+#: kmmainwidget.cpp:2939
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "&Configure Automatic Archiving..."
 msgstr "Танзимоти &маълумот..."
 
-#: kmmainwidget.cpp:2946
+#: kmmainwidget.cpp:2945
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Delayed Messages..."
 msgstr "Ҳузфи иттилоот"
 
-#: kmmainwidget.cpp:2952
+#: kmmainwidget.cpp:2951
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "&Ҷустуҷӯи иттилоот..."
 
-#: kmmainwidget.cpp:2963 util.cpp:148
+#: kmmainwidget.cpp:2962 util.cpp:148
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "ҳузфшуда"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4013
+#: kmmainwidget.cpp:2967 kmmainwidget.cpp:4012
 #, fuzzy, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Ба сабад ҷойгир кардан"
 
-#: kmmainwidget.cpp:2972
+#: kmmainwidget.cpp:2971
 #, fuzzy, kde-format
 msgid "Move thread to trashcan"
 msgstr "Гузаронидани иттилоот ба сабад"
 
-#: kmmainwidget.cpp:2975 kmmainwidget.cpp:4013
+#: kmmainwidget.cpp:2974 kmmainwidget.cpp:4012
 #, fuzzy, kde-format
 msgid "Delete T&hread"
 msgstr "ҳузфшуда"
 
-#: kmmainwidget.cpp:2981 kmmainwidget.cpp:4015
+#: kmmainwidget.cpp:2980 kmmainwidget.cpp:4014
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Ҷустуҷӯи иттилоот..."
 
-#: kmmainwidget.cpp:2986
+#: kmmainwidget.cpp:2985
 #, kde-format
 msgid "Select &All Messages"
 msgstr "Ҷудо кардани &тамоми иттилоот"
 
-#: kmmainwidget.cpp:2993
+#: kmmainwidget.cpp:2992
 #, fuzzy, kde-format
 msgid "&Mailing List Management..."
 msgstr "Рӯйхати фиристониш"
 
-#: kmmainwidget.cpp:3001
+#: kmmainwidget.cpp:3000
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:3005
+#: kmmainwidget.cpp:3004
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr ""
 
-#: kmmainwidget.cpp:3023
+#: kmmainwidget.cpp:3022
 #, fuzzy, kde-format
 msgid "&Expiration Settings"
 msgstr "Их&тисосҳои мавҷудӣ:"
 
-#: kmmainwidget.cpp:3048
+#: kmmainwidget.cpp:3047
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "&Archive Folder..."
 msgstr "&Папкаи нав..."
 
-#: kmmainwidget.cpp:3056
+#: kmmainwidget.cpp:3055
 #, kde-format
 msgid "Load E&xternal References"
 msgstr ""
 
-#: kmmainwidget.cpp:3079
+#: kmmainwidget.cpp:3078
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Message To..."
 msgstr "Иттилооти нав ба..."
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3080
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message To..."
 msgstr "Иттилооти нав ба..."
 
-#: kmmainwidget.cpp:3086
+#: kmmainwidget.cpp:3085
 #, kde-format
 msgid "&New Message..."
 msgstr "&Иттилооти нав..."
 
-#: kmmainwidget.cpp:3088
+#: kmmainwidget.cpp:3087
 #, fuzzy, kde-format
 #| msgid "New"
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Эҷод кардан"
 
-#: kmmainwidget.cpp:3096
+#: kmmainwidget.cpp:3095
 #, fuzzy, kde-format
 msgid "Message From &Template"
 msgstr "Иттилооти нав аз сервер нест"
 
-#: kmmainwidget.cpp:3102
+#: kmmainwidget.cpp:3101
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "Фиристодан &ба рӯйхати фиристониш..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3107
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Эҷоди филтр"
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3111
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "Филтронӣ аз рӯи &мавзӯъ..."
 
-#: kmmainwidget.cpp:3119
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgid "Filter on &From..."
 msgstr "Филтронӣ аз рӯи &фиристонанда..."
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3124
 #, kde-format
 msgid "Filter on &To..."
 msgstr "Филтронӣ аз рӯи &қабулкунанда..."
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3130
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "Филтронӣ аз рӯи &қабулкунанда..."
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Игора намудани &мунозирот"
 
-#: kmmainwidget.cpp:3142
+#: kmmainwidget.cpp:3141
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Ишора намудани мунозирот ҳамчун &хондашуда"
 
-#: kmmainwidget.cpp:3145
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Ишора намудани тамоми иттилоот дар мунозирот ҳамчун хондашуда"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Ишора намудани мунозирот ҳамчун &хонданашуда"
 
-#: kmmainwidget.cpp:3151
+#: kmmainwidget.cpp:3150
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Ишора намудани иттилоот мунозирот ҳамчун хонданашуда"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3156
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Ишора намудани мунозирот ҳамчун &хондашуда"
 
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3159
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Аз мунозироти &муҳим, гирфтани ишора"
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3162
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &New"
 msgid "Mark Thread as &Action Item"
 msgstr "Ишора намудани мунозирот ҳамчун &нав"
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3165
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Гирифтани нишонаи \"&муҳим\""
 
-#: kmmainwidget.cpp:3170
+#: kmmainwidget.cpp:3169
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Мушоҳида намудани &мунозирот"
 
-#: kmmainwidget.cpp:3174
+#: kmmainwidget.cpp:3173
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Ба эътибор нагирифтани мунозирот"
 
-#: kmmainwidget.cpp:3182 kmreadermainwin.cpp:478
+#: kmmainwidget.cpp:3181 kmreadermainwin.cpp:478
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "&Захира кардани тамоми замимот..."
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3189
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Decrypted To..."
 msgstr "Иттилооти нав ба..."
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3193
 #, fuzzy, kde-format
 msgid "Appl&y All Filters"
 msgstr "Истифода аз &филтрҳо"
 
-#: kmmainwidget.cpp:3203
+#: kmmainwidget.cpp:3202
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -4992,13 +4992,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Боз кардани мубоҳисот"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3205
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "Боз кардани мубоҳисоти ҷорӣ"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3209
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -5006,124 +5006,124 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Пинҳон кардани мунозирот"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3212
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "Пинҳон кардани мунозирот"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Б&оз кардани тамоми мунозирот"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Боз кардани тамоми мунозирот дар папкаи ҷорӣ"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "П&инҳон кардани тамоми мунозирот"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Пинҳон кардани мунозирот дар папкаи ҷорӣ"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3230
 #, fuzzy, kde-format
 msgid "&Display Message"
 msgstr "&Андозаи иттилоот"
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgid "&Next Message"
 msgstr "Иттилооти &навбатӣ"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "Go to the next message"
 msgstr "Гузаштан ба иттилооти навбатӣ"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3244
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Хонданашудаи &навбатӣ"
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr ""
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3253
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Гузаштан ба иттилооти хонданашудаи навбатӣ"
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3257
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Иттилооти қаблӣ"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Гузаштан ба иттилооти қаблӣ"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3264
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "&Хонданашудаи қаблӣ"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3272
 #, fuzzy, kde-format
 #| msgid "&Previous Card"
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "&Корти қаблӣ"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3273
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Гузаштан ба иттилооти хонданашудаи қаблӣ"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Папкаи хонданашудаи &навбатӣ"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Гузаштан ба папкаи навбатӣ бо иттилооти хонданашуда"
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "&Папкаи хонданашудаи қаблӣ"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3291
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Гузаштан ба папкаи қаблӣ бо иттилооти хонданашуда"
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Матни &хонданашудаи навбатӣ"
 
-#: kmmainwidget.cpp:3299
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Гузаштан ба матни хонданашудаи навбатӣ"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5132,253 +5132,253 @@ msgstr ""
 "Саҳифа гардонидани иттилоот. Ҳангоми расидани охири иттилоот, ба иттилооти "
 "хонданашудаи навбатӣ гузаштан."
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3308
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "Танзимоти &филтрҳо..."
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3314
 #, fuzzy, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Филтрҳои дастрас"
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3319
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "Афзудани қуттии хатфиристӣ"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3324
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "&Мадхал ба KMail"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Намоиши саҳифаи табаррукоти KMail"
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "Танзимоти &маълумот..."
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3340
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "&Танзими KMail..."
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3347
 #, fuzzy, kde-format
 msgid "Expire..."
 msgstr "Озод кардан аз кӯҳнашуда"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3353
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "Add Favorite Folder..."
 msgstr "&Папкаи нав..."
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3359
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgid "Serverside Subscription..."
 msgstr "Обуна..."
 
-#: kmmainwidget.cpp:3366 kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3365 kmmainwidget.cpp:3373
 #, fuzzy, kde-format
 msgid "Apply All Filters"
 msgstr "Истифода аз &филтрҳо"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3391
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data..."
 msgstr "&Танзими KMail..."
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3397
 #, fuzzy, kde-format
 #| msgid "&Address Book..."
 msgid "New AddressBook Contact..."
 msgstr "&Китоби адресӣ..."
 
-#: kmmainwidget.cpp:3406 kmmainwidget.cpp:4054
+#: kmmainwidget.cpp:3405 kmmainwidget.cpp:4053
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "Ф&иристодан"
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3409
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "Номи ихтисос"
 
-#: kmmainwidget.cpp:3426
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Копӣ кардани иттилоот - интихоби папка"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3431
 #, fuzzy, kde-format
 msgid "Jump to Folder..."
 msgstr "Ба ин папка копӣ кардан"
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Барҳам додани амалиёти ҷорӣ"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Гузаштан ба папкаи навбатӣ"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3449
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Гузаштан ба папкаи қаблӣ"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3455
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Интихоби папка барои гузариш"
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3462
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "Гузаштан ба папкаи навбатӣ"
 
-#: kmmainwidget.cpp:3469
+#: kmmainwidget.cpp:3468
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "Гузаштан ба папкаи навбатӣ"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3474
 #, fuzzy, kde-format
 msgid "Focus on Next Message"
 msgstr "Гузаштан ба папкаи навбатӣ"
 
-#: kmmainwidget.cpp:3481
+#: kmmainwidget.cpp:3480
 #, fuzzy, kde-format
 msgid "Focus on Previous Message"
 msgstr "Гузаштан ба папкаи қаблӣ"
 
-#: kmmainwidget.cpp:3487
+#: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "Ҷудо кардани &тамоми иттилоот"
 
-#: kmmainwidget.cpp:3493
+#: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "Ҷудо кардани &тамоми иттилоот"
 
-#: kmmainwidget.cpp:3499
+#: kmmainwidget.cpp:3498
 #, fuzzy, kde-format
 msgid "Select Message with Focus"
 msgstr "Интихоби папка барои гузариш"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3505
 #, fuzzy, kde-format
 #| msgid "Reset Quick Search"
 msgid "Set Focus to Quick Search"
 msgstr "Партоиши ҷустуҷӯи тези охирин"
 
-#: kmmainwidget.cpp:3514
+#: kmmainwidget.cpp:3513
 #, fuzzy, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Гузаштан ба папкаи қаблӣ"
 
-#: kmmainwidget.cpp:3520
+#: kmmainwidget.cpp:3519
 #, fuzzy, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Гузаштан ба папкаи навбатӣ"
 
-#: kmmainwidget.cpp:3527
+#: kmmainwidget.cpp:3526
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Гузаронидани иттилоот - интихоби папка"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3536
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3541
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3548
+#: kmmainwidget.cpp:3547
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "&Папкаи хонданашудаи қаблӣ"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3554
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Ҳузфи феҳрист"
 
-#: kmmainwidget.cpp:3583
+#: kmmainwidget.cpp:3582
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "&Папкаи нав..."
 
-#: kmmainwidget.cpp:4001
+#: kmmainwidget.cpp:4000
 #, fuzzy, kde-format
 msgid "&Delete Search"
 msgstr "&Ҳузфи папка"
 
-#: kmmainwidget.cpp:4015
+#: kmmainwidget.cpp:4014
 #, fuzzy, kde-format
 msgid "Edit Search..."
 msgstr "Тағйир кардан..."
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4051
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "&Танзими KMail..."
 
-#: kmmainwidget.cpp:4063
+#: kmmainwidget.cpp:4062
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "П&ок кардани сабад"
 
-#: kmmainwidget.cpp:4063
+#: kmmainwidget.cpp:4062
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Ҷойгир кардани тамоми иттилоот ба сабад"
 
-#: kmmainwidget.cpp:4137
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4139
+#: kmmainwidget.cpp:4138
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4196
+#: kmmainwidget.cpp:4195
 #, kde-format
 msgid "Filter %1"
 msgstr "Филтри %1"
 
-#: kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:4662
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Обуна..."
 
-#: kmmainwidget.cpp:4671
+#: kmmainwidget.cpp:4670
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5389,12 +5389,12 @@ msgstr ""
 "метавонад эҳтимолоти онро, ки низоми шумо бо ёрии тарзи шикасти аллакай "
 "мавҷудбуда ва ояндавии нуқсонро низ баландтар кунад."
 
-#: kmmainwidget.cpp:4675
+#: kmmainwidget.cpp:4674
 #, kde-format
 msgid "Use HTML"
 msgstr "Истифода аз HTML"
 
-#: kmmainwidget.cpp:4857
+#: kmmainwidget.cpp:4824
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5404,41 +5404,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4860
+#: kmmainwidget.cpp:4827
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4828
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4862
+#: kmmainwidget.cpp:4829
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Барҳам додан"
 
-#: kmmainwidget.cpp:4895 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4862 kmmainwidget.cpp:4868
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: kmmainwidget.cpp:4896 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4863 kmmainwidget.cpp:4868
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Номи ихтисос"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4864
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Номи ихтисос"
 
-#: kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:4875
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
