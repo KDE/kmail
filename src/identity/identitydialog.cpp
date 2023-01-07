@@ -253,7 +253,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: General
     //
-    int row = -1;
     auto page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
@@ -269,7 +268,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto formLayout = new QFormLayout(tab);
 
     // "Name" line edit and label:
-    ++row;
     mNameEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mNameEdit, this);
     auto label = new QLabel(i18n("&Your name:"), tab);
@@ -286,7 +284,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mNameEdit->setWhatsThis(msg);
 
     // "Organization" line edit and label:
-    ++row;
     mOrganizationEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mOrganizationEdit, this);
     label = new QLabel(i18n("Organi&zation:"), tab);
@@ -304,7 +301,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Email Address" line edit and label:
     // (row 3: spacer)
-    ++row;
     mEmailEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mEmailEdit, this);
     label = new QLabel(i18n("&Email address:"), tab);
@@ -326,7 +322,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
-    ++row;
     mAliasEdit = new KEditListWidget(tab);
 
     auto emailValidator1 = new PimCommon::EmailValidator(this);
@@ -353,7 +348,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: Cryptography
     //
-    row = -1;
     mCryptographyTab = new QWidget(mTabWidget);
     mTabWidget->addTab(mCryptographyTab, i18n("Cryptography"));
     formLayout = new QFormLayout(mCryptographyTab);
