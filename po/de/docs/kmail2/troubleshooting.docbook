@@ -3,562 +3,556 @@
 <chapterinfo>
 <authorgroup>
 <author>
-  <personname>
-  <firstname>Portions of this chapter were converted from the KDE UserBase <ulink
-  url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips">KMail/FAQs Hints and Tips</ulink> page in 2012.</firstname>
-  </personname>
-</author>
-<author>
-&David.Bryant;
-&David.Bryant.mail;
-</author>
-<!-- TRANS:ROLES_OF_TRANSLATORS -->
-</authorgroup>
-<date>2021-08-08</date>
-<releaseinfo>5.14.2 (Applications 20.04.2)</releaseinfo>
+<personname
+><firstname
+>Dieses Kapitel wurde aus der Webseite <ulink url=" https://userbase.kde.org/KMail/FAQs Hints and Tips"
+>KMail / FAQs Tipps und Tricks</ulink
+> der &kde;-Userbase erstellt.</firstname
+> <surname
+></surname
+> </personname>
+      </author>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+      </authorgroup>
+<date
+>2012-07-28</date>
+      <releaseinfo
+>&kde; SC 4.9</releaseinfo>
 </chapterinfo>
 
-<title>&kmail; Troubleshooting</title>
+<title
+>Fehlersuche und -behebung in &kmail;</title>
 
-<sect1 id="introduction-to-akonadi">
-<title>Introduction to &akonadi;</title>
-    
-  <para>&kmail; has been under active development since 1997. A lot of bugs have cropped up over the years.
-  Many of these have been resolved. If you are curious about any of those old bugs, please see the <ulink
-  url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips">KMail/FAQs Hints and Tips</ulink>
-  in the &kde; UserBase Wiki. Or visit <ulink url="https://bugs.kde.org">&kde;'s main bug tracking page</ulink>
-  to learn about bugs of a more recent vintage.</para>
-  
-  <para>At the present time (2021), many of the problems people are experiencing with &kmail; involve the &akonadi;
-  server. &akonadi; is an auxiliary program that functions as an intermediary between &kmail; (plus all the other &PIM;
-  applications) and a general purpose database daemon (most commonly "mysqld"). It also facilitates inter-process
-  communications among the various pieces of the &PIM; applications. Depending on the way your system is configured,
-  &akonadi; may be started during the bootup / login process. Or it may not start until you invoke a &PIM; 
-  application program (like &kmail;, or &kaddressbook;, or &kontact;).</para>
-  
-  <para> There are two application programs that permit one to interact with the &akonadi; server directly: <code>akonadictl</code>
-  (a terminal-oriented control program), and <code>akonadiconsole</code> (a GUI application). Here is a little information about
-  those two programs.</para>
-  <para>&nbsp;</para><!-- add whitespace -->
-  
-    <sect2 id="intro-to-akonadictl">
-    <title>The Akonadictl Control Program</title>
-    <screenshot>
-      <screeninfo>&akonadi; status report</screeninfo>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="akonadictl.png" format="PNG"/>
-          </imageobject>
-          <textobject>
-            <phrase>&akonadi; status report</phrase>
-          </textobject>
-          <caption>
-              <para>Akonadictl Status Report, 32 Agents Running</para>
-          </caption>
-        </mediaobject>
-    </screenshot>
-    <para>&nbsp;</para><!-- add whitespace -->
-    
-    <para>The preceding screenshot illustrates one of the commands one may use with the <code>akonadictl</code> program. Here
-      are all the commands <code>akonadictl</code> recognizes.</para>
-    
-    <para><screen>~$ akonadictl start</screen> Starts the &akonadi; server.</para>
-    <para><screen>~$ akonadictl stop</screen> Stops the &akonadi; server.</para>
-    <para><screen>~$ akonadictl restart</screen> Stops the &akonadi; server, then launches it anew.</para>
-    <para><screen>~$ akonadictl status</screen> Produces the status report illustrated in the preceding screenshot.</para>
-    <para><screen>~$ akonadictl instances</screen> Lists the &akonadi; server instances (more than one can
-      be running at the same time).</para>
-    <para><screen>~$ akonadictl vacuum</screen> Cleans up &akonadi;'s storage, or at least tries to do that.</para>
-    <para><screen>~$ akonadictl fsck</screen> Performs a file consistency check. The output from this 
-      command can be quite voluminous, especially if you have added your own folders to &kmail;. Use this
-      version of the command (piping the output through grep) to verify that your &akonadi; database is healthy,
-      without producing a lot of extraneous output.</para>
-    <para>
-        
-<screen>~ $ akonadictl fsck 2>&amp;1 | grep ^Found
-Found 0 external files.
-Found 0 external parts.
-Found no unreferenced external files.
-Found 0 parts to be moved to external files
-Found 0 parts to be moved to database
-Found 6 collections without RID.
-Found 0 items without RID.
-Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  -->
-
-      RID stands for RemoteId, a named field in the mysql database tables. If there are more than 0 items
-      without RID, you have a minor problem that should be corrected. If there are more than 0 dirty items
-      you may have a major problem that <emphasis>must</emphasis> be corrected. See <link 
-      linkend="resource-conflict-error">"Unable to Fetch Item ..."</link> and also <link
-      linkend="dealing-with-dirt">Correcting &kmail;'s "Dirty" Items</link>, below.
-    </para>
-    <para>&nbsp;</para><!-- add whitespace -->
-    </sect2>
-    
-    <sect2 id="intro-to-akonadiconsole">
-    <title>The Akonadiconsole Program</title>
-    <screenshot>
-      <screeninfo>What akonadiconsole looks like</screeninfo>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="akonadiconsole.png" format="PNG"/>
-          </imageobject>
-          <textobject>
-            <phrase>What akonadiconsole looks like</phrase>
-          </textobject>
-          <caption>
-              <para>Akonadiconsole in action</para>
-          </caption>
-        </mediaobject>
-    </screenshot>
-    <para>&nbsp;</para><!-- add whitespace -->
-    
-    <para>The <code>akonadiconsole</code> program provides twelve different "windows" into the inner
-      workings of the &PIM; applications. Here is a brief summary of the available views.</para>
-    
-    <variablelist>
-      <varlistentry id="ak-console-agents">
-        <term><guilabel>Agents</guilabel> tab.</term>
-        <listitem><para>Here you can see a list of the user agents (processors).</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-browser">
-        <term><guilabel>Browse</guilabel> tab.</term>
-        <listitem><para>This tab provides an overview of the various collections of data &akonadi;
-          is maintaining, organized as a hierarchical tree that shows how many items reside in each
-          collection.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-debugger">
-        <term><guilabel>Debugger</guilabel> tab.</term>
-        <listitem><para>Here you can turn debugging on and off, and view the debug message log.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-logging">
-        <term><guilabel>Logging</guilabel> tab.</term>
-        <listitem><para>This tab lets you view messages emitted by various &akonadi; components.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-db-browser">
-        <term><guilabel>DB Browser</guilabel> tab.</term>
-        <listitem><para>Use this tab to peek inside the mysql database. There are many different tables.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-db-console">
-        <term><guilabel>DB Console</guilabel> tab.</term>
-        <listitem><para>Here you can query the mysql database.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-query">
-        <term><guilabel>Query Debugger</guilabel> tab.</term>
-        <listitem><para>Use this tab to turn database query debugging on and off. &kmail; queries the mysql
-          database many times in just a few seconds; output can be voluminous.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-tracker">
-        <term><guilabel>Job Tracker</guilabel> tab.</term>
-        <listitem><para>The &PIM; applications perform various functions by initiating "jobs". Use
-          this tab to toggle job tracking on and off.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-scheduler">
-        <term><guilabel>Resources Schedulers</guilabel> tab.</term>
-        <listitem><para>Here you can see which resources are needed when a particular &PIM; function is
-          invoked. You can see a list of all the &akonadi; resources in your system in the
-          <filename>~/.config/akonadi/</filename> directory.</para></listitem>
-      </varlistentry>
-  
-      <varlistentry id="ak-console-notif-monitor">
-        <term><guilabel>Notification Monitor</guilabel> tab.</term>
-        <listitem><para>Use this tab to monitor notifications sent by various &akonadi; resources.</para></listitem>
-      </varlistentry>
-      
-      <varlistentry id="ak-console-search">
-        <term><guilabel>Item Search</guilabel> tab.</term>
-        <listitem><para>This tab provides a generic search function. Searches can be restricted to Calendar, Contact,
-          Email, or Note.</para></listitem>
-      </varlistentry>
-      
-      <varlistentry id="ak-console-monitors">
-        <term><guilabel>Monitors</guilabel> tab.</term>
-        <listitem><para>Here you can see a list of all the monitors running under &akonadi;, and also view
-          their properties. Agents, resources, and even some application programs are monitored.</para></listitem>
-      </varlistentry>
-    </variablelist>
-    
-    </sect2>
-    
+<sect1 id="kmail2-doesnt-send-mail"
+><title
+>KMail versendet keine E-Mails</title>
+<para
+>In einigen Fällen wird keine E-Mail versandt, anscheinend fehlt &SMTP;, obwohl es im Einstellungsdialog als aktiviert angezeigt wird. Manchmal hilft es, das Konsolenprogramm <application
+>akonadiconsole</application
+> zu starten und den <guilabel
+>Agent zur Nachrichten-Auslieferung</guilabel
+> hinzuzufügen. </para>
+<para
+>Wenn der Rechner im Ruhezustand &eg; durch einen Stromausfall plötzlich abgeschaltet wurde, bleiben E-Mails manchmal im Postausgang. ohne versendet zu werden. Es wird aber auch keine Fehlermeldung angezeigt. Dies kann dadurch verursacht werden, dass die Nachrichten-Auslieferung in der Einstellungsdatei im Ruhezustand <quote
+>abschaltet</quote
+> ist und wegen des Stromausfalls nicht wieder aktiviert wurde. Um diesen Fehler zu beheben, bearbeiten Sie folgende Datei: </para>
+<para
+><filename
+>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename>
+</para>
+<para
+>und ändern Sie </para>
+<para
+><screen
+>[Agent]
+Online=false</screen>
+</para>
+<para
+>in </para>
+<para
+><screen
+>[Agent]
+Online=true</screen>
+</para>
 </sect1>
-
-<!-- <sect1 id="kmail2-doesnt-send-mail">
-<title>KMail doesn't send mail</title>
-  <para>Some users find that mail does not go out, and it appears that &SMTP; is missing, even though the
-  <guilabel>Settings</guilabel> page looks correct.  It has been reported that this is cured by opening
-  <application>akonadiconsole</application> and adding Mail Dispatcher Agent.</para>ttps://bugs.kde.org/show_bug.cgi?id=283682
-  <para>If the computer was suddenly turned off in suspend mode (&eg; by a power cut) sometimes e-mails simply
-  stay in the outbox without being sent, but no error message is generated either. This may be due to the fact
-  that the Mail Dispatcher Agent is set to <quote>offline</quote> in the configuration file during suspend and
-  is not changed back due to the crash. Edit the following file:</para>
-  <para><filename>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename> and change</para>
-  <para><screen>[Agent] Online=false</screen></para>
-  <para>to</para>
-  <para><screen>[Agent] Online=true</screen></para>
-</sect1> --> <!-- This section removed 8/8/2021. -->
-
-<!-- <sect1 id="clean-start-after-a-failed-migration"><title>Clean start after a failed migration</title>
-<para>In case migration from &kmail; 1 to &kmail; 2 fails or you have weird problems after it, you can try to do a clean import of your data, instead of migrating the existing settings. Be warned, this needs more manual setup, so do only if you are confident of setting up your &kmail; accounts again; it can generate a large amount of network traffic for &IMAP; resources.
-</para>
+<sect1 id="clean-start-after-a-failed-migration"
+><title
+>Neue Einrichtung für &kmail; nach einer fehlgeschlagenen Aktualisierung</title>
+<para
+>Ist die Aktualisierung von &kmail; 1 auf &kmail; 2 fehlgeschlagen oder haben Sie danach Probleme mit dem Programm, sollten Sie versuchen, &kmail; neu einzurichten und Ihre E-Mails zu importieren. Das erfordert mehr Arbeit zu Wiederherstellung der Funktionsfähigkeit. Daher sollten Sie sich mit der Einstellung der Zugänge zum Empfangen und Versenden von E-Mails auskennen. Bei &IMAP;-Postfächern kann viel Netzwerkverkehr entstehen. </para>
 <orderedlist>
-<listitem><para>Stop Akonadi and related applications</para>
-<para>quit &kmail;/&kontact;/&korganizer;, and issue this command:
+<listitem
+><para
+>Stoppen Sie Akonadi und alle zugehörigen Programme</para>
+<para
+>Beenden Sie &kmail;/&kontact;/&korganizer; und führen diesen Befehl aus: </para>
+<para
+><userinput
+><command
+>akonadictl stop</command
+></userinput>
 </para>
-<para><userinput><command>akonadictl stop</command></userinput>
+<para
+>Überprüfen Sie, dass kein <application
+>Akonadi</application
+>- oder <application
+>MySQL</application
+>-Prozess mehr ausgeführt wird:  </para>
+<para
+><userinput
+><command
+>ps ux | grep mysql</command
+></userinput>
 </para>
-<para>Make sure no <application>Akonadi</application> or <application>MySQL</application> process is running:
+<para
+><userinput
+><command
+>ps ux | grep akonadi</command
+></userinput>
 </para>
-<para><userinput><command>ps ux | grep mysql</command></userinput>
-</para>
-<para><userinput><command>ps ux | grep akonadi</command></userinput>
-</para>
-<para>They should not show anything else but the <application>grep</application> process itself.
-</para>
+<para
+>In der Ausgabe dieser beiden Befehle darf nur der <application
+>grep</application
+>-Prozess selbst angezeigt werden. </para>
 </listitem>
-<listitem><para>Remove old Akonadi database and config</para>
-<para>Delete the following folders
-</para>
+<listitem
+><para
+>Entfernen Sie die alte Akonadi-Datenbank und die zugehörigen Einstellungen</para>
+<para
+>Löschen Sie die folgenden Ordner: </para>
 <itemizedlist>
   <listitem>
     <para>
-      <filename role="directory">~/.local/share/akonadi</filename>
+      <filename role="directory"
+>~/.local/share/akonadi</filename>
     </para>
   </listitem>
   <listitem>
     <para>
-      <filename role="directory">~/.config/akonadi</filename>
+      <filename role="directory"
+>~/.config/akonadi</filename>
     </para>
   </listitem>
 </itemizedlist>
-<para>Delete also the files starting with <emphasis>akonadi</emphasis> from <filename role="directory">~/.kde4/share/config</filename>
-</para>
+<para
+>Löschen Sie ebenso alle Dateien, deren Namen mit <emphasis
+>akonadi</emphasis
+> beginnen, aus dem Ordner <filename role="directory"
+>~/.kde4/share/config</filename
+> </para>
 </listitem>
-<listitem>ttps://bugs.kde.org/show_bug.cgi?id=283682
-<para>Restart Akonadi server
-</para>
-<para><userinput><command>akonadictl start</command></userinput>
+<listitem>
+<para
+>Starten Sie den Akonadi-Server erneut. </para>
+<para
+><userinput
+><command
+>akonadictl start</command
+></userinput>
 </para>
 </listitem>
 <listitem>
-<para>Add back the accounts
-</para>
-<para>Now it is time to add your account back. You can use &kmail; (&kontact;) for it, or you can use the <application>akonadiconsole</application> tool.
-</para>
-<para>In &kmail;: <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Accounts</guimenuitem></menuchoice> and use <guilabel>Add</guilabel>.
-</para>
-<para>If you use &IMAP;, add a new <guimenuitem>&IMAP; E-Mail server</guimenuitem>. If you want disconnected mode (so you can read the mails offline), enable it on the <guilabel>Advanced</guilabel> tab. Be sure to check that you are subscribed to all your important folders.
-</para>
-<para>You might already see a <guilabel>Local folder</guilabel> resource. This points to a local maildir folder. You can either modify this to point to your existing maildir folders or you can add a new resource for local mails.
-</para>
-<para>When adding a maildir resource you can choose between <guilabel>&kmail; Mail Folder</guilabel> or <guilabel>Maildir</guilabel>. Unless you have a mixed folder containing <emphasis>both</emphasis> maildir folders and mbox files, you should choose <guilabel>Maildir</guilabel>. For independent mbox files, like the one in the <filename role="directory">/var/spool/mail</filename>, you can set up a new <emphasis>MBox</emphasis>  folder.
-</para>
-<para>Add the POP3 accounts as well. If you have multiple Local Folders set up, on the <guilabel>Advanced</guilabel> tab, choose the destination folder where the newly downloaded mails are put.
-</para>
-<para>For all accounts, configure the mail check interval. For Local folders disable interval checking and also disable <guilabel>Include in manual mail check</guilabel> in the <guilabel>Retrieval options</guilabel>.
-</para>
-<para>Add the sending (SMTP) accounts.
-</para>
+<para
+>Versand- und Empfangszugänge wieder hinzufügen </para>
+<para
+>Nun müssen Sie Ihre Versand- und Empfangszugänge wieder herstellen. Dazu können Sie &kmail; oder &kontact; oder das Konsolenprogramm <application
+>akonadiconsole</application
+> verwenden. </para>
+<para
+>In &kmail; öffnen Sie mit <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog und klicken auf der Seite <guilabel
+>Zugänge</guilabel
+> auf den Knopf <guibutton
+>Hinzufügen</guibutton
+>. </para>
+<para
+>Möchten Sie &IMAP;, benutzen, fügen Sie einen neuen <guimenuitem
+>&IMAP;-E-Mail-Server</guimenuitem
+> hinzu. Möchten Sie Ihre E-Mails auch Offline lesen und bearbeiten (Disconnected &IMAP;), aktivieren Sie dies auf der Karteikarte <guilabel
+>Erweitert</guilabel
+>. Überprüfen Sie, ob Sie auch alle wichtigen Ordner abonniert haben. </para>
+<para
+>Wahrscheinlich haben Sie bereits eine Ressource <guilabel
+>Lokale Ordner</guilabel
+>. Diese Ressource zeigt auf einen lokalen Maildir-Ordner. Entweder Sie ändern diese Zuordnung zu einem vorhandenen Maildir-Ordner oder fügen eine neue Ressource für lokale E-Mails hinzu. </para>
+<para
+>Wenn Sie eine Maildir-Ressource hinzufügen, können Sie zwischen <guilabel
+>&kmail;-Mailordner</guilabel
+> oder <guilabel
+>Maildir</guilabel
+> wählen. Wenn Sie keine gemischten Ordner <emphasis
+>sowohl</emphasis
+> mit Maildir-Ordnern und MBox-Dateien haben, sollten Sie  <guilabel
+>Maildir</guilabel
+> wählen. Für eigene MBox-Dateien wie in <filename role="directory"
+>/var/spool/mail</filename
+> sollten Sie neue <emphasis
+>MBox</emphasis
+>-Ordner einstellen. </para>
+<para
+>Fügen Sie ebenso alle POP3-Zugänge hinzu, Haben Sie mehrere lokale Ordner eingestellt, wählen Sie auf der Karteikarte <guilabel
+>Erweitert</guilabel
+> den Zielordner zur Speicherung der E-Mails. </para>
+<para
+>Stellen Sie für alle Zugänge das Abrufintervall ein. Deaktivieren Sie für lokale Ordner das Abrufintervall und schalten Sie auch <guilabel
+>Bei manueller Prüfung einbeziehen</guilabel
+> in den <guilabel
+>Abrufeinstellungen</guilabel
+> ab. </para>
+<para
+>Fügen Sie die Versand-Zugänge (SMTP) hinzu. </para>
 </listitem>
 <listitem>
-<para>Fix your filters, identities and favorite folders
-</para>
-<para>If you have client side filtering (common with POP3 mails), go to <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure Filters</guimenuitem></menuchoice> and fix the destination folder for the filters, they most probably are wrong. Otherwise mails will end up in folders you don't expect.
-</para>
-<para>Spam filter (at least in version 4.7.3 and earlier) does not work as expected in that the rule that the wizard creates does not send spam to the folder you have defined.
-</para>
-<para>The workaround for this is to change the <quote>spam</quote> and <quote>spam unsure</quote> (if the spam filter you use supports that) from looking at Status-fields in the header <literal>X-Spam-Status</literal> to look <guimenuitem>Anywhere in headers</guimenuitem> for X-<replaceable>your spam filter</replaceable>-Classification: <quote>SPAM or unsure</quote>. Look at the filters the wizard creates and copy the <quote>contains</quote> part. Example for <application>Spambayes</application>: <quote>X-Spambayes-Classification: spam</quote> and <quote>X-Spambayes-Classification: unsure</quote>.
-</para>
-<para>You also need to verify the identity settings and set the sent-mail, drafts and templates folders to point to the right folders. To do that go to <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Identities</guimenuitem></menuchoice>, modify the identity, go to the  <guilabel>Advanced</guilabel> tab and modify the above mentioned folder settings.
-</para>
-<para>Check also that your <guilabel>Favorite Folders</guilabel> are the ones you have chosen before.
-</para>
+<para
+>Stellen Sie Ihre Filter, Identitäten und bevorzugten Order wieder ein. </para>
+<para
+>Filtern Sie die E-Mails auf Ihrem Rechner wie typischerweise mit POP3-Zugängen, wählen Sie <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Filter einrichten ...</guimenuitem
+></menuchoice
+> und korrigieren die Zielordner der Filter, die vielfach falsch sind. Ansonsten werden die gefilterten E-Mails in unerwarteten Ordnern abgelegt. </para>
+<para
+>Spam-Filter (bis zu Version 4.7.3 und vorher) funktionieren nicht wie erwartet, das die durch den Assistenten erstellten Regeln die Spam-E-Mails nicht in den angegebenen Ordner verschieben. </para>
+<para
+>Als Übergangslösung für diese Problem können Sie abstellen, das die Filter <quote
+>Spam</quote
+> und <quote
+>Möglicherweise Spam</quote
+>, wenn das durch den von Ihnen verwendeten Spamfilter unterstützt wird, in dem Statusfeld <literal
+>X-Spam-Status</literal
+> im Vorspann <guimenuitem
+>Irgendwo im Vorspann</guimenuitem
+> nach Klassifizierungen <quote
+>SPAM or unsure</quote
+> suchen. Sehen Sie sich die durch den Assistenten erstellten Filter an und kopieren Sie den Teil <quote
+>enthält</quote
+>. Ein Beispiel für <application
+>Spambayes</application
+>: <quote
+>X-Spambayes-Classification: spam</quote
+> und <quote
+>X-Spambayes-Classification: unsure</quote
+>. </para>
+<para
+>Überprüfen Sie auch die Einstellungen Ihrer Identität und stellen Sie Versendete Nachrichten, Entwürfe und Vorlagen auf die richtigen Ordner ein. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, gehen zur Seite <guilabel
+>Identitäten</guilabel
+>, passen die Einstellungen an und ändern die oben genannten Ordner auf der Karteikarte <guilabel
+>Erweitert</guilabel
+>. </para>
+<para
+>Überprüfen Sie, das Ihre <guilabel
+>Bevorzugten Ordner</guilabel
+> mit den Einstellungen vorher übereinstimmen. </para>
 </listitem>
 <listitem>
-<para>Initiate a mail check
-</para>
-<para>Start a mail check for your accounts. It is suggested doing it per account.
-</para>
-<para>First check for &IMAP;, if you have it.
-</para>
-<para>Next check (import) your local mails. One solution is to do a full check in one go <menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail In</guimenuitem></menuchoice> and select the local account; the other is to click one by one on the folders, that should initiate the check for that folder (alternatively right click on the folder name and select <guilabel>Update Folder</guilabel>).
-</para>
-<para>The initial import might be slow and could use a lot of memory, especially if you have folders with a large amount of mail. In that case per-folder check is preferred. If the check (complete or for one folder) is finished and the memory usage is still high, you could restart the Akonadi server &mdash; as seen above &mdash; or just the maildir agent, if you use <varname>akonadiconsole</varname>. Do not worry, this high memory usage is <emphasis>only</emphasis> for initial import.
-</para>
-<para>Initiate a check mail for POP3 resources.
-</para>
+<para
+>Starten Sie das Abholen von E-Mails </para>
+<para
+>Sehen Sie nach E-Mails in allen Ihren Zugängen, am besten nacheinander für jeden einzelnen Zugang. </para>
+<para
+>Als erstes sehen Sie nach E-Mails in Ihren &IMAP;-Zugängen, falls vorhanden. </para>
+<para
+>Als nächstes sehen Sie nach bzw. importieren Sie Ihre lokalen E-Mails. Eine Möglichkeit ist im Menü <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen in</guimenuitem
+></menuchoice
+> zu benutzen und die lokalen Ordner zu wählen. Alternativ klicken Sie nacheinander auf alle Ordner, damit wird in diesen Ordner nach E-Mail gesehen oder Sie klicken mit der &RMBn; auf den Ordnernamen und wählen <guilabel
+>Ordner aktualisieren</guilabel
+>. </para>
+<para
+>Das erste Abholen bzw. Importieren von E-Mails dauert möglicherweise lange und benötigt viel Arbeitsspeicher, besonders für Ordner mit einer großen Zahl von E-Mails. In diesem Fall sollten Sie die Ordner einzeln nacheinander importieren. Ist der Import für alle E-Mails oder für einen Ordner beendet und es wird immer noch viel Arbeitsspeicher belegt, können Sie den Akonadi-Server &mdash; wie oben beschrieben &mdash; neu starten oder nur den Maildir-Agenten mit <command
+>akonadiconsole</command
+>. <emphasis
+>Nur</emphasis
+> beim ersten Abholen von E-Mails wird viel Arbeitsspeicher benötigt. </para>
+<para
+>Starten Sie den E-Mail-Import für POP3-Ressourcen. </para>
 </listitem>
 </orderedlist>
-<para>Hopefully after these steps, you will have a much nicer &kmail; experience.
-</para>
-</sect1> --> <!-- This section removed 8/8/2021. -->
+<para
+>Nachdem Sie mit diesem Verfahren &kmail; neu eingerichtet und die E-Mails importiert haben, wird &kmail; viel besser funktionieren. </para>
+</sect1>
 
-<!-- <sect1 id="local-folders-is-added-over-and-over"><title>Local Folders is added over and over</title>
-<para>In some cases you might end up with a maildir account pointing to a certain place (like <filename>$HOME/Mail</filename>), but you still see a <guilabel>Local Folders</guilabel> folder in the folder list with Inbox/Outbox/Trash/Drafts/&etc; subfolders and &kmail; keeps putting mails there, especially sent mails.
-</para>
-<para>The problem is that certain folders are marked as special folders (system folders) and if you don't have them, &kmail; cannot operate correctly. That is the reason why it keeps re-creating that folder.
-</para>
-<para>At this time there is no easy way to change this in the UI for all types of special folders. Here is what you can do:
-</para>
+<sect1 id="local-folders-is-added-over-and-over"
+><title
+>Lokale Ordner werden immer wieder hinzugefügt</title>
+<para
+>Manchmal haben Sie einen Maildir-Zugang für einen bestimmten Ort wie zum Beispiel <filename
+>$HOME/Mail</filename
+>, aber immer noch einen Ordner <guilabel
+>Lokale Ordner</guilabel
+> in der Ordnerliste mit Posteingang/Postausgang/Papierkorb/Entwürfe/&etc; und &kmail; speichert immer noch die E-Mails, insbesondere Versendete Nachrichten in diesen Ordnern. </para>
+<para
+>Das Problem besteht darin, dass bestimmte Ordner als besondere „System“-Ordner gekennzeichnet sind. Ohne diese System-Ordner funktioniert &kmail; nicht korrekt. Daher werden diese Ordner immer wieder neu erstellt. </para>
+<para
+>Zurzeit gibt es keine Möglichkeit, dies mit einer grafischen Benutzeroberfläche für alle Arten von besonderen Ordnern zu ändern. Es gibt nur folgende Vorgehensweise: </para>
 <orderedlist>
-<listitem><para>The <emphasis>Sent-Mail, Drafts and Templates</emphasis> folder is configurable for each identity. Go to  <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Identities</guimenuitem></menuchoice>, select your identity, click on <guilabel>Modify</guilabel>, go to the <guilabel>Advanced</guilabel> tab and set the folders to point to the right place.</para></listitem>
-<listitem><para>The default <emphasis>Inbox</emphasis> is configurable for each POP3 account. Go to  <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure KMail</guisubmenu><guimenuitem>Account</guimenuitem></menuchoice>, select your POP3 account, click on <guilabel>Modify</guilabel> go to the <guilabel>Advanced</guilabel> tab and set the <guilabel>Destination folder</guilabel>.</para></listitem>
-<listitem><para>For IMAP accounts you can configure the <emphasis>Trash</emphasis> folder. Do as above. The setting name is <emphasis>Trash folder</emphasis>.</para></listitem>
-<listitem><para>The most problematic part is the <emphasis>Outbox</emphasis>. First, locate <filename>specialmailcollectionsrc</filename> in your &kde; configuration directory (<filename>$HOME/.kde4/share/config</filename> or similar). It contains something like this:</para></listitem>
+<listitem
+><para
+>Die Ordner <guilabel
+>Versendete Nachrichten</guilabel
+>, <guilabel
+>Entwürfe</guilabel
+> und <guilabel
+>Vorlagen</guilabel
+> können für jede Identität getrennt eingestellt werden. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, gehen zur Seite <guilabel
+>Identitäten</guilabel
+>, wählen die Identität und klicken auf <guibutton
+>Ändern ...</guibutton
+>. Gehen Sie dann zur Karteikarte <guilabel
+>Erweitert</guilabel
+> und stellen den richtigen Ort für die Ordner ein.</para
+></listitem>
+<listitem
+><para
+>Die Voreinstellung für den Zielordner <guilabel
+>Posteingang</guilabel
+> kann für jedes POP3-Postfach eingestellt werden. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, wählen Ihr  POP3-Postfach und klicken auf <guibutton
+>Ändern ...</guibutton
+>. Gehen Sie zur Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> und geben Sie den richtigen <guilabel
+>Zielordner</guilabel
+> an.</para
+></listitem>
+<listitem
+><para
+>Für IMAP-Konten können Sie den Ordner <guilabel
+>Papierkorb</guilabel
+> wie oben beschrieben einstellen. Die Einstellung ist mit <guilabel
+>Papierkorb-Ordner</guilabel
+> bezeichnet.</para
+></listitem>
+<listitem
+><para
+>Der schwierigste Teil ist die Einstellung für den Ordner <guilabel
+>Postausgang</guilabel
+>. Suchen Sie zuerst die Datei <filename
+>specialmailcollectionsrc</filename
+> in Ihrem &kde;-Einrichtungsordner <filename
+>$HOME/.kde4/share/config</filename
+>. Die Datei enthält unter anderem folgende Einträge:</para
+></listitem>
 </orderedlist>
-<para><userinput>
-[SpecialCollections]
-DefaultResourceId=akonadi_maildir_resource_0</userinput>
+<para
+><userinput
+>[SpecialCollections] DefaultResourceId=akonadi_maildir_resource_0</userinput>
 </para>
-<para>Now start <application>akonadiconsole</application>, on the <guilabel>Agents</guilabel> tab locate your local account for your <emphasis>Outbox</emphasis> folder, click on it and note the identifier that appears in the lower part (<replaceable>akonadi_maildir_resource_XXX</replaceable> or similar). Put this identifier in the above shown <filename>specialmailcollectionsrc</filename>, by replacing the existing one.
+<para
+>Starten Sie jetzt das Programm <application
+>akonadiconsole</application
+>. Suchen Sie auf der Karteikarte <guilabel
+>Agents</guilabel
+> das lokale Konto mit Ihrem Ordner <guilabel
+>Postausgang</guilabel
+>, klicken Sie darauf und notieren Sie den Namen des <guilabel
+>Identifier</guilabel
+> unten im Dialog wie zum Beispiel <replaceable
+>akonadi_maildir_resource_XXX</replaceable
+>. Tragen Sie diesen Wert in der vorher erwähnten Datei <filename
+>specialmailcollectionsrc</filename
+> als Ersatz des vorhandenen Wertes ein. </para>
+<para
+>Danach starten Sie das Programm <application
+>akonadi</application
+> wieder neu, indem Sie in <application
+>akonadiconsole</application
+>  <menuchoice
+><guimenu
+>Server</guimenu
+><guimenuitem
+>Restart Server</guimenuitem
+></menuchoice
+> wählen oder folgendes in einer Konsole auf der Befehlszeile eingeben: </para>
+<para
+><userinput
+>akonadictl restart</userinput>
 </para>
-<para>After that restart <application>akonadi</application> (you can do from the <application>akonadiconsole</application>, <menuchoice><guimenu>Server</guimenu><guimenuitem>Restart Server</guimenuitem></menuchoice> or from command line with:
-</para>
-<para><userinput>akonadictl restart</userinput>
-</para>
-<para>Now remove the <guilabel>Local Folders</guilabel> that you don't want to use anymore.
-</para>
-<para>If it keeps reappearing and the <guilabel>Mail Dispatcher Agent</guilabel> still crashes, you need to do one more thing in <application>akonadiconsole</application>. Go to the <guilabel>Browser</guilabel> tab, find the outbox you <emphasis>want</emphasis> to use, right click on it, select <guilabel>Folder Properties</guilabel>, <guilabel>Attributes</guilabel> tab, enter <userinput>SpecialCollectionAttribute</userinput> then click <guilabel>Add</guilabel>, double click on the <guilabel>Value</guilabel> near the <guilabel>SpecialCollectionAttribute</guilabel> and enter <userinput>outbox</userinput>. Add also another attribute, the attribute name has to be <guilabel>ENTITYDISPLAY</guilabel> and the value <userinput>("outbox" "mail-folder-outbox" "" ())</userinput> (just copy paste from here). Restart <application>akonadi</application> and now you should be able to remove completely the unneeded local folder account.
-</para>
-</sect1> --> <!-- This section removed 8/8/2021. -->
-
-<sect1 id="unable-to-fetch-item-from-backend">
-<title>"Unable to Fetch Item from Backend" When Entering &IMAP; Folder</title>
-
-  <para>There are at least two possible reasons for this. Here are some workarounds.</para>
-  
-  <variablelist>
-    <varlistentry>
-      <term>Workaround 1</term>
-      <listitem>
-        <itemizedlist>
-          <listitem><para>edit <filename>~/.local/share/akonadi/mysql.conf</filename></para></listitem>
-          <listitem><para>Under the <guilabel>[mysql]</guilabel> section, add: <userinput>binlog_format=row</userinput></para></listitem>
-        </itemizedlist>
-        <para>If this does not work, try workaround 2 (below).</para>
-      </listitem>
-    </varlistentry>
-    
-    <varlistentry>
-      <term>Workaround 2</term>
-      <listitem>
-        <para>This one is a matter of restarting so &kmail; can fetch those pesky items. Some possible steps include:</para>
-        <para>Use <keycombo>&Alt;<keycap>F2</keycap></keycombo> (&krunner;) or &konsole; to type <userinput><command>kquitapp
-          kmail</command></userinput> , then wait a minute, then <userinput><command>akonadictl stop</command></userinput> . Wait
-          a minute, type <userinput><command>akonadictl start</command></userinput> , wait a minute, then type <userinput>
-          <command>kmail</command></userinput> . This stops &kmail; (closing <emphasis>all</emphasis> windows), stops the &kmail;
-          backend, restarts the &kmail; backend, and restarts &kmail;. Having a working internet connection increases the chances
-          of success. Sometimes, you can also just do <userinput><command>kquitapp kmail</command></userinput> , wait a minute, and
-          then start &kmail; again. Often, a few restarts seem to be needed. It is unclear what causes this error, but on bad
-          network connections it is more likely to happen.
-        </para>
-      </listitem>
-    </varlistentry>
-  </variablelist>
-  <para>See also <link linkend="your-mails-are-not-being-sent">the next topic</link> to learn how 
-    <application>akonadiconsole</application> can be helpful.</para>
+<para
+>Entfernen Sie nun die <guilabel
+>Lokalen Ordner</guilabel
+>, die Sie nicht mehr benutzen möchten. </para>
+<para
+>Wenn die <guilabel
+>Lokalen Ordner</guilabel
+> trotzdem immer noch erstellt werden und der <guilabel
+>Agent zur Nachrichten-Auslieferung</guilabel
+> immer noch abstürzt, müssen Sie noch weitere Einstellungen in <application
+>akonadiconsole</application
+> vornehmen. Gehen Sie zur Karteikarte <guilabel
+>Browser</guilabel
+>, suchen Sie den Postausgang, den Sie verwenden möchten, und klicken Sie mit der &RMBn; darauf. Wählen Sie <guilabel
+>Folder Properties</guilabel
+> und gehen zur Karteikarte <guilabel
+>Attributes</guilabel
+>. Geben Sie hier <userinput
+>SpecialCollectionAttribute</userinput
+> ein und klicken dann auf <guibutton
+>Add</guibutton
+>. Doppelklicken Sie auf <guilabel
+>Value</guilabel
+> neben <guilabel
+>SpecialCollectionAttribute</guilabel
+> und geben <userinput
+>outbox</userinput
+> ein. Fügen Sie auch noch ein weiteres Attribut mit dem Namen <guilabel
+>ENTITYDISPLAY</guilabel
+> und dem Wert <userinput
+>("outbox" "mail-folder-outbox" "" ())</userinput
+> hinzu. Starten Sie das Programm <application
+>akonadi</application
+> erneut. Jetzt sollten Sie alle nicht mehr benötigten lokalen Ordner löschen können. </para>
 </sect1>
 
-<sect1 id="your-mails-are-not-being-sent">
-<title>Your Emails Are Not Being Sent, Without Error Messages</title>
-
-  <para>If &kmail; does not send mail without saying anything, the <quote>agent</quote> responsible for dispatching
-    messages may be stuck. Of course, you should first verify you have proper network connectivity so mail can be sent!</para>
-
-  <para>To remedy this, it might help to abort the current action and restart it. First, quit &kmail; by using &krunner;
-    (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole; and typing: <userinput><command>kquitapp kmail</command></userinput> .
-    Note that a normal <keycombo>&Alt;<keycap>F4</keycap></keycombo> or <menuchoice><guimenu>File</guimenu><guimenuitem>Quit</guimenuitem>
-    </menuchoice> does <emphasis>not</emphasis> do the trick! Wait a minute, then start &kmail; again. Now start 
-    <application>akonadiconsole</application> using &krunner; (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole;. Go to the
-    <guilabel>Mail Dispatcher Agent</guilabel> (under the <guilabel>Agents</guilabel> tab), do a right-click, and abort the current action.
-    You will most likely get some error messages popping up. Now go back to &kmail; and choose <menuchoice><guimenu>File</guimenu>
-    <guimenuitem>Send Queued Messages</guimenuitem></menuchoice>. Now it might work. If not, instead of aborting the current action,
-    try toggling the offline/online status of the <guilabel>Mail Dispatcher Agent</guilabel> (same context menu) or restarting things
-    as mentioned in workaround 2 of <link linkend="unable-to-fetch-item-from-backend"> the previous topic</link>.</para>
-    
-  <para><note><para>akonadiconsole can be quite helpful for a number of situations because it shows all the <quote>agents</quote>,
-    the separate components of the &kmail; backend. You can stop and start them, put them in offline mode, abort ongoing actions &etc;.
-    It can be very helpful when &kmail; is acting cranky.</para></note></para>
-    
-  <para>Sometimes the <guilabel>Mail Dispatcher Agent</guilabel> fails to function because the dbus daemon (a system-level
-    facility for inter-process communications) is not functioning correctly. Your best bet in this circumstance is simply to
-    reboot the system. The dbus daemon is one of the first processes started when you log in to the &kde; desktop, so it
-    cannot be easily stopped and restarted. The whole &plasma; environment depends on it.</para>
-    
+<sect1 id="you-get-the-error-unable-to-fetch-item-from-backend-when-entering-imap-folder"
+><title
+>Sie erhalten die Fehlermeldung „Unable to fetch item from backend“ beim Öffnen eines IMAP-Ordners</title>
+<para
+>Es gibt mehrere mögliche Ursachen für diesen Fehler und das &kmail;-Teams arbeitet daran. In der Zwischenzeit müssen Sie einige Übergangslösung verwenden. </para>
+<variablelist>
+  <varlistentry>
+    <term
+>Übergangslösung 1</term>
+    <listitem>
+      <itemizedlist>
+        <listitem
+><para
+>Bearbeiten Sie die Datei <filename
+>~/.local/share/akonadi/mysql.conf</filename
+> </para
+></listitem>
+        <listitem
+><para
+>Fügen Sie im Abschnitt <guilabel
+>[mysql]</guilabel
+> den Eintrag <userinput
+>binlog_format=row</userinput
+> hinzu</para
+></listitem>
+      </itemizedlist>
+      <para
+>Wenn das nicht funktioniert, versuchen Sie die folgende Übergangslösung 2 </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+>Übergangslösung 2</term>
+    <listitem>
+      <para
+>Dies wird meistens durch einen Neustart erreicht, so dass &kmail; diese Einträge abholen kann. Führen Sie dazu folgende Schritte aus:</para>
+      <para
+>Benutzen Sie <keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+> oder &konsole;, um folgendes einzugeben: <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, dann warten Sie eine Minute. Als nächstes geben Sie <userinput
+><command
+>akonadictl stop</command
+></userinput
+> ein, warten wieder eine Minute, geben <userinput
+><command
+>akonadictl start</command
+></userinput
+>ein, warten wieder eine Minute und starten dann &kmail; mit <userinput
+><command
+>kmail</command
+></userinput
+>. Mit diesen Befehlen wird &kmail; einschließlich <emphasis
+>aller</emphasis
+> Fenster zusammen mit den &kmail;-Backends angehalten und wieder neu gestartet. Mit einer funktionierenden Internetverbindung erhöht die Chance des Erfolgs. Manchmal reicht auch nur <userinput
+><command
+>kquitapp kmail</command
+></userinput
+> und der Neustart von &kmail; nach einer Minute. Häufig sind mehrere neue Starts erforderlich. Die Ursache für diese Verhalten ist noch unklar, aber mit ungenügenden Netzwerkverbindungen passiert es häufiger. </para>
+    </listitem>
+  </varlistentry>
+</variablelist>
+<para
+>Lesen Sie auch in einem der nächsten Absätze, wie <application
+>akonadiconsole</application
+> bei solchen Problemen hilfreich sein kann. </para>
 </sect1>
 
-<sect1 id="resource-conflict-error">
-<title>"Unable to Fetch Item from Backend ... [LRCONFLICT]"</title>
-
-  <para>This problem is directly related to <ulink url="https://bugs.kde.org/show_bug.cgi?id=283682">&akonadi; bug #283682</ulink>,
-    which has been a thorn in the side of &kmail; since October, 2011. There is a timing / co-ordination problem with asynchronous
-    processing of message filters. Once in a while, a filter rule that moves messages to a different folder "hiccups", and produces
-    more than one database entry for a message that has been moved. When you try to open the second copy of such a message, the error
-    message "Unable to fetch item from backend ...[LRCONFLICT]" appears. Such phantom messages cannot be deleted or moved to trash
-    using &kmail;'s built-in functions. But you <emphasis>can</emphasis> get rid of them. Here's how you do it.</para>
-
-<procedure>
-  <step><para>First, exit the &kmail; program. This may not be necessary, but better safe than sorry.</para></step>
-
-  <step><para>You can learn how many corrupted messages are present by using <code>akonadictl</code>.
-<screen>~ $ akonadictl fsck 2>&amp;1 | grep ^Found
-Found 6 external files.
-Found 6 external parts.
-Found no unreferenced external files.
-Found 0 parts to be moved to external files
-Found 0 parts to be moved to database
-Found 6 collections without RID.
-Found 9 items without RID.
-Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  -->
-    In this instance, there are nine duplicated messages (without RID).</para>
-<para>&nbsp;</para><!-- add whitespace --></step>
-
-  <step><para>You need to know how to connect directly to the mysql server. Use the <code>ps</code> and
-    <code>grep</code> commands to do this.
-<screen>~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
---defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/ 
---socket=/run/user/1000/akonadi/mysql.socket 
---pid-file=/run/user/1000/akonadi/mysql.pid
-david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen></para>
-<para>&nbsp;</para><!-- add whitespace --></step>
-
-  <step><para>Invoke the mysql server program using the socket information from step 3 and issue three mysql
-    commands, as illustrated below.
-<screen>~ $ mysql --socket=/run/user/1000/akonadi/mysql.socket                 &lt;==
-Welcome to the MariaDB monitor.  Commands end with ; or \g.
-Your MariaDB connection id is 114
-Server version: 10.5.10-MariaDB Source distribution
-
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
-
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-
-MariaDB [(none)]> use akonadi;                                         &lt;==
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-MariaDB [akonadi]> delete from pimitemtable where remoteid is NULL;    &lt;==
-Query OK, 9 rows affected (0.003 sec)
-
-MariaDB [akonadi]> \q                                                  &lt;==
-Bye</screen>
-    The three mysql commands are "use akonadi;", "delete from pimitemtable where remoteid is NULL;", and "\q". After you
-    say "mysql --socket= ..." you will be in a dialog with the mysql server (aka "MariaDB"), which provides a &gt; prompt.
-    The entire dialog is presented here, for clarity. User input lines are marked with &lt;== in the preceding
-    illustration.</para></step>
-  
-</procedure>
-  
-  <para>When you restart &kmail;, those pesky duplicate messages will be gone. They were merely phantoms caused by the NULL
-    pointers in the mysql database tables.</para>
-
+<sect1 id="your-mails-are-not-being-sent-without-error-messages"
+><title
+>Ihre E-Mails werden nicht gesendet und Sie erhalten keine Fehlermeldungen</title>
+<para
+>Wenn &kmail; keine E-Mails versendet und es keine Fehlermeldung gibt, kann der für das Versenden zuständige <quote
+>Agent</quote
+> gestoppt sein. Natürlich benötigen Sie eine funktionierende Netzwerkverbindung, um E-Mails zu versenden. </para>
+<para
+>Um dies zu beheben, ist es oft nützlich, die aktuell ausgeführte Aktion abzubrechen und wieder neu zu starten. Als erstes beenden Sie &kmail;, indem Sie in &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) oder in einer &konsole; den Befehl <userinput
+><command
+>kquitapp kmail</command
+></userinput
+> eingeben. Beachten Sie, dass das normale Beenden von &kmail; mit <keycombo
+>&Alt;<keycap
+>F4</keycap
+></keycombo
+> or <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Beenden</guimenuitem
+></menuchoice
+> <emphasis
+>nicht</emphasis
+> ausreichend ist. Warten Sie eine Minute und starten Sie dann &kmail; erneut. Starten Sie jetzt das Programm <application
+>akonadiconsole</application
+> mit &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) oder in einer &konsole;. Gehen Sie zum <guilabel
+>Mail Dispatcher Agent</guilabel
+> und brechen Sie die die aktuelle Version mit dem Kontextmenü der &RMBn; ab. Wahrscheinlich wird eine Fehlermeldung angezeigt. Wechseln Sie zu &kmail; zurück und wählen Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+>. Nun sollte es funktionieren. Falls nicht, versuchen Sie den Status des <guilabel
+>Mail Dispatcher Agent</guilabel
+> Offline/Online zu schalten oder wie in der oben genannten Übergangslösung 2 alles wieder neu zu starten. </para>
+<para
+><note
+><para
+>Das Programm <application
+>akonadiconsole</application
+> kann in vielen Situationen sehr hilfreich sein, da es alle <quote
+>Agenten</quote
+>, d . h. die einzelnen Komponenten des &kmail;-Backends anzeigt.</para
+></note>
+</para>
 </sect1>
-
-<sect1 id="cleaning-aux-storage">
-<title>Keeping &kmail;'s Auxiliary Storage Areas Clean</title>
-    
-  <para>&kmail; stores data in several different places on your machine. Most of these places are inside the
-    <filename>~/.local/share/</filename> directory somewhere. For instance, on most Linux distros, your 
-    <guilabel>Local Folders</guilabel> are in <filename>~/.local/share/local-mail/</filename> . &akonadi; stores
-    most of its data in <filename>~/.local/share/akonadi/</filename> .
-<screen>~ $ cd .local/share/akonadi
-~/.local/share/akonadi $ ls
-Akonadi.error      db_data  file_db_data     mysql.conf  socket-localhost-default
-Akonadi.error.old  db_misc  file_lost+found  search_db
-</screen></para>
-
-  <para><filename>Akonadi.error</filename>  and <filename>Akonadi.error.old</filename>  are log files that are created
-      whenever &akonadi; stops and restarts. Text file <filename>mysql.conf</filename>  is a configuration file for
-      the mysqld daemon that serves as &akonadi;'s backend. The two directories <filename>db_data</filename>  and
-      <filename>search_db</filename>  contain the actual mysql database tables. There are also a couple of mysql
-      log files in <filename>db_data</filename>  that might be helpful if and when &akonadi; acts up.</para>
-  
-  <para>The two directories <filename>file_db_data</filename>  and <filename>file_lost+found</filename>  contain auxiliary
-      data associated with asynchronous processing. &akonadi; does not automatically clean out the
-      <filename>file_lost+found</filename>  directory, so you may wish to clean those files up manually from time to time
-      (&eg;, with &dolphin;). &akonadi; does try to clean the <filename>file_db_data</filename>  directory out after it has merged
-      everything into the main database files, but sometimes junk piles up in there. Use this command
-      <screen>find .local/share/akonadi/file_db_data/ -type f | xargs rm</screen> to fix this when it happens. (If the directory
-      <filename>file_db_data</filename>  is already clean, the "find" command shown above will return an error.)</para>
-
-</sect1>
-
-<sect1 id="dealing-with-dirt">
-<title>Correcting &kmail;'s "Dirty" Items</title>
-
-  <para>This problem is directly related to <ulink url="https://bugs.kde.org/show_bug.cgi?id=436550">&akonadi; bug #436550</ulink>,
-      which was reported in April, 2021. It results from the "dirty" items occasionally found by <code>akonadictl fsck</code>.
-<screen>~ $ akonadictl fsck 2>&amp;1 | grep ^Found
-Found 5 external files.
-Found 5 external parts.
-Found no unreferenced external files.
-Found 0 parts to be moved to external files
-Found 0 parts to be moved to database
-Found 6 collections without RID.
-Found 0 items without RID.
-Found 750 dirty items.</screen> <!-- Can't indent here ... messes up the output.  -->
-  </para>
-  
-  <para>The "dirty" flag on an item in pimitemtable (one of the tables in the &akonadi; database) is used to control certain
-    aspects of asynchronous processing. It is set true when there are operations pending for a particular email message. Most
-    of the time, the "dirty" flag is cleared one or two seconds later, when the once pending operation finishes up.</para>
-
-  <para>Occasionally, for reasons that are not entirely clear, the "dirty" flag can get set on dozens or even hundreds of
-    messages all at once, as illustrated above. When this happens, the automatic clearing mechanism gets stuck, and is unable
-    to repair itself automatically. The primary reason for a "dirty" item in this circumstance is that the field "remoteid"
-    is not set correctly, making retrieval of a "dirty" message impossible in &kmail;. The message still exists on the disk.
-    But &kmail; can't find it.</para>
-
-  <para>There ought to be a better way to correct this problem. If you think of a better way, please let the authors know about
-    it, so this documentation can be improved. The following procedure will at least correct the database errors. But it does
-    entail a lot of work.</para>
-
-  <procedure>
-    <step><para>Exit &kmail; and stop the &akonadi; server with a terminal command: <code>akonadictl stop</code> .</para></step>
-    
-    <step><para>Make a backup copy of all your email messages. You may be able to use <ulink url="help:/pimdataexporter">PIM
-      Data Exporter</ulink> for this purpose. Or you may use &ark; to make an archive, or &dolphin; to make a second copy of
-      <filename>~/.local/share/local-mail/</filename> somewhere else on your hard disk. If you're adventurous, you might just
-      rename your local folders directory to something like <filename>local-mail-save</filename> . But it's safer to be sure
-      you have a backup copy of your messages before you proceed.</para></step>
-      
-    <step><para>You should also make a backup copy of any filters you have created, and make sure you know how to restore any
-      custom <guilabel>Sent mail folder</guilabel>, <guilabel>Drafts folder</guilabel>, or <guilabel>Templates folder</guilabel>
-      entries associated with your &kmail; identities. The next step will remove all your personally customized mail folders,
-      and you will need to patch some stuff up after &akonadi; rebuilds its database tables.</para></step>
-      
-    <step><para>Now delete all the folders inside of the directory <filename>local-mail</filename>, or rename that directory
-      to something like <filename>local-mail-save</filename> . Then start the &kmail; program. This will force &akonadi; to
-      erase all the database table entries associated with email messages. You will see your old folder names, briefly, but these
-      will disappear when &akonadi; finishes deleting all the "dirty" items (and all the clean ones, too).</para></step>
-      
-    <step><para>Exit &kmail; and stop the &akonadi; server as explained in step 1, then restore the backup copy of your messages
-      (created in step 2) to the <filename>~/.local/share/local-mail/</filename> directory.</para></step>
-      
-    <step><para>Start &kmail; up again, and force &akonadi; to re-sync the database. The easiest way to do this is to <menuchoice>
-      <shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut><guimenu>File</guimenu><guimenuitem>Check
-      Mail</guimenuitem></menuchoice>; &akonadi; automatically re-syncs all the folders when it fetches mail. This will take several
-      minutes to complete, depending on how many messages you have saved in your &kmail; folders. But when the process is complete
-      all the "dirty" items will be gone.</para></step>
-      
-    <step><para>Finally, you will want to restore your mail filter rules backed up in step 3, and check that all the custom folder
-      items (<guilabel>Sent mail folder</guilabel>, &etc;) for your identities are set the way you want them. You will also need
-      to reset any custom folder properties you had set up, and you will probably have a bunch of spurious "Unread Message"
-      notifications to deal with. But your &akonadi; database tables will be all clean and shiny once again!</para></step>
-    
-  </procedure>
-
-
-</sect1>
-
 
 </chapter>
