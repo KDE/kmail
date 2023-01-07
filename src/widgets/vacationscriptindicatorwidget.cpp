@@ -6,7 +6,6 @@
 
 #include "vacationscriptindicatorwidget.h"
 
-#include "util.h"
 #include <KLocalizedString>
 #include <QIcon>
 

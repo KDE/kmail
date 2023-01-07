@@ -14,7 +14,6 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <QMenu>

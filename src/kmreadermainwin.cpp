@@ -19,7 +19,6 @@
 #include "kmreaderwin.h"
 #include "widgets/zoomlabelwidget.h"
 
-#include "kmail_debug.h"
 #include "kmcommands.h"
 #include "messageactions.h"
 #include "util.h"
