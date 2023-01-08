@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-07 00:50+0000\n"
+"POT-Creation-Date: 2023-01-08 00:59+0000\n"
 "PO-Revision-Date: 2022-12-11 20:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -381,8 +381,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "Çok sayıda IMAP hatası düzeltme"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2320 kmreaderwin.cpp:299 kmsystemtray.cpp:49
-#: kmsystemtray.cpp:78
+#: editor/kmcomposerwin.cpp:2320 kmreaderwin.cpp:299 kmsystemtray.cpp:48
+#: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -535,7 +535,7 @@ msgstr ""
 "aşağıdaki düğmeye tıklayın ve bu klasöre atayacağınız düğmelere basın.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:681
+#: identity/identitydialog.cpp:675
 #, kde-format
 msgid "Templates"
 msgstr "Şablonlar"
@@ -1746,7 +1746,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Klasörü Arşivle"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3522
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3520
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1843,7 +1843,7 @@ msgid "Encoding"
 msgstr "Kodlama"
 
 #: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:61
-#: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
+#: kmreadermainwin.cpp:466 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -1978,7 +1978,7 @@ msgstr "&Metin Dosyası Ekle..."
 msgid "&Insert Recent Text File"
 msgstr "&Son Kullanılan Metin Dosyasını Ekle"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2877
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2875
 #, kde-format
 msgid "&Address Book"
 msgstr "Ad&res Defteri"
@@ -2165,7 +2165,7 @@ msgstr "Hatırlatıcı Takip Etme Oluştur..."
 msgid "Configure KMail..."
 msgstr "KMail Uygulamasını Yapılandır..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:525
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2174,7 +2174,7 @@ msgstr ""
 "<qt>Bu, menü çubuğunu tümüyle gizleyecektir. %1 ile yeniden "
 "gösterebilirsiniz.</qt>"
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:528
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menü çubuğunu gizle"
@@ -2848,18 +2848,18 @@ msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Kimliği Düzenle"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:265
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Genel"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:272
 #, kde-format
 msgid "&Your name:"
 msgstr "&Adınız:"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:277
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2870,12 +2870,12 @@ msgstr ""
 "adınızı içermelidir;</p><p>eğer bu alanı boş bırakırsanız, gerçek adınız "
 "gösterilmeyecek, yalnızca e-posta adresiniz gösterilecektir.</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:288
 #, kde-format
 msgid "Organi&zation:"
 msgstr "&Kurum:"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2886,12 +2886,12 @@ msgstr ""
 "kurumunuzun adını içermelidir.</p><p>Genellikle bu alanı boş bırakmak "
 "normaldir.</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-posta Adresi:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2906,12 +2906,12 @@ msgstr ""
 "alana takma adresler girebilirsiniz.</p><p>Bu alanı boş bırakır ya da hatalı "
 "yazarsanız, insanlar size yanıt yazmakta sorun yaşayacaklardır.</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:329
 #, kde-format
 msgid "Email a&liases:"
 msgstr "&Takma E-postalar:"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:334
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2928,12 +2928,12 @@ msgstr ""
 "org<br>soyad@ornek.org</td></tr></table><p>Her satıra bir takma adres yazın</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:351
 #, kde-format
 msgid "Cryptography"
 msgstr "Şifreleme"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2949,22 +2949,22 @@ msgstr ""
 "</p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://www.gnupg.org</a> "
 "adresinden bulabilirsiniz.</p></qt>"
 
-#: identity/identitydialog.cpp:369 identity/identitydialog.cpp:393
+#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP imzalama anahtarı:"
 
-#: identity/identitydialog.cpp:375
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr "Şifreleme ve imzalama için aynı anahtarı kullan"
 
-#: identity/identitydialog.cpp:385
+#: identity/identitydialog.cpp:379
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP anahtarı:"
 
-#: identity/identitydialog.cpp:410
+#: identity/identitydialog.cpp:404
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -2981,12 +2981,12 @@ msgstr ""
 "ileti gönderme süreci etkilenmez.</p><p>Anahtarlar hakkında daha geniş "
 "bilgiyi <a>https://www.gnupg.org</a> adresinden edinebilirsiniz</p>.</qt>"
 
-#: identity/identitydialog.cpp:417
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP şifreleme anahtarı:"
 
-#: identity/identitydialog.cpp:427
+#: identity/identitydialog.cpp:421
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -2999,12 +2999,12 @@ msgstr ""
 "iletileri S/MIME kullanarak sayısal imzalayamayacaktır; normal posta "
 "işlevleri bundan etkilenmeyecektir.</p></qt>"
 
-#: identity/identitydialog.cpp:432
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME imzalama sertifikası:"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:440
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3019,76 +3019,76 @@ msgstr ""
 "kullanarak dışarı giden iletilerin kopyalarını şifreleyemebilir; normal "
 "posta işlevleri bundan etkilenmeyecektir.</p></qt>"
 
-#: identity/identitydialog.cpp:452
+#: identity/identitydialog.cpp:446
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME şifreleme sertifikası:"
 
-#: identity/identitydialog.cpp:469
+#: identity/identitydialog.cpp:463
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Tercih edilen biçim:"
 
-#: identity/identitydialog.cpp:474
+#: identity/identitydialog.cpp:468
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Otomatik Şifrelemeyi Etkinleştir"
 
-#: identity/identitydialog.cpp:478
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
 msgstr "Otomatik şifrele:"
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr "Başkalarının şifreleme yeğlediğinizi bilmesine izin ver"
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "Güvenlik öntanımlıları global ayarlarının üzerine yaz"
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr "Öntanımlıların üzerine yaz:"
 
-#: identity/identitydialog.cpp:494
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Sign messages"
 msgstr "İletileri imzala"
 
-#: identity/identitydialog.cpp:497
+#: identity/identitydialog.cpp:491
 #, kde-format
 msgid "Encrypt messages when possible"
 msgstr "Olabildiğince iletileri şifrele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "İmzasız ileti gönderilmeye çalışıldığında uyar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Şifrelenmemiş ileti gönderilmeye çalışıldığında uyar"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:507
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Gelişmiş"
 
-#: identity/identitydialog.cpp:521
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&Yanıt adresi:"
 
-#: identity/identitydialog.cpp:525
+#: identity/identitydialog.cpp:519
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3106,12 +3106,12 @@ msgstr ""
 "göndermek isteyebilirsiniz.</p><p>Eğer emin değilseniz bu alanı boş bırakın."
 "</p></qt>"
 
-#: identity/identitydialog.cpp:542
+#: identity/identitydialog.cpp:536
 #, kde-format
 msgid "&CC addresses:"
 msgstr "&Kopya adresleri:"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3128,12 +3128,12 @@ msgstr ""
 "posta adreslerinin arasına virgül koyun.</p><p>Eğer emin değilseniz bu alanı "
 "boş bırakın.</p></qt>"
 
-#: identity/identitydialog.cpp:562
+#: identity/identitydialog.cpp:556
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&Gizli Kopya adresleri:"
 
-#: identity/identitydialog.cpp:566
+#: identity/identitydialog.cpp:560
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3151,72 +3151,72 @@ msgstr ""
 "arasına virgül koyun.</p><p>Eğer emin değilseniz bu alanı boş bırakın.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:574
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&Sözlük:"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Gönderilen Klasörünü Seç"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&Gönderilmiş postalar klasörü:"
 
-#: identity/identitydialog.cpp:594
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Taslak Klasörünü Seç"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Tas&laklar klasörü:"
 
-#: identity/identitydialog.cpp:602
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Şablonlar Klasörünü Seç"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "&Templates folder:"
 msgstr "&Şablon klasörü:"
 
-#: identity/identitydialog.cpp:609
+#: identity/identitydialog.cpp:603
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Giden E-posta Hesabı:"
 
-#: identity/identitydialog.cpp:616
+#: identity/identitydialog.cpp:610
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "İletiye vCard'ımı iliştir"
 
-#: identity/identitydialog.cpp:617 identity/identitydialog.cpp:1166
+#: identity/identitydialog.cpp:611 identity/identitydialog.cpp:1160
 #, kde-format
 msgid "Create..."
 msgstr "Oluştur..."
 
-#: identity/identitydialog.cpp:622
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Otomatik düzeltme dili:"
 
-#: identity/identitydialog.cpp:634
+#: identity/identitydialog.cpp:628
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Öntanımlı alan adını geri yükle"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:631
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Öntanımlı &alan:"
 
-#: identity/identitydialog.cpp:643
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3225,38 +3225,38 @@ msgstr ""
 "<qt> <p>Öntanımlı alan. Kullanıcı adını tamamlamak için e-posta adreslerinin "
 "tamamınından meydana gelir.</p></qt>"
 
-#: identity/identitydialog.cpp:660
+#: identity/identitydialog.cpp:654
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Bu kimlik için ö&zel ileti şablonları kullan"
 
-#: identity/identitydialog.cpp:674
+#: identity/identitydialog.cpp:668
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "Genel Şablonları Ko&pyala"
 
-#: identity/identitydialog.cpp:687
+#: identity/identitydialog.cpp:681
 #, kde-format
 msgid "Signature"
 msgstr "İmza"
 
-#: identity/identitydialog.cpp:694
+#: identity/identitydialog.cpp:688
 #, kde-format
 msgid "Picture"
 msgstr "Resim"
 
-#: identity/identitydialog.cpp:747
+#: identity/identitydialog.cpp:741
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Geçersiz Takma E-posta\"%1\""
 
-#: identity/identitydialog.cpp:756 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:750 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Geçersiz E-posta Adresi"
 
-#: identity/identitydialog.cpp:814
+#: identity/identitydialog.cpp:808
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3269,7 +3269,7 @@ msgstr ""
 "Bu yapılandırma ile ileti göndermek alıcı tarafında imzaların doğrulanması "
 "sırasında uyarılar çıkmasına neden olur."
 
-#: identity/identitydialog.cpp:823
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3278,7 +3278,7 @@ msgstr ""
 "Yapılandırılan OpenPGP şifreleme anahtarları, bu kimlik için tanımlanan e-"
 "posta adresine sahip hiç bir kimlik bilgisi (ID) içermiyor (%1)."
 
-#: identity/identitydialog.cpp:830
+#: identity/identitydialog.cpp:824
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3291,7 +3291,7 @@ msgstr ""
 "Bu durum, iletiyi alan tarafta, bu düzenle yapılmış imzaları doğrulamaya "
 "çalışırken hata iletileri görüntülenmesine neden olabilir."
 
-#: identity/identitydialog.cpp:839
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3300,23 +3300,23 @@ msgstr ""
 "Yapılandırılan S/MIME şifreleme sertifikalarından bir tanesi bu kimlik için "
 "yapılandırdığınız e-posta adresini içermiyor (%1)."
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:843
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Anahtarda/Sertifikada E-Posta Adresi Bulunamadı"
 
-#: identity/identitydialog.cpp:861
+#: identity/identitydialog.cpp:855
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "İmza dosyası geçerli değil."
 
-#: identity/identitydialog.cpp:877
+#: identity/identitydialog.cpp:871
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" Kimliğini Düzenle"
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3325,7 +3325,7 @@ msgstr ""
 "Kimlik için tanımlanmış olan bazı özel klasörler (artık) yok; bu nedenle "
 "öntanımlı klasörler kullanılacak."
 
-#: identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:1162
 #, kde-format
 msgid "Edit..."
 msgstr "Düzenle..."
@@ -3795,14 +3795,14 @@ msgid "F&older"
 msgstr "&Klasör"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3371 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3369 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Klasöre Süzgeçleri Uygula"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3376 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3374 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -3828,7 +3828,7 @@ msgid "&Forward"
 msgstr "&Yönlendir"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3188 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3186 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&Süzgeç Uygula"
@@ -3970,12 +3970,12 @@ msgstr "Metin Yönü Araç Çubuğu"
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail çevrimdışı olarak ayarlanmış; tüm ağ işleri beklemede"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:835 kmmainwidget.cpp:2367 kmmainwidget.cpp:2383
 #, kde-format
 msgid "Send Email"
 msgstr "E-posta Gönder"
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
+#: kmkernel.cpp:836 kmmainwidget.cpp:2368 kmmainwidget.cpp:2384
 #, kde-format
 msgid "Impossible to send email"
 msgstr "E-posta gönderimi olanaksız"
@@ -4006,12 +4006,12 @@ msgstr ""
 msgid "Online/Offline"
 msgstr "Çevrimiçi/Çevrimdışı"
 
-#: kmkernel.cpp:946 kmmainwidget.cpp:2358
+#: kmkernel.cpp:946 kmmainwidget.cpp:2356
 #, kde-format
 msgid "Work Online"
 msgstr "Çevrimiçi Çalış"
 
-#: kmkernel.cpp:947 kmmainwidget.cpp:2355
+#: kmkernel.cpp:947 kmmainwidget.cpp:2353
 #, kde-format
 msgid "Work Offline"
 msgstr "Çevrimdışı Çalış"
@@ -4130,7 +4130,7 @@ msgstr ""
 "Aktarma sihirbazı başlatılamıyor. ImportWizard'ın doğru şekilde yüklü "
 "olduğundan emin olun."
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:315
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Aktarma sihirbazı başlatılamadı"
@@ -4164,76 +4164,76 @@ msgstr ""
 msgid "Unable to start ImportWizard"
 msgstr "Aktarma sihirbazı başlatılamadı"
 
-#: kmmainwidget.cpp:304
+#: kmmainwidget.cpp:302
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Sistemde başka bir posta uygulaması bulundu. Verilerini içe aktarmak ister "
 "misiniz?"
 
-#: kmmainwidget.cpp:307
+#: kmmainwidget.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "İçe Aktar"
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:306
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "İçe Aktarma"
 
-#: kmmainwidget.cpp:313
+#: kmmainwidget.cpp:311
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "Aktarma sihirbazı başlatılamıyor. Kurulumuzunu denetleyin."
 
-#: kmmainwidget.cpp:1368
+#: kmmainwidget.cpp:1366
 #, kde-format
 msgid "No Subject"
 msgstr "Konusuz"
 
-#: kmmainwidget.cpp:1381
+#: kmmainwidget.cpp:1379
 #, kde-format
 msgid "(no templates)"
 msgstr "(şablon yok)"
 
-#: kmmainwidget.cpp:1433
+#: kmmainwidget.cpp:1431
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Bu klasör için herhangi bir süre dolumu seçeneği ayarlanmamış"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1437
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt><b>%1</b> klasörünü gerçekten silmek istiyor musunuz?</qt>"
 
-#: kmmainwidget.cpp:1440
+#: kmmainwidget.cpp:1438
 #, kde-format
 msgid "Expire Folder"
 msgstr "Klasörün Süresini Doldur"
 
-#: kmmainwidget.cpp:1440
+#: kmmainwidget.cpp:1438
 #, kde-format
 msgid "&Expire"
 msgstr "&Süresini Doldur"
 
-#: kmmainwidget.cpp:1456
+#: kmmainwidget.cpp:1454
 #, kde-format
 msgid "Empty Trash"
 msgstr "Çöp Kutusunu Boşalt"
 
-#: kmmainwidget.cpp:1456 util.cpp:151
+#: kmmainwidget.cpp:1454 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "Çöpe Taşı"
 
-#: kmmainwidget.cpp:1457
+#: kmmainwidget.cpp:1455
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Çöp klasörünü gerçekten boşaltmak istiyor musunuz?"
 
-#: kmmainwidget.cpp:1459
+#: kmmainwidget.cpp:1457
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4242,27 +4242,27 @@ msgstr ""
 "<qt>Gerçekten <b>%1</b> klasöründeki tüm iletileri çöpe taşımak istiyor "
 "musunuz?</qt>"
 
-#: kmmainwidget.cpp:1482
+#: kmmainwidget.cpp:1480
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Bütün iletiler çöp kutusuna taşındı"
 
-#: kmmainwidget.cpp:1536
+#: kmmainwidget.cpp:1534
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Tüm eski iletilerin süresinin dolmasını istiyor musunuz?"
 
-#: kmmainwidget.cpp:1537
+#: kmmainwidget.cpp:1535
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "Eski İletilerin Süresini Doldur?"
 
-#: kmmainwidget.cpp:1538
+#: kmmainwidget.cpp:1536
 #, kde-format
 msgid "Expire"
 msgstr "Süresini doldur"
 
-#: kmmainwidget.cpp:1563
+#: kmmainwidget.cpp:1561
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4273,17 +4273,17 @@ msgstr ""
 "savunmasız yapar ve sisteminizin güvenlik açıklarını sezen programlarla "
 "saldırıya uğramasına sebep olabilir."
 
-#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4661
 #, kde-format
 msgid "Security Warning"
 msgstr "Güvenlik Uyarısı"
 
-#: kmmainwidget.cpp:1567
+#: kmmainwidget.cpp:1565
 #, kde-format
 msgid "Load External References"
 msgstr "Dış Referansları Yükle"
 
-#: kmmainwidget.cpp:1639
+#: kmmainwidget.cpp:1637
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4298,539 +4298,539 @@ msgstr[1] ""
 "<qt>Seçili %1 iletiyi gerçekten silmek istiyor musunuz?<br />Bir kez "
 "silinirse, bunları geri getiremezsiniz.</qt>"
 
-#: kmmainwidget.cpp:1644
+#: kmmainwidget.cpp:1642
 #, kde-format
 msgid "Delete Messages"
 msgstr "İletileri Sil"
 
-#: kmmainwidget.cpp:1644
+#: kmmainwidget.cpp:1642
 #, kde-format
 msgid "Delete Message"
 msgstr "İletiyi Sil"
 
-#: kmmainwidget.cpp:1659
+#: kmmainwidget.cpp:1657
 #, kde-format
 msgid "Moving messages..."
 msgstr "İletiler taşınıyor..."
 
-#: kmmainwidget.cpp:1661 kmmainwidget.cpp:1855
+#: kmmainwidget.cpp:1659 kmmainwidget.cpp:1853
 #, kde-format
 msgid "Deleting messages..."
 msgstr "İletiler siliniyor..."
 
-#: kmmainwidget.cpp:1676 kmmainwidget.cpp:1875
+#: kmmainwidget.cpp:1674 kmmainwidget.cpp:1873
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "İleti başarılı bir şekilde silindi."
 
-#: kmmainwidget.cpp:1678
+#: kmmainwidget.cpp:1676
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "İleti başarılı bir şekilde taşındı."
 
-#: kmmainwidget.cpp:1683 kmmainwidget.cpp:1888
+#: kmmainwidget.cpp:1681 kmmainwidget.cpp:1886
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "İletiler silinemedi."
 
-#: kmmainwidget.cpp:1685 kmmainwidget.cpp:1901
+#: kmmainwidget.cpp:1683 kmmainwidget.cpp:1899
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "İletileri silme işlemi iptal edildi."
 
-#: kmmainwidget.cpp:1689
+#: kmmainwidget.cpp:1687
 #, kde-format
 msgid "Moving messages failed."
 msgstr "İletiler taşınamadı."
 
-#: kmmainwidget.cpp:1691
+#: kmmainwidget.cpp:1689
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "İletilerin taşınması işlemi iptal edildi."
 
-#: kmmainwidget.cpp:1757
+#: kmmainwidget.cpp:1755
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "İletileri Klasöre Taşı"
 
-#: kmmainwidget.cpp:1784
+#: kmmainwidget.cpp:1782
 #, kde-format
 msgid "Copying messages..."
 msgstr "İletiler kopyalanıyor..."
 
-#: kmmainwidget.cpp:1792
+#: kmmainwidget.cpp:1790
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "İleti başarılı bir şekilde kopyalandı."
 
-#: kmmainwidget.cpp:1795
+#: kmmainwidget.cpp:1793
 #, kde-format
 msgid "Copying messages failed."
 msgstr "İletiler taşınamadı."
 
-#: kmmainwidget.cpp:1797
+#: kmmainwidget.cpp:1795
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "İleti kopyalama işlemi iptal edildi."
 
-#: kmmainwidget.cpp:1807
+#: kmmainwidget.cpp:1805
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "İletileri Klasöre Kopyala"
 
-#: kmmainwidget.cpp:1852
+#: kmmainwidget.cpp:1850
 #, kde-format
 msgid "Moving messages to trash..."
 msgstr "İletiler çöp kutusuna taşınıyor..."
 
-#: kmmainwidget.cpp:1859
+#: kmmainwidget.cpp:1857
 #, kde-format
 msgid "Deleting and moving messages to trash..."
 msgstr "İletiler siliniyor ve çöp kutusuna taşınıyor..."
 
-#: kmmainwidget.cpp:1872
+#: kmmainwidget.cpp:1870
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "İletiler başarılı bir şekilde çöp kutusuna taşındı."
 
-#: kmmainwidget.cpp:1879
+#: kmmainwidget.cpp:1877
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "İletiler başarılı bir şekilde silindi veya çöp kutusuna taşındı"
 
-#: kmmainwidget.cpp:1885
+#: kmmainwidget.cpp:1883
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "İletiler çöp kutusuna taşınamadı."
 
-#: kmmainwidget.cpp:1892
+#: kmmainwidget.cpp:1890
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "İletilerin silinmesi veya çöp kutusuna taşınması başarısız oldu."
 
-#: kmmainwidget.cpp:1898
+#: kmmainwidget.cpp:1896
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "İletileri çöp kutusuna taşıma işlemi iptal edildi."
 
-#: kmmainwidget.cpp:1905
+#: kmmainwidget.cpp:1903
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "İletilerin silinmesi veya çöp kutusuna taşınması iptal edildi."
 
-#: kmmainwidget.cpp:2175
+#: kmmainwidget.cpp:2173
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Klasöre Geç"
 
-#: kmmainwidget.cpp:2826
+#: kmmainwidget.cpp:2824
 #, kde-format
 msgid "Save &As..."
 msgstr "&Farklı Kaydet..."
 
-#: kmmainwidget.cpp:2837
+#: kmmainwidget.cpp:2835
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "&Tüm Klasörlerin Süresini Doldur"
 
-#: kmmainwidget.cpp:2842
+#: kmmainwidget.cpp:2840
 #, kde-format
 msgid "Check &Mail"
 msgstr "&Postayı Denetle"
 
-#: kmmainwidget.cpp:2850
+#: kmmainwidget.cpp:2848
 #, kde-format
 msgid "Check Mail In"
 msgstr "Şu Hesaptaki Postayı Denetle"
 
-#: kmmainwidget.cpp:2852 kmmainwidget.cpp:2853
+#: kmmainwidget.cpp:2850 kmmainwidget.cpp:2851
 #, kde-format
 msgid "Check Mail"
 msgstr "Postayı Denetle"
 
-#: kmmainwidget.cpp:2857
+#: kmmainwidget.cpp:2855
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "Kuy&ruktaki İletileri Gönder"
 
-#: kmmainwidget.cpp:2865
+#: kmmainwidget.cpp:2863
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Bağlantı durumu (bilinmiyor)"
 
-#: kmmainwidget.cpp:2870
+#: kmmainwidget.cpp:2868
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Kuyruktaki İletileri Gönder"
 
-#: kmmainwidget.cpp:2886
+#: kmmainwidget.cpp:2884
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Sertifika Yöneticisi"
 
-#: kmmainwidget.cpp:2896
+#: kmmainwidget.cpp:2894
 #, kde-format
 msgid "&Import Messages..."
 msgstr "İ&letileri İçe Aktar..."
 
-#: kmmainwidget.cpp:2906
+#: kmmainwidget.cpp:2904
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "Sieve &Hata Ayıklaması..."
 
-#: kmmainwidget.cpp:2913
+#: kmmainwidget.cpp:2911
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "&Süzgeç Günlüğü İzleyicisi..."
 
-#: kmmainwidget.cpp:2918
+#: kmmainwidget.cpp:2916
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr "&Başka E-Posta İstemcisi'nden İçe Aktar..."
 
-#: kmmainwidget.cpp:2923
+#: kmmainwidget.cpp:2921
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "\"Ofis Dışında\" Yanıtlarını Düzenle..."
 
-#: kmmainwidget.cpp:2929
+#: kmmainwidget.cpp:2927
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "&Otomatik Arşivlemeyi Yapılandır..."
 
-#: kmmainwidget.cpp:2935
+#: kmmainwidget.cpp:2933
 #, kde-format
 msgid "Delayed Messages..."
 msgstr "Gecikmeli İletiler..."
 
-#: kmmainwidget.cpp:2941
+#: kmmainwidget.cpp:2939
 #, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "Takip Et Anımsatıcı İletileri..."
 
-#: kmmainwidget.cpp:2952 util.cpp:148
+#: kmmainwidget.cpp:2950 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Sil"
 
-#: kmmainwidget.cpp:2957 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2955 kmmainwidget.cpp:4000
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Tartışmayı Çöpe Taşı"
 
-#: kmmainwidget.cpp:2961
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Tartışmayı çöp kutusuna taşı"
 
-#: kmmainwidget.cpp:2964 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2962 kmmainwidget.cpp:4000
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Ta&rtışmayı Sil"
 
-#: kmmainwidget.cpp:2970 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4002
 #, kde-format
 msgid "&Find Messages..."
 msgstr "İ&leti Bul..."
 
-#: kmmainwidget.cpp:2975
+#: kmmainwidget.cpp:2973
 #, kde-format
 msgid "Select &All Messages"
 msgstr "&Tüm İletileri Seç"
 
-#: kmmainwidget.cpp:2982
+#: kmmainwidget.cpp:2980
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "&E-Posta Listesi Yönetimi..."
 
-#: kmmainwidget.cpp:2990
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr "Akonadi Arabelleğini T&emizle..."
 
-#: kmmainwidget.cpp:2994
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "&Kısayol Ata..."
 
-#: kmmainwidget.cpp:3012
+#: kmmainwidget.cpp:3010
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "Zaman Aşımı Ayarları"
 
-#: kmmainwidget.cpp:3037
+#: kmmainwidget.cpp:3035
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "Klasörü &Arşivle..."
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "Dış &Referansları Yükle"
 
-#: kmmainwidget.cpp:3068
+#: kmmainwidget.cpp:3066
 #, kde-format
 msgid "Copy Message To..."
 msgstr "İletiyi Kopyala..."
 
-#: kmmainwidget.cpp:3070
+#: kmmainwidget.cpp:3068
 #, kde-format
 msgid "Move Message To..."
 msgstr "İletiyi Taşı..."
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3073
 #, kde-format
 msgid "&New Message..."
 msgstr "&Yeni İleti..."
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3075
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Yeni"
 
-#: kmmainwidget.cpp:3085
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgid "Message From &Template"
 msgstr "Şablondan &İleti"
 
-#: kmmainwidget.cpp:3091
+#: kmmainwidget.cpp:3089
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "&E-posta Listesine Yeni İleti..."
 
-#: kmmainwidget.cpp:3097
+#: kmmainwidget.cpp:3095
 #, kde-format
 msgid "&Create Filter"
 msgstr "Süzgeç &Oluştur"
 
-#: kmmainwidget.cpp:3101
+#: kmmainwidget.cpp:3099
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "Konuya Göre &Süz..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "Filter on &From..."
 msgstr "&Gönderene Göre Süz..."
 
-#: kmmainwidget.cpp:3114
+#: kmmainwidget.cpp:3112
 #, kde-format
 msgid "Filter on &To..."
 msgstr "&Gidene Göre Süz..."
 
-#: kmmainwidget.cpp:3120
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgid "Filter on &Cc..."
 msgstr "&Karbon Kopyaya Göre Süz..."
 
-#: kmmainwidget.cpp:3128
+#: kmmainwidget.cpp:3126
 #, kde-format
 msgid "Mark &Thread"
 msgstr "&Tartışmayı İşaretle"
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3129
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Tartışmayı &Okunmuş İşaretle"
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3132
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Bu tartışmadaki bütün iletileri okunmuş işaretle"
 
-#: kmmainwidget.cpp:3137
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Tartışmayı &Okunmamış İşaretle"
 
-#: kmmainwidget.cpp:3140
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Tartışmadaki bütün iletileri okunmamış işaretle"
 
-#: kmmainwidget.cpp:3146
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Tartışmayı Ö&nemli İşaretle"
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Tartışmanın Ö&nemli İşaretini Kaldır"
 
-#: kmmainwidget.cpp:3152
+#: kmmainwidget.cpp:3150
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Tartışmayı Yapılacak &Ögesi İşaretle"
 
-#: kmmainwidget.cpp:3155
+#: kmmainwidget.cpp:3153
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "Tartışmanın &Eylem Ögesi İşaretini Kaldır"
 
-#: kmmainwidget.cpp:3159
+#: kmmainwidget.cpp:3157
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Tartışmayı İ&zle"
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3161
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Tartışmayı Yok Say"
 
-#: kmmainwidget.cpp:3171 kmreadermainwin.cpp:478
+#: kmmainwidget.cpp:3169 kmreadermainwin.cpp:477
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "E&klentileri Kaydet..."
 
-#: kmmainwidget.cpp:3179
+#: kmmainwidget.cpp:3177
 #, kde-format
 msgid "Copy Decrypted To..."
 msgstr "Şifresi Çözüleni Şuraya Kopyala..."
 
-#: kmmainwidget.cpp:3183
+#: kmmainwidget.cpp:3181
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Tüm &Süzgeçleri Uygula"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3190
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "T&artışmayı / Grubu Genişlet"
 
-#: kmmainwidget.cpp:3195
+#: kmmainwidget.cpp:3193
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Yapılan tartışmayı veya grubu genişlet"
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3197
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Ta&rtışmayı / Grubu Topla"
 
-#: kmmainwidget.cpp:3202
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Yapılan tartışmayı veya grubu topla"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "B&ütün Tartışmaları Genişlet"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3207
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Geçerli klasördeki tüm tartışmaları genişlet"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3211
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Bü&tün Tartışmaları Kapat"
 
-#: kmmainwidget.cpp:3216
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Geçerli klasördeki tüm tartışmaları topla"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3218
 #, kde-format
 msgid "&Display Message"
 msgstr "İ&letiyi Görüntüle"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3225
 #, kde-format
 msgid "&Next Message"
 msgstr "S&onraki İleti"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Go to the next message"
 msgstr "Sonraki iletiye git"
 
-#: kmmainwidget.cpp:3234
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Sonraki Ok&unmayan"
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Sonraki"
 
-#: kmmainwidget.cpp:3243
+#: kmmainwidget.cpp:3241
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Sonraki okunmayan iletiye git"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Önceki İleti"
 
-#: kmmainwidget.cpp:3249
+#: kmmainwidget.cpp:3247
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Önceki iletiye git"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Ö&nceki Okunmayan"
 
-#: kmmainwidget.cpp:3262
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Önceki"
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3261
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Önceki okunmayan iletiye git"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Sonraki Okunmamış &Klasör"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Okunmamış iletileri olan sonraki klasöre git"
 
-#: kmmainwidget.cpp:3276
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Önceki Okunmamış Diz&in"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3279
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Okunmamış iletileri olan önceki klasöre git"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Sonraki Ok&unmamış Metin"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Sonraki okunmayan metine git"
 
-#: kmmainwidget.cpp:3290
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4839,239 +4839,239 @@ msgstr ""
 "Geçerli iletinin sonuna sar. Geçerli iletinin sonundaysanız sonraki "
 "okunmamış iletiye geçin."
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3296
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "S&üzgeçleri Yapılandır..."
 
-#: kmmainwidget.cpp:3304
+#: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Sieve Betiklerini &Yönet..."
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3307
 #, kde-format
 msgid "&Add Account..."
 msgstr "&Hesap Ekle..."
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail Uygulamasına &Giriş"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "KMail'in hoş geldiniz ekranını göster"
 
-#: kmmainwidget.cpp:3323
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "&Bildirimleri Yapılandır..."
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "&KMail Uygulamasını Yapılandır..."
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Expire..."
 msgstr "Süresini Doldur..."
 
-#: kmmainwidget.cpp:3343
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "Sık Kullanılan Klasör Ekle..."
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3347
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "Sunucuya Üyelik..."
 
-#: kmmainwidget.cpp:3355 kmmainwidget.cpp:3363
+#: kmmainwidget.cpp:3353 kmmainwidget.cpp:3361
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Tüm Süzgeçleri Uygula"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3379
 #, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "KMail Verisini İçe/Dışa Aktar..."
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3385
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "Yeni Adres Defteri Kişisi..."
 
-#: kmmainwidget.cpp:3395 kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:3393 kmmainwidget.cpp:4041
 #, kde-format
 msgid "Account &Settings"
 msgstr "Hesap Ayar&ları"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3397
 #, kde-format
 msgid "Restart Account"
 msgstr "Hesabı Yeniden Başlat"
 
-#: kmmainwidget.cpp:3415
+#: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "İletiyi Klasöre Kopyala"
 
-#: kmmainwidget.cpp:3421
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "Klasöre Geç..."
 
-#: kmmainwidget.cpp:3427
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Geçerli İşlem Hakkında"
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Sonraki Klasöre Odaklan"
 
-#: kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Önceki Klasöre Odaklan"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Klasörü Odaklanarak Seç"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "Sonraki İlk Klasöre Odaklan"
 
-#: kmmainwidget.cpp:3458
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "Sonraki Son Klasöre Odaklan"
 
-#: kmmainwidget.cpp:3464
+#: kmmainwidget.cpp:3462
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Sonraki İletiye Odaklan"
 
-#: kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3468
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Önceki İletiye Odaklan"
 
-#: kmmainwidget.cpp:3476
+#: kmmainwidget.cpp:3474
 #, kde-format
 msgid "Select First Message"
 msgstr "Odaklanan İlk İletiyi Seç"
 
-#: kmmainwidget.cpp:3482
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgid "Select Last Message"
 msgstr "Odaklanan Son İletiyi Seç"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3486
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Odaklanan İletiyi Seç"
 
-#: kmmainwidget.cpp:3495
+#: kmmainwidget.cpp:3493
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "Hızlı Aramayı Odakla"
 
-#: kmmainwidget.cpp:3503
+#: kmmainwidget.cpp:3501
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Seçimi Önceki İletiye Genişlet"
 
-#: kmmainwidget.cpp:3509
+#: kmmainwidget.cpp:3507
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Seçimi Sonraki İletiye Genişlet"
 
-#: kmmainwidget.cpp:3516
+#: kmmainwidget.cpp:3514
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "İletiyi Klasöre Taşı"
 
-#: kmmainwidget.cpp:3526
+#: kmmainwidget.cpp:3524
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki İletileri Okundu İşaretle"
 
-#: kmmainwidget.cpp:3531
+#: kmmainwidget.cpp:3529
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Yinelenmiş Girişleri Kaldır"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3535
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "Önceki Seçili Klasör"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3542
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "Sonraki Seçili Klasör"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3570
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Sık Kullanılanlara Ekle"
 
-#: kmmainwidget.cpp:3990
+#: kmmainwidget.cpp:3988
 #, kde-format
 msgid "&Delete Search"
 msgstr "Aramayı &Sil"
 
-#: kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:4002
 #, kde-format
 msgid "Edit Search..."
 msgstr "Aramayı Düzenle..."
 
-#: kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:4039
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Birleştirilmiş Posta Kutusunu Yapılandır"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Çö&p Kutusunu Boşalt"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Tüm İletileri &Çöp Kutusuna Taşı"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Undo"
 msgstr "&Geri Al"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4126
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Geri Al: \"%1\""
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4183
 #, kde-format
 msgid "Filter %1"
 msgstr "Süzgeç %1"
 
-#: kmmainwidget.cpp:4652
+#: kmmainwidget.cpp:4650
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Ara... <%1>"
 
-#: kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:4658
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5082,12 +5082,12 @@ msgstr ""
 "ve sisteminizin güvenlik açıklarını sezen programlarla saldırıya uğramasına "
 "sebep olabilir."
 
-#: kmmainwidget.cpp:4664
+#: kmmainwidget.cpp:4662
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML Kullan"
 
-#: kmmainwidget.cpp:4810
+#: kmmainwidget.cpp:4808
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5103,37 +5103,37 @@ msgstr ""
 "Birleştirilmiş posta kutuları oluşturabilir, özel kutular yaratabilir\n"
 "veya özelliği KMail'in Eklentiler ayarlarından tümüyle kapatabilirsiniz."
 
-#: kmmainwidget.cpp:4813
+#: kmmainwidget.cpp:4811
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Birleştirilmiş Posta Kutuları Etkinleştirilsin mi?"
 
-#: kmmainwidget.cpp:4814
+#: kmmainwidget.cpp:4812
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Birleştirilmiş Posta Kutularını Etkinleştir"
 
-#: kmmainwidget.cpp:4815
+#: kmmainwidget.cpp:4813
 #, kde-format
 msgid "Cancel"
 msgstr "İ&ptal"
 
-#: kmmainwidget.cpp:4843
+#: kmmainwidget.cpp:4841
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi'yi yeniden başlatmak istiyor musunuz?"
 
-#: kmmainwidget.cpp:4844
+#: kmmainwidget.cpp:4842
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Akonadi'yi Yeniden Başlat"
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid "Restart"
 msgstr "Yeniden Başlat"
 
-#: kmmainwidget.cpp:4852
+#: kmmainwidget.cpp:4850
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi yeniden başlatıldı."
@@ -5143,23 +5143,23 @@ msgstr "Akonadi yeniden başlatıldı."
 msgid "Starting..."
 msgstr "Başlatılıyor..."
 
-#: kmreadermainwin.cpp:481 util.cpp:148
+#: kmreadermainwin.cpp:480 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Sil"
 
-#: kmreadermainwin.cpp:482
+#: kmreadermainwin.cpp:481
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Çöpe Gönder"
 
-#: kmreadermainwin.cpp:483
+#: kmreadermainwin.cpp:482
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "İletiyi çöp kutusuna taşı"
 
-#: kmreadermainwin.cpp:612
+#: kmreadermainwin.cpp:611
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Öge kopyalanamıyor. %1"
@@ -5338,17 +5338,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Kişi başarılıyla düzenlendi"
 
-#: kmsystemtray.cpp:92
+#: kmsystemtray.cpp:91
 #, kde-format
 msgid "New Messages In"
 msgstr "Yeni İletiler"
 
-#: kmsystemtray.cpp:264
+#: kmsystemtray.cpp:263
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Okunmamış ileti yok"
 
-#: kmsystemtray.cpp:264
+#: kmsystemtray.cpp:263
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
@@ -5893,32 +5893,32 @@ msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Koşul, 4'ten az karakter ile kullanılamaz."
 
-#: searchdialog/searchwindow.cpp:521
+#: searchdialog/searchwindow.cpp:520
 #, kde-format
 msgid "Searching..."
 msgstr "Aranıyor..."
 
-#: searchdialog/searchwindow.cpp:534
+#: searchdialog/searchwindow.cpp:533
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Arama sonucu alınamadı. %1"
 
-#: searchdialog/searchwindow.cpp:537
+#: searchdialog/searchwindow.cpp:536
 #, kde-format
 msgid "Search failed."
 msgstr "Arama başarısız."
 
-#: searchdialog/searchwindow.cpp:578
+#: searchdialog/searchwindow.cpp:577
 #, kde-format
 msgid "Search complete."
 msgstr "Arama tamamlandı."
 
-#: searchdialog/searchwindow.cpp:616
+#: searchdialog/searchwindow.cpp:615
 #, kde-format
 msgid "Search stopped."
 msgstr "Arama durduruldu."
 
-#: searchdialog/searchwindow.cpp:674
+#: searchdialog/searchwindow.cpp:673
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -5928,21 +5928,21 @@ msgstr ""
 "Arama klasörünüzü yeniden adlandırırken bir sorun oluştu. Bu sorun genelde "
 "aynı adda başka bir arama klasörü olduğunda oluşur. Alınan hata \"%1\"."
 
-#: searchdialog/searchwindow.cpp:778
+#: searchdialog/searchwindow.cpp:777
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "İletiyi Kopyala"
 msgstr[1] "%1 İletiyi Kopyala"
 
-#: searchdialog/searchwindow.cpp:781
+#: searchdialog/searchwindow.cpp:780
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "İletiyi Kes"
 msgstr[1] "%1 İletiyi Kes"
 
-#: searchdialog/searchwindow.cpp:910
+#: searchdialog/searchwindow.cpp:909
 #, kde-format
 msgid "Checking index status..."
 msgstr "Klasör durumu denetleniyor..."
@@ -7693,7 +7693,7 @@ msgstr "&Düz Metni HTML'ye Tercih Et"
 msgid "Use Global Setting"
 msgstr "Genel Ayarları Kullan"
 
-#: widgets/vacationscriptindicatorwidget.cpp:85
+#: widgets/vacationscriptindicatorwidget.cpp:84
 #, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"

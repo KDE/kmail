@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-07 00:50+0000\n"
+"POT-Creation-Date: 2023-01-08 00:59+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -400,8 +400,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2320 kmreaderwin.cpp:299 kmsystemtray.cpp:49
-#: kmsystemtray.cpp:78
+#: editor/kmcomposerwin.cpp:2320 kmreaderwin.cpp:299 kmsystemtray.cpp:48
+#: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -555,7 +555,7 @@ msgstr ""
 "បន្ទាប់មក​សង្កត់​គ្រាប់ចុច​ដែលអ្នកចង់​ឲ្យ​ភ្ជាប់​ជាមួយ​ថតនេះ ។</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:681
+#: identity/identitydialog.cpp:675
 #, kde-format
 msgid "Templates"
 msgstr "ពុម្ព"
@@ -1814,7 +1814,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "​ថត​​ប័ណ្ណសារ"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3522
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3520
 #, fuzzy, kde-format
 #| msgid "Archive"
 msgctxt "@action"
@@ -1912,7 +1912,7 @@ msgid "Encoding"
 msgstr "ការ​អ៊ិនកូដ"
 
 #: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:61
-#: kmreadermainwin.cpp:467 kontactplugin/kmail/kmail_plugin.cpp:39
+#: kmreadermainwin.cpp:466 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2049,7 +2049,7 @@ msgstr "បញ្ចូល​ឯកសារ​អត្ថបទ..."
 msgid "&Insert Recent Text File"
 msgstr "បញ្ចូល​ឯកសារ​អត្ថបទ​ថ្មីៗ"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2877
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2875
 #, kde-format
 msgid "&Address Book"
 msgstr "​សៀវភៅ​អាសយដ្ឋាន​"
@@ -2239,14 +2239,14 @@ msgstr "រក​សារ..."
 msgid "Configure KMail..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ KMail..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:526
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:525
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:529
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:528
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
@@ -2908,18 +2908,18 @@ msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "កែសម្រួល​អត្តសញ្ញាណ"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:265
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "ទូទៅ"
 
-#: identity/identitydialog.cpp:274
+#: identity/identitydialog.cpp:272
 #, kde-format
 msgid "&Your name:"
 msgstr "ឈ្មោះ​របស់​អ្នក ៖"
 
-#: identity/identitydialog.cpp:279
+#: identity/identitydialog.cpp:277
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2930,12 +2930,12 @@ msgstr ""
 "នៅក្នុង​​ក្បាល​អ៊ីមែល​ដែល​ត្រូវផ្ញើចេញ ។</p><p>ប្រសិនបើ​អ្នក​ទុក​វា​ឲ្យ​ទទេ​ឈ្មោះ​ពិត​របស់​អ្នក​នឹង​មិន​បង្ហាញ​ទេ "
 "បង្ហាញ​តែ​អាសយដ្ឋាន​អ៊ីមែល​ប៉ុណ្ណោះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:291
+#: identity/identitydialog.cpp:288
 #, kde-format
 msgid "Organi&zation:"
 msgstr "ស្ថាប័ន ៖"
 
-#: identity/identitydialog.cpp:296
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2946,12 +2946,12 @@ msgstr ""
 "ក្នុង​បឋមកថា​អ៊ីមែល​ដែល​ត្រូវ​បាន​ផ្ញើ​ចេញ ។</p><p>វា​មាន​សុវត្ថិភាព (និង​ធម្មតា) ដើម្បីទុក​ឲ្យ​ទំនេរ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "&Email address:"
 msgstr "​អាសយដ្ឋាន​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2965,12 +2965,12 @@ msgstr ""
 "មួយ បង្កើត​អត្តសញ្ញា​ថ្មី ឬ​បន្ថែម​អាសយដ្ឋាន​ក្លែងក្លាយ​ថ្មី​នៅ​ក្នុង​វាល​ខាង​ក្រោម ។</p><p>ប្រសិនបើ​អ្នក​ទុក​"
 "ឲ្យ​វា​ទំនេរ ឬ​ដាក់​វា​ខុស នោះ​អ្នក​ទទួល​​នឹង​មាន​បញ្ហា​ក្នុង​ការ​ឆ្លើយតប​មក​អ្នក​វិញ ។</p></qt>"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:329
 #, kde-format
 msgid "Email a&liases:"
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:339
+#: identity/identitydialog.cpp:334
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2986,12 +2986,12 @@ msgstr ""
 "tr><tr><th>ឈ្មោះ​ក្លែងក្លាយ ៖</th><td>first@example.org<br>last@example.org</"
 "td></tr></table><p>វាយ​អាសយដ្ឋាន​ក្លែងក្លាយ​មួយ​ក្នុង​មួយ​បន្ទាត់ ។</p></qt>"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:351
 #, kde-format
 msgid "Cryptography"
 msgstr "កូដសាស្ត្រ"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:357
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3011,23 +3011,23 @@ msgstr ""
 "ចុះហត្ថលេខា​អ៊ីមែល​តាមលក្ខណៈ​ឌីជីថល​ដោយប្រើ​ OpenPGP បានឡើយ ។ មុខងារ​សំបុត្រ​ធម្មតា នឹង​មិនត្រូវបាន​"
 "ប៉ះពាល់ឡើយ ។</p><p>អ្នកអាច​ស្វែងយល់​បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:369 identity/identitydialog.cpp:393
+#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:375
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:385
+#: identity/identitydialog.cpp:379
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:410
+#: identity/identitydialog.cpp:404
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3050,12 +3050,12 @@ msgstr ""
 "អ្នក ដោយ OpenPGP បានទេ មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពានល់ ។</p><p>អ្នក​អាច​ស្វែងយល់​"
 "បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:417
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "កូនសោ​អ៊ិនគ្រីប OpenPGP ៖"
 
-#: identity/identitydialog.cpp:427
+#: identity/identitydialog.cpp:421
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3068,12 +3068,12 @@ msgstr ""
 "អ៊ីមែលដោយប្រើ S/MIME តាមលក្ខណៈ​ឌីជីថល​បាន​ឡើយ ។ មុខងារ​សំបុត្រ​​ធម្មតា​នឹងមិនត្រូវបាន​ប៉ះពាល់ឡើយ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:432
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការចុះហត្ថលេខា S/MIME ៖"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:440
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3087,81 +3087,81 @@ msgstr ""
 "វា​ឲ្យ​នៅ​ទទេ ប៉ុន្តែ​ KMail នឹង​មិន​អាច​អ៊ិនគ្រីប​ច្បាប់​ចម្លង​នៃ​សារ​ផ្ញើ​ចេញ​ទៅ​ឲ្យអ្នក​ដោយ​ប្រើ S/MIME ។ "
 "មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពាល់ឡើយ ។</p></qt>"
 
-#: identity/identitydialog.cpp:452
+#: identity/identitydialog.cpp:446
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការអ៊ិនគ្រីប S/MIME ៖"
 
-#: identity/identitydialog.cpp:469
+#: identity/identitydialog.cpp:463
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "ទ្រង់ទ្រាយ​ដែល​ពេញចិត្ត ៖"
 
-#: identity/identitydialog.cpp:474
+#: identity/identitydialog.cpp:468
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:478
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr ""
 
-#: identity/identitydialog.cpp:494
+#: identity/identitydialog.cpp:488
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "ចុះហត្ថលេខា​លើសារ"
 
-#: identity/identitydialog.cpp:497
+#: identity/identitydialog.cpp:491
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "អ៊ិនគ្រីប​សារ​ដោយស្វ័យប្រវត្តិ​នៅពេល​ណា​ក៏ដោយ​ឲ្យ​តែ​អាច​ធ្វើ​ទៅ​បាន"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:500 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:503 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "ព្រមាន​ នៅ​ពេល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:507
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "​កម្រិត​ខ្ពស់"
 
-#: identity/identitydialog.cpp:521
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "ឆ្លើយតប​ទៅកាន់​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:525
+#: identity/identitydialog.cpp:519
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3177,12 +3177,12 @@ msgstr ""
 "ទៅ មាន​អ៊ីមែល​របស់​អ្នក​នៅ​ក្នុង​វាល <tt>មក​ពី ៖</tt> ប៉ុន្តែ​ចង់​ឲ្យ​ការ​ឆ្លើយតប​នានា​ចូល​ទៅ​អាសយដ្ឋាន​"
 "ក្រុម ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វា​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:542
+#: identity/identitydialog.cpp:536
 #, kde-format
 msgid "&CC addresses:"
 msgstr "អាសយដ្ឋាន​ចម្លង​ជូន ៖"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3198,12 +3198,12 @@ msgstr ""
 "សូម​ប្រើ​សញ្ញា​ក្បៀស (,) ដើម្បី​បំបែក​បញ្ជី​អ្នក​ទទួល​ច្បាប់​ចម្លង​ជូន ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វាល​នេះ​នៅ​"
 "ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:562
+#: identity/identitydialog.cpp:556
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "ចម្លងជា​សម្ងាត់​ជូន​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:566
+#: identity/identitydialog.cpp:560
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3220,78 +3220,78 @@ msgstr ""
 "ជាងមួយ សូម​ប្រើ​សញ្ញាក្បៀស ដើម្បី​បំបែក​អ្នក​ទទួល​ច្បាប់ចម្លង​សម្ងាត់​របស់​អ្នក ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​"
 "វាល​នេះ​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:574
 #, kde-format
 msgid "D&ictionary:"
 msgstr "វចនានុក្រម ៖"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "ថត សំបុត្រផ្ញើចេញ"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "ថត សំបុត្រ​ផ្ញើចេញ ៖"
 
-#: identity/identitydialog.cpp:594
+#: identity/identitydialog.cpp:588
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgid "Select Draft Folder"
 msgstr "ជ្រើស​ពុម្ពអក្សរ"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "ថត សេចក្ដី​ព្រាង ៖"
 
-#: identity/identitydialog.cpp:602
+#: identity/identitydialog.cpp:596
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Select Templates Folder"
 msgstr "លុប​ថត"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "&Templates folder:"
 msgstr "ថត​ពុម្ព ៖"
 
-#: identity/identitydialog.cpp:609
+#: identity/identitydialog.cpp:603
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "គណនី​ចេញ ៖"
 
-#: identity/identitydialog.cpp:616
+#: identity/identitydialog.cpp:610
 #, fuzzy, kde-format
 #| msgid "Attach my vcard to message"
 msgid "Attach my vCard to message"
 msgstr "ភ្ជាប់​ជាមួយ​ vcard ទៅ​កាន់​សារ"
 
-#: identity/identitydialog.cpp:617 identity/identitydialog.cpp:1166
+#: identity/identitydialog.cpp:611 identity/identitydialog.cpp:1160
 #, kde-format
 msgid "Create..."
 msgstr "បាន​បង្កើត..."
 
-#: identity/identitydialog.cpp:622
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "Autocorrection Language:"
 msgid "Autocorrection language:"
 msgstr "ភាសា​​ការ​កែ​ស្វ័យប្រវត្តិ ៖"
 
-#: identity/identitydialog.cpp:634
+#: identity/identitydialog.cpp:628
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:637
+#: identity/identitydialog.cpp:631
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:643
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3300,38 +3300,38 @@ msgstr ""
 "<qt><p>ដែន​លំនាំដើម​គឺត្រូវបាន​ប្រើ​ដើម្បី​បំពេញ​អាសយដ្ឋាន​អ៊ីមែល​​ដែលមាន​តែ​ឈ្មោះរបស់អ្នកប្រើ​ប៉ុណ្ណោះ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:660
+#: identity/identitydialog.cpp:654
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ប្រើ​ពុម្ព​សារ​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ​នេះ"
 
-#: identity/identitydialog.cpp:674
+#: identity/identitydialog.cpp:668
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "ចម្លង​ពុម្ព​សកល"
 
-#: identity/identitydialog.cpp:687
+#: identity/identitydialog.cpp:681
 #, kde-format
 msgid "Signature"
 msgstr "​ហត្ថលេខា"
 
-#: identity/identitydialog.cpp:694
+#: identity/identitydialog.cpp:688
 #, kde-format
 msgid "Picture"
 msgstr "រូបភាព"
 
-#: identity/identitydialog.cpp:747
+#: identity/identitydialog.cpp:741
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល​មិន​ត្រឹមត្រូវ \"%1\""
 
-#: identity/identitydialog.cpp:756 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:750 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:814
+#: identity/identitydialog.cpp:808
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3344,7 +3344,7 @@ msgstr ""
 "ការនេះ​អាច​មានលទ្ធផល​នៅក្នុង​សារព្រមាន​នៅលើ​ផ្នែក​ការទទួល​នៅពេល​ដែលកំពុង​ព្យាយាមផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការកំណត់​រចនាសម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:823
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3353,7 +3353,7 @@ msgstr ""
 "កូនសោ​អ៊ិនគ្រីប​ OpenPGP ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​មិន​មាន​លេខ​សម្គាល់​របស់​អ្នក​ប្រើ​ណាមួយ​ដែល​បាន​ភ្ជាប់​ជា​មួយ​​"
 "អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​រចនា​សម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ​ឡើយ ។"
 
-#: identity/identitydialog.cpp:830
+#: identity/identitydialog.cpp:824
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3366,7 +3366,7 @@ msgstr ""
 "ការ​នេះ​​អាច​មាន​លទ្ធផល​នៅ​ក្នុង​សារ​ព្រមាន​នៅ​លើ​ផ្នែក​ទទួល​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការ​កំណត់​រចនា​សម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:839
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3375,24 +3375,24 @@ msgstr ""
 "វិញ្ញាបនបត្រ​អ៊ិនគ្រីប​ S/MIME ដែលបានកំណត់​រចនាសម្ព័ន្ធ​មួយ មិន​មាន​អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​​"
 "រចនាសម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ ។"
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:843
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "រក​អាសយដ្ឋាន​អ៊ីមែល​នៅក្នុង សោ/វិញ្ញាបនបត្រ​មិឃើញឡើយ"
 
-#: identity/identitydialog.cpp:861
+#: identity/identitydialog.cpp:855
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ឯកសារ​ហត្ថលេខា​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:877
+#: identity/identitydialog.cpp:871
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "កែសម្រួល​អត្តសញ្ញាណ \"%1\""
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3404,7 +3404,7 @@ msgstr ""
 "មិនមាន​ថត​សេចក្ដីព្រាង​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ \"%1\" (តទៅទៀត​ឡើយ) ។ ដូច្នេះ ថត​សេចក្ដីព្រាង​"
 "លំនាំដើម​នឹងត្រូវបានប្រើ ។"
 
-#: identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:1162
 #, kde-format
 msgid "Edit..."
 msgstr "កែសម្រួល..."
@@ -3892,7 +3892,7 @@ msgid "F&older"
 msgstr "ថត"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3371 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3369 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
@@ -3900,7 +3900,7 @@ msgid "Apply Filters on Folder"
 msgstr "អនុវត្ត​​គ្រប់​តម្រង​ទាំងអស់​នៅ​លើ​ថត"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3376 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3374 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -3926,7 +3926,7 @@ msgid "&Forward"
 msgstr "បញ្ជូន​បន្ត"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3188 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3186 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "អនុវត្ត​តម្រង"
@@ -4070,13 +4070,13 @@ msgstr "របារ​ឧបករណ៍​ទិស​អត្ថបទ"
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ត្រូវបាន​កំណត់​ឲ្យនៅ​ក្រៅ​បណ្ដាញ ។ រាល់ការងារ​នៅលើបណ្ដាញ​ទាំងអស់​ត្រូវបាន​ផ្អាក"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:835 kmmainwidget.cpp:2367 kmmainwidget.cpp:2383
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
+#: kmkernel.cpp:836 kmmainwidget.cpp:2368 kmmainwidget.cpp:2384
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4106,12 +4106,12 @@ msgstr "បច្ចុប្បន្ន KMail នៅក្នុង​រប�
 msgid "Online/Offline"
 msgstr "លើបណ្ដាញ/ក្រៅបណ្ដាញ"
 
-#: kmkernel.cpp:946 kmmainwidget.cpp:2358
+#: kmkernel.cpp:946 kmmainwidget.cpp:2356
 #, kde-format
 msgid "Work Online"
 msgstr "ធ្វើការ​នៅលើ​បណ្ដាញ"
 
-#: kmkernel.cpp:947 kmmainwidget.cpp:2355
+#: kmkernel.cpp:947 kmmainwidget.cpp:2353
 #, kde-format
 msgid "Work Offline"
 msgstr "ធ្វើការ​នៅក្រៅ​បណ្ដាញ"
@@ -4222,7 +4222,7 @@ msgid ""
 "properly installed."
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​នាំចូល​បានទេ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក ។"
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:315
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​នាំចូល​បានទេ"
@@ -4257,103 +4257,103 @@ msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជ
 msgid "Unable to start ImportWizard"
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​នាំចូល​បានទេ"
 
-#: kmmainwidget.cpp:304
+#: kmmainwidget.cpp:302
 #, fuzzy, kde-format
 #| msgid ""
 #| "An other mailer was found on system. Do you want to import data from it?"
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr "កម្មវិធី​ផ្ញើ​សំបុត្រ​រក​មិន​ឃើញ​នៅ​លើ​ប្រព័ន្ធ​ឡើយ ។ តើ​អ្នក​ចង់​នាំ​ចូល​ទិន្នន័យ​ពី​វា​ឬ ?"
 
-#: kmmainwidget.cpp:307
+#: kmmainwidget.cpp:305
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr ""
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:306
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr ""
 
-#: kmmainwidget.cpp:313
+#: kmmainwidget.cpp:311
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​នាំចូល​បានទេ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក ។"
 
-#: kmmainwidget.cpp:1368
+#: kmmainwidget.cpp:1366
 #, kde-format
 msgid "No Subject"
 msgstr "​គ្មាន​ប្រធាន​បទ"
 
-#: kmmainwidget.cpp:1381
+#: kmmainwidget.cpp:1379
 #, kde-format
 msgid "(no templates)"
 msgstr "(គ្មាន​ពុម្ព)"
 
-#: kmmainwidget.cpp:1433
+#: kmmainwidget.cpp:1431
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "ថត​នេះ​មិនបាន​កំណត់​ជម្រើស​ផុតកំណត់​ណាមួយឡើយ"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1437
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>តើអ្នកពិត​ជា​ចង់​ធ្វើ​ឲ្យ <b>%1</b> ផុតកំណត់ឬ ?</qt>"
 
-#: kmmainwidget.cpp:1440
+#: kmmainwidget.cpp:1438
 #, kde-format
 msgid "Expire Folder"
 msgstr "ធ្វើ​ឲ្យ​ថត​ផុតកំណត់"
 
-#: kmmainwidget.cpp:1440
+#: kmmainwidget.cpp:1438
 #, kde-format
 msgid "&Expire"
 msgstr "ផុត​កំណត់"
 
-#: kmmainwidget.cpp:1456
+#: kmmainwidget.cpp:1454
 #, kde-format
 msgid "Empty Trash"
 msgstr "សម្អាត​ធុងសំរាម"
 
-#: kmmainwidget.cpp:1456 util.cpp:151
+#: kmmainwidget.cpp:1454 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "ផ្លាស់​ទី​ទៅ​​ធុងសំរាម"
 
-#: kmmainwidget.cpp:1457
+#: kmmainwidget.cpp:1455
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "តើ​អ្នក​ពិត​ជា​ចង់​សម្អាត​ធុងសំរាម​ឬ ?"
 
-#: kmmainwidget.cpp:1459
+#: kmmainwidget.cpp:1457
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr "<qt>តើអ្នក​ពិតជាចង់​ផ្លាស់ទី​សារទាំងអស់ពី​ថត <b>%1</b> ទៅធុងសំរាម​ឬ ?</qt>"
 
-#: kmmainwidget.cpp:1482
+#: kmmainwidget.cpp:1480
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "បាន​ផ្លាស់​ទីសារទាំងអស់ទៅ​ធុងសំរាម"
 
-#: kmmainwidget.cpp:1536
+#: kmmainwidget.cpp:1534
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "តើអ្នកពិតជាចង់​ឲ្យ​សារចាស់ទាំងអស់​ផុតកំណត់​ឬ ?"
 
-#: kmmainwidget.cpp:1537
+#: kmmainwidget.cpp:1535
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "ផុត​កំណត់​សារចាស់ឬ ?"
 
-#: kmmainwidget.cpp:1538
+#: kmmainwidget.cpp:1536
 #, kde-format
 msgid "Expire"
 msgstr "​ផុត​កំណត់"
 
-#: kmmainwidget.cpp:1563
+#: kmmainwidget.cpp:1561
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4364,17 +4364,17 @@ msgstr ""
 "ហើយ អាច​បង្កើន​ភាព​ដែល​ដូច​គ្នា ដែលប្រព័ន្ធ​របស់​អ្នក​នឹង​ត្រូវបាន​ស្រុះស្រួល​ដោយការបង្ហាញ​ផ្សេងទៀត និង "
 "ការទាញ​យក​សុវត្ថិភាព​ដែល​បាន​ស្មានទុក ។"
 
-#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4663
+#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4661
 #, kde-format
 msgid "Security Warning"
 msgstr "ព្រមាន​អំពី​សុវត្ថិភាព"
 
-#: kmmainwidget.cpp:1567
+#: kmmainwidget.cpp:1565
 #, kde-format
 msgid "Load External References"
 msgstr "ផ្ទុក​សេចក្ដី​យោង​ខាងក្រៅ"
 
-#: kmmainwidget.cpp:1639
+#: kmmainwidget.cpp:1637
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4386,550 +4386,550 @@ msgstr[0] ""
 "<qt>តើ​អ្នក​ពិត​ជា​ចង់​លុប​សារ​ដែល​បាន​ជ្រើស %1 ឬ ?<br />នៅ​ពេល​បាន​លុប វា​មិន​អាច​ត្រូវ​បាន​ស្ដារ​ឡើង​វិញ​"
 "ឡើយ ។</qt>"
 
-#: kmmainwidget.cpp:1644
+#: kmmainwidget.cpp:1642
 #, kde-format
 msgid "Delete Messages"
 msgstr "លុប​សារ"
 
-#: kmmainwidget.cpp:1644
+#: kmmainwidget.cpp:1642
 #, kde-format
 msgid "Delete Message"
 msgstr "លុប​សារ"
 
-#: kmmainwidget.cpp:1659
+#: kmmainwidget.cpp:1657
 #, kde-format
 msgid "Moving messages..."
 msgstr "កំពុង​ផ្លាស់ទី​សារ..."
 
-#: kmmainwidget.cpp:1661 kmmainwidget.cpp:1855
+#: kmmainwidget.cpp:1659 kmmainwidget.cpp:1853
 #, kde-format
 msgid "Deleting messages..."
 msgstr "កំពុង​លុបសារ..."
 
-#: kmmainwidget.cpp:1676 kmmainwidget.cpp:1875
+#: kmmainwidget.cpp:1674 kmmainwidget.cpp:1873
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "បាន​លុប​សារ​ដោយ​ជោគជ័យ ។"
 
-#: kmmainwidget.cpp:1678
+#: kmmainwidget.cpp:1676
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "បាន​ផ្លាស់ទី​សារ​ដោយជោគជ័យ ។"
 
-#: kmmainwidget.cpp:1683 kmmainwidget.cpp:1888
+#: kmmainwidget.cpp:1681 kmmainwidget.cpp:1886
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "បរាជ័យ​ក្នុង​ការ​លុបសារ ។"
 
-#: kmmainwidget.cpp:1685 kmmainwidget.cpp:1901
+#: kmmainwidget.cpp:1683 kmmainwidget.cpp:1899
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "បាន​បោះបង់​ការ​លុប​សារ ។"
 
-#: kmmainwidget.cpp:1689
+#: kmmainwidget.cpp:1687
 #, kde-format
 msgid "Moving messages failed."
 msgstr "បរាជ័យ​ក្នុង​ការ​ផ្លាស់ទី​សារ ។"
 
-#: kmmainwidget.cpp:1691
+#: kmmainwidget.cpp:1689
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "បាន​បោះបង់​ការ​ផ្លាស់ទី​សារ ។"
 
-#: kmmainwidget.cpp:1757
+#: kmmainwidget.cpp:1755
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "ផ្លាស់ទី​សារ​ទៅ​ថត"
 
-#: kmmainwidget.cpp:1784
+#: kmmainwidget.cpp:1782
 #, kde-format
 msgid "Copying messages..."
 msgstr "កំពុង​ចម្លង​សារ..."
 
-#: kmmainwidget.cpp:1792
+#: kmmainwidget.cpp:1790
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "បាន​ចម្លង​សារ​ដោយជោគជ័យ ។"
 
-#: kmmainwidget.cpp:1795
+#: kmmainwidget.cpp:1793
 #, kde-format
 msgid "Copying messages failed."
 msgstr "បរាជ័យ​ក្នុង​ការ​ចម្លង​សារ ។"
 
-#: kmmainwidget.cpp:1797
+#: kmmainwidget.cpp:1795
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "បាន​បោះបង់​ការ​ចម្លង​សារ ។"
 
-#: kmmainwidget.cpp:1807
+#: kmmainwidget.cpp:1805
 #, fuzzy, kde-format
 #| msgid "Copy Messages to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "ចម្លង​សារ​ទៅកាន់​ថត"
 
-#: kmmainwidget.cpp:1852
+#: kmmainwidget.cpp:1850
 #, kde-format
 msgid "Moving messages to trash..."
 msgstr "កំពុង​ផ្លាស់ទី​សារ​ទៅកាន់​ធុង​សំរាម..."
 
-#: kmmainwidget.cpp:1859
+#: kmmainwidget.cpp:1857
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
 msgid "Deleting and moving messages to trash..."
 msgstr "កំពុង​ផ្លាស់ទី​សារ​ទៅកាន់​ធុង​សំរាម..."
 
-#: kmmainwidget.cpp:1872
+#: kmmainwidget.cpp:1870
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "សារ​ត្រូវបាន​ផ្លាស់ទី​ទៅកាន់​ធុងសំរាម​ដោយ​ជោគជ័យ ។"
 
-#: kmmainwidget.cpp:1879
+#: kmmainwidget.cpp:1877
 #, fuzzy, kde-format
 #| msgid "Messages moved to trash successfully."
 msgid "Messages moved to trash or deleted successfully"
 msgstr "សារ​ត្រូវបាន​ផ្លាស់ទី​ទៅកាន់​ធុងសំរាម​ដោយ​ជោគជ័យ ។"
 
-#: kmmainwidget.cpp:1885
+#: kmmainwidget.cpp:1883
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "បរាជ័យ​ក្នុងការ​ផ្លាស់ទីសារ​ទៅកាន់​ធុង​សំរាម ។"
 
-#: kmmainwidget.cpp:1892
+#: kmmainwidget.cpp:1890
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash failed."
 msgid "Deleting or moving messages to trash failed."
 msgstr "បរាជ័យ​ក្នុងការ​ផ្លាស់ទីសារ​ទៅកាន់​ធុង​សំរាម ។"
 
-#: kmmainwidget.cpp:1898
+#: kmmainwidget.cpp:1896
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "បាន​បោះបង់​ការ​ផ្លាស់ទី​សារ​ទៅកាន់​ធុង​សំរាម ។"
 
-#: kmmainwidget.cpp:1905
+#: kmmainwidget.cpp:1903
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash canceled."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "បាន​បោះបង់​ការ​ផ្លាស់ទី​សារ​ទៅកាន់​ធុង​សំរាម ។"
 
-#: kmmainwidget.cpp:2175
+#: kmmainwidget.cpp:2173
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "លោត​ទៅ​ថត"
 
-#: kmmainwidget.cpp:2826
+#: kmmainwidget.cpp:2824
 #, kde-format
 msgid "Save &As..."
 msgstr "​រក្សាទុកជា..."
 
-#: kmmainwidget.cpp:2837
+#: kmmainwidget.cpp:2835
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "ធ្វើ​ឲ្យ​ថត​ទាំងអស់​ផុត​កំណត់"
 
-#: kmmainwidget.cpp:2842
+#: kmmainwidget.cpp:2840
 #, kde-format
 msgid "Check &Mail"
 msgstr "ពិនិត្យ​សំបុត្រ"
 
-#: kmmainwidget.cpp:2850
+#: kmmainwidget.cpp:2848
 #, kde-format
 msgid "Check Mail In"
 msgstr "ពិនិត្យ​សំបុត្រ​នៅ​ក្នុង"
 
-#: kmmainwidget.cpp:2852 kmmainwidget.cpp:2853
+#: kmmainwidget.cpp:2850 kmmainwidget.cpp:2851
 #, kde-format
 msgid "Check Mail"
 msgstr "ពិនិត្យ​សំបុត្រ"
 
-#: kmmainwidget.cpp:2857
+#: kmmainwidget.cpp:2855
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "ផ្ញើ​សារ​ជាជួរ"
 
-#: kmmainwidget.cpp:2865
+#: kmmainwidget.cpp:2863
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "ស្ថានភាព​នៅ​លើ​បណ្ដាញ (មិនស្គាល់)"
 
-#: kmmainwidget.cpp:2870
+#: kmmainwidget.cpp:2868
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "ផ្ញើសារ​ជាជួរ​តាមរយៈ"
 
-#: kmmainwidget.cpp:2886
+#: kmmainwidget.cpp:2884
 #, kde-format
 msgid "Certificate Manager"
 msgstr "កម្មវិធី​គ្រប់គ្រង​វិញ្ញាបនបត្រ"
 
-#: kmmainwidget.cpp:2896
+#: kmmainwidget.cpp:2894
 #, kde-format
 msgid "&Import Messages..."
 msgstr "នាំចូល​សារ..."
 
-#: kmmainwidget.cpp:2906
+#: kmmainwidget.cpp:2904
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "បំបាត់កំហុស Sieve..."
 
-#: kmmainwidget.cpp:2913
+#: kmmainwidget.cpp:2911
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "កម្មវិធី​មើល​កំណត់ហេតុ​តម្រង..."
 
-#: kmmainwidget.cpp:2918
+#: kmmainwidget.cpp:2916
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2923
+#: kmmainwidget.cpp:2921
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "កែសម្រួល​ចម្លើយតប \"ក្រៅការិយាល័យ\"..."
 
-#: kmmainwidget.cpp:2929
+#: kmmainwidget.cpp:2927
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​ការ​ទុក​ក្នុង​ប័ណ្ណសារ​ដោយ​ស្វ័យប្រវត្តិ..."
 
-#: kmmainwidget.cpp:2935
+#: kmmainwidget.cpp:2933
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgid "Delayed Messages..."
 msgstr "កំពុង​លុបសារ..."
 
-#: kmmainwidget.cpp:2941
+#: kmmainwidget.cpp:2939
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "រក​សារ..."
 
-#: kmmainwidget.cpp:2952 util.cpp:148
+#: kmmainwidget.cpp:2950 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "លុប"
 
-#: kmmainwidget.cpp:2957 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2955 kmmainwidget.cpp:4000
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ផ្លាស់ទី​សែស្រឡាយ​ទៅ​ធុងសំរាម"
 
-#: kmmainwidget.cpp:2961
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "ផ្លាស់ទី​ខ្សែស្រឡាយ​ទៅ​ធុងសំរាម"
 
-#: kmmainwidget.cpp:2964 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2962 kmmainwidget.cpp:4000
 #, kde-format
 msgid "Delete T&hread"
 msgstr "លុប​ខ្សែស្រឡាយ"
 
-#: kmmainwidget.cpp:2970 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4002
 #, kde-format
 msgid "&Find Messages..."
 msgstr "រក​សារ..."
 
-#: kmmainwidget.cpp:2975
+#: kmmainwidget.cpp:2973
 #, kde-format
 msgid "Select &All Messages"
 msgstr "ជ្រើស​សារទាំងអស់"
 
-#: kmmainwidget.cpp:2982
+#: kmmainwidget.cpp:2980
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "ការ​គ្រប់គ្រង​បញ្ជី​សំបុត្រ​រួម..."
 
-#: kmmainwidget.cpp:2990
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2994
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "ផ្ដល់ផ្លូវកាត់..."
 
-#: kmmainwidget.cpp:3012
+#: kmmainwidget.cpp:3010
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "ការកំណត់​ការផុតកំណត់"
 
-#: kmmainwidget.cpp:3037
+#: kmmainwidget.cpp:3035
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "ដាក់ថត​ជា​ប័ណ្ណសារ..."
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "ផ្ទុកសេចក្ដី​យោង​ខាងក្រៅ"
 
-#: kmmainwidget.cpp:3068
+#: kmmainwidget.cpp:3066
 #, kde-format
 msgid "Copy Message To..."
 msgstr "ចម្លង​សារ​ទៅ..."
 
-#: kmmainwidget.cpp:3070
+#: kmmainwidget.cpp:3068
 #, kde-format
 msgid "Move Message To..."
 msgstr "ផ្លាស់ទី​សារ​ទៅ..."
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3073
 #, kde-format
 msgid "&New Message..."
 msgstr "សារថ្មី..."
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3075
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "ថ្មី"
 
-#: kmmainwidget.cpp:3085
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgid "Message From &Template"
 msgstr "សារ​ពីពុម្ព"
 
-#: kmmainwidget.cpp:3091
+#: kmmainwidget.cpp:3089
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "សារថ្មី​ទៅ​បញ្ជី​សំបុត្រ​រួម..."
 
-#: kmmainwidget.cpp:3097
+#: kmmainwidget.cpp:3095
 #, kde-format
 msgid "&Create Filter"
 msgstr "បង្កើត​តម្រង"
 
-#: kmmainwidget.cpp:3101
+#: kmmainwidget.cpp:3099
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "តម្រង​នៅលើ​ប្រធានបទ..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "Filter on &From..."
 msgstr "តម្រង​នៅលើ​មក​​ពី..."
 
-#: kmmainwidget.cpp:3114
+#: kmmainwidget.cpp:3112
 #, kde-format
 msgid "Filter on &To..."
 msgstr "តម្រង​នៅ​លើ​ជូន​ចំពោះ..."
 
-#: kmmainwidget.cpp:3120
+#: kmmainwidget.cpp:3118
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "តម្រង​នៅ​លើ​ជូន​ចំពោះ..."
 
-#: kmmainwidget.cpp:3128
+#: kmmainwidget.cpp:3126
 #, kde-format
 msgid "Mark &Thread"
 msgstr "សម្គាល់​សែស្រឡាយ"
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3129
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "សម្គាល់​សែស្រឡាយ​ថា​អាន​រួច"
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3132
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "សម្គាល់​សារ​ទាំងអស់​នៅ​ក្នុង​ខ្សែស្រឡាយ​ដែល​បាន​ជ្រើស​ថា​អាន​រួច"
 
-#: kmmainwidget.cpp:3137
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "សម្គាល់​ខ្សែស្រឡាយ​ថា​ មិនទាន់​អាន"
 
-#: kmmainwidget.cpp:3140
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "សម្គាល់​សារទាំងអស់​នៅក្នុង​ខ្សែស្រឡាយ​ដែលបានជ្រើស​ថា​មិនទាន់អាន"
 
-#: kmmainwidget.cpp:3146
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "សម្គាល់ខ្សែស្រឡាយ​ថាសំខាន់"
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "យក​ការសម្គាល់​ខ្សែស្រឡាយ​សំខាន់​ចេញ"
 
-#: kmmainwidget.cpp:3152
+#: kmmainwidget.cpp:3150
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "សម្គាល់​ខ្សែស្រឡាយ​ជា​ធាតុ​សកម្មភាព"
 
-#: kmmainwidget.cpp:3155
+#: kmmainwidget.cpp:3153
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "យក​របាំង​ខ្សែស្រឡាយ​ធាតុ​សកម្មភាព​ចេញ"
 
-#: kmmainwidget.cpp:3159
+#: kmmainwidget.cpp:3157
 #, kde-format
 msgid "&Watch Thread"
 msgstr "ឃ្លាំមើល​ខ្សែស្រឡាយ"
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3161
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "មិនអើពើ​ខ្សែស្រឡាយ"
 
-#: kmmainwidget.cpp:3171 kmreadermainwin.cpp:478
+#: kmmainwidget.cpp:3169 kmreadermainwin.cpp:477
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "រក្សាទុក​ឯកសារ​ភ្ជាប់..."
 
-#: kmmainwidget.cpp:3179
+#: kmmainwidget.cpp:3177
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To..."
 msgstr "ចម្លង​ធាតុ​ទៅ..."
 
-#: kmmainwidget.cpp:3183
+#: kmmainwidget.cpp:3181
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "អនុវត្ត​​គ្រប់​តម្រង​ទាំងអស់"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3190
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "បន្លាយ​ខ្សែស្រឡាយ / ក្រុម"
 
-#: kmmainwidget.cpp:3195
+#: kmmainwidget.cpp:3193
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "បន្លាយ​ខ្សែស្រឡាយ ឬ​ក្រុម​បច្ចុប្បន្ន"
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3197
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "វេញ​ខ្សែស្រឡាយ / ក្រុម"
 
-#: kmmainwidget.cpp:3202
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "វេញ​សែស្រឡាយ ឬ​ក្រុម​បច្ចុប្បន្ន"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "វេញ​សែស្រឡាយ​ទាំងអស់"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3207
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "វេញ​សែស្រឡាយ​ទាំងអស់​នៅ​ក្នុង​ថត​បច្ចុប្បន្ន"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3211
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "វេញ​សែស្រឡាយ​ទាំងអស់"
 
-#: kmmainwidget.cpp:3216
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "វេញ​សែស្រឡាយ​ទាំងអស់​នៅ​ក្នុង​ថត​បច្ចុប្បន្ន"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3218
 #, kde-format
 msgid "&Display Message"
 msgstr "បង្ហាញ​សារ"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3225
 #, kde-format
 msgid "&Next Message"
 msgstr "សារ​បន្ទាប់"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Go to the next message"
 msgstr "ទៅកាន់​សារ​បន្ទាប់"
 
-#: kmmainwidget.cpp:3234
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "សារ​មិន​ទាន់អាន​បន្ទាប់"
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "បន្ទាប់"
 
-#: kmmainwidget.cpp:3243
+#: kmmainwidget.cpp:3241
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "ទៅកាន់​សារ​មិនទាន់អាន​បន្ទាប់"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "&Previous Message"
 msgstr "សារ​មុន"
 
-#: kmmainwidget.cpp:3249
+#: kmmainwidget.cpp:3247
 #, kde-format
 msgid "Go to the previous message"
 msgstr "ទៅកាន់​សារ​មុន"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "សារ​មិនទាន់​អាន​មុន"
 
-#: kmmainwidget.cpp:3262
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "មុន"
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3261
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "ទៅកាន់​សារ​មិន​ទាន់អាន​មុន"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "ថត​មិន​ទាន់​អាន​បន្ទាប់"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "ទៅកាន់​ថត​បន្ទាប់​ដោយមាន​សារ​មិនទាន់អាន"
 
-#: kmmainwidget.cpp:3276
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "ថត​មិនទាន់អាន​មុន"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3279
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "ទៅកាន់​ថត​មុន​ដោយមាន​សារ​មិន​ទាន់​អាន"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "អត្ថបទ​មិន​ទាន់​អាន​បន្ទាប់"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "ទៅកាន់​អត្ថបទ​មិន​ទាន់​អាន​បន្ទាប់"
 
-#: kmmainwidget.cpp:3290
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4937,254 +4937,254 @@ msgid ""
 msgstr ""
 "រមូរ​សារ​បច្ចុប្បន្ន​ចុះក្រោម ។ ប្រសិន​បើ​នៅ​ខាង​ចុង​សារ​បច្ចុប្បន្ន សូម​ទៅកាន់​សារ​មិន​ទាន់​អាន​បច្ចុប្បន្ន ។"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3296
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "កំណត់រចនាសម្ព័ន្ធ​តម្រង..."
 
-#: kmmainwidget.cpp:3304
+#: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "គ្រប់គ្រង​ស្គ្រីប​ Sieve..."
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3307
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "&Add Account..."
 msgstr "បន្ថែម​ចំណាំ..."
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "ការណែនាំ​ពី KMail"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "បង្ហាញ​ទំព័រ​ស្វាគមន៍របស់​ KMail"
 
-#: kmmainwidget.cpp:3323
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​ការជូន​ដំណឹង..."
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "កំណត់​រចនា​សម្ព័ន្ធ KMail..."
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Expire..."
 msgstr "ផុតកំណត់..."
 
-#: kmmainwidget.cpp:3343
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "បន្ថែម​ថត​សំណព្វ..."
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3347
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "ការ​ជាវប្រចាំ​ផ្នែក​មួយ​ចំនួន..."
 
-#: kmmainwidget.cpp:3355 kmmainwidget.cpp:3363
+#: kmmainwidget.cpp:3353 kmmainwidget.cpp:3361
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "អនុវត្ត​​គ្រប់​តម្រង​ទាំងអស់"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3379
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data..."
 msgstr "នាំចេញ​ទិន្នន័យ KMail ..."
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3385
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "ទាក់ទង​សៀវភៅ​អាសយដ្ឋាន​ថ្មី..."
 
-#: kmmainwidget.cpp:3395 kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:3393 kmmainwidget.cpp:4041
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "ការ​កំណត់"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3397
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Account"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:3415
+#: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "ចម្លង​សារ​ទៅ​ថត"
 
-#: kmmainwidget.cpp:3421
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "លោត​ទៅ​ថត..."
 
-#: kmmainwidget.cpp:3427
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "បោះបង់​ប្រតិបត្តិការ​បច្ចុប្បន្ន"
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
 
-#: kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "ផ្ដោត​ទៅលើ​ថត​មុន"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "ជ្រើស​ថត​ដោយមាន​ការផ្ដោត"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3450
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
 
-#: kmmainwidget.cpp:3458
+#: kmmainwidget.cpp:3456
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "ផ្ដោតទៅលើ​ថតបន្ទាប់"
 
-#: kmmainwidget.cpp:3464
+#: kmmainwidget.cpp:3462
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "ផ្ដោត​ទៅលើ​សារបន្ទាប់"
 
-#: kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3468
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "ផ្ដោត​ទៅលើ​សារមុន"
 
-#: kmmainwidget.cpp:3476
+#: kmmainwidget.cpp:3474
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "ជ្រើស​សារទាំងអស់"
 
-#: kmmainwidget.cpp:3482
+#: kmmainwidget.cpp:3480
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "ជ្រើស​សារទាំងអស់"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3486
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "ជ្រើស​សារ​ដោយមាន​ការផ្ដោត"
 
-#: kmmainwidget.cpp:3495
+#: kmmainwidget.cpp:3493
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "កំណត់​កា​រផ្ដោត​លើ​ការ​ស្វែងរក​រហ័ស"
 
-#: kmmainwidget.cpp:3503
+#: kmmainwidget.cpp:3501
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​មុន"
 
-#: kmmainwidget.cpp:3509
+#: kmmainwidget.cpp:3507
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "ពង្រីក​ជម្រើស​ទៅ​សារ​បន្ទាប់"
 
-#: kmmainwidget.cpp:3516
+#: kmmainwidget.cpp:3514
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "ផ្លាស់ទី​សារ​ទៅ​ថត"
 
-#: kmmainwidget.cpp:3526
+#: kmmainwidget.cpp:3524
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3531
+#: kmmainwidget.cpp:3529
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3535
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "ថត​មិនទាន់អាន​មុន"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3542
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "លុប​ថត"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3570
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "បន្ថែម​ថត​សំណព្វ"
 
-#: kmmainwidget.cpp:3990
+#: kmmainwidget.cpp:3988
 #, kde-format
 msgid "&Delete Search"
 msgstr "លុប​ការស្វែងរក"
 
-#: kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:4002
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Edit Search..."
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:4039
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ KMail..."
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "សម្អាត​ធុងសំរាម"
 
-#: kmmainwidget.cpp:4052
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ផ្លាស់ទី​សារ​ទាំងអស់​ទៅកាន់ធុងសំរាម"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4126
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4183
 #, kde-format
 msgid "Filter %1"
 msgstr "តម្រង %1"
 
-#: kmmainwidget.cpp:4652
+#: kmmainwidget.cpp:4650
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:4658
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5195,12 +5195,12 @@ msgstr ""
 "បង្កើន​ភាព​ដែលដូចគ្នា ដែលប្រព័ន្ធរបស់អ្នកនឹងត្រូវបាន​ស្រុះស្រួល​ដោយការបង្ហាញ​ផ្សេងទៀត និង ការទាញយក​"
 "សុវត្ថិភាពដែលបាន​ស្មានទុក ។"
 
-#: kmmainwidget.cpp:4664
+#: kmmainwidget.cpp:4662
 #, kde-format
 msgid "Use HTML"
 msgstr "ប្រើ HTML"
 
-#: kmmainwidget.cpp:4810
+#: kmmainwidget.cpp:4808
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5210,40 +5210,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4813
+#: kmmainwidget.cpp:4811
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4814
+#: kmmainwidget.cpp:4812
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4815
+#: kmmainwidget.cpp:4813
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4843
+#: kmmainwidget.cpp:4841
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: kmmainwidget.cpp:4844
+#: kmmainwidget.cpp:4842
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Akonadi"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4843
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart"
 msgstr "ចាប់ផ្ដើម​ឡើងវិញ"
 
-#: kmmainwidget.cpp:4852
+#: kmmainwidget.cpp:4850
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5253,23 +5253,23 @@ msgstr ""
 msgid "Starting..."
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: kmreadermainwin.cpp:481 util.cpp:148
+#: kmreadermainwin.cpp:480 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "​ផ្លាស់​ទី​ទៅ​ធុង​សំរាម"
 
-#: kmreadermainwin.cpp:482
+#: kmreadermainwin.cpp:481
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "ធុងសំរាម"
 
-#: kmreadermainwin.cpp:483
+#: kmreadermainwin.cpp:482
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "ផ្លាស់ទី​សារ​ទៅ​ធុងសំរាម"
 
-#: kmreadermainwin.cpp:612
+#: kmreadermainwin.cpp:611
 #, fuzzy, kde-format
 #| msgid "Can not copy item. %1"
 msgid "Cannot copy item. %1"
@@ -5472,17 +5472,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "បាន​ផ្លាស់ទី​សារ​ដោយជោគជ័យ ។"
 
-#: kmsystemtray.cpp:92
+#: kmsystemtray.cpp:91
 #, kde-format
 msgid "New Messages In"
 msgstr "សារ​ថ្មី​នៅក្នុង"
 
-#: kmsystemtray.cpp:264
+#: kmsystemtray.cpp:263
 #, kde-format
 msgid "There are no unread messages"
 msgstr "មិនមានសារ​មិនទាន់​អាន​ទេ"
 
-#: kmsystemtray.cpp:264
+#: kmsystemtray.cpp:263
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
@@ -6039,37 +6039,37 @@ msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:521
+#: searchdialog/searchwindow.cpp:520
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching..."
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: searchdialog/searchwindow.cpp:534
+#: searchdialog/searchwindow.cpp:533
 #, fuzzy, kde-format
 #| msgid "Can not get search result. %1"
 msgid "Cannot get search result. %1"
 msgstr "មិន​អាច​ទទួលយក​លទ្ធផល​ស្វែងរក ។ %1"
 
-#: searchdialog/searchwindow.cpp:537
+#: searchdialog/searchwindow.cpp:536
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search failed."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:578
+#: searchdialog/searchwindow.cpp:577
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search complete."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:616
+#: searchdialog/searchwindow.cpp:615
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search stopped."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:674
+#: searchdialog/searchwindow.cpp:673
 #, fuzzy, kde-format
 #| msgid ""
 #| "There was a problem renaming your search folder. A common reason for this "
@@ -6082,19 +6082,19 @@ msgstr ""
 "មាន​បញ្ហា​ក្នុងកា​រប្ដូរ​ឈ្មោះ​ថត​ស្វែងរក​របស់​អ្នក ។ ហេតុ​ផល​ធម្មតា​សម្រាប់​បញ្ហា​នេះ គឺ​ថត​ស្វែងរក​ផ្សេង​ទៀត​"
 "មាន​ឈ្មោះ​ដូច​គ្នា ។"
 
-#: searchdialog/searchwindow.cpp:778
+#: searchdialog/searchwindow.cpp:777
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "ចម្លង​សារ %1"
 
-#: searchdialog/searchwindow.cpp:781
+#: searchdialog/searchwindow.cpp:780
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "កាត់សារ %1"
 
-#: searchdialog/searchwindow.cpp:910
+#: searchdialog/searchwindow.cpp:909
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgid "Checking index status..."
@@ -7922,7 +7922,7 @@ msgstr "ចូលចិត្ត​ HTML ជាង​អត្ថបទ​ធម
 msgid "Use Global Setting"
 msgstr "កំណត់​ការកំណត់​ពុម្ព​អក្សរ​ឡើងវិញ"
 
-#: widgets/vacationscriptindicatorwidget.cpp:85
+#: widgets/vacationscriptindicatorwidget.cpp:84
 #, fuzzy, kde-format
 #| msgid "Out of office reply active"
 msgid "Out of office reply active on server"
