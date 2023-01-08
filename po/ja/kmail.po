@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-07 03:38+0000\n"
+"POT-Creation-Date: 2023-01-08 02:44+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -574,7 +574,7 @@ msgstr ""
 "のボタンを押して、このフォルダと関連付けるキーを押してください。</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Templates"
 msgstr "テンプレート"
@@ -2938,18 +2938,18 @@ msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "個人情報の編集"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "全般"
 
-#: identity/identitydialog.cpp:275
+#: identity/identitydialog.cpp:273
 #, kde-format
 msgid "&Your name:"
 msgstr "あなたの名前(&Y):"
 
-#: identity/identitydialog.cpp:280
+#: identity/identitydialog.cpp:278
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2960,12 +2960,12 @@ msgstr ""
 "メールのヘッダに表示されます。</p><p>ここを空欄にしておくと、メールアドレスだ"
 "けで名前は表示されません。</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:289
 #, kde-format
 msgid "Organi&zation:"
 msgstr "組織(&Z):"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:294
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2976,12 +2976,12 @@ msgstr ""
 "メールのヘッダに表示されます。</p><p>ここは空欄にしておいても問題はありませ"
 "ん (通常はそうしておきます)。</p></qt>"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:306
 #, kde-format
 msgid "&Email address:"
 msgstr "メールアドレス(&E):"
 
-#: identity/identitydialog.cpp:315
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2996,12 +2996,12 @@ msgstr ""
 "てくださ。</p><p>ここが空欄だったり、間違っていると、受け取った人は返信できま"
 "せん。</p></qt>"
 
-#: identity/identitydialog.cpp:335
+#: identity/identitydialog.cpp:330
 #, kde-format
 msgid "Email a&liases:"
 msgstr "メールエイリアス(&L):"
 
-#: identity/identitydialog.cpp:340
+#: identity/identitydialog.cpp:335
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3017,12 +3017,12 @@ msgstr ""
 "tr><tr><th>エイリアス:</th><td>first@example.org<br>last@example.org</td></"
 "tr></table><p>一行にエイリアスを一つ記してください。</p></qt>"
 
-#: identity/identitydialog.cpp:358
+#: identity/identitydialog.cpp:352
 #, kde-format
 msgid "Cryptography"
 msgstr "暗号法"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:358
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3043,23 +3043,23 @@ msgstr ""
 "は影響ありません。</p><p>詳しくは <a>http://www.gnupg.org</a> をご覧くださ"
 "い。</p></qt>"
 
-#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:364 identity/identitydialog.cpp:388
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 署名鍵:"
 
-#: identity/identitydialog.cpp:376
+#: identity/identitydialog.cpp:370
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "OpenPGP 署名鍵:"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:406
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3082,12 +3082,12 @@ msgstr ""
 "メールのコピーを暗号化できません。通常のメール機能には影響ありません。</p><p>"
 "詳しくは <a>http://www.gnupg.org</a> をご覧ください。</p></qt>"
 
-#: identity/identitydialog.cpp:419
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP 暗号化鍵:"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:423
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3100,12 +3100,12 @@ msgstr ""
 "MIME を使ってメールに電子署名できません。通常のメール機能には影響ありません。"
 "</p></qt>"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:428
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 署名用証明書:"
 
-#: identity/identitydialog.cpp:448
+#: identity/identitydialog.cpp:442
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3119,58 +3119,58 @@ msgstr ""
 "もかまいませんが、その場合は KMail は S/MIME を使って送信メッセージのコピーを"
 "暗号化できません。通常のメール機能には影響ありません。</p></qt>"
 
-#: identity/identitydialog.cpp:454
+#: identity/identitydialog.cpp:448
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 暗号化用証明書:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:465
 #, fuzzy, kde-format
 #| msgid "Preferred handler:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "優先するハンドラ:"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:470
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "暗号化"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:474
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:482
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr ""
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:490
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "メッセージに署名(&S)"
 
-#: identity/identitydialog.cpp:499
+#: identity/identitydialog.cpp:493
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "可能なら自動的にメッセージを暗号化する(&M)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:496 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
@@ -3178,24 +3178,24 @@ msgstr "未署名のメッセージの送信時に警告する(&U)"
 
 # ACCELERATOR changed by translator
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:499 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "暗号化されていないメッセージの送信時に警告する(&T)"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:509
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "詳細"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:517
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "返信アドレス(&R):"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:521
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3212,13 +3212,13 @@ msgstr ""
 "する場合に利用できます。</p><p>よく分からなければ、ここは空欄にしておいてくだ"
 "さい。</p></qt>"
 
-#: identity/identitydialog.cpp:544
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "&BCC アドレス:"
 
-#: identity/identitydialog.cpp:549
+#: identity/identitydialog.cpp:543
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3243,12 +3243,12 @@ msgstr ""
 "をコンマで区切ります。</p><p>よく分からなければ、ここは空欄にしておいてくださ"
 "い。</p></qt>"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:558
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&BCC アドレス:"
 
-#: identity/identitydialog.cpp:568
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3265,79 +3265,79 @@ msgstr ""
 "をコンマで区切ります。</p><p>よく分からなければ、ここは空欄にしておいてくださ"
 "い。</p></qt>"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:576
 #, kde-format
 msgid "D&ictionary:"
 msgstr "辞書(&I):"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:582
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "送信済みフォルダ(&S)"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "送信済みフォルダ(&F):"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:590
 #, fuzzy, kde-format
 #| msgid "Select File..."
 msgid "Select Draft Folder"
 msgstr "ファイルを選択..."
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "下書きフォルダ(&D):"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:598
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgid "Select Templates Folder"
 msgstr "テンプレートフォルダ(&T):"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:600
 #, kde-format
 msgid "&Templates folder:"
 msgstr "テンプレートフォルダ(&T):"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Outgoing Account:"
 msgstr ""
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:612
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "<placeholder>ヘッダ</placeholder> をメッセージに追加"
 
 # ACCELERATOR removed by translator
-#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:613 identity/identitydialog.cpp:1162
 #, fuzzy, kde-format
 #| msgid "Chang&e..."
 msgid "Create..."
 msgstr "変更..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:618
 #, kde-format
 msgid "Autocorrection language:"
 msgstr ""
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgid "Restore default domain name"
 msgstr "デフォルトのドメイン(&T):"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:633
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "デフォルトのドメイン(&T):"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3346,39 +3346,39 @@ msgstr ""
 "<qt><p>デフォルトのドメインは、ユーザ名だけのメールアドレスを補完するために使"
 "用します。</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:656
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "この個人情報にカスタムメッセージテンプレートを使う(&U)"
 
 # ACCELERATOR changed by translator
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:670
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "全体のテンプレートをコピー(&G)"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Signature"
 msgstr "署名"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Picture"
 msgstr "画像"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:743
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "不正なメールエイリアス「%1」"
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:752 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "不正なメールアドレス"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3391,7 +3391,7 @@ msgstr ""
 "による署名を検証しようとすると、警告メッセージが出る可能性があります。</p></"
 "html>"
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3400,7 +3400,7 @@ msgstr ""
 "設定された OpenPGP 暗号化鍵の一つに、個人情報 (%1) のために設定されたメールア"
 "ドレスを持つユーザ ID が含まれていません。"
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3412,7 +3412,7 @@ msgstr ""
 "定されたメールアドレスが含まれていません。</p><p>受信者がこの設定による署名を"
 "検証しようとすると、警告メッセージが出る可能性があります。</p></html>"
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3421,24 +3421,24 @@ msgstr ""
 "設定された S/MIME 暗号化用証明書の一つに、この個人情報 (%1) のために設定され"
 "たメールアドレスが含まれていません。"
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:845
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "メールアドレスが鍵/証明書の中に見つかりません"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "署名ファイルは無効です"
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:873
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "個人情報 “%1” を編集"
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:942
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3450,7 +3450,7 @@ msgstr ""
 "個人情報 <resource>%1</resource> に対応する下書きフォルダが存在しません。標準"
 "の下書きフォルダを使用します。"
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1164
 #, kde-format
 msgid "Edit..."
 msgstr "編集..."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-07 03:38+0000\n"
+"POT-Creation-Date: 2023-01-08 02:44+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -545,7 +545,7 @@ msgstr ""
 "ktoré vyberú aktuálny priečinok.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Templates"
 msgstr "Šablóny"
@@ -2933,18 +2933,18 @@ msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Upraviť identitu"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Všeobecné"
 
-#: identity/identitydialog.cpp:275
+#: identity/identitydialog.cpp:273
 #, kde-format
 msgid "&Your name:"
 msgstr "Vaše me&no:"
 
-#: identity/identitydialog.cpp:280
+#: identity/identitydialog.cpp:278
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2955,12 +2955,12 @@ msgstr ""
 "chcete, aby sa zobrazilo v hlavičke posielanej správy.</p><p>Ak toto pole "
 "nevyplníte, vaše skutočné meno sa nezobrazí, iba e-mailová adresa.</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:289
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Organi&zácia:"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:294
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2971,12 +2971,12 @@ msgstr ""
 "organizácie, ak ho chcete zobraziť v hlavičke posielanej správy.</p><p>Je "
 "bezpečné (a normálne) toto nevyplniť.</p></qt>"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:306
 #, kde-format
 msgid "&Email address:"
 msgstr "&E-mailová adresa:"
 
-#: identity/identitydialog.cpp:315
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2991,12 +2991,12 @@ msgstr ""
 "ďalší alias v poli dolu.</p><p>Ak ho nevyplníte alebo vyplníte nesprávne, "
 "ľudia vám nebudú môcť odpovedať.</p></qt>"
 
-#: identity/identitydialog.cpp:335
+#: identity/identitydialog.cpp:330
 #, kde-format
 msgid "Email a&liases:"
 msgstr "E-mailové aliasy:"
 
-#: identity/identitydialog.cpp:340
+#: identity/identitydialog.cpp:335
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3012,12 +3012,12 @@ msgstr ""
 "org</td></tr><tr><th>Aliasy:</th><td>first@example.org<br>last@example.org</"
 "td></tr></table><p>Napíšte jeden alias na riadok.</p></qt>"
 
-#: identity/identitydialog.cpp:358
+#: identity/identitydialog.cpp:352
 #, kde-format
 msgid "Cryptography"
 msgstr "Ši&frovanie"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:358
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3032,23 +3032,23 @@ msgstr ""
 "normálne poštové funkcie to neovplyvní.</p><p>Viac o kľúčoch nájdete na "
 "<a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:370 identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:364 identity/identitydialog.cpp:388
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP kľúč pre podpis:"
 
-#: identity/identitydialog.cpp:376
+#: identity/identitydialog.cpp:370
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:386
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "OpenPGP kľúč pre podpis:"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:406
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3065,12 +3065,12 @@ msgstr ""
 "poštové funkcie to neovplyvní.</p><p>Viac o kľúčoch nájdete na <a>http://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:419
+#: identity/identitydialog.cpp:413
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP kľúč pre šifrovanie:"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:423
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3082,12 +3082,12 @@ msgstr ""
 "správ.</p><p>Môžete toto pole nechať prázdne, ale potom KMail nedokáže "
 "digitálne podpisovať správy. Normálne poštové funkcie to neovplyvní.</p></qt>"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:428
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Certifikát S/MIME pre digitálny podpis:"
 
-#: identity/identitydialog.cpp:448
+#: identity/identitydialog.cpp:442
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3102,81 +3102,81 @@ msgstr ""
 "nedokáže šifrovať odosielané správy pomocou S/MIME. Normálne poštové funkcie "
 "to neovplyvní.</p></qt>>"
 
-#: identity/identitydialog.cpp:454
+#: identity/identitydialog.cpp:448
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "Certifikát S/MIME pre šifrovanie:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:465
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Uprednostňovaný formát:"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:470
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "Šifrovanie"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:474
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:485
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:482
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:485
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr ""
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:490
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Podpísať správu"
 
-#: identity/identitydialog.cpp:499
+#: identity/identitydialog.cpp:493
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt messages when possible"
 msgid "Encrypt messages when possible"
 msgstr "Automaticky šifrovať správy, ak je to možné"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:502 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:496 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Varovať pri pok&use o zaslanie nepodpísaných správ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:505 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:499 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Varovať pri pokuse o zaslanie nešifrovaných správ"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:509
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Pokročilé"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:517
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "Ad&resa pre odpoveď:"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:521
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3193,12 +3193,12 @@ msgstr ""
 "odosielateľa, ale aby odpovede šli na skupinovú adresu.</p><p>Ak neviete, "
 "nechajte toto pole prázdne.</p></qt>"
 
-#: identity/identitydialog.cpp:544
+#: identity/identitydialog.cpp:538
 #, kde-format
 msgid "&CC addresses:"
 msgstr "&CC adresa:"
 
-#: identity/identitydialog.cpp:549
+#: identity/identitydialog.cpp:543
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3215,12 +3215,12 @@ msgstr ""
 "CC prijímateľov.</p><p>Ak máte pochybnosti, nechajte toto pole prázdne.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:558
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&BCC adresa:"
 
-#: identity/identitydialog.cpp:568
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3236,72 +3236,72 @@ msgstr ""
 "kópie každej správy na vaše iné konto.</p><p>Ak to nepotrebujete, nechajte "
 "toto pole prázdne.</p></qt>"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:576
 #, kde-format
 msgid "D&ictionary:"
 msgstr "&Slovník:"
 
-#: identity/identitydialog.cpp:588
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Vybrať priečinok na odoslanie"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Priečinok pre &odoslané:"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Vybrať priečinok konceptov"
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "Priečinok pre &návrhy:"
 
-#: identity/identitydialog.cpp:604
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Vybrať priečinok šablón"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:600
 #, kde-format
 msgid "&Templates folder:"
 msgstr "Priečinok pre ša&blóny:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Odchádzajúci účet:"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Pridať moju vizitku do správy"
 
-#: identity/identitydialog.cpp:619 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:613 identity/identitydialog.cpp:1162
 #, kde-format
 msgid "Create..."
 msgstr "Vytvoriť..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:618
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "Jazyk automatických opráv:"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:630
 #, kde-format
 msgid "Restore default domain name"
 msgstr "Obnoviť predvolený názov domény"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:633
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "Š&tandardná doména:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3310,38 +3310,38 @@ msgstr ""
 "<qt><p>Štandardná doména bude použitá pre dopĺňanie e-mailových adries ktoré "
 "pozostávaju len z mena používateľa.</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:656
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Použiť vlastné šablóny pre správy pre túto identitu"
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:670
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "Kopírovať globálne šablóny"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Signature"
 msgstr "Podpis"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgid "Picture"
 msgstr "Obrázok"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:743
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Neplatný e-mailový alias \"%1\""
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:752 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Neplatná e-mailová adresa"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3354,7 +3354,7 @@ msgstr ""
 "To môže spôsobiť varovania pre prijímateľov správy pri pokuse o overenie "
 "podpisu."
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3363,7 +3363,7 @@ msgstr ""
 "Jeden z nastavených šifrovacích kľúčov OpenPGP neobsahuje e-mailovú adresu "
 "nastavenú pre túto identitu (%1)."
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:826
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3376,7 +3376,7 @@ msgstr ""
 "To môže spôsobiť varovania pre prijímateľov správy pri pokuse o overenie "
 "podpisu."
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3385,23 +3385,23 @@ msgstr ""
 "Jeden z nastavených šifrovacích certifikátov S/MIME neobsahuje e-mailovú "
 "adresu nastavenú pre túto identitu (%1)."
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:845
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mailová adresa nenájdená v kľúčoch/certifikátoch"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Podpisový súbor je neplatný"
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:873
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Upraviť identitu \"%1\""
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:942
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3410,7 +3410,7 @@ msgstr ""
 "Niektoré vlastné priečinky pre identity už neexistuje. Preto budú použité "
 "štandardné priečinky."
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1164
 #, kde-format
 msgid "Edit..."
 msgstr "Upraviť..."
