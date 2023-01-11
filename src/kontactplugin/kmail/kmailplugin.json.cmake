@@ -27,7 +27,7 @@
         "Description[sl]": "Vstavek Kontact za KMail",
         "Description[sv]": "Kontact-insticksprogram för Kmail",
         "Description[ta]": "காண்டாக்டுக்கான கேமெயில் செருகுநிரல்",
-        "Description[tr]": "Kontact KMail Eklentisi",
+        "Description[tr]": "Kontak K Posta Eklentisi",
         "Description[uk]": "Додаток електронної пошти Kontact",
         "Description[x-test]": "xxKontact KMail Pluginxx",
         "Description[zh_CN]": "Kontact KMail 插件",
