@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-01-10 22:06+0300\n"
+"PO-Revision-Date: 2023-01-11 18:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.0\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -272,7 +272,7 @@ msgstr "Tüm bir klasör için dış başvuru yükleme desteğini etkinleştirme
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
-msgstr "Bir ilmeğin tümünü silme"
+msgstr "Bir konunun tümünü sil"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -4521,17 +4521,17 @@ msgstr "&Sil"
 #: kmmainwidget.cpp:2967 kmmainwidget.cpp:4012
 #, kde-format
 msgid "M&ove Thread to Trash"
-msgstr "&Tartışmayı Çöpe Taşı"
+msgstr "&Konuyu Çöpe Taşı"
 
 #: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Move thread to trashcan"
-msgstr "Tartışmayı çöp kutusuna taşı"
+msgstr "Konuyu çöp kutusuna taşı"
 
 #: kmmainwidget.cpp:2974 kmmainwidget.cpp:4012
 #, kde-format
 msgid "Delete T&hread"
-msgstr "Ta&rtışmayı Sil"
+msgstr "K&onuyu Sil"
 
 #: kmmainwidget.cpp:2980 kmmainwidget.cpp:4014
 #, kde-format
@@ -4632,57 +4632,57 @@ msgstr "&Karbon Kopyaya Göre Süz..."
 #: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark &Thread"
-msgstr "&Tartışmayı İşaretle"
+msgstr "&Konuyu İmle"
 
 #: kmmainwidget.cpp:3141
 #, kde-format
 msgid "Mark Thread as &Read"
-msgstr "Tartışmayı &Okunmuş İşaretle"
+msgstr "Konuyu &Okunmuş Olarak İmle"
 
 #: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
-msgstr "Bu tartışmadaki bütün iletileri okunmuş işaretle"
+msgstr "Bu tartışmadaki bütün iletileri okunmuş olarak imle"
 
 #: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Mark Thread as &Unread"
-msgstr "Tartışmayı &Okunmamış İşaretle"
+msgstr "Konuyu &Okunmamış Olarak İmle"
 
 #: kmmainwidget.cpp:3150
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
-msgstr "Tartışmadaki bütün iletileri okunmamış işaretle"
+msgstr "Konudaki bütün iletileri okunmamış olarak imle"
 
 #: kmmainwidget.cpp:3156
 #, kde-format
 msgid "Mark Thread as &Important"
-msgstr "Tartışmayı Ö&nemli İşaretle"
+msgstr "Konuyu Ö&nemli Olarak İmle"
 
 #: kmmainwidget.cpp:3159
 #, kde-format
 msgid "Remove &Important Thread Mark"
-msgstr "Tartışmanın Ö&nemli İşaretini Kaldır"
+msgstr "Konunun Ö&nemli İmini Kaldır"
 
 #: kmmainwidget.cpp:3162
 #, kde-format
 msgid "Mark Thread as &Action Item"
-msgstr "Tartışmayı Yapılacak &Ögesi İşaretle"
+msgstr "Konuyu Yapılacak &Olarak İmle"
 
 #: kmmainwidget.cpp:3165
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
-msgstr "Tartışmanın &Eylem Ögesi İşaretini Kaldır"
+msgstr "Konunun &Eylem Ögesi İmini Kaldır"
 
 #: kmmainwidget.cpp:3169
 #, kde-format
 msgid "&Watch Thread"
-msgstr "Tartışmayı İ&zle"
+msgstr "Konuyu İ&zle"
 
 #: kmmainwidget.cpp:3173
 #, kde-format
 msgid "&Ignore Thread"
-msgstr "&Tartışmayı Yok Say"
+msgstr "Konuyu &Yok Say"
 
 #: kmmainwidget.cpp:3181 kmreadermainwin.cpp:478
 #, kde-format
@@ -4703,45 +4703,45 @@ msgstr "Tüm &Süzgeçleri Uygula"
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
-msgstr "T&artışmayı / Grubu Genişlet"
+msgstr "Ko&nuyu/Grubu Genişlet"
 
 #: kmmainwidget.cpp:3205
 #, kde-format
 msgid "Expand the current thread or group"
-msgstr "Yapılan tartışmayı veya grubu genişlet"
+msgstr "Geçerli konuyu veya grubu genişlet"
 
 #: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
-msgstr "Ta&rtışmayı / Grubu Topla"
+msgstr "Konuyu/&Grubu Daralt"
 
 #: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Collapse the current thread or group"
-msgstr "Yapılan tartışmayı veya grubu topla"
+msgstr "Geçerli tartışmayı veya grubu daralt"
 
 #: kmmainwidget.cpp:3216
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
-msgstr "B&ütün Tartışmaları Genişlet"
+msgstr "B&ütün Konuları Genişlet"
 
 #: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Expand all threads in the current folder"
-msgstr "Geçerli klasördeki tüm tartışmaları genişlet"
+msgstr "Geçerli klasördeki tüm konuları genişlet"
 
 #: kmmainwidget.cpp:3223
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
-msgstr "Bü&tün Tartışmaları Kapat"
+msgstr "Bü&tün Tartışmaları Daralt"
 
 #: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Collapse all threads in the current folder"
-msgstr "Geçerli klasördeki tüm tartışmaları topla"
+msgstr "Geçerli klasördeki tüm tartışmaları daralt"
 
 #: kmmainwidget.cpp:3230
 #, kde-format
