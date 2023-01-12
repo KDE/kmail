@@ -146,6 +146,7 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
@@ -155,6 +156,9 @@ void KMLaunchExternalComponent::slotAccountWizard()
                                 "Please make sure you have AccountWizard properly installed."),
                            i18n("Unable to start account wizard"));
     }
+#else
+    qWarning() << "Account wizard not reimplemented yet";
+#endif
 }
 
 void KMLaunchExternalComponent::slotFilterLogViewer()
