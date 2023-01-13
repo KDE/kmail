@@ -2709,10 +2709,8 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEditTextToSpeech::TextToSpeech::self()->isReady()) {
-            menu.addSeparator();
-            menu.addAction(mMsgView->speakTextAction());
-        }
+        menu.addSeparator();
+        menu.addAction(mMsgView->speakTextAction());
 #endif
         menu.addSeparator();
         menu.addAction(mMsgView->shareTextAction());

@@ -739,10 +739,8 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
 #if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEditTextToSpeech::TextToSpeech::self()->isReady()) {
-            menu->addSeparator();
-            menu->addAction(mReaderWin->speakTextAction());
-        }
+        menu->addSeparator();
+        menu->addAction(mReaderWin->speakTextAction());
 #endif
         menu->addSeparator();
         menu->addAction(mReaderWin->shareTextAction());
