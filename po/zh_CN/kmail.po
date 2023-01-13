@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
-"PO-Revision-Date: 2023-01-02 07:11\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
+"PO-Revision-Date: 2023-01-12 10:30\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -646,38 +646,38 @@ msgstr "添加邮件账户..."
 msgid "Custom Account..."
 msgstr "自定义账户..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr "无法启动账户向导。请确保您正确安装了账户向导。"
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "无法启动账户向导"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手动检查邮件时包含"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "关闭 KMail 时切换到脱机模式"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgid "Check mail on startup"
 msgstr "启动时检查邮件"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -2589,7 +2589,7 @@ msgstr "将不对信件签名"
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format
 msgid "Message will be encrypted"
-msgstr "加密存储已发信件(&P)"
+msgstr "将对信件加密"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format

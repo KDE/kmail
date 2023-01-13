@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -689,8 +689,8 @@ msgstr "新增帳號"
 msgid "Custom Account..."
 msgstr "自訂帳號順序..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -698,30 +698,30 @@ msgid ""
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查安裝是否完全！"
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "無法啟動帳號精靈"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手動檢查信件時檢查這個帳號"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "KMail 關閉時切換到離線模式"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgid "Check mail on startup"
 msgstr "啟動時檢查信件"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."

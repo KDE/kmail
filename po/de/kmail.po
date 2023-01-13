@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
 "PO-Revision-Date: 2022-07-23 23:15+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -666,8 +666,8 @@ msgstr "E-Mail-Postfach hinzufügen ..."
 msgid "Custom Account..."
 msgstr "Benutzerdefiniertes Postfach ..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -676,30 +676,30 @@ msgstr ""
 "Der Postfach-Assistent lässt sich nicht starten. Stellen Sie bitte sicher, "
 "dass AccountWizard richtig installiert ist."
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "Der Postfach-Assistent lässt sich nicht starten"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Bei manueller Prüfung einbeziehen"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Beim Beenden in Offline-Modus wechseln"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgid "Check mail on startup"
 msgstr "Beim Start nach E-Mail sehen"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."

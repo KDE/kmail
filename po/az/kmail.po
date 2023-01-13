@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
 "PO-Revision-Date: 2022-11-11 12:41+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -648,8 +648,8 @@ msgstr "Poçt hesabı əlavə edin..."
 msgid "Custom Account..."
 msgstr "Xüsusi hesab..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -658,30 +658,30 @@ msgstr ""
 "Hesab yaradılması bələdçisi başladıla bilmədi. AccountWizard'ın düzgün "
 "quraşdırıldığını yoxlayın."
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "Hesab bələdçisi başladıla bilmədi"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Poçtun əl ilə yoxlanmasına daxil edin"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "KMail söndükdən sonra şəbəkədən ayrılsın"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgid "Check mail on startup"
 msgstr "Açıldıqda poçt yoxlanılsın"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."

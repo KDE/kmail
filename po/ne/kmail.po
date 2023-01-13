@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -737,8 +737,8 @@ msgstr "खाता थप्नुहोस्"
 msgid "Custom Account..."
 msgstr "खाता थप्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -746,33 +746,33 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start account wizard"
 msgstr "खाता सिर्जना गर्न असमर्थ"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "म्यानुअल मेल जाँचमा समावेश गर्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Check mail on startup"
 msgstr "सुरुआतमा मेल जाँच गर्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."

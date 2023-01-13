@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-08 00:59+0000\n"
+"POT-Creation-Date: 2023-01-13 00:57+0000\n"
 "PO-Revision-Date: 2022-10-26 08:43+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -489,7 +489,7 @@ msgid ""
 "in the addresses by hand."
 msgstr ""
 "KMail no ha pogut detectar del tot una llista de correu en esta carpeta. "
-"Ompliu les adreces a mà."
+"Empleneu els adreces a mà."
 
 #: collectionpage/collectionquotapage.cpp:21
 #, kde-format
@@ -663,8 +663,8 @@ msgstr "Afig un compte de correu..."
 msgid "Custom Account..."
 msgstr "Personalitza un compte..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:154
+#: configuredialog/configureaccountpage.cpp:220
+#: kmlaunchexternalcomponent.cpp:155
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -673,30 +673,30 @@ msgstr ""
 "No s'ha pogut iniciar l'assistent de comptes. Comproveu que AccountWizard "
 "estiga instal·lat correctament."
 
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:156
+#: configuredialog/configureaccountpage.cpp:222
+#: kmlaunchexternalcomponent.cpp:157
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "No s'ha pogut iniciar l'assistent de comptes"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Inclou en la comprovació manual del correu"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Canvia a fora de línia en parar KMail"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgid "Check mail on startup"
 msgstr "Comprova el correu en iniciar"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:335
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -7401,7 +7401,7 @@ msgid ""
 msgstr ""
 "Si se selecciona esta opció, els certificats S/MIME es validen en línia "
 "utilitzant el protocol d'estat de certificats en línia (Online Certificates "
-"Status Protocol, OCSP). Ompliu l'URL del contestador OCSP davall."
+"Status Protocol, OCSP). Empleneu l'URL del contestador OCSP davall."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
