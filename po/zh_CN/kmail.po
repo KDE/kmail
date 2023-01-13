@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-01-02 07:16\n"
+"PO-Revision-Date: 2023-01-12 10:35\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2589,7 +2589,7 @@ msgstr "将不对信件签名"
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format
 msgid "Message will be encrypted"
-msgstr "加密存储已发信件(&P)"
+msgstr "将对信件加密"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format

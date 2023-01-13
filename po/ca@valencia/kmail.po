@@ -489,7 +489,7 @@ msgid ""
 "in the addresses by hand."
 msgstr ""
 "KMail no ha pogut detectar del tot una llista de correu en esta carpeta. "
-"Ompliu les adreces a mà."
+"Empleneu els adreces a mà."
 
 #: collectionpage/collectionquotapage.cpp:21
 #, kde-format
@@ -7401,7 +7401,7 @@ msgid ""
 msgstr ""
 "Si se selecciona esta opció, els certificats S/MIME es validen en línia "
 "utilitzant el protocol d'estat de certificats en línia (Online Certificates "
-"Status Protocol, OCSP). Ompliu l'URL del contestador OCSP davall."
+"Status Protocol, OCSP). Empleneu l'URL del contestador OCSP davall."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
