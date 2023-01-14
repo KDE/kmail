@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-13 00:57+0000\n"
+"POT-Creation-Date: 2023-01-14 00:57+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -1752,7 +1752,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "බහලුම සංරක්‍ෂණය"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3520
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3518
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -1997,7 +1997,7 @@ msgstr "පෙළ ගොනුවක් ඇතුළත් කරන්න... (&
 msgid "&Insert Recent Text File"
 msgstr "මෑත පෙළ ගොනුවක් ඇතුළත් කරන්න (&I)"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2875
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2873
 #, kde-format
 msgid "&Address Book"
 msgstr "ලිපින පොත (&A)"
@@ -3754,7 +3754,7 @@ msgid "F&older"
 msgstr "බහලුම (&o)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3369 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3367 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
@@ -3762,7 +3762,7 @@ msgid "Apply Filters on Folder"
 msgstr "සියළු පෙරහන් ඇතුළත් කරන්න (&y)"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3374 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3372 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
@@ -3788,7 +3788,7 @@ msgid "&Forward"
 msgstr "ඉදිරියට (&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3186 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3184 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "පෙරහන ඇතුළත් කරන්න (&p)"
@@ -4216,7 +4216,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4661
+#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4659
 #, kde-format
 msgid "Security Warning"
 msgstr "ආරක්ෂක අවවාදය"
@@ -4372,672 +4372,672 @@ msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "බහලුමට යන්න"
 
-#: kmmainwidget.cpp:2824
+#: kmmainwidget.cpp:2822
 #, kde-format
 msgid "Save &As..."
 msgstr "සුරකින අයුර... (&A)"
 
-#: kmmainwidget.cpp:2835
+#: kmmainwidget.cpp:2833
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "සියළුම බහලුම් කල්ඉකුත්වී"
 
-#: kmmainwidget.cpp:2840
+#: kmmainwidget.cpp:2838
 #, kde-format
 msgid "Check &Mail"
 msgstr "තැපැල් බලන්න (&M)"
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2846
 #, kde-format
 msgid "Check Mail In"
 msgstr "ලියුම් පරීක්ෂා කරමි"
 
-#: kmmainwidget.cpp:2850 kmmainwidget.cpp:2851
+#: kmmainwidget.cpp:2848 kmmainwidget.cpp:2849
 #, kde-format
 msgid "Check Mail"
 msgstr "තැපැල් බලන්න"
 
-#: kmmainwidget.cpp:2855
+#: kmmainwidget.cpp:2853
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "පොරොත්තු පණිවුඩ යවමි"
 
-#: kmmainwidget.cpp:2863
+#: kmmainwidget.cpp:2861
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "සබැඳි තත්ත්වය (නොදන්නා)"
 
-#: kmmainwidget.cpp:2868
+#: kmmainwidget.cpp:2866
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "හරහා පෙළගැසූ පණිවුඩ යවන්න"
 
-#: kmmainwidget.cpp:2884
+#: kmmainwidget.cpp:2882
 #, kde-format
 msgid "Certificate Manager"
 msgstr "සහතිකය කළමණාකරු"
 
-#: kmmainwidget.cpp:2894
+#: kmmainwidget.cpp:2892
 #, fuzzy, kde-format
 #| msgid "&Import Messages"
 msgid "&Import Messages..."
 msgstr "පණිවුඩ ආයාත (&I)"
 
-#: kmmainwidget.cpp:2904
+#: kmmainwidget.cpp:2902
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "Sieve දෝශ නිරාකරණය... (&D)"
 
-#: kmmainwidget.cpp:2911
+#: kmmainwidget.cpp:2909
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "වාර්තා දසුන පෙරන්න... (&L)"
 
-#: kmmainwidget.cpp:2916
+#: kmmainwidget.cpp:2914
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2921
+#: kmmainwidget.cpp:2919
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "\"කාර්‍යාලයෙන් බැහැර\" පිළිතුරු සකසන්න..."
 
-#: kmmainwidget.cpp:2927
+#: kmmainwidget.cpp:2925
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "&Configure Automatic Archiving..."
 msgstr "දැන්වීම් සකසන්න... (&N)"
 
-#: kmmainwidget.cpp:2933
+#: kmmainwidget.cpp:2931
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgid "Delayed Messages..."
 msgstr "පණිවිඩ මකමින්..."
 
-#: kmmainwidget.cpp:2939
+#: kmmainwidget.cpp:2937
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "පණිවුඩ සෙවීම... (&F)"
 
-#: kmmainwidget.cpp:2950 util.cpp:148
+#: kmmainwidget.cpp:2948 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "මකන්න (&D)"
 
-#: kmmainwidget.cpp:2955 kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:2953 kmmainwidget.cpp:3998
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ත්‍රෙඩ් ඉවතලන බඳුනට ගෙනයන්න (&o)"
 
-#: kmmainwidget.cpp:2959
+#: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "ත්‍රෙඩය ඉවතලන බඳුනට ගෙනයන්න"
 
-#: kmmainwidget.cpp:2962 kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:2960 kmmainwidget.cpp:3998
 #, kde-format
 msgid "Delete T&hread"
 msgstr "ත්‍රෙඩ් මකන්න (&h)"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2966 kmmainwidget.cpp:4000
 #, kde-format
 msgid "&Find Messages..."
 msgstr "පණිවුඩ සෙවීම... (&F)"
 
-#: kmmainwidget.cpp:2973
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Select &All Messages"
 msgstr "සියළුම පණිවුඩ තෝරන්න (&A)"
 
-#: kmmainwidget.cpp:2980
+#: kmmainwidget.cpp:2978
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "ලිපි ලැයිස්තු කලමණාකරණය... (&M)"
 
-#: kmmainwidget.cpp:2988
+#: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2992
+#: kmmainwidget.cpp:2990
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "කෙටි මං පිහිටුවමින්... (&A)"
 
-#: kmmainwidget.cpp:3010
+#: kmmainwidget.cpp:3008
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "කල්ඉකුත් වූ සැකසුම් (&E)"
 
-#: kmmainwidget.cpp:3035
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "සංරක්‍ෂිත බහලුම... (&A)"
 
-#: kmmainwidget.cpp:3043
+#: kmmainwidget.cpp:3041
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "බාහිර යොමු පූර්‍ණය කරන්න (&x)"
 
-#: kmmainwidget.cpp:3066
+#: kmmainwidget.cpp:3064
 #, kde-format
 msgid "Copy Message To..."
 msgstr "වෙත පණිවුඩ පිටපත් කරන්න..."
 
-#: kmmainwidget.cpp:3068
+#: kmmainwidget.cpp:3066
 #, kde-format
 msgid "Move Message To..."
 msgstr "වෙත පණිවුඩ ගෙනයන්න..."
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3071
 #, kde-format
 msgid "&New Message..."
 msgstr "නව පණිවුඩය... (&N)"
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3073
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "නව"
 
-#: kmmainwidget.cpp:3083
+#: kmmainwidget.cpp:3081
 #, kde-format
 msgid "Message From &Template"
 msgstr "ආකෘති මගින් පණිවුඩ (&T)"
 
-#: kmmainwidget.cpp:3089
+#: kmmainwidget.cpp:3087
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "තැපැල් ලැයිස්තුවට නව පණිවිඩයක්... (&o)"
 
-#: kmmainwidget.cpp:3095
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgid "&Create Filter"
 msgstr "පෙරහන නිර්මාණය (&C)"
 
-#: kmmainwidget.cpp:3099
+#: kmmainwidget.cpp:3097
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "මාතෘකාව මත පෙරන්න... (&S)"
 
-#: kmmainwidget.cpp:3106
+#: kmmainwidget.cpp:3104
 #, kde-format
 msgid "Filter on &From..."
 msgstr "වෙතින් මත පෙරන්න... (&F)"
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3110
 #, kde-format
 msgid "Filter on &To..."
 msgstr "වෙත මත පෙරන්න... (&F)"
 
-#: kmmainwidget.cpp:3118
+#: kmmainwidget.cpp:3116
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "වෙත මත පෙරන්න... (&F)"
 
-#: kmmainwidget.cpp:3126
+#: kmmainwidget.cpp:3124
 #, kde-format
 msgid "Mark &Thread"
 msgstr "ත්‍රෙඩ් ලකුණු කරන්න (&T)"
 
-#: kmmainwidget.cpp:3129
+#: kmmainwidget.cpp:3127
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "ත්‍රෙඩ් කියවූ ලෙස ලකුණු කරන්න (&R)"
 
-#: kmmainwidget.cpp:3132
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "තෝරාගත් ත්‍රෙඩ්හි සියළු පණිවුඩ කියවූ ලෙස ලකුණු කරන්න"
 
-#: kmmainwidget.cpp:3135
+#: kmmainwidget.cpp:3133
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "ත්‍රෙඩ් නොකියවූ ලෙස ලකුණු කරන්න (&U)"
 
-#: kmmainwidget.cpp:3138
+#: kmmainwidget.cpp:3136
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "තෝරාගත් ත්‍රෙඩ්හි සියළු පණිවුඩ නොකියවූ ලෙස ලකුණු කරන්න"
 
-#: kmmainwidget.cpp:3144
+#: kmmainwidget.cpp:3142
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "ත්‍රෙඩ් වැදගත් ලෙස ලකුණු කරන්න (&I)"
 
-#: kmmainwidget.cpp:3147
+#: kmmainwidget.cpp:3145
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "වැදගත් ත්‍රෙඩ් ලකුණ ඉවත් කරන්න (&I)"
 
-#: kmmainwidget.cpp:3150
+#: kmmainwidget.cpp:3148
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "ක්‍රියා අයිතමයක් ලෙස ත්‍රෙඩ් ලකුණු කරන්න (&A)"
 
-#: kmmainwidget.cpp:3153
+#: kmmainwidget.cpp:3151
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "ක්‍රියා අයිතම ත්‍රෙඩ් ලකුණ ඉවත් කරන්න (&A)"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3155
 #, kde-format
 msgid "&Watch Thread"
 msgstr "ත්‍රෙඩ් බලන්න (&W)"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3159
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "ත්‍රෙඩ් මඟහරින්න (&I)"
 
-#: kmmainwidget.cpp:3169 kmreadermainwin.cpp:477
+#: kmmainwidget.cpp:3167 kmreadermainwin.cpp:477
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "ඇමිණුම් සුරකින්න... (&t)"
 
-#: kmmainwidget.cpp:3177
+#: kmmainwidget.cpp:3175
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To..."
 msgstr "වෙත අයිතමය පිටපතත් කරන්න..."
 
-#: kmmainwidget.cpp:3181
+#: kmmainwidget.cpp:3179
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "සියළු පෙරහන් ඇතුළත් කරන්න (&y)"
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3188
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "ත්‍රෙඩ් / සමූහය දිගහරින්න (&E)"
 
-#: kmmainwidget.cpp:3193
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "වත්මන් ත්‍රෙඩ් හෝ සමූහය දිගහරින්න"
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3195
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "ත්‍රෙඩ් / සමූහය හකුළන්න (&C)"
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "වත්මන් ත්‍රෙඩ් හෝ සමූහය හකුළන්න"
 
-#: kmmainwidget.cpp:3204
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "සියළු ත්‍රෙඩ් දිගහරින්න (&p)"
 
-#: kmmainwidget.cpp:3207
+#: kmmainwidget.cpp:3205
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "වත්මන් බහලුමේ සියළු ත්‍රෙඩ් දිගහරින්න"
 
-#: kmmainwidget.cpp:3211
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "සියළු ත්‍රෙඩ් හකුළන්න (&o)"
 
-#: kmmainwidget.cpp:3214
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "වත්මන් බහලුමේ සියළු ත්‍රෙඩ් හකුළන්න"
 
-#: kmmainwidget.cpp:3218
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgid "&Display Message"
 msgstr "පණිවුඩය පෙන්වන්න.  "
 
-#: kmmainwidget.cpp:3225
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgid "&Next Message"
 msgstr "මීළඟ පණිවුඩය "
 
-#: kmmainwidget.cpp:3228
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Go to the next message"
 msgstr "නොකියවූ මීළඟ පණිවුඩය  වෙත යන්න "
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "මීළඟ නොකියවූ පණිවු"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3238
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "මීළඟ"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3239
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "මීළඟ නොකියවූ පණිවුඩය වෙත යන්න. "
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3243
 #, kde-format
 msgid "&Previous Message"
 msgstr "පෙර ලිපිය (&P)"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "Go to the previous message"
 msgstr "පෙර පණිවුඩය වෙත යන්න "
 
-#: kmmainwidget.cpp:3252
+#: kmmainwidget.cpp:3250
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "පෙර නොකියවන ලද පණිවුඩ"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3258
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "පෙර"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "පෙර නොකියවන ලද පණිවුඩ වෙත යන්න "
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "පෙර නොකියවන ලද බහලුම් "
 
-#: kmmainwidget.cpp:3271
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "නොකියවූ පණිවුඩ සමග මීළඟ බහලුම වෙත යන්න. "
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3272
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "පෙර නොකියවූ බහලුම (&o)"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "නොකියවූ පණිවුඩ ඇති පෙර බහලුමට යන්න"
 
-#: kmmainwidget.cpp:3283
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "ඊලඟ නොකියවූ පෙළ (&T)"
 
-#: kmmainwidget.cpp:3286
+#: kmmainwidget.cpp:3284
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "මීළඟ නොකියවූ අකුරු වෙත යන්න. "
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr "පවතින පණිවුඩය පහතට පෙරලන්න. පණිවුඩයේ කෙලවර නම් ඊළඟ නොකියවූ පණිවිඩය වෙත යන්න."
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3294
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "වින්‍යාස  පෙරහන්... (&F)"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "&Sieve විධානවලි පාලනය..."
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3305
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "&Add Account..."
 msgstr "සටහනක් එක් කිරීම..."
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3310
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "Kmail හඳුන්වාදීම (&I)"
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Kmail ආරම්ඹක පිටුව දර්ශනය"
 
-#: kmmainwidget.cpp:3321
+#: kmmainwidget.cpp:3319
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "දැන්වීම් සකසන්න... (&N)"
 
-#: kmmainwidget.cpp:3328
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "Kmail සකසීම... (&C) "
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Expire..."
 msgstr "කල් ඉකුත්විය..."
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "කැමතිම බහලුමට එකතු කරන්න..."
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3345
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr ""
 
-#: kmmainwidget.cpp:3353 kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3351 kmmainwidget.cpp:3359
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "සියළු පෙරහන් ඇතුළත් කරන්න (&y)"
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3377
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data..."
 msgstr "Kmail සකසීම... (&C) "
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3383
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
 msgid "New AddressBook Contact..."
 msgstr "ලිපින පොත තුළ විවෘත කරන්න"
 
-#: kmmainwidget.cpp:3393 kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:3391 kmmainwidget.cpp:4039
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "සැකසුම් "
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3395
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Account"
 msgstr "නැවත ආරම්භ කරමින් "
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3411
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "පණිවුඩය පිටපත් කරන්න"
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "බහලුමට යන්න..."
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3423
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "වත්මන් මෙහෙයුම නවතන්න"
 
-#: kmmainwidget.cpp:3431
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "ඊළඟ බහලුම වෙත කේන්ද්‍රගත කිරීම "
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3435
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "කලින් බහලුම වෙත කේන්ද්‍රගත කිරීම "
 
-#: kmmainwidget.cpp:3443
+#: kmmainwidget.cpp:3441
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "කේන්ද්‍රගත වීමත් සමග බහලුමක් තේරීම "
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3448
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "ඊළඟ බහලුම වෙත කේන්ද්‍රගත කිරීම "
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "ඊළඟ බහලුම වෙත කේන්ද්‍රගත කිරීම "
 
-#: kmmainwidget.cpp:3462
+#: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "ඊළඟ පණිවිඩයට කේන්ද්‍රගත වෙමින් "
 
-#: kmmainwidget.cpp:3468
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "කලින් පණිවිඩයට කේන්ද්‍රගත වීම "
 
-#: kmmainwidget.cpp:3474
+#: kmmainwidget.cpp:3472
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "සියළුම පණිවුඩ තෝරන්න (&A)"
 
-#: kmmainwidget.cpp:3480
+#: kmmainwidget.cpp:3478
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "සියළුම පණිවුඩ තෝරන්න (&A)"
 
-#: kmmainwidget.cpp:3486
+#: kmmainwidget.cpp:3484
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "පණිවිඩය කේන්ද්‍රගත වීමත් සමග තේරීම "
 
-#: kmmainwidget.cpp:3493
+#: kmmainwidget.cpp:3491
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "වේගවත් සුපිරික්සනයක් සඳහා කේන්ද්‍රගත කිරීම "
 
-#: kmmainwidget.cpp:3501
+#: kmmainwidget.cpp:3499
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "පෙර පණිවුඩය වෙත තෝරාගැනීම දිගු කරන්න"
 
-#: kmmainwidget.cpp:3507
+#: kmmainwidget.cpp:3505
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "ඊළඟ පණිවුඩය වෙත තෝරාගැනීම දිගු කරන්න"
 
-#: kmmainwidget.cpp:3514
+#: kmmainwidget.cpp:3512
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "පණිවිඩය බහලුමට යවන්න"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3522
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3529
+#: kmmainwidget.cpp:3527
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3535
+#: kmmainwidget.cpp:3533
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "පෙර නොකියවූ බහලුම (&o)"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3540
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "බහලුම මකන්න"
 
-#: kmmainwidget.cpp:3570
+#: kmmainwidget.cpp:3568
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "කැමතිම බහලුමට එකතු කරන්න "
 
-#: kmmainwidget.cpp:3988
+#: kmmainwidget.cpp:3986
 #, kde-format
 msgid "&Delete Search"
 msgstr "සෙවුම මකන්න (&D)"
 
-#: kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:4000
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Edit Search..."
 msgstr "අරඹමින්..."
 
-#: kmmainwidget.cpp:4039
+#: kmmainwidget.cpp:4037
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "KMail සකසන්න..."
 
-#: kmmainwidget.cpp:4050
+#: kmmainwidget.cpp:4048
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ඉවතලන බඳුන හිස් කරන්න (&m)"
 
-#: kmmainwidget.cpp:4050
+#: kmmainwidget.cpp:4048
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "සියළුම පණිවුඩ මකන්න (&M)"
 
-#: kmmainwidget.cpp:4124
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:4181
 #, kde-format
 msgid "Filter %1"
 msgstr "%1 පෙරහණ"
 
-#: kmmainwidget.cpp:4650
+#: kmmainwidget.cpp:4648
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "අරඹමින්..."
 
-#: kmmainwidget.cpp:4658
+#: kmmainwidget.cpp:4656
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5045,12 +5045,12 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4660
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML භාවිත කරන්න"
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4806
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5060,40 +5060,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4811
+#: kmmainwidget.cpp:4809
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4812
+#: kmmainwidget.cpp:4810
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4813
+#: kmmainwidget.cpp:4811
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4841
+#: kmmainwidget.cpp:4839
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "ඔබට ගිණුම මැකීම අවශ්‍යද '%1'? "
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4840
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Akonadi"
 msgstr "නැවත ආරම්භ කරමින් "
 
-#: kmmainwidget.cpp:4843
+#: kmmainwidget.cpp:4841
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart"
 msgstr "නැවත ආරම්භ කරමින් "
 
-#: kmmainwidget.cpp:4850
+#: kmmainwidget.cpp:4848
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

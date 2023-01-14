@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-13 00:57+0000\n"
+"POT-Creation-Date: 2023-01-14 00:57+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -1820,7 +1820,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "封存資料夾"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3520
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3518
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -2053,7 +2053,7 @@ msgstr "插入文字檔(&I)..."
 msgid "&Insert Recent Text File"
 msgstr "插入最近使用的文字檔(&I)"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2875
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2873
 #, kde-format
 msgid "&Address Book"
 msgstr "通訊錄(&A)"
@@ -3854,7 +3854,7 @@ msgid "F&older"
 msgstr "資料夾(&O)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3369 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3367 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
@@ -3862,7 +3862,7 @@ msgid "Apply Filters on Folder"
 msgstr "套用所有的過濾器在資料夾上(&Y)"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3374 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3372 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, fuzzy, kde-format
 #| msgid "Current Folder & All Subfolders"
@@ -3889,7 +3889,7 @@ msgid "&Forward"
 msgstr "轉寄(&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3186 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3184 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "套用過濾器(&P)"
@@ -4320,7 +4320,7 @@ msgstr ""
 "在 HTML 信件中下載遠端的連結會使您更容易受到垃圾信的攻擊，並且有可能會增加您"
 "的系統被其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4661
+#: kmmainwidget.cpp:1564 kmmainwidget.cpp:4659
 #, kde-format
 msgid "Security Warning"
 msgstr "安全性警告"
@@ -4475,654 +4475,654 @@ msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "跳至資料夾"
 
-#: kmmainwidget.cpp:2824
+#: kmmainwidget.cpp:2822
 #, kde-format
 msgid "Save &As..."
 msgstr "另存新檔(&A)..."
 
-#: kmmainwidget.cpp:2835
+#: kmmainwidget.cpp:2833
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "將所有的資料夾內的信件設為過期信件(&E)"
 
-#: kmmainwidget.cpp:2840
+#: kmmainwidget.cpp:2838
 #, kde-format
 msgid "Check &Mail"
 msgstr "檢查信件(&M)"
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2846
 #, kde-format
 msgid "Check Mail In"
 msgstr "檢查信件於"
 
-#: kmmainwidget.cpp:2850 kmmainwidget.cpp:2851
+#: kmmainwidget.cpp:2848 kmmainwidget.cpp:2849
 #, kde-format
 msgid "Check Mail"
 msgstr "檢查信件"
 
-#: kmmainwidget.cpp:2855
+#: kmmainwidget.cpp:2853
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "傳送佇列中的信件(&S)"
 
-#: kmmainwidget.cpp:2863
+#: kmmainwidget.cpp:2861
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "線上狀態（未知）"
 
-#: kmmainwidget.cpp:2868
+#: kmmainwidget.cpp:2866
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "傳送佇列中的信件，使用"
 
-#: kmmainwidget.cpp:2884
+#: kmmainwidget.cpp:2882
 #, kde-format
 msgid "Certificate Manager"
 msgstr "憑證管理員"
 
-#: kmmainwidget.cpp:2894
+#: kmmainwidget.cpp:2892
 #, kde-format
 msgid "&Import Messages..."
 msgstr "匯入信件(&I)"
 
-#: kmmainwidget.cpp:2904
+#: kmmainwidget.cpp:2902
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "除錯過濾器(&D)..."
 
-#: kmmainwidget.cpp:2911
+#: kmmainwidget.cpp:2909
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "過濾紀錄檢視器(&L)..."
 
-#: kmmainwidget.cpp:2916
+#: kmmainwidget.cpp:2914
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2921
+#: kmmainwidget.cpp:2919
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "編輯自動回覆..."
 
-#: kmmainwidget.cpp:2927
+#: kmmainwidget.cpp:2925
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "設定自動封存(&C)..."
 
-#: kmmainwidget.cpp:2933
+#: kmmainwidget.cpp:2931
 #, kde-format
 msgid "Delayed Messages..."
 msgstr "已延遲信件..."
 
-#: kmmainwidget.cpp:2939
+#: kmmainwidget.cpp:2937
 #, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "回覆提醒信件..."
 
-#: kmmainwidget.cpp:2950 util.cpp:148
+#: kmmainwidget.cpp:2948 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "刪除(&D)"
 
-#: kmmainwidget.cpp:2955 kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:2953 kmmainwidget.cpp:3998
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "將整個串列移至垃圾桶(&O)"
 
-#: kmmainwidget.cpp:2959
+#: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "將整個串列移入垃圾桶"
 
-#: kmmainwidget.cpp:2962 kmmainwidget.cpp:4000
+#: kmmainwidget.cpp:2960 kmmainwidget.cpp:3998
 #, kde-format
 msgid "Delete T&hread"
 msgstr "刪除整個串列(&H)"
 
-#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:2966 kmmainwidget.cpp:4000
 #, kde-format
 msgid "&Find Messages..."
 msgstr "尋找信件(&F)..."
 
-#: kmmainwidget.cpp:2973
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Select &All Messages"
 msgstr "選取所有信件(&A)"
 
-#: kmmainwidget.cpp:2980
+#: kmmainwidget.cpp:2978
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "郵件論壇管理員(&M)"
 
-#: kmmainwidget.cpp:2988
+#: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2992
+#: kmmainwidget.cpp:2990
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "設定捷徑(&A)..."
 
-#: kmmainwidget.cpp:3010
+#: kmmainwidget.cpp:3008
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "過期設定(&E)"
 
-#: kmmainwidget.cpp:3035
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "封存資料夾(&A)..."
 
-#: kmmainwidget.cpp:3043
+#: kmmainwidget.cpp:3041
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "載入遠端連結(&X)"
 
-#: kmmainwidget.cpp:3066
+#: kmmainwidget.cpp:3064
 #, kde-format
 msgid "Copy Message To..."
 msgstr "複製信件到..."
 
-#: kmmainwidget.cpp:3068
+#: kmmainwidget.cpp:3066
 #, kde-format
 msgid "Move Message To..."
 msgstr "移動信件到..."
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3071
 #, kde-format
 msgid "&New Message..."
 msgstr "新信件(&N)..."
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3073
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "新增"
 
-#: kmmainwidget.cpp:3083
+#: kmmainwidget.cpp:3081
 #, kde-format
 msgid "Message From &Template"
 msgstr "從樣板產生信件(&T)"
 
-#: kmmainwidget.cpp:3089
+#: kmmainwidget.cpp:3087
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "張貼到信件論壇(&O)..."
 
-#: kmmainwidget.cpp:3095
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgid "&Create Filter"
 msgstr "建立過濾器(&C)"
 
-#: kmmainwidget.cpp:3099
+#: kmmainwidget.cpp:3097
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "過濾信件主題(&S)..."
 
-#: kmmainwidget.cpp:3106
+#: kmmainwidget.cpp:3104
 #, kde-format
 msgid "Filter on &From..."
 msgstr "過濾信件來源(&F)..."
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3110
 #, kde-format
 msgid "Filter on &To..."
 msgstr "過濾信件收件者(&T)..."
 
-#: kmmainwidget.cpp:3118
+#: kmmainwidget.cpp:3116
 #, kde-format
 msgid "Filter on &Cc..."
 msgstr "過濾信件副本(&C)..."
 
-#: kmmainwidget.cpp:3126
+#: kmmainwidget.cpp:3124
 #, kde-format
 msgid "Mark &Thread"
 msgstr "標記討論串(&T)"
 
-#: kmmainwidget.cpp:3129
+#: kmmainwidget.cpp:3127
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "標記目前討論串為已讀(&R)"
 
-#: kmmainwidget.cpp:3132
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "標記選擇的串列內所有信件為已讀"
 
-#: kmmainwidget.cpp:3135
+#: kmmainwidget.cpp:3133
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "標記目前討論串為未讀取(&U)"
 
-#: kmmainwidget.cpp:3138
+#: kmmainwidget.cpp:3136
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "標記選擇的討論串內所有信件為未讀"
 
-#: kmmainwidget.cpp:3144
+#: kmmainwidget.cpp:3142
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "標記討論串為重要(&I)"
 
-#: kmmainwidget.cpp:3147
+#: kmmainwidget.cpp:3145
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "移除重要討論串標記(&I)"
 
-#: kmmainwidget.cpp:3150
+#: kmmainwidget.cpp:3148
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "標記目前討論串為動作項目(&A)"
 
-#: kmmainwidget.cpp:3153
+#: kmmainwidget.cpp:3151
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "移除動作項目信件串列標記(&A)"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3155
 #, kde-format
 msgid "&Watch Thread"
 msgstr "標記討論串為監測中(&W)"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3159
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "標記討論串為忽略(&I)"
 
-#: kmmainwidget.cpp:3169 kmreadermainwin.cpp:477
+#: kmmainwidget.cpp:3167 kmreadermainwin.cpp:477
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "儲存附件(&T)..."
 
-#: kmmainwidget.cpp:3177
+#: kmmainwidget.cpp:3175
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To..."
 msgstr "複製項目到..."
 
-#: kmmainwidget.cpp:3181
+#: kmmainwidget.cpp:3179
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "套用所有的過濾器(&Y)"
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3188
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "展開討論串/群組(&E)"
 
-#: kmmainwidget.cpp:3193
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "展開目前的討論串或群組"
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3195
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "收起討論串/群組(&C)"
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "收起目前討論串或群組"
 
-#: kmmainwidget.cpp:3204
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "展開所有討論串(&P)"
 
-#: kmmainwidget.cpp:3207
+#: kmmainwidget.cpp:3205
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "展開目前資料夾內的所有討論串"
 
-#: kmmainwidget.cpp:3211
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "收起所有討論串(&O)"
 
-#: kmmainwidget.cpp:3214
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "收起目前資料夾內的所有討論串"
 
-#: kmmainwidget.cpp:3218
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgid "&Display Message"
 msgstr "顯示信件(&D)"
 
-#: kmmainwidget.cpp:3225
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgid "&Next Message"
 msgstr "下一封信件(&N)"
 
-#: kmmainwidget.cpp:3228
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Go to the next message"
 msgstr "到下一封信件"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "下一封未讀信件(&U)"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3238
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "下一個"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3239
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "到下一封未讀信件"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3243
 #, kde-format
 msgid "&Previous Message"
 msgstr "上一封信件(&P)"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "Go to the previous message"
 msgstr "到上一封信件"
 
-#: kmmainwidget.cpp:3252
+#: kmmainwidget.cpp:3250
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "上一封未讀信件(&M)"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3258
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "上一個"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "到上一封未讀信件"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "下一個有未讀信件的資料夾(&F)"
 
-#: kmmainwidget.cpp:3271
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "到下一個有未讀信件的資料夾"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3272
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "上一個有未讀信件的資料夾(&O)"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "到上一個有未讀信件的資料夾"
 
-#: kmmainwidget.cpp:3283
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "下一個未讀文字(&T)"
 
-#: kmmainwidget.cpp:3286
+#: kmmainwidget.cpp:3284
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "到下一個未讀的文字"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr "將目前信件往下捲，若到了底部，則跳到下一封未讀信件。"
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3294
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "設定過濾器(&F)..."
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "管理可用的過濾器..."
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3305
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "新增帳號"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3310
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail 介紹(&I)"
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "顯示 KMail 歡迎頁"
 
-#: kmmainwidget.cpp:3321
+#: kmmainwidget.cpp:3319
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "設定通知(&N)..."
 
-#: kmmainwidget.cpp:3328
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "設定 KMail (&C)..."
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Expire..."
 msgstr "設定過期"
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "新增我的最愛資料夾..."
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3345
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "伺服器端訂閱..."
 
-#: kmmainwidget.cpp:3353 kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3351 kmmainwidget.cpp:3359
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "套用所有的過濾器(&Y)"
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3377
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data..."
 msgstr "匯出 KMail 資料(&E)..."
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3383
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "新增通訊錄聯絡人..."
 
-#: kmmainwidget.cpp:3393 kmmainwidget.cpp:4041
+#: kmmainwidget.cpp:3391 kmmainwidget.cpp:4039
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "設定(&S)"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3395
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Restart Account"
 msgstr "自訂帳號順序..."
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3411
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "複製信件到資料夾"
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "跳至資料夾..."
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3423
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "取消目前的動作"
 
-#: kmmainwidget.cpp:3431
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "將輸入焦點設在下一個資料夾"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3435
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "將輸入焦點設在上一個資料夾"
 
-#: kmmainwidget.cpp:3443
+#: kmmainwidget.cpp:3441
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "選取資料夾時取得焦點"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3448
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "將輸入焦點設在第一個資料夾"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "將輸入焦點設在最後一個資料夾"
 
-#: kmmainwidget.cpp:3462
+#: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "將輸入焦點設在下一封信件"
 
-#: kmmainwidget.cpp:3468
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "將輸入焦點設在上一封信件"
 
-#: kmmainwidget.cpp:3474
+#: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Select First Message"
 msgstr "選取第一封信件"
 
-#: kmmainwidget.cpp:3480
+#: kmmainwidget.cpp:3478
 #, kde-format
 msgid "Select Last Message"
 msgstr "選取最後一封信件"
 
-#: kmmainwidget.cpp:3486
+#: kmmainwidget.cpp:3484
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "選取信件時取得焦點"
 
-#: kmmainwidget.cpp:3493
+#: kmmainwidget.cpp:3491
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "設定焦點到快速搜尋"
 
-#: kmmainwidget.cpp:3501
+#: kmmainwidget.cpp:3499
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "將選取延伸到上一封信件"
 
-#: kmmainwidget.cpp:3507
+#: kmmainwidget.cpp:3505
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "將選取延伸到下一封信件"
 
-#: kmmainwidget.cpp:3514
+#: kmmainwidget.cpp:3512
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "移動信件到資料夾"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3522
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3529
+#: kmmainwidget.cpp:3527
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3535
+#: kmmainwidget.cpp:3533
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "上一個有未讀信件的資料夾(&O)"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3540
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "刪除資料夾"
 
-#: kmmainwidget.cpp:3570
+#: kmmainwidget.cpp:3568
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "新增我的最愛資料夾"
 
-#: kmmainwidget.cpp:3988
+#: kmmainwidget.cpp:3986
 #, kde-format
 msgid "&Delete Search"
 msgstr "刪除搜尋結果(&D)"
 
-#: kmmainwidget.cpp:4002
+#: kmmainwidget.cpp:4000
 #, kde-format
 msgid "Edit Search..."
 msgstr "編輯搜尋字串..."
 
-#: kmmainwidget.cpp:4039
+#: kmmainwidget.cpp:4037
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "設定 KMail..."
 
-#: kmmainwidget.cpp:4050
+#: kmmainwidget.cpp:4048
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "清空垃圾桶(&M)"
 
-#: kmmainwidget.cpp:4050
+#: kmmainwidget.cpp:4048
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "將所有信件移入垃圾桶(&M)"
 
-#: kmmainwidget.cpp:4124
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "&Undo"
 msgstr "復原(&U)"
 
-#: kmmainwidget.cpp:4126
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "復原(&U)：\"%1\""
 
-#: kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:4181
 #, kde-format
 msgid "Filter %1"
 msgstr "過濾 %1"
 
-#: kmmainwidget.cpp:4650
+#: kmmainwidget.cpp:4648
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
@@ -5130,7 +5130,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "搜尋...<%1>"
 
-#: kmmainwidget.cpp:4658
+#: kmmainwidget.cpp:4656
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5140,12 +5140,12 @@ msgstr ""
 "在信件中使用 HTML 將會使您更容易受到垃圾信的攻擊，並且有可能會增加您的系統被"
 "其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4660
 #, kde-format
 msgid "Use HTML"
 msgstr "使用 HTML"
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4806
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5155,40 +5155,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4811
+#: kmmainwidget.cpp:4809
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4812
+#: kmmainwidget.cpp:4810
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4813
+#: kmmainwidget.cpp:4811
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4841
+#: kmmainwidget.cpp:4839
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "您確定要移除標籤 %1 嗎？"
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4840
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Restart Akonadi"
 msgstr "自訂帳號順序..."
 
-#: kmmainwidget.cpp:4843
+#: kmmainwidget.cpp:4841
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Restart"
 msgstr "自訂帳號順序..."
 
-#: kmmainwidget.cpp:4850
+#: kmmainwidget.cpp:4848
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
