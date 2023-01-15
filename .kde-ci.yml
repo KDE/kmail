@@ -49,3 +49,4 @@ Dependencies:
     'frameworks/kxmlgui': '@latest'
     'frameworks/kiconthemes': '@latest'
     'third-party/qtkeychain': '@latest'
+    'libraries/ktextaddons': '@stable'
