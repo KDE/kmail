@@ -36,15 +36,12 @@
 #include "widgets/collectionpane.h"
 #include "widgets/kactionmenuaccount.h"
 #include "widgets/kactionmenutransport.h"
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEditTextToSpeech/TextToSpeech>
-#endif
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
+#include <kpimtextedit/kpimtextedit-texttospeech.h>
 
 #include "collectionpage/collectionmailinglistpage.h"
 #include "collectionpage/collectionquotapage.h"

@@ -53,14 +53,11 @@
 #include <Akonadi/ItemCreateJob>
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/MessageFlags>
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEditTextToSpeech/TextToSpeech>
-#endif
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
+#include <kpimtextedit/kpimtextedit-texttospeech.h>
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
