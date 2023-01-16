@@ -22,6 +22,19 @@
             ]
         },
         {
+            "name": "dev-textaddons-mold",
+            "displayName": "Build as debug + using mold linker",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "USE_KTEXTADDONS_LIB": "ON",
+                "CMAKE_SHARED_LINKER_FLAGS": "-fuse-ld=mold"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+	{
             "name": "dev",
             "displayName": "Build as debug",
             "cacheVariables": {
@@ -162,6 +175,10 @@
         {
             "name": "dev",
             "configurePreset": "dev"
+        },
+        {
+            "name": "dev-textaddons-mold",
+            "configurePreset": "dev-textaddons-mold"
         },
         {
             "name": "dev-mold",
