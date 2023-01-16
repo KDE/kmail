@@ -68,6 +68,8 @@ if (QT_MAJOR_VERSION STREQUAL "6")
 endif()
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
+option(USE_KTEXTADDONS_LIB "Use ktextaddons lib (experimental)" OFF)
+set(KTEXTADDONS_MIN_VERSION "1.0.0")
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.22.40")
@@ -144,6 +146,11 @@ find_package(KF5PimCommonAkonadi ${PIMCOMMON_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
+
+if (USE_KTEXTADDONS_LIB)
+    find_package(KF5TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
+    add_definitions(-DHAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT)
+endif()
 
 find_package(Qt${QT_MAJOR_VERSION}Keychain CONFIG)
 set_package_properties(Qt${QT_MAJOR_VERSION}Keychain PROPERTIES

@@ -52,11 +52,17 @@ namespace TemplateParser
 {
 class TemplatesConfiguration;
 }
-
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+namespace TextAutoCorrection
+{
+class AutoCorrectionLanguage;
+}
+#else
 namespace PimCommonAutoCorrection
 {
 class AutoCorrectionLanguage;
 }
+#endif
 
 namespace KMail
 {
@@ -127,7 +133,11 @@ private:
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+    TextAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#else
     PimCommonAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#endif
     QLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:

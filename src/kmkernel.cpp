@@ -53,8 +53,13 @@ using KMail::MailServiceImpl;
 #include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
 #include <PimCommon/NetworkManager>
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+#include <TextAutoCorrection/AutoCorrection>
+#include <TextAutoCorrection/TextAutoCorrectionSettings>
+#else
 #include <PimCommonAutoCorrection/AutoCorrection>
 #include <PimCommonAutoCorrection/PimCommonAutoCorrectionSettings>
+#endif
 #include <gravatar/gravatarsettings.h>
 #include <messagelist/messagelistsettings.h>
 
@@ -150,8 +155,11 @@ KMKernel::KMKernel(QObject *parent)
     // so better do it here, than in some code where changing the group of config()
     // would be unexpected
     KMailSettings::self();
-
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+    mAutoCorrection = new TextAutoCorrection::AutoCorrection();
+#else
     mAutoCorrection = new PimCommonAutoCorrection::AutoCorrection();
+#endif
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
 
     // cberzan: this crap moved to CodecManager ======================
@@ -1287,7 +1295,11 @@ void KMKernel::slotSyncConfig()
 {
     saveConfig();
     // Laurent investigate why we need to reload them.
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+    TextAutoCorrection::TextAutoCorrectionSettings::self()->load();
+#else
     PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->load();
+#endif
     MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
@@ -1302,7 +1314,12 @@ void KMKernel::slotSyncConfig()
 
 void KMKernel::saveConfig()
 {
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+    TextAutoCorrection::TextAutoCorrectionSettings::self()->save();
+#else
     PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->save();
+#endif
+
     MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
@@ -1433,8 +1450,14 @@ KSharedConfig::Ptr KMKernel::config()
 
         mMailCommonSettings->setSharedConfig(mySelf->mConfig);
         mMailCommonSettings->load();
+
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+        TextAutoCorrection::TextAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
+        TextAutoCorrection::TextAutoCorrectionSettings::self()->load();
+#else
         PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
         PimCommonAutoCorrection::PimCommonAutoCorrectionSettings::self()->load();
+#endif
         Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
         Gravatar::GravatarSettings::self()->load();
     }
@@ -1985,8 +2008,11 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
         break;
     }
 }
-
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+TextAutoCorrection::AutoCorrection *KMKernel::composerAutoCorrection()
+#else
 PimCommonAutoCorrection::AutoCorrection *KMKernel::composerAutoCorrection()
+#endif
 {
     return mAutoCorrection;
 }
