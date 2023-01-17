@@ -427,7 +427,6 @@ target_link_libraries(kmailprivate
     KF5::KIOCore
     KF5::Contacts
     KF5::PimTextEdit
-    KF5::PimTextEditTextToSpeech
     KF5::MessageViewer
     KF5::IconThemes
     KF5::XmlGui
@@ -440,6 +439,14 @@ target_link_libraries(kmailprivate
     KF5::GuiAddons
     ${kmail_userfeedback_LIB}
     )
+
+if (USE_KTEXTADDONS_LIB)
+    target_link_libraries(kmailprivate
+        PRIVATE KF5::TextEditTextToSpeech)
+else()
+    target_link_libraries(kmailprivate
+        PRIVATE KF5::PimTextEditTextToSpeech)
+endif()
 target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
