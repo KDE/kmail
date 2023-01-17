@@ -622,7 +622,11 @@ private:
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
+#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
+    TextAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
+#else
     PimCommonAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
+#endif
     FolderArchiveManager *const mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
