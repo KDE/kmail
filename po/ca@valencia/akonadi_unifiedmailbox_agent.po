@@ -58,7 +58,7 @@ msgstr "S'està sincronitzant la bústia unificada %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr "Configuració de les bústies unificades"
+msgstr "Configureu les bústies unificades"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format

@@ -328,7 +328,7 @@ msgstr "Pedaç de la configuració de l'editor"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
-msgstr "Gestió dels projectes Ägypten i Kroupware"
+msgstr "Gestioneu els projectes Ägypten i Kroupware"
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
@@ -1711,7 +1711,7 @@ msgstr[1] " dies"
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
-msgstr "Configuració de GnuPG"
+msgstr "Configureu GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:344
 #, kde-format
@@ -2827,7 +2827,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
-msgstr "Creació d'una vCard pròpia"
+msgstr "Creeu una vCard pròpia"
 
 #: identity/identityaddvcarddialog.cpp:47 identity/newidentitydialog.cpp:70
 #, kde-format
@@ -2883,7 +2883,7 @@ msgstr "S'està generant un parell nou de claus..."
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
-msgstr "Edició de la identitat"
+msgstr "Editeu la identitat"
 
 #: identity/identitydialog.cpp:266
 #, kde-format
@@ -3357,7 +3357,7 @@ msgstr "El fitxer de signatura no és vàlid"
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "Edició de la identitat «%1»"
+msgstr "Editeu la identitat «%1»"
 
 #: identity/identitydialog.cpp:942
 #, kde-format
@@ -3377,7 +3377,7 @@ msgstr "Edita..."
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
-msgstr "Edició de la vCard pròpia"
+msgstr "Editeu la vCard pròpia"
 
 #: identity/identityeditvcarddialog.cpp:40
 #, kde-format
@@ -4611,7 +4611,7 @@ msgstr "&Assigna una drecera..."
 #: kmmainwidget.cpp:3022
 #, kde-format
 msgid "&Expiration Settings"
-msgstr "Con&figuració de la caducitat"
+msgstr "&Configureu la caducitat"
 
 #: kmmainwidget.cpp:3047
 #, kde-format
@@ -4959,7 +4959,7 @@ msgstr "Contacte nou en la llibreta d'adreces..."
 #: kmmainwidget.cpp:3405 kmmainwidget.cpp:4053
 #, kde-format
 msgid "Account &Settings"
-msgstr "Con&figuració del compte"
+msgstr "&Configureu el compte"
 
 #: kmmainwidget.cpp:3409
 #, kde-format
@@ -5333,7 +5333,7 @@ msgstr "S'ha afegit la comprovació d'URL de pesca"
 
 #: kmreaderwin.cpp:269
 msgid "Added Check DKIM"
-msgstr "S'ha afegit la comprovació del DKIM"
+msgstr "S'ha afegit la comprovació de DKIM"
 
 #: kmreaderwin.cpp:270
 msgid "Added Markdown Editing Support"
@@ -6491,7 +6491,7 @@ msgstr "Canvia l'etiqueta del missatge: %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
-msgstr "Selecció d'etiquetes"
+msgstr "Seleccioneu les etiquetes"
 
 #: tag/tagselectdialog.cpp:52
 #, kde-format
@@ -7077,7 +7077,7 @@ msgstr "Per a certificats de la CA intermediària:"
 #: ui/securitypageencryptiontab.ui:354
 #, kde-format
 msgid "GnuPG Settings..."
-msgstr "Configuració de GnuPG..."
+msgstr "Configureu GnuPG..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:393

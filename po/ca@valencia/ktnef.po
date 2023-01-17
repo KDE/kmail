@@ -166,7 +166,7 @@ msgstr[1] "S'han trobat %1 adjunts"
 #, kde-format
 msgctxt "@title:window"
 msgid "Open TNEF File"
-msgstr "Obertura del fitxer TNEF"
+msgstr "Obriu el fitxer TNEF"
 
 #: ktnefmain.cpp:244 ktnefmain.cpp:275
 #, kde-format
