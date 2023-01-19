@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-17 00:59+0000\n"
-"PO-Revision-Date: 2023-01-11 18:57+0300\n"
+"PO-Revision-Date: 2023-01-18 22:31+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1163,9 +1163,9 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
-"Yanıtlarken veya yönlendirirken, sadece alınan biçimdeki orijinal biçimdeki "
-"iletiyi alıntıla. Seçili değilse öntanımlı olarak düz metin şeklinde "
-"yanıtlanacaktır."
+"Yanıtlarken veya yönlendirirken, yalnızca alınan biçimdeki orijinal "
+"biçimdeki iletiyi alıntıla. Seçili değilse öntanımlı olarak düz metin "
+"şeklinde yanıtlanacaktır."
 
 #: configuredialog/configurecomposerpage.cpp:257
 #, kde-format
@@ -1232,7 +1232,7 @@ msgid ""
 "accidentally sending a message to too many people.  Note, however, that it "
 "does not take account of distribution lists or mailing lists."
 msgstr ""
-"İleti için sadece bu kadar alıcı belirtilmesine izin ver. Bu; \"Tümünü "
+"İleti için yalnızca bu kadar alıcı belirtilmesine izin ver. Bu; \"Tümünü "
 "Yanıtla\", alıcıları elle belirtme veya \"Seç...\" seçicisi kullanımında "
 "geçerlidir. Bu sınırı belirlemek bir iletiyi yanlışlıkla çok sayıda kişiye "
 "göndermenizi engeller. Ancak bunun dağıtım veya posta listelerini hesaba "
@@ -3731,12 +3731,12 @@ msgstr "Postaya bir eklenti yerleştir. Bu işlemi tekrar edebilirsiniz"
 #: kmail_options.h:29
 #, kde-format
 msgid "Only check for new mail"
-msgstr "Sadece yeni e-postaları denetle"
+msgstr "Yalnızca yeni e-postaları denetle"
 
 #: kmail_options.h:31
 #, kde-format
 msgid "Only open composer window"
-msgstr "Sadece düzenleyici penceresini aç"
+msgstr "Yalnızca düzenleyici penceresini aç"
 
 #: kmail_options.h:32
 #, kde-format
@@ -5398,8 +5398,8 @@ msgid ""
 "path will be shown."
 msgstr ""
 "Eğer özette listelenen her klasörün tam yolunu görmek istiyorsanız bu "
-"seçeneği etkinleştirin. Bu seçenek etkin olmadığında, sadece temel klasörün "
-"yolu gösterilecektir."
+"seçeneği etkinleştirin. Bu seçenek etkin olmadığında, yalnızca temel "
+"klasörün yolu gösterilecektir."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
@@ -6074,8 +6074,8 @@ msgid ""
 "Specifies whether this is the very first time that the application is run "
 "(for internal use only)"
 msgstr ""
-"Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler (sadece "
-"dahili kullanım için)"
+"Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler "
+"(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.cmake:164
@@ -6343,7 +6343,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki koleksiyon alanının genişliğini "
-"belirtir (sadece dahili kullanım için)"
+"belirtir (yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:422
@@ -6353,7 +6353,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki konu alanının genişliğini belirtir "
-"(sadece dahili kullanım için)"
+"(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:426
@@ -6363,7 +6363,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki gönderici alanının genişliğini belirtir "
-"(sadece dahili kullanım için)"
+"(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:430
@@ -6373,7 +6373,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki alıcı alanının genişliğini belirtir "
-"(sadece dahili kullanım için)"
+"(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:434
@@ -6383,7 +6383,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki tarih alanının genişliğini belirtir "
-"(sadece dahili kullanım için)"
+"(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:438
@@ -6393,7 +6393,7 @@ msgid ""
 "internal use only)"
 msgstr ""
 "Arama Penceresi iletişim kutusundaki klasör alanının genişliğini belirtir "
-"(sadece dahili kullanım için)"
+"(yalnızca dahili kullanım için)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -6689,7 +6689,7 @@ msgstr ""
 "seçilen yönteme bağlı olarak önceki klasörde sürdürülecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Tüm işaretli klasörlerde döngüye gir: </span>Sadece \"Bu "
+"weight:600;\">Tüm işaretli klasörlerde döngüye gir: </span>Yalnızca \"Bu "
 "klasöre yeni/okunmamış posta geldiğinde uyar\" özelliği işaretli olan "
 "klasörlerin dikkate alınması dışında \"Tüm klasörlerde döngüye gir\" "
 "seçeneği ile aynıdır.</p></body></html>"
@@ -6752,7 +6752,7 @@ msgstr "&Tüm klasörlerde ara"
 #: ui/searchwindow.ui:26
 #, kde-format
 msgid "Search &only in:"
-msgstr "Sadece &burada ara:"
+msgstr "Yalnızca &burada ara:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mChkSubFolders)
 #: ui/searchwindow.ui:39
@@ -7230,7 +7230,7 @@ msgstr ""
 "li><li><em>Sor</em>: Kullanıcıdan izin istedikten sonra isteğe yanıt verir. "
 "Bu yolla, seçilmiş iletiler için  gönderirken başkaları için reddetmek veya "
 "yok saymak mümkündür.</li><li><em>Reddet</em>: Her zaman <b>reddedildi</b> "
-"uyarısını yollar. Bu  her zaman göndermekten sadece <em>biraz</em> daha "
+"uyarısını yollar. Bu  her zaman göndermekten yalnızca <em>biraz</em> daha "
 "iyidir. Gönderen kişi iletisi üzerinde işlem yapıldığını bilecektir, ancak "
 "silindiğine veya okunduğuna, vs emin olamayacaktır.</li><li><em>Her zaman "
 "gönder</em>Her zaman istenen durum uyarısını gönderir. Bunun anlamı, "
@@ -7285,7 +7285,7 @@ msgstr "Tüm ileti"
 #: ui/securitypagemdntab.ui:119
 #, kde-format
 msgid "Only headers"
-msgstr "Sadece başlıklar"
+msgstr "Yalnızca başlıklar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mNoMDNsWhenEncryptedCheck)
 #: ui/securitypagemdntab.ui:142
