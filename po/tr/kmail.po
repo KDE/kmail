@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-01-11 18:57+0300\n"
+"PO-Revision-Date: 2023-01-21 14:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -78,9 +78,9 @@ msgid ""
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
-"Lütfen birkaç dakikanızı ayırıp Ayarlar->K Posta'yı Yapılandır menüsünden K "
-"Posta ayarlarınızı yapın. En azından öntanımlı bir kimlik ile gelen ve giden "
-"bir e-posta hesabı oluşturmak zorundasınız."
+"Lütfen birkaç dakikanızı ayırıp Ayarlar->K Posta Uygulamasını Yapılandır "
+"menüsünden K Posta ayarlarınızı yapın. En azından öntanımlı bir kimlik ile "
+"gelen ve giden bir e-posta hesabı oluşturmak zorundasınız."
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
@@ -1120,7 +1120,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:173
 #, kde-format
 msgid "When replying, do not quote any existing signature"
-msgstr "Yanıtlarken, mevcut imzayı alıntılama"
+msgstr "Yanıtlarken var olan herhangi bir imzayı alıntılama"
 
 #: configuredialog/configurecomposerpage.cpp:185
 #, kde-format
@@ -1422,7 +1422,7 @@ msgstr "Bu karakter kümesi desteklenmiyor."
 #: configuredialog/configurecomposerpage.cpp:846
 #, kde-format
 msgid "&Use custom message-id suffix"
-msgstr "Ö&zel İleti kimliği sonekini kullan"
+msgstr "Ö&zel ileti kimliği soneki kullan"
 
 #: configuredialog/configurecomposerpage.cpp:858
 #, kde-format
@@ -1432,7 +1432,7 @@ msgstr "Özel &İleti-kimliği (message-id) soneki:"
 #: configuredialog/configurecomposerpage.cpp:870
 #, kde-format
 msgid "Define custom mime header fields:"
-msgstr "Özel mime başlık etiketleri tanımla:"
+msgstr "Özel MIME üstbilgi etiketleri tanımla:"
 
 #: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
@@ -1618,7 +1618,7 @@ msgstr "Web Motoru Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
 msgid "Header Style Plugins"
-msgstr "Başlık Biçem Eklentileri"
+msgstr "Üstbilgi Biçem Eklentileri"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
 #, kde-format
@@ -2800,7 +2800,7 @@ msgstr "&Boş alanlarla birlikte"
 #: identity/identityaddvcarddialog.cpp:53
 #, kde-format
 msgid "&From existing vCard"
-msgstr "&Mevcut vCard'tan"
+msgstr "&Var olan vCard'tan"
 
 #: identity/identityaddvcarddialog.cpp:65
 #, kde-format
@@ -2810,12 +2810,12 @@ msgstr "&vCard yolu:"
 #: identity/identityaddvcarddialog.cpp:76
 #, kde-format
 msgid "&Duplicate existing vCard"
-msgstr "&Mevcut vCard'ı çoğalt"
+msgstr "&Var olan vCard'ı çoğalt"
 
 #: identity/identityaddvcarddialog.cpp:88 identity/newidentitydialog.cpp:91
 #, kde-format
 msgid "&Existing identities:"
-msgstr "&Mevcut kimlikler:"
+msgstr "&Var olan kimlikler:"
 
 #: identity/identitydialog.cpp:174
 #, kde-format
@@ -3098,7 +3098,7 @@ msgid ""
 "email in the <tt>From:</tt> field, but any responses to go to a group "
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
-"<qt><h3>Adreslere Yanıtla</h3><p>Bu<tt>Yanıtla:</tt> başlıklarını farklı e-"
+"<qt><h3>Adreslere Yanıtla</h3><p>Bu<tt>Yanıtla:</tt> üstbilgilerini farklı e-"
 "posta adresleri içeren biçimden normal <tt>Kimden:</tt> adresleri biçimine "
 "dönüştürür.</p><p>Bu benzer rolleri olan insanlarla birlikte çalışılan grup "
 "çalışmalarında kullanışlıdır. Örneğin, <tt>Kimden</tt> alanında kendi e-"
@@ -3287,8 +3287,8 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 "Düzenlenen S/MIME imza sertifikalarından birinde, bu kimlik (%1) için "
-"düzenlenmiş e-posta adresi mevcut değil.\n"
-"Bu durum, iletiyi alan tarafta, bu düzenle yapılmış imzaları doğrulamaya "
+"düzenlenmiş e-posta adresi yok.\n"
+"Bu durum, iletiyi alan tarafta bu düzenle yapılmış imzaları doğrulamaya "
 "çalışırken hata iletileri görüntülenmesine neden olabilir."
 
 #: identity/identitydialog.cpp:835
@@ -3447,12 +3447,12 @@ msgstr "&Yeni kimlik:"
 #: identity/newidentitydialog.cpp:76
 #, kde-format
 msgid "&Use System Settings values"
-msgstr "&Sistem Ayarlarındaki değerleri kullan"
+msgstr "&Sistem Ayarları değerlerini kullan"
 
 #: identity/newidentitydialog.cpp:81
 #, kde-format
 msgid "&Duplicate existing identity"
-msgstr "&Mevcut kimliği çoğalt"
+msgstr "&Var olan kimliği çoğalt"
 
 #: identity/xfaceconfigurator.cpp:38
 #, kde-format
@@ -3711,7 +3711,7 @@ msgstr "Yanıtlama adresini 'adres' olarak ayarla"
 #: kmail_options.h:25
 #, kde-format
 msgid "Add 'header' to message. This can be repeated"
-msgstr "İletiye bir 'başlık' ekle. Bu işlemi tekrar edebilirsiniz"
+msgstr "İletiye bir 'üstbilgi' ekle. Bu işlemi yineleyebilirsiniz"
 
 #: kmail_options.h:26
 #, kde-format
@@ -5188,7 +5188,7 @@ msgstr "Adres Defterine Ekle"
 #: kmreaderwin.cpp:144
 #, kde-format
 msgid "Add to Existing Contact"
-msgstr "Mevcut Kişiye Ekle"
+msgstr "Var Olan Kişiye Ekle"
 
 #: kmreaderwin.cpp:150
 #, kde-format
@@ -6021,7 +6021,7 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
-"İletilere eklenilecek özel MIME başlık alanlarının numarasını belirler "
+"İletilere eklenilecek özel MIME üstbilgi alanlarının numarasını belirler "
 "(yalnızca dahili kullanım için)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
@@ -6440,7 +6440,7 @@ msgstr "Etiket ara..."
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order..."
-msgstr "Hesap sıralamasını özelleştir..."
+msgstr "Hesap Sırasını Özelleştir..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6506,7 +6506,7 @@ msgstr "Seçili kimliği yeniden adlandır"
 #: ui/identitypage.ui:53
 #, kde-format
 msgid "&Rename"
-msgstr "Ye&niden adlandır"
+msgstr "Ye&niden Adlandır"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
 #: ui/identitypage.ui:63
@@ -7065,11 +7065,11 @@ msgid ""
 "href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
-"<b>UYARI:</b> E-posta içinde HTML'e izin vermek, güvenlik açıklarını tarayan "
-"ve kullanan programlar tarafından sisteminizin açıklarının tespit edilmesi "
-"riskini artırır. Her bir seçenek üzerinde ayrıntılı bilgi için <a href="
-"\"whatsthis1\">HTML iletiler hakkında...</a> ve <a href="
-"\"whatsthis2\">Harici referanslar hakkında...</a> bağlantılarına tıklayın"
+"<b>UYARI:</b> E-posta içinde HTML'ye izin vermek, güvenlik açıklarını "
+"tarayan ve kullanan programlar tarafından sisteminizin açıklarının tespit "
+"edilmesi riskini artırır. Her bir seçenek üzerinde ayrıntılı bilgi için <a "
+"href=\"whatsthis1\">HTML iletiler hakkında...</a> ve <a href="
+"\"whatsthis2\">Dış başvurular hakkında...</a> bağlantılarına tıklayın"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:75
@@ -7341,7 +7341,7 @@ msgstr "Sertifikaları çevirim içi doğrula (OSCP)"
 #: ui/smimeconfiguration.ui:40
 #, kde-format
 msgid "Online Certificate Validation"
-msgstr "Çevirim İçi Sertifika Doğrulması"
+msgstr "Çevrimiçi Sertifika Doğrulama"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
