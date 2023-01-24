@@ -10,6 +10,14 @@
             "hidden": true
         },
         {
+            "name": "base-qt6",
+            "displayName": "base preset",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build-${presetName}",
+            "installDir": "$env{KF6}",
+            "hidden": true
+        },
+        {
             "name": "dev-mold",
             "displayName": "Build as debug + using mold linker",
             "cacheVariables": {
@@ -68,7 +76,7 @@
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
             },
             "inherits": [
-                "base"
+                "base-qt6"
             ]
         },
         {
