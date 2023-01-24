@@ -11,12 +11,12 @@ target_link_libraries( kmail_potentialphishingemailjobtest Qt::Test KF5::PimComm
 add_executable( kmail_potentialphishingdetaildialogtest potentialphishingdetaildialogtest.cpp potentialphishingdetaildialogtest.h)
 add_test(NAME kmail_potentialphishingdetaildialogtest COMMAND kmail_potentialphishingdetaildialogtest)
 ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
-target_link_libraries( kmail_potentialphishingdetaildialogtest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
+target_link_libraries( kmail_potentialphishingdetaildialogtest Qt::Test Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigCore KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::WidgetsAddons kmailprivate)
 
 add_executable( kmail_potentialphishingdetailwidgettest potentialphishingdetailwidgettest.cpp potentialphishingdetailwidgettest.h)
 add_test(NAME kmail_potentialphishingdetailwidgettest COMMAND kmail_potentialphishingdetailwidgettest)
 ecm_mark_as_test(kmail_potentialphishingdetailwidgettest)
-target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons KF5::PimCommon kmailprivate)
+target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigCore KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::WidgetsAddons KF5::PimCommon kmailprivate)
 
 
 
@@ -24,7 +24,7 @@ target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widg
 add_executable( kmail_potentialphishingemailwarningtest potentialphishingemailwarningtest.cpp potentialphishingemailwarningtest.h)
 add_test(NAME kmail_potentialphishingemailwarningtest COMMAND kmail_potentialphishingemailwarningtest)
 ecm_mark_as_test(kmail_potentialphishingemailwarningtest)
-target_link_libraries( kmail_potentialphishingemailwarningtest Qt::Test Qt::Widgets KF5::ConfigCore KF5::I18n KF5::WidgetsAddons kmailprivate)
+target_link_libraries( kmail_potentialphishingemailwarningtest Qt::Test Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigCore KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::WidgetsAddons kmailprivate)
 
 
 

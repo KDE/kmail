@@ -54,13 +54,13 @@ target_link_libraries(followupreminderagent
     KF5::IdentityManagement
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
-    KF5::DBusAddons
-    KF5::XmlGui
-    KF5::KIOWidgets
-    KF5::Notifications
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::KIOWidgets
+    KF${KF_MAJOR_VERSION}::Notifications
     KF5::MailCommon
-    KF5::I18n
-    KF5::CalendarCore
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::CalendarCore
 )
 
 
@@ -73,13 +73,13 @@ target_link_libraries(akonadi_followupreminder_agent
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
     KF5::Mime
-    KF5::CalendarCore
-    KF5::DBusAddons
+    KF${KF_MAJOR_VERSION}::CalendarCore
+    KF${KF_MAJOR_VERSION}::DBusAddons
     Qt::Widgets
-    KF5::Notifications
-    KF5::I18n
-    KF5::XmlGui
-    KF5::Service
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::Service
     )
 
 if( APPLE )
@@ -112,6 +112,6 @@ kcoreaddons_add_plugin(followupreminderagentconfig
 target_link_libraries(followupreminderagentconfig
     followupreminderagent
     KF5::AkonadiCore
-    KF5::XmlGui
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::I18n
 )

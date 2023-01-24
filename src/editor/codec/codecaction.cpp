@@ -61,7 +61,11 @@ QVector<QByteArray> CodecAction::mimeCharsets() const
     } else {
         // Specific codec selected.
         // ret << currentCodecName().toLatin1().toLower(); // FIXME in kdelibs: returns e.g. '&koi8-r'
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         ret << currentCodec()->name();
+#else
+        ret << currentCodecName().toLatin1().toLower();
+#endif
         qCDebug(KMAIL_LOG) << "current codec name" << ret.at(0);
     }
     return ret;

@@ -42,13 +42,13 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::AkonadiMime
     KF5::AkonadiWidgets
     KF5::Mime
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::I18n
     KF5::IdentityManagement
-    KF5::WidgetsAddons
-    KF5::IconThemes
-    KF5::ItemModels
+    KF${KF_MAJOR_VERSION}::WidgetsAddons
+    KF${KF_MAJOR_VERSION}::IconThemes
+    KF${KF_MAJOR_VERSION}::ItemModels
     KF5::MailCommon
-    KF5::DBusAddons
+    KF${KF_MAJOR_VERSION}::DBusAddons
 )
 
 if( APPLE )

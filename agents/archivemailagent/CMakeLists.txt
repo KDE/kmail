@@ -41,9 +41,9 @@ pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 target_link_libraries(archivemailagent
     KF5::MailCommon
     KF5::AkonadiAgentBase
-    KF5::I18n
-    KF5::Notifications
-    KF5::KIOWidgets
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::KIOWidgets
 )
 
 ########################### Agent executable ################################
@@ -56,12 +56,12 @@ target_link_libraries(akonadi_archivemail_agent
     KF5::IdentityManagement
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
-    KF5::DBusAddons
-    KF5::XmlGui
-    KF5::KIOWidgets
-    KF5::Notifications
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::KIOWidgets
+    KF${KF_MAJOR_VERSION}::Notifications
     KF5::MailCommon
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::I18n
     )
 
 if( APPLE )
@@ -99,8 +99,8 @@ target_sources(archivemailagentconfig PRIVATE
 target_link_libraries(archivemailagentconfig
     archivemailagent
     KF5::AkonadiCore
-    KF5::XmlGui
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::I18n
 )
 #if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagentconfig PROPERTIES UNITY_BUILD ON)

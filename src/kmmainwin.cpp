@@ -27,7 +27,6 @@
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
-#include <ktip.h>
 
 #include <QLabel>
 #include <chrono>

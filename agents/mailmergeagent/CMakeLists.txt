@@ -46,11 +46,11 @@ target_link_libraries(mailmergeagent
     #KF5::Mime
     KF5::MessageComposer
     KF5::MessageCore
-    KF5::DBusAddons
-    KF5::WindowSystem
-    KF5::XmlGui
-    KF5::I18n
-    KF5::Notifications
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::WindowSystem
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::Notifications
     KF5::AkonadiAgentBase
     )
 

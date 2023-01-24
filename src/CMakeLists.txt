@@ -400,8 +400,8 @@ endif()
 generate_export_header(kmailprivate BASE_NAME kmail)
 target_link_libraries(kmailprivate
     PRIVATE
-    KF5::TextWidgets
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::TextWidgets
+    KF${KF_MAJOR_VERSION}::I18n
     KF5::Gravatar
     KF5::Mime
     KF5::AkonadiCore
@@ -413,30 +413,31 @@ target_link_libraries(kmailprivate
     KF5::MailCommon
     KF5::TemplateParser
     KF5::IdentityManagementWidgets
-    KF5::WindowSystem
-    KF5::Notifications
-    KF5::GuiAddons
-    KF5::Crash
-    KF5::KIOFileWidgets
-    KF5::NotifyConfig
+    KF${KF_MAJOR_VERSION}::WindowSystem
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::GuiAddons
+    KF${KF_MAJOR_VERSION}::Crash
+    KF${KF_MAJOR_VERSION}::KIOFileWidgets
+    KF${KF_MAJOR_VERSION}::NotifyConfig
+    KF${KF_MAJOR_VERSION}::Codecs
     KF5::MailTransportAkonadi
     KF5::MailTransport
-    KF5::KCMUtils
+    KF${KF_MAJOR_VERSION}::KCMUtils
     KF5::Libkleo
     KF5::KSieveUi
-    KF5::KIOCore
-    KF5::Contacts
+    KF${KF_MAJOR_VERSION}::KIOCore
+    KF${KF_MAJOR_VERSION}::Contacts
     KF5::PimTextEdit
     KF5::MessageViewer
-    KF5::IconThemes
-    KF5::XmlGui
-    KF5::Completion
+    KF${KF_MAJOR_VERSION}::IconThemes
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::Completion
     KF5::Ldap
     KF5::AkonadiSearchDebug
     KF5::AkonadiSearchPIM
     KF5::WebEngineViewer
-    KF5::SyntaxHighlighting
-    KF5::GuiAddons
+    KF${KF_MAJOR_VERSION}::SyntaxHighlighting
+    KF${KF_MAJOR_VERSION}::GuiAddons
     ${kmail_userfeedback_LIB}
     )
 
@@ -461,7 +462,7 @@ set_target_properties(kmailprivate
 add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
 target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
-target_link_libraries(kcm_kmail_static  kmailprivate KF5::KCMUtils KF5::Completion KF5::I18n KF5::TextWidgets)
+target_link_libraries(kcm_kmail_static  kmailprivate KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::Completion KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::TextWidgets)
 
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim${QT_MAJOR_VERSION}/kcms/kmail")
 target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
@@ -494,11 +495,11 @@ pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 target_link_libraries(kmailpart
     kmailprivate
     KF5::AkonadiCore
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::I18n
     KF5::PimCommon
-    KF5::KCMUtils
-    KF5::Parts
-    KF5::IconThemes
+    KF${KF_MAJOR_VERSION}::KCMUtils
+    KF${KF_MAJOR_VERSION}::Parts
+    KF${KF_MAJOR_VERSION}::IconThemes
     KF5::TemplateParser
     )
 
@@ -513,12 +514,13 @@ target_link_libraries(kmail
     kmailprivate
     KF5::AkonadiCore
     KF5::PimCommon
-    KF5::I18n
+    KF${KF_MAJOR_VERSION}::I18n
     KF5::TemplateParser
     KF5::Libkdepim
-    KF5::Crash
+    KF${KF_MAJOR_VERSION}::Crash
     KF5::WebEngineViewer
     ${kmail_userfeedback_LIB}
+    KF${KF_MAJOR_VERSION}::WindowSystem
     )
 
 if(BUILD_TESTING)

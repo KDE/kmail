@@ -11,5 +11,5 @@ kconfig_add_kcfg_files(unifiedmailbox_agent_autotest_SRCS
 )
 add_akonadi_isolated_test(SOURCE unifiedmailboxmanagertest.cpp
     ADDITIONAL_SOURCES ${common_SRCS} ../unifiedmailboxmanager.cpp ../unifiedmailbox.cpp ${unifiedmailbox_agent_autotest_SRCS}
-    LINK_LIBRARIES KF5::I18n KF5::AkonadiMime KF5::ConfigGui
+    LINK_LIBRARIES KF${KF_MAJOR_VERSION}::I18n KF5::AkonadiMime KF${KF_MAJOR_VERSION}::ConfigGui
 )

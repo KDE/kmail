@@ -39,13 +39,13 @@ endif()
 target_link_libraries(ktnef
     Qt::Widgets
     KF5::Tnef
-    KF5::DBusAddons
-    KF5::Crash
-    KF5::I18n
-    KF5::XmlGui
-    KF5::WidgetsAddons
-    KF5::Service
-    KF5::KIOWidgets
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::Crash
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::WidgetsAddons
+    KF${KF_MAJOR_VERSION}::Service
+    KF${KF_MAJOR_VERSION}::KIOWidgets
 )
 
 
