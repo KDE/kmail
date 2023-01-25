@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-17 00:59+0000\n"
+"POT-Creation-Date: 2023-01-25 00:58+0000\n"
 "PO-Revision-Date: 2022-12-18 22:48+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1850,7 +1850,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Codifica"
 
-#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:61
+#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:463 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2177,7 +2177,7 @@ msgstr "Crea memorar de continuation..."
 msgid "Configure KMail..."
 msgstr "Configura KMail..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:522
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:183 kmreadermainwin.cpp:522
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2186,7 +2186,7 @@ msgstr ""
 "<qt>Isto celera completemente le barra de menu. Tu pote monstrar lo de nove "
 "per typar %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:525
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:186 kmreadermainwin.cpp:525
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Cela barra de menu"
@@ -5172,7 +5172,7 @@ msgstr "Re-Initia"
 msgid "Akonadi restarted."
 msgstr "Akonadi reinitiava."
 
-#: kmmainwin.cpp:39
+#: kmmainwin.cpp:38
 #, kde-format
 msgid "Starting..."
 msgstr "Il Initia..."
@@ -5517,23 +5517,23 @@ msgstr "Summario de Kontact de KDE"
 msgid "(c), 2004 Tobias Koenig"
 msgstr "(c), 2004 Tobias Koenig"
 
-#: kontactplugin/summary/summaryview_part.cpp:46
+#: kontactplugin/summary/summaryview_part.cpp:47
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Summario de Kontact"
 
-#: kontactplugin/summary/summaryview_part.cpp:55
+#: kontactplugin/summary/summaryview_part.cpp:56
 #, kde-format
 msgid "&Configure Summary View..."
 msgstr "&Configura vista de summario ..."
 
-#: kontactplugin/summary/summaryview_part.cpp:58
+#: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
 msgid "Configure the summary view"
 msgstr "Configura le vista de summario"
 
-#: kontactplugin/summary/summaryview_part.cpp:62
+#: kontactplugin/summary/summaryview_part.cpp:63
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5543,12 +5543,12 @@ msgstr ""
 "Seliger isto monstrara un dialogo ubi tu pote seliger qual summarios tu vole "
 "vider e anque te permitte de configurar le summarios a tu placer."
 
-#: kontactplugin/summary/summaryview_part.cpp:104
+#: kontactplugin/summary/summaryview_part.cpp:105
 #, kde-format
 msgid "Summary for %1"
 msgstr "Summario pro %1"
 
-#: kontactplugin/summary/summaryview_part.cpp:362
+#: kontactplugin/summary/summaryview_part.cpp:363
 #, kde-format
 msgid "What's next?"
 msgstr "Qual es proxime?"

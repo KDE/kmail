@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-17 00:59+0000\n"
+"POT-Creation-Date: 2023-01-25 00:58+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1935,7 +1935,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "การเข้ารหัสภาษา"
 
-#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:61
+#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:463 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2268,14 +2268,14 @@ msgstr "ค้นหาจดหมาย..."
 msgid "Configure KMail..."
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:522
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:183 kmreadermainwin.cpp:522
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:525
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:186 kmreadermainwin.cpp:525
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
@@ -5245,7 +5245,7 @@ msgstr "ชื่อการแสดงตัว"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:39
+#: kmmainwin.cpp:38
 #, kde-format
 msgid "Starting..."
 msgstr "กำลังเริ่ม..."
@@ -5616,24 +5616,24 @@ msgstr ""
 msgid "(c), 2004 Tobias Koenig"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:46
+#: kontactplugin/summary/summaryview_part.cpp:47
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:55
+#: kontactplugin/summary/summaryview_part.cpp:56
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure Summary View..."
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: kontactplugin/summary/summaryview_part.cpp:58
+#: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
 msgid "Configure the summary view"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:62
+#: kontactplugin/summary/summaryview_part.cpp:63
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5641,13 +5641,13 @@ msgid ""
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:104
+#: kontactplugin/summary/summaryview_part.cpp:105
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Summary for %1"
 msgstr "รูปแบบแฟนซี (%1)"
 
-#: kontactplugin/summary/summaryview_part.cpp:362
+#: kontactplugin/summary/summaryview_part.cpp:363
 #, kde-format
 msgid "What's next?"
 msgstr ""

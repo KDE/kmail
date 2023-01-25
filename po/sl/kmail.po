@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-17 00:59+0000\n"
+"POT-Creation-Date: 2023-01-25 00:58+0000\n"
 "PO-Revision-Date: 2023-01-03 16:40+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1847,7 +1847,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kodiranje"
 
-#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:61
+#: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:463 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2171,7 +2171,7 @@ msgstr "Ustvari opomnik za spremljano pošto ..."
 msgid "Configure KMail..."
 msgstr "Nastavi KMail ..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:184 kmreadermainwin.cpp:522
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:183 kmreadermainwin.cpp:522
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2180,7 +2180,7 @@ msgstr ""
 "<qt>To bo povsem skrilo menijsko vrstico. Spet jo lahko prikažete s "
 "pritiskom %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:187 kmreadermainwin.cpp:525
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:186 kmreadermainwin.cpp:525
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Skrij menijsko vrstico"
@@ -5171,7 +5171,7 @@ msgstr "Znova zaženi"
 msgid "Akonadi restarted."
 msgstr "Akonadi ponovno zagnan."
 
-#: kmmainwin.cpp:39
+#: kmmainwin.cpp:38
 #, kde-format
 msgid "Starting..."
 msgstr "Začenjanje..."
@@ -5516,23 +5516,23 @@ msgstr "Povzetek KDE-jevega Kontacta"
 msgid "(c), 2004 Tobias Koenig"
 msgstr "©, 2004 Tobias Koenig"
 
-#: kontactplugin/summary/summaryview_part.cpp:46
+#: kontactplugin/summary/summaryview_part.cpp:47
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Povzetek Kontacta"
 
-#: kontactplugin/summary/summaryview_part.cpp:55
+#: kontactplugin/summary/summaryview_part.cpp:56
 #, kde-format
 msgid "&Configure Summary View..."
 msgstr "Nastavi prikaz povzetkov..."
 
-#: kontactplugin/summary/summaryview_part.cpp:58
+#: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
 msgid "Configure the summary view"
 msgstr "Nastavitev prikaza povzetkov"
 
-#: kontactplugin/summary/summaryview_part.cpp:62
+#: kontactplugin/summary/summaryview_part.cpp:63
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5543,12 +5543,12 @@ msgstr ""
 "povzetke, ki jih želite videti. Povzetke lahko tudi prilagodite po svojem "
 "okusu."
 
-#: kontactplugin/summary/summaryview_part.cpp:104
+#: kontactplugin/summary/summaryview_part.cpp:105
 #, kde-format
 msgid "Summary for %1"
 msgstr "Povzetek za %1"
 
-#: kontactplugin/summary/summaryview_part.cpp:362
+#: kontactplugin/summary/summaryview_part.cpp:363
 #, kde-format
 msgid "What's next?"
 msgstr "Kaj bo naslednje?"
