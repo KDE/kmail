@@ -28,7 +28,11 @@ SummaryView::SummaryView(KontactInterface::Core *core, const KPluginMetaData &da
 {
     mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect(mSyncAction, &KSelectAction::triggered, this, &SummaryView::syncAccount);
+#else
+    connect(mSyncAction, &KSelectAction::actionTriggered, this, &SummaryView::syncAccount);
+#endif
     connect(mSyncAction->menu(), &QMenu::aboutToShow, this, &SummaryView::fillSyncActionSubEntries);
 
     insertSyncAction(mSyncAction);
