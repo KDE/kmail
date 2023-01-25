@@ -67,14 +67,15 @@ if (QT_MAJOR_VERSION STREQUAL "6")
     set(QT_REQUIRED_VERSION "6.4.0")
     set(KF_MIN_VERSION "5.240.0")
     set(KF_MAJOR_VERSION "6")
+    set(KTEXTADDONS_MIN_VERSION "1.0.41")
 else()
-    set(KF_MIN_VERSION "5.100.0")
     set(KF_MAJOR_VERSION "5")
+    set(KTEXTADDONS_MIN_VERSION "1.0.0")
 endif()
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
 option(USE_KTEXTADDONS_LIB "Use ktextaddons lib (experimental)" ON)
-set(KTEXTADDONS_MIN_VERSION "1.0.0")
+
 
 find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.22.40")
