@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-25 00:58+0000\n"
+"POT-Creation-Date: 2023-01-26 00:58+0000\n"
 "PO-Revision-Date: 2022-07-13 12:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -5308,7 +5308,7 @@ msgstr "Copyright © 2004–2010 Tobias Koenig"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:47
 #: kontactplugin/summary/kcmkontactsummary.cpp:91
-#: kontactplugin/summary/summaryview_plugin.cpp:108
+#: kontactplugin/summary/summaryview_plugin.cpp:112
 #, kde-format
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
@@ -5410,7 +5410,7 @@ msgid "(c), 2004 Tobias Koenig"
 msgstr "(c), 2004 Tobias Koenig"
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
+#: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Kontact 요약"
@@ -5450,28 +5450,28 @@ msgstr "다음으로 무엇이 있습니까?"
 msgid "Sync All"
 msgstr "모두 동기화"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:42
+#: kontactplugin/summary/summaryview_plugin.cpp:46
 #, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
 msgstr "모두"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:102
+#: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Kontact Summary View"
 msgstr "Kontact 요약 보기"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:104
+#: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
 msgstr "(c) 2003-2021 The Kontact developers"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:106
+#: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:107
+#: kontactplugin/summary/summaryview_plugin.cpp:111
 #, kde-format
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"

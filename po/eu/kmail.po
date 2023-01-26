@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-25 00:58+0000\n"
+"POT-Creation-Date: 2023-01-26 00:58+0000\n"
 "PO-Revision-Date: 2022-10-27 06:34+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -5385,7 +5385,7 @@ msgstr "Copyright © 2004–2010 Tobias Koenig"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:47
 #: kontactplugin/summary/kcmkontactsummary.cpp:91
-#: kontactplugin/summary/summaryview_plugin.cpp:108
+#: kontactplugin/summary/summaryview_plugin.cpp:112
 #, kde-format
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
@@ -5490,7 +5490,7 @@ msgid "(c), 2004 Tobias Koenig"
 msgstr "(c), 2004 Tobias Koenig"
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
+#: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Kontaktu laburpena"
@@ -5530,28 +5530,28 @@ msgstr "Ondoren zer?"
 msgid "Sync All"
 msgstr "Sinkronizatu dena"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:42
+#: kontactplugin/summary/summaryview_plugin.cpp:46
 #, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
 msgstr "Dena"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:102
+#: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Kontact Summary View"
 msgstr "Kontact laburpen ikuspegia"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:104
+#: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
 msgstr "(c) 2003-2021 Kontact-en garatzaileak"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:106
+#: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:107
+#: kontactplugin/summary/summaryview_plugin.cpp:111
 #, kde-format
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"

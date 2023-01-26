@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-25 00:58+0000\n"
+"POT-Creation-Date: 2023-01-26 00:58+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -5448,7 +5448,7 @@ msgstr "Copyright © 2004–2010 Tobias Koenig"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:47
 #: kontactplugin/summary/kcmkontactsummary.cpp:91
-#: kontactplugin/summary/summaryview_plugin.cpp:108
+#: kontactplugin/summary/summaryview_plugin.cpp:112
 #, kde-format
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
@@ -5553,7 +5553,7 @@ msgid "(c), 2004 Tobias Koenig"
 msgstr "Tobias Koenig"
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
+#: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
 msgstr ""
@@ -5595,29 +5595,29 @@ msgstr ""
 msgid "Sync All"
 msgstr "同步郵件"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:42
+#: kontactplugin/summary/summaryview_plugin.cpp:46
 #, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
 msgstr "所有的"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:102
+#: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Kontact Summary View"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:104
+#: kontactplugin/summary/summaryview_plugin.cpp:108
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2009, The KMail developers"
 msgid "(c) 2003-2021 The Kontact developers"
 msgstr "(c) 1997-2009, KMail 開發團隊"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:106
+#: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
 msgid "Sven Lueppken"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:107
+#: kontactplugin/summary/summaryview_plugin.cpp:111
 #, kde-format
 msgid "Cornelius Schumacher"
 msgstr ""

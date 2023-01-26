@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-25 00:58+0000\n"
+"POT-Creation-Date: 2023-01-26 00:58+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -5630,7 +5630,7 @@ msgstr ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:47
 #: kontactplugin/summary/kcmkontactsummary.cpp:91
-#: kontactplugin/summary/summaryview_plugin.cpp:108
+#: kontactplugin/summary/summaryview_plugin.cpp:112
 #, kde-format
 msgid "Tobias Koenig"
 msgstr ""
@@ -5738,7 +5738,7 @@ msgid "(c), 2004 Tobias Koenig"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
+#: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
 msgstr ""
@@ -5779,7 +5779,7 @@ msgstr ""
 msgid "Sync All"
 msgstr "Nettbreef &loosstüern"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:42
+#: kontactplugin/summary/summaryview_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgctxt "Permissions"
 #| msgid "All"
@@ -5787,23 +5787,23 @@ msgctxt "@action:inmenu sync everything"
 msgid "All"
 msgstr "All"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:102
+#: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Kontact Summary View"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:104
+#: kontactplugin/summary/summaryview_plugin.cpp:108
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2010, The KMail developers"
 msgid "(c) 2003-2021 The Kontact developers"
 msgstr "© 1997-2010, de Schrieverslüüd vun KMail"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:106
+#: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
 msgid "Sven Lueppken"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:107
+#: kontactplugin/summary/summaryview_plugin.cpp:111
 #, kde-format
 msgid "Cornelius Schumacher"
 msgstr ""
