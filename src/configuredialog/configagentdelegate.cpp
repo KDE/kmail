@@ -62,7 +62,11 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
 
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (data.isValid() && data.type() == QVariant::Icon) {
+#else
+    if (data.isValid() && data.userType() == QMetaType::QIcon) {
+#endif
         document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")), qvariant_cast<QIcon>(data).pixmap(decorationSize));
     }
 
