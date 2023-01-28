@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-26 00:58+0000\n"
+"POT-Creation-Date: 2023-01-28 00:59+0000\n"
 "PO-Revision-Date: 2014-10-18 12:13+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -596,7 +596,7 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "Nem olvas&ott:"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:217
 #, kde-format
 msgid "Retrieval Options"
 msgstr "Letöltés beállításai"
@@ -5980,17 +5980,17 @@ msgstr "Leiratkozás a listáról"
 msgid "Filter on Mailing-List %1..."
 msgstr "A(z) %1 levelezőlistára..."
 
-#: messageactions.cpp:655
+#: messageactions.cpp:659
 #, kde-format
 msgid "email"
 msgstr "e-mail"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:662
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:663
+#: messageactions.cpp:667
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -5998,13 +5998,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, fuzzy, kde-format
 #| msgid "Export..."
 msgid "Export to PDF"
 msgstr "Exportálás..."
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

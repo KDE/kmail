@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-26 00:58+0000\n"
+"POT-Creation-Date: 2023-01-28 00:59+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -568,7 +568,7 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "Ongelees"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:217
 #, kde-format
 msgid "Retrieval Options"
 msgstr ""
@@ -5645,17 +5645,17 @@ msgstr ""
 msgid "Filter on Mailing-List %1..."
 msgstr ""
 
-#: messageactions.cpp:655
+#: messageactions.cpp:659
 #, fuzzy, kde-format
 msgid "email"
 msgstr "Pos"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:662
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:663
+#: messageactions.cpp:667
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -5664,13 +5664,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Pos"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, fuzzy, kde-format
 #| msgid "&Expire"
 msgid "Export to PDF"
 msgstr "Verstryk"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

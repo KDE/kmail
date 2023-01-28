@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-26 00:58+0000\n"
+"POT-Creation-Date: 2023-01-28 00:59+0000\n"
 "PO-Revision-Date: 2010-01-13 18:47+0200\n"
 "Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -621,7 +621,7 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "&Nelasīta:"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:217
 #, fuzzy, kde-format
 #| msgid "Retrieving annotations"
 msgid "Retrieval Options"
@@ -6052,17 +6052,17 @@ msgstr "Atrakstīties no vēstkopas"
 msgid "Filter on Mailing-List %1..."
 msgstr "Filtrs vēstkopai %1..."
 
-#: messageactions.cpp:655
+#: messageactions.cpp:659
 #, kde-format
 msgid "email"
 msgstr "e-pasts"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:662
 #, kde-format
 msgid "web"
 msgstr "tīmeklis"
 
-#: messageactions.cpp:663
+#: messageactions.cpp:667
 #, fuzzy, kde-format
 #| msgid "%1 (%2)"
 msgctxt ""
@@ -6071,13 +6071,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, fuzzy, kde-format
 #| msgid "Export..."
 msgid "Export to PDF"
 msgstr "Eksportēt..."
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

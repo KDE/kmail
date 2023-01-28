@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-26 00:58+0000\n"
+"POT-Creation-Date: 2023-01-28 00:59+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -603,7 +603,7 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "बिनपढ़ाः (&U)"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:217
 #, fuzzy, kde-format
 #| msgid "General Options"
 msgid "Retrieval Options"
@@ -5905,18 +5905,18 @@ msgstr "सूची से अनसब्सक्राइब करें"
 msgid "Filter on Mailing-List %1..."
 msgstr "डाक-सूची %1 पर फ़िल्टर..."
 
-#: messageactions.cpp:655
+#: messageactions.cpp:659
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "ईमेल"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:662
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:663
+#: messageactions.cpp:667
 #, fuzzy, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -5924,12 +5924,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "डाक: %1"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, fuzzy, kde-format
 msgid "Export to PDF"
 msgstr "मियाद ख़त्म..."
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-26 00:58+0000\n"
+"POT-Creation-Date: 2023-01-28 00:59+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -627,7 +627,7 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "नपढिएको:"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:217
 #, fuzzy, kde-format
 #| msgid "General Options"
 msgid "Retrieval Options"
@@ -6145,18 +6145,18 @@ msgstr "सूचीबाट सदस्यता हटाउनुहोस�
 msgid "Filter on Mailing-List %1..."
 msgstr "मेलिङ सूची %1 मा फिल्टर गर्नुहोस्..."
 
-#: messageactions.cpp:655
+#: messageactions.cpp:659
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "इमेल"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:662
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:663
+#: messageactions.cpp:667
 #, fuzzy, kde-format
 #| msgid "X-Mailer: "
 msgctxt ""
@@ -6165,13 +6165,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "X-प्रेषक: "
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF"
 msgstr "खारेज गर्नुहोस्"
 
-#: messageactions.cpp:772
+#: messageactions.cpp:776
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
