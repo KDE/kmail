@@ -98,6 +98,7 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
+#include <QTextCodec>
 #include <QWidget>
 #include <QtDBus>
 

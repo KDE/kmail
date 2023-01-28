@@ -108,6 +108,7 @@ class KeyCache;
 }
 
 class QTimer;
+class QTextCodec;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
