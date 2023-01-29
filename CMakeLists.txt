@@ -67,7 +67,7 @@ if (QT_MAJOR_VERSION STREQUAL "6")
     set(QT_REQUIRED_VERSION "6.4.0")
     set(KF_MIN_VERSION "5.240.0")
     set(KF_MAJOR_VERSION "6")
-    set(KTEXTADDONS_MIN_VERSION "1.0.42")
+    set(KTEXTADDONS_MIN_VERSION "1.1.0")
 else()
     set(KF_MAJOR_VERSION "5")
     set(KTEXTADDONS_MIN_VERSION "1.0.0")
@@ -153,15 +153,15 @@ find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
 if (USE_KTEXTADDONS_LIB)
-    find_package(KF5TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
-    set_package_properties(KF5TextEditTextToSpeech PROPERTIES DESCRIPTION
+    find_package(KF${KF_MAJOR_VERSION}TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
+    set_package_properties(KF${KF_MAJOR_VERSION}TextEditTextToSpeech PROPERTIES DESCRIPTION
         "Add support for text to speech"
         TYPE OPTIONAL
     )
-    if (TARGET KF5::TextEditTextToSpeech)
+    if (TARGET KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
         add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
     endif()
-    find_package(KF5TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
+    find_package(KF${KF_MAJOR_VERSION}TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
     add_definitions(-DHAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT)
     add_definitions(-DHAVE_KTEXTADDONS_SUPPORT)
 else()

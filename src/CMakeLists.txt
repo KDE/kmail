@@ -443,7 +443,7 @@ target_link_libraries(kmailprivate
 
 if (USE_KTEXTADDONS_LIB)
     target_link_libraries(kmailprivate
-        PRIVATE KF5::TextEditTextToSpeech)
+        PRIVATE KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
 else()
     target_link_libraries(kmailprivate
         PRIVATE KF5::PimTextEditTextToSpeech)
