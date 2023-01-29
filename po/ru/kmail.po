@@ -10,14 +10,14 @@
 # Julia Dronova <juliette.tux@gmail.com>, 2012.
 # Yuri Efremov <yur.arh@gmail.com>, 2013.
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
-# Alexander Yavorsky <kekcuha@gmail.com>, 2018, 2019, 2020, 2021, 2022.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2018, 2019, 2020, 2021, 2022, 2023.
 # Мария Шикунова <translation-team@basealt.ru>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-28 00:59+0000\n"
-"PO-Revision-Date: 2022-10-01 15:03+0300\n"
+"PO-Revision-Date: 2023-01-28 14:23+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -1692,8 +1692,7 @@ msgid "Message Disposition Notifications"
 msgstr "Уведомления об обработке писем"
 
 #: configuredialog/configuresecuritypage.cpp:55
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Шифрование"
 
@@ -3022,13 +3021,12 @@ msgstr "Ключ подписи OpenPGP:"
 #: identity/identitydialog.cpp:373
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Использовать один ключ для шифрования и подписания"
 
 #: identity/identitydialog.cpp:383
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "Ключ подписи OpenPGP:"
+msgstr "Ключ OpenPGP:"
 
 #: identity/identitydialog.cpp:408
 #, kde-format
@@ -3095,20 +3093,19 @@ msgstr "Предпочитаемый формат шифрования:"
 
 # "Зашифровать"? --aspotashev
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Шифрование"
+msgstr "Использовать сквозное шифрование"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Сквозное шифрование:"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Сообщать адресатам о предпочтении использования шифрования"
 
 #: identity/identitydialog.cpp:484
 #, kde-format
@@ -3118,33 +3115,29 @@ msgstr ""
 #: identity/identitydialog.cpp:487
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Переопределить параметры по умолчанию:"
 
 #: identity/identitydialog.cpp:492
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Подписать письмо"
+msgstr "Подписывать письма"
 
 #: identity/identitydialog.cpp:495
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Автоматически шифровать письма, если возможно"
+msgstr "Шифровать письма, если возможно"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:498 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "&Предупреждать при отправке неподписанного письма"
+msgstr "Предупреждать при отправке неподписанного письма"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:501 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Предупреждать при отправке незашифрованного письма"
+msgstr "Предупреждать при отправке незашифрованного письма"
 
 #: identity/identitydialog.cpp:511
 #, kde-format
@@ -5226,10 +5219,9 @@ msgid "Restart Akonadi"
 msgstr "Перезапуск Akonadi"
 
 #: kmmainwidget.cpp:4838
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "Перезапустить учётную запись"
+msgstr "Перезапустить"
 
 #: kmmainwidget.cpp:4845
 #, kde-format
@@ -6896,17 +6888,15 @@ msgstr "&Открыть письмо"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Сделать основным"
+msgstr "Параметры безопасности по умолчанию"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Зашифрованные письма"
+msgstr "Шифровать черновики"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6941,50 +6931,45 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Зашифрованные письма"
+msgstr "Шифровать &отправленные письма"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Подписать письмо"
+msgstr "Подписывать все письма"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Автоматически шифровать письма, если возможно"
+msgstr "Шифровать письма, если возможно"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Показывать в редакторе индикатор подписи/шифрования"
+msgstr "Индикаторы шифрования"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Показывать индикатор подписанного/зашифрованного письма в редакторе"
+msgstr "Показывать индикатор подписанного/зашифрованного письма"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Показывать уровень доверия ключу"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Предупреждения"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
@@ -7057,22 +7042,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Для &корневых сертификатов:"
+msgstr "Для собственных сертификатов:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7083,11 +7059,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Предупреждать об истечении срока действия корневого сертификата</h1>\n"
-"Укажите количество дней до окончания срока действия корневого сертификата, "
-"за которое должно выводиться предупреждение.\n"
+"<h1>Предупреждать об истечении срока действия собственного сертификата</h1>\n"
+"Укажите количество дней до окончания срока действия собственного "
+"сертификата, за которое должно выводиться предупреждение.\n"
 "<p>\n"
-"Рекомендуемое значение SPHINX — 14 дней.\n"
+"Рекомендуемое значение SPHINX — 30 дней.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)

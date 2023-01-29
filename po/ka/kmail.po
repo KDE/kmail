@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-28 00:59+0000\n"
-"PO-Revision-Date: 2023-01-25 06:59+0100\n"
+"PO-Revision-Date: 2023-01-28 07:35+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2236,7 +2236,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:2554
 #, kde-format
 msgid "Undefined Encryption Key"
-msgstr ""
+msgstr "დაშიფვრის აღუწერელი გასაღები"
 
 #: editor/kmcomposerwin.cpp:2618
 #, kde-format
@@ -2249,7 +2249,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:2625
 #, kde-format
 msgid "Undefined Signing Key"
-msgstr ""
+msgstr "ხელმოწერის აღუწერელი გასაღები"
 
 #: editor/kmcomposerwin.cpp:2784
 #, kde-format
