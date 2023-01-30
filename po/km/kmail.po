@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-28 00:59+0000\n"
+"POT-Creation-Date: 2023-01-30 00:58+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1008,14 +1008,14 @@ msgid "System Tray"
 msgstr "ថាសប្រព័ន្ធ​"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:89
+#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "អនុញ្ញាត​រូបតំណាង​ក្នុង​ថាស​ប្រព័ន្ធ"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:819 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:93
+#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -4065,29 +4065,29 @@ msgstr "របា​ឧបករណ៍​ HTML"
 msgid "Text Direction Toolbar"
 msgstr "របារ​ឧបករណ៍​ទិស​អត្ថបទ"
 
-#: kmkernel.cpp:823
+#: kmkernel.cpp:824
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ត្រូវបាន​កំណត់​ឲ្យនៅ​ក្រៅ​បណ្ដាញ ។ រាល់ការងារ​នៅលើបណ្ដាញ​ទាំងអស់​ត្រូវបាន​ផ្អាក"
 
-#: kmkernel.cpp:843 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
+#: kmkernel.cpp:844 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#: kmkernel.cpp:844 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
+#: kmkernel.cpp:845 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ប្រុង​នឹង​ផ្ញើ​សំបុត្រ​ហើយ..."
 
-#: kmkernel.cpp:876
+#: kmkernel.cpp:877
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​បណ្ដាញ ។ រាល់​ការងារ​នៅ​លើ​បណ្ដាញ​ទាំងអស់​បាន​បន្ត"
 
-#: kmkernel.cpp:878
+#: kmkernel.cpp:879
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4096,37 +4096,37 @@ msgstr ""
 "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​​បណ្ដាញ រាល់​ការងារ​ដែល​នៅ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បន្ត នៅ​ពេល​ដែល​ការ​តភ្ជាប់​"
 "បណ្ដាញ​ត្រូវ​បាន​រកឃើញ"
 
-#: kmkernel.cpp:951
+#: kmkernel.cpp:952
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "បច្ចុប្បន្ន KMail នៅក្នុង​របៀប​ក្រៅបណ្ដាញ ។ តើអ្នក​ចង់​បន្ត​ដោយ​របៀបណា ?"
 
-#: kmkernel.cpp:953
+#: kmkernel.cpp:954
 #, kde-format
 msgid "Online/Offline"
 msgstr "លើបណ្ដាញ/ក្រៅបណ្ដាញ"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2353
+#: kmkernel.cpp:955 kmmainwidget.cpp:2353
 #, kde-format
 msgid "Work Online"
 msgstr "ធ្វើការ​នៅលើ​បណ្ដាញ"
 
-#: kmkernel.cpp:955 kmmainwidget.cpp:2350
+#: kmkernel.cpp:956 kmmainwidget.cpp:2350
 #, kde-format
 msgid "Work Offline"
 msgstr "ធ្វើការ​នៅក្រៅ​បណ្ដាញ"
 
-#: kmkernel.cpp:979
+#: kmkernel.cpp:980
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ រាល់​ការងារ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បាន​បន្ត"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:983
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "គ្មាន​ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ​ទេ រាល់​ការងារ​លើ​បណ្ដាញ​ទាំងអស់​នឹង​ត្រូវ​បាន​ផ្អាក"
 
-#: kmkernel.cpp:1077
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4135,36 +4135,36 @@ msgstr ""
 "បាន​បរាជ័យ​ក្នុងការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ %1 ។\n"
 "មូលហេតុ​ ៖ %2"
 
-#: kmkernel.cpp:1078
+#: kmkernel.cpp:1079
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1641
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ ដើម្បី​ប្រើ​កា​រដឹកជញ្ជូន​លំនាំដើម ៖"
 
-#: kmkernel.cpp:1664
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ត្រូវ​បាន​ផ្លាស់ប្ដូរ​​ដើម្បី​ប្រើ​កា​របញ្ជូនអ្វី​​ដែល​បាន​កែប្រែ ៖"
 
-#: kmkernel.cpp:1679
+#: kmkernel.cpp:1680
 #, kde-format
 msgid "Sending messages"
 msgstr "កំពុង​ផ្ញើ​សារ"
 
-#: kmkernel.cpp:1680
+#: kmkernel.cpp:1681
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "កំពុង​ចាប់ផ្ដើម​ដំណើរការ​ផ្ញើ..."
 
-#: kmkernel.cpp:1759
+#: kmkernel.cpp:1760
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4172,7 +4172,7 @@ msgid ""
 "%2"
 msgstr "ធនធាន %1 ខូច ។ ធនធាន​នេះ​ឥឡូវ​គឺជា %2"
 
-#: kmkernel.cpp:1935 kmkernel.cpp:1941
+#: kmkernel.cpp:1936 kmkernel.cpp:1942
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6107,7 +6107,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:55
+#: settings/kmail.kcfg.cmake:54
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6118,19 +6118,19 @@ msgstr ""
 "ត្រូ​វបាន​សម្គាល់ជា 'សំខាន់' ឬ'ធាតុ​សកម្មភាព'"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:59
+#: settings/kmail.kcfg.cmake:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "អនុញ្ញាត​ទង់មូលដ្ឋាន​នៅ​ក្នុង​ថត​បាន​តែ​អាន"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
+#: settings/kmail.kcfg.cmake:64
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "ផ្ញើ​សំបុត្រ​ដែល​បាន​ដាក់ជាជួរ​នៅលើ​ការពិនិត្យ​សំបុត្រ"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:66
+#: settings/kmail.kcfg.cmake:65
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6141,32 +6141,32 @@ msgstr ""
 "សារទាំងអស់, ឬ ថាតើ​អ្នក​មិនចង់​ឲ្យ​ផ្ញើសារ​ទាំងអស់​ដោយស្វ័យប្រវត្តិ ។ </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:78
+#: settings/kmail.kcfg.cmake:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr "ថត​ដែលបាន​ជ្រើស​ថ្មីៗ​បំផុត នៅក្នុង​ប្រអប់​ជ្រើស​ថត ។"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:97
+#: settings/kmail.kcfg.cmake:96
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show Unread Email in TaskBar"
 msgstr "បង្ហាញ​សំបុត្រ​ដែល​មិន​ទាន់​បាន​​អាន​នៅ​ក្នុង​ថាស​ប្រព័ន្ធ​"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:101
+#: settings/kmail.kcfg.cmake:100
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "បញ្ជាក់​កម្មវិធី​កែសម្រួល ៖"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:105
+#: settings/kmail.kcfg.cmake:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "ប្រើ​កម្មវិធី​កែសម្រួល​ខាងក្នុង ជំនួស​ឲ្យ​កម្មវិធី​តែង"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:109
+#: settings/kmail.kcfg.cmake:108
 #, kde-format
 msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
@@ -6175,7 +6175,7 @@ msgstr ""
 "បញ្ជាក់​ចំនួន​វាល​បឋមកថា MIME ផ្ទាល់ខ្លួន ដើម្បី​​ឲ្យ​បញ្ចូល​ក្នុង​សារ (សម្រាប់​ការ​ប្រើប្រាស់​ខា​ងក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:112
+#: settings/kmail.kcfg.cmake:111
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6183,32 +6183,32 @@ msgid ""
 msgstr "កម្រិត​ពន្លឺ​សម្រាប់​នៅ​ពេល​ព្រមាន​អ្នក​ប្រើ​ ដែល​ថត​មួយ​នៅ​ជិត​ដែន​កំណត់​កូតា​របស់​វា ។"
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:116
+#: settings/kmail.kcfg.cmake:115
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "សម្អាត​ថត​ធុងសំរាម ពេល​ចេញ​ពី​កម្មវិធី"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:120
+#: settings/kmail.kcfg.cmake:119
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:124
+#: settings/kmail.kcfg.cmake:123
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr ""
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:128
+#: settings/kmail.kcfg.cmake:127
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "បញ្ជាក់​ចំនួន​ថត​ត្រូវ​បើក នៅពេល​កម្មវិធី​ចាប់ផ្ដើម"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:135
+#: settings/kmail.kcfg.cmake:134
 #, kde-format
 msgid ""
 "Specifies whether the folders will expire in the background (for internal "
@@ -6216,7 +6216,7 @@ msgid ""
 msgstr "បញ្ជាក់​ថាតើថត​នឹង​ផុត​កំណត់​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ​ដែរឬទេ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុងប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:139
+#: settings/kmail.kcfg.cmake:138
 #, kde-format
 msgid ""
 "Specifies whether this is the very first time that the application is run "
@@ -6225,7 +6225,7 @@ msgstr ""
 "បញ្ជាក់​ថាតើ​​ នេះ​ជា​ពេល​ដំបូង​បង្អស់​ដែល​កម្មវិធី​ដំណើការ​មែនឬ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:164
+#: settings/kmail.kcfg.cmake:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6233,7 +6233,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:172
+#: settings/kmail.kcfg.cmake:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6241,19 +6241,19 @@ msgid ""
 msgstr "តម្លៃ​នេះ​គឺត្រូវបាន​ប្រើ​ដើម្បី​សម្រេច​ថាតើ​ ការណែនាំ​អំពី KMail គួរតែត្រូវបាន​បង្ហាញ​ឬអត់ ។"
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:179
+#: settings/kmail.kcfg.cmake:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "បង្ហាញ​ការ​កែសម្រួល​ស្វែង​រក​​ថត​រហ័ស"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:187
+#: settings/kmail.kcfg.cmake:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "បញ្ជូន​បន្ត​ក្នុងតួ​ជា​លំនាំដើម ។"
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:190
+#: settings/kmail.kcfg.cmake:189
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
 msgid "Warn if the number of recipients is more than:"
@@ -6261,7 +6261,7 @@ msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្�
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:192 settings/kmail.kcfg.cmake:199
+#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6272,25 +6272,25 @@ msgstr ""
 "អាច​ត្រូវ​បាន​បិទ ។"
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:213
+#: settings/kmail.kcfg.cmake:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "អះអាងមុនផ្ញើ"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:220
+#: settings/kmail.kcfg.cmake:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "ពិនិត្យមើល​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
+#: settings/kmail.kcfg.cmake:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:225
+#: settings/kmail.kcfg.cmake:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6305,13 +6305,13 @@ msgstr ""
 "><em>ការជូនដំណឹង​អំពី​ការរៀបចំ​សំណើរ</em> ។</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
+#: settings/kmail.kcfg.cmake:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "រក្សាទុក​ចន្លោះពេល​ដោយស្វ័យប្រវត្តិ ៖"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:248
+#: settings/kmail.kcfg.cmake:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6323,157 +6323,157 @@ msgstr ""
 "ដោយ​កំណត់​វា​ទៅ​តម្លៃ 0 ។"
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:255
+#: settings/kmail.kcfg.cmake:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "បង្ហាញ​កា​រគ្រប់គ្រង​អត្ថបទ​ដែល​បាន​ច្រឹប និង​បញ្ចូល​បន្ទះ​នៅ​ក្នុង​កម្មវិធី​តែង ។"
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:261
+#: settings/kmail.kcfg.cmake:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "នៅ​ពេល​ពិនិត្យ​មើល សារ​ដែលបានផ្ញើ​នឹង​ត្រូវ​បាន​ទុក​នៅ​ក្នុង​ទម្រង់​ដែល​បានអ៊ីនគ្រិប"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:265
+#: settings/kmail.kcfg.cmake:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "បញ្ជី​របស់​ URLs ដែលបាន​ប្រើប្រាស់​ថ្មី​ទាំងអស់"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:271
+#: settings/kmail.kcfg.cmake:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "បញ្ជី​របស់​ការ​អ៊ីនកូ​ដដែល​បាន​ប្រើ​ថ្មី​ទាំងអស់"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:277
+#: settings/kmail.kcfg.cmake:276
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:281
+#: settings/kmail.kcfg.cmake:280
 #, kde-format
 msgid "Show crypto ownertrust icons"
 msgstr ""
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:285
+#: settings/kmail.kcfg.cmake:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:301
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:305
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:309
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:313
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:318
+#: settings/kmail.kcfg.cmake:317
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:344
+#: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:347
+#: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "កុំ​បង្ហាញ​ស្លាបព្រិល​សារ​មើលជា​មុន"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:350
+#: settings/kmail.kcfg.cmake:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​​មើល​សារ​ជា​មុន​ខាង​ក្រោម​បញ្ជី​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:353
+#: settings/kmail.kcfg.cmake:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ​ជាមុន​នៅ​ជាប់នឹង​បញ្ជីសារ"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:360
+#: settings/kmail.kcfg.cmake:359
 #, kde-format
 msgid "Folder List"
 msgstr "បញ្ជី​ថត"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:363
+#: settings/kmail.kcfg.cmake:362
 #, kde-format
 msgid "Long folder list"
 msgstr "បញ្ជី​ថត​សារ​វែង"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:366
+#: settings/kmail.kcfg.cmake:365
 #, kde-format
 msgid "Short folder list"
 msgstr "បញ្ជី​ថត​ខ្លី"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:375
+#: settings/kmail.kcfg.cmake:374
 #, kde-format
 msgid "Message template for new message"
 msgstr "ពុម្ពសារ​​សម្រាប់​សារ​ថ្មី"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:380
+#: settings/kmail.kcfg.cmake:379
 #, kde-format
 msgid "Message template for reply"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:385
+#: settings/kmail.kcfg.cmake:384
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប​ទៅ​អ្នក​ទាំងអស់"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:390
+#: settings/kmail.kcfg.cmake:389
 #, kde-format
 msgid "Message template for forward"
 msgstr "ពុម្ព​សារ​សម្រាប់​បញ្ជូន​បន្ត"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:395
+#: settings/kmail.kcfg.cmake:394
 #, kde-format
 msgid "Quote characters"
 msgstr "តួអក្សរ​សម្រង់"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:410
+#: settings/kmail.kcfg.cmake:409
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "បញ្ជាក់​ថាតើ​ គោលនយោបាយ​ត្រូវ​បាន​ប្រើ​នៅពេល​បង្ហាញ​គោលនយោបាយ​ដែរឬទេ"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:417
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6481,7 +6481,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:421
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6490,7 +6490,7 @@ msgstr ""
 "បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:425
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6498,7 +6498,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:429
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6506,7 +6506,7 @@ msgid ""
 msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:433
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6515,7 +6515,7 @@ msgstr ""
 "បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:438
+#: settings/kmail.kcfg.cmake:437
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "

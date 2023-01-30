@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-28 00:59+0000\n"
+"POT-Creation-Date: 2023-01-30 00:58+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1023,14 +1023,14 @@ msgid "System Tray"
 msgstr "Жүйелік сөре"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:89
+#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Жүйелік сөреде таңбашасы болсын"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:819 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:93
+#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -4149,30 +4149,30 @@ msgstr "HTML құралдары"
 msgid "Text Direction Toolbar"
 msgstr "Мәтін бағытының құралдары"
 
-#: kmkernel.cpp:823
+#: kmkernel.cpp:824
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail желіден тыс режімге ауысты. Барлық желілік тапсырмалар аялдатылды"
 
-#: kmkernel.cpp:843 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
+#: kmkernel.cpp:844 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:844 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
+#: kmkernel.cpp:845 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Хат жіберілуге дайын..."
 
-#: kmkernel.cpp:876
+#: kmkernel.cpp:877
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail желіге қосылды. Барлық желілік тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:878
+#: kmkernel.cpp:879
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4181,38 +4181,38 @@ msgstr ""
 "KMail желіде істемек. Желіге қосылғаны байқалғанда барлық желілік "
 "тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:951
+#: kmkernel.cpp:952
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail желіден тыс режімде істеп тұр. Нені қалайсыз?"
 
-#: kmkernel.cpp:953
+#: kmkernel.cpp:954
 #, kde-format
 msgid "Online/Offline"
 msgstr "Желіде/Желіден тыс"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2353
+#: kmkernel.cpp:955 kmmainwidget.cpp:2353
 #, kde-format
 msgid "Work Online"
 msgstr "Желіде істеу"
 
-#: kmkernel.cpp:955 kmmainwidget.cpp:2350
+#: kmkernel.cpp:956 kmmainwidget.cpp:2350
 #, kde-format
 msgid "Work Offline"
 msgstr "Желіден тыс істеу"
 
-#: kmkernel.cpp:979
+#: kmkernel.cpp:980
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "KMail желіге қосығаны байқалды, барлық желілік тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:983
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail желіден тыс екенін байқады, барлық желілік тапсырмалар аялдады"
 
-#: kmkernel.cpp:1077
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4221,36 +4221,36 @@ msgstr ""
 "%1 дегендегі автоматты түрінде сақтайтын файлды ашу жаңылысы.\n"
 "Себебі: %2"
 
-#: kmkernel.cpp:1078
+#: kmkernel.cpp:1079
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Автосақтау файлды ашу жаңылысы"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1641
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "Мынау %1 іс-әлпеті әдетті жіберу әдісіне ауыстырылған:"
 
-#: kmkernel.cpp:1664
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "Бұл %1 іс-әлпеті өзгертілген жіберу әдісіне ауыстырылған:"
 
-#: kmkernel.cpp:1679
+#: kmkernel.cpp:1680
 #, kde-format
 msgid "Sending messages"
 msgstr "Хаттары жіберу"
 
-#: kmkernel.cpp:1680
+#: kmkernel.cpp:1681
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Жіберу әрекетін бастау..."
 
-#: kmkernel.cpp:1759
+#: kmkernel.cpp:1760
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4258,7 +4258,7 @@ msgid ""
 "%2"
 msgstr "%1 деректер көзі істемейді. Бұл ресурс енді %2"
 
-#: kmkernel.cpp:1935 kmkernel.cpp:1941
+#: kmkernel.cpp:1936 kmkernel.cpp:1942
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6193,7 +6193,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:55
+#: settings/kmail.kcfg.cmake:54
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6204,19 +6204,19 @@ msgstr ""
 "автоматты түрде өшіруін (не архив қапшығына жылжытуын) болдырмайды"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:59
+#: settings/kmail.kcfg.cmake:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Тек оқу үшін қапшықтарда жергілікті жалаушалар рұқса етілсін"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
+#: settings/kmail.kcfg.cmake:64
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Кезектегі хат тексеріске жіберілсін"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:66
+#: settings/kmail.kcfg.cmake:65
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6227,32 +6227,32 @@ msgstr ""
 "автоматты түрде жіберілсін бе, таңдаңыз.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:78
+#: settings/kmail.kcfg.cmake:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr "Қапшық таңдау диалогындағы ең жуырда таңдалған қапшық."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:97
+#: settings/kmail.kcfg.cmake:96
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show Unread Email in TaskBar"
 msgstr "Оқылмаған пошта жүйелік сөреде көрсетілсін"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:101
+#: settings/kmail.kcfg.cmake:100
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Сыртқы &редакторы:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:105
+#: settings/kmail.kcfg.cmake:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Құрастырғышының орына с&ыртқы редакторы қолданылсын"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:109
+#: settings/kmail.kcfg.cmake:108
 #, kde-format
 msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
@@ -6261,7 +6261,7 @@ msgstr ""
 "Хаттарға енгізілетін өзгеше MIME айдарлар саны (ішкі қолданыс үшін ғана)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:112
+#: settings/kmail.kcfg.cmake:111
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6269,32 +6269,32 @@ msgid ""
 msgstr "Квотаға жақындап қалғаны туралы ескертетін табалдырығы."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:116
+#: settings/kmail.kcfg.cmake:115
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Бағдарламадан шыққанда Шелек қапшығы тазалансын"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:120
+#: settings/kmail.kcfg.cmake:119
 #, fuzzy, kde-format
 #| msgid "Delete Sieve Script Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "Sieve скриптін өшіруді құптау"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:124
+#: settings/kmail.kcfg.cmake:123
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Бастағанда ашылатын қапшығын келтіру"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:128
+#: settings/kmail.kcfg.cmake:127
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Бағдарлама жұмысын бастағанда ашылатын қапшығын келтіріңіз"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:135
+#: settings/kmail.kcfg.cmake:134
 #, kde-format
 msgid ""
 "Specifies whether the folders will expire in the background (for internal "
@@ -6304,7 +6304,7 @@ msgstr ""
 "(тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:139
+#: settings/kmail.kcfg.cmake:138
 #, kde-format
 msgid ""
 "Specifies whether this is the very first time that the application is run "
@@ -6313,7 +6313,7 @@ msgstr ""
 "Қолданба ең бірінші рет жегіліп жатқанын көрсетді (тек ішкі колданысы үшін)"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:164
+#: settings/kmail.kcfg.cmake:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6321,7 +6321,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:172
+#: settings/kmail.kcfg.cmake:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6329,26 +6329,26 @@ msgid ""
 msgstr "KMail кіріспе бетін көрсету қажетілігін білдіретін мән."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:179
+#: settings/kmail.kcfg.cmake:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Жедел іздеу өрісі көрсетілсін"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:187
+#: settings/kmail.kcfg.cmake:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Басқаға жолдайтыны әдетте хат бетінде жіберілсін."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:190
+#: settings/kmail.kcfg.cmake:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Алушылар саны келесіден артық болса ескерту:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:192 settings/kmail.kcfg.cmake:199
+#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6359,25 +6359,25 @@ msgstr ""
 "өшіріп қоюға болады."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:213
+#: settings/kmail.kcfg.cmake:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Жіберу &алдында құптау сұралсын"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:220
+#: settings/kmail.kcfg.cmake:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Жіберер алдына емлесін тексеру"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
+#: settings/kmail.kcfg.cmake:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "&Хатпен не істеген туралы хабарлауы автоматты түрде сұралсын"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:225
+#: settings/kmail.kcfg.cmake:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6393,13 +6393,13 @@ msgstr ""
 "құлақтандыруды сұрау</em> деген жол арқылы өзгертуге болады.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
+#: settings/kmail.kcfg.cmake:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Автосақтау аралығы:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:248
+#: settings/kmail.kcfg.cmake:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6411,160 +6411,160 @@ msgstr ""
 "жасалмайды."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:255
+#: settings/kmail.kcfg.cmake:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 "Құрастырғышында мәтін үзінділерін басқару және енгізу панелі көрсетілсін"
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:261
+#: settings/kmail.kcfg.cmake:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "Белгіленсе, жіберілген хаттар шифрланған түрде сақталады"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:265
+#: settings/kmail.kcfg.cmake:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Жуырда қолданған URL-адрестер тізімі"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:271
+#: settings/kmail.kcfg.cmake:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Жуырда қолданған кодтамалар тізімі"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:277
+#: settings/kmail.kcfg.cmake:276
 #, fuzzy, kde-format
 #| msgid "Show crypto &icons"
 msgid "Show crypto label indicator"
 msgstr "&Шифрлау таңбашасы көрсетілсін"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:281
+#: settings/kmail.kcfg.cmake:280
 #, fuzzy, kde-format
 #| msgid "Show crypto &icons"
 msgid "Show crypto ownertrust icons"
 msgstr "&Шифрлау таңбашасы көрсетілсін"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:285
+#: settings/kmail.kcfg.cmake:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:301
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "Іс-әлпеті диалогының өлшемі (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:305
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "Іздеу терезесінің ені (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:309
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "Іздеу терезесінің биіктігі (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:313
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "KMail баптау диалог терезесінің ені (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:318
+#: settings/kmail.kcfg.cmake:317
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "KMail баптау диалог терезесінің биіктігі (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:344
+#: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "Хаттың көрніс терезесі"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:347
+#: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Хат көрнісінің терезесі көрсетілмесін"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:350
+#: settings/kmail.kcfg.cmake:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Хат көрнісі хаттар тізімінен төмен көрсетілсін"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:353
+#: settings/kmail.kcfg.cmake:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Хат көрнісі хаттар тізімінен кейін көрсетілсін"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:360
+#: settings/kmail.kcfg.cmake:359
 #, kde-format
 msgid "Folder List"
 msgstr "Қапшықтар тізімі"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:363
+#: settings/kmail.kcfg.cmake:362
 #, kde-format
 msgid "Long folder list"
 msgstr "Ұзын қапшық тізімі"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:366
+#: settings/kmail.kcfg.cmake:365
 #, kde-format
 msgid "Short folder list"
 msgstr "Қысқа қапшық тізімі"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:375
+#: settings/kmail.kcfg.cmake:374
 #, kde-format
 msgid "Message template for new message"
 msgstr "Жаңа хат үшін хат үлгісі"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:380
+#: settings/kmail.kcfg.cmake:379
 #, kde-format
 msgid "Message template for reply"
 msgstr "Жауап үшін хат үлгісі"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:385
+#: settings/kmail.kcfg.cmake:384
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Барлығына жауап үшін хат үлгісі"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:390
+#: settings/kmail.kcfg.cmake:389
 #, kde-format
 msgid "Message template for forward"
 msgstr "Басқаға жолдау үшін хат үлгісі"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:395
+#: settings/kmail.kcfg.cmake:394
 #, kde-format
 msgid "Quote characters"
 msgstr "Дәйексөз белгілері"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:410
+#: settings/kmail.kcfg.cmake:409
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Ережелер көрсету саясатын келтіру"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:417
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6574,7 +6574,7 @@ msgstr ""
 "үшін)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:421
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6584,7 +6584,7 @@ msgstr ""
 "үшін)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:425
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6594,7 +6594,7 @@ msgstr ""
 "үшін)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:429
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6604,7 +6604,7 @@ msgstr ""
 "үшін)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:433
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6613,7 +6613,7 @@ msgstr ""
 "Іздеу диалог терезесіндегі күннің өріс енің көрсету (тек ішкі қолданысы үшін)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:438
+#: settings/kmail.kcfg.cmake:437
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "

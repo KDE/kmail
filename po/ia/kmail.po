@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-28 00:59+0000\n"
+"POT-Creation-Date: 2023-01-30 00:58+0000\n"
 "PO-Revision-Date: 2022-12-18 22:48+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -971,14 +971,14 @@ msgid "System Tray"
 msgstr "Tabuliero de systema"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:89
+#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Habilita icone de tabuliero de systema"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:819 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:93
+#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Starta minimisate a area de notification"
@@ -3997,28 +3997,28 @@ msgstr "Barra de instrumento de HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra de Instrumento de direction de texto"
 
-#: kmkernel.cpp:823
+#: kmkernel.cpp:824
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "Kmal es fixate de modo foras de linea; omne labores de rete es suspendite"
 
-#: kmkernel.cpp:843 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
+#: kmkernel.cpp:844 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
 #, kde-format
 msgid "Send Email"
 msgstr "Invia e-posta"
 
-#: kmkernel.cpp:844 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
+#: kmkernel.cpp:845 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Impossibile  inviar e-posta"
 
-#: kmkernel.cpp:876
+#: kmkernel.cpp:877
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "Kmal es fixate de modo in linea; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:878
+#: kmkernel.cpp:879
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4027,37 +4027,37 @@ msgstr ""
 "Kmal es fixate de modo in linea; omne labores de rete es recuperate quando "
 "un connexion es relevate"
 
-#: kmkernel.cpp:951
+#: kmkernel.cpp:952
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Kmail currentemente es in modo foras de linea. Como tu vole proceder?"
 
-#: kmkernel.cpp:953
+#: kmkernel.cpp:954
 #, kde-format
 msgid "Online/Offline"
 msgstr "In linea/ Foras de Linea"
 
-#: kmkernel.cpp:954 kmmainwidget.cpp:2353
+#: kmkernel.cpp:955 kmmainwidget.cpp:2353
 #, kde-format
 msgid "Work Online"
 msgstr "Travaliar in linea"
 
-#: kmkernel.cpp:955 kmmainwidget.cpp:2350
+#: kmkernel.cpp:956 kmmainwidget.cpp:2350
 #, kde-format
 msgid "Work Offline"
 msgstr "Travaliar Foras de linea"
 
-#: kmkernel.cpp:979
+#: kmkernel.cpp:980
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Connexion de rete relevate; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:982
+#: kmkernel.cpp:983
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Nulle connexion de rete relevate; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:1077
+#: kmkernel.cpp:1078
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4066,12 +4066,12 @@ msgstr ""
 "Il falleva a aperir file de salveguardar automatic a %1.\n"
 "Motivation: %2"
 
-#: kmkernel.cpp:1078
+#: kmkernel.cpp:1079
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Il falleva a aperir file de salveguardar automatic"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1641
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4081,7 +4081,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Iste %1 identitates ha essite cambiate pro usar le transporto predefinite:"
 
-#: kmkernel.cpp:1664
+#: kmkernel.cpp:1665
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4091,17 +4091,17 @@ msgstr[0] ""
 msgstr[1] ""
 "Iste %1 identitates ha essite cambiate pro usar le transporto modificate:"
 
-#: kmkernel.cpp:1679
+#: kmkernel.cpp:1680
 #, kde-format
 msgid "Sending messages"
 msgstr "Inviante messages"
 
-#: kmkernel.cpp:1680
+#: kmkernel.cpp:1681
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Il es initiante a inviar processo..."
 
-#: kmkernel.cpp:1759
+#: kmkernel.cpp:1760
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4110,7 +4110,7 @@ msgstr ""
 "Ressource %1 es rupte.\n"
 "%2"
 
-#: kmkernel.cpp:1935 kmkernel.cpp:1941
+#: kmkernel.cpp:1936 kmkernel.cpp:1942
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5995,7 +5995,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:55
+#: settings/kmail.kcfg.cmake:54
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6007,19 +6007,19 @@ msgstr ""
 "\"Importante\" o \"Elemento de action\""
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:59
+#: settings/kmail.kcfg.cmake:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Permitte bandieras local in dossieres de sol lectura"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
+#: settings/kmail.kcfg.cmake:64
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Invia e-posta in cauda super verifica de e-posta"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:66
+#: settings/kmail.kcfg.cmake:65
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6031,32 +6031,32 @@ msgstr ""
 "messages es inviate automaticamente  del toto.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:78
+#: settings/kmail.kcfg.cmake:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr ""
 "Le plus recentemente seligite dossier in le dialogo de selection de dossier."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:97
+#: settings/kmail.kcfg.cmake:96
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Monstra message de e-posta non legite in barra de carga"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:101
+#: settings/kmail.kcfg.cmake:100
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Specifica e&ditor:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:105
+#: settings/kmail.kcfg.cmake:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Usar editor e&xterne in vice de compositor"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:109
+#: settings/kmail.kcfg.cmake:108
 #, kde-format
 msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
@@ -6066,7 +6066,7 @@ msgstr ""
 "esser insertate in messages (solmente pro uso interne) "
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:112
+#: settings/kmail.kcfg.cmake:111
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6076,31 +6076,31 @@ msgstr ""
 "quota."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:116
+#: settings/kmail.kcfg.cmake:115
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Vacua le local dossier de corbe quando on sorti."
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:120
+#: settings/kmail.kcfg.cmake:119
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Dele messages sin confirmation"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:124
+#: settings/kmail.kcfg.cmake:123
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Permitte initiar dossier specific"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:128
+#: settings/kmail.kcfg.cmake:127
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Specifica le dossier de aperir quando le programma es initiate"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:135
+#: settings/kmail.kcfg.cmake:134
 #, kde-format
 msgid ""
 "Specifies whether the folders will expire in the background (for internal "
@@ -6109,7 +6109,7 @@ msgstr ""
 "Il specifica si le dossieres expirara in le fundo (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:139
+#: settings/kmail.kcfg.cmake:138
 #, kde-format
 msgid ""
 "Specifies whether this is the very first time that the application is run "
@@ -6119,7 +6119,7 @@ msgstr ""
 "executante (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:164
+#: settings/kmail.kcfg.cmake:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6129,7 +6129,7 @@ msgstr ""
 "de e-posta es relevate.Nos demanda sol un vice."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:172
+#: settings/kmail.kcfg.cmake:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6139,26 +6139,26 @@ msgstr ""
 "monstrate. "
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:179
+#: settings/kmail.kcfg.cmake:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Monstra modifica de linea de cerca rapide de dossier"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:187
+#: settings/kmail.kcfg.cmake:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Reexpedi Incorporate (Inline) como predefinite. "
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:190
+#: settings/kmail.kcfg.cmake:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Avisa si le numero de destinatarios es plus grande que:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:192 settings/kmail.kcfg.cmake:199
+#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6170,25 +6170,25 @@ msgstr ""
 "dis-habilitate."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:213
+#: settings/kmail.kcfg.cmake:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Confirma &ante que inviar"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:220
+#: settings/kmail.kcfg.cmake:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Verifica orthographia ante que inviar"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
+#: settings/kmail.kcfg.cmake:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Require automaticamente notificationes de disposition de &message"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:225
+#: settings/kmail.kcfg.cmake:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6205,13 +6205,13 @@ msgstr ""
 "p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
+#: settings/kmail.kcfg.cmake:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Intervallo de salvamento automatic:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:248
+#: settings/kmail.kcfg.cmake:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6223,7 +6223,7 @@ msgstr ""
 "pote dis-habilitar le salvar automatic per fixar lo al valor de 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:255
+#: settings/kmail.kcfg.cmake:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
@@ -6231,154 +6231,154 @@ msgstr ""
 "compositor."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:261
+#: settings/kmail.kcfg.cmake:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
 "Quando marcate, messages inviate essera immagazinate in le forma cryptate"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:265
+#: settings/kmail.kcfg.cmake:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Un lista de tote le URL's usate recentemente"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:271
+#: settings/kmail.kcfg.cmake:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Un lista de tote le codificationes usate recentemente"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:277
+#: settings/kmail.kcfg.cmake:276
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Monstra indicator de crypto etiquetta"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:281
+#: settings/kmail.kcfg.cmake:280
 #, kde-format
 msgid "Show crypto ownertrust icons"
 msgstr "Monstra icones de confidentia de proprietario de crypto"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:285
+#: settings/kmail.kcfg.cmake:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Valida via breve predefinite de invio"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:302
+#: settings/kmail.kcfg.cmake:301
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr "Le grandor del dialogo de identitate (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:306
+#: settings/kmail.kcfg.cmake:305
 #, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr "Le largessa de fenestra de cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:310
+#: settings/kmail.kcfg.cmake:309
 #, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr "Le altessa de fenestra de cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:314
+#: settings/kmail.kcfg.cmake:313
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr "Le largessa del dialogo Configura KMail (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:318
+#: settings/kmail.kcfg.cmake:317
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr "Le altessa del dialogo Configura KMail (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:344
+#: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
 msgstr "Vitro de vista preliminari de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:347
+#: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Non monstra un vitro de vista preliminari de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:350
+#: settings/kmail.kcfg.cmake:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr ""
 "Monstra le vitro de vista preliminari de message sub le lista de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:353
+#: settings/kmail.kcfg.cmake:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr ""
 "Monstra le vitro de vista preliminari de message proxime al lista de message"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:360
+#: settings/kmail.kcfg.cmake:359
 #, kde-format
 msgid "Folder List"
 msgstr "Lista de dossier"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:363
+#: settings/kmail.kcfg.cmake:362
 #, kde-format
 msgid "Long folder list"
 msgstr "Longe lista de dossier"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:366
+#: settings/kmail.kcfg.cmake:365
 #, kde-format
 msgid "Short folder list"
 msgstr "Breve lista de dossier"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:375
+#: settings/kmail.kcfg.cmake:374
 #, kde-format
 msgid "Message template for new message"
 msgstr "Patrono de message pro nove message"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:380
+#: settings/kmail.kcfg.cmake:379
 #, kde-format
 msgid "Message template for reply"
 msgstr "Patrono de message pro responsa"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:385
+#: settings/kmail.kcfg.cmake:384
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Patrono de message pro responsa a omne"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:390
+#: settings/kmail.kcfg.cmake:389
 #, kde-format
 msgid "Message template for forward"
 msgstr "Patrono de message pro reexpedir"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:395
+#: settings/kmail.kcfg.cmake:394
 #, kde-format
 msgid "Quote characters"
 msgstr "Characteres de citar"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:410
+#: settings/kmail.kcfg.cmake:409
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Il specifica le politica usate quando on monstra politica"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:418
+#: settings/kmail.kcfg.cmake:417
 #, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
@@ -6388,7 +6388,7 @@ msgstr ""
 "Cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:422
+#: settings/kmail.kcfg.cmake:421
 #, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
@@ -6398,7 +6398,7 @@ msgstr ""
 "Cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:426
+#: settings/kmail.kcfg.cmake:425
 #, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
@@ -6408,7 +6408,7 @@ msgstr ""
 "Cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:430
+#: settings/kmail.kcfg.cmake:429
 #, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
@@ -6418,7 +6418,7 @@ msgstr ""
 "Cerca (solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:434
+#: settings/kmail.kcfg.cmake:433
 #, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
@@ -6428,7 +6428,7 @@ msgstr ""
 "(solmente pro uso interne)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:438
+#: settings/kmail.kcfg.cmake:437
 #, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
