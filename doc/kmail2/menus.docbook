@@ -130,7 +130,7 @@ performs a menu item function, the default shortcut is listed with the menu item
 
 <varlistentry id="reader-file-import-messages">
   <term><menuchoice><guimenu>File</guimenu><guimenuitem>Import Messages...</guimenuitem></menuchoice></term>
-  <listitem><para>Starts up the <application>PIM Import Tool></application> program.
+  <listitem><para>Starts up the <application>PIM Import Tool</application> program.
   This application lets you import messages from several email clients into &kmail;.</para></listitem>
 </varlistentry>
 
