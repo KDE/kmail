@@ -268,9 +268,9 @@
 ></term>
   <listitem
 ><para
->Запустити програму <application
->KMailCVT</application
-> (майстер імпортування електронної пошти). Ця програма надає вам змогу імпортувати повідомлення з декількох клієнтів електронної пошти у &kmail;.</para
+>Starts up the <application
+>PIM Import Tool</application
+> program. This application lets you import messages from several email clients into &kmail;.</para
 ></listitem>
 </varlistentry>
 

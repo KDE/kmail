@@ -4347,7 +4347,7 @@ modifying it by hand.</para>
       <varlistentry>
         <term
 ><guilabel
->Відкриття зовнішнього редактора</guilabel
+>Відкрити зовнішній редактор</guilabel
 ></term>
         <listitem>
           <para
@@ -5285,48 +5285,6 @@ modifying it by hand.</para>
 >--file <replaceable
 >/шлях/до/kmail2rc</replaceable
 > --group OutOfOffice --key OutOfOfficeReactToSpam true</option
-></userinput
-> </para
-></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term
-><guilabel
->ShowUserAgent</guilabel
-></term>
-<listitem>
-<para
->Починаючи з версії 1.9, &kmail; може показувати значення поля заголовка повідомлення User-Agent або X-Mailer, якщо ви використовуєте вишукані заголовки (див. пункт меню <menuchoice
-><guimenu
->Перегляд</guimenu
-> <guisubmenu
->Заголовки</guisubmenu
-></menuchoice
->). Щоб увімкнути цю можливість, додайте такий рядок до розділу «[Reader]»:</para>
-<itemizedlist>
-<listitem
-><para
->Файл налаштувань:</para>
-<programlisting
->ShowUserAgent=true</programlisting
-></listitem>
-<listitem
-><para
-><command
->kwriteconfig</command
-></para>
-<para
-><prompt
->&percnt;</prompt
-> <userinput
-><command
->kwriteconfig</command
-> <option
->--file <replaceable
->/шлях/до/kmail2rc</replaceable
-> --group Reader --key ShowUserAgent true</option
 ></userinput
 > </para
 ></listitem>

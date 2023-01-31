@@ -256,9 +256,9 @@
 ></term>
   <listitem
 ><para
->Inicia el programa <application
->KMailCVT</application
-> (conegut com a Assistent per a la importació de correu). Aquesta aplicació permet importar els missatges des de diversos clients de correu electrònic cap al &kmail;.</para
+>Starts up the <application
+>PIM Import Tool</application
+> program. This application lets you import messages from several email clients into &kmail;.</para
 ></listitem>
 </varlistentry>
 
