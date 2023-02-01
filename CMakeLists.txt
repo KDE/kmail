@@ -74,9 +74,6 @@ else()
 endif()
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
-option(USE_KTEXTADDONS_LIB "Use ktextaddons lib (experimental)" ON)
-
-
 find_package(Qt${QT_MAJOR_VERSION} ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngineWidgets)
 set(LIBGRAVATAR_VERSION "5.22.40")
 set(MAILCOMMON_LIB_VERSION "5.22.40")
