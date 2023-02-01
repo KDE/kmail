@@ -440,13 +440,9 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::GuiAddons
     ${kmail_userfeedback_LIB}
     )
-
-if (USE_KTEXTADDONS_LIB)
+if (TARGET KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
     target_link_libraries(kmailprivate
         PRIVATE KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
-else()
-    target_link_libraries(kmailprivate
-        PRIVATE KF5::PimTextEditTextToSpeech)
 endif()
 target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 

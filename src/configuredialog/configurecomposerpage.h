@@ -23,17 +23,10 @@ namespace TemplateParser
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
 namespace TextAutoCorrection
 {
 class AutoCorrectionWidget;
 }
-#else
-namespace PimCommonAutoCorrection
-{
-class AutoCorrectionWidget;
-}
-#endif
 namespace PimCommon
 {
 class SimpleStringListEditor;
@@ -218,11 +211,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
     TextAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;
-#else
-    PimCommonAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;
-#endif
 };
 
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab

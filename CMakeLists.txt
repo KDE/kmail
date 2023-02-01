@@ -152,21 +152,15 @@ find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(MailTransportDBusService CONFIG REQUIRED)
 
-if (USE_KTEXTADDONS_LIB)
-    find_package(KF${KF_MAJOR_VERSION}TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
-    set_package_properties(KF${KF_MAJOR_VERSION}TextEditTextToSpeech PROPERTIES DESCRIPTION
-        "Add support for text to speech"
-        TYPE OPTIONAL
-    )
-    if (TARGET KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
-        add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
-    endif()
-    find_package(KF${KF_MAJOR_VERSION}TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
-    add_definitions(-DHAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT)
-    add_definitions(-DHAVE_KTEXTADDONS_SUPPORT)
-else()
-    find_package(KF5PimTextEditTextToSpeech ${KPIMTEXTEDIT_LIB_VERSION} CONFIG REQUIRED)
+find_package(KF${KF_MAJOR_VERSION}TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
+set_package_properties(KF${KF_MAJOR_VERSION}TextEditTextToSpeech PROPERTIES DESCRIPTION
+    "Add support for text to speech"
+    TYPE OPTIONAL
+)
+if (TARGET KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
+    add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
 endif()
+find_package(KF${KF_MAJOR_VERSION}TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 
 find_package(Qt${QT_MAJOR_VERSION}Keychain CONFIG)
 set_package_properties(Qt${QT_MAJOR_VERSION}Keychain PROPERTIES

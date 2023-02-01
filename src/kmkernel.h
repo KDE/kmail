@@ -51,17 +51,10 @@ namespace MessageComposer
 {
 class MessageSender;
 }
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
 namespace TextAutoCorrection
 {
 class AutoCorrection;
 }
-#else
-namespace PimCommonAutoCorrection
-{
-class AutoCorrection;
-}
-#endif
 
 /** The KMail namespace contains classes used for KMail.
  * This is to keep them out of the way from all the other
@@ -483,11 +476,7 @@ public:
     void savePaneSelection();
 
     void updatePaneTagComboBox();
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
     Q_REQUIRED_RESULT TextAutoCorrection::AutoCorrection *composerAutoCorrection();
-#else
-    Q_REQUIRED_RESULT PimCommonAutoCorrection::AutoCorrection *composerAutoCorrection();
-#endif
 
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
@@ -623,11 +612,7 @@ private:
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
     TextAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
-#else
-    PimCommonAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
-#endif
     FolderArchiveManager *const mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;

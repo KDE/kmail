@@ -39,11 +39,7 @@
 #include <KIdentityManagement/SignatureConfigurator>
 
 #include <PimCommon/PimUtil>
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
 #include <TextAutoCorrection/AutoCorrectionLanguage>
-#else
-#include <PimCommonAutoCorrection/AutoCorrectionLanguage>
-#endif
 
 #include <Libkdepim/LineEditCatchReturnKey>
 #include <PimCommonAkonadi/AddresseeLineEdit>
@@ -616,11 +612,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
 
-#ifdef HAVE_KTEXTADDONS_TEXT_AUTOCORRECTION_SUPPORT
     mAutoCorrectionLanguage = new TextAutoCorrection::AutoCorrectionLanguage(tab);
-#else
-    mAutoCorrectionLanguage = new PimCommonAutoCorrection::AutoCorrectionLanguage(tab);
-#endif
     label = new QLabel(i18n("Autocorrection language:"), tab);
     label->setBuddy(mAutoCorrectionLanguage);
     formLayout->addRow(label, mAutoCorrectionLanguage);
