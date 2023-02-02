@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-01-31 22:03+0300\n"
+"PO-Revision-Date: 2023-02-01 12:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4270,8 +4270,8 @@ msgid ""
 "\"spam\" and may increase the likelihood that your system will be "
 "compromised by other present and anticipated security exploits."
 msgstr ""
-"HTML iletilerde dış referansları kullanmak sizi \"çöp\" postalara karşı daha "
-"savunmasız yapar ve sisteminizin güvenlik açıklarını sezen programlarla "
+"HTML iletilerde dış başvurular kullanmak sizi \"istenmeyen\" postaya karşı "
+"daha savunmasız yapar ve sisteminizin güvenlik açıklarını sezen programlarla "
 "saldırıya uğramasına sebep olabilir."
 
 #: kmmainwidget.cpp:1576 kmmainwidget.cpp:4673
@@ -4282,7 +4282,7 @@ msgstr "Güvenlik Uyarısı"
 #: kmmainwidget.cpp:1577
 #, kde-format
 msgid "Load External References"
-msgstr "Dış Referansları Yükle"
+msgstr "Dış Başvuruları Yükle"
 
 #: kmmainwidget.cpp:1649
 #, kde-format
@@ -4571,7 +4571,7 @@ msgstr "Klasörü &Arşivle..."
 #: kmmainwidget.cpp:3055
 #, kde-format
 msgid "Load E&xternal References"
-msgstr "Dış &Referansları Yükle"
+msgstr "Dış &Başvuruları Yükle"
 
 #: kmmainwidget.cpp:3078
 #, kde-format
@@ -5079,9 +5079,9 @@ msgid ""
 "increase the likelihood that your system will be compromised by other "
 "present and anticipated security exploits."
 msgstr ""
-"İletilerde HTML kullanımı sizi \"çöp\" iletilere karşı daha savunmasız yapar "
-"ve sisteminizin güvenlik açıklarını sezen programlarla saldırıya uğramasına "
-"sebep olabilir."
+"İletilerde HTML kullanımı sizi \"istenmeyen\" postaya karşı daha savunmasız "
+"yapar ve sisteminizin güvenlik açıklarını sezen programlarla saldırıya "
+"uğramasına neden olabilir."
 
 #: kmmainwidget.cpp:4674
 #, kde-format
@@ -5233,7 +5233,7 @@ msgstr "Bu kişiden posta geldiğinde HTML biçimini göster"
 #: kmreaderwin.cpp:191
 #, kde-format
 msgid "Load external reference when mail comes for this contact"
-msgstr "Bu kişiden gelen postalar için dış referansları yükle"
+msgstr "Bu kişiden gelen postalar için dış başvuruları yükle"
 
 #: kmreaderwin.cpp:197
 #, kde-format
