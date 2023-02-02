@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-30 00:58+0000\n"
+"POT-Creation-Date: 2023-02-02 00:59+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -567,7 +567,7 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:675
 #, kde-format
 msgid "Templates"
 msgstr ""
@@ -1129,42 +1129,42 @@ msgstr "&Susa"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:69
+#: configuredialog/configurecomposerpage.cpp:65
 #, fuzzy, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "&Ngokubanzi"
 
-#: configuredialog/configurecomposerpage.cpp:76
+#: configuredialog/configurecomposerpage.cpp:72
 #, fuzzy, kde-format
 msgid "Standard Templates"
 msgstr "Gcina njengomsebenzi omele ukwenziwa"
 
-#: configuredialog/configurecomposerpage.cpp:82
+#: configuredialog/configurecomposerpage.cpp:78
 #, fuzzy, kde-format
 msgid "Custom Templates"
 msgstr "&Buyisela"
 
-#: configuredialog/configurecomposerpage.cpp:88
+#: configuredialog/configurecomposerpage.cpp:84
 #, fuzzy, kde-format
 #| msgid "Subject"
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Umxholo"
 
-#: configuredialog/configurecomposerpage.cpp:95
+#: configuredialog/configurecomposerpage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Cha&rset"
 msgid "Charset"
 msgstr "Cha&rset"
 
-#: configuredialog/configurecomposerpage.cpp:101
+#: configuredialog/configurecomposerpage.cpp:97
 #, fuzzy, kde-format
 #| msgid "H&eaders"
 msgid "Headers"
 msgstr "Oku&bhalwe phezu ephepheni"
 
-#: configuredialog/configurecomposerpage.cpp:107
+#: configuredialog/configurecomposerpage.cpp:103
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Attachments"
@@ -1172,60 +1172,60 @@ msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "&Uncanyatheliso"
 
-#: configuredialog/configurecomposerpage.cpp:113
+#: configuredialog/configurecomposerpage.cpp:109
 #, kde-format
 msgid "Autocorrection"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:119
+#: configuredialog/configurecomposerpage.cpp:115
 #, kde-format
 msgid "Auto Resize Image"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:136
+#: configuredialog/configurecomposerpage.cpp:132
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "&Utyikityo"
 
-#: configuredialog/configurecomposerpage.cpp:142
+#: configuredialog/configurecomposerpage.cpp:138
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:153
+#: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:165
+#: configuredialog/configurecomposerpage.cpp:161
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:176
+#: configuredialog/configurecomposerpage.cpp:172
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:188
+#: configuredialog/configurecomposerpage.cpp:184
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "&Iqhelekile:"
 
-#: configuredialog/configurecomposerpage.cpp:193
+#: configuredialog/configurecomposerpage.cpp:189
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:203
+#: configuredialog/configurecomposerpage.cpp:199
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1233,31 +1233,31 @@ msgid ""
 "wrapping the text."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:214
+#: configuredialog/configurecomposerpage.cpp:210
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:225
+#: configuredialog/configurecomposerpage.cpp:221
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:245
+#: configuredialog/configurecomposerpage.cpp:241
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:257
+#: configuredialog/configurecomposerpage.cpp:253
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:267
+#: configuredialog/configurecomposerpage.cpp:263
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -1265,28 +1265,28 @@ msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "&Kwi layini"
 
-#: configuredialog/configurecomposerpage.cpp:267
+#: configuredialog/configurecomposerpage.cpp:263
 #, fuzzy, kde-format
 msgid "As Attachment"
 msgstr "Uncamathelo: "
 
-#: configuredialog/configurecomposerpage.cpp:269
+#: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:269
 #, fuzzy, kde-format
 msgid "Default forwarding type:"
 msgstr "Indawo yokwendalo:"
 
-#: configuredialog/configurecomposerpage.cpp:291
+#: configuredialog/configurecomposerpage.cpp:287
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Abamkeli abangasebenziyo."
 
-#: configuredialog/configurecomposerpage.cpp:304
+#: configuredialog/configurecomposerpage.cpp:300
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1294,17 +1294,17 @@ msgid ""
 "Notification\""
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:329
+#: configuredialog/configurecomposerpage.cpp:325
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:340
+#: configuredialog/configurecomposerpage.cpp:336
 #, fuzzy, kde-format
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Iintshukumo Yecebo lokucoca ulwelo"
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:356
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1314,47 +1314,47 @@ msgid ""
 "does not take account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:381
+#: configuredialog/configurecomposerpage.cpp:377
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:393
+#: configuredialog/configurecomposerpage.cpp:389
 #, fuzzy, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Akukho data."
 
-#: configuredialog/configurecomposerpage.cpp:396
+#: configuredialog/configurecomposerpage.cpp:392
 #, fuzzy, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr "&Bonisa iidilesi ezisanduk'ukubakho"
 
-#: configuredialog/configurecomposerpage.cpp:400
+#: configuredialog/configurecomposerpage.cpp:396
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:409
 #, fuzzy, kde-format
 msgid "Configure Completion..."
 msgstr "Qi&nisekisa phambi kokwenza iincwadi ezineenkcukacha zingabi nanto"
 
-#: configuredialog/configurecomposerpage.cpp:422
+#: configuredialog/configurecomposerpage.cpp:418
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Akukho data."
 
-#: configuredialog/configurecomposerpage.cpp:432
+#: configuredialog/configurecomposerpage.cpp:428
 #, fuzzy, kde-format
 msgid "No autosave"
 msgstr "Akukho data."
 
-#: configuredialog/configurecomposerpage.cpp:433
+#: configuredialog/configurecomposerpage.cpp:429
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1363,18 +1363,18 @@ msgid_plural " minutes"
 msgstr[0] " min"
 msgstr[1] " min"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:431
 #, fuzzy, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Iposi Entsha Eqatshelweyo"
 
-#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Phendu&la Umxholo Wezimaphambili"
 
-#: configuredialog/configurecomposerpage.cpp:649
-#: configuredialog/configurecomposerpage.cpp:675
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1386,82 +1386,82 @@ msgstr ""
 "Yazi naluphina ulandelelwano lwezimaphambili ezilandelayo\n"
 "(amangenelo ayimeko-engavakalelwayo eneembonakalo ezisoloko zikho):"
 
-#: configuredialog/configurecomposerpage.cpp:657
-#: configuredialog/configurecomposerpage.cpp:740
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:736
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "A&dd..."
 msgstr "Yo&ngeza..."
 
-#: configuredialog/configurecomposerpage.cpp:657
-#: configuredialog/configurecomposerpage.cpp:893
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "Re&move"
 msgstr "&Susa"
 
-#: configuredialog/configurecomposerpage.cpp:657
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:1116
 #, fuzzy, kde-format
 msgid "Mod&ify..."
 msgstr "Guqula kancincane..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Ngenisa impendulo entsha yesimaphambili:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:654
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:660
+#: configuredialog/configurecomposerpage.cpp:656
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Phendu&la Umxholo Wezimaphambili"
 
-#: configuredialog/configurecomposerpage.cpp:671
+#: configuredialog/configurecomposerpage.cpp:667
 #, fuzzy, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Yisa phambili Umxholo Wezimaphambili"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:681
-#: configuredialog/configurecomposerpage.cpp:741 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Susa"
 
-#: configuredialog/configurecomposerpage.cpp:681 identity/identitypage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "Yongeza..."
 
-#: configuredialog/configurecomposerpage.cpp:681 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "Guqula kancincane..."
 
-#: configuredialog/configurecomposerpage.cpp:681
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Ngenisa isimaphambili esitsha esiphambili:"
 
-#: configuredialog/configurecomposerpage.cpp:682
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:683
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 msgid "Forward Prefix:"
 msgstr "Yisa phambili Umxholo Wezimaphambili"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:727
 #, kde-format
 msgid ""
 "This list is checked for every outgoing message from the top to the bottom "
@@ -1471,156 +1471,156 @@ msgstr ""
 "ngezantsi kwe charset equlathe bonke abasebenzi abafunwayo."
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: configuredialog/configurecomposerpage.cpp:742 ui/identitypage.ui:40
+#: configuredialog/configurecomposerpage.cpp:738 ui/identitypage.ui:40
 #, kde-format
 msgid "&Modify..."
 msgstr "&Guqula kancincane..."
 
-#: configuredialog/configurecomposerpage.cpp:743
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgid "Enter charset:"
 msgstr "Ngenisa i charset:"
 
-#: configuredialog/configurecomposerpage.cpp:744
+#: configuredialog/configurecomposerpage.cpp:740
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this selected charset?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:745
+#: configuredialog/configurecomposerpage.cpp:741
 #, fuzzy, kde-format
 #| msgid "Cha&rset"
 msgid "Add Charset:"
 msgstr "Cha&rset"
 
-#: configuredialog/configurecomposerpage.cpp:751
+#: configuredialog/configurecomposerpage.cpp:747
 #, fuzzy, kde-format
 msgid "&Keep original charset when replying or forwarding (if possible)"
 msgstr ""
 "&Gcina i charset yoqobo xa uphendula okanye usiya phambili (ukuba kuyenzeka)."
 
-#: configuredialog/configurecomposerpage.cpp:785
+#: configuredialog/configurecomposerpage.cpp:781
 #, kde-format
 msgid "This charset is not supported."
 msgstr "Le charset ayixhaswanga."
 
-#: configuredialog/configurecomposerpage.cpp:848
+#: configuredialog/configurecomposerpage.cpp:844
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Sebenzisa umyalezo wesiko onesimamva se-id "
 
-#: configuredialog/configurecomposerpage.cpp:860
+#: configuredialog/configurecomposerpage.cpp:856
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "Umyalezo wesiko-&nesimamva se id:"
 
-#: configuredialog/configurecomposerpage.cpp:872
+#: configuredialog/configurecomposerpage.cpp:868
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "Chaza imihlaba yesiko ye mime ebhalwe phezulu kwephepha:"
 
-#: configuredialog/configurecomposerpage.cpp:880
+#: configuredialog/configurecomposerpage.cpp:876
 #, fuzzy, kde-format
 #| msgid "Name"
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Igama"
 
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:877
 #, fuzzy, kde-format
 #| msgid "Value"
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Ixabiso"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:885
 #, fuzzy, kde-format
 #| msgid "Ne&w"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "En&tsha"
 
-#: configuredialog/configurecomposerpage.cpp:902
+#: configuredialog/configurecomposerpage.cpp:898
 #, fuzzy, kde-format
 #| msgid "&Name:"
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Igama:"
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "&Value:"
 msgstr "&Ixabiso:"
 
-#: configuredialog/configurecomposerpage.cpp:1051
+#: configuredialog/configurecomposerpage.cpp:1047
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1051
+#: configuredialog/configurecomposerpage.cpp:1047
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid header"
 msgstr "&Yenza utyikityo"
 
-#: configuredialog/configurecomposerpage.cpp:1092
+#: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
 msgid "Outlook-compatible attachment naming"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1095
+#: configuredialog/configurecomposerpage.cpp:1091
 #, kde-format
 msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1103
+#: configuredialog/configurecomposerpage.cpp:1099
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1109
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1120
+#: configuredialog/configurecomposerpage.cpp:1116
 #, fuzzy, kde-format
 msgid "Enter new key word:"
 msgstr "Ngenisa impendulo entsha yesimaphambili:"
 
-#: configuredialog/configurecomposerpage.cpp:1121
+#: configuredialog/configurecomposerpage.cpp:1117
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1122
+#: configuredialog/configurecomposerpage.cpp:1118
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Attachments"
 msgid "Attachment Word:"
 msgstr "&Uncanyatheliso"
 
-#: configuredialog/configurecomposerpage.cpp:1130
+#: configuredialog/configurecomposerpage.cpp:1126
 #, fuzzy, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "Uncamathelo: "
 
-#: configuredialog/configurecomposerpage.cpp:1137
+#: configuredialog/configurecomposerpage.cpp:1133
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1139
+#: configuredialog/configurecomposerpage.cpp:1135
 #, kde-format
 msgid "No limit"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1168
+#: configuredialog/configurecomposerpage.cpp:1164
 #, kde-format
 msgid ""
 "You have chosen to encode attachment names containing non-English characters "
@@ -2899,50 +2899,50 @@ msgstr "&Isiphindo sesazisi esikhoyo"
 msgid "&Existing identities:"
 msgstr "&Iinkcazo ezikhoyo:"
 
-#: identity/identitydialog.cpp:177
+#: identity/identitydialog.cpp:173
 #, fuzzy, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "Izicwangciso Zeencwadi ezinenkcukacha"
 
-#: identity/identitydialog.cpp:178
+#: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:220
+#: identity/identitydialog.cpp:216
 #, fuzzy, kde-format
 msgid "Generate a new key pair"
 msgstr "Ngenisa impendulo entsha yesimaphambili:"
 
-#: identity/identitydialog.cpp:232
+#: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair..."
 msgstr ""
 
-#: identity/identitydialog.cpp:245
+#: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Hlela Uchazo"
 
-#: identity/identitydialog.cpp:269
+#: identity/identitydialog.cpp:265
 #, fuzzy, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "&Ngokubanzi"
 
-#: identity/identitydialog.cpp:276
+#: identity/identitydialog.cpp:272
 #, kde-format
 msgid "&Your name:"
 msgstr "&Igama lakho:"
 
-#: identity/identitydialog.cpp:281
+#: identity/identitydialog.cpp:277
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2950,12 +2950,12 @@ msgid ""
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:288
 #, kde-format
 msgid "Organi&zation:"
 msgstr "Um&butho:"
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:293
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2963,12 +2963,12 @@ msgid ""
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "&Email address:"
 msgstr "&Idilesi ye email:"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2978,13 +2978,13 @@ msgid ""
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:333
+#: identity/identitydialog.cpp:329
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email a&liases:"
 msgstr "&Idilesi ye email:"
 
-#: identity/identitydialog.cpp:338
+#: identity/identitydialog.cpp:334
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2995,12 +2995,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:355
+#: identity/identitydialog.cpp:351
 #, kde-format
 msgid "Cryptography"
 msgstr ""
 
-#: identity/identitydialog.cpp:361
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3010,23 +3010,23 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
+#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
 #, fuzzy, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Isitshixo se OpenPGP:"
 
-#: identity/identitydialog.cpp:373
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:383
+#: identity/identitydialog.cpp:379
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "Isitshixo se PGP 0x%1"
 
-#: identity/identitydialog.cpp:408
+#: identity/identitydialog.cpp:404
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3037,12 +3037,12 @@ msgid ""
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:411
 #, fuzzy, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "Isitshixo se OpenPGP:"
 
-#: identity/identitydialog.cpp:425
+#: identity/identitydialog.cpp:421
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3051,12 +3051,12 @@ msgid ""
 "not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:426
 #, fuzzy, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "Ithumela Iziqinisekiso"
 
-#: identity/identitydialog.cpp:444
+#: identity/identitydialog.cpp:440
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3066,79 +3066,79 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:450
+#: identity/identitydialog.cpp:446
 #, fuzzy, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "&Khetha isiqinisekiso:"
 
-#: identity/identitydialog.cpp:467
+#: identity/identitydialog.cpp:463
 #, fuzzy, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Ekhethwayo"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:468
 #, fuzzy, kde-format
 msgid "Enable Autocrypt"
 msgstr "Inkcazelo"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
 msgstr ""
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:484
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:487
+#: identity/identitydialog.cpp:483
 #, fuzzy, kde-format
 msgid "Overwrite defaults:"
 msgstr "Ngenisa Ifayile"
 
-#: identity/identitydialog.cpp:492
+#: identity/identitydialog.cpp:488
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Tyikitya Umyalezo"
 
-#: identity/identitydialog.cpp:495
+#: identity/identitydialog.cpp:491
 #, fuzzy, kde-format
 msgid "Encrypt messages when possible"
 msgstr "Fihla imiyalezo ngokuzenzekelayo &anini na xa kunokwenzeka"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:498 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Lumkisa xa uzama ukuthumela &imiyalezo engatyikitywanga"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:501 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Lumkisiwe ngexesha ibizama ukuthumela umyalezo oguqulelwe kwi khowudi"
 
-#: identity/identitydialog.cpp:511
+#: identity/identitydialog.cpp:507
 #, fuzzy, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "&Ukubheka phambili"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:515
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "&Phendula-Kwidilesi:"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:519
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3149,13 +3149,13 @@ msgid ""
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:540
+#: identity/identitydialog.cpp:536
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgid "&CC addresses:"
 msgstr "&Iidilesi ze BCC:"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:541
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3171,12 +3171,12 @@ msgstr ""
 "ekuthumeleni ukhuphelo lomyalezo ngamnye othunyelwe   kwenye i akhawunti "
 "yakho.</p><p>Ukuba uyathandabuza, shiya elibala lingenanto.</p></qt> "
 
-#: identity/identitydialog.cpp:560
+#: identity/identitydialog.cpp:556
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "&Iidilesi ze BCC:"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3192,75 +3192,75 @@ msgstr ""
 "ekuthumeleni ukhuphelo lomyalezo ngamnye othunyelwe   kwenye i akhawunti "
 "yakho.</p><p>Ukuba uyathandabuza, shiya elibala lingenanto.</p></qt> "
 
-#: identity/identitydialog.cpp:578
+#: identity/identitydialog.cpp:574
 #, fuzzy, kde-format
 msgid "D&ictionary:"
 msgstr "&Indawo ekuyo:"
 
-#: identity/identitydialog.cpp:584
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Incwadi eneenkcukacha Yeposi-Ethunyelwey&o"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Incwadi eneenkcukacha yeposi-&ethunyelweyo:"
 
-#: identity/identitydialog.cpp:592
+#: identity/identitydialog.cpp:588
 #, fuzzy, kde-format
 msgid "Select Draft Folder"
 msgstr "Khetha umhlathi(imi):"
 
-#: identity/identitydialog.cpp:594
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "&Imizobo yenncwadi eneenkcukacha:"
 
-#: identity/identitydialog.cpp:600
+#: identity/identitydialog.cpp:596
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Incwadi eneenkcukacha"
 
-#: identity/identitydialog.cpp:602
+#: identity/identitydialog.cpp:598
 #, fuzzy, kde-format
 msgid "&Templates folder:"
 msgstr "&Incwadi eneenkcukacha yenkunkuma:"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:603
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Qwalasela i Akhawunti"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:610
 #, fuzzy, kde-format
 msgid "Attach my vCard to message"
 msgstr "Yongeza 'isihloko' k umyalezo."
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1168
+#: identity/identitydialog.cpp:611 identity/identitydialog.cpp:1160
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
 msgstr "Nika igama kwakhona..."
 
-#: identity/identitydialog.cpp:624
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgid "Autocorrection language:"
 msgstr "Khetha &ulwimi:"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:628
 #, fuzzy, kde-format
 msgid "Restore default domain name"
 msgstr "Indawo yokwendalo:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:631
 #, fuzzy, kde-format
 msgid "Defaul&t domain:"
 msgstr "Indawo yokwendalo:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:637
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3269,38 +3269,38 @@ msgstr ""
 "<qt><p>Indawo yokungagqibekanga isetyenziselwe ukugqiba iidilesi ze email "
 "ezine gama lomsebenzisi.</p></qt>"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:654
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Sebenzisa umyalezo wesiko onesimamva se-id "
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:668
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Buyisela"
 
-#: identity/identitydialog.cpp:689
+#: identity/identitydialog.cpp:681
 #, fuzzy, kde-format
 msgid "Signature"
 msgstr "&Utyikityo"
 
-#: identity/identitydialog.cpp:696
+#: identity/identitydialog.cpp:688
 #, fuzzy, kde-format
 msgid "Picture"
 msgstr "&Utyikityo"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:741
 #, fuzzy, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Yongeza Idilesi ye Email"
 
-#: identity/identitydialog.cpp:758 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:750 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 msgid "Invalid Email Address"
 msgstr "Yongeza Idilesi ye Email"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:808
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3309,14 +3309,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:825
+#: identity/identitydialog.cpp:817
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:832
+#: identity/identitydialog.cpp:824
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3325,31 +3325,31 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:841
+#: identity/identitydialog.cpp:833
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:851
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "&Idilesi ye email ye CA ekhupha iziqinisekiso"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:855
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Utyikityo luphelelwe lixesha."
 
-#: identity/identitydialog.cpp:879
+#: identity/identitydialog.cpp:871
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Hlela Uchazo \"%1\" "
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3359,7 +3359,7 @@ msgstr ""
 "Ngoko ke incwadi eneenkcukacha engagqibekanga esezakulungiswa iza "
 "kusetyenziswa."
 
-#: identity/identitydialog.cpp:1170
+#: identity/identitydialog.cpp:1162
 #, kde-format
 msgid "Edit..."
 msgstr "Hlela..."
@@ -4012,78 +4012,78 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:824
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:844 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
+#: kmkernel.cpp:835 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Thumela iposi"
 
-#: kmkernel.cpp:845 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
+#: kmkernel.cpp:836 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Ilungisele ukuthumela i email..."
 
-#: kmkernel.cpp:877
+#: kmkernel.cpp:868
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:879
+#: kmkernel.cpp:870
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:952
+#: kmkernel.cpp:943
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:954
+#: kmkernel.cpp:945
 #, kde-format
 msgid "Online/Offline"
 msgstr ""
 
-#: kmkernel.cpp:955 kmmainwidget.cpp:2353
+#: kmkernel.cpp:946 kmmainwidget.cpp:2353
 #, fuzzy, kde-format
 msgid "Work Online"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:956 kmmainwidget.cpp:2350
+#: kmkernel.cpp:947 kmmainwidget.cpp:2350
 #, fuzzy, kde-format
 msgid "Work Offline"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:980
+#: kmkernel.cpp:971
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:983
+#: kmkernel.cpp:974
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:1078
+#: kmkernel.cpp:1069
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:1079
+#: kmkernel.cpp:1070
 #, fuzzy, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmkernel.cpp:1641
+#: kmkernel.cpp:1618
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4091,7 +4091,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1665
+#: kmkernel.cpp:1642
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4099,25 +4099,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1680
+#: kmkernel.cpp:1657
 #, fuzzy, kde-format
 msgid "Sending messages"
 msgstr "Tyikitya Imiyalezo"
 
-#: kmkernel.cpp:1681
+#: kmkernel.cpp:1658
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "Yazisa uqhubekeko lomthumeli..."
 
-#: kmkernel.cpp:1760
+#: kmkernel.cpp:1737
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1936 kmkernel.cpp:1942
+#: kmkernel.cpp:1913 kmkernel.cpp:1919
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
