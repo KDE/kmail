@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-02 00:59+0000\n"
-"PO-Revision-Date: 2023-01-28 07:35+0100\n"
+"PO-Revision-Date: 2023-02-02 08:52+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2799,7 +2799,7 @@ msgstr ""
 #: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
 #, kde-format
 msgid "OpenPGP signing key:"
-msgstr ""
+msgstr "OpenPGP ხელმოწერის გასაღები:"
 
 #: identity/identitydialog.cpp:369
 #, kde-format
@@ -2825,7 +2825,7 @@ msgstr ""
 #: identity/identitydialog.cpp:411
 #, kde-format
 msgid "OpenPGP encryption key:"
-msgstr ""
+msgstr "OpenPGP დაშიფვრის გასაღები:"
 
 #: identity/identitydialog.cpp:421
 #, kde-format
@@ -2839,7 +2839,7 @@ msgstr ""
 #: identity/identitydialog.cpp:426
 #, kde-format
 msgid "S/MIME signing certificate:"
-msgstr ""
+msgstr "S/MIME ხელმოწერის სერტიფიკატი:"
 
 #: identity/identitydialog.cpp:440
 #, kde-format
@@ -4170,7 +4170,7 @@ msgstr "საქაღალდეზე გადასვლა"
 #: kmmainwidget.cpp:2819
 #, kde-format
 msgid "Save &As..."
-msgstr ""
+msgstr "შენახვა &როგორც..."
 
 #: kmmainwidget.cpp:2830
 #, kde-format
@@ -4347,7 +4347,7 @@ msgstr ""
 #: kmmainwidget.cpp:3090
 #, kde-format
 msgid "&Create Filter"
-msgstr ""
+msgstr "ფილტრის &შექმნა"
 
 #: kmmainwidget.cpp:3094
 #, kde-format
@@ -4486,12 +4486,12 @@ msgstr ""
 #: kmmainwidget.cpp:3213
 #, kde-format
 msgid "&Display Message"
-msgstr ""
+msgstr "&შეტყობინების ჩვენება"
 
 #: kmmainwidget.cpp:3220
 #, kde-format
 msgid "&Next Message"
-msgstr ""
+msgstr "&შემდეგი შეტყობინება"
 
 #: kmmainwidget.cpp:3223
 #, kde-format
@@ -4501,7 +4501,7 @@ msgstr "შემდეგ შეტყობინებაზე გადა�
 #: kmmainwidget.cpp:3227
 #, kde-format
 msgid "Next &Unread Message"
-msgstr ""
+msgstr "შემდეგი წაუკითხავი შეტყობინება"
 
 #: kmmainwidget.cpp:3235
 #, kde-format
@@ -4512,12 +4512,12 @@ msgstr "შემდეგი"
 #: kmmainwidget.cpp:3236
 #, kde-format
 msgid "Go to the next unread message"
-msgstr ""
+msgstr "შემდეგ წაუკითხავ შეტყობინებაზე გადასვლა"
 
 #: kmmainwidget.cpp:3240
 #, kde-format
 msgid "&Previous Message"
-msgstr ""
+msgstr "&წინა შეტყობინება"
 
 #: kmmainwidget.cpp:3242
 #, kde-format
@@ -4527,7 +4527,7 @@ msgstr "წინა შეტყობინებაზე გადასვ�
 #: kmmainwidget.cpp:3247
 #, kde-format
 msgid "Previous Unread &Message"
-msgstr ""
+msgstr "წინა წაუკითხავი &შეტყობინება"
 
 #: kmmainwidget.cpp:3255
 #, kde-format
@@ -4538,7 +4538,7 @@ msgstr "წინა"
 #: kmmainwidget.cpp:3256
 #, kde-format
 msgid "Go to the previous unread message"
-msgstr ""
+msgstr "წინა წაუკითხავ შეტყობინებაზე გადასვლა"
 
 #: kmmainwidget.cpp:3260
 #, kde-format
@@ -4611,7 +4611,7 @@ msgstr "&შეტყობინებების მორგება..."
 #: kmmainwidget.cpp:3323
 #, kde-format
 msgid "&Configure KMail..."
-msgstr ""
+msgstr "&KMail-ის მორგება..."
 
 #: kmmainwidget.cpp:3330
 #, kde-format
@@ -4802,7 +4802,7 @@ msgstr ""
 #: kmmainwidget.cpp:4178
 #, kde-format
 msgid "Filter %1"
-msgstr ""
+msgstr "%1-ის ფილტრი"
 
 #: kmmainwidget.cpp:4645
 #, kde-format
