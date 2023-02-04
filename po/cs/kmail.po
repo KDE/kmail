@@ -3,14 +3,14 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011, 2012.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vit@pelcak.org>, 2021, 2022.
+# Vit Pelcak <vit@pelcak.org>, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-02 00:59+0000\n"
-"PO-Revision-Date: 2022-01-14 14:39+0100\n"
+"PO-Revision-Date: 2023-02-03 16:48+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 21.12.1\n"
+"X-Generator: Lokalize 22.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -221,15 +221,15 @@ msgstr ""
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
-msgstr ""
+msgstr "Podpora LDAP, údržba"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Hlavní přispěvatel do Akonadi"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
-msgstr ""
+msgstr "Dokumentace, stále aktivní"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
@@ -257,7 +257,7 @@ msgstr ""
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
-msgstr ""
+msgstr "Smazat celé vlákno"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -807,7 +807,7 @@ msgstr "&Použít vlastní barvy"
 #: configuredialog/configureappearancepage.cpp:323
 #, kde-format
 msgid "&Do not change color from original HTML mail"
-msgstr ""
+msgstr "Neměnit barvu půvo&dního e-mailu HTML"
 
 #: configuredialog/configureappearancepage.cpp:336
 #, kde-format
@@ -1552,7 +1552,7 @@ msgstr "Moduly pro kontrolu před odesláním"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, kde-format
 msgid "Composer Plugins"
-msgstr ""
+msgstr "Moduly editoru"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
@@ -2771,7 +2771,7 @@ msgstr "Chyba při generování klíče"
 #: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
-msgstr "Žád&ný klíč"
+msgstr "Žádný klíč"
 
 #: identity/identitydialog.cpp:216
 #, kde-format
@@ -2892,7 +2892,7 @@ msgstr ""
 #: identity/identitydialog.cpp:379
 #, kde-format
 msgid "OpenPGP key:"
-msgstr ""
+msgstr "Klíč OpenPGP:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -2962,49 +2962,49 @@ msgstr "Preferovaný formát:"
 #: identity/identitydialog.cpp:468
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr ""
+msgstr "Povolit automatické šifrování"
 
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Automaticky šifrovat"
 
 #: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Dejte ostatním vědět, že preferujete šifrování"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Přepsat globální nastavení pro výchozí bezpečnostní nastavení"
 
 #: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Přepsat výchozí:"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
 msgid "Sign messages"
-msgstr ""
+msgstr "Podepisovat zprávy"
 
 #: identity/identitydialog.cpp:491
 #, kde-format
 msgid "Encrypt messages when possible"
-msgstr ""
+msgstr "Šifrovat zprávy, pokud možno"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr ""
+msgstr "Upozornit při pokusu o odeslání nepodepsané zprávy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr ""
+msgstr "Upozornit při pokusu o odeslání nešifrované zprávy"
 
 #: identity/identitydialog.cpp:507
 #, kde-format
@@ -3411,7 +3411,7 @@ msgstr ""
 #: identity/xfaceconfigurator.cpp:123
 #, kde-format
 msgid "No image will be sent."
-msgstr ""
+msgstr "Nebude odeslán žádný obrázek."
 
 #: identity/xfaceconfigurator.cpp:126
 #, kde-format
@@ -3504,7 +3504,7 @@ msgstr "Přiložit"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr ""
+msgstr "Nepřipojovat"
 
 #: job/removecollectionjob.cpp:56
 #, kde-format
@@ -4466,7 +4466,7 @@ msgstr "Správa poštovní &konference..."
 #: kmmainwidget.cpp:2983
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr ""
+msgstr "Vyčistit &mezipaměť Akonadi..."
 
 #: kmmainwidget.cpp:2987
 #, kde-format
@@ -4928,7 +4928,7 @@ msgstr ""
 #: kmmainwidget.cpp:3530
 #, kde-format
 msgid "Previous Selected Folder"
-msgstr ""
+msgstr "Předchozí vybraná složka"
 
 #: kmmainwidget.cpp:3537
 #, kde-format
@@ -5031,7 +5031,7 @@ msgstr "Zrušit"
 #: kmmainwidget.cpp:4836
 #, kde-format
 msgid "Do you want to restart Akonadi?"
-msgstr ""
+msgstr "Přejete si restartovat Akonadi?"
 
 #: kmmainwidget.cpp:4837
 #, kde-format
@@ -5046,7 +5046,7 @@ msgstr "Restartovat"
 #: kmmainwidget.cpp:4845
 #, kde-format
 msgid "Akonadi restarted."
-msgstr ""
+msgstr "Akonadi bylo restartováno."
 
 #: kmmainwin.cpp:38
 #, kde-format
@@ -6036,7 +6036,7 @@ msgstr "Zkontrolovat pravopis před odesláním"
 #: settings/kmail.kcfg.cmake:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Automaticky požadovat oznámení o &naložení"
+msgstr "Auto&maticky požadovat upozornění na dispozice zprávy"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.cmake:224
@@ -6309,7 +6309,7 @@ msgstr "Přidat novou značku..."
 #: tag/tagselectdialog.cpp:66
 #, kde-format
 msgid "Search tag..."
-msgstr ""
+msgstr "Hledat značku..."
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -6577,7 +6577,7 @@ msgstr "Povolit mazání zpráv bez potvrzení"
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
-msgstr ""
+msgstr "Povolit přetahování složek"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -6631,13 +6631,13 @@ msgstr "Otevřít &zprávu"
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr ""
+msgstr "Výchozí hodnoty zabezpečení"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
 #, kde-format
 msgid "Encrypt draft messages"
-msgstr ""
+msgstr "Šifrovat koncepty"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6673,49 +6673,49 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:44
 #, kde-format
 msgid "Encry&pt sent messages"
-msgstr ""
+msgstr "Šifrovat odeslané z&právy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
 #, kde-format
 msgid "Sign all messages"
-msgstr ""
+msgstr "Podepsat všechny zprávy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
 #, kde-format
 msgid "Encrypt all messages when possible"
-msgstr ""
+msgstr "Šifrovat, pokud možno, všechny zprávy"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
 #, kde-format
 msgid "Encryption indicators"
-msgstr ""
+msgstr "Ukazatele šifrování"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
 #, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr ""
+msgstr "Zobrazit ukazatel zašifrovaný/podepsaný"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Zobrazit úroveň důvěry šifrovacího klíče"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Varování"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
 #, kde-format
 msgid "Always approve encryption keys before send"
-msgstr ""
+msgstr "Vždy schvalovat šifrovací klíče před odesláním"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6783,7 +6783,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:221
 #, kde-format
 msgid "For own certificates:"
-msgstr ""
+msgstr "Pro vlastní certifikáty:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
@@ -6797,6 +6797,13 @@ msgid ""
 "The recommended SPHINX setting is 30 days.\n"
 "</p></qt>"
 msgstr ""
+"<qt>\n"
+"<h1>Varování při vypršení vlastního certifikátu</h1>\n"
+"Zvolte minimální počet dnů, po které bude kořenový certifikát považován za "
+"platný a nebudou generována varování.\n"
+"<p>\n"
+"Doporučená hodnota SPHINX je 30 dnů.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -7081,7 +7088,7 @@ msgstr "Dotázat se"
 #: ui/securitypagemdntab.ui:53
 #, kde-format
 msgid "Deny"
-msgstr "Odmítnout"
+msgstr "Zakázat"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioAlways)
 #: ui/securitypagemdntab.ui:63
@@ -7401,7 +7408,7 @@ msgstr "Odesílat obrázek s každou zprávou:"
 #: ui/xfaceconfigurator.ui:30
 #, kde-format
 msgid "Don't send"
-msgstr ""
+msgstr "Neposílat"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:35
@@ -7419,7 +7426,7 @@ msgstr ""
 #: ui/xfaceconfigurator.ui:45
 #, kde-format
 msgid "Send both"
-msgstr ""
+msgstr "Odeslat obojí"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/xfaceconfigurator.ui:68
@@ -7437,7 +7444,7 @@ msgstr ""
 #: ui/xfaceconfigurator.ui:78
 #, kde-format
 msgid "An informative text about the current mode!"
-msgstr ""
+msgstr "Informační text o aktuálním režimu."
 
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
@@ -7447,7 +7454,7 @@ msgstr "%1 s"
 #: undosend/undosendcombobox.cpp:24
 #, kde-format
 msgid "5 minutes"
-msgstr ""
+msgstr "5 minut"
 
 #: undosend/undosendcreatejob.cpp:44
 #, kde-format
