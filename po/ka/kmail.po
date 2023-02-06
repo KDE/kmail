@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-01-14 18:30+0100\n"
+"PO-Revision-Date: 2023-02-05 09:39+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2236,7 +2236,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:2565
 #, kde-format
 msgid "Undefined Encryption Key"
-msgstr ""
+msgstr "დაშიფვრის აღუწერელი გასაღები"
 
 #: editor/kmcomposerwin.cpp:2629
 #, kde-format
@@ -2249,7 +2249,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:2636
 #, kde-format
 msgid "Undefined Signing Key"
-msgstr ""
+msgstr "ხელმოწერის აღუწერელი გასაღები"
 
 #: editor/kmcomposerwin.cpp:2795
 #, kde-format
@@ -2799,7 +2799,7 @@ msgstr ""
 #: identity/identitydialog.cpp:364 identity/identitydialog.cpp:388
 #, kde-format
 msgid "OpenPGP signing key:"
-msgstr ""
+msgstr "OpenPGP ხელმოწერის გასაღები:"
 
 #: identity/identitydialog.cpp:370
 #, kde-format
@@ -2825,7 +2825,7 @@ msgstr ""
 #: identity/identitydialog.cpp:413
 #, kde-format
 msgid "OpenPGP encryption key:"
-msgstr ""
+msgstr "OpenPGP დაშიფვრის გასაღები:"
 
 #: identity/identitydialog.cpp:423
 #, kde-format
@@ -2839,7 +2839,7 @@ msgstr ""
 #: identity/identitydialog.cpp:428
 #, kde-format
 msgid "S/MIME signing certificate:"
-msgstr ""
+msgstr "S/MIME ხელმოწერის სერტიფიკატი:"
 
 #: identity/identitydialog.cpp:442
 #, kde-format
@@ -4347,7 +4347,7 @@ msgstr ""
 #: kmmainwidget.cpp:3107
 #, kde-format
 msgid "&Create Filter"
-msgstr ""
+msgstr "ფილტრის &შექმნა"
 
 #: kmmainwidget.cpp:3111
 #, kde-format
@@ -4486,12 +4486,12 @@ msgstr ""
 #: kmmainwidget.cpp:3230
 #, kde-format
 msgid "&Display Message"
-msgstr ""
+msgstr "&შეტყობინების ჩვენება"
 
 #: kmmainwidget.cpp:3237
 #, kde-format
 msgid "&Next Message"
-msgstr ""
+msgstr "&შემდეგი შეტყობინება"
 
 #: kmmainwidget.cpp:3240
 #, kde-format
@@ -4501,7 +4501,7 @@ msgstr "შემდეგ შეტყობინებაზე გადა�
 #: kmmainwidget.cpp:3244
 #, kde-format
 msgid "Next &Unread Message"
-msgstr ""
+msgstr "შემდეგი წაუკითხავი შეტყობინება"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
@@ -4512,12 +4512,12 @@ msgstr "შემდეგი"
 #: kmmainwidget.cpp:3253
 #, kde-format
 msgid "Go to the next unread message"
-msgstr ""
+msgstr "შემდეგ წაუკითხავ შეტყობინებაზე გადასვლა"
 
 #: kmmainwidget.cpp:3257
 #, kde-format
 msgid "&Previous Message"
-msgstr ""
+msgstr "&წინა შეტყობინება"
 
 #: kmmainwidget.cpp:3259
 #, kde-format
@@ -4527,7 +4527,7 @@ msgstr "წინა შეტყობინებაზე გადასვ�
 #: kmmainwidget.cpp:3264
 #, kde-format
 msgid "Previous Unread &Message"
-msgstr ""
+msgstr "წინა წაუკითხავი &შეტყობინება"
 
 #: kmmainwidget.cpp:3272
 #, kde-format
@@ -4538,7 +4538,7 @@ msgstr "წინა"
 #: kmmainwidget.cpp:3273
 #, kde-format
 msgid "Go to the previous unread message"
-msgstr ""
+msgstr "წინა წაუკითხავ შეტყობინებაზე გადასვლა"
 
 #: kmmainwidget.cpp:3277
 #, kde-format
@@ -4611,7 +4611,7 @@ msgstr "&შეტყობინებების მორგება..."
 #: kmmainwidget.cpp:3340
 #, kde-format
 msgid "&Configure KMail..."
-msgstr ""
+msgstr "&KMail-ის მორგება..."
 
 #: kmmainwidget.cpp:3347
 #, kde-format
@@ -4772,7 +4772,7 @@ msgstr ""
 #: kmmainwidget.cpp:4014
 #, kde-format
 msgid "Edit Search..."
-msgstr ""
+msgstr "ძებნის ჩასწორება..."
 
 #: kmmainwidget.cpp:4051
 #, kde-format
@@ -4802,7 +4802,7 @@ msgstr ""
 #: kmmainwidget.cpp:4195
 #, kde-format
 msgid "Filter %1"
-msgstr ""
+msgstr "%1-ის ფილტრი"
 
 #: kmmainwidget.cpp:4662
 #, kde-format
@@ -5322,7 +5322,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
-msgstr ""
+msgstr "მიმაგრებულ &ფაილად..."
 
 #: messageactions.cpp:70
 #, kde-format
@@ -6008,7 +6008,7 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:395
 #, kde-format
 msgid "Quote characters"
-msgstr ""
+msgstr "ბრჭყალის სიმბოლოები"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.cmake:410
