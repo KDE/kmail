@@ -237,6 +237,7 @@ private:
     void doLoadFromGlobalSettings() override;
     void swapTagsInListBox(const int first, const int second);
     void updateButtons();
+    void slotCustomMenuRequested(const QPoint &pos);
 
 private: // data
     QLineEdit *mTagAddLineEdit = nullptr;

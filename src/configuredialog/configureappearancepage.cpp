@@ -61,6 +61,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
+#include <QMenu>
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QVBoxLayout>
@@ -946,9 +947,11 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     mTagListBox = new QListWidget(mTagsGroupBox);
     mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
     connect(mTagListBox->model(), &QAbstractItemModel::rowsMoved, this, &AppearancePageMessageTagTab::slotRowsMoved);
+    connect(mTagListBox, &QListWidget::customContextMenuRequested, this, &AppearancePageMessageTagTab::slotCustomMenuRequested);
 
     mTagListBox->setMinimumWidth(150);
     listboxgrid->addWidget(mTagListBox);
+    mTagListBox->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // RHS for individual tag settings
 
@@ -1000,6 +1003,16 @@ AppearancePageMessageTagTab::~AppearancePageMessageTagTab() = default;
 void AppearancePageMessageTagTab::slotEmitChangeCheck()
 {
     slotEmitChanged();
+}
+
+void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
+{
+    const int currentIndex = mTagListBox->currentRow();
+    if (currentIndex >= 0) {
+        QMenu menu(this);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &AppearancePageMessageTagTab::slotRemoveTag);
+        menu.exec(QCursor::pos());
+    }
 }
 
 void AppearancePageMessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
