@@ -174,7 +174,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 ecm_set_disabled_deprecation_versions(QT 5.15.2
-     KF 5.102.0
+     KF 5.103.0
     )
 
 find_package(KUserFeedback 1.2.0 CONFIG)
