@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-02 00:59+0000\n"
+"POT-Creation-Date: 2023-02-14 00:59+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -757,238 +757,238 @@ msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:84
+#: configuredialog/configureappearancepage.cpp:85
 #, fuzzy, kde-format
 #| msgid "General"
 msgid "General"
 msgstr "Cyffredinol"
 
-#: configuredialog/configureappearancepage.cpp:91
+#: configuredialog/configureappearancepage.cpp:92
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgid "Fonts"
 msgstr "Cysylltau"
 
-#: configuredialog/configureappearancepage.cpp:97
+#: configuredialog/configureappearancepage.cpp:98
 #, fuzzy, kde-format
 #| msgid "Color&s"
 msgid "Colors"
 msgstr "Lliwi&au"
 
-#: configuredialog/configureappearancepage.cpp:103
+#: configuredialog/configureappearancepage.cpp:104
 #, fuzzy, kde-format
 #| msgid "La&yout"
 msgid "Layout"
 msgstr "&Haenlun"
 
-#: configuredialog/configureappearancepage.cpp:109
-#: configuredialog/configureappearancepage.cpp:130
+#: configuredialog/configureappearancepage.cpp:110
+#: configuredialog/configureappearancepage.cpp:131
 #, kde-format
 msgid "Message List"
 msgstr "Rhestr Negeseuon"
 
-#: configuredialog/configureappearancepage.cpp:115
+#: configuredialog/configureappearancepage.cpp:116
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message Tags"
 msgstr "&Neges"
 
-#: configuredialog/configureappearancepage.cpp:129
+#: configuredialog/configureappearancepage.cpp:130
 msgid "Message Body"
 msgstr "Corff y Neges"
 
-#: configuredialog/configureappearancepage.cpp:131
+#: configuredialog/configureappearancepage.cpp:132
 #, fuzzy
 msgid "Message List - Unread Messages"
 msgstr "Neges Nesaf &Heb ei Darllen"
 
-#: configuredialog/configureappearancepage.cpp:132
+#: configuredialog/configureappearancepage.cpp:133
 #, fuzzy
 msgid "Message List - Important Messages"
 msgstr "Neges bwysig"
 
-#: configuredialog/configureappearancepage.cpp:133
+#: configuredialog/configureappearancepage.cpp:134
 #, fuzzy
 msgid "Message List - Action Item Messages"
 msgstr "Rhestr Negeseuon - Maes Dyddiad"
 
-#: configuredialog/configureappearancepage.cpp:134
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
 msgstr "Wynebfath o Led Gosodedig"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Composer"
 msgstr "Cyfansoddydd"
 
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:137
 msgid "Printing Output"
 msgstr "Allbwn Argraffu"
 
-#: configuredialog/configureappearancepage.cpp:147
+#: configuredialog/configureappearancepage.cpp:148
 #, kde-format
 msgid "&Use custom fonts"
 msgstr "&Defnyddio wynebfathau addasiedig"
 
-#: configuredialog/configureappearancepage.cpp:165
+#: configuredialog/configureappearancepage.cpp:166
 #, kde-format
 msgid "Apply &to:"
 msgstr "Gwethr&edu ar:"
 
-#: configuredialog/configureappearancepage.cpp:301
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Quoted Text - First Level"
 msgstr "Testun Dyfynedig - Lefel Cyntaf"
 
-#: configuredialog/configureappearancepage.cpp:302
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - Second Level"
 msgstr "Testun Dyfynedig - Ail Lefel"
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Quoted Text - Third Level"
 msgstr "Testun Dyfynedig - Trydydd Lefel"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:305
 msgid "Link"
 msgstr "Cyswllt"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:306
 #, fuzzy
 msgid "Unread Message"
 msgstr "Neges na's darllenwyd"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:307
 #, fuzzy
 msgid "Important Message"
 msgstr "Neges bwysig"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:308
 #, fuzzy
 msgid "Action Item Message"
 msgstr "Neges bwysig"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:309
 #, fuzzy
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "Cefndir bar cyflwr HTML - Dim neges HTML"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:310
 #, fuzzy
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "Blaendir bar cyflwr HTML - Dim neges HTML"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:311
 #, fuzzy
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "Cefndir bar cyflwr HTML - Neges HTML"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:312
 #, fuzzy
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Blaendir bar cyflwr HTML - Neges HTML"
 
-#: configuredialog/configureappearancepage.cpp:319
+#: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "&Use custom colors"
 msgstr "&Defnyddio lliwiau addasiedig"
 
-#: configuredialog/configureappearancepage.cpp:323
+#: configuredialog/configureappearancepage.cpp:324
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:336
+#: configuredialog/configureappearancepage.cpp:337
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "Ailgylchu'r lliwiau wrth dd&yfynnu'n ddwfn"
 
-#: configuredialog/configureappearancepage.cpp:344
+#: configuredialog/configureappearancepage.cpp:345
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:350
+#: configuredialog/configureappearancepage.cpp:351
 #, kde-format
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:467
+#: configuredialog/configureappearancepage.cpp:468
 #, fuzzy, kde-format
 msgid "Show folder quick search field"
 msgstr "Chwiliad Diwethaf"
 
-#: configuredialog/configureappearancepage.cpp:474
+#: configuredialog/configureappearancepage.cpp:475
 #, fuzzy, kde-format
 #| msgid "Shor&t folder list"
 msgid "Show Favorite Folders View"
 msgstr "Rh&estr fer o blygyll"
 
-#: configuredialog/configureappearancepage.cpp:479
-#: configuredialog/configureappearancepage.cpp:507
+#: configuredialog/configureappearancepage.cpp:480
+#: configuredialog/configureappearancepage.cpp:508
 #, fuzzy, kde-format
 #| msgid "Receiver"
 msgid "Never"
 msgstr "Derbyniwr"
 
-#: configuredialog/configureappearancepage.cpp:484
+#: configuredialog/configureappearancepage.cpp:485
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&As Icons"
 msgid "As icons"
 msgstr "Fel &Eiconau"
 
-#: configuredialog/configureappearancepage.cpp:489
+#: configuredialog/configureappearancepage.cpp:490
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:498
+#: configuredialog/configureappearancepage.cpp:499
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder Tooltips"
 msgstr "Rhestr Plygyll"
 
-#: configuredialog/configureappearancepage.cpp:503
+#: configuredialog/configureappearancepage.cpp:504
 #, fuzzy, kde-format
 #| msgid "Always"
 msgid "Always"
 msgstr "O hyd"
 
-#: configuredialog/configureappearancepage.cpp:562
+#: configuredialog/configureappearancepage.cpp:563
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "&Fformat safonol (%1)"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:564
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Fformat &lleol (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:565
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "Fformat &pert (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:566
 #, fuzzy
 msgid "C&ustom format:"
 msgstr "Fformat &Cadw:"
 
-#: configuredialog/configureappearancepage.cpp:588
+#: configuredialog/configureappearancepage.cpp:589
 #, fuzzy, kde-format
 msgid "Default aggregation:"
 msgstr "wedi'u dileu"
 
-#: configuredialog/configureappearancepage.cpp:606
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 msgid "Default theme:"
 msgstr "wedi'u dileu"
 
-#: configuredialog/configureappearancepage.cpp:643
+#: configuredialog/configureappearancepage.cpp:644
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:649
+#: configuredialog/configureappearancepage.cpp:650
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1057,93 +1057,98 @@ msgstr ""
 "li><li>Z - amserfa mewn ffurf rhifol (-0500)</li></ul><p><strong>Anwybyddir "
 "pob nod arall o fewnbwn.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:686
+#: configuredialog/configureappearancepage.cpp:687
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "Ymddangosiad y Dyddiad"
 
-#: configuredialog/configureappearancepage.cpp:794
+#: configuredialog/configureappearancepage.cpp:795
 #, fuzzy, kde-format
 msgid "Message Window"
 msgstr "Rhestr Negeseuon"
 
-#: configuredialog/configureappearancepage.cpp:801
+#: configuredialog/configureappearancepage.cpp:802
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:809
+#: configuredialog/configureappearancepage.cpp:810
 #, fuzzy, kde-format
 #| msgid "System &Tray"
 msgid "System Tray"
 msgstr "B&ar Tasgau"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:815 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
 #, fuzzy, kde-format
 msgid "Enable system tray icon"
 msgstr "hysbysiad cafn cysawd"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:819 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:837
+#: configuredialog/configureappearancepage.cpp:838
 #, fuzzy, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "&Dangos y cafn cysawd o hyd"
 
-#: configuredialog/configureappearancepage.cpp:905
+#: configuredialog/configureappearancepage.cpp:906
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Hidlau ar Gael"
 
-#: configuredialog/configureappearancepage.cpp:918
+#: configuredialog/configureappearancepage.cpp:919
 #, kde-format
 msgid "Add new tag"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:923
+#: configuredialog/configureappearancepage.cpp:924
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Remove selected tag"
 msgstr "Gwaredu Negeseuon Dyblyg"
 
-#: configuredialog/configureappearancepage.cpp:932
+#: configuredialog/configureappearancepage.cpp:933
 #, kde-format
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:938
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:960
+#: configuredialog/configureappearancepage.cpp:963
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Anfon"
 
-#: configuredialog/configureappearancepage.cpp:1130
+#: configuredialog/configureappearancepage.cpp:1013
+#, fuzzy, kde-format
+msgid "Delete"
+msgstr "Wedi'u dileu"
+
+#: configuredialog/configureappearancepage.cpp:1143
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1131
+#: configuredialog/configureappearancepage.cpp:1144
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Gware&du"
 
-#: configuredialog/configureappearancepage.cpp:1176
-#: configuredialog/configureappearancepage.cpp:1211
+#: configuredialog/configureappearancepage.cpp:1189
+#: configuredialog/configureappearancepage.cpp:1224
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
