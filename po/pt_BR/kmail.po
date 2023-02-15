@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:59+0000\n"
-"PO-Revision-Date: 2023-01-16 23:44-0300\n"
+"PO-Revision-Date: 2023-02-14 11:02-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -1037,9 +1037,7 @@ msgid "Ta&g Settings"
 msgstr "Confi&gurações da marca"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Excluir"
 
@@ -3011,7 +3009,7 @@ msgstr "Chave de assinatura OpenPGP:"
 #: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Usar mesma chave para criptografia e assinatura"
 
 #: identity/identitydialog.cpp:379
 #, kde-format
@@ -3099,21 +3097,20 @@ msgstr ""
 #: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Deixe os outros saberem que você prefere criptografia"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Sobrescrever as configurações globais por padrões de segurança"
 
 #: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "Sobrescrever padrões:"
 
 #: identity/identitydialog.cpp:488
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
 msgstr "Assinar mensagens"
 
@@ -6944,14 +6941,13 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Alertas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Sempre mostrar as chaves de criptografia para &aprovação"
+msgstr "Sempre aprovar chaves de criptografia antes de enviar"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7019,22 +7015,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Para certificados &raiz:"
+msgstr "Para certificados próprios:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7045,11 +7032,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Avisar se um certificado raiz expirar</h1>\n"
-"Selecione o número de dias em que o certificado raiz deve ser válido sem "
+"<h1>Avisar se um certificado próprio expirar</h1>\n"
+"Selecione o número de dias em que o certificado próprio deve ser válido sem "
 "emitir um aviso.\n"
 "<p>\n"
-"A configuração SPHINX recomendada é de 14 dias.\n"
+"A configuração SPHINX recomendada é de 30 dias.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)

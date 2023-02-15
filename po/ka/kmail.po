@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-14 00:59+0000\n"
-"PO-Revision-Date: 2023-02-02 08:52+0100\n"
+"PO-Revision-Date: 2023-02-14 06:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -978,9 +978,7 @@ msgid "Ta&g Settings"
 msgstr "&ჭდის მორგება"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "წაშლა"
 
@@ -5458,7 +5456,7 @@ msgstr "ელფოსტა"
 #: messageactions.cpp:662
 #, kde-format
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: messageactions.cpp:667
 #, kde-format
