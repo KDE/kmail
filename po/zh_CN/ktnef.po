@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-31 00:59+0000\n"
-"PO-Revision-Date: 2023-02-07 11:01\n"
+"PO-Revision-Date: 2023-02-15 11:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -65,7 +65,7 @@ msgstr "因选中项包含空标签而无法保存。"
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
-msgstr "无法为写入操作打开文件，请检查文件权限。"
+msgstr "无法打开文件进行写入，请检查文件权限。"
 
 #: ktnefmain.cpp:94
 #, kde-format
@@ -182,7 +182,7 @@ msgstr "信件不包含任何富文本数据。"
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
-msgstr "无法为写入操作打开文件“%1”，请检查文件权限。"
+msgstr "无法打开文件“%1”进行写入，请检查文件权限。"
 
 #: ktnefmain.cpp:526
 #, kde-format

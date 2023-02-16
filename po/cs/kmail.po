@@ -1009,9 +1009,7 @@ msgid "Ta&g Settings"
 msgstr "Nastav&ení značek"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Smazat"
 

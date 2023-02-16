@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-16 00:47+0000\n"
-"PO-Revision-Date: 2023-02-07 11:01\n"
+"PO-Revision-Date: 2023-02-15 11:04\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -201,22 +201,22 @@ msgstr "编辑..."
 #: widgets/formatcombobox.cpp:14
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
-msgstr "Zip 压缩文件 (.zip)"
+msgstr "已压缩的 Zip 压缩包 (.zip)"
 
 #: widgets/formatcombobox.cpp:15
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
-msgstr "无压缩的归档 (.tar)"
+msgstr "未压缩的 Tar 压缩包 (*.tar)"
 
 #: widgets/formatcombobox.cpp:16
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
-msgstr "BZ2 压缩的 tar 归档 (.tar.bz2)"
+msgstr "BZ2 压缩的 Tar 压缩包 (.tar.bz2)"
 
 #: widgets/formatcombobox.cpp:17
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
-msgstr "GZ 压缩的 tar 归档 (.tar.gz)"
+msgstr "GZ 压缩的 Tar 压缩包 (.tar.gz)"
 
 #: widgets/unitcombobox.cpp:13
 #, kde-format
