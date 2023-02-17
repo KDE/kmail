@@ -37,10 +37,10 @@ ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KF5::MailTransportAkonadi KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
 
 
-add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp ""
+add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
     "Qt::Test;KF5::IdentityManagementWidgets;KF5::MessageCore;KF5::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;Qt::Widgets;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::I18n;kmailprivate")
 
-add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KF5::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
+add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KF5::MailCommon;KF5::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KF5::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
 
-add_akonadi_isolated_test_advanced(kmcommandstest.cpp ""
+add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
     "Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KF5::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KF5::MailCommon;KF5::MailTransportAkonadi;KF5::Libkdepim;KF5::TemplateParser;kmailprivate")
