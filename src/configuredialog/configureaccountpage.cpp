@@ -211,7 +211,6 @@ void AccountsPageReceivingTab::slotAddCustomAccount()
 
 void AccountsPageReceivingTab::slotAddMailAccount()
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
 
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
@@ -221,9 +220,6 @@ void AccountsPageReceivingTab::slotAddMailAccount()
                                 "Please make sure you have AccountWizard properly installed."),
                            i18n("Unable to start account wizard"));
     }
-#else
-    qWarning() << "Account wizard not reimplemented yet";
-#endif
 }
 
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()
