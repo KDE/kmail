@@ -23,10 +23,10 @@
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent)
+    , mConfig(SendLaterUtil::defaultConfig())
     , mTimer(new QTimer(this))
     , mSender(new MessageComposer::AkonadiSender)
 {
-    mConfig = SendLaterUtil::defaultConfig();
     connect(mTimer, &QTimer::timeout, this, &SendLaterManager::slotCreateJob);
 }
 

@@ -20,10 +20,10 @@
 
 ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate)
     : MailCommon::ScheduledJob(folder, immediate)
+    , mDefaultIconName(QStringLiteral("kmail"))
     , mInfo(info)
     , mManager(manager)
 {
-    mDefaultIconName = QStringLiteral("kmail");
 }
 
 ArchiveJob::~ArchiveJob()

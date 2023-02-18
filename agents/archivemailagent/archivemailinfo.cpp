@@ -17,16 +17,16 @@ ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
 }
 
 ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
+    : mLastDateSaved(info.lastDateSaved())
+    , mArchiveAge(info.archiveAge())
+    , mArchiveType(info.archiveType())
+    , mArchiveUnit(info.archiveUnit())
+    , mSaveCollectionId(info.saveCollectionId())
+    , mPath(info.url())
+    , mMaximumArchiveCount(info.maximumArchiveCount())
+    , mSaveSubCollection(info.saveSubCollection())
+    , mIsEnabled(info.isEnabled())
 {
-    mLastDateSaved = info.lastDateSaved();
-    mArchiveAge = info.archiveAge();
-    mArchiveType = info.archiveType();
-    mArchiveUnit = info.archiveUnit();
-    mSaveCollectionId = info.saveCollectionId();
-    mMaximumArchiveCount = info.maximumArchiveCount();
-    mSaveSubCollection = info.saveSubCollection();
-    mPath = info.url();
-    mIsEnabled = info.isEnabled();
 }
 
 ArchiveMailInfo::~ArchiveMailInfo() = default;

@@ -23,8 +23,8 @@ using namespace FollowUpReminder;
 
 FollowUpReminderManager::FollowUpReminderManager(QObject *parent)
     : QObject(parent)
+    , mConfig(KSharedConfig::openConfig())
 {
-    mConfig = KSharedConfig::openConfig();
 }
 
 FollowUpReminderManager::~FollowUpReminderManager()

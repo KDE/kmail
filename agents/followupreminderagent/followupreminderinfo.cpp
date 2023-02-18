@@ -16,16 +16,16 @@ FollowUpReminderInfo::FollowUpReminderInfo(const KConfigGroup &config)
 }
 
 FollowUpReminderInfo::FollowUpReminderInfo(const FollowUpReminderInfo &info)
+    : mOriginalMessageItemId(info.originalMessageItemId())
+    , mAnswerMessageItemId(info.answerMessageItemId())
+    , mTodoId(info.todoId())
+    , mMessageId(info.messageId())
+    , mFollowUpReminderDate(info.followUpReminderDate())
+    , mTo(info.to())
+    , mSubject(info.subject())
+    , mUniqueIdentifier(info.uniqueIdentifier())
+    , mAnswerWasReceived(info.answerWasReceived())
 {
-    mFollowUpReminderDate = info.followUpReminderDate();
-    mOriginalMessageItemId = info.originalMessageItemId();
-    mMessageId = info.messageId();
-    mTo = info.to();
-    mSubject = info.subject();
-    mAnswerWasReceived = info.answerWasReceived();
-    mAnswerMessageItemId = info.answerMessageItemId();
-    mUniqueIdentifier = info.uniqueIdentifier();
-    mTodoId = info.todoId();
 }
 
 void FollowUpReminderInfo::readConfig(const KConfigGroup &config)

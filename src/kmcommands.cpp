@@ -164,8 +164,8 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
     : mDeletesItself(false)
     , mEmitsCompletedItself(false)
     , mParent(parent)
+    , mMsgList(msgList)
 {
-    mMsgList = msgList;
 }
 
 KMCommand::~KMCommand() = default;
