@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:59+0000\n"
+"POT-Creation-Date: 2023-02-18 01:00+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -612,7 +612,7 @@ msgctxt "Icon used for folders with no unread messages."
 msgid "&Normal:"
 msgstr "Н&ормална:"
 
-#: collectionpage/collectionviewpage.cpp:72
+#: collectionpage/collectionviewpage.cpp:71
 #, fuzzy, kde-format
 #| msgid "&Unread:"
 msgctxt "Icon used for folders which do have unread messages."
@@ -729,8 +729,8 @@ msgstr "Додајте сметка"
 msgid "Custom Account..."
 msgstr "Додајте сметка"
 
-#: configuredialog/configureaccountpage.cpp:220
-#: kmlaunchexternalcomponent.cpp:155
+#: configuredialog/configureaccountpage.cpp:219
+#: kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -740,33 +740,33 @@ msgstr ""
 "Не можев да го стартувам менаџерот на сертификати. Проверете ја вашата "
 "инсталација."
 
-#: configuredialog/configureaccountpage.cpp:222
-#: kmlaunchexternalcomponent.cpp:157
+#: configuredialog/configureaccountpage.cpp:221
+#: kmlaunchexternalcomponent.cpp:156
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start account wizard"
 msgstr "Не можев да ја создадам сметката"
 
-#: configuredialog/configureaccountpage.cpp:273
+#: configuredialog/configureaccountpage.cpp:269
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Вклучи при р&ачни проверки на пошта"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:277
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:284
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Check mail on startup"
 msgstr "Про&вери пошта на старт"
 
-#: configuredialog/configureaccountpage.cpp:335
+#: configuredialog/configureaccountpage.cpp:331
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."

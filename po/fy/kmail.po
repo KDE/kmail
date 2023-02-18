@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-14 00:59+0000\n"
+"POT-Creation-Date: 2023-02-18 01:00+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -626,7 +626,7 @@ msgctxt "Icon used for folders with no unread messages."
 msgid "&Normal:"
 msgstr "&Normaal:"
 
-#: collectionpage/collectionviewpage.cpp:72
+#: collectionpage/collectionviewpage.cpp:71
 #, fuzzy, kde-format
 #| msgid "&Unread:"
 msgctxt "Icon used for folders which do have unread messages."
@@ -743,8 +743,8 @@ msgstr "Akkount taheakje"
 msgid "Custom Account..."
 msgstr "Akkount taheakje"
 
-#: configuredialog/configureaccountpage.cpp:220
-#: kmlaunchexternalcomponent.cpp:155
+#: configuredialog/configureaccountpage.cpp:219
+#: kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -753,33 +753,33 @@ msgid ""
 msgstr ""
 "It sertifikaatbehear kin net begûn wurde. Kontrolearje jo ynstallaasje."
 
-#: configuredialog/configureaccountpage.cpp:222
-#: kmlaunchexternalcomponent.cpp:157
+#: configuredialog/configureaccountpage.cpp:221
+#: kmlaunchexternalcomponent.cpp:156
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgid "Unable to start account wizard"
 msgstr "It akkount koe net oanmakke wurde."
 
-#: configuredialog/configureaccountpage.cpp:273
+#: configuredialog/configureaccountpage.cpp:269
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Meinimme as jo berjocht &kontrôle mei de hân útfiere"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:277
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:284
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Check mail on startup"
 msgstr "Berjochten op&helje by it opstarten"
 
-#: configuredialog/configureaccountpage.cpp:335
+#: configuredialog/configureaccountpage.cpp:331
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
