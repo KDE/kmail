@@ -89,11 +89,7 @@
         "Name[wa]": "Racourtis",
         "Name[x-test]": "xxSummariesxx",
         "Name[zh_CN]": "摘要",
-        "Name[zh_TW]": "摘要",
-        "ServiceTypes": [
-            "KCModule"
-        ]
+        "Name[zh_TW]": "摘要"
     },
-    "X-KDE-FactoryName": "kontactsummary",
     "X-KDE-Weight": 100
 }

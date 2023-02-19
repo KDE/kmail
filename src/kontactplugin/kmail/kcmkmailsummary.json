@@ -91,11 +91,7 @@
         "Name[wa]": "Noveas messaedjes",
         "Name[x-test]": "xxNew Messagesxx",
         "Name[zh_CN]": "新邮件",
-        "Name[zh_TW]": "新訊息",
-        "ServiceTypes": [
-            "KCModule"
-        ]
+        "Name[zh_TW]": "新訊息"
     },
-    "X-KDE-FactoryName": "kmailsummary",
     "X-KDE-Weight": 200
 }
