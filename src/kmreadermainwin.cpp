@@ -57,7 +57,6 @@
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
@@ -735,7 +734,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
+#if HAVE_TEXT_TO_SPEECH_SUPPORT
         menu->addSeparator();
         menu->addAction(mReaderWin->speakTextAction());
 #endif

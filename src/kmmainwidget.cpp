@@ -41,7 +41,6 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/SearchRuleStatus>
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
 
 #include "collectionpage/collectionmailinglistpage.h"
 #include "collectionpage/collectionquotapage.h"
@@ -2705,7 +2704,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(&menu, selectedText);
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
+#if HAVE_TEXT_TO_SPEECH_SUPPORT
         menu.addSeparator();
         menu.addAction(mMsgView->speakTextAction());
 #endif
