@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-18 01:00+0000\n"
+"POT-Creation-Date: 2023-02-21 01:00+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1837,7 +1837,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "แฟ้มจัดเก็บของโฟลเดอร์"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3515
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3514
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -1942,7 +1942,7 @@ msgid "Encoding"
 msgstr "การเข้ารหัสภาษา"
 
 #: editor/kmcomposerwin.cpp:272 kmail_part.cpp:43 kmmainwin.cpp:60
-#: kmreadermainwin.cpp:463 kontactplugin/kmail/kmail_plugin.cpp:39
+#: kmreadermainwin.cpp:462 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2084,7 +2084,7 @@ msgstr "แ&ทรกแฟ้ม..."
 msgid "&Insert Recent Text File"
 msgstr "แ&ทรกแฟ้มที่ใช้ล่าสุด"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2870
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2869
 #, kde-format
 msgid "&Address Book"
 msgstr "&สมุดที่อยู่"
@@ -2274,14 +2274,14 @@ msgstr "ค้นหาจดหมาย..."
 msgid "Configure KMail..."
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:183 kmreadermainwin.cpp:522
+#: editor/kmcomposerwin.cpp:1491 kmmainwin.cpp:183 kmreadermainwin.cpp:521
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:186 kmreadermainwin.cpp:525
+#: editor/kmcomposerwin.cpp:1494 kmmainwin.cpp:186 kmreadermainwin.cpp:524
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
@@ -3887,7 +3887,7 @@ msgid "F&older"
 msgstr "โฟ&ลเดอร์"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3364 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3363 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
@@ -3895,7 +3895,7 @@ msgid "Apply Filters on Folder"
 msgstr "ปรับใช้ตัวกรองทั้งหมด"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3369 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3368 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, fuzzy, kde-format
 #| msgid "Current Folder & All Subfolders"
@@ -3922,7 +3922,7 @@ msgid "&Forward"
 msgstr "ส่ง&ต่อ"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3181 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3180 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "ปรับใช้ตัวกรอง"
@@ -4067,13 +4067,13 @@ msgstr ""
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
+#: kmkernel.cpp:835 kmmainwidget.cpp:2363 kmmainwidget.cpp:2379
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:836 kmmainwidget.cpp:2365 kmmainwidget.cpp:2381
+#: kmkernel.cpp:836 kmmainwidget.cpp:2364 kmmainwidget.cpp:2380
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4101,12 +4101,12 @@ msgstr ""
 msgid "Online/Offline"
 msgstr "ออนไลน์/ออฟไลน์"
 
-#: kmkernel.cpp:946 kmmainwidget.cpp:2353
+#: kmkernel.cpp:946 kmmainwidget.cpp:2352
 #, kde-format
 msgid "Work Online"
 msgstr "ทำงานออนไลน์"
 
-#: kmkernel.cpp:947 kmmainwidget.cpp:2350
+#: kmkernel.cpp:947 kmmainwidget.cpp:2349
 #, kde-format
 msgid "Work Offline"
 msgstr "ทำงานออฟไลน์"
@@ -4213,7 +4213,7 @@ msgid ""
 "properly installed."
 msgstr "ไม่สามารถเริ่มตัวช่วยสร้างบัญชีผู้ใช้ได้ โปรดตรวจสอบการติดตั้งของคุณ"
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:310
+#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:309
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgid "Unable to start import wizard"
@@ -4247,77 +4247,77 @@ msgstr "ไม่สามารถเริ่มตัวช่วยสร้
 msgid "Unable to start ImportWizard"
 msgstr "ไม่สามารถเริ่มตัวช่วยสร้างบัญชีผู้ใช้ได้"
 
-#: kmmainwidget.cpp:299
+#: kmmainwidget.cpp:298
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 
-#: kmmainwidget.cpp:302
+#: kmmainwidget.cpp:301
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "นำเข้า"
 
-#: kmmainwidget.cpp:303
+#: kmmainwidget.cpp:302
 #, fuzzy, kde-format
 #| msgid "Do Not Keep"
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "ไม่ต้องเก็บ"
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:307
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "ไม่สามารถเริ่มตัวช่วยสร้างบัญชีผู้ใช้ได้ โปรดตรวจสอบการติดตั้งของคุณ"
 
-#: kmmainwidget.cpp:1363
+#: kmmainwidget.cpp:1362
 #, kde-format
 msgid "No Subject"
 msgstr "ไม่มีชื่อเรื่อง"
 
-#: kmmainwidget.cpp:1376
+#: kmmainwidget.cpp:1375
 #, kde-format
 msgid "(no templates)"
 msgstr "(ไม่ใช้แม่แบบ)"
 
-#: kmmainwidget.cpp:1428
+#: kmmainwidget.cpp:1427
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "โฟลเดอร์นี้ ยังไม่ได้ตั้งค่าตัวเลือกการหมดอายุ"
 
-#: kmmainwidget.cpp:1434
+#: kmmainwidget.cpp:1433
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>คุณแน่ใจหรือไม่ ที่จะให้โฟลเดอร์ <b>%1</b> หมดอายุ ?</qt>"
 
-#: kmmainwidget.cpp:1435
+#: kmmainwidget.cpp:1434
 #, kde-format
 msgid "Expire Folder"
 msgstr "โฟลเดอร์หมดอายุ"
 
-#: kmmainwidget.cpp:1435
+#: kmmainwidget.cpp:1434
 #, kde-format
 msgid "&Expire"
 msgstr "หมดอายุ"
 
-#: kmmainwidget.cpp:1451
+#: kmmainwidget.cpp:1450
 #, kde-format
 msgid "Empty Trash"
 msgstr "เทถังขยะทิ้ง"
 
-#: kmmainwidget.cpp:1451 util.cpp:151
+#: kmmainwidget.cpp:1450 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "ทิ้งลงถังขยะ"
 
-#: kmmainwidget.cpp:1452
+#: kmmainwidget.cpp:1451
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "คุณแน่ใจหรือว่าต้องการจะเทถังขยะทิ้ง ?"
 
-#: kmmainwidget.cpp:1454
+#: kmmainwidget.cpp:1453
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4325,27 +4325,27 @@ msgid ""
 msgstr ""
 "<qt>คุณแน่ใจหรือว่า ต้องการจะทิ้งจดหมายทั้งหมดจากโฟลเดอร์ <b>%1</b> ลงถังขยะ ?</qt>"
 
-#: kmmainwidget.cpp:1477
+#: kmmainwidget.cpp:1476
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "ทิ้งจดหมายทั้งหมดลงถังขยะ"
 
-#: kmmainwidget.cpp:1531
+#: kmmainwidget.cpp:1530
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "คุณแน่ใจหรือไม่ ที่จะให้จดหมายเก่าทั้งหมด หมดอายุ ?"
 
-#: kmmainwidget.cpp:1532
+#: kmmainwidget.cpp:1531
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "ให้จดหมายเก่าหมดอายุ ?"
 
-#: kmmainwidget.cpp:1533
+#: kmmainwidget.cpp:1532
 #, kde-format
 msgid "Expire"
 msgstr "หมดอายุ"
 
-#: kmmainwidget.cpp:1558
+#: kmmainwidget.cpp:1557
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4355,17 +4355,17 @@ msgstr ""
 "การโหลดส่วนที่อ้างถึงภายนอก ในจดหมายแบบ HTML อาจจะทำให้คุณได้รับ \"ขยะ\" "
 "และอาจทำให้ระบบของคุณมีปัญหาเรื่องความปลอดภัยได้"
 
-#: kmmainwidget.cpp:1561 kmmainwidget.cpp:4656
+#: kmmainwidget.cpp:1560 kmmainwidget.cpp:4655
 #, kde-format
 msgid "Security Warning"
 msgstr "เตือนความปลอดภัย"
 
-#: kmmainwidget.cpp:1562
+#: kmmainwidget.cpp:1561
 #, kde-format
 msgid "Load External References"
 msgstr "เรียกส่วนที่อ้างถึงจากภายนอก"
 
-#: kmmainwidget.cpp:1634
+#: kmmainwidget.cpp:1633
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4377,423 +4377,423 @@ msgstr[0] ""
 "<qt>คุณแน่ใจหรือว่า ต้องการจะลบจดหมายที่เลือกไว้ทั้ง %1 ฉบับนี้ ?<br />หากมันถูกลบไปแล้ว "
 "จะไม่สามารถกู้คืนมาได้ !</qt>"
 
-#: kmmainwidget.cpp:1639
+#: kmmainwidget.cpp:1638
 #, kde-format
 msgid "Delete Messages"
 msgstr "ลบจดหมาย"
 
-#: kmmainwidget.cpp:1639
+#: kmmainwidget.cpp:1638
 #, kde-format
 msgid "Delete Message"
 msgstr "ลบจดหมาย"
 
-#: kmmainwidget.cpp:1654
+#: kmmainwidget.cpp:1653
 #, kde-format
 msgid "Moving messages..."
 msgstr "กำลังย้ายจดหมาย..."
 
-#: kmmainwidget.cpp:1656 kmmainwidget.cpp:1850
+#: kmmainwidget.cpp:1655 kmmainwidget.cpp:1849
 #, kde-format
 msgid "Deleting messages..."
 msgstr "กำลังลบจดหมาย..."
 
-#: kmmainwidget.cpp:1671 kmmainwidget.cpp:1870
+#: kmmainwidget.cpp:1670 kmmainwidget.cpp:1869
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "ลบจดหมายเรียบร้อยแล้ว"
 
-#: kmmainwidget.cpp:1673
+#: kmmainwidget.cpp:1672
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "ย้ายจดหมายเรียบร้อยแล้ว"
 
-#: kmmainwidget.cpp:1678 kmmainwidget.cpp:1883
+#: kmmainwidget.cpp:1677 kmmainwidget.cpp:1882
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "การลบจดหมายล้มเหลว"
 
-#: kmmainwidget.cpp:1680 kmmainwidget.cpp:1896
+#: kmmainwidget.cpp:1679 kmmainwidget.cpp:1895
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "ยกเลิกการลบจดหมายแล้ว"
 
-#: kmmainwidget.cpp:1684
+#: kmmainwidget.cpp:1683
 #, kde-format
 msgid "Moving messages failed."
 msgstr "การย้ายจดหมายล้มเหลว"
 
-#: kmmainwidget.cpp:1686
+#: kmmainwidget.cpp:1685
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "ยกเลิกการย้ายจดหมายแล้ว"
 
-#: kmmainwidget.cpp:1752
+#: kmmainwidget.cpp:1751
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "ย้ายจดหมายไปยังโฟลเดอร์"
 
-#: kmmainwidget.cpp:1779
+#: kmmainwidget.cpp:1778
 #, kde-format
 msgid "Copying messages..."
 msgstr "กำลังคัดลอกจดหมาย..."
 
-#: kmmainwidget.cpp:1787
+#: kmmainwidget.cpp:1786
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "คัดลอกจดหมายเรียบร้อยแล้ว"
 
-#: kmmainwidget.cpp:1790
+#: kmmainwidget.cpp:1789
 #, kde-format
 msgid "Copying messages failed."
 msgstr "การคัดลอกจดหมายล้มเหลว"
 
-#: kmmainwidget.cpp:1792
+#: kmmainwidget.cpp:1791
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "ยกเลิกการคัดลอกจดหมายแล้ว"
 
-#: kmmainwidget.cpp:1802
+#: kmmainwidget.cpp:1801
 #, fuzzy, kde-format
 #| msgid "Copy Messages to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "สำเนาจดหมายไปยังโฟลเดอร์"
 
-#: kmmainwidget.cpp:1847
+#: kmmainwidget.cpp:1846
 #, kde-format
 msgid "Moving messages to trash..."
 msgstr "ทิ้งจดหมายลงถังขยะ..."
 
-#: kmmainwidget.cpp:1854
+#: kmmainwidget.cpp:1853
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
 msgid "Deleting and moving messages to trash..."
 msgstr "ทิ้งจดหมายลงถังขยะ..."
 
-#: kmmainwidget.cpp:1867
+#: kmmainwidget.cpp:1866
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "ทิ้งจดหมายลงถังขยะเรียบร้อยแล้ว"
 
-#: kmmainwidget.cpp:1874
+#: kmmainwidget.cpp:1873
 #, fuzzy, kde-format
 #| msgid "Messages moved to trash successfully."
 msgid "Messages moved to trash or deleted successfully"
 msgstr "ทิ้งจดหมายลงถังขยะเรียบร้อยแล้ว"
 
-#: kmmainwidget.cpp:1880
+#: kmmainwidget.cpp:1879
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "ล้มเหลวในการทิ้งจดหมายลงถังขยะ"
 
-#: kmmainwidget.cpp:1887
+#: kmmainwidget.cpp:1886
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash failed."
 msgid "Deleting or moving messages to trash failed."
 msgstr "ล้มเหลวในการทิ้งจดหมายลงถังขยะ"
 
-#: kmmainwidget.cpp:1893
+#: kmmainwidget.cpp:1892
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "การทิ้งจดหมายลงถังขยะถูกยกเลิก"
 
-#: kmmainwidget.cpp:1900
+#: kmmainwidget.cpp:1899
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash canceled."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "การทิ้งจดหมายลงถังขยะถูกยกเลิก"
 
-#: kmmainwidget.cpp:2170
+#: kmmainwidget.cpp:2169
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "กระโดดไปยังโฟลเดอร์"
 
-#: kmmainwidget.cpp:2819
+#: kmmainwidget.cpp:2818
 #, kde-format
 msgid "Save &As..."
 msgstr "บัน&ทึกเป็น..."
 
-#: kmmainwidget.cpp:2830
+#: kmmainwidget.cpp:2829
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "ให้ทุกโฟลเดอร์หมดอายุ"
 
-#: kmmainwidget.cpp:2835
+#: kmmainwidget.cpp:2834
 #, kde-format
 msgid "Check &Mail"
 msgstr "ตรวจ&จดหมาย"
 
-#: kmmainwidget.cpp:2843
+#: kmmainwidget.cpp:2842
 #, kde-format
 msgid "Check Mail In"
 msgstr "ตรวจจดหมายใน"
 
-#: kmmainwidget.cpp:2845 kmmainwidget.cpp:2846
+#: kmmainwidget.cpp:2844 kmmainwidget.cpp:2845
 #, kde-format
 msgid "Check Mail"
 msgstr "ตรวจจดหมาย"
 
-#: kmmainwidget.cpp:2850
+#: kmmainwidget.cpp:2849
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&ส่งจดหมายไปยังคิว"
 
-#: kmmainwidget.cpp:2858
+#: kmmainwidget.cpp:2857
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "สถานะการออนไลน์ (ไม่ทราบ)"
 
-#: kmmainwidget.cpp:2863
+#: kmmainwidget.cpp:2862
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "ส่งจดหมายไปยังคิวผ่านทาง"
 
-#: kmmainwidget.cpp:2879
+#: kmmainwidget.cpp:2878
 #, kde-format
 msgid "Certificate Manager"
 msgstr "จัดการใบรับรอง"
 
-#: kmmainwidget.cpp:2889
+#: kmmainwidget.cpp:2888
 #, fuzzy, kde-format
 #| msgid "&Import Messages"
 msgid "&Import Messages..."
 msgstr "&นำเข้าจดหมาย..."
 
-#: kmmainwidget.cpp:2899
+#: kmmainwidget.cpp:2898
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "ดี&บั๊กสคริปต์ตัวกรอง..."
 
-#: kmmainwidget.cpp:2906
+#: kmmainwidget.cpp:2905
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "แสดงปูมบันทึกของตัวกรอง..."
 
-#: kmmainwidget.cpp:2911
+#: kmmainwidget.cpp:2910
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2916
+#: kmmainwidget.cpp:2915
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "แก้ไขการตอบกลับ \"ไม่อยู่ที่ออฟฟิศ\""
 
-#: kmmainwidget.cpp:2922
+#: kmmainwidget.cpp:2921
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "&Configure Automatic Archiving..."
 msgstr "ปรับแต่งการแจ้งเตือน..."
 
-#: kmmainwidget.cpp:2928
+#: kmmainwidget.cpp:2927
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgid "Delayed Messages..."
 msgstr "กำลังลบจดหมาย..."
 
-#: kmmainwidget.cpp:2934
+#: kmmainwidget.cpp:2933
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "ค้นหาจดหมาย..."
 
-#: kmmainwidget.cpp:2945 util.cpp:148
+#: kmmainwidget.cpp:2944 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&ลบ"
 
-#: kmmainwidget.cpp:2950 kmmainwidget.cpp:3995
+#: kmmainwidget.cpp:2949 kmmainwidget.cpp:3994
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 
-#: kmmainwidget.cpp:2954
+#: kmmainwidget.cpp:2953
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 
-#: kmmainwidget.cpp:2957 kmmainwidget.cpp:3995
+#: kmmainwidget.cpp:2956 kmmainwidget.cpp:3994
 #, kde-format
 msgid "Delete T&hread"
 msgstr "ลบทั้งเธรด"
 
-#: kmmainwidget.cpp:2963 kmmainwidget.cpp:3997
+#: kmmainwidget.cpp:2962 kmmainwidget.cpp:3996
 #, kde-format
 msgid "&Find Messages..."
 msgstr "ค้นหาจดหมาย..."
 
-#: kmmainwidget.cpp:2968
+#: kmmainwidget.cpp:2967
 #, kde-format
 msgid "Select &All Messages"
 msgstr "เลือกจดหมายทั้งหมด"
 
-#: kmmainwidget.cpp:2975
+#: kmmainwidget.cpp:2974
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "การจัดการจดหมายเวียน..."
 
-#: kmmainwidget.cpp:2983
+#: kmmainwidget.cpp:2982
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2987
+#: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "กำหนดปุ่มพิมพ์ลัด..."
 
-#: kmmainwidget.cpp:3005
+#: kmmainwidget.cpp:3004
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "ตั้งค่าการหมดอายุของจดหมาย"
 
-#: kmmainwidget.cpp:3030
+#: kmmainwidget.cpp:3029
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "สร้างแฟ้ม&จัดเก็บของโฟลเดอร์..."
 
-#: kmmainwidget.cpp:3038
+#: kmmainwidget.cpp:3037
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "โหลดส่วนที่อ้างถึงภายนอก"
 
-#: kmmainwidget.cpp:3061
+#: kmmainwidget.cpp:3060
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Message To..."
 msgstr "เขียนจดหมายใหม่ไปยัง..."
 
-#: kmmainwidget.cpp:3063
+#: kmmainwidget.cpp:3062
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message To..."
 msgstr "เขียนจดหมายใหม่ไปยัง..."
 
-#: kmmainwidget.cpp:3068
+#: kmmainwidget.cpp:3067
 #, kde-format
 msgid "&New Message..."
 msgstr "เขียนจดหมายใ&หม่..."
 
-#: kmmainwidget.cpp:3070
+#: kmmainwidget.cpp:3069
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "จดหมายใหม่"
 
-#: kmmainwidget.cpp:3078
+#: kmmainwidget.cpp:3077
 #, kde-format
 msgid "Message From &Template"
 msgstr "สร้างจดหมายจากแม่แบบจดหมาย"
 
-#: kmmainwidget.cpp:3084
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "ส่งจดหมายใหม่ไปยังผู้รับจดหมายเวียน..."
 
-#: kmmainwidget.cpp:3090
+#: kmmainwidget.cpp:3089
 #, kde-format
 msgid "&Create Filter"
 msgstr "สร้างตัวกรองใหม่"
 
-#: kmmainwidget.cpp:3094
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "กรองส่วนเรื่อง..."
 
-#: kmmainwidget.cpp:3101
+#: kmmainwidget.cpp:3100
 #, kde-format
 msgid "Filter on &From..."
 msgstr "กรองส่วนจาก..."
 
-#: kmmainwidget.cpp:3107
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "Filter on &To..."
 msgstr "กรองส่วนถึง..."
 
-#: kmmainwidget.cpp:3113
+#: kmmainwidget.cpp:3112
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "กรองส่วนถึง..."
 
-#: kmmainwidget.cpp:3121
+#: kmmainwidget.cpp:3120
 #, kde-format
 msgid "Mark &Thread"
 msgstr "ตั้งส&ถานะเธรด"
 
-#: kmmainwidget.cpp:3124
+#: kmmainwidget.cpp:3123
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "เป็นเธรดที่&อ่านแล้ว"
 
-#: kmmainwidget.cpp:3127
+#: kmmainwidget.cpp:3126
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "ตั้งสถานะจดหมายทั้งหมดในเธรดที่เลือกให้เป็นจดหมายที่อ่านแล้ว"
 
-#: kmmainwidget.cpp:3130
+#: kmmainwidget.cpp:3129
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "เป็นเธรดที่ยังไ&ม่ได้อ่าน"
 
-#: kmmainwidget.cpp:3133
+#: kmmainwidget.cpp:3132
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "ตั้งสถานะจดหมายทั้งหมดในเธรดที่เลือกให้เป็นจดหมายที่ยังไม่ได้อ่าน"
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "เป็นเธรดที่สำ&คัญมาก"
 
-#: kmmainwidget.cpp:3142
+#: kmmainwidget.cpp:3141
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "ล&บสถานะเธรดที่สำคัญมากออกจากเธรด"
 
-#: kmmainwidget.cpp:3145
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "เป็นรายการการกระทำ"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3147
 #, fuzzy, kde-format
 #| msgid "Remove &Action Item Message Mark"
 msgid "Remove &Action Item Thread Mark"
 msgstr "ลบสถานะรายการการกระทำออกจากจดหมาย"
 
-#: kmmainwidget.cpp:3152
+#: kmmainwidget.cpp:3151
 #, kde-format
 msgid "&Watch Thread"
 msgstr "เป็นเธรดที่ต้อง&ติดตาม"
 
-#: kmmainwidget.cpp:3156
+#: kmmainwidget.cpp:3155
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "เป็นเธรดที่ไม่ส&นใจ"
 
-#: kmmainwidget.cpp:3164 kmreadermainwin.cpp:474
+#: kmmainwidget.cpp:3163 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "บันทึกสิ่งที่แ&นบมาด้วย..."
 
-#: kmmainwidget.cpp:3172
+#: kmmainwidget.cpp:3171
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Decrypted To..."
 msgstr "เขียนจดหมายใหม่ไปยัง..."
 
-#: kmmainwidget.cpp:3176
+#: kmmainwidget.cpp:3175
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "ปรับใช้ตัวกรองทั้งหมด"
 
-#: kmmainwidget.cpp:3185
+#: kmmainwidget.cpp:3184
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -4801,13 +4801,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "ขยายเธรด"
 
-#: kmmainwidget.cpp:3188
+#: kmmainwidget.cpp:3187
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "ขยายเธรดปัจจุบัน"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3191
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -4815,123 +4815,123 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "ย่อเก็บเธรด"
 
-#: kmmainwidget.cpp:3195
+#: kmmainwidget.cpp:3194
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "ย่อเก็บเธรดปัจจุบัน"
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "ขยายเธรดทั้งหมด"
 
-#: kmmainwidget.cpp:3202
+#: kmmainwidget.cpp:3201
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "ขยายเธรดทั้งหมดในโฟลเดอร์ปัจจุบัน"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3205
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "ย่อเก็บเธรดทั้งหมด"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3208
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "ย่อเก็บเธรดทั้งหมดในโฟลเดอร์ปัจจุบัน"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "&Display Message"
 msgstr "แสดงจดหมาย"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "&Next Message"
 msgstr "ฉบับ&ถัดไป"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3222
 #, kde-format
 msgid "Go to the next message"
 msgstr "ไปยังจดหมายฉบับถัดไป"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "ฉบับที่ยังไม่ได้อ่านถัดไป"
 
-#: kmmainwidget.cpp:3235
+#: kmmainwidget.cpp:3234
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "ฉบับถัดไป"
 
-#: kmmainwidget.cpp:3236
+#: kmmainwidget.cpp:3235
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "ไปยังจดหมายที่ยังไม่ได้อ่านฉบับถัดไป"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3239
 #, kde-format
 msgid "&Previous Message"
 msgstr "ฉบับ&ก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3241
 #, kde-format
 msgid "Go to the previous message"
 msgstr "ไปยังจดหมายฉบับก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3246
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "ฉบับที่ยังไม่ได้อ่านก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3255
+#: kmmainwidget.cpp:3254
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "ฉบับก่อน"
 
-#: kmmainwidget.cpp:3256
+#: kmmainwidget.cpp:3255
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "ไปยังจดหมายฉบับที่ยังไม่ได้อ่านก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวถัดไป"
 
-#: kmmainwidget.cpp:3266
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "ไปยังโฟลเดอร์ถัดไปที่มีจดหมายที่ยังไม่ได้อ่าน"
 
-#: kmmainwidget.cpp:3269
+#: kmmainwidget.cpp:3268
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3273
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "ไปยังโฟลเดอร์ก่อนหน้านี้ที่มีจดหมายที่ยังไม่ได้อ่าน"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "ข้อความที่ยังไม่ได้อ่านถัดไป"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "ไปยังข้อความที่ยังไม่ได้อ่านตัวถัดไป"
 
-#: kmmainwidget.cpp:3283
+#: kmmainwidget.cpp:3282
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4939,255 +4939,255 @@ msgid ""
 msgstr ""
 "เลื่อนจดหมายฉบับปัจจุบันลง หากอยู่ที่ส่วนท้ายของฉบับปัจจุบันแล้ว ให้ไปยังฉบับที่ยังไม่ได้อ่านฉบับถัดไป"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3290
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "ปรับแต่งตัวกรอง..."
 
-#: kmmainwidget.cpp:3297
+#: kmmainwidget.cpp:3296
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "จัดการสคริปต์การกรอง..."
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3301
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "เพิ่มบัญชีผู้ใช้"
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3306
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "แนะนำโปรแกรมจัดการจดหมาย-K"
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3308
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "แสดงหน้าต้อนรับของโปรแกรมจัดการจดหมาย-K"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "ปรับแต่งการแจ้งเตือน..."
 
-#: kmmainwidget.cpp:3323
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3329
 #, kde-format
 msgid "Expire..."
 msgstr "หมดอายุ..."
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "เพิ่มโฟลเดอร์โปรด..."
 
-#: kmmainwidget.cpp:3342
+#: kmmainwidget.cpp:3341
 #, fuzzy, kde-format
 msgid "Serverside Subscription..."
 msgstr "รายละเอียด"
 
-#: kmmainwidget.cpp:3348 kmmainwidget.cpp:3356
+#: kmmainwidget.cpp:3347 kmmainwidget.cpp:3355
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "ปรับใช้ตัวกรองทั้งหมด"
 
-#: kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3373
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data..."
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: kmmainwidget.cpp:3380
+#: kmmainwidget.cpp:3379
 #, fuzzy, kde-format
 #| msgid "&Address Book..."
 msgid "New AddressBook Contact..."
 msgstr "สมุดที่อยู่..."
 
-#: kmmainwidget.cpp:3388 kmmainwidget.cpp:4036
+#: kmmainwidget.cpp:3387 kmmainwidget.cpp:4035
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&ตั้งค่า"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3391
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "ชื่อการแสดงตัว"
 
-#: kmmainwidget.cpp:3408
+#: kmmainwidget.cpp:3407
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "สำเนาจดหมายไปยังโฟลเดอร์"
 
-#: kmmainwidget.cpp:3414
+#: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "กระโดดไปยังโฟลเดอร์..."
 
-#: kmmainwidget.cpp:3420
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "ยกเลิกปฏิบัติการที่ทำอยู่ในปัจจุบัน"
 
-#: kmmainwidget.cpp:3426
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "เลือกโฟลเดอร์พร้อมกับโฟกัส"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3444
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
-#: kmmainwidget.cpp:3451
+#: kmmainwidget.cpp:3450
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
-#: kmmainwidget.cpp:3457
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "โฟกัสไปยังจดหมายฉบับถัดไป"
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3462
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "โฟกัสไปยังจดหมายฉบับก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3469
+#: kmmainwidget.cpp:3468
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "เลือกจดหมายทั้งหมด"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3474
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "เลือกจดหมายทั้งหมด"
 
-#: kmmainwidget.cpp:3481
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "เลือกจดหมายพร้อมกับโฟกัส"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3487
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "ย้ายโฟกัสไปยังแถบค้นหาด่วน"
 
-#: kmmainwidget.cpp:3496
+#: kmmainwidget.cpp:3495
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "ขยายการเลือกไปยังจดหมายฉบับก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3502
+#: kmmainwidget.cpp:3501
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "ขยายการเลือกไปยังจดหมายฉบับถัดไป"
 
-#: kmmainwidget.cpp:3509
+#: kmmainwidget.cpp:3508
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "ย้ายจดหมายไปยังโฟลเดอร์"
 
-#: kmmainwidget.cpp:3519
+#: kmmainwidget.cpp:3518
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3523
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3530
+#: kmmainwidget.cpp:3529
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวก่อนหน้านี้"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3536
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "ลบโฟลเดอร์"
 
-#: kmmainwidget.cpp:3565
+#: kmmainwidget.cpp:3564
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "เพิ่มโฟลเดอร์โปรด"
 
-#: kmmainwidget.cpp:3983
+#: kmmainwidget.cpp:3982
 #, kde-format
 msgid "&Delete Search"
 msgstr "ลบการค้นหา"
 
-#: kmmainwidget.cpp:3997
+#: kmmainwidget.cpp:3996
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search..."
 msgstr "แก้ไขสคริปต์..."
 
-#: kmmainwidget.cpp:4034
+#: kmmainwidget.cpp:4033
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: kmmainwidget.cpp:4045
+#: kmmainwidget.cpp:4044
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "เ&ทถังขยะทิ้ง"
 
-#: kmmainwidget.cpp:4045
+#: kmmainwidget.cpp:4044
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ทิ้งจดหมายทั้งหมดลงถังขยะ"
 
-#: kmmainwidget.cpp:4119
+#: kmmainwidget.cpp:4118
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4121
+#: kmmainwidget.cpp:4120
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4178
+#: kmmainwidget.cpp:4177
 #, kde-format
 msgid "Filter %1"
 msgstr "ตัวกรอง %1"
 
-#: kmmainwidget.cpp:4645
+#: kmmainwidget.cpp:4644
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "กำลังเริ่ม..."
 
-#: kmmainwidget.cpp:4653
+#: kmmainwidget.cpp:4652
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5197,12 +5197,12 @@ msgstr ""
 "การใช้ HTML ในจดหมาย อาจจะทำให้คุณได้รับ จดหมาย\n"
 "\"ขยะ\" และอาจทำให้ระบบของคุณ มีปัญหาเรื่องความปลอดภัยได้"
 
-#: kmmainwidget.cpp:4657
+#: kmmainwidget.cpp:4656
 #, kde-format
 msgid "Use HTML"
 msgstr "ใช้ HTML"
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4802
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5212,41 +5212,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4806
+#: kmmainwidget.cpp:4805
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4807
+#: kmmainwidget.cpp:4806
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4807
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: kmmainwidget.cpp:4836
+#: kmmainwidget.cpp:4835
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: kmmainwidget.cpp:4837
+#: kmmainwidget.cpp:4836
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "ชื่อการแสดงตัว"
 
-#: kmmainwidget.cpp:4838
+#: kmmainwidget.cpp:4837
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "ชื่อการแสดงตัว"
 
-#: kmmainwidget.cpp:4845
+#: kmmainwidget.cpp:4844
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5256,23 +5256,23 @@ msgstr ""
 msgid "Starting..."
 msgstr "กำลังเริ่ม..."
 
-#: kmreadermainwin.cpp:477 util.cpp:148
+#: kmreadermainwin.cpp:476 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
 msgstr "ทิ้งลง&ถังขยะ"
 
-#: kmreadermainwin.cpp:478
+#: kmreadermainwin.cpp:477
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "ทิ้งลงถังขยะ"
 
-#: kmreadermainwin.cpp:479
+#: kmreadermainwin.cpp:478
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "ทิ้งจดหมายทั้งหมดลงถังขยะ"
 
-#: kmreadermainwin.cpp:608
+#: kmreadermainwin.cpp:607
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot copy item. %1"
