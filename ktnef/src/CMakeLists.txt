@@ -38,7 +38,7 @@ endif()
 
 target_link_libraries(ktnef
     Qt::Widgets
-    KF5::Tnef
+    KPim${KF_MAJOR_VERSION}::Tnef
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::Crash
     KF${KF_MAJOR_VERSION}::I18n

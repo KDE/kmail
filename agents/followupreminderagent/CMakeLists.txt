@@ -72,7 +72,7 @@ target_link_libraries(akonadi_followupreminder_agent
     KF5::AkonadiCore
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
-    KF5::Mime
+    KPim${KF_MAJOR_VERSION}::Mime
     KF${KF_MAJOR_VERSION}::CalendarCore
     KF${KF_MAJOR_VERSION}::DBusAddons
     Qt::Widgets

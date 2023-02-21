@@ -41,7 +41,7 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::AkonadiAgentBase
     KF5::AkonadiMime
     KF5::AkonadiWidgets
-    KF5::Mime
+    KPim${KF_MAJOR_VERSION}::Mime
     KF${KF_MAJOR_VERSION}::I18n
     KF5::IdentityManagement
     KF${KF_MAJOR_VERSION}::WidgetsAddons

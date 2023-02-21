@@ -54,7 +54,7 @@ target_link_libraries(sendlateragent
     KF5::AkonadiMime
     KF5::MailTransportAkonadi
     KF5::MailTransport
-    KF5::Mime
+    KPim${KF_MAJOR_VERSION}::Mime
     KF5::MessageComposer
     KF5::MessageCore
     KF5::PimCommon

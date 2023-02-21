@@ -403,7 +403,7 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::TextWidgets
     KF${KF_MAJOR_VERSION}::I18n
     KF5::Gravatar
-    KF5::Mime
+    KPim${KF_MAJOR_VERSION}::Mime
     KF5::AkonadiCore
     KF5::AkonadiMime
     KF5::MessageCore

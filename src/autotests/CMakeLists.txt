@@ -22,7 +22,7 @@ target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF${KF_MA
 #####
 add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp createfollowupreminderonexistingmessagejobtest.h)
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
-target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF${KF_MAJOR_VERSION}::CalendarCore KF5::Mime KF5::MessageComposer kmailprivate)
+target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF${KF_MAJOR_VERSION}::CalendarCore KPim${KF_MAJOR_VERSION}::Mime KF5::MessageComposer kmailprivate)
 #####
 
 add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp cryptostateindicatorwidgettest.h)
