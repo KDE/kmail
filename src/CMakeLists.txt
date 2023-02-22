@@ -432,7 +432,7 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::IconThemes
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::Completion
-    KF5::Ldap
+    KPim${KF_MAJOR_VERSION}::Ldap
     KF5::AkonadiSearchDebug
     KF5::AkonadiSearchPIM
     KF5::WebEngineViewer
