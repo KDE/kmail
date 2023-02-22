@@ -506,13 +506,13 @@ file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
-    KF5::KontactInterface
+    KPim${KF_MAJOR_VERSION}::KontactInterface
     kmailprivate
     KF5::AkonadiCore
     KF5::PimCommon
     KF${KF_MAJOR_VERSION}::I18n
     KF5::TemplateParser
-    KF5::Libkdepim
+    KPim${KF_MAJOR_VERSION}::Libkdepim
     KF${KF_MAJOR_VERSION}::Crash
     KF5::WebEngineViewer
     ${kmail_userfeedback_LIB}

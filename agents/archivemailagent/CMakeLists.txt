@@ -53,7 +53,7 @@ add_executable(akonadi_archivemail_agent archivemailagent.cpp archivemailagent.h
 target_link_libraries(akonadi_archivemail_agent
     archivemailagent
     KF5::AkonadiCore
-    KF5::IdentityManagement
+    KPim${KF_MAJOR_VERSION}::IdentityManagement
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::DBusAddons

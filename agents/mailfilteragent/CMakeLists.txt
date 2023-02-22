@@ -47,7 +47,7 @@ target_link_libraries(akonadi_mailfilter_agent
     KF5::AkonadiMime
     KF5::AkonadiAgentBase
     KPim${KF_MAJOR_VERSION}::Mime
-    KF5::IdentityManagement
+    KPim${KF_MAJOR_VERSION}::IdentityManagement
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::Notifications
     KF${KF_MAJOR_VERSION}::WindowSystem

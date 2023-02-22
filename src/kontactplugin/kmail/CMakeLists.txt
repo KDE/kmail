@@ -19,7 +19,7 @@ target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp km
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
-target_link_libraries(kontact_kmailplugin KPim${KF_MAJOR_VERSION}::Mime KF${KF_MAJOR_VERSION}::I18n KF5::KontactInterface KF${KF_MAJOR_VERSION}::CalendarCore KF5::CalendarUtils KF5::AkonadiCore KF${KF_MAJOR_VERSION}::Contacts KF5::AkonadiWidgets)
+target_link_libraries(kontact_kmailplugin KPim${KF_MAJOR_VERSION}::Mime KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::KontactInterface KF${KF_MAJOR_VERSION}::CalendarCore KPim${KF_MAJOR_VERSION}::CalendarUtils KF5::AkonadiCore KF${KF_MAJOR_VERSION}::Contacts KF5::AkonadiWidgets)
 
 ########### next target ###############
 
