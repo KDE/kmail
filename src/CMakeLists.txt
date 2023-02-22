@@ -402,7 +402,7 @@ target_link_libraries(kmailprivate
     PRIVATE
     KF${KF_MAJOR_VERSION}::TextWidgets
     KF${KF_MAJOR_VERSION}::I18n
-    KF5::Gravatar
+    KPim${KF_MAJOR_VERSION}::Gravatar
     KPim${KF_MAJOR_VERSION}::Mime
     KF5::AkonadiCore
     KF5::AkonadiMime
@@ -412,7 +412,7 @@ target_link_libraries(kmailprivate
     KF5::PimCommon
     KF5::MailCommon
     KF5::TemplateParser
-    KF5::IdentityManagementWidgets
+    KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::Notifications
     KF${KF_MAJOR_VERSION}::GuiAddons
