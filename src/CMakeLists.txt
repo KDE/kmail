@@ -405,12 +405,12 @@ target_link_libraries(kmailprivate
     KPim${KF_MAJOR_VERSION}::Gravatar
     KPim${KF_MAJOR_VERSION}::Mime
     KF5::AkonadiCore
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::MessageCore
     KF5::MessageList
     KF5::MessageComposer
     KF5::PimCommon
-    KF5::MailCommon
+    KPim${KF_MAJOR_VERSION}::MailCommon
     KF5::TemplateParser
     KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets
     KF${KF_MAJOR_VERSION}::WindowSystem
@@ -421,7 +421,7 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::NotifyConfig
     KF${KF_MAJOR_VERSION}::Codecs
     KF5::MailTransportAkonadi
-    KF5::MailTransport
+    KPim${KF_MAJOR_VERSION}::MailTransport
     KF${KF_MAJOR_VERSION}::KCMUtils
     KF5::Libkleo
     KF5::KSieveUi
@@ -448,7 +448,7 @@ target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim${KF_MAJOR_VERSION}::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}

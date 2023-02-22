@@ -52,13 +52,13 @@ pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 target_link_libraries(followupreminderagent
     KF5::AkonadiCore
     KPim${KF_MAJOR_VERSION}::IdentityManagement
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::KIOWidgets
     KF${KF_MAJOR_VERSION}::Notifications
-    KF5::MailCommon
+    KPim${KF_MAJOR_VERSION}::MailCommon
     KF${KF_MAJOR_VERSION}::I18n
     KF${KF_MAJOR_VERSION}::CalendarCore
 )
@@ -70,7 +70,7 @@ add_executable(akonadi_followupreminder_agent followupreminderagent.cpp followup
 target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
     KF5::AkonadiCore
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::AkonadiAgentBase
     KPim${KF_MAJOR_VERSION}::Mime
     KF${KF_MAJOR_VERSION}::CalendarCore

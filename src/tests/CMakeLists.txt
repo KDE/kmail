@@ -15,5 +15,5 @@ target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KF5::PimCommonAkonadi)
 
 #####
 add_executable(searchmailertest searchmailertest.cpp)
-target_link_libraries(searchmailertest KF5::MailCommon KPim${KF_MAJOR_VERSION}::Ldap)
+target_link_libraries(searchmailertest KPim${KF_MAJOR_VERSION}::MailCommon KPim${KF_MAJOR_VERSION}::Ldap)
 

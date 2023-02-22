@@ -39,7 +39,7 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
     KF5::AkonadiAgentBase
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::AkonadiWidgets
     KPim${KF_MAJOR_VERSION}::Mime
     KF${KF_MAJOR_VERSION}::I18n
@@ -47,7 +47,7 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KF${KF_MAJOR_VERSION}::WidgetsAddons
     KF${KF_MAJOR_VERSION}::IconThemes
     KF${KF_MAJOR_VERSION}::ItemModels
-    KF5::MailCommon
+    KPim${KF_MAJOR_VERSION}::MailCommon
     KF${KF_MAJOR_VERSION}::DBusAddons
 )
 

@@ -39,7 +39,7 @@ pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #    set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(archivemailagent
-    KF5::MailCommon
+    KPim${KF_MAJOR_VERSION}::MailCommon
     KF5::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::I18n
     KF${KF_MAJOR_VERSION}::Notifications
@@ -54,13 +54,13 @@ target_link_libraries(akonadi_archivemail_agent
     archivemailagent
     KF5::AkonadiCore
     KPim${KF_MAJOR_VERSION}::IdentityManagement
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::KIOWidgets
     KF${KF_MAJOR_VERSION}::Notifications
-    KF5::MailCommon
+    KPim${KF_MAJOR_VERSION}::MailCommon
     KF${KF_MAJOR_VERSION}::I18n
     )
 

@@ -51,9 +51,9 @@ pim_target_precompile_headers(sendlateragent PUBLIC ../../kmail_pch.h)
 
 target_link_libraries(sendlateragent
     KF5::AkonadiCore
-    KF5::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
     KF5::MailTransportAkonadi
-    KF5::MailTransport
+    KPim${KF_MAJOR_VERSION}::MailTransport
     KPim${KF_MAJOR_VERSION}::Mime
     KF5::MessageComposer
     KF5::MessageCore
