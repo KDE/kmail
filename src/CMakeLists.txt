@@ -444,6 +444,11 @@ if (TARGET KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
     target_link_libraries(kmailprivate
         PRIVATE KF${KF_MAJOR_VERSION}::TextEditTextToSpeech)
 endif()
+
+if (TARGET Qt6::Core5Compat)
+    target_link_libraries(kmailprivate PRIVATE Qt6::Core5Compat) # QTextCodec
+endif()
+
 target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
