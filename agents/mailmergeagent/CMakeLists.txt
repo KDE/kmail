@@ -42,7 +42,7 @@ kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 target_link_libraries(mailmergeagent
     KF5::AkonadiCore
     KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KF5::MailTransportAkonadi
+    KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     #KPim${KF_MAJOR_VERSION}::Mime
     KF5::MessageComposer
     KF5::MessageCore

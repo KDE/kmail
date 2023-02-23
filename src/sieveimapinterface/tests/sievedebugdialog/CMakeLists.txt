@@ -3,8 +3,8 @@
 add_executable(sievedebugdialog sievedebugdialog.cpp)
 
 target_link_libraries(sievedebugdialog
-  KF5::KSieve
-  KF5::KSieveUi
+  KPim${KF_MAJOR_VERSION}::KSieve
+  KPim${KF_MAJOR_VERSION}::KSieveUi
   KF5::AkonadiCore
   KF${KF_MAJOR_VERSION}::SyntaxHighlighting
   kmailprivate

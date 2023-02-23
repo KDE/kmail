@@ -420,21 +420,21 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::KIOFileWidgets
     KF${KF_MAJOR_VERSION}::NotifyConfig
     KF${KF_MAJOR_VERSION}::Codecs
-    KF5::MailTransportAkonadi
+    KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     KPim${KF_MAJOR_VERSION}::MailTransport
     KF${KF_MAJOR_VERSION}::KCMUtils
     KF5::Libkleo
-    KF5::KSieveUi
+    KPim${KF_MAJOR_VERSION}::KSieveUi
     KF${KF_MAJOR_VERSION}::KIOCore
     KF${KF_MAJOR_VERSION}::Contacts
-    KF5::PimTextEdit
+    KPim${KF_MAJOR_VERSION}::PimTextEdit
     KF5::MessageViewer
     KF${KF_MAJOR_VERSION}::IconThemes
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::Completion
     KPim${KF_MAJOR_VERSION}::Ldap
-    KF5::AkonadiSearchDebug
-    KF5::AkonadiSearchPIM
+    KPim${KF_MAJOR_VERSION}::AkonadiSearchDebug
+    KPim${KF_MAJOR_VERSION}::AkonadiSearchPIM
     KF5::WebEngineViewer
     KF${KF_MAJOR_VERSION}::SyntaxHighlighting
     KF${KF_MAJOR_VERSION}::GuiAddons

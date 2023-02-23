@@ -3,8 +3,8 @@
 add_executable(sievemanagerdialog sievemanagerdialog.cpp )
 
 target_link_libraries(sievemanagerdialog
-  KF5::KSieve
-  KF5::KSieveUi
+  KPim${KF_MAJOR_VERSION}::KSieve
+  KPim${KF_MAJOR_VERSION}::KSieveUi
   KF5::AkonadiCore
   kmailprivate
 )

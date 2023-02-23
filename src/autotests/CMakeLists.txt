@@ -34,7 +34,7 @@ target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KF5::MessageCore
 add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
-target_link_libraries( kactionmenutransporttest Qt::Test  KF5::MailTransportAkonadi KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
+target_link_libraries( kactionmenutransporttest Qt::Test  KPim${KF_MAJOR_VERSION}::MailTransportAkonadi KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
 
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
@@ -43,4 +43,4 @@ add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KF5::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
-    "Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KF5::MailTransportAkonadi;KPim${KF_MAJOR_VERSION}::Libkdepim;KF5::TemplateParser;kmailprivate")
+    "Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KF5::MessageCore;KF5::MessageComposer;KF5::MessageList;KF5::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::MailTransportAkonadi;KPim${KF_MAJOR_VERSION}::Libkdepim;KF5::TemplateParser;kmailprivate")
