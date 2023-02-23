@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-21 01:00+0000\n"
-"PO-Revision-Date: 2023-02-03 16:48+0100\n"
+"PO-Revision-Date: 2023-02-22 16:43+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -378,7 +378,7 @@ msgstr "Poštovní klient KDE"
 #: aboutdata.cpp:198
 #, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr "Copyright © %1, Vývojáři KMailu"
+msgstr "Autorská práva © %1, Vývojáři KMailu"
 
 #: collectionpage/collectionmailinglistpage.cpp:39
 #, kde-format
@@ -5289,7 +5289,7 @@ msgstr "Dialog nastavení souhrnu pošty"
 #: kontactplugin/kmail/kcmkmailsummary.cpp:46
 #, kde-format
 msgid "Copyright © 2004–2010 Tobias Koenig"
-msgstr "Copyright © 2004–2010 Tobias Koenig"
+msgstr "Autorská práva © 2004–2010 Tobias Koenig"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:47
 #: kontactplugin/summary/kcmkontactsummary.cpp:91
