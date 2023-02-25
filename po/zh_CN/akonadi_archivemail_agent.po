@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-10-16 00:47+0000\n"
-"PO-Revision-Date: 2023-02-15 11:08\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -221,7 +221,7 @@ msgstr "GZ 压缩的 Tar 压缩包 (.tar.gz)"
 #: widgets/unitcombobox.cpp:13
 #, kde-format
 msgid "Days"
-msgstr "天"
+msgstr "日"
 
 #: widgets/unitcombobox.cpp:14
 #, kde-format

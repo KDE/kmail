@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-26 00:46+0000\n"
-"PO-Revision-Date: 2023-02-15 11:08\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -123,7 +123,7 @@ msgstr "KMail 错误"
 #: filtermanager.cpp:100
 #, kde-format
 msgid "Filtering message %1 of %2"
-msgstr "正在过滤 %2 封信件中的第 %1 封"
+msgstr "正在过滤 %2 条消息中的第 %1 条"
 
 #: filtermanager.cpp:187
 #, kde-format
@@ -153,12 +153,12 @@ msgstr "<b>过滤规则已匹配。</b>"
 #: filtermanager.cpp:246
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
-msgstr "<b>开始过滤在“%3”来自“%2”的信件“%1”：</b>"
+msgstr "<b>开始过滤在“%3”来自“%2”的消息“%1”：</b>"
 
 #: filtermanager.cpp:580 filtermanager.cpp:608
 #, kde-format
 msgid "Filtering messages"
-msgstr "过滤信件"
+msgstr "过滤消息"
 
 #: mailfilteragent.cpp:109
 #, kde-format

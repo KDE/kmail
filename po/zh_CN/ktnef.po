@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-28 00:50+0000\n"
-"PO-Revision-Date: 2023-02-15 11:08\n"
+"PO-Revision-Date: 2023-02-24 12:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -91,19 +91,19 @@ msgstr "查看方式..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
-msgstr "解压缩"
+msgstr "解压"
 
 #: ktnefmain.cpp:121 ktnefmain.cpp:400
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
-msgstr "解压缩到..."
+msgstr "解压到..."
 
 #: ktnefmain.cpp:126
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
-msgstr "全部解压缩到..."
+msgstr "全部解压到..."
 
 #: ktnefmain.cpp:131 ktnefmain.cpp:403
 #, kde-format
@@ -115,19 +115,19 @@ msgstr "属性"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Message Properties"
-msgstr "信件属性"
+msgstr "消息属性"
 
 #: ktnefmain.cpp:140
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
-msgstr "显示信件属性"
+msgstr "显示消息属性"
 
 #: ktnefmain.cpp:145
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
-msgstr "保存信件文本为..."
+msgstr "保存消息文本为..."
 
 #: ktnefmain.cpp:158
 #, kde-format
@@ -176,7 +176,7 @@ msgstr "无法解压缩文件“%1”。"
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
-msgstr "信件不包含任何富文本数据。"
+msgstr "消息不包含任何富文本数据。"
 
 #: ktnefmain.cpp:504
 #, kde-format
@@ -303,7 +303,7 @@ msgstr "可选参数‘文件’。"
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
-msgstr "信件属性"
+msgstr "消息属性"
 
 #: messagepropertydialog.cpp:55
 #, kde-format

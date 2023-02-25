@@ -1,15 +1,13 @@
 <?xml version="1.0" ?>
-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&ktnef;">
-  <!ENTITY package "kdepim">
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Brazilian-Portuguese "INCLUDE"
 > <!-- change language only here -->
 ]>
 
-<book id="ktnef" lang="&language;">
+<article id="ktnef" lang="&language;">
 
-<bookinfo id="ktnefinfo">
+<articleinfo id="ktnefinfo">
 <title
 >Manual do Visualizador de Arquivos TNEF</title>
 
@@ -76,28 +74,28 @@
 >&FDLNotice;</legalnotice>
 
 <date
->31/05/2013</date>
+>27/07/2016</date>
 <releaseinfo
->4.11 pre (4.11)</releaseinfo>
+>5.3.40 (Applications 16.08)</releaseinfo>
 
 <abstract
 ><para
->O Visualizador de Arquivos TNEF é um aplicativo para anexos de e-mail em formato <ulink url="http://en.wikipedia.org/wiki/TNEF"
+>O Visualizador de Arquivos TNEF é um aplicativo para anexos de e-mail em formato <ulink url="https://en.wikipedia.org/wiki/TNEF"
 >TNEF</ulink
 >.</para
 ></abstract>
 
 <keywordset>
 <keyword
->KDE</keyword>
+>e-mail</keyword>
 <keyword
 >TNEF</keyword>
 
 </keywordset>
 
-</bookinfo>
+</articleinfo>
 
-<chapter id="introduction">
+<sect1 id="introduction">
 	<title
 >Introdução</title>
 
@@ -130,7 +128,7 @@
 	<itemizedlist>
 		<listitem
 ><para
->Ver/abrir os anexos com os aplicativos associados.</para
+>Exibir/abrir os anexos com os aplicativos associados.</para
 ></listitem>
 		<listitem
 ><para
@@ -138,11 +136,11 @@
 ></listitem>
 		<listitem
 ><para
->Ver as propriedades da mensagem (TNEF/MAPI)</para
+>Exibir as propriedades da mensagem (TNEF/MAPI)</para
 ></listitem>
 		<listitem
 ><para
->Ver/extrair o texto formatado da mensagem (no formato RTF)</para
+>Exibir/extrair o texto formatado da mensagem (no formato RTF)</para
 ></listitem>
 	</itemizedlist>
 
@@ -162,9 +160,9 @@
 </mediaobject>
 </screenshot>
 
-</chapter>
+</sect1>
 
-<chapter id="credits">
+<sect1 id="credits">
 	<title
 >Créditos e licença</title>
 
@@ -186,7 +184,6 @@
 > e André Marcelo Alvarenga <email
 >alvarenga@kde.org</email
 ></para
-> 
-&underFDL; &underGPL; </chapter>
+> &underFDL; &underGPL; </sect1>
 
-</book>
+</article>
