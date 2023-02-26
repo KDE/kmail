@@ -37,16 +37,17 @@ void UndoSendManager::addItem(const UndoSendManagerInfo &info)
 
 QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
 {
-    QString str;
+    QString str = QStringLiteral("<qt>");
     if (!to.isEmpty()) {
-        str = i18n("To: %1", to);
+        str += i18n("<b>To:</b> %1", to);
     }
     if (!subject.isEmpty()) {
         if (!str.isEmpty()) {
             str += QLatin1Char('\n');
         }
-        str += i18n("Subject: %1", subject);
+        str += i18n("<b>Subject:</b> %1", subject);
     }
+    str += QStringLiteral("</qt>");
     return str;
 }
 
