@@ -150,7 +150,7 @@ find_package(KF5MessageViewer ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5PimCommonAkonadi ${PIMCOMMON_LIB_VERSION} CONFIG REQUIRED)
 find_package(KF5TemplateParser ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim${KF_MAJOR_VERSION}Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
-find_package(MailTransportDBusService CONFIG REQUIRED)
+find_package(KPim${KF_MAJOR_VERSION}MailTransportDBusService CONFIG REQUIRED)
 
 find_package(KF${KF_MAJOR_VERSION}TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
 set_package_properties(KF${KF_MAJOR_VERSION}TextEditTextToSpeech PROPERTIES DESCRIPTION
