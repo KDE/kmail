@@ -53,5 +53,5 @@ QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
 
 bool UndoSendManager::UndoSendManagerInfo::isValid() const
 {
-    return index != -1 && delay != -1 && !subject.isEmpty() && !to.isEmpty();
+    return index != -1 && delay != -1;
 }
