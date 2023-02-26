@@ -6,15 +6,24 @@
 
 #pragma once
 
+#include "kmail_private_export.h"
 #include <QObject>
 
-class UndoSendManager : public QObject
+class KMAILTESTS_TESTS_EXPORT UndoSendManager : public QObject
 {
     Q_OBJECT
 public:
+    struct KMAILTESTS_TESTS_EXPORT UndoSendManagerInfo {
+        QString subject;
+        QString to;
+        qint64 index = -1;
+        int delay = -1;
+        Q_REQUIRED_RESULT QString generateMessageInfoText() const;
+        Q_REQUIRED_RESULT bool isValid() const;
+    };
     explicit UndoSendManager(QObject *parent = nullptr);
     ~UndoSendManager() override;
     static UndoSendManager *self();
 
-    void addItem(qint64 index, const QString &subject, int delay);
+    void addItem(const UndoSendManagerInfo &info);
 };

@@ -2069,7 +2069,13 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
 void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 {
     if (id != -1) {
-        UndoSendManager::self()->addItem(id, subject(), KMailSettings::self()->undoSendDelay());
+        UndoSendManager::UndoSendManagerInfo info;
+        info.subject = subject();
+        info.index = id;
+        info.delay = KMailSettings::self()->undoSendDelay();
+        info.to = mComposerBase->to();
+
+        UndoSendManager::self()->addItem(info);
     }
     setModified(false);
     mComposerBase->cleanupAutoSave();

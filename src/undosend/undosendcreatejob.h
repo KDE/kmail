@@ -20,7 +20,7 @@ public:
     Q_REQUIRED_RESULT bool start();
 
     Q_REQUIRED_RESULT QString subject() const;
-    void setSubject(const QString &subject);
+    void setMessageInfoText(const QString &subject);
 
     Q_REQUIRED_RESULT int delay() const;
     void setDelay(int delay);

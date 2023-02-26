@@ -85,7 +85,7 @@ QString UndoSendCreateJob::subject() const
     return mSubject;
 }
 
-void UndoSendCreateJob::setSubject(const QString &subject)
+void UndoSendCreateJob::setMessageInfoText(const QString &subject)
 {
     mSubject = subject;
 }
