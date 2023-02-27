@@ -1,0 +1,209 @@
+# translation of akonadi_sendlater_agent.pot to Esperanto
+# Copyright (C) 2013 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kmail package.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+#
+# Minuskloj: ĉ ĝ ĵ ĥ ŝ ŭ   Majuskloj: Ĉ Ĝ Ĵ Ĥ Ŝ Ŭ
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"PO-Revision-Date: 2023-02-26 10:53+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Agordi"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Agento por Sendi Poste"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Agento por prokrastita sendo de retpoŝtoj."
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Kopirajto (C) 2013-%1 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Prizorganto"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Oliver Kellogg"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "okellogg@users.sourceforge.net"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Al"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Subjekto"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Sendi ĉirkaŭen"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Ripetiĝanta"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Mesaĝo Id"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Neniuj mesaĝoj atendantaj..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Sendi nun"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Forigi"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Jes"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Ne"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Ĉu vi volas forigi la elektitan elementon?"
+msgstr[1] "Ĉu vi volas forigi la elektitajn elementojn?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Forigi Erojn"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Ĉu vi volas forigi ankaŭ la mesaĝon?"
+msgstr[1] "Ĉu vi volas forigi ankaŭ la mesaĝojn?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Forigi Mesaĝojn"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Ne Forigi"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Ne trovis mesaĝon."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Neniu mesaĝo trovita."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Eraro dum alportado de mesaĝo."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Ne povas preni mesaĝon. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Ni ne povas krei transporton"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Mesaĝo ne estas vera mesaĝo"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Ne povas sendi mesaĝon."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Mesaĝo sendita"
+
+#: sendlatermanager.cpp:191
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Eraro estis trovita. Ĉu vi volas resendi ĝin?"
+
+#: sendlatermanager.cpp:192
+#, kde-format
+msgid "Error found"
+msgstr "Eraro trovita"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Resendi"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Modifi..."

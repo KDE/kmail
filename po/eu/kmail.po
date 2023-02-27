@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-02-21 01:00+0000\n"
+"POT-Creation-Date: 2023-02-27 01:02+0000\n"
 "PO-Revision-Date: 2023-02-15 19:17+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -375,7 +375,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "IMAP akats asko konpontzea"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2320 kmreaderwin.cpp:299 kmsystemtray.cpp:48
+#: editor/kmcomposerwin.cpp:2326 kmreaderwin.cpp:299 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
@@ -1934,7 +1934,7 @@ msgid "Send"
 msgstr "Bidali"
 
 #: editor/kmcomposerwin.cpp:1177 editor/kmcomposerwin.cpp:1189
-#: editor/kmcomposerwin.cpp:3057
+#: editor/kmcomposerwin.cpp:3063
 #, kde-format
 msgid "Send &Later"
 msgstr "Bidali &geroago"
@@ -2191,13 +2191,13 @@ msgstr ""
 msgid "Hide menu bar"
 msgstr "Ezkutatu menu-barra"
 
-#: editor/kmcomposerwin.cpp:1595 editor/kmcomposerwin.cpp:3513
+#: editor/kmcomposerwin.cpp:1595 editor/kmcomposerwin.cpp:3519
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr "Lerroa: %1 "
 
-#: editor/kmcomposerwin.cpp:1598 editor/kmcomposerwin.cpp:3515
+#: editor/kmcomposerwin.cpp:1598 editor/kmcomposerwin.cpp:3521
 #, kde-format
 msgid " Column: %1 "
 msgstr " Zutabea: %1 "
@@ -2267,62 +2267,62 @@ msgstr "Mezua automatikoki gordetzea huts egin du"
 msgid "Sending Message Failed"
 msgstr "Mezua bidaltzea huts egin du"
 
-#: editor/kmcomposerwin.cpp:2242
+#: editor/kmcomposerwin.cpp:2248
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Txertatu fitxategia"
 
-#: editor/kmcomposerwin.cpp:2304
+#: editor/kmcomposerwin.cpp:2310
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "Gorde lerro &barruko irudi gisa"
 
-#: editor/kmcomposerwin.cpp:2305
+#: editor/kmcomposerwin.cpp:2311
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Gehitu er&anskin gisa"
 
-#: editor/kmcomposerwin.cpp:2320 editor/kmcomposerwin.cpp:2424
+#: editor/kmcomposerwin.cpp:2326 editor/kmcomposerwin.cpp:2430
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Eranskinaren izena:"
 
-#: editor/kmcomposerwin.cpp:2326
+#: editor/kmcomposerwin.cpp:2332
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Eranskin izena ezin da hutsik egon"
 
-#: editor/kmcomposerwin.cpp:2326
+#: editor/kmcomposerwin.cpp:2332
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "Eranskinaren izen baliogabea"
 
-#: editor/kmcomposerwin.cpp:2377
+#: editor/kmcomposerwin.cpp:2383
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Gehitu URL bat mezuri"
 msgstr[1] "Gehitu URLak mezuari"
 
-#: editor/kmcomposerwin.cpp:2378
+#: editor/kmcomposerwin.cpp:2384
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Gehitu fitxategi bat er&anskin gisa"
 msgstr[1] "Gehitu fitxategiak er&anskin gisa"
 
-#: editor/kmcomposerwin.cpp:2424
+#: editor/kmcomposerwin.cpp:2430
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Txertatu arbeleko testua eranskin gisa"
 
-#: editor/kmcomposerwin.cpp:2521
+#: editor/kmcomposerwin.cpp:2527
 #, kde-format
 msgid "unnamed"
 msgstr "Izengabea"
 
-#: editor/kmcomposerwin.cpp:2547
+#: editor/kmcomposerwin.cpp:2553
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2334,12 +2334,12 @@ msgstr ""
 "identitateak ez du (OpenPGP edo S/MIME) enkriptazio-gakorik definitzen.</"
 "p><p>Hautatu identitatearen konfigurazioaren erabiltzeko gakoak.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2554
+#: editor/kmcomposerwin.cpp:2560
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "Definitu gabeko enkriptazio-gakoa"
 
-#: editor/kmcomposerwin.cpp:2618
+#: editor/kmcomposerwin.cpp:2624
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2350,12 +2350,12 @@ msgstr ""
 "definitu behar duzu.</p><p>Hautatu identitatearen konfigurazioan erabiltzeko "
 "gakoa.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2625
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "Definitu gabeko sinatzeko gakoa"
 
-#: editor/kmcomposerwin.cpp:2784
+#: editor/kmcomposerwin.cpp:2790
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2366,7 +2366,7 @@ msgstr ""
 "guztietan zure helbide elektronikoa ere ezarri beharko zenuke, mezu "
 "bakoitzean sartu ez dezazun."
 
-#: editor/kmcomposerwin.cpp:2793
+#: editor/kmcomposerwin.cpp:2799
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2375,42 +2375,42 @@ msgstr ""
 "Gutxienez hartzaile bat zehaztu behar duzu, Nori: eremuan edo CC edo BCC "
 "gisa."
 
-#: editor/kmcomposerwin.cpp:2799
+#: editor/kmcomposerwin.cpp:2805
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Nori: eremua hutsik dago. Hala ere mezua bidali?"
 
-#: editor/kmcomposerwin.cpp:2801
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid "No To: specified"
 msgstr "Ez da Nori: zehaztu"
 
-#: editor/kmcomposerwin.cpp:2802 editor/kmcomposerwin.cpp:2816
+#: editor/kmcomposerwin.cpp:2808 editor/kmcomposerwin.cpp:2822
 #, kde-format
 msgid "S&end as Is"
 msgstr "&Bidali dagoen bezala"
 
-#: editor/kmcomposerwin.cpp:2803
+#: editor/kmcomposerwin.cpp:2809
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&Zehaztu Nori eremua"
 
-#: editor/kmcomposerwin.cpp:2813
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Ez duzu gairik zehaztu. Edonola ere, mezua bidali?"
 
-#: editor/kmcomposerwin.cpp:2815
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "No Subject Specified"
 msgstr "Ez da gairik zehaztu"
 
-#: editor/kmcomposerwin.cpp:2817
+#: editor/kmcomposerwin.cpp:2823
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Zehaztu gaia"
 
-#: editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2868
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2419,22 +2419,22 @@ msgstr ""
 "Gutxienez hartzaile bat zehaztu behar duzu zirriborro bat zifratu ahal "
 "izateko."
 
-#: editor/kmcomposerwin.cpp:3054
+#: editor/kmcomposerwin.cpp:3060
 #, kde-format
 msgid "About to send email..."
 msgstr "Posta bidaltzeko zorian..."
 
-#: editor/kmcomposerwin.cpp:3055
+#: editor/kmcomposerwin.cpp:3061
 #, kde-format
 msgid "Send Confirmation"
 msgstr "Bidali berrespena"
 
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3062
 #, kde-format
 msgid "&Send Now"
 msgstr "&Bidali orain"
 
-#: editor/kmcomposerwin.cpp:3132
+#: editor/kmcomposerwin.cpp:3138
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2443,44 +2443,44 @@ msgstr ""
 "Posta %1 hartzaile baino gehiagori bidaltzen saiatzen ari zara. Hala ere "
 "mezua bidali?"
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3139
 #, kde-format
 msgid "Too many recipients"
 msgstr "Hartzaile gehiegi"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3140
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Bidali dagoen bezala"
 
-#: editor/kmcomposerwin.cpp:3135
+#: editor/kmcomposerwin.cpp:3141
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&Editatu hartzaileak"
 
-#: editor/kmcomposerwin.cpp:3172
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "HTML modua itzaltzea testuak formatua galtzea eragingo du. Ziur zaude?"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Formatua galdu?"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Formatua galdu"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Gehitu markadun testu soil"
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3864
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2489,7 +2489,7 @@ msgstr ""
 "Hartzaile horretarako zifratzeko gako automatikoa erabiltzen da. Gako hau ez "
 "da egiaztatu. Hartzaileak nahiago ditu zifratutako erantzunak."
 
-#: editor/kmcomposerwin.cpp:3862
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2498,7 +2498,7 @@ msgstr ""
 "Hartzaile horretarako zifratzeko gako automatikoa erabiltzen da. Gako hau ez "
 "da egiaztatu. Hartzaileak ez ditu nahiago zifratutako erantzunak."
 
-#: editor/kmcomposerwin.cpp:3869
+#: editor/kmcomposerwin.cpp:3875
 #, kde-format
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
@@ -2506,7 +2506,7 @@ msgstr ""
 "«Autocrypt gossip» gako bat erabiltzen da hartzaile honekin. Gako hau ez da "
 "egiaztatu."
 
-#: editor/kmcomposerwin.cpp:3902
+#: editor/kmcomposerwin.cpp:3908
 #, kde-format
 msgid ""
 "High security encryption will be used for this recipient (the encryption key "
@@ -2515,7 +2515,7 @@ msgstr ""
 "Segurtasun handiko zifratzea erabiliko da hartzaile horretarako (zifratzeko "
 "gakoak erabateko fidagarritasuna du). Ikonoak klik egin xehetasunak ikusteko."
 
-#: editor/kmcomposerwin.cpp:3908
+#: editor/kmcomposerwin.cpp:3914
 #, kde-format
 msgid ""
 "Medium security encryption will be used for this recipient (the encryption "
@@ -2525,7 +2525,7 @@ msgstr ""
 "(zifratzeko gakoak bazterreko fidagarritasuna du). Ikonoan klik egin "
 "xehetasunak ikusteko."
 
-#: editor/kmcomposerwin.cpp:3914
+#: editor/kmcomposerwin.cpp:3920
 #, kde-format
 msgid ""
 "Low security encryption will be used for this recipient (the encryption key "
@@ -2534,7 +2534,7 @@ msgstr ""
 "Segurtasun eskaseko zifratzea erabilik da hartzaile horretarako (zifratzeko "
 "gakoak ez du fidagarritasunik). Ikonoan klik egin xehetasunak ikusteko."
 
-#: editor/kmcomposerwin.cpp:3921
+#: editor/kmcomposerwin.cpp:3927
 #, kde-format
 msgid ""
 "The email to this recipient will be encrypted, but the security of the "
@@ -2545,7 +2545,7 @@ msgstr ""
 "segurtasuna ezezaguna da (zifratzeko gakoa ezin izan du egiaztatu). Ikonoan "
 "klik egin xehetasunak ikusteko."
 
-#: editor/kmcomposerwin.cpp:3955
+#: editor/kmcomposerwin.cpp:3961
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Plugin editorearen informazioa"
@@ -7644,6 +7644,16 @@ msgstr "5 minutu"
 #, kde-format
 msgid "Undo send"
 msgstr "Desegin bidaltzea"
+
+#: undosend/undosendmanager.cpp:42
+#, kde-format
+msgid "<b>To:</b> %1"
+msgstr ""
+
+#: undosend/undosendmanager.cpp:48
+#, kde-format
+msgid "<b>Subject:</b> %1"
+msgstr ""
 
 #: undostack.cpp:47
 #, kde-format
