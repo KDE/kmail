@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-02 01:04+0000\n"
-"PO-Revision-Date: 2023-01-02 14:02+0100\n"
+"PO-Revision-Date: 2023-02-26 16:45+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -81,16 +81,19 @@ msgstr "Neteja"
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Elimina la configuració «TipOfDay» obsoleta: Fet"
 
+# skip-rule: rst-link0italic,rst-italic2
 #: refreshsettingscleanuppage.cpp:62
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Eliminació de la configuració dels diàlegs en el fitxer «%1»: Fet"
 
+# skip-rule: rst-link0italic,rst-italic2
 #: refreshsettingscleanuppage.cpp:74
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Eliminació de la configuració dels filtres en el fitxer «%1»: Fet"
 
+# skip-rule: rst-link0italic,rst-italic2
 #: refreshsettingscleanuppage.cpp:90
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
@@ -98,6 +101,7 @@ msgstr ""
 "Eliminació de la configuració de les carpetes en el fitxer de configuració "
 "«%1»: Fet"
 
+# skip-rule: rst-link0italic,rst-italic2
 #: refreshsettingscleanuppage.cpp:146
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"

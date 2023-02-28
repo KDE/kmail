@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2023-02-14 23:55+0100\n"
+"PO-Revision-Date: 2023-02-27 05:08+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -7701,12 +7701,12 @@ msgstr "Deshacer el envío"
 #: undosend/undosendmanager.cpp:42
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Para:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Asunto:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

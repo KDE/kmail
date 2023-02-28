@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2023-02-14 10:42+0100\n"
+"PO-Revision-Date: 2023-02-27 10:56+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -34,8 +34,8 @@ msgid "Your names"
 msgstr ""
 "Fabrice Mous - 2003,Wilbert Berendsen - 2003; 2004,Bram Schoenmakers - 2004 "
 "t/m 2007,Tom Albers - 2004,Rinse de Vries - 2000 t/m 2008,Wilbert Berendsen "
-"- 2005, Antoon Tolboom - 2008, Jaap Woldringh - 2009,Freek de Kruijf - 2009 "
-"t/m 2023"
+"- 2005, Antoon Tolboom - 2008, Jaap Woldringh - 2009,Freek de Kruijf - "
+"2009-2023"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -7727,12 +7727,12 @@ msgstr "Verzenden ongedaan maken"
 #: undosend/undosendmanager.cpp:42
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Aan:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Onderwerp:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

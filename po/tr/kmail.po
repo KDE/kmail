@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2023-02-14 10:16+0300\n"
+"PO-Revision-Date: 2023-02-27 19:55+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -7636,12 +7636,12 @@ msgstr "Göndermeyi geri al"
 #: undosend/undosendmanager.cpp:42
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Kime:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Konu:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

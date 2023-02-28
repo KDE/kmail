@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2023-02-14 08:16+0200\n"
+"PO-Revision-Date: 2023-02-27 16:37+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -7759,12 +7759,12 @@ msgstr "Скасувати надсилання"
 #: undosend/undosendmanager.cpp:42
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Кому:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Тема:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

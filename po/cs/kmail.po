@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2023-02-22 16:43+0100\n"
+"PO-Revision-Date: 2023-02-27 14:41+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -7469,12 +7469,12 @@ msgstr "Vrátit odeslání"
 #: undosend/undosendmanager.cpp:42
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Komu:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Předmět:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

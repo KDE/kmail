@@ -6,13 +6,13 @@
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, ٢٠١٦, 2018.
-# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-02-27 01:02+0000\n"
-"PO-Revision-Date: 2022-10-24 22:29+0400\n"
+"PO-Revision-Date: 2023-02-27 18:55+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1014,9 +1014,7 @@ msgid "Ta&g Settings"
 msgstr "إعدادات الو&سم"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "احذف"
 
@@ -7578,15 +7576,14 @@ msgid "Undo send"
 msgstr "تراجُع عن الإرْسال"
 
 #: undosend/undosendmanager.cpp:42
-#, fuzzy, kde-format
-#| msgid "<b>To:</b><br/>"
+#, kde-format
 msgid "<b>To:</b> %1"
-msgstr "<b>الى:</b><br/>"
+msgstr "<b>إلى:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>الموضوع:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
