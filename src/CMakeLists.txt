@@ -423,7 +423,7 @@ target_link_libraries(kmailprivate
     KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     KPim${KF_MAJOR_VERSION}::MailTransport
     KF${KF_MAJOR_VERSION}::KCMUtils
-    KF5::Libkleo
+    KPim${KF_MAJOR_VERSION}::Libkleo
     KPim${KF_MAJOR_VERSION}::KSieveUi
     KF${KF_MAJOR_VERSION}::KIOCore
     KF${KF_MAJOR_VERSION}::Contacts
