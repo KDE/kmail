@@ -406,12 +406,12 @@ target_link_libraries(kmailprivate
     KPim${KF_MAJOR_VERSION}::Mime
     KF5::AkonadiCore
     KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KF5::MessageCore
-    KF5::MessageList
-    KF5::MessageComposer
+    KPim${KF_MAJOR_VERSION}::MessageCore
+    KPim${KF_MAJOR_VERSION}::MessageList
+    KPim${KF_MAJOR_VERSION}::MessageComposer
     KF5::PimCommon
     KPim${KF_MAJOR_VERSION}::MailCommon
-    KF5::TemplateParser
+    KPim${KF_MAJOR_VERSION}::TemplateParser
     KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::Notifications
@@ -428,14 +428,14 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::KIOCore
     KF${KF_MAJOR_VERSION}::Contacts
     KPim${KF_MAJOR_VERSION}::PimTextEdit
-    KF5::MessageViewer
+    KPim${KF_MAJOR_VERSION}::MessageViewer
     KF${KF_MAJOR_VERSION}::IconThemes
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::Completion
     KPim${KF_MAJOR_VERSION}::Ldap
     KPim${KF_MAJOR_VERSION}::AkonadiSearchDebug
     KPim${KF_MAJOR_VERSION}::AkonadiSearchPIM
-    KF5::WebEngineViewer
+    KPim${KF_MAJOR_VERSION}::WebEngineViewer
     KF${KF_MAJOR_VERSION}::SyntaxHighlighting
     KF${KF_MAJOR_VERSION}::GuiAddons
     ${kmail_userfeedback_LIB}
@@ -451,8 +451,8 @@ endif()
 
 target_link_libraries(kmailprivate PRIVATE qt${QT_MAJOR_VERSION}keychain)
 
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
-target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KF5::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim${KF_MAJOR_VERSION}::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim${KF_MAJOR_VERSION}::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim${KF_MAJOR_VERSION}::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(kmailprivate
@@ -501,7 +501,7 @@ target_link_libraries(kmailpart
     KF${KF_MAJOR_VERSION}::KCMUtils
     KF${KF_MAJOR_VERSION}::Parts
     KF${KF_MAJOR_VERSION}::IconThemes
-    KF5::TemplateParser
+    KPim${KF_MAJOR_VERSION}::TemplateParser
     )
 
 ########### KMail executable ###############
@@ -516,10 +516,10 @@ target_link_libraries(kmail
     KF5::AkonadiCore
     KF5::PimCommon
     KF${KF_MAJOR_VERSION}::I18n
-    KF5::TemplateParser
+    KPim${KF_MAJOR_VERSION}::TemplateParser
     KPim${KF_MAJOR_VERSION}::Libkdepim
     KF${KF_MAJOR_VERSION}::Crash
-    KF5::WebEngineViewer
+    KPim${KF_MAJOR_VERSION}::WebEngineViewer
     ${kmail_userfeedback_LIB}
     KF${KF_MAJOR_VERSION}::WindowSystem
     )

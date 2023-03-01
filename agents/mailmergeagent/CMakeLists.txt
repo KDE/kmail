@@ -44,8 +44,8 @@ target_link_libraries(mailmergeagent
     KPim${KF_MAJOR_VERSION}::AkonadiMime
     KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     #KPim${KF_MAJOR_VERSION}::Mime
-    KF5::MessageComposer
-    KF5::MessageCore
+    KPim${KF_MAJOR_VERSION}::MessageComposer
+    KPim${KF_MAJOR_VERSION}::MessageCore
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::XmlGui
