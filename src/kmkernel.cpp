@@ -800,7 +800,7 @@ void KMKernel::pauseBackgroundJobs()
 void KMKernel::resumeBackgroundJobs()
 {
     mJobScheduler->resume();
-    mBackgroundTasksTimer->start(4 * 60 * 60 * 1000);
+    mBackgroundTasksTimer->start(4h);
 }
 
 void KMKernel::stopNetworkJobs()
@@ -1504,9 +1504,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
         mCheckIndexingManager->start(entityTreeModel());
     }
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-    mBackgroundTasksTimer->start(60 * 1000); // check again in 1 minute
+    mBackgroundTasksTimer->start(1m); // check again in 1 minute
 #else
-    mBackgroundTasksTimer->start(4 * 60 * 60 * 1000); // check again in 4 hours
+    mBackgroundTasksTimer->start(4h); // check again in 4 hours
 #endif
 }
 

@@ -20,6 +20,8 @@
 #include <QRegularExpression>
 #include <QStringList>
 #include <QTimer>
+#include <chrono>
+using namespace std::chrono_literals;
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent)
@@ -79,7 +81,7 @@ void SendLaterManager::createSendInfoList()
             const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
             if (seconds > 0) {
                 // qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
-                mTimer->start(seconds * 1000);
+                mTimer->start(seconds * 1s);
             } else {
                 // Create job when seconds <0
                 slotCreateJob();
