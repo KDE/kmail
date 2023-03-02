@@ -22,7 +22,7 @@ target_link_libraries( identityaddvcarddialogtest Qt::Test Qt::Widgets KF${KF_MA
 #####
 add_executable( createfollowupreminderonexistingmessagejobtest createfollowupreminderonexistingmessagejobtest.cpp createfollowupreminderonexistingmessagejobtest.h)
 ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
-target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KF5::AkonadiCore KF${KF_MAJOR_VERSION}::CalendarCore KPim${KF_MAJOR_VERSION}::Mime KPim${KF_MAJOR_VERSION}::MessageComposer kmailprivate)
+target_link_libraries( createfollowupreminderonexistingmessagejobtest Qt::Test Qt::Widgets KPim${KF_MAJOR_VERSION}::AkonadiCore KF${KF_MAJOR_VERSION}::CalendarCore KPim${KF_MAJOR_VERSION}::Mime KPim${KF_MAJOR_VERSION}::MessageComposer kmailprivate)
 #####
 
 add_executable( cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp cryptostateindicatorwidgettest.h)
@@ -43,4 +43,4 @@ add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
-    "Qt::Test;Qt::Widgets;KF5::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::MessageComposer;KPim${KF_MAJOR_VERSION}::MessageList;KPim${KF_MAJOR_VERSION}::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::MailTransportAkonadi;KPim${KF_MAJOR_VERSION}::Libkdepim;KPim${KF_MAJOR_VERSION}::TemplateParser;kmailprivate")
+    "Qt::Test;Qt::Widgets;KPim${KF_MAJOR_VERSION}::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::MessageComposer;KPim${KF_MAJOR_VERSION}::MessageList;KPim${KF_MAJOR_VERSION}::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::MailTransportAkonadi;KPim${KF_MAJOR_VERSION}::Libkdepim;KPim${KF_MAJOR_VERSION}::TemplateParser;kmailprivate")

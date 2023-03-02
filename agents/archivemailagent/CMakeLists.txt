@@ -40,7 +40,7 @@ pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #endif()
 target_link_libraries(archivemailagent
     KPim${KF_MAJOR_VERSION}::MailCommon
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::I18n
     KF${KF_MAJOR_VERSION}::Notifications
     KF${KF_MAJOR_VERSION}::KIOWidgets
@@ -52,10 +52,10 @@ add_executable(akonadi_archivemail_agent archivemailagent.cpp archivemailagent.h
 
 target_link_libraries(akonadi_archivemail_agent
     archivemailagent
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KPim${KF_MAJOR_VERSION}::IdentityManagement
     KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::KIOWidgets
@@ -98,7 +98,7 @@ target_sources(archivemailagentconfig PRIVATE
 )
 target_link_libraries(archivemailagentconfig
     archivemailagent
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::I18n
 )

@@ -40,7 +40,7 @@ kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 #endif()
 
 target_link_libraries(mailmergeagent
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KPim${KF_MAJOR_VERSION}::AkonadiMime
     KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     #KPim${KF_MAJOR_VERSION}::Mime
@@ -51,13 +51,13 @@ target_link_libraries(mailmergeagent
     KF${KF_MAJOR_VERSION}::XmlGui
     KF${KF_MAJOR_VERSION}::I18n
     KF${KF_MAJOR_VERSION}::Notifications
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     )
 
 add_executable(akonadi_mailmerge_agent)
 target_link_libraries(akonadi_mailmerge_agent
     mailmergeagent
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     )
 
 

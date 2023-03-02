@@ -404,7 +404,7 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::I18n
     KPim${KF_MAJOR_VERSION}::Gravatar
     KPim${KF_MAJOR_VERSION}::Mime
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KPim${KF_MAJOR_VERSION}::AkonadiMime
     KPim${KF_MAJOR_VERSION}::MessageCore
     KPim${KF_MAJOR_VERSION}::MessageList
@@ -495,7 +495,7 @@ pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KF${KF_MAJOR_VERSION}::I18n
     KF5::PimCommon
     KF${KF_MAJOR_VERSION}::KCMUtils
@@ -513,7 +513,7 @@ add_executable(kmail ${kmail_SRCS})
 target_link_libraries(kmail
     KPim${KF_MAJOR_VERSION}::KontactInterface
     kmailprivate
-    KF5::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
     KF5::PimCommon
     KF${KF_MAJOR_VERSION}::I18n
     KPim${KF_MAJOR_VERSION}::TemplateParser

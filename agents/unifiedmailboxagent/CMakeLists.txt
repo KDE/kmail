@@ -38,9 +38,9 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KF5::AkonadiWidgets
+    KPim${KF_MAJOR_VERSION}::AkonadiWidgets
     KPim${KF_MAJOR_VERSION}::Mime
     KF${KF_MAJOR_VERSION}::I18n
     KPim${KF_MAJOR_VERSION}::IdentityManagement
