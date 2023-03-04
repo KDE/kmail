@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-03 00:48+0000\n"
-"PO-Revision-Date: 2023-02-15 18:45+0100\n"
+"PO-Revision-Date: 2023-02-27 22:33+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -7734,15 +7734,14 @@ msgid "Undo send"
 msgstr "Annulla invio"
 
 #: undosend/undosendmanager.cpp:42
-#, fuzzy, kde-format
-#| msgid "<b>To:</b><br/>"
+#, kde-format
 msgid "<b>To:</b> %1"
-msgstr "<b>A:</b><br/>"
+msgstr "<b>A:</b> %1"
 
 #: undosend/undosendmanager.cpp:48
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Oggetto:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
