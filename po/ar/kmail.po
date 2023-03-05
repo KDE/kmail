@@ -47,7 +47,7 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
-"«بريدك» هو عميل بريد لكدي، صُمّم ليتوافق بالكامل مع مقاييس التّراسل عبر "
+"«بريدك» هو عميل بريد لكِيدِي، صُمّم ليتوافق بالكامل مع مقاييس التّراسل عبر "
 "الإنترنت متضمّنة IMAP، وPOP3 وSMTP."
 
 #: about/introduction_kmail.html:10
@@ -381,7 +381,7 @@ msgstr "بريدك"
 #: aboutdata.cpp:196
 #, kde-format
 msgid "KDE Email Client"
-msgstr "عميل بريد لكدي"
+msgstr "عميل بريد لكِيدِي"
 
 #: aboutdata.cpp:198
 #, kde-format
@@ -5273,7 +5273,7 @@ msgstr "إضافة دعم موارد Microsoft Exchange Web Services "
 #: kmreaderwin.cpp:302
 #, kde-format
 msgid "The KDE Mail Client"
-msgstr "عميل بريد لكدي"
+msgstr "عميل بريد لكِيدِي"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -5450,7 +5450,7 @@ msgstr "ملخص متراسلك"
 #: kontactplugin/summary/kcmkontactsummary.cpp:88
 #, kde-format
 msgid "KDE Kontact Summary"
-msgstr "مخلص كدي متراسلك"
+msgstr "مخلص كِيدِي متراسلك"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:90
 #, kde-format
