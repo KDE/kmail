@@ -3,13 +3,13 @@
 #
 # Javier Viñal <fjvinal@gmail.com>, 2012, 2013, 2014.
 # Javier Vinal <fjvinalgmail.com>, 2012, 2014, 2015, 2016, 2017, 2018, 2019.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2019, 2020, 2021, 2022.
+# Eloy Cuadra <ecuadra@eloihr.net>, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2022-10-23 20:54+0200\n"
+"PO-Revision-Date: 2023-03-04 01:48+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -67,8 +67,8 @@ msgid ""
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
-"Por favor, tome un momento para rellenar en el panel de configuración de "
-"KMail en Preferencias->Configurar KMail. Debe crear al menos una identidad "
+"Tómese un momento para rellenar el panel de configuración de KMail en "
+"Preferencias->Configurar KMail. Debe crear al menos una identidad "
 "predeterminada, una cuenta de correo entrante y otra saliente."
 
 #: about/introduction_kmail.html:38
@@ -472,9 +472,7 @@ msgstr "No disponible."
 #: collectionpage/collectionmailinglistpage.cpp:212
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
-msgstr ""
-"KMail no pudo detectar ninguna lista de correo en esta carpeta. Rellene las "
-"direcciones a mano, por favor."
+msgstr "KMail no ha podido detectar ninguna lista de correo en esta carpeta."
 
 #: collectionpage/collectionmailinglistpage.cpp:215
 #, kde-format
@@ -482,8 +480,8 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
-"KMail no pudo detectar completamente una lista de correo en esta carpeta. "
-"Rellene las direcciones a mano, por favor."
+"KMail no ha podido detectar completamente una lista de correo en esta "
+"carpeta. Rellene las direcciones a mano."
 
 #: collectionpage/collectionquotapage.cpp:21
 #, kde-format
@@ -664,8 +662,8 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"No se ha podido iniciar el asistente de cuentas. Por favor, asegúrese de que "
-"tiene AccountWizard instalado adecuadamente."
+"No se ha podido iniciar el asistente de cuentas. Asegúrese de que "
+"AccountWizard está instalado correctamente."
 
 #: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:156
@@ -695,7 +693,7 @@ msgstr "Comprobar correo al inicio"
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
-"Nuevo agente de notificación de correo sin registrar. Por favor, contacte "
+"Nuevo agente de notificación de correo sin registrar. Póngase en contacto "
 "con su administrador."
 
 #: configuredialog/configureappearancepage.cpp:85
@@ -1709,8 +1707,8 @@ msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
-"El módulo no se encuentra. Por favor, verifique su instalación. Este módulo "
-"lo proporciona Kleopatra."
+"El módulo no se encuentra. Compruebe su instalación. Este módulo lo "
+"proporciona Kleopatra."
 
 #: configuredialog/configuresecuritypage.cpp:349
 #, kde-format
@@ -2627,7 +2625,7 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
-"Los siguientes adjuntos: <ul><li>%1</li></ul> se añadieron externamente. "
+"Los siguientes adjuntos: <ul><li>%1</li></ul> se han añadido externamente. "
 "Elimínelos si se trata de un error."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:19
@@ -2660,23 +2658,21 @@ msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
-"No se ha encontrado el transporte. Por favor, compruebe que va a usar un "
-"transporte de correo correcto."
+"No se ha encontrado el transporte. Compruebe que va a usar un transporte de "
+"correo correcto."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
-msgstr ""
-"Carpeta de enviados no definida. Por favor, establézcala antes de enviar el "
-"correo."
+msgstr "Carpeta de enviados no definida. Defínala antes de enviar el correo."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr ""
-"No se ha encontrado la identidad. Por favor, compruebe que va a usar una "
-"identidad correcta."
+"No se ha encontrado la identidad. Compruebe que va a usar una identidad "
+"correcta."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
 #, kde-format
@@ -2684,8 +2680,8 @@ msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr ""
-"No se ha encontrado el diccionario. Por favor, compruebe que va a usar un "
-"diccionario correcto."
+"No se ha encontrado el diccionario. Compruebe que va a usar un diccionario "
+"correcto."
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:18
 #, kde-format
@@ -2698,22 +2694,22 @@ msgstr ""
 #: editor/widgets/cryptostateindicatorwidget.cpp:76
 #, kde-format
 msgid "Message will be signed"
-msgstr "El mensaje será firmado"
+msgstr "El mensaje se firmará"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:76
 #, kde-format
 msgid "Message will not be signed"
-msgstr "El mensaje no será firmado"
+msgstr "El mensaje no se firmará"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format
 msgid "Message will be encrypted"
-msgstr "El mensaje será cifrado"
+msgstr "El mensaje se cifrará"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:77
 #, kde-format
 msgid "Message will not be encrypted"
-msgstr "El mensaje no será cifrado"
+msgstr "El mensaje no se cifrará"
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:35
 #: folderarchive/folderarchiveagentjob.cpp:59
@@ -2736,8 +2732,7 @@ msgstr "No es posible crear la carpeta. %1"
 #, kde-format
 msgid "Archive folder not defined. Please verify settings for account %1"
 msgstr ""
-"Carpeta de archivo no definida. Por favor, verifique las preferencias de la "
-"cuenta %1"
+"Carpeta de archivo no definida. Compruebe las preferencias de la cuenta %1."
 
 #: folderarchive/folderarchiveagentjob.cpp:36
 #, kde-format
@@ -2754,8 +2749,8 @@ msgstr "La lista de colecciones está vacía. %1"
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
-"Esta carpeta %1 es de solo lectura. Por favor, verifique la configuración de "
-"la cuenta %2"
+"Esta carpeta %1 es de solo lectura. Compruebe la configuración de la cuenta "
+"%2."
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -3903,14 +3898,14 @@ msgstr "Barra de herramientas principal"
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
-msgstr "Espere, por favor"
+msgstr "Espere un momento"
 
 #: kmcommands.cpp:300 kmcommands.cpp:364
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
-msgstr[0] "Por favor, espere mientras se transfiere el mensaje"
-msgstr[1] "Por favor, espere mientras se transfieren los %1 mensajes"
+msgstr[0] "Espere mientras se transfiere el mensaje"
+msgstr[1] "Espere mientras se transfieren los %1 mensajes"
 
 #: kmcommands.cpp:511
 #, kde-format
@@ -4171,8 +4166,8 @@ msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"No se ha podido iniciar el asistente de importación. Por favor, asegúrese de "
-"que tiene ImportWizard instalado correctamente."
+"No se ha podido iniciar el asistente de importación. Asegúrese de que "
+"ImportWizard está instalado correctamente."
 
 #: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:325
 #, kde-format
@@ -4185,8 +4180,8 @@ msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
-"No se ha podido iniciar el «Asistente de exportación PIM». Por favor, "
-"verifique su instalación."
+"No se ha podido iniciar el «Asistente de exportación PIM». Compruebe su "
+"instalación."
 
 #: kmlaunchexternalcomponent.cpp:123
 #, kde-format
@@ -4199,8 +4194,8 @@ msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"No se ha podido iniciar ImportWizard. Por favor, asegúrese de que tiene "
-"ImportWizard instalado correctamente."
+"No se ha podido iniciar ImportWizard. Asegúrese de que ImportWizard está "
+"instalado correctamente."
 
 #: kmlaunchexternalcomponent.cpp:143
 #, kde-format
@@ -4230,7 +4225,7 @@ msgstr "No importar"
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
-"No se ha podido iniciar el asistente de importación. Por favor, verifique su "
+"No se ha podido iniciar el asistente de importación. Compruebe su "
 "instalación."
 
 #: kmmainwidget.cpp:1378
@@ -4337,11 +4332,11 @@ msgid_plural ""
 "<qt>Do you really want to delete the %1 selected messages?<br />Once "
 "deleted, they cannot be restored.</qt>"
 msgstr[0] ""
-"<qt>¿Está seguro de que quiere borrar el mensaje seleccionado?<br />Una vez "
-"borrado, no podrá recuperarlo.</qt>"
+"<qt>¿Seguro que quiere borrar el mensaje seleccionado?<br />Una vez borrado, "
+"no podrá recuperarlo.</qt>"
 msgstr[1] ""
-"<qt>¿Está seguro de que quiere eliminar los %1 mensajes seleccionados?<br /"
-">Una vez que los elimine, no podrá recuperarlos.</qt>"
+"<qt>¿Seguro que quiere borrar los %1 mensajes seleccionados?<br />Una vez "
+"borrados, no podrá recuperarlos.</qt>"
 
 #: kmmainwidget.cpp:1654
 #, kde-format
@@ -4534,7 +4529,7 @@ msgstr "Visor de registros de fi&ltrado..."
 #: kmmainwidget.cpp:2928
 #, kde-format
 msgid "&Import from another Email Client..."
-msgstr "&Importar desde otro cliente de correo..."
+msgstr "&Importar de otro cliente de correo..."
 
 #: kmmainwidget.cpp:2933
 #, kde-format
@@ -5358,7 +5353,7 @@ msgstr "Recuperando contenidos de la carpeta"
 #: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
-msgstr "Por favor, espere..."
+msgstr "Espere un momento..."
 
 #: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
