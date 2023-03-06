@@ -41,7 +41,7 @@ bool UndoSendCreateJob::start()
     connect(mTimer, &QTimer::timeout, this, &UndoSendCreateJob::slotTimeOut);
     mTimer->setSingleShot(true);
     mTimer->start(mDelay * 1s);
-    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent);
+    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent, this);
     mNotification->setText(mSubject);
     mNotification->setActions(QStringList() << i18n("Undo send"));
 
