@@ -177,7 +177,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 ecm_set_disabled_deprecation_versions(QT 5.15.2
-     KF 5.103.0
+     KF 5.104.0
     )
 set(KUSERFEEDBACK_SUFFIX)
 # Laurent reactivate when I will merge KuserFeedBack
