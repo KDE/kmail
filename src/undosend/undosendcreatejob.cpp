@@ -5,7 +5,7 @@
 */
 
 #include "undosendcreatejob.h"
-#include "kmail_debug.h"
+#include "kmail_undo_send_debug.h"
 
 #include <MessageComposer/SendLaterRemoveJob>
 
@@ -33,7 +33,7 @@ bool UndoSendCreateJob::canStart() const
 bool UndoSendCreateJob::start()
 {
     if (!canStart()) {
-        qCWarning(KMAIL_LOG) << "Impossible to start undosendcreatejob";
+        qCWarning(KMAIL_UNDO_SEND_LOG) << "Impossible to start undosendcreatejob";
         deleteLater();
         return false;
     }
@@ -54,12 +54,14 @@ bool UndoSendCreateJob::start()
 
 void UndoSendCreateJob::slotTimeOut()
 {
+    qCDebug(KMAIL_UNDO_SEND_LOG) << "undo send timeout";
     mNotification->close();
     deleteLater();
 }
 
 void UndoSendCreateJob::slotNotificationClosed()
 {
+    qCDebug(KMAIL_UNDO_SEND_LOG) << "undo send slotNotificationClosed";
     mTimer->stop();
     deleteLater();
 }
@@ -72,7 +74,7 @@ void UndoSendCreateJob::slotActivateNotificationAction(unsigned int index)
         undoSendEmail();
         return;
     }
-    qCWarning(KMAIL_LOG) << " SpecialNotifierJob::slotActivateNotificationAction unknown index " << index;
+    qCWarning(KMAIL_UNDO_SEND_LOG) << " SpecialNotifierJob::slotActivateNotificationAction unknown index " << index;
 }
 
 void UndoSendCreateJob::undoSendEmail()

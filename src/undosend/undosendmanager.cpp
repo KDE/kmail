@@ -5,7 +5,8 @@
 */
 
 #include "undosendmanager.h"
-#include "kmail_debug.h"
+#include "kmail_undo_send_debug.h"
+
 #include "undosendcreatejob.h"
 #include <KLocalizedString>
 
@@ -30,7 +31,7 @@ void UndoSendManager::addItem(const UndoSendManagerInfo &info)
         job->setMessageInfoText(info.generateMessageInfoText());
         job->setDelay(info.delay);
         if (!job->start()) {
-            qCWarning(KMAIL_LOG) << " Impossible to create job";
+            qCWarning(KMAIL_UNDO_SEND_LOG) << " Impossible to create job";
         }
     }
 }

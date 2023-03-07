@@ -31,6 +31,12 @@ ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIE
         EXPORT KMAIL
     )
 
+ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
+        DESCRIPTION "kmail (kmail)"
+        OLD_CATEGORY_NAMES log_undo_send_kmail
+        EXPORT KMAIL
+    )
+
 add_library(kmailprivate)
 if (TARGET KUserFeedbackWidgets${KUSERFEEDBACK_SUFFIX})
     target_sources(kmailprivate PRIVATE
