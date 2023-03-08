@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-08 02:44+0000\n"
-"PO-Revision-Date: 2023-02-01 12:58+0300\n"
+"PO-Revision-Date: 2023-03-07 20:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2293,8 +2293,8 @@ msgstr "Geçersiz Eklenti Adı"
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
-msgstr[0] "Adresi İletiye Ekle"
-msgstr[1] "Adresleri İletiye Ekle"
+msgstr[0] "URL'yi İletiye Ekle"
+msgstr[1] "URL'leri İletiye Ekle"
 
 #: editor/kmcomposerwin.cpp:2389
 #, kde-format
@@ -3756,7 +3756,7 @@ msgstr "Kullanıcı geri bildirimi için kullanılabilir seçenekleri listeler"
 #: kmail_options.h:40
 #, kde-format
 msgid "Send message to 'address' or attach the file the 'URL' points to"
-msgstr "İletiyi 'adrese' gönder veya 'URL'nin gösterdiği dosyayı iliştir"
+msgstr "İletiyi 'URL'ye gönder veya 'URL'nin gösterdiği dosyayı iliştir"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
@@ -5274,7 +5274,7 @@ msgstr "Yeni HTML sunucu (QtWebEngine)"
 
 #: kmreaderwin.cpp:268
 msgid "Added Check for Phishing URL"
-msgstr "Sahte Adres Denetimi Eklendi"
+msgstr "Sahte URL Denetimi Eklendi"
 
 #: kmreaderwin.cpp:269
 msgid "Added Check DKIM"
@@ -6198,7 +6198,7 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:265
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr "En son kullanılan adreslerin listesi"
+msgstr "En son kullanılan URL'lerin listesi"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.cmake:271
@@ -7347,7 +7347,7 @@ msgstr "Çevrimiçi Sertifika Doğrulama"
 #: ui/smimeconfiguration.ui:50
 #, kde-format
 msgid "OCSP responder URL:"
-msgstr "OCSP yanıtlayıcı adresi:"
+msgstr "OCSP yanıtlayıcı URL'si:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ui/smimeconfiguration.ui:60
@@ -7362,14 +7362,14 @@ msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
-"Sertifikaların çevrimiçi olarak doğrulanması için sunucunun adresini buraya "
+"Sertifikaların çevrimiçi olarak doğrulanması için sunucunun URL'sini buraya "
 "girin (OCSP yanıtlayıcısı). URL genellikle http:// ile başlar."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
 #, kde-format
 msgid "Ignore service URL of certificates"
-msgstr "Sertifikaların servis adreslerini yok say"
+msgstr "Sertifikaların hizmet URL'lerini yok say"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:101

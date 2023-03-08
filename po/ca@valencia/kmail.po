@@ -5730,7 +5730,7 @@ msgstr "Missatge nou des d'una plan&tilla"
 #: messageactions.cpp:83
 #, kde-format
 msgid "Export to PDF..."
-msgstr "Exporta a PDF..."
+msgstr "Exporta cap a PDF..."
 
 #: messageactions.cpp:368
 #, kde-format
@@ -5809,7 +5809,7 @@ msgstr "%1 (%2)"
 #: messageactions.cpp:772
 #, kde-format
 msgid "Export to PDF"
-msgstr "Exporta a PDF"
+msgstr "Exporta cap a PDF"
 
 #: messageactions.cpp:772
 #, kde-format
