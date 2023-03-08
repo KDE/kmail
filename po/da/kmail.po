@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2023-03-08 00:48+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -7800,12 +7800,12 @@ msgstr " minut"
 msgid "Undo send"
 msgstr "Fortryd send"
 
-#: undosend/undosendmanager.cpp:42
+#: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
 msgstr ""
 
-#: undosend/undosendmanager.cpp:48
+#: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
 msgstr ""

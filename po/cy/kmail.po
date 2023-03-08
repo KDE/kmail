@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2023-03-08 00:48+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -7847,12 +7847,12 @@ msgstr "mun"
 msgid "Undo send"
 msgstr ""
 
-#: undosend/undosendmanager.cpp:42
+#: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
 msgstr ""
 
-#: undosend/undosendmanager.cpp:48
+#: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
 msgstr ""
