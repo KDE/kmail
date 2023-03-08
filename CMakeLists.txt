@@ -180,12 +180,13 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
      KF 5.104.0
     )
 set(KUSERFEEDBACK_SUFFIX)
-# Laurent reactivate when I will merge KuserFeedBack
-#if (QT_MAJOR_VERSION STREQUAL "6")
-#    set(KUSERFEEDBACK_SUFFIX "Qt6")
-#endif()
-
-find_package(KUserFeedback${KUSERFEEDBACK_SUFFIX} 1.2.0 CONFIG)
+if (QT_MAJOR_VERSION STREQUAL "6")
+    set(KUSERFEEDBACK_SUFFIX "Qt6")
+    find_package(KUserFeedback${KUSERFEEDBACK_SUFFIX} 1.2.1 CONFIG)
+    add_definitions(-DUSE_KUSERFEEDBACK_QT6)
+else()
+    find_package(KUserFeedback${KUSERFEEDBACK_SUFFIX} 1.2.0 CONFIG)
+endif()
 set_package_properties(KUserFeedback${KUSERFEEDBACK_SUFFIX} PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
 
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)

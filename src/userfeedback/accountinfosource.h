@@ -6,7 +6,11 @@
 
 #pragma once
 #include "kmail_private_export.h"
+#ifdef USE_KUSERFEEDBACK_QT6
+#include <KUserFeedbackQt6/AbstractDataSource>
+#else
 #include <KUserFeedback/AbstractDataSource>
+#endif
 
 class KMAILTESTS_TESTS_EXPORT AccountInfoSource : public KUserFeedback::AbstractDataSource
 {
