@@ -2709,7 +2709,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(&menu, selectedText);
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#if HAVE_TEXT_TO_SPEECH_SUPPORT
+#ifdef HAVE_TEXT_TO_SPEECH_SUPPORT
         menu.addSeparator();
         menu.addAction(mMsgView->speakTextAction());
 #endif
