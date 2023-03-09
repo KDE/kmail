@@ -44,7 +44,7 @@ public:
     void stopAll();
     Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
 
-    MessageComposer::AkonadiSender *sender() const;
+    Q_REQUIRED_RESULT MessageComposer::AkonadiSender *sender() const;
 
     void sendNow(Akonadi::Item::Id id);
 
@@ -58,9 +58,9 @@ private:
     Q_DISABLE_COPY(SendLaterManager)
     void slotCreateJob();
     void createSendInfoList();
-    QString infoToStr(MessageComposer::SendLaterInfo *info) const;
+    Q_REQUIRED_RESULT QString infoToStr(MessageComposer::SendLaterInfo *info) const;
     void removeLaterInfo(MessageComposer::SendLaterInfo *info);
-    MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
+    Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
     void recreateSendList();
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);
