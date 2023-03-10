@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-09 00:47+0000\n"
-"PO-Revision-Date: 2023-02-27 14:41+0100\n"
+"PO-Revision-Date: 2023-03-04 23:31+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
-msgstr ""
+msgstr "Důležité změny od poslední verze:"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
