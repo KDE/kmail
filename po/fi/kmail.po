@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-09 00:47+0000\n"
-"PO-Revision-Date: 2022-07-18 22:44+0300\n"
+"PO-Revision-Date: 2022-11-05 21:09+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2013-01-13 20:43:22+0000\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1676,7 +1676,7 @@ msgid "Message Disposition Notifications"
 msgstr "Vastaanottokuittaukset"
 
 #: configuredialog/configuresecuritypage.cpp:55
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encryption"
 msgstr "Salaus"
 
@@ -2982,13 +2982,12 @@ msgstr "OpenPGP-allekirjoitusavain:"
 #: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Käytä salaamiseen ja allekirjoittamiseen samaa avainta"
 
 #: identity/identitydialog.cpp:379
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP-avain 0x%1"
+msgstr "OpenPGP-avain:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -3057,57 +3056,51 @@ msgid "Preferred format:"
 msgstr "Ensisijainen muoto:"
 
 #: identity/identitydialog.cpp:468
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Otetaanko tilaukset käyttöön?"
+msgstr "Salaa automaattisesti"
 
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Salaa automaattisesti:"
 
 #: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Kerro muille, että suosit salaamista"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Korvaa tietoturvaoletusten yleisasetukset"
 
 #: identity/identitydialog.cpp:483
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "K&orvaa kaikki"
+msgstr "Korvaa oletusasetukset:"
 
 #: identity/identitydialog.cpp:488
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Allekirjoita viesti"
+msgstr "Allekirjoita viestit"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Salaa viestit automaattisesti aina kun mahdollista"
+msgstr "Salaa viestit kun mahdollista"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Varoita lähetettäessä &allekirjoittamattomia viestejä"
+msgstr "Varoita lähetettäessä allekirjoittamattomia viestejä"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Varoita lähetettäessä &salaamattomia viestejä"
+msgstr "Varoita lähetettäessä salaamattomia viestejä"
 
 #: identity/identitydialog.cpp:507
 #, kde-format
@@ -5151,7 +5144,7 @@ msgid "Restart Akonadi"
 msgstr "Käynnistä Akonadi uudelleen"
 
 #: kmmainwidget.cpp:4842
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restart"
 msgstr "Käynnistä uudelleen"
 
@@ -6231,10 +6224,9 @@ msgstr "Näytä salauksen teksti-ilmaisin"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Näytä salauksen teksti-ilmaisin"
+msgstr "Näytä salauksen luottamuskuvakkeet"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:284
@@ -6802,17 +6794,15 @@ msgstr "Avaa &viesti"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Aseta oletukseksi"
+msgstr "Tietoturvaoletukset"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Salattu viesti"
+msgstr "Salaa viestiluonnokset"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6846,57 +6836,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Salattu viesti"
+msgstr "Salaa lä&hetetyt viestit"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Allekirjoita viesti"
+msgstr "Allekirjoita kaikki viestit"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Salaa viestit automaattisesti aina kun mahdollista"
+msgstr "Salaa kaikki viestit kun mahdollista"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Näytä salauksen teksti-ilmaisin"
+msgstr "Salausilmaisimet"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Näytä allekirjoittamisen/salaamisen ilmaisin muokkaimessa"
+msgstr "Näytä allekirjoittamisen/salaamisen ilmaisin"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Näytä salausavaimen luottamustaso"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Hälytykset"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "&Näytä aina salausavaimet arviointia varten"
+msgstr "Hyväksytä salausavaimet aina ennen lähetystä"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6936,7 +6920,7 @@ msgstr ""
 "<qt>\n"
 "<h1>Varoita, jos varmenneketjun varmenne vanhenee</h1>\n"
 "Aseta vähimmäisaika päivinä, jonka kaikkien ketjun varmenteiden pitää olla "
-"voimassa niin ettei varoitusta näytetä.\n"
+"voimassa, jottei varoitusta näytetä.\n"
 "<p>\n"
 "Suositeltava SPHINX-asetus on 14 päivää.\n"
 "</p></qt>"
@@ -6955,30 +6939,21 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Varoita, jos salausvarmenne vanhenee</h1>\n"
-"Aseta vähimmäisaika päivinä, jonka salausvarmenteen pitää olla voimassa niin "
-"ettei varoitusta näytetä.\n"
+"Aseta vähimmäisaika päivinä, jonka salausvarmenteen pitää olla voimassa, "
+"jottei varoitusta näytetä.\n"
 "<p>\n"
 "Suositeltava SPHINX-asetus on 14 päivää.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "&Juurivarmenteille:"
+msgstr "Omille varmenteille:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6989,11 +6964,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Varoita, jos juurivarmenne vanhenee</h1>\n"
-"Aseta vähimmäisaika päivinä, jonka juurivarmenteen pitää olla voimassa niin "
-"ettei varoitusta näytetä.\n"
+"<h1>Varoita, jos oma varmenne vanhenee</h1>\n"
+"Aseta vähimmäisaika päivinä, jonka oman varmenteen pitää olla voimassa, "
+"jottei varoitusta näytetä.\n"
 "<p>\n"
-"Suositeltava SPHINX-asetus on 14 päivää.\n"
+"Suositeltava SPHINX-asetus on 30 päivää.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7016,8 +6991,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Varoita, jos juurivarmenne vanhenee</h1>\n"
-"Aseta vähimmäisaika päivinä, jonka juurivarmenteen pitää olla voimassa niin "
-"ettei varoitusta näytetä.\n"
+"Aseta vähimmäisaika päivinä, jonka juurivarmenteen pitää olla voimassa, "
+"jottei varoitusta näytetä.\n"
 "<p>\n"
 "Suositeltava SPHINX-asetus on 14 päivää.\n"
 "</p></qt>"
