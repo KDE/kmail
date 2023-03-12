@@ -9,6 +9,7 @@
         "Description[cs]": "Modul KMailu pro aplikaci Kontact",
         "Description[de]": "KMail-Modul für Kontact",
         "Description[en_GB]": "Kontact KMail Plugin",
+        "Description[eo]": "Kontact KMail-kromprogramo",
         "Description[es]": "Complemento de KMail para Kontact",
         "Description[eu]": "Kontact-erako KMail-en plugina",
         "Description[fi]": "Kontactin KMail-liitännäinen",
