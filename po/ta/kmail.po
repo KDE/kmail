@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-09 00:47+0000\n"
-"PO-Revision-Date: 2023-02-14 22:00+0530\n"
+"PO-Revision-Date: 2023-03-12 16:51+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -57,12 +57,16 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
+"கேமெயில், கே.டீ.யீ. உருவாக்கியுள்ள மின்னஞ்சல் செயலியாகும். IMAP, POP3, மற்றும் SMTP "
+"போன்ற வழக்கமான மின்னஞ்சல் நெறிமுறைகளை இது ஆதரிக்கும்."
 
 #: about/introduction_kmail.html:10
 msgid ""
 "KMail has many powerful features that are described in the <a href='help:/"
 "kmail2/index.html'>documentation</a>."
 msgstr ""
+"<a href='help:/kmail2/index.html'>கையேட்டில்</a> விவரித்துள்ள பல ஆற்றல்மிக்க அம்சங்கள் "
+"கேமெயில் கொண்டுள்ளது."
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
@@ -150,10 +154,8 @@ msgid "Major contributor, still active"
 msgstr ""
 
 #: aboutdata.cpp:54
-#, fuzzy
-#| msgid "Add Transport"
 msgid "Added maildir support"
-msgstr "போக்குவரத்தை சேர்"
+msgstr "அஞ்சல் அடைவுகளுக்கான ஆதரவை சேர்த்தார்"
 
 #: aboutdata.cpp:56
 msgid "PGP 6 support and further enhancements of the encryption support"
@@ -3007,7 +3009,7 @@ msgstr "OpenPGP கையொப்ப சாவி:"
 #: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "கையொப்பமிடுவதற்கும் மறையாக்குவதற்கும் ஒரே சாவியை பயன்படுத்து"
 
 #: identity/identitydialog.cpp:379
 #, kde-format
