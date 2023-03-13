@@ -51,7 +51,7 @@ void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, 
     }
     mCollectionsInfo.removeAll(info);
     mCollectionsInfo.prepend(info);
-    Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.size() - 1, 1), {});
+    Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.count() - 1, 1), {});
 }
 
 const Akonadi::Collection CollectionSwitcherModel::collection(int index)
