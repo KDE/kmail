@@ -415,7 +415,7 @@ target_link_libraries(kmailprivate
     KPim${KF_MAJOR_VERSION}::MessageCore
     KPim${KF_MAJOR_VERSION}::MessageList
     KPim${KF_MAJOR_VERSION}::MessageComposer
-    KF5::PimCommon
+    KPim${KF_MAJOR_VERSION}::PimCommon
     KPim${KF_MAJOR_VERSION}::MailCommon
     KPim${KF_MAJOR_VERSION}::TemplateParser
     KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets
@@ -503,7 +503,7 @@ target_link_libraries(kmailpart
     kmailprivate
     KPim${KF_MAJOR_VERSION}::AkonadiCore
     KF${KF_MAJOR_VERSION}::I18n
-    KF5::PimCommon
+    KPim${KF_MAJOR_VERSION}::PimCommon
     KF${KF_MAJOR_VERSION}::KCMUtils
     KF${KF_MAJOR_VERSION}::Parts
     KF${KF_MAJOR_VERSION}::IconThemes
@@ -520,7 +520,7 @@ target_link_libraries(kmail
     KPim${KF_MAJOR_VERSION}::KontactInterface
     kmailprivate
     KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KF5::PimCommon
+    KPim${KF_MAJOR_VERSION}::PimCommon
     KF${KF_MAJOR_VERSION}::I18n
     KPim${KF_MAJOR_VERSION}::TemplateParser
     KPim${KF_MAJOR_VERSION}::Libkdepim

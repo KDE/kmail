@@ -12,7 +12,7 @@ add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
 pim_target_precompile_headers(kontact_summaryplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_summaryplugin kmail_xml)
 
-target_link_libraries(kontact_summaryplugin KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::IdentityManagement KPim${KF_MAJOR_VERSION}::KontactInterface KF5::PimCommon KF${KF_MAJOR_VERSION}::ConfigCore)
+target_link_libraries(kontact_summaryplugin KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::IdentityManagement KPim${KF_MAJOR_VERSION}::KontactInterface KPim${KF_MAJOR_VERSION}::PimCommon KF${KF_MAJOR_VERSION}::ConfigCore)
 
 ########### next target ###############
 

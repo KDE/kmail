@@ -57,7 +57,7 @@ target_link_libraries(sendlateragent
     KPim${KF_MAJOR_VERSION}::Mime
     KPim${KF_MAJOR_VERSION}::MessageComposer
     KPim${KF_MAJOR_VERSION}::MessageCore
-    KF5::PimCommon
+    KPim${KF_MAJOR_VERSION}::PimCommon
     KF${KF_MAJOR_VERSION}::DBusAddons
     KF${KF_MAJOR_VERSION}::WindowSystem
     KF${KF_MAJOR_VERSION}::XmlGui

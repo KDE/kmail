@@ -11,7 +11,7 @@ target_link_libraries(dbustest KF${KF_MAJOR_VERSION}::KIOCore KF${KF_MAJOR_VERSI
 
 #####
 add_executable(searchdbustest  searchdbustest.cpp searchdbustest.h)
-target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KF5::PimCommonAkonadi)
+target_link_libraries(searchdbustest Qt::DBus Qt::Widgets KPim${KF_MAJOR_VERSION}::PimCommonAkonadi)
 
 #####
 add_executable(searchmailertest searchmailertest.cpp)

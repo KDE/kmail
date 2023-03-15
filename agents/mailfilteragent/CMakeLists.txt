@@ -42,7 +42,7 @@ endif ()
 target_link_libraries(akonadi_mailfilter_agent
     KPim${KF_MAJOR_VERSION}::MailCommon
     KPim${KF_MAJOR_VERSION}::MessageComposer
-    KF5::PimCommon
+    KPim${KF_MAJOR_VERSION}::PimCommon
     KPim${KF_MAJOR_VERSION}::AkonadiCore
     KPim${KF_MAJOR_VERSION}::AkonadiMime
     KPim${KF_MAJOR_VERSION}::AkonadiAgentBase

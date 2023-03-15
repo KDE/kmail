@@ -5,7 +5,7 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR} )
 add_executable( kmail_potentialphishingemailjobtest potentialphishingemailjobtest.cpp potentialphishingemailjobtest.h)
 add_test(NAME kmail_potentialphishingemailjobtest COMMAND kmail_potentialphishingemailjobtest)
 ecm_mark_as_test(kmail_potentialphishingemailjobtest)
-target_link_libraries( kmail_potentialphishingemailjobtest Qt::Test KF5::PimCommon kmailprivate)
+target_link_libraries( kmail_potentialphishingemailjobtest Qt::Test KPim${KF_MAJOR_VERSION}::PimCommon kmailprivate)
 
 
 add_executable( kmail_potentialphishingdetaildialogtest potentialphishingdetaildialogtest.cpp potentialphishingdetaildialogtest.h)
@@ -16,7 +16,7 @@ target_link_libraries( kmail_potentialphishingdetaildialogtest Qt::Test Qt::Widg
 add_executable( kmail_potentialphishingdetailwidgettest potentialphishingdetailwidgettest.cpp potentialphishingdetailwidgettest.h)
 add_test(NAME kmail_potentialphishingdetailwidgettest COMMAND kmail_potentialphishingdetailwidgettest)
 ecm_mark_as_test(kmail_potentialphishingdetailwidgettest)
-target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigCore KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::WidgetsAddons KF5::PimCommon kmailprivate)
+target_link_libraries( kmail_potentialphishingdetailwidgettest Qt::Test Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigCore KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::WidgetsAddons KPim${KF_MAJOR_VERSION}::PimCommon kmailprivate)
 
 
 
