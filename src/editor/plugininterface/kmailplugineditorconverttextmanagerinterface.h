@@ -47,7 +47,6 @@ Q_SIGNALS:
     void reformatingTextDone();
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
     QList<MessageComposer::PluginEditorConvertTextInterface *> mListPluginInterface;
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> mActionHash;
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;

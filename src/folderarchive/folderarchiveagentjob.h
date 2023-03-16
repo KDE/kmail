@@ -24,7 +24,6 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(FolderArchiveAgentJob)
     void slotFetchCollection(KJob *job);
     void sloMoveMailsToCollection(const Akonadi::Collection &col);
     void slotCheckFailed(const QString &message);

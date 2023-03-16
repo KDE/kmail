@@ -53,7 +53,6 @@ Q_SIGNALS:
     void insertText(const QString &str);
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorManagerInterface)
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
     KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;
     MessageComposer::ComposerViewBase *mComposerInterface = nullptr;

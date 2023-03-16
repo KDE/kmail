@@ -30,7 +30,6 @@ Q_SIGNALS:
     void potentialPhishingEmailsFound(const QStringList &emails);
 
 private:
-    Q_DISABLE_COPY(PotentialPhishingEmailJob)
     QStringList mEmails;
     QStringList mPotentialPhisingEmails;
     QStringList mEmailWhiteList;

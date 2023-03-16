@@ -33,7 +33,6 @@ public:
     Q_REQUIRED_RESULT bool canStart() const;
 
 private:
-    Q_DISABLE_COPY(CreateFollowupReminderOnExistingMessageJob)
     void itemFetchJobDone(KJob *job);
     void slotReminderDone(KJob *job);
 

@@ -23,7 +23,6 @@ Q_SIGNALS:
     void finishTaskFailed();
 
 private:
-    Q_DISABLE_COPY(FollowUpReminderFinishTaskJob)
     void slotItemFetchJobDone(KJob *job);
     void slotItemModifiedResult(KJob *job);
     void closeTodo();

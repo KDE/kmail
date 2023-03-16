@@ -38,7 +38,6 @@ public:
     void setSettings(const CreateReplyMessageJobSettings &settings);
 
 private:
-    Q_DISABLE_COPY(CreateReplyMessageJob)
     void slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply);
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     CreateReplyMessageJobSettings mSettings;

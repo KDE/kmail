@@ -25,7 +25,6 @@ public:
     void setCurrentCollection(const Akonadi::Collection &currentCollection);
 
 private:
-    Q_DISABLE_COPY(HandleClickedUrlJob)
     void slotOpenComposer();
     QUrl mUrl;
     Akonadi::Collection mCurrentCollection;

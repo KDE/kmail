@@ -37,7 +37,6 @@ Q_SIGNALS:
     void selectCollectionFolder(const Akonadi::Collection &col);
 
 private:
-    Q_DISABLE_COPY(FolderShortcutCommand)
     const Akonadi::Collection mCollectionFolder;
     QWidget *const mMainWidget;
     QAction *mAction = nullptr;
@@ -68,7 +67,6 @@ private:
     void slotRowsInserted(const QModelIndex &parent, int start, int end);
 
 private:
-    Q_DISABLE_COPY(FolderShortcutActionManager)
     void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
     QHash<Akonadi::Collection::Id, FolderShortcutCommand *> mFolderShortcutCommands;
     KActionCollection *mActionCollection = nullptr;

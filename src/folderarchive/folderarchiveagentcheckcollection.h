@@ -23,7 +23,6 @@ Q_SIGNALS:
     void checkFailed(const QString &message);
 
 private:
-    Q_DISABLE_COPY(FolderArchiveAgentCheckCollection)
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
     void slotCreateNewFolder(KJob *);
     void createNewFolder(const QString &name);

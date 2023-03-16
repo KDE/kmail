@@ -37,7 +37,6 @@ public:
     void setCustomToolsWidget(PimCommon::CustomToolsWidgetNg *customToolsWidget);
 
 private:
-    Q_DISABLE_COPY(KMailPluginGrammarEditorManagerInterface)
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     QWidget *mParentWidget = nullptr;

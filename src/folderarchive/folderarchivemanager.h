@@ -40,7 +40,6 @@ public Q_SLOTS:
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
 private:
-    Q_DISABLE_COPY(FolderArchiveManager)
     void slotFetchParentCollection(KJob *job);
     void slotFetchCollection(KJob *job);
 

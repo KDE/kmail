@@ -41,7 +41,6 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 private:
-    Q_DISABLE_COPY(ArchiveMailManager)
     QString infoToStr(ArchiveMailInfo *info) const;
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;
