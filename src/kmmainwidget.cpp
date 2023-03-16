@@ -13,7 +13,6 @@
 #include "editor/composer.h"
 #include "job/composenewmessagejob.h"
 #include "kmcommands.h"
-#include "kmmainwin.h"
 #include "kmreadermainwin.h"
 #include "searchdialog/searchwindow.h"
 #include "undostack.h"
