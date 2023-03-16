@@ -36,8 +36,5 @@ public:
                                        const QString &subject,
                                        const QString &body,
                                        const QByteArray &attachment);
-
-private:
-    Q_DISABLE_COPY(MailServiceImpl)
 };
 }

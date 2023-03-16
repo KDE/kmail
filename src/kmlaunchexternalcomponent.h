@@ -27,6 +27,5 @@ public:
     void slotFilterLogViewer();
 
 private:
-    Q_DISABLE_COPY(KMLaunchExternalComponent)
     QWidget *const mParentWidget;
 };

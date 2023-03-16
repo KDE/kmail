@@ -24,7 +24,6 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(RemoveDuplicateMailJob)
     void slotRemoveDuplicatesDone(KJob *job);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);

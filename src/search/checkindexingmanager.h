@@ -30,7 +30,6 @@ public:
     void start(QAbstractItemModel *collectionModel);
 
 private:
-    Q_DISABLE_COPY(CheckIndexingManager)
     void checkNextCollection();
 
     void indexingFinished(qint64 index, bool reindexCollection);

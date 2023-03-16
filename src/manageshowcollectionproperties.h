@@ -33,7 +33,6 @@ public Q_SLOTS:
     void slotCollectionProperties();
 
 private:
-    Q_DISABLE_COPY(ManageShowCollectionProperties)
     void slotCollectionPropertiesContinued(KJob *job);
     void slotCollectionPropertiesFinished(KJob *job);
     void showCollectionProperties(const QString &pageToShow);

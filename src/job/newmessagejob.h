@@ -52,7 +52,6 @@ public:
     void setNewMessageJobSettings(const NewMessageJobSettings &newMessageJobSettings);
 
 private:
-    Q_DISABLE_COPY(NewMessageJob)
     void slotOpenComposer();
     NewMessageJobSettings mNewMessageJobSettings;
     Akonadi::Collection mCollection;
