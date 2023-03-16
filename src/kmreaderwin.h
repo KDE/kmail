@@ -173,6 +173,7 @@ public:
 
     void updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton);
     MessageViewer::RemoteContentMenu *remoteContentMenu() const;
+    void addImageMenuActions(QMenu *menu);
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
     void zoomChanged(qreal factor);

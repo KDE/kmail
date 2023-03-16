@@ -2687,11 +2687,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
             menu.addAction(mMsgView->shareServiceUrlMenu());
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
-                menu.addSeparator();
-                menu.addAction(mMsgView->copyImageLocation());
-                menu.addAction(mMsgView->downloadImageToDiskAction());
-                menu.addAction(mMsgView->shareImage());
-                menu.addAction(mMsgView->openImageAction());
+                mMsgView->addImageMenuActions(&menu);
             }
             urlMenuAdded = true;
         }
@@ -2747,11 +2743,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         menu.addSeparator();
         if (mMsgView) {
             if (!imageUrl.isEmpty()) {
-                menu.addSeparator();
-                menu.addAction(mMsgView->copyImageLocation());
-                menu.addAction(mMsgView->downloadImageToDiskAction());
-                menu.addAction(mMsgView->shareImage());
-                menu.addAction(mMsgView->openImageAction());
+                mMsgView->addImageMenuActions(&menu);
                 menu.addSeparator();
             }
             menu.addSeparator();

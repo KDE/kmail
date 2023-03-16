@@ -1014,3 +1014,12 @@ void KMReaderWin::slotItemModified(const Akonadi::Item &item, const QSet<QByteAr
         }
     }
 }
+
+void KMReaderWin::addImageMenuActions(QMenu *menu)
+{
+    menu->addSeparator();
+    menu->addAction(copyImageLocation());
+    menu->addAction(downloadImageToDiskAction());
+    menu->addAction(shareImage());
+    menu->addAction(openImageAction());
+}

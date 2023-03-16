@@ -705,10 +705,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
-                menu->addAction(mReaderWin->copyImageLocation());
-                menu->addAction(mReaderWin->downloadImageToDiskAction());
-                menu->addAction(mReaderWin->shareImage());
-                menu->addAction(mReaderWin->openImageAction());
+                mReaderWin->addImageMenuActions(menu);
             }
             urlMenuAdded = true;
         }
@@ -783,10 +780,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addSeparator();
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
-                menu->addAction(mReaderWin->copyImageLocation());
-                menu->addAction(mReaderWin->downloadImageToDiskAction());
-                menu->addAction(mReaderWin->shareImage());
-                menu->addAction(mReaderWin->openImageAction());
+                mReaderWin->addImageMenuActions(menu);
                 menu->addSeparator();
             }
 
