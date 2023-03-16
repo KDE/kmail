@@ -846,6 +846,7 @@ void KMMainWidget::readConfig()
             deleteWidgets();
             createWidgets();
             restoreCollectionFolderViewConfig();
+            slotShowSelectedFolderInPane();
             Q_EMIT recreateGui();
         } else if (oldFolderQuickSearch != mEnableFolderQuickSearch) {
             if (mEnableFolderQuickSearch) {
