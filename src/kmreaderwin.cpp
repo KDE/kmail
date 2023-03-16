@@ -58,6 +58,7 @@ using namespace MessageViewer;
 #include <KMessageBox>
 #include <KToggleAction>
 #include <QAction>
+#include <QDesktopServices>
 #include <QMenu>
 
 #include <QClipboard>
@@ -179,6 +180,12 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("saveas_imageurl"), mImageUrlSaveAsAction);
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false);
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
+
+    // save Image On Disk
+    mOpenImageAction = new QAction(i18n("Open Image..."), this);
+    ac->addAction(QStringLiteral("open_image"), mOpenImageAction);
+    ac->setShortcutsConfigurable(mOpenImageAction, false);
+    connect(mOpenImageAction, &QAction::triggered, this, &KMReaderWin::slotOpenImage);
 
     // View html options
     mViewHtmlOptions = new QMenu(i18n("Show HTML Format"), this);
@@ -497,6 +504,15 @@ void KMReaderWin::slotUrlSave()
     command->start();
 }
 
+void KMReaderWin::slotOpenImage()
+{
+    const QUrl url = imageUrlClicked();
+    if (url.isEmpty()) {
+        return;
+    }
+    QDesktopServices::openUrl(url);
+}
+
 void KMReaderWin::slotSaveImageOnDisk()
 {
     const QUrl url = imageUrlClicked();
@@ -667,6 +683,11 @@ QAction *KMReaderWin::shareTextAction() const
 QAction *KMReaderWin::downloadImageToDiskAction() const
 {
     return mImageUrlSaveAsAction;
+}
+
+QAction *KMReaderWin::openImageAction() const
+{
+    return mOpenImageAction;
 }
 
 void KMReaderWin::clear(bool force)

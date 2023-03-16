@@ -708,6 +708,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
                 menu->addAction(mReaderWin->copyImageLocation());
                 menu->addAction(mReaderWin->downloadImageToDiskAction());
                 menu->addAction(mReaderWin->shareImage());
+                menu->addAction(mReaderWin->openImageAction());
             }
             urlMenuAdded = true;
         }
@@ -785,6 +786,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
                 menu->addAction(mReaderWin->copyImageLocation());
                 menu->addAction(mReaderWin->downloadImageToDiskAction());
                 menu->addAction(mReaderWin->shareImage());
+                menu->addAction(mReaderWin->openImageAction());
                 menu->addSeparator();
             }
 

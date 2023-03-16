@@ -146,6 +146,7 @@ public:
     Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
 
     Q_REQUIRED_RESULT QWidget *mainWindow() const;
+    Q_REQUIRED_RESULT QAction *openImageAction() const;
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);
@@ -221,6 +222,7 @@ private:
     void sendMdnInfo(const Akonadi::Item &item);
     void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
+    void slotOpenImage();
 
 private:
     KContacts::Addressee mSearchedAddress;
@@ -236,6 +238,7 @@ private:
     QAction *mUrlSaveAsAction = nullptr;
     QAction *mAddBookmarksAction = nullptr;
     QAction *mImageUrlSaveAsAction = nullptr;
+    QAction *mOpenImageAction = nullptr;
     QAction *mEditContactAction = nullptr;
     QAction *mViewAsHtml = nullptr;
     QAction *mLoadExternalReference = nullptr;
