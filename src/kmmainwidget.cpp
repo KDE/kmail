@@ -2679,7 +2679,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
             menu.addAction(mMsgView->urlOpenAction());
-            menu.addAction(mMsgView->addBookmarksAction());
+            menu.addAction(mMsgView->addUrlToBookmarkAction());
             menu.addAction(mMsgView->urlSaveAsAction());
             menu.addAction(mMsgView->copyURLAction());
             menu.addSeparator();

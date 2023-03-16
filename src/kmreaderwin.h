@@ -125,7 +125,7 @@ public:
     Q_REQUIRED_RESULT QAction *copyImageLocation() const;
     Q_REQUIRED_RESULT QAction *urlOpenAction() const;
     Q_REQUIRED_RESULT QAction *urlSaveAsAction() const;
-    Q_REQUIRED_RESULT QAction *addBookmarksAction() const;
+    Q_REQUIRED_RESULT QAction *addUrlToBookmarkAction() const;
     Q_REQUIRED_RESULT QAction *toggleMimePartTreeAction() const;
     Q_REQUIRED_RESULT QAction *speakTextAction() const;
     Q_REQUIRED_RESULT QAction *downloadImageToDiskAction() const;
@@ -194,7 +194,7 @@ public Q_SLOTS:
     void slotMailtoOpenAddrBook();
     /** Save the page to a file */
     void slotUrlSave();
-    void slotAddBookmarks();
+    void slotAddUrlToBookmark();
     void slotUrlClicked(const Akonadi::Item &, const QUrl &);
     void slotShowReader(KMime::Content *, bool html, const QString &);
     void slotShowMessage(const KMime::Message::Ptr &message, const QString &encoding);
@@ -237,7 +237,7 @@ private:
     QAction *mAddAddrBookAction = nullptr;
     QAction *mOpenAddrBookAction = nullptr;
     QAction *mUrlSaveAsAction = nullptr;
-    QAction *mAddBookmarksAction = nullptr;
+    QAction *mAddUrlToBookmarkAction = nullptr;
     QAction *mImageUrlSaveAsAction = nullptr;
     QAction *mOpenImageAction = nullptr;
     QAction *mEditContactAction = nullptr;

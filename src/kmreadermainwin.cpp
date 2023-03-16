@@ -696,7 +696,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             // popup on a not-mailto URL
             menu = new QMenu(this);
             menu->addAction(mReaderWin->urlOpenAction());
-            menu->addAction(mReaderWin->addBookmarksAction());
+            menu->addAction(mReaderWin->addUrlToBookmarkAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
             menu->addAction(mReaderWin->copyURLAction());
             menu->addSeparator();

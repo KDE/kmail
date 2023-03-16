@@ -153,10 +153,10 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("openin_addr_book"), mOpenAddrBookAction);
     connect(mOpenAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoOpenAddrBook);
     // bookmark message
-    mAddBookmarksAction = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Bookmark This Link"), this);
-    ac->setShortcutsConfigurable(mAddBookmarksAction, false);
-    ac->addAction(QStringLiteral("add_bookmarks"), mAddBookmarksAction);
-    connect(mAddBookmarksAction, &QAction::triggered, this, &KMReaderWin::slotAddBookmarks);
+    mAddUrlToBookmarkAction = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Bookmark This Link"), this);
+    ac->setShortcutsConfigurable(mAddUrlToBookmarkAction, false);
+    ac->addAction(QStringLiteral("add_bookmarks"), mAddUrlToBookmarkAction);
+    connect(mAddUrlToBookmarkAction, &QAction::triggered, this, &KMReaderWin::slotAddUrlToBookmark);
 
     mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact..."), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
@@ -484,7 +484,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     job->start();
 }
 
-void KMReaderWin::slotAddBookmarks()
+void KMReaderWin::slotAddUrlToBookmark()
 {
     const QUrl url = urlClicked();
     if (url.isEmpty()) {
@@ -660,9 +660,9 @@ QAction *KMReaderWin::urlSaveAsAction() const
     return mUrlSaveAsAction;
 }
 
-QAction *KMReaderWin::addBookmarksAction() const
+QAction *KMReaderWin::addUrlToBookmarkAction() const
 {
-    return mAddBookmarksAction;
+    return mAddUrlToBookmarkAction;
 }
 
 void KMReaderWin::setPrinting(bool enable)
