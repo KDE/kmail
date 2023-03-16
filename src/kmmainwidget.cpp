@@ -740,10 +740,10 @@ void KMMainWidget::layoutSplitters()
     QList<int> splitter2Sizes;
 
     const int folderViewWidth = KMailSettings::self()->folderViewWidth();
-    int ftHeight = KMailSettings::self()->folderTreeHeight();
+    const int ftHeight = KMailSettings::self()->folderTreeHeight();
     int headerHeight = KMailSettings::self()->searchAndHeaderHeight();
     const int messageViewerWidth = KMailSettings::self()->readerWindowWidth();
-    int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+    const int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
     int messageViewerHeight = KMailSettings::self()->readerWindowHeight();
 
     int ffvHeight = mFolderViewSplitter ? KMKernel::self()->mailCommonSettings()->favoriteCollectionViewHeight() : 0;
