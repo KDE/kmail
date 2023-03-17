@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-09 00:47+0000\n"
+"POT-Creation-Date: 2023-03-17 03:16+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1893,7 +1893,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "پوشه جدید"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3519
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3520
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -2144,7 +2144,7 @@ msgstr "&درج پرونده...‌"
 msgid "&Insert Recent Text File"
 msgstr "&درج پرونده اخیر‌"
 
-#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2874
+#: editor/kmcomposerwin.cpp:1244 kmmainwidget.cpp:2875
 #, kde-format
 msgid "&Address Book"
 msgstr "کتاب &نشانی‌"
@@ -4084,7 +4084,7 @@ msgid "F&older"
 msgstr "&پوشه‌"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3368 kmmainwin.rc:133
+#: kmail_part.rc:131 kmail_part.rc:280 kmmainwidget.cpp:3369 kmmainwin.rc:133
 #: kmmainwin.rc:283
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
@@ -4092,7 +4092,7 @@ msgid "Apply Filters on Folder"
 msgstr "&اعمال همه پالایه‌ها‌"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3373 kmmainwin.rc:138
+#: kmail_part.rc:136 kmail_part.rc:285 kmmainwidget.cpp:3374 kmmainwin.rc:138
 #: kmmainwin.rc:288
 #, fuzzy, kde-format
 #| msgid "Current folder and all subfolders"
@@ -4119,7 +4119,7 @@ msgid "&Forward"
 msgstr "&پیش‌سو‌"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:188 kmmainwidget.cpp:3185 kmmainwin.rc:188
+#: kmail_part.rc:188 kmmainwidget.cpp:3186 kmmainwin.rc:188
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&اعمال پالایه‌"
@@ -4263,13 +4263,13 @@ msgstr ""
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail، برای برون‌خط شدن تنظیم می‌شود؛ تمام کارهای شبکه معلق می‌شوند"
 
-#: kmkernel.cpp:839 kmmainwidget.cpp:2368 kmmainwidget.cpp:2384
+#: kmkernel.cpp:839 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&ارسال نامه‌"
 
-#: kmkernel.cpp:840 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:840 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4298,12 +4298,12 @@ msgstr "در حال حاضر KMail در حالت برون‌خط است. چقد�
 msgid "Online/Offline"
 msgstr "بر‌خط/برون‌خط"
 
-#: kmkernel.cpp:950 kmmainwidget.cpp:2357
+#: kmkernel.cpp:950 kmmainwidget.cpp:2358
 #, kde-format
 msgid "Work Online"
 msgstr "کار کردن برخط"
 
-#: kmkernel.cpp:951 kmmainwidget.cpp:2354
+#: kmkernel.cpp:951 kmmainwidget.cpp:2355
 #, kde-format
 msgid "Work Offline"
 msgstr "کار کردن برون‌‌خط"
@@ -4471,53 +4471,53 @@ msgstr "نگه داشته نشود"
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
 
-#: kmmainwidget.cpp:1367
+#: kmmainwidget.cpp:1368
 #, kde-format
 msgid "No Subject"
 msgstr "بدون موضوع"
 
-#: kmmainwidget.cpp:1380
+#: kmmainwidget.cpp:1381
 #, fuzzy, kde-format
 #| msgid "(no custom templates)"
 msgid "(no templates)"
 msgstr ")بدون قالب سفارشی("
 
-#: kmmainwidget.cpp:1432
+#: kmmainwidget.cpp:1433
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "این پوشه، تنظیم گزینه‌های انقضا ندارد"
 
-#: kmmainwidget.cpp:1438
+#: kmmainwidget.cpp:1439
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>مطمئن هستید که می‌خواهید پوشه <b>%1</b> انقضا یابد؟ </qt>"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1440
 #, kde-format
 msgid "Expire Folder"
 msgstr "انقضای پوشه"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1440
 #, kde-format
 msgid "&Expire"
 msgstr "&انقضا‌"
 
-#: kmmainwidget.cpp:1455
+#: kmmainwidget.cpp:1456
 #, kde-format
 msgid "Empty Trash"
 msgstr "خالی کردن زباله"
 
-#: kmmainwidget.cpp:1455 util.cpp:151
+#: kmmainwidget.cpp:1456 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "حرکت به زباله"
 
-#: kmmainwidget.cpp:1456
+#: kmmainwidget.cpp:1457
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "مطمئن هستید که می‌خواهید پوشه زباله را خالی کنید؟"
 
-#: kmmainwidget.cpp:1458
+#: kmmainwidget.cpp:1459
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4526,27 +4526,27 @@ msgstr ""
 "<qt>مطمئن هستید که می‌خواهید تمام پیامها را از پوشه <b>%1</b> به زباله حرکت "
 "دهید؟</qt>"
 
-#: kmmainwidget.cpp:1481
+#: kmmainwidget.cpp:1482
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "تمام پیامها به زباله حرکت داده شد"
 
-#: kmmainwidget.cpp:1535
+#: kmmainwidget.cpp:1536
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "مطمئن هستید که می‌خواهید تمام پیامهای قدیمی انقضا یابد؟"
 
-#: kmmainwidget.cpp:1536
+#: kmmainwidget.cpp:1537
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "پیامهای قدیمی انقضا یابد؟"
 
-#: kmmainwidget.cpp:1537
+#: kmmainwidget.cpp:1538
 #, kde-format
 msgid "Expire"
 msgstr "انقضا"
 
-#: kmmainwidget.cpp:1562
+#: kmmainwidget.cpp:1563
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4557,17 +4557,17 @@ msgstr ""
 "می‌کند و  ممکن است احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده "
 "سازش یابد را افزایش دهد."
 
-#: kmmainwidget.cpp:1565 kmmainwidget.cpp:4660
+#: kmmainwidget.cpp:1566 kmmainwidget.cpp:4661
 #, kde-format
 msgid "Security Warning"
 msgstr "اخطار امنیتی"
 
-#: kmmainwidget.cpp:1566
+#: kmmainwidget.cpp:1567
 #, kde-format
 msgid "Load External References"
 msgstr "بارگذاری مرجعهای خارجی"
 
-#: kmmainwidget.cpp:1638
+#: kmmainwidget.cpp:1639
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4579,441 +4579,441 @@ msgstr[0] ""
 "<qt>واقعاً می‌خواهید %1 پیام برگزیده را حذف کنید؟<br />به محض این که حذف "
 "می‌‌شوند، آنها را نمی‌توان بازگرداند.</qt>"
 
-#: kmmainwidget.cpp:1643
+#: kmmainwidget.cpp:1644
 #, kde-format
 msgid "Delete Messages"
 msgstr "حذف پیامها"
 
-#: kmmainwidget.cpp:1643
+#: kmmainwidget.cpp:1644
 #, kde-format
 msgid "Delete Message"
 msgstr "حذف پیام"
 
-#: kmmainwidget.cpp:1658
+#: kmmainwidget.cpp:1659
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgid "Moving messages..."
 msgstr "حرکت دادن پیامها"
 
-#: kmmainwidget.cpp:1660 kmmainwidget.cpp:1854
+#: kmmainwidget.cpp:1661 kmmainwidget.cpp:1855
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Deleting messages..."
 msgstr "حذف پیامها"
 
-#: kmmainwidget.cpp:1675 kmmainwidget.cpp:1874
+#: kmmainwidget.cpp:1676 kmmainwidget.cpp:1875
 #, fuzzy, kde-format
 #| msgid "Messages deleted successfully."
 msgid "Messages deleted successfully."
 msgstr "پیامها با موفقیت حذف شدند."
 
-#: kmmainwidget.cpp:1677
+#: kmmainwidget.cpp:1678
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Messages moved successfully."
 msgstr "پیامها با موفقیت منتقل شدند"
 
-#: kmmainwidget.cpp:1682 kmmainwidget.cpp:1887
+#: kmmainwidget.cpp:1683 kmmainwidget.cpp:1888
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "خرابی در حذف پیامها."
 
-#: kmmainwidget.cpp:1684 kmmainwidget.cpp:1900
+#: kmmainwidget.cpp:1685 kmmainwidget.cpp:1901
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "حذف پیامها لغو شد."
 
-#: kmmainwidget.cpp:1688
+#: kmmainwidget.cpp:1689
 #, kde-format
 msgid "Moving messages failed."
 msgstr "خرابی در حرکت پیامها."
 
-#: kmmainwidget.cpp:1690
+#: kmmainwidget.cpp:1691
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "حرکت پیامها لغو شد."
 
-#: kmmainwidget.cpp:1756
+#: kmmainwidget.cpp:1757
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "حرکت دادن پیامها به پوشه"
 
-#: kmmainwidget.cpp:1783
+#: kmmainwidget.cpp:1784
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgid "Copying messages..."
 msgstr "حرکت دادن پیامها"
 
-#: kmmainwidget.cpp:1791
+#: kmmainwidget.cpp:1792
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Messages copied successfully."
 msgstr "پیامها با موفقیت منتقل شدند"
 
-#: kmmainwidget.cpp:1794
+#: kmmainwidget.cpp:1795
 #, fuzzy, kde-format
 #| msgid "Moving messages failed."
 msgid "Copying messages failed."
 msgstr "خرابی در حرکت پیامها."
 
-#: kmmainwidget.cpp:1796
+#: kmmainwidget.cpp:1797
 #, fuzzy, kde-format
 #| msgid "Moving messages canceled."
 msgid "Copying messages canceled."
 msgstr "حرکت پیامها لغو شد."
 
-#: kmmainwidget.cpp:1806
+#: kmmainwidget.cpp:1807
 #, fuzzy, kde-format
 #| msgid "Copy Message to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "رونوشت پیام در پوشه"
 
-#: kmmainwidget.cpp:1851
+#: kmmainwidget.cpp:1852
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
 msgid "Moving messages to trash..."
 msgstr "حرکت پیام به زباله‌دان"
 
-#: kmmainwidget.cpp:1858
+#: kmmainwidget.cpp:1859
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
 msgid "Deleting and moving messages to trash..."
 msgstr "حرکت پیام به زباله‌دان"
 
-#: kmmainwidget.cpp:1871
+#: kmmainwidget.cpp:1872
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Messages moved to trash successfully."
 msgstr "پیامها با موفقیت منتقل شدند"
 
-#: kmmainwidget.cpp:1878
+#: kmmainwidget.cpp:1879
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Messages moved to trash or deleted successfully"
 msgstr "پیامها با موفقیت منتقل شدند"
 
-#: kmmainwidget.cpp:1884
+#: kmmainwidget.cpp:1885
 #, fuzzy, kde-format
 #| msgid "Moving messages failed."
 msgid "Moving messages to trash failed."
 msgstr "خرابی در حرکت پیامها."
 
-#: kmmainwidget.cpp:1891
+#: kmmainwidget.cpp:1892
 #, fuzzy, kde-format
 #| msgid "Moving messages failed."
 msgid "Deleting or moving messages to trash failed."
 msgstr "خرابی در حرکت پیامها."
 
-#: kmmainwidget.cpp:1897
+#: kmmainwidget.cpp:1898
 #, fuzzy, kde-format
 #| msgid "Moving messages canceled."
 msgid "Moving messages to trash canceled."
 msgstr "حرکت پیامها لغو شد."
 
-#: kmmainwidget.cpp:1904
+#: kmmainwidget.cpp:1905
 #, fuzzy, kde-format
 #| msgid "Moving messages canceled."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "حرکت پیامها لغو شد."
 
-#: kmmainwidget.cpp:2174
+#: kmmainwidget.cpp:2175
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "پرش به پوشه"
 
-#: kmmainwidget.cpp:2823
+#: kmmainwidget.cpp:2824
 #, kde-format
 msgid "Save &As..."
 msgstr "ذخیره &به عنوان...‌"
 
-#: kmmainwidget.cpp:2834
+#: kmmainwidget.cpp:2835
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "&انقضای تمام پوشه‌ها‌"
 
-#: kmmainwidget.cpp:2839
+#: kmmainwidget.cpp:2840
 #, kde-format
 msgid "Check &Mail"
 msgstr "بررسی &نامه‌"
 
-#: kmmainwidget.cpp:2847
+#: kmmainwidget.cpp:2848
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
 msgid "Check Mail In"
 msgstr "بررسی &نامه‌"
 
-#: kmmainwidget.cpp:2849 kmmainwidget.cpp:2850
+#: kmmainwidget.cpp:2850 kmmainwidget.cpp:2851
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
 msgid "Check Mail"
 msgstr "بررسی &نامه‌"
 
-#: kmmainwidget.cpp:2854
+#: kmmainwidget.cpp:2855
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&ارسال پیامهای صف‌شده‌"
 
-#: kmmainwidget.cpp:2862
+#: kmmainwidget.cpp:2863
 #, fuzzy, kde-format
 #| msgid "Onlinestatus (unknown)"
 msgid "Online status (unknown)"
 msgstr "وضعیت برخط )ناشناخته("
 
-#: kmmainwidget.cpp:2867
+#: kmmainwidget.cpp:2868
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "ارسال پیامهای صف‌شده از طریق"
 
-#: kmmainwidget.cpp:2883
+#: kmmainwidget.cpp:2884
 #, kde-format
 msgid "Certificate Manager"
 msgstr "مدیر گواهی"
 
-#: kmmainwidget.cpp:2893
+#: kmmainwidget.cpp:2894
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
 msgid "&Import Messages..."
 msgstr "&واردات پیامها...‌"
 
-#: kmmainwidget.cpp:2903
+#: kmmainwidget.cpp:2904
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "&اشکال‌زدایی غربال...‌"
 
-#: kmmainwidget.cpp:2910
+#: kmmainwidget.cpp:2911
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "پالایش مشاهده‌گر &ثبت...‌"
 
-#: kmmainwidget.cpp:2915
+#: kmmainwidget.cpp:2916
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2920
+#: kmmainwidget.cpp:2921
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "ویرایش پاسخهای »خارج از دفتر«..."
 
-#: kmmainwidget.cpp:2926
+#: kmmainwidget.cpp:2927
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "&Configure Automatic Archiving..."
 msgstr "پیکربندی &اخطارها...‌"
 
-#: kmmainwidget.cpp:2932
+#: kmmainwidget.cpp:2933
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Delayed Messages..."
 msgstr "حذف پیامها"
 
-#: kmmainwidget.cpp:2938
+#: kmmainwidget.cpp:2939
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "&یافتن پیامها...‌"
 
-#: kmmainwidget.cpp:2949 util.cpp:148
+#: kmmainwidget.cpp:2950 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&حذف‌"
 
-#: kmmainwidget.cpp:2954 kmmainwidget.cpp:3999
+#: kmmainwidget.cpp:2955 kmmainwidget.cpp:4000
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&حرکت رشته به زباله‌"
 
-#: kmmainwidget.cpp:2958
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "حرکت رشته به زباله‌دان"
 
-#: kmmainwidget.cpp:2961 kmmainwidget.cpp:3999
+#: kmmainwidget.cpp:2962 kmmainwidget.cpp:4000
 #, kde-format
 msgid "Delete T&hread"
 msgstr "حذف &رشته‌"
 
-#: kmmainwidget.cpp:2967 kmmainwidget.cpp:4001
+#: kmmainwidget.cpp:2968 kmmainwidget.cpp:4002
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&یافتن پیامها...‌"
 
-#: kmmainwidget.cpp:2972
+#: kmmainwidget.cpp:2973
 #, kde-format
 msgid "Select &All Messages"
 msgstr "برگزیدن &تمام پیامها‌"
 
-#: kmmainwidget.cpp:2979
+#: kmmainwidget.cpp:2980
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "مدیریت فهرست &نامه...‌"
 
-#: kmmainwidget.cpp:2987
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2991
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "&انتساب میان‌بر...‌"
 
-#: kmmainwidget.cpp:3009
+#: kmmainwidget.cpp:3010
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "تنظیمات &انقضا‌"
 
-#: kmmainwidget.cpp:3034
+#: kmmainwidget.cpp:3035
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "&Archive Folder..."
 msgstr "پوشه &جدید...‌"
 
-#: kmmainwidget.cpp:3042
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "بارگذاری مرجعهای &خارجی‌"
 
-#: kmmainwidget.cpp:3065
+#: kmmainwidget.cpp:3066
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Message To..."
 msgstr "پیام جدید به..."
 
-#: kmmainwidget.cpp:3067
+#: kmmainwidget.cpp:3068
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message To..."
 msgstr "پیام جدید به..."
 
-#: kmmainwidget.cpp:3072
+#: kmmainwidget.cpp:3073
 #, kde-format
 msgid "&New Message..."
 msgstr "پیام &جدید...‌"
 
-#: kmmainwidget.cpp:3074
+#: kmmainwidget.cpp:3075
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "جدید"
 
-#: kmmainwidget.cpp:3082
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgid "Message From &Template"
 msgstr "پیام از &قالب‌"
 
-#: kmmainwidget.cpp:3088
+#: kmmainwidget.cpp:3089
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "پیام جدید &در فهرست نامه...‌"
 
-#: kmmainwidget.cpp:3094
+#: kmmainwidget.cpp:3095
 #, kde-format
 msgid "&Create Filter"
 msgstr "&ایجاد پالایه‌"
 
-#: kmmainwidget.cpp:3098
+#: kmmainwidget.cpp:3099
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "پالایش بر اساس &موضوع...‌"
 
-#: kmmainwidget.cpp:3105
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "Filter on &From..."
 msgstr "پالایش بر اساس &از...‌"
 
-#: kmmainwidget.cpp:3111
+#: kmmainwidget.cpp:3112
 #, kde-format
 msgid "Filter on &To..."
 msgstr "پالایش بر اساس &به...‌"
 
-#: kmmainwidget.cpp:3117
+#: kmmainwidget.cpp:3118
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "پالایش بر اساس &به...‌"
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3126
 #, kde-format
 msgid "Mark &Thread"
 msgstr "نشان‌دار کردن &رشته‌"
 
-#: kmmainwidget.cpp:3128
+#: kmmainwidget.cpp:3129
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "نشان‌دار کردن رشته به عنوان &خوانده‌شده‌"
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3132
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "نشان‌دار کردن همه پیامهای رشته برگزیده به عنوان خوانده‌شده"
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "نشان‌دار کردن رشته به عنوان &خوانده‌نشده‌"
 
-#: kmmainwidget.cpp:3137
+#: kmmainwidget.cpp:3138
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "نشان‌دار کردن همه پیامهای رشته برگزیده به عنوان خوانده‌نشده"
 
-#: kmmainwidget.cpp:3143
+#: kmmainwidget.cpp:3144
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &Unread"
 msgid "Mark Thread as &Important"
 msgstr "نشان‌دار کردن رشته به عنوان &خوانده‌نشده‌"
 
-#: kmmainwidget.cpp:3146
+#: kmmainwidget.cpp:3147
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr ""
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3150
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &New"
 msgid "Mark Thread as &Action Item"
 msgstr "نشان‌دار کردن رشته به عنوان &جدید‌"
 
-#: kmmainwidget.cpp:3152
+#: kmmainwidget.cpp:3153
 #, fuzzy, kde-format
 #| msgid "Important Message"
 msgid "Remove &Action Item Thread Mark"
 msgstr "پیام مهم"
 
-#: kmmainwidget.cpp:3156
+#: kmmainwidget.cpp:3157
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&پایش رشته‌"
 
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3161
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&چشم‌پوشی از رشته‌"
 
-#: kmmainwidget.cpp:3168 kmreadermainwin.cpp:473
+#: kmmainwidget.cpp:3169 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "ذخیره &پیوستها...‌"
 
-#: kmmainwidget.cpp:3176
+#: kmmainwidget.cpp:3177
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Decrypted To..."
 msgstr "پیام جدید به..."
 
-#: kmmainwidget.cpp:3180
+#: kmmainwidget.cpp:3181
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "&اعمال همه پالایه‌ها‌"
 
-#: kmmainwidget.cpp:3189
+#: kmmainwidget.cpp:3190
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -5021,13 +5021,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&گسترش رشته‌"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3193
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "گسترش رشته جاری"
 
-#: kmmainwidget.cpp:3196
+#: kmmainwidget.cpp:3197
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -5035,123 +5035,123 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&فشردن رشته‌"
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3200
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "فشردن رشته جاری"
 
-#: kmmainwidget.cpp:3203
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "&گسترش همه رشته‌ها‌"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3207
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "گسترش همه رشته‌های پوشه جاری"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3211
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "&فشردن همه رشته‌ها‌"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "فشردن همه رشته‌های پوشه جاری"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3218
 #, kde-format
 msgid "&Display Message"
 msgstr "&نمایش پیام‌"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3225
 #, kde-format
 msgid "&Next Message"
 msgstr "پیام &بعدی‌"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Go to the next message"
 msgstr "رفتن به پیام بعدی"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "پیام &خوانده‌نشده بعدی‌"
 
-#: kmmainwidget.cpp:3239
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "بعدی"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3241
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "رفتن به پیام خوانده‌نشده بعدی"
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "&Previous Message"
 msgstr "پیام &قبلی‌"
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3247
 #, kde-format
 msgid "Go to the previous message"
 msgstr "رفتن به پیام قبلی"
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "&پیام خوانده‌نشده قبلی‌"
 
-#: kmmainwidget.cpp:3259
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "قبلی"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3261
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "رفتن به پیام خوانده‌نشده قبلی"
 
-#: kmmainwidget.cpp:3264
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "&پوشه خوانده‌نشده بعدی‌"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "رفتن به پوشه بعدی دارای پیامهای خوانده‌نشده"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "&پوشه خوانده‌نشده قبلی‌"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3279
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "رفتن به پوشه قبلی دارای پیامهای خوانده‌نشده"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "&متن خوانده‌نشدهبعدی‌"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "رفتن به متن خوانده‌نشده بعدی"
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5160,261 +5160,261 @@ msgstr ""
 "لغزاندن به پایین پیام جاری. اگر به پایان پیام جاری رسیدید، به پیام "
 "خوانده‌نشده بعدی بروید."
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3296
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "پیکربندی &پالایه‌ها...‌"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "مدیریت دست‌نوشته‌های &غربالی...‌"
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3307
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "افزودن حساب"
 
-#: kmmainwidget.cpp:3311
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "&مقدمه KMail‌"
 
-#: kmmainwidget.cpp:3313
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "نمایش صفحه خوش‌آمد گویی KMail"
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "پیکربندی &اخطارها...‌"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "&پیکربندی KMail...‌"
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Expire..."
 msgstr "انقضا..."
 
-#: kmmainwidget.cpp:3340
+#: kmmainwidget.cpp:3341
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "Add Favorite Folder..."
 msgstr "پوشه &جدید...‌"
 
-#: kmmainwidget.cpp:3346
+#: kmmainwidget.cpp:3347
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgid "Serverside Subscription..."
 msgstr "اشتراک..."
 
-#: kmmainwidget.cpp:3352 kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3353 kmmainwidget.cpp:3361
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "&اعمال همه پالایه‌ها‌"
 
-#: kmmainwidget.cpp:3378
+#: kmmainwidget.cpp:3379
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data..."
 msgstr "&پیکربندی KMail...‌"
 
-#: kmmainwidget.cpp:3384
+#: kmmainwidget.cpp:3385
 #, fuzzy, kde-format
 #| msgid "&Address Book..."
 msgid "New AddressBook Contact..."
 msgstr "کتاب &نشانی...‌"
 
-#: kmmainwidget.cpp:3392 kmmainwidget.cpp:4040
+#: kmmainwidget.cpp:3393 kmmainwidget.cpp:4041
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&تنظیمات‌"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3397
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "نام هویت"
 
-#: kmmainwidget.cpp:3412
+#: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "رونوشت پیام در پوشه"
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3419
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgid "Jump to Folder..."
 msgstr "پرش به پوشه"
 
-#: kmmainwidget.cpp:3424
+#: kmmainwidget.cpp:3425
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "ساقط کردن عمل جاری"
 
-#: kmmainwidget.cpp:3430
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "تمرکز بر پوشه بعدی"
 
-#: kmmainwidget.cpp:3436
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "تمرکز بر پوشه قبلی"
 
-#: kmmainwidget.cpp:3442
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "گزینش پوشه با تمرکز"
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3450
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "تمرکز بر پوشه بعدی"
 
-#: kmmainwidget.cpp:3455
+#: kmmainwidget.cpp:3456
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "تمرکز بر پوشه بعدی"
 
-#: kmmainwidget.cpp:3461
+#: kmmainwidget.cpp:3462
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "تمرکز بر پیام بعدی"
 
-#: kmmainwidget.cpp:3467
+#: kmmainwidget.cpp:3468
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "تمرکز بر پیام قبلی"
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3474
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "برگزیدن &تمام پیامها‌"
 
-#: kmmainwidget.cpp:3479
+#: kmmainwidget.cpp:3480
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "برگزیدن &تمام پیامها‌"
 
-#: kmmainwidget.cpp:3485
+#: kmmainwidget.cpp:3486
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "گزینش پیام با تمرکز"
 
-#: kmmainwidget.cpp:3492
+#: kmmainwidget.cpp:3493
 #, fuzzy, kde-format
 #| msgid "Show Quick Search"
 msgid "Set Focus to Quick Search"
 msgstr "نمایش جستجوی سریع"
 
-#: kmmainwidget.cpp:3500
+#: kmmainwidget.cpp:3501
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgid "Extend Selection to Previous Message"
 msgstr "تمرکز بر پیام قبلی"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3507
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgid "Extend Selection to Next Message"
 msgstr "تمرکز بر پیام بعدی"
 
-#: kmmainwidget.cpp:3513
+#: kmmainwidget.cpp:3514
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "حرکت پیام به پوشه"
 
-#: kmmainwidget.cpp:3523
+#: kmmainwidget.cpp:3524
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3528
+#: kmmainwidget.cpp:3529
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3535
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "&پوشه خوانده‌نشده قبلی‌"
 
-#: kmmainwidget.cpp:3541
+#: kmmainwidget.cpp:3542
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "حذف پوشه"
 
-#: kmmainwidget.cpp:3569
+#: kmmainwidget.cpp:3570
 #, fuzzy, kde-format
 #| msgid "Paste Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "چسباندن پوشه"
 
-#: kmmainwidget.cpp:3987
+#: kmmainwidget.cpp:3988
 #, kde-format
 msgid "&Delete Search"
 msgstr "&حذف جستجو‌"
 
-#: kmmainwidget.cpp:4001
+#: kmmainwidget.cpp:4002
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search..."
 msgstr "ویرایش دست‌نوشته..."
 
-#: kmmainwidget.cpp:4038
+#: kmmainwidget.cpp:4039
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "پیکربندی KMail..."
 
-#: kmmainwidget.cpp:4049
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&خالی کردن زباله‌"
 
-#: kmmainwidget.cpp:4049
+#: kmmainwidget.cpp:4050
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&حرکت همه پیامها به زباله‌"
 
-#: kmmainwidget.cpp:4123
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4125
+#: kmmainwidget.cpp:4126
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4182
+#: kmmainwidget.cpp:4183
 #, kde-format
 msgid "Filter %1"
 msgstr "پالایه %1"
 
-#: kmmainwidget.cpp:4649
+#: kmmainwidget.cpp:4650
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "آغاز..."
 
-#: kmmainwidget.cpp:4657
+#: kmmainwidget.cpp:4658
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5425,12 +5425,12 @@ msgstr ""
 "احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده سازش یابد، افزایش "
 "یابد."
 
-#: kmmainwidget.cpp:4661
+#: kmmainwidget.cpp:4662
 #, kde-format
 msgid "Use HTML"
 msgstr "استفاده از زنگام"
 
-#: kmmainwidget.cpp:4807
+#: kmmainwidget.cpp:4808
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5440,40 +5440,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4810
+#: kmmainwidget.cpp:4811
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4811
+#: kmmainwidget.cpp:4812
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4812
+#: kmmainwidget.cpp:4813
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&لغو‌"
 
-#: kmmainwidget.cpp:4840
+#: kmmainwidget.cpp:4841
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: kmmainwidget.cpp:4841
+#: kmmainwidget.cpp:4842
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "نام هویت"
 
-#: kmmainwidget.cpp:4842
+#: kmmainwidget.cpp:4843
 #, kde-format
 msgid "Restart"
 msgstr "بازآغازی"
 
-#: kmmainwidget.cpp:4849
+#: kmmainwidget.cpp:4850
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
