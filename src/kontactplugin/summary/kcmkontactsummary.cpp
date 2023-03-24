@@ -66,14 +66,28 @@ PluginView::~PluginView() = default;
 
 K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
     , mPluginView(new PluginView(this))
+#else
+KCMKontactSummary::KCMKontactSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : KCModule(parent, data, args)
+    , mPluginView(new PluginView(widget()))
+#endif
 {
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto layout = new QVBoxLayout(this);
-    layout->setContentsMargins({});
+#else
+    auto layout = new QVBoxLayout(widget());
+#endif
 
+    layout->setContentsMargins({});
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+#else
+    auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), widget());
+#endif
     layout->addWidget(label);
 
     layout->addWidget(mPluginView);

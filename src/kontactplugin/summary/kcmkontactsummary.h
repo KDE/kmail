@@ -8,7 +8,7 @@
 */
 
 #pragma once
-
+#include "kcmutils_version.h"
 #include <KCModule>
 #include <QTreeWidget>
 
@@ -26,7 +26,11 @@ class KCMKontactSummary : public KCModule
     Q_OBJECT
 
 public:
-    explicit KCMKontactSummary(QWidget *parent = nullptr, const QVariantList &args = {});
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
+    explicit KCMKontactSummary(QWidget *parent, const QVariantList &args);
+#else
+    explicit KCMKontactSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     void load() override;
     void save() override;

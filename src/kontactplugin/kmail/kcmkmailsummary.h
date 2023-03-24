@@ -8,7 +8,7 @@
 */
 
 #pragma once
-
+#include "kcmutils_version.h"
 #include <KCModule>
 #include <KViewStateMaintainer>
 namespace Akonadi
@@ -28,7 +28,11 @@ class KCMKMailSummary : public KCModule
     Q_OBJECT
 
 public:
-    explicit KCMKMailSummary(QWidget *parent = nullptr, const QVariantList &args = {});
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
+    explicit KCMKMailSummary(QWidget *parent, const QVariantList &args);
+#else
+    explicit KCMKMailSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     void load() override;
     void save() override;

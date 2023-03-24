@@ -26,28 +26,45 @@
 #include <QVBoxLayout>
 
 K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kcmkmailsummary.json")
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 KCMKMailSummary::KCMKMailSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
     , mFullPath(new QCheckBox(i18n("Show full path for folders"), this))
+#else
+KCMKMailSummary::KCMKMailSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : KCModule(parent, data, args)
+    , mFullPath(new QCheckBox(i18n("Show full path for folders"), widget()))
+#endif
 {
     initGUI();
 
     connect(mCheckedCollectionWidget->folderTreeView(), &QAbstractItemView::clicked, this, &KCMKMailSummary::modified);
     connect(mFullPath, &QCheckBox::toggled, this, &KCMKMailSummary::modified);
-
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     KAcceleratorManager::manage(this);
+#else
+    KAcceleratorManager::manage(widget());
+#endif
 
     load();
 }
 
 void KCMKMailSummary::modified()
 {
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     Q_EMIT changed(true);
+#else
+    markAsChanged();
+#endif
 }
 
 void KCMKMailSummary::initGUI()
 {
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto layout = new QVBoxLayout(this);
+#else
+    auto layout = new QVBoxLayout(widget());
+#endif
     layout->setContentsMargins({});
 
     mCheckedCollectionWidget = new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType());
@@ -92,20 +109,31 @@ void KCMKMailSummary::load()
     initFolders();
     loadFolders();
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     Q_EMIT changed(false);
+#else
+    setNeedsSave(false);
+#endif
 }
 
 void KCMKMailSummary::save()
 {
     storeFolders();
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     Q_EMIT changed(false);
+#else
+    setNeedsSave(false);
+#endif
 }
 
 void KCMKMailSummary::defaults()
 {
     mFullPath->setChecked(true);
-
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     Q_EMIT changed(true);
+#else
+    setNeedsSave(true);
+#endif
 }
 #include "kcmkmailsummary.moc"

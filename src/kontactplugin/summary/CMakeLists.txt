@@ -19,7 +19,7 @@ target_link_libraries(kontact_summaryplugin KF${KF_MAJOR_VERSION}::KCMUtils KF${
 add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp kcmkontactsummary.h)
 pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcmkontactsummary KF${KF_MAJOR_VERSION}::I18n Qt::Widgets KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::KontactInterface)
+target_link_libraries(kcmkontactsummary KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::I18n Qt::Widgets KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::KontactInterface)
 
 ########### install files ###############
 
