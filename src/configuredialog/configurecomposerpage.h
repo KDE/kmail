@@ -235,7 +235,11 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit ComposerPage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     QString helpAnchor() const override;
 };

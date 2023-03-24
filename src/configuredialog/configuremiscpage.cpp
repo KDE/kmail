@@ -31,8 +31,13 @@ QString MiscPage::helpAnchor() const
     return QStringLiteral("configure-misc");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 MiscPage::MiscPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+MiscPage::MiscPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     auto folderTab = new MiscPageFolderTab();
     addTab(folderTab, i18n("Folders"));

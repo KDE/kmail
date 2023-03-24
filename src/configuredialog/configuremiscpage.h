@@ -57,7 +57,11 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit MiscPage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit MiscPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
     Q_REQUIRED_RESULT QString helpAnchor() const override;
 };
 

@@ -37,8 +37,13 @@ QString SecurityPage::helpAnchor() const
     return QStringLiteral("configure-security");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     //
     // "Reading" tab:

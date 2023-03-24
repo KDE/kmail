@@ -21,11 +21,21 @@
 
 // Other headers:
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 ConfigModuleWithTabs::ConfigModuleWithTabs(QWidget *parent, const QVariantList &args)
     : ConfigModule(parent, args)
     , mTabWidget(new QTabWidget(this))
+#else
+ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModule(parent, data, args)
+    , mTabWidget(new QTabWidget(widget()))
+#endif
 {
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto vlay = new QVBoxLayout(this);
+#else
+    auto vlay = new QVBoxLayout(widget());
+#endif
     vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
 }
@@ -36,11 +46,13 @@ void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
     connect(tab, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 void ConfigModuleWithTabs::showEvent(QShowEvent *event)
 {
     mWasInitialized = true;
     ConfigModule::showEvent(event);
 }
+#endif
 
 void ConfigModuleWithTabs::load()
 {

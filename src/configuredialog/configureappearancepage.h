@@ -265,7 +265,11 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit AppearancePage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit AppearancePage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     QString helpAnchor() const override;
 };
