@@ -82,14 +82,6 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
 
     load();
     connect(mPluginView, &QTreeWidget::itemChanged, this, &KCMKontactSummary::markAsChanged);
-    auto about = new KAboutData(QStringLiteral("kontactsummary"),
-                                i18n("kontactsummary"),
-                                QString(),
-                                i18n("KDE Kontact Summary"),
-                                KAboutLicense::GPL,
-                                i18n("(c), 2004 Tobias Koenig"));
-    about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
-    setAboutData(about);
 }
 
 void KCMKontactSummary::load()

@@ -38,14 +38,6 @@ KCMKMailSummary::KCMKMailSummary(QWidget *parent, const QVariantList &args)
     KAcceleratorManager::manage(this);
 
     load();
-    auto about = new KAboutData(QStringLiteral("kcmkmailsummary"),
-                                i18n("kcmkmailsummary"),
-                                QString(),
-                                i18n("Mail Summary Configuration Dialog"),
-                                KAboutLicense::GPL,
-                                i18n("Copyright © 2004–2010 Tobias Koenig"));
-    about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
-    setAboutData(about);
 }
 
 void KCMKMailSummary::modified()
