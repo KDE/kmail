@@ -41,6 +41,31 @@
             ]
         },
         {
+            "name": "dev-qch",
+            "displayName": "Build as debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+		"BUILD_QCH": "ON"
+            },
+            "inherits": [
+                "base"
+            ]
+        },
+        {
+            "name": "dev-qt6-qch",
+            "displayName": "Build as debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+		"BUILD_QCH": "ON"
+            },
+            "inherits": [
+                "base-qt6"
+            ]
+        },
+	
+        {
             "name": "dev-qt6",
             "displayName": "Build against qt6",
             "binaryDir": "${sourceDir}/build-qt6",
@@ -158,9 +183,17 @@
             "name": "dev-mold",
             "configurePreset": "dev-mold"
         },
+        {   
+            "name": "dev-qch",
+            "configurePreset": "dev-qch"
+        },	
         {
             "name": "dev-qt6",
             "configurePreset": "dev-qt6"
+        },
+        {
+            "name": "dev-qt6-qch",
+            "configurePreset": "dev-qt6-qch"
         },
         {
             "name": "dev-clang",
