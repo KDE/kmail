@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-25 00:47+0000\n"
-"PO-Revision-Date: 2023-03-11 04:52\n"
+"PO-Revision-Date: 2023-03-26 02:18\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -7441,21 +7441,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "kcmkmailsummary"
-#~ msgstr "kcmkmailsummary"
-
-#~ msgid "Mail Summary Configuration Dialog"
-#~ msgstr "邮件摘要配置对话框"
-
-#~ msgid "Copyright © 2004–2010 Tobias Koenig"
-#~ msgstr "Copyright © 2004–2010 Tobias Koenig"
-
-#~ msgid "kontactsummary"
-#~ msgstr "kontactsummary"
-
-#~ msgid "KDE Kontact Summary"
-#~ msgstr "KDE Kontact 摘要"
-
-#~ msgid "(c), 2004 Tobias Koenig"
-#~ msgstr "(c), 2004 Tobias Koenig"
