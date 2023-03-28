@@ -15,7 +15,7 @@
 #include "kmail_export.h"
 #include <QObject>
 #if KCMUTILS_VERSION >= QT_VERSION_CHECK(5, 240, 0)
-#include <KCMUtils/KCModule>
+#include <KCModule>
 #include <KPluginMetaData>
 #else
 #include <KCModule>

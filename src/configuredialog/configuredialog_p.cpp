@@ -43,7 +43,13 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
 {
     mTabWidget->addTab(tab, title);
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     connect(tab, SIGNAL(changed(bool)), this, SIGNAL(changed(bool)));
+#else
+    connect(tab, &ConfigModuleTab::changed, this, [this](bool state) {
+        setNeedsSave(state);
+    });
+#endif
 }
 
 #if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
