@@ -2892,7 +2892,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></term>
 	  <listitem>
             <para
->Si està marcada, el &kmail; podrà carregar les imatges externes, els fulls d'estil, &etc; des d'Internet quan s'estigui mostrant un missatge &HTML;. Recomanen encaridament que deixeu desactivada aquesta opció (encara que no tindrà cap efecte fins que habiliteu l'&HTML;). </para>
+>Si està marcada, el &kmail; podrà carregar les imatges externes, els fulls d'estil, &etc; des d'Internet quan s'estigui mostrant un missatge &HTML;. Recomanen fermament que deixeu desactivada aquesta opció (encara que no tindrà cap efecte fins que habiliteu l'&HTML;). </para>
             <para
 >Afegint referències externes als seus missatges, la gent pot enviar correu brossa que podria detectar que esteu mirant el seu missatge. Cal tenir present que aquesta opció no afectarà el &Java;, JavaScript, ja que no estan admesos pel &kmail;. </para>
 	  </listitem>
