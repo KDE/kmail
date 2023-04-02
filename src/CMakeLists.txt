@@ -427,7 +427,6 @@ target_link_libraries(kmailprivate
     KF${KF_MAJOR_VERSION}::KIOFileWidgets
     KF${KF_MAJOR_VERSION}::NotifyConfig
     KF${KF_MAJOR_VERSION}::Codecs
-    KPim${KF_MAJOR_VERSION}::MailTransportAkonadi
     KPim${KF_MAJOR_VERSION}::MailTransport
     KF${KF_MAJOR_VERSION}::KCMUtils
     KPim${KF_MAJOR_VERSION}::Libkleo

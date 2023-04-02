@@ -12,10 +12,10 @@
 #include <MessageComposer/Util>
 #include <MessageCore/StringUtil>
 
+#include <Akonadi/SentBehaviourAttribute>
+#include <Akonadi/TransportAttribute>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
-#include <MailTransportAkonadi/SentBehaviourAttribute>
-#include <MailTransportAkonadi/TransportAttribute>
 
 #include <Akonadi/ItemDeleteJob>
 #include <Akonadi/ItemFetchJob>
@@ -43,8 +43,8 @@ void SendLaterJob::start()
         if (mInfo->itemId() > -1) {
             const Akonadi::Item item = Akonadi::Item(mInfo->itemId());
             auto fetch = new Akonadi::ItemFetchJob(item, this);
-            mFetchScope.fetchAttribute<MailTransport::TransportAttribute>();
-            mFetchScope.fetchAttribute<MailTransport::SentBehaviourAttribute>();
+            mFetchScope.fetchAttribute<Akonadi::TransportAttribute>();
+            mFetchScope.fetchAttribute<Akonadi::SentBehaviourAttribute>();
             mFetchScope.setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
             mFetchScope.fetchFullPayload(true);
             fetch->setFetchScope(mFetchScope);

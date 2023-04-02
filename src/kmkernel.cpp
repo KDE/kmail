@@ -35,11 +35,11 @@ using PimCommon::RecentAddresses;
 // kdepim includes
 #include "kmail-version.h"
 
+#include <Akonadi/DispatcherInterface>
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
-#include <MailTransportAkonadi/DispatcherInterface>
 
 #include "mailserviceimpl.h"
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
@@ -1656,7 +1656,7 @@ void KMKernel::itemDispatchStarted()
 {
     // Watch progress of the MDA.
     PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
-                                                          MailTransport::DispatcherInterface().dispatcherInstance(),
+                                                          Akonadi::DispatcherInterface().dispatcherInstance(),
                                                           QStringLiteral("Sender"),
                                                           i18n("Sending messages"),
                                                           i18n("Initiating sending process..."),

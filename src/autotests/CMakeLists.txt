@@ -34,7 +34,7 @@ target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KPim${KF_MAJOR_V
 add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
-target_link_libraries( kactionmenutransporttest Qt::Test  KPim${KF_MAJOR_VERSION}::MailTransportAkonadi KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
+target_link_libraries( kactionmenutransporttest Qt::Test  KPim${KF_MAJOR_VERSION}::AkonadiMime KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
 
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
@@ -43,4 +43,4 @@ add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
-    "Qt::Test;Qt::Widgets;KPim${KF_MAJOR_VERSION}::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::MessageComposer;KPim${KF_MAJOR_VERSION}::MessageList;KPim${KF_MAJOR_VERSION}::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::MailTransportAkonadi;KPim${KF_MAJOR_VERSION}::Libkdepim;KPim${KF_MAJOR_VERSION}::TemplateParser;kmailprivate")
+    "Qt::Test;Qt::Widgets;KPim${KF_MAJOR_VERSION}::AkonadiCore;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Bookmarks;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::Contacts;KF${KF_MAJOR_VERSION}::I18n;KPim${KF_MAJOR_VERSION}::IdentityManagement;KF${KF_MAJOR_VERSION}::KIOCore;KF${KF_MAJOR_VERSION}::KIOFileWidgets;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::MessageComposer;KPim${KF_MAJOR_VERSION}::MessageList;KPim${KF_MAJOR_VERSION}::MessageViewer;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::AkonadiMime;KPim${KF_MAJOR_VERSION}::Libkdepim;KPim${KF_MAJOR_VERSION}::TemplateParser;kmailprivate")

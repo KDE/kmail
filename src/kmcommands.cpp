@@ -89,9 +89,9 @@
 #include <MimeTreeParser/NodeHelper>
 #include <MimeTreeParser/ObjectTreeParser>
 
+#include <Akonadi/SentBehaviourAttribute>
+#include <Akonadi/TransportAttribute>
 #include <MailTransport/TransportManager>
-#include <MailTransportAkonadi/SentBehaviourAttribute>
-#include <MailTransportAkonadi/TransportAttribute>
 
 #include <Libkdepim/ProgressManager>
 #include <PimCommon/BroadcastStatus>
@@ -559,8 +559,8 @@ KMEditItemCommand::KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, 
     , mDeleteFromSource(deleteFromSource)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
@@ -590,7 +590,7 @@ KMCommand::Result KMEditItemCommand::execute()
 
     win->setFolder(item.parentCollection());
 
-    const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+    const auto *transportAttribute = item.attribute<Akonadi::TransportAttribute>();
     if (transportAttribute) {
         win->setCurrentTransport(transportAttribute->transportId());
     } else {
@@ -603,8 +603,8 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
-    if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
+    const auto *sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
+    if (sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
     }
     win->show();
@@ -991,8 +991,8 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item::List 
     : KMCommand(parent, msgList)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
 
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1001,8 +1001,8 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
 
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1041,7 +1041,7 @@ KMCommand::Result KMRedirectCommand::execute()
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
         if (transportId == -1) {
-            const auto transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+            const auto transportAttribute = item.attribute<Akonadi::TransportAttribute>();
             if (transportAttribute) {
                 transportId = transportAttribute->transportId();
                 const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
@@ -1051,9 +1051,9 @@ KMCommand::Result KMRedirectCommand::execute()
             }
         }
 
-        const auto sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+        const auto sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
         QString fcc;
-        if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
+        if (sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
             fcc = QString::number(sentAttribute->moveToCollection().id());
         }
 
