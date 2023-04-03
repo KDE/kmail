@@ -412,6 +412,7 @@ target_link_libraries(kmailprivate
     KPim${KF_MAJOR_VERSION}::Gravatar
     KPim${KF_MAJOR_VERSION}::Mime
     KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::ContactEditor
     KPim${KF_MAJOR_VERSION}::AkonadiMime
     KPim${KF_MAJOR_VERSION}::MessageCore
     KPim${KF_MAJOR_VERSION}::MessageList

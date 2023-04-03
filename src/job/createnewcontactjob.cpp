@@ -104,9 +104,9 @@ void CreateNewContactJob::slotResourceCreationDone(KJob *job)
 
 void CreateNewContactJob::createContact()
 {
-    QPointer<Akonadi::ContactEditorDialog> dlg = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::CreateMode, mParentWidget);
-    connect(dlg.data(), &Akonadi::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
-    connect(dlg.data(), &Akonadi::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
+    QPointer<ContactEditor::ContactEditorDialog> dlg = new ContactEditor::ContactEditorDialog(ContactEditor::ContactEditorDialog::CreateMode, mParentWidget);
+    connect(dlg.data(), &ContactEditor::ContactEditorDialog::contactStored, this, &CreateNewContactJob::contactStored);
+    connect(dlg.data(), &ContactEditor::ContactEditorDialog::error, this, &CreateNewContactJob::slotContactEditorError);
     dlg->exec();
     delete dlg;
 }

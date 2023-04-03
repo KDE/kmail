@@ -446,9 +446,9 @@ void KMReaderWin::slotMailtoAddAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
-    auto job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
-    connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [](const QString &message) {
+    connect(job, &ContactEditor::AddEmailAddressJob::successMessage, this, [](const QString &message) {
         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
     });
     job->start();
@@ -480,7 +480,7 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto job = new Akonadi::OpenEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::OpenEmailAddressJob(emailString, mMainWindow, this);
     job->start();
 }
 
@@ -864,9 +864,9 @@ void KMReaderWin::slotContactHtmlOptions()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto job = new Akonadi::AddEmailDisplayJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::AddEmailDisplayJob(emailString, mMainWindow, this);
     job->setMessageId(mViewer->messageItem().id());
-    connect(job, &Akonadi::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
+    connect(job, &ContactEditor::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
@@ -884,9 +884,9 @@ void KMReaderWin::slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact
 void KMReaderWin::slotEditContact()
 {
     if (mSearchedContact.isValid()) {
-        QPointer<Akonadi::ContactEditorDialog> dlg = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::EditMode, this);
-        connect(dlg.data(), &Akonadi::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
-        connect(dlg.data(), &Akonadi::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
+        QPointer<ContactEditor::ContactEditorDialog> dlg = new ContactEditor::ContactEditorDialog(ContactEditor::ContactEditorDialog::EditMode, this);
+        connect(dlg.data(), &ContactEditor::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
+        connect(dlg.data(), &ContactEditor::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
         dlg->setContact(mSearchedContact);
         dlg->exec();
         delete dlg;
