@@ -8,7 +8,7 @@ project(kmail VERSION ${PIM_VERSION})
 include(CheckIncludeFiles)
 
 
-set(KF_MIN_VERSION "5.104.0")
+set(KF_MIN_VERSION "5.105.0")
 
 find_package(ECM ${KF_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
