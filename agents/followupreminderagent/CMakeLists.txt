@@ -107,7 +107,7 @@ set(followupreminderagentconfig_SRCS
 
 kcoreaddons_add_plugin(followupreminderagentconfig
     SOURCES ${followupreminderagentconfig_SRCS}
-    INSTALL_NAMESPACE pim${QT_MAJOR_VERSION}/akonadi/config
+    INSTALL_NAMESPACE pim6/akonadi/config
 )
 target_link_libraries(followupreminderagentconfig
     followupreminderagent

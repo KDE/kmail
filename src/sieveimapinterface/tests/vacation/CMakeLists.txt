@@ -4,4 +4,4 @@ add_executable(vacationmultiservertest main.cpp)
 target_link_libraries(vacationmultiservertest  KPim6::KSieveUi KPim6::KSieve KF6::I18n KPim6::AkonadiCore kmailprivate)
 
 
-target_link_libraries(vacationmultiservertest qt${QT_MAJOR_VERSION}keychain)
+target_link_libraries(vacationmultiservertest qt6keychain)

@@ -9,4 +9,4 @@ target_link_libraries(sievemanagerdialog
   kmailprivate
 )
 
-target_link_libraries(sievemanagerdialog qt${QT_MAJOR_VERSION}keychain)
+target_link_libraries(sievemanagerdialog qt6keychain)

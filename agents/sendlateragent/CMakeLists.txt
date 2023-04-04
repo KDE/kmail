@@ -83,5 +83,5 @@ install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFY
 
 #kcoreaddons_add_plugin(sendlateragentconfig
 #    SOURCES ${sendlateragentconfig_SRCS}
-#    INSTALL_NAMESPACE pim${QT_MAJOR_VERSION}/akonadi/config
+#    INSTALL_NAMESPACE pim6/akonadi/config
 #)

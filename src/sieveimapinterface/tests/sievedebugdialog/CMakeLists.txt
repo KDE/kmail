@@ -10,4 +10,4 @@ target_link_libraries(sievedebugdialog
   kmailprivate
 )
 
-target_link_libraries(sievedebugdialog qt${QT_MAJOR_VERSION}keychain)
+target_link_libraries(sievedebugdialog qt6keychain)

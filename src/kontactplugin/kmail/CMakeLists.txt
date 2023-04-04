@@ -33,6 +33,6 @@ target_link_libraries(kcmkmailsummary KF6::KCMUtils  KPim6::Mime KPim6::PimCommo
 
 ########### install files ###############
 
-install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kontact)
+install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact)
 
-install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim${QT_MAJOR_VERSION}/kcms/summary/)
+install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary/)
