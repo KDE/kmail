@@ -171,9 +171,8 @@ ecm_set_disabled_deprecation_versions(QT 5.15.2
     )
 set(KUSERFEEDBACK_SUFFIX)
 set(KUSERFEEDBACK_SUFFIX "Qt6")
-find_package(KUserFeedback${KUSERFEEDBACK_SUFFIX} 1.2.1 CONFIG)
-add_definitions(-DUSE_KUSERFEEDBACK_QT6)
-set_package_properties(KUserFeedback${KUSERFEEDBACK_SUFFIX} PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
+find_package(KUserFeedbackQt6 1.2.1 CONFIG)
+set_package_properties(KUserFeedbackQt6 PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
 
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 

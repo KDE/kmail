@@ -173,13 +173,8 @@
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
 #ifdef WITH_KUSERFEEDBACK
-#ifdef USE_KUSERFEEDBACK_QT6
 #include <KUserFeedbackQt6/NotificationPopup>
 #include <KUserFeedbackQt6/Provider>
-#else
-#include <KUserFeedback/NotificationPopup>
-#include <KUserFeedback/Provider>
-#endif
 #endif
 
 using namespace std::chrono_literals;

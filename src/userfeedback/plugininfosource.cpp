@@ -6,11 +6,7 @@
 
 #include "plugininfosource.h"
 #include <KLocalizedString>
-#ifdef USE_KUSERFEEDBACK_QT6
 #include <KUserFeedbackQt6/Provider>
-#else
-#include <KUserFeedback/Provider>
-#endif
 #include <QVariant>
 
 PluginInfoSource::PluginInfoSource()
