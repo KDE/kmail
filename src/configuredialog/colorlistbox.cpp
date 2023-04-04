@@ -98,11 +98,7 @@ void ColorListBox::dragLeaveEvent(QDragLeaveEvent *)
 void ColorListBox::dragMoveEvent(QDragMoveEvent *e)
 {
     if (KColorMimeData::canDecode(e->mimeData()) && isEnabled()) {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        QTreeWidgetItem *item = itemAt(e->pos());
-#else
         QTreeWidgetItem *item = itemAt(e->position().toPoint());
-#endif
         if (item) {
             setCurrentItem(item);
         }

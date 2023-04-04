@@ -16,13 +16,10 @@
 #include <Akonadi/ItemFetchScope>
 #include <QDBusConnection>
 
+#include "followupreminderagent_debug.h"
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <Kdelibs4ConfigMigrator>
-#endif
-#include "followupreminderagent_debug.h"
 #include <QTimer>
 #include <chrono>
 
@@ -33,12 +30,6 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     , mManager(new FollowUpReminderManager(this))
     , mTimer(new QTimer(this))
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    Kdelibs4ConfigMigrator migrate(QStringLiteral("followupreminderagent"));
-    migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_followupreminder_agentrc") << QStringLiteral("akonadi_followupreminder_agent.notifyrc"));
-    migrate.migrate();
-#endif
-
     new FollowUpReminderAgentAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));

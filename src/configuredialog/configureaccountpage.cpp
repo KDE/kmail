@@ -43,13 +43,8 @@ QString AccountsPage::helpAnchor() const
     return QStringLiteral("configure-accounts");
 }
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, args)
-#else
 AccountsPage::AccountsPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : ConfigModuleWithTabs(parent, data, args)
-#endif
 {
     // Identity Tab:
     auto identityTab = new KMail::IdentityPage();

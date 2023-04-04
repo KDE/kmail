@@ -68,11 +68,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
 {
     Q_OBJECT
 public:
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    explicit ConfigModuleWithTabs(QWidget *parent = nullptr, const QVariantList &args = {});
-#else
     explicit ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
-#endif
     ~ConfigModuleWithTabs() override = default;
 
     // don't reimplement any of those methods

@@ -404,7 +404,7 @@ void SummaryViewPart::slotConfigure()
     dlg->setObjectName(QStringLiteral("ConfigDialog"));
     dlg->setModal(true);
     connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
-    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kcms/summary/"));
+    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/summary/"));
     for (const auto &metaData : metaDataList) {
         dlg->addModule(metaData);
     }
@@ -427,9 +427,6 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    connect(qApp, &QApplication::paletteChanged, this, &SummaryViewPart::slotAdjustPalette);
-#endif
     slotAdjustPalette();
 
     mMainLayout = new QVBoxLayout(mMainWidget);
@@ -509,10 +506,8 @@ QString SummaryViewPart::widgetName(QWidget *widget) const
 
 bool SummaryViewPart::event(QEvent *e)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     if (e->type() == QEvent::ApplicationPaletteChange) {
         slotAdjustPalette();
     }
-#endif
     return KParts::Part::event(e);
 }

@@ -20,10 +20,6 @@
 
 int main(int argc, char **argv)
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-#endif
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kmail-refresh-settings");

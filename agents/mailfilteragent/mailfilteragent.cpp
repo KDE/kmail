@@ -39,9 +39,6 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <Kdelibs4ConfigMigrator>
-#endif
 bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {
     if (!collection.contentMimeTypes().contains(KMime::Message::mimeType())) {
@@ -57,12 +54,6 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mProgressTimer(new QTimer(this))
 {
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    Kdelibs4ConfigMigrator migrate(QStringLiteral("mailfilteragent"));
-    migrate.setConfigFiles(QStringList() << QStringLiteral("akonadi_mailfilter_agentrc") << QStringLiteral("akonadi_mailfilter_agent.notifyrc"));
-    migrate.migrate();
-#endif
-
     Akonadi::AttributeFactory::registerAttribute<Akonadi::Pop3ResourceAttribute>();
     mMailFilterKernel = new DummyKernel(this);
     CommonKernel->registerKernelIf(mMailFilterKernel); // register KernelIf early, it is used by the Filter classes

@@ -10,21 +10,11 @@
 
 #include <QHBoxLayout>
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-ConfigurePluginPage::ConfigurePluginPage(QWidget *parent, const QVariantList &args)
-    : ConfigModule(parent, args)
-    , mConfigurePlugins(new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(this), this))
-#else
 ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : ConfigModule(parent, data, args)
     , mConfigurePlugins(new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(widget()), widget()))
-#endif
 {
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    auto l = new QHBoxLayout(this);
-#else
     auto l = new QHBoxLayout(widget());
-#endif
     l->setContentsMargins({});
     l->addWidget(mConfigurePlugins);
 
@@ -55,9 +45,5 @@ void ConfigurePluginPage::load()
 
 void ConfigurePluginPage::slotConfigureChanged()
 {
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    Q_EMIT changed(true);
-#else
     markAsChanged();
-#endif
 }

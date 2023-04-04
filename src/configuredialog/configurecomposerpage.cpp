@@ -54,13 +54,8 @@ QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
 }
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-ComposerPage::ComposerPage(QWidget *parent, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, args)
-#else
 ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : ConfigModuleWithTabs(parent, data, args)
-#endif
 {
     //
     // "General" tab:

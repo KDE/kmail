@@ -21,11 +21,7 @@ class KMailPart : public KParts::ReadOnlyPart
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.kmailpart")
 
 public:
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    explicit KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &);
-#else
     explicit KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaData &data, const QVariantList &);
-#endif
     ~KMailPart() override;
 
 public Q_SLOTS:

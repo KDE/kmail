@@ -114,11 +114,6 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    explicit SecurityPage(QWidget *parent = nullptr, const QVariantList &args = {});
-#else
     explicit SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
-#endif
-
     Q_REQUIRED_RESULT QString helpAnchor() const override;
 };

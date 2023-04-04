@@ -37,13 +37,8 @@ QString SecurityPage::helpAnchor() const
     return QStringLiteral("configure-security");
 }
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, args)
-#else
 SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : ConfigModuleWithTabs(parent, data, args)
-#endif
 {
     //
     // "Reading" tab:
@@ -338,8 +333,7 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
     KPageWidgetItem *page = nullptr;
-    const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kcms/kleopatra")),
-                                                        QStringLiteral("kleopatra_config_gnupgsystem"));
+    const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim6/kcms/kleopatra")), QStringLiteral("kleopatra_config_gnupgsystem"));
     if (plugin.isValid()) {
         page = dlg->addModule(plugin);
     }

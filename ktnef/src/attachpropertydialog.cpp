@@ -135,11 +135,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         }
 
         QVariant value = (*it)->value();
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        if (value.type() == QVariant::List) {
-#else
         if (value.userType() == QMetaType::QVariantList) {
-#endif
             newItem->setExpanded(true);
             newItem->setText(0, newItem->text(0) + QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
@@ -148,11 +144,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
                 new QTreeWidgetItem(newItem,
                                     QStringList() << QLatin1Char('[') + QString::number(i) + QLatin1Char(']') << QString(KTNEFProperty::formatValue(*lit)));
             }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        } else if (value.type() == QVariant::DateTime) {
-#else
         } else if (value.userType() == QMetaType::QDateTime) {
-#endif
             newItem->setText(1, value.toDateTime().toString());
         } else {
             newItem->setText(1, (*it)->valueString());
@@ -182,11 +174,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
         KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {
         QString tag = item->text(2);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        const int key = tag.midRef(5).toInt();
-#else
         const int key = QStringView(tag).mid(5).toInt();
-#endif
         QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {

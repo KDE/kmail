@@ -75,13 +75,8 @@ QString AppearancePage::helpAnchor() const
     return QStringLiteral("configure-appearance");
 }
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-AppearancePage::AppearancePage(QWidget *parent, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, args)
-#else
 AppearancePage::AppearancePage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : ConfigModuleWithTabs(parent, data, args)
-#endif
 {
     //
     // "General" tab:

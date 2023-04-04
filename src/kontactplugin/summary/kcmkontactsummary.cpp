@@ -66,28 +66,14 @@ PluginView::~PluginView() = default;
 
 K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
-    : KCModule(parent, args)
-    , mPluginView(new PluginView(this))
-#else
 KCMKontactSummary::KCMKontactSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
     : KCModule(parent, data, args)
     , mPluginView(new PluginView(widget()))
-#endif
 {
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    auto layout = new QVBoxLayout(this);
-#else
     auto layout = new QVBoxLayout(widget());
-#endif
 
     layout->setContentsMargins({});
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
-#else
     auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), widget());
-#endif
     layout->addWidget(label);
 
     layout->addWidget(mPluginView);
@@ -100,10 +86,9 @@ KCMKontactSummary::KCMKontactSummary(QObject *parent, const KPluginMetaData &dat
 
 void KCMKontactSummary::load()
 {
-    const QVector<KPluginMetaData> pluginMetaDatas =
-        KPluginMetaData::findPlugins(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kontact"), [](const KPluginMetaData &data) {
-            return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
-        });
+    const QVector<KPluginMetaData> pluginMetaDatas = KPluginMetaData::findPlugins(QStringLiteral("pim6/kontact"), [](const KPluginMetaData &data) {
+        return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
+    });
 
     QStringList activeSummaries;
 

@@ -568,11 +568,7 @@ void MessageActions::slotNoQuoteReplyToMsg()
 void MessageActions::slotRunUrl(QAction *urlAction)
 {
     const QVariant q = urlAction->data();
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    if (q.type() == QVariant::Url) {
-#else
     if (q.userType() == QMetaType::QUrl) {
-#endif
         auto job = new KIO::OpenUrlJob(q.toUrl());
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
         job->start();

@@ -10,9 +10,6 @@
 
 #include "kmail_options.h"
 #include "kmkernel.h" //control center
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include "kmmigrateapplication.h"
-#endif
 
 #include "kmail_debug.h"
 #undef Status // stupid X headers
@@ -29,11 +26,7 @@
 
 #ifdef WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
-#ifdef USE_KUSERFEEDBACK_QT6
 #include <KUserFeedbackQt6/Provider>
-#else
-#include <KUserFeedback/Provider>
-#endif
 #endif
 
 //-----------------------------------------------------------------------------
@@ -126,10 +119,6 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-#endif
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
     cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored | QWebEngineUrlScheme::LocalScheme
@@ -164,10 +153,6 @@ int main(int argc, char *argv[])
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
         return 0;
     }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    KMMigrateApplication migrate;
-    migrate.migrate();
-#endif
     // local, do the init
     KMKernel kmailKernel;
     kmailKernel.init();

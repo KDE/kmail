@@ -105,11 +105,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    explicit AccountsPage(QWidget *parent = nullptr, const QVariantList &args = {});
-#else
     explicit AccountsPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
-#endif
     QString helpAnchor() const override;
 
 Q_SIGNALS:
