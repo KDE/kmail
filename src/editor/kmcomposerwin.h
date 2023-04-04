@@ -18,7 +18,6 @@
 // Qt includes
 #include <QFont>
 #include <QList>
-#include <QVector>
 
 #include <MessageComposer/ComposerViewBase>
 #include <MessageComposer/RichTextComposerNg>
@@ -159,7 +158,7 @@ public Q_SLOTS:
 
     void addAttachmentsAndSend(const QList<QUrl> &urls, const QString &comment, int how) override;
 
-    void addAttachment(const QVector<KMail::Composer::AttachmentInfo> &infos, bool showWarning) override;
+    void addAttachment(const QList<KMail::Composer::AttachmentInfo> &infos, bool showWarning) override;
 
     void addAttachment(const QString &name,
                        KMime::Headers::contentEncoding cte,
@@ -664,7 +663,7 @@ private:
 
     MessageComposer::Composer *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QVector<MessageComposer::Composer *> mMiscComposers;
+    QList<MessageComposer::Composer *> mMiscComposers;
 
     int mLabelWidth = 0;
 

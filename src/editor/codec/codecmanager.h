@@ -8,7 +8,7 @@
 #pragma once
 
 #include <QByteArray>
-#include <QVector>
+#include <QList>
 class CodecManager
 {
 public:
@@ -20,7 +20,7 @@ public:
     /**
       A list of preferred charsets to use when composing messages.
     */
-    Q_REQUIRED_RESULT QVector<QByteArray> preferredCharsets() const;
+    Q_REQUIRED_RESULT QList<QByteArray> preferredCharsets() const;
 
     /**
       Re-read the preferred charsets from settings.
@@ -32,5 +32,5 @@ private:
     // Singleton.  The only instance lives in sInstance->instance
     CodecManager();
 
-    QVector<QByteArray> mPreferredCharsets;
+    QList<QByteArray> mPreferredCharsets;
 };

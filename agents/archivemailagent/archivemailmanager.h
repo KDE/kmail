@@ -44,6 +44,6 @@ private:
     QString infoToStr(ArchiveMailInfo *info) const;
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;
-    QVector<ArchiveMailInfo *> mListArchiveInfo;
+    QList<ArchiveMailInfo *> mListArchiveInfo;
     ArchiveMailKernel *mArchiveMailKernel = nullptr;
 };

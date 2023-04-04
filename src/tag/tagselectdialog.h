@@ -11,7 +11,7 @@
 #include <Akonadi/Item>
 #include <Akonadi/Tag>
 #include <QDialog>
-#include <QVector>
+#include <QList>
 
 class QListWidget;
 class KActionCollection;
@@ -36,7 +36,7 @@ private:
     const Akonadi::Item mSelectedItem;
 
     Akonadi::Tag::List mCurrentSelectedTags;
-    QVector<MailCommon::Tag::Ptr> mTagList;
+    QList<MailCommon::Tag::Ptr> mTagList;
     QList<KActionCollection *> mActionCollectionList;
     QListWidget *const mListTag;
 };

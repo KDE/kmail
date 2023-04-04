@@ -8,7 +8,7 @@
 #pragma once
 
 // Qt
-#include <QVector>
+#include <QList>
 
 // KDE
 #include <KCodecAction>
@@ -36,7 +36,7 @@ public:
       mode.  In Reader mode it probably makes more sense to use KCodecAction::currentCodec()
       and KCodecAction::currentAutoDetectScript().
     */
-    Q_REQUIRED_RESULT QVector<QByteArray> mimeCharsets() const;
+    Q_REQUIRED_RESULT QList<QByteArray> mimeCharsets() const;
 
     void setAutoCharset();
     void setCharset(const QByteArray &charset);

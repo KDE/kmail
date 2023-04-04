@@ -7,7 +7,7 @@ SPDX-License-Identifier: GPL-2.0-only
 #pragma once
 #include <Akonadi/Collection>
 #include <QAbstractListModel>
-#include <QVector>
+#include <QList>
 
 class CollectionSwitcherModel : public QAbstractListModel
 {
@@ -43,7 +43,7 @@ public:
     Q_REQUIRED_RESULT const Akonadi::Collection collection(int index);
 
 private:
-    QVector<CollectionInfo> mCollectionsInfo;
+    QList<CollectionInfo> mCollectionsInfo;
 };
 
 Q_DECLARE_METATYPE(CollectionSwitcherModel::CollectionInfo)

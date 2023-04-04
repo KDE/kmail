@@ -26,7 +26,7 @@ void KMailPluginCheckBeforeDeletingManagerInterface::initializePlugins()
     if (!mParentWidget) {
         qCDebug(KMAIL_LOG) << "KMailPluginCheckBeforeDeletingManagerInterface : Parent is null. This is a bug";
     }
-    const QVector<MessageViewer::MessageViewerCheckBeforeDeletingPlugin *> lstPlugin =
+    const QList<MessageViewer::MessageViewerCheckBeforeDeletingPlugin *> lstPlugin =
         MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->pluginsList();
     for (MessageViewer::MessageViewerCheckBeforeDeletingPlugin *plugin : lstPlugin) {
         if (plugin->isEnabled()) {

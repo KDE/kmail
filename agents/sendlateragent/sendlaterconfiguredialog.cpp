@@ -69,7 +69,7 @@ SendLaterConfigureDialog::~SendLaterConfigureDialog()
     writeConfig();
 }
 
-QVector<Akonadi::Item::Id> SendLaterConfigureDialog::messagesToRemove() const
+QList<Akonadi::Item::Id> SendLaterConfigureDialog::messagesToRemove() const
 {
     return mWidget->messagesToRemove();
 }

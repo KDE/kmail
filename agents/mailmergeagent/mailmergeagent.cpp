@@ -126,7 +126,7 @@ void MailMergeAgent::configure(WId windowId)
     if (dialog->exec()) {
         // TODO
         //        mManager->load();
-        //        const QVector<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
+        //        const QList<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
         //        if (!listMessage.isEmpty()) {
         //            // Will delete in specific job when done.
         //            auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);

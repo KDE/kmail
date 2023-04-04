@@ -422,7 +422,7 @@ void SearchWindow::doSearch()
 
     mUi.mSearchFolderEdt->setEnabled(false);
 
-    QVector<Akonadi::Collection> searchCollections;
+    QList<Akonadi::Collection> searchCollections;
     bool recursive = false;
     if (mUi.mChkbxSpecificFolders->isChecked()) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
@@ -482,7 +482,7 @@ void SearchWindow::doSearch()
     qCDebug(KMAIL_LOG) << mQuery.toJSON();
     mUi.mSearchFolderOpenBtn->setEnabled(true);
 
-    const QVector<qint64> unindexedCollections = checkIncompleteIndex(searchCollections, recursive);
+    const QList<qint64> unindexedCollections = checkIncompleteIndex(searchCollections, recursive);
     if (!unindexedCollections.isEmpty()) {
         IncompleteIndexDialog dlg(unindexedCollections);
         dlg.exec();
@@ -884,9 +884,9 @@ void SearchWindow::slotJumpToFolder()
     }
 }
 
-QVector<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive)
+QList<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive)
 {
-    QVector<qint64> results;
+    QList<qint64> results;
     Akonadi::Collection::List cols;
     if (recursive) {
         cols = searchCollectionsRecursive(searchCols);

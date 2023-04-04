@@ -33,12 +33,12 @@
 
 using namespace std::chrono_literals;
 Q_DECLARE_METATYPE(Qt::CheckState)
-Q_DECLARE_METATYPE(QVector<qint64>)
+Q_DECLARE_METATYPE(QList<qint64>)
 
 class SearchCollectionProxyModel : public QSortFilterProxyModel
 {
 public:
-    explicit SearchCollectionProxyModel(const QVector<qint64> &unindexedCollections, QObject *parent = nullptr)
+    explicit SearchCollectionProxyModel(const QList<qint64> &unindexedCollections, QObject *parent = nullptr)
         : QSortFilterProxyModel(parent)
     {
         mFilterCollections.reserve(unindexedCollections.size());
@@ -104,14 +104,14 @@ namespace
 static const char myIncompleteIndexDialogGroupName[] = "IncompleteIndexDialog";
 }
 
-IncompleteIndexDialog::IncompleteIndexDialog(const QVector<qint64> &unindexedCollections, QWidget *parent)
+IncompleteIndexDialog::IncompleteIndexDialog(const QList<qint64> &unindexedCollections, QWidget *parent)
     : QDialog(parent)
     , mUi(new Ui::IncompleteIndexDialog)
 {
     auto mainLayout = new QHBoxLayout(this);
     auto w = new QWidget(this);
     mainLayout->addWidget(w);
-    qDBusRegisterMetaType<QVector<qint64>>();
+    qDBusRegisterMetaType<QList<qint64>>();
 
     mUi->setupUi(w);
 

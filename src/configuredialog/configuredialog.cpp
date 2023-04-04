@@ -24,7 +24,7 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Help | QDialogButtonBox::RestoreDefaults | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
                        | QDialogButtonBox::Reset);
     setModal(modal);
-    const QVector<KPluginMetaData> availablePlugins = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/kmail"));
+    const QList<KPluginMetaData> availablePlugins = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/kmail"));
     for (const KPluginMetaData &metaData : availablePlugins) {
         addModule(metaData);
     }

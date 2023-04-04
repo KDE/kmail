@@ -11,7 +11,7 @@
 #include <MessageComposer/PluginEditorManager>
 
 #include <QAction>
-#include <QVector>
+#include <QList>
 #include <QWidget>
 
 KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *parent)
@@ -55,7 +55,7 @@ void KMailPluginEditorManagerInterface::initializePlugins()
         qCWarning(KMAIL_LOG) << "KMailPluginEditorManagerInterface : Parent is null. This is a bug";
     }
 
-    const QVector<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
+    const QList<MessageComposer::PluginEditor *> lstPlugin = MessageComposer::PluginEditorManager::self()->pluginsList();
     for (MessageComposer::PluginEditor *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             auto interface = static_cast<MessageComposer::PluginEditorInterface *>(plugin->createInterface(this));

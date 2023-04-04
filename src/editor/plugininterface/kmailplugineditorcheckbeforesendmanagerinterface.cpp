@@ -38,7 +38,7 @@ void KMailPluginEditorCheckBeforeSendManagerInterface::initializePlugins()
         qCWarning(KMAIL_LOG) << "KMailPluginEditorCheckBeforeSendManagerInterface : Parent is null. This is a bug";
     }
 
-    const QVector<MessageComposer::PluginEditorCheckBeforeSend *> lstPlugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList();
+    const QList<MessageComposer::PluginEditorCheckBeforeSend *> lstPlugin = MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsList();
     for (MessageComposer::PluginEditorCheckBeforeSend *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorCheckBeforeSendInterface *interface = plugin->createInterface(this);

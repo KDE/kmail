@@ -49,7 +49,7 @@ void KMailPluginEditorInitManagerInterface::initializePlugins()
         qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Parent is null. This is a bug";
     }
 
-    const QVector<MessageComposer::PluginEditorInit *> lstPlugin = MessageComposer::PluginEditorInitManager::self()->pluginsList();
+    const QList<MessageComposer::PluginEditorInit *> lstPlugin = MessageComposer::PluginEditorInitManager::self()->pluginsList();
     for (MessageComposer::PluginEditorInit *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorInitInterface *interface = plugin->createInterface(this);

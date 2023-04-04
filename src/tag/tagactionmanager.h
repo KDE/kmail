@@ -9,8 +9,8 @@
 #include "kmail_export.h"
 #include "mailcommon/tag.h"
 #include <Akonadi/Item>
+#include <QList>
 #include <QMap>
-#include <QVector>
 class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;
@@ -93,7 +93,7 @@ private:
 
     void fillTagList();
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
-    void createTagActions(const QVector<MailCommon::Tag::Ptr> &);
+    void createTagActions(const QList<MailCommon::Tag::Ptr> &);
     void checkTags(const QList<qint64> &tags);
     Q_REQUIRED_RESULT QList<qint64> checkedTags() const;
 

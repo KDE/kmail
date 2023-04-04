@@ -7,8 +7,8 @@
 #pragma once
 
 #include <Akonadi/Item>
+#include <QList>
 #include <QObject>
-#include <QVector>
 namespace MessageViewer
 {
 class MessageViewerCheckBeforeDeletingInterface;
@@ -34,7 +34,7 @@ public:
 
 private:
     QList<QAction *> mActions;
-    QVector<MessageViewer::MessageViewerCheckBeforeDeletingInterface *> mListPluginInterface;
+    QList<MessageViewer::MessageViewerCheckBeforeDeletingInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;
     bool mWasInitialized = false;

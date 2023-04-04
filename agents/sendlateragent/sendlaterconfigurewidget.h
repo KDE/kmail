@@ -49,7 +49,7 @@ public:
     void saveTreeWidgetHeader(KConfigGroup &group);
     void restoreTreeWidgetHeader(const QByteArray &group);
     void needToReload();
-    Q_REQUIRED_RESULT QVector<Akonadi::Item::Id> messagesToRemove() const;
+    Q_REQUIRED_RESULT QList<Akonadi::Item::Id> messagesToRemove() const;
 
 Q_SIGNALS:
     void sendNow(Akonadi::Item::Id);
@@ -62,7 +62,7 @@ private:
     void slotSendNow();
     void createOrUpdateItem(MessageComposer::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
-    QVector<Akonadi::Item::Id> mListMessagesToRemove;
+    QList<Akonadi::Item::Id> mListMessagesToRemove;
     bool mChanged = false;
     Ui::SendLaterConfigureWidget *mWidget = nullptr;
 };

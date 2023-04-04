@@ -105,7 +105,7 @@ void KMailPluginEditorConvertTextManagerInterface::initializePlugins()
     if (!mParentWidget) {
         qCWarning(KMAIL_LOG) << "KMailPluginEditorConvertTextManagerInterface : Parent is null. This is a bug";
     }
-    const QVector<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
+    const QList<MessageComposer::PluginEditorConvertText *> lstPlugin = MessageComposer::PluginEditorConvertTextManager::self()->pluginsList();
     for (MessageComposer::PluginEditorConvertText *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             MessageComposer::PluginEditorConvertTextInterface *interface = plugin->createInterface(this);

@@ -753,7 +753,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             startOfMessage += 1; // the message starts after the '\n'
         }
-        QVector<KMime::Message::Ptr> listMessages;
+        QList<KMime::Message::Ptr> listMessages;
 
         // check for multiple messages in the file
         bool multipleMessages = true;
@@ -975,7 +975,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-    QPair<KMime::Message::Ptr, QVector<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
+    QPair<KMime::Message::Ptr, QList<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
     }
@@ -1283,7 +1283,7 @@ void KMSetTagCommand::slotModifyItemDone(KJob *job)
     deleteLater();
 }
 
-KMFilterActionCommand::KMFilterActionCommand(QWidget *parent, const QVector<qlonglong> &msgListId, const QString &filterId)
+KMFilterActionCommand::KMFilterActionCommand(QWidget *parent, const QList<qlonglong> &msgListId, const QString &filterId)
     : KMCommand(parent)
     , mMsgListId(msgListId)
     , mFilterId(filterId)
@@ -1805,7 +1805,7 @@ KMCommand::Result KMShareImageCommand::execute()
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
     win->setFocusToSubject();
-    QVector<KMail::Composer::AttachmentInfo> infoList;
+    QList<KMail::Composer::AttachmentInfo> infoList;
     KMail::Composer::AttachmentInfo info;
     info.url = mUrl;
     info.comment = i18n("Image");

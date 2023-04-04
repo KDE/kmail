@@ -138,6 +138,5 @@
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QVariantList>
-#include <QVector>
 #include <QWhatsThis>
 #include <QWidget>

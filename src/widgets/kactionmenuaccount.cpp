@@ -74,7 +74,7 @@ void KActionMenuAccount::updateAccountMenu()
     if (mInitialized) {
         menu()->clear();
         const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-        QVector<AgentIdentifier> agentIdentifierList;
+        QList<AgentIdentifier> agentIdentifierList;
         agentIdentifierList.reserve(lst.count());
 
         for (const Akonadi::AgentInstance &type : lst) {

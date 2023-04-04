@@ -27,7 +27,7 @@ void HandleClickedUrlJob::start()
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     mMsg->contentType()->setCharset("utf-8");
 
-    const QVector<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
+    const QList<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
         if (element.first == QLatin1String("to")) {

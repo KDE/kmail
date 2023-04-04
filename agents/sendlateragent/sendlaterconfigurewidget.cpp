@@ -264,7 +264,7 @@ void SendLaterWidget::needToReload()
     load();
 }
 
-QVector<Akonadi::Item::Id> SendLaterWidget::messagesToRemove() const
+QList<Akonadi::Item::Id> SendLaterWidget::messagesToRemove() const
 {
     return mListMessagesToRemove;
 }

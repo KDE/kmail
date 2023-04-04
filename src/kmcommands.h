@@ -492,11 +492,11 @@ class KMAILTESTS_TESTS_EXPORT KMFilterActionCommand : public KMCommand
     Q_OBJECT
 
 public:
-    KMFilterActionCommand(QWidget *parent, const QVector<qlonglong> &msgListId, const QString &filterId);
+    KMFilterActionCommand(QWidget *parent, const QList<qlonglong> &msgListId, const QString &filterId);
 
 private:
     Q_REQUIRED_RESULT Result execute() override;
-    QVector<qlonglong> mMsgListId;
+    QList<qlonglong> mMsgListId;
     QString mFilterId;
 };
 

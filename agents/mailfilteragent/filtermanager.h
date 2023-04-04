@@ -85,7 +85,7 @@ public:
     Q_REQUIRED_RESULT bool
     process(const Akonadi::Item &item, bool needsFullPayload, FilterSet set = Inbound, bool account = false, const QString &accountId = QString());
 
-    Q_REQUIRED_RESULT bool process(const QVector<MailCommon::MailFilter *> &mailFilters,
+    Q_REQUIRED_RESULT bool process(const QList<MailCommon::MailFilter *> &mailFilters,
                                    const Akonadi::Item &item,
                                    bool needsFullPayload,
                                    FilterSet set = Inbound,

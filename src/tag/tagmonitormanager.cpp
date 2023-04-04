@@ -56,7 +56,7 @@ void TagMonitorManager::finishedTagListing(KJob *job)
     Q_EMIT fetchTagDone();
 }
 
-QVector<MailCommon::Tag::Ptr> TagMonitorManager::tags() const
+QList<MailCommon::Tag::Ptr> TagMonitorManager::tags() const
 {
     return mTags;
 }

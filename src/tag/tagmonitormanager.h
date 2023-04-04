@@ -24,7 +24,7 @@ public:
 
     static TagMonitorManager *self();
 
-    Q_REQUIRED_RESULT QVector<MailCommon::Tag::Ptr> tags() const;
+    Q_REQUIRED_RESULT QList<MailCommon::Tag::Ptr> tags() const;
 
 Q_SIGNALS:
     void tagAdded();
@@ -40,7 +40,7 @@ private:
     void onTagChanged(const Akonadi::Tag &akonadiTag);
 
     // A sorted list of all tags
-    QVector<MailCommon::Tag::Ptr> mTags;
+    QList<MailCommon::Tag::Ptr> mTags;
 
     Akonadi::Monitor *const mMonitor;
 };

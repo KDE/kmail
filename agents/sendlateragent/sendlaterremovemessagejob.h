@@ -15,7 +15,7 @@ class SendLaterRemoveMessageJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendLaterRemoveMessageJob(const QVector<Akonadi::Item::Id> &listItem, QObject *parent = nullptr);
+    explicit SendLaterRemoveMessageJob(const QList<Akonadi::Item::Id> &listItem, QObject *parent = nullptr);
     ~SendLaterRemoveMessageJob() override;
 
     void start();
@@ -23,6 +23,6 @@ public:
 private:
     void slotItemDeleteDone(KJob *job);
     void removeMessageItem();
-    const QVector<Akonadi::Item::Id> mListItems;
+    const QList<Akonadi::Item::Id> mListItems;
     int mIndex = 0;
 };

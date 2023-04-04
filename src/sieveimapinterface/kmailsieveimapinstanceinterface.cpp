@@ -11,9 +11,9 @@
 
 KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface() = default;
 
-QVector<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
+QList<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
 {
-    QVector<KSieveUi::SieveImapInstance> listInstance;
+    QList<KSieveUi::SieveImapInstance> listInstance;
 
     const Akonadi::AgentInstance::List allInstances = Akonadi::AgentManager::self()->instances();
     listInstance.reserve(allInstances.count());

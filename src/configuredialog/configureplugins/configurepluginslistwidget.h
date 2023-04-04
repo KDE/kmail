@@ -8,7 +8,7 @@
 
 #include <PimCommon/ConfigurePluginsListWidget>
 #include <PimCommon/PluginUtil>
-#include <QVector>
+#include <QList>
 class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
 {
     Q_OBJECT
@@ -29,17 +29,17 @@ private:
     Q_REQUIRED_RESULT bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
     void changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable);
     void saveAkonadiAgent();
-    QVector<PluginItem *> mPluginEditorItems;
-    QVector<PluginItem *> mPluginMessageViewerItems;
-    QVector<PluginItem *> mPluginCheckBeforeSendItems;
-    QVector<PluginItem *> mPluginEditorInitItems;
-    QVector<PluginItem *> mPluginEditorGrammarItems;
-    QVector<PluginItem *> mPluginGenericItems;
-    QVector<PluginItem *> mPluginWebEngineItems;
-    QVector<PluginItem *> mPluginHeaderStyleItems;
-    QVector<PluginItem *> mAgentPluginsItems;
-    QVector<PluginItem *> mPluginConvertTextItems;
-    QVector<PluginItem *> mPluginConfigureItems;
-    QVector<PluginItem *> mPluginCheckBeforeDeletingItems;
-    QVector<PimCommon::PluginUtilData> mPluginUtilDataList;
+    QList<PluginItem *> mPluginEditorItems;
+    QList<PluginItem *> mPluginMessageViewerItems;
+    QList<PluginItem *> mPluginCheckBeforeSendItems;
+    QList<PluginItem *> mPluginEditorInitItems;
+    QList<PluginItem *> mPluginEditorGrammarItems;
+    QList<PluginItem *> mPluginGenericItems;
+    QList<PluginItem *> mPluginWebEngineItems;
+    QList<PluginItem *> mPluginHeaderStyleItems;
+    QList<PluginItem *> mAgentPluginsItems;
+    QList<PluginItem *> mPluginConvertTextItems;
+    QList<PluginItem *> mPluginConfigureItems;
+    QList<PluginItem *> mPluginCheckBeforeDeletingItems;
+    QList<PimCommon::PluginUtilData> mPluginUtilDataList;
 };

@@ -31,7 +31,7 @@ CodecManager *CodecManager::self()
     return &instance;
 }
 
-QVector<QByteArray> CodecManager::preferredCharsets() const
+QList<QByteArray> CodecManager::preferredCharsets() const
 {
     return mPreferredCharsets;
 }

@@ -74,7 +74,7 @@ void KMailPluginGrammarEditorManagerInterface::initializePlugins()
         return;
     }
 
-    const QVector<PimCommon::CustomToolsPlugin *> lstPlugin = MessageComposer::PluginEditorGrammarManager::self()->pluginsList();
+    const QList<PimCommon::CustomToolsPlugin *> lstPlugin = MessageComposer::PluginEditorGrammarManager::self()->pluginsList();
     for (PimCommon::CustomToolsPlugin *plugin : lstPlugin) {
         if (plugin->isEnabled()) {
             auto interface =
