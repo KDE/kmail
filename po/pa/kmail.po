@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-31 00:48+0000\n"
+"POT-Creation-Date: 2023-04-04 00:48+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -2837,7 +2837,7 @@ msgid "No picture set for your address book entry."
 msgstr "ਤੁਹਾਡੀ ਐਡਰੈੱਸ ਬੁੱਕ ਵਿੱਚ ਕੋਈ ਤਸਵੀਰ ਨਹੀਂ ਦਿੱਤੀ।"
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
@@ -3343,41 +3343,41 @@ msgstr ""
 msgid "Edit..."
 msgstr "ਸੋਧ..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:37
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "ਅਕਾਊਂਟ ਸੋਧੋ"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:40
 #, fuzzy, kde-format
 #| msgctxt "@info:tooltip"
 #| msgid "Close the current tab"
 msgid "Delete current vCard"
 msgstr "ਮੌਜੂਦਾ ਟੈਬ ਬੰਦ ਕਰੋ"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:59
 #, fuzzy, kde-format
 #| msgid "Are you sure you want to empty the trash folder?"
 msgid "Are you sure you want to delete this vCard?"
 msgstr "ਕੀ ਤੁਸੀਂ ਇਹ ਫੋਲਡਰ ਨੂੰ ਰੱਦੀ ਵਿੱਚ ਭੇਜਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:60
+#: identity/identityeditvcarddialog.cpp:80
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Deleted"
 msgid "Delete vCard"
 msgstr "ਹਟਾਏ"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:80
 #, fuzzy, kde-format
 #| msgid "Could not sync maildir folder."
 msgid "We cannot delete vCard file."
 msgstr "maildir ਫੋਲਡਰ ਸਮਕਾਲੀ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਹੈ।"
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid "Do you really want to execute <filename>%1</filename>?"
@@ -3385,21 +3385,21 @@ msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "ਕੀ ਤੁਸੀਂ <filename>%1</filename> ਨੂੰ ਚਲਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ? "
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:127
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "ਭੇਜਣ ਬਾਰੇ ਪੁਸ਼ਟੀ"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:128
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "ਫਾਰਮੈਟ ਖਤਮ ਕਰੋ"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:129
 #, fuzzy, kde-format
 #| msgid "Do Not Enable"
 msgctxt "@action:button"
