@@ -40,23 +40,23 @@ kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 #endif()
 
 target_link_libraries(mailmergeagent
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    #KPim${KF_MAJOR_VERSION}::Mime
-    KPim${KF_MAJOR_VERSION}::MessageComposer
-    KPim${KF_MAJOR_VERSION}::MessageCore
-    KF${KF_MAJOR_VERSION}::DBusAddons
-    KF${KF_MAJOR_VERSION}::WindowSystem
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::I18n
-    KF${KF_MAJOR_VERSION}::Notifications
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KPim6::AkonadiCore
+    KPim6::AkonadiMime
+    #KPim6::Mime
+    KPim6::MessageComposer
+    KPim6::MessageCore
+    KF6::DBusAddons
+    KF6::WindowSystem
+    KF6::XmlGui
+    KF6::I18n
+    KF6::Notifications
+    KPim6::AkonadiAgentBase
     )
 
 add_executable(akonadi_mailmerge_agent)
 target_link_libraries(akonadi_mailmerge_agent
     mailmergeagent
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KPim6::AkonadiAgentBase
     )
 
 

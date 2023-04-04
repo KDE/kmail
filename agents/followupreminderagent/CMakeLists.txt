@@ -50,17 +50,17 @@ pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 #endif()
 
 target_link_libraries(followupreminderagent
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KPim${KF_MAJOR_VERSION}::IdentityManagement
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
-    KF${KF_MAJOR_VERSION}::DBusAddons
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::KIOWidgets
-    KF${KF_MAJOR_VERSION}::Notifications
-    KPim${KF_MAJOR_VERSION}::MailCommon
-    KF${KF_MAJOR_VERSION}::I18n
-    KF${KF_MAJOR_VERSION}::CalendarCore
+    KPim6::AkonadiCore
+    KPim6::IdentityManagement
+    KPim6::AkonadiMime
+    KPim6::AkonadiAgentBase
+    KF6::DBusAddons
+    KF6::XmlGui
+    KF6::KIOWidgets
+    KF6::Notifications
+    KPim6::MailCommon
+    KF6::I18n
+    KF6::CalendarCore
 )
 
 
@@ -69,17 +69,17 @@ add_executable(akonadi_followupreminder_agent followupreminderagent.cpp followup
 
 target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
-    KPim${KF_MAJOR_VERSION}::Mime
-    KF${KF_MAJOR_VERSION}::CalendarCore
-    KF${KF_MAJOR_VERSION}::DBusAddons
+    KPim6::AkonadiCore
+    KPim6::AkonadiMime
+    KPim6::AkonadiAgentBase
+    KPim6::Mime
+    KF6::CalendarCore
+    KF6::DBusAddons
     Qt::Widgets
-    KF${KF_MAJOR_VERSION}::Notifications
-    KF${KF_MAJOR_VERSION}::I18n
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::Service
+    KF6::Notifications
+    KF6::I18n
+    KF6::XmlGui
+    KF6::Service
     )
 
 if( APPLE )
@@ -111,7 +111,7 @@ kcoreaddons_add_plugin(followupreminderagentconfig
 )
 target_link_libraries(followupreminderagentconfig
     followupreminderagent
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::I18n
+    KPim6::AkonadiCore
+    KF6::XmlGui
+    KF6::I18n
 )

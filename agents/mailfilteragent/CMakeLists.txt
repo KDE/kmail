@@ -40,18 +40,18 @@ endif ()
 
 
 target_link_libraries(akonadi_mailfilter_agent
-    KPim${KF_MAJOR_VERSION}::MailCommon
-    KPim${KF_MAJOR_VERSION}::MessageComposer
-    KPim${KF_MAJOR_VERSION}::PimCommon
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
-    KPim${KF_MAJOR_VERSION}::Mime
-    KPim${KF_MAJOR_VERSION}::IdentityManagement
-    KF${KF_MAJOR_VERSION}::DBusAddons
-    KF${KF_MAJOR_VERSION}::Notifications
-    KF${KF_MAJOR_VERSION}::WindowSystem
-    KF${KF_MAJOR_VERSION}::I18n
+    KPim6::MailCommon
+    KPim6::MessageComposer
+    KPim6::PimCommon
+    KPim6::AkonadiCore
+    KPim6::AkonadiMime
+    KPim6::AkonadiAgentBase
+    KPim6::Mime
+    KPim6::IdentityManagement
+    KF6::DBusAddons
+    KF6::Notifications
+    KF6::WindowSystem
+    KF6::I18n
     )
 
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

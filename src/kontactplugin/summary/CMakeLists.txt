@@ -12,14 +12,14 @@ add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
 pim_target_precompile_headers(kontact_summaryplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_summaryplugin kmail_xml)
 
-target_link_libraries(kontact_summaryplugin KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::IdentityManagement KPim${KF_MAJOR_VERSION}::KontactInterface KPim${KF_MAJOR_VERSION}::PimCommon KF${KF_MAJOR_VERSION}::ConfigCore)
+target_link_libraries(kontact_summaryplugin KF6::KCMUtils KF6::I18n KPim6::IdentityManagement KPim6::KontactInterface KPim6::PimCommon KF6::ConfigCore)
 
 ########### next target ###############
 
 add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp kcmkontactsummary.h)
 pim_target_precompile_headers(kcmkontactsummary PUBLIC ../../../kmail_pch.h)
 
-target_link_libraries(kcmkontactsummary KF${KF_MAJOR_VERSION}::KCMUtils KF${KF_MAJOR_VERSION}::I18n Qt::Widgets KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::KontactInterface)
+target_link_libraries(kcmkontactsummary KF6::KCMUtils KF6::I18n Qt::Widgets KF6::I18n KPim6::KontactInterface)
 
 ########### install files ###############
 

@@ -22,7 +22,7 @@ ecm_qt_declare_logging_category(kmail-refresh-settings HEADER kmail-refresh-sett
 if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmail-refresh-settings PROPERTIES UNITY_BUILD ON)
 endif()
-target_link_libraries(kmail-refresh-settings KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::AkonadiWidgets KF${KF_MAJOR_VERSION}::DBusAddons KF${KF_MAJOR_VERSION}::Crash KF${KF_MAJOR_VERSION}::XmlGui)
+target_link_libraries(kmail-refresh-settings KF6::I18n KPim6::AkonadiWidgets KF6::DBusAddons KF6::Crash KF6::XmlGui)
 
 
 install(TARGETS kmail-refresh-settings  ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

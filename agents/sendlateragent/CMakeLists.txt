@@ -50,25 +50,25 @@ pim_target_precompile_headers(sendlateragent PUBLIC ../../kmail_pch.h)
 #endif()
 
 target_link_libraries(sendlateragent
-    KPim${KF_MAJOR_VERSION}::AkonadiCore
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KPim${KF_MAJOR_VERSION}::MailTransport
-    KPim${KF_MAJOR_VERSION}::Mime
-    KPim${KF_MAJOR_VERSION}::MessageComposer
-    KPim${KF_MAJOR_VERSION}::MessageCore
-    KPim${KF_MAJOR_VERSION}::PimCommon
-    KF${KF_MAJOR_VERSION}::DBusAddons
-    KF${KF_MAJOR_VERSION}::WindowSystem
-    KF${KF_MAJOR_VERSION}::XmlGui
-    KF${KF_MAJOR_VERSION}::Notifications
-    KF${KF_MAJOR_VERSION}::I18n
+    KPim6::AkonadiCore
+    KPim6::AkonadiMime
+    KPim6::MailTransport
+    KPim6::Mime
+    KPim6::MessageComposer
+    KPim6::MessageCore
+    KPim6::PimCommon
+    KF6::DBusAddons
+    KF6::WindowSystem
+    KF6::XmlGui
+    KF6::Notifications
+    KF6::I18n
     )
 
 
 add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
 target_link_libraries(akonadi_sendlater_agent
     sendlateragent
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KPim6::AkonadiAgentBase
     )
 
 if( APPLE )

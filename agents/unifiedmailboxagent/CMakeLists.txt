@@ -38,22 +38,22 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
-    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
-    KPim${KF_MAJOR_VERSION}::AkonadiMime
-    KPim${KF_MAJOR_VERSION}::AkonadiWidgets
-    KPim${KF_MAJOR_VERSION}::Mime
-    KF${KF_MAJOR_VERSION}::I18n
-    KPim${KF_MAJOR_VERSION}::IdentityManagement
-    KF${KF_MAJOR_VERSION}::WidgetsAddons
-    KF${KF_MAJOR_VERSION}::IconThemes
-    KF${KF_MAJOR_VERSION}::ItemModels
-    KPim${KF_MAJOR_VERSION}::MailCommon
-    KF${KF_MAJOR_VERSION}::DBusAddons
+    KPim6::AkonadiAgentBase
+    KPim6::AkonadiMime
+    KPim6::AkonadiWidgets
+    KPim6::Mime
+    KF6::I18n
+    KPim6::IdentityManagement
+    KF6::WidgetsAddons
+    KF6::IconThemes
+    KF6::ItemModels
+    KPim6::MailCommon
+    KF6::DBusAddons
 )
 
 if( APPLE )
     set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
-    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.KF5::UnifiedMailbox")
+    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.KF6::UnifiedMailbox")
     set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE PIM Unified Mailbox")
 endif ()
 
