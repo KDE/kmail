@@ -32,7 +32,7 @@ ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIE
     )
 
 ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
-        DESCRIPTION "kmail (kmail)"
+        DESCRIPTION "kmail undo send (kmail)"
         OLD_CATEGORY_NAMES log_undo_send_kmail
         EXPORT KMAIL
     )
