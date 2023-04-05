@@ -22,7 +22,7 @@ target_sources(ktnef PRIVATE
     )
 
 ecm_qt_declare_logging_category(ktnef HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
-        DESCRIPTION "kmail-refresh-settings"
+	DESCRIPTION "kmail (ktnef apps)"
         EXPORT KMAIL
     )
 
