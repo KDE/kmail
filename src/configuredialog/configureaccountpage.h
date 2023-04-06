@@ -14,7 +14,7 @@ class QCheckBox;
 class QComboBox;
 class UndoSendCombobox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
-namespace KLDAP
+namespace KLDAPWidgets
 {
 class LdapConfigureWidget;
 }
@@ -55,7 +55,7 @@ private:
     void doLoadOther() override;
 
 private:
-    KLDAP::LdapConfigureWidget *const mLdapConfigureWidget;
+    KLDAPWidgets::LdapConfigureWidget *const mLdapConfigureWidget;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab

@@ -439,7 +439,7 @@ target_link_libraries(kmailprivate
     KF6::IconThemes
     KF6::XmlGui
     KF6::Completion
-    KPim6::Ldap
+    KPim6::LdapWidgets
     KPim6::AkonadiSearchDebug
     KPim6::AkonadiSearchPIM
     KPim6::WebEngineViewer

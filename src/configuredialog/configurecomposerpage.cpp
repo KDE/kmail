@@ -22,7 +22,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <templateparser/globalsettings_templateparser.h>
 #include <templateparser/templatesconfiguration_kfg.h>
 
-#include <KLDAP/LdapClientSearch>
+#include <KLDAPWidgets/LdapClientSearch>
 #include <PimCommonAkonadi/CompletionOrderEditor>
 #include <PimCommonAkonadi/RecentAddresses>
 using PimCommon::RecentAddresses;
@@ -547,7 +547,7 @@ void ComposerPageGeneralTab::save()
 
 void ComposerPageGeneralTab::slotConfigureAddressCompletion()
 {
-    KLDAP::LdapClientSearch search;
+    KLDAPWidgets::LdapClientSearch search;
     QPointer<PimCommon::CompletionConfigureDialog> dlg(new PimCommon::CompletionConfigureDialog(this));
     dlg->setRecentAddresses(PimCommon::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     dlg->setLdapClientSearch(&search);

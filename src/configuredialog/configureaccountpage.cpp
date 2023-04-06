@@ -24,7 +24,7 @@ using MailTransport::TransportManagementWidget;
 #include <Akonadi/AgentType>
 #include <Akonadi/AgentTypeDialog>
 #include <KConfigGroup>
-#include <KLDAP/LdapConfigureWidget>
+#include <KLDAPWidgets/LdapConfigureWidget>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QComboBox>
@@ -368,14 +368,14 @@ void AccountsPageReceivingTab::save()
 
 LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mLdapConfigureWidget(new KLDAP::LdapConfigureWidget(this))
+    , mLdapConfigureWidget(new KLDAPWidgets::LdapConfigureWidget(this))
 {
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
     layout->addWidget(mLdapConfigureWidget);
 
-    connect(mLdapConfigureWidget, &KLDAP::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
+    connect(mLdapConfigureWidget, &KLDAPWidgets::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
 }
 
 LdapCompetionTab::~LdapCompetionTab() = default;
