@@ -32,7 +32,6 @@
         "Description[zh_CN]": "Kontact 摘要视图插件",
         "EnabledByDefault": true,
         "Icon": "view-calendar-agenda",
-        "Id": "kontact_summaryplugin",
         "InitialPreference": 0,
         "License": "LGPL",
         "Name": "Summary",

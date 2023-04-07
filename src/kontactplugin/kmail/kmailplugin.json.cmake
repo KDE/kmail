@@ -33,7 +33,6 @@
         "Description[zh_CN]": "Kontact KMail 插件",
         "EnabledByDefault": true,
         "Icon": "view-pim-mail",
-        "Id": "kontact_kmailplugin",
         "License": "GPL",
         "Name": "Mail",
         "Name[af]": "Pos",
