@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-04 00:48+0000\n"
-"PO-Revision-Date: 2023-02-26 10:53+0100\n"
+"PO-Revision-Date: 2023-04-07 10:09+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -758,7 +758,7 @@ msgstr "Elpresaĵo"
 #: configuredialog/configureappearancepage.cpp:153
 #, kde-format
 msgid "&Use custom fonts"
-msgstr "&Uzi &proprajn tiparojn"
+msgstr "&Uzi proprajn tiparojn"
 
 #: configuredialog/configureappearancepage.cpp:171
 #, kde-format
@@ -943,7 +943,7 @@ msgstr ""
 "montriĝas AM/PM)</li><li>m - la minutoj sen antaŭa nulo (0-59)</li><li>mm - "
 "la minutoj kun unua nulo (00-59)</li>><li>s - la sekundoj sen unua nulo "
 "(0-59)</li><li>ss - la sekundoj kun unua nulo (00-59)</li><li>z - la "
-"milisekundoj sen antaŭaj nuloj (0-999)< /li><li>zzz - la milisekundoj kun "
+"milisekundoj sen antaŭaj nuloj (0-999)</li><li>zzz - la milisekundoj kun "
 "antaŭaj nuloj (000-999)</li><li>AP - ŝanĝu al AM/PM-vidigo. AP estos "
 "anstataŭigita per aŭ \"AM\" aŭ \"PM\".</li><li>ap - ŝanĝu al AM/PM-vidigo. "
 "ap estos anstataŭigita per aŭ \"am\" aŭ \"pm\".</li><li>Z - horzono en "
@@ -2015,7 +2015,7 @@ msgstr "Alglui kiel &kunsendaĵo"
 #: editor/kmcomposerwin.cpp:1286
 #, kde-format
 msgid "Cl&ean Spaces"
-msgstr "&Forigi troajn spac&etojn"
+msgstr "Forigi troajn spac&etojn"
 
 #: editor/kmcomposerwin.cpp:1290
 #, kde-format
@@ -2915,7 +2915,7 @@ msgstr ""
 "</p><p>Ĉi tiu adreso estas la ĉefa, uzata por ĉiuj elirantaj poŝtoj. Se vi "
 "havas pli ol unu adreson, aŭ kreu novan identecon, aŭ aldonu pliajn "
 "kaŝnomajn adresojn en la suba kampo.</p><p>Se vi lasas ĉi tion malplena, aŭ "
-"malĝuste, homoj havos problemojn respondi al vi. </ p ></ qt >"
+"malĝuste, homoj havos problemojn respondi al vi.</p></qt>"
 
 #: identity/identitydialog.cpp:329
 #, kde-format
@@ -2934,9 +2934,9 @@ msgid ""
 msgstr ""
 "<qt><h3>Retpoŝtaj kaŝnomoj</h3><p>Ĉi tiu kampo enhavas kaŝnomajn adresojn, "
 "kiuj ankaŭ devus esti konsiderataj kiel apartenantaj al ĉi tiu identeco "
-"(kontraste al reprezentado de malsama identeco).</p><p>Ekzemplo:< /"
+"(kontraste al reprezentado de malsama identeco).</p><p>Ekzemplo:</"
 "p><table><tr><th> Ĉefa adreso:</th><td>first.last@example.org</td></"
-"tr><tr><th>Kaŝnomo:</th>< td>unua@ekzemplo.org<br>lasta@ekzemplo.org</td></"
+"tr><tr><th>Kaŝnomo:</th><td>unua@ekzemplo.org<br>lasta@ekzemplo.org</td></"
 "tr></table><p>Tajpu unu kaŝnomo-adreson per linio.</p></qt>"
 
 #: identity/identitydialog.cpp:351
@@ -6626,7 +6626,7 @@ msgstr ""
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
 "weight:400; font-style:normal;\">\n"
-"< p stilo=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">Saltante al la sekva "
 "nelegita mesaĝo, povas okazi ke ne plu nelegitaj mesaĝoj estas sub la nuna "
 "mesaĝo.</p>\n"
@@ -7002,7 +7002,7 @@ msgstr ""
 "montra funkcio de KMail, ĉi tiu opcio estas <em>malŝaltita</em> defaŭlte.</"
 "p><p>Tamen, se vi volas, ekzemple, vidi bildojn en HTML-mesaĝoj kiuj ne "
 "estis alfiksitaj al ĝi, vi povas ebligi ĉi tiun opcion, sed vi devus esti "
-"konsciante pri la ebla problemo.</ p ></ qt >"
+"konsciante pri la ebla problemo.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:32
@@ -7050,7 +7050,7 @@ msgstr ""
 "<qt><p>Mesaĝoj foje venas en ambaŭ formatoj. Ĉi tiu opcio kontrolas ĉu vi "
 "volas ke la HTML-parto aŭ la klarteksta parto estu montrata.</p><p>Vidi la "
 "HTML-parton plibonigas la mesaĝon, sed samtempe pliigas la riskon de "
-"ekspluatado de sekurecaj truoj.< /p><p>Montri la klartekstan parton perdas "
+"ekspluatado de sekurecaj truoj.</p><p>Montri la klartekstan parton perdas "
 "grandan parton de la formatado de la mesaĝo, sed preskaŭ <em>maleblas</em> "
 "ekspluati sekurecajn truojn en la HTML-bildilo (QtWebEngine).</p><p>La suba "
 "opcio protektas kontraŭ unu ofta misuzo de HTML-mesaĝoj, sed ĝi ne povas "
