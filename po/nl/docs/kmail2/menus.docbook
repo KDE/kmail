@@ -254,9 +254,9 @@
 ></term>
   <listitem
 ><para
->Start het programma <application
->Hulpmiddel PIM importeren</application
-> (de assistent voor e-mail importeren). Met behulp van deze toepassing kunt u e-mail in &kmail; importeren vanuit diverse e-mailclients.</para
+>Starts up the <application
+>KMailCVT</application
+> program (aka the Email Import Wizard). This application lets you import messages from several email clients into &kmail;.</para
 ></listitem>
 </varlistentry>
 
