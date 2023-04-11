@@ -27,6 +27,9 @@ class Key;
 namespace KIdentityManagement
 {
 class Identity;
+}
+namespace KIdentityManagementWidgets
+{
 class SignatureConfigurator;
 }
 namespace KMail
@@ -134,7 +137,7 @@ private:
     QCheckBox *mCustom = nullptr;
     QPushButton *mCopyGlobal = nullptr;
     // "signature" tab:
-    KIdentityManagement::SignatureConfigurator *mSignatureConfigurator = nullptr;
+    KIdentityManagementWidgets::SignatureConfigurator *mSignatureConfigurator = nullptr;
     // "X-Face" tab:
     KMail::XFaceConfigurator *mXFaceConfigurator = nullptr;
     QTabWidget *mTabWidget = nullptr;

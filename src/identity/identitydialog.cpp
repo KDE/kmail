@@ -36,7 +36,7 @@
 #include <templateparser/templatesconfiguration_kfg.h>
 // other kdepim headers:
 #include <KIdentityManagement/Identity>
-#include <KIdentityManagement/SignatureConfigurator>
+#include <KIdentityManagementWidgets/SignatureConfigurator>
 
 #include <PimCommon/PimUtil>
 #include <TextAutoCorrection/AutoCorrectionLanguage>
@@ -677,7 +677,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: Signature
     //
-    mSignatureConfigurator = new KIdentityManagement::SignatureConfigurator(mTabWidget);
+    mSignatureConfigurator = new KIdentityManagementWidgets::SignatureConfigurator(mTabWidget);
     mTabWidget->addTab(mSignatureConfigurator, i18n("Signature"));
 
     //

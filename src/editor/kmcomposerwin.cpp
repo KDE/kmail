@@ -58,9 +58,9 @@
 #include <KContacts/VCardConverter>
 
 #include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityCombo>
 #include <KIdentityManagement/IdentityManager>
 #include <KIdentityManagement/Signature>
+#include <KIdentityManagementWidgets/IdentityCombo>
 
 #include <KMime/Message>
 
@@ -285,11 +285,11 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto v = new QVBoxLayout(mMainWidget);
     v->setContentsMargins({});
     v->addWidget(mHeadersToEditorSplitter);
-    auto identity = new KIdentityManagement::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
+    auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
     identity->setObjectName(QStringLiteral("identitycombo"));
-    connect(identity, &KIdentityManagement::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
-    connect(identity, &KIdentityManagement::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
+    connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
+    connect(identity, &KIdentityManagementWidgets::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
 
     sigController->setIdentityCombo(identity);
@@ -465,7 +465,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
 
     mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
-    mIdentityConnection = connect(identity, &KIdentityManagement::IdentityCombo::identityChanged, this, [this](uint val) {
+    mIdentityConnection = connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
     connect(kmkernel->identityManager(), qOverload<uint>(&KIdentityManagement::IdentityManager::changed), this, [this](uint val) {
@@ -1765,7 +1765,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
 
     // load the mId into the gui, sticky or not, without emitting
     mComposerBase->identityCombo()->setCurrentIdentity(mId);
-    mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagement::IdentityCombo::identityChanged, this, [this](uint val) {
+    mIdentityConnection = connect(mComposerBase->identityCombo(), &KIdentityManagementWidgets::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
 

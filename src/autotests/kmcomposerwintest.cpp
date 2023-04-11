@@ -9,8 +9,8 @@
 #include <MessageComposer/Composer>
 
 #include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityCombo>
 #include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementWidgets/IdentityCombo>
 
 #include <KMime/Message>
 
@@ -216,7 +216,7 @@ void KMComposerWinTest::testChangeIdentity()
 
     {
         ident = im->identityForAddress(QStringLiteral("autocrypt@example.com"));
-        auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+        auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
@@ -230,7 +230,7 @@ void KMComposerWinTest::testChangeIdentity()
 
     {
         ident = im->identityForAddress(QStringLiteral("secundus@example.com"));
-        auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+        auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
         QVERIFY(identCombo);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
