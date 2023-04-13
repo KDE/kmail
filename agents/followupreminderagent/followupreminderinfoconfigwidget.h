@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include <Akonadi/AgentConfigurationBase>
+#include <Akonadi/AgentWidgetConfigurationBase>
 #include <Akonadi/Item>
 #include <QVariantList>
 #include <QWidget>
 class FollowUpReminderInfoWidget;
-class FollowUpReminderInfoConfigWidget : public Akonadi::AgentConfigurationBase
+class FollowUpReminderInfoConfigWidget : public Akonadi::AgentWidgetConfigurationBase
 {
     Q_OBJECT
 public:

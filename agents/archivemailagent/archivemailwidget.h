@@ -10,7 +10,7 @@
 #include "ui_archivemailwidget.h"
 #include <QTreeWidgetItem>
 
-#include <Akonadi/AgentConfigurationBase>
+#include <Akonadi/AgentWidgetConfigurationBase>
 
 class ArchiveMailItem : public QTreeWidgetItem
 {
@@ -25,7 +25,7 @@ private:
     ArchiveMailInfo *mInfo = nullptr;
 };
 
-class ArchiveMailWidget : public Akonadi::AgentConfigurationBase
+class ArchiveMailWidget : public Akonadi::AgentWidgetConfigurationBase
 {
     Q_OBJECT
 public:
