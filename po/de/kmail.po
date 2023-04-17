@@ -5,7 +5,7 @@
 # Matthias Kalle Dalheimer <kalle@kdab.net>, 2004.
 # Thomas Reitelbach <tr@erdfunkstelle.de>, 2005, 2006, 2007, 2008, 2009, 2010.
 # Burkhard Lück <lueck@hube-lueck.de>, 2006, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021.
-# Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2020, 2021, 2022.
+# Frederik Schwarzer <schwarzer@kde.org>, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2020, 2021, 2022, 2023.
 # Jannick Kuhr <opensource@kuhr.org>, 2009.
 # Markus Slopianka <markus.s@kdemail.net>, 2010.
 # Moritz Baumann <flamingmo@online.de>, 2010.
@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-17 03:16+0000\n"
-"PO-Revision-Date: 2022-07-23 23:15+0200\n"
+"PO-Revision-Date: 2023-04-16 14:13+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -1035,9 +1035,7 @@ msgid "Ta&g Settings"
 msgstr "&Einstellungen für Markierungen"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Löschen"
 
@@ -1680,8 +1678,7 @@ msgid "Message Disposition Notifications"
 msgstr "Empfangs- und Lesebenachrichtigungen"
 
 #: configuredialog/configuresecuritypage.cpp:55
-#, fuzzy, kde-format
-#| msgid "Encryption"
+#, kde-format
 msgid "Encryption"
 msgstr "Verschlüsselung"
 
@@ -3022,13 +3019,12 @@ msgstr "OpenPGP-Signaturschlüssel:"
 #: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Für Verschlüsselung und Signierung denselben Schlüssel verwenden"
 
 #: identity/identitydialog.cpp:379
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP-Schlüssel 0x%1"
+msgstr "OpenPGP-Schlüssel:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -3115,7 +3111,7 @@ msgstr ""
 #: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Anderen mitteilen, dass Sie Verschlüsslung bevorzugen"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
@@ -3129,30 +3125,26 @@ msgid "Overwrite defaults:"
 msgstr "&Alle überschreiben"
 
 #: identity/identitydialog.cpp:488
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Nachricht &signieren"
+msgstr "Nachrichten signieren"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Nachrichten möglichst automatisch verschlüsseln"
+msgstr "Nachrichten verschlüsseln wenn möglich"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Vor dem Versand &unsignierter Nachrichten warnen"
+msgstr "Vor dem Versand unsignierter Nachrichten warnen"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Vor dem Versand unverschlüsselter Nachrichten &warnen"
+msgstr "Vor dem Versand unverschlüsselter Nachrichten warnen"
 
 #: identity/identitydialog.cpp:507
 #, kde-format
@@ -5242,8 +5234,7 @@ msgid "Restart Akonadi"
 msgstr "Akonadi neu starten"
 
 #: kmmainwidget.cpp:4843
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgid "Restart"
 msgstr "Neu starten"
 
@@ -6926,10 +6917,9 @@ msgstr "Als Standard verwenden"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Verschlüsselte Nachricht"
+msgstr "Entwürfe verschlüsseln"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6966,38 +6956,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Verschlüsselte Nachricht"
+msgstr "&Gesendete Nachrichten verschlüsseln"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Nachricht &signieren"
+msgstr "Alle Nachrichten signieren"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Nachrichten möglichst automatisch verschlüsseln"
+msgstr "Alle Nachrichten verschlüsseln, wenn möglich"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Markierung für Verschlüsselung anzeigen"
+msgstr "Verschlüsselungsmarkierung"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Markierung für Signieren/Verschlüsseln im Editor anzeigen"
+msgstr "Markierung für Signieren/Verschlüsseln anzeigen"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
@@ -7009,7 +6994,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Warnungen"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
