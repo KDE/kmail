@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-04 00:48+0000\n"
-"PO-Revision-Date: 2023-04-17 06:30+0100\n"
+"PO-Revision-Date: 2023-04-18 06:31+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -4226,7 +4226,7 @@ msgstr "Malplenigi rubujon"
 #: kmmainwidget.cpp:1455 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
-msgstr "&Movi al rubujo"
+msgstr "Movi al rubujo"
 
 #: kmmainwidget.cpp:1456
 #, kde-format
