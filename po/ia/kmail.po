@@ -5817,7 +5817,7 @@ msgstr "Data"
 #: searchdialog/kmsearchmessagemodel.cpp:87
 #, kde-format
 msgid "Preview"
-msgstr "Vista preliminari"
+msgstr "Vista preliminar"
 
 #: searchdialog/kmsearchmessagemodel.cpp:140
 #, kde-format
@@ -6282,27 +6282,27 @@ msgstr "Le altessa del dialogo Configura KMail (solmente pro uso interne)"
 #: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
-msgstr "Vitro de vista preliminari de message"
+msgstr "Vitro de vista preliminar de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
-msgstr "Non monstra un vitro de vista preliminari de message"
+msgstr "Non monstra un vitro de vista preliminar de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr ""
-"Monstra le vitro de vista preliminari de message sub le lista de message"
+"Monstra le vitro de vista preliminar de message sub le lista de message"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr ""
-"Monstra le vitro de vista preliminari de message proxime al lista de message"
+"Monstra le vitro de vista preliminar de message proxime al lista de message"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
@@ -7905,7 +7905,7 @@ msgstr "Zoom: %1"
 #~ "capace de monstrar."
 
 #~ msgid "This is a preview of the picture selected/entered below."
-#~ msgstr "Iste es un vista preliminari del photo seligite/insertate a basso."
+#~ msgstr "Iste es un vista preliminar del photo seligite/insertate a basso."
 
 #~ msgid "Click on the widgets below to obtain help on the input methods."
 #~ msgstr ""
@@ -8557,7 +8557,7 @@ msgstr "Zoom: %1"
 #~| msgid "Message Preview Pane"
 #~ msgctxt "@action:inmenu"
 #~ msgid "Message Properties"
-#~ msgstr "Vitro de vista preliminari de message"
+#~ msgstr "Vitro de vista preliminar de message"
 
 #, fuzzy
 #~| msgid "New Messages"
@@ -8660,7 +8660,7 @@ msgstr "Zoom: %1"
 #, fuzzy
 #~| msgid "Message Preview Pane"
 #~ msgid "Message Properties"
-#~ msgstr "Vitro de vista preliminari de message"
+#~ msgstr "Vitro de vista preliminar de message"
 
 #, fuzzy
 #~| msgid "Name"
