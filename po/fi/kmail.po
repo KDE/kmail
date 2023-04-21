@@ -14,7 +14,7 @@
 # Ville-Pekka Vainio <vpivaini@cs.helsinki.fi>, 2007.
 # Mikko Piippo <piippo@cc.helsinki.fi>, 2007.
 # Tommi Nieminen <translator@legisign.org>, 2009, 2010, 2011.
-# Tommi Nieminen <translator@legisign.org>, 2010, 2012, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Tommi Nieminen <translator@legisign.org>, 2010, 2012, 2013, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 # Jiri Grönroos <jiri.gronroos+kde@iki.fi>, 2012.
 # Niklas Laxström <niklas.laxstrom+kdetrans@gmail.com>, 2012.
@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-04-04 00:48+0000\n"
-"PO-Revision-Date: 2022-11-05 21:09+0200\n"
+"PO-Revision-Date: 2023-04-12 15:09+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-POT-Import-Date: 2013-01-13 20:43:22+0000\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1038,9 +1038,7 @@ msgid "Ta&g Settings"
 msgstr "&Luokitusten asetukset"
 
 #: configuredialog/configureappearancepage.cpp:1018
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Poista"
 
@@ -7600,15 +7598,14 @@ msgid "Undo send"
 msgstr "Peru lähetys"
 
 #: undosend/undosendmanager.cpp:43
-#, fuzzy, kde-format
-#| msgid "<b>To:</b><br/>"
+#, kde-format
 msgid "<b>To:</b> %1"
-msgstr "<b>Vastaanottaja:</b><br/>"
+msgstr "<b>Vastaanottaja:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Aihe:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
