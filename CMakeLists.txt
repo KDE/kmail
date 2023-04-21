@@ -60,7 +60,7 @@ set(KTNEF_LIB_VERSION "5.23.40")
 set(GRANTLEETHEME_LIB_VERSION "5.23.40")
 
 set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
-set(KDEPIM_LIB_SOVERSION "5")
+set(KDEPIM_LIB_SOVERSION "6")
 
 set(KTEXTADDONS_MIN_VERSION "1.2.0")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
