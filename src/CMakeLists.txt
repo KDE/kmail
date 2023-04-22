@@ -452,9 +452,7 @@ if (TARGET KF6::TextEditTextToSpeech)
         PRIVATE KF6::TextEditTextToSpeech)
 endif()
 
-if (TARGET Qt6::Core5Compat)
-    target_link_libraries(kmailprivate PRIVATE Qt6::Core5Compat) # QTextCodec
-endif()
+target_link_libraries(kmailprivate PRIVATE Qt6::Core5Compat) # QTextCodec
 
 target_link_libraries(kmailprivate PRIVATE qt6keychain)
 
