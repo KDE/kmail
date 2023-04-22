@@ -3,7 +3,7 @@
 # LinuxKorea Co. <kde@linuxkorea.co.kr>, 2000.
 # Louis JANG <louis@mizi.com>, 2001.
 # KIM KyungHeon <tody@teoal.net>, 2002, 2003, 2004.
-# Shinjo Park <kde@peremen.name>, 2007, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Shinjo Park <kde@peremen.name>, 2007, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 #
 # Expire: "오래된 메시지 정리"로 번역. 받은 지 오래 된 메시지를 단순히 삭제하는 것이 아니라 특정한 폴더로 이동하는 기능도 있으므로 "정리"로 번역.
 # Archive: 폴더를 파일로 압축하는 것은 압축, 폴더를 자동으로 정리하는 것은 아카이브로 번역.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-17 03:16+0000\n"
-"PO-Revision-Date: 2022-07-13 12:50+0200\n"
+"PO-Revision-Date: 2023-04-22 00:35+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1010,9 +1010,7 @@ msgid "Ta&g Settings"
 msgstr "태그 설정(&G)"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "삭제"
 
@@ -1630,8 +1628,7 @@ msgid "Message Disposition Notifications"
 msgstr "메시지 읽음 확인"
 
 #: configuredialog/configuresecuritypage.cpp:55
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "암호화"
 
@@ -2926,13 +2923,12 @@ msgstr "OpenPGP 서명 키:"
 #: identity/identitydialog.cpp:369
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "서명과 암호화에 같은 키 사용"
 
 #: identity/identitydialog.cpp:379
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP 서명 키:"
+msgstr "OpenPGP 키:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -2998,56 +2994,51 @@ msgid "Preferred format:"
 msgstr "선호하는 암호화 메시지 형식:"
 
 #: identity/identitydialog.cpp:468
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "암호화"
+msgstr "자동 암호화 활성화"
 
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "자동 암호화:"
 
 #: identity/identitydialog.cpp:477
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "다른 사람에게 내 암호화 선호도 알리기"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "보안 기본값 전역 설정 덮어쓰기"
 
 #: identity/identitydialog.cpp:483
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "기본값 덮어쓰기:"
 
 #: identity/identitydialog.cpp:488
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "메시지에 서명(&S)"
+msgstr "메시지에 서명"
 
 #: identity/identitydialog.cpp:491
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
 msgstr "가능하다면 자동으로 메시지 암호화"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "서명되지 않은 메시지를 보내려고 할 때 알림(&U)"
+msgstr "서명되지 않은 메시지를 보내려고 할 때 알림"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "암호화되지 않은 메시지를 보낼 때 알림(&W)"
+msgstr "암호화되지 않은 메시지를 보내려고 할 때 알림"
 
 #: identity/identitydialog.cpp:507
 #, kde-format
@@ -5067,10 +5058,9 @@ msgid "Restart Akonadi"
 msgstr "Akonadi 다시 시작"
 
 #: kmmainwidget.cpp:4843
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "계정 다시 시작"
+msgstr "다시 시작"
 
 #: kmmainwidget.cpp:4850
 #, kde-format
@@ -6129,10 +6119,9 @@ msgstr "암호화 표시기 이름표 표시"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "암호화 표시기 이름표 표시"
+msgstr "암호화 소유자 신뢰 아이콘 표시"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:284
@@ -6691,17 +6680,15 @@ msgstr "메시지 열기(&M)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "기본값으로 설정"
+msgstr "보안 기본값"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "암호화된 메시지"
+msgstr "임시 보관함 메시지 암호화"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6735,57 +6722,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted Messages"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "암호화된 메시지"
+msgstr "보낸 메시지 암호화(&P)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "메시지에 서명(&S)"
+msgstr "모든 메시지 암호화"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "가능하다면 자동으로 메시지 암호화"
+msgstr "가능하다면 모든 메시지 암호화"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "암호화 표시기 이름표 표시"
+msgstr "암호화 표시기"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "편집기에 서명/암호화 표시기 표시"
+msgstr "서명/암호화 표시기 표시"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "암호화 키 소유자 신뢰 정도 표시"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "알림"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "항상 승인할 암호화 키 표시(&F)"
+msgstr "항상 보내기 전에 암호화 키 승인"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6850,22 +6831,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "루트 인증서(&R):"
+msgstr "내 인증서:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6876,10 +6848,10 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>루트 인증서가 만료될 때 알려 주기</h1>\n"
-"루트 인증서 만료 날짜부터 다음 최소 기간 이전까지 경고를 표시합니다.\n"
+"<h1>내 인증서가 만료될 때 알려 주기</h1>\n"
+"내 인증서 만료 날짜부터 다음 최소 기간 이전까지 경고를 표시합니다.\n"
 "<p>\n"
-"추천하는 SPHINX 설정은 14일입니다.\n"
+"추천하는 SPHINX 설정은 30일입니다.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7525,12 +7497,12 @@ msgstr "전송 실행 취소"
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>받는 사람:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>제목:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
