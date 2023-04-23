@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
 #include <config-enterprise.h>
@@ -23,7 +24,11 @@ namespace TemplateParser
 class CustomTemplates;
 class TemplatesConfiguration;
 }
+#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+namespace TextAutoCorrectionWidgets
+#else
 namespace TextAutoCorrection
+#endif
 {
 class AutoCorrectionWidget;
 }
@@ -211,7 +216,11 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
+#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionWidgets::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+#else
     TextAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+#endif
 };
 
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab
