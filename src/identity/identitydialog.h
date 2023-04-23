@@ -8,7 +8,7 @@
 */
 
 #pragma once
-
+#include "config-kmail.h"
 #include <QDialog>
 class QCheckBox;
 
@@ -55,7 +55,11 @@ namespace TemplateParser
 {
 class TemplatesConfiguration;
 }
+#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+namespace TextAutoCorrectionWidgets
+#else
 namespace TextAutoCorrection
+#endif
 {
 class AutoCorrectionLanguage;
 }
@@ -129,7 +133,11 @@ private:
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
+#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionWidgets::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#else
     TextAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#endif
     QLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:
