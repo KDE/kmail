@@ -62,7 +62,7 @@ set(GRANTLEETHEME_LIB_VERSION "5.23.40")
 set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "6")
 
-set(KTEXTADDONS_MIN_VERSION "1.2.0")
+set(KTEXTADDONS_MIN_VERSION "1.2.41")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
 find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngineWidgets)
@@ -150,17 +150,7 @@ set_package_properties(KF6TextEditTextToSpeech PROPERTIES DESCRIPTION
 if (TARGET KF6::TextEditTextToSpeech)
     add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
 endif()
-find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG)
-set_package_properties(KF6TextAutoCorrectionWidgets PROPERTIES DESCRIPTION
-    "Add support for text auto correction"
-    TYPE OPTIONAL
-)
-if (TARGET KF6::TextAutoCorrectionWidgets)
-    set(HAVE_TEXT_AUTOCORRECTION_WIDGETS TRUE)
-else()
-    find_package(KF6TextAutoCorrection ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
-endif()
-configure_file(config-kmail.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
+find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 
 find_package(Qt6Keychain CONFIG)
 set_package_properties(Qt6Keychain PROPERTIES

@@ -1,7 +1,6 @@
 //
 
 #pragma once
-#include "config-kmail.h"
 #include <MailCommon/MailInterfaces>
 
 #include <QDBusObjectPath>
@@ -51,11 +50,7 @@ namespace MessageComposer
 {
 class MessageSender;
 }
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
 namespace TextAutoCorrectionCore
-#else
-namespace TextAutoCorrection
-#endif
 {
 class AutoCorrection;
 }
@@ -480,11 +475,7 @@ public:
     void savePaneSelection();
 
     void updatePaneTagComboBox();
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
     Q_REQUIRED_RESULT TextAutoCorrectionCore::AutoCorrection *composerAutoCorrection();
-#else
-    Q_REQUIRED_RESULT TextAutoCorrection::AutoCorrection *composerAutoCorrection();
-#endif
 
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
@@ -620,11 +611,7 @@ private:
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionCore::AutoCorrection *mAutoCorrection = nullptr;
-#else
-    TextAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;
-#endif
     FolderArchiveManager *const mFolderArchiveManager;
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
