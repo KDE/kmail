@@ -30,8 +30,11 @@ FolderShortcutCommand::FolderShortcutCommand(QWidget *mainwidget, const Akonadi:
 
 FolderShortcutCommand::~FolderShortcutCommand()
 {
-    if (mAction && mAction->parentWidget()) {
-        mAction->parentWidget()->removeAction(mAction);
+    if (mAction) {
+        auto action = qobject_cast<QWidget *>(mAction->parent());
+        if (action) {
+            action->removeAction(mAction);
+        }
     }
     delete mAction;
 }

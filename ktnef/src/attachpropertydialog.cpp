@@ -175,13 +175,13 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
     } else {
         QString tag = item->text(2);
         const int key = QStringView(tag).mid(5).toInt();
-        QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
+        const QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);
             if (f.open(QIODevice::WriteOnly)) {
-                switch (prop.type()) {
-                case QVariant::ByteArray:
+                switch (prop.metaType().id()) {
+                case QMetaType::QByteArray:
                     f.write(prop.toByteArray().data(), prop.toByteArray().size());
                     break;
                 default: {
