@@ -11,7 +11,6 @@
 #pragma once
 
 #include "configmodule.h"
-#include "kcmutils_version.h"
 #include "kmail_export.h"
 class QTabWidget;
 class ConfigureDialog;
