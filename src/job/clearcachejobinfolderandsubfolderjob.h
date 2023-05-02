@@ -29,6 +29,9 @@ public:
 
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
+Q_SIGNALS:
+    void clearCacheDone();
+
 private:
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);

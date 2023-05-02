@@ -73,6 +73,7 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
         auto job = new Akonadi::ClearCacheFoldersJob(lst, this);
         job->setProperty("ProgressItem", QVariant::fromValue(item));
         item->setProperty("ClearCacheFoldersJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
+        connect(job, &Akonadi::ClearCacheFoldersJob::clearCacheDone, this, &ClearCacheJobInFolderAndSubFolderJob::clearCacheDone);
         connect(job, &Akonadi::ClearCacheFoldersJob::finished, this, [this, job](bool success) {
             // TODO use it
             Q_UNUSED(success)
@@ -81,6 +82,7 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
         });
         // connect(job, &Akonadi::ClearCacheFoldersJob::description, this, &ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheUpdate);
         connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled);
+        job->start();
     }
 }
 

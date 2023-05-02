@@ -534,6 +534,7 @@ private:
     void updateMoveAllToTrash();
     void slotClearFolder();
     void slotClearCacheDone();
+    void slotClearFolderAndSubFolders();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
