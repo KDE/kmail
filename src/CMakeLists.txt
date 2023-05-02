@@ -140,6 +140,8 @@ target_sources(kmailprivate PRIVATE
     job/createreplymessagejob.cpp
     job/createforwardmessagejob.cpp
     job/dndfromarkjob.cpp
+    job/clearcachejobinfolderandsubfolderjob.cpp
+    job/clearcachejobinfolderandsubfolderjob.h
     widgets/collectionpane.cpp
     widgets/vacationscriptindicatorwidget.cpp
     widgets/displaymessageformatactionmenu.cpp
