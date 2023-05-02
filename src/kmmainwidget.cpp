@@ -96,7 +96,7 @@
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/ClearCacheJob>
+#include <Akonadi/ClearCacheFoldersJob>
 #include <Akonadi/CollectionAttributesSynchronizationJob>
 #include <Akonadi/CollectionDialog>
 #include <Akonadi/CollectionFetchJob>
@@ -4817,10 +4817,9 @@ void KMMainWidget::setupUnifiedMailboxChecker()
 
 void KMMainWidget::slotClearFolder()
 {
-    auto job = new Akonadi::ClearCacheJob(this);
-    job->setCollection(mCurrentCollection);
+    auto job = new Akonadi::ClearCacheFoldersJob(mCurrentCollection, this);
     job->setParentWidget(this);
-    connect(job, &ClearCacheJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
+    connect(job, &ClearCacheFoldersJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
     job->start();
 }
 
