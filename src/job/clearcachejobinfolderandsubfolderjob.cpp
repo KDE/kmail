@@ -107,7 +107,7 @@ void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled(KPIM::P
 {
     auto job = item->property("ClearCacheFoldersJob").value<Akonadi::ClearCacheFoldersJob *>();
     if (job) {
-        // TODO job->kill(KJob::Quietly);
+        job->setCanceled(true);
     }
 
     item->setComplete();
