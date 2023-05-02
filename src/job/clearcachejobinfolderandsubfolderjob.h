@@ -14,6 +14,10 @@ namespace KPIM
 {
 class ProgressItem;
 }
+namespace Akonadi
+{
+class ClearCacheFoldersJob;
+}
 class ClearCacheJobInFolderAndSubFolderJob : public QObject
 {
     Q_OBJECT
@@ -25,12 +29,15 @@ public:
 
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
+Q_SIGNALS:
+    void clearCacheDone();
+
 private:
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
-    void slotFinished(KJob *job);
-    void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);
-    void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
+    void slotFinished(Akonadi::ClearCacheFoldersJob *job);
+    void slotClearAkonadiCacheUpdate(Akonadi::ClearCacheFoldersJob *job, const QString &description);
+    void slotClearAkonadiCacheCanceled(KPIM::ProgressItem *item);
     Akonadi::Collection mTopLevelCollection;
     QWidget *const mParentWidget;
 };

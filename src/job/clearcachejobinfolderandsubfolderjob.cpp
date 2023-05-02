@@ -7,9 +7,9 @@
 
 #include "clearcachejobinfolderandsubfolderjob.h"
 #include "kmail_debug.h"
+#include <Akonadi/ClearCacheFoldersJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
-#include <Akonadi/RemoveDuplicatesJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <Libkdepim/ProgressManager>
@@ -70,16 +70,23 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
         item->setUsesBusyIndicator(true);
         item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 
-        auto job = new Akonadi::RemoveDuplicatesJob(lst, this);
+        auto job = new Akonadi::ClearCacheFoldersJob(lst, this);
         job->setProperty("ProgressItem", QVariant::fromValue(item));
-        item->setProperty("RemoveDuplicatesJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
-        connect(job, &Akonadi::RemoveDuplicatesJob::finished, this, &ClearCacheJobInFolderAndSubFolderJob::slotFinished);
-        connect(job, &Akonadi::RemoveDuplicatesJob::description, this, &ClearCacheJobInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate);
-        connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &ClearCacheJobInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled);
+        item->setProperty("ClearCacheFoldersJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
+        connect(job, &Akonadi::ClearCacheFoldersJob::clearCacheDone, this, &ClearCacheJobInFolderAndSubFolderJob::clearCacheDone);
+        connect(job, &Akonadi::ClearCacheFoldersJob::finished, this, [this, job](bool success) {
+            // TODO use it
+            Q_UNUSED(success)
+
+            slotFinished(job);
+        });
+        // connect(job, &Akonadi::ClearCacheFoldersJob::description, this, &ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheUpdate);
+        connect(item, &KPIM::ProgressItem::progressItemCanceled, this, &ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled);
+        job->start();
     }
 }
 
-void ClearCacheJobInFolderAndSubFolderJob::slotFinished(KJob *job)
+void ClearCacheJobInFolderAndSubFolderJob::slotFinished(Akonadi::ClearCacheFoldersJob *job)
 {
     auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
@@ -87,17 +94,10 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFinished(KJob *job)
         item->setStatus(i18n("Done"));
         item = nullptr;
     }
-    if (job->error()) {
-        qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
-        KMessageBox::error(mParentWidget,
-                           i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()),
-                           i18n("Error while removing duplicates"));
-    }
-
     deleteLater();
 }
 
-void ClearCacheJobInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
+void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheUpdate(Akonadi::ClearCacheFoldersJob *job, const QString &description)
 {
     auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
     if (item) {
@@ -105,11 +105,11 @@ void ClearCacheJobInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate(KJob *job,
     }
 }
 
-void ClearCacheJobInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
+void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled(KPIM::ProgressItem *item)
 {
-    auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
+    auto job = item->property("ClearCacheFoldersJob").value<Akonadi::ClearCacheFoldersJob *>();
     if (job) {
-        job->kill(KJob::Quietly);
+        job->setCanceled(true);
     }
 
     item->setComplete();

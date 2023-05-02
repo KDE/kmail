@@ -11,6 +11,7 @@
 // KMail includes
 #include "kmmainwidget.h"
 #include "editor/composer.h"
+#include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
 #include "kmcommands.h"
 #include "kmreadermainwin.h"
@@ -2977,6 +2978,12 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache"), mClearFolderCacheAction);
     connect(mClearFolderCacheAction, &QAction::triggered, this, &KMMainWidget::slotClearFolder);
 
+    {
+        auto action = new QAction(i18n("&Clear Akonadi Cache in This Folder and All its Subfolders"), this);
+        actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache_and_subfolders"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotClearFolderAndSubFolders);
+    }
+
     mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QStringLiteral("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QStringLiteral("folder_shortcut_command"), mShowFolderShortcutDialogAction);
     connect(mShowFolderShortcutDialogAction,
@@ -4815,6 +4822,14 @@ void KMMainWidget::slotClearFolder()
     auto job = new Akonadi::ClearCacheFoldersJob(mCurrentCollection, this);
     job->setParentWidget(this);
     connect(job, &ClearCacheFoldersJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
+    job->start();
+}
+
+void KMMainWidget::slotClearFolderAndSubFolders()
+{
+    auto job = new ClearCacheJobInFolderAndSubFolderJob(this, this);
+    job->setTopLevelCollection(mCurrentCollection);
+    connect(job, &ClearCacheJobInFolderAndSubFolderJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
     job->start();
 }
 
