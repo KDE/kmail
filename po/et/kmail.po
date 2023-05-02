@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3653,6 +3653,34 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "Postiloend %2 on tühi, seda ei saa kasutada."
 msgstr[1] "Postiloendid %2 on tühjad, neid ei saa kasutada."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Restart Account"
+msgid "Clear Akonadi Cache"
+msgstr "Taaskäivita konto"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Tehtud"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Tõrge topeltkirjade eemaldamisel: '%1'"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Tõrge topeltkirjade eemaldamisel"
+
 #: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
@@ -3775,25 +3803,6 @@ msgstr "&Kustuta"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Topeltkirjade eemaldamine"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Tehtud"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Tõrge topeltkirjade eemaldamisel: '%1'"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Tõrge topeltkirjade eemaldamisel"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format

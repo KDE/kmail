@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2023-04-12 15:09+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3560,6 +3560,34 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "Jakelulista ”%2” on tyhjä eikä sitä voi käyttää."
 msgstr[1] "Jakelulistat ”%2” ovat tyhjiä eikä niitä voi käyttää."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "&Clear Akonadi Cache..."
+msgid "Clear Akonadi Cache"
+msgstr "T&yhjennä Akonadin välimuisti…"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Valmis"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Virhe poistettaessa toistuvia sähköpostiviestejä: ”%1”"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Virhe poistettaessa kaksoiskappaleita"
+
 #: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
@@ -3680,25 +3708,6 @@ msgstr "&Poista"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Poistetaan kaksoiskappaleita"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Valmis"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Virhe poistettaessa toistuvia sähköpostiviestejä: ”%1”"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Virhe poistettaessa kaksoiskappaleita"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format

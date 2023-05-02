@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2023-02-27 22:33+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -3593,6 +3593,34 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "La lista di distribuzione %2 è vuota, non può essere usata."
 msgstr[1] "Le liste di distribuzione %2 sono vuote, non possono essere usate."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "&Clear Akonadi Cache..."
+msgid "Clear Akonadi Cache"
+msgstr "Pulis&ci cache di Akonadi..."
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Fatto"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Errore durante la rimozione di messaggi di posta duplicati: «%1»"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Errore durante la rimozione dei duplicati"
+
 #: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
@@ -3716,25 +3744,6 @@ msgstr "&Elimina"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Rimozione dei duplicati"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Fatto"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Errore durante la rimozione di messaggi di posta duplicati: «%1»"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Errore durante la rimozione dei duplicati"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format

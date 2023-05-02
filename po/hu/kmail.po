@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2014-10-18 12:13+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3723,6 +3723,35 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "A(z) „%2” terjesztési lista üres, nem használható."
 msgstr[1] "A(z) „%2” terjesztési listák üresek, nem használhatók."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "Azonosító"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Kész"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while removing duplicates"
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Hiba történt a duplikátumok eltávolítása közben"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Hiba történt a duplikátumok eltávolítása közben"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3847,26 +3876,6 @@ msgstr "&Törlés"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Duplikátumok eltávolítása"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Kész"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Hiba történt a duplikátumok eltávolítása közben"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Hiba történt a duplikátumok eltávolítása közben"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

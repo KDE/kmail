@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2023-03-25 09:51+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3568,6 +3568,34 @@ msgstr[0] "Lista dystrybucyjna %2 jest pusta, nie można jej użyć."
 msgstr[1] "Listy dystrybucyjne %2 są puste, nie można ich użyć."
 msgstr[2] "Listy dystrybucyjne %2 są puste, nie można ich użyć."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "&Clear Akonadi Cache..."
+msgid "Clear Akonadi Cache"
+msgstr "W&czyść pamięć Akonadi..."
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Gotowe"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Błąd podczas usuwania powielonych wiadomosci: '%1'"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Błąd podczas usuwania powieleń"
+
 #: job/createnewcontactjob.cpp:63
 #, kde-format
 msgctxt "@title:window"
@@ -3689,25 +3717,6 @@ msgstr "U&suń"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Usuwanie powieleń"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Gotowe"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Błąd podczas usuwania powielonych wiadomosci: '%1'"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Błąd podczas usuwania powieleń"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format

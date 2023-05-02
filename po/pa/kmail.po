@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -3570,6 +3570,38 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 msgstr[1] ""
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "ਪਛਾਣ ਨਾਂ"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, fuzzy, kde-format
+#| msgctxt "Search finished."
+#| msgid "Done"
+msgid "Done"
+msgstr "ਮੁਕੰਮਲ"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while removing a folder."
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "ਇੱਕ ਫੋਲਡਰ ਹਟਾਉਣ ਦੌਰਾਨ ਗਲਤੀ ਹੈ।"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, fuzzy, kde-format
+#| msgid "Error while removing a folder."
+msgid "Error while removing duplicates"
+msgstr "ਇੱਕ ਫੋਲਡਰ ਹਟਾਉਣ ਦੌਰਾਨ ਗਲਤੀ ਹੈ।"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3700,29 +3732,6 @@ msgstr "ਹਟਾਓ(&D)"
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "ਦੂਹਰੇ ਸੁਨੇਹੇ ਹਟਾਓ"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "Search finished."
-#| msgid "Done"
-msgid "Done"
-msgstr "ਮੁਕੰਮਲ"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while removing a folder."
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "ਇੱਕ ਫੋਲਡਰ ਹਟਾਉਣ ਦੌਰਾਨ ਗਲਤੀ ਹੈ।"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, fuzzy, kde-format
-#| msgid "Error while removing a folder."
-msgid "Error while removing duplicates"
-msgstr "ਇੱਕ ਫੋਲਡਰ ਹਟਾਉਣ ਦੌਰਾਨ ਗਲਤੀ ਹੈ।"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

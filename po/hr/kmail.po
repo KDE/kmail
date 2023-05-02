@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -3586,6 +3586,36 @@ msgstr[0] "Distribucijska lista \"%1\" je prazn pa se ne može koristiti."
 msgstr[1] "Distribucijska lista \"%1\" je prazn pa se ne može koristiti."
 msgstr[2] "Distribucijska lista \"%1\" je prazn pa se ne može koristiti."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "Ime identiteta"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, fuzzy, kde-format
+#| msgctxt "Search finished."
+#| msgid "Done"
+msgid "Done"
+msgstr "Završeno"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Greška prilikom slanja mape"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, fuzzy, kde-format
+msgid "Error while removing duplicates"
+msgstr "Greška prilikom slanja mape"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3712,27 +3742,6 @@ msgstr "izbrisano"
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "Ukloni duplicirane poruke"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "Search finished."
-#| msgid "Done"
-msgid "Done"
-msgstr "Završeno"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Greška prilikom slanja mape"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, fuzzy, kde-format
-msgid "Error while removing duplicates"
-msgstr "Greška prilikom slanja mape"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -3535,6 +3535,35 @@ msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Local Account"
+msgid "Clear Akonadi Cache"
+msgstr "Cuntas Logánta"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Críochnaithe"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while removing duplicates"
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Earráid agus teachtaireachtaí dúbailte á mbaint"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Earráid agus teachtaireachtaí dúbailte á mbaint"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3650,26 +3679,6 @@ msgstr "&Scrios"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Teachtaireachtaí dúbailte á mbaint"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Críochnaithe"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Earráid agus teachtaireachtaí dúbailte á mbaint"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Earráid agus teachtaireachtaí dúbailte á mbaint"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

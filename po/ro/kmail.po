@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -3739,6 +3739,38 @@ msgstr[0] "Lista de distribuție %2 este goală, nu poate fi folosită."
 msgstr[1] "Listele de distribuție %2 sunt goale, nu pot fi folosite."
 msgstr[2] "Listele de distribuție %2 sunt goale, nu pot fi folosite."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity account"
+msgid "Clear Akonadi Cache"
+msgstr "Cont de identitate"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, fuzzy, kde-format
+#| msgctxt "Search finished."
+#| msgid "Done"
+msgid "Done"
+msgstr "Gata"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while removing a folder."
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Eroare la ștergerea unui dosar."
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, fuzzy, kde-format
+#| msgid "Error while removing a folder."
+msgid "Error while removing duplicates"
+msgstr "Eroare la ștergerea unui dosar."
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3868,29 +3900,6 @@ msgstr "Ș&terge"
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "Șterge mesajele duplicate"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, fuzzy, kde-format
-#| msgctxt "Search finished."
-#| msgid "Done"
-msgid "Done"
-msgstr "Gata"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while removing a folder."
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Eroare la ștergerea unui dosar."
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, fuzzy, kde-format
-#| msgid "Error while removing a folder."
-msgid "Error while removing duplicates"
-msgstr "Eroare la ștergerea unui dosar."
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

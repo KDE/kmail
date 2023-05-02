@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3778,6 +3778,35 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "Η λίστα διανομής %2 είναι άδεια, δεν μπορεί να χρησιμοποιηθεί."
 msgstr[1] "Οι λίστες διανομής %2 είναι άδειες, δεν μπορούν να χρησιμοποιηθούν."
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "Όνομα ταυτότητας"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, kde-format
+msgid "Done"
+msgstr "Έτοιμο"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while removing duplicates"
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Σφάλμα κατά την αφαίρεση αντιγράφων"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, kde-format
+msgid "Error while removing duplicates"
+msgstr "Σφάλμα κατά την αφαίρεση αντιγράφων"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3906,26 +3935,6 @@ msgstr "&Διαγραφή"
 #, kde-format
 msgid "Removing duplicates"
 msgstr "Αφαίρεση αντιγράφων"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, kde-format
-msgid "Done"
-msgstr "Έτοιμο"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Σφάλμα κατά την αφαίρεση αντιγράφων"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, kde-format
-msgid "Error while removing duplicates"
-msgstr "Σφάλμα κατά την αφαίρεση αντιγράφων"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -3603,6 +3603,36 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 msgstr[1] ""
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "পরিচিতির নাম"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, fuzzy, kde-format
+msgid "Done"
+msgstr "হয়ে গেছে"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+#| msgid "Error while creating a folder."
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "ফোল্ডার তৈরি করাকালীন সমস্যা।"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, fuzzy, kde-format
+#| msgid "Error while creating a folder."
+msgid "Error while removing duplicates"
+msgstr "ফোল্ডার তৈরি করাকালীন সমস্যা।"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3718,27 +3748,6 @@ msgstr "মুছে ফেলা"
 #, fuzzy, kde-format
 msgid "Removing duplicates"
 msgstr "ফোল্ডার-এর নাম পরিবর্তন করা হচ্ছে"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, fuzzy, kde-format
-msgid "Done"
-msgstr "হয়ে গেছে"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-#| msgid "Error while creating a folder."
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "ফোল্ডার তৈরি করাকালীন সমস্যা।"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, fuzzy, kde-format
-#| msgid "Error while creating a folder."
-msgid "Error while removing duplicates"
-msgstr "ফোল্ডার তৈরি করাকালীন সমস্যা।"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format

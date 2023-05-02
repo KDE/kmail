@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-04-24 00:49+0000\n"
+"POT-Creation-Date: 2023-05-02 00:49+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -3697,6 +3697,34 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 msgstr[1] ""
 
+#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "Clear Akonadi Cache"
+msgstr "Enw Dynodiad"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemailjob.cpp:58
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: manageshowcollectionproperties.cpp:171
+#, fuzzy, kde-format
+msgid "Done"
+msgstr "Cyflawn"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#, fuzzy, kde-format
+msgid "Error occurred during removing duplicate emails: '%1'"
+msgstr "Gwall wrth lanlwytho'r plygell"
+
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#, fuzzy, kde-format
+msgid "Error while removing duplicates"
+msgstr "Gwall wrth lanlwytho'r plygell"
+
 #: job/createnewcontactjob.cpp:63
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
@@ -3820,25 +3848,6 @@ msgstr "Wedi'u dileu"
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "Gwaredu Negeseuon Dyblyg"
-
-#: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
-#: manageshowcollectionproperties.cpp:171
-#, fuzzy, kde-format
-msgid "Done"
-msgstr "Cyflawn"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
-#, fuzzy, kde-format
-msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Gwall wrth lanlwytho'r plygell"
-
-#: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
-#, fuzzy, kde-format
-msgid "Error while removing duplicates"
-msgstr "Gwall wrth lanlwytho'r plygell"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format
