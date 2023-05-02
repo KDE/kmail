@@ -3371,7 +3371,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        mApplyFilterFolderRecursiveActionsMenu = new KActionMenu(i18n("Apply Filters on Folder and all its Subfolders"), this);
+        mApplyFilterFolderRecursiveActionsMenu = new KActionMenu(i18n("Apply Filters on Folder and All its Subfolders"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_on_folder_recursive_actions"), mApplyFilterFolderRecursiveActionsMenu);
     }
 
