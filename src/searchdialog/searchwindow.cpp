@@ -67,6 +67,7 @@ using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
     : QDialog(nullptr)
+    , mSearchButton(new QPushButton(this))
     , mKMMainWidget(widget)
 {
     setWindowTitle(i18nc("@title:window", "Find Messages"));
@@ -87,7 +88,6 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     mStartSearchGuiItem = KGuiItem(i18nc("@action:button Search for messages", "&Search"), QStringLiteral("edit-find"));
     mStopSearchGuiItem = KStandardGuiItem::stop();
-    mSearchButton = new QPushButton;
     KGuiItem::assign(mSearchButton, mStartSearchGuiItem);
     mUi.mButtonBox->addButton(mSearchButton, QDialogButtonBox::ActionRole);
     connect(mUi.mButtonBox, &QDialogButtonBox::rejected, this, &SearchWindow::slotClose);

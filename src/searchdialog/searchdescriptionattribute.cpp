@@ -28,6 +28,7 @@ QByteArray SearchDescriptionAttribute::serialized() const
 {
     QByteArray ba;
     QDataStream s(&ba, QIODevice::WriteOnly);
+    s.setVersion(QDataStream::Qt_5_15);
     s << mBaseCollection.id();
     s << mRecursive;
     s << mDescription;
@@ -38,6 +39,7 @@ QByteArray SearchDescriptionAttribute::serialized() const
 void SearchDescriptionAttribute::deserialize(const QByteArray &data)
 {
     QDataStream s(data);
+    s.setVersion(QDataStream::Qt_5_15);
     Akonadi::Collection::Id id;
     s >> id;
     mBaseCollection = Akonadi::Collection(id);
