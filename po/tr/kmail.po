@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-05-02 11:19+0300\n"
+"PO-Revision-Date: 2023-05-03 12:11+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4564,10 +4564,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Akonadi Arabelleğini T&emizle..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Yinelenmiş Girişleri Kaldır"
+msgstr "Bu Klasör ve Tüm Alt Klasörlerindeki Akonadi Önbelleğini &Temizle"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4912,10 +4911,9 @@ msgid "Apply All Filters"
 msgstr "Tüm Süzgeçleri Uygula"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Bu Klasör ve Tüm Alt Klasörlerine Süzgeçleri Uygula"
+msgstr "Süzgeçleri Klasöre ve Tüm Alt Klasörlerine Uygula"
 
 #: kmmainwidget.cpp:3379
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-05-02 09:28+0200\n"
+"PO-Revision-Date: 2023-05-03 09:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -4614,10 +4614,11 @@ msgid "&Clear Akonadi Cache..."
 msgstr "&Neteja la memòria cau d'Akonadi..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Elimina els duplicats en esta carpeta i totes les seues subcarpetes"
+msgstr ""
+"&Neteja la memòria cau d'Akonadi en esta carpeta i totes les seues "
+"subcarpetes"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4963,8 +4964,7 @@ msgid "Apply All Filters"
 msgstr "Aplica tots els filtres"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Aplica els filtres sobre la carpeta i totes les seues subcarpetes"
 

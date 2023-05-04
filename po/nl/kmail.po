@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-05-02 10:53+0200\n"
+"PO-Revision-Date: 2023-05-03 15:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -4626,10 +4626,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Akonadi Cache &wissen..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Verwijder dubbelen in deze map en al zijn submappen"
+msgstr "Akonadi Cache in deze map en al zijn submappen &wissen"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4974,8 +4973,7 @@ msgid "Apply All Filters"
 msgstr "Alle filters toepassen"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filters op map en al zijn submappen toepassen"
 

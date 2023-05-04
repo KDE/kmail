@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-05-02 11:20+0200\n"
+"PO-Revision-Date: 2023-05-03 09:05+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4597,10 +4597,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Očisti predpomnilnik Akonadi..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Odstrani dvojnike iz te mape in njenih podmap"
+msgstr "Očisti medpomnilnik Akonidi v tej mapi in njenih podmapah"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4945,10 +4944,9 @@ msgid "Apply All Filters"
 msgstr "Uveljavi vse filtre"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Uveljavi filtre v mapi in njenih podmapah"
+msgstr "Uveljavi filtre v mapi in vseh njenih podmapah"
 
 #: kmmainwidget.cpp:3379
 #, kde-format
