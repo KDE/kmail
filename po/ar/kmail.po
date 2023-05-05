@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-02-27 18:55+0400\n"
+"POT-Creation-Date: 2023-05-05 00:48+0000\n"
+"PO-Revision-Date: 2023-05-04 10:06+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3523,10 +3523,9 @@ msgstr[4] "قوائم التّجميع %2 فارغة ولا يمكن استخد�
 msgstr[5] "قوائم التّجميع %2 فارغة ولا يمكن استخدامها."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "امحُ &خبيئة اكوندا..."
+msgstr "امحُ خبيئة اكوندا"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4536,10 +4535,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "امحُ &خبيئة اكوندا..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "أزل المكرَّرات في هذا المجلد وكلّ مجلَّداته الفرعيَّة"
+msgstr "امحُ &خبيئة اكوندا في هذا المجلد وكلّ مجلَّداته الفرعيَّة"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4884,8 +4882,7 @@ msgid "Apply All Filters"
 msgstr "طبّق كلّ المرشّحات"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "طبّق المرشّحات على المجلّد وكلّ مجلَّداته الفرْعيَّة"
 
@@ -5781,13 +5778,13 @@ msgstr "المجلّد"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "فشل البحث. وجد بعض اﻷخطاء: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:72
+#: searchdialog/searchwindow.cpp:73
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "ابحث عن رسائل"
 
-#: searchdialog/searchwindow.cpp:88
+#: searchdialog/searchwindow.cpp:89
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
