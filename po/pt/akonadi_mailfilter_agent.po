@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2019-12-17 11:44+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -108,7 +108,7 @@ msgstr ""
 "se o tamanho dos dados registados ultrapassar este limite, os dados mais "
 "antigos serão apagados até que o limite não seja mais excedido. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -117,7 +117,7 @@ msgstr ""
 "Não foi possível gravar o ficheiro %1:\n"
 "A \"%2\" é a descrição detalhada do erro."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Erro do KMail"

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-03 00:49+0000\n"
-"PO-Revision-Date: 2023-05-02 10:48+0100\n"
+"POT-Creation-Date: 2023-05-05 00:48+0000\n"
+"PO-Revision-Date: 2023-05-05 10:33+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
 "Language: pt\n"
@@ -4614,10 +4614,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "&Limpar a 'Cache' do Akonadi..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Remover os Duplicados nesta Pasta e suas Sub-Pastas"
+msgstr "Limpar a '&Cache' do Akonadi nesta Pasta e nas suas Sub-Pastas"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -4962,10 +4961,9 @@ msgid "Apply All Filters"
 msgstr "Aplicar Todos os Filtros"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Aplicar os Filtros na Pasta e suas Sub-Pastas"
+msgstr "Aplicar os Filtros na Pasta e nas suas Sub-Pastas"
 
 #: kmmainwidget.cpp:3379
 #, kde-format
@@ -5868,13 +5866,13 @@ msgstr ""
 "A pesquisa foi mal-sucedida, devido a alguns erros encontrados: <ul><li>%1</"
 "li></ul>"
 
-#: searchdialog/searchwindow.cpp:72
+#: searchdialog/searchwindow.cpp:73
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Procurar Mensagens"
 
-#: searchdialog/searchwindow.cpp:88
+#: searchdialog/searchwindow.cpp:89
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"

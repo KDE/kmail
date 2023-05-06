@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2020-07-27 22:46+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -111,7 +111,7 @@ msgstr ""
 "log-data. Hvis størrelsen på de indsamlede log-data overskrider denne "
 "grænse, kasseres de ældste data, indtil grænsen ikke længere overskrides."
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -120,7 +120,7 @@ msgstr ""
 "Kunne ikke skrive filen %1:\n"
 "\"%2\" er den detaljerede fejlbeskrivelse."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail-fejl"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2019-12-18 00:17+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
@@ -111,7 +111,7 @@ msgstr ""
 "wanneer de hoeveelheid gegevens te groot wordt zullen de oudste gegevens "
 "verwijderd worden zodat die grens niet wordt overschreden. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -120,7 +120,7 @@ msgstr ""
 "Kon bestand %1 niet schrijven:\n"
 "\"%2\" is de gedetailleerde foutbeschrijving."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail - foutmelding"

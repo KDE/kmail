@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -112,7 +112,7 @@ msgstr ""
 "អាច​កំណត់​ចំនួន​អង្គ​ចងចាំ​ដែល​ត្រូវ​ប្រើ​ជា​អតិបរមាបាន ៖ ប្រសិនបើ ទំហំ​ទិន្នន័យ​កំណត់ហេតុ​ដែល​បាន​ប្រមូល​លើស​ពី​ការ​"
 "កំណត់​នេះ​ ពេល​នោះ​ទិន្នន័យ​ដែល​ចាស់​បំផុត​នឹង​ត្រូវ​បាន​បោះបង់​ រហូត​ទាល់តែ​​​លែង​មាន​ការ​លើស​កំណត់​ទៀត ។"
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -121,7 +121,7 @@ msgstr ""
 "មិន​អាច​សរសេរ​ឯកសារ %1 ៖\n"
 "\"%2\" គឺជា​សេចក្ដី​ពិពណ៌នា​អំពី​កំហុស​ដែល​លម្អិត ។"
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "កំហុស KMail"
