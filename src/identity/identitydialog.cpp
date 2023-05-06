@@ -56,11 +56,11 @@
 #include <MailTransport/Transport>
 #include <MailTransport/TransportComboBox>
 #include <MailTransport/TransportManager>
-#include <PimCommon/EmailValidator>
 using MailTransport::TransportManager;
 
 // other KDE headers:
 #include "kmail_debug.h"
+#include <KEmailValidator>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QComboBox>
@@ -317,13 +317,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
     mEmailEdit->setWhatsThis(msg);
 
-    auto emailValidator = new PimCommon::EmailValidator(this);
+    auto emailValidator = new KEmailValidator(this);
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
     mAliasEdit = new KEditListWidget(tab);
 
-    auto emailValidator1 = new PimCommon::EmailValidator(this);
+    auto emailValidator1 = new KEmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
     label = new QLabel(i18n("Email a&liases:"), tab);
