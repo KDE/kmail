@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 02:57+0000\n"
 "PO-Revision-Date: 2013-10-19 23:24+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -115,7 +115,7 @@ msgstr ""
 "ako veličina prikupljenih podataka pređe ovo ograničenje, biće odbačeni "
 "najstariji podaci dok dnevnik ne bude manji od ograničenja. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -124,7 +124,7 @@ msgstr ""
 "Ne mogu pisati u datoteku %1:\n"
 "\"%2\" je detaljan opis greške."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail greška"

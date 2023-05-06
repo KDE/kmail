@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 02:57+0000\n"
 "PO-Revision-Date: 2019-12-17 18:35+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -109,7 +109,7 @@ msgstr ""
 "kan du begränsa maximal minnesstorlek som ska användas. Om insamlad loggdata "
 "överskrider gränsen, kastas äldsta data till gränsen inte längre överskrids. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -118,7 +118,7 @@ msgstr ""
 "Kunde inte skriva till filen %1:\n"
 "Den detaljerade felbeskrivningen är \"%2\"."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Kmail-fel"
