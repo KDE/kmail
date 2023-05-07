@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2020-03-22 13:23+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -105,7 +105,7 @@ msgstr ""
 "velikost paměti, která se pro tento účel použije. Jestliže záznamy dosáhnou "
 "zde stanové velikosti, starší data se smažou a bude se pokračovat v záznamu. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -114,7 +114,7 @@ msgstr ""
 "Nelze zapsat soubor %1:\n"
 "Podrobný popis chyby: %2."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Chyba KMailu"

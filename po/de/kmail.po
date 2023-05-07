@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-05 00:48+0000\n"
-"PO-Revision-Date: 2023-04-16 14:13+0200\n"
+"PO-Revision-Date: 2023-05-05 19:51+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -5010,8 +5010,7 @@ msgid "Apply All Filters"
 msgstr "Alle Filter anwenden"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filter auf Ordner und alle Unterordner anwenden"
 

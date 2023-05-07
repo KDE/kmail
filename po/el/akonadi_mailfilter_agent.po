@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2020-09-20 09:30+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -115,7 +115,7 @@ msgstr ""
 "καταγραφής υπερβαίνει το όριο αυτό τότε τα παλαιότερα δεδομένα θα "
 "απορριφθούν μέχρι την παύση της υπέρβασης του ορίου. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -124,7 +124,7 @@ msgstr ""
 "Αδυναμία εγγραφής του αρχείου %1:\n"
 "\"%2\" είναι η λεπτομερής περιγραφή σφάλματος."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Σφάλμα του KMail"

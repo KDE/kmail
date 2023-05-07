@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2022-01-02 20:34+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -111,7 +111,7 @@ msgstr ""
 "قصر أقصى حدّ للذّاكرة المستخدمة لذلك، فإن تخطّى حجم السّجلّات المجموعة هذا الحدّ "
 "فستُهمل البيانات الأكثر قدمًا طالما وصل التّطبيق إلى الحدّ."
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -120,7 +120,7 @@ msgstr ""
 "تعذّرت كتابة الملفّ %1:\n"
 "وصف الخطأ المفصّل هو ”%2“."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "خطأ في «بريدك»"
