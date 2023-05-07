@@ -41,7 +41,7 @@
 #include <PimCommon/PimUtil>
 #include <TextAutoCorrectionWidgets/AutoCorrectionLanguage>
 
-#include <Libkdepim/LineEditCatchReturnKey>
+#include <KLineEditEventHandler>
 #include <PimCommonAkonadi/AddresseeLineEdit>
 // libkleopatra:
 #include <Libkleo/DefaultKeyFilter>
@@ -92,7 +92,6 @@ using MailTransport::TransportManager;
 #include <QGroupBox>
 #include <QStandardPaths>
 
-using namespace KPIM;
 using namespace MailTransport;
 using namespace MailCommon;
 
@@ -268,7 +267,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Name" line edit and label:
     mNameEdit = new QLineEdit(tab);
-    new LineEditCatchReturnKey(mNameEdit, this);
+    KLineEditEventHandler::catchReturnKey(mNameEdit);
     auto label = new QLabel(i18n("&Your name:"), tab);
     formLayout->addRow(label, mNameEdit);
     label->setBuddy(mNameEdit);
@@ -284,7 +283,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Organization" line edit and label:
     mOrganizationEdit = new QLineEdit(tab);
-    new LineEditCatchReturnKey(mOrganizationEdit, this);
+    KLineEditEventHandler::catchReturnKey(mOrganizationEdit);
     label = new QLabel(i18n("Organi&zation:"), tab);
     formLayout->addRow(label, mOrganizationEdit);
     label->setBuddy(mOrganizationEdit);
@@ -301,7 +300,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Email Address" line edit and label:
     // (row 3: spacer)
     mEmailEdit = new QLineEdit(tab);
-    new LineEditCatchReturnKey(mEmailEdit, this);
+    KLineEditEventHandler::catchReturnKey(mEmailEdit);
     label = new QLabel(i18n("&Email address:"), tab);
     formLayout->addRow(label, mEmailEdit);
     label->setBuddy(mEmailEdit);
@@ -619,7 +618,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "default domain" input field:
     auto hbox = new QHBoxLayout;
     mDefaultDomainEdit = new QLineEdit(tab);
-    new LineEditCatchReturnKey(mDefaultDomainEdit, this);
+    KLineEditEventHandler::catchReturnKey(mDefaultDomainEdit);
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
     auto restoreDefaultDomainName = new QToolButton;

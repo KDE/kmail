@@ -9,7 +9,7 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/colorlistbox.h"
 #include "kmkernel.h"
-#include <Libkdepim/LineEditCatchReturnKey>
+#include <KLineEditEventHandler>
 #include <MailCommon/TagWidget>
 #include <MessageList/AggregationComboBox>
 #include <MessageList/AggregationConfigButton>
@@ -633,7 +633,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             mDateDisplay->addButton(radio, dateDisplayConfig[i].dateDisplay);
 
             mCustomDateFormatEdit = new QLineEdit(hbox);
-            new KPIM::LineEditCatchReturnKey(mCustomDateFormatEdit, this);
+            KLineEditEventHandler::catchReturnKey(mCustomDateFormatEdit);
             hboxHBoxLayout->addWidget(mCustomDateFormatEdit);
             mCustomDateFormatEdit->setEnabled(false);
             hboxHBoxLayout->setStretchFactor(mCustomDateFormatEdit, 1);
@@ -912,7 +912,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     tageditgrid->addLayout(addremovegrid);
 
     mTagAddLineEdit = new QLineEdit(mTagsGroupBox);
-    new KPIM::LineEditCatchReturnKey(mTagAddLineEdit, this);
+    KLineEditEventHandler::catchReturnKey(mTagAddLineEdit);
     addremovegrid->addWidget(mTagAddLineEdit);
 
     mTagAddButton = new QPushButton(mTagsGroupBox);

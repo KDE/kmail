@@ -12,9 +12,9 @@
 #include "newidentitydialog.h"
 
 #include <KIdentityManagement/IdentityManager>
+#include <KLineEditEventHandler>
 #include <KLocalizedString>
 #include <KSeparator>
-#include <Libkdepim/LineEditCatchReturnKey>
 #include <PimCommon/PimUtil>
 #include <QComboBox>
 #include <QLineEdit>
@@ -57,7 +57,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manag
     mLineEdit = new QLineEdit(page);
     mLineEdit->setFocus();
     mLineEdit->setClearButtonEnabled(true);
-    new KPIM::LineEditCatchReturnKey(mLineEdit, this);
+    KLineEditEventHandler::catchReturnKey(mLineEdit);
     auto l = new QLabel(i18n("&New identity:"), page);
     l->setBuddy(mLineEdit);
     hlay->addWidget(l);
