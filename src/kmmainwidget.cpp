@@ -74,6 +74,7 @@
 #include <MessageViewer/AttachmentStrategy>
 #include <MessageViewer/MessageViewerCheckBeforeDeletingPluginManager>
 
+#include <KColorSchemeMenu>
 #include <KCursorSaver>
 
 #include <MessageComposer/MessageHelper>
@@ -3543,7 +3544,7 @@ void KMMainWidget::setupActions()
         mCollectionSwitcherTreeViewManager->addActions(listActions);
     }
     auto manager = new KColorSchemeManager(this);
-    actionCollection()->addAction(QStringLiteral("colorscheme_menu"), manager->createSchemeSelectionMenu(this));
+    actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 }
 
 void KMMainWidget::redoSwitchFolder()
