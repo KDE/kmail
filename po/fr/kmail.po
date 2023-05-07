@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-05 00:48+0000\n"
-"PO-Revision-Date: 2023-02-27 19:02+0100\n"
+"PO-Revision-Date: 2023-05-05 16:21+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -37,7 +37,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -3640,10 +3640,9 @@ msgstr[1] ""
 "utilisées."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Effacer le &cache de Akonadi..."
+msgstr "Effacer le cache de Akonadi..."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4676,10 +4675,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Effacer le &cache de Akonadi..."
 
 #: kmmainwidget.cpp:2987
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Supprimer les doublons dans ce dossier et ses sous dossiers"
+msgstr "Effa&cer le cache de Akonadi dans ce dossier et ses sous dossiers"
 
 #: kmmainwidget.cpp:2992
 #, kde-format
@@ -5024,8 +5022,7 @@ msgid "Apply All Filters"
 msgstr "Appliquer tous les filtres"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Appliquer les filtres sur le dossier et tous ses sous-dossiers"
 
