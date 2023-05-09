@@ -51,7 +51,7 @@ namespace MessageComposer
 {
 class MessageSender;
 }
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 namespace TextAutoCorrectionCore
 #else
 namespace TextAutoCorrection
@@ -480,7 +480,7 @@ public:
     void savePaneSelection();
 
     void updatePaneTagComboBox();
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     Q_REQUIRED_RESULT TextAutoCorrectionCore::AutoCorrection *composerAutoCorrection();
 #else
     Q_REQUIRED_RESULT TextAutoCorrection::AutoCorrection *composerAutoCorrection();
@@ -620,7 +620,7 @@ private:
     QStringList mResourcesBeingChecked;
 
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionCore::AutoCorrection *mAutoCorrection = nullptr;
 #else
     TextAutoCorrection::AutoCorrection *mAutoCorrection = nullptr;

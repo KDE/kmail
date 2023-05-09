@@ -18,7 +18,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <PimCommon/SimpleStringListEditor>
 #include <TemplateParser/CustomTemplates>
 #include <TemplateParser/TemplatesConfiguration>
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 #include <TextAutoCorrectionWidgets/AutoCorrectionWidget>
 #else
 #include <TextAutoCorrection/AutoCorrectionWidget>
@@ -1186,7 +1186,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     autocorrectionWidget = new TextAutoCorrectionWidgets::AutoCorrectionWidget(this);
 #else
     autocorrectionWidget = new TextAutoCorrection::AutoCorrectionWidget(this);
@@ -1195,7 +1195,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
     }
     vlay->addWidget(autocorrectionWidget);
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     connect(autocorrectionWidget, &TextAutoCorrectionWidgets::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 #else
     connect(autocorrectionWidget, &TextAutoCorrection::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);

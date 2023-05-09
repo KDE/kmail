@@ -52,7 +52,7 @@ namespace TemplateParser
 {
 class TemplatesConfiguration;
 }
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 namespace TextAutoCorrectionWidgets
 #else
 namespace TextAutoCorrection
@@ -130,7 +130,7 @@ private:
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionWidgets::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
 #else
     TextAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;

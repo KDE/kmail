@@ -53,7 +53,7 @@ using KMail::MailServiceImpl;
 #include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
 #include <PimCommon/NetworkManager>
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 #include <TextAutoCorrectionCore/AutoCorrection>
 #include <TextAutoCorrectionCore/TextAutoCorrectionSettings>
 #else
@@ -160,7 +160,7 @@ KMKernel::KMKernel(QObject *parent)
     // so better do it here, than in some code where changing the group of config()
     // would be unexpected
     KMailSettings::self();
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     mAutoCorrection = new TextAutoCorrectionCore::AutoCorrection();
 #else
     mAutoCorrection = new TextAutoCorrection::AutoCorrection();
@@ -1300,7 +1300,7 @@ void KMKernel::slotSyncConfig()
 {
     saveConfig();
     // Laurent investigate why we need to reload them.
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->load();
 #else
     TextAutoCorrection::TextAutoCorrectionSettings::self()->load();
@@ -1319,7 +1319,7 @@ void KMKernel::slotSyncConfig()
 
 void KMKernel::saveConfig()
 {
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->save();
 #else
     TextAutoCorrection::TextAutoCorrectionSettings::self()->save();
@@ -1456,7 +1456,7 @@ KSharedConfig::Ptr KMKernel::config()
         mMailCommonSettings->setSharedConfig(mySelf->mConfig);
         mMailCommonSettings->load();
 
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
         TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
         TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->load();
 #else
@@ -2013,7 +2013,7 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
         break;
     }
 }
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 TextAutoCorrectionCore::AutoCorrection *KMKernel::composerAutoCorrection()
 #else
 TextAutoCorrection::AutoCorrection *KMKernel::composerAutoCorrection()

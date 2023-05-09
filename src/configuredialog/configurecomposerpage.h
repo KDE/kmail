@@ -24,7 +24,7 @@ namespace TemplateParser
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 namespace TextAutoCorrectionWidgets
 #else
 namespace TextAutoCorrection
@@ -216,7 +216,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     TextAutoCorrectionWidgets::AutoCorrectionWidget *autocorrectionWidget = nullptr;
 #else
     TextAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;

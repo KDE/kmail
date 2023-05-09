@@ -39,7 +39,7 @@
 #include <KIdentityManagement/SignatureConfigurator>
 
 #include <PimCommon/PimUtil>
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
 #include <TextAutoCorrectionWidgets/AutoCorrectionLanguage>
 #else
 #include <TextAutoCorrection/AutoCorrectionLanguage>
@@ -615,7 +615,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mEditVCard = new QPushButton(i18n("Create..."), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
-#ifdef HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
     mAutoCorrectionLanguage = new TextAutoCorrectionWidgets::AutoCorrectionLanguage(tab);
 #else
     mAutoCorrectionLanguage = new TextAutoCorrection::AutoCorrectionLanguage(tab);
