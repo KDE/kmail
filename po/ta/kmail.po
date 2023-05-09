@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-05 00:48+0000\n"
-"PO-Revision-Date: 2023-03-12 16:51+0530\n"
+"PO-Revision-Date: 2023-05-07 14:59+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -147,11 +147,11 @@ msgstr "மறையாக்க ஆதரவு"
 
 #: aboutdata.cpp:50
 msgid "Improved internal program documentation"
-msgstr ""
+msgstr "உள்ளக நிரல் ஆவணமாக்கத்தை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:52 aboutdata.cpp:122 aboutdata.cpp:187
 msgid "Major contributor, still active"
-msgstr ""
+msgstr "இன்னும் உள்ள முக்கிய பங்களிப்பாளர்"
 
 #: aboutdata.cpp:54
 msgid "Added maildir support"
@@ -177,11 +177,11 @@ msgstr "GnuPG துணை"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
-msgstr ""
+msgstr "முக்கிய பங்களிப்பாளர்"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
-msgstr ""
+msgstr "பல பிழைதிருத்தங்கள்"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
@@ -200,10 +200,8 @@ msgid "Improve efficiency and consistency of code"
 msgstr ""
 
 #: aboutdata.cpp:78
-#, fuzzy
-#| msgid "No messages to delete..."
 msgid "New message list and new folder tree"
-msgstr "செய்திகள் நீக்கப்படவில்லை"
+msgstr "புதிய அஞ்சல்பட்டியலும் அடைவு கிளைப்படமும்"
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
@@ -211,7 +209,7 @@ msgstr ""
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
-msgstr ""
+msgstr "பல பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
@@ -1093,9 +1091,7 @@ msgid "Ta&g Settings"
 msgstr "&குறிச்சொல் அமைப்புகள்"
 
 #: configuredialog/configureappearancepage.cpp:1018
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "அழி"
 
@@ -1616,6 +1612,11 @@ msgid ""
 "compliant mail clients; so, unless you have no other choice, you should not "
 "enable this option."
 msgstr ""
+"ஆங்கிலம் அல்லாத எழுத்துகளைக் கொண்ட உடனிணைப்புப் பெயர்களை அவுட்லுக் புரிந்துகொள்ளும் வகையில் "
+"(அதாவது செந்தர முறையில் இல்லாமல்) குறியாக்குமாறு அமைத்துள்ளீர்.\n"
+"அவ்வாறு உருவாக்கும் அஞ்சல்கள் செந்தரமல்லாதவையாதலால் தரநிலைகளைப் பின்பற்றும் அஞ்சல் "
+"செயலிகளால் புரிந்துகொள்ள முடியாத வகையில் இருக்கலாம்; ஆதலால், முடிந்தவரையில் இத்தேர்வின் "
+"பயன்பாட்டைத் தவிர்க்கவும்."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -2999,7 +3000,7 @@ msgstr ""
 "செய்திகள் மறைக்குறீயிட்டவும் உபயோகப்படுத்தப்படும்.  க்னூPG சாவிகளையும் நீங்கள் "
 "உபயோகப்படுத்தலாம். </p><p>இதை வெற்றாக விடலாம், ஆனால் Kமின்னஞ்சலால் செய்திகளை "
 "மறைக்குறியீட்டு கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</"
-"p><p>சாவிகள் பற்றி மேலும் <a>http://www.gnupg.org</a>அறியலாம்</p></qt>."
+"p><p>சாவிகள் பற்றி மேலும் <a>https://www.gnupg.org</a>அறியலாம்</p></qt>."
 
 #: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
 #, kde-format
@@ -3107,7 +3108,7 @@ msgstr "நீங்கள் மறையாக்கத்தை விரு�
 #: identity/identitydialog.cpp:484
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "பாதுகாப்பு குறித்த பொதுவான இயல்பிருப்புகளை மேலெழுது"
 
 #: identity/identitydialog.cpp:487
 #, kde-format
@@ -3581,10 +3582,9 @@ msgstr[0] "%2 என்ற பெறுநர் பட்டியல் கா
 msgstr[1] "%2 என்ற பெறுநர் பட்டியல்கள் காலியாக உள்ளதால், அவற்றை பயன்படுத்த முடியாது."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "&Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு..."
+msgstr "Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4937,8 +4937,7 @@ msgid "Apply All Filters"
 msgstr "அனைத்து வடிகட்டிகளையும் செயல்படுத்து"
 
 #: kmmainwidget.cpp:3374
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "அடைவின்மீதும் அதில் சார்ந்த அடைவுகளின் மீதும் வடிகட்டிகளை செயல்படுத்து"
 
@@ -5303,21 +5302,19 @@ msgstr ""
 
 #: kmreaderwin.cpp:270
 msgid "Improved searches"
-msgstr ""
+msgstr "மேம்பட்ட தேடல்"
 
 #: kmreaderwin.cpp:271
 msgid "Support for adding notes (annotations) to mails"
-msgstr ""
+msgstr "அஞ்சல்களில் குறிப்புகளை சேர்க்கலாம்"
 
 #: kmreaderwin.cpp:272
 msgid "Less GUI freezes, mail checks happen in the background"
 msgstr ""
 
 #: kmreaderwin.cpp:273
-#, fuzzy
-#| msgid "Add Transport"
 msgid "Plugins support"
-msgstr "போக்குவரத்தை சேர்"
+msgstr "செருகுநிரல் ஆதரவு"
 
 #: kmreaderwin.cpp:274
 msgid "New HTML renderer (QtWebEngine)"
@@ -6141,10 +6138,9 @@ msgstr "&அனுப்பு முன் உறுதிசெய்"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.cmake:219
-#, fuzzy, kde-format
-#| msgid "Confirm &before send"
+#, kde-format
 msgid "Check spelling before send"
-msgstr "&அனுப்பு முன் உறுதிசெய்"
+msgstr "அனுப்புமுன் எழுத்தாக்கத்தை சரிபார்"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.cmake:223
@@ -6202,13 +6198,13 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr ""
+msgstr "சமீபமாக பயன்படுத்தப்பட்ட முகவரிகள்"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.cmake:270
 #, kde-format
 msgid "A list of all the recently used encodings"
-msgstr ""
+msgstr "சமீபமாக பயன்படுத்தப்பட்ட குறியாக்கங்கள்"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.cmake:276
@@ -6264,28 +6260,25 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
-msgstr "செய்தி முன்பார்வை பட்டி"
+msgstr "அஞ்சல் முன்பார்வை பலகை"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
-#, fuzzy, kde-format
-#| msgid "&Do not show a message preview pane"
+#, kde-format
 msgid "Do not show a message preview pane"
-msgstr "செய்தி முன்பார்வை திரை காண்பிக்காதே."
+msgstr "அஞ்சல் முன்பார்வை பலகையை காட்டாதே"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:349
-#, fuzzy, kde-format
-#| msgid "Show the message preview pane belo&w the message list"
+#, kde-format
 msgid "Show the message preview pane below the message list"
-msgstr "செய்தி முன்பார்வை திரையை செய்தி பட்டியலுக்கு கீழ் காண்பி"
+msgstr "அஞ்சல் முன்பார்வை பலகையை அஞ்சல்பட்டியலுக்கு அடியில் காட்டு"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:352
-#, fuzzy, kde-format
-#| msgid "Show the message preview pane ne&xt to the message list"
+#, kde-format
 msgid "Show the message preview pane next to the message list"
-msgstr "செய்தி முன்பார்வை திரையை செய்தி பட்டியலுக்கு அடுத்து காண்பி"
+msgstr "அஞ்சல் முன்பார்வை பலகையை அஞ்சல்பட்டியலுக்கு பக்கத்தில் காட்டு"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
@@ -6295,47 +6288,45 @@ msgstr "அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362
-#, fuzzy, kde-format
-#| msgid "Lon&g folder list"
+#, kde-format
 msgid "Long folder list"
 msgstr "நீளமான அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:365
-#, fuzzy, kde-format
-#| msgid "Shor&t folder list"
+#, kde-format
 msgid "Short folder list"
 msgstr "குறுகிய அடைவுப் பட்டியல்"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:374
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for new message"
-msgstr "செய்தி பட்டியல் - புதிய செய்திகள்"
+msgstr "புதிய அஞ்சலுக்கான வார்ப்புரு"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:379
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for reply"
-msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
+msgstr "பதிலுக்கான வார்ப்புரு"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:384
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for reply to all"
-msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
+msgstr "அனைவருக்கும் பதிலளிப்பதற்கான வார்ப்புரு"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:389
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for forward"
-msgstr "செய்தி திருப்பி அனுப்பட்டதாக குறி"
+msgstr "முன்னனுப்புவதற்கான வார்ப்புரு"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:394
-#, fuzzy, kde-format
+#, kde-format
 msgid "Quote characters"
-msgstr "&மேற்கோள் எழுத்துக்களை சேர்"
+msgstr "மேற்கோளுக்கான குறி"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.cmake:409
@@ -6796,38 +6787,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "மறைகுறியிடப்பட்ட செய்தி"
+msgstr "அனுப்பப்படும் அஞ்சல்களை மறையாக்கு"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "Sign all message &parts"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&செய்திப் பகுதிகளை கையொப்பமிடு"
+msgstr "அனைத்து அஞ்சல்களுக்கு கையொப்பமிடு"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
 msgstr "முடிந்தால் அஞ்சல்களை மறையாக்கம் செய்"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Encryption Configuration"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "மறையாக்க கட்டமைப்பு"
+msgstr "மறையாக்க காட்டிகள்"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "உரைத்திருத்தியில் மறையாக்கம்/கையொப்ப நிலையை காட்டு"
+msgstr "மறையாக்கம்/கையொப்ப நிலையை காட்டு"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
@@ -6839,14 +6825,13 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "எச்சரிக்கைகள்"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "மறையாக்க சாவிகளை ஏற்க கோரி &எப்போதும் காட்டு"
+msgstr "அனுப்புமுன் மறையாக்க சாவிகளை உறுதிசெய்"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -7626,15 +7611,14 @@ msgid "Undo send"
 msgstr "அனுப்பியதை செயல்நீக்கு"
 
 #: undosend/undosendmanager.cpp:43
-#, fuzzy, kde-format
-#| msgid "<b>To:</b><br/>"
+#, kde-format
 msgid "<b>To:</b> %1"
-msgstr "<b>To:</b><br/>"
+msgstr "<b>பெறுநர்:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>தலைப்பு:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
