@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 02:56+0000\n"
-"PO-Revision-Date: 2023-04-16 14:13+0200\n"
+"PO-Revision-Date: 2023-05-10 20:21+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -823,7 +823,7 @@ msgstr "Vordergrund HTML-Statusleiste – HTML-Nachricht"
 #: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "&Use custom colors"
-msgstr "E&igene Farben benutzen"
+msgstr "&Benutzerdefinierte Farben verwenden"
 
 #: configuredialog/configureappearancepage.cpp:324
 #, kde-format
