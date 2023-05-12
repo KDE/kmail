@@ -65,7 +65,6 @@
 #include <PimCommonAkonadi/CollectionAclPage>
 #include <mailcommon/mailcommonsettings_base.h>
 
-#include "messageviewer/config-messageviewer.h"
 #include <MessageViewer/HeaderStyle>
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
