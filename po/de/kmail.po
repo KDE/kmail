@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-04 02:56+0000\n"
-"PO-Revision-Date: 2023-05-10 20:21+0200\n"
+"PO-Revision-Date: 2023-05-12 19:30+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -2535,6 +2535,8 @@ msgstr ""
 msgid ""
 "Autocrypt gossip key is used for this recipient. This key is not verified."
 msgstr ""
+"Für diesen Empfänger wird Autocrypt Gossip verwendet. Der Schlüssel ist "
+"nicht verifiziert."
 
 #: editor/kmcomposerwin.cpp:3908
 #, kde-format
@@ -3098,15 +3100,14 @@ msgid "Preferred format:"
 msgstr "Bevorzugtes Format:"
 
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Abonnementfunktion einschalten?"
+msgstr "Autocrypt aktivieren"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
@@ -3116,13 +3117,12 @@ msgstr "Anderen mitteilen, dass Sie Verschlüsslung bevorzugen"
 #: identity/identitydialog.cpp:484
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Globale Einstellungen zu Sicherheitsstandards überschreiben"
 
 #: identity/identitydialog.cpp:487
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "&Alle überschreiben"
+msgstr "Standards überschreiben:"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
@@ -6910,10 +6910,9 @@ msgstr "Nachricht öffnen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Als Standard verwenden"
+msgstr "Sicherheitsstandards"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
@@ -7071,10 +7070,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Für Wu&rzelzertifikate:"
+msgstr "Für eigene Zertifikate:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
@@ -7777,15 +7775,14 @@ msgid "Undo send"
 msgstr "Senden rückgängig machen"
 
 #: undosend/undosendmanager.cpp:43
-#, fuzzy, kde-format
-#| msgid "<b>To:</b><br/>"
+#, kde-format
 msgid "<b>To:</b> %1"
-msgstr "<b>An:</b><br/>"
+msgstr "<b>An:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Betreff:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
