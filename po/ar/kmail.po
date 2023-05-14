@@ -5,7 +5,7 @@
 # Munzir Taha <munzir@kacst.edu.sa>, 2004.
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
-# Safa Alfulaij <safa1996alfulaij@gmail.com>, ٢٠١٦, 2018.
+# Safa Alfulaij <safa1996alfulaij@gmail.com>, 2016, 2018.
 # Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022, 2023.
 msgid ""
 msgstr ""
@@ -5871,7 +5871,7 @@ msgstr "نسيت إضافة شروط."
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
-msgstr "لا يمكن استخدام شرط ضمّن لأقل من ٤ محارف."
+msgstr "لا يمكن استخدام شرط ضمّن لأقل من 4 محارف."
 
 #: searchdialog/searchwindow.cpp:520
 #, kde-format
@@ -6926,7 +6926,7 @@ msgstr ""
 "حدد أقلّ عدد من الأيَّام التي ينبغي أن تبقى فيها شهادة الخاصة بي سارية المفعول "
 "بدون إِصدار تحذير.\n"
 "<p>\n"
-"إعداد سفنكس المنصوح به ٣٠ يوم.\n"
+"إعداد سفنكس المنصوح به 30 يوم.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
