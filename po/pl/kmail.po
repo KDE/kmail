@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:48+0000\n"
-"PO-Revision-Date: 2023-03-25 09:51+0100\n"
+"PO-Revision-Date: 2023-05-13 08:58+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -3569,10 +3569,9 @@ msgstr[1] "Listy dystrybucyjne %2 są puste, nie można ich użyć."
 msgstr[2] "Listy dystrybucyjne %2 są puste, nie można ich użyć."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "W&czyść pamięć Akonadi..."
+msgstr "Wyczyść pamięć podręczną Akonadi"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4589,10 +4588,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "W&czyść pamięć Akonadi..."
 
 #: kmmainwidget.cpp:2986
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Usuń powielenia w tym katalogu i wszystkich jego podkatalogach"
+msgstr "Usuń pamięć podrę&czną Akonadi w tym i jego katalogach podrzędnych"
 
 #: kmmainwidget.cpp:2991
 #, kde-format
@@ -4937,10 +4935,9 @@ msgid "Apply All Filters"
 msgstr "Zastosuj wszystkie filtry"
 
 #: kmmainwidget.cpp:3373
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Zastosuj filtry na katalogu i wszystkich jego podkatalogach"
+msgstr "Zastosuj filtry na tym i wszystkich jego podkatalogach"
 
 #: kmmainwidget.cpp:3378
 #, kde-format
