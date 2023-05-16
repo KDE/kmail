@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:48+0000\n"
-"PO-Revision-Date: 2023-05-03 12:11+0300\n"
+"PO-Revision-Date: 2023-05-15 22:43+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -220,7 +220,7 @@ msgstr "İyileştirilmiş çalışma hızı"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
-msgstr "İsteğe bağlı olarak eklentileri sıkıştır"
+msgstr "Ekleri isteğe bağlı olarak sıkıştırs"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
@@ -954,7 +954,7 @@ msgstr ""
 "geç. AP, \"ÖÖ\" veya \"ÖS\" ile değiştirilir.</li><li>ap - ÖÖ/ÖS gösterimine "
 "geç. ap \"öö\" veya \"ös\" ile değiştirilir.</li><li>Z - saat aralığını "
 "sayısal biçimde gösterir (-0500)</li></ul><p><strong>Diğer bütün girdi "
-"karakterleri göz ardı edilecektir.</strong></p></qt>"
+"karakterleri yok sayılacaktır.</strong></p></qt>"
 
 #: configuredialog/configureappearancepage.cpp:692
 #, kde-format
@@ -1083,7 +1083,7 @@ msgstr "Üstbilgiler"
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
-msgstr "Eklentiler"
+msgstr "Ekler"
 
 #: configuredialog/configurecomposerpage.cpp:117
 #, kde-format
@@ -1190,7 +1190,7 @@ msgstr "İçinde"
 #: configuredialog/configurecomposerpage.cpp:271
 #, kde-format
 msgid "As Attachment"
-msgstr "Eklenti Olarak"
+msgstr "Ek Olarak"
 
 #: configuredialog/configurecomposerpage.cpp:273
 #, kde-format
@@ -1491,7 +1491,7 @@ msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr ""
-"Outlook'un İngilizce olmayan eklenti adlarını anlayabilmesi için bu seçeneği "
+"Outlook'un İngilizce olmayan ek adlarını anlayabilmesi için bu seçeneği "
 "etkinleştirin"
 
 #: configuredialog/configurecomposerpage.cpp:1107
@@ -1503,7 +1503,8 @@ msgstr "Eksik eklerin bulunmasını etki&nleştir"
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
-"Bu anahtar sözcüklerin herhangi birini dosya eklentisi isteği olarak algıla:"
+"Aşağıdaki anahtar sözcüklerden herhangi birini dosya iliştirme niyeti olarak "
+"kabul edin:"
 
 #: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
@@ -1513,17 +1514,17 @@ msgstr "Yeni anahtar sözcüğü girin:"
 #: configuredialog/configurecomposerpage.cpp:1125
 #, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "Bu eklenti sözcüğünü kaldırmak istiyor musunuz?"
+msgstr "Bu ek sözcüğünü kaldırmak istiyor musunuz?"
 
 #: configuredialog/configurecomposerpage.cpp:1126
 #, kde-format
 msgid "Attachment Word:"
-msgstr "Eklenti Sözcüğü:"
+msgstr "Ek Sözcüğü:"
 
 #: configuredialog/configurecomposerpage.cpp:1134
 #, kde-format
 msgid "Maximum Attachment Size:"
-msgstr "Azami Eklenti Boyutu:"
+msgstr "En Büyük Ek Boyutu:"
 
 #: configuredialog/configurecomposerpage.cpp:1141
 #, kde-format
@@ -1822,18 +1823,18 @@ msgstr "Bildirim"
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
-msgstr[0] "1 eklenti (%2)"
-msgstr[1] "%1 eklenti (%2)"
+msgstr[0] "1 ek (%2)"
+msgstr[1] "%1 ek (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
 #, kde-format
 msgid "Hide attachment list"
-msgstr "Eklenti listesini gizle"
+msgstr "Ek listesini gizle"
 
 #: editor/attachment/attachmentview.cpp:200
 #, kde-format
 msgid "Show attachment list"
-msgstr "Eklenti listesini göster"
+msgstr "Ek listesini göster"
 
 #: editor/codec/codecaction.cpp:36
 #, kde-format
@@ -2011,7 +2012,7 @@ msgstr "&Gönderim Listesini Kaydet..."
 #: editor/kmcomposerwin.cpp:1282
 #, kde-format
 msgid "Paste as Attac&hment"
-msgstr "&Eklenti Olarak Yapıştır"
+msgstr "&Ek Olarak Yapıştır"
 
 #: editor/kmcomposerwin.cpp:1286
 #, kde-format
@@ -2277,22 +2278,22 @@ msgstr "&İleti İçi Görsel Olarak Ekle"
 #: editor/kmcomposerwin.cpp:2311
 #, kde-format
 msgid "Add as &Attachment"
-msgstr "&Eklenti Olarak Ekle"
+msgstr "&Ek Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2326 editor/kmcomposerwin.cpp:2430
 #, kde-format
 msgid "Name of the attachment:"
-msgstr "Eklenti adı:"
+msgstr "Ek adı:"
 
 #: editor/kmcomposerwin.cpp:2332
 #, kde-format
 msgid "Attachment name can't be empty"
-msgstr "Eklenti adı boş olamaz"
+msgstr "Ek adı boş olamaz"
 
 #: editor/kmcomposerwin.cpp:2332
 #, kde-format
 msgid "Invalid Attachment Name"
-msgstr "Geçersiz Eklenti Adı"
+msgstr "Geçersiz Ek Adı"
 
 #: editor/kmcomposerwin.cpp:2383
 #, kde-format
@@ -2305,13 +2306,13 @@ msgstr[1] "URL'leri İletiye Ekle"
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
-msgstr[0] "Dosyayı &Eklenti Olarak Ekle"
-msgstr[1] "Dosyaları &Eklenti Olarak Ekle"
+msgstr[0] "Dosyayı &Ek Olarak Ekle"
+msgstr[1] "Dosyaları &Ek Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2430
 #, kde-format
 msgid "Insert clipboard text as attachment"
-msgstr "Pano metinini eklenti olarak ekle"
+msgstr "Pano Metnini Ek Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2527
 #, kde-format
@@ -2603,8 +2604,7 @@ msgstr "Onaylamadan Gönderiliyor"
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
-msgstr ""
-"<ul><li>%1</li></ul> eklentisi dışarıdan eklendi. Bu bir hataysa kaldırın."
+msgstr "<ul><li>%1</li></ul> eki dışarıdan eklendi. Bu bir hataysa kaldırın."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
@@ -2612,7 +2612,7 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
-"<ul><li>%1</li></ul> eklentileri dışarıdan eklendi. Bu bir hataysa kaldırın."
+"<ul><li>%1</li></ul> ekleri dışarıdan eklendi. Bu bir hataysa kaldırın."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:19
 #, kde-format
@@ -2620,8 +2620,8 @@ msgid ""
 "The message you have composed seems to refer to an attached file but you "
 "have not attached anything. Do you want to attach a file to your message?"
 msgstr ""
-"Yazdığınız ileti bir ek dosyası ekleyecekmişsiniz gibi görünüyor ancak "
-"herhangi bir şey eklememişsiniz. İletinize bir dosya eklemek ister misiniz?"
+"Oluşturduğunuz ileti bir eke atıfta bulunuyor gibi görünüyor; ancak herhangi "
+"bir şey iliştirmediniz. İletinize bir dosya iliştirmek istiyor musunuz?"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -2631,7 +2631,7 @@ msgstr "&Dosya İliştir"
 #: editor/warningwidgets/attachmentmissingwarning.cpp:27
 #, kde-format
 msgid "&Remind me later"
-msgstr "&Daha sonra hatırlat"
+msgstr "&Daha Sonra Anımsat"
 
 #: editor/warningwidgets/externaleditorwarning.cpp:17
 #, kde-format
@@ -2979,7 +2979,7 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Kendinizi şifrelemek ve oluşturucuda \"Genel Anahtarımı Ekle\" "
+"<qt><p>Kendinizi şifrelemek ve oluşturucuda \"Genel Anahtarımı İliştir\" "
 "özelliğini kullanmak için OpenPGP anahtarını seçin. Ayrıca GnuPG "
 "anahtarlarını da kullanabilirsiniz.</p><p>Bu alanı boş bırakabilirsiniz; "
 "ancak K Posta giden iletilerinizi şifreleyemeyecektir. Bu durumdan normal "
@@ -3019,7 +3019,7 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 "<qt><p>Burada seçtiğiniz S/MIME sertifikası, kendiniz ve ileti "
-"düzenleyicideki \"Sertifikamı Ekle\" özelliği için iletileri şifrelemekte "
+"düzenleyicideki \"Sertifikamı İliştir\" özelliği için iletileri şifrelemekte "
 "kullanılacaktır.</p><p>Bunu boş bırakabilirsiniz, ancak K Posta S/MIME "
 "kullanarak dışarı giden iletilerin kopyalarını şifreleyemeyebilir; normal "
 "posta işlevleri bundan etkilenmeyecektir.</p></qt>"
@@ -3737,7 +3737,7 @@ msgstr "İletinin gövdesini belirleyin"
 #: kmail_options.h:28
 #, kde-format
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr "Postaya bir eklenti yerleştir. Bu işlemi tekrar edebilirsiniz"
+msgstr "Postaya bir ek koy. Bu işlemi yineleyebilirsiniz"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4702,7 +4702,7 @@ msgstr "Konuyu &Yok Say"
 #: kmmainwidget.cpp:3168 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
-msgstr "E&klentileri Kaydet..."
+msgstr "&Ekleri Kaydet..."
 
 #: kmmainwidget.cpp:3176
 #, kde-format
@@ -5602,7 +5602,7 @@ msgstr "&Alıntı Yaparak Yönlendir..."
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
-msgstr "&Eklenti Olarak..."
+msgstr "&Ek Olarak..."
 
 #: messageactions.cpp:70
 #, kde-format
@@ -5830,12 +5830,12 @@ msgstr "&Alıntı Yaparak Yönlendir..."
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment..."
-msgstr "&Eklenti Olarak..."
+msgstr "&Ek Olarak..."
 
 #: searchdialog/searchwindow.cpp:190
 #, kde-format
 msgid "Save Attachments..."
-msgstr "Eklentileri Kaydet..."
+msgstr "Ekleri Kaydet..."
 
 #: searchdialog/searchwindow.cpp:197
 #, kde-format
@@ -6908,7 +6908,7 @@ msgstr ""
 "<qt>\n"
 "<h1>Eğer Zincirdeki Bir Sertifika Süresi Dolarsa Uyar</h1>\n"
 "Zincirdeki tüm sertifikaların bir uyarı göstermemesi için geçerli olmaları "
-"gereken asgari gün sayısını seçin.\n"
+"gereken en az gün sayısını seçin.\n"
 "<p>\n"
 "Önerilen SPHINX ayarı 14 gündür.\n"
 "</p></qt>"
@@ -6928,7 +6928,7 @@ msgstr ""
 "<qt>\n"
 "<h1>Eğer Şifreleme Sertifikası Süresi Dolarsa Uyar</h1>\n"
 "Şifreleme sertifikasının bir uyarı göstermemesi için geçerli olması gereken "
-"asgari gün sayısını seçin.\n"
+"en az gün sayısını seçin.\n"
 "<p>\n"
 "Önerilen SPHINX ayarı 14 gündür.\n"
 "</p></qt>"
@@ -6953,8 +6953,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Eğer Kendi Sertifikası Süresi Dolarsa Uyar</h1>\n"
-"Kendi sertifikasının bir uyarı göstermemesi için geçerli olması gereken "
-"asgari gün sayısını seçin.\n"
+"Kendi sertifikasının bir uyarı göstermemesi için geçerli olması gereken en "
+"az gün sayısını seçin.\n"
 "<p>\n"
 "Önerilen SPHINX ayarı 30 gündür.\n"
 "</p></qt>"
@@ -6980,7 +6980,7 @@ msgstr ""
 "<qt>\n"
 "<h1>Eğer Yönetici Sertifikası Süresi Dolarsa Uyar</h1>\n"
 "Yönetici sertifikasının bir uyarı göstermemesi için geçerli olması gereken "
-"asgari gün sayısını seçin.\n"
+"en az gün sayısını seçin.\n"
 "<p>\n"
 "Önerilen SPHINX ayarı 14 gündür.\n"
 "</p></qt>"
