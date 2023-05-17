@@ -115,6 +115,10 @@ QString KMSearchMessageModel::fullCollectionPath(Akonadi::Collection::Id id) con
 
 QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column, int role) const
 {
+    if (!item.isValid()) {
+        QVariant();
+    }
+
     if (role == Qt::ToolTipRole) {
         return toolTip(item);
     }
