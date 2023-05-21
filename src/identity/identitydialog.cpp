@@ -527,6 +527,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "<p>If in doubt, leave this field blank.</p></qt>");
     label->setWhatsThis(msg);
     mReplyToEdit->setWhatsThis(msg);
+    KLineEditEventHandler::catchReturnKey(mReplyToEdit);
 
     // "CC addresses" line edit and label:
     mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
@@ -535,6 +536,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
     formLayout->addRow(label, mCcEdit);
+    KLineEditEventHandler::catchReturnKey(mCcEdit);
 
     msg = i18n(
         "<qt><h3>CC (Carbon Copy) addresses</h3>"
@@ -552,6 +554,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
+    KLineEditEventHandler::catchReturnKey(mBccEdit);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
     formLayout->addRow(label, mBccEdit);
