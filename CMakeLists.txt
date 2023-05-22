@@ -166,7 +166,7 @@ configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h
 if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
-ecm_set_disabled_deprecation_versions(QT 5.15.2
+ecm_set_disabled_deprecation_versions(QT 6.5
      KF 5.240.0
     )
 find_package(KUserFeedbackQt6 1.2.1 CONFIG)

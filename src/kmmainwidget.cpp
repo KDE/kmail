@@ -148,6 +148,7 @@
 #include <QAction>
 #include <QByteArray>
 #include <QHeaderView>
+#include <QKeyCombination>
 #include <QList>
 #include <QMenu>
 #include <QProcess>
@@ -3260,9 +3261,9 @@ void KMMainWidget::setupActions()
         auto action = new QAction(i18n("Next Unread &Folder"), this);
         actionCollection()->addAction(QStringLiteral("go_next_unread_folder"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotNextUnreadFolder);
-        actionCollection()->setDefaultShortcuts(
-            action,
-            QList<QKeySequence>{QKeySequence(Qt::ALT | Qt::Key_Plus), QKeySequence(Qt::ALT | Qt::Key_Plus | Qt::KeypadModifier)});
+        actionCollection()->setDefaultShortcuts(action,
+                                                QList<QKeySequence>{QKeySequence(Qt::ALT | Qt::Key_Plus),
+                                                                    QKeySequence(QKeyCombination(Qt::ALT, Qt::Key_Plus), QKeyCombination(Qt::KeypadModifier))});
         KMail::Util::addQActionHelpText(action, i18n("Go to the next folder with unread messages"));
     }
     {
@@ -3270,7 +3271,8 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("go_prev_unread_folder"), action);
         actionCollection()->setDefaultShortcuts(
             action,
-            QList<QKeySequence>{QKeySequence(Qt::ALT | Qt::Key_Minus), QKeySequence(Qt::ALT | Qt::Key_Minus | Qt::KeypadModifier)});
+            QList<QKeySequence>{QKeySequence(Qt::ALT | Qt::Key_Minus),
+                                QKeySequence(QKeyCombination(Qt::ALT, Qt::Key_Minus), QKeyCombination(Qt::KeypadModifier))});
         KMail::Util::addQActionHelpText(action, i18n("Go to the previous folder with unread messages"));
         connect(action, &QAction::triggered, this, &KMMainWidget::slotPrevUnreadFolder);
     }
@@ -3536,7 +3538,8 @@ void KMMainWidget::setupActions()
 
         act = new QAction(i18n("Next Selected Folder"), this); // TODO fix me i18n
         actionCollection()->addAction(QStringLiteral("next_folder"), act);
-        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::SHIFT | Qt::Key_Tab | Qt::CTRL));
+        QKeyCombination combinationKeys(Qt::SHIFT, Qt::Key_Tab);
+        actionCollection()->setDefaultShortcut(act, QKeySequence(combinationKeys, QKeyCombination(Qt::CTRL)));
         connect(act, &QAction::triggered, this, &KMMainWidget::redoSwitchFolder);
         listActions.append(act);
 
