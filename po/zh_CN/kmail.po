@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:48+0000\n"
-"PO-Revision-Date: 2023-04-29 08:34\n"
+"PO-Revision-Date: 2023-05-22 14:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3428,10 +3428,9 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "分发列表“%2”为空，无法使用。"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "清除 Akonadi 缓存..."
+msgstr ""
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4411,10 +4410,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "清除 Akonadi 缓存..."
 
 #: kmmainwidget.cpp:2986
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "移除此文件夹及其所有子文件夹的重复邮件"
+msgstr ""
 
 #: kmmainwidget.cpp:2991
 #, kde-format
@@ -4757,10 +4755,9 @@ msgid "Apply All Filters"
 msgstr "应用所有过滤器"
 
 #: kmmainwidget.cpp:3373
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "将过滤器应用于文件夹及其所有子文件夹"
+msgstr ""
 
 #: kmmainwidget.cpp:3378
 #, kde-format
