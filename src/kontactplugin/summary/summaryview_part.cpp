@@ -14,8 +14,8 @@
 #include <PimCommon/BroadcastStatus>
 using PimCommon::BroadcastStatus;
 
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include <KontactInterface/Core>
 #include <KontactInterface/Plugin>
@@ -100,7 +100,7 @@ void SummaryViewPart::updateWidgets()
 
     delete mFrame;
 
-    const KIdentityManagement::Identity &id = KIdentityManagement::IdentityManager::self()->defaultIdentity();
+    const KIdentityManagementCore::Identity &id = KIdentityManagementCore::IdentityManager::self()->defaultIdentity();
 
     const QString currentUser = i18n("Summary for %1", id.fullName());
     mUsernameLabel->setText(QStringLiteral("<b>%1</b>").arg(currentUser));

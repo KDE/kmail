@@ -8,8 +8,8 @@
 #include "kmkernel.h"
 #include <MessageComposer/Composer>
 
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KIdentityManagementWidgets/IdentityCombo>
 
 #include <KMime/Message>
@@ -25,7 +25,7 @@ using namespace std::chrono_literals;
 
 QTEST_MAIN(KMComposerWinTest)
 
-KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident)
+KMime::Message::Ptr createItem(const KIdentityManagementCore::Identity &ident)
 {
     QByteArray data
         = "From: Konqui <konqui@kde.org>\n"
@@ -85,8 +85,8 @@ void KMComposerWinTest::initTestCase()
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
     autocryptDir = QDir(genericDataLocation.filePath(QStringLiteral("autocrypt")));
 
-    const KIdentityManagement::Identity &def = mKernel->identityManager()->defaultIdentity();
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForUoid(def.uoid());
+    const KIdentityManagementCore::Identity &def = mKernel->identityManager()->defaultIdentity();
+    KIdentityManagementCore::Identity &i1 = mKernel->identityManager()->modifyIdentityForUoid(def.uoid());
     i1.setIdentityName(QStringLiteral("default"));
     mKernel->identityManager()->newFromScratch(QStringLiteral("test2"));
     mKernel->identityManager()->newFromScratch(QStringLiteral("test3"));
@@ -97,28 +97,28 @@ void KMComposerWinTest::initTestCase()
 
 void KMComposerWinTest::resetIdentities()
 {
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
+    KIdentityManagementCore::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
     i1.setFullName(QStringLiteral("default"));
     i1.setPrimaryEmailAddress(QStringLiteral("firstname.lastname@example.com"));
     i1.setPGPSigningKey("0x123456789");
     i1.setPGPEncryptionKey("0x123456789");
     i1.setPgpAutoSign(true);
     i1.setPgpAutoEncrypt(false);
-    KIdentityManagement::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
+    KIdentityManagementCore::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
     i2.setFullName(QStringLiteral("second"));
     i2.setPrimaryEmailAddress(QStringLiteral("secundus@example.com"));
     i2.setPGPSigningKey("0x234567890");
     i2.setPGPEncryptionKey("0x234567890");
     i2.setPgpAutoSign(false);
     i2.setPgpAutoEncrypt(false);
-    KIdentityManagement::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
+    KIdentityManagementCore::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
     i3.setFullName(QStringLiteral("third"));
     i3.setPrimaryEmailAddress(QStringLiteral("drei@example.com"));
     i3.setPGPSigningKey("0x345678901");
     i3.setPGPEncryptionKey("0x345678901");
     i3.setPgpAutoSign(true);
     i3.setPgpAutoEncrypt(true);
-    KIdentityManagement::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("autocrypt"));
+    KIdentityManagementCore::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("autocrypt"));
     i4.setFullName(QStringLiteral("autocrypt"));
     i4.setPrimaryEmailAddress(QStringLiteral("autocrypt@example.com"));
     i4.setPGPSigningKey("0x456789012");

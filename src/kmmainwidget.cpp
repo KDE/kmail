@@ -120,8 +120,8 @@
 #include <Akonadi/StandardActionManager>
 
 #include <KEmailAddress>
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KMime/HeaderParsing>
 #include <KMime/KMimeMessage>
 #include <KSieveUi/ManageSieveScriptsDialog>
@@ -1330,7 +1330,7 @@ void KMMainWidget::slotCompose()
 void KMMainWidget::slotShowNewFromTemplate()
 {
     if (mCurrentFolderSettings) {
-        const KIdentityManagement::Identity &ident = kmkernel->identityManager()->identityForUoidOrDefault(mCurrentFolderSettings->identity());
+        const KIdentityManagementCore::Identity &ident = kmkernel->identityManager()->identityForUoidOrDefault(mCurrentFolderSettings->identity());
         mTemplateFolder = CommonKernel->collectionFromId(ident.templates().toLongLong());
     }
 

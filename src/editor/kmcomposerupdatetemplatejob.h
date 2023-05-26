@@ -7,7 +7,7 @@
 #pragma once
 
 #include <Akonadi/Collection>
-#include <KIdentityManagement/Identity>
+#include <KIdentityManagementCore/Identity>
 #include <KMime/Message>
 #include <QObject>
 
@@ -30,11 +30,11 @@ public:
 
     void setUoid(uint uoid);
 
-    void setIdent(const KIdentityManagement::Identity &ident);
+    void setIdent(const KIdentityManagementCore::Identity &ident);
 
     void setCollection(const Akonadi::Collection &col);
 Q_SIGNALS:
-    void updateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
+    void updateComposer(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
 private:
     void slotFinished();
@@ -45,6 +45,6 @@ private:
     Akonadi::Collection mCollectionForNewMessage;
     uint mUoldId = 0;
     uint mUoid = 0;
-    KIdentityManagement::Identity mIdent;
+    KIdentityManagementCore::Identity mIdent;
     bool mWasModified = false;
 };

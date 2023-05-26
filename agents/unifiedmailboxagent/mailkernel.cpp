@@ -10,7 +10,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/Session>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/MailKernel>
@@ -19,7 +19,7 @@
 MailKernel::MailKernel(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
     , mConfig(config)
-    , mIdentityManager(new KIdentityManagement::IdentityManager(true, this))
+    , mIdentityManager(new KIdentityManagementCore::IdentityManager(true, this))
     , mMessageSender(new MessageComposer::AkonadiSender(this))
 {
     auto session = new Akonadi::Session("UnifiedMailbox Kernel ETM", this);
@@ -47,7 +47,7 @@ MailKernel::~MailKernel()
     CommonKernel->registerSettingsIf(nullptr);
 }
 
-KIdentityManagement::IdentityManager *MailKernel::identityManager()
+KIdentityManagementCore::IdentityManager *MailKernel::identityManager()
 {
     return mIdentityManager;
 }

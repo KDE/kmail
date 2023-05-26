@@ -27,7 +27,7 @@ public:
     explicit MailKernel(const KSharedConfigPtr &config, QObject *parent = nullptr);
     ~MailKernel() override;
 
-    KIdentityManagement::IdentityManager *identityManager() override;
+    KIdentityManagementCore::IdentityManager *identityManager() override;
     MessageComposer::MessageSender *msgSender() override;
 
     Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
@@ -49,7 +49,7 @@ private:
     Q_DISABLE_COPY(MailKernel)
 
     KSharedConfigPtr mConfig;
-    KIdentityManagement::IdentityManager *const mIdentityManager;
+    KIdentityManagementCore::IdentityManager *const mIdentityManager;
     MessageComposer::MessageSender *const mMessageSender;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
     Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;

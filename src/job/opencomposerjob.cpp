@@ -7,8 +7,8 @@
 #include "opencomposerjob.h"
 #include "kmail_debug.h"
 #include "kmkernel.h"
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <MessageComposer/Composer>
@@ -35,14 +35,14 @@ void OpenComposerJob::start()
     mMsg = KMime::Message::Ptr(new KMime::Message);
     if (!mOpenComposerSettings.mIdentity.isEmpty()) {
         if (KMKernel::self()->identityManager()->identities().contains(mOpenComposerSettings.mIdentity)) {
-            const KIdentityManagement::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);
+            const KIdentityManagementCore::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);
             mIdentityId = id.uoid();
         } else {
             qCWarning(KMAIL_LOG) << "Identity name doesn't exist " << mOpenComposerSettings.mIdentity;
         }
     }
 
-    MessageHelper::initHeader(mMsg, KIdentityManagement::IdentityManager::self(), mIdentityId);
+    MessageHelper::initHeader(mMsg, KIdentityManagementCore::IdentityManager::self(), mIdentityId);
 
     mMsg->contentType()->setCharset("utf-8");
     if (!mOpenComposerSettings.mTo.isEmpty()) {

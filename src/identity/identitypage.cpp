@@ -17,8 +17,8 @@
 
 #include <MailCommon/MailKernel>
 
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -40,7 +40,7 @@ IdentityPage::IdentityPage(QWidget *parent)
         return;
     }
     mIdentityManager = KernelIf->identityManager();
-    connect(mIdentityManager, &KIdentityManagement::IdentityManager::needToReloadIdentitySettings, this, &IdentityPage::load);
+    connect(mIdentityManager, &KIdentityManagementCore::IdentityManager::needToReloadIdentitySettings, this, &IdentityPage::load);
 
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
@@ -73,9 +73,9 @@ void IdentityPage::load()
     // Fill the list:
     mIPage.mIdentityList->clear();
     QTreeWidgetItem *item = nullptr;
-    KIdentityManagement::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
+    KIdentityManagementCore::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
 
-    for (KIdentityManagement::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
+    for (KIdentityManagementCore::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
         item = new IdentityListViewItem(mIPage.mIdentityList, item, *it);
     }
     if (auto currentItem = mIPage.mIdentityList->currentItem()) {
@@ -123,7 +123,7 @@ void IdentityPage::slotNewIdentity()
         //
         switch (dialog->duplicateMode()) {
         case NewIdentityDialog::ExistingEntry: {
-            KIdentityManagement::Identity &dupThis = mIdentityManager->modifyIdentityForName(dialog->duplicateIdentity());
+            KIdentityManagementCore::Identity &dupThis = mIdentityManager->modifyIdentityForName(dialog->duplicateIdentity());
             mIdentityManager->newFromExisting(dupThis, identityName);
             break;
         }
@@ -138,7 +138,7 @@ void IdentityPage::slotNewIdentity()
         //
         // Insert into listview:
         //
-        KIdentityManagement::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
+        KIdentityManagementCore::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
         QTreeWidgetItem *item = nullptr;
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
             item = mIPage.mIdentityList->selectedItems().at(0);
@@ -258,7 +258,7 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
 
     const QString newName = text.trimmed();
     if (!newName.isEmpty() && !mIdentityManager->shadowIdentities().contains(newName)) {
-        KIdentityManagement::Identity &ident = item->identity();
+        KIdentityManagementCore::Identity &ident = item->identity();
         ident.setIdentityName(newName);
         save();
     }

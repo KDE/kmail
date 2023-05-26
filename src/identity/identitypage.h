@@ -15,7 +15,7 @@
 
 #include "configuredialog/configuredialog_p.h"
 #include "ui_identitypage.h"
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class IdentityManager;
 }
@@ -46,7 +46,7 @@ private:
       QTreeWidget::editItem on the selected item */
     void slotRenameIdentity();
     /** connected to @p mIdentityList's renamed() signal. Validates the
-      new name and sets it in the KIdentityManagement::IdentityManager */
+      new name and sets it in the KIdentityManagementCore::IdentityManager */
     void slotRenameIdentityFromItem(KMail::IdentityListViewItem *, const QString &);
     void slotContextMenu(KMail::IdentityListViewItem *, const QPoint &);
     void slotSetAsDefault();
@@ -59,6 +59,6 @@ private: // data members
     Ui_IdentityPage mIPage;
     KMail::IdentityDialog *mIdentityDialog = nullptr;
     int mOldNumberOfIdentities = 0;
-    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
+    KIdentityManagementCore::IdentityManager *mIdentityManager = nullptr;
 };
 }

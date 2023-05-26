@@ -13,7 +13,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class Identity;
 class IdentityManager;
@@ -29,21 +29,21 @@ class IdentityListView;
 class IdentityListViewItem : public QTreeWidgetItem
 {
 public:
-    IdentityListViewItem(IdentityListView *parent, const KIdentityManagement::Identity &ident);
-    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagement::Identity &ident);
+    IdentityListViewItem(IdentityListView *parent, const KIdentityManagementCore::Identity &ident);
+    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident);
 
     Q_REQUIRED_RESULT uint uoid() const;
 
-    KIdentityManagement::Identity &identity() const;
-    virtual void setIdentity(const KIdentityManagement::Identity &ident);
+    KIdentityManagementCore::Identity &identity() const;
+    virtual void setIdentity(const KIdentityManagementCore::Identity &ident);
     void redisplay();
 
 private:
-    void init(const KIdentityManagement::Identity &ident);
+    void init(const KIdentityManagementCore::Identity &ident);
     uint mUOID = 0;
 };
 
-/** @short A QTreeWidget for KIdentityManagement::Identity
+/** @short A QTreeWidget for KIdentityManagementCore::Identity
  * @author Marc Mutz <mutz@kde.org>
  **/
 class IdentityListView : public QTreeWidget
@@ -55,8 +55,8 @@ public:
 
 public:
     void editItem(QTreeWidgetItem *item, int column = 0);
-    KIdentityManagement::IdentityManager *identityManager() const;
-    void setIdentityManager(KIdentityManagement::IdentityManager *im);
+    KIdentityManagementCore::IdentityManager *identityManager() const;
+    void setIdentityManager(KIdentityManagementCore::IdentityManager *im);
 
 protected Q_SLOTS:
     void commitData(QWidget *editor) override;
@@ -72,6 +72,6 @@ protected:
 
 private:
     void slotCustomContextMenuRequested(const QPoint &);
-    KIdentityManagement::IdentityManager *mIdentityManager = nullptr;
+    KIdentityManagementCore::IdentityManager *mIdentityManager = nullptr;
 };
 } // namespace KMail

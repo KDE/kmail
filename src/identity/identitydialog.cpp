@@ -17,7 +17,7 @@
 #include <QGpgME/Job>
 #include <QGpgME/Protocol>
 
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/IdentityManager>
 
 // other KMail headers:
 #include "settings/kmailsettings.h"
@@ -35,7 +35,7 @@
 #include <TemplateParser/TemplatesConfiguration>
 #include <templateparser/templatesconfiguration_kfg.h>
 // other kdepim headers:
-#include <KIdentityManagement/Identity>
+#include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementWidgets/SignatureConfigurator>
 
 #include <PimCommon/PimUtil>
@@ -867,7 +867,7 @@ bool IdentityDialog::checkFolderExists(const QString &folderID)
     return folder.isValid();
 }
 
-void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
+void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
 {
     setWindowTitle(i18nc("@title:window", "Edit Identity \"%1\"", ident.identityName()));
 
@@ -993,7 +993,7 @@ void IdentityDialog::unregisterSpecialCollection(qint64 colId)
     });
 }
 
-void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
+void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
 {
     // "General" tab:
     ident.setFullName(mNameEdit->text());
@@ -1107,7 +1107,7 @@ void IdentityDialog::slotEditVcard()
         if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
             return;
         }
-        KIdentityManagement::IdentityManager *manager = KernelIf->identityManager();
+        KIdentityManagementCore::IdentityManager *manager = KernelIf->identityManager();
 
         QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager->shadowIdentities(), this);
         if (dlg->exec()) {
@@ -1117,7 +1117,7 @@ void IdentityDialog::slotEditVcard()
                 editVcard(mVcardFilename);
                 break;
             case IdentityAddVcardDialog::ExistingEntry: {
-                KIdentityManagement::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
+                KIdentityManagementCore::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
                 const QString filename = ident.vCardFile();
                 if (!filename.isEmpty()) {
                     QFile::copy(filename, mVcardFilename);

@@ -25,8 +25,8 @@
 #include <Akonadi/SpecialCollectionAttribute>
 #include <Akonadi/UnlinkJob>
 
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include <KLocalizedString>
 #include <QDBusConnection>
@@ -257,7 +257,7 @@ void UnifiedMailboxAgent::fixSpecialCollections()
 
     qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "Fixing special collections assigned from Identities";
 
-    for (const auto &identity : *KIdentityManagement::IdentityManager::self()) {
+    for (const auto &identity : *KIdentityManagementCore::IdentityManager::self()) {
         if (!identity.disabledFcc()) {
             fixSpecialCollection(identity.fcc(), Akonadi::SpecialMailCollections::SentMail);
         }

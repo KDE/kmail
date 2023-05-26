@@ -9,8 +9,8 @@
 #include <MailCommon/MailKernel>
 
 #include <Akonadi/MessageFolderAttribute>
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <MailCommon/FolderSettings>
 #include <PimCommonAkonadi/MailUtil>
 
@@ -49,7 +49,7 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
     if (!fd.isNull()) {
         const QString folderId(QString::number(c.id()));
         // default setting
-        const KIdentityManagement::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
+        const KIdentityManagementCore::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
 
         bool isOnline = false;
         if (CommonKernel->isSystemFolderCollection(c) && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {

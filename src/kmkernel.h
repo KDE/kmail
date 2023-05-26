@@ -70,7 +70,7 @@ namespace MessageComposer
 class AkonadiSender;
 }
 
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class Identity;
 class IdentityManager;
@@ -413,7 +413,7 @@ public:
     void createFilter(const QByteArray &field, const QString &value) override;
 
     /** return the pointer to the identity manager */
-    KIdentityManagement::IdentityManager *identityManager() override;
+    KIdentityManagementCore::IdentityManager *identityManager() override;
 
     MailCommon::JobScheduler *jobScheduler() const override;
 

@@ -7,8 +7,8 @@
 #include "kmcommandstest.h"
 #include "kmcommands.h"
 #include "kmkernel.h"
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
@@ -21,7 +21,7 @@
 #include <QTemporaryDir>
 #include <QTest>
 
-Akonadi::Item createItem(const KIdentityManagement::Identity &ident)
+Akonadi::Item createItem(const KIdentityManagementCore::Identity &ident)
 {
     QByteArray data
         = "From: Konqui <konqui@kde.org>\n"
@@ -61,8 +61,8 @@ KMCommandsTest::~KMCommandsTest()
 
 void KMCommandsTest::initTestCase()
 {
-    const KIdentityManagement::Identity &def = mKernel->identityManager()->defaultIdentity();
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForUoid(def.uoid());
+    const KIdentityManagementCore::Identity &def = mKernel->identityManager()->defaultIdentity();
+    KIdentityManagementCore::Identity &i1 = mKernel->identityManager()->modifyIdentityForUoid(def.uoid());
     i1.setIdentityName(QStringLiteral("default"));
     mKernel->identityManager()->newFromScratch(QStringLiteral("test2"));
     mKernel->identityManager()->newFromScratch(QStringLiteral("test3"));
@@ -71,17 +71,17 @@ void KMCommandsTest::initTestCase()
 
 void KMCommandsTest::resetIdentities()
 {
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
+    KIdentityManagementCore::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
     i1.setFullName(QStringLiteral("default"));
     i1.setPrimaryEmailAddress(QStringLiteral("firstname.lastname@example.com"));
     i1.setPGPSigningKey("0x123456789");
     i1.setPgpAutoSign(true);
-    KIdentityManagement::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
+    KIdentityManagementCore::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
     i2.setFullName(QStringLiteral("second"));
     i2.setPrimaryEmailAddress(QStringLiteral("secundus@example.com"));
     i2.setPGPSigningKey("0x234567890");
     i2.setPgpAutoSign(false);
-    KIdentityManagement::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
+    KIdentityManagementCore::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
     i3.setFullName(QStringLiteral("third"));
     i3.setPrimaryEmailAddress(QStringLiteral("drei@example.com"));
     i3.setPGPSigningKey("0x345678901");
@@ -110,7 +110,7 @@ void KMCommandsTest::testMailtoReply()
     resetIdentities();
     {
         // default has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
@@ -120,7 +120,7 @@ void KMCommandsTest::testMailtoReply()
     }
     {
         // secundus has no auto sign set -> verifySignature = false
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
@@ -130,7 +130,7 @@ void KMCommandsTest::testMailtoReply()
     }
     {
         // drei has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMMailtoReplyCommand(nullptr, QUrl(QStringLiteral("mailto:test@example.com")), item, QString()));
@@ -145,7 +145,7 @@ void KMCommandsTest::testReply()
     resetIdentities();
     {
         // default has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -155,7 +155,7 @@ void KMCommandsTest::testReply()
     }
     {
         // secundus has no auto sign set -> verifySignature = false
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -165,7 +165,7 @@ void KMCommandsTest::testReply()
     }
     {
         // drei has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -178,13 +178,13 @@ void KMCommandsTest::testReply()
 void KMCommandsTest::testReplyWithoutDefaultGPGSign()
 {
     resetIdentities();
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
+    KIdentityManagementCore::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
     i1.setPgpAutoSign(false);
     mKernel->identityManager()->commit();
 
     {
         // default has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -194,7 +194,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
     }
     {
         // secundus has no auto sign set -> verifySignature = false
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("secundus@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -204,7 +204,7 @@ void KMCommandsTest::testReplyWithoutDefaultGPGSign()
     }
     {
         // drei has auto sign set -> verifySignature = true
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->identityForAddress(QStringLiteral("drei@example.com"));
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMReplyCommand(nullptr, item, MessageComposer::ReplyAll));
@@ -218,7 +218,7 @@ void KMCommandsTest::testSendAgain()
 {
     resetIdentities();
     {
-        const KIdentityManagement::Identity &ident = mKernel->identityManager()->defaultIdentity();
+        const KIdentityManagementCore::Identity &ident = mKernel->identityManager()->defaultIdentity();
         Akonadi::Item item(createItem(ident));
 
         auto cmd(new KMResendMessageCommand(nullptr, item));

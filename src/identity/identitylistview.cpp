@@ -10,8 +10,8 @@
 
 #include "identitylistview.h"
 
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include "kmail_debug.h"
 #include <KLocalizedString>
@@ -28,14 +28,14 @@ using namespace KMail;
 //
 //
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, const KIdentityManagement::Identity &ident)
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, const KIdentityManagementCore::Identity &ident)
     : QTreeWidgetItem(parent)
     , mUOID(ident.uoid())
 {
     init(ident);
 }
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagement::Identity &ident)
+IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident)
     : QTreeWidgetItem(parent, after)
     , mUOID(ident.uoid())
 {
@@ -47,14 +47,14 @@ uint IdentityListViewItem::uoid() const
     return mUOID;
 }
 
-KIdentityManagement::Identity &IdentityListViewItem::identity() const
+KIdentityManagementCore::Identity &IdentityListViewItem::identity() const
 {
-    KIdentityManagement::IdentityManager *im = qobject_cast<IdentityListView *>(treeWidget())->identityManager();
+    KIdentityManagementCore::IdentityManager *im = qobject_cast<IdentityListView *>(treeWidget())->identityManager();
     Q_ASSERT(im);
     return im->modifyIdentityForUoid(mUOID);
 }
 
-void IdentityListViewItem::setIdentity(const KIdentityManagement::Identity &ident)
+void IdentityListViewItem::setIdentity(const KIdentityManagementCore::Identity &ident)
 {
     mUOID = ident.uoid();
     init(ident);
@@ -65,7 +65,7 @@ void IdentityListViewItem::redisplay()
     init(identity());
 }
 
-void IdentityListViewItem::init(const KIdentityManagement::Identity &ident)
+void IdentityListViewItem::init(const KIdentityManagementCore::Identity &ident)
 {
     if (ident.isDefault()) {
         // Add "(Default)" to the end of the default identity's name:
@@ -121,7 +121,7 @@ void IdentityListView::editItem(QTreeWidgetItem *item, int column)
     if (column == 0 && item) {
         auto lvItem = dynamic_cast<IdentityListViewItem *>(item);
         if (lvItem) {
-            KIdentityManagement::Identity &ident = lvItem->identity();
+            KIdentityManagementCore::Identity &ident = lvItem->identity();
             if (ident.isDefault()) {
                 lvItem->setText(0, ident.identityName());
             }
@@ -179,13 +179,13 @@ void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
 
 #endif
 
-KIdentityManagement::IdentityManager *IdentityListView::identityManager() const
+KIdentityManagementCore::IdentityManager *IdentityListView::identityManager() const
 {
     Q_ASSERT(mIdentityManager);
     return mIdentityManager;
 }
 
-void IdentityListView::setIdentityManager(KIdentityManagement::IdentityManager *im)
+void IdentityListView::setIdentityManager(KIdentityManagementCore::IdentityManager *im)
 {
     mIdentityManager = im;
 }

@@ -23,7 +23,7 @@ namespace GpgME
 {
 class Key;
 }
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class Identity;
 }
@@ -72,9 +72,9 @@ public:
     explicit IdentityDialog(QWidget *parent = nullptr);
     ~IdentityDialog() override;
 
-    void setIdentity(/*_not_ const*/ KIdentityManagement::Identity &ident);
+    void setIdentity(/*_not_ const*/ KIdentityManagementCore::Identity &ident);
 
-    void updateIdentity(KIdentityManagement::Identity &ident);
+    void updateIdentity(KIdentityManagementCore::Identity &ident);
 
 private:
     void slotAboutToShow(int);

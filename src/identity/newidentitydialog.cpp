@@ -11,7 +11,7 @@
 
 #include "newidentitydialog.h"
 
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KLineEditEventHandler>
 #include <KLocalizedString>
 #include <KSeparator>
@@ -31,7 +31,7 @@
 
 using namespace KMail;
 
-NewIdentityDialog::NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent)
+NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *manager, QWidget *parent)
     : QDialog(parent)
     , mIdentityManager(manager)
 {

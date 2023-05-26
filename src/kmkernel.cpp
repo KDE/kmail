@@ -36,8 +36,8 @@ using PimCommon::RecentAddresses;
 #include "kmail-version.h"
 
 #include <Akonadi/DispatcherInterface>
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
 
@@ -220,7 +220,7 @@ KMKernel::KMKernel(QObject *parent)
 
     connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCompleted, this, &KMKernel::slotProgressItemCompletedOrCanceled);
     connect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCanceled, this, &KMKernel::slotProgressItemCompletedOrCanceled);
-    connect(identityManager(), &KIdentityManagement::IdentityManager::deleted, this, &KMKernel::slotDeleteIdentity);
+    connect(identityManager(), &KIdentityManagementCore::IdentityManager::deleted, this, &KMKernel::slotDeleteIdentity);
     CommonKernel->registerKernelIf(this);
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
@@ -1371,9 +1371,9 @@ void KMKernel::updateSystemTray()
     }
 }
 
-KIdentityManagement::IdentityManager *KMKernel::identityManager()
+KIdentityManagementCore::IdentityManager *KMKernel::identityManager()
 {
-    return KIdentityManagement::IdentityManager::self();
+    return KIdentityManagementCore::IdentityManager::self();
 }
 
 JobScheduler *KMKernel::jobScheduler() const
@@ -1599,9 +1599,9 @@ void KMKernel::transportRemoved(int id, const QString &name)
 
     // reset all identities using the deleted transport
     QStringList changedIdents;
-    KIdentityManagement::IdentityManager *im = identityManager();
-    KIdentityManagement::IdentityManager::Iterator end = im->modifyEnd();
-    for (KIdentityManagement::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it) {
+    KIdentityManagementCore::IdentityManager *im = identityManager();
+    KIdentityManagementCore::IdentityManager::Iterator end = im->modifyEnd();
+    for (KIdentityManagementCore::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it) {
         if (name == (*it).transport()) {
             (*it).setTransport(QString());
             changedIdents += (*it).identityName();
@@ -1629,9 +1629,9 @@ void KMKernel::transportRenamed(int id, const QString &oldName, const QString &n
     Q_UNUSED(id)
 
     QStringList changedIdents;
-    KIdentityManagement::IdentityManager *im = identityManager();
-    KIdentityManagement::IdentityManager::Iterator end = im->modifyEnd();
-    for (KIdentityManagement::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it) {
+    KIdentityManagementCore::IdentityManager *im = identityManager();
+    KIdentityManagementCore::IdentityManager::Iterator end = im->modifyEnd();
+    for (KIdentityManagementCore::IdentityManager::Iterator it = im->modifyBegin(); it != end; ++it) {
         if (oldName == (*it).transport()) {
             (*it).setTransport(newName);
             changedIdents << (*it).identityName();

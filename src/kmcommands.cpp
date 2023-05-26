@@ -45,7 +45,7 @@
 #include "kmmainwidget.h"
 #include "undostack.h"
 
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/IdentityManager>
 
 #include <KMime/MDN>
 #include <KMime/Message>

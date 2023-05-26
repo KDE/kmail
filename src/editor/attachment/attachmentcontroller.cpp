@@ -17,7 +17,7 @@
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <KContacts/Addressee>
-#include <KIdentityManagement/Identity>
+#include <KIdentityManagementCore/Identity>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailUtil>
 
@@ -59,7 +59,7 @@ void AttachmentController::slotSelectAllAttachment()
 
 void AttachmentController::identityChanged()
 {
-    const KIdentityManagement::Identity &identity = mComposer->identity();
+    const KIdentityManagementCore::Identity &identity = mComposer->identity();
 
     // "Attach public key" is only possible if OpenPGP support is available:
     enableAttachPublicKey(QGpgME::openpgp());
@@ -71,7 +71,7 @@ void AttachmentController::identityChanged()
 
 void AttachmentController::attachMyPublicKey()
 {
-    const KIdentityManagement::Identity &identity = mComposer->identity();
+    const KIdentityManagementCore::Identity &identity = mComposer->identity();
     qCDebug(KMAIL_LOG) << identity.identityName();
     exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
 }

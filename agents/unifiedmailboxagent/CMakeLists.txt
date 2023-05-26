@@ -43,7 +43,7 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KPim6::AkonadiWidgets
     KPim6::Mime
     KF6::I18n
-    KPim6::IdentityManagement
+    KPim6::IdentityManagementCore
     KF6::WidgetsAddons
     KF6::IconThemes
     KF6::ItemModels

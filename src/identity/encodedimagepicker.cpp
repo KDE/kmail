@@ -12,8 +12,8 @@
 #include "ui_encodedimagepicker.h"
 
 #include <Akonadi/ContactSearchJob>
-#include <KIdentityManagement/Identity>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/Identity>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KPIMTextEdit/PlainTextEditor>
 
 #include <KIO/StoredTransferJob>
@@ -112,7 +112,7 @@ void EncodedImagePicker::setFromFileDone(KJob *job)
 
 void EncodedImagePicker::selectFromAddressBook()
 {
-    using namespace KIdentityManagement;
+    using namespace KIdentityManagementCore;
 
     const IdentityManager manager(true);
     const Identity defaultIdentity = manager.defaultIdentity();

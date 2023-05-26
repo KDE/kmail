@@ -51,7 +51,7 @@ pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 
 target_link_libraries(followupreminderagent
     KPim6::AkonadiCore
-    KPim6::IdentityManagement
+    KPim6::IdentityManagementCore
     KPim6::AkonadiMime
     KPim6::AkonadiAgentBase
     KF6::DBusAddons

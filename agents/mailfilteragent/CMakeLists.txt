@@ -47,7 +47,7 @@ target_link_libraries(akonadi_mailfilter_agent
     KPim6::AkonadiMime
     KPim6::AkonadiAgentBase
     KPim6::Mime
-    KPim6::IdentityManagement
+    KPim6::IdentityManagementCore
     KF6::DBusAddons
     KF6::Notifications
     KF6::WindowSystem

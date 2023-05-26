@@ -66,7 +66,7 @@ namespace MailTransport
 class Transport;
 }
 
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class Identity;
 }
@@ -167,7 +167,7 @@ public Q_SLOTS:
                        const QByteArray &mimeType) override;
 
 Q_SIGNALS:
-    void identityChanged(const KIdentityManagement::Identity &identity);
+    void identityChanged(const KIdentityManagementCore::Identity &identity);
 
 public: // kmkernel, kmcommands, callback
     /**
@@ -424,12 +424,12 @@ private Q_SLOTS:
     void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
 
     void slotDelayedCheckSendNow();
-    void slotUpdateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
+    void slotUpdateComposer(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
-    const KIdentityManagement::Identity &identity() const;
+    const KIdentityManagementCore::Identity &identity() const;
     Q_REQUIRED_RESULT bool pgpAutoSign() const;
     Q_REQUIRED_RESULT bool pgpAutoEncrypt() const;
 
@@ -486,7 +486,7 @@ private:
     /**
      * Apply template to new or unmodified message.
      */
-    void applyTemplate(uint uoid, uint uOldId, const KIdentityManagement::Identity &ident, bool wasModified);
+    void applyTemplate(uint uoid, uint uOldId, const KIdentityManagementCore::Identity &ident, bool wasModified);
 
     /**
      * Set the quote prefix according to identity.
@@ -570,7 +570,7 @@ private:
     void slotInvalidIdentity();
     void slotTransportRemoved(int id, const QString &name);
 
-    void updateComposerAfterIdentityChanged(const KIdentityManagement::Identity &ident, uint uoid, bool wasModified);
+    void updateComposerAfterIdentityChanged(const KIdentityManagementCore::Identity &ident, uint uoid, bool wasModified);
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
@@ -583,7 +583,7 @@ private:
     Q_REQUIRED_RESULT bool sendLaterRegistered() const;
     void slotRecipientEditorLineFocused();
     void updateHamburgerMenu();
-    void addFaceHeaders(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg);
+    void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
 
     Akonadi::Collection mCollectionForNewMessage;

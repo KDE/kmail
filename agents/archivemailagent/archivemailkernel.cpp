@@ -10,7 +10,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/Session>
-#include <KIdentityManagement/IdentityManager>
+#include <KIdentityManagementCore/IdentityManager>
 #include <KSharedConfig>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/JobScheduler>
@@ -18,7 +18,7 @@
 ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     : QObject(parent)
 {
-    mIdentityManager = new KIdentityManagement::IdentityManager(true, this);
+    mIdentityManager = new KIdentityManagementCore::IdentityManager(true, this);
     auto session = new Akonadi::Session("Archive Mail Kernel ETM", this);
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
@@ -43,7 +43,7 @@ ArchiveMailKernel *ArchiveMailKernel::self()
     return &s_self;
 }
 
-KIdentityManagement::IdentityManager *ArchiveMailKernel::identityManager()
+KIdentityManagementCore::IdentityManager *ArchiveMailKernel::identityManager()
 {
     return mIdentityManager;
 }

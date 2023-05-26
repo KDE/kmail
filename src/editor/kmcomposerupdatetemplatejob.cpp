@@ -68,7 +68,7 @@ void KMComposerUpdateTemplateJob::setUoid(uint uoid)
     mUoid = uoid;
 }
 
-void KMComposerUpdateTemplateJob::setIdent(const KIdentityManagement::Identity &ident)
+void KMComposerUpdateTemplateJob::setIdent(const KIdentityManagementCore::Identity &ident)
 {
     mIdent = ident;
 }

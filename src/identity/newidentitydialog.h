@@ -17,7 +17,7 @@ class QComboBox;
 class QLineEdit;
 class QButtonGroup;
 
-namespace KIdentityManagement
+namespace KIdentityManagementCore
 {
 class IdentityManager;
 }
@@ -34,7 +34,7 @@ public:
         ControlCenter,
         ExistingEntry,
     };
-    explicit NewIdentityDialog(KIdentityManagement::IdentityManager *manager, QWidget *parent = nullptr);
+    explicit NewIdentityDialog(KIdentityManagementCore::IdentityManager *manager, QWidget *parent = nullptr);
 
     Q_REQUIRED_RESULT QString identityName() const;
     Q_REQUIRED_RESULT QString duplicateIdentity() const;
@@ -46,7 +46,7 @@ private:
     QLineEdit *mLineEdit = nullptr;
     QComboBox *mComboBox = nullptr;
     QButtonGroup *mButtonGroup = nullptr;
-    KIdentityManagement::IdentityManager *const mIdentityManager;
+    KIdentityManagementCore::IdentityManager *const mIdentityManager;
     QPushButton *mOkButton = nullptr;
 };
 }
