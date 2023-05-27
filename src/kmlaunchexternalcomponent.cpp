@@ -146,10 +146,8 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
-    const QStringList lst = {QStringLiteral("--type"), QStringLiteral("message/rfc822")};
-
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
-    if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
+    if (path.isEmpty() || !QProcess::startDetached(path, {})) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),
