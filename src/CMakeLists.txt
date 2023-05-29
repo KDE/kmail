@@ -439,6 +439,7 @@ target_link_libraries(kmailprivate
     KPim6::PimTextEdit
     KPim6::MessageViewer
     KF6::IconThemes
+    KF6::IconWidgets
     KF6::XmlGui
     KF6::Completion
     KPim6::LdapWidgets

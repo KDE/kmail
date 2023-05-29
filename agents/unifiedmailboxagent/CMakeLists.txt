@@ -46,6 +46,7 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KPim6::IdentityManagementCore
     KF6::WidgetsAddons
     KF6::IconThemes
+    KF6::IconWidgets
     KF6::ItemModels
     KPim6::MailCommon
     KF6::DBusAddons
