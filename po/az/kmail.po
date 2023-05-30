@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:48+0000\n"
-"PO-Revision-Date: 2023-03-12 18:29+0400\n"
+"PO-Revision-Date: 2023-05-29 21:49+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3550,10 +3550,9 @@ msgstr[0] "%2 paylaşım siyahısı boşdur, istifadə oluna bilməz."
 msgstr[1] "%2 paylaşım siyahıları boşdur, onlar istifadə oluna bilməz."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Akonadi keşini &təmizləyin..."
+msgstr "Akonadi keşini təmizləyin"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4567,10 +4566,10 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Akonadi keşini &təmizləyin..."
 
 #: kmmainwidget.cpp:2986
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Bu qovluqdakı və alt qovluqlarındakı təkrarları silin"
+msgstr ""
+"Bu qovluqdakı və onun bütün alt qovluqlarındakı Akonadi keşini &təmizləyin"
 
 #: kmmainwidget.cpp:2991
 #, kde-format
@@ -4915,8 +4914,7 @@ msgid "Apply All Filters"
 msgstr "Bütün filtrləri tətbiq edin"
 
 #: kmmainwidget.cpp:3373
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Süzgəcləri qovluğa və onun bütün alt qovluqlarına tətbiq edin"
 

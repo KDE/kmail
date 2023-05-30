@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-13 00:48+0000\n"
-"PO-Revision-Date: 2023-05-15 22:43+0300\n"
+"PO-Revision-Date: 2023-05-29 12:47+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1247,7 +1247,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
-msgstr "En son girilen adresleri hatırla ve alıcı tamamlanmasında öner"
+msgstr "En son girilen adresleri anımsa ve alıcı tamamlanmasında öner"
 
 #: configuredialog/configurecomposerpage.cpp:397
 #, kde-format
@@ -1266,7 +1266,7 @@ msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
-"Tamamlanmak için hatırlanacak yakın zamanda kullanılan adreslerin azami "
+"Tamamlanmak için anımsanacak yakın zamanda kullanılmış adreslerin azami "
 "sayısı"
 
 #: configuredialog/configurecomposerpage.cpp:417
@@ -2164,7 +2164,7 @@ msgstr "Bu ileti için bir kriptografik biçim seçin"
 #: editor/kmcomposerwin.cpp:1427
 #, kde-format
 msgid "Create Follow Up Reminder..."
-msgstr "Hatırlatıcı Takip Etme Oluştur..."
+msgstr "Takip Anımsatıcısı Oluştur..."
 
 #: editor/kmcomposerwin.cpp:1461
 #, kde-format
