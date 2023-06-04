@@ -243,7 +243,7 @@
       <li xml:lang="zh-CN">安全可靠 - KMail 具有安全的默认设置、良好的端到端加密支持、可靠的垃圾邮件检测功能，为您的隐私保驾护航。</li>
       <li>Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
       <li xml:lang="ar">قوي - تشمل الميزات الدعم في وضع عدم الاتصال، وهويات متعددة للمرسلين، ودعم الكثير من اللغات، ومرشحات قوية، ووظيفة البحث وإضافة الوسوم، وإدارة القوائم البريدية، وضبط المرن للغاية.</li>
-      <li xml:lang="az">Güclü - Xüsusiyyətlər, oflayn dəstək, göndərənin birdən çox olması, çox dilli dəstək, güclü süzgəc, axtarış və yarlıq təyin etmə funksiyaları, paylaşım siyahısının idarə edilməsi və çox çevik tənzimləələri əhatə edir.</li>
+      <li xml:lang="az">Güclü - Xüsusiyyətlər, oflayn dəstək, göndərənin birdən çox olması, çox dilli dəstək, güclü süzgəc, axtarış və yarlıq təyin etmə funksiyaları, paylaşım siyahısının idarə edilməsi və çox çevik tənzimləmələri əhatə edir.</li>
       <li xml:lang="bg">Мощен - Функции за офлайн поддръжка, множество профили за изпращане, многоезична поддръжка, мощно филтриране, търсене и поставяне на етикети, управление на пощенски списъци и много гъвкава конфигурация.</li>
       <li xml:lang="ca">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de cerca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
       <li xml:lang="ca-valencia">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de busca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
@@ -357,9 +357,9 @@
     <binary>kmail</binary>
   </provides>
   <releases>
+    <release version="5.23.2" date="2023-06-08"/>
     <release version="5.23.1" date="2023-05-11"/>
     <release version="5.23.0" date="2023-04-20"/>
     <release version="5.22.3" date="2023-03-02"/>
-    <release version="5.22.2" date="2023-02-02"/>
   </releases>
 </component>
