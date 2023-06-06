@@ -2073,7 +2073,7 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
         info.subject = subject();
         info.index = id;
         info.delay = KMailSettings::self()->undoSendDelay();
-        info.to = mComposerBase->to();
+        info.to = MessageCore::StringUtil::quoteHtmlChars(mComposerBase->to());
 
         UndoSendManager::self()->addItem(info);
     }
