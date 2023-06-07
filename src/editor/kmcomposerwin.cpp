@@ -153,9 +153,11 @@
 #include <KEditToolBar>
 #include <KEmailAddress>
 #include <KEncodingFileDialog>
+#include <KFileWidget>
 #include <KIO/JobUiDelegate>
 #include <KIconUtils>
 #include <KMessageBox>
+#include <KRecentDirs>
 #include <KRecentFilesAction>
 #include <KShortcutsDialog>
 #include <KSplitterCollapserButton>
@@ -163,6 +165,7 @@
 #include <KToggleAction>
 #include <KToolBar>
 #include <KXMLGUIFactory>
+
 #include <QDBusConnection>
 // Qt includes
 #include <QAction>
@@ -2244,13 +2247,19 @@ void KMComposerWin::slotUpdateFont()
 
 QUrl KMComposerWin::insertFile()
 {
+    QString recentDirClass;
+    QUrl startUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///InsertFile")), recentDirClass);
+
     const KEncodingFileDialog::Result result =
-        KEncodingFileDialog::getOpenUrlAndEncoding(QString(), QUrl(), QString(), this, i18nc("@title:window", "Insert File"));
+        KEncodingFileDialog::getOpenUrlAndEncoding(QString(), startUrl, QString(), this, i18nc("@title:window", "Insert File"));
     QUrl url;
     if (!result.URLs.isEmpty()) {
         url = result.URLs.constFirst();
         if (url.isValid()) {
             MessageCore::StringUtil::setEncodingFile(url, MimeTreeParser::NodeHelper::fixEncoding(result.encoding));
+            if (!recentDirClass.isEmpty()) {
+                KRecentDirs::add(recentDirClass, url.path());
+            }
         }
     }
     return url;
