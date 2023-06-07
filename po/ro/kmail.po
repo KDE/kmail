@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:48+0000\n"
+"POT-Creation-Date: 2023-06-07 00:49+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -3747,7 +3747,7 @@ msgstr "Cont de identitate"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
 #: manageshowcollectionproperties.cpp:171
 #, fuzzy, kde-format
 #| msgctxt "Search finished."
@@ -3879,21 +3879,21 @@ msgid "&Delete"
 msgstr "Ș&terge"
 
 #: job/removeduplicatemailjob.cpp:31
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:69
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "Șterge mesajele duplicate"
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "Eroare la ștergerea unui dosar."
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
 msgid "Error while removing duplicates"

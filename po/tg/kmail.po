@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:48+0000\n"
+"POT-Creation-Date: 2023-06-07 00:49+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -3789,7 +3789,7 @@ msgstr "Номи ихтисос"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
 #: manageshowcollectionproperties.cpp:171
 #, fuzzy, kde-format
 msgid "Done"
@@ -3914,21 +3914,21 @@ msgid "&Delete"
 msgstr "ҳузфшуда"
 
 #: job/removeduplicatemailjob.cpp:31
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:69
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Removing duplicates"
 msgstr "Ҳузфи нусхаи иттилоот"
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "Натавонистам папкаро ҳузф кунам."
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
 msgid "Error while removing duplicates"

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-13 00:48+0000\n"
+"POT-Creation-Date: 2023-06-07 00:49+0000\n"
 "PO-Revision-Date: 2023-05-07 14:59+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3588,7 +3588,7 @@ msgstr "Akonadi-யின் தற்காலிக நினைவிடத�
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:87
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
 #: manageshowcollectionproperties.cpp:171
 #, kde-format
 msgid "Done"
@@ -3707,19 +3707,19 @@ msgid "&Delete"
 msgstr "&நீக்கு"
 
 #: job/removeduplicatemailjob.cpp:31
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:69
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
 #, kde-format
 msgid "Removing duplicates"
 msgstr "நகல்கள் நீக்கப்படுகின்றன"
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:93
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "நகல் அஞ்சல்களை நீக்கும்போது சிக்கல் ஏற்பட்டது: '%1'"
 
 #: job/removeduplicatemailjob.cpp:62
-#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:94
+#: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, kde-format
 msgid "Error while removing duplicates"
 msgstr "நகல்களை நீக்கும்போது சிக்கல்"
