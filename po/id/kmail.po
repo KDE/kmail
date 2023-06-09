@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-08 02:47+0000\n"
-"PO-Revision-Date: 2023-01-02 07:27+0700\n"
+"POT-Creation-Date: 2023-06-09 02:50+0000\n"
+"PO-Revision-Date: 2023-06-08 19:02+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
 "Language: id\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.3\n"
+"X-Generator: Lokalize 23.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -68,7 +68,7 @@ msgstr ""
 
 #: about/introduction_kmail.html:39
 msgid "Thank you,"
-msgstr ""
+msgstr "Terimakasih,"
 
 #: about/introduction_kmail.html:40
 msgid "The KMail Team"
@@ -399,7 +399,7 @@ msgstr ""
 #: collectionpage/collectionmailinglistpage.cpp:78
 #, kde-format
 msgid "Browser"
-msgstr ""
+msgstr "Browser"
 
 #: collectionpage/collectionmailinglistpage.cpp:81
 #, kde-format
@@ -724,7 +724,7 @@ msgstr "Daftar Pesan - Pesan Item Tindakan"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
-msgstr ""
+msgstr "Font Lebar Tetap"
 
 #: configuredialog/configureappearancepage.cpp:136
 msgid "Composer"
@@ -979,9 +979,7 @@ msgid "Ta&g Settings"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Hapus"
 
@@ -1539,7 +1537,7 @@ msgstr ""
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
-msgstr ""
+msgstr "Plugin Webengine"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
@@ -1579,7 +1577,7 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:55
 #, kde-format
 msgid "Encryption"
-msgstr ""
+msgstr "Enkripsi"
 
 #: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
@@ -1763,7 +1761,7 @@ msgstr ""
 #, kde-format
 msgctxt "Menu item"
 msgid "Encoding"
-msgstr ""
+msgstr "Pengenkodean"
 
 #: editor/kmcomposerwin.cpp:275 kmail_part.cpp:43 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:462 kontactplugin/kmail/kmail_plugin.cpp:39
@@ -2121,7 +2119,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1606
 #, kde-format
 msgid "INS"
-msgstr ""
+msgstr "INS"
 
 #: editor/kmcomposerwin.cpp:1614
 #, kde-format
@@ -2873,7 +2871,7 @@ msgstr ""
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr ""
+msgstr "Fungsikan Autocrypt"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
@@ -3746,76 +3744,76 @@ msgstr "Bilah Alat HTML"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:828
+#: kmkernel.cpp:827
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:848 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:847 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
 #, kde-format
 msgid "Send Email"
 msgstr "Kirim Email"
 
-#: kmkernel.cpp:849 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
+#: kmkernel.cpp:848 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:881
+#: kmkernel.cpp:880
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:883
+#: kmkernel.cpp:882
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:956
+#: kmkernel.cpp:955
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:958
+#: kmkernel.cpp:957
 #, kde-format
 msgid "Online/Offline"
 msgstr ""
 
-#: kmkernel.cpp:959 kmmainwidget.cpp:2358
+#: kmkernel.cpp:958 kmmainwidget.cpp:2358
 #, kde-format
 msgid "Work Online"
 msgstr "Bekerja Secara Online"
 
-#: kmkernel.cpp:960 kmmainwidget.cpp:2355
+#: kmkernel.cpp:959 kmmainwidget.cpp:2355
 #, kde-format
 msgid "Work Offline"
 msgstr "Bekerja Ofline"
 
-#: kmkernel.cpp:984
+#: kmkernel.cpp:983
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:987
+#: kmkernel.cpp:986
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:1082
+#: kmkernel.cpp:1081
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:1083
+#: kmkernel.cpp:1082
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr ""
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1644
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -3823,7 +3821,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1669
+#: kmkernel.cpp:1668
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -3831,24 +3829,24 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1684
+#: kmkernel.cpp:1683
 #, kde-format
 msgid "Sending messages"
 msgstr ""
 
-#: kmkernel.cpp:1685
+#: kmkernel.cpp:1684
 #, kde-format
 msgid "Initiating sending process..."
 msgstr ""
 
-#: kmkernel.cpp:1764
+#: kmkernel.cpp:1763
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1940 kmkernel.cpp:1946
+#: kmkernel.cpp:1939 kmkernel.cpp:1945
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4597,7 +4595,7 @@ msgstr ""
 #: kmmainwidget.cpp:3307
 #, kde-format
 msgid "&Add Account..."
-msgstr ""
+msgstr "&Tambahkan Akun..."
 
 #: kmmainwidget.cpp:3312
 #, kde-format
@@ -4838,6 +4836,12 @@ msgid ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
+"Anda memiliki lebih dari satu akun email yang disiapkan.\n"
+"Apakah Anda ingin mengaktifkan fitur Kotak Surat Terpadu untuk menampilkan "
+"konten terpadu dari folder kotak masuk, terkirim, dan draf?\n"
+"Anda dapat mengonfigurasi kotak surat terpadu, membuat kotak surat khusus, "
+"atau\n"
+"nonaktifkan fitur sepenuhnya di pengaturan Plugin KMail."
 
 #: kmmainwidget.cpp:4811
 #, kde-format
@@ -4938,7 +4942,7 @@ msgstr "Markahkan Tautan Ini"
 #: kmreaderwin.cpp:160
 #, kde-format
 msgid "Edit contact..."
-msgstr ""
+msgstr "Sunting kontak..."
 
 #: kmreaderwin.cpp:166
 #, kde-format
@@ -5083,7 +5087,7 @@ msgstr ""
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] ""
-msgstr[1] "Pesan Tak Terbaca"
+msgstr[1] "Pesan Tak TerbacaPesan Tak Terbaca"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, kde-format
@@ -6431,7 +6435,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr ""
+msgstr "Keamanan bawaan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
@@ -6500,7 +6504,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Peringatan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
@@ -7143,12 +7147,12 @@ msgstr ""
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Ke:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Subyek:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

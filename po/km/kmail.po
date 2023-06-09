@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-08 02:47+0000\n"
+"POT-Creation-Date: 2023-06-09 02:50+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -4072,29 +4072,29 @@ msgstr "របា​ឧបករណ៍​ HTML"
 msgid "Text Direction Toolbar"
 msgstr "របារ​ឧបករណ៍​ទិស​អត្ថបទ"
 
-#: kmkernel.cpp:828
+#: kmkernel.cpp:827
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ត្រូវបាន​កំណត់​ឲ្យនៅ​ក្រៅ​បណ្ដាញ ។ រាល់ការងារ​នៅលើបណ្ដាញ​ទាំងអស់​ត្រូវបាន​ផ្អាក"
 
-#: kmkernel.cpp:848 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:847 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#: kmkernel.cpp:849 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
+#: kmkernel.cpp:848 kmmainwidget.cpp:2370 kmmainwidget.cpp:2386
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ប្រុង​នឹង​ផ្ញើ​សំបុត្រ​ហើយ..."
 
-#: kmkernel.cpp:881
+#: kmkernel.cpp:880
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​បណ្ដាញ ។ រាល់​ការងារ​នៅ​លើ​បណ្ដាញ​ទាំងអស់​បាន​បន្ត"
 
-#: kmkernel.cpp:883
+#: kmkernel.cpp:882
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4103,37 +4103,37 @@ msgstr ""
 "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​​បណ្ដាញ រាល់​ការងារ​ដែល​នៅ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បន្ត នៅ​ពេល​ដែល​ការ​តភ្ជាប់​"
 "បណ្ដាញ​ត្រូវ​បាន​រកឃើញ"
 
-#: kmkernel.cpp:956
+#: kmkernel.cpp:955
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "បច្ចុប្បន្ន KMail នៅក្នុង​របៀប​ក្រៅបណ្ដាញ ។ តើអ្នក​ចង់​បន្ត​ដោយ​របៀបណា ?"
 
-#: kmkernel.cpp:958
+#: kmkernel.cpp:957
 #, kde-format
 msgid "Online/Offline"
 msgstr "លើបណ្ដាញ/ក្រៅបណ្ដាញ"
 
-#: kmkernel.cpp:959 kmmainwidget.cpp:2358
+#: kmkernel.cpp:958 kmmainwidget.cpp:2358
 #, kde-format
 msgid "Work Online"
 msgstr "ធ្វើការ​នៅលើ​បណ្ដាញ"
 
-#: kmkernel.cpp:960 kmmainwidget.cpp:2355
+#: kmkernel.cpp:959 kmmainwidget.cpp:2355
 #, kde-format
 msgid "Work Offline"
 msgstr "ធ្វើការ​នៅក្រៅ​បណ្ដាញ"
 
-#: kmkernel.cpp:984
+#: kmkernel.cpp:983
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ រាល់​ការងារ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បាន​បន្ត"
 
-#: kmkernel.cpp:987
+#: kmkernel.cpp:986
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "គ្មាន​ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ​ទេ រាល់​ការងារ​លើ​បណ្ដាញ​ទាំងអស់​នឹង​ត្រូវ​បាន​ផ្អាក"
 
-#: kmkernel.cpp:1082
+#: kmkernel.cpp:1081
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4142,36 +4142,36 @@ msgstr ""
 "បាន​បរាជ័យ​ក្នុងការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ %1 ។\n"
 "មូលហេតុ​ ៖ %2"
 
-#: kmkernel.cpp:1083
+#: kmkernel.cpp:1082
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ"
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1644
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ ដើម្បី​ប្រើ​កា​រដឹកជញ្ជូន​លំនាំដើម ៖"
 
-#: kmkernel.cpp:1669
+#: kmkernel.cpp:1668
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ត្រូវ​បាន​ផ្លាស់ប្ដូរ​​ដើម្បី​ប្រើ​កា​របញ្ជូនអ្វី​​ដែល​បាន​កែប្រែ ៖"
 
-#: kmkernel.cpp:1684
+#: kmkernel.cpp:1683
 #, kde-format
 msgid "Sending messages"
 msgstr "កំពុង​ផ្ញើ​សារ"
 
-#: kmkernel.cpp:1685
+#: kmkernel.cpp:1684
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "កំពុង​ចាប់ផ្ដើម​ដំណើរការ​ផ្ញើ..."
 
-#: kmkernel.cpp:1764
+#: kmkernel.cpp:1763
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4179,7 +4179,7 @@ msgid ""
 "%2"
 msgstr "ធនធាន %1 ខូច ។ ធនធាន​នេះ​ឥឡូវ​គឺជា %2"
 
-#: kmkernel.cpp:1940 kmkernel.cpp:1946
+#: kmkernel.cpp:1939 kmkernel.cpp:1945
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
