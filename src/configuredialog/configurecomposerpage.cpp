@@ -54,8 +54,8 @@ QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
 }
-ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, data, args)
+ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data)
+    : ConfigModuleWithTabs(parent, data)
 {
     //
     // "General" tab:

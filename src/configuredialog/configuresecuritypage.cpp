@@ -37,8 +37,8 @@ QString SecurityPage::helpAnchor() const
     return QStringLiteral("configure-security");
 }
 
-SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, data, args)
+SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data)
+    : ConfigModuleWithTabs(parent, data)
 {
     //
     // "Reading" tab:

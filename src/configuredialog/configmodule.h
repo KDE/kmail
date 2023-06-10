@@ -18,8 +18,8 @@
 class ConfigModule : public KCModule
 {
 public:
-    explicit ConfigModule(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-        : KCModule(parent, data, args)
+    explicit ConfigModule(QObject *parent, const KPluginMetaData &data)
+        : KCModule(parent, data)
     {
     }
 

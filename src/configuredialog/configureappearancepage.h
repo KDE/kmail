@@ -265,7 +265,7 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AppearancePage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+    explicit AppearancePage(QObject *parent, const KPluginMetaData &data);
 
     QString helpAnchor() const override;
 };

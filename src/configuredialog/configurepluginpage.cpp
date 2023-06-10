@@ -10,8 +10,8 @@
 
 #include <QHBoxLayout>
 
-ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : ConfigModule(parent, data, args)
+ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData &data)
+    : ConfigModule(parent, data)
     , mConfigurePlugins(new PimCommon::ConfigurePluginsWidget(new ConfigurePluginsListWidget(widget()), widget()))
 {
     auto l = new QHBoxLayout(widget());

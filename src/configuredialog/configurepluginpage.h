@@ -17,7 +17,7 @@ class KMAIL_EXPORT ConfigurePluginPage : public ConfigModule
 {
     Q_OBJECT
 public:
-    explicit ConfigurePluginPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args = {});
+    explicit ConfigurePluginPage(QObject *parent, const KPluginMetaData &data);
     ~ConfigurePluginPage() override;
 
     Q_REQUIRED_RESULT QString helpAnchor() const override;

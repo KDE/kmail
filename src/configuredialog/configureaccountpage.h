@@ -105,7 +105,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit AccountsPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+    explicit AccountsPage(QObject *parent, const KPluginMetaData &data);
     QString helpAnchor() const override;
 
 Q_SIGNALS:

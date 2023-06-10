@@ -235,7 +235,7 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+    explicit ComposerPage(QObject *parent, const KPluginMetaData &data);
 
     QString helpAnchor() const override;
 };

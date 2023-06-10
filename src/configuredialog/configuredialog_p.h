@@ -67,7 +67,7 @@ class KMAIL_EXPORT ConfigModuleWithTabs : public ConfigModule
 {
     Q_OBJECT
 public:
-    explicit ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+    explicit ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data);
     ~ConfigModuleWithTabs() override = default;
 
     // don't reimplement any of those methods

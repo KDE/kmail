@@ -21,8 +21,8 @@
 
 // Other headers:
 
-ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : ConfigModule(parent, data, args)
+ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaData &data)
+    : ConfigModule(parent, data)
     , mTabWidget(new QTabWidget(widget()))
 {
     auto vlay = new QVBoxLayout(widget());

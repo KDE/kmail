@@ -27,8 +27,8 @@ QString MiscPage::helpAnchor() const
     return QStringLiteral("configure-misc");
 }
 
-MiscPage::MiscPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
-    : ConfigModuleWithTabs(parent, data, args)
+MiscPage::MiscPage(QObject *parent, const KPluginMetaData &data)
+    : ConfigModuleWithTabs(parent, data)
 {
     auto folderTab = new MiscPageFolderTab();
     addTab(folderTab, i18n("Folders"));

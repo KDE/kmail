@@ -114,6 +114,6 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
-    explicit SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+    explicit SecurityPage(QObject *parent, const KPluginMetaData &data);
     Q_REQUIRED_RESULT QString helpAnchor() const override;
 };
