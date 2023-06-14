@@ -25,7 +25,6 @@ ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData 
 #else
     auto l = new QHBoxLayout(widget());
 #endif
-    l->setContentsMargins({});
     l->addWidget(mConfigurePlugins);
 
     connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::slotConfigureChanged);
