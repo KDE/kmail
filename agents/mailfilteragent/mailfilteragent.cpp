@@ -45,7 +45,7 @@ bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collecti
         return false;
     }
 
-    return m_filterManager->hasAllFoldersFilter() || MailCommon::Kernel::folderIsInbox(collection);
+    return mFilterManager->hasAllFoldersFilter() || MailCommon::Kernel::folderIsInbox(collection);
 
     // TODO: check got filter attribute here
 }
@@ -60,10 +60,10 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     CommonKernel->registerSettingsIf(mMailFilterKernel); // SettingsIf is used in FolderTreeWidget
 
     // Initialize it after registring CommonKernel otherwise it crashs!
-    m_filterManager = new FilterManager(this);
+    mFilterManager = new FilterManager(this);
 
-    connect(m_filterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
-    connect(m_filterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
+    connect(mFilterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
+    connect(mFilterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
 
     auto collectionMonitor = new Akonadi::Monitor(this);
     collectionMonitor->setObjectName(QStringLiteral("MailFilterCollectionMonitor"));
@@ -111,16 +111,16 @@ MailFilterAgent::MailFilterAgent(const QString &id)
         emitProgress();
     });
 
-    itemMonitor = new Akonadi::Monitor(this);
-    itemMonitor->setObjectName(QStringLiteral("MailFilterItemMonitor"));
-    itemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
-    itemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    connect(itemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);
+    mItemMonitor = new Akonadi::Monitor(this);
+    mItemMonitor->setObjectName(QStringLiteral("MailFilterItemMonitor"));
+    mItemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
+    mItemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+    connect(mItemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);
 }
 
 MailFilterAgent::~MailFilterAgent()
 {
-    delete m_filterLogDialog;
+    delete mFilterLogDialog;
 }
 
 void MailFilterAgent::configure(WId windowId)
@@ -130,7 +130,7 @@ void MailFilterAgent::configure(WId windowId)
 
 void MailFilterAgent::initializeCollections()
 {
-    m_filterManager->readConfig();
+    mFilterManager->readConfig();
 
     auto job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
     job->fetchScope().setContentMimeTypes({KMime::Message::mimeType()});
@@ -182,7 +182,7 @@ void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collec
     }
 
     if (item.remoteId().isEmpty()) {
-        itemMonitor->setItemMonitored(item);
+        mItemMonitor->setItemMonitored(item);
     } else {
         filterItem(item, collection);
     }
@@ -195,13 +195,13 @@ void MailFilterAgent::slotItemChanged(const Akonadi::Item &item)
     }
 
     // now we have the remoteId
-    itemMonitor->setItemMonitored(item, false);
+    mItemMonitor->setItemMonitored(item, false);
     filterItem(item, item.parentCollection());
 }
 
 void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection)
 {
-    MailCommon::SearchRule::RequiredPart requiredPart = m_filterManager->requiredPart(collection.resource());
+    MailCommon::SearchRule::RequiredPart requiredPart = mFilterManager->requiredPart(collection.resource());
 
     auto job = new Akonadi::ItemFetchJob(item);
     connect(job, &Akonadi::ItemFetchJob::itemsReceived, this, &MailFilterAgent::itemsReceiviedForFiltering);
@@ -248,7 +248,7 @@ void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &item
     }
 
     emitProgressMessage(i18n("Filtering in %1", Akonadi::AgentManager::self()->instance(resource).name()));
-    if (!m_filterManager->process(item, m_filterManager->requiredPart(resource), FilterManager::Inbound, true, resource)) {
+    if (!mFilterManager->process(item, mFilterManager->requiredPart(resource), FilterManager::Inbound, true, resource)) {
         qCWarning(MAILFILTERAGENT_LOG) << "Impossible to process mails";
     }
 
@@ -272,12 +272,12 @@ void MailFilterAgent::mailCollectionChanged(const Akonadi::Collection &collectio
 void MailFilterAgent::mailCollectionRemoved(const Akonadi::Collection &collection)
 {
     changeRecorder()->setCollectionMonitored(collection, false);
-    m_filterManager->mailCollectionRemoved(collection);
+    mFilterManager->mailCollectionRemoved(collection);
 }
 
 QString MailFilterAgent::createUniqueName(const QString &nameTemplate)
 {
-    return m_filterManager->createUniqueName(nameTemplate);
+    return mFilterManager->createUniqueName(nameTemplate);
 }
 
 void MailFilterAgent::filterItems(const QList<qint64> &itemIds, int filterSet)
@@ -288,7 +288,7 @@ void MailFilterAgent::filterItems(const QList<qint64> &itemIds, int filterSet)
         items << Akonadi::Item(id);
     }
 
-    m_filterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
+    mFilterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
 }
 
 void MailFilterAgent::filterCollections(const QList<qint64> &collections, int filterSet)
@@ -297,7 +297,7 @@ void MailFilterAgent::filterCollections(const QList<qint64> &collections, int fi
         auto ifj = new Akonadi::ItemFetchJob{Akonadi::Collection{id}, this};
         ifj->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         connect(ifj, &Akonadi::ItemFetchJob::itemsReceived, this, [=](const Akonadi::Item::List &items) {
-            m_filterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
+            mFilterManager->applyFilters(items, static_cast<FilterManager::FilterSet>(filterSet));
         });
     }
 }
@@ -310,7 +310,7 @@ void MailFilterAgent::applySpecificFilters(const QList<qint64> &itemIds, int req
         items << Akonadi::Item(id);
     }
 
-    m_filterManager->applySpecificFilters(items, static_cast<MailCommon::SearchRule::RequiredPart>(requiresPart), listFilters);
+    mFilterManager->applySpecificFilters(items, static_cast<MailCommon::SearchRule::RequiredPart>(requiresPart), listFilters);
 }
 
 void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &colIds, const QStringList &listFilters, int filterSet)
@@ -322,19 +322,19 @@ void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &col
         auto ifj = new Akonadi::ItemFetchJob{Akonadi::Collection{id}, this};
         ifj->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
         connect(ifj, &Akonadi::ItemFetchJob::itemsReceived, this, [=](const Akonadi::Item::List &items) {
-            m_filterManager->applySpecificFilters(items, requiresParts, listFilters, static_cast<FilterManager::FilterSet>(filterSet));
+            mFilterManager->applySpecificFilters(items, requiresParts, listFilters, static_cast<FilterManager::FilterSet>(filterSet));
         });
     }
 }
 
 void MailFilterAgent::filterItem(qint64 item, int filterSet, const QString &resourceId)
 {
-    m_filterManager->filter(Akonadi::Item(item), static_cast<FilterManager::FilterSet>(filterSet), resourceId);
+    mFilterManager->filter(Akonadi::Item(item), static_cast<FilterManager::FilterSet>(filterSet), resourceId);
 }
 
 void MailFilterAgent::filter(qint64 item, const QString &filterIdentifier, const QString &resourceId)
 {
-    m_filterManager->filter(Akonadi::Item(item), filterIdentifier, resourceId);
+    mFilterManager->filter(Akonadi::Item(item), filterIdentifier, resourceId);
 }
 
 void MailFilterAgent::reload()
@@ -348,15 +348,15 @@ void MailFilterAgent::reload()
 
 void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
 {
-    if (!m_filterLogDialog) {
-        m_filterLogDialog = new FilterLogDialog(nullptr);
-        m_filterLogDialog->setAttribute(Qt::WA_NativeWindow, true);
+    if (!mFilterLogDialog) {
+        mFilterLogDialog = new FilterLogDialog(nullptr);
+        mFilterLogDialog->setAttribute(Qt::WA_NativeWindow, true);
     }
-    KWindowSystem::setMainWindow(m_filterLogDialog->windowHandle(), windowId);
-    m_filterLogDialog->show();
-    m_filterLogDialog->raise();
-    m_filterLogDialog->activateWindow();
-    m_filterLogDialog->setModal(false);
+    KWindowSystem::setMainWindow(mFilterLogDialog->windowHandle(), windowId);
+    mFilterLogDialog->show();
+    mFilterLogDialog->raise();
+    mFilterLogDialog->activateWindow();
+    mFilterLogDialog->setModal(false);
 }
 
 void MailFilterAgent::emitProgress(int p)
@@ -399,7 +399,7 @@ void MailFilterAgent::expunge(qint64 collectionId)
 
 void MailFilterAgent::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
-    m_filterManager->agentRemoved(instance.identifier());
+    mFilterManager->agentRemoved(instance.identifier());
 }
 
 AKONADI_AGENT_MAIN(MailFilterAgent)

@@ -70,13 +70,13 @@ public Q_SLOTS:
 private:
     bool isFilterableCollection(const Akonadi::Collection &collection) const;
 
-    FilterManager *m_filterManager = nullptr;
+    FilterManager *mFilterManager = nullptr;
 
-    FilterLogDialog *m_filterLogDialog = nullptr;
+    FilterLogDialog *mFilterLogDialog = nullptr;
     QTimer *const mProgressTimer;
     DummyKernel *mMailFilterKernel = nullptr;
     int mProgressCounter = 0;
-    Akonadi::Monitor *itemMonitor = nullptr;
+    Akonadi::Monitor *mItemMonitor = nullptr;
 
     void filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection);
 };
