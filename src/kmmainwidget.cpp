@@ -2906,6 +2906,11 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotFilterLogViewer);
     }
     {
+        auto action = new QAction(i18n("Notification History..."), this);
+        actionCollection()->addAction(QStringLiteral("notification_history"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotShowHistoryNotification);
+    }
+    {
         auto action = new QAction(i18n("&Import from another Email Client..."), this);
         actionCollection()->addAction(QStringLiteral("importWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImportWizard);
@@ -4859,4 +4864,9 @@ void KMMainWidget::slotClearCacheDone()
             process->start();
         }
     }
+}
+
+void KMMainWidget::slotShowHistoryNotification()
+{
+    // TODO
 }
