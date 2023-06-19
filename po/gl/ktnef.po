@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Xosé <xosecalvo@gmail.com>, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2013, 2015, 2017.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-31 00:59+0000\n"
-"PO-Revision-Date: 2019-09-29 09:16+0200\n"
+"PO-Revision-Date: 2023-06-18 20:05+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.11.70\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -128,7 +128,7 @@ msgstr "Propiedades da mensaxe"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
-msgstr "Mostrar o texto da mensaxe"
+msgstr "Amosar o texto da mensaxe"
 
 #: ktnefmain.cpp:145
 #, kde-format
@@ -146,7 +146,7 @@ msgstr "Cartafol predeterminado…"
 #, kde-format
 msgctxt "@info:status"
 msgid "No file loaded"
-msgstr "Non se cargou ningún ficheiro"
+msgstr "Non se cargou ningún ficheiro."
 
 #: ktnefmain.cpp:193
 #, kde-format
@@ -159,8 +159,8 @@ msgstr "Non se pode abrir o ficheiro «%1»."
 msgctxt "@info:status"
 msgid "%1 attachment found"
 msgid_plural "%1 attachments found"
-msgstr[0] "Atopouse %1 anexo"
-msgstr[1] "Atopáronse %1 anexos"
+msgstr[0] "Atopouse %1 anexo."
+msgstr[1] "Atopáronse %1 anexos."
 
 #: ktnefmain.cpp:208
 #, kde-format
@@ -228,7 +228,7 @@ msgstr "&Abrir con…"
 #: ktnefui.rc:6
 #, kde-format
 msgid "&File"
-msgstr ""
+msgstr "&Ficheiro"
 
 #. i18n: ectx: Menu (action)
 #: ktnefui.rc:9
@@ -274,19 +274,16 @@ msgstr "KTnef"
 #: main.cpp:46
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
-msgstr "Visor de anexos de correo que empreguen o formato TNEF"
+msgstr "Visor de anexos de correo que usen o formato TNEF"
 
 #: main.cpp:48
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul\n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
 "Copyright 2012  Allen Winter"
 msgstr ""
-"Copyright 2000 Michael Goffioul\n"
-"Copyright 2012  Allen Winter"
+"© 2000 Michael Goffioul\n"
+"© 2012 Allen Winter"
 
 #: main.cpp:50
 #, kde-format
@@ -314,8 +311,7 @@ msgid "An optional argument 'file' "
 msgstr "Un argumento optativo «ficheiro»"
 
 #: messagepropertydialog.cpp:42
-#, fuzzy, kde-format
-#| msgid "Message Properties"
+#, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "Propiedades da mensaxe"

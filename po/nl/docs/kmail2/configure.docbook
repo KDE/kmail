@@ -1212,11 +1212,13 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
-><guilabel
->Verzending bevestigen</guilabel
-> zorgt ervoor dat er voor elk  verzonden bericht een extra bevestiging wordt gevraagd. <guilabel
->Spelling controleren voor verzenden</guilabel
-> zal de spellingscontrole inschakelen voordat een bericht wordt verzonden.</para>
+>In de sectie <guilabel
+>Vóór verzending</guilabel
+>, zal <guilabel
+>Actie bevestigen</guilabel
+> verschijnen met een bevestigingsvakje elke dat u een bericht verstuurt, terwijl <guilabel
+>Spelling controleren</guilabel
+> de spellingscontrole zal inschakelen voordat een bericht wordt verzonden.</para>
 
 <para
 >Bij <guilabel
