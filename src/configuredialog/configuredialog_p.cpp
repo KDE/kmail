@@ -28,6 +28,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
     auto vlay = new QVBoxLayout(widget());
     vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
+    mWasInitialized = true;
 }
 
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
@@ -41,7 +42,6 @@ void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
 #if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 void ConfigModuleWithTabs::showEvent(QShowEvent *event)
 {
-    mWasInitialized = true;
     ConfigModule::showEvent(event);
 }
 #endif
