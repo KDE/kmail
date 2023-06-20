@@ -214,6 +214,7 @@
    <Action name="importWizard"/>
    <Separator/>
    <Action name="kmail_export_data"/>
+   <Separator/>
    <Action name="notification_history"/>
    <Separator/>
    <Separator/>
