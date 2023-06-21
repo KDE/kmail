@@ -161,3 +161,7 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
 {
     MailCommon::FilterManager::instance()->showFilterLogDialog(static_cast<qlonglong>(mParentWidget->winId()));
 }
+
+void KMLaunchExternalComponent::slotShowNotificationHistory()
+{
+}
