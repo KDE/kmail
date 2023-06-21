@@ -43,9 +43,8 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -55,9 +54,8 @@ void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_mailmerge_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Mail Merge Agent was not registered."));
     }
