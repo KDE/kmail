@@ -5,6 +5,8 @@
 */
 
 #include "kmlaunchexternalcomponent.h"
+#include "kmail_debug.h"
+#include "newmailnotifierinterface.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
 #include <KLocalizedString>
@@ -43,9 +45,8 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -55,9 +56,8 @@ void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_mailmerge_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Mail Merge Agent was not registered."));
     }
@@ -158,4 +158,13 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
 
 void KMLaunchExternalComponent::slotShowNotificationHistory()
 {
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
+    auto newMailNotifierInterface =
+        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    if (!newMailNotifierInterface->isValid()) {
+        qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
+    } else {
+        newMailNotifierInterface->showNotNotificationHistoryDialog(0); // TODO fix me windid
+    }
+    delete newMailNotifierInterface;
 }
