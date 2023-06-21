@@ -10,10 +10,6 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include "archivemailagentinterface.h"
-#include "followupreminderinterface.h"
-#include "mailmergeagentinterface.h"
-#include "sendlateragentinterface.h"
 #include <MailCommon/FilterManager>
 
 #include <KDialogJobUiDelegate>
