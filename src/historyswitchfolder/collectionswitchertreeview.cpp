@@ -61,3 +61,5 @@ void CollectionSwitcherTreeView::showEvent(QShowEvent *event)
     reset();
     QTreeView::showEvent(event);
 }
+
+#include "moc_collectionswitchertreeview.cpp"

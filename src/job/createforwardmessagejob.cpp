@@ -63,3 +63,5 @@ void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &f
     }
     deleteLater();
 }
+
+#include "moc_createforwardmessagejob.cpp"

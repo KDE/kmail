@@ -392,3 +392,5 @@ void LdapCompetionTab::doLoadOther()
 {
     mLdapConfigureWidget->load();
 }
+
+#include "moc_configureaccountpage.cpp"

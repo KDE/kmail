@@ -107,3 +107,5 @@ void KCMKMailSummary::defaults()
     setNeedsSave(true);
 }
 #include "kcmkmailsummary.moc"
+
+#include "moc_kcmkmailsummary.cpp"

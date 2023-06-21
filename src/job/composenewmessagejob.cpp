@@ -86,3 +86,5 @@ void ComposeNewMessageJob::setRecipientsFromMessage(const Akonadi::Item &from)
 {
     mRecipientsFrom = from;
 }
+
+#include "moc_composenewmessagejob.cpp"

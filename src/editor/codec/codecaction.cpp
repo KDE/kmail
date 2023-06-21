@@ -104,3 +104,5 @@ void CodecAction::setCharset(const QByteArray &charset)
         setCurrentCodec(codecNameToSet);
     }
 }
+
+#include "moc_codecaction.cpp"

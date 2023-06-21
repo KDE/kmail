@@ -198,3 +198,5 @@ QString SendLaterAgent::printDebugInfo() const
 }
 
 AKONADI_AGENT_MAIN(SendLaterAgent)
+
+#include "moc_sendlateragent.cpp"

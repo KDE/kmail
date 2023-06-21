@@ -192,3 +192,5 @@ ArchiveMailKernel *ArchiveMailManager::kernel() const
 {
     return mArchiveMailKernel;
 }
+
+#include "moc_archivemailmanager.cpp"

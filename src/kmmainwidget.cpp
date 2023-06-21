@@ -4864,3 +4864,5 @@ void KMMainWidget::slotClearCacheDone()
         }
     }
 }
+
+#include "moc_kmmainwidget.cpp"

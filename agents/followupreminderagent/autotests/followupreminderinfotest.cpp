@@ -99,3 +99,5 @@ void FollowUpReminderInfoTest::shouldCopyReminderInfo()
 }
 
 QTEST_GUILESS_MAIN(FollowUpReminderInfoTest)
+
+#include "moc_followupreminderinfotest.cpp"

@@ -181,3 +181,5 @@ void UnifiedMailboxEditor::writeConfig()
 }
 
 #include "unifiedmailboxeditor.moc"
+
+#include "moc_unifiedmailboxeditor.cpp"

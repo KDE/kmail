@@ -168,3 +168,5 @@ void KMLaunchExternalComponent::slotShowNotificationHistory()
     }
     delete newMailNotifierInterface;
 }
+
+#include "moc_kmlaunchexternalcomponent.cpp"

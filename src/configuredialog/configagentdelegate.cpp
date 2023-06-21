@@ -230,3 +230,5 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
 
     return buttonOpt;
 }
+
+#include "moc_configagentdelegate.cpp"

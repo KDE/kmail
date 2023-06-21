@@ -77,3 +77,5 @@ void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFa
     win->show();
     deleteLater();
 }
+
+#include "moc_createreplymessagejob.cpp"

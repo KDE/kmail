@@ -42,3 +42,5 @@ void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &l
             i18n("These attachments: <ul><li>%1</li></ul> were added externally. Remove them if it's an error.", attachments.join(QLatin1String("</li><li>"))));
     }
 }
+
+#include "moc_attachmentaddedfromexternalwarning.cpp"

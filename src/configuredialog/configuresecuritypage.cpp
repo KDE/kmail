@@ -705,3 +705,5 @@ void GpgSettingsDialog::saveConfig()
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
+
+#include "moc_configuresecuritypage.cpp"

@@ -73,3 +73,5 @@ void PotentialPhishingDetailDialog::slotSave()
     mPotentialPhishingDetailWidget->save();
     accept();
 }
+
+#include "moc_potentialphishingdetaildialog.cpp"

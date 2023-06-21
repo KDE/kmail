@@ -34,3 +34,5 @@ MailCommon::BackupJob::ArchiveType FormatComboBox::format() const
 {
     return static_cast<MailCommon::BackupJob::ArchiveType>(itemData(currentIndex()).toInt());
 }
+
+#include "moc_formatcombobox.cpp"

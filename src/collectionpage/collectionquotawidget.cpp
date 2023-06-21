@@ -41,3 +41,5 @@ void CollectionQuotaWidget::setQuotaInfo(qint64 current, qint64 maxValue)
     mProgressBar->setValue(perc);
     mUsage->setText(i18n("%1 of %2 used", KIO::convertSize(qMax(0LL, current)), KIO::convertSize(qMax(0LL, maxValue))));
 }
+
+#include "moc_collectionquotawidget.cpp"

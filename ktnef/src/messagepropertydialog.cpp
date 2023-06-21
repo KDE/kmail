@@ -94,3 +94,5 @@ void MessagePropertyDialog::writeConfig()
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();
 }
+
+#include "moc_messagepropertydialog.cpp"

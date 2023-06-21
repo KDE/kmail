@@ -85,3 +85,5 @@ bool PotentialPhishingEmailJob::start()
     deleteLater();
     return true;
 }
+
+#include "moc_potentialphishingemailjob.cpp"

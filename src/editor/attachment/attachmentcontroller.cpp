@@ -139,3 +139,5 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
         editAttachment(part);
     }
 }
+
+#include "moc_attachmentcontroller.cpp"

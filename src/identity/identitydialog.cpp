@@ -1166,3 +1166,5 @@ void IdentityDialog::updateVcardButton()
 }
 
 #include "identitydialog.moc"
+
+#include "moc_identitydialog.cpp"

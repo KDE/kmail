@@ -42,3 +42,5 @@ void UnitComboBoxTest::changeCurrentItem()
 }
 
 QTEST_MAIN(UnitComboBoxTest)
+
+#include "moc_unitcomboboxtest.cpp"

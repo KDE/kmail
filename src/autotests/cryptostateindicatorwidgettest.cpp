@@ -69,3 +69,5 @@ void CryptoStateIndicatorWidgetTest::shouldVisibleWhenChangeStatus()
 }
 
 QTEST_MAIN(CryptoStateIndicatorWidgetTest)
+
+#include "moc_cryptostateindicatorwidgettest.cpp"

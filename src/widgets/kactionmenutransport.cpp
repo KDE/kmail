@@ -57,3 +57,5 @@ void KActionMenuTransport::slotSelectTransport(QAction *act)
         Q_EMIT transportSelected(transport);
     }
 }
+
+#include "moc_kactionmenutransport.cpp"

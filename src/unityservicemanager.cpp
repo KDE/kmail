@@ -232,3 +232,5 @@ void UnityServiceManager::toggleSystemTray(QWidget *widget)
         }
     }
 }
+
+#include "moc_unityservicemanager.cpp"

@@ -86,3 +86,5 @@ void KMailPluginGrammarEditorManagerInterface::initializePlugins()
     }
     mWasInitialized = true;
 }
+
+#include "moc_kmailplugingrammareditormanagerinterface.cpp"

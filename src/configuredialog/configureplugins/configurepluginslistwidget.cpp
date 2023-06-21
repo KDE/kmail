@@ -405,3 +405,5 @@ void ConfigurePluginsListWidget::defaults()
 {
     doResetToDefaultsOther();
 }
+
+#include "moc_configurepluginslistwidget.cpp"

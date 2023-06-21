@@ -84,3 +84,5 @@ void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectFromExistingVCar
 }
 
 QTEST_MAIN(identityaddvcarddialogtest)
+
+#include "moc_identityaddvcarddialogtest.cpp"

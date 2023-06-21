@@ -187,3 +187,5 @@ QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInf
     infoStr += QStringLiteral("****************************************\n");
     return infoStr;
 }
+
+#include "moc_followupremindermanager.cpp"

@@ -27,3 +27,5 @@ void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(PotentialPhishingEmailWarningTest)
+
+#include "moc_potentialphishingemailwarningtest.cpp"

@@ -23,3 +23,5 @@ void KActionMenuTransportTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(KActionMenuTransportTest)
+
+#include "moc_kactionmenutransporttest.cpp"

@@ -76,3 +76,5 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotMarkAsResult(Akonadi::Mar
     }
     deleteLater();
 }
+
+#include "moc_markallmessagesasreadinfolderandsubfolderjob.cpp"

@@ -32,3 +32,5 @@ ArchiveMailInfo::ArchiveUnit UnitComboBox::unit() const
 {
     return static_cast<ArchiveMailInfo::ArchiveUnit>(itemData(currentIndex()).toInt());
 }
+
+#include "moc_unitcombobox.cpp"

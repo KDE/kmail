@@ -20,3 +20,5 @@ TooManyRecipientsWarning::TooManyRecipientsWarning(QWidget *parent)
 }
 
 TooManyRecipientsWarning::~TooManyRecipientsWarning() = default;
+
+#include "moc_toomanyrecipientswarning.cpp"

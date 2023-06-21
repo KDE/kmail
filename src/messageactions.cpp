@@ -784,3 +784,5 @@ QAction *MessageActions::exportToPdfAction() const
 {
     return mExportToPdfAction;
 }
+
+#include "moc_messageactions.cpp"

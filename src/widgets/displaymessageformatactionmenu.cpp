@@ -78,3 +78,5 @@ void DisplayMessageFormatActionMenu::updateMenu()
         }
     }
 }
+
+#include "moc_displaymessageformatactionmenu.cpp"

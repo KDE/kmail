@@ -3974,3 +3974,5 @@ void KMComposerWin::slotEditorPluginInsertText(const QString &str)
 {
     mGlobalAction->slotInsertText(str);
 }
+
+#include "moc_kmcomposerwin.cpp"

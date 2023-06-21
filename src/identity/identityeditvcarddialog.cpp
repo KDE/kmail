@@ -131,3 +131,5 @@ void IdentityEditVcardDialog::reject()
         QDialog::reject(); // Discard current changes
     }
 }
+
+#include "moc_identityeditvcarddialog.cpp"

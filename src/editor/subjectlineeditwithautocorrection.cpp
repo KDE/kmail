@@ -28,3 +28,5 @@ void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
     }
     PimCommon::LineEditWithAutoCorrection::dropEvent(event);
 }
+
+#include "moc_subjectlineeditwithautocorrection.cpp"

@@ -189,3 +189,5 @@ void IdentityListView::setIdentityManager(KIdentityManagementCore::IdentityManag
 {
     mIdentityManager = im;
 }
+
+#include "moc_identitylistview.cpp"

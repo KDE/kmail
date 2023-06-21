@@ -56,3 +56,5 @@ void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychai
     mSievePassword.clear();
     mSieveCustomPassword.clear();
 }
+
+#include "moc_kmsieveimappasswordprovider.cpp"

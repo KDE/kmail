@@ -119,3 +119,5 @@ void ArchiveMailKernel::expunge(Akonadi::Collection::Id col, bool sync)
     Q_UNUSED(col)
     Q_UNUSED(sync)
 }
+
+#include "moc_archivemailkernel.cpp"

@@ -77,3 +77,5 @@ void FolderArchiveCache::addToCache(const QString &resourceName, Akonadi::Collec
         mCache.insert(resourceName, cache);
     }
 }
+
+#include "moc_folderarchivecache.cpp"

@@ -207,3 +207,5 @@ void KuserFeedBackPageTab::doLoadFromGlobalSettings()
 }
 
 #endif
+
+#include "moc_configuremiscpage.cpp"

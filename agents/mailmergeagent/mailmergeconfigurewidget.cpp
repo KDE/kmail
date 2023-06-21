@@ -15,3 +15,5 @@ MailMergeConfigureWidget::MailMergeConfigureWidget(QWidget *parent)
 }
 
 MailMergeConfigureWidget::~MailMergeConfigureWidget() = default;
+
+#include "moc_mailmergeconfigurewidget.cpp"

@@ -75,3 +75,5 @@ void DndFromArkJob::setComposerWin(KMComposerWin *composerWin)
 {
     mComposerWin = composerWin;
 }
+
+#include "moc_dndfromarkjob.cpp"

@@ -242,3 +242,5 @@ void KMComposerWinTest::testChangeIdentity()
         QCOMPARE(signature->isVisible(), false);
     }
 }
+
+#include "moc_kmcomposerwintest.cpp"

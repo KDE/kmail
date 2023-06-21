@@ -45,3 +45,5 @@ void PotentialPhishingEmailWarning::setPotentialPhisingEmail(const QStringList &
         animatedShow();
     }
 }
+
+#include "moc_potentialphishingemailwarning.cpp"

@@ -136,3 +136,5 @@ bool KMComposerEditorNg::processModifyText(QKeyEvent *event)
     }
     return true;
 }
+
+#include "moc_kmcomposereditorng.cpp"

@@ -219,3 +219,5 @@ int AddArchiveMailDialog::maximumArchiveCount() const
 {
     return mMaximumArchive->value();
 }
+
+#include "moc_addarchivemaildialog.cpp"

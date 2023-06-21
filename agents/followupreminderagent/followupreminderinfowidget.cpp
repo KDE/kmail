@@ -270,3 +270,5 @@ void FollowUpReminderInfoWidget::saveTreeWidgetHeader(KConfigGroup &group)
 {
     group.writeEntry("HeaderState", mTreeWidget->header()->saveState());
 }
+
+#include "moc_followupreminderinfowidget.cpp"

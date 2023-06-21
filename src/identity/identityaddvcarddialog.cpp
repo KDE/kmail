@@ -118,3 +118,5 @@ QUrl IdentityAddVcardDialog::existingVCard() const
 {
     return mVCardPath->url();
 }
+
+#include "moc_identityaddvcarddialog.cpp"

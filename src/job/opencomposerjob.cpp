@@ -152,3 +152,5 @@ void OpenComposerJob::slotOpenComposer()
     }
     deleteLater();
 }
+
+#include "moc_opencomposerjob.cpp"

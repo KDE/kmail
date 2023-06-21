@@ -50,3 +50,5 @@ void KMComposerCreateNewComposerJob::setCollectionForNewMessage(const Akonadi::C
 {
     mCollectionForNewMessage = collectionForNewMessage;
 }
+
+#include "moc_kmcomposercreatenewcomposerjob.cpp"

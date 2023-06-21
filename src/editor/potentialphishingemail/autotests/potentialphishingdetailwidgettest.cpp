@@ -71,3 +71,5 @@ void PotentialPhishingDetailWidgetTest::shouldNotAddDuplicateEntries()
 }
 
 QTEST_MAIN(PotentialPhishingDetailWidgetTest)
+
+#include "moc_potentialphishingdetailwidgettest.cpp"

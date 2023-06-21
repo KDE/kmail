@@ -19,3 +19,5 @@ ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
 }
 
 ExternalEditorWarning::~ExternalEditorWarning() = default;
+
+#include "moc_externaleditorwarning.cpp"

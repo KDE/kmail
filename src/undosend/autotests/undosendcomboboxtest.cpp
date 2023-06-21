@@ -19,3 +19,5 @@ void UndoSendComboboxTest::shouldHaveDefaultValues()
     UndoSendCombobox w;
     QCOMPARE(w.count(), 6);
 }
+
+#include "moc_undosendcomboboxtest.cpp"

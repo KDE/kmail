@@ -56,3 +56,5 @@ void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
 }
 
 QTEST_MAIN(FolderArchiveAccountInfoTest)
+
+#include "moc_folderarchiveaccountinfotest.cpp"

@@ -80,3 +80,5 @@ void FollowUpReminderFinishTaskJob::slotItemModifiedResult(KJob *job)
     }
     deleteLater();
 }
+
+#include "moc_followupreminderfinishtaskjob.cpp"

@@ -67,3 +67,5 @@ void CheckIndexingJob::slotCollectionPropertiesFinished(KJob *job)
     }
     askForNextCheck(mCollection.id(), needToReindex);
 }
+
+#include "moc_checkindexingjob.cpp"

@@ -93,3 +93,5 @@ void FollowupReminderNoAnswerDialogTest::shouldItemHaveInfo()
 }
 
 QTEST_MAIN(FollowupReminderNoAnswerDialogTest)
+
+#include "moc_followupremindernoanswerdialogtest.cpp"

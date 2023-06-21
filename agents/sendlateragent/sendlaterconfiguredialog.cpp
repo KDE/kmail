@@ -102,3 +102,5 @@ void SendLaterConfigureDialog::writeConfig()
     KWindowConfig::saveWindowSize(windowHandle(), group);
     mWidget->saveTreeWidgetHeader(group);
 }
+
+#include "moc_sendlaterconfiguredialog.cpp"

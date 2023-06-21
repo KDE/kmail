@@ -330,3 +330,5 @@ void IdentityPage::updateButtons()
     const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
 }
+
+#include "moc_identitypage.cpp"

@@ -190,3 +190,5 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEdit
     }
     return mActionHash;
 }
+
+#include "moc_kmailplugineditormanagerinterface.cpp"

@@ -114,3 +114,5 @@ Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
     }
     return item;
 }
+
+#include "moc_addemailtoexistingcontactdialog.cpp"

@@ -235,3 +235,5 @@ QPixmap AttachPropertyDialog::loadRenderingPixmap(KTNEFPropertySet *pSet, const 
     }
     return pix;
 }
+
+#include "moc_attachpropertydialog.cpp"

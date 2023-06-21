@@ -342,3 +342,5 @@ void CollectionMailingListPage::slotInvokeHandler()
         qCWarning(KMAIL_LOG) << "Wrong entry in the mailing list entry combo!";
     }
 }
+
+#include "moc_collectionmailinglistpage.cpp"

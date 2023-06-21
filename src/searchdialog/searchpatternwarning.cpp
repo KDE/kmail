@@ -36,3 +36,5 @@ void SearchPatternWarning::hideWarningPattern()
     setText(QString());
     animatedHide();
 }
+
+#include "moc_searchpatternwarning.cpp"

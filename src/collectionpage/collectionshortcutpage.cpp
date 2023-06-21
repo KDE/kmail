@@ -83,3 +83,5 @@ void CollectionShortcutPage::slotShortcutChanged()
 {
     mShortcutChanged = true;
 }
+
+#include "moc_collectionshortcutpage.cpp"

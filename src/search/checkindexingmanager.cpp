@@ -151,3 +151,5 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
         }
     }
 }
+
+#include "moc_checkindexingmanager.cpp"

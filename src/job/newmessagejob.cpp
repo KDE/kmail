@@ -71,3 +71,5 @@ void NewMessageJob::setNewMessageJobSettings(const NewMessageJobSettings &newMes
 {
     mNewMessageJobSettings = newMessageJobSettings;
 }
+
+#include "moc_newmessagejob.cpp"

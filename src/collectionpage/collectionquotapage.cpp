@@ -54,3 +54,5 @@ void CollectionQuotaPage::save(Akonadi::Collection &)
 {
     // nothing to do, we are read-only
 }
+
+#include "moc_collectionquotapage.cpp"

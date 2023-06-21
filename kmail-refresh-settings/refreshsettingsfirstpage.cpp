@@ -25,3 +25,5 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
 }
 
 RefreshSettingsFirstPage::~RefreshSettingsFirstPage() = default;
+
+#include "moc_refreshsettingsfirstpage.cpp"

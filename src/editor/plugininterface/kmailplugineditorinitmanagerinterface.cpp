@@ -63,3 +63,5 @@ void KMailPluginEditorInitManagerInterface::initializePlugins()
     }
     mWasInitialized = true;
 }
+
+#include "moc_kmailplugineditorinitmanagerinterface.cpp"

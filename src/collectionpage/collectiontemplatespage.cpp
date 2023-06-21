@@ -50,3 +50,5 @@ void CollectionTemplatesPage::save(Collection &col)
 {
     mCollectionTemplateWidget->save(col);
 }
+
+#include "moc_collectiontemplatespage.cpp"

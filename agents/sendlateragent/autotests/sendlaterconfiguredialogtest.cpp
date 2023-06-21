@@ -37,3 +37,5 @@ void SendLaterConfigureDialogTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(SendLaterConfigureDialogTest)
+
+#include "moc_sendlaterconfiguredialogtest.cpp"

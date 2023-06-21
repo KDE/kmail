@@ -129,3 +129,5 @@ void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
     }
     Q_EMIT undoStackChanged();
 }
+
+#include "moc_undostack.cpp"

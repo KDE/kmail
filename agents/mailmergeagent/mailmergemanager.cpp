@@ -41,3 +41,5 @@ bool MailMergeManager::itemRemoved(Akonadi::Item::Id id)
     //    }
     return false;
 }
+
+#include "moc_mailmergemanager.cpp"

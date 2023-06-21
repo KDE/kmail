@@ -66,3 +66,5 @@ void SecondaryWindow::setCaption(const QString &userCaption)
 
     setWindowTitle(captionString);
 }
+
+#include "moc_secondarywindow.cpp"

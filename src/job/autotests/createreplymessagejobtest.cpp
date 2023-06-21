@@ -25,3 +25,5 @@ void CreateReplyMessageJobTest::shouldHaveDefaultValue()
     QVERIFY(!settings.replyAsHtml);
     QCOMPARE(settings.replyStrategy, MessageComposer::ReplySmart);
 }
+
+#include "moc_createreplymessagejobtest.cpp"

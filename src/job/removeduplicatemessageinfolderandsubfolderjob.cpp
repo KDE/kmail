@@ -119,3 +119,5 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled
     item = nullptr;
     deleteLater();
 }
+
+#include "moc_removeduplicatemessageinfolderandsubfolderjob.cpp"

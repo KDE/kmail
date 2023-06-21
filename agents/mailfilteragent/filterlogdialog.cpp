@@ -344,3 +344,5 @@ void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
         menu->addAction(clearAllAction);
     }
 }
+
+#include "moc_filterlogdialog.cpp"

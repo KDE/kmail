@@ -66,3 +66,5 @@ void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidFcc()
     QVERIFY(w.isVisible());
     QVERIFY(!w.text().isEmpty());
 }
+
+#include "moc_incorrectidentityfolderwarningtest.cpp"

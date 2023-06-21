@@ -128,3 +128,5 @@ bool CreateFollowupReminderOnExistingMessageJob::canStart() const
 {
     return mMessageItem.isValid() && mCollection.isValid() && mDate.isValid();
 }
+
+#include "moc_createfollowupreminderonexistingmessagejob.cpp"

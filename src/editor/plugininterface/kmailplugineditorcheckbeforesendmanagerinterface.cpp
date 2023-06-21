@@ -58,3 +58,5 @@ bool KMailPluginEditorCheckBeforeSendManagerInterface::execute(const MessageComp
     }
     return true;
 }
+
+#include "moc_kmailplugineditorcheckbeforesendmanagerinterface.cpp"

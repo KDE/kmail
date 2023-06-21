@@ -46,3 +46,5 @@ void ConfigurePluginPage::slotConfigureChanged()
 {
     markAsChanged();
 }
+
+#include "moc_configurepluginpage.cpp"

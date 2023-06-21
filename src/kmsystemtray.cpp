@@ -285,3 +285,5 @@ void KMSystemTray::slotSelectCollection(QAction *act)
         activate();
     }
 }
+
+#include "moc_kmsystemtray.cpp"

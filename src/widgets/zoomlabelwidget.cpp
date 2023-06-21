@@ -23,3 +23,5 @@ void ZoomLabelWidget::setZoom(qreal zoomFactor)
         hide();
     }
 }
+
+#include "moc_zoomlabelwidget.cpp"

@@ -70,3 +70,5 @@ void ArchiveMailInfoTest::shouldCopyArchiveInfo()
 }
 
 QTEST_MAIN(ArchiveMailInfoTest)
+
+#include "moc_archivemailinfotest.cpp"

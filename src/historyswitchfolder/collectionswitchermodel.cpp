@@ -66,3 +66,5 @@ bool CollectionSwitcherModel::CollectionInfo::operator==(const CollectionInfo &o
 {
     return other.mNewCollection == mNewCollection && other.mFullPath == mFullPath;
 }
+
+#include "moc_collectionswitchermodel.cpp"

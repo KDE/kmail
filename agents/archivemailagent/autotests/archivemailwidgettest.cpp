@@ -32,3 +32,5 @@ void ArchiveMailWidgetTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(ArchiveMailWidgetTest)
+
+#include "moc_archivemailwidgettest.cpp"

@@ -1868,3 +1868,5 @@ QDebug operator<<(QDebug d, const KMPrintCommandInfo &t)
     d << "mHeaderStylePlugin " << t.mHeaderStylePlugin;
     return d;
 }
+
+#include "moc_kmcommands.cpp"

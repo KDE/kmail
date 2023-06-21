@@ -106,3 +106,5 @@ void ConfigModuleTab::slotEmitChanged()
         Q_EMIT changed(true);
     }
 }
+
+#include "moc_configuredialog_p.cpp"

@@ -70,3 +70,5 @@ void ConfigureDialog::slotOk()
     }
     Q_EMIT configChanged();
 }
+
+#include "moc_configuredialog.cpp"

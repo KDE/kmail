@@ -41,3 +41,5 @@ void KMailSettings::slotSyncNow()
 }
 
 KMailSettings::~KMailSettings() = default;
+
+#include "moc_kmailsettings.cpp"

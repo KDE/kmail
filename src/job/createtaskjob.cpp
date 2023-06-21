@@ -119,3 +119,5 @@ void CreateTaskJob::slotModifyItemDone(KJob *job)
     }
     deleteLater();
 }
+
+#include "moc_createtaskjob.cpp"

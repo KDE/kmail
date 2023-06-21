@@ -64,3 +64,5 @@ void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
 }
 
 QTEST_MAIN(DisplayMessageFormatActionMenuTest)
+
+#include "moc_displaymessageformatactionmenutest.cpp"

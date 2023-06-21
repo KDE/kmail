@@ -77,3 +77,5 @@ void CryptoStateIndicatorWidget::updateSignatureAndEncrypionStateIndicators(bool
     mEncryptionStateIndicator->setText(isEncrypted ? i18n("Message will be encrypted") : i18n("Message will not be encrypted"));
     updateShowAlwaysIndicator();
 }
+
+#include "moc_cryptostateindicatorwidget.cpp"

@@ -29,3 +29,5 @@ void ExternalEditorWarningTest::shouldHaveDefaultValue()
     QVERIFY(w.wordWrap());
     QVERIFY(!w.text().isEmpty());
 }
+
+#include "moc_externaleditorwarningtest.cpp"

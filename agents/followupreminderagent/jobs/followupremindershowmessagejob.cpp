@@ -39,3 +39,5 @@ void FollowUpReminderShowMessageJob::start()
     kmail.call(QStringLiteral("showMail"), mId);
     deleteLater();
 }
+
+#include "moc_followupremindershowmessagejob.cpp"

@@ -113,3 +113,5 @@ void UndoSendCreateJob::setAkonadiIndex(qint64 akonadiIndex)
 {
     mAkonadiIndex = akonadiIndex;
 }
+
+#include "moc_undosendcreatejob.cpp"

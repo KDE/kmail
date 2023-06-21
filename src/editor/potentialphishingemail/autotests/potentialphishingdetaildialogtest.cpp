@@ -30,3 +30,5 @@ void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(PotentialPhishingDetailDialogTest)
+
+#include "moc_potentialphishingdetaildialogtest.cpp"

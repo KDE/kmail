@@ -121,3 +121,5 @@ void CreateNewContactJob::slotContactEditorError(const QString &error)
 {
     KMessageBox::error(mParentWidget, i18n("Contact cannot be stored: %1", error), i18n("Failed to store contact"));
 }
+
+#include "moc_createnewcontactjob.cpp"

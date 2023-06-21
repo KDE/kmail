@@ -23,3 +23,5 @@ void CollectionSwitcherTreeViewManagerTest::shouldHaveDefaultValues()
     QVERIFY(m.collectionSwitcherTreeView());
     QVERIFY(m.collectionSwitcherTreeView()->model());
 }
+
+#include "moc_collectionswitchertreeviewmanagertest.cpp"

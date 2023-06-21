@@ -63,3 +63,5 @@ void PotentialPhishingDetailWidget::save()
         group.writeEntry("whiteList", potentialPhishing);
     }
 }
+
+#include "moc_potentialphishingdetailwidget.cpp"

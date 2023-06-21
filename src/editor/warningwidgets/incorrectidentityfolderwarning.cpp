@@ -92,3 +92,5 @@ void IncorrectIdentityFolderWarning::slotHideAnnimationFinished()
     mIdentityIsInvalid = false;
     mDictionaryIsInvalid = false;
 }
+
+#include "moc_incorrectidentityfolderwarning.cpp"

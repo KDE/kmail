@@ -200,3 +200,5 @@ void AttachmentView::slotShowHideAttchementList(bool show)
         mToolButton->setToolTip(i18n("Show attachment list"));
     }
 }
+
+#include "moc_attachmentview.cpp"

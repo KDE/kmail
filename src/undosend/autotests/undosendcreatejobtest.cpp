@@ -21,3 +21,5 @@ void UndoSendCreateJobTest::shouldHaveDefaultValues()
     QCOMPARE(job.delay(), -1);
     QVERIFY(job.subject().isEmpty());
 }
+
+#include "moc_undosendcreatejobtest.cpp"

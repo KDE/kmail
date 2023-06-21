@@ -248,3 +248,5 @@ int main(int argc, char *argv[])
     KMCommandsTest tc;
     return QTest::qExec(&tc, argc, argv);
 }
+
+#include "moc_kmcommandstest.cpp"

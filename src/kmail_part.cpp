@@ -123,3 +123,5 @@ void KMailPart::save()
 }
 
 #include "kmail_part.moc"
+
+#include "moc_kmail_part.cpp"

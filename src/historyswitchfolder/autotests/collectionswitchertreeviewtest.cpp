@@ -26,3 +26,5 @@ void CollectionSwitcherTreeViewTest::shouldHaveDefaultValues()
     QVERIFY(w.isHeaderHidden());
     QCOMPARE(w.windowFlags(), Qt::Popup | Qt::FramelessWindowHint);
 }
+
+#include "moc_collectionswitchertreeviewtest.cpp"

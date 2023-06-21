@@ -122,3 +122,5 @@ MailCommon::ScheduledJob *ScheduledArchiveTask::run()
 {
     return folder().isValid() ? new ArchiveJob(mManager, mInfo, folder(), isImmediate()) : nullptr;
 }
+
+#include "moc_archivejob.cpp"

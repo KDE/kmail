@@ -153,3 +153,5 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
         }
     }
 }
+
+#include "moc_encodedimagepicker.cpp"

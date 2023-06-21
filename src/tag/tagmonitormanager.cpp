@@ -91,3 +91,5 @@ void TagMonitorManager::onTagChanged(const Akonadi::Tag &akonadiTag)
     std::sort(mTags.begin(), mTags.end(), MailCommon::Tag::compare);
     Q_EMIT tagChanged();
 }
+
+#include "moc_tagmonitormanager.cpp"

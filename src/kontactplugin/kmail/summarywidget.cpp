@@ -219,3 +219,5 @@ bool SummaryWidget::eventFilter(QObject *obj, QEvent *e)
 
     return KontactInterface::Summary::eventFilter(obj, e);
 }
+
+#include "moc_summarywidget.cpp"

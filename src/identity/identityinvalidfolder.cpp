@@ -23,3 +23,5 @@ void IdentityInvalidFolder::setErrorMessage(const QString &msg)
     animatedShow();
     setText(msg);
 }
+
+#include "moc_identityinvalidfolder.cpp"

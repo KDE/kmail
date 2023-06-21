@@ -145,3 +145,5 @@ void RefreshSettingsCleanupPage::initCleanupDialogSettings(const QString &config
     settingsrc->sync();
     Q_EMIT cleanDoneInfo(i18n("Clean Dialog Size in setting file `%1`: Done", configName));
 }
+
+#include "moc_refreshsettingscleanuppage.cpp"

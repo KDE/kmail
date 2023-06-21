@@ -80,3 +80,5 @@ void SendLaterConfigTest::shouldNotAddInvalidItem()
 }
 
 QTEST_MAIN(SendLaterConfigTest)
+
+#include "moc_sendlaterconfigtest.cpp"

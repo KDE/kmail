@@ -90,3 +90,5 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
 
     emitResult();
 }
+
+#include "moc_addressvalidationjob.cpp"

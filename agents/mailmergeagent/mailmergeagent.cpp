@@ -193,3 +193,5 @@ QString MailMergeAgent::printDebugInfo() const
 }
 
 AKONADI_AGENT_MAIN(MailMergeAgent)
+
+#include "moc_mailmergeagent.cpp"

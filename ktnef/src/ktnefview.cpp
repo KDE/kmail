@@ -138,3 +138,5 @@ void KTNEFView::adjustColumnWidth()
     setColumnWidth(1, w / 2);
     setColumnWidth(2, w / 2);
 }
+
+#include "moc_ktnefview.cpp"

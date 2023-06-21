@@ -150,3 +150,5 @@ void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType t
     mManager->sendError(mInfo, type);
     deleteLater();
 }
+
+#include "moc_sendlaterjob.cpp"

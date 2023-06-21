@@ -68,3 +68,5 @@ Akonadi::Item::List KMailPluginCheckBeforeDeletingManagerInterface::confirmBefor
     }
     return currentList;
 }
+
+#include "moc_kmailplugincheckbeforedeletingmanagerinterface.cpp"

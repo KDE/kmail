@@ -342,3 +342,5 @@ void ArchiveMailWidget::saveDialogSize(const QSize &size)
     auto group = config()->group(myConfigGroupName);
     group.writeEntry("Size", size);
 }
+
+#include "moc_archivemailwidget.cpp"

@@ -28,3 +28,5 @@ void RefreshSettringsFinishPage::slotCleanDoneInfo(const QString &str)
 {
     mTextEdit->insertPlainText(str + QLatin1Char('\n'));
 }
+
+#include "moc_refreshsettringsfinishpage.cpp"

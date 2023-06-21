@@ -511,3 +511,5 @@ bool SummaryViewPart::event(QEvent *e)
     }
     return KParts::Part::event(e);
 }
+
+#include "moc_summaryview_part.cpp"

@@ -269,3 +269,5 @@ void UnifiedMailboxAgent::fixSpecialCollections()
 }
 
 AKONADI_RESOURCE_MAIN(UnifiedMailboxAgent)
+
+#include "moc_unifiedmailboxagent.cpp"

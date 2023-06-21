@@ -30,3 +30,5 @@ void DropWidget::dropEvent(QDropEvent *event)
     alignment |= (event->position().toPoint().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
     Q_EMIT summaryWidgetDropped(this, event->source(), alignment);
 }
+
+#include "moc_dropwidget.cpp"

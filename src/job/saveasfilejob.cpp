@@ -68,3 +68,5 @@ void SaveAsFileJob::setParentWidget(QWidget *parentWidget)
 {
     mParentWidget = parentWidget;
 }
+
+#include "moc_saveasfilejob.cpp"

@@ -37,3 +37,5 @@ void CreateFollowupReminderOnExistingMessageJobTest::shouldValidBeforeStartJob()
 }
 
 QTEST_MAIN(CreateFollowupReminderOnExistingMessageJobTest)
+
+#include "moc_createfollowupreminderonexistingmessagejobtest.cpp"

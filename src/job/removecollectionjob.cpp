@@ -127,3 +127,5 @@ void RemoveCollectionJob::slotDeletionCollectionResult(KJob *job)
     }
     deleteLater();
 }
+
+#include "moc_removecollectionjob.cpp"

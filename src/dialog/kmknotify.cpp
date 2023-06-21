@@ -136,3 +136,5 @@ void KMKnotify::writeConfig()
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }
+
+#include "moc_kmknotify.cpp"

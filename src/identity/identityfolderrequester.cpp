@@ -32,3 +32,5 @@ void IdentityFolderRequester::slotFolderChanged(const Akonadi::Collection &col)
         setStyleSheet(QString());
     }
 }
+
+#include "moc_identityfolderrequester.cpp"

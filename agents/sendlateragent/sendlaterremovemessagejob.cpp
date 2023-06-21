@@ -39,3 +39,5 @@ void SendLaterRemoveMessageJob::slotItemDeleteDone(KJob *job)
     ++mIndex;
     removeMessageItem();
 }
+
+#include "moc_sendlaterremovemessagejob.cpp"

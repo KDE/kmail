@@ -2087,3 +2087,5 @@ KUserFeedback::Provider *KMKernel::userFeedbackProvider() const
 }
 
 #endif
+
+#include "moc_kmkernel.cpp"

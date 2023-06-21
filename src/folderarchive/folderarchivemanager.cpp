@@ -203,3 +203,5 @@ void FolderArchiveManager::reloadConfig()
 {
     load();
 }
+
+#include "moc_folderarchivemanager.cpp"

@@ -403,3 +403,5 @@ void MailFilterAgent::slotInstanceRemoved(const Akonadi::AgentInstance &instance
 }
 
 AKONADI_AGENT_MAIN(MailFilterAgent)
+
+#include "moc_mailfilteragent.cpp"

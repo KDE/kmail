@@ -111,3 +111,5 @@ const KAboutData SummaryView::aboutData()
 }
 
 #include "summaryview_plugin.moc"
+
+#include "moc_summaryview_plugin.cpp"

@@ -117,3 +117,5 @@ void ColorListBox::dropEvent(QDropEvent *e)
         mCurrentOnDragEnter = nullptr;
     }
 }
+
+#include "moc_colorlistbox.cpp"

@@ -67,3 +67,5 @@ void OpenComposerHiddenJob::setSettings(const OpenComposerHiddenJobSettings &set
 {
     mSettings = settings;
 }
+
+#include "moc_opencomposerhiddenjob.cpp"

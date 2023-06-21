@@ -89,3 +89,5 @@ void HandleClickedUrlJob::setCurrentCollection(const Akonadi::Collection &curren
 {
     mCurrentCollection = currentCollection;
 }
+
+#include "moc_handleclickedurljob.cpp"

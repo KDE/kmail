@@ -116,3 +116,5 @@ void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled(KPIM::P
     item = nullptr;
     deleteLater();
 }
+
+#include "moc_clearcachejobinfolderandsubfolderjob.cpp"

@@ -77,3 +77,5 @@ void KMComposerUpdateTemplateJob::setCollection(const Akonadi::Collection &col)
 {
     mCollectionForNewMessage = col;
 }
+
+#include "moc_kmcomposerupdatetemplatejob.cpp"

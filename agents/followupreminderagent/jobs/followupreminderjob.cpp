@@ -72,3 +72,5 @@ void FollowUpReminderJob::slotItemFetchJobDone(KJob *job)
     }
     deleteLater();
 }
+
+#include "moc_followupreminderjob.cpp"

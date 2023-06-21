@@ -170,3 +170,5 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
     }
     return lst;
 }
+
+#include "moc_tagselectdialog.cpp"

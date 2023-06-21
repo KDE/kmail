@@ -122,3 +122,5 @@ QString FollowUpReminderAgent::printDebugInfo() const
 }
 
 AKONADI_AGENT_MAIN(FollowUpReminderAgent)
+
+#include "moc_followupreminderagent.cpp"

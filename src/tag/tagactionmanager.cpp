@@ -254,3 +254,5 @@ QList<qint64> TagActionManager::checkedTags() const
     }
     return checked;
 }
+
+#include "moc_tagactionmanager.cpp"

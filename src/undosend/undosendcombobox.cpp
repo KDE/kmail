@@ -34,3 +34,5 @@ void UndoSendCombobox::setDelay(int val)
     const int index = findData(val);
     setCurrentIndex(index != -1 ? index : 0);
 }
+
+#include "moc_undosendcombobox.cpp"

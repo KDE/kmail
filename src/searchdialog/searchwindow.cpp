@@ -953,3 +953,5 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
 
     return result;
 }
+
+#include "moc_searchwindow.cpp"

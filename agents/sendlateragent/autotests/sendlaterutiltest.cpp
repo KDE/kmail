@@ -42,3 +42,5 @@ void SendLaterUtilTest::shouldRestoreFromSettings()
 }
 
 QTEST_GUILESS_MAIN(SendLaterUtilTest)
+
+#include "moc_sendlaterutiltest.cpp"

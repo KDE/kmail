@@ -13,3 +13,5 @@ KMailSearchPatternEdit::KMailSearchPatternEdit(QWidget *parent)
 }
 
 KMailSearchPatternEdit::~KMailSearchPatternEdit() = default;
+
+#include "moc_kmailsearchpatternedit.cpp"

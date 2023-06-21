@@ -83,3 +83,5 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate(KJob *job, const QString
         item->setStatus(description);
     }
 }
+
+#include "moc_removeduplicatemailjob.cpp"

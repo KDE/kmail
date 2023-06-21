@@ -38,3 +38,5 @@ KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
 }
 
 KMailUserFeedbackProvider::~KMailUserFeedbackProvider() = default;
+
+#include "moc_kmailuserfeedbackprovider.cpp"

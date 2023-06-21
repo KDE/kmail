@@ -269,3 +269,5 @@ void XFaceConfigurator::pngquantFinished(int exitCode, QProcess::ExitStatus exit
         compressFaceDone(QByteArray(), true);
     }
 }
+
+#include "moc_xfaceconfigurator.cpp"

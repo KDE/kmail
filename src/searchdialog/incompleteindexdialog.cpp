@@ -245,3 +245,5 @@ void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong col
         }
     }
 }
+
+#include "moc_incompleteindexdialog.cpp"

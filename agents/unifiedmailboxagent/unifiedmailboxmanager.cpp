@@ -423,3 +423,5 @@ const UnifiedMailbox *UnifiedMailboxManager::unregisterSpecialSourceCollection(q
     box->removeSourceCollection(colId);
     return box;
 }
+
+#include "moc_unifiedmailboxmanager.cpp"

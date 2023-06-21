@@ -42,3 +42,5 @@ void FormatComboBoxTest::changeCurrentItem()
 }
 
 QTEST_MAIN(FormatComboBoxTest)
+
+#include "moc_formatcomboboxtest.cpp"

@@ -35,3 +35,5 @@ void TagSelectDialogTest::shouldHaveDefaultValue()
 }
 
 QTEST_MAIN(TagSelectDialogTest)
+
+#include "moc_tagselectdialogtest.cpp"

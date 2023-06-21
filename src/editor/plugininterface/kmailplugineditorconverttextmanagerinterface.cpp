@@ -197,3 +197,5 @@ QList<QWidget *> KMailPluginEditorConvertTextManagerInterface::statusBarWidgetLi
     }
     return mStatusBarWidget;
 }
+
+#include "moc_kmailplugineditorconverttextmanagerinterface.cpp"

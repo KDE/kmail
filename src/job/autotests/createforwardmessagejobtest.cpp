@@ -22,3 +22,5 @@ void CreateForwardMessageJobTest::shouldHaveDefaultValues()
     QVERIFY(!settings.msg);
     QCOMPARE(settings.identity, 0);
 }
+
+#include "moc_createforwardmessagejobtest.cpp"

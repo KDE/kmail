@@ -211,3 +211,5 @@ bool KMailPlugin::queryClose() const
 }
 
 #include "kmail_plugin.moc"
+
+#include "moc_kmail_plugin.cpp"

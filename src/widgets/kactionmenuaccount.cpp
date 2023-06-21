@@ -94,3 +94,5 @@ void KActionMenuAccount::updateAccountMenu()
         }
     }
 }
+
+#include "moc_kactionmenuaccount.cpp"

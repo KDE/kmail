@@ -119,3 +119,5 @@ bool MailServiceImpl::sendMessage(const QString &from,
     KMail::makeComposer(msg, false, false);
     return true;
 }
+
+#include "moc_mailserviceimpl.cpp"

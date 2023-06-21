@@ -55,3 +55,5 @@ void RefreshSettingsAssistant::cleanUpDone()
 {
     next();
 }
+
+#include "moc_refreshsettingsassistant.cpp"

@@ -110,3 +110,5 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails()
 }
 
 QTEST_MAIN(PotentialPhishingEmailJobTest)
+
+#include "moc_potentialphishingemailjobtest.cpp"

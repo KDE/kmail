@@ -25,3 +25,5 @@ void MailfilterPurposeMenuWidget::setEditorWidget(KPIMTextEdit::PlainTextEditor 
 {
     mEditor = editor;
 }
+
+#include "moc_mailfilterpurposemenuwidget.cpp"

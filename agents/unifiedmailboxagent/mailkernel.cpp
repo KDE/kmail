@@ -128,3 +128,5 @@ void MailKernel::expunge(Akonadi::Collection::Id id, bool sync)
         mFolderCollectionMonitor->expunge(Akonadi::Collection(col), sync);
     }
 }
+
+#include "moc_mailkernel.cpp"

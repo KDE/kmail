@@ -42,3 +42,5 @@ void SaveDraftJob::slotStoreDone(KJob *job)
     }
     emitResult();
 }
+
+#include "moc_savedraftjob.cpp"

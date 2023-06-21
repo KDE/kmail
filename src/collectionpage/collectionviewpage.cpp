@@ -146,3 +146,5 @@ void CollectionViewPage::save(Akonadi::Collection &col)
     }
     mCollectionViewWidget->save(col);
 }
+
+#include "moc_collectionviewpage.cpp"

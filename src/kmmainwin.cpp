@@ -282,3 +282,5 @@ void KMMainWin::slotShortcutSaved()
 {
     mKMMainWidget->updateQuickSearchLineText();
 }
+
+#include "moc_kmmainwin.cpp"

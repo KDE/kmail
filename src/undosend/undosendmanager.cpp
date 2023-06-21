@@ -56,3 +56,5 @@ bool UndoSendManager::UndoSendManagerInfo::isValid() const
 {
     return index != -1 && delay != -1;
 }
+
+#include "moc_undosendmanager.cpp"

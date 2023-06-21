@@ -588,3 +588,5 @@ void KTNEFMain::slotOpenWithAction(QAction *act)
 
     openWith(app);
 }
+
+#include "moc_ktnefmain.cpp"

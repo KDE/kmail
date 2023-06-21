@@ -142,3 +142,5 @@ void FollowUpReminderNoAnswerDialog::closeEvent(QCloseEvent *event)
     slotSave();
     QDialog::closeEvent(event);
 }
+
+#include "moc_followupremindernoanswerdialog.cpp"

@@ -135,3 +135,5 @@ void FillComposerJob::setSettings(const FillComposerJobSettings &settings)
 {
     mSettings = settings;
 }
+
+#include "moc_fillcomposerjob.cpp"

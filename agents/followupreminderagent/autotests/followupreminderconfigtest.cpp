@@ -227,3 +227,5 @@ void FollowUpReminderConfigTest::shouldNotRemoveItemWhenItemDoesntExist()
 }
 
 QTEST_MAIN(FollowUpReminderConfigTest)
+
+#include "moc_followupreminderconfigtest.cpp"

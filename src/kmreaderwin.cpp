@@ -1023,3 +1023,5 @@ void KMReaderWin::addImageMenuActions(QMenu *menu)
     menu->addAction(shareImage());
     menu->addAction(openImageAction());
 }
+
+#include "moc_kmreaderwin.cpp"

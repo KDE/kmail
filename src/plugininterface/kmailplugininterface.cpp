@@ -54,3 +54,5 @@ bool KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
     }
     return true;
 }
+
+#include "moc_kmailplugininterface.cpp"

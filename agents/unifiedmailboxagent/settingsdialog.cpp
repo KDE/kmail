@@ -184,3 +184,5 @@ void SettingsDialog::addBox(UnifiedMailbox *box)
     item->setData(QVariant::fromValue(box));
     mBoxModel->appendRow(item);
 }
+
+#include "moc_settingsdialog.cpp"

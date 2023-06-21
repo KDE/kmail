@@ -148,3 +148,5 @@ void KMComposerGlobalAction::slotInsertText(const QString &str)
     // Don't insert text in mail linedit
     //} else if (::qobject_cast<KLineEdit *>(fw)) {
 }
+
+#include "moc_kmcomposerglobalaction.cpp"

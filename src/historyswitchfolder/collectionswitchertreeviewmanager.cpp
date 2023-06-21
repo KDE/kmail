@@ -132,3 +132,5 @@ void CollectionSwitcherTreeViewManager::addHistory(const Akonadi::Collection &cu
 {
     mCollectionSwitcherModel->addHistory(currentCol, fullPath);
 }
+
+#include "moc_collectionswitchertreeviewmanager.cpp"

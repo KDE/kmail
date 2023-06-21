@@ -268,3 +268,5 @@ QList<Akonadi::Item::Id> SendLaterWidget::messagesToRemove() const
 {
     return mListMessagesToRemove;
 }
+
+#include "moc_sendlaterconfigurewidget.cpp"

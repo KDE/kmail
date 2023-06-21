@@ -5,3 +5,5 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include <MessageComposer/Composer>
+
+#include "moc_composer.cpp"
