@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-20 00:53+0000\n"
+"POT-Creation-Date: 2023-06-21 00:48+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -3986,14 +3986,14 @@ msgstr "Di&rektorij"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
 #: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3373 kmmainwin.rc:134
-#: kmmainwin.rc:286
+#: kmmainwin.rc:287
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgid "Apply Filters on Folder"
 msgstr "Staviti sve prečišćavače ma direktorij"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:291
+#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr ""
@@ -4030,20 +4030,20 @@ msgid "&Tools"
 msgstr "&Alati"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:223 kmreadermainwin.rc:76
+#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "&Postavke"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:243
+#: kmail_part.rc:240 kmmainwin.rc:244
 #, kde-format
 msgid "&Help"
 msgstr "&Pomoć"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:343 kmreadermainwin.rc:87
+#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Glavna alatna traka"

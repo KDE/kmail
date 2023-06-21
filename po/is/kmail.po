@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-20 00:53+0000\n"
+"POT-Creation-Date: 2023-06-21 00:48+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -4128,14 +4128,14 @@ msgstr "&Mappa"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
 #: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3373 kmmainwin.rc:134
-#: kmmainwin.rc:286
+#: kmmainwin.rc:287
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "&Virkja allar síur"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:291
+#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
@@ -4172,20 +4172,20 @@ msgid "&Tools"
 msgstr "&Til"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:223 kmreadermainwin.rc:76
+#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, fuzzy, kde-format
 msgid "&Settings"
 msgstr "&Sending"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:243
+#: kmail_part.rc:240 kmmainwin.rc:244
 #, fuzzy, kde-format
 msgid "&Help"
 msgstr "&Hljóðmerki"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:343 kmreadermainwin.rc:87
+#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
 #, fuzzy, kde-format
 msgid "Main Toolbar"
 msgstr "HTML tækjaslá"

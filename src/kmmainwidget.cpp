@@ -2905,7 +2905,7 @@ void KMMainWidget::setupActions()
     {
         auto action = new QAction(i18n("Notification History..."), this);
         actionCollection()->addAction(QStringLiteral("notification_history"), action);
-        connect(action, &QAction::triggered, this, &KMMainWidget::slotShowHistoryNotification);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotShowNotificationHistory);
     }
     {
         auto action = new QAction(i18n("&Import from another Email Client..."), this);
@@ -4863,9 +4863,4 @@ void KMMainWidget::slotClearCacheDone()
             process->start();
         }
     }
-}
-
-void KMMainWidget::slotShowHistoryNotification()
-{
-    // TODO
 }

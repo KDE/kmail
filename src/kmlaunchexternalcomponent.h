@@ -26,6 +26,8 @@ public:
     void slotAccountWizard();
     void slotFilterLogViewer();
 
+    void slotShowNotificationHistory();
+
 private:
     QWidget *const mParentWidget;
 };
