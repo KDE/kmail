@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-21 00:48+0000\n"
+"POT-Creation-Date: 2023-06-22 00:49+0000\n"
 "PO-Revision-Date: 2023-05-03 17:38+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -658,7 +658,7 @@ msgid "Custom Account..."
 msgstr "Account personalizzato..."
 
 #: configuredialog/configureaccountpage.cpp:224
-#: kmlaunchexternalcomponent.cpp:154
+#: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -668,7 +668,7 @@ msgstr ""
 "Assicurati che Account\tWizard sia correttamente installato."
 
 #: configuredialog/configureaccountpage.cpp:226
-#: kmlaunchexternalcomponent.cpp:156
+#: kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "Impossibile eseguire la procedura guidata per la creazione di account"
@@ -4154,27 +4154,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:42
+#: kmlaunchexternalcomponent.cpp:40
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "L'agente di archiviazione della posta non era registrato."
 
-#: kmlaunchexternalcomponent.cpp:54
+#: kmlaunchexternalcomponent.cpp:51
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "L'agente per l'invio posticipato non era registrato."
 
-#: kmlaunchexternalcomponent.cpp:66
+#: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "L'agente per l'unione della posta non era registrato."
 
-#: kmlaunchexternalcomponent.cpp:78
+#: kmlaunchexternalcomponent.cpp:74
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "L'agente per gli avvisi delle azioni da seguire non era registrato."
 
-#: kmlaunchexternalcomponent.cpp:91
+#: kmlaunchexternalcomponent.cpp:87
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4183,12 +4183,12 @@ msgstr ""
 "Impossibile avviare il gestore dei certificati; assicurati che Kleopatra sia "
 "correttamente installato."
 
-#: kmlaunchexternalcomponent.cpp:93
+#: kmlaunchexternalcomponent.cpp:89
 #, kde-format
 msgid "KMail Error"
 msgstr "Errore KMail"
 
-#: kmlaunchexternalcomponent.cpp:106
+#: kmlaunchexternalcomponent.cpp:102
 #, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
@@ -4197,12 +4197,12 @@ msgstr ""
 "Impossibile avviare la procedura guidata per l'importazione. Assicurati che "
 "ImportWizard sia correttamente installato."
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:313
+#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Impossibile eseguire la procedura guidata per l'importazione"
 
-#: kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:117
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4211,14 +4211,14 @@ msgstr ""
 "Impossibile avviare il programma «PIM Data Exporter» (Esportatore dai dati "
 "di PIM). Controlla l'installazione."
 
-#: kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:119
 #, kde-format
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr ""
 "Impossibile avviare il programma «PIM Data Exporter» (Esportatore dei dati "
 "di PIM)"
 
-#: kmlaunchexternalcomponent.cpp:141
+#: kmlaunchexternalcomponent.cpp:137
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4227,7 +4227,7 @@ msgstr ""
 "Impossibile avviare la procedura guidata per l'importazione. Assicurati che "
 "ImportWizard sia correttamente installato."
 
-#: kmlaunchexternalcomponent.cpp:143
+#: kmlaunchexternalcomponent.cpp:139
 #, kde-format
 msgid "Unable to start ImportWizard"
 msgstr "Impossibile eseguire la procedura guidata per l'importazione"

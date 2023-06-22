@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-21 00:48+0000\n"
+"POT-Creation-Date: 2023-06-22 00:49+0000\n"
 "PO-Revision-Date: 2014-10-18 12:13+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -704,7 +704,7 @@ msgid "Custom Account..."
 msgstr "Fióksorrend testreszabása…"
 
 #: configuredialog/configureaccountpage.cpp:224
-#: kmlaunchexternalcomponent.cpp:154
+#: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -715,7 +715,7 @@ msgstr ""
 "telepítését."
 
 #: configuredialog/configureaccountpage.cpp:226
-#: kmlaunchexternalcomponent.cpp:156
+#: kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "Nem lehet elindítani az azonosítóbeállító varázslót"
@@ -4285,29 +4285,29 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:42
+#: kmlaunchexternalcomponent.cpp:40
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "A levélarchiváló ügynök nincs regisztrálva."
 
-#: kmlaunchexternalcomponent.cpp:54
+#: kmlaunchexternalcomponent.cpp:51
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "A küldés később ügynök nincs regisztrálva."
 
-#: kmlaunchexternalcomponent.cpp:66
+#: kmlaunchexternalcomponent.cpp:62
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Mail Merge Agent was not registered."
 msgstr "A levélarchiváló ügynök nincs regisztrálva."
 
-#: kmlaunchexternalcomponent.cpp:78
+#: kmlaunchexternalcomponent.cpp:74
 #, fuzzy, kde-format
 #| msgid "Send Later Agent was not registered."
 msgid "Followup Reminder Agent was not registered."
 msgstr "A küldés később ügynök nincs regisztrálva."
 
-#: kmlaunchexternalcomponent.cpp:91
+#: kmlaunchexternalcomponent.cpp:87
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4317,12 +4317,12 @@ msgstr ""
 "A tanúsítványkezelőt nem sikerült elindítani. Ellenőrizze, hogy minden "
 "szükséges rész telepítve van-e."
 
-#: kmlaunchexternalcomponent.cpp:93
+#: kmlaunchexternalcomponent.cpp:89
 #, kde-format
 msgid "KMail Error"
 msgstr "Hiba - KMail"
 
-#: kmlaunchexternalcomponent.cpp:106
+#: kmlaunchexternalcomponent.cpp:102
 #, fuzzy, kde-format
 #| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
@@ -4331,12 +4331,12 @@ msgid ""
 msgstr ""
 "Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
 
-#: kmlaunchexternalcomponent.cpp:108 kmmainwidget.cpp:313
+#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Nem lehet elindítani az importálás varázslót"
 
-#: kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:117
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4348,13 +4348,13 @@ msgstr ""
 "Nem lehet elindítani a „PIM beállítás exportáló” programot. Ellenőrizze a "
 "telepítését."
 
-#: kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:119
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Nem lehet elindítani a „PIM beállítás exportáló” programot"
 
-#: kmlaunchexternalcomponent.cpp:141
+#: kmlaunchexternalcomponent.cpp:137
 #, fuzzy, kde-format
 #| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
@@ -4363,7 +4363,7 @@ msgid ""
 msgstr ""
 "Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
 
-#: kmlaunchexternalcomponent.cpp:143
+#: kmlaunchexternalcomponent.cpp:139
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgid "Unable to start ImportWizard"
