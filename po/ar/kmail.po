@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-22 00:49+0000\n"
-"PO-Revision-Date: 2023-05-04 10:06+0400\n"
+"PO-Revision-Date: 2023-06-22 09:20+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 "X-POOTLE-MTIME: 1381756262.0\n"
 
 #, kde-format
@@ -4469,11 +4469,9 @@ msgid "Filter &Log Viewer..."
 msgstr "مُرشِّح &عارض السجل..."
 
 #: kmmainwidget.cpp:2909
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "إخطار"
+msgstr "تاريخ الإخطارات..."
 
 #: kmmainwidget.cpp:2914
 #, kde-format

@@ -4413,11 +4413,9 @@ msgid "Filter &Log Viewer..."
 msgstr "Proh&lížeč záznamů filtrů..."
 
 #: kmmainwidget.cpp:2909
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Upozornění"
+msgstr ""
 
 #: kmmainwidget.cpp:2914
 #, kde-format
