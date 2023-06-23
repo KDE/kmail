@@ -7,7 +7,6 @@
 
 #include "kmsystemtray.h"
 #include "kmmainwidget.h"
-#include "settings/kmailsettings.h"
 #include "unityservicemanager.h"
 #include <Akonadi/NewMailNotifierAttribute>
 #include <MailCommon/FolderTreeView>

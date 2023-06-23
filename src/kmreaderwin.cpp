@@ -14,7 +14,6 @@
 #include "job/addemailtoexistingcontactjob.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "settings/kmailsettings.h"
 #include <MailCommon/MailKernel>
 
 #include "kmail-version.h"
