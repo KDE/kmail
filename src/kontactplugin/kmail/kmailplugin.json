@@ -14,6 +14,7 @@
         "Description[eu]": "Kontact-erako KMail-en plugina",
         "Description[fi]": "Kontactin KMail-liitännäinen",
         "Description[fr]": "Module externe « KMail » pour Kontact",
+        "Description[gl]": "Complemento de KMail para Kontact",
         "Description[ia]": "Plug-in pro Kontact KMail",
         "Description[id]": "Plugin Kontact KMail",
         "Description[it]": "Estensione per Kontact di KMail",
