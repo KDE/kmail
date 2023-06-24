@@ -4992,7 +4992,7 @@ msgstr "Configurar os &filtros…"
 #: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Manage &Sieve Scripts..."
-msgstr "Xestionar os scripts de &Sieve…"
+msgstr "Xestionar os guións de &Sieve…"
 
 #: kmmainwidget.cpp:3307
 #, kde-format
@@ -7678,8 +7678,8 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Se escolle esta opción, empregarase o valor do proxy HTTP que se mostra á "
-"dereita (que ven da variábel de contorno http_proxy) para todas as "
+"Se escolle esta opción, empregarase o valor do mandatario HTTP que se mostra "
+"á dereita (que ven da variábel de contorno http_proxy) para todas as "
 "solicitudes HTTP."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
@@ -7767,8 +7767,8 @@ msgstr ""
 "Se se insire aquí un servidor LDAP, todas as solicitudes de LDAP irán "
 "primeiro a ese servidor. Máis exactamente, esta configuración omite calquera "
 "parte de servidor e porto especificados nun URL de LDAP e tamén se utilizará "
-"se se omitiron o servidor e o porto do URL. Empregaranse outros servidores "
-"LDAP só se falla a conexión co «proxy».\n"
+"se se omitiron o servidor e o porto do URL. Usaranse outros servidores LDAP "
+"só se falla a conexión co «proxy».\n"
 "A sintaxe é «SERVIDOR» OU «SERVIDOR:PORTO». Se se omite o porto, úsase o "
 "porto 389 (porto LDAP estándar)."
 
