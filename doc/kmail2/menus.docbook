@@ -2019,7 +2019,7 @@ items will be marked (check box colored in) in the menu.</para>
   <listitem><para>Lets you control which toolbars are displayed. You may choose any combination of three options:
   Main Toolbar (<guilabel>Send</guilabel>, <guilabel>Queue</guilabel>, <guilabel>Rich Text</guilabel>, &etc;),
   HTML Toolbar (<guilabel>Style</guilabel>, <guilabel>Font / Size</guilabel>, &etc;), and
-  Text Direction (in case you write in Hebrew, I guess). Note that the HTML Toolbar is easily
+  Text Direction (in case you use a right-to-left script). Note that the HTML Toolbar is easily
   toggled on and off via the <guibutton>Rich Text</guibutton> button on the Main Toolbar.</para></listitem>
 </varlistentry>
 
