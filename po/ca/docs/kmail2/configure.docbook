@@ -1214,11 +1214,13 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
->Amb <guilabel
->Confirma abans d'enviar</guilabel
-> apareixerà un quadre de confirmació cada vegada que envieu un missatge. <guilabel
->Verifica l'ortografia abans d'enviar</guilabel
-> invocarà al corrector ortogràfic abans d'enviar un missatge.</para>
+>In the <guilabel
+>Before sending</guilabel
+> section, <guilabel
+>Confirm action</guilabel
+> will pop up a confirmation box every time you send a message, while <guilabel
+>Check spelling</guilabel
+> will invoke the spell checker before a message is sent.</para>
 
 <para
 ><guilabel

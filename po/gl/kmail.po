@@ -7662,7 +7662,7 @@ msgstr ""
 "normalmente contén o que se chaman entradas «Punto de Distribución "
 "CRL» (DP), que son URL que describen como se accede ao URL. Úsase a primeira "
 "entrada DP que se atope. Con esta opción ignóranse todas as entradas que "
-"empreguen o esquema HTTP ao buscar un DP axeitado."
+"usen o esquema HTTP ao buscar un DP axeitado."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
@@ -7678,8 +7678,8 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Se escolle esta opción, empregarase o valor do mandatario HTTP que se mostra "
-"á dereita (que ven da variábel de contorno http_proxy) para todas as "
+"Se escolle esta opción, usarase o valor do mandatario HTTP que se mostra á "
+"dereita (que ven da variábel de contorno http_proxy) para todas as "
 "solicitudes HTTP."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
@@ -7738,7 +7738,7 @@ msgstr ""
 "normalmente contén o que se chaman entradas «Punto de Distribución "
 "CRL» (DP), que son URLs que describen como se accede ao URL. Úsase a "
 "primeira entrada DP que se atope. Con esta opción ignóranse todas as "
-"entradas que empreguen o esquema LDAP ao buscar un DP axeitado."
+"entradas que usen o esquema LDAP ao buscar un DP axeitado."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237

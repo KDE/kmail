@@ -4633,19 +4633,19 @@
 ></term>
   <listitem
 ><para
->Permet controlar quines barres d'eines es mostraran. Podreu triar qualsevol combinació de tres opcions: Barra d'eines principal (<guilabel
->Envia</guilabel
+>Lets you control which toolbars are displayed. You may choose any combination of three options: Main Toolbar (<guilabel
+>Send</guilabel
 >, <guilabel
->A la cua</guilabel
+>Queue</guilabel
 >, <guilabel
->Text enriquit</guilabel
->, &etc;), Barra d'eines HTML (<guilabel
->Estil</guilabel
+>Rich Text</guilabel
+>, &etc;), HTML Toolbar (<guilabel
+>Style</guilabel
 >, <guilabel
->Tipus de lletra / Mida</guilabel
->, &etc;) i Direcció del text (en cas que escriviu en hebreu, suposo). Recordeu que la barra d'eines HTML s'activa i desactiva amb facilitat mitjançant el botó <guibutton
->Text enriquit</guibutton
-> de la barra d'eines principal.</para
+>Font / Size</guilabel
+>, &etc;), and Text Direction (in case you use a right-to-left script). Note that the HTML Toolbar is easily toggled on and off via the <guibutton
+>Rich Text</guibutton
+> button on the Main Toolbar.</para
 ></listitem>
 </varlistentry>
 

@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-09 02:50+0000\n"
-"PO-Revision-Date: 2023-06-07 14:04-0300\n"
+"PO-Revision-Date: 2023-06-26 16:54-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -34,7 +34,7 @@ msgid "Your names"
 msgstr ""
 "Lisiane Sztoltz Teixeira, Antonio Sérgio de Mello e Souza, Roberto Selbach "
 "Teixeira, Eduardo Pereira Habkost,Henrique Pinto, Diniz Bortolotto, André "
-"Marcelo Alvarenga"
+"Marcelo Alvarenga, Luiz Fernando Ranghetti, Geraldo Simião"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -42,7 +42,8 @@ msgid "Your emails"
 msgstr ""
 "lisiane@conectiva.com.br, asergioz@bol.com.br, roberto@kde.org, "
 "ehabkost@conectiva.com.br, henrique.pinto@kdemail.net, diniz."
-"bortolotto@gmail.com, alvarenga@kde.org"
+"bortolotto@gmail.com, alvarenga@kde.org, elchevive@opensuse.org, "
+"geraldosimiao@fedoraproject.org"
 
 #: about/introduction_kmail.html:5
 #, kde-format
@@ -3084,15 +3085,14 @@ msgid "Preferred format:"
 msgstr "Formato preferido:"
 
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Criptografar"
+msgstr "Habilitar Autocrypt"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
@@ -6280,10 +6280,9 @@ msgstr "Mostrar o indicador de legenda de criptografia"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Mostrar o indicador de legenda de criptografia"
+msgstr "Mostrar ícones de confiança do proprietário da criptografia"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:284
@@ -6926,16 +6925,15 @@ msgstr "Indicadores de criptografia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Mostrar o indicador de assinatura/criptografia no editor"
+msgstr "Mostrar o indicador de assinatura/criptografia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Mostrar nível de confiança do proprietário da chave de criptografia"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
