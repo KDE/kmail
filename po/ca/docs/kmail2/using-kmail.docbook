@@ -3973,7 +3973,7 @@ version.)</para>
 >Bàsics</title>
 
 <para
->El &kmail; no disposa d'una solució pròpia per a detectar el correu brossa: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra el correu brossa us ajudarà amb la configuració inicial del filtratge. </para>
+>El &kmail; no disposa d'una solució integrada per a detectar el correu brossa: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra el correu brossa us ajudarà amb la configuració inicial del filtratge. </para>
 
 <variablelist>
 <varlistentry>
@@ -4125,7 +4125,7 @@ version.)</para>
 >Bàsics</title>
 
 <para
->El &kmail; no disposa d'una solució pròpia per a detectar virus: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra els virus us ajudarà amb la configuració inicial del filtratge. </para>
+>El &kmail; no disposa d'una solució integrada per a detectar virus: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra els virus us ajudarà amb la configuració inicial del filtratge. </para>
 
 <variablelist>
 <varlistentry>
