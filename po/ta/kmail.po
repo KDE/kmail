@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-06-09 02:50+0000\n"
-"PO-Revision-Date: 2023-05-07 14:59+0530\n"
+"PO-Revision-Date: 2023-07-02 15:59+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -222,20 +222,16 @@ msgid "Improve 'Mark Message as' popup menu"
 msgstr "Mark Message as &Important"
 
 #: aboutdata.cpp:97
-#, fuzzy
-#| msgid "Maintainer"
 msgid "Bugzilla maintenance"
-msgstr "பராமரிப்பாளர்"
+msgstr "Bugzilla பராமரிப்பு"
 
 #: aboutdata.cpp:99
 msgid "Improved execution speed"
-msgstr ""
+msgstr "மேம்பட்ட செயல்வேகம்"
 
 #: aboutdata.cpp:103
-#, fuzzy
-#| msgid "Name of the attachment:"
 msgid "Optionally compress attachments"
-msgstr "இணைப்பின் பெயர்:"
+msgstr "உடனிணைப்புகளை வேண்டுமானால் சுருக்குவது"
 
 #: aboutdata.cpp:107
 #, fuzzy
@@ -281,23 +277,19 @@ msgstr "எழுத்துருவின் நிலைத்த அகல�
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
-msgstr ""
+msgstr "பிழைதிருத்தங்கள்"
 
 #: aboutdata.cpp:125
-#, fuzzy
-#| msgid "Searches"
 msgid "Several patches"
-msgstr "தேடு"
+msgstr "பல மாற்றங்கள்"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
 msgstr ""
 
 #: aboutdata.cpp:131
-#, fuzzy
-#| msgid "Delete T&hread"
 msgid "Delete an entire thread"
-msgstr "இணைப்பை அழி"
+msgstr "முழுத்தொடரை அகற்றுவது"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -309,11 +301,11 @@ msgstr ""
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
+msgstr "புதிய/படிக்காத/முக்கியமான அஞ்சல்களுக்கான எழுத்துருக்களை தேர்ந்தெடுக்க விடுவது"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
-msgstr ""
+msgstr "விரைதேடலின் விசைப்பலகை உலாவலை சரிசெய்த‍து"
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
@@ -362,17 +354,15 @@ msgstr "Ägypten மற்றும் Kroupware திட்ட மேலாண
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
-msgstr ""
+msgstr "மேம்பட்ட HTML ஆதரவு"
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
-msgstr ""
+msgstr "X-Face ஆதரவு"
 
 #: aboutdata.cpp:174
-#, fuzzy
-#| msgid "Remove recipient line"
 msgid "Automated recipient selection"
-msgstr "பெறுநர் வரியை நீக்கு"
+msgstr "தானியக்க பெறுநர் தேர்வு"
 
 #: aboutdata.cpp:175
 #, fuzzy
@@ -386,7 +376,7 @@ msgstr ""
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
-msgstr ""
+msgstr "விண்டோஸ் ஆதரவு"
 
 #: aboutdata.cpp:181
 #, fuzzy
