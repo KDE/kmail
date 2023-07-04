@@ -8,7 +8,7 @@
 
 #include <QDialog>
 
-namespace ContactEditor
+namespace Akonadi
 {
 class AkonadiContactEditor;
 }
@@ -38,5 +38,5 @@ private:
     void slotDeleteCurrentVCard();
     void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
-    ContactEditor::AkonadiContactEditor *const mContactEditor;
+    Akonadi::AkonadiContactEditor *const mContactEditor;
 };

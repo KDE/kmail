@@ -20,8 +20,7 @@
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
-    , mContactEditor(
-          new ContactEditor::AkonadiContactEditor(ContactEditor::AkonadiContactEditor::CreateMode, ContactEditor::AkonadiContactEditor::VCardMode, this))
+    , mContactEditor(new Akonadi::AkonadiContactEditor(Akonadi::AkonadiContactEditor::CreateMode, Akonadi::AkonadiContactEditor::VCardMode, this))
 {
     auto topLayout = new QVBoxLayout(this);
     setModal(true);

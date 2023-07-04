@@ -414,7 +414,7 @@ target_link_libraries(kmailprivate
     KPim6::Gravatar
     KPim6::Mime
     KPim6::AkonadiCore
-    KPim6::ContactEditor
+    KPim6::AkonadiContactWidgets
     KPim6::AkonadiMime
     KPim6::MessageCore
     KPim6::MessageList
