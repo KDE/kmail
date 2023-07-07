@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  .r1608 (kmail)  #-#-#-#-#\n"
 "X-Generator: Lokalize 1.2\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.11.4\n"
@@ -1401,6 +1401,7 @@ msgctxt "Interval suffix"
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " دقیقه"
+msgstr[1] ""
 
 #: configuredialog/configurecomposerpage.cpp:439
 #, fuzzy, kde-format
@@ -1827,10 +1828,11 @@ msgstr "تغییر تنظیم سراسری نخ‌کشی، تمام مقادیر
 #: configuredialog/configuresecuritypage.cpp:299
 #: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
-#, kde-format
+#, fuzzy, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " روز"
+msgstr[1] ""
 
 #: configuredialog/configuresecuritypage.cpp:339
 #, fuzzy, kde-format
@@ -1974,6 +1976,7 @@ msgstr "اخطار"
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
 msgstr[0] "پیوست: %1"
+msgstr[1] ""
 
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
@@ -2473,6 +2476,7 @@ msgstr "&فعال‌سازی امضا‌"
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "پیام نقل قول شده"
+msgstr[1] ""
 
 #: editor/kmcomposerwin.cpp:2393
 #, fuzzy, kde-format
@@ -2480,6 +2484,7 @@ msgstr[0] "پیام نقل قول شده"
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "افزودن به عنوان پیوست"
+msgstr[1] ""
 
 #: editor/kmcomposerwin.cpp:2439
 #, fuzzy, kde-format
@@ -3662,6 +3667,7 @@ msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
+msgstr[1] ""
 
 #: identity/identitypage.cpp:219
 #, fuzzy, kde-format
@@ -3669,6 +3675,7 @@ msgstr[0] "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> �
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "حذف هویت"
+msgstr[1] ""
 
 #: identity/identitypage.cpp:220
 #, kde-format
@@ -3798,6 +3805,7 @@ msgstr "پیامها با موفقیت حذف شدند."
 msgid "Distribution list %2 is empty, it cannot be used."
 msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "لیست توزیع \"%1\" خالی است و نمی‌تواند استفاده شود."
+msgstr[1] ""
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, fuzzy, kde-format
@@ -4163,10 +4171,11 @@ msgid "Please wait"
 msgstr "لطفاً، صبر کنید"
 
 #: kmcommands.cpp:298 kmcommands.cpp:362
-#, kde-format
+#, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "لطفاً، تا زمانی که %1 پیام منتقل می‌شود، صبر کنید"
+msgstr[1] ""
 
 #: kmcommands.cpp:509
 #, fuzzy, kde-format
@@ -4340,18 +4349,20 @@ msgid "Opening Autosave File Failed"
 msgstr "خرابی در ذخیره خودکار"
 
 #: kmkernel.cpp:1644
-#, kde-format
+#, fuzzy, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
+msgstr[1] ""
 
 #: kmkernel.cpp:1668
-#, kde-format
+#, fuzzy, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
+msgstr[1] ""
 
 #: kmkernel.cpp:1683
 #, kde-format
@@ -4574,7 +4585,7 @@ msgid "Load External References"
 msgstr "بارگذاری مرجعهای خارجی"
 
 #: kmmainwidget.cpp:1638
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
 "cannot be restored.</qt>"
@@ -4584,6 +4595,7 @@ msgid_plural ""
 msgstr[0] ""
 "<qt>واقعاً می‌خواهید %1 پیام برگزیده را حذف کنید؟<br />به محض این که حذف "
 "می‌‌شوند، آنها را نمی‌توان بازگرداند.</qt>"
+msgstr[1] ""
 
 #: kmmainwidget.cpp:1643
 #, kde-format
@@ -5750,6 +5762,7 @@ msgstr "پیام خوانده‌نشده‌ای وجود ندارد"
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "پیام خوانده‌نشده"
+msgstr[1] ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
 #: kontactplugin/kmail/kcmkmailsummary.cpp:36
@@ -6253,10 +6266,11 @@ msgid "Jump to original folder"
 msgstr "پرش به پوشه"
 
 #: searchdialog/searchwindow.cpp:292
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 تطبیق"
+msgstr[1] ""
 
 #: searchdialog/searchwindow.cpp:362 searchdialog/searchwindow.cpp:404
 #, kde-format
@@ -6344,6 +6358,7 @@ msgstr ""
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "رونوشت پیامها"
+msgstr[1] ""
 
 #: searchdialog/searchwindow.cpp:780
 #, fuzzy, kde-format
@@ -6351,6 +6366,7 @@ msgstr[0] "رونوشت پیامها"
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "برش پیامها"
+msgstr[1] ""
 
 #: searchdialog/searchwindow.cpp:909
 #, fuzzy, kde-format
@@ -8144,6 +8160,7 @@ msgstr "حرکت به زباله"
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "پیام جدید به..."
+msgstr[1] ""
 
 #: undostack.cpp:101
 #, kde-format
@@ -8214,6 +8231,7 @@ msgstr "بازنشانی تنظیمات قلم"
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "ویرایش پاسخهای »خارج از دفتر«..."
+msgstr[1] ""
 
 #: widgets/zoomlabelwidget.cpp:20
 #, fuzzy, kde-format
