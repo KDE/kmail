@@ -10,9 +10,9 @@
 
 #include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
 #include "sieveimapinterface/kmsieveimappasswordprovider.h"
+#include <KSieveCore/MultiImapVacationManager>
+#include <KSieveCore/SieveImapInstanceInterfaceManager>
 #include <KSieveUi/MultiImapVacationDialog>
-#include <KSieveUi/MultiImapVacationManager>
-#include <KSieveUi/SieveImapInstanceInterfaceManager>
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
@@ -25,9 +25,9 @@ int main(int argc, char **argv)
     parser.process(app);
 
     app.setQuitOnLastWindowClosed(true);
-    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
+    KSieveCore::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KMSieveImapPasswordProvider provider(nullptr);
-    KSieveUi::MultiImapVacationManager manager(&provider);
+    KSieveCore::MultiImapVacationManager manager(&provider);
     KSieveUi::MultiImapVacationDialog dlg(&manager);
     QObject::connect(&dlg, &KSieveUi::MultiImapVacationDialog::okClicked, &app, &QApplication::quit);
     QObject::connect(&dlg, &KSieveUi::MultiImapVacationDialog::cancelClicked, &app, &QApplication::quit);

@@ -6,8 +6,8 @@
 
 #include "sieveimapinterface/kmailsieveimapinstanceinterface.h"
 #include "sieveimapinterface/kmsieveimappasswordprovider.h"
+#include <KSieveCore/SieveImapInstanceInterfaceManager>
 #include <KSieveUi/ManageSieveScriptsDialog>
-#include <KSieveUi/SieveImapInstanceInterfaceManager>
 #include <QApplication>
 
 int main(int argc, char **argv)
@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     QApplication::setApplicationName(QStringLiteral("managersievescriptsdialogtest"));
     QApplication::setApplicationVersion(QStringLiteral("1.0"));
 
-    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
+    KSieveCore::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     KMSieveImapPasswordProvider provider(nullptr);
     auto dlg = KSieveUi::ManageSieveScriptsDialog(&provider);
     dlg.show();

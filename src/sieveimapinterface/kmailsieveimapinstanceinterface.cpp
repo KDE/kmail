@@ -7,34 +7,34 @@
 #include "kmailsieveimapinstanceinterface.h"
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentManager>
-#include <KSieveUi/SieveImapInstance>
+#include <KSieveCore/SieveImapInstance>
 
 KMailSieveImapInstanceInterface::KMailSieveImapInstanceInterface() = default;
 
-QList<KSieveUi::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
+QList<KSieveCore::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapInstances()
 {
-    QList<KSieveUi::SieveImapInstance> listInstance;
+    QList<KSieveCore::SieveImapInstance> listInstance;
 
     const Akonadi::AgentInstance::List allInstances = Akonadi::AgentManager::self()->instances();
     listInstance.reserve(allInstances.count());
     for (const Akonadi::AgentInstance &instance : allInstances) {
-        KSieveUi::SieveImapInstance sieveInstance;
+        KSieveCore::SieveImapInstance sieveInstance;
         sieveInstance.setCapabilities(instance.type().capabilities());
         sieveInstance.setIdentifier(instance.identifier());
         sieveInstance.setMimeTypes(instance.type().mimeTypes());
         sieveInstance.setName(instance.name());
         switch (instance.status()) {
         case Akonadi::AgentInstance::Idle:
-            sieveInstance.setStatus(KSieveUi::SieveImapInstance::Idle);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Idle);
             break;
         case Akonadi::AgentInstance::Running:
-            sieveInstance.setStatus(KSieveUi::SieveImapInstance::Running);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Running);
             break;
         case Akonadi::AgentInstance::Broken:
-            sieveInstance.setStatus(KSieveUi::SieveImapInstance::Broken);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Broken);
             break;
         case Akonadi::AgentInstance::NotConfigured:
-            sieveInstance.setStatus(KSieveUi::SieveImapInstance::NotConfigured);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::NotConfigured);
             break;
         }
         listInstance.append(sieveInstance);

@@ -7,14 +7,14 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <KSieveUi/SieveImapInstanceInterface>
-class KMAILTESTS_TESTS_EXPORT KMailSieveImapInstanceInterface : public KSieveUi::SieveImapInstanceInterface
+#include <KSieveCore/SieveImapInstanceInterface>
+class KMAILTESTS_TESTS_EXPORT KMailSieveImapInstanceInterface : public KSieveCore::SieveImapInstanceInterface
 {
 public:
     KMailSieveImapInstanceInterface();
     ~KMailSieveImapInstanceInterface() override = default;
 
-    Q_REQUIRED_RESULT QList<KSieveUi::SieveImapInstance> sieveImapInstances() override;
+    Q_REQUIRED_RESULT QList<KSieveCore::SieveImapInstance> sieveImapInstances() override;
 
 private:
     Q_DISABLE_COPY(KMailSieveImapInstanceInterface)

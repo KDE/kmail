@@ -42,7 +42,7 @@ using PimCommon::RecentAddresses;
 #include <MailTransport/TransportManager>
 
 #include "mailserviceimpl.h"
-#include <KSieveUi/SieveImapInstanceInterfaceManager>
+#include <KSieveCore/SieveImapInstanceInterfaceManager>
 using KMail::MailServiceImpl;
 #include <MailCommon/JobScheduler>
 
@@ -128,7 +128,7 @@ KMKernel::KMKernel(QObject *parent)
     , mFolderArchiveManager(new FolderArchiveManager(this))
 {
     // Initialize kmail sieveimap interface
-    KSieveUi::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
+    KSieveCore::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
 #ifdef WITH_KUSERFEEDBACK

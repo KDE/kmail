@@ -124,8 +124,8 @@
 #include <KIdentityManagementCore/IdentityManager>
 #include <KMime/HeaderParsing>
 #include <KMime/KMimeMessage>
+#include <KSieveCore/Util>
 #include <KSieveUi/ManageSieveScriptsDialog>
-#include <KSieveUi/Util>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
 
@@ -285,7 +285,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
         setZoomChanged(mMsgView->viewer()->webViewZoomFactor());
     }
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);
-    if (KSieveUi::Util::checkOutOfOfficeOnStartup()) {
+    if (KSieveCore::Util::checkOutOfOfficeOnStartup()) {
         QTimer::singleShot(0, this, &KMMainWidget::slotCheckVacation);
     }
 
@@ -2912,7 +2912,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("importWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImportWizard);
     }
-    if (KSieveUi::Util::allowOutOfOfficeSettings()) {
+    if (KSieveCore::Util::allowOutOfOfficeSettings()) {
         auto action = new QAction(i18n("Edit \"Out of Office\" Replies..."), this);
         actionCollection()->addAction(QStringLiteral("tools_edit_vacation"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotEditCurrentVacation);

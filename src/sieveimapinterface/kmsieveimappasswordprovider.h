@@ -6,9 +6,9 @@
 
 #pragma once
 #include "kmail_private_export.h"
-#include <KSieveUi/SieveImapPasswordProvider>
+#include <KSieveCore/SieveImapPasswordProvider>
 #include <qt6keychain/keychain.h>
-class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveUi::SieveImapPasswordProvider
+class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveCore::SieveImapPasswordProvider
 {
     Q_OBJECT
 public:

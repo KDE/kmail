@@ -8,7 +8,7 @@
 #include "kmail_debug.h"
 using namespace QKeychain;
 KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(QObject *parent)
-    : KSieveUi::SieveImapPasswordProvider(parent)
+    : KSieveCore::SieveImapPasswordProvider(parent)
 {
 }
 
