@@ -746,6 +746,10 @@ void IdentityDialog::slotAccepted()
 
     // Validate email addresses
     const QString email = mEmailEdit->text().trimmed();
+    if (email.isEmpty()) {
+        KMessageBox::error(this, i18n("You must provide an email for this identity."), i18n("Empty Email Address"));
+        return;
+    }
     if (!KEmailAddress::isValidSimpleAddress(email)) {
         const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
         KMessageBox::error(this, errorMsg, i18n("Invalid Email Address"));
