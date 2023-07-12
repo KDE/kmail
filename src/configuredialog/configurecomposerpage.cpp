@@ -43,6 +43,7 @@ using PimCommon::RecentAddresses;
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QScrollArea>
+#include <QStringEncoder>
 #include <QTextCodec>
 #include <QVBoxLayout>
 
@@ -771,9 +772,9 @@ void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
         return;
     }
 
-    QTextCodec *codec = QTextCodec::codecForName(charset.toLatin1());
-    if (codec) {
-        charset = QString::fromLatin1(codec->name()).toLower();
+    QStringEncoder codec(charset.toLatin1().constData());
+    if (codec.isValid()) {
+        charset = QString::fromLatin1(codec.name()).toLower();
         return;
     }
 

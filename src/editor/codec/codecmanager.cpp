@@ -11,12 +11,9 @@
 // Own
 #include "codecmanager.h"
 
-// KMail
-
 // Qt
-#include <QTextCodec>
+#include <QStringEncoder>
 
-// KDE libs
 #include <MessageComposer/MessageComposerSettings>
 
 CodecManager::CodecManager()
@@ -44,7 +41,7 @@ void CodecManager::updatePreferredCharsets()
         QByteArray charset = str.toLatin1().toLower();
 
         if (charset == "locale") {
-            charset = QTextCodec::codecForLocale()->name();
+            charset = QStringEncoder(QStringEncoder::System).name();
 
             // Special case for Japanese:
             // (Introduction to i18n, 6.6 Limit of Locale technology):
