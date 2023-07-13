@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2023-07-02 15:59+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3232,7 +3232,7 @@ msgstr "அஞ்சலனுப்பும் கணக்கு:"
 msgid "Attach my vCard to message"
 msgstr "அஞ்சலுடன் என் vCard-ஐ இணை"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "உருவாக்கு…"
@@ -3286,13 +3286,25 @@ msgstr "படம்"
 msgid "Invalid Email Alias \"%1\""
 msgstr "செல்லுபடியாகாத மாற்று மின்னஞ்சல் முகவரி \"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "&இந்த அடையாளத்திற்கு தனிப்பட்ட அஞ்சல் வார்ப்புருகளை பயன்படுத்து"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "மின்னஞ்சல் முகவரி"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "செல்லுபடியாகாத மின்னஞ்சல் முகவரி"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3301,7 +3313,7 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3310,7 +3322,7 @@ msgstr ""
 "கட்டமைக்கப்பட்ட OpenPGP மறையாக்க விசைகள் பயனர் அடையாளத்தை மின்னஞ்சல் முகவரியோடு இந்த "
 "அடையாளத்திற்காக கட்டமைக்கப்படவில்லை (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3323,7 +3335,7 @@ msgstr ""
 "இது கட்டமைப்பு உருவாக்கிய கையெழுத்தை பரிசோதிக்கும் போது எச்சரிக்கை செய்தியை பெற "
 "விளைவிக்கும்."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3332,23 +3344,23 @@ msgstr ""
 "ஒரு கட்டமைக்கப்பட்ட S/MIME கையெழுத்து சான்றிதழில் கட்டமைக்கப்பட்ட மின்னஞ்சல் முகவரி "
 "அடையாளத்திற்காக இருக்காது (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "சாவி/சான்றிதழ்களில் மின்னஞ்சல் முகவரி கண்டுபிடிக்கப்படவில்லை"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "கையொப்ப கோப்பு செல்லுபடியாகாத‍து"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" அடையாளத்தை திருத்து"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3357,7 +3369,7 @@ msgstr ""
 "இந்த அடையாளத்திற்கான தனிப்பட்ட அடைவுகளில் சில இப்போதில்லை; ஆகவே, இயல்பிருப்பு அடைவுகளே "
 "பயன்படுத்தப்படுவன."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "திருத்து…"
@@ -17371,11 +17383,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ msgctxt "Status of an item"
 #~ msgid "ToDo"
 #~ msgstr "செய்யவேண்டியது"
-
-#, fuzzy
-#~| msgid "Email Address"
-#~ msgid "Copy Email Address"
-#~ msgstr "மின்னஞ்சல் முகவரி"
 
 #~ msgid "Display messa&ge sizes"
 #~ msgstr "செய்தி அளவுகளைக் காட்டு."

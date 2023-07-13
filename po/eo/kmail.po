@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2023-06-20 21:25+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -3203,7 +3203,7 @@ msgstr "Elira Konto:"
 msgid "Attach my vCard to message"
 msgstr "Kunsendi mian vCard al mesaĝo"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Krei..."
@@ -3257,13 +3257,25 @@ msgstr "Bildo"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Nevalida Retpoŝta kaŝnomo \"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "&Uzi proprajn mesaĝoŝablonojn por ĉi tiu identeco"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "Retpoŝta adreso"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Nelaŭregula retpoŝtadreso"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3276,7 +3288,7 @@ msgstr ""
 "Do ĝi povas kaŭzi avertmesaĝon ĉe la adresato, kiam tie estos provata la "
 "konfirmon de ĉi tiu subskribo."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3285,7 +3297,7 @@ msgstr ""
 "Unu el la agorditaj OpenPGP-subskribaj ŝlosiloj ne havas iun uzantnomon, kiu "
 "konvenas al la retpoŝtadreson por tiu nomo (%1). "
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3298,7 +3310,7 @@ msgstr ""
 "Do ĝi povas kaŭzi avertmesaĝon ĉe la adresato, kiam tie estos provata la "
 "konfirmon de ĉi tiu subskribo."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3307,23 +3319,23 @@ msgstr ""
 "Unu el la agorditaj S/MIME-subskribaj testiloj ne havas iun uzantnomon, kiu "
 "konvenas al la retpoŝtadreson por tiu nomo (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Retpoŝtadreso ne trovita en ŝlosiloj aŭ testiloj"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "La subskribodosiero de estas valida"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Redakti identecon \"%1\""
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3332,7 +3344,7 @@ msgstr ""
 "Iu propra dosierujo por identeco ne ekzistas (plu); tial, defaŭltaj "
 "dosierujoj estos uzataj."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Redakti..."

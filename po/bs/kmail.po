@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -3350,7 +3350,7 @@ msgstr "Otvoren nalog:"
 msgid "Attach my vCard to message"
 msgstr "Dodaj vizitkartu poruci."
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Kreiraj..."
@@ -3405,13 +3405,25 @@ msgstr "Slika"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Pogrešan alias e-maila \"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "&Koristi obične šablone poruka za ovaj identitet"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "Email adresa:"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Pogrešna e-mail adresa"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3424,7 +3436,7 @@ msgstr ""
 "Ovo može rezultirati porukama upozorenja na strani primatelja kada pokuša "
 "provjeriti potpise napravljene ovom konfiguracijom."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3433,7 +3445,7 @@ msgstr ""
 "Jedan od podešenih OpenPGP ključeva za šifrovanje ne sadrži ID korisnika sa "
 "podešenom e-mail adresom za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3446,7 +3458,7 @@ msgstr ""
 "Ovo može rezultirati porukama upozorenja na strani primatelja kada pokuša "
 "provjeriti potpise napravljene ovom konfiguracijom."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3455,24 +3467,24 @@ msgstr ""
 "Jedan od podešenih S/MIME ključeva za šifrovanje ne sadrži ID korisnika sa "
 "podešenom e-mail adresom za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mail adresa nije pronađena u ključu/certifikatu"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Datoteka potpisa nije ispravan"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Izmijeni identitet \"%1\""
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3484,7 +3496,7 @@ msgstr ""
 "Vlastiti fascikl nacrta za identitet \"%1\" (više) ne postoji. Stoga će biti "
 "korišten uobičajeni fascikl za nacrte."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Izmijeni..."
