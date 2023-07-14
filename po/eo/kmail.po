@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-06-20 21:25+0100\n"
+"PO-Revision-Date: 2023-07-13 08:49+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -3258,14 +3258,12 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Nevalida Retpoŝta kaŝnomo \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&Uzi proprajn mesaĝoŝablonojn por ĉi tiu identeco"
+msgstr "Vi devas provizi retpoŝton por ĉi tiu identeco."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
 msgstr "Retpoŝta adreso"
 

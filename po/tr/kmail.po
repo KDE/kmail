@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-07-12 12:37+0300\n"
+"PO-Revision-Date: 2023-07-13 23:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1614,7 +1614,7 @@ msgstr "Editör Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, kde-format
 msgid "Message Viewer"
-msgstr "İleti Görüntüleyici"
+msgstr "İleti Görüntüleyicisi"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
@@ -3258,16 +3258,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Geçersiz Takma E-posta\"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "Bu kimlik için ö&zel ileti şablonları kullan"
+msgstr "Bu kimlik için bir e-posta sağlamalısınız."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "E-posta Adresi"
+msgstr "Boş E-posta Adresi"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -4509,7 +4507,7 @@ msgstr "Sieve &Hata Ayıklaması..."
 #: kmmainwidget.cpp:2904
 #, kde-format
 msgid "Filter &Log Viewer..."
-msgstr "&Süzgeç Günlüğü İzleyicisi..."
+msgstr "&Günlük Görüntüleyicisini Süz..."
 
 #: kmmainwidget.cpp:2909
 #, kde-format
