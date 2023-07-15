@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
-"PO-Revision-Date: 2023-07-04 01:03+0300\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
+"PO-Revision-Date: 2023-07-13 23:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1614,7 +1614,7 @@ msgstr "Editör Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
 #, kde-format
 msgid "Message Viewer"
-msgstr "İleti Görüntüleyici"
+msgstr "İleti Görüntüleyicisi"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
@@ -2022,7 +2022,7 @@ msgstr "B&oşlukları Temizle"
 #: editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Use Fi&xed Font"
-msgstr "S&abit Yazıtipi Kullan"
+msgstr "Eş A&ralıklı Yazıtipi Kullan"
 
 #: editor/kmcomposerwin.cpp:1299
 #, kde-format
@@ -2327,9 +2327,10 @@ msgid ""
 "encryption key to use for this.</p><p>Please select the key(s) to use in the "
 "identity configuration.</p></qt>"
 msgstr ""
-"<qt><p>İletinin kendi kendine şifrelenmesini istediniz, ancak bu işlem için "
-"bir şifreleme yöntemi (OpenPGP ya da S/MIME) belirtmediniz. </p><p>Lütfen bu "
-"kimlik için kullanılacak anahtarları seçin.</p></qt>"
+"<qt><p>İletilerin kendinize şifrelenmesini istediniz; ancak seçili olan "
+"kimlik, bunun için kullanılacak bir (OpenPGP veya S/MIME) şifreleme anahtarı "
+"tanımlamıyor.</p><p>Lütfen bu kimlik yapılandırmasında kullanılacak "
+"anahtarları seçin.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2569
 #, kde-format
@@ -2343,9 +2344,9 @@ msgid ""
 "(OpenPGP or S/MIME) signing key to use.</p><p>Please select the key to use "
 "in the identity configuration.</p></qt>"
 msgstr ""
-"<qt><p>Bu iletiyi imzalayabilmek için öncelikle kullanmak için bir (OpenPGP "
-"or S/MIME) imzalama anahtarı belirlemelisiniz.</p><p>Lütfen kimlik "
-"yapılandırmanızdan kullanmak istediğiniz anahtarı seçin</p></qt>"
+"<qt><p>Bu iletiyi imzalayabilmek için öncelikle kullanılacak imzalama "
+"anahtarını (OpenPGP veya S/MIME) tanımlamanız gerekir.</p><p>Lütfen kimlik "
+"yapılandırmasında kullanmak istediğiniz anahtarı seçin.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2640
 #, kde-format
@@ -2535,8 +2536,9 @@ msgid ""
 "encryption is unknown (the encryption key could not be verified). Click the "
 "icon for details."
 msgstr ""
-"Bu alıcıya e-posta şifrelenecek, ancak şifrelemenin güvenliği bilinmiyor "
-"(şifreleme anahtarı doğrulanamadı). Ayrıntılar için buraya tıklayın."
+"Bu alıcıya gönderilen e-posta şifrelenecek; ancak şifrelemenin güvenliği "
+"bilinmiyor (şifreleme anahtarı doğrulanamadı). Ayrıntılar için simgeye "
+"tıklayın."
 
 #: editor/kmcomposerwin.cpp:3970
 #, kde-format
@@ -2947,12 +2949,12 @@ msgid ""
 "functions will not be affected.</p><p>You can find out more about keys at "
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Burada seçtiğiniz OpenPGP anahtarı iletileri sayısal olarak imzalamak "
-"için kullanılacaktır. GnuPG anahtarlarını da kullanabilirsiniz.</p><p>Bunu "
-"boş bırakabilirsiniz, ancak K Posta OpenPGP kullanarak e-postaları sayısal "
-"olarak imzalayamayacaktır; normal posta işlevleri bundan etkilenmeyecektir. "
-"</p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://www.gnupg.org</a> "
-"adresinden bulabilirsiniz.</p></qt>"
+"<qt><p>Burada seçtiğiniz OpenPGP anahtarı, iletileri sayısal olarak "
+"imzalamak için kullanılacaktır. GnuPG anahtarlarını da kullanabilirsiniz.</"
+"p><p>Bunu boş bırakabilirsiniz; ancak K Posta, OpenPGP kullanarak e-"
+"postaları sayısal olarak imzalayamaz; normal posta işlevleri "
+"etkilenmeyecektir.</p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://"
+"www.gnupg.org</a></p></qt> adresinde bulabilirsiniz."
 
 #: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
 #, kde-format
@@ -2999,10 +3001,10 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
-"<qt><p> Burada seçtiğiniz S/MIME (X.509) sertifikası iletileri sayısal  "
-"imzalamak için kullanılacaktır.</p><p>Bunu boş bırakabilirsiniz, ancak K "
-"Posta iletileri S/MIME kullanarak sayısal imzalayamayacaktır; normal posta "
-"işlevleri bundan etkilenmeyecektir.</p></qt>"
+"<qt><p>Burada seçtiğiniz S/MIME (X.509) sertifikası, iletileri sayısal "
+"olarak imzalamak için kullanılacaktır.</p><p>Bunu boş bırakabilirsiniz; "
+"ancak K Posta, S/MIME kullanarak e-postaları sayısal olarak imzalayamaz; "
+"normal posta işlevleri etkilenmeyecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:430
 #, kde-format
@@ -3018,11 +3020,11 @@ msgid ""
 "encrypt copies of outgoing messages to you using S/MIME; normal mail "
 "functions will not be affected.</p></qt>"
 msgstr ""
-"<qt><p>Burada seçtiğiniz S/MIME sertifikası, kendiniz ve ileti "
-"düzenleyicideki \"Sertifikamı İliştir\" özelliği için iletileri şifrelemekte "
-"kullanılacaktır.</p><p>Bunu boş bırakabilirsiniz, ancak K Posta S/MIME "
-"kullanarak dışarı giden iletilerin kopyalarını şifreleyemeyebilir; normal "
-"posta işlevleri bundan etkilenmeyecektir.</p></qt>"
+"<qt><p>Burada seçtiğiniz S/MIME sertifikası, iletileri kendinize şifrelemek "
+"ve oluşturucudaki \"Sertifikamı İliştir\" özelliği için kullanılacaktır.</"
+"p><p>Bunu boş bırakabilirsiniz; ancak K Posta, S/MIME kullanarak size giden "
+"iletilerin kopyalarını şifreleyemez; normal posta işlevleri "
+"etkilenmeyecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:450
 #, kde-format
@@ -3201,7 +3203,7 @@ msgstr "Giden E-posta Hesabı:"
 msgid "Attach my vCard to message"
 msgstr "İletiye vCard'ımı iliştir"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Oluştur..."
@@ -3255,13 +3257,23 @@ msgstr "Resim"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Geçersiz Takma E-posta\"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "You must provide an email for this identity."
+msgstr "Bu kimlik için bir e-posta sağlamalısınız."
+
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "Empty Email Address"
+msgstr "Boş E-posta Adresi"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Geçersiz E-posta Adresi"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3274,7 +3286,7 @@ msgstr ""
 "Bu yapılandırma ile ileti göndermek alıcı tarafında imzaların doğrulanması "
 "sırasında uyarılar çıkmasına neden olur."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3283,7 +3295,7 @@ msgstr ""
 "Yapılandırılan OpenPGP şifreleme anahtarları, bu kimlik için tanımlanan e-"
 "posta adresine sahip hiç bir kimlik bilgisi (ID) içermiyor (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3296,7 +3308,7 @@ msgstr ""
 "Bu durum, iletiyi alan tarafta bu düzenle yapılmış imzaları doğrulamaya "
 "çalışırken hata iletileri görüntülenmesine neden olabilir."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3305,23 +3317,23 @@ msgstr ""
 "Yapılandırılan S/MIME şifreleme sertifikalarından bir tanesi bu kimlik için "
 "yapılandırdığınız e-posta adresini içermiyor (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Anahtarda/Sertifikada E-Posta Adresi Bulunamadı"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "İmza dosyası geçerli değil."
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" Kimliğini Düzenle"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3330,7 +3342,7 @@ msgstr ""
 "Kimlik için tanımlanmış olan bazı özel klasörler (artık) yok; bu nedenle "
 "öntanımlı klasörler kullanılacak."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Düzenle..."
@@ -4495,7 +4507,7 @@ msgstr "Sieve &Hata Ayıklaması..."
 #: kmmainwidget.cpp:2904
 #, kde-format
 msgid "Filter &Log Viewer..."
-msgstr "&Süzgeç Günlüğü İzleyicisi..."
+msgstr "&Günlük Görüntüleyicisini Süz..."
 
 #: kmmainwidget.cpp:2909
 #, kde-format
@@ -7170,7 +7182,7 @@ msgstr "Sertifika ve Anahtar Yönetimi"
 #: ui/securitypagegeneraltab.ui:187
 #, kde-format
 msgid "Automatically import keys and certificate"
-msgstr "Anahtarları ve sertifikaları otomatik al"
+msgstr "Anahtarları ve sertifikaları kendiliğinden içe aktar"
 
 #. i18n: ectx: property (text), widget (QLabel, labelSend)
 #: ui/securitypagemdntab.ui:20
@@ -7224,9 +7236,9 @@ msgstr ""
 "yok sayar. Otomatik olarak hiçbir İDU gönderilmeyecektir (tavsiye edilir).</"
 "li><li><em>Sor</em>: Kullanıcıdan izin istedikten sonra isteğe yanıt verir. "
 "Bu yolla, seçilmiş iletiler için  gönderirken başkaları için reddetmek veya "
-"yok saymak mümkündür.</li><li><em>Reddet</em>: Her zaman <b>reddedildi</b> "
+"yok saymak olanaklıdır.</li><li><em>Reddet</em>: Her zaman <b>reddedildi</b> "
 "uyarısını yollar. Bu  her zaman göndermekten yalnızca <em>biraz</em> daha "
-"iyidir. Gönderen kişi iletisi üzerinde işlem yapıldığını bilecektir, ancak "
+"iyidir. Gönderen kişi iletisi üzerinde işlem yapıldığını bilecektir; ancak "
 "silindiğine veya okunduğuna, vs emin olamayacaktır.</li><li><em>Her zaman "
 "gönder</em>Her zaman istenen durum uyarısını gönderir. Bunun anlamı, "
 "iletinin yazarına iletinin işlendiği ve buna ilaveten ne yapıldığı "

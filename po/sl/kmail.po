@@ -11,18 +11,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
-"PO-Revision-Date: 2023-06-20 06:37+0200\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
+"PO-Revision-Date: 2023-07-13 06:51+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3208,7 +3208,7 @@ msgstr "Račun za pošiljanje:"
 msgid "Attach my vCard to message"
 msgstr "Sporočilu priloži mojo vizitko vCard"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Ustvari ..."
@@ -3262,13 +3262,23 @@ msgstr "Slika"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Neveljaven drugi e-poštni naslov »%1«"
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "You must provide an email for this identity."
+msgstr "Za to identiteto morate navesti e-poštni naslov."
+
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "Empty Email Address"
+msgstr "Prazen e-poštni naslov"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Neveljaven e-poštni naslov"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3282,7 +3292,7 @@ msgstr ""
 "To bo morda povzročilo, da bo prejemnik naletel na opozorila med poskusom "
 "preverjanja podpisov narejenih s temi nastavitvami."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3291,7 +3301,7 @@ msgstr ""
 "Eden izmed nastavljenih šifrirnih ključev OpenPGP ne vsebuje uporabniškega "
 "ID-ja z nastavljenim e-poštnim naslovom za to istovetnost (%1)"
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3304,7 +3314,7 @@ msgstr ""
 "To bo morda povzročilo, da bo prejemnik naletel na opozorila med poskusom "
 "preverjanja podpisov narejenih s temi nastavitvami."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3313,23 +3323,23 @@ msgstr ""
 "Eno izmed nastavljenih šifrirnih potrdil S/MIME ne vsebuje nastavljenega e-"
 "poštnega naslova za to istovetnost (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-poštni naslov ni najden v ključu ali potrdilih"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Datoteka s podpisom ni veljavna"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Uredi istovetnost »%1«"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3338,7 +3348,7 @@ msgstr ""
 "Ena izmed map za istovetnost ne obstaja (več). Zaradi tega bodo uporabljene "
 "privzete mape."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Uredi ..."

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3408,7 +3408,7 @@ msgstr "Λογαριασμός εξερχομένων:"
 msgid "Attach my vCard to message"
 msgstr "Επισύναψη της κάρτας μου vCard στο μήνυμα"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Δημιουργία..."
@@ -3462,13 +3462,25 @@ msgstr "Εικόνα"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Μη έγκυρο ψευδώνυμο ηλ. αλληλογραφίας «%1»"
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "&Χρήση προσαρμοσμένων προτύπων μηνύματος για αυτήν την ταυτότητα"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Copy Email Address"
+msgid "Empty Email Address"
+msgstr "Αντιγραφή διεύθυνσης Email"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Μη έγκυρη διεύθυνση ηλ. αλληλογραφίας"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3482,7 +3494,7 @@ msgstr ""
 "κατά την προσπάθεια επαλήθευσης υπογραφών που δημιουργήθηκαν με αυτή τη "
 "διαμόρφωση."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3492,7 +3504,7 @@ msgstr ""
 "χρήστη με τη διαμορφωμένη διεύθυνση ηλ. αλληλογραφίας για αυτή την ταυτότητα "
 "(%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3507,7 +3519,7 @@ msgstr ""
 "κατά την προσπάθεια επαλήθευσης υπογραφών που δημιουργήθηκαν με αυτή τη "
 "διαμόρφωση."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3517,24 +3529,24 @@ msgstr ""
 "χρήστη με τη διαμορφωμένη διεύθυνση ηλ. αλληλογραφίας για αυτή την ταυτότητα "
 "(%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Η διεύθυνση ηλ. αλληλογραφίας δεν βρέθηκε στα κλειδιά/πιστοποιητικά"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Το αρχείο υπογραφής δεν είναι έγκυρο"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Επεξεργασία ταυτότητας \"%1\""
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3546,7 +3558,7 @@ msgstr ""
 "Ο προσαρμοσμένος φάκελος προσχεδίων για την ταυτότητα \"%1\" δεν υπάρχει "
 "(πια), και γι' αυτό θα χρησιμοποιηθεί ο προκαθορισμένος φάκελος προσχεδίων."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Επεξεργασία..."
@@ -19655,9 +19667,6 @@ msgstr "Εστίαση"
 #~ msgctxt "Status of an item"
 #~ msgid "ToDo"
 #~ msgstr "Προς υλοποίηση"
-
-#~ msgid "Copy Email Address"
-#~ msgstr "Αντιγραφή διεύθυνσης Email"
 
 #~ msgid "Display messa&ge sizes"
 #~ msgstr "Εμφάνιση μεγέθο&υς μηνυμάτων"

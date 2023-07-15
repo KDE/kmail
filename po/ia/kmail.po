@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2023-06-21 16:21+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -3231,7 +3231,7 @@ msgstr "Conto de exito:"
 msgid "Attach my vCard to message"
 msgstr "Attacha mi vCard a message"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Crea..."
@@ -3285,13 +3285,25 @@ msgstr "Photo"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Alias de E-Posta invalide \"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "&Usa patronos de message personalisate pro iste identitate"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "Adresse de E-Posta"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Adresse de e-posta invalide"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3304,7 +3316,7 @@ msgstr ""
 "Isto pote originar messages de aviso sur le parte recipente quando on cerca "
 "de verificar signaturas facite con iste configuration."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3313,7 +3325,7 @@ msgstr ""
 "Uno del claves de cryptation de OpenPGP configurate non contine alcun ID de "
 "usator con le configurate adresse de e-posta pro iste identitate (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3326,7 +3338,7 @@ msgstr ""
 "Isto pote originar messages de aviso sur le parte recipente quando on cerca "
 "de verificar signaturas facite con iste configuration."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3335,23 +3347,23 @@ msgstr ""
 "Uno del configurate certificatos de cryption S/MIME non contine le adresse "
 "de e-posta configurate pro iste identitate (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Adresse de e-posta non trovate in Clave/Certificatos"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Le file de signatura non es valide"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edita identitate \"%1\""
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3360,7 +3372,7 @@ msgstr ""
 "Alcun dossier personalisate per identitate non existe (plus), assi on usara "
 "le dossier predefinite."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Editar ..."
