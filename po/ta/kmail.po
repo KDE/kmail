@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-07-02 15:59+0530\n"
+"PO-Revision-Date: 2023-07-16 14:49+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -189,11 +189,11 @@ msgstr ""
 
 #: aboutdata.cpp:75
 msgid "Enhanced configuration dialogs"
-msgstr ""
+msgstr "மேம்பட்ட அமைப்புச்சாளரங்கள்"
 
 #: aboutdata.cpp:76
 msgid "Notes/calendar integration"
-msgstr ""
+msgstr "குறிப்புகள்/நாள்காட்டி ஒருங்கிணைப்பு"
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
@@ -309,7 +309,7 @@ msgstr "விரைதேடலின் விசைப்பலகை உல�
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
-msgstr ""
+msgstr "முகவரிப்புத்தகத்திலிருந்து அஞ்சலெழுதும் இடத்திற்கு இழுத்துப் போடுவதை சரிசெய்தார்"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
@@ -3287,16 +3287,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "செல்லுபடியாகாத மாற்று மின்னஞ்சல் முகவரி \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&இந்த அடையாளத்திற்கு தனிப்பட்ட அஞ்சல் வார்ப்புருகளை பயன்படுத்து"
+msgstr "இந்த அடையாளத்திற்கான மின்னஞ்சல் முகவரியை உள்ளிட வேண்டும்."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "மின்னஞ்சல் முகவரி"
+msgstr "காலியான மின்னஞ்சல் முகவரி"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -4592,13 +4590,12 @@ msgstr "&அஞ்சல் பட்டியல் மேலாண்மை…
 #: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr "&Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு..."
+msgstr "Akonadi-&யின் தற்காலிக நினைவிடத்தை காலியாக்கு..."
 
 #: kmmainwidget.cpp:2991
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "இவ்வடைவிலும் சார்ந்துள்ளவற்றிலும் பலமுறை உள்ளவற்றை ஒன்றுபோக நீக்கு"
+msgstr "&இவ்வடைவிலும் இதில் சார்ந்தவற்றிலும் Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு"
 
 #: kmmainwidget.cpp:2996
 #, kde-format
@@ -5325,7 +5322,7 @@ msgstr "செருகுநிரல் ஆதரவு"
 
 #: kmreaderwin.cpp:274
 msgid "New HTML renderer (QtWebEngine)"
-msgstr ""
+msgstr "புதிய HTML வரைநிரல் (QtWebEngine)"
 
 #: kmreaderwin.cpp:275
 #, fuzzy
@@ -5505,7 +5502,7 @@ msgstr "தொகுப்புப்பக்கத்தில் காட�
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
-msgstr ""
+msgstr "காண்டாக்ட் தொகுப்பு"
 
 #: kontactplugin/summary/summaryview_part.cpp:56
 #, kde-format
