@@ -208,9 +208,3 @@ msgstr "Torna a enviar"
 #, kde-format
 msgid "Modify..."
 msgstr "Modifica..."
-
-#~ msgid "Remove items"
-#~ msgstr "Elimina els elements"
-
-#~ msgid "Remove"
-#~ msgstr "Elimina"

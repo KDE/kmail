@@ -89,7 +89,3 @@ msgstr "Enviat"
 #, kde-format
 msgid "Drafts"
 msgstr "Esborranys"
-
-#~ msgctxt "@title:window"
-#~ msgid "Add an Unified MailBox"
-#~ msgstr "Afegeix una bústia unificada"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-07-03 11:38\n"
+"PO-Revision-Date: 2023-07-18 11:15\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/kmail/kmail.pot\n"
-"X-Crowdin-File-ID: 3751\n"
+"X-Crowdin-File: /kf5-stable/messages/kmail/kmail.pot\n"
+"X-Crowdin-File-ID: 3076\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3155,16 +3155,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "无效的电子邮件别名“%1”"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "为此身份使用自定义消息模板(&U)"
+msgstr ""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "邮件地址："
+msgstr ""
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
