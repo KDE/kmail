@@ -4097,7 +4097,7 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
 
 bool KMComposerWin::sign() const
 {
-    return mSignAction->isEnabled();
+    return mSignAction->isChecked();
 }
 
 void KMComposerWin::slotRecipientEditorFocusChanged()
