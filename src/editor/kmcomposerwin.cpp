@@ -78,6 +78,7 @@
 
 #include <KCursorSaver>
 
+#include <Libkleo/ExpiryChecker>
 #include <Libkleo/KeyCache>
 #include <Libkleo/KeyResolverCore>
 #include <Libkleo/Enum>
@@ -274,15 +275,17 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     (void)new MailcomposerAdaptor(this);
 
-    connect(mComposerBase->nearExpiryChecker().data(), &MessageComposer::NearExpiryChecker::expiryMessage, this,
-            [&](const GpgME::Key &key, QString msg,  MessageComposer::NearExpiryChecker::ExpiryInformation info, bool isNewMessage) {
+    connect(mComposerBase->expiryChecker().get(),
+            &Kleo::ExpiryChecker::expiryMessage,
+            this,
+            [&](const GpgME::Key &key, QString msg, Kleo::ExpiryChecker::ExpiryInformation info, bool isNewMessage) {
                 Q_UNUSED(isNewMessage);
-                if (info == MessageComposer::NearExpiryChecker::OwnKeyExpired || info == MessageComposer::NearExpiryChecker::OwnKeyNearExpiry) {
+                if (info == Kleo::ExpiryChecker::OwnKeyExpired || info == Kleo::ExpiryChecker::OwnKeyNearExpiry) {
                     const auto plainMsg = msg.replace(QStringLiteral("<p>"),QStringLiteral(" "))
                                              .replace(QStringLiteral("</p>"),QStringLiteral(" "))
                                              .replace(QStringLiteral("<p align=center>"),QStringLiteral(" "));
                     mNearExpiryWarning->addInfo(plainMsg);
-                    mNearExpiryWarning->setWarning(info == MessageComposer::NearExpiryChecker::OwnKeyExpired);
+                    mNearExpiryWarning->setWarning(info == Kleo::ExpiryChecker::OwnKeyExpired);
                     mNearExpiryWarning->animatedShow();
                 }
                 const QList<KPIM::MultiplyingLine *> lstLines = mComposerBase->recipientsEditor()->lines();
@@ -3435,13 +3438,13 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
-                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
             }
         }
         if (!ident.pgpSigningKey().isEmpty()) {
             if (ident.pgpSigningKey() != ident.pgpEncryptionKey()) {
                 auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
-                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
             }
         }
     }
@@ -3454,13 +3457,13 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
-                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
             }
         }
         if (!ident.smimeSigningKey().isEmpty()) {
             if (ident.smimeSigningKey() != ident.smimeEncryptionKey()) {
                 auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
-                mComposerBase->nearExpiryChecker()->checkOwnKey(key);
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
             }
         }
     }
@@ -3697,7 +3700,7 @@ void KMComposerWin::runKeyResolver()
         annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
 
         if (!key.isNull()) {
-            mComposerBase->nearExpiryChecker()->checkKey(key);
+            mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::EncryptionKey);
         }
     }
 }
