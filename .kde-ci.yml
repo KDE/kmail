@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['@all']
+- 'on': ['Linux/Qt5', 'FreeBSD/Qt5', 'Windows/Qt5']
   'require':
     'frameworks/extra-cmake-modules': '@latest'
     'frameworks/kcontacts' : '@latest'
@@ -48,3 +48,6 @@ Dependencies:
     'frameworks/kwindowsystem': '@latest'
     'frameworks/kxmlgui': '@latest'
     'frameworks/kiconthemes': '@latest'
+    'third-party/qtkeychain': '@latest'
+    'libraries/ktextaddons': '@stable'
+

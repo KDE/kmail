@@ -1,7 +1,7 @@
 /*
     This file is part of KMail, the KDE mail client.
     SPDX-FileCopyrightText: 2002 Don Sanders <sanders@kde.org>
-    SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
@@ -19,7 +19,6 @@
 #include "kmreaderwin.h"
 #include "widgets/zoomlabelwidget.h"
 
-#include "kmail_debug.h"
 #include "kmcommands.h"
 #include "messageactions.h"
 #include "util.h"
@@ -54,10 +53,6 @@
 #include <Akonadi/ItemCreateJob>
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/MessageFlags>
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEdit/TextToSpeech>
-#endif
 #include <MailCommon/MailUtil>
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
@@ -701,7 +696,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             // popup on a not-mailto URL
             menu = new QMenu(this);
             menu->addAction(mReaderWin->urlOpenAction());
-            menu->addAction(mReaderWin->addBookmarksAction());
+            menu->addAction(mReaderWin->addUrlToBookmarkAction());
             menu->addAction(mReaderWin->urlSaveAsAction());
             menu->addAction(mReaderWin->copyURLAction());
             menu->addSeparator();
@@ -710,9 +705,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
-                menu->addAction(mReaderWin->copyImageLocation());
-                menu->addAction(mReaderWin->downloadImageToDiskAction());
-                menu->addAction(mReaderWin->shareImage());
+                mReaderWin->addImageMenuActions(menu);
             }
             urlMenuAdded = true;
         }
@@ -739,11 +732,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
-            menu->addSeparator();
-            menu->addAction(mReaderWin->speakTextAction());
-        }
+#ifdef HAVE_TEXT_TO_SPEECH_SUPPORT
+        menu->addSeparator();
+        menu->addAction(mReaderWin->speakTextAction());
 #endif
         menu->addSeparator();
         menu->addAction(mReaderWin->shareTextAction());
@@ -789,9 +780,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addSeparator();
             if (!imageUrl.isEmpty()) {
                 menu->addSeparator();
-                menu->addAction(mReaderWin->copyImageLocation());
-                menu->addAction(mReaderWin->downloadImageToDiskAction());
-                menu->addAction(mReaderWin->shareImage());
+                mReaderWin->addImageMenuActions(menu);
                 menu->addSeparator();
             }
 

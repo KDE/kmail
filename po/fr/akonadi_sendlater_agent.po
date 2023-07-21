@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2022-01-09 09:57+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -192,17 +192,17 @@ msgstr "Il est impossible d'envoyer un message."
 msgid "Message sent"
 msgstr "Message envoyé"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Une erreur est survenue. Voulez-vous effectuer un nouvel envoi ?"
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "Erreur rencontrée"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

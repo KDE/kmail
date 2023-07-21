@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -44,7 +44,7 @@ public:
     void stopAll();
     Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
 
-    MessageComposer::AkonadiSender *sender() const;
+    Q_REQUIRED_RESULT MessageComposer::AkonadiSender *sender() const;
 
     void sendNow(Akonadi::Item::Id id);
 
@@ -55,12 +55,11 @@ public Q_SLOTS:
     void load(bool forcereload = false);
 
 private:
-    Q_DISABLE_COPY(SendLaterManager)
     void slotCreateJob();
     void createSendInfoList();
-    QString infoToStr(MessageComposer::SendLaterInfo *info) const;
+    Q_REQUIRED_RESULT QString infoToStr(MessageComposer::SendLaterInfo *info) const;
     void removeLaterInfo(MessageComposer::SendLaterInfo *info);
-    MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
+    Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
     void recreateSendList();
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);

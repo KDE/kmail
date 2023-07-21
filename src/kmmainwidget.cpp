@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   SPDX-FileCopyrightText: 2002 Don Sanders <sanders@kde.org>
-  SPDX-FileCopyrightText: 2009-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2009-2023 Laurent Montel <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
@@ -11,9 +11,9 @@
 // KMail includes
 #include "kmmainwidget.h"
 #include "editor/composer.h"
+#include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
 #include "kmcommands.h"
-#include "kmmainwin.h"
 #include "kmreadermainwin.h"
 #include "searchdialog/searchwindow.h"
 #include "undostack.h"
@@ -36,10 +36,6 @@
 #include "widgets/collectionpane.h"
 #include "widgets/kactionmenuaccount.h"
 #include "widgets/kactionmenutransport.h"
-#include <kpimtextedit/kpimtextedit-texttospeech.h>
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-#include <KPIMTextEdit/TextToSpeech>
-#endif
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/MailKernel>
@@ -69,9 +65,6 @@
 #include <PimCommonAkonadi/CollectionAclPage>
 #include <mailcommon/mailcommonsettings_base.h>
 
-#include "kmail-version.h"
-
-#include "messageviewer/config-messageviewer.h"
 #include <MessageViewer/HeaderStyle>
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
@@ -103,7 +96,7 @@
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/ClearCacheJob>
+#include <Akonadi/ClearCacheFoldersJob>
 #include <Akonadi/CollectionAttributesSynchronizationJob>
 #include <Akonadi/CollectionDialog>
 #include <Akonadi/CollectionFetchJob>
@@ -139,7 +132,6 @@
 
 #include <KAcceleratorManager>
 #include <KActionMenu>
-#include <KCharsets>
 #include <KMessageBox>
 #include <KStandardShortcut>
 #include <KWindowSystem>
@@ -181,8 +173,13 @@
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
 #ifdef WITH_KUSERFEEDBACK
+#ifdef USE_KUSERFEEDBACK_QT6
+#include <KUserFeedbackQt6/NotificationPopup>
+#include <KUserFeedbackQt6/Provider>
+#else
 #include <KUserFeedback/NotificationPopup>
 #include <KUserFeedback/Provider>
+#endif
 #endif
 
 using namespace std::chrono_literals;
@@ -301,13 +298,13 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (kmkernel->firstStart()) {
         const QStringList listOfMailerFound = MailCommon::Util::foundMailer();
         if (!listOfMailerFound.isEmpty()) {
-            const int answer = KMessageBox::questionYesNoList(this,
-                                                              i18n("Another mailer was found on system. Do you want to import data from it?"),
-                                                              listOfMailerFound,
-                                                              QString(),
-                                                              KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
-                                                              KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
-            if (answer == KMessageBox::Yes) {
+            const int answer = KMessageBox::questionTwoActionsList(this,
+                                                                   i18n("Another mailer was found on system. Do you want to import data from it?"),
+                                                                   listOfMailerFound,
+                                                                   QString(),
+                                                                   KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
+                                                                   KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
+            if (answer == KMessageBox::ButtonCode::PrimaryAction) {
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
                 if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,
@@ -742,10 +739,10 @@ void KMMainWidget::layoutSplitters()
     QList<int> splitter2Sizes;
 
     const int folderViewWidth = KMailSettings::self()->folderViewWidth();
-    int ftHeight = KMailSettings::self()->folderTreeHeight();
+    const int ftHeight = KMailSettings::self()->folderTreeHeight();
     int headerHeight = KMailSettings::self()->searchAndHeaderHeight();
     const int messageViewerWidth = KMailSettings::self()->readerWindowWidth();
-    int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
+    const int headerWidth = KMailSettings::self()->searchAndHeaderWidth();
     int messageViewerHeight = KMailSettings::self()->readerWindowHeight();
 
     int ffvHeight = mFolderViewSplitter ? KMKernel::self()->mailCommonSettings()->favoriteCollectionViewHeight() : 0;
@@ -848,6 +845,7 @@ void KMMainWidget::readConfig()
             deleteWidgets();
             createWidgets();
             restoreCollectionFolderViewConfig();
+            slotShowSelectedFolderInPane();
             Q_EMIT recreateGui();
         } else if (oldFolderQuickSearch != mEnableFolderQuickSearch) {
             if (mEnableFolderQuickSearch) {
@@ -1286,7 +1284,7 @@ bool KMMainWidget::showSearchDialog()
     }
 
     mSearchWin->show();
-    KWindowSystem::activateWindow(mSearchWin->winId());
+    KWindowSystem::activateWindow(mSearchWin->windowHandle());
     return true;
 }
 
@@ -2087,8 +2085,7 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
     auto command = new KMReplyCommand(this, msg, MessageComposer::ReplyAll, text, false, tmpl);
-    command->setReplyAsHtml(messageView()->htmlMail());
-
+    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
     command->start();
 }
 
@@ -2682,17 +2679,14 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         } else if (url.scheme() != QLatin1String("attachment")) {
             // popup on a not-mailto URL
             menu.addAction(mMsgView->urlOpenAction());
-            menu.addAction(mMsgView->addBookmarksAction());
+            menu.addAction(mMsgView->addUrlToBookmarkAction());
             menu.addAction(mMsgView->urlSaveAsAction());
             menu.addAction(mMsgView->copyURLAction());
             menu.addSeparator();
             menu.addAction(mMsgView->shareServiceUrlMenu());
             menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedUrl));
             if (!imageUrl.isEmpty()) {
-                menu.addSeparator();
-                menu.addAction(mMsgView->copyImageLocation());
-                menu.addAction(mMsgView->downloadImageToDiskAction());
-                menu.addAction(mMsgView->shareImage());
+                mMsgView->addImageMenuActions(&menu);
             }
             urlMenuAdded = true;
         }
@@ -2712,11 +2706,9 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(&menu, selectedText);
         menu.addSeparator();
         menu.addActions(mMsgView->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#if KPIMTEXTEDIT_TEXT_TO_SPEECH
-        if (KPIMTextEdit::TextToSpeech::self()->isReady()) {
-            menu.addSeparator();
-            menu.addAction(mMsgView->speakTextAction());
-        }
+#ifdef HAVE_TEXT_TO_SPEECH_SUPPORT
+        menu.addSeparator();
+        menu.addAction(mMsgView->speakTextAction());
 #endif
         menu.addSeparator();
         menu.addAction(mMsgView->shareTextAction());
@@ -2750,10 +2742,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         menu.addSeparator();
         if (mMsgView) {
             if (!imageUrl.isEmpty()) {
-                menu.addSeparator();
-                menu.addAction(mMsgView->copyImageLocation());
-                menu.addAction(mMsgView->downloadImageToDiskAction());
-                menu.addAction(mMsgView->shareImage());
+                mMsgView->addImageMenuActions(&menu);
                 menu.addSeparator();
             }
             menu.addSeparator();
@@ -2917,6 +2906,11 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotFilterLogViewer);
     }
     {
+        auto action = new QAction(i18n("Notification History..."), this);
+        actionCollection()->addAction(QStringLiteral("notification_history"), action);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotShowNotificationHistory);
+    }
+    {
         auto action = new QAction(i18n("&Import from another Email Client..."), this);
         actionCollection()->addAction(QStringLiteral("importWizard"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImportWizard);
@@ -2992,6 +2986,12 @@ void KMMainWidget::setupActions()
     mClearFolderCacheAction = new QAction(i18n("&Clear Akonadi Cache..."), this);
     actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache"), mClearFolderCacheAction);
     connect(mClearFolderCacheAction, &QAction::triggered, this, &KMMainWidget::slotClearFolder);
+
+    {
+        auto action = new QAction(i18n("&Clear Akonadi Cache in This Folder and All its Subfolders"), this);
+        actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache_and_subfolders"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotClearFolderAndSubFolders);
+    }
 
     mShowFolderShortcutDialogAction = new QAction(QIcon::fromTheme(QStringLiteral("configure-shortcuts")), i18n("&Assign Shortcut..."), this);
     actionCollection()->addAction(QStringLiteral("folder_shortcut_command"), mShowFolderShortcutDialogAction);
@@ -3375,7 +3375,7 @@ void KMMainWidget::setupActions()
     }
 
     {
-        mApplyFilterFolderRecursiveActionsMenu = new KActionMenu(i18n("Apply Filters on Folder and all its Subfolders"), this);
+        mApplyFilterFolderRecursiveActionsMenu = new KActionMenu(i18n("Apply Filters on Folder and All its Subfolders"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_on_folder_recursive_actions"), mApplyFilterFolderRecursiveActionsMenu);
     }
 
@@ -3393,6 +3393,14 @@ void KMMainWidget::setupActions()
 
     QAction *act = actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"));
     connect(act, &QAction::triggered, this, &KMMainWidget::slotUndo);
+
+    mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
+    actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
+    connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
+
+    mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
+    actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
+    connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
 
     menutimer = new QTimer(this);
     menutimer->setObjectName(QStringLiteral("menutimer"));
@@ -3526,13 +3534,6 @@ void KMMainWidget::setupActions()
     actionCollection()->addAction(QStringLiteral("remove_duplicate_recursive"), mRemoveDuplicateRecursiveAction);
     connect(mRemoveDuplicateRecursiveAction, &KToggleAction::triggered, this, &KMMainWidget::slotRemoveDuplicateRecursive);
 
-    mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
-    actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
-    connect(mAccountSettings, &QAction::triggered, this, &KMMainWidget::slotAccountSettings);
-
-    mRestartAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Restart Account"), this);
-    actionCollection()->addAction(QStringLiteral("resource_restart"), mRestartAccountSettings);
-    connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
     {
         QList<QAction *> listActions;
         auto act = new QAction(i18n("Previous Selected Folder"), this); // TODO fix me i18n
@@ -4720,38 +4721,6 @@ void KMMainWidget::slotUpdateConfig()
     updateDisplayFormatMessage();
 }
 
-void KMMainWidget::printCurrentMessage(bool preview)
-{
-    bool result = false;
-    if (messageView() && messageView()->viewer()) {
-        if (MessageViewer::MessageViewerSettings::self()->printSelectedText()) {
-            result = messageView()->printSelectedText(preview);
-        }
-    }
-    if (!result) {
-        const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
-        const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
-
-        const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
-
-        KMPrintCommandInfo commandInfo;
-        commandInfo.mMsg = currentItem;
-        commandInfo.mHeaderStylePlugin = messageView()->viewer()->headerStylePlugin();
-        commandInfo.mFormat = messageView()->viewer()->displayFormatMessageOverwrite();
-        commandInfo.mHtmlLoadExtOverride = messageView()->viewer()->htmlLoadExternal();
-        commandInfo.mPrintPreview = preview;
-        commandInfo.mUseFixedFont = useFixedFont;
-        commandInfo.mOverrideFont = overrideEncoding;
-        commandInfo.mShowSignatureDetails =
-            messageView()->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-        commandInfo.mShowEncryptionDetails =
-            messageView()->viewer()->showEncryptionDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
-
-        auto command = new KMPrintCommand(this, commandInfo);
-        command->start();
-    }
-}
-
 void KMMainWidget::slotRedirectCurrentMessage()
 {
     if (messageView() && messageView()->viewer()) {
@@ -4767,7 +4736,7 @@ void KMMainWidget::slotRedirectCurrentMessage()
 void KMMainWidget::replyMessageTo(const Akonadi::Item &item, bool replyToAll)
 {
     auto command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
-    command->setReplyAsHtml(messageView()->htmlMail());
+    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
     command->start();
 }
 
@@ -4838,7 +4807,7 @@ void KMMainWidget::setupUnifiedMailboxChecker()
             return;
         }
 
-        const auto answer = KMessageBox::questionYesNo(
+        const auto answer = KMessageBox::questionTwoActions(
             this,
             i18n("You have more than one email account set up.\nDo you want to enable the Unified Mailbox feature to "
                  "show unified content of your inbox, sent and drafts folders?\n"
@@ -4846,7 +4815,7 @@ void KMMainWidget::setupUnifiedMailboxChecker()
             i18n("Enable Unified Mailboxes?"),
             KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
             KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
-        if (answer == KMessageBox::Yes) {
+        if (answer == KMessageBox::ButtonCode::PrimaryAction) {
             iface.call(QStringLiteral("setEnableAgent"), true);
         }
     };
@@ -4859,10 +4828,17 @@ void KMMainWidget::setupUnifiedMailboxChecker()
 
 void KMMainWidget::slotClearFolder()
 {
-    auto job = new Akonadi::ClearCacheJob(this);
-    job->setCollection(mCurrentCollection);
+    auto job = new Akonadi::ClearCacheFoldersJob(mCurrentCollection, this);
     job->setParentWidget(this);
-    connect(job, &ClearCacheJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
+    connect(job, &ClearCacheFoldersJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
+    job->start();
+}
+
+void KMMainWidget::slotClearFolderAndSubFolders()
+{
+    auto job = new ClearCacheJobInFolderAndSubFolderJob(this, this);
+    job->setTopLevelCollection(mCurrentCollection);
+    connect(job, &ClearCacheJobInFolderAndSubFolderJob::clearCacheDone, this, &KMMainWidget::slotClearCacheDone);
     job->start();
 }
 
@@ -4872,7 +4848,12 @@ void KMMainWidget::slotClearCacheDone()
     if (akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
-        if (KMessageBox::questionYesNo(this, i18n("Do you want to restart Akonadi?"), i18n("Restart Akonadi")) == KMessageBox::Yes) {
+        if (KMessageBox::questionTwoActions(this,
+                                            i18n("Do you want to restart Akonadi?"),
+                                            i18n("Restart Akonadi"),
+                                            KGuiItem(i18n("Restart")),
+                                            KStandardGuiItem::cancel())
+            == KMessageBox::ButtonCode::PrimaryAction) {
             auto process = new QProcess(this);
             process->setProgram(QStandardPaths::findExecutable(QStringLiteral("akonadictl")));
             process->setArguments(QStringList() << QStringLiteral("restart"));

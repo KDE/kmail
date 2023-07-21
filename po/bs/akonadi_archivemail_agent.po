@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-25 00:45+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2014-01-31 18:56+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -76,87 +76,87 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arhiva"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "Ime"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "Zadnja arhiva"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "Sljedeća arhiva u"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "Direktorij za pohranu"
 
-#: archivemailwidget.cpp:89
+#: archivemailwidget.cpp:88
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Arhivni Mail Agent"
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:90
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Automatski arhiviraj elektronsku poštu"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:92
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2012, 2013 Laurent Montel"
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Autorska prava (C) 2012, 2013 Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Maintainer"
 msgstr "Održava"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Samir Ribić"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "samir.ribic@etf.unsa.ba"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Dodaj..."
 
-#: archivemailwidget.cpp:113
+#: archivemailwidget.cpp:112
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Otvori sadržavajući direktorij..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Obriši"
 
-#: archivemailwidget.cpp:166
+#: archivemailwidget.cpp:165
 #, kde-format
 msgid "Folder: %1"
 msgstr "Direktorij: %1"
 
-#: archivemailwidget.cpp:188
+#: archivemailwidget.cpp:187
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -164,25 +164,25 @@ msgstr[0] "za %1 dan"
 msgstr[1] "za %1 dana"
 msgstr[2] "za %1 dana"
 
-#: archivemailwidget.cpp:197
+#: archivemailwidget.cpp:196
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Arhiva će se uraditi %1"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:232
 #, fuzzy, kde-format
 #| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected items?"
 msgstr "Želite li obrisati odabrane stavke? Želite li nastaviti?"
 
-#: archivemailwidget.cpp:234
+#: archivemailwidget.cpp:233
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Obriši"
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -190,7 +190,7 @@ msgstr ""
 "Ne mogu dodati drugu arhivu za ovu fasciklu. Umjesto toga se mijenja "
 "postojeća."
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "Dodaj arhivnu poštu"

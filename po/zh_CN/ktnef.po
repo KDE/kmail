@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
-"PO-Revision-Date: 2022-10-02 15:49\n"
+"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"PO-Revision-Date: 2023-07-03 11:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -43,29 +43,29 @@ msgstr "附件 %1 的属性"
 msgid " bytes"
 msgstr " 比特"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF 属性"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:176
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "必须先选择一项。"
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:182
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "因选中项包含空标签而无法保存。"
 
-#: attachpropertydialog.cpp:199
+#: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
-msgstr "无法为写入操作打开文件，请检查文件权限。"
+msgstr "无法打开文件进行写入，请检查文件权限。"
 
 #: ktnefmain.cpp:94
 #, kde-format
@@ -91,19 +91,19 @@ msgstr "查看方式..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
-msgstr "解压缩"
+msgstr "解压"
 
 #: ktnefmain.cpp:121 ktnefmain.cpp:400
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
-msgstr "解压缩到..."
+msgstr "解压到..."
 
 #: ktnefmain.cpp:126
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
-msgstr "全部解压缩到..."
+msgstr "全部解压到..."
 
 #: ktnefmain.cpp:131 ktnefmain.cpp:403
 #, kde-format
@@ -115,19 +115,19 @@ msgstr "属性"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Message Properties"
-msgstr "信件属性"
+msgstr "消息属性"
 
 #: ktnefmain.cpp:140
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
-msgstr "显示信件属性"
+msgstr "显示消息属性"
 
 #: ktnefmain.cpp:145
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
-msgstr "保存信件文本为..."
+msgstr "保存消息文本为..."
 
 #: ktnefmain.cpp:158
 #, kde-format
@@ -176,13 +176,13 @@ msgstr "无法解压缩文件“%1”。"
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
-msgstr "信件不包含任何富文本数据。"
+msgstr "消息不包含任何富文本数据。"
 
 #: ktnefmain.cpp:504
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
-msgstr "无法为写入操作打开文件“%1”，请检查文件权限。"
+msgstr "无法打开文件“%1”进行写入，请检查文件权限。"
 
 #: ktnefmain.cpp:526
 #, kde-format
@@ -303,7 +303,7 @@ msgstr "可选参数‘文件’。"
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
-msgstr "信件属性"
+msgstr "消息属性"
 
 #: messagepropertydialog.cpp:55
 #, kde-format

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -24,7 +24,6 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(FolderArchiveAgentJob)
     void slotFetchCollection(KJob *job);
     void sloMoveMailsToCollection(const Akonadi::Collection &col);
     void slotCheckFailed(const QString &message);

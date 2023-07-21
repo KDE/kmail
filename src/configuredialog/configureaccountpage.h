@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -105,7 +105,11 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit AccountsPage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit AccountsPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
     QString helpAnchor() const override;
 
 Q_SIGNALS:

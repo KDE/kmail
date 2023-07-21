@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -7,7 +7,6 @@
 #include "tagselectdialog.h"
 
 #include "kmail_debug.h"
-#include "util.h"
 
 #include <MailCommon/AddTagDialog>
 
@@ -19,6 +18,7 @@
 #include <Akonadi/TagFetchJob>
 #include <Akonadi/TagFetchScope>
 #include <KConfigGroup>
+#include <KSharedConfig>
 #include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QListWidget>
@@ -27,7 +27,6 @@
 #include <QVBoxLayout>
 #include <QWindow>
 
-using namespace KMail;
 namespace
 {
 static const char myTagSelectDialogGroupName[] = "TagSelectDialog";

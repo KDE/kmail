@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -23,7 +23,6 @@ Q_SIGNALS:
     void checkFailed(const QString &message);
 
 private:
-    Q_DISABLE_COPY(FolderArchiveAgentCheckCollection)
     void slotInitialCollectionFetchingFirstLevelDone(KJob *job);
     void slotCreateNewFolder(KJob *);
     void createNewFolder(const QString &name);

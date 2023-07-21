@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 
@@ -26,7 +26,6 @@ public:
     void setTopLevelCollection(const Akonadi::Collection &topLevelCollection);
 
 private:
-    Q_DISABLE_COPY(RemoveDuplicateMessageInFolderAndSubFolderJob)
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotFinished(KJob *job);

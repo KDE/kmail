@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 
@@ -23,7 +23,6 @@ public:
     void setParentWidget(QWidget *parentWidget);
 
 private:
-    Q_DISABLE_COPY(SaveAsFileJob)
     bool mHtmlMode = false;
     QTextDocument *mTextDocument = nullptr;
     QWidget *mParentWidget = nullptr;

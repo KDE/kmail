@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2016-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -8,7 +8,6 @@
 
 #include "../../plugininterface/kmailplugininterface.h"
 #include "kmail_debug.h"
-#include "util.h"
 #include <Akonadi/ServerManager>
 #include <KLocalizedString>
 #include <KSharedConfig>

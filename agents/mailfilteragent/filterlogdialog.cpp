@@ -1,6 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2003 Andreas Gungl <a.gungl@gmx.de>
-    SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
@@ -128,7 +128,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     auto logSizeLab = new QLabel(i18n("Log size limit:"), hbox);
     hboxHBoxLayout->addWidget(logSizeLab);
     mLogMemLimitSpin = new QSpinBox(hbox);
-    hboxHBoxLayout->addWidget(mLogMemLimitSpin);
+    hboxHBoxLayout->addWidget(mLogMemLimitSpin, 1);
     mLogMemLimitSpin->setMinimum(1);
     mLogMemLimitSpin->setMaximum(1024 * 256); // 256 MB
     // value in the QSpinBox is in KB while it's in Byte in the FilterLog
@@ -142,6 +142,9 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
              "to be used: if the size of the collected log data exceeds "
              "this limit then the oldest data will be discarded until "
              "the limit is no longer exceeded. "));
+
+    connect(mLogActiveBox, &QCheckBox::toggled, mLogMemLimitSpin, &QSpinBox::setEnabled);
+    mLogMemLimitSpin->setEnabled(mLogActiveBox->isChecked());
 
     connect(FilterLog::instance(), &FilterLog::logEntryAdded, this, &FilterLogDialog::slotLogEntryAdded);
     connect(FilterLog::instance(), &FilterLog::logShrinked, this, &FilterLogDialog::slotLogShrinked);

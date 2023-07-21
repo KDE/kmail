@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -17,7 +17,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageList/ThemeConfigButton>
 #include <messagelist/messagelistsettings.h>
 
-#include "util.h"
 #include <MailCommon/FolderTreeWidget>
 
 #include "kmmainwidget.h"
@@ -62,6 +61,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QLabel>
+#include <QMenu>
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QVBoxLayout>
@@ -75,8 +75,13 @@ QString AppearancePage::helpAnchor() const
     return QStringLiteral("configure-appearance");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 AppearancePage::AppearancePage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+AppearancePage::AppearancePage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     //
     // "General" tab:
@@ -622,7 +627,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
                               .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
                               .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
         } else {
-            buttonLabel = i18n(label);
+            buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName).toString();
         }
         if (dateDisplayConfig[i].dateDisplay == DateFormatter::Custom) {
             auto hbox = new QWidget(this);
@@ -947,9 +952,11 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     mTagListBox = new QListWidget(mTagsGroupBox);
     mTagListBox->setDragDropMode(QAbstractItemView::InternalMove);
     connect(mTagListBox->model(), &QAbstractItemModel::rowsMoved, this, &AppearancePageMessageTagTab::slotRowsMoved);
+    connect(mTagListBox, &QListWidget::customContextMenuRequested, this, &AppearancePageMessageTagTab::slotCustomMenuRequested);
 
     mTagListBox->setMinimumWidth(150);
     listboxgrid->addWidget(mTagListBox);
+    mTagListBox->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // RHS for individual tag settings
 
@@ -1001,6 +1008,16 @@ AppearancePageMessageTagTab::~AppearancePageMessageTagTab() = default;
 void AppearancePageMessageTagTab::slotEmitChangeCheck()
 {
     slotEmitChanged();
+}
+
+void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
+{
+    const int currentIndex = mTagListBox->currentRow();
+    if (currentIndex >= 0) {
+        QMenu menu(this);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &AppearancePageMessageTagTab::slotRemoveTag);
+        menu.exec(QCursor::pos());
+    }
 }
 
 void AppearancePageMessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
@@ -1126,12 +1143,12 @@ void AppearancePageMessageTagTab::slotRemoveTag()
 {
     const int tmp_index = mTagListBox->currentRow();
     if (tmp_index >= 0) {
-        if (KMessageBox::Yes
-            == KMessageBox::questionYesNo(this,
-                                          i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()),
-                                          i18nc("@title:window", "Remove Tag"),
-                                          KStandardGuiItem::remove(),
-                                          KStandardGuiItem::cancel())) {
+        if (KMessageBox::ButtonCode::PrimaryAction
+            == KMessageBox::questionTwoActions(this,
+                                               i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()),
+                                               i18nc("@title:window", "Remove Tag"),
+                                               KStandardGuiItem::remove(),
+                                               KStandardGuiItem::cancel())) {
             QListWidgetItem *item = mTagListBox->takeItem(mTagListBox->currentRow());
             auto tagItem = static_cast<TagListWidgetItem *>(item);
             MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();

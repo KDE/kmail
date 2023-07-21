@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -33,7 +33,6 @@ public Q_SLOTS:
     void slotCollectionProperties();
 
 private:
-    Q_DISABLE_COPY(ManageShowCollectionProperties)
     void slotCollectionPropertiesContinued(KJob *job);
     void slotCollectionPropertiesFinished(KJob *job);
     void showCollectionProperties(const QString &pageToShow);

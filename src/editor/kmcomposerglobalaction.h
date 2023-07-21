@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -26,6 +26,5 @@ public Q_SLOTS:
     void slotInsertText(const QString &str);
 
 private:
-    Q_DISABLE_COPY(KMComposerGlobalAction)
     KMComposerWin *const mComposerWin;
 };

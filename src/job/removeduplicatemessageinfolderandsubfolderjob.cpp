@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 
@@ -56,6 +56,9 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed()
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi::Collection::List &list)
 {
     Akonadi::Collection::List lst;
+    if (mTopLevelCollection.rights() & Akonadi::Collection::CanDeleteItem) {
+        lst.append(mTopLevelCollection);
+    }
     for (const Akonadi::Collection &collection : list) {
         if (collection.isValid()) {
             if (collection.rights() & Akonadi::Collection::CanDeleteItem) {

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -25,7 +25,6 @@ public:
     void setCurrentCollection(const Akonadi::Collection &currentCollection);
 
 private:
-    Q_DISABLE_COPY(HandleClickedUrlJob)
     void slotOpenComposer();
     QUrl mUrl;
     Akonadi::Collection mCurrentCollection;

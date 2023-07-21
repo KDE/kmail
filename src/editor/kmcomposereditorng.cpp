@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -7,10 +7,8 @@
 #include "kmcomposereditorng.h"
 #include "dialog/spellcheckerconfigdialog.h"
 #include "job/dndfromarkjob.h"
-#include "kmail_debug.h"
 #include "kmcomposerwin.h"
 #include "kmkernel.h"
-#include "util.h"
 
 #include <KPIMTextEdit/RichTextComposerEmailQuoteHighlighter>
 #include <KToggleAction>

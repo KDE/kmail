@@ -4,16 +4,19 @@
         "Description[ar]": "إعداد ملخّص البريد",
         "Description[az]": "Poçt yekununun təyin edilməsi",
         "Description[bg]": "Настройки на обобщението на писмата",
-        "Description[ca@valencia]": "Configuració del resum del correu",
+        "Description[ca@valencia]": "Configureu el resum del correu",
         "Description[ca]": "Configuració del resum del correu",
         "Description[cs]": "Nastavení souhrnu pošty",
         "Description[de]": "Mailübersicht-Einstellungen",
         "Description[en_GB]": "Mail Summary Setup",
+        "Description[eo]": "Agordo por Poŝta Resumo",
         "Description[es]": "Configuración del resumen de correo",
         "Description[eu]": "Posta laburpenaren ezarpena",
         "Description[fi]": "Sähköpostiyhteenvedon asetus",
         "Description[fr]": "Configuration du résumé de courriel",
+        "Description[gl]": "Configuración do resumo de correo",
         "Description[ia]": "Configuration de summario de posta",
+        "Description[id]": "Penyiapan Ringkasan Mail",
         "Description[it]": "Impostazioni sommario posta",
         "Description[ka]": "ფოსტის შეჯამების მორგება",
         "Description[ko]": "메일 요약 설정",
@@ -43,6 +46,7 @@
         "Name[de]": "Neue Nachrichten",
         "Name[el]": "Νέα μηνύματα",
         "Name[en_GB]": "New Messages",
+        "Name[eo]": "Nova Mesaĝo",
         "Name[es]": "Mensajes nuevos",
         "Name[et]": "Uued kirjad",
         "Name[eu]": "Mezu berriak",
@@ -53,6 +57,7 @@
         "Name[gl]": "Mensaxes novas",
         "Name[hu]": "Új üzenetek",
         "Name[ia]": "Nove messages",
+        "Name[id]": "Pesan Baru",
         "Name[it]": "Nuovi messaggi",
         "Name[ja]": "未読メッセージ",
         "Name[ka]": "ახალი შეტყობინებები",
@@ -88,11 +93,7 @@
         "Name[wa]": "Noveas messaedjes",
         "Name[x-test]": "xxNew Messagesxx",
         "Name[zh_CN]": "新邮件",
-        "Name[zh_TW]": "新訊息",
-        "ServiceTypes": [
-            "KCModule"
-        ]
+        "Name[zh_TW]": "新訊息"
     },
-    "X-KDE-FactoryName": "kmailsummary",
     "X-KDE-Weight": 200
 }

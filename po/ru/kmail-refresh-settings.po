@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# Alexander Yavorsky <kekcuha@gmail.com>, 2019, 2020, 2022.
+# Alexander Yavorsky <kekcuha@gmail.com>, 2019, 2020, 2022, 2023.
 # Мария Шикунова <translation-team@basealt.ru>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-01-02 00:48+0000\n"
-"PO-Revision-Date: 2022-05-11 21:42+0300\n"
+"POT-Creation-Date: 2023-01-02 01:04+0000\n"
+"PO-Revision-Date: 2023-02-19 13:56+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -36,8 +36,8 @@ msgstr "Помощник удаления неиспользуемых пара�
 
 #: main.cpp:36
 #, kde-format
-msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
-msgstr "© Laurent Montel <montel@kde.org>, 2019–2022"
+msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgstr "© Laurent Montel <montel@kde.org>, 2019–2023"
 
 #: main.cpp:37
 #, kde-format

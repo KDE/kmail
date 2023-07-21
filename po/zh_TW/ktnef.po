@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-01-31 00:59+0000\n"
 "PO-Revision-Date: 2018-05-01 23:19+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -44,25 +44,25 @@ msgstr "附檔 %1 的屬性"
 msgid " bytes"
 msgstr " 位元組"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF 屬性"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:176
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "需要先選擇一個項目。"
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:182
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "選取的項目不能被儲存，因為有空的標籤。"
 
-#: attachpropertydialog.cpp:199
+#: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
  *
  * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
@@ -30,7 +30,6 @@
 #include "editor/warningwidgets/nearexpirywarning.h"
 #include "editor/warningwidgets/toomanyrecipientswarning.h"
 #include "job/addressvalidationjob.h"
-#include "job/createnewcontactjob.h"
 #include "job/dndfromarkjob.h"
 #include "job/saveasfilejob.h"
 #include "job/savedraftjob.h"
@@ -40,8 +39,6 @@
 #include "kmcomposerglobalaction.h"
 #include "kmcomposerupdatetemplatejob.h"
 #include "kmkernel.h"
-#include "kmmainwidget.h"
-#include "kmmainwin.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
 #include "settings/kmailsettings.h"
 #include "undosend/undosendmanager.h"
@@ -156,14 +153,15 @@
 // KDE Frameworks includes
 #include <KActionCollection>
 #include <KActionMenu>
-#include <KCharsets>
 #include <KConfigGroup>
 #include <KEditToolBar>
 #include <KEmailAddress>
 #include <KEncodingFileDialog>
+#include <KFileWidget>
 #include <KIO/JobUiDelegate>
 #include <KIconUtils>
 #include <KMessageBox>
+#include <KRecentDirs>
 #include <KRecentFilesAction>
 #include <KShortcutsDialog>
 #include <KSplitterCollapserButton>
@@ -171,6 +169,7 @@
 #include <KToggleAction>
 #include <KToolBar>
 #include <KXMLGUIFactory>
+
 #include <QDBusConnection>
 // Qt includes
 #include <QAction>
@@ -596,7 +595,7 @@ KMComposerWin::ModeType KMComposerWin::modeType() const
     return mModeType;
 }
 
-void KMComposerWin::setModeType(const ModeType &modeType)
+void KMComposerWin::setModeType(KMComposerWin::ModeType modeType)
 {
     mModeType = modeType;
 }
@@ -1451,7 +1450,7 @@ void KMComposerWin::setupActions()
     mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
     mLastEncryptActionState = false;
-    mLastSignActionState = ident.pgpAutoSign();
+    mLastSignActionState = pgpAutoSign();
 
     changeCryptoAction();
 
@@ -2043,15 +2042,15 @@ bool KMComposerWin::queryClose()
                                              : i18n("Save this message in the Drafts folder. "
                                                     "It can then be edited and sent at a later time."));
 
-        const int rc = KMessageBox::warningYesNoCancel(this,
-                                                       i18n("Do you want to save the message for later or discard it?"),
-                                                       i18n("Close Composer"),
-                                                       KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
-                                                       KStandardGuiItem::discard(),
-                                                       KStandardGuiItem::cancel());
+        const int rc = KMessageBox::warningTwoActionsCancel(this,
+                                                            i18n("Do you want to save the message for later or discard it?"),
+                                                            i18n("Close Composer"),
+                                                            KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
+                                                            KStandardGuiItem::discard(),
+                                                            KStandardGuiItem::cancel());
         if (rc == KMessageBox::Cancel) {
             return false;
-        } else if (rc == KMessageBox::Yes) {
+        } else if (rc == KMessageBox::ButtonCode::PrimaryAction) {
             // doSend will close the window. Just return false from this method
             if (istemplate) {
                 slotSaveTemplate();
@@ -2107,11 +2106,6 @@ void KMComposerWin::autoSaveMessage(bool force)
     }
 }
 
-bool KMComposerWin::encryptToSelf() const
-{
-    return MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelf();
-}
-
 void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::ComposerViewBase::FailedType type)
 {
     setEnabled(true);
@@ -2125,7 +2119,13 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
 void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 {
     if (id != -1) {
-        UndoSendManager::self()->addItem(id, subject(), KMailSettings::self()->undoSendDelay());
+        UndoSendManager::UndoSendManagerInfo info;
+        info.subject = MessageCore::StringUtil::quoteHtmlChars(subject());
+        info.index = id;
+        info.delay = KMailSettings::self()->undoSendDelay();
+        info.to = MessageCore::StringUtil::quoteHtmlChars(mComposerBase->to());
+
+        UndoSendManager::self()->addItem(info);
     }
     setModified(false);
     mComposerBase->cleanupAutoSave();
@@ -2136,6 +2136,26 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
 const KIdentityManagement::Identity &KMComposerWin::identity() const
 {
     return KMKernel::self()->identityManager()->identityForUoidOrDefault(currentIdentity());
+}
+
+bool KMComposerWin::pgpAutoEncrypt() const
+{
+    const auto ident = identity();
+    if (ident.encryptionOverride()) {
+        return ident.pgpAutoEncrypt();
+    } else {
+        return MessageComposer::MessageComposerSettings::self()->cryptoAutoEncrypt();
+    }
+}
+
+bool KMComposerWin::pgpAutoSign() const
+{
+    const auto ident = identity();
+    if (ident.encryptionOverride()) {
+        return ident.pgpAutoSign();
+    } else {
+        return MessageComposer::MessageComposerSettings::self()->cryptoAutoSign();
+    }
 }
 
 Kleo::CryptoMessageFormat KMComposerWin::cryptoMessageFormat() const
@@ -2274,13 +2294,19 @@ void KMComposerWin::slotUpdateFont()
 
 QUrl KMComposerWin::insertFile()
 {
+    QString recentDirClass;
+    QUrl startUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///InsertFile")), recentDirClass);
+
     const KEncodingFileDialog::Result result =
-        KEncodingFileDialog::getOpenUrlAndEncoding(QString(), QUrl(), QString(), this, i18nc("@title:window", "Insert File"));
+        KEncodingFileDialog::getOpenUrlAndEncoding(QString(), startUrl, QString(), this, i18nc("@title:window", "Insert File"));
     QUrl url;
     if (!result.URLs.isEmpty()) {
         url = result.URLs.constFirst();
         if (url.isValid()) {
             MessageCore::StringUtil::setEncodingFile(url, MimeTreeParser::NodeHelper::fixEncoding(result.encoding));
+            if (!recentDirClass.isEmpty()) {
+                KRecentDirs::add(recentDirClass, url.path());
+            }
         }
     }
     return url;
@@ -2571,7 +2597,7 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
     }
     // check if the user wants to encrypt messages to himself and if he defined
     // an encryption key for the current identity
-    else if (encrypt && encryptToSelf() && !mLastIdentityHasEncryptionKey) {
+    else if (encrypt && !mLastIdentityHasEncryptionKey) {
         if (setByUser) {
             KMessageBox::error(this,
                                i18n("<qt><p>You have requested that messages be "
@@ -2817,13 +2843,13 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
                 return;
             } else {
-                const int rc = KMessageBox::questionYesNo(this,
-                                                          i18n("To: field is empty. "
-                                                               "Send message anyway?"),
-                                                          i18n("No To: specified"),
-                                                          KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
-                                                          KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
-                if (rc == KMessageBox::No) {
+                const int rc = KMessageBox::questionTwoActions(this,
+                                                               i18n("To: field is empty. "
+                                                                    "Send message anyway?"),
+                                                               i18n("No To: specified"),
+                                                               KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
+                                                               KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
+                if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                     return;
                 }
             }
@@ -2831,13 +2857,13 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
         if (subject().isEmpty()) {
             mEdtSubject->setFocus();
-            const int rc = KMessageBox::questionYesNo(this,
-                                                      i18n("You did not specify a subject. "
-                                                           "Send message anyway?"),
-                                                      i18n("No Subject Specified"),
-                                                      KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
-                                                      KGuiItem(i18n("&Specify the Subject"), QLatin1String("edit-rename")));
-            if (rc == KMessageBox::No) {
+            const int rc = KMessageBox::questionTwoActions(this,
+                                                           i18n("You did not specify a subject. "
+                                                                "Send message anyway?"),
+                                                           i18n("No Subject Specified"),
+                                                           KGuiItem(i18n("S&end as Is"), QStringLiteral("mail-send")),
+                                                           KGuiItem(i18n("&Specify the Subject"), QStringLiteral("edit-rename")));
+            if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                 return;
             }
         }
@@ -3071,15 +3097,15 @@ void KMComposerWin::slotSendNow()
 
 void KMComposerWin::confirmBeforeSend()
 {
-    const int rc = KMessageBox::warningYesNoCancel(mMainWidget,
-                                                   i18n("About to send email..."),
-                                                   i18n("Send Confirmation"),
-                                                   KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
-                                                   KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
+    const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
+                                                        i18n("About to send email..."),
+                                                        i18n("Send Confirmation"),
+                                                        KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
+                                                        KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
 
-    if (rc == KMessageBox::Yes) {
+    if (rc == KMessageBox::ButtonCode::PrimaryAction) {
         doSend(MessageComposer::MessageSender::SendImmediate);
-    } else if (rc == KMessageBox::No) {
+    } else if (rc == KMessageBox::ButtonCode::SecondaryAction) {
         doSend(MessageComposer::MessageSender::SendLater);
     }
 }
@@ -3149,12 +3175,12 @@ bool KMComposerWin::checkRecipientNumber() const
 {
     const int thresHold = KMailSettings::self()->recipientThreshold();
     if (KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
-        if (KMessageBox::questionYesNo(mMainWidget,
-                                       i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
-                                       i18n("Too many recipients"),
-                                       KGuiItem(i18n("&Send as Is")),
-                                       KGuiItem(i18n("&Edit Recipients")))
-            == KMessageBox::No) {
+        if (KMessageBox::questionTwoActions(mMainWidget,
+                                            i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
+                                            i18n("Too many recipients"),
+                                            KGuiItem(i18n("&Send as Is")),
+                                            KGuiItem(i18n("&Edit Recipients")))
+            == KMessageBox::ButtonCode::SecondaryAction) {
             return false;
         }
     }
@@ -3189,23 +3215,23 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
     bool forcePlainTextMarkup = false;
     if (confirmation == MessageComposer::ComposerViewBase::LetUserConfirm && mComposerBase->editor()->composerControler()->isFormattingUsed()
         && !mForceDisableHtml) {
-        int choice = KMessageBox::warningYesNoCancel(this,
-                                                     i18n("Turning HTML mode off "
-                                                          "will cause the text to lose the formatting. Are you sure?"),
-                                                     i18n("Lose the formatting?"),
-                                                     KGuiItem(i18n("Lose Formatting")),
-                                                     KGuiItem(i18n("Add Markup Plain Text")),
-                                                     KStandardGuiItem::cancel(),
-                                                     QStringLiteral("LoseFormattingWarning"));
+        int choice = KMessageBox::warningTwoActionsCancel(this,
+                                                          i18n("Turning HTML mode off "
+                                                               "will cause the text to lose the formatting. Are you sure?"),
+                                                          i18n("Lose the formatting?"),
+                                                          KGuiItem(i18n("Lose Formatting")),
+                                                          KGuiItem(i18n("Add Markup Plain Text")),
+                                                          KStandardGuiItem::cancel(),
+                                                          QStringLiteral("LoseFormattingWarning"));
 
         switch (choice) {
         case KMessageBox::Cancel:
             enableHtml();
             return;
-        case KMessageBox::No:
+        case KMessageBox::ButtonCode::SecondaryAction:
             forcePlainTextMarkup = true;
             break;
-        case KMessageBox::Yes:
+        case KMessageBox::ButtonCode::PrimaryAction:
             break;
         }
     }
@@ -3553,7 +3579,7 @@ std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
 void KMComposerWin::slotEncryptionButtonIconUpdate()
 {
     const auto state = mEncryptionState.encrypt();
-    const auto override = mEncryptionState.override();
+    const auto setByUser = mEncryptionState.override();
     const auto acceptedSolution = mEncryptionState.acceptedSolution();
 
     auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));

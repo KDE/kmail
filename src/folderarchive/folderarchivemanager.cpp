@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -8,8 +8,6 @@
 #include "folderarchiveagentjob.h"
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
-
-#include "util.h"
 
 #include <Akonadi/AgentManager>
 #include <Akonadi/CollectionFetchJob>

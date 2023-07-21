@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2016-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -34,7 +34,6 @@ Q_SIGNALS:
     void finished(Akonadi::Collection::Id id, bool needToReindex);
 
 private:
-    Q_DISABLE_COPY(CheckIndexingJob)
     void slotCollectionPropertiesFinished(KJob *job);
     void askForNextCheck(quint64 id, bool needToReindex = false);
     Akonadi::Collection mCollection;

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -19,6 +19,5 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(FollowUpReminderShowMessageJob)
     const Akonadi::Item::Id mId;
 };

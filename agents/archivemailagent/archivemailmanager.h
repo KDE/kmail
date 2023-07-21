@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -41,7 +41,6 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 private:
-    Q_DISABLE_COPY(ArchiveMailManager)
     QString infoToStr(ArchiveMailInfo *info) const;
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;

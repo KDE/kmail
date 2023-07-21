@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -53,7 +53,6 @@ Q_SIGNALS:
     void insertText(const QString &str);
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorManagerInterface)
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
     KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;
     MessageComposer::ComposerViewBase *mComposerInterface = nullptr;

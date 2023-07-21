@@ -5,7 +5,6 @@
 */
 
 #include "util.h"
-#include "kmkernel.h"
 
 #include "job/handleclickedurljob.h"
 #include <MessageComposer/MessageHelper>

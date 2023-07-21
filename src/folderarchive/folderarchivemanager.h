@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -40,7 +40,6 @@ public Q_SLOTS:
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
 
 private:
-    Q_DISABLE_COPY(FolderArchiveManager)
     void slotFetchParentCollection(KJob *job);
     void slotFetchCollection(KJob *job);
 

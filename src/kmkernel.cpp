@@ -35,11 +35,11 @@ using PimCommon::RecentAddresses;
 // kdepim includes
 #include "kmail-version.h"
 
+#include <Akonadi/DispatcherInterface>
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 #include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
-#include <MailTransportAkonadi/DispatcherInterface>
 
 #include "mailserviceimpl.h"
 #include <KSieveUi/SieveImapInstanceInterfaceManager>
@@ -52,9 +52,14 @@ using KMail::MailServiceImpl;
 #include <MessageCore/MessageCoreSettings>
 #include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
-#include <PimCommon/AutoCorrection>
 #include <PimCommon/NetworkManager>
-#include <PimCommon/PimCommonSettings>
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#include <TextAutoCorrectionCore/AutoCorrection>
+#include <TextAutoCorrectionCore/TextAutoCorrectionSettings>
+#else
+#include <TextAutoCorrection/AutoCorrection>
+#include <TextAutoCorrection/TextAutoCorrectionSettings>
+#endif
 #include <gravatar/gravatarsettings.h>
 #include <messagelist/messagelistsettings.h>
 
@@ -93,13 +98,11 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
+#include <QTextCodec>
 #include <QWidget>
-#include <QtDBus>
 
 #include <MailCommon/ResourceReadConfigFile>
 
-#include "kmailinterface.h"
-#include "util.h"
 #include <KLocalizedString>
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/MailKernel>
@@ -111,12 +114,16 @@ using KMail::MailServiceImpl;
 #include "searchdialog/searchdescriptionattribute.h"
 #ifdef WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
+#ifdef USE_KUSERFEEDBACK_QT6
+#include <KUserFeedbackQt6/Provider>
+#else
 #include <KUserFeedback/Provider>
+#endif
 #endif
 #include <chrono>
 
 using namespace std::chrono_literals;
-//#define DEBUG_SCHEDULER 1
+// #define DEBUG_SCHEDULER 1
 using namespace MailCommon;
 
 static KMKernel *mySelf = nullptr;
@@ -152,8 +159,11 @@ KMKernel::KMKernel(QObject *parent)
     // so better do it here, than in some code where changing the group of config()
     // would be unexpected
     KMailSettings::self();
-
-    mAutoCorrection = new PimCommon::AutoCorrection();
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    mAutoCorrection = new TextAutoCorrectionCore::AutoCorrection();
+#else
+    mAutoCorrection = new TextAutoCorrection::AutoCorrection();
+#endif
     KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
 
     // cberzan: this crap moved to CodecManager ======================
@@ -802,7 +812,7 @@ void KMKernel::pauseBackgroundJobs()
 void KMKernel::resumeBackgroundJobs()
 {
     mJobScheduler->resume();
-    mBackgroundTasksTimer->start(4 * 60 * 60 * 1000);
+    mBackgroundTasksTimer->start(4h);
 }
 
 void KMKernel::stopNetworkJobs()
@@ -941,15 +951,15 @@ bool KMKernel::askToGoOnline()
 
     if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Offline) {
         s_askingToGoOnline = true;
-        int rc = KMessageBox::questionYesNo(KMKernel::self()->mainWin(),
-                                            i18n("KMail is currently in offline mode. "
-                                                 "How do you want to proceed?"),
-                                            i18n("Online/Offline"),
-                                            KGuiItem(i18n("Work Online")),
-                                            KGuiItem(i18n("Work Offline")));
+        int rc = KMessageBox::questionTwoActions(KMKernel::self()->mainWin(),
+                                                 i18n("KMail is currently in offline mode. "
+                                                      "How do you want to proceed?"),
+                                                 i18n("Online/Offline"),
+                                                 KGuiItem(i18n("Work Online")),
+                                                 KGuiItem(i18n("Work Offline")));
 
         s_askingToGoOnline = false;
-        if (rc == KMessageBox::No) {
+        if (rc == KMessageBox::ButtonCode::SecondaryAction) {
             return false;
         } else {
             kmkernel->resumeNetworkJobs();
@@ -1289,7 +1299,11 @@ void KMKernel::slotSyncConfig()
 {
     saveConfig();
     // Laurent investigate why we need to reload them.
-    PimCommon::PimCommonSettings::self()->load();
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->load();
+#else
+    TextAutoCorrection::TextAutoCorrectionSettings::self()->load();
+#endif
     MessageCore::MessageCoreSettings::self()->load();
     MessageViewer::MessageViewerSettings::self()->load();
     MessageComposer::MessageComposerSettings::self()->load();
@@ -1304,7 +1318,12 @@ void KMKernel::slotSyncConfig()
 
 void KMKernel::saveConfig()
 {
-    PimCommon::PimCommonSettings::self()->save();
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->save();
+#else
+    TextAutoCorrection::TextAutoCorrectionSettings::self()->save();
+#endif
+
     MessageCore::MessageCoreSettings::self()->save();
     MessageViewer::MessageViewerSettings::self()->save();
     MessageComposer::MessageComposerSettings::self()->save();
@@ -1435,8 +1454,14 @@ KSharedConfig::Ptr KMKernel::config()
 
         mMailCommonSettings->setSharedConfig(mySelf->mConfig);
         mMailCommonSettings->load();
-        PimCommon::PimCommonSettings::self()->setSharedConfig(mySelf->mConfig);
-        PimCommon::PimCommonSettings::self()->load();
+
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+        TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
+        TextAutoCorrectionCore::TextAutoCorrectionSettings::self()->load();
+#else
+        TextAutoCorrection::TextAutoCorrectionSettings::self()->setSharedConfig(mySelf->mConfig);
+        TextAutoCorrection::TextAutoCorrectionSettings::self()->load();
+#endif
         Gravatar::GravatarSettings::self()->setSharedConfig(mySelf->mConfig);
         Gravatar::GravatarSettings::self()->load();
     }
@@ -1505,9 +1530,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
         mCheckIndexingManager->start(entityTreeModel());
     }
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-    mBackgroundTasksTimer->start(60 * 1000); // check again in 1 minute
+    mBackgroundTasksTimer->start(1m); // check again in 1 minute
 #else
-    mBackgroundTasksTimer->start(4 * 60 * 60 * 1000); // check again in 4 hours
+    mBackgroundTasksTimer->start(4h); // check again in 4 hours
 #endif
 }
 
@@ -1653,7 +1678,7 @@ void KMKernel::itemDispatchStarted()
 {
     // Watch progress of the MDA.
     PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
-                                                          MailTransport::DispatcherInterface().dispatcherInstance(),
+                                                          Akonadi::DispatcherInterface().dispatcherInstance(),
                                                           QStringLiteral("Sender"),
                                                           i18n("Sending messages"),
                                                           i18n("Initiating sending process..."),
@@ -1987,8 +2012,11 @@ void KMKernel::makeResourceOnline(MessageViewer::Viewer::ResourceOnlineMode mode
         break;
     }
 }
-
-PimCommon::AutoCorrection *KMKernel::composerAutoCorrection()
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+TextAutoCorrectionCore::AutoCorrection *KMKernel::composerAutoCorrection()
+#else
+TextAutoCorrection::AutoCorrection *KMKernel::composerAutoCorrection()
+#endif
 {
     return mAutoCorrection;
 }

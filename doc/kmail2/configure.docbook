@@ -810,9 +810,10 @@ security settings, you should make &kmail; test for the best settings by
 using <guibutton>Auto Detect</guibutton> on the
 <guilabel>Advanced</guilabel> tab.</para>
 
-<para><guilabel>Confirm before send</guilabel> will pop up a
-confirmation box every time you send a message. <guilabel>Check
-spelling before sending</guilabel> will invoke the spell checker
+<para>In the <guilabel>Before sending</guilabel> section,
+<guilabel>Confirm action</guilabel> will pop up a
+confirmation box every time you send a message, while
+<guilabel>Check spelling</guilabel> will invoke the spell checker
 before a message is sent.</para>
 
 <para><guilabel>Send messages in outbox folder</guilabel> lets you specify
@@ -4163,23 +4164,6 @@ behavior, add to the [OutOfOffice] section:</para>
 <listitem><para><command>kwriteconfig</command></para>
 <para><prompt>&percnt;</prompt> <userinput><command>kwriteconfig</command>
 <option>--file <replaceable>/path/to/kmail2rc</replaceable> --group OutOfOffice --key OutOfOfficeReactToSpam true</option></userinput>
-</para></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>ShowUserAgent</guilabel></term>
-<listitem>
-<para>
-Starting in version 1.9, &kmail; can show the User-Agent or X-Mailer value
-from the message header when using Fancy Headers (see <menuchoice><guimenu>View</guimenu>
-<guisubmenu>Headers</guisubmenu></menuchoice> menu).
-To enable this feature, add to the <quote>[Reader]</quote> section:</para>
-<itemizedlist>
-<listitem><para>Configuration file:</para>
-<programlisting>ShowUserAgent=true</programlisting></listitem>
-<listitem><para><command>kwriteconfig</command></para>
-<para><prompt>&percnt;</prompt> <userinput><command>kwriteconfig</command> <option>--file <replaceable>/path/to/kmail2rc</replaceable> --group Reader --key ShowUserAgent true</option></userinput>
 </para></listitem>
 </itemizedlist>
 </listitem>

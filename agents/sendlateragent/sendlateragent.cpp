@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -34,7 +34,7 @@
 
 using namespace std::chrono_literals;
 
-//#define DEBUG_SENDLATERAGENT 1
+// #define DEBUG_SENDLATERAGENT 1
 
 SendLaterAgent::SendLaterAgent(const QString &id)
     : Akonadi::AgentBase(id)

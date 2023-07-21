@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+# SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_sendlater_agent\")
 
@@ -50,26 +50,25 @@ pim_target_precompile_headers(sendlateragent PUBLIC ../../kmail_pch.h)
 #endif()
 
 target_link_libraries(sendlateragent
-    KF5::AkonadiCore
-    KF5::AkonadiMime
-    KF5::MailTransportAkonadi
-    KF5::MailTransport
-    KF5::Mime
-    KF5::MessageComposer
-    KF5::MessageCore
-    KF5::PimCommon
-    KF5::DBusAddons
-    KF5::WindowSystem
-    KF5::XmlGui
-    KF5::Notifications
-    KF5::I18n
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::MailTransport
+    KPim${KF_MAJOR_VERSION}::Mime
+    KPim${KF_MAJOR_VERSION}::MessageComposer
+    KPim${KF_MAJOR_VERSION}::MessageCore
+    KPim${KF_MAJOR_VERSION}::PimCommon
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::WindowSystem
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::I18n
     )
 
 
 add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
 target_link_libraries(akonadi_sendlater_agent
     sendlateragent
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     )
 
 if( APPLE )

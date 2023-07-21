@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -17,16 +17,16 @@ ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
 }
 
 ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
+    : mLastDateSaved(info.lastDateSaved())
+    , mArchiveAge(info.archiveAge())
+    , mArchiveType(info.archiveType())
+    , mArchiveUnit(info.archiveUnit())
+    , mSaveCollectionId(info.saveCollectionId())
+    , mPath(info.url())
+    , mMaximumArchiveCount(info.maximumArchiveCount())
+    , mSaveSubCollection(info.saveSubCollection())
+    , mIsEnabled(info.isEnabled())
 {
-    mLastDateSaved = info.lastDateSaved();
-    mArchiveAge = info.archiveAge();
-    mArchiveType = info.archiveType();
-    mArchiveUnit = info.archiveUnit();
-    mSaveCollectionId = info.saveCollectionId();
-    mMaximumArchiveCount = info.maximumArchiveCount();
-    mSaveSubCollection = info.saveSubCollection();
-    mPath = info.url();
-    mIsEnabled = info.isEnabled();
 }
 
 ArchiveMailInfo::~ArchiveMailInfo() = default;

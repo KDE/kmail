@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * SPDX-FileCopyrightText: 2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2022-2023 Laurent Montel <montel@kde.org>
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 

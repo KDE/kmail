@@ -29,8 +29,11 @@
 
 #ifdef WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
+#ifdef USE_KUSERFEEDBACK_QT6
+#include <KUserFeedbackQt6/Provider>
+#else
 #include <KUserFeedback/Provider>
-
+#endif
 #endif
 
 //-----------------------------------------------------------------------------
@@ -129,7 +132,8 @@ int main(int argc, char *argv[])
 #endif
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
-    cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored);
+    cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored | QWebEngineUrlScheme::LocalScheme
+                       | QWebEngineUrlScheme::LocalAccessAllowed);
     cidScheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
     QWebEngineUrlScheme::registerScheme(cidScheme);
 

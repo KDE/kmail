@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2022-11-16 00:47+0000\n"
 "PO-Revision-Date: 2021-06-24 10:33+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -42,7 +42,7 @@ msgstr "Segur que voleu eliminar la bústia unificada <b>%1</b>?"
 #: settingsdialog.cpp:101
 #, kde-format
 msgid "Really Remove?"
-msgstr "L'elimine realment?"
+msgstr "Voleu eliminar-lo realment?"
 
 #: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
 #, kde-format
@@ -58,7 +58,7 @@ msgstr "S'està sincronitzant la bústia unificada %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr "Configuració de les bústies unificades"
+msgstr "Configureu les bústies unificades"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format

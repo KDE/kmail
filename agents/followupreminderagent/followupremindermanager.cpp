@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -23,8 +23,8 @@ using namespace FollowUpReminder;
 
 FollowUpReminderManager::FollowUpReminderManager(QObject *parent)
     : QObject(parent)
+    , mConfig(KSharedConfig::openConfig())
 {
-    mConfig = KSharedConfig::openConfig();
 }
 
 FollowUpReminderManager::~FollowUpReminderManager()

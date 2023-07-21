@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2022-01-02 14:20+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -183,17 +183,17 @@ msgstr "Kan inte skicka brev."
 msgid "Message sent"
 msgstr "Brev skickat"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Ett fel hittades. Vill du skicka om det?"
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "Fel hittades"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

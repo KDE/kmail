@@ -34,6 +34,7 @@ using PimCommon::BroadcastStatus;
 #include <QIcon>
 #include <QLabel>
 #include <QLocale>
+#include <QPointer>
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>

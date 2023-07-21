@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   SPDX-FileCopyrightText: 1997 Markus Wuebben <markus.wuebben@kde.org>
-  SPDX-FileCopyrightText: 2009-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2009-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -58,6 +58,7 @@ using namespace MessageViewer;
 #include <KMessageBox>
 #include <KToggleAction>
 #include <QAction>
+#include <QDesktopServices>
 #include <QMenu>
 
 #include <QClipboard>
@@ -152,10 +153,10 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("openin_addr_book"), mOpenAddrBookAction);
     connect(mOpenAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoOpenAddrBook);
     // bookmark message
-    mAddBookmarksAction = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Bookmark This Link"), this);
-    ac->setShortcutsConfigurable(mAddBookmarksAction, false);
-    ac->addAction(QStringLiteral("add_bookmarks"), mAddBookmarksAction);
-    connect(mAddBookmarksAction, &QAction::triggered, this, &KMReaderWin::slotAddBookmarks);
+    mAddUrlToBookmarkAction = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Bookmark This Link"), this);
+    ac->setShortcutsConfigurable(mAddUrlToBookmarkAction, false);
+    ac->addAction(QStringLiteral("add_bookmarks"), mAddUrlToBookmarkAction);
+    connect(mAddUrlToBookmarkAction, &QAction::triggered, this, &KMReaderWin::slotAddUrlToBookmark);
 
     mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact..."), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
@@ -179,6 +180,12 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("saveas_imageurl"), mImageUrlSaveAsAction);
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false);
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
+
+    // save Image On Disk
+    mOpenImageAction = new QAction(i18n("Open Image..."), this);
+    ac->addAction(QStringLiteral("open_image"), mOpenImageAction);
+    ac->setShortcutsConfigurable(mOpenImageAction, false);
+    connect(mOpenImageAction, &QAction::triggered, this, &KMReaderWin::slotOpenImage);
 
     // View html options
     mViewHtmlOptions = new QMenu(i18n("Show HTML Format"), this);
@@ -439,9 +446,9 @@ void KMReaderWin::slotMailtoAddAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
 
-    auto job = new Akonadi::AddEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::AddEmailAddressJob(emailString, mMainWindow, this);
     job->setInteractive(true);
-    connect(job, &Akonadi::AddEmailAddressJob::successMessage, this, [](const QString &message) {
+    connect(job, &ContactEditor::AddEmailAddressJob::successMessage, this, [](const QString &message) {
         PimCommon::BroadcastStatus::instance()->setStatusMsg(message);
     });
     job->start();
@@ -473,11 +480,11 @@ void KMReaderWin::slotMailtoOpenAddrBook()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto job = new Akonadi::OpenEmailAddressJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::OpenEmailAddressJob(emailString, mMainWindow, this);
     job->start();
 }
 
-void KMReaderWin::slotAddBookmarks()
+void KMReaderWin::slotAddUrlToBookmark()
 {
     const QUrl url = urlClicked();
     if (url.isEmpty()) {
@@ -495,6 +502,15 @@ void KMReaderWin::slotUrlSave()
     }
     KMCommand *command = new KMUrlSaveCommand(url, mMainWindow);
     command->start();
+}
+
+void KMReaderWin::slotOpenImage()
+{
+    const QUrl url = imageUrlClicked();
+    if (url.isEmpty()) {
+        return;
+    }
+    QDesktopServices::openUrl(url);
 }
 
 void KMReaderWin::slotSaveImageOnDisk()
@@ -644,9 +660,9 @@ QAction *KMReaderWin::urlSaveAsAction() const
     return mUrlSaveAsAction;
 }
 
-QAction *KMReaderWin::addBookmarksAction() const
+QAction *KMReaderWin::addUrlToBookmarkAction() const
 {
-    return mAddBookmarksAction;
+    return mAddUrlToBookmarkAction;
 }
 
 void KMReaderWin::setPrinting(bool enable)
@@ -667,6 +683,11 @@ QAction *KMReaderWin::shareTextAction() const
 QAction *KMReaderWin::downloadImageToDiskAction() const
 {
     return mImageUrlSaveAsAction;
+}
+
+QAction *KMReaderWin::openImageAction() const
+{
+    return mOpenImageAction;
 }
 
 void KMReaderWin::clear(bool force)
@@ -843,9 +864,9 @@ void KMReaderWin::slotContactHtmlOptions()
     }
     const QString emailString = KEmailAddress::decodeMailtoUrl(url).toLower();
 
-    auto job = new Akonadi::AddEmailDisplayJob(emailString, mMainWindow, this);
+    auto job = new ContactEditor::AddEmailDisplayJob(emailString, mMainWindow, this);
     job->setMessageId(mViewer->messageItem().id());
-    connect(job, &Akonadi::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
+    connect(job, &ContactEditor::AddEmailDisplayJob::contactUpdated, this, &KMReaderWin::slotContactHtmlPreferencesUpdated);
     job->setRemoteContent(mLoadExternalReference->isChecked());
     job->setShowAsHTML(mViewAsHtml->isChecked());
     job->setContact(mSearchedContact);
@@ -863,9 +884,9 @@ void KMReaderWin::slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact
 void KMReaderWin::slotEditContact()
 {
     if (mSearchedContact.isValid()) {
-        QPointer<Akonadi::ContactEditorDialog> dlg = new Akonadi::ContactEditorDialog(Akonadi::ContactEditorDialog::EditMode, this);
-        connect(dlg.data(), &Akonadi::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
-        connect(dlg.data(), &Akonadi::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
+        QPointer<ContactEditor::ContactEditorDialog> dlg = new ContactEditor::ContactEditorDialog(ContactEditor::ContactEditorDialog::EditMode, this);
+        connect(dlg.data(), &ContactEditor::ContactEditorDialog::contactStored, this, &KMReaderWin::contactStored);
+        connect(dlg.data(), &ContactEditor::ContactEditorDialog::error, this, &KMReaderWin::slotContactEditorError);
         dlg->setContact(mSearchedContact);
         dlg->exec();
         delete dlg;
@@ -992,4 +1013,13 @@ void KMReaderWin::slotItemModified(const Akonadi::Item &item, const QSet<QByteAr
             mViewer->mdnWarning()->animatedHide();
         }
     }
+}
+
+void KMReaderWin::addImageMenuActions(QMenu *menu)
+{
+    menu->addSeparator();
+    menu->addAction(copyImageLocation());
+    menu->addAction(downloadImageToDiskAction());
+    menu->addAction(shareImage());
+    menu->addAction(openImageAction());
 }

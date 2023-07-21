@@ -1,0 +1,186 @@
+# translation of akonadi_mailfilter_agent.pot to Esperanto
+# Copyright (C) 2012 Free Software Foundation, Inc.
+# This file is distributed under the same license as the kmail package.
+# Oliver Kellogg <okellogg@users.sourceforge.net>, 2023.
+#
+# Minuskloj: ĉ ĝ ĵ ĥ ŝ ŭ   Majuskloj: Ĉ Ĝ Ĵ Ĥ Ŝ Ŭ
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
+"PO-Revision-Date: 2023-02-26 10:53+0100\n"
+"Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
+"Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: translate-po (https://github.com/zcribe/translate-po)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Rigardilo por Filtrila Protokolo"
+
+#: filterlogdialog.cpp:74
+#, kde-format
+msgid "Share..."
+msgstr "Kunhavigi..."
+
+#: filterlogdialog.cpp:80
+#, kde-format
+msgid "&Log filter activities"
+msgstr "Protoko&li filtrilajn agadojn"
+
+#: filterlogdialog.cpp:85
+#, kde-format
+msgid ""
+"You can turn logging of filter activities on and off here. Of course, log "
+"data is collected and shown only when logging is turned on. "
+msgstr ""
+"Vi povas ŝalti kaj malŝalti registradon de filtrilaj agadoj ĉi tie. "
+"Kompreneble, protokolaj datumoj estas kolektitaj kaj montrataj nur kiam la "
+"protokolo estas ŝaltita."
+
+#: filterlogdialog.cpp:89
+#, kde-format
+msgid "Logging Details"
+msgstr "Detaloj de Protokolado"
+
+#: filterlogdialog.cpp:96
+#, kde-format
+msgid "Log pattern description"
+msgstr "Priskribo de protokola ŝablono "
+
+#: filterlogdialog.cpp:101
+#, kde-format
+msgid "Log filter &rule evaluation"
+msgstr "Protokoli filtril-&regulan efektivigon"
+
+#: filterlogdialog.cpp:106
+#, kde-format
+msgid ""
+"You can control the feedback in the log concerning the evaluation of the "
+"filter rules of applied filters: having this option checked will give "
+"detailed feedback for each single filter rule; alternatively, only feedback "
+"about the result of the evaluation of all rules of a single filter will be "
+"given."
+msgstr ""
+"Vi povas regi la reagojn en la protokolo pri la taksado de la filtrilreguloj "
+"de aplikataj filtriloj: havi ĉi tiun opcion kontrolita donos detalan reagojn "
+"por ĉiu unuopa filtrila regulo; alternative, nur reagoj pri la rezulto de la "
+"taksado de ĉiuj reguloj de ununura filtrilo estos donita."
+
+#: filterlogdialog.cpp:113
+#, kde-format
+msgid "Log filter pattern evaluation"
+msgstr "Ensalutu filtrila ŝablono taksado"
+
+#: filterlogdialog.cpp:118
+#, kde-format
+msgid "Log filter actions"
+msgstr "Ensalutu filtrilaj agoj"
+
+#: filterlogdialog.cpp:128
+#, kde-format
+msgid "Log size limit:"
+msgstr "Limo de protokolo:"
+
+#: filterlogdialog.cpp:136
+#, kde-format
+msgid " KB"
+msgstr "KB"
+
+#: filterlogdialog.cpp:137
+#, kde-format
+msgctxt "@label:spinbox Set the size of the logfile to unlimited."
+msgid "unlimited"
+msgstr "senlima"
+
+#: filterlogdialog.cpp:140
+#, kde-format
+msgid ""
+"Collecting log data uses memory to temporarily store the log data; here you "
+"can limit the maximum amount of memory to be used: if the size of the "
+"collected log data exceeds this limit then the oldest data will be discarded "
+"until the limit is no longer exceeded. "
+msgstr ""
+"Kolektado de protokolaj datumoj uzas memoron por provizore konservi la "
+"protokolojn; ĉi tie vi povas limigi la maksimuman kvanton de memoro uzota: "
+"se la grandeco de la kolektitaj protokolaj datumoj superas ĉi tiun limon, "
+"tiam la plej malnovaj datumoj estos forĵetitaj ĝis la limo ne plu estos "
+"superita."
+
+#: filterlogdialog.cpp:321
+#, kde-format
+msgid ""
+"Could not write the file %1:\n"
+"\"%2\" is the detailed error description."
+msgstr ""
+"Ne eblis skribi la dosieron %1:\n"
+"\"%2\" estas la detala erara priskribo."
+
+#: filterlogdialog.cpp:325
+#, kde-format
+msgid "KMail Error"
+msgstr "KMail Eraro"
+
+#: filtermanager.cpp:100
+#, kde-format
+msgid "Filtering message %1 of %2"
+msgstr "Filtri mesaĝon %1 de %2"
+
+#: filtermanager.cpp:187
+#, kde-format
+msgid "Error applying mail filter move"
+msgstr "Eraro dum aplikado de poŝtfiltrilo movo"
+
+#: filtermanager.cpp:195
+#, kde-format
+msgid "Error applying mail filter delete"
+msgstr "Eraro dum aplikado de poŝtfiltrilo forigo"
+
+#: filtermanager.cpp:203
+#, kde-format
+msgid "Error applying mail filter modifications"
+msgstr "Eraro dum aplikado de poŝtfiltrilaj modifoj"
+
+#: filtermanager.cpp:220
+#, kde-format
+msgid "<b>Evaluating filter rules:</b> "
+msgstr "<b>Taksado de filtrilaj reguloj:</b>"
+
+#: filtermanager.cpp:227
+#, kde-format
+msgid "<b>Filter rules have matched.</b>"
+msgstr "<b>Reguloj de filtrilo kongruis.</b>"
+
+#: filtermanager.cpp:246
+#, kde-format
+msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
+msgstr "<b>Komencu filtri ĉe mesaĝo \"%1\" de \"%2\" ĉe \"%3\" :</b>"
+
+#: filtermanager.cpp:580 filtermanager.cpp:608
+#, kde-format
+msgid "Filtering messages"
+msgstr "Filtri mesaĝojn"
+
+#: mailfilteragent.cpp:109
+#, kde-format
+msgctxt "Notification when the filter log was enabled"
+msgid "Mail Filter Log Enabled"
+msgstr "Poŝtfiltrila Protokolo Ebligita"
+
+#: mailfilteragent.cpp:173
+#, kde-format
+msgid "Ready"
+msgstr "Preta"
+
+#: mailfilteragent.cpp:259
+#, kde-format
+msgid "Filtering in %1"
+msgstr "Filtri en %1"

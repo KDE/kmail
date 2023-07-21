@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2022-01-02 07:37+0100\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -187,17 +187,17 @@ msgstr "No s'ha pogut enviar el missatge."
 msgid "Message sent"
 msgstr "El missatge s'ha enviat"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "S'ha trobat un error. Voleu tornar-lo a enviar?"
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "S'ha trobat un error"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

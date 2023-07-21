@@ -3,7 +3,7 @@
 
     This file is part of KMail, the KDE mail client.
     SPDX-FileCopyrightText: 2002 Marc Mutz <mutz@kde.org>
-    SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
@@ -14,14 +14,12 @@
 #include "identityfolderrequester.h"
 #include "identityinvalidfolder.h"
 
-#include <MessageComposer/MessageComposerSettings>
 #include <QGpgME/Job>
 #include <QGpgME/Protocol>
 
 #include <KIdentityManagement/IdentityManager>
 
 // other KMail headers:
-#include "kmkernel.h"
 #include "settings/kmailsettings.h"
 #include "xfaceconfigurator.h"
 #include <KEditListWidget>
@@ -31,6 +29,7 @@
 
 #include "job/addressvalidationjob.h"
 #include <MessageComposer/Kleo_Util>
+#include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/StringUtil>
 #include <Sonnet/DictionaryComboBox>
 #include <TemplateParser/TemplatesConfiguration>
@@ -39,8 +38,12 @@
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/SignatureConfigurator>
 
-#include <PimCommon/AutoCorrectionLanguage>
 #include <PimCommon/PimUtil>
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#include <TextAutoCorrectionWidgets/AutoCorrectionLanguage>
+#else
+#include <TextAutoCorrection/AutoCorrectionLanguage>
+#endif
 
 #include <Libkdepim/LineEditCatchReturnKey>
 #include <PimCommonAkonadi/AddresseeLineEdit>
@@ -90,6 +93,7 @@ using MailTransport::TransportManager;
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/SpecialMailCollections>
 #include <QDialogButtonBox>
+#include <QGroupBox>
 #include <QStandardPaths>
 
 using namespace KPIM;
@@ -252,7 +256,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: General
     //
-    int row = -1;
     auto page = new QWidget(this);
     mainLayout->addWidget(page);
     mainLayout->addWidget(buttonBox);
@@ -268,7 +271,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto formLayout = new QFormLayout(tab);
 
     // "Name" line edit and label:
-    ++row;
     mNameEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mNameEdit, this);
     auto label = new QLabel(i18n("&Your name:"), tab);
@@ -285,7 +287,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mNameEdit->setWhatsThis(msg);
 
     // "Organization" line edit and label:
-    ++row;
     mOrganizationEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mOrganizationEdit, this);
     label = new QLabel(i18n("Organi&zation:"), tab);
@@ -303,7 +304,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Email Address" line edit and label:
     // (row 3: spacer)
-    ++row;
     mEmailEdit = new QLineEdit(tab);
     new LineEditCatchReturnKey(mEmailEdit, this);
     label = new QLabel(i18n("&Email address:"), tab);
@@ -325,7 +325,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mEmailEdit->setValidator(emailValidator);
 
     // "Email Aliases" string text edit and label:
-    ++row;
     mAliasEdit = new KEditListWidget(tab);
 
     auto emailValidator1 = new PimCommon::EmailValidator(this);
@@ -352,7 +351,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     //
     // Tab Widget: Cryptography
     //
-    row = -1;
     mCryptographyTab = new QWidget(mTabWidget);
     mTabWidget->addTab(mCryptographyTab, i18n("Cryptography"));
     formLayout = new QFormLayout(mCryptographyTab);
@@ -371,7 +369,38 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
 
-    formLayout->addRow(label, mPGPSigningKeyRequester);
+    auto vbox = new QVBoxLayout;
+    mPGPSameKey = new QCheckBox(i18n("Use same key for encryption and signing"));
+    vbox->addWidget(mPGPSigningKeyRequester);
+    vbox->addWidget(mPGPSameKey);
+    formLayout->addRow(label, vbox);
+
+    connect(mPGPSameKey, &QCheckBox::toggled, this, [=](bool checked) {
+        mPGPEncryptionKeyRequester->setVisible(!checked);
+        formLayout->labelForField(mPGPEncryptionKeyRequester)->setVisible(!checked);
+        const auto label = qobject_cast<QLabel *>(formLayout->labelForField(vbox));
+        if (checked) {
+            label->setText(i18n("OpenPGP key:"));
+            const auto key = mPGPSigningKeyRequester->currentKey();
+            if (!key.isBad()) {
+                mPGPEncryptionKeyRequester->setCurrentKey(key);
+            } else if (mPGPSigningKeyRequester->currentData() == QLatin1String("no-key")) {
+                mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
+            }
+        } else {
+            label->setText(i18n("OpenPGP signing key:"));
+        }
+    });
+    connect(mPGPSigningKeyRequester, &KeySelectionCombo::currentKeyChanged, this, [&](const GpgME::Key &key) {
+        if (mPGPSameKey->isChecked()) {
+            mPGPEncryptionKeyRequester->setCurrentKey(key);
+        }
+    });
+    connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant &type) {
+        if (mPGPSameKey->isChecked() && type == QLatin1String("no-key")) {
+            mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
+        }
+    });
 
     // "OpenPGP Encryption Key" requester and label:
     mPGPEncryptionKeyRequester = new KeySelectionCombo(KeySelectionCombo::EncryptionKey, GpgME::OpenPGP, mCryptographyTab);
@@ -385,8 +414,8 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
     label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
     label->setBuddy(mPGPEncryptionKeyRequester);
-    mPGPEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
+    mPGPEncryptionKeyRequester->setWhatsThis(msg);
 
     formLayout->addRow(label, mPGPEncryptionKeyRequester);
 
@@ -440,11 +469,37 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     formLayout->addRow(label, mPreferredCryptoMessageFormat);
 
-    mAutoSign = new QCheckBox(i18n("Automatically sign messages"));
-    formLayout->addWidget(mAutoSign);
+    mAutocrypt = new QGroupBox(i18n("Enable Autocrypt"));
+    mAutocrypt->setCheckable(true);
+    mAutocrypt->setChecked(true);
 
-    mAutoEncrypt = new QCheckBox(i18n("Automatically encrypt messages when possible"));
-    formLayout->addWidget(mAutoEncrypt);
+    label = new QLabel(i18n("Autocrypt:"), tab);
+    formLayout->addRow(label, mAutocrypt);
+
+    vlay = new QVBoxLayout(mAutocrypt);
+
+    mAutocryptPrefer = new QCheckBox(i18n("Let others know you prefer encryption"));
+    vlay->addWidget(mAutocryptPrefer);
+
+    mOverrideDefault = new QGroupBox(i18n("Overwrite global settings for security defaults"));
+    mOverrideDefault->setCheckable(true);
+    mOverrideDefault->setChecked(false);
+    label = new QLabel(i18n("Overwrite defaults:"), tab);
+    formLayout->addRow(label, mOverrideDefault);
+
+    vlay = new QVBoxLayout(mOverrideDefault);
+
+    mAutoSign = new QCheckBox(i18n("Sign messages"));
+    vlay->addWidget(mAutoSign);
+
+    mAutoEncrypt = new QCheckBox(i18n("Encrypt messages when possible"));
+    vlay->addWidget(mAutoEncrypt);
+
+    mWarnNotSign = new QCheckBox(i18n("Warn when trying to send unsigned messages"));
+    vlay->addWidget(mWarnNotSign);
+
+    mWarnNotEncrypt = new QCheckBox(i18n("Warn when trying to send unencrypted messages"));
+    vlay->addWidget(mWarnNotEncrypt);
 
     //
     // Tab Widget: Advanced
@@ -560,8 +615,11 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mEditVCard = new QPushButton(i18n("Create..."), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
-
-    mAutoCorrectionLanguage = new PimCommon::AutoCorrectionLanguage(tab);
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    mAutoCorrectionLanguage = new TextAutoCorrectionWidgets::AutoCorrectionLanguage(tab);
+#else
+    mAutoCorrectionLanguage = new TextAutoCorrection::AutoCorrectionLanguage(tab);
+#endif
     label = new QLabel(i18n("Autocorrection language:"), tab);
     label->setBuddy(mAutoCorrectionLanguage);
     formLayout->addRow(label, mAutoCorrectionLanguage);
@@ -828,12 +886,27 @@ void IdentityDialog::setIdentity(KIdentityManagement::Identity &ident)
     // "Cryptography" tab:
     mPGPSigningKeyRequester->setDefaultKey(QLatin1String(ident.pgpSigningKey()));
     mPGPEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.pgpEncryptionKey()));
+
+    mPGPSameKey->setChecked(ident.pgpSigningKey() == ident.pgpEncryptionKey());
+
     mSMIMESigningKeyRequester->setDefaultKey(QLatin1String(ident.smimeSigningKey()));
     mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
-    mAutoSign->setChecked(ident.pgpAutoSign());
-    mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
+    mAutocrypt->setChecked(ident.autocryptEnabled());
+    mAutocryptPrefer->setChecked(ident.autocryptPrefer());
+    mOverrideDefault->setChecked(ident.encryptionOverride());
+    if (!ident.encryptionOverride()) {
+        mAutoSign->setChecked(ident.pgpAutoSign());
+        mAutoEncrypt->setChecked(ident.pgpAutoEncrypt());
+        mWarnNotSign->setChecked(ident.warnNotSign());
+        mWarnNotEncrypt->setChecked(ident.warnNotEncrypt());
+    } else {
+        mAutoEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoAutoEncrypt());
+        mAutoSign->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoAutoSign());
+        mWarnNotEncrypt->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencrypted());
+        mWarnNotSign->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsigned());
+    }
 
     // "Advanced" tab:
     mReplyToEdit->setText(ident.replyToAddr());
@@ -952,8 +1025,13 @@ void IdentityDialog::updateIdentity(KIdentityManagement::Identity &ident)
     ident.setSMIMESigningKey(mSMIMESigningKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setPreferredCryptoMessageFormat(QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
+    ident.setAutocryptEnabled(mAutocrypt->isChecked());
+    ident.setAutocryptPrefer(mAutocryptPrefer->isChecked());
+    ident.setEncryptionOverride(mOverrideDefault->isChecked());
     ident.setPgpAutoSign(mAutoSign->isChecked());
     ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
+    ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
+    ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
     // "Advanced" tab:
     ident.setReplyToAddr(mReplyToEdit->text());
     ident.setBcc(mBccEdit->text());

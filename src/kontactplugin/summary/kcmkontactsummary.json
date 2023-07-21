@@ -9,11 +9,14 @@
         "Description[cs]": "Výběr souhrnu",
         "Description[de]": "Zusammenstellung der Übersicht",
         "Description[en_GB]": "Summary Selection",
+        "Description[eo]": "Elekto de Resumo",
         "Description[es]": "Selección de resumen",
         "Description[eu]": "Laburpen hautapena",
         "Description[fi]": "Yhteenvedon valinta",
         "Description[fr]": "Sélection des résumés",
+        "Description[gl]": "Selección de resumos",
         "Description[ia]": "Selection de summario",
+        "Description[id]": "Pemilihan Ringkasan",
         "Description[it]": "Selezione sommario",
         "Description[ka]": "მონიშნულის შეჯამება",
         "Description[ko]": "요약 선택",
@@ -42,6 +45,7 @@
         "Name[de]": "Übersichten",
         "Name[el]": "Συνόψεις",
         "Name[en_GB]": "Summaries",
+        "Name[eo]": "Resumoj",
         "Name[es]": "Resúmenes",
         "Name[et]": "Kokkuvõtted",
         "Name[eu]": "Laburpenak",
@@ -51,6 +55,7 @@
         "Name[gl]": "Resumos",
         "Name[hu]": "Áttekintők",
         "Name[ia]": "Summarios",
+        "Name[id]": "Ringkasan",
         "Name[it]": "Sommari",
         "Name[ja]": "要約",
         "Name[ka]": "შეჯამებები",
@@ -85,11 +90,7 @@
         "Name[wa]": "Racourtis",
         "Name[x-test]": "xxSummariesxx",
         "Name[zh_CN]": "摘要",
-        "Name[zh_TW]": "摘要",
-        "ServiceTypes": [
-            "KCModule"
-        ]
+        "Name[zh_TW]": "摘要"
     },
-    "X-KDE-FactoryName": "kontactsummary",
     "X-KDE-Weight": 100
 }

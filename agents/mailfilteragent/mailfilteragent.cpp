@@ -263,7 +263,7 @@ void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &item
 
     emitProgress(++mProgressCounter);
 
-    mProgressTimer->start(1000);
+    mProgressTimer->start(1s);
 }
 
 void MailFilterAgent::mailCollectionAdded(const Akonadi::Collection &collection, const Akonadi::Collection &)

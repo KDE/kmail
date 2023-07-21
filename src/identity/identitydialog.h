@@ -8,12 +8,13 @@
 */
 
 #pragma once
-
+#include "config-kmail.h"
 #include <QDialog>
 class QCheckBox;
 
 class KEditListWidget;
 class QComboBox;
+class QGroupBox;
 class KJob;
 class QLineEdit;
 class QPushButton;
@@ -51,8 +52,11 @@ namespace TemplateParser
 {
 class TemplatesConfiguration;
 }
-
-namespace PimCommon
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+namespace TextAutoCorrectionWidgets
+#else
+namespace TextAutoCorrection
+#endif
 {
 class AutoCorrectionLanguage;
 }
@@ -105,8 +109,14 @@ private:
     KeySelectionCombo *mSMIMESigningKeyRequester = nullptr;
     KeySelectionCombo *mSMIMEEncryptionKeyRequester = nullptr;
     QComboBox *mPreferredCryptoMessageFormat = nullptr;
+    QGroupBox *mAutocrypt = nullptr;
+    QCheckBox *mAutocryptPrefer = nullptr;
+    QGroupBox *mOverrideDefault = nullptr;
+    QCheckBox *mPGPSameKey = nullptr;
     QCheckBox *mAutoSign = nullptr;
     QCheckBox *mAutoEncrypt = nullptr;
+    QCheckBox *mWarnNotEncrypt = nullptr;
+    QCheckBox *mWarnNotSign = nullptr;
     // "advanced" tab:
     QLineEdit *mReplyToEdit = nullptr;
     QLineEdit *mBccEdit = nullptr;
@@ -120,7 +130,11 @@ private:
     MailTransport::TransportComboBox *mTransportCombo = nullptr;
     QCheckBox *mAttachMyVCard = nullptr;
     QPushButton *mEditVCard = nullptr;
-    PimCommon::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionWidgets::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#else
+    TextAutoCorrection::AutoCorrectionLanguage *mAutoCorrectionLanguage = nullptr;
+#endif
     QLineEdit *mDefaultDomainEdit = nullptr;
 
     // "templates" tab:

@@ -9,7 +9,6 @@
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
-#include "util.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
@@ -20,7 +19,6 @@
 #include <QStatusBar>
 #include <QTimer>
 
-#include "kmail_debug.h"
 #include <KConfig>
 #include <KConfigGui>
 #include <KEditToolBar>
@@ -29,7 +27,6 @@
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
-#include <ktip.h>
 
 #include <QLabel>
 #include <chrono>
@@ -38,7 +35,6 @@ using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
-    , mProgressBar(new KPIM::ProgressStatusBarWidget(statusBar(), this))
     , mMessageLabel(new QLabel(i18n("Starting...")))
 
 {
@@ -53,6 +49,10 @@ KMMainWin::KMMainWin(QWidget *)
     resize(700, 500); // The default size
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
+
+    // Don't initialize in constructor. We need this statusbar created
+    // Bug 460289
+    mProgressBar = new KPIM::ProgressStatusBarWidget(statusBar(), this);
     connect(mKMMainWidget, &KMMainWidget::recreateGui, this, &KMMainWin::slotUpdateGui);
     setCentralWidget(mKMMainWidget);
     setupStatusBar();

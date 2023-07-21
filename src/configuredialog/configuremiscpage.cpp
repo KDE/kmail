@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -18,7 +18,11 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QHBoxLayout>
 
 #ifdef WITH_KUSERFEEDBACK
+#ifdef USE_KUSERFEEDBACK_QT6
+#include <KUserFeedbackQt6/FeedbackConfigWidget>
+#else
 #include <KUserFeedback/FeedbackConfigWidget>
+#endif
 #endif
 
 using namespace MailCommon;
@@ -27,8 +31,13 @@ QString MiscPage::helpAnchor() const
     return QStringLiteral("configure-misc");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 MiscPage::MiscPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+MiscPage::MiscPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     auto folderTab = new MiscPageFolderTab();
     addTab(folderTab, i18n("Folders"));

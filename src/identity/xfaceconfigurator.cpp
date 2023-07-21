@@ -32,8 +32,8 @@ XFaceConfigurator::XFaceConfigurator(QWidget *parent)
     mUi->setupUi(this);
 
     mPngquantProc->setInputChannelMode(QProcess::ManagedInputChannel);
-    mPngquantProc->setProgram(QLatin1String("pngquant"));
-    mPngquantProc->setArguments(QStringList() << QLatin1String("--strip") << QLatin1String("7") << QLatin1String("-"));
+    mPngquantProc->setProgram(QStringLiteral("pngquant"));
+    mPngquantProc->setArguments(QStringList() << QStringLiteral("--strip") << QStringLiteral("7") << QStringLiteral("-"));
 
     mUi->faceConfig->setTitle(i18n("Face"));
     mUi->xFaceConfig->setTitle(i18n("X-Face"));

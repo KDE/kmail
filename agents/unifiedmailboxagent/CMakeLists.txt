@@ -38,17 +38,17 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
-    KF5::AkonadiAgentBase
-    KF5::AkonadiMime
-    KF5::AkonadiWidgets
-    KF5::Mime
-    KF5::I18n
-    KF5::IdentityManagement
-    KF5::WidgetsAddons
-    KF5::IconThemes
-    KF5::ItemModels
-    KF5::MailCommon
-    KF5::DBusAddons
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiWidgets
+    KPim${KF_MAJOR_VERSION}::Mime
+    KF${KF_MAJOR_VERSION}::I18n
+    KPim${KF_MAJOR_VERSION}::IdentityManagement
+    KF${KF_MAJOR_VERSION}::WidgetsAddons
+    KF${KF_MAJOR_VERSION}::IconThemes
+    KF${KF_MAJOR_VERSION}::ItemModels
+    KPim${KF_MAJOR_VERSION}::MailCommon
+    KF${KF_MAJOR_VERSION}::DBusAddons
 )
 
 if( APPLE )

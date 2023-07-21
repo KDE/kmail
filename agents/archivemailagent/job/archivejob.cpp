@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -20,10 +20,10 @@
 
 ArchiveJob::ArchiveJob(ArchiveMailManager *manager, ArchiveMailInfo *info, const Akonadi::Collection &folder, bool immediate)
     : MailCommon::ScheduledJob(folder, immediate)
+    , mDefaultIconName(QStringLiteral("kmail"))
     , mInfo(info)
     , mManager(manager)
 {
-    mDefaultIconName = QStringLiteral("kmail");
 }
 
 ArchiveJob::~ArchiveJob()

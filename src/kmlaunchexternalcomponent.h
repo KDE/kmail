@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -26,7 +26,8 @@ public:
     void slotAccountWizard();
     void slotFilterLogViewer();
 
+    void slotShowNotificationHistory();
+
 private:
-    Q_DISABLE_COPY(KMLaunchExternalComponent)
     QWidget *const mParentWidget;
 };

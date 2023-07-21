@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -20,7 +20,8 @@
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
-    , mContactEditor(new Akonadi::AkonadiContactEditor(Akonadi::AkonadiContactEditor::CreateMode, Akonadi::AkonadiContactEditor::VCardMode, this))
+    , mContactEditor(
+          new ContactEditor::AkonadiContactEditor(ContactEditor::AkonadiContactEditor::CreateMode, ContactEditor::AkonadiContactEditor::VCardMode, this))
 {
     auto topLayout = new QVBoxLayout(this);
     setModal(true);
@@ -54,12 +55,12 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     if (mVcardFileName.isEmpty()) {
         return;
     }
-    const int answer = KMessageBox::questionYesNo(this,
-                                                  i18n("Are you sure you want to delete this vCard?"),
-                                                  i18n("Delete vCard"),
-                                                  KStandardGuiItem::del(),
-                                                  KStandardGuiItem::cancel());
-    if (answer == KMessageBox::Yes) {
+    const int answer = KMessageBox::questionTwoActions(this,
+                                                       i18n("Are you sure you want to delete this vCard?"),
+                                                       i18n("Delete vCard"),
+                                                       KStandardGuiItem::del(),
+                                                       KStandardGuiItem::cancel());
+    if (answer == KMessageBox::ButtonCode::PrimaryAction) {
         if (mVcardFileName.startsWith(QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation))) {
             deleteCurrentVcard(true);
         } else {
@@ -121,12 +122,12 @@ QString IdentityEditVcardDialog::saveVcard() const
 
 void IdentityEditVcardDialog::reject()
 {
-    const int answer = KMessageBox::questionYesNo(this,
-                                                  i18nc("@info", "Do you really want to cancel?"),
-                                                  i18nc("@title:window", "Confirmation"),
-                                                  KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
-                                                  KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
-    if (answer == KMessageBox::Yes) {
+    const int answer = KMessageBox::questionTwoActions(this,
+                                                       i18nc("@info", "Do you really want to cancel?"),
+                                                       i18nc("@title:window", "Confirmation"),
+                                                       KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
+                                                       KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
+    if (answer == KMessageBox::ButtonCode::PrimaryAction) {
         QDialog::reject(); // Discard current changes
     }
 }

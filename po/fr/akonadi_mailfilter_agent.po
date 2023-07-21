@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2019-11-11 07:36+0800\n"
 "Last-Translator: Simon Depiets <sdepiets@gmail.com>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -120,7 +120,7 @@ msgstr ""
 "limite, alors les données les plus anciennes seront effacées jusqu'à ce que "
 "la limite ne soit plus dépassée."
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -129,7 +129,7 @@ msgstr ""
 "Impossible d'écrire le fichier %1 :\n"
 "La description détaillée de l'erreur est donnée par « %2 »."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Erreur de KMail"

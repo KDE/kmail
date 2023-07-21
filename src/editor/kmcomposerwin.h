@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
  *
  * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
@@ -434,6 +434,8 @@ public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
     const KIdentityManagement::Identity &identity() const;
+    Q_REQUIRED_RESULT bool pgpAutoSign() const;
+    Q_REQUIRED_RESULT bool pgpAutoEncrypt() const;
 
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck() override;
@@ -443,7 +445,7 @@ public: // kmcommand
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 
     Q_REQUIRED_RESULT ModeType modeType() const;
-    void setModeType(const ModeType &modeType);
+    void setModeType(KMComposerWin::ModeType modeType);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -556,8 +558,6 @@ private:
 
     // helper method for rethinkFields
     Q_REQUIRED_RESULT int calcColumnWidth(int which, long allShowing, int width) const;
-
-    Q_REQUIRED_RESULT inline bool encryptToSelf() const;
 
 private:
     enum CryptoKeyState {

@@ -1,6 +1,6 @@
 /*
 This file is part of KMail, the KDE mail client.
-SPDX-FileCopyrightText: 2021-2022 Laurent Montel <montel@kde.org>
+SPDX-FileCopyrightText: 2021-2023 Laurent Montel <montel@kde.org>
 
 SPDX-License-Identifier: GPL-2.0-only
 */
@@ -51,7 +51,7 @@ void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, 
     }
     mCollectionsInfo.removeAll(info);
     mCollectionsInfo.prepend(info);
-    Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.size() - 1, 1), {});
+    Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.count() - 1, 1), {});
 }
 
 const Akonadi::Collection CollectionSwitcherModel::collection(int index)

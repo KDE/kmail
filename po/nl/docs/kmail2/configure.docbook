@@ -1212,11 +1212,13 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
-><guilabel
->Verzending bevestigen</guilabel
-> zorgt ervoor dat er voor elk  verzonden bericht een extra bevestiging wordt gevraagd. <guilabel
->Spelling controleren voor verzenden</guilabel
-> zal de spellingscontrole inschakelen voordat een bericht wordt verzonden.</para>
+>In de sectie <guilabel
+>Vóór verzending</guilabel
+>, zal <guilabel
+>Actie bevestigen</guilabel
+> verschijnen met een bevestigingsvakje elke dat u een bericht verstuurt, terwijl <guilabel
+>Spelling controleren</guilabel
+> de spellingscontrole zal inschakelen voordat een bericht wordt verzonden.</para>
 
 <para
 >Bij <guilabel
@@ -5271,50 +5273,6 @@ modifying it by hand.</para>
 >--file <replaceable
 >/path/to/kmail2rc</replaceable
 > --group OutOfOffice --key OutOfOfficeReactToSpam true</option
-></userinput
-> </para
-></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term
-><guilabel
->ShowUserAgent</guilabel
-></term>
-<listitem>
-<para
->Beginnend in versie 1.9, kan &kmail; de User-agent- of X-Mailer-waarde tonen in de berichtkop als Elegante berichtkoppen (zie menu <menuchoice
-><guimenu
->Beeld</guimenu
-> <guisubmenu
->Berichtkoppen</guisubmenu
-></menuchoice
->). Om deze functie in te schakelen, voeg een regel toe aan de sectie <quote
->[Reader]</quote
->:</para>
-<itemizedlist>
-<listitem
-><para
->Configuratiebestand:</para>
-<programlisting
->ShowUserAgent=true</programlisting
-></listitem>
-<listitem
-><para
-><command
->kwriteconfig</command
-></para>
-<para
-><prompt
->&percnt;</prompt
-> <userinput
-><command
->kwriteconfig</command
-> <option
->--file <replaceable
->/path/to/kmail2rc</replaceable
-> --group Reader --key ShowUserAgent true</option
 ></userinput
 > </para
 ></listitem>

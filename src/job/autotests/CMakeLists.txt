@@ -4,7 +4,7 @@ macro(add_kmail_job_unittest _source)
     get_filename_component(_name ${_source} NAME_WE)
     ecm_add_test(${_source} ${_name}.h
         TEST_NAME ${_name}
-        LINK_LIBRARIES kmailprivate Qt::Test Qt::Widgets KF5::AkonadiCore
+        LINK_LIBRARIES kmailprivate Qt::Test Qt::Widgets KPim${KF_MAJOR_VERSION}::AkonadiCore
     )
 endmacro ()
 

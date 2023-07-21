@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-01-31 00:59+0000\n"
 "PO-Revision-Date: 2021-05-16 22:24+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -43,25 +43,25 @@ msgstr "첨부 파일 %1의 속성"
 msgid " bytes"
 msgstr " 바이트"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF 속성"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:176
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "항목을 선택하십시오."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:182
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "빈 태그가 들어 있어서 선택한 항목을 저장할 수 없습니다."
 
-#: attachpropertydialog.cpp:199
+#: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

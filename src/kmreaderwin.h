@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   SPDX-FileCopyrightText: 1997 Markus Wuebben <markus.wuebben@kde.org>
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -125,7 +125,7 @@ public:
     Q_REQUIRED_RESULT QAction *copyImageLocation() const;
     Q_REQUIRED_RESULT QAction *urlOpenAction() const;
     Q_REQUIRED_RESULT QAction *urlSaveAsAction() const;
-    Q_REQUIRED_RESULT QAction *addBookmarksAction() const;
+    Q_REQUIRED_RESULT QAction *addUrlToBookmarkAction() const;
     Q_REQUIRED_RESULT QAction *toggleMimePartTreeAction() const;
     Q_REQUIRED_RESULT QAction *speakTextAction() const;
     Q_REQUIRED_RESULT QAction *downloadImageToDiskAction() const;
@@ -146,6 +146,7 @@ public:
     Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
 
     Q_REQUIRED_RESULT QWidget *mainWindow() const;
+    Q_REQUIRED_RESULT QAction *openImageAction() const;
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);
@@ -172,6 +173,7 @@ public:
 
     void updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton);
     MessageViewer::RemoteContentMenu *remoteContentMenu() const;
+    void addImageMenuActions(QMenu *menu);
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
     void zoomChanged(qreal factor);
@@ -192,7 +194,7 @@ public Q_SLOTS:
     void slotMailtoOpenAddrBook();
     /** Save the page to a file */
     void slotUrlSave();
-    void slotAddBookmarks();
+    void slotAddUrlToBookmark();
     void slotUrlClicked(const Akonadi::Item &, const QUrl &);
     void slotShowReader(KMime::Content *, bool html, const QString &);
     void slotShowMessage(const KMime::Message::Ptr &message, const QString &encoding);
@@ -221,6 +223,7 @@ private:
     void sendMdnInfo(const Akonadi::Item &item);
     void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
+    void slotOpenImage();
 
 private:
     KContacts::Addressee mSearchedAddress;
@@ -234,8 +237,9 @@ private:
     QAction *mAddAddrBookAction = nullptr;
     QAction *mOpenAddrBookAction = nullptr;
     QAction *mUrlSaveAsAction = nullptr;
-    QAction *mAddBookmarksAction = nullptr;
+    QAction *mAddUrlToBookmarkAction = nullptr;
     QAction *mImageUrlSaveAsAction = nullptr;
+    QAction *mOpenImageAction = nullptr;
     QAction *mEditContactAction = nullptr;
     QAction *mViewAsHtml = nullptr;
     QAction *mLoadExternalReference = nullptr;

@@ -96,12 +96,12 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
         if (!indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
             const auto mailbox = item->data().value<UnifiedMailbox *>();
-            if (KMessageBox::warningYesNo(this,
-                                          i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
-                                          i18n("Really Remove?"),
-                                          KStandardGuiItem::remove(),
-                                          KStandardGuiItem::cancel())
-                == KMessageBox::Yes) {
+            if (KMessageBox::warningTwoActions(this,
+                                               i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
+                                               i18n("Really Remove?"),
+                                               KStandardGuiItem::remove(),
+                                               KStandardGuiItem::cancel())
+                == KMessageBox::ButtonCode::PrimaryAction) {
                 mBoxModel->removeRow(item->row());
                 mBoxManager.removeBox(mailbox->id());
                 mBoxManager.saveBoxes();

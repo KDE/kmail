@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2020-02-12 13:18+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-it@kde.org>\n"
@@ -112,7 +112,7 @@ msgstr ""
 "usar: si le dimension de datos colligite excede iste limite alora le data "
 "plus vetere essera abandonate usque le limite non es ancora excedite."
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -121,7 +121,7 @@ msgstr ""
 "Il non pote scriber le file %1:\n"
 "\"%2\" es le detaliate description de error."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Error de KMail"

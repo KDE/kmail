@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 
@@ -24,7 +24,6 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(MarkAllMessagesAsReadInFolderAndSubFolderJob)
     void slotFetchCollectionFailed();
     void slotFetchCollectionDone(const Akonadi::Collection::List &list);
     void slotMarkAsResult(Akonadi::MarkAsCommand::Result result);

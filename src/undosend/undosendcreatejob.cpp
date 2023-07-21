@@ -1,17 +1,19 @@
 /*
-   SPDX-FileCopyrightText: 2019-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2019-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "undosendcreatejob.h"
-#include "kmail_debug.h"
+#include "kmail_undo_send_debug.h"
 
 #include <MessageComposer/SendLaterRemoveJob>
 
 #include <KLocalizedString>
 #include <KNotification>
 #include <QTimer>
+#include <chrono>
+using namespace std::chrono_literals;
 
 UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
     : QObject(parent)
@@ -31,19 +33,19 @@ bool UndoSendCreateJob::canStart() const
 bool UndoSendCreateJob::start()
 {
     if (!canStart()) {
-        qCWarning(KMAIL_LOG) << "Impossible to start undosendcreatejob";
+        qCWarning(KMAIL_UNDO_SEND_LOG) << "Impossible to start undosendcreatejob";
         deleteLater();
         return false;
     }
     mTimer = new QTimer(this);
     connect(mTimer, &QTimer::timeout, this, &UndoSendCreateJob::slotTimeOut);
     mTimer->setSingleShot(true);
-    mTimer->start(mDelay * 1000);
-    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent);
+    mTimer->start(mDelay * 1s);
+    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent, this);
     mNotification->setText(mSubject);
     mNotification->setActions(QStringList() << i18n("Undo send"));
 
-    connect(mNotification, qOverload<unsigned int>(&KNotification::activated), this, &UndoSendCreateJob::slotActivateNotificationAction);
+    connect(mNotification, &KNotification::activated, this, &UndoSendCreateJob::slotActivateNotificationAction);
     connect(mNotification, &KNotification::closed, this, &UndoSendCreateJob::slotNotificationClosed);
     mNotification->sendEvent();
 
@@ -52,12 +54,14 @@ bool UndoSendCreateJob::start()
 
 void UndoSendCreateJob::slotTimeOut()
 {
+    qCDebug(KMAIL_UNDO_SEND_LOG) << "undo send timeout";
     mNotification->close();
     deleteLater();
 }
 
 void UndoSendCreateJob::slotNotificationClosed()
 {
+    qCDebug(KMAIL_UNDO_SEND_LOG) << "undo send slotNotificationClosed";
     mTimer->stop();
     deleteLater();
 }
@@ -70,7 +74,7 @@ void UndoSendCreateJob::slotActivateNotificationAction(unsigned int index)
         undoSendEmail();
         return;
     }
-    qCWarning(KMAIL_LOG) << " SpecialNotifierJob::slotActivateNotificationAction unknown index " << index;
+    qCWarning(KMAIL_UNDO_SEND_LOG) << " SpecialNotifierJob::slotActivateNotificationAction unknown index " << index;
 }
 
 void UndoSendCreateJob::undoSendEmail()
@@ -85,7 +89,7 @@ QString UndoSendCreateJob::subject() const
     return mSubject;
 }
 
-void UndoSendCreateJob::setSubject(const QString &subject)
+void UndoSendCreateJob::setMessageInfoText(const QString &subject)
 {
     mSubject = subject;
 }

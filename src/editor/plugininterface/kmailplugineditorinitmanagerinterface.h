@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -28,7 +28,6 @@ public:
     void initializePlugins();
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorInitManagerInterface)
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     QWidget *mParentWidget = nullptr;
     bool mWasInitialized = false;

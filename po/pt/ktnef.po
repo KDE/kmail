@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-01-31 00:59+0000\n"
 "PO-Revision-Date: 2020-08-15 11:13+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -44,25 +44,25 @@ msgstr "Propriedades do Anexo %1"
 msgid " bytes"
 msgstr " bytes"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "Atributos TNEF"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:176
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Deverá seleccionar primeiro um item."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:182
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "O item seleccionado não pode ser gravado por ter um elemento vazio."
 
-#: attachpropertydialog.cpp:199
+#: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

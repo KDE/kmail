@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -52,7 +52,6 @@ public:
     void setNewMessageJobSettings(const NewMessageJobSettings &newMessageJobSettings);
 
 private:
-    Q_DISABLE_COPY(NewMessageJob)
     void slotOpenComposer();
     NewMessageJobSettings mNewMessageJobSettings;
     Akonadi::Collection mCollection;

@@ -12,7 +12,6 @@
 #include "identitypage.h"
 
 #include "identitydialog.h"
-#include "kmkernel.h"
 #include "newidentitydialog.h"
 #include "settings/kmailsettings.h"
 
@@ -21,7 +20,6 @@
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QMenu>
@@ -80,8 +78,8 @@ void IdentityPage::load()
     for (KIdentityManagement::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
         item = new IdentityListViewItem(mIPage.mIdentityList, item, *it);
     }
-    if (mIPage.mIdentityList->currentItem()) {
-        mIPage.mIdentityList->currentItem()->setSelected(true);
+    if (auto currentItem = mIPage.mIdentityList->currentItem()) {
+        currentItem->setSelected(true);
     }
 }
 

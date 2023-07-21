@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -8,7 +8,7 @@
 
 #include <QDialog>
 
-namespace Akonadi
+namespace ContactEditor
 {
 class AkonadiContactEditor;
 }
@@ -38,5 +38,5 @@ private:
     void slotDeleteCurrentVCard();
     void deleteCurrentVcard(bool deleteOnDisk);
     QString mVcardFileName;
-    Akonadi::AkonadiContactEditor *const mContactEditor;
+    ContactEditor::AkonadiContactEditor *const mContactEditor;
 };

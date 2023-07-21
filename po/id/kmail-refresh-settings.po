@@ -1,0 +1,105 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# Wantoyèk <wantoyek@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-01-02 01:04+0000\n"
+"PO-Revision-Date: 2022-10-23 06:49+0700\n"
+"Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
+"Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 22.08.1\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Wantoyèk"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "wantoyek@gmail.com"
+
+#: main.cpp:32 main.cpp:34
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr "KMail Assistant untuk penyegaran pengaturan"
+
+#: main.cpp:36
+#, fuzzy, kde-format
+#| msgid "(c) 2019-2022 Laurent Montel <montel@kde.org>"
+msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgstr "Laurent Montel <montel@kde.org> (c) 2020-2021"
+
+#: main.cpp:37
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: main.cpp:37
+#, kde-format
+msgid "Author"
+msgstr "Penulis"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr "Penyegaran Pengaturan KMail"
+
+#: refreshsettingsassistant.cpp:39
+#, kde-format
+msgid "Warning"
+msgstr "Peringatan"
+
+#: refreshsettingsassistant.cpp:43
+#, kde-format
+msgid "Clean up Settings"
+msgstr "Bersihkan Pengaturan"
+
+#: refreshsettingsassistant.cpp:47
+#, kde-format
+msgid "Finish"
+msgstr "Selesai"
+
+#: refreshsettingscleanuppage.cpp:20
+#, kde-format
+msgid "Clean"
+msgstr "Bersihkan"
+
+#: refreshsettingscleanuppage.cpp:50
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr "Menyingkirkan pengaturan \"TipOfDay\" yang usang: Kelar"
+
+#: refreshsettingscleanuppage.cpp:62
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr "Menghapus pengaturan Dialog dalam file '%1': Kelar"
+
+#: refreshsettingscleanuppage.cpp:74
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr "Menghapus pengaturan Filter dalam file '%1': Kelar"
+
+#: refreshsettingscleanuppage.cpp:90
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr "Membersihkan Pengaturan Folder dalam file pengaturan '%1': Kelar"
+
+#: refreshsettingscleanuppage.cpp:146
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr "Membersihkan Ukuran Dialog dalam file pengaturan '%1': Kelar"
+
+#: refreshsettingsfirstpage.cpp:18
+#, kde-format
+msgid "Please close KMail/Kontact before using it."
+msgstr "Silakan tutup KMail/Kontact sebelum menggunakannya."

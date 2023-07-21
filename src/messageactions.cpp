@@ -8,7 +8,6 @@
 
 #include "kmcommands.h"
 #include "kmkernel.h"
-#include "kmmainwidget.h"
 #include "kmreaderwin.h"
 #include "settings/kmailsettings.h"
 #include "util.h"
@@ -48,6 +47,7 @@
 
 #include <Akonadi/Collection>
 #include <Akonadi/EntityAnnotationsAttribute>
+#include <Akonadi/StandardMailActionManager>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
 #include <QVariant>
@@ -568,7 +568,11 @@ void MessageActions::slotNoQuoteReplyToMsg()
 void MessageActions::slotRunUrl(QAction *urlAction)
 {
     const QVariant q = urlAction->data();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (q.type() == QVariant::Url) {
+#else
+    if (q.userType() == QMetaType::QUrl) {
+#endif
         auto job = new KIO::OpenUrlJob(q.toUrl());
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
         job->start();

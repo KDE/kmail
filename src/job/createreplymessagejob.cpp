@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -7,7 +7,6 @@
 #include "createreplymessagejob.h"
 
 #include "../util.h"
-#include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>

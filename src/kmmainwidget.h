@@ -516,12 +516,11 @@ private Q_SLOTS:
 private:
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete); // completely delete message
-    bool showSearchDialog();
+    Q_REQUIRED_RESULT bool showSearchDialog();
     void clearCurrentFolder();
     void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
-    void printCurrentMessage(bool preview);
     void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
     Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
@@ -535,6 +534,7 @@ private:
     void updateMoveAllToTrash();
     void slotClearFolder();
     void slotClearCacheDone();
+    void slotClearFolderAndSubFolders();
 
     // Message actions
     QAction *mDeleteAction = nullptr;

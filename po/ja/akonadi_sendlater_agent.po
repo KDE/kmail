@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2013-05-10 21:38-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
@@ -113,7 +113,6 @@ msgstr ""
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] ""
-msgstr[1] ""
 
 #: sendlaterconfigurewidget.cpp:208
 #, kde-format
@@ -126,7 +125,6 @@ msgstr ""
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] ""
-msgstr[1] ""
 
 #: sendlaterconfigurewidget.cpp:217
 #, kde-format
@@ -180,17 +178,17 @@ msgstr ""
 msgid "Message sent"
 msgstr ""
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr ""
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr ""
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2020-01-02 11:46+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -188,17 +188,17 @@ msgstr "Kirja saatmine nurjus."
 msgid "Message sent"
 msgstr "Kiri saadetud"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Tekkis tõrge. Kas saata uuesti?"
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "Tekkis tõrge"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

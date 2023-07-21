@@ -1,7 +1,7 @@
 /*
     This file is part of KMail, the KDE mail client.
     SPDX-FileCopyrightText: 2002 Don Sanders <sanders@kde.org>
-    SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
@@ -35,7 +35,6 @@
 #include "kmail_debug.h"
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
-#include "settings/kmailsettings.h"
 #include "util.h"
 #include "widgets/collectionpane.h"
 
@@ -90,9 +89,9 @@
 #include <MimeTreeParser/NodeHelper>
 #include <MimeTreeParser/ObjectTreeParser>
 
+#include <Akonadi/SentBehaviourAttribute>
+#include <Akonadi/TransportAttribute>
 #include <MailTransport/TransportManager>
-#include <MailTransportAkonadi/SentBehaviourAttribute>
-#include <MailTransportAkonadi/TransportAttribute>
 
 #include <Libkdepim/ProgressManager>
 #include <PimCommon/BroadcastStatus>
@@ -165,8 +164,8 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
     : mDeletesItself(false)
     , mEmitsCompletedItself(false)
     , mParent(parent)
+    , mMsgList(msgList)
 {
-    mMsgList = msgList;
 }
 
 KMCommand::~KMCommand() = default;
@@ -560,8 +559,8 @@ KMEditItemCommand::KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, 
     , mDeleteFromSource(deleteFromSource)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
 
@@ -591,7 +590,7 @@ KMCommand::Result KMEditItemCommand::execute()
 
     win->setFolder(item.parentCollection());
 
-    const MailTransport::TransportAttribute *transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+    const auto *transportAttribute = item.attribute<Akonadi::TransportAttribute>();
     if (transportAttribute) {
         win->setCurrentTransport(transportAttribute->transportId());
     } else {
@@ -604,8 +603,8 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    const MailTransport::SentBehaviourAttribute *sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
-    if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
+    const auto *sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
+    if (sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
     }
     win->show();
@@ -716,7 +715,7 @@ void KMOpenMsgCommand::slotDataArrived(KIO::Job *, const QByteArray &data)
         return;
     }
 
-    mMsgString.append(QString::fromLatin1(data.data()));
+    mMsgString.append(data.data());
 }
 
 void KMOpenMsgCommand::doesNotContainMessage()
@@ -746,8 +745,8 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             return;
         }
         int startOfMessage = 0;
-        if (mMsgString.startsWith(QLatin1String("From "))) {
-            startOfMessage = mMsgString.indexOf(QLatin1Char('\n'));
+        if (mMsgString.startsWith("From ")) {
+            startOfMessage = mMsgString.indexOf('\n');
             if (startOfMessage == -1) {
                 doesNotContainMessage();
                 return;
@@ -758,10 +757,10 @@ void KMOpenMsgCommand::slotResult(KJob *job)
 
         // check for multiple messages in the file
         bool multipleMessages = true;
-        int endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+        int endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         while (endOfMessage != -1) {
             auto msg = new KMime::Message;
-            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
             msg->parse();
             if (!msg->hasContent()) {
                 delete msg;
@@ -772,13 +771,13 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             KMime::Message::Ptr mMsg(msg);
             listMessages << mMsg;
             startOfMessage = endOfMessage + 1;
-            endOfMessage = mMsgString.indexOf(QLatin1String("\nFrom "), startOfMessage);
+            endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         }
         if (endOfMessage == -1) {
             endOfMessage = mMsgString.length();
             multipleMessages = false;
             auto msg = new KMime::Message;
-            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage).toUtf8()));
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
             msg->parse();
             if (!msg->hasContent()) {
                 delete msg;
@@ -904,15 +903,15 @@ KMCommand::Result KMForwardCommand::execute()
     if (msgList.count() >= 2) {
         // ask if they want a mime digest forward
 
-        int answer = KMessageBox::questionYesNoCancel(parentWidget(),
-                                                      i18n("Do you want to forward the selected messages as "
-                                                           "attachments in one message (as a MIME digest) or as "
-                                                           "individual messages?"),
-                                                      QString(),
-                                                      KGuiItem(i18n("Send As Digest")),
-                                                      KGuiItem(i18n("Send Individually")));
+        int answer = KMessageBox::questionTwoActionsCancel(parentWidget(),
+                                                           i18n("Do you want to forward the selected messages as "
+                                                                "attachments in one message (as a MIME digest) or as "
+                                                                "individual messages?"),
+                                                           QString(),
+                                                           KGuiItem(i18n("Send As Digest")),
+                                                           KGuiItem(i18n("Send Individually")));
 
-        if (answer == KMessageBox::Yes) {
+        if (answer == KMessageBox::ButtonCode::PrimaryAction) {
             Akonadi::Item firstItem(msgList.first());
             MessageFactoryNG factory(KMime::Message::Ptr(new KMime::Message),
                                      firstItem.id(),
@@ -926,7 +925,7 @@ KMCommand::Result KMForwardCommand::execute()
             win->show();
             delete fwdMsg.second;
             return OK;
-        } else if (answer == KMessageBox::No) { // NO MIME DIGEST, Multiple forward
+        } else if (answer == KMessageBox::ButtonCode::SecondaryAction) { // NO MIME DIGEST, Multiple forward
             Akonadi::Item::List::const_iterator it;
             Akonadi::Item::List::const_iterator end(msgList.constEnd());
 
@@ -992,8 +991,8 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item::List 
     : KMCommand(parent, msgList)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
 
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1002,8 +1001,8 @@ KMRedirectCommand::KMRedirectCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
     fetchScope().fetchFullPayload(true);
-    fetchScope().fetchAttribute<MailTransport::SentBehaviourAttribute>();
-    fetchScope().fetchAttribute<MailTransport::TransportAttribute>();
+    fetchScope().fetchAttribute<Akonadi::SentBehaviourAttribute>();
+    fetchScope().fetchAttribute<Akonadi::TransportAttribute>();
 
     fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
 }
@@ -1042,7 +1041,7 @@ KMCommand::Result KMRedirectCommand::execute()
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
         if (transportId == -1) {
-            const auto transportAttribute = item.attribute<MailTransport::TransportAttribute>();
+            const auto transportAttribute = item.attribute<Akonadi::TransportAttribute>();
             if (transportAttribute) {
                 transportId = transportAttribute->transportId();
                 const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
@@ -1052,9 +1051,9 @@ KMCommand::Result KMRedirectCommand::execute()
             }
         }
 
-        const auto sentAttribute = item.attribute<MailTransport::SentBehaviourAttribute>();
+        const auto sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
         QString fcc;
-        if (sentAttribute && (sentAttribute->sentBehaviour() == MailTransport::SentBehaviourAttribute::MoveToCollection)) {
+        if (sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
             fcc = QString::number(sentAttribute->moveToCollection().id());
         }
 

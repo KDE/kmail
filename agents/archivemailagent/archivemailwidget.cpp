@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2015-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2015-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -66,8 +66,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
     mWidget.setupUi(w);
     parent->layout()->addWidget(w);
 
-    QStringList headers;
-    headers << i18n("Name") << i18n("Last archive") << i18n("Next archive in") << i18n("Storage directory");
+    const QStringList headers = QStringList{i18n("Name"), i18n("Last archive"), i18n("Next archive in"), i18n("Storage directory")};
     mWidget.treeWidget->setHeaderLabels(headers);
     mWidget.treeWidget->setObjectName(QStringLiteral("treewidget"));
     mWidget.treeWidget->setSortingEnabled(true);
@@ -90,7 +89,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
                          QStringLiteral(KDEPIM_VERSION),
                          i18n("Archive emails automatically."),
                          KAboutLicense::GPL_V2,
-                         i18n("Copyright (C) 2014-%1 Laurent Montel", QStringLiteral("2022")));
+                         i18n("Copyright (C) 2014-%1 Laurent Montel", QStringLiteral("2023")));
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
@@ -229,12 +228,12 @@ bool ArchiveMailWidget::save() const
 void ArchiveMailWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    const int answer = KMessageBox::warningYesNo(parentWidget(),
-                                                 i18n("Do you want to delete the selected items?"),
-                                                 i18nc("@title:window", "Delete Items"),
-                                                 KStandardGuiItem::del(),
-                                                 KStandardGuiItem::cancel());
-    if (answer == KMessageBox::No) {
+    const int answer = KMessageBox::warningTwoActions(parentWidget(),
+                                                      i18n("Do you want to delete the selected items?"),
+                                                      i18nc("@title:window", "Delete Items"),
+                                                      KStandardGuiItem::del(),
+                                                      KStandardGuiItem::cancel());
+    if (answer == KMessageBox::ButtonCode::SecondaryAction) {
         return;
     }
 

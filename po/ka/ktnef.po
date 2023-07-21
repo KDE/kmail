@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
-"PO-Revision-Date: 2022-09-12 11:17+0200\n"
+"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"PO-Revision-Date: 2023-02-03 16:55+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -44,25 +44,25 @@ msgstr "მიმაგრების (%1) თვისებები"
 msgid " bytes"
 msgstr " ბაიტი"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF თვისებები"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:176
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "ჯერ აირჩიეთ ჩანაწერი."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:182
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr ""
 
-#: attachpropertydialog.cpp:199
+#: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -74,7 +74,7 @@ msgctxt "@info:whatsthis"
 msgid ""
 "You will be presented with a dialog where you can configure the application-"
 "wide shortcuts."
-msgstr ""
+msgstr "გაჩვენებთ ფანჯარას, სადაც პროგრამის მალსახმობების მორგება შეგეძლებათ."
 
 #: ktnefmain.cpp:108
 #, kde-format
@@ -225,7 +225,7 @@ msgstr "&ფაილი"
 #: ktnefui.rc:9
 #, kde-format
 msgid "&Action"
-msgstr "_მოქმედება"
+msgstr "&ქმედება"
 
 #. i18n: ectx: Menu (settings)
 #: ktnefui.rc:24
@@ -305,7 +305,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
-msgstr ""
+msgstr "შეტყობინების თვისებები"
 
 #: messagepropertydialog.cpp:55
 #, kde-format

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -33,6 +33,5 @@ public:
     void clearCache();
 
 private:
-    Q_DISABLE_COPY(FolderArchiveCache)
     QHash<QString, ArchiveCache> mCache;
 };

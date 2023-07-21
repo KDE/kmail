@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -15,10 +15,14 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageComposer/ImageScalingWidget>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageCore/MessageCoreSettings>
-#include <PimCommon/AutoCorrectionWidget>
 #include <PimCommon/SimpleStringListEditor>
 #include <TemplateParser/CustomTemplates>
 #include <TemplateParser/TemplatesConfiguration>
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+#include <TextAutoCorrectionWidgets/AutoCorrectionWidget>
+#else
+#include <TextAutoCorrection/AutoCorrectionWidget>
+#endif
 #include <templateparser/globalsettings_templateparser.h>
 #include <templateparser/templatesconfiguration_kfg.h>
 
@@ -28,7 +32,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 using PimCommon::RecentAddresses;
 
 #include "kmail_debug.h"
-#include <KCharsets>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluralHandlingSpinBox>
@@ -55,9 +58,13 @@ QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");
 }
-
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 ComposerPage::ComposerPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     //
     // "General" tab:
@@ -773,9 +780,8 @@ void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
         return;
     }
 
-    bool ok = false;
-    QTextCodec *codec = KCharsets::charsets()->codecForName(charset, ok);
-    if (ok && codec) {
+    QTextCodec *codec = QTextCodec::codecForName(charset.toLatin1());
+    if (codec) {
         charset = QString::fromLatin1(codec->name()).toLower();
         return;
     }
@@ -1180,12 +1186,20 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
-    autocorrectionWidget = new PimCommon::AutoCorrectionWidget(this);
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    autocorrectionWidget = new TextAutoCorrectionWidgets::AutoCorrectionWidget(this);
+#else
+    autocorrectionWidget = new TextAutoCorrection::AutoCorrectionWidget(this);
+#endif
     if (KMKernel::self()) {
         autocorrectionWidget->setAutoCorrection(KMKernel::self()->composerAutoCorrection());
     }
     vlay->addWidget(autocorrectionWidget);
-    connect(autocorrectionWidget, &PimCommon::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    connect(autocorrectionWidget, &TextAutoCorrectionWidgets::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(autocorrectionWidget, &TextAutoCorrection::AutoCorrectionWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 }
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const

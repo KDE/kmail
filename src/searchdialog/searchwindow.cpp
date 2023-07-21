@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  * SPDX-FileCopyrightText: 2001 Aaron J. Seigo <aseigo@kde.org>
  * SPDX-FileCopyrightText: 2010 Till Adam <adam@kde.org>
- * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *
@@ -67,6 +67,7 @@ using namespace KMail;
 
 SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &collection)
     : QDialog(nullptr)
+    , mSearchButton(new QPushButton(this))
     , mKMMainWidget(widget)
 {
     setWindowTitle(i18nc("@title:window", "Find Messages"));
@@ -87,7 +88,6 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     mStartSearchGuiItem = KGuiItem(i18nc("@action:button Search for messages", "&Search"), QStringLiteral("edit-find"));
     mStopSearchGuiItem = KStandardGuiItem::stop();
-    mSearchButton = new QPushButton;
     KGuiItem::assign(mSearchButton, mStartSearchGuiItem);
     mUi.mButtonBox->addButton(mSearchButton, QDialogButtonBox::ActionRole);
     connect(mUi.mButtonBox, &QDialogButtonBox::rejected, this, &SearchWindow::slotClose);
@@ -502,7 +502,6 @@ void SearchWindow::doSearch()
         attribute->setRemoteSearchEnabled(false);
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
-        qDebug() << " CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
     } else {
         const QString searchString =
             respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
@@ -513,7 +512,6 @@ void SearchWindow::doSearch()
         searchJob->setRecursive(recursive);
         searchJob->setRemoteSearchEnabled(false);
         mSearchJob = searchJob;
-        qDebug() << " SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSss";
     }
 
     connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);

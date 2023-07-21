@@ -1,12 +1,11 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
 
 #include "configureaccountpage.h"
 #include "configagentdelegate.h"
-#include "dialog/kmknotify.h"
 #include "kmkernel.h"
 #include "newmailnotifierinterface.h"
 #include "settings/kmailsettings.h"
@@ -44,8 +43,13 @@ QString AccountsPage::helpAnchor() const
     return QStringLiteral("configure-accounts");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 AccountsPage::AccountsPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+AccountsPage::AccountsPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     // Identity Tab:
     auto identityTab = new KMail::IdentityPage();

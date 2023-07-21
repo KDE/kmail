@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -7,7 +7,6 @@
 #include "configuresecuritypage.h"
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include "settings/kmailsettings.h"
 #include <MailCommon/FolderSettings>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageViewer/MessageViewerSettings>
@@ -26,18 +25,25 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KMessageBox>
 #include <KPluginMetaData>
 
+#include <KWindowConfig>
 #include <QButtonGroup>
 #include <QDBusConnection>
 #include <QPointer>
 #include <QWhatsThis>
+#include <QWindow>
 
 QString SecurityPage::helpAnchor() const
 {
     return QStringLiteral("configure-security");
 }
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
     : ConfigModuleWithTabs(parent, args)
+#else
+SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : ConfigModuleWithTabs(parent, data, args)
+#endif
 {
     //
     // "Reading" tab:
@@ -48,16 +54,10 @@ SecurityPage::SecurityPage(QWidget *parent, const QVariantList &args)
     addTab(new SecurityPageMDNTab(), i18n("Message Disposition Notifications"));
 
     //
-    // "Composing" tab:
+    // "Encryption" tab:
     //
-    auto composerCryptoTab = new SecurityPageComposerCryptoTab();
-    addTab(composerCryptoTab, i18n("Composing"));
-
-    //
-    // "Warnings" tab:
-    //
-    auto warningTab = new SecurityPageWarningTab();
-    addTab(warningTab, i18n("Miscellaneous"));
+    auto encryptionTab = new SecurityPageEncryptionTab();
+    addTab(encryptionTab, i18n("Encryption"));
 
     //
     // "S/MIME Validation" tab:
@@ -217,127 +217,86 @@ void SecurityPageMDNTab::save()
     saveCheckBox(mUi.mNoMDNsWhenEncryptedCheck, MessageViewer::MessageViewerSettings::self()->notSendWhenEncryptedItem());
 }
 
-QString SecurityPageComposerCryptoTab::helpAnchor() const
+QString SecurityPageEncryptionTab::helpAnchor() const
 {
     return QStringLiteral("configure-security-composing");
 }
 
-SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab(QWidget *parent)
+SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    mWidget = new Ui::ComposerCryptoConfiguration;
+    mWidget = new Ui::SecurityPageEncryptionTab;
     mWidget->setupUi(this);
-    connect(mWidget->mEncToSelf, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mAlwaysEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
-    connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageComposerCryptoTab::slotEmitChanged);
+    connect(mWidget->mAlwaysEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mAutoSign, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mAutoEncrypt, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+
+    connect(mWidget->mShowEncSignIndicator, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mShowCryptoOwnertrust, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    mWidget->mShowCryptoOwnertrust->setVisible(false);
+
+    connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+
+    connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrOwnKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+
+    connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotConfigureGnupg);
+    connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotReenableAllWarningsClicked);
 }
 
-SecurityPageComposerCryptoTab::~SecurityPageComposerCryptoTab()
+SecurityPageEncryptionTab::~SecurityPageEncryptionTab()
 {
     delete mWidget;
 }
 
-void SecurityPageComposerCryptoTab::doLoadOther()
+void SecurityPageEncryptionTab::doLoadFromGlobalSettings()
 {
-    // If you change default values, sync messagecomposer.cpp too
-
-    loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
-
-    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
-
-    loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
-    loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
-}
-
-void SecurityPageComposerCryptoTab::save()
-{
-    saveCheckBox(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
-
-    saveCheckBox(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
-    saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
-    saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
-}
-
-void SecurityPageComposerCryptoTab::doLoadFromGlobalSettings()
-{
-    loadWidget(mWidget->mEncToSelf, MessageComposer::MessageComposerSettings::self()->cryptoEncryptToSelfItem());
-    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
-
     loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
     loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    loadWidget(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());
+    loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->cryptoAutoEncryptItem());
+
     loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
-}
+    loadWidget(mWidget->mShowCryptoOwnertrust, KMailSettings::self()->showCryptoOwnertrustItem());
 
-QString SecurityPageWarningTab::helpAnchor() const
-{
-    return QStringLiteral("configure-security-warnings");
-}
-
-SecurityPageWarningTab::SecurityPageWarningTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    mWidget = new Ui::WarningConfiguration;
-    mWidget->setupUi(this);
-
-    connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnSignRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageWarningTab::slotEmitChanged);
-
-    connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageWarningTab::slotConfigureGnupg);
-    connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageWarningTab::slotReenableAllWarningsClicked);
-}
-
-SecurityPageWarningTab::~SecurityPageWarningTab()
-{
-    delete mWidget;
-}
-
-void SecurityPageWarningTab::doLoadFromGlobalSettings()
-{
-    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
+    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
     loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
+    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
 
-    // The "-int" part of the key name is because there used to be a separate boolean
-    // config entry for enabling/disabling. This is done with the single bool value now.
     mWidget->warnGroupBox->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
 
-    loadWidget(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
-    loadWidget(mWidget->mWarnSignChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDaysItem());
-    loadWidget(mWidget->mWarnSignRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
+    loadWidget(mWidget->mWarnEncrOwnKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnOwnEncrKeyNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-void SecurityPageWarningTab::doLoadOther()
+void SecurityPageEncryptionTab::doLoadOther()
 {
-    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
-    loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
+    loadWidget(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
+    loadWidget(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    loadWidget(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());
+    loadWidget(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->cryptoAutoEncryptItem());
 
-    // The "-int" part of the key name is because there used to be a separate boolean
-    // config entry for enabling/disabling. This is done with the single bool value now.
+    loadWidget(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
+    loadWidget(mWidget->mShowCryptoOwnertrust, KMailSettings::self()->showCryptoOwnertrustItem());
+
+    loadWidget(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
+    loadWidget(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
+    loadWidget(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
+
     mWidget->warnGroupBox->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
 
-    loadWidget(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
-    mWidget->mWarnSignKeyExpiresSB->setSuffix(ki18np(" day", " days"));
-
-    loadWidget(mWidget->mWarnSignChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDaysItem());
-    mWidget->mWarnSignChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
-    loadWidget(mWidget->mWarnSignRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDaysItem());
-    mWidget->mWarnSignRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
+    loadWidget(mWidget->mWarnEncrOwnKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnOwnEncrKeyNearExpiryThresholdDaysItem());
+    mWidget->mWarnEncrOwnKeyExpiresSB->setSuffix(ki18np(" day", " days"));
     loadWidget(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
     mWidget->mWarnEncrKeyExpiresSB->setSuffix(ki18np(" day", " days"));
-
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     mWidget->mWarnEncrChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
@@ -346,28 +305,35 @@ void SecurityPageWarningTab::doLoadOther()
     mWidget->enableAllWarningsPB->setEnabled(true);
 }
 
-void SecurityPageWarningTab::save()
+void SecurityPageEncryptionTab::save()
 {
-    saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
+    saveCheckBox(mWidget->mAlwaysEncryptWhenSavingInDrafts, KMailSettings::self()->alwaysEncryptDraftsItem());
+    saveCheckBox(mWidget->mStoreEncrypted, KMailSettings::self()->cryptoStoreEncryptedItem());
+    saveCheckBox(mWidget->mAutoSign, MessageComposer::MessageComposerSettings::self()->cryptoAutoSignItem());
+    saveCheckBox(mWidget->mAutoEncrypt, MessageComposer::MessageComposerSettings::self()->cryptoAutoEncryptItem());
+
+    saveCheckBox(mWidget->mShowEncSignIndicator, KMailSettings::self()->showCryptoLabelIndicatorItem());
+    saveCheckBox(mWidget->mShowCryptoOwnertrust, KMailSettings::self()->showCryptoOwnertrustItem());
+
+    saveCheckBox(mWidget->mShowKeyApprovalDlg, MessageComposer::MessageComposerSettings::self()->cryptoShowKeysForApprovalItem());
     saveCheckBox(mWidget->mWarnUnsigned, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnsignedItem());
+    saveCheckBox(mWidget->warnUnencryptedCB, MessageComposer::MessageComposerSettings::self()->cryptoWarningUnencryptedItem());
 
     MessageComposer::MessageComposerSettings::self()->setCryptoWarnWhenNearExpire(mWidget->warnGroupBox->isChecked());
 
-    saveSpinBox(mWidget->mWarnSignKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignKeyNearExpiryThresholdDaysItem());
-    saveSpinBox(mWidget->mWarnSignChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignChaincertNearExpiryThresholdDaysItem());
-    saveSpinBox(mWidget->mWarnSignRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnSignRootNearExpiryThresholdDaysItem());
+    saveSpinBox(mWidget->mWarnEncrOwnKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnOwnEncrKeyNearExpiryThresholdDaysItem());
     saveSpinBox(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
     saveSpinBox(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     saveSpinBox(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 }
 
-void SecurityPageWarningTab::slotReenableAllWarningsClicked()
+void SecurityPageEncryptionTab::slotReenableAllWarningsClicked()
 {
     KMessageBox::enableAllMessages();
     mWidget->enableAllWarningsPB->setEnabled(false);
 }
 
-void SecurityPageWarningTab::slotConfigureGnupg()
+void SecurityPageEncryptionTab::slotConfigureGnupg()
 {
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
@@ -732,16 +698,16 @@ GpgSettingsDialog::~GpgSettingsDialog()
 
 void GpgSettingsDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(600, 400));
     KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
-    const QSize size = group.readEntry("Size", QSize(600, 400));
-    if (size.isValid()) {
-        resize(size);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void GpgSettingsDialog::saveConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

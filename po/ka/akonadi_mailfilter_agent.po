@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
 "PO-Revision-Date: 2022-08-21 05:59+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -101,7 +101,7 @@ msgid ""
 "until the limit is no longer exceeded. "
 msgstr ""
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -110,7 +110,7 @@ msgstr ""
 "ფაილის ჩაწერა შეიძლებელია %1:\n"
 "\"%2\" შეცდომის დეტალურ აღწერას წარმოადგენს."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail-ის შეცდომა"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-01-02 00:48+0000\n"
-"PO-Revision-Date: 2022-10-02 15:49\n"
+"POT-Creation-Date: 2022-12-03 00:47+0000\n"
+"PO-Revision-Date: 2023-07-03 11:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -17,44 +17,44 @@ msgstr ""
 "X-Crowdin-File: /kf5-trunk/messages/kmail/akonadi_mailmerge_agent.pot\n"
 "X-Crowdin-File-ID: 25358\n"
 
-#: mailmergeconfiguredialog.cpp:31
+#: mailmergeconfiguredialog.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "配置"
 
-#: mailmergeconfiguredialog.cpp:48
+#: mailmergeconfiguredialog.cpp:50
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr "邮件合并代理程序"
 
-#: mailmergeconfiguredialog.cpp:50
+#: mailmergeconfiguredialog.cpp:52
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr "电子邮件地址合并代理程序。"
 
-#: mailmergeconfiguredialog.cpp:52
+#: mailmergeconfiguredialog.cpp:54
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
 msgstr "Copyright (C) 2021-%1 Laurent Montel"
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Maintainer"
 msgstr "维护者"
 
-#: mailmergeconfiguredialog.cpp:57
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "KDE 中国, EasternLi, Wordless Echo"
 
-#: mailmergeconfiguredialog.cpp:57
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

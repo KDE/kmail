@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2018-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2018-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -47,7 +47,6 @@ Q_SIGNALS:
     void reformatingTextDone();
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorConvertTextManagerInterface)
     QList<MessageComposer::PluginEditorConvertTextInterface *> mListPluginInterface;
     QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> mActionHash;
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;

@@ -66,14 +66,28 @@ PluginView::~PluginView() = default;
 
 K_PLUGIN_CLASS_WITH_JSON(KCMKontactSummary, "kcmkontactsummary.json")
 
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
 KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
     : KCModule(parent, args)
     , mPluginView(new PluginView(this))
+#else
+KCMKontactSummary::KCMKontactSummary(QObject *parent, const KPluginMetaData &data, const QVariantList &args)
+    : KCModule(parent, data, args)
+    , mPluginView(new PluginView(widget()))
+#endif
 {
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto layout = new QVBoxLayout(this);
-    layout->setContentsMargins({});
+#else
+    auto layout = new QVBoxLayout(widget());
+#endif
 
+    layout->setContentsMargins({});
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), this);
+#else
+    auto label = new QLabel(i18n("Select the plugin summaries to show on the summary page."), widget());
+#endif
     layout->addWidget(label);
 
     layout->addWidget(mPluginView);
@@ -82,20 +96,12 @@ KCMKontactSummary::KCMKontactSummary(QWidget *parent, const QVariantList &args)
 
     load();
     connect(mPluginView, &QTreeWidget::itemChanged, this, &KCMKontactSummary::markAsChanged);
-    auto about = new KAboutData(QStringLiteral("kontactsummary"),
-                                i18n("kontactsummary"),
-                                QString(),
-                                i18n("KDE Kontact Summary"),
-                                KAboutLicense::GPL,
-                                i18n("(c), 2004 Tobias Koenig"));
-    about->addAuthor(ki18n("Tobias Koenig").toString(), QString(), QStringLiteral("tokoe@kde.org"));
-    setAboutData(about);
 }
 
 void KCMKontactSummary::load()
 {
     const QVector<KPluginMetaData> pluginMetaDatas =
-        KPluginMetaData::findPlugins(QStringLiteral("kontact" QT_STRINGIFY(QT_VERSION_MAJOR)), [](const KPluginMetaData &data) {
+        KPluginMetaData::findPlugins(QStringLiteral("pim" QT_STRINGIFY(QT_VERSION_MAJOR)) + QStringLiteral("/kontact"), [](const KPluginMetaData &data) {
             return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
         });
 
@@ -116,7 +122,7 @@ void KCMKontactSummary::load()
 
     mPluginView->clear();
 
-    for (auto plugin : std::as_const(pluginMetaDatas)) {
+    for (const auto &plugin : std::as_const(pluginMetaDatas)) {
         QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false);
         if (var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);

@@ -1214,11 +1214,13 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
->Amb <guilabel
->Confirma abans d'enviar</guilabel
-> apareixerà un quadre de confirmació cada vegada que envieu un missatge. <guilabel
->Verifica l'ortografia abans d'enviar</guilabel
-> invocarà al corrector ortogràfic abans d'enviar un missatge.</para>
+>A la secció <guilabel
+>Abans d'enviar</guilabel
+>, apareixerà el quadre de confirmació <guilabel
+>Confirma l'acció</guilabel
+>cada vegada que envieu un missatge. <guilabel
+>Verifica l'ortografia</guilabel
+> invocarà el corrector ortogràfic abans d'enviar un missatge.</para>
 
 <para
 ><guilabel
@@ -2892,7 +2894,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></term>
 	  <listitem>
             <para
->Si està marcada, el &kmail; podrà carregar les imatges externes, els fulls d'estil, &etc; des d'Internet quan s'estigui mostrant un missatge &HTML;. Recomanen encaridament que deixeu desactivada aquesta opció (encara que no tindrà cap efecte fins que habiliteu l'&HTML;). </para>
+>Si està marcada, el &kmail; podrà carregar les imatges externes, els fulls d'estil, &etc; des d'Internet quan s'estigui mostrant un missatge &HTML;. Recomanen fermament que deixeu desactivada aquesta opció (encara que no tindrà cap efecte fins que habiliteu l'&HTML;). </para>
             <para
 >Afegint referències externes als seus missatges, la gent pot enviar correu brossa que podria detectar que esteu mirant el seu missatge. Cal tenir present que aquesta opció no afectarà el &Java;, JavaScript, ja que no estan admesos pel &kmail;. </para>
 	  </listitem>
@@ -5245,48 +5247,6 @@ modifying it by hand.</para>
 >--file <replaceable
 >/camí/a/kmail2rc</replaceable
 > --group OutOfOffice --key OutOfOfficeReactToSpam false</option
-></userinput
-> </para
-></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term
-><guilabel
->ShowUserAgent</guilabel
-></term>
-<listitem>
-<para
->Inicialment a la versió 1.9, el &kmail; pot mostrar el valor User-Agent o X-Mailer de la capçalera del missatge en utilitzar les capçaleres sofisticades (vegeu el menú <menuchoice
-><guimenu
->Visualitza</guimenu
-> <guisubmenu
->Capçaleres</guisubmenu
-></menuchoice
->). Per a habilitar aquesta característica, afegiu-la a la secció «[Reader]»:</para>
-<itemizedlist>
-<listitem
-><para
->Fitxer de configuració:</para>
-<programlisting
->ShowUserAgent=true</programlisting
-></listitem>
-<listitem
-><para
-><command
->kwriteconfig</command
-></para>
-<para
-><prompt
->&percnt;</prompt
-> <userinput
-><command
->kwriteconfig</command
-> <option
->--file <replaceable
->/camí/a/kmail2rc</replaceable
-> --group Reader --key ShowUserAgent true</option
 ></userinput
 > </para
 ></listitem>

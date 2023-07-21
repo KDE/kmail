@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
@@ -237,6 +237,7 @@ private:
     void doLoadFromGlobalSettings() override;
     void swapTagsInListBox(const int first, const int second);
     void updateButtons();
+    void slotCustomMenuRequested(const QPoint &pos);
 
 private: // data
     QLineEdit *mTagAddLineEdit = nullptr;
@@ -264,7 +265,11 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit AppearancePage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit AppearancePage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     QString helpAnchor() const override;
 };

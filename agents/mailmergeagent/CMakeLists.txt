@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2021-2022 Laurent Montel <montel@kde.org>
+# SPDX-FileCopyrightText: 2021-2023 Laurent Montel <montel@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailmerge_agent\")
@@ -40,24 +40,23 @@ kconfig_add_kcfg_files(mailmergeagent mailmergeagentsettings.kcfgc)
 #endif()
 
 target_link_libraries(mailmergeagent
-    KF5::AkonadiCore
-    KF5::AkonadiMime
-    KF5::MailTransportAkonadi
-    #KF5::Mime
-    KF5::MessageComposer
-    KF5::MessageCore
-    KF5::DBusAddons
-    KF5::WindowSystem
-    KF5::XmlGui
-    KF5::I18n
-    KF5::Notifications
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
+    #KPim${KF_MAJOR_VERSION}::Mime
+    KPim${KF_MAJOR_VERSION}::MessageComposer
+    KPim${KF_MAJOR_VERSION}::MessageCore
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::WindowSystem
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::Notifications
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     )
 
 add_executable(akonadi_mailmerge_agent)
 target_link_libraries(akonadi_mailmerge_agent
     mailmergeagent
-    KF5::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
     )
 
 

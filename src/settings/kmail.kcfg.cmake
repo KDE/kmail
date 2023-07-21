@@ -3,7 +3,6 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <include>qtextcodec.h</include>
   <include>QFontDatabase</include>
   <include>kcolorscheme.h</include>
   <include>editor/composer.h</include>
@@ -276,6 +275,10 @@
       <entry name="ShowCryptoLabelIndicator" type="Bool">
        <label>Show crypto label indicator</label>
        <default>true</default>
+      </entry>
+      <entry name="ShowCryptoOwnertrust" type="Bool">
+       <label>Show crypto ownertrust icons</label>
+       <default>false</default>
       </entry>
       <entry name="CheckSendDefaultActionShortcut" type="Bool">
        <label>Validate Send Default Shortcut</label>

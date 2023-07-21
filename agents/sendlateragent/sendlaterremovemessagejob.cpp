@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -18,10 +18,10 @@ SendLaterRemoveMessageJob::~SendLaterRemoveMessageJob() = default;
 
 void SendLaterRemoveMessageJob::start()
 {
-    deleteItem();
+    removeMessageItem();
 }
 
-void SendLaterRemoveMessageJob::deleteItem()
+void SendLaterRemoveMessageJob::removeMessageItem()
 {
     if (mIndex < mListItems.count()) {
         auto job = new Akonadi::ItemDeleteJob(Akonadi::Item(mListItems.at(mIndex)), this);
@@ -37,5 +37,5 @@ void SendLaterRemoveMessageJob::slotItemDeleteDone(KJob *job)
         qCDebug(SENDLATERAGENT_LOG) << " Error during delete item :" << job->errorString();
     }
     ++mIndex;
-    deleteItem();
+    removeMessageItem();
 }

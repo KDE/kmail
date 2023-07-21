@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2018-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2018-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -32,7 +32,6 @@ public:
     void updateCount();
 
 private:
-    Q_DISABLE_COPY(UnityServiceManager)
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     void initUnity();

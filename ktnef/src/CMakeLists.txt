@@ -22,7 +22,7 @@ target_sources(ktnef PRIVATE
     )
 
 ecm_qt_declare_logging_category(ktnef HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
-        DESCRIPTION "kmail-refresh-settings"
+	DESCRIPTION "kmail (ktnef apps)"
         EXPORT KMAIL
     )
 
@@ -38,14 +38,14 @@ endif()
 
 target_link_libraries(ktnef
     Qt::Widgets
-    KF5::Tnef
-    KF5::DBusAddons
-    KF5::Crash
-    KF5::I18n
-    KF5::XmlGui
-    KF5::WidgetsAddons
-    KF5::Service
-    KF5::KIOWidgets
+    KPim${KF_MAJOR_VERSION}::Tnef
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::Crash
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::WidgetsAddons
+    KF${KF_MAJOR_VERSION}::Service
+    KF${KF_MAJOR_VERSION}::KIOWidgets
 )
 
 

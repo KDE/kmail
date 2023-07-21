@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-09-28 00:50+0000\n"
-"PO-Revision-Date: 2022-09-12 11:13+0200\n"
+"PO-Revision-Date: 2022-11-22 07:23+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
 msgid "Follow Up Reminder Agent"
-msgstr ""
+msgstr "შემხსენებელი აგენტისთვის მიყოლა"
 
 #: followupreminderinfoconfigwidget.cpp:27
 #, kde-format
 msgid "Follow Up Reminder"
-msgstr ""
+msgstr "შეხსენების მიყოლა"
 
 #: followupreminderinfoconfigwidget.cpp:29
 #, kde-format
@@ -116,15 +116,15 @@ msgstr "ჩანაწერების წაშლა"
 #: followupremindermanager.cpp:154
 #, kde-format
 msgid "Answer from %1 received"
-msgstr ""
+msgstr "%1-დან მიღებულის პასუხი"
 
 #: followupremindernoanswerdialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
-msgstr ""
+msgstr "შეხსენების მიყოლა"
 
 #: followupremindernoanswerdialog.cpp:43
 #, kde-format
 msgid "You still wait an answer about this mail:"
-msgstr ""
+msgstr "თქვენ ჯერ კიდევ ელოდებით პასუხს ამ ელფოსტის შესახებ:"

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2019-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2019-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -37,7 +37,6 @@ public:
     void setCustomToolsWidget(PimCommon::CustomToolsWidgetNg *customToolsWidget);
 
 private:
-    Q_DISABLE_COPY(KMailPluginGrammarEditorManagerInterface)
     KPIMTextEdit::RichTextComposer *mRichTextEditor = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     QWidget *mParentWidget = nullptr;

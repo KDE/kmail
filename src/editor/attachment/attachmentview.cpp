@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
  *
  * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *
@@ -14,7 +14,6 @@
 #include "attachmentview.h"
 
 #include "kmkernel.h"
-#include "util.h"
 
 #include <MessageComposer/AttachmentModel>
 

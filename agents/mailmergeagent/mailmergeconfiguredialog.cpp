@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2021-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2021-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -12,12 +12,14 @@
 #include <KHelpMenu>
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <KWindowConfig>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QWindow>
 
 namespace
 {
@@ -49,7 +51,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Merge email addresses agent."),
                                       KAboutLicense::GPL_V2,
-                                      i18n("Copyright (C) 2021-%1 Laurent Montel", QStringLiteral("2022")));
+                                      i18n("Copyright (C) 2021-%1 Laurent Montel", QStringLiteral("2023")));
 
     aboutData.addAuthor(i18n("Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
     aboutData.setProductName(QByteArrayLiteral("Akonadi/MailMergeAgent"));
@@ -75,15 +77,16 @@ void MailMergeConfigureDialog::slotSave()
 
 void MailMergeConfigureDialog::readConfig()
 {
+    create(); // ensure a window is created
+    windowHandle()->resize(QSize(800, 600));
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
-    const QSize sizeDialog = group.readEntry("Size", QSize(800, 600));
-    if (sizeDialog.isValid()) {
-        resize(sizeDialog);
-    }
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
+    resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void MailMergeConfigureDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureMailMergeConfigureDialogGroupName);
-    group.writeEntry("Size", size());
+    KWindowConfig::saveWindowSize(windowHandle(), group);
+    group.sync();
 }

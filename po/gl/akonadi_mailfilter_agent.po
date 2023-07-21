@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Xosé <xosecalvo@gmail.com>, 2011, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2013, 2015.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019.
+# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-26 00:46+0000\n"
-"PO-Revision-Date: 2019-10-27 08:26+0100\n"
+"POT-Creation-Date: 2023-05-06 00:48+0000\n"
+"PO-Revision-Date: 2023-06-18 13:44+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -17,11 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.11.70\n"
+"X-Generator: Lokalize 23.04.2\n"
 
 #: filterlogdialog.cpp:44
-#, fuzzy, kde-format
-#| msgid "Filter Log Viewer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visor do rexistro de filtrado"
@@ -43,7 +42,7 @@ msgid ""
 "data is collected and shown only when logging is turned on. "
 msgstr ""
 "Pode activar aquí o rexistro das actividades de filtrado. De feito, os datos "
-"rexistrados recóllense e móstranse só cando se activa o rexistro. "
+"rexistrados recóllense e amósanse só cando se activa o rexistro. "
 
 #: filterlogdialog.cpp:89
 #, kde-format
@@ -108,12 +107,12 @@ msgid ""
 "collected log data exceeds this limit then the oldest data will be discarded "
 "until the limit is no longer exceeded. "
 msgstr ""
-"A recolla de datos de rexistro emprega memoria para almacenar temporalmente "
-"os datos rexistrados; aquí pode limitar a cantidade máxima de memoria que "
-"quere empregar: se o tamaño dos datos rexistrados excede este límite entón "
-"os datos máis antigos descártanse ata que non se exceda máis o límite. "
+"A recolla de datos de rexistro usa memoria para almacenar temporalmente os "
+"datos rexistrados; aquí pode limitar a cantidade máxima de memoria que quere "
+"usar: se o tamaño dos datos rexistrados excede este límite entón os datos "
+"máis antigos descártanse ata que non se exceda máis o límite. "
 
-#: filterlogdialog.cpp:318
+#: filterlogdialog.cpp:321
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -122,7 +121,7 @@ msgstr ""
 "Non se puido escribir no ficheiro %1:\n"
 "«%2» é a descrición detallada do erro."
 
-#: filterlogdialog.cpp:322
+#: filterlogdialog.cpp:325
 #, kde-format
 msgid "KMail Error"
 msgstr "Erro de KMail"

@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -24,7 +24,6 @@ public:
     void start();
 
 private:
-    Q_DISABLE_COPY(RemoveDuplicateMailJob)
     void slotRemoveDuplicatesDone(KJob *job);
     void slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item);
     void slotRemoveDuplicatesUpdate(KJob *job, const QString &description);

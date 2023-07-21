@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2013-10-16 03:33+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -190,17 +190,17 @@ msgstr "Хат жіберілмеді."
 msgid "Message sent"
 msgstr "Хат жіберілді"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Қате табылды. Қайта жібермексіз бе?"
 
-#: sendlatermanager.cpp:192
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "Қате табылды."
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

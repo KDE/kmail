@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2009-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2009-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -10,7 +10,6 @@
 #include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/MessageFolderAttribute>
 
-#include "kmail_debug.h"
 #include <KIconButton>
 #include <KLocalizedString>
 #include <QCheckBox>
@@ -64,7 +63,6 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mNormalIconLabel->setBuddy(mNormalIconButton);
         mNormalIconButton->setIconType(KIconLoader::NoGroup, KIconLoader::Place, false);
         mNormalIconButton->setIconSize(16);
-        mNormalIconButton->setStrictIconSize(true);
         mNormalIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
         mNormalIconButton->setIcon(QStringLiteral("folder"));
@@ -77,7 +75,6 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mUnreadIconLabel->setBuddy(mUnreadIconButton);
         mUnreadIconButton->setIconType(KIconLoader::NoGroup, KIconLoader::Place, false);
         mUnreadIconButton->setIconSize(16);
-        mUnreadIconButton->setStrictIconSize(true);
         mUnreadIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
         mUnreadIconButton->setIcon(QStringLiteral("folder-open"));

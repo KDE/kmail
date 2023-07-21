@@ -13,8 +13,6 @@
 #include <KIdentityManagement/Identity>
 #include <KIdentityManagement/IdentityManager>
 
-#include "kmkernel.h"
-
 #include "kmail_debug.h"
 #include <KLocalizedString>
 

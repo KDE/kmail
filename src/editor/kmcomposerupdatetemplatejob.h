@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -37,7 +37,6 @@ Q_SIGNALS:
     void updateComposer(const KIdentityManagement::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
 
 private:
-    Q_DISABLE_COPY(KMComposerUpdateTemplateJob)
     void slotFinished();
 
     QString mTextSelection;

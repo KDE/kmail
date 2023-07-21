@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2016-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2016-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -30,7 +30,6 @@ public:
     void start(QAbstractItemModel *collectionModel);
 
 private:
-    Q_DISABLE_COPY(CheckIndexingManager)
     void checkNextCollection();
 
     void indexingFinished(qint64 index, bool reindexCollection);

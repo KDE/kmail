@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2012-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -22,7 +22,7 @@ using namespace std::chrono_literals;
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <Kdelibs4ConfigMigrator>
 #endif
-//#define DEBUG_ARCHIVEMAILAGENT 1
+// #define DEBUG_ARCHIVEMAILAGENT 1
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     : Akonadi::AgentBase(id)

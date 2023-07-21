@@ -1,11 +1,12 @@
 /*
-  SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
 
 #pragma once
 
+#include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
 #include <config-enterprise.h>
@@ -23,9 +24,16 @@ namespace TemplateParser
 class CustomTemplates;
 class TemplatesConfiguration;
 }
-namespace PimCommon
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+namespace TextAutoCorrectionWidgets
+#else
+namespace TextAutoCorrection
+#endif
 {
 class AutoCorrectionWidget;
+}
+namespace PimCommon
+{
 class SimpleStringListEditor;
 }
 namespace MessageComposer
@@ -208,7 +216,11 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    PimCommon::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+#if HAVE_TEXT_AUTOCORRECTION_WIDGETS
+    TextAutoCorrectionWidgets::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+#else
+    TextAutoCorrection::AutoCorrectionWidget *autocorrectionWidget = nullptr;
+#endif
 };
 
 class ComposerPageAutoImageResizeTab : public ConfigModuleTab
@@ -232,7 +244,11 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 {
     Q_OBJECT
 public:
+#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
     explicit ComposerPage(QWidget *parent = nullptr, const QVariantList &args = {});
+#else
+    explicit ComposerPage(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
+#endif
 
     QString helpAnchor() const override;
 };

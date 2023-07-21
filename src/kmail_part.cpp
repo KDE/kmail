@@ -11,7 +11,6 @@
 #include "kmail_part.h"
 
 #include "kmmainwidget.h"
-#include "kmmainwin.h"
 
 #include <QVBoxLayout>
 
@@ -37,8 +36,13 @@ K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
 using namespace KMail;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const QVariantList &)
     : KParts::ReadOnlyPart(parent)
+#else
+KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaData &data, const QVariantList &)
+    : KParts::ReadOnlyPart(parent, data)
+#endif
     , mParentWidget(parentWidget)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));

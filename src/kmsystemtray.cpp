@@ -1,6 +1,6 @@
 /*
    SPDX-FileCopyrightText: 2001 by Ryan Breen <ryan@porivo.com>
-   SPDX-FileCopyrightText: 2010-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2010-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -14,12 +14,18 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KWindowSystem>
 #include <QMenu>
 
 #include "widgets/kactionmenutransport.h"
+
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
+#define HAVE_X11 1
+#include <KX11Extras>
+#else
+#define HAVE_X11 0
+#endif
 
 using namespace MailCommon;
 
@@ -157,22 +163,23 @@ void KMSystemTray::slotActivated()
 
     KWindowInfo cur = KWindowInfo(mainWin->winId(), NET::WMDesktop);
 
-    const int currentDesktop = KWindowSystem::currentDesktop();
     const bool wasMinimized = cur.isMinimized();
+#ifdef HAVE_X11
+    const int currentDesktop = KX11Extras::currentDesktop();
 
     if (cur.valid()) {
         mDesktopOfMainWin = cur.desktop();
     }
 
     if (wasMinimized && (currentDesktop != mDesktopOfMainWin) && (mDesktopOfMainWin == NET::OnAllDesktops)) {
-        KWindowSystem::setOnDesktop(mainWin->winId(), currentDesktop);
+        KX11Extras::setOnDesktop(mainWin->winId(), currentDesktop);
     }
 
     if (mDesktopOfMainWin == NET::OnAllDesktops) {
-        KWindowSystem::setOnAllDesktops(mainWin->winId(), true);
+        KX11Extras::setOnAllDesktops(mainWin->winId(), true);
     }
-
-    KWindowSystem::activateWindow(mainWin->winId());
+#endif
+    KWindowSystem::activateWindow(mainWin->windowHandle());
 
     if (wasMinimized) {
         kmkernel->raise();
@@ -244,7 +251,9 @@ void KMSystemTray::hideKMail()
     if (mainWin) {
         mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         // iconifying is unnecessary, but it looks cooler
-        KWindowSystem::minimizeWindow(mainWin->winId());
+#ifdef HAVE_X11
+        KX11Extras::minimizeWindow(mainWin->winId());
+#endif
         mainWin->hide();
     }
 }

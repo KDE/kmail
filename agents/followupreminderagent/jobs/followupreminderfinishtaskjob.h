@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -23,7 +23,6 @@ Q_SIGNALS:
     void finishTaskFailed();
 
 private:
-    Q_DISABLE_COPY(FollowUpReminderFinishTaskJob)
     void slotItemFetchJobDone(KJob *job);
     void slotItemModifiedResult(KJob *job);
     void closeTodo();

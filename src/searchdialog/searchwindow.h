@@ -163,7 +163,7 @@ private:
 
     KJob *mSearchJob = nullptr;
     KMSearchMessageModel *mResultModel = nullptr;
-    QPushButton *mSearchButton = nullptr;
+    QPushButton *const mSearchButton;
 
     QAction *mReplyAction = nullptr;
     QAction *mReplyAllAction = nullptr;

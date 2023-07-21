@@ -56,7 +56,6 @@ Q_SIGNALS:
     void undoStackChanged();
 
 private:
-    Q_DISABLE_COPY(UndoStack)
     void slotMoveResult(KJob *);
     QList<UndoInfo *> mStack;
     const int mSize = 0;

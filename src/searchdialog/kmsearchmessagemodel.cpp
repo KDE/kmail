@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2011-2022 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
  */
@@ -16,7 +16,6 @@
 #include <Akonadi/MessageParts>
 #include <KMime/KMimeMessage>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QApplication>
 #include <QColor>
@@ -116,6 +115,10 @@ QString KMSearchMessageModel::fullCollectionPath(Akonadi::Collection::Id id) con
 
 QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column, int role) const
 {
+    if (!item.isValid()) {
+        QVariant();
+    }
+
     if (role == Qt::ToolTipRole) {
         return toolTip(item);
     }

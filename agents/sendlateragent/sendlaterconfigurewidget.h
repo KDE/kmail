@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -24,7 +24,7 @@ public:
     ~SendLaterItem() override;
 
     void setInfo(MessageComposer::SendLaterInfo *info);
-    MessageComposer::SendLaterInfo *info() const;
+    Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *info() const;
 
 private:
     MessageComposer::SendLaterInfo *mInfo = nullptr;
@@ -49,7 +49,7 @@ public:
     void saveTreeWidgetHeader(KConfigGroup &group);
     void restoreTreeWidgetHeader(const QByteArray &group);
     void needToReload();
-    QVector<Akonadi::Item::Id> messagesToRemove() const;
+    Q_REQUIRED_RESULT QVector<Akonadi::Item::Id> messagesToRemove() const;
 
 Q_SIGNALS:
     void sendNow(Akonadi::Item::Id);

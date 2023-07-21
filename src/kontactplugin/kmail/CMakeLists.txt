@@ -19,7 +19,7 @@ target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp km
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
-target_link_libraries(kontact_kmailplugin KF5::Mime KF5::I18n KF5::KontactInterface KF5::CalendarCore KF5::CalendarUtils KF5::AkonadiCore KF5::Contacts KF5::AkonadiWidgets)
+target_link_libraries(kontact_kmailplugin KPim${KF_MAJOR_VERSION}::Mime KF${KF_MAJOR_VERSION}::I18n KPim${KF_MAJOR_VERSION}::KontactInterface KF${KF_MAJOR_VERSION}::CalendarCore KPim${KF_MAJOR_VERSION}::CalendarUtils KPim${KF_MAJOR_VERSION}::AkonadiCore KF${KF_MAJOR_VERSION}::Contacts KPim${KF_MAJOR_VERSION}::AkonadiWidgets)
 
 ########### next target ###############
 
@@ -29,7 +29,7 @@ pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
 
 add_dependencies(kcmkmailsummary kmail_xml)
 
-target_link_libraries(kcmkmailsummary  KF5::Mime KF5::PimCommonAkonadi Qt::DBus KF5::ConfigWidgets KF5::I18n)
+target_link_libraries(kcmkmailsummary KF${KF_MAJOR_VERSION}::KCMUtils  KPim${KF_MAJOR_VERSION}::Mime KPim${KF_MAJOR_VERSION}::PimCommonAkonadi Qt::DBus KF${KF_MAJOR_VERSION}::I18n)
 
 ########### install files ###############
 

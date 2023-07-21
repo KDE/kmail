@@ -1,20 +1,17 @@
 /*
-   SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
 #include "kmlaunchexternalcomponent.h"
+#include "kmail_debug.h"
+#include "newmailnotifierinterface.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include "archivemailagentinterface.h"
-#include "followupreminderinterface.h"
-#include "mailmergeagentinterface.h"
-#include "sendlateragentinterface.h"
-#include "util.h"
 #include <MailCommon/FilterManager>
 
 #include <KDialogJobUiDelegate>
@@ -22,7 +19,6 @@
 #include <KIO/CommandLauncherJob>
 #include <QPointer>
 
-#include "kmail_debug.h"
 #include <QProcess>
 #include <QStandardPaths>
 
@@ -49,9 +45,8 @@ void KMLaunchExternalComponent::slotConfigureSendLater()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
     }
@@ -61,9 +56,8 @@ void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
     auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_mailmerge_agent"));
     if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
+        Akonadi::AgentConfigurationDialog dlg(agent, mParentWidget);
+        dlg.exec();
     } else {
         KMessageBox::error(mParentWidget, i18n("Mail Merge Agent was not registered."));
     }
@@ -162,4 +156,17 @@ void KMLaunchExternalComponent::slotAccountWizard()
 void KMLaunchExternalComponent::slotFilterLogViewer()
 {
     MailCommon::FilterManager::instance()->showFilterLogDialog(static_cast<qlonglong>(mParentWidget->winId()));
+}
+
+void KMLaunchExternalComponent::slotShowNotificationHistory()
+{
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
+    auto newMailNotifierInterface =
+        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    if (!newMailNotifierInterface->isValid()) {
+        qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
+    } else {
+        newMailNotifierInterface->showNotNotificationHistoryDialog(0); // TODO fix me windid
+    }
+    delete newMailNotifierInterface;
 }

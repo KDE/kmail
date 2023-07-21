@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2017-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2017-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -33,7 +33,6 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
-    Q_DISABLE_COPY(CreateForwardMessageJob)
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     CreateForwardMessageJobSettings mSettings;

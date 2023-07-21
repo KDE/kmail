@@ -10,7 +10,6 @@
 
 // my headers:
 #include "configuredialog.h"
-#include "configuredialog_p.h"
 
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"

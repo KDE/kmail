@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2022 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2023 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -20,13 +20,15 @@
 #include <QRegularExpression>
 #include <QStringList>
 #include <QTimer>
+#include <chrono>
+using namespace std::chrono_literals;
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent)
+    , mConfig(SendLaterUtil::defaultConfig())
     , mTimer(new QTimer(this))
     , mSender(new MessageComposer::AkonadiSender)
 {
-    mConfig = SendLaterUtil::defaultConfig();
     connect(mTimer, &QTimer::timeout, this, &SendLaterManager::slotCreateJob);
 }
 
@@ -79,7 +81,7 @@ void SendLaterManager::createSendInfoList()
             const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
             if (seconds > 0) {
                 // qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
-                mTimer->start(seconds * 1000);
+                mTimer->start(seconds * 1s);
             } else {
                 // Create job when seconds <0
                 slotCreateJob();
@@ -187,12 +189,12 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
         case TooManyItemFound:
         case CanNotFetchItem:
         case CanNotCreateTransport: {
-            const int answer = KMessageBox::questionYesNo(nullptr,
-                                                          i18n("An error was found. Do you want to resend it?"),
-                                                          i18n("Error found"),
-                                                          KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
-                                                          KStandardGuiItem::cancel());
-            if (answer == KMessageBox::No) {
+            const int answer = KMessageBox::questionTwoActions(nullptr,
+                                                               i18n("An error was found. Do you want to resend it?"),
+                                                               i18n("Error found"),
+                                                               KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
+                                                               KStandardGuiItem::cancel());
+            if (answer == KMessageBox::ButtonCode::SecondaryAction) {
                 removeLaterInfo(info);
             }
             break;

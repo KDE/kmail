@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2014-2022 Laurent Montel <montel@kde.org>
+# SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
@@ -50,17 +50,17 @@ pim_target_precompile_headers(followupreminderagent PUBLIC ../../kmail_pch.h)
 #endif()
 
 target_link_libraries(followupreminderagent
-    KF5::AkonadiCore
-    KF5::IdentityManagement
-    KF5::AkonadiMime
-    KF5::AkonadiAgentBase
-    KF5::DBusAddons
-    KF5::XmlGui
-    KF5::KIOWidgets
-    KF5::Notifications
-    KF5::MailCommon
-    KF5::I18n
-    KF5::CalendarCore
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::IdentityManagement
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KF${KF_MAJOR_VERSION}::DBusAddons
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::KIOWidgets
+    KF${KF_MAJOR_VERSION}::Notifications
+    KPim${KF_MAJOR_VERSION}::MailCommon
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::CalendarCore
 )
 
 
@@ -69,17 +69,17 @@ add_executable(akonadi_followupreminder_agent followupreminderagent.cpp followup
 
 target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
-    KF5::AkonadiCore
-    KF5::AkonadiMime
-    KF5::AkonadiAgentBase
-    KF5::Mime
-    KF5::CalendarCore
-    KF5::DBusAddons
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KPim${KF_MAJOR_VERSION}::AkonadiMime
+    KPim${KF_MAJOR_VERSION}::AkonadiAgentBase
+    KPim${KF_MAJOR_VERSION}::Mime
+    KF${KF_MAJOR_VERSION}::CalendarCore
+    KF${KF_MAJOR_VERSION}::DBusAddons
     Qt::Widgets
-    KF5::Notifications
-    KF5::I18n
-    KF5::XmlGui
-    KF5::Service
+    KF${KF_MAJOR_VERSION}::Notifications
+    KF${KF_MAJOR_VERSION}::I18n
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::Service
     )
 
 if( APPLE )
@@ -111,7 +111,7 @@ kcoreaddons_add_plugin(followupreminderagentconfig
 )
 target_link_libraries(followupreminderagentconfig
     followupreminderagent
-    KF5::AkonadiCore
-    KF5::XmlGui
-    KF5::I18n
+    KPim${KF_MAJOR_VERSION}::AkonadiCore
+    KF${KF_MAJOR_VERSION}::XmlGui
+    KF${KF_MAJOR_VERSION}::I18n
 )
