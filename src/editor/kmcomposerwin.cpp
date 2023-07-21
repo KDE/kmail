@@ -375,7 +375,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
     connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
     connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
-    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
 
     mRunKeyResolverTimer = new QTimer(this);
     mRunKeyResolverTimer->setSingleShot(true);
@@ -1457,6 +1456,7 @@ void KMComposerWin::setupActions()
 
     changeCryptoAction();
 
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
     connect(mEncryptAction, &KToggleAction::triggered, &mEncryptionState, &EncryptionState::toggleOverride);
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposerWin::slotSignToggled);
 
