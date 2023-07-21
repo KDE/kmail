@@ -173,48 +173,66 @@ void KMComposerWinTest::initTestCase()
     mKernel->init();
 
     Kleo::KeyCache::mutableInstance()->setKeys({
-        createTestKey("test <drei@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("encryptonly <encryptonly@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("signandencrypt <signandencrypt@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
         createTestKey("friends@kde.example", "1", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
     });
 }
 
 void KMComposerWinTest::cleanupTestCase()
 {
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("testautocrypt")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("test3")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("test2")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("default")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("autocrypt")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("signonly")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("encryptonly")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("signandencrypt")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("nothing")));
     mKernel->identityManager()->commit();
     killAgent();
 }
 
 void KMComposerWinTest::resetIdentities()
 {
-    KIdentityManagement::Identity &i1 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("default"));
-    i1.setPrimaryEmailAddress(QStringLiteral("firstname.lastname@test.example"));
-    i1.setPGPSigningKey("0x123456789");
-    i1.setPGPEncryptionKey("0x123456789");
-    i1.setPgpAutoSign(true);
-    i1.setPgpAutoEncrypt(false);
-    KIdentityManagement::Identity &i2 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test2"));
-    i2.setPrimaryEmailAddress(QStringLiteral("secundus@test.example"));
-    i2.setPGPSigningKey("0x234567890");
-    i2.setPGPEncryptionKey("0x234567890");
-    i2.setPgpAutoSign(false);
-    i2.setPgpAutoEncrypt(false);
-    KIdentityManagement::Identity &i3 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("test3"));
-    i3.setPrimaryEmailAddress(QStringLiteral("drei@test.example"));
-    i3.setPGPSigningKey("0x345678901");
-    i3.setPGPEncryptionKey("0x345678901");
-    i3.setPgpAutoSign(true);
-    i3.setPgpAutoEncrypt(true);
-    KIdentityManagement::Identity &i4 = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("testautocrypt"));
-    i4.setPrimaryEmailAddress(QStringLiteral("autocrypt@test.example"));
-    i4.setPGPSigningKey("345678901");
-    i4.setPGPEncryptionKey("345678901");
-    i4.setPgpAutoSign(true);
-    i4.setPgpAutoEncrypt(true);
-    i4.setAutocryptEnabled(true);
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("nothing"));
+        i.setPrimaryEmailAddress(QStringLiteral("nothing@test.example"));
+        i.setPGPSigningKey("0x234567890");
+        i.setPGPEncryptionKey("0x234567890");
+        i.setPgpAutoSign(false);
+        i.setPgpAutoEncrypt(false);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signonly"));
+        i.setPrimaryEmailAddress(QStringLiteral("signonly@test.example"));
+        i.setPGPSigningKey("0x123456789");
+        i.setPGPEncryptionKey("0x123456789");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(false);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("encryptonly"));
+        i.setPrimaryEmailAddress(QStringLiteral("encryptonly@test.example"));
+        i.setPGPSigningKey("0x123456789");
+        i.setPGPEncryptionKey("0x123456789");
+        i.setPgpAutoSign(false);
+        i.setPgpAutoEncrypt(true);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signandencrypt"));
+        i.setPrimaryEmailAddress(QStringLiteral("signandencrypt@test.example"));
+        i.setPGPSigningKey("0x345678901");
+        i.setPGPEncryptionKey("0x345678901");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("autocrypt"));
+        i.setPrimaryEmailAddress(QStringLiteral("autocrypt@test.example"));
+        i.setPGPSigningKey("345678901");
+        i.setPGPEncryptionKey("345678901");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+        i.setAutocryptEnabled(true);
+    }
     mKernel->identityManager()->commit();
 }
 
@@ -225,9 +243,11 @@ void KMComposerWinTest::testSignature_data()
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<bool>("sign");
 
-    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << true;
-    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << false;
-    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << true;
+    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << false;
+    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << true;
+    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << false;
+    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << true;
+    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << true;
 }
 
 void KMComposerWinTest::testSignature()
@@ -257,10 +277,11 @@ void KMComposerWinTest::testEncryption_data()
     QTest::addColumn<QString>("recipient");
     QTest::addColumn<bool>("encrypt");
 
-    QTest::newRow("default") << im->identityForAddress(QStringLiteral("firstname.lastname@test.example")).uoid() << recipient << false;
-    QTest::newRow("secondus@test.example") << im->identityForAddress(QStringLiteral("secundus@test.example")).uoid() << recipient << false;
-    QTest::newRow("drei@test.example") << im->identityForAddress(QStringLiteral("drei@test.example")).uoid() << recipient << true;
-    QTest::newRow("autocrypt@test.example") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true;
+    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << recipient << false;
+    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << recipient << false;
+    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << recipient << true;
+    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << recipient << true;
+    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true;
 }
 
 void KMComposerWinTest::testEncryption()
@@ -302,12 +323,9 @@ void KMComposerWinTest::testEncryption()
 
 void KMComposerWinTest::testChangeIdentity()
 {
-    QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(QStringLiteral("friends%40kde.example.json"))));
-
     const auto im = mKernel->identityManager();
 
-    auto ident = im->identityForAddress(QStringLiteral("firstname.lastname@test.example"));
+    auto ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
     const auto msg(createItem(ident));
 
     auto composer = KMail::makeComposer(msg);
@@ -316,15 +334,15 @@ void KMComposerWinTest::testChangeIdentity()
     QCoreApplication::processEvents(QEventLoop::AllEvents);
     auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
     QVERIFY(encryption);
     QVERIFY(signature);
+    QVERIFY(identCombo);
     QCOMPARE(encryption->isVisible(), false);
     QCOMPARE(signature->isVisible(), true);
 
     {
-        ident = im->identityForAddress(QStringLiteral("autocrypt@test.example"));
-        auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
-        QVERIFY(identCombo);
+        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -336,9 +354,7 @@ void KMComposerWinTest::testChangeIdentity()
     }
 
     {
-        ident = im->identityForAddress(QStringLiteral("secundus@test.example"));
-        auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
-        QVERIFY(identCombo);
+        ident = im->identityForAddress(QStringLiteral("nothing@test.example"));
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -347,5 +363,17 @@ void KMComposerWinTest::testChangeIdentity()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(encryption->isVisible(), false);
         QCOMPARE(signature->isVisible(), false);
+    }
+
+    {
+        ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(encryption->isVisible(), false);
+        QCOMPARE(signature->isVisible(), true);
     }
 }
