@@ -10,6 +10,10 @@
 #include <QObject>
 class KMKernel;
 
+namespace KMail {
+    class Composer;
+}
+
 class KMComposerWinTest : public QObject
 {
     Q_OBJECT
@@ -36,8 +40,11 @@ private Q_SLOTS:
     void testChangeIdentity();
     void testChangeIdentityNearExpiryWarning();
 
+
 private:
     void resetIdentities();
+    void toggleEncryption(KMail::Composer* composer);
+    void toggleSigning(KMail::Composer* composer);
     KMKernel *mKernel = nullptr;
     QDir autocryptDir;
 };

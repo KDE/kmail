@@ -1457,6 +1457,7 @@ void KMComposerWin::setupActions()
     changeCryptoAction();
 
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, mEncryptAction, &KToggleAction::setChecked);
     connect(mEncryptAction, &KToggleAction::triggered, &mEncryptionState, &EncryptionState::toggleOverride);
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposerWin::slotSignToggled);
 
@@ -3543,6 +3544,8 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     if (!bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey) {
         mLastEncryptActionState = mEncryptionState.encrypt();
     }
+
+    mSignAction->setEnabled(bNewIdentityHasSigningKey);
 
     if (!bNewIdentityHasSigningKey && mLastIdentityHasSigningKey) {
         mLastSignActionState = sign();
