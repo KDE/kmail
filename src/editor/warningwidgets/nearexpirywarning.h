@@ -15,7 +15,7 @@ public:
     explicit NearExpiryWarning(QWidget *parent = nullptr);
     ~NearExpiryWarning() override;
 
-    void addInfo(QString msg);
+    void addInfo(const QString &msg);
     void setWarning(bool warning);
     void clearInfo();
 };

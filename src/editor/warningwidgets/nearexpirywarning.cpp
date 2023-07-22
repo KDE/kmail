@@ -19,7 +19,7 @@ NearExpiryWarning::NearExpiryWarning(QWidget *parent)
 
 NearExpiryWarning::~NearExpiryWarning() = default;
 
-void NearExpiryWarning::addInfo(QString msg)
+void NearExpiryWarning::addInfo(const QString &msg)
 {
     setText(text() + (text().isEmpty() ? QString() : QStringLiteral("\n")) + QStringLiteral("<p>") + msg + QStringLiteral("</p>"));
 }
