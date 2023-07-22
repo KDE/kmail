@@ -40,7 +40,7 @@ private Q_SLOTS:
     void testChangeIdentity();
     void testChangeIdentityNearExpiryWarning();
 
-
+    void testOwnExpiry();
 private:
     void resetIdentities();
     void toggleEncryption(KMail::Composer* composer);

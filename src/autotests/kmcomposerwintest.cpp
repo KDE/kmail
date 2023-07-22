@@ -57,6 +57,7 @@ auto mapValidity(GpgME::UserID::Validity validity)
 }
 
 GpgME::Key createTestKey(QByteArray uid, QByteArray fingerprint,
+                         time_t expires = 0,
                          GpgME::Protocol protocol = GpgME::UnknownProtocol,
                          Kleo::KeyCache::KeyUsage usage = Kleo::KeyCache::KeyUsage::AnyUsage,
                          GpgME::UserID::Validity validity = GpgME::UserID::Full)
@@ -86,6 +87,7 @@ GpgME::Key createTestKey(QByteArray uid, QByteArray fingerprint,
     subkey->timestamp = 123456789;
     subkey->revoked = 0;
     subkey->expired = 0;
+    subkey->expires = expires,
     subkey->disabled = 0;
     subkey->keyid = strdup(fingerprint.constData());
     subkey->can_encrypt = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Encrypt);
@@ -175,14 +177,18 @@ void KMComposerWinTest::initTestCase()
     mKernel->init();
 
     Kleo::KeyCache::mutableInstance()->setKeys({
-        createTestKey("encrypt <encrypt@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
-        createTestKey("wrongkey <wrongkey@test.example>",   "22222222", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
-        createTestKey("friends@kde.example", "1", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("encrypt <encrypt@test.example>",   "345678901"),
+        createTestKey("wrongkey <wrongkey@test.example>",   "22222222"),
+        createTestKey("friends@kde.example", "1"),
+        createTestKey("nearexpiry@test.example", "2", std::time(nullptr)+2*86300),
+        createTestKey("expired@test.example", "3", std::time(nullptr)-2*86300),
     });
 }
 
 void KMComposerWinTest::cleanupTestCase()
 {
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("nearexpiry")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("expired")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkeysign")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkey")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("autocrypt")));
@@ -250,6 +256,22 @@ void KMComposerWinTest::resetIdentities()
         i.setPrimaryEmailAddress(QStringLiteral("wrongkeysign@test.example"));
         i.setPGPSigningKey("1111111");
         i.setPGPEncryptionKey("22222222");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("nearexpiry"));
+        i.setPrimaryEmailAddress(QStringLiteral("nearexpiry@test.example"));
+        i.setPGPSigningKey("2");
+        i.setPGPEncryptionKey("2");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("expired"));
+        i.setPrimaryEmailAddress(QStringLiteral("expired@test.example"));
+        i.setPGPSigningKey("3");
+        i.setPGPEncryptionKey("3");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
@@ -596,4 +618,63 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), false);
     }
+}
+
+void KMComposerWinTest::testOwnExpiry()
+{
+    const auto im = mKernel->identityManager();
+    auto ident = im->identityForAddress(QStringLiteral("nearexpiry@test.example"));
+    const auto msg(createItem(ident));
+
+    auto composer = KMail::makeComposer(msg);
+    composer->show();
+    QVERIFY(QTest::qWaitForWindowExposed(composer));
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+
+    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
+    QVERIFY(nearExpiryWarning);
+    QVERIFY(identCombo);
+    QCOMPARE(nearExpiryWarning->isVisible(), true);
+    QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+    QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+    QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
+
+    {
+        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), false);
+    }
+    {
+        ident = im->identityForAddress(QStringLiteral("expired@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), true);
+        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expired 2 days ago.")));
+    }
+    {
+        ident = im->identityForAddress(QStringLiteral("nearexpiry@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), true);
+        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
+    }
+
 }
