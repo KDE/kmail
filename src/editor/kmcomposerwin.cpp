@@ -3473,8 +3473,48 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
 {
     // disable certain actions if there is no PGP user identity set
     // for this profile
-    bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-    bool bNewIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
+    bool bPGPEncryptionKey = !ident.pgpEncryptionKey().isEmpty();
+    bool bPGPSigningKey = !ident.pgpSigningKey().isEmpty();
+    bool bSMIMEEncryptionKey = !ident.smimeEncryptionKey().isEmpty();
+    bool bSMIMESigningKey = !ident.smimeSigningKey().isEmpty();
+    if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
+        if (bPGPEncryptionKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                bPGPEncryptionKey = false;
+            }
+        }
+        if (bPGPSigningKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
+            if (key.isNull() || !key.canSign()) {
+                bPGPSigningKey = false;
+            }
+        }
+    } else {
+        bPGPEncryptionKey = false;
+        bPGPSigningKey = false;
+    }
+
+    if (cryptoMessageFormat() & Kleo::AnySMIME) {
+        if (bSMIMEEncryptionKey) {
+            auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                bSMIMEEncryptionKey = false;
+            }
+        }
+        if (bSMIMESigningKey) {
+            auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
+            if (key.isNull() || !key.canSign()) {
+                bSMIMESigningKey = false;
+            }
+        }
+    } else {
+        bSMIMEEncryptionKey = false;
+        bSMIMESigningKey = false;
+    }
+
+    bool bNewIdentityHasSigningKey = bPGPSigningKey || bSMIMESigningKey;
+    bool bNewIdentityHasEncryptionKey = bPGPEncryptionKey || bSMIMEEncryptionKey;
 
     if (!mKeyCache->initialized()) {
         // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.

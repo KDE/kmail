@@ -173,8 +173,8 @@ void KMComposerWinTest::initTestCase()
     mKernel->init();
 
     Kleo::KeyCache::mutableInstance()->setKeys({
-        createTestKey("encryptonly <encryptonly@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
-        createTestKey("signandencrypt <signandencrypt@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("encrypt <encrypt@test.example>",   "345678901", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
+        createTestKey("wrongkey <wrongkey@test.example>",   "22222222", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
         createTestKey("friends@kde.example", "1", GpgME::OpenPGP, Kleo::KeyCache::KeyCache::KeyUsage::AnyUsage),
     });
 }
@@ -195,32 +195,32 @@ void KMComposerWinTest::resetIdentities()
     {
         auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("nothing"));
         i.setPrimaryEmailAddress(QStringLiteral("nothing@test.example"));
-        i.setPGPSigningKey("0x234567890");
-        i.setPGPEncryptionKey("0x234567890");
+        i.setPGPSigningKey("345678901");
+        i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(false);
         i.setPgpAutoEncrypt(false);
     }
     {
         auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signonly"));
         i.setPrimaryEmailAddress(QStringLiteral("signonly@test.example"));
-        i.setPGPSigningKey("0x123456789");
-        i.setPGPEncryptionKey("0x123456789");
+        i.setPGPSigningKey("345678901");
+        i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(false);
     }
     {
         auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("encryptonly"));
         i.setPrimaryEmailAddress(QStringLiteral("encryptonly@test.example"));
-        i.setPGPSigningKey("0x123456789");
-        i.setPGPEncryptionKey("0x123456789");
+        i.setPGPSigningKey("345678901");
+        i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(false);
         i.setPgpAutoEncrypt(true);
     }
     {
         auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signandencrypt"));
         i.setPrimaryEmailAddress(QStringLiteral("signandencrypt@test.example"));
-        i.setPGPSigningKey("0x345678901");
-        i.setPGPEncryptionKey("0x345678901");
+        i.setPGPSigningKey("345678901");
+        i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
