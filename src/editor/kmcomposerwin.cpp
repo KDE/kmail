@@ -148,7 +148,6 @@
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
 
-#include <QGpgME/KeyForMailboxJob>
 #include <QGpgME/Protocol>
 
 // KDE Frameworks includes
@@ -4215,7 +4214,7 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
 
 void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *line)
 {
-    // Encryption is possible not possible to find encryption keys.
+    // Not possible to find encryption keys.
     if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
