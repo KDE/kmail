@@ -12,3 +12,8 @@ add_executable( kmail_externaleditorwarningtest externaleditorwarningtest.cpp ex
 add_test(NAME kmail_externaleditorwarningtest COMMAND kmail_externaleditorwarningtest)
 ecm_mark_as_test(kmail_externaleditorwarningtest)
 target_link_libraries( kmail_externaleditorwarningtest Qt::Test KPim${KF_MAJOR_VERSION}::PimCommon KF${KF_MAJOR_VERSION}::I18n kmailprivate)
+
+add_executable( kmail_nearexpirywarningtest nearexpirywarningtest.cpp nearexpirywarningtest.h)
+add_test(NAME kmail_nearexpirywarningtest COMMAND kmail_nearexpirywarningtest)
+ecm_mark_as_test(kmail_nearexpirywarningtest)
+target_link_libraries( kmail_nearexpirywarningtest Qt::Test KPim${KF_MAJOR_VERSION}::PimCommon KF${KF_MAJOR_VERSION}::I18n kmailprivate)

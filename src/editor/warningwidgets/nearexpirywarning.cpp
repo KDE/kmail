@@ -21,7 +21,7 @@ NearExpiryWarning::~NearExpiryWarning() = default;
 
 void NearExpiryWarning::addInfo(QString msg)
 {
-    setText(text() + QStringLiteral("\n<p>") + msg + QStringLiteral("</p>"));
+    setText(text() + (text().isEmpty() ? QString() : QStringLiteral("\n")) + QStringLiteral("<p>") + msg + QStringLiteral("</p>"));
 }
 
 void NearExpiryWarning::setWarning(bool warning)
