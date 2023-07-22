@@ -3433,8 +3433,8 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
     if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
         if (!ident.pgpEncryptionKey().isEmpty()) {
             auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
-            if (key.isNull()) {
-                mNearExpiryWarning->addInfo(QStringLiteral("Your GPG key cannot been found in your keyring: ") + QString::fromUtf8(ident.pgpEncryptionKey()));
+            if (key.isNull() || !key.canEncrypt()) {
+                mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint","Your selected PGP key (%1) doesn't exist in your keyring or is not suitable for encryption.", QString::fromUtf8(ident.pgpEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
@@ -3444,7 +3444,13 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
         if (!ident.pgpSigningKey().isEmpty()) {
             if (ident.pgpSigningKey() != ident.pgpEncryptionKey()) {
                 auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
-                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                if (key.isNull() || !key.canSign()) {
+                    mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint","Your selected PGP signing key (%1) doesn't exist in your keyring or is not suitable for signing.", QString::fromUtf8(ident.pgpSigningKey())));
+                    mNearExpiryWarning->setWarning(true);
+                    mNearExpiryWarning->show();
+                } else {
+                    mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                }
             }
         }
     }
@@ -3452,8 +3458,8 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
     if (cryptoMessageFormat() & Kleo::AnySMIME) {
         if (!ident.smimeEncryptionKey().isEmpty()) {
             auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
-            if (key.isNull()) {
-                mNearExpiryWarning->addInfo(QStringLiteral("Your SMIME key cannot been found in your keyring: ") + QString::fromUtf8(ident.pgpEncryptionKey()));
+            if (key.isNull() || !key.canEncrypt()) {
+                mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint","Your selected SMIME key (%1) doesn't exist in your keyring or is not suitable for encryption.", QString::fromUtf8(ident.smimeEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
@@ -3463,7 +3469,13 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagement::Identity& ident
         if (!ident.smimeSigningKey().isEmpty()) {
             if (ident.smimeSigningKey() != ident.smimeEncryptionKey()) {
                 auto const key =  mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
-                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                if (key.isNull() || !key.canSign()) {
+                    mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint","Your selected SMIME signing key (%1) doesn't exist in your keyring or is not suitable for signing.", QString::fromUtf8(ident.smimeSigningKey())));
+                    mNearExpiryWarning->setWarning(true);
+                    mNearExpiryWarning->show();
+                } else {
+                    mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                }
             }
         }
     }

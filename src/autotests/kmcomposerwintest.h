@@ -30,7 +30,11 @@ private Q_SLOTS:
     void testSignature_data();
     void testSignature();
 
+    void testNearExpiryWarningIdentity_data();
+    void testNearExpiryWarningIdentity();
+
     void testChangeIdentity();
+    void testChangeIdentityNearExpiryWarning();
 
 private:
     void resetIdentities();

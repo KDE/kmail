@@ -5,6 +5,7 @@
 */
 
 #include "kmcomposerwintest.h"
+#include "editor/warningwidgets/nearexpirywarning.h"
 #include "kmkernel.h"
 #include <MessageComposer/Composer>
 
@@ -181,6 +182,8 @@ void KMComposerWinTest::initTestCase()
 
 void KMComposerWinTest::cleanupTestCase()
 {
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkeysign")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkey")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("autocrypt")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("signonly")));
     QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("encryptonly")));
@@ -233,6 +236,22 @@ void KMComposerWinTest::resetIdentities()
         i.setPgpAutoEncrypt(true);
         i.setAutocryptEnabled(true);
     }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("wrongkey"));
+        i.setPrimaryEmailAddress(QStringLiteral("wrongkey@test.example"));
+        i.setPGPSigningKey("1111111");
+        i.setPGPEncryptionKey("1111111");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+    }
+    {
+        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("wrongkeysign"));
+        i.setPrimaryEmailAddress(QStringLiteral("wrongkeysign@test.example"));
+        i.setPGPSigningKey("1111111");
+        i.setPGPEncryptionKey("22222222");
+        i.setPgpAutoSign(true);
+        i.setPgpAutoEncrypt(true);
+    }
     mKernel->identityManager()->commit();
 }
 
@@ -248,6 +267,8 @@ void KMComposerWinTest::testSignature_data()
     QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << false;
     QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << true;
     QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << true;
+    QTest::newRow("wrongkey") << im->identityForAddress(QStringLiteral("wrongkey@test.example")).uoid() << false;
+    QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << false;
 }
 
 void KMComposerWinTest::testSignature()
@@ -282,6 +303,8 @@ void KMComposerWinTest::testEncryption_data()
     QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << recipient << true;
     QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << recipient << true;
     QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true;
+    QTest::newRow("wrongkey") << im->identityForAddress(QStringLiteral("wrongkey@test.example")).uoid() << recipient << false;
+    QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << recipient << true;
 }
 
 void KMComposerWinTest::testEncryption()
@@ -319,6 +342,51 @@ void KMComposerWinTest::testEncryption()
     auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
+}
+
+void KMComposerWinTest::testNearExpiryWarningIdentity_data()
+{
+    const auto im = mKernel->identityManager();
+
+    QTest::addColumn<uint>("uoid");
+    QTest::addColumn<bool>("visible");
+    QTest::addColumn<QString>("searchpattern");
+
+    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << false << QString();
+    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << false << QString();
+    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << false << QString();
+    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << false << QString();
+    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << false << QString();
+
+    auto ident = im->identityForAddress(QStringLiteral("wrongkey@test.example"));
+    QTest::newRow("wrongkey") << ident.uoid() << true << QString::fromUtf8(ident.pgpEncryptionKey());
+
+    ident = im->identityForAddress(QStringLiteral("wrongkeysign@test.example"));
+    QTest::newRow("wrongkeysign") << ident.uoid() << true << QString::fromUtf8(ident.pgpSigningKey());
+}
+
+void KMComposerWinTest::testNearExpiryWarningIdentity()
+{
+    QFETCH(uint, uoid);
+    QFETCH(bool, visible);
+    QFETCH(QString, searchpattern);
+
+    const auto ident = mKernel->identityManager()->identityForUoid(uoid);
+    const auto msg(createItem(ident));
+
+    auto composer = KMail::makeComposer(msg);
+    composer->show();
+    QVERIFY(QTest::qWaitForWindowExposed(composer));
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+
+    auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
+    QVERIFY(nearExpiryWarning);
+    QCOMPARE(nearExpiryWarning->isVisible(), visible);
+
+    if (visible) {
+        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QVERIFY(nearExpiryWarning->text().contains(searchpattern));
+    }
 }
 
 void KMComposerWinTest::testChangeIdentity()
@@ -375,5 +443,60 @@ void KMComposerWinTest::testChangeIdentity()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(encryption->isVisible(), false);
         QCOMPARE(signature->isVisible(), true);
+    }
+}
+
+
+void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
+{
+    const auto im = mKernel->identityManager();
+    auto ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+    const auto msg(createItem(ident));
+
+    auto composer = KMail::makeComposer(msg);
+    composer->show();
+    QVERIFY(QTest::qWaitForWindowExposed(composer));
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
+
+    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
+    QVERIFY(nearExpiryWarning);
+    QVERIFY(identCombo);
+    QCOMPARE(nearExpiryWarning->isVisible(), false);
+
+    {
+        ident = im->identityForAddress(QStringLiteral("wrongkey@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), true);
+        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpEncryptionKey())));
+    }
+    {
+        ident = im->identityForAddress(QStringLiteral("wrongkeysign@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), true);
+        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QVERIFY(!nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpEncryptionKey())));
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpSigningKey())));
+    }
+    {
+        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+        identCombo->setCurrentIdentity(ident);
+        // We need a small sleep so that identity change can take place
+        QEventLoop loop;
+        QTimer::singleShot(50ms, &loop, SLOT(quit()));
+        loop.exec();
+        QCoreApplication::processEvents(QEventLoop::AllEvents);
+        QCOMPARE(nearExpiryWarning->isVisible(), false);
     }
 }
