@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-06-21 16:21+0200\n"
+"PO-Revision-Date: 2023-07-20 23:10+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3286,16 +3286,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Alias de E-Posta invalide \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&Usa patronos de message personalisate pro iste identitate"
+msgstr "Tu debe fornir un eposta per iste identitate"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "Adresse de E-Posta"
+msgstr "Vacua Adresse de E-Posta"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
