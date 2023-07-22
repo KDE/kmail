@@ -31,11 +31,15 @@ ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KPim${KF_MAJOR_VERSION}::MessageCore Qt::Widgets KF${KF_MAJOR_VERSION}::ConfigWidgets KF${KF_MAJOR_VERSION}::I18n kmailprivate)
 #####
 
+add_executable( encryptionstatetest encryptionstatetest.cpp encryptionstatetest.h)
+add_test(NAME encryptionstatetest COMMAND encryptionstatetest)
+ecm_mark_as_test(encryptionstatetest)
+target_link_libraries( encryptionstatetest Qt::Test kmailprivate)
+
 add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KPim${KF_MAJOR_VERSION}::AkonadiMime KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
-
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
    "Qt::Test;KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets;KPim${KF_MAJOR_VERSION}::Libkleo;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;Qt::Widgets;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::I18n;kmailprivate")

@@ -4,13 +4,13 @@
 */
 
 #pragma once
-
+#include "kmail_private_export.h"
 #include <QObject>
 
 /**
  * @todo write docs
  */
-class EncryptionState : public QObject
+class KMAILTESTS_TESTS_EXPORT EncryptionState : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool override READ override WRITE setOverride NOTIFY overrideChanged)

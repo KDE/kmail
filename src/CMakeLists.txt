@@ -233,6 +233,7 @@ target_sources(kmailprivate PRIVATE
     editor/composer.h
     editor/codec/codecaction.h
     editor/codec/codecmanager.h
+    editor/encryptionstate.h
     editor/kmcomposerwin.h
     editor/attachment/attachmentcontroller.h
     editor/attachment/attachmentview.h
