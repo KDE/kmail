@@ -27,8 +27,8 @@ private Q_SLOTS:
     void testEncryption_data();
     void testEncryption();
 
-    void testSignature_data();
-    void testSignature();
+    void testSigning_data();
+    void testSigning();
 
     void testNearExpiryWarningIdentity_data();
     void testNearExpiryWarningIdentity();

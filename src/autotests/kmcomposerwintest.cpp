@@ -255,7 +255,7 @@ void KMComposerWinTest::resetIdentities()
     mKernel->identityManager()->commit();
 }
 
-void KMComposerWinTest::testSignature_data()
+void KMComposerWinTest::testSigning_data()
 {
     const auto im = mKernel->identityManager();
 
@@ -271,7 +271,7 @@ void KMComposerWinTest::testSignature_data()
     QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << false;
 }
 
-void KMComposerWinTest::testSignature()
+void KMComposerWinTest::testSigning()
 {
     QFETCH(uint, uoid);
     QFETCH(bool, sign);
