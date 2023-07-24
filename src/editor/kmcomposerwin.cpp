@@ -3598,6 +3598,8 @@ std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
     const auto ident = identity();
     auto keyResolverCore = std::make_unique<Kleo::KeyResolverCore>(true, sign());
 
+    keyResolverCore->setMinimumValidity(GpgME::UserID::Unknown);
+
     QStringList signingKeys, encryptionKeys;
 
     if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
@@ -3783,7 +3785,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         recipient->setEncryptionAction(Kleo::Impossible);
         if (showAllIcons && !invalidEmail) {
             const auto icon = QIcon::fromTheme(QStringLiteral("emblem-error"));
-            line->setIcon(icon, QStringLiteral("No key found for the user."));
+            line->setIcon(icon, i18n("No key found for the recipient."));
         } else {
             line->setIcon(QIcon());
         }
@@ -3837,7 +3839,8 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         switch (trustLevel) {
             case Kleo::Level0:
                 if (uid.tofuInfo().isNull()) {
-                        // TODO: tooltip to help the user to fix this.
+                    tooltip = i18n("The encryption key is not trusted. It hasn't enough validity. You can sign the key, if you communicated the fingerprint by another channel."
+                    "Click the icon for details.");
                     keyState = NoKey;
                 } else {
                     switch (uid.tofuInfo().validity()) {
@@ -3846,12 +3849,18 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                             "Click the icon for details.");
                             break;
                         case GpgME::TofuInfo::Conflict:
+                            tooltip = i18n("The encryption key is not trusted. It has conflicting TOFU data."
+                            "Click the icon for details.");
+                            keyState = NoKey;
+                            break;
                         case GpgME::TofuInfo::ValidityUnknown:
-                            // TODO: tooltip to help the user to fix this.
+                            tooltip = i18n("The encryption key is not trusted. It has unknown validity in TOFU data."
+                            "Click the icon for details.");
                             keyState = NoKey;
                             break;
                         default:
-                            //TODO a bad key was selected -> give user help to fix this
+                            tooltip = i18n("The encryption key is not trusted. The key is marked as bad."
+                            "Click the icon for details.");
                             keyState = NoKey;
                     }
                 }
@@ -3861,8 +3870,13 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                 "Click the icon for details.");
                 break;
             case Kleo::Level2:
-                tooltip = i18n("The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. By using the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
-                "Click the icon for details.");
+                if (uid.tofuInfo().isNull()) {
+                    tooltip = i18n("The encryption key is only marginally trusted. You can sign the key, if you communicated the fingerprint by another channel."
+                    "Click the icon for details.");
+                } else {
+                    tooltip = i18n("The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. By using the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
+                    "Click the icon for details.");
+                }
                 break;
             case Kleo::Level3:
                 tooltip = i18n("The encryption key is fully trusted. You can raise the security level, by signing the key."

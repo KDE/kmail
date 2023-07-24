@@ -7,6 +7,7 @@
 #pragma once
 
 #include <QDir>
+#include <QTemporaryDir>
 #include <QObject>
 class KMKernel;
 
@@ -41,10 +42,17 @@ private Q_SLOTS:
     void testChangeIdentityNearExpiryWarning();
 
     void testOwnExpiry();
+    void testRecipientExpiry();
+
+    void testRecipientAnnotation_data();
+    void testRecipientAnnotation();
+
+    void checkKeys();
 private:
     void resetIdentities();
     void toggleEncryption(KMail::Composer* composer);
     void toggleSigning(KMail::Composer* composer);
     KMKernel *mKernel = nullptr;
     QDir autocryptDir;
+    QTemporaryDir gnupgDir;
 };

@@ -42,7 +42,7 @@ ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KPim${KF_MAJOR_VERSION}::AkonadiMime KF${KF_MAJOR_VERSION}::WidgetsAddons KF${KF_MAJOR_VERSION}::I18n KF${KF_MAJOR_VERSION}::ConfigGui kmailprivate)
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
-   "Qt::Test;KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets;KPim${KF_MAJOR_VERSION}::Libkleo;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;Qt::Widgets;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::I18n;kmailprivate")
+   "Qt::Test;KPim${KF_MAJOR_VERSION}::IdentityManagementWidgets;KPim${KF_MAJOR_VERSION}::Libkleo;KPim${KF_MAJOR_VERSION}::MessageCore;KPim${KF_MAJOR_VERSION}::MessageComposer;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;Qt::Widgets;KF${KF_MAJOR_VERSION}::ConfigWidgets;KF${KF_MAJOR_VERSION}::I18n;kmailprivate")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim${KF_MAJOR_VERSION}::MailCommon;KPim${KF_MAJOR_VERSION}::Libkdepim;KF${KF_MAJOR_VERSION}::ItemViews;KPim${KF_MAJOR_VERSION}::TemplateParser;KF${KF_MAJOR_VERSION}::XmlGui;KF${KF_MAJOR_VERSION}::Completion;KF${KF_MAJOR_VERSION}::I18n")
 
