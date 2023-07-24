@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-04-22 00:35+0200\n"
+"PO-Revision-Date: 2023-07-23 20:45+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -3208,16 +3208,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "잘못된 추가 이메일 주소 \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "이 프로필에서 사용자 정의 메시지 템플릿 사용(&U)"
+msgstr "프로필에 이메일을 지정해야 합니다."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "이메일 주소"
+msgstr "비어 있는 이메일 주소"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -3503,10 +3501,9 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "%2 분배 목록이 비어 있으므로 사용할 수 없습니다."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Akonadi 캐시 지우기(&C)..."
+msgstr "Akonadi 캐시 지우기"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4436,11 +4433,9 @@ msgid "Filter &Log Viewer..."
 msgstr "필터 로그 뷰어(&L)..."
 
 #: kmmainwidget.cpp:2909
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "알림"
+msgstr "알림 과거 기록..."
 
 #: kmmainwidget.cpp:2914
 #, kde-format
@@ -4509,10 +4504,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "Akonadi 캐시 지우기(&C)..."
 
 #: kmmainwidget.cpp:2991
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "이 폴더와 모든 하위 폴더의 중복 메시지 삭제"
+msgstr "이 폴더와 모든 하위 폴더의 Akonadi 캐시 삭제(&C)"
 
 #: kmmainwidget.cpp:2996
 #, kde-format
@@ -4857,8 +4851,7 @@ msgid "Apply All Filters"
 msgstr "모든 필터 적용"
 
 #: kmmainwidget.cpp:3378
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "이 폴더와 모든 하위 폴더에 필터 적용"
 
@@ -4900,37 +4893,37 @@ msgstr "현재 작업 중단"
 #: kmmainwidget.cpp:3435
 #, kde-format
 msgid "Focus on Next Folder"
-msgstr "다음 폴더에 초점 맞춤"
+msgstr "다음 폴더에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3441
 #, kde-format
 msgid "Focus on Previous Folder"
-msgstr "이전 폴더에 초점 맞춤"
+msgstr "이전 폴더에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3447
 #, kde-format
 msgid "Select Folder with Focus"
-msgstr "초점이 맞은 폴더 선택"
+msgstr "포커스가 맞은 폴더 선택"
 
 #: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Focus on First Folder"
-msgstr "첫 폴더에 초점 맞춤"
+msgstr "첫 폴더에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Focus on Last Folder"
-msgstr "마지막 폴더에 초점 맞춤"
+msgstr "마지막 폴더에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Focus on Next Message"
-msgstr "다음 메시지에 초점 맞춤"
+msgstr "다음 메시지에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Focus on Previous Message"
-msgstr "이전 메시지에 초점 맞춤"
+msgstr "이전 메시지에 포커스 맞춤"
 
 #: kmmainwidget.cpp:3478
 #, kde-format
@@ -4945,12 +4938,12 @@ msgstr "마지막 메시지 선택"
 #: kmmainwidget.cpp:3490
 #, kde-format
 msgid "Select Message with Focus"
-msgstr "초점이 맞은 메시지 선택"
+msgstr "포커스가 맞은 메시지 선택"
 
 #: kmmainwidget.cpp:3497
 #, kde-format
 msgid "Set Focus to Quick Search"
-msgstr "빠른 검색에 초점 맞춤"
+msgstr "빠른 검색에 포커스 맞추기"
 
 #: kmmainwidget.cpp:3505
 #, kde-format
@@ -6000,7 +5993,7 @@ msgstr "백그라운드에서 폴더의 오래된 메시지를 정리할지 여�
 msgid ""
 "Specifies whether this is the very first time that the application is run "
 "(for internal use only)"
-msgstr "프로그램이 맨 처음으로 실행되었는지 여부 선택(내부용)"
+msgstr "앱이 맨 처음으로 실행되었는지 여부 선택(내부용)"
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.cmake:163
