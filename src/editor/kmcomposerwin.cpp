@@ -291,7 +291,23 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
                 for (KPIM::MultiplyingLine *line : lstLines) {
                     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
                     if (recipient->key().primaryFingerprint() == key.primaryFingerprint()) {
-                        qobject_cast<MessageComposer::RecipientLineNG *>(line)->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), msg);
+                        auto recipientLine = qobject_cast<MessageComposer::RecipientLineNG *>(line);
+                        QString iconname = QStringLiteral("emblem-warning");
+                        if (info == Kleo::ExpiryChecker::OtherKeyExpired) {
+                            mEncryptionState.setAcceptedSolution(false);
+                            iconname = QStringLiteral("emblem-error");
+                            const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
+                            const auto hasOverride = mEncryptionState.hasOverride();
+                            const auto encrypt = mEncryptionState.encrypt();
+
+                            const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+                            if (!showAllIcons) {
+                                recipientLine->setIcon(QIcon(), msg);
+                                return;
+                            }
+                        }
+
+                        recipientLine->setIcon(QIcon::fromTheme(iconname), msg);
                         return;
                     }
                 }
@@ -3741,7 +3757,10 @@ void KMComposerWin::runKeyResolver()
         auto resolved_keys = result.solution.encryptionKeys[addrSpec];
         GpgME::Key key;
         if (resolved_keys.size() == 0) {                // no key found for recipient
-            recipient->setKey(GpgME::Key());
+            // Search for any key, also for not accepted ons, to at least give the user more info.
+            key = Kleo::KeyCache::instance()->findBestByMailBox(addrSpec.toUtf8().constData(), GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::Encrypt);
+            key.update();                               // We need tofu information for key.
+            recipient->setKey(key);
         } else {                                        // A key was found for recipient
             key = resolved_keys.front();
             if (recipient->key().primaryFingerprint() != key.primaryFingerprint()) {
@@ -3891,8 +3910,11 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         }
 
         if (keyState == NoKey) {
+            mEncryptionState.setAcceptedSolution(false);
             if (showAllIcons) {
                 line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+            } else {
+                line->setIcon(QIcon());
             }
         } else if (trustLevel == Kleo::Level0 && encrypt) {
             line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), tooltip);
