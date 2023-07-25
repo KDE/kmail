@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
-"PO-Revision-Date: 2023-06-20 07:22+0300\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
+"PO-Revision-Date: 2023-07-13 08:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -3263,7 +3263,7 @@ msgstr "Обліковий запис вихідної пошти:"
 msgid "Attach my vCard to message"
 msgstr "Долучити до повідомлення вашу візитівку"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Створити…"
@@ -3317,13 +3317,23 @@ msgstr "Зображення"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Помилкова альтернативна адреса «%1»"
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "You must provide an email for this identity."
+msgstr "Вам слід вказати адресу електронної пошти для цього профілю."
+
+#: identity/identitydialog.cpp:756
+#, kde-format
+msgid "Empty Email Address"
+msgstr "Порожня адреса електронної пошти"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Неправильна адреса електронної пошти"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3337,7 +3347,7 @@ msgstr ""
 "Такі налаштування призведуть до того, що отримувачі повідомлень будуть "
 "бачити попередження при спробі перевірити підписи."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3347,7 +3357,7 @@ msgstr ""
 "ідентифікатора користувача, який би містив адресу електронної пошти для "
 "цього профілю (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3360,7 +3370,7 @@ msgstr ""
 "Така конфігурація призведе до того, що отримувачі повідомлень будуть бачити "
 "попередження при спробі перевірити підписи."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3369,23 +3379,23 @@ msgstr ""
 "Один з налаштованих S/MIME-сертифікатів для шифрування не містить адреси "
 "електронної пошти для цього профілю (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Електронну адресу не знайдено в ключах/сертифікатах"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Некоректний файл підпису"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Редагування профілю «%1»"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3394,7 +3404,7 @@ msgstr ""
 "Якоїсь із нетипових тек профілю вже не існує. Тому буде використано типові "
 "теки."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Редагувати…"

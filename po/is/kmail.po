@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -3460,7 +3460,7 @@ msgstr "Stilla tengingu"
 msgid "Attach my vCard to message"
 msgstr "Bæta 'haus' við bréfið"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create..."
@@ -3518,13 +3518,24 @@ msgstr "&Mynd"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ógilt netfang"
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+msgid "You must provide an email for this identity."
+msgstr "Nota sérsniðna ending&u á kennistreng"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "Netfang"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Ógilt netfang"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3537,7 +3548,7 @@ msgstr ""
 "Það gæti valdið því að móttakandi fær viðvörun þegar reynt er að staðfesta "
 "undirskriftina."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3546,7 +3557,7 @@ msgstr ""
 "Einn af uppsettu OpenPGP undirritunarlyklunum inniheldur ekki "
 "notandaauðkenni með netfanginu sem er notað fyrir þessa tengingu (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3559,7 +3570,7 @@ msgstr ""
 "Það gæti valdið því að móttakandi fær viðvörun þegar reynt er að staðfesta "
 "undirskriftina."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3568,24 +3579,24 @@ msgstr ""
 "Eitt af uppsettu S/MIME undirritunarskírteinunum inniheldur ekki netfangið "
 "sem er notað fyrir þessa tengingu (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Netfang fannst ekki í lykli/skírteini"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Undirritunarskráin er ekki gild"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Sýsla með auðkenni \"%1\""
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3597,7 +3608,7 @@ msgstr ""
 "Sérsniðna mappan \"Uppköst\" fyrir \"%1\" er ekki til (lengur). Því verður "
 "sjálfgefna mappan fyrir uppköst notuð."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Breyta..."

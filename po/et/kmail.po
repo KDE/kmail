@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-06-22 00:49+0000\n"
+"POT-Creation-Date: 2023-07-13 00:50+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3303,7 +3303,7 @@ msgstr "Väljuvate kirjade konto:"
 msgid "Attach my vCard to message"
 msgstr "Oma vCardi lisamine kirjale"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1167
+#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
 msgid "Create..."
 msgstr "Loo..."
@@ -3357,13 +3357,25 @@ msgstr "Pilt"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Sobimatu e-posti alias \"%1\""
 
-#: identity/identitydialog.cpp:757 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "&Use custom message templates for this identity"
+msgid "You must provide an email for this identity."
+msgstr "Kohandat&ud kirjamallide kasutamine selle identiteedi puhul"
+
+#: identity/identitydialog.cpp:756
+#, fuzzy, kde-format
+#| msgid "Email Address"
+msgid "Empty Email Address"
+msgstr "E-posti aadress"
+
+#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Sobimatu e-posti aadress"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:819
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3376,7 +3388,7 @@ msgstr ""
 "Selle tulemuseks võivad olla hoiatusteated saaja poolel, kui ta püüab selle "
 "seadistusega loodud allkirja kontrollida."
 
-#: identity/identitydialog.cpp:824
+#: identity/identitydialog.cpp:828
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3385,7 +3397,7 @@ msgstr ""
 "Üks seadistatud OpenPGP krüptovõtmeid ei sisalda ühtki määratud e-posti "
 "aadressiga kasutaja ID-d sellele identiteedile (%1)."
 
-#: identity/identitydialog.cpp:831
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3398,7 +3410,7 @@ msgstr ""
 "Selle tulemuseks võivad olla hoiatusteated saaja poolel, kui ta püüab selle "
 "seadistusega loodud allkirja kontrollida."
 
-#: identity/identitydialog.cpp:840
+#: identity/identitydialog.cpp:844
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3407,23 +3419,23 @@ msgstr ""
 "Üks seadistatud S/MIME krüptosertifikaate ei sisalda ühtki määratud e-posti "
 "aadressiga kasutaja ID-d sellele identiteedile (%1)."
 
-#: identity/identitydialog.cpp:850
+#: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-posti aadressi ei leitud võtmest/sertifikaadist"
 
-#: identity/identitydialog.cpp:862
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Allkirjafail ei ole kehtiv"
 
-#: identity/identitydialog.cpp:878
+#: identity/identitydialog.cpp:882
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteedi \"%1\" muutmine"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:951
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3432,7 +3444,7 @@ msgstr ""
 "Mõningaid identiteedile määratud kohandatud kaustu ei ole (enam) olemas. "
 "Seepärast kasutatakse tavalisi kaustu."
 
-#: identity/identitydialog.cpp:1169
+#: identity/identitydialog.cpp:1173
 #, kde-format
 msgid "Edit..."
 msgstr "Muuda..."
