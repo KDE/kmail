@@ -369,7 +369,6 @@ LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     , mLdapConfigureWidget(new KLDAPWidgets::LdapConfigureWidget(this))
 {
     auto layout = new QVBoxLayout(this);
-    layout->setContentsMargins({});
 
     layout->addWidget(mLdapConfigureWidget);
 
