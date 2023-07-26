@@ -47,4 +47,4 @@ private:
 };
 
 Q_DECLARE_METATYPE(CollectionSwitcherModel::CollectionInfo)
-Q_DECLARE_TYPEINFO(CollectionSwitcherModel::CollectionInfo, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(CollectionSwitcherModel::CollectionInfo, Q_RELOCATABLE_TYPE);
