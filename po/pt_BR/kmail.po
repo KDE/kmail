@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-06-26 16:54-0300\n"
+"PO-Revision-Date: 2023-07-25 10:10-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -3305,16 +3305,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Endereço de e-mail alternativo inválido \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&Usar modelos de mensagem personalizados para esta identidade"
+msgstr "Você deve fornecer um e-mail para esta identidade."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "Endereço de e-mail"
+msgstr "Endereço de e-mail vazio"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86

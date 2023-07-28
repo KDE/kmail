@@ -73,7 +73,7 @@ msgctxt "@info:whatsthis"
 msgid ""
 "You will be presented with a dialog where you can configure the application-"
 "wide shortcuts."
-msgstr "프로그램별 단축키를 설정할 수 있는 대화 상자가 열립니다."
+msgstr "앱별 단축키를 설정할 수 있는 대화 상자가 열립니다."
 
 #: ktnefmain.cpp:108
 #, kde-format
