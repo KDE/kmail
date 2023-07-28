@@ -46,7 +46,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
 {
     setToolTipTitle(i18n("KMail"));
     setToolTipIconByName(QStringLiteral("kmail"));
-    setIconByName(QStringLiteral("kmail"));
+    setIconByName(QStringLiteral("kmail-symbolic"));
 
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (mainWidget) {
