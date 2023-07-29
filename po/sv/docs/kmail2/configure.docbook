@@ -1230,10 +1230,12 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
-><guilabel
->Bekräfta före skickning</guilabel
-> visar en dialogruta för att bekräfta varje gång som du skickar ett brev. <guilabel
->Kontrollera stavning innan sändning</guilabel
+>Under fliken <guilabel
+>Innan brev skickas</guilabel
+>, visar<guilabel
+>Bekräfta åtgärd</guilabel
+> en dialogruta för att bekräfta varje gång som du skickar ett brev. <guilabel
+>Kontrollera stavning</guilabel
 > utför stavningskontroll innan ett brev skickas.</para>
 
 <para
@@ -5305,50 +5307,6 @@ modifying it by hand.</para>
 >--file <replaceable
 >/sökväg/till/kmail2rc</replaceable
 > --group OutOfOffice --key OutOfOfficeReactToSpam true</option
-></userinput
-> </para
-></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term
-><guilabel
->ShowUserAgent</guilabel
-></term>
-<listitem>
-<para
->Från version 1.9 kan &kmail; visa e-postprogram eller värdet av X-Mailer från brevhuvudet när snygga brevhuvuden används (se menyn <menuchoice
-><guimenu
->Visa</guimenu
-> <guisubmenu
->Sidhuvuden</guisubmenu
-></menuchoice
->). För att aktivera funktionen, lägg till en rad under sektionen <quote
->[Reader]</quote
-> som lyder:</para>
-<itemizedlist>
-<listitem
-><para
->Inställningsfil:</para>
-<programlisting
->ShowUserAgent=true</programlisting
-></listitem>
-<listitem
-><para
-><command
->kwriteconfig</command
-></para>
-<para
-><prompt
->&percnt;</prompt
-> <userinput
-><command
->kwriteconfig</command
-> <option
->--file <replaceable
->/sökväg/till/kmail2rc</replaceable
-> --group Reader --key ShowUserAgent true</option
 ></userinput
 > </para
 ></listitem>
