@@ -107,7 +107,6 @@
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/Kleo_Util>
-#include <MessageComposer/NearExpiryChecker>
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/PluginActionType>
