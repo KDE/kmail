@@ -3183,16 +3183,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Neplatná e-mailová přezdívka \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "Po&užít vlastní šablony zpráv pro tuto identitu"
+msgstr ""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "E-mailová adresa"
+msgstr ""
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
