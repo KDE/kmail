@@ -16,7 +16,6 @@
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include "kmsearchmessagemodel.h"
-#include "messagecore/stringutil.h"
 #include "searchdescriptionattribute.h"
 #include "searchpatternwarning.h"
 #include <MailCommon/FolderRequester>
@@ -25,6 +24,7 @@
 #include <MailCommon/SearchPatternEdit>
 #include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/SelectMultiCollectionDialog>
+#include <TextUtils/ConvertText>
 
 #include "kmail_debug.h"
 #include <Akonadi/CachePolicy>
@@ -504,7 +504,7 @@ void SearchWindow::doSearch()
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
     } else {
         const QString searchString =
-            respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : MessageCore::StringUtil::normalize(mUi.mSearchFolderEdt->text());
+            respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : TextUtils::ConvertText::normalize(mUi.mSearchFolderEdt->text());
         qCDebug(KMAIL_LOG) << " create new folder " << searchString;
         auto searchJob = new Akonadi::SearchCreateJob(searchString, mQuery, this);
         searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));

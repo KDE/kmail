@@ -448,6 +448,7 @@ target_link_libraries(kmailprivate
     KPim6::WebEngineViewer
     KF6::SyntaxHighlighting
     KF6::GuiAddons
+    KF6::TextUtils
     ${kmail_userfeedback_LIB}
     )
 if (TARGET KF6::TextEditTextToSpeech)
