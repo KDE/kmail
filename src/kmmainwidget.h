@@ -375,6 +375,7 @@ private Q_SLOTS:
     void slotSaveMsg();
     void slotOpenMsg();
     void slotSaveAttachments();
+    void slotDeleteAttachments();
     void slotJumpToFolder();
     void slotCheckVacation();
     void slotDebugSieve();
@@ -543,6 +544,7 @@ private:
     QAction *mSaveAsAction = nullptr;
     QAction *mApplyAllFiltersAction = nullptr;
     QAction *mSaveAttachmentsAction = nullptr;
+    QAction *mDeleteAttachmentsAction = nullptr;
     QAction *mOpenAction = nullptr;
     QAction *mMoveMsgToFolderAction = nullptr;
     QAction *mCollectionProperties = nullptr;
