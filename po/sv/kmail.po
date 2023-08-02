@@ -7,13 +7,13 @@
 # Anders Widell <awl@hem.passagen.se>, 2000.
 # Daniel Karlsson <chaotica@home.se>, 2001.
 # Stefan Asserhäll <stefan.asserhall@bredband.net>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
-# Stefan Asserhall <stefan.asserhall@bredband.net>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Stefan Asserhall <stefan.asserhall@bredband.net>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2022-08-03 10:10+0200\n"
+"PO-Revision-Date: 2023-07-25 11:36+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -1022,9 +1022,7 @@ msgid "Ta&g Settings"
 msgstr "&Etikettinställningar"
 
 #: configuredialog/configureappearancepage.cpp:1018
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -2968,13 +2966,12 @@ msgstr "OpenPGP-signaturnyckel:"
 #: identity/identitydialog.cpp:373
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Använd samma nyckel för kryptering och signering"
 
 #: identity/identitydialog.cpp:383
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP-nyckel 0x%1"
+msgstr "OpenPGP-nyckel:"
 
 #: identity/identitydialog.cpp:408
 #, kde-format
@@ -3043,57 +3040,51 @@ msgid "Preferred format:"
 msgstr "Format som föredras:"
 
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Aktivera prenumerationer?"
+msgstr "Aktivera automatisk kryptering"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Kryptera automatiskt:"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Låt andra veta att du föredrar kryptering"
 
 #: identity/identitydialog.cpp:484
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "Skriv över globala inställningar av säkerhetsförinställningar"
 
 #: identity/identitydialog.cpp:487
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Skriv över &alla"
+msgstr "Skriv över förval:"
 
 #: identity/identitydialog.cpp:492
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Signera brevet"
+msgstr "Signera brev"
 
 #: identity/identitydialog.cpp:495
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Kryptera automatiskt breven om möjligt"
+msgstr "Kryptera brev om möjligt"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:498 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Varna vid försök att skicka &osignerade brev"
+msgstr "Varna vid försök att skicka osignerade brev"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:501 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "Slut på krypterat brev"
+msgstr "Varna vid försök att skicka okrypterade brev"
 
 #: identity/identitydialog.cpp:511
 #, kde-format
@@ -3268,16 +3259,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Ogiltigt e-postalias \"%1\""
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "An&vänd egna brevmallar för identiteten"
+msgstr "Du måste ange en e-postadress för identiteten."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "E-postadress"
+msgstr "Töm e-postadress"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -3569,10 +3558,9 @@ msgstr[0] "Distributionslistan %2 är tom. Den kan inte användas."
 msgstr[1] "Distributionslistorna %2 är tomma. De kan inte användas."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Rensa Akonadis &cache..."
+msgstr "Töm Akonadi-cache..."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4518,11 +4506,9 @@ msgid "Filter &Log Viewer..."
 msgstr "Visning av filter&logg..."
 
 #: kmmainwidget.cpp:2909
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Underrättelse"
+msgstr "Underrättelsehistorik..."
 
 #: kmmainwidget.cpp:2914
 #, kde-format
@@ -4588,13 +4574,12 @@ msgstr "&Hantering av sändlistor..."
 #: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr "Rensa Akonadis &cache..."
+msgstr "Töm Akonadi-&cache..."
 
 #: kmmainwidget.cpp:2991
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Ta bort dubbletter i korgen och alla dess underkorgar"
+msgstr "Töm Akonadi-&cache i korgen och alla dess underkorgar"
 
 #: kmmainwidget.cpp:2996
 #, kde-format
@@ -4939,8 +4924,7 @@ msgid "Apply All Filters"
 msgstr "Filtrera med alla filter"
 
 #: kmmainwidget.cpp:3378
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filtrera korg och alla dess underkorgar"
 
@@ -6234,10 +6218,9 @@ msgstr "Visa indikering av kryptografietikett"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Visa indikering av kryptografietikett"
+msgstr "Visa ikoner för krypteringens ägarpålitlighet"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:284
@@ -6806,17 +6789,15 @@ msgstr "Öppna &brev"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Använd som standard"
+msgstr "Säkerhetsförinställningar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Krypterat brev"
+msgstr "Kryptera utkast"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6850,57 +6831,51 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Krypterat brev"
+msgstr "Kryptera skickade brev"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&Signera brevet"
+msgstr "Signera alla brevet"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt messages when possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Kryptera automatiskt breven om möjligt"
+msgstr "Kryptera alla brev om möjligt"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Visa indikering av kryptografietikett"
+msgstr "Krypteringsindikeringar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Visa indikering av signerad eller krypterad i editorn"
+msgstr "Visa indikering av signerad eller krypterad"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "Visa krypteringsnyckelns ägarpålitlighetsnivå"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Varningar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Visa alltid krypteringsnycklarna &för godkännande"
+msgstr "Godkänn alltid krypteringsnycklar innan brev skickas"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
@@ -6967,22 +6942,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "För &rotcertifikat:"
+msgstr "För egna certifikat:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6993,11 +6959,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Varna om rotcertifikat går ut</h1>\n"
-"Välj det minimala antal dagar som rotcertifikatet ska vara giltigt utan att "
+"<h1>Varna om egna certifikat går ut</h1>\n"
+"Välj det minimala antal dagar som egna certifikat ska vara giltiga utan att "
 "en varning visas.\n"
 "<p>\n"
-"Den rekommenderade inställningen för SPHINX är 14 dagar.\n"
+"Den rekommenderade inställningen för SPHINX är 30 dagar.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7664,12 +7630,12 @@ msgstr "Ångra skicka"
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Till:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Rubrik:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format

@@ -2328,6 +2328,72 @@ void KMMainWidget::slotSaveAttachments()
     saveCommand->start();
 }
 
+//-----------------------------------------------------------------------------
+
+static std::pair<int, int> countMessages(const Akonadi::Item::List &items)
+{
+    int signedMsgs = 0;
+    int encryptedMsgs = 0;
+    for (const auto &item : items) {
+        if (item.flags().contains(Akonadi::MessageFlags::Signed)) {
+            ++signedMsgs;
+        }
+        if (item.flags().contains(Akonadi::MessageFlags::Encrypted)) {
+            ++encryptedMsgs;
+        }
+    }
+
+    return {signedMsgs, encryptedMsgs};
+}
+
+void KMMainWidget::slotDeleteAttachments()
+{
+    const Akonadi::Item::List selectedMessages = mMessagePane->selectionAsMessageItemList();
+    if (selectedMessages.isEmpty()) {
+        return;
+    }
+    if (!mMsgView) {
+        return;
+    }
+
+    const auto [signedMessages, encryptedMessages] = countMessages(selectedMessages);
+    if (encryptedMessages == selectedMessages.size()) {
+        KMessageBox::information(
+            this,
+            i18np("The selected message is encrypted. It's currently not possible to delete attachments from encrypted messages.",
+                  "The selection contains only encrypted messages, from which it's currently not possible to delete attachments.",
+                  encryptedMessages),
+            i18ncp("@title:window", "Delete Attachments from Encrypted Message", "Delete Attachments from Encrypted Messages", encryptedMessages));
+        return;
+    }
+
+    QString message = i18np(
+        "<html><p>Do you really want to delete all attachments from the selected message?<br />"
+        "Once deleted, they cannot be restored.</p></html>",
+        "<html>Do you really want to delete all attachments from the %1 selected messages?<br />"
+        "Once deleted, they cannot be restored.</html>",
+        selectedMessages.size());
+    if (signedMessages > 0) {
+        message += i18n(
+            "<html><p>Note that deleting attachments from a cryptographically signed message "
+            "will invalidate its signature.</p></html>");
+    }
+    if (encryptedMessages > 0) {
+        message += i18n(
+            "<html><p>It's not currently possible to delete attachments from encrypted messages.<br />"
+            "Encrypted messages will be ignored.</p></html>");
+    }
+
+    const int ret =
+        KMessageBox::warningContinueCancel(this, message, i18nc("@title:window", "Delete Attachments"), KStandardGuiItem::del(), KStandardGuiItem::cancel());
+    if (ret == KMessageBox::Cancel) {
+        return; // user canceled the action
+    }
+
+    auto deleteCommand = new KMDeleteAttachmentsCommand(this, selectedMessages, mMsgView->viewer());
+    deleteCommand->start();
+}
+
 void KMMainWidget::slotOnlineStatus()
 {
     // KMKernel will emit a signal when we toggle the network state that is caught by
@@ -2750,6 +2816,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         menu.addAction(mSaveAsAction);
         menu.addSeparator();
         menu.addAction(mSaveAttachmentsAction);
+        menu.addAction(mDeleteAttachmentsAction);
         menu.addSeparator();
         menu.addAction(mMsgActions->exportToPdfAction());
         menu.addSeparator();
@@ -3170,6 +3237,10 @@ void KMMainWidget::setupActions()
     mSaveAttachmentsAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), this);
     actionCollection()->addAction(QStringLiteral("file_save_attachments"), mSaveAttachmentsAction);
     connect(mSaveAttachmentsAction, &QAction::triggered, this, &KMMainWidget::slotSaveAttachments);
+
+    mDeleteAttachmentsAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action:inmenu", "Delete All Attachments"), this);
+    actionCollection()->addAction(QStringLiteral("delete_all_attachments"), mDeleteAttachmentsAction);
+    connect(mDeleteAttachmentsAction, &QAction::triggered, this, &KMMainWidget::slotDeleteAttachments);
 
     mMoveActionMenu = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::MoveItemToMenu);
 
@@ -3824,7 +3895,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     } else if (single_actions) {
         actionList << mMsgActions->editAsNewAction();
     }
-    actionList << mSaveAttachmentsAction;
+    actionList << mSaveAttachmentsAction << mDeleteAttachmentsAction;
     if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
