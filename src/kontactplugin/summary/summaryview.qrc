@@ -3,4 +3,7 @@
 <qresource prefix="/summaryview">
   <file>kontact_bg.png</file>
 </qresource>
+    <qresource prefix="/kxmlgui5/kontactsummary">
+        <file>kontactsummary_part.rc</file>
+    </qresource>
 </RCC>

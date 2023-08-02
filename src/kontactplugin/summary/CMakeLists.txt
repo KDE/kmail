@@ -25,4 +25,3 @@ target_link_libraries(kcmkontactsummary KF6::KCMUtils KF6::I18n Qt::Widgets KF6:
 install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact)
 install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary)
 
-install(FILES kontactsummary_part.rc DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kontactsummary)
