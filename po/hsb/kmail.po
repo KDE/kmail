@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-07-13 00:50+0000\n"
+"POT-Creation-Date: 2023-08-03 00:47+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -1773,7 +1773,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Archiwowy zapisk"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3524
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3595
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -2008,7 +2008,7 @@ msgstr "Tekstowu dataju z&asunyć..."
 msgid "&Insert Recent Text File"
 msgstr "Nje&dawno wužiwanu tekstowu dataju zasunyć"
 
-#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2868
+#: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2935
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adresnik"
@@ -2778,7 +2778,7 @@ msgid "Folder Shortcut %1"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1811
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3778,7 +3778,7 @@ msgid "F&older"
 msgstr "&Zapisk"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3373 kmmainwin.rc:134
+#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3444 kmmainwin.rc:134
 #: kmmainwin.rc:287
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -3810,7 +3810,7 @@ msgid "&Forward"
 msgstr "Do&pósłać"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:189 kmmainwidget.cpp:3190 kmmainwin.rc:189
+#: kmail_part.rc:189 kmmainwidget.cpp:3261 kmmainwin.rc:189
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Filter &nałožić"
@@ -3917,6 +3917,13 @@ msgstr "Přesuwam powěsće"
 msgid "Deleting messages"
 msgstr "Wumazanje powěsćow"
 
+#: kmcommands.cpp:1802
+#, fuzzy, kde-format
+#| msgid "&Remove Attachment"
+msgctxt "@info:progress"
+msgid "Deleting Attachments"
+msgstr "Přiwěšk &zničić"
+
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
 #, kde-format
@@ -3952,12 +3959,12 @@ msgstr "Nastrojowy pas za směr teksta"
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail je offline; wšitke syćowe nadawki su zastajene"
 
-#: kmkernel.cpp:847 kmmainwidget.cpp:2368 kmmainwidget.cpp:2384
+#: kmkernel.cpp:847 kmmainwidget.cpp:2434 kmmainwidget.cpp:2450
 #, kde-format
 msgid "Send Email"
 msgstr "Mejlku pósłać"
 
-#: kmkernel.cpp:848 kmmainwidget.cpp:2369 kmmainwidget.cpp:2385
+#: kmkernel.cpp:848 kmmainwidget.cpp:2435 kmmainwidget.cpp:2451
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Njemóžu mejlki pósłać"
@@ -3986,12 +3993,12 @@ msgstr "KMail je tuchwilu offline. Kak chceće pokročować?"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:958 kmmainwidget.cpp:2357
+#: kmkernel.cpp:958 kmmainwidget.cpp:2423
 #, kde-format
 msgid "Work Online"
 msgstr "Online dźěłać"
 
-#: kmkernel.cpp:959 kmmainwidget.cpp:2354
+#: kmkernel.cpp:959 kmmainwidget.cpp:2420
 #, kde-format
 msgid "Work Offline"
 msgstr "Offline dźěłać"
@@ -4247,7 +4254,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1565 kmmainwidget.cpp:4665
+#: kmmainwidget.cpp:1565 kmmainwidget.cpp:4736
 #, kde-format
 msgid "Security Warning"
 msgstr "Wěstotne warnowanje"
@@ -4412,424 +4419,501 @@ msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Do zapiska skočić"
 
-#: kmmainwidget.cpp:2817
+#: kmmainwidget.cpp:2366
+#, kde-format
+msgid ""
+"The selected message is encrypted. It's currently not possible to delete "
+"attachments from encrypted messages."
+msgid_plural ""
+"The selection contains only encrypted messages, from which it's currently "
+"not possible to delete attachments."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: kmmainwidget.cpp:2369
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Attachments from Encrypted Message"
+msgid_plural "Delete Attachments from Encrypted Messages"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#: kmmainwidget.cpp:2374
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>Do you really want to delete the selected message?<br>Once deleted, "
+#| "it cannot be restored.</qt>"
+#| msgid_plural ""
+#| "<qt>Do you really want to delete the %1 selected messages?<br>Once "
+#| "deleted, they cannot be restored.</qt>"
+msgid ""
+"<html><p>Do you really want to delete all attachments from the selected "
+"message?<br />Once deleted, they cannot be restored.</p></html>"
+msgid_plural ""
+"<html>Do you really want to delete all attachments from the %1 selected "
+"messages?<br />Once deleted, they cannot be restored.</html>"
+msgstr[0] ""
+"<qt>Chceće woprawdźe te %1 wubranych powěsćow zničić?<br>Njebudźe móžno je "
+"rekonstruować!</qt>"
+msgstr[1] ""
+"<qt>Chceće woprawdźe tu %1 wubranu powěsćow zničić?<br>Njebudźe móžno ju "
+"rekonstruować!</qt>"
+msgstr[2] ""
+"<qt>Chceće woprawdźe tej %1 wubranej powěsći zničić?<br>Njebudźe móžno jej "
+"rekonstruować!</qt>"
+msgstr[3] ""
+"<qt>Chceće woprawdźe te %1 wubrane powěsće zničić?<br>Njebudźe móžno je "
+"rekonstruować!</qt>"
+
+#: kmmainwidget.cpp:2381
+#, kde-format
+msgid ""
+"<html><p>Note that deleting attachments from a cryptographically signed "
+"message will invalidate its signature.</p></html>"
+msgstr ""
+
+#: kmmainwidget.cpp:2386
+#, kde-format
+msgid ""
+"<html><p>It's not currently possible to delete attachments from encrypted "
+"messages.<br />Encrypted messages will be ignored.</p></html>"
+msgstr ""
+
+#: kmmainwidget.cpp:2391
+#, fuzzy, kde-format
+#| msgid "&Remove Attachment"
+msgctxt "@title:window"
+msgid "Delete Attachments"
+msgstr "Přiwěšk &zničić"
+
+#: kmmainwidget.cpp:2884
 #, kde-format
 msgid "Save &As..."
 msgstr "Z&awěsćić jako..."
 
-#: kmmainwidget.cpp:2828
+#: kmmainwidget.cpp:2895
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "&Ze wšěch zapiskow zestarjene powěsće zwumjetać"
 
-#: kmmainwidget.cpp:2833
+#: kmmainwidget.cpp:2900
 #, kde-format
 msgid "Check &Mail"
 msgstr "Pohladaj za &póštu"
 
-#: kmmainwidget.cpp:2841
+#: kmmainwidget.cpp:2908
 #, kde-format
 msgid "Check Mail In"
 msgstr "Pohladaj za póštu w"
 
-#: kmmainwidget.cpp:2843 kmmainwidget.cpp:2844
+#: kmmainwidget.cpp:2910 kmmainwidget.cpp:2911
 #, kde-format
 msgid "Check Mail"
 msgstr "Pohladaj za póštu"
 
-#: kmmainwidget.cpp:2848
+#: kmmainwidget.cpp:2915
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&Pósćel čakace powěsće"
 
-#: kmmainwidget.cpp:2856
+#: kmmainwidget.cpp:2923
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Njeznaty online-staw"
 
-#: kmmainwidget.cpp:2861
+#: kmmainwidget.cpp:2928
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Pósćel čakace powěsće přez"
 
-#: kmmainwidget.cpp:2877
+#: kmmainwidget.cpp:2944
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Rjadowanje certifikatow"
 
-#: kmmainwidget.cpp:2887
+#: kmmainwidget.cpp:2954
 #, kde-format
 msgid "&Import Messages..."
 msgstr "Powěsće &importować ..."
 
-#: kmmainwidget.cpp:2897
+#: kmmainwidget.cpp:2964
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr ""
 
-#: kmmainwidget.cpp:2904
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "&Filtrowy protokol wobhladać..."
 
-#: kmmainwidget.cpp:2909
+#: kmmainwidget.cpp:2976
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "Notification"
 msgid "Notification History..."
 msgstr "Skedźbnjenje na nowu póštu"
 
-#: kmmainwidget.cpp:2914
+#: kmmainwidget.cpp:2981
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr "&Importować z druheho emejloweho programa..."
 
-#: kmmainwidget.cpp:2919
+#: kmmainwidget.cpp:2986
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "Awtomatiske wotmołwy njepřitomnosće wobdźěłać..."
 
-#: kmmainwidget.cpp:2925
+#: kmmainwidget.cpp:2992
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "&Awtomatiske archiwowanje připrawić ..."
 
-#: kmmainwidget.cpp:2931
+#: kmmainwidget.cpp:2998
 #, kde-format
 msgid "Delayed Messages..."
 msgstr "Čakace powěsće..."
 
-#: kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:3004
 #, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "Dopomnjenki za dopósłanje..."
 
-#: kmmainwidget.cpp:2948 util.cpp:148
+#: kmmainwidget.cpp:3015 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Z&ničić"
 
-#: kmmainwidget.cpp:2953 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:3020 kmmainwidget.cpp:4075
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Diskusiju do &papjernika sunyć"
 
-#: kmmainwidget.cpp:2957
+#: kmmainwidget.cpp:3024
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Diskusiju do papjernika sunyć"
 
-#: kmmainwidget.cpp:2960 kmmainwidget.cpp:4004
+#: kmmainwidget.cpp:3027 kmmainwidget.cpp:4075
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Diskusiju z&ničić"
 
-#: kmmainwidget.cpp:2966 kmmainwidget.cpp:4006
+#: kmmainwidget.cpp:3033 kmmainwidget.cpp:4077
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Powěsće &namakać ..."
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:3038
 #, kde-format
 msgid "Select &All Messages"
 msgstr "&Wšitke powěsće wubrać"
 
-#: kmmainwidget.cpp:2978
+#: kmmainwidget.cpp:3045
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "Rjadowanje emejlowych lisćin"
 
-#: kmmainwidget.cpp:2986
+#: kmmainwidget.cpp:3053
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:2991
+#: kmmainwidget.cpp:3058
 #, fuzzy, kde-format
 #| msgid "Apply Filters on Folder and all its Subfolders"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Filtry na zapisk nałožić a wšitke jeho podzapiski"
 
-#: kmmainwidget.cpp:2996
+#: kmmainwidget.cpp:3063
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "S&krótšenku přirjadować..."
 
-#: kmmainwidget.cpp:3014
+#: kmmainwidget.cpp:3081
 #, fuzzy, kde-format
 msgid "&Expiration Settings"
 msgstr "&Eksistowace identity:"
 
-#: kmmainwidget.cpp:3039
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "&Archiwowy zapisk..."
 
-#: kmmainwidget.cpp:3047
+#: kmmainwidget.cpp:3114
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "E&ksterne wotkazy začitać"
 
-#: kmmainwidget.cpp:3070
+#: kmmainwidget.cpp:3137
 #, kde-format
 msgid "Copy Message To..."
 msgstr "Kopěruj powěsće do..."
 
-#: kmmainwidget.cpp:3072
+#: kmmainwidget.cpp:3139
 #, kde-format
 msgid "Move Message To..."
 msgstr "Suń powěsće do..."
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgid "&New Message..."
 msgstr "&Nowa powěsć..."
 
-#: kmmainwidget.cpp:3079
+#: kmmainwidget.cpp:3146
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Nowa"
 
-#: kmmainwidget.cpp:3087
+#: kmmainwidget.cpp:3154
 #, kde-format
 msgid "Message From &Template"
 msgstr "Nowa powěsć ze šablony"
 
-#: kmmainwidget.cpp:3093
+#: kmmainwidget.cpp:3160
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "N&owa powěsć emailowej lisćinje..."
 
-#: kmmainwidget.cpp:3099
+#: kmmainwidget.cpp:3166
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Filter stworić"
 
-#: kmmainwidget.cpp:3103
+#: kmmainwidget.cpp:3170
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "Filter nałožić na &temu..."
 
-#: kmmainwidget.cpp:3110
+#: kmmainwidget.cpp:3177
 #, kde-format
 msgid "Filter on &From..."
 msgstr "&Filter na wotpósłarja nałožić..."
 
-#: kmmainwidget.cpp:3116
+#: kmmainwidget.cpp:3183
 #, kde-format
 msgid "Filter on &To..."
 msgstr "Fil&ter nałožić na adresata ..."
 
-#: kmmainwidget.cpp:3122
+#: kmmainwidget.cpp:3189
 #, kde-format
 msgid "Filter on &Cc..."
 msgstr "Fil&ter nałožić na adresata kopije..."
 
-#: kmmainwidget.cpp:3130
+#: kmmainwidget.cpp:3197
 #, kde-format
 msgid "Mark &Thread"
 msgstr "&Diskusiju markěrować"
 
-#: kmmainwidget.cpp:3133
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "&Diskusiju markěrować jako čitanu"
 
-#: kmmainwidget.cpp:3136
+#: kmmainwidget.cpp:3203
 #, fuzzy, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "in"
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3206
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr ""
 
-#: kmmainwidget.cpp:3142
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Wšitke powěsće we wubranej diskusiju mar&kěrować jako nječitane"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3215
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Diskusiju markěrować jako &wažnu"
 
-#: kmmainwidget.cpp:3151
+#: kmmainwidget.cpp:3218
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Markěrowanje diskusije jako wažneje zběhnyć"
 
-#: kmmainwidget.cpp:3154
+#: kmmainwidget.cpp:3221
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Powěsć markěrować jako &akcijowy element"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3224
 #, fuzzy, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "Wažna powěsć"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&Temu slědować"
 
-#: kmmainwidget.cpp:3165
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "Temu &ignorować"
 
-#: kmmainwidget.cpp:3173 kmreadermainwin.cpp:473
+#: kmmainwidget.cpp:3240 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "&Přiwěški zawěsćić ..."
 
-#: kmmainwidget.cpp:3181
+#: kmmainwidget.cpp:3244
+#, fuzzy, kde-format
+msgctxt "@action:inmenu"
+msgid "Delete All Attachments"
+msgstr "&Přiwěšk zawěsćić jako..."
+
+#: kmmainwidget.cpp:3252
 #, fuzzy, kde-format
 msgid "Copy Decrypted To..."
 msgstr "&Nowa powěsć..."
 
-#: kmmainwidget.cpp:3185
+#: kmmainwidget.cpp:3256
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Wšitke filtry &nałožić"
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Skupinu/Diskusiju rozćahnyć"
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3268
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Rozćehnje aktualnu diskusiju abo skupinu powěsćow"
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3272
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Diskusiju/Skupinu sćahnyć"
 
-#: kmmainwidget.cpp:3204
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Sćehnje aktualnu diskusiju abo skupinu"
 
-#: kmmainwidget.cpp:3208
+#: kmmainwidget.cpp:3279
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Wšitke diskusije z&rozćahać"
 
-#: kmmainwidget.cpp:3211
+#: kmmainwidget.cpp:3282
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Zrozćaha wšitke skupiny w aktualnym zapisku"
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Wšitke diskusije ze&sćahać"
 
-#: kmmainwidget.cpp:3218
+#: kmmainwidget.cpp:3289
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Zesćaha wšitke skupiny w aktualnym zapisku"
 
-#: kmmainwidget.cpp:3222
+#: kmmainwidget.cpp:3293
 #, kde-format
 msgid "&Display Message"
 msgstr "Powěsć pokazać"
 
-#: kmmainwidget.cpp:3229
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid "&Next Message"
 msgstr "Přichod&na powěsć"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3303
 #, kde-format
 msgid "Go to the next message"
 msgstr "Dźi k přichodnej powěsći"
 
-#: kmmainwidget.cpp:3236
+#: kmmainwidget.cpp:3307
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Přichodna nj&ečitana powěsć"
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Přichodna"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3316
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Dźi k přichodnej nječitanej powěsći"
 
-#: kmmainwidget.cpp:3249
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Prjedawša powěsć"
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Dźi k prjedawšej powěsći"
 
-#: kmmainwidget.cpp:3256
+#: kmmainwidget.cpp:3327
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Prjedawša nječ&itana powěsć"
 
-#: kmmainwidget.cpp:3264
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Prjedawša"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3336
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Dźi k prjedawšej nječitanej powěsći"
 
-#: kmmainwidget.cpp:3269
+#: kmmainwidget.cpp:3340
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Přichodny nječitany zapis&k"
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Dźi k přichodnemu zapiskej z nječitanymi powěsćemi"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3349
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Prjedawši nječitany &zapisk"
 
-#: kmmainwidget.cpp:3283
+#: kmmainwidget.cpp:3354
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Dźi k prjedawšemu zapiskej z nječitanymi powěsćemi"
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Dźi k přichodnemu nječitanemu &tekstej"
 
-#: kmmainwidget.cpp:3290
+#: kmmainwidget.cpp:3361
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Dźi k přichodnemu nječitanemu tekstej"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3363
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4838,247 +4922,247 @@ msgstr ""
 "W aktualnej powěsći dale dele hić. Na kóncu aktualneje powěsće k přichodnej "
 "nječitanej powěsći skočić."
 
-#: kmmainwidget.cpp:3300
+#: kmmainwidget.cpp:3371
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "Kon&figuracija filtrow..."
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3377
 #, fuzzy, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Filtry k dispoziciji"
 
-#: kmmainwidget.cpp:3311
+#: kmmainwidget.cpp:3382
 #, kde-format
 msgid "&Add Account..."
 msgstr "Konto dod&ać..."
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3387
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "Zawod do KMa&ila"
 
-#: kmmainwidget.cpp:3318
+#: kmmainwidget.cpp:3389
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "KMailowu powitansku stronu pokazać"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "&Zdźělenki připrawić ..."
 
-#: kmmainwidget.cpp:3332
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "KMail &připrawić..."
 
-#: kmmainwidget.cpp:3339
+#: kmmainwidget.cpp:3410
 #, kde-format
 msgid "Expire..."
 msgstr "Zestarjene zwumjetać..."
 
-#: kmmainwidget.cpp:3345
+#: kmmainwidget.cpp:3416
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "Nowy zapisk za preferowane powěsće..."
 
-#: kmmainwidget.cpp:3351
+#: kmmainwidget.cpp:3422
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "Skazanka pola serwera..."
 
-#: kmmainwidget.cpp:3357 kmmainwidget.cpp:3365
+#: kmmainwidget.cpp:3428 kmmainwidget.cpp:3436
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Wšitke filtry nałožić"
 
-#: kmmainwidget.cpp:3378
+#: kmmainwidget.cpp:3449
 #, fuzzy, kde-format
 #| msgid "Apply Filters on Folder and all its Subfolders"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filtry na zapisk nałožić a wšitke jeho podzapiski"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "Daty KMaila importować/eksportować..."
 
-#: kmmainwidget.cpp:3389
+#: kmmainwidget.cpp:3460
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "Nowy kontakt w adresniku..."
 
-#: kmmainwidget.cpp:3397 kmmainwidget.cpp:4045
+#: kmmainwidget.cpp:3468 kmmainwidget.cpp:4116
 #, kde-format
 msgid "Account &Settings"
 msgstr "&Nastajenja za konto"
 
-#: kmmainwidget.cpp:3401
+#: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Restart Account"
 msgstr "Konto znowa startować"
 
-#: kmmainwidget.cpp:3417
+#: kmmainwidget.cpp:3488
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Kopěruj powěsće do zapiska"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3494
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "Do zapiska skočić..."
 
-#: kmmainwidget.cpp:3429
+#: kmmainwidget.cpp:3500
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Aktualnu operaciju přetorhnyć"
 
-#: kmmainwidget.cpp:3435
+#: kmmainwidget.cpp:3506
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Fokus na přichodnym zapisku"
 
-#: kmmainwidget.cpp:3441
+#: kmmainwidget.cpp:3512
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Fokus na prjedawšim zapisku"
 
-#: kmmainwidget.cpp:3447
+#: kmmainwidget.cpp:3518
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Zapisk wubrać za fokus"
 
-#: kmmainwidget.cpp:3454
+#: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "Fokus na prěnim zapisku"
 
-#: kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3531
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "Fokus na poslednim zapisku"
 
-#: kmmainwidget.cpp:3466
+#: kmmainwidget.cpp:3537
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Fokus na přichodnej powěsći"
 
-#: kmmainwidget.cpp:3472
+#: kmmainwidget.cpp:3543
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Fokus na prjedawšej powěsći"
 
-#: kmmainwidget.cpp:3478
+#: kmmainwidget.cpp:3549
 #, kde-format
 msgid "Select First Message"
 msgstr "Prěnju powěsć wubrać"
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3555
 #, kde-format
 msgid "Select Last Message"
 msgstr "Poslednju powěsć wubrać"
 
-#: kmmainwidget.cpp:3490
+#: kmmainwidget.cpp:3561
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Powěsć za fokus wubrać"
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3568
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr ""
 
-#: kmmainwidget.cpp:3505
+#: kmmainwidget.cpp:3576
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgid "Extend Selection to Previous Message"
 msgstr "Fokus na prjedawšej powěsći"
 
-#: kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3582
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgid "Extend Selection to Next Message"
 msgstr "Fokus na přichodnej powěsći"
 
-#: kmmainwidget.cpp:3518
+#: kmmainwidget.cpp:3589
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Suń powěsće do zapiska"
 
-#: kmmainwidget.cpp:3528
+#: kmmainwidget.cpp:3599
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3533
+#: kmmainwidget.cpp:3604
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3539
+#: kmmainwidget.cpp:3610
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "Prjedawši wubrany zapisk"
 
-#: kmmainwidget.cpp:3546
+#: kmmainwidget.cpp:3617
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "Přichodny wubrany zapisk"
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3645
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Nowy zapisk za preferowane powěsće dodać"
 
-#: kmmainwidget.cpp:3992
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "&Delete Search"
 msgstr "Py&tanje wumazać"
 
-#: kmmainwidget.cpp:4006
+#: kmmainwidget.cpp:4077
 #, kde-format
 msgid "Edit Search..."
 msgstr "Pytanje wobdźěłać..."
 
-#: kmmainwidget.cpp:4043
+#: kmmainwidget.cpp:4114
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Unified Mailbox &připrawić..."
 
-#: kmmainwidget.cpp:4054
+#: kmmainwidget.cpp:4125
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Pa&pjernik wuprózdnić"
 
-#: kmmainwidget.cpp:4054
+#: kmmainwidget.cpp:4125
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Wšitke powěsće do papjernika sunyć"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4199
 #, kde-format
 msgid "&Undo"
 msgstr "&Wróćo"
 
-#: kmmainwidget.cpp:4130
+#: kmmainwidget.cpp:4201
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Wróćo: %1"
 
-#: kmmainwidget.cpp:4187
+#: kmmainwidget.cpp:4258
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4654
+#: kmmainwidget.cpp:4725
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Pytać... <%1>"
 
-#: kmmainwidget.cpp:4662
+#: kmmainwidget.cpp:4733
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5088,12 +5172,12 @@ msgstr ""
 "Wužiwanje HTML w mailkach přićahuje wjace čaporowych mailkow a powjetši "
 "prawdźepodobnosć, zo nastanu wěstotne problemy."
 
-#: kmmainwidget.cpp:4666
+#: kmmainwidget.cpp:4737
 #, kde-format
 msgid "Use HTML"
 msgstr "Wužiwaj HTML"
 
-#: kmmainwidget.cpp:4812
+#: kmmainwidget.cpp:4883
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5103,40 +5187,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4815
+#: kmmainwidget.cpp:4886
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4816
+#: kmmainwidget.cpp:4887
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4817
+#: kmmainwidget.cpp:4888
 #, kde-format
 msgid "Cancel"
 msgstr "Přetorhnyć"
 
-#: kmmainwidget.cpp:4852
+#: kmmainwidget.cpp:4923
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Chceće etiket '%1' wotstronić?"
 
-#: kmmainwidget.cpp:4853
+#: kmmainwidget.cpp:4924
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart Akonadi"
 msgstr "Konto znowa startować"
 
-#: kmmainwidget.cpp:4854
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart"
 msgstr "Konto znowa startować"
 
-#: kmmainwidget.cpp:4861
+#: kmmainwidget.cpp:4932
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -8366,11 +8450,6 @@ msgstr ""
 #~| msgid "&Attachments"
 #~ msgid "Attachment"
 #~ msgstr "&Přiwěški"
-
-#, fuzzy
-#~| msgid "&Remove Attachment"
-#~ msgid "Select attachment:"
-#~ msgstr "Přiwěšk &zničić"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -11687,10 +11766,6 @@ msgstr ""
 
 #~ msgid "Open With..."
 #~ msgstr "Wočinić z ..."
-
-#, fuzzy
-#~ msgid "Save All Attachments..."
-#~ msgstr "&Přiwěšk zawěsćić jako..."
 
 #, fuzzy
 #~ msgid "Edit Attachment"
