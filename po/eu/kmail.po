@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-22 16:08+0200\n"
+"PO-Revision-Date: 2023-08-03 12:38+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3970,11 +3970,10 @@ msgid "Deleting messages"
 msgstr "Mezuak ezabatzen"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "&Remove Attachment"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "&Kendu eranskina"
+msgstr "Eranskina ezabatzen"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4468,24 +4467,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Hautatutako mezua zifratuta dago. Egun, ezin da ezabatu zifratutako mezuko "
+"eranskinik."
 msgstr[1] ""
+"Hautapenak zifratutako mezuak baino ez ditu, eta gaur egun ezin da ezabatu "
+"zifratutako mezuetako eranskinik."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ezabatu eranskinak zifratutako mezutik"
+msgstr[1] "Ezabatu eranskinak zifratutako mezuetatik"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4493,11 +4490,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Benetan ezabatu nahi duzu hautatutako mezua?<br />Behin ezabatuta, ezin "
-"da berreskuratu.</qt>"
+"<html><p>Benetan ezabatu nahi dituzu hautatutako mezuko eranskin guztiak?"
+"<br />Behin ezabatuta, ezin dira berreskuratu.</p></html>"
 msgstr[1] ""
-"<qt>Benetan ezabatu nahi dituzu hautatutako %1 mezuak?<br />Behin ezabatuta, "
-"ezin dira berreskuratu.</qt>"
+"<html><p>Benetan ezabatu nahi dituzu hautatutako %1 mezuetako eranskin "
+"guztiak?<br />Behin ezabatuta, ezin dira berreskuratu.</p></html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4505,6 +4502,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Kontuan izan kriptografikoki sinatutako mezu bateko eranskinak "
+"ezabatzeak bere sinadura baliorik gabe utziko duela.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4512,13 +4511,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Egun, ezin da zifratutako mezuetako eranskinik ezabatu.<br /> "
+"Zifratutako mezuei ezikusi egingo zaie.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "&Remove Attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "&Kendu eranskina"
+msgstr "Ezabatu eranskinak"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4794,11 +4794,10 @@ msgid "Save A&ttachments..."
 msgstr "Gorde &eranskinak..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Gorde eranskin guztiak..."
+msgstr "Ezabatu eranskin guztiak"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

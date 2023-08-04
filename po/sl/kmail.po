@@ -12,15 +12,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-13 06:51+0200\n"
+"PO-Revision-Date: 2023-08-03 08:56+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
 "X-Generator: Poedit 3.3.2\n"
 
@@ -3972,12 +3972,10 @@ msgid "Deleting messages"
 msgstr "Brisanje sporočil"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Priloge"
+msgstr "Brisanje prilog"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4497,28 +4495,30 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Izbrano sporočilo je šifrirano. Trenutno ni mogoče brisati prilog iz "
+"šifriranih sporočil."
 msgstr[1] ""
+"Izbrani sporočili sta šifrirano. Trenutno ni mogoče brisati prilog iz "
+"šifriranih sporočil."
 msgstr[2] ""
+"Izbrana sporočila so šifrirana. Trenutno ni mogoče brisati prilog iz "
+"šifriranih sporočil."
 msgstr[3] ""
+"Izbrana sporočila so šifrirana. Trenutno ni mogoče brisati prilog iz "
+"šifriranih sporočil."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Izbriši priloge iz šifriranega sporočila"
+msgstr[1] "Izbriši priloge iz šifriranih sporočil"
+msgstr[2] "Izbriši priloge iz šifriranih sporočil"
+msgstr[3] "Izbriši priloge iz šifriranih sporočil"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4526,17 +4526,17 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Ali resnično želite izbrisati %1 izbrano sporočilo?<br />Izbrisanih "
-"sporočil ni več mogoče obnoviti.</qt>"
+"<html><p>Ali resnično želite izbrisati vse priloge iz %1 izbranega sporočila?"
+"<br />Izbrisanega sporočila ni več mogoče obnoviti.</p></html>"
 msgstr[1] ""
-"<qt>Ali resnično želite izbrisati %1 izbrani sporočili?<br />Izbrisanih "
-"sporočil ni več mogoče obnoviti.</qt>"
+"<html><p>Ali resnično želite izbrisati vse priloge iz %1 izbranih sporočil?"
+"<br />Izbrisanih sporočil ni več mogoče obnoviti.</p></html>"
 msgstr[2] ""
-"<qt>Ali resnično želite izbrisati %1 izbrana sporočila?<br />Izbrisanih "
-"sporočil ni več mogoče obnoviti.</qt>"
+"<html><p>Ali resnično želite izbrisati vse priloge iz %1 izbranih sporočil?"
+"<br />Izbrisanih sporočil ni več mogoče obnoviti.</p></html>"
 msgstr[3] ""
-"<qt>Ali resnično želite izbrisati %1 izbranih sporočil?<br />Izbrisanih "
-"sporočil ni več mogoče obnoviti.</qt>"
+"<html><p>Ali resnično želite izbrisati vse priloge iz %1 izbranih sporočil?"
+"<br />Izbrisanih sporočil ni več mogoče obnoviti.</p></html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4544,6 +4544,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Upoštevajte, da bo brisanje prilog iz kriptografsko podpisanega "
+"sporočila razveljavilo njegov podpis.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4551,14 +4553,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Trenutno ni mogoče izbrisati prilog iz šifriranih sporočil.<br /"
+">Šifrirana sporočila bodo prezrta.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Priloge"
+msgstr "Zbriši priloge"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4833,11 +4835,10 @@ msgid "Save A&ttachments..."
 msgstr "Shrani priloge ..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Kot prilogo"
+msgstr "Zbriši vse priloge"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-25 11:36+0200\n"
+"PO-Revision-Date: 2023-08-03 07:24+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -3960,11 +3960,10 @@ msgid "Deleting messages"
 msgstr "Tar bort brev"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Välj bilaga:"
+msgstr "Tar bort bilagor"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4461,24 +4460,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Det markerade brevet är krypterat. Det är för närvarande inte möjligt att ta "
+"bort bilagor från krypterade brev."
 msgstr[1] ""
+"Markeringen innehåller bara krypterade brev, som för närvarande inte "
+"tillåter att bilagor tas bort."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ta bort bilagor från krypterat brev"
+msgstr[1] "Ta bort bilagor från krypterade brev"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4486,11 +4483,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Vill du verkligen ta bort det markerade brevet?<br />När det väl har "
-"tagits bort, kan det inte återställas.</qt>"
+"<qt>Vill du verkligen ta bort alla bilagor från det markerade brevet?<br /"
+">När de väl har tagits bort, kan de inte återställas.</qt>"
 msgstr[1] ""
-"<qt>Vill du verkligen ta bort de %1 markerade breven?<br />När de väl har "
-"tagits bort, kan de inte återställas.</qt>"
+"<qt>Vill du verkligen ta bort alla bilagor från de %1 markerade breven?<br /"
+">När de väl har tagits bort, kan de inte återställas.</qt>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4498,6 +4495,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Observera att ta bort bilagor från ett kryptografiskt signerat brev "
+"gör signaturen ogiltig.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4505,13 +4504,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Det är för närvarande inte möjligt att ta bort bilagor från "
+"krypterade brev.<br />Krypterade brev ignoreras.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Välj bilaga:"
+msgstr "Ta bort bilagor"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4786,11 +4786,10 @@ msgid "Save A&ttachments..."
 msgstr "Spara &bilagor..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Spara alla bilagor..."
+msgstr "Ta bort alla bilagor"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

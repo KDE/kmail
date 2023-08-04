@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-13 12:32+0200\n"
+"PO-Revision-Date: 2023-08-03 11:08+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -4013,11 +4013,10 @@ msgid "Deleting messages"
 msgstr "Berichten worden verwijderd"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Bijlage selecteren:"
+msgstr "Bijlage worden verwijderd"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4525,24 +4524,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Het geselecteerde bericht is versleuteld. Het is nu niet mogelijk om "
+"bijlagen uit versleutelde berichten te verwijderen."
 msgstr[1] ""
+"De selectie bevat alleen versleutelde berichten, waaruit het nu niet "
+"mogelijk is om bijlagen te verwijderen."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Bijlagen uit versleuteld bericht verwijderen"
+msgstr[1] "Bijlagen uit versleutelde berichten verwijderen"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4550,11 +4547,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Wilt u het geselecteerde bericht verwijderen?<br />Eenmaal verwijderd "
-"kunt u het niet meer terughalen.</qt>"
+"<html><p>Wilt u alle bijlagen uit het geselecteerde bericht verwijderen?<br /"
+">Eenmaal verwijderd kunnen ze niet meer worden hersteld.</p></html>"
 msgstr[1] ""
-"<qt>Wilt u de %1 geselecteerde berichten verwijderen?<br />Eenmaal "
-"verwijderd kunt u ze niet meer terughalen.</qt>"
+"<html>Wilt u alle bijlagen uit de %1 geselecteerde berichten verwijderen?"
+"<br />Eenmaal verwijderd kunnen ze niet meer worden hersteld.</html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4562,6 +4559,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Merk op dat de cryptografische ondertekening ongeldig zal zijn als "
+"u bijlagen verwijderd.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4569,13 +4568,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Het is nu niet mogelijk om bijlagen uit versleutelde berichten te "
+"verwijderen.<br />Versleutelde berichten zullen genegeerd worden.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Bijlage selecteren:"
+msgstr "Bijlagen verwijderen"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4850,11 +4850,10 @@ msgid "Save A&ttachments..."
 msgstr "Bijlagen op&slaan..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Alle bijlagen opslaan..."
+msgstr "Alle bijlagen verwijderen"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

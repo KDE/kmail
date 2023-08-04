@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-08-02 01:20+0300\n"
+"PO-Revision-Date: 2023-08-03 12:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3378,7 +3378,7 @@ msgstr "vCard dosyasını silemeyiz."
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
-msgstr "Gerçekten iptal etmek istiyor musunuz?"
+msgstr "İptal etmeyi gerçekten istiyor musunuz?"
 
 #: identity/identityeditvcarddialog.cpp:127
 #, kde-format
@@ -3419,14 +3419,14 @@ msgstr "E-posta Adresi"
 #: identity/identitypage.cpp:213
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgstr "<qt><b>%1</b> adlı kimliği gerçekten silmek istiyor musunuz?</qt>"
+msgstr "<qt><b>%1</b> adlı kimliği silmeyi gerçekten istiyor musunuz?</qt>"
 
 #: identity/identitypage.cpp:216
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "Bu %1 kimliğini gerçekten silmek istiyor musunuz?"
-msgstr[1] "Bu %1 kimliği gerçekten silmek istiyor musunuz?"
+msgstr[0] "Bu %1 kimliği silmeyi gerçekten istiyor musunuz?"
+msgstr[1] "Bu %1 kimliği silmeyi gerçekten istiyor musunuz?"
 
 #: identity/identitypage.cpp:219
 #, kde-format
@@ -3959,12 +3959,10 @@ msgid "Deleting messages"
 msgstr "İletiler siliniyor"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Ekler"
+msgstr "Ekler siliniyor"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4324,11 +4322,11 @@ msgid_plural ""
 "<qt>Do you really want to delete the %1 selected messages?<br />Once "
 "deleted, they cannot be restored.</qt>"
 msgstr[0] ""
-"<qt>Seçili iletiyi gerçekten silmek istiyor musunuz?<br />Bir kez silinirse, "
-"bunları geri getiremezsiniz.</qt>"
+"<qt>Seçili iletiyi silmeyi gerçekten istiyor musunuz?<br />Silindikten sonra "
+"geri yüklenemezler.</qt>"
 msgstr[1] ""
-"<qt>Seçili %1 iletiyi gerçekten silmek istiyor musunuz?<br />Bir kez "
-"silinirse, bunları geri getiremezsiniz.</qt>"
+"<qt>Seçili %1 iletiyi silmeyi gerçekten istiyor musunuz?<br />Silindikten "
+"sonra geri yüklenemezler.</qt>"
 
 #: kmmainwidget.cpp:1643
 #, kde-format
@@ -4467,24 +4465,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Seçili ileti şifrelenmiş. Şu anda şifrelenmiş iletilerden ekleri silmek "
+"olanaklı değil."
 msgstr[1] ""
+"Seçimde yalnızca şifrelenmiş iletiler var. Şu anda şifrelenmiş iletilerden "
+"ekleri silmek olanaklı değil."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Şifrelenmiş İletiden Ekleri Sil"
+msgstr[1] "Şifrelenmiş İletilerden Ekleri Sil"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4492,11 +4488,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Seçili iletiyi gerçekten silmek istiyor musunuz?<br />Bir kez silinirse, "
-"bunları geri getiremezsiniz.</qt>"
+"<qt>Seçili iletideki tüm ekleri silmeyi gerçekten istiyor musunuz?<br /"
+">Silindikten sonra geri yüklenemezler.</qt>"
 msgstr[1] ""
-"<qt>Seçili %1 iletiyi gerçekten silmek istiyor musunuz?<br />Bir kez "
-"silinirse, bunları geri getiremezsiniz.</qt>"
+"<qt>Seçili %1 iletideki tüm ekleri silmeyi gerçekten istiyor musunuz?<br /"
+">Silindikten sonra geri yüklenemezler.</qt>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4504,6 +4500,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Kriptografik olarak imzalanan bir iletiden ekleri silmek, iletinin "
+"imzasını geçersiz kılacaktır.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4511,14 +4509,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Şu anda şifrelenmiş iletilerden ekleri silmek olanaklı değil.<br /"
+">Şifrelenmiş iletiler yok sayılacak.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Ekler"
+msgstr "Ekleri Sil"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4793,11 +4791,10 @@ msgid "Save A&ttachments..."
 msgstr "&Ekleri Kaydet..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Ek Olarak"
+msgstr "Tüm Ekleri Sil"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

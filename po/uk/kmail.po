@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-13 08:33+0300\n"
+"PO-Revision-Date: 2023-08-03 09:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -4030,12 +4030,10 @@ msgid "Deleting messages"
 msgstr "Вилучення повідомлень"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Долучення"
+msgstr "Вилучення долучень"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4547,28 +4545,30 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Вибрано лише зашифровані повідомлення. У поточній версії програми не "
+"передбачено можливості вилучення долучень з зашифрованих повідомлень."
 msgstr[1] ""
+"Вибрано лише зашифровані повідомлення. У поточній версії програми не "
+"передбачено можливості вилучення долучень з зашифрованих повідомлень."
 msgstr[2] ""
+"Вибрано лише зашифровані повідомлення. У поточній версії програми не "
+"передбачено можливості вилучення долучень з зашифрованих повідомлень."
 msgstr[3] ""
+"Вибране повідомлення зашифровано. У поточній версії програми не передбачено "
+"можливості вилучення долучень з зашифрованих повідомлень."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Вилучення долучень до зашифрованих повідомлень"
+msgstr[1] "Вилучення долучень до зашифрованих повідомлень"
+msgstr[2] "Вилучення долучень до зашифрованих повідомлень"
+msgstr[3] "Вилучення долучень до зашифрованого повідомлення"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4576,17 +4576,17 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Ви справді хочете вилучити %1 вибране повідомлення?<br />Цю дію буде "
-"неможливо скасувати.</qt>"
+"<html><p>Ви справді хочете вилучити усі долучення до %1 вибраного "
+"повідомлення?<br />Цю дію буде неможливо скасувати.</p></html>"
 msgstr[1] ""
-"<qt>Ви справді хочете вилучити %1 вибрані повідомлення?<br />Цю дію буде "
-"неможливо скасувати.</qt>"
+"<html><p>Ви справді хочете вилучити усі долучення до %1 вибраних повідомлень?"
+"<br />Цю дію буде неможливо скасувати.</p></html>"
 msgstr[2] ""
-"<qt>Ви справді хочете вилучити %1 вибраних повідомлень?<br />Цю дію буде "
-"неможливо скасувати.</qt>"
+"<html><p>Ви справді хочете вилучити усі долучення до %1 вибраних повідомлень?"
+"<br />Цю дію буде неможливо скасувати.</p></html>"
 msgstr[3] ""
-"<qt>Ви справді хочете вилучити %1 вибране повідомлення?<br />Цю дію буде "
-"неможливо скасувати.</qt>"
+"<html><p>Ви справді хочете вилучити усі долучення до вибраного повідомлення?"
+"<br />Цю дію буде неможливо скасувати.</p></html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4594,6 +4594,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Зауважте, що вилучення долучень до криптографічно підписаного "
+"повідомлення скасовує чинність його підпису.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4601,14 +4603,15 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>У поточній версії не передбачено можливості вилучення долучень до "
+"зашифрованих повідомлень.<br />Зашифровані повідомлення буде проігноровано.</"
+"p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Долучення"
+msgstr "Вилучення долучень"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4883,11 +4886,10 @@ msgid "Save A&ttachments..."
 msgstr "&Зберегти долучення…"
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Як долучення"
+msgstr "Вилучити усі долучення"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
