@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-01-31 00:59+0000\n"
-"PO-Revision-Date: 2023-02-03 16:55+0100\n"
+"PO-Revision-Date: 2023-08-05 09:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -60,13 +60,13 @@ msgstr "ჯერ აირჩიეთ ჩანაწერი."
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
-msgstr ""
+msgstr "მონიშნული ჩანაწერის შენახვა შეუძლებელია, რადგან მისი ჭდე ცარიელია."
 
 #: attachpropertydialog.cpp:207
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
-msgstr ""
+msgstr "ფაილის ჩასაწერად გახსნის შეცდომა. შეამოწმეთ ფაილის წვდომები."
 
 #: ktnefmain.cpp:94
 #, kde-format
@@ -166,25 +166,25 @@ msgstr "TNEF ფაილია გახსნა"
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
-msgstr ""
+msgstr "ფაილი არჩეული არა. აირჩიეთ ფაილი და თავიდან სცადეთ."
 
 #: ktnefmain.cpp:304 ktnefmain.cpp:380
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
-msgstr ""
+msgstr "ფაილის \"%1\" გაშლა შეუძლებელია."
 
 #: ktnefmain.cpp:486
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
-msgstr ""
+msgstr "შეტყობინება მდიდარი ტექსტის მონაცემებს არ შეიცავს."
 
 #: ktnefmain.cpp:504
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
-msgstr ""
+msgstr "ფაილის \"%1\" ჩასაწერად გახსნა შეუძლებელია. შეამოწმეთ ფაილის წვდომები."
 
 #: ktnefmain.cpp:526
 #, kde-format
@@ -265,7 +265,7 @@ msgstr "KTnef"
 #: main.cpp:46
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
-msgstr ""
+msgstr "TNEF ფორმატის მქონე მიმაგრებული ფაილების ნახვა"
 
 #: main.cpp:48
 #, kde-format
@@ -294,12 +294,12 @@ msgstr "Allen Winter"
 #: main.cpp:52
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
-msgstr ""
+msgstr "ავტორი, Qt4/KDE4-ზე გადატანა"
 
 #: main.cpp:58
 #, kde-format
 msgid "An optional argument 'file' "
-msgstr ""
+msgstr "არასავალდებული არგუმენტი 'ფაილი' "
 
 #: messagepropertydialog.cpp:42
 #, kde-format

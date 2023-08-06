@@ -2,7 +2,7 @@
 # Copyright (C) 1998-2023 This_file_is_part_of_KDE
 #
 # Sebastià Pla i Sanz <sps@sastia.com>, 1998, 1999, 2000, 2004, 2005, 2006.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2002, 2003, 2004, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Antoni Bella Pérez <antonibella5@yahoo.com>, 2002, 2003, 2004, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2009.
 # David Gil <al016950@yahoo.es>, 2005.
 # Josep M. Ferrer <txemaq@gmail.com>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-13 10:53+0200\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-08-05 19:10+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.11.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -4004,12 +4004,10 @@ msgid "Deleting messages"
 msgstr "S'estan suprimint els missatges"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Adjunts"
+msgstr "S'estan suprimint els adjunts"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4514,24 +4512,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"El missatge seleccionat està encriptat. Actualment no és possible suprimir "
+"els adjunts dels missatges encriptats."
 msgstr[1] ""
+"La selecció només conte missatges encriptats, dels quals actualment no és "
+"possible suprimir els adjunts."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Supressió d'adjunts de missatge encriptat"
+msgstr[1] "Supressió d'adjunts de missatges encriptats"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4539,11 +4535,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Segur que voleu suprimir el missatge seleccionat?<br />Una vegada "
-"l'hàgeu suprimit, no es podrà restaurar.</qt>"
+"<html><p>Voleu suprimir tots els adjunts del missatge seleccionat?<br />Una "
+"vegada l'hàgeu suprimit, no es podrà restaurar.</p></html>"
 msgstr[1] ""
-"<qt>Segur que voleu suprimir els %1 missatges seleccionats?<br />Una vegada "
-"els hàgeu suprimit no es podran restaurar.</qt>"
+"<html><p>Voleu suprimir tots els adjunts de %1 missatges seleccionats?<br /"
+">Una vegada els hàgeu suprimit, no es podran restaurar.</p></html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4551,6 +4547,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Cal tindre en compte que suprimir els adjunts d'un missatge signat "
+"criptogràficament invalidarà la seua signatura.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4558,14 +4556,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Actualment no és possible suprimir els adjunts dels missatges "
+"encriptats.<br />Els missatges encriptats s'ignoraran.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Adjunts"
+msgstr "Supressió d'adjunts"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4843,11 +4841,10 @@ msgid "Save A&ttachments..."
 msgstr "Guarda els ad&junts..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Com a adjunt"
+msgstr "Suprimix tots els adjunts"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
