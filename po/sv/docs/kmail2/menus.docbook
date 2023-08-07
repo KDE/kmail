@@ -269,8 +269,8 @@
   <listitem
 ><para
 >Startar programmet <application
->KMailCVT</application
-> (också känt som e-postimportguiden). Detta program låter dig importera brev från flera andra e-postklienter till &kmail;.</para
+>Importverktyg för personlig information</application
+>. Programmet låter dig importera brev från flera andra e-postklienter till &kmail;.</para
 ></listitem>
 </varlistentry>
 
@@ -4671,7 +4671,7 @@
 >Stil</guilabel
 >, <guilabel
 >Teckenstorlek</guilabel
->, etc.), och Textriktning (ifall du skriver på Hebreiska, antar jag). Observera att HTML-verktygsraden enkelt visas eller döljs via knappen <guibutton
+>, etc.), och Textriktning (ifall du skriver med höger-till-vänster skrivtecken). Observera att HTML-verktygsraden enkelt visas eller döljs via knappen <guibutton
 >Rich text</guibutton
 > på huvudverktygsraden.</para
 ></listitem>

@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-16 14:49+0530\n"
+"PO-Revision-Date: 2023-08-06 14:47+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -3978,11 +3978,10 @@ msgid "Deleting messages"
 msgstr "அஞ்சல்கள் நீக்கப்படுகின்றன"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "&Remove Attachment"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "இணைப்பை நீக்கு"
+msgstr "உடனிணைப்புகள் நீக்கப்படுகின்றன"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4477,24 +4476,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"தேர்ந்தெடுத்துள்ள அஞ்சல் மறையாக்கம் செய்யப்பட்டிருக்கிறது. மறையாக்கிய அஞ்சல்களிலிருந்து "
+"இப்போதைக்கு உடனிணைப்புகளை நீக்க முடியாது."
 msgstr[1] ""
+"தேர்ந்தெடுத்துள்ள அனைத்து அஞ்சல்களும் மறையாக்கம் செய்யப்பட்டிருக்கின்றன. மறையாக்கிய "
+"அஞ்சல்களிலிருந்து இப்போதைக்கு உடனிணைப்புகளை நீக்க முடியாது."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "மறையாக்கிய அஞ்சலிலிருந்து உடனிணைப்புகளை நீக்குவது"
+msgstr[1] "மறையாக்கிய அஞ்சல்களிலிருந்து உடனிணைப்புகளை நீக்குவது"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4502,11 +4499,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>தேர்வு செய்த அஞ்சலை உறுதியாக நீக்க விரும்புகிறீர்களா?<br />நீக்கிய பின் அதனை திரும்ப‍"
-"ப்பெற முடியாது.</qt>"
+"<html><p>தேர்ந்தெடுத்துள்ள அஞ்சலிலுள்ள அனைத்து உடனிணைப்புகளையும் உறுதியாக நீக்க வேண்டுமா?"
+"<br />நீக்கிய பின், அவற்றைத் திரும்ப‍ப்பெற முடியாது.</p></html>"
 msgstr[1] ""
-"<qt>தேர்வு செய்த %1 அஞ்சல்களை உறுதியாக நீக்க விரும்புகிறீர்களா?<br />நீக்கிய பின் அவற்றை "
-"திரும்ப‍ப்பெற முடியாது.</qt>"
+"<html><p>தேர்ந்தெடுத்துள்ள %1 அஞ்சல்களிலுள்ள அனைத்து உடனிணைப்புகளையும் உறுதியாக நீக்க "
+"வேண்டுமா?<br />நீக்கிய பின், அவற்றைத் திரும்ப‍ப்பெற முடியாது.</p></html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4514,6 +4511,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>எண்ம முறையில் கையொப்பமிடப்பட்டுள்ள அஞ்சலிலிருந்து உடனிணைப்புகளை நீக்குவது, "
+"அதிலுள்ள கையொப்பத்தை செல்லுபடியாகாத‍தாக்கிவிடும்.</p></html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4521,13 +4520,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>மறையாக்கப்பட்டுள்ள அஞ்சல்களிலிருந்து இப்போதைக்கு உடனிணைப்புகளை நீக்க முடியாது."
+"<br />மறையாக்கிய அஞ்சல்கள் மாற்றப்படா.</p></html>"
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "&Remove Attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "இணைப்பை நீக்கு"
+msgstr "உடனிணைப்புகளை நீக்குவது"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4802,11 +4802,10 @@ msgid "Save A&ttachments..."
 msgstr "&உடனிணைப்புகளை இப்படி சேமி..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "எல்லா இணைப்புகளை சேமி..."
+msgstr "அனைத்து உடனிணைப்புகளையும் நீக்கு"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
