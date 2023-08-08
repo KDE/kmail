@@ -4039,7 +4039,7 @@ msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
-"자원 %1이(가) 깨졌습니다.\n"
+"리소스 %1이(가) 깨졌습니다.\n"
 "%2"
 
 #: kmkernel.cpp:1939 kmkernel.cpp:1945
@@ -5321,11 +5321,11 @@ msgstr "문법 플러그인 지원 추가"
 
 #: kmreaderwin.cpp:279
 msgid "Added etesync resource support"
-msgstr "etesync 자원 지원 추가"
+msgstr "etesync 리소스 지원 추가"
 
 #: kmreaderwin.cpp:280
 msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Microsoft Exchange 웹 서비스 자원 지원 추가"
+msgstr "Microsoft Exchange 웹 서비스 리소스 지원 추가"
 
 #: kmreaderwin.cpp:309
 #, kde-format
