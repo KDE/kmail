@@ -541,7 +541,7 @@ void KMComposerWinTest::testChangeIdentity()
     auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
     auto encryptAction = composer->findChild<KToggleAction *>(QStringLiteral("encrypt_message"));
     auto signAction = composer->findChild<KToggleAction *>(QStringLiteral("sign_message"));
-    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
     QVERIFY(encryption);
     QVERIFY(signature);
     QVERIFY(identCombo);
@@ -620,7 +620,7 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     QVERIFY(nearExpiryWarning);
     QVERIFY(identCombo);
@@ -674,7 +674,7 @@ void KMComposerWinTest::testOwnExpiry()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto identCombo = composer->findChild<KIdentityManagement::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     QVERIFY(nearExpiryWarning);
     QVERIFY(identCombo);

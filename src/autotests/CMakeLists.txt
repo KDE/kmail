@@ -42,7 +42,7 @@ ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KPim6::AkonadiMime KF6::WidgetsAddons KF6::I18n KF6::ConfigGui kmailprivate)
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
-    "Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::ConfigWidgets;KF6::I18n;kmailprivate")
+	"Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::ConfigWidgets;KF6::I18n;kmailprivate;KF6::Codecs")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim6::MailCommon;KPim6::Libkdepim;KF6::ItemViews;KPim6::TemplateParser;KF6::XmlGui;KF6::Completion;KF6::I18n")
 
