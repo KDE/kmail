@@ -3806,7 +3806,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         recipient->setEncryptionAction(Kleo::Impossible);
         if (showAllIcons && !invalidEmail) {
             const auto icon = QIcon::fromTheme(QStringLiteral("emblem-error"));
-            line->setIcon(icon, i18n("@info:tooltip", "No key found for the recipient."));
+            line->setIcon(icon, i18nc("@info:tooltip", "No key found for the recipient."));
         } else {
             line->setIcon(QIcon());
         }
