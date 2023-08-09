@@ -31,13 +31,13 @@ public:
     ~AddArchiveMailDialog() override;
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
-    MailCommon::BackupJob::ArchiveType archiveType() const;
+    Q_REQUIRED_RESULT MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setRecursive(bool b);
     Q_REQUIRED_RESULT bool recursive() const;
 
     void setSelectedFolder(const Akonadi::Collection &collection);
-    Akonadi::Collection selectedFolder() const;
+    Q_REQUIRED_RESULT Akonadi::Collection selectedFolder() const;
 
     Q_REQUIRED_RESULT QUrl path() const;
     void setPath(const QUrl &);
@@ -52,13 +52,13 @@ private:
     void slotFolderChanged(const Akonadi::Collection &);
     void slotUpdateOkButton();
     void load(ArchiveMailInfo *info);
-    MailCommon::FolderRequester *mFolderRequester = nullptr;
-    FormatComboBox *mFormatComboBox = nullptr;
-    UnitComboBox *mUnits = nullptr;
-    QCheckBox *mRecursiveCheckBox = nullptr;
-    KUrlRequester *mPath = nullptr;
-    QSpinBox *mDays = nullptr;
-    QSpinBox *mMaximumArchive = nullptr;
+    MailCommon::FolderRequester *const mFolderRequester;
+    FormatComboBox *const mFormatComboBox;
+    UnitComboBox *const mUnits;
+    QCheckBox *const mRecursiveCheckBox;
+    KUrlRequester *const mPath;
+    QSpinBox *const mDays;
+    QSpinBox *const mMaximumArchive;
 
     ArchiveMailInfo *mInfo = nullptr;
     QPushButton *mOkButton = nullptr;

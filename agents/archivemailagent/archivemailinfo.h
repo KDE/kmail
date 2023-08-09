@@ -14,9 +14,10 @@
 class ArchiveMailInfo
 {
 public:
-    explicit ArchiveMailInfo();
     explicit ArchiveMailInfo(const KConfigGroup &config);
     ArchiveMailInfo(const ArchiveMailInfo &info);
+    ArchiveMailInfo();
+
     ~ArchiveMailInfo();
 
     ArchiveMailInfo &operator=(const ArchiveMailInfo &old);
