@@ -3692,8 +3692,8 @@ void KMComposerWin::runKeyResolver()
     auto keyResolverCore = fillKeyResolver();
     auto result = keyResolverCore->resolve();
 
-    QStringList autocrypt_keys;
-    QStringList gossip_keys;
+    QStringList autocryptKeys;
+    QStringList gossipKeys;
 
     if (!(result.flags & Kleo::KeyResolverCore::AllResolved)) {
         if (result.flags & Kleo::KeyResolverCore::OpenPGPOnly && ident.autocryptEnabled()) {
@@ -3716,13 +3716,13 @@ void KMComposerWin::runKeyResolver()
                     } else {
                         const auto gossipKey = rec->gossipKey();
                         if (!gossipKey.isBad() && gossipKey.canEncrypt()) {
-                            gossip_keys.push_back(recipient);
+                            gossipKeys.push_back(recipient);
                             autocryptKey = gossipKey;
                         }
                     }
                 }
                 if (!autocryptKey.isNull()) {
-                    autocrypt_keys.push_back(recipient);
+                    autocryptKeys.push_back(recipient);
                     result.solution.encryptionKeys[recipient].push_back(autocryptKey);
                 } else {
                     allResolved = false;
@@ -3757,23 +3757,23 @@ void KMComposerWin::runKeyResolver()
             addrSpec = recipient->email();
         }
 
-        auto resolved_keys = result.solution.encryptionKeys[addrSpec];
+        auto resolvedKeys = result.solution.encryptionKeys[addrSpec];
         GpgME::Key key;
-        if (resolved_keys.size() == 0) { // no key found for recipient
+        if (resolvedKeys.size() == 0) { // no key found for recipient
             // Search for any key, also for not accepted ons, to at least give the user more info.
             key = Kleo::KeyCache::instance()->findBestByMailBox(addrSpec.toUtf8().constData(), GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::Encrypt);
             key.update(); // We need tofu information for key.
             recipient->setKey(key);
         } else { // A key was found for recipient
-            key = resolved_keys.front();
+            key = resolvedKeys.front();
             if (recipient->key().primaryFingerprint() != key.primaryFingerprint()) {
                 key.update(); // We need tofu information for key.
                 recipient->setKey(key);
             }
         }
 
-        const bool autocryptKey = autocrypt_keys.contains(addrSpec);
-        const bool gossipKey = gossip_keys.contains(addrSpec);
+        const bool autocryptKey = autocryptKeys.contains(addrSpec);
+        const bool gossipKey = gossipKeys.contains(addrSpec);
         annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
 
         if (!key.isNull()) {
