@@ -19,6 +19,7 @@
 #include <QList>
 #include <QPointer>
 #include <QUrl>
+
 namespace Akonadi
 {
 class Tag;
@@ -329,8 +330,27 @@ public:
     KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
 
 private:
-    Q_REQUIRED_RESULT Result execute() override;
+    Result execute() override;
     MessageViewer::Viewer *mViewer = nullptr;
+};
+
+class KMAILTESTS_TESTS_EXPORT KMDeleteAttachmentsCommand : public KMCommand
+{
+    Q_OBJECT
+public:
+    KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
+
+private Q_SLOTS:
+    void slotUpdateResult(KJob *job);
+    void slotCanceled();
+
+private:
+    Q_REQUIRED_RESULT Result execute() override;
+    void complete(KMCommand::Result result);
+
+    KPIM::ProgressItem *mProgressItem = nullptr;
+    MessageViewer::Viewer *mViewer = nullptr;
+    QList<KJob *> mRunningJobs;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMReplyCommand : public KMCommand

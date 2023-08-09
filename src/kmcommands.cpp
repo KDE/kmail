@@ -1755,6 +1755,100 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     return Failed;
 }
 
+KMDeleteAttachmentsCommand::KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer)
+    : KMCommand(parent, msgs)
+    , mViewer(viewer)
+{
+    fetchScope().fetchFullPayload(true);
+}
+
+KMCommand::Result KMDeleteAttachmentsCommand::execute()
+{
+    setEmitsCompletedItself(true);
+    setDeletesItself(true);
+
+    for (const auto &item : retrievedMsgs()) {
+        if (!item.hasPayload<KMime::Message::Ptr>()) {
+            qCWarning(KMAIL_LOG) << "Retrieved Item" << item.id() << "does not have KMime::Message payload, ignoring.";
+            continue;
+        }
+
+        auto message = item.payload<KMime::Message::Ptr>();
+        const auto attachments = message->attachments();
+        if (!attachments.empty()) {
+            if (const auto actuallyDeleted = MessageViewer::Util::deleteAttachments(attachments); actuallyDeleted > 0) {
+                qCDebug(KMAIL_LOG) << "Deleted" << actuallyDeleted << "attachments from message" << item.id() << "(out of" << attachments.size()
+                                   << "attachments found)";
+                Akonadi::Item updateItem(item);
+                updateItem.setPayloadFromData(message->encodedContent());
+                updateItem.setRemoteId(QString()); // clear remoteID as we will be re-uploading the message
+                auto job = new Akonadi::ItemModifyJob(updateItem, this);
+                job->disableRevisionCheck();
+                connect(job, &Akonadi::ItemModifyJob::finished, this, &KMDeleteAttachmentsCommand::slotUpdateResult);
+                mRunningJobs.push_back(job);
+            } else {
+                qCDebug(KMAIL_LOG) << "Message" << item.id() << "not modified - no attachments were actually deleted"
+                                   << "(out of" << attachments.size() << "attachments found)";
+            }
+        } else {
+            qCDebug(KMAIL_LOG) << "Message" << item.id() << "has no attachments to delete, skipping";
+        }
+    }
+
+    qCDebug(KMAIL_LOG) << mRunningJobs.size() << "Items now pending update after deleting attachments";
+
+    if (!mRunningJobs.empty()) {
+        mProgressItem = ProgressManager::createProgressItem(QLatin1String("deleteAttachments") + ProgressManager::getUniqueID(),
+                                                            i18nc("@info:progress", "Deleting Attachments"),
+                                                            QString(),
+                                                            true,
+                                                            KPIM::ProgressItem::Unknown);
+        mProgressItem->setTotalItems(mRunningJobs.size());
+        connect(mProgressItem, &ProgressItem::progressItemCanceled, this, &KMDeleteAttachmentsCommand::slotCanceled);
+    } else {
+        complete(OK);
+    }
+
+    return OK;
+}
+
+void KMDeleteAttachmentsCommand::slotCanceled()
+{
+    for (auto job : mRunningJobs) {
+        job->kill();
+    }
+    complete(KMCommand::Canceled);
+}
+
+void KMDeleteAttachmentsCommand::slotUpdateResult(KJob *job)
+{
+    mRunningJobs.removeOne(job);
+
+    if (mProgressItem) {
+        mProgressItem->setCompletedItems(mProgressItem->completedItems() + 1);
+    }
+
+    if (job->error()) {
+        showJobError(job);
+        complete(Failed);
+    } else if (mRunningJobs.empty()) {
+        complete(OK);
+    }
+}
+
+void KMDeleteAttachmentsCommand::complete(KMCommand::Result result)
+{
+    if (mProgressItem) {
+        mProgressItem->setComplete();
+        mProgressItem = nullptr;
+    }
+
+    qCDebug(KMAIL_LOG) << "Deleting attachments completed with result" << result;
+    setResult(result);
+    Q_EMIT completed(this);
+    deleteLater();
+}
+
 KMResendMessageCommand::KMResendMessageCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent, msg)
 {
