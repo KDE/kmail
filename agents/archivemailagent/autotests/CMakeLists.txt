@@ -5,7 +5,7 @@ ecm_qt_declare_logging_category(autotest_categories_SRCS HEADER archivemailagent
 
 # Convenience macro to add unit tests.
 macro( archivemail_agent _source)
-    set( _test ${_source} ../archivemailwidget.cpp ../addarchivemaildialog.cpp ../widgets/formatcombobox.cpp ../widgets/unitcombobox.cpp ${autotest_categories_SRCS})
+    set( _test ${_source} ../archivemailrangewidget.cpp ../archivemailwidget.cpp ../addarchivemaildialog.cpp ../widgets/formatcombobox.cpp ../widgets/unitcombobox.cpp ${autotest_categories_SRCS})
     ki18n_wrap_ui(_test ../ui/archivemailwidget.ui )
     get_filename_component( _name ${_source} NAME_WE )
     add_executable( ${_name} ${_test} ${_name}.h)
@@ -18,3 +18,4 @@ archivemail_agent(archivemailinfotest.cpp )
 archivemail_agent(archivemailwidgettest.cpp)
 archivemail_agent(formatcomboboxtest.cpp)
 archivemail_agent(unitcomboboxtest.cpp)
+archivemail_agent(archivemailrangewidgettest.cpp)
