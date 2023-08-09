@@ -93,6 +93,7 @@ target_sources(kmailprivate PRIVATE
     identity/identityinvalidfolder.cpp
     identity/identityfolderrequester.cpp
     editor/kmcomposereditorng.cpp
+    editor/encryptionstate.cpp
     editor/subjectlineeditwithautocorrection.cpp
     editor/subjectlineeditwithautocorrection.h
     editor/composer.cpp
@@ -112,6 +113,7 @@ target_sources(kmailprivate PRIVATE
     editor/warningwidgets/incorrectidentityfolderwarning.cpp
     editor/warningwidgets/attachmentaddedfromexternalwarning.cpp
     editor/warningwidgets/toomanyrecipientswarning.cpp
+    editor/warningwidgets/nearexpirywarning.cpp
     editor/potentialphishingemail/potentialphishingemailwarning.cpp
     editor/potentialphishingemail/potentialphishingemailjob.cpp
     editor/potentialphishingemail/potentialphishingdetaildialog.cpp
@@ -231,6 +233,7 @@ target_sources(kmailprivate PRIVATE
     editor/composer.h
     editor/codec/codecaction.h
     editor/codec/codecmanager.h
+    editor/encryptionstate.h
     editor/kmcomposerwin.h
     editor/attachment/attachmentcontroller.h
     editor/attachment/attachmentview.h
@@ -245,6 +248,7 @@ target_sources(kmailprivate PRIVATE
     editor/warningwidgets/incorrectidentityfolderwarning.h
     editor/warningwidgets/attachmentaddedfromexternalwarning.h
     editor/warningwidgets/toomanyrecipientswarning.h
+    editor/warningwidgets/nearexpirywarning.h
     editor/potentialphishingemail/potentialphishingemailwarning.h
     editor/potentialphishingemail/potentialphishingemailjob.h
     editor/potentialphishingemail/potentialphishingdetaildialog.h

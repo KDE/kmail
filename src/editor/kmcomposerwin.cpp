@@ -16,6 +16,7 @@
 #include "attachment/attachmentview.h"
 #include "codec/codecaction.h"
 #include "custommimeheader.h"
+#include "editor/encryptionstate.h"
 #include "editor/kmcomposereditorng.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h"
@@ -26,6 +27,7 @@
 #include "editor/potentialphishingemail/potentialphishingemailwarning.h"
 #include "editor/warningwidgets/attachmentaddedfromexternalwarning.h"
 #include "editor/warningwidgets/incorrectidentityfolderwarning.h"
+#include "editor/warningwidgets/nearexpirywarning.h"
 #include "editor/warningwidgets/toomanyrecipientswarning.h"
 #include "job/addressvalidationjob.h"
 #include "job/dndfromarkjob.h"
@@ -76,7 +78,10 @@
 
 #include <KCursorSaver>
 
-#include <Libkleo/KeySelectionDialog>
+#include <Libkleo/Enum>
+#include <Libkleo/ExpiryChecker>
+#include <Libkleo/KeyCache>
+#include <Libkleo/KeyResolverCore>
 
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/FolderRequester>
@@ -142,8 +147,6 @@
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
 
-#include <QGpgME/ExportJob>
-#include <QGpgME/KeyForMailboxJob>
 #include <QGpgME/Protocol>
 
 // KDE Frameworks includes
@@ -187,6 +190,7 @@
 // GPGME
 #include <gpgme++/key.h>
 #include <gpgme++/keylistresult.h>
+#include <gpgme++/tofuinfo.h>
 
 #include <KDialogJobUiDelegate>
 #include <KIO/CommandLauncherJob>
@@ -240,12 +244,14 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mAttachmentMissing(new AttachmentMissingWarning(this))
     , mExternalEditorWarning(new ExternalEditorWarning(this))
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
+    , mNearExpiryWarning(new NearExpiryWarning(this))
     , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
     , mPotentialPhishingEmailWarning(new PotentialPhishingEmailWarning(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
     , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
+    , mKeyCache(Kleo::KeyCache::mutableInstance())
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
@@ -264,6 +270,46 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mComposerBase, &MessageComposer::ComposerViewBase::modified, this, &KMComposerWin::setModified);
 
     (void)new MailcomposerAdaptor(this);
+
+    connect(mComposerBase->expiryChecker().get(),
+            &Kleo::ExpiryChecker::expiryMessage,
+            this,
+            [&](const GpgME::Key &key, QString msg, Kleo::ExpiryChecker::ExpiryInformation info, bool isNewMessage) {
+                Q_UNUSED(isNewMessage);
+                if (info == Kleo::ExpiryChecker::OwnKeyExpired || info == Kleo::ExpiryChecker::OwnKeyNearExpiry) {
+                    const auto plainMsg = msg.replace(QStringLiteral("<p>"), QStringLiteral(" "))
+                                              .replace(QStringLiteral("</p>"), QStringLiteral(" "))
+                                              .replace(QStringLiteral("<p align=center>"), QStringLiteral(" "));
+                    mNearExpiryWarning->addInfo(plainMsg);
+                    mNearExpiryWarning->setWarning(info == Kleo::ExpiryChecker::OwnKeyExpired);
+                    mNearExpiryWarning->animatedShow();
+                }
+                const QList<KPIM::MultiplyingLine *> lstLines = mComposerBase->recipientsEditor()->lines();
+                for (KPIM::MultiplyingLine *line : lstLines) {
+                    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+                    if (recipient->key().primaryFingerprint() == key.primaryFingerprint()) {
+                        auto recipientLine = qobject_cast<MessageComposer::RecipientLineNG *>(line);
+                        QString iconname = QStringLiteral("emblem-warning");
+                        if (info == Kleo::ExpiryChecker::OtherKeyExpired) {
+                            mEncryptionState.setAcceptedSolution(false);
+                            iconname = QStringLiteral("emblem-error");
+                            const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
+                            const auto hasOverride = mEncryptionState.hasOverride();
+                            const auto encrypt = mEncryptionState.encrypt();
+
+                            const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+                            if (!showAllIcons) {
+                                recipientLine->setIcon(QIcon(), msg);
+                                return;
+                            }
+                        }
+
+                        recipientLine->setIcon(QIcon::fromTheme(iconname), msg);
+                        return;
+                    }
+                }
+            });
+
     mdbusObjectPath = QLatin1String("/Composer_") + QString::number(++s_composerNumber);
     QDBusConnection::sessionBus().registerObject(mdbusObjectPath, this);
 
@@ -335,6 +381,18 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mEdtSubject, &SubjectLineEditWithAutoCorrection::handleMimeData, this, [this](const QMimeData *mimeData) {
         insertFromMimeData(mimeData, false);
     });
+
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, this, &KMComposerWin::updateSignatureAndEncryptionStateIndicators);
+    connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
+    connect(&mEncryptionState, &EncryptionState::overrideChanged, this, &KMComposerWin::runKeyResolver);
+    connect(&mEncryptionState, &EncryptionState::acceptedSolutionChanged, this, &KMComposerWin::slotEncryptionButtonIconUpdate);
+
+    mRunKeyResolverTimer = new QTimer(this);
+    mRunKeyResolverTimer->setSingleShot(true);
+    mRunKeyResolverTimer->setInterval(500ms);
+    connect(mRunKeyResolverTimer, &QTimer::timeout, this, &KMComposerWin::runKeyResolver);
+
     mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
     mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
     mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);
@@ -352,7 +410,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mSplitter->addWidget(mSnippetSplitter);
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
-    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
     vbox->setContentsMargins({});
@@ -379,6 +436,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     vbox->addWidget(mAttachmentFromExternalMissing);
     vbox->addWidget(mTooMyRecipientWarning);
+    vbox->addWidget(mNearExpiryWarning);
 
     vbox->addWidget(mCryptoStateIndicatorWidget);
     vbox->addWidget(mRichTextEditorwidget);
@@ -480,6 +538,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposerWin::slotFolderRemoved);
     connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::slotConfigChanged);
+    connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::runKeyResolver);
 
     mMainWidget->resize(800, 600);
     setCentralWidget(mMainWidget);
@@ -730,6 +789,7 @@ void KMComposerWin::readConfig(bool reload)
 {
     mEdtFrom->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
     mComposerBase->recipientsEditor()->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
+    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
@@ -985,8 +1045,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 
     connect(mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::focusDown, mEdtSubject, qOverload<>(&QWidget::setFocus));
     connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::focusUp, mComposerBase->recipientsEditor(), &KPIM::MultiplyingLineEditor::setFocusBottom);
-
-    mComposerBase->recipientsEditor();
 
     if (!fromSlot) {
         mSubjectAction->setChecked(std::abs(mShowHeaders) & HDR_SUBJECT);
@@ -1410,7 +1468,9 @@ void KMComposerWin::setupActions()
 
     changeCryptoAction();
 
-    connect(mEncryptAction, &KToggleAction::triggered, this, &KMComposerWin::slotEncryptToggled);
+    connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, mEncryptAction, &KToggleAction::setChecked);
+    connect(mEncryptAction, &KToggleAction::triggered, &mEncryptionState, &EncryptionState::toggleOverride);
     connect(mSignAction, &KToggleAction::triggered, this, &KMComposerWin::slotSignToggled);
 
     QStringList listCryptoFormat;
@@ -1574,15 +1634,14 @@ void KMComposerWin::changeCryptoAction()
     if (!QGpgME::openpgp() && !QGpgME::smime()) {
         // no crypto whatsoever
         mEncryptAction->setEnabled(false);
-        setEncryption(false);
+        mEncryptionState.setPossibleEncrypt(false);
         mSignAction->setEnabled(false);
         setSigning(false);
     } else {
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
-        setEncryption(false);
-        setSigning((canOpenPGPSign || canSMIMESign) && pgpAutoSign());
+        setSigning((canOpenPGPSign || canSMIMESign) && ident.pgpAutoSign());
     }
 }
 
@@ -1772,7 +1831,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         slotIdentityChanged(val);
     });
 
-    mComposerBase->setMessage(newMsg, allowDecryption);
     mMsg = newMsg;
 
     // manually load the identity's value into the fields; either the one from the
@@ -1783,7 +1841,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     }
     slotIdentityChanged(mId, true /*initalChange*/);
     // Fixing the identities with auto signing activated
-    mLastSignActionState = mSignAction->isChecked();
+    mLastSignActionState = sign();
 
     // Add initial data.
     MessageComposer::PluginEditorConverterInitialData data;
@@ -1845,10 +1903,15 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
-        setEncryption(mLastEncryptActionState);
         setSigning((canOpenPGPSign || canSMIMESign) && mLastSignActionState);
+    } else {
+        mEncryptionState.setPossibleEncrypt(false);
     }
     updateSignatureAndEncryptionStateIndicators();
+
+    // We need to set encryption/signing first before adding content.
+    // This is important if we are in auto detect the encrypt mode.
+    mComposerBase->setMessage(mMsg, allowDecryption);
 
     QString kmailFcc;
     if (auto hdr = mMsg->headerByType("X-KMail-Fcc")) {
@@ -2539,19 +2602,13 @@ void KMComposerWin::slotUpdateWindowTitle()
     }
 }
 
-void KMComposerWin::slotEncryptToggled(bool on)
-{
-    setEncryption(on, true);
-    updateSignatureAndEncryptionStateIndicators();
-}
-
 void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
 {
     const bool wasModified = isModified();
     if (setByUser) {
         setModified(true);
     }
-    if (!mEncryptAction->isEnabled()) {
+    if (!mEncryptionState.encrypt()) {
         encrypt = false;
     }
     // check if the user wants to encrypt messages to himself and if he defined
@@ -2572,29 +2629,21 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
         encrypt = false;
     }
 
-    // make sure the mEncryptAction is in the right state
-    mEncryptAction->setChecked(encrypt);
-    mEncryptAction->setProperty("setByUser", setByUser);
-    if (!setByUser) {
-        updateSignatureAndEncryptionStateIndicators();
-    }
-
-    // show the appropriate icon
-    if (encrypt) {
-        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-encrypt")));
+    if (setByUser) {
+        mEncryptionState.setOverride(setByUser);
     } else {
-        mEncryptAction->setIcon(QIcon::fromTheme(QStringLiteral("document-decrypt")));
+        mEncryptionState.unsetOverride();
     }
 
     if (setByUser) {
-        // User has toggled encryption, go over all recipients
-        const auto lst = mComposerBase->recipientsEditor()->lines();
-        for (auto line : lst) {
-            if (encrypt) {
-                // Encryption was enabled, update encryption status of all recipients
-                slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
-            } else {
-                // Encryption was disabled, remove the encryption indicator
+        if (encrypt) {
+            if (mKeyCache->initialized()) {
+                runKeyResolver();
+            }
+        } else {
+            // Encryption was disabled, remove the encryption indicator
+            const auto lst = mComposerBase->recipientsEditor()->lines();
+            for (auto line : lst) {
                 auto edit = qobject_cast<MessageComposer::RecipientLineNG *>(line);
                 edit->setIcon(QIcon());
                 auto recipient = edit->data().dynamicCast<MessageComposer::Recipient>();
@@ -2871,7 +2920,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
         // we'll call send from within slotDoDelaySend
     } else {
-        if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptAction->isChecked() && KMailSettings::self()->alwaysEncryptDrafts()
+        if (saveIn == MessageComposer::MessageSender::SaveInDrafts && mEncryptionState.encrypt() && KMailSettings::self()->alwaysEncryptDrafts()
             && mComposerBase->to().isEmpty() && mComposerBase->cc().isEmpty()) {
             KMessageBox::information(this,
                                      i18n("You must specify at least one receiver "
@@ -2926,11 +2975,10 @@ void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod met
     if (mForceDisableHtml) {
         disableHtml(MessageComposer::ComposerViewBase::NoConfirmationNeeded);
     }
-    const bool sign = mSignAction->isChecked();
-    const bool encrypt = mEncryptAction->isChecked();
+    const bool encrypt = mEncryptionState.encrypt();
 
     mComposerBase->setCryptoOptions(
-        sign,
+        sign(),
         encrypt,
         cryptoMessageFormat(),
         ((saveIn != MessageComposer::MessageSender::SaveInNone && !KMailSettings::self()->alwaysEncryptDrafts()) || mSigningAndEncryptionExplicitlyDisabled));
@@ -3390,25 +3438,140 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     }
 }
 
+void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &ident)
+{
+    mNearExpiryWarning->clearInfo();
+    mNearExpiryWarning->hide();
+
+    if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
+        if (!ident.pgpEncryptionKey().isEmpty()) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
+                                                  "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable for encryption.",
+                                                  QString::fromUtf8(ident.pgpEncryptionKey())));
+                mNearExpiryWarning->setWarning(true);
+                mNearExpiryWarning->show();
+            } else {
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
+            }
+        }
+        if (!ident.pgpSigningKey().isEmpty()) {
+            if (ident.pgpSigningKey() != ident.pgpEncryptionKey()) {
+                auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
+                if (key.isNull() || !key.canSign()) {
+                    mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
+                                                      "Your selected PGP signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
+                                                      QString::fromUtf8(ident.pgpSigningKey())));
+                    mNearExpiryWarning->setWarning(true);
+                    mNearExpiryWarning->show();
+                } else {
+                    mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                }
+            }
+        }
+    }
+
+    if (cryptoMessageFormat() & Kleo::AnySMIME) {
+        if (!ident.smimeEncryptionKey().isEmpty()) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
+                                                  "Your selected SMIME key (%1) doesn't exist in your keyring or is not suitable for encryption.",
+                                                  QString::fromUtf8(ident.smimeEncryptionKey())));
+                mNearExpiryWarning->setWarning(true);
+                mNearExpiryWarning->show();
+            } else {
+                mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
+            }
+        }
+        if (!ident.smimeSigningKey().isEmpty()) {
+            if (ident.smimeSigningKey() != ident.smimeEncryptionKey()) {
+                auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
+                if (key.isNull() || !key.canSign()) {
+                    mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
+                                                      "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
+                                                      QString::fromUtf8(ident.smimeSigningKey())));
+                    mNearExpiryWarning->setWarning(true);
+                    mNearExpiryWarning->show();
+                } else {
+                    mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
+                }
+            }
+        }
+    }
+}
+
 void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagementCore::Identity &ident, uint uoid, bool wasModified)
 {
     // disable certain actions if there is no PGP user identity set
     // for this profile
-    bool bNewIdentityHasSigningKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
-    bool bNewIdentityHasEncryptionKey = !ident.pgpSigningKey().isEmpty() || !ident.smimeSigningKey().isEmpty();
+    bool bPGPEncryptionKey = !ident.pgpEncryptionKey().isEmpty();
+    bool bPGPSigningKey = !ident.pgpSigningKey().isEmpty();
+    bool bSMIMEEncryptionKey = !ident.smimeEncryptionKey().isEmpty();
+    bool bSMIMESigningKey = !ident.smimeSigningKey().isEmpty();
+    if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
+        if (bPGPEncryptionKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                bPGPEncryptionKey = false;
+            }
+        }
+        if (bPGPSigningKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
+            if (key.isNull() || !key.canSign()) {
+                bPGPSigningKey = false;
+            }
+        }
+    } else {
+        bPGPEncryptionKey = false;
+        bPGPSigningKey = false;
+    }
+
+    if (cryptoMessageFormat() & Kleo::AnySMIME) {
+        if (bSMIMEEncryptionKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
+            if (key.isNull() || !key.canEncrypt()) {
+                bSMIMEEncryptionKey = false;
+            }
+        }
+        if (bSMIMESigningKey) {
+            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
+            if (key.isNull() || !key.canSign()) {
+                bSMIMESigningKey = false;
+            }
+        }
+    } else {
+        bSMIMEEncryptionKey = false;
+        bSMIMESigningKey = false;
+    }
+
+    bool bNewIdentityHasSigningKey = bPGPSigningKey || bSMIMESigningKey;
+    bool bNewIdentityHasEncryptionKey = bPGPEncryptionKey || bSMIMEEncryptionKey;
+
+    if (!mKeyCache->initialized()) {
+        // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
+        mKeyCache->startKeyListing();
+        connect(mKeyCache.get(), &Kleo::KeyCache::keyListingDone, this, [this, &ident]() {
+            checkOwnKeyExpiry(ident);
+            runKeyResolver();
+        });
+    } else {
+        checkOwnKeyExpiry(ident);
+    }
+
     // save the state of the sign and encrypt button
     if (!bNewIdentityHasEncryptionKey && mLastIdentityHasEncryptionKey) {
-        mLastEncryptActionState = mEncryptAction->isChecked();
-        setEncryption(false);
+        mLastEncryptActionState = mEncryptionState.encrypt();
     }
+
+    mSignAction->setEnabled(bNewIdentityHasSigningKey);
+
     if (!bNewIdentityHasSigningKey && mLastIdentityHasSigningKey) {
-        mLastSignActionState = mSignAction->isChecked();
+        mLastSignActionState = sign();
         setSigning(false);
     }
     // restore the last state of the sign and encrypt button
-    if (bNewIdentityHasEncryptionKey && !mLastIdentityHasEncryptionKey) {
-        setEncryption(mLastEncryptActionState);
-    }
     if (bNewIdentityHasSigningKey && !mLastIdentityHasSigningKey) {
         setSigning(mLastSignActionState);
     }
@@ -3425,18 +3588,370 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     mInsertSignatureAtCursorPosition->setEnabled(isEnabledSignature);
 
     mId = uoid;
+
+    mEncryptionState.setPossibleEncrypt(true);
     changeCryptoAction();
+    mEncryptionState.unsetOverride();
+    mEncryptionState.setPossibleEncrypt(mEncryptionState.possibleEncrypt() && bNewIdentityHasEncryptionKey);
+    mEncryptionState.setAutoEncrypt(ident.pgpAutoEncrypt());
+
     // make sure the From and BCC fields are shown if necessary
     rethinkFields(false);
     setModified(wasModified);
 
-    // Update encryption status of all recipients, if encryption state is not set by user
-    const bool setByUser = mEncryptAction->property("setByUser").toBool();
-    if (!setByUser && pgpAutoEncrypt()) {
-        const auto lst = mComposerBase->recipientsEditor()->lines();
-        for (auto line : lst) {
-            slotRecipientAdded(qobject_cast<MessageComposer::RecipientLineNG *>(line));
+    if (ident.pgpAutoEncrypt() && mKeyCache->initialized()) {
+        runKeyResolver();
+    }
+}
+
+auto findSendersUid(const std::string &addrSpec, const std::vector<GpgME::UserID> &userIds)
+{
+    return std::find_if(userIds.cbegin(), userIds.cend(), [&addrSpec](const auto &uid) {
+        return uid.addrSpec() == addrSpec || (uid.addrSpec().empty() && std::string(uid.email()) == addrSpec)
+            || (uid.addrSpec().empty() && (!uid.email() || !*uid.email()) && uid.name() == addrSpec);
+    });
+}
+
+std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
+{
+    const auto ident = identity();
+    auto keyResolverCore = std::make_unique<Kleo::KeyResolverCore>(true, sign());
+
+    keyResolverCore->setMinimumValidity(GpgME::UserID::Unknown);
+
+    QStringList signingKeys, encryptionKeys;
+
+    if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
+        if (!ident.pgpSigningKey().isEmpty()) {
+            signingKeys.push_back(QLatin1String(ident.pgpSigningKey()));
         }
+        if (!ident.pgpEncryptionKey().isEmpty()) {
+            encryptionKeys.push_back(QLatin1String(ident.pgpEncryptionKey()));
+        }
+    }
+
+    if (cryptoMessageFormat() & Kleo::AnySMIME) {
+        if (!ident.smimeSigningKey().isEmpty()) {
+            signingKeys.push_back(QLatin1String(ident.smimeSigningKey()));
+        }
+        if (!ident.smimeEncryptionKey().isEmpty()) {
+            encryptionKeys.push_back(QLatin1String(ident.smimeEncryptionKey()));
+        }
+    }
+
+    keyResolverCore->setSender(ident.fullEmailAddr());
+    keyResolverCore->setSigningKeys(signingKeys);
+    keyResolverCore->setOverrideKeys({{GpgME::UnknownProtocol, {{keyResolverCore->normalizedSender(), encryptionKeys}}}});
+
+    QStringList recipients;
+    const auto lst = mComposerBase->recipientsEditor()->lines();
+    for (auto line : lst) {
+        auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+        recipients.push_back(recipient->email());
+    }
+
+    keyResolverCore->setRecipients(recipients);
+    return keyResolverCore;
+}
+
+void KMComposerWin::slotEncryptionButtonIconUpdate()
+{
+    const auto state = mEncryptionState.encrypt();
+    const auto setByUser = mEncryptionState.override();
+    const auto acceptedSolution = mEncryptionState.acceptedSolution();
+
+    auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));
+    QString tooltip;
+    if (state) {
+        tooltip = i18nc("@info:tooltip", "Encrypt");
+    } else {
+        tooltip = i18nc("@info:tooltip", "Not Encrypt");
+        icon = QIcon::fromTheme(QStringLiteral("document-decrypt"));
+    }
+
+    if (acceptedSolution) {
+        auto overlay = QIcon::fromTheme(QStringLiteral("emblem-added"));
+        if (state) {
+            overlay = QIcon::fromTheme(QStringLiteral("emblem-checked"));
+        }
+        icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
+    } else {
+        if (state && setByUser) {
+            auto overlay = QIcon::fromTheme(QStringLiteral("emblem-warning"));
+            icon = KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner);
+        }
+    }
+    mEncryptAction->setIcon(icon);
+    mEncryptAction->setToolTip(tooltip);
+}
+
+void KMComposerWin::runKeyResolver()
+{
+    const auto ident = identity();
+    auto keyResolverCore = fillKeyResolver();
+    auto result = keyResolverCore->resolve();
+
+    QStringList autocryptKeys;
+    QStringList gossipKeys;
+
+    if (!(result.flags & Kleo::KeyResolverCore::AllResolved)) {
+        if (result.flags & Kleo::KeyResolverCore::OpenPGPOnly && ident.autocryptEnabled()) {
+            bool allResolved = true;
+            const auto storage = MessageCore::AutocryptStorage::self();
+            for (const auto &recipient : result.solution.encryptionKeys.keys()) {
+                const auto key = result.solution.encryptionKeys[recipient];
+                if (key.size() > 0) { // There are already keys found
+                    continue;
+                }
+                if (recipient == keyResolverCore->normalizedSender()) { // Don't care about own key as we show warnings in another way
+                    continue;
+                }
+                const auto rec = storage->getRecipient(recipient.toUtf8());
+                GpgME::Key autocryptKey;
+                if (rec) {
+                    const auto key = rec->gpgKey();
+                    if (!key.isBad() && key.canEncrypt()) {
+                        autocryptKey = key;
+                    } else {
+                        const auto gossipKey = rec->gossipKey();
+                        if (!gossipKey.isBad() && gossipKey.canEncrypt()) {
+                            gossipKeys.push_back(recipient);
+                            autocryptKey = gossipKey;
+                        }
+                    }
+                }
+                if (!autocryptKey.isNull()) {
+                    autocryptKeys.push_back(recipient);
+                    result.solution.encryptionKeys[recipient].push_back(autocryptKey);
+                } else {
+                    allResolved = false;
+                }
+            }
+            if (allResolved) {
+                result.flags = Kleo::KeyResolverCore::SolutionFlags(result.flags | Kleo::KeyResolverCore::AllResolved);
+            }
+        }
+    }
+
+    const auto lst = mComposerBase->recipientsEditor()->lines();
+
+    if (lst.size() == 1) {
+        const auto line = qobject_cast<MessageComposer::RecipientLineNG *>(lst.first());
+        if (line->recipientsCount() == 0) {
+            mEncryptionState.setAcceptedSolution(false);
+            return;
+        }
+    }
+
+    mEncryptionState.setAcceptedSolution(result.flags & Kleo::KeyResolverCore::AllResolved);
+
+    for (auto line_ : lst) {
+        auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
+        Q_ASSERT(line);
+        auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+
+        QString dummy;
+        QString addrSpec;
+        if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+            addrSpec = recipient->email();
+        }
+
+        auto resolvedKeys = result.solution.encryptionKeys[addrSpec];
+        GpgME::Key key;
+        if (resolvedKeys.size() == 0) { // no key found for recipient
+            // Search for any key, also for not accepted ons, to at least give the user more info.
+            key = Kleo::KeyCache::instance()->findBestByMailBox(addrSpec.toUtf8().constData(), GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::Encrypt);
+            key.update(); // We need tofu information for key.
+            recipient->setKey(key);
+        } else { // A key was found for recipient
+            key = resolvedKeys.front();
+            if (recipient->key().primaryFingerprint() != key.primaryFingerprint()) {
+                key.update(); // We need tofu information for key.
+                recipient->setKey(key);
+            }
+        }
+
+        const bool autocryptKey = autocryptKeys.contains(addrSpec);
+        const bool gossipKey = gossipKeys.contains(addrSpec);
+        annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
+
+        if (!key.isNull()) {
+            mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::EncryptionKey);
+        }
+    }
+}
+
+void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey)
+{
+    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
+    const auto key = recipient->key();
+
+    const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
+    const auto hasOverride = mEncryptionState.hasOverride();
+    const auto encrypt = mEncryptionState.encrypt();
+
+    const bool showPositiveIcons = showCryptoIndicator && encrypt;
+    const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+
+    QString dummy;
+    QString addrSpec;
+    bool invalidEmail = false;
+    if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
+        invalidEmail = true;
+        addrSpec = recipient->email();
+    }
+
+    if (key.isNull()) {
+        recipient->setEncryptionAction(Kleo::Impossible);
+        if (showAllIcons && !invalidEmail) {
+            const auto icon = QIcon::fromTheme(QStringLiteral("emblem-error"));
+            line->setIcon(icon, i18nc("@info:tooltip", "No key found for the recipient."));
+        } else {
+            line->setIcon(QIcon());
+        }
+        line->setProperty("keyStatus", invalidEmail ? InProgress : NoKey);
+        return;
+    }
+
+    KMComposerWin::CryptoKeyState keyState = KeyOk;
+
+    if (recipient->encryptionAction() != Kleo::DoIt) {
+        recipient->setEncryptionAction(Kleo::DoIt);
+    }
+
+    if (autocryptKey) { // We found an Autocrypt key for recipient
+        QIcon icon = QIcon::fromTheme(QStringLiteral("emblem-success"));
+        QString tooltip;
+        const auto storage = MessageCore::AutocryptStorage::self();
+        const auto rec = storage->getRecipient(addrSpec.toUtf8());
+        if (gossipKey) { // We found an Autocrypt gossip key for recipient
+            icon = QIcon::fromTheme(QStringLiteral("emblem-informations"));
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt gossip key is used for this recipient. We got this key from 3rd party recipients. "
+                            "This key is not verified.");
+        } else if (rec->prefer_encrypt()) {
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt key is used for this recipient. "
+                            "This key is not verified. The recipient prefers encrypted replies.");
+        } else {
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt key is used for this recipient. "
+                            "This key is not verified. The recipient does not prefer encrypted replies.");
+        }
+        if (showAllIcons) {
+            line->setIcon(icon, tooltip);
+        } else {
+            line->setIcon(QIcon());
+        }
+
+    } else {
+        QIcon icon;
+        QString tooltip;
+
+        const auto uids = key.userIDs();
+        const auto _uid = findSendersUid(addrSpec.toStdString(), uids);
+        GpgME::UserID uid;
+        if (_uid == uids.cend()) {
+            uid = key.userID(0);
+        } else {
+            uid = *_uid;
+        }
+
+        const auto trustLevel = Kleo::trustLevel(uid);
+        switch (trustLevel) {
+        case Kleo::Level0:
+            if (uid.tofuInfo().isNull()) {
+                tooltip = i18nc("@info:tooltip",
+                                "The encryption key is not trusted. It hasn't enough validity. "
+                                "You can sign the key, if you communicated the fingerprint by another channel. "
+                                "Click the icon for details.");
+                keyState = NoKey;
+            } else {
+                switch (uid.tofuInfo().validity()) {
+                case GpgME::TofuInfo::NoHistory:
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. "
+                                    "It hasn't used anywhere to guarantee it belongs to the stated person. "
+                                    "By using the key will be trusted more. "
+                                    "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                                    "Click the icon for details.");
+                    break;
+                case GpgME::TofuInfo::Conflict:
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. It has conflicting TOFU data. "
+                                    "Click the icon for details.");
+                    keyState = NoKey;
+                    break;
+                case GpgME::TofuInfo::ValidityUnknown:
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. It has unknown validity in TOFU data. "
+                                    "Click the icon for details.");
+                    keyState = NoKey;
+                    break;
+                default:
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. The key is marked as bad. "
+                                    "Click the icon for details.");
+                    keyState = NoKey;
+                }
+            }
+            break;
+        case Kleo::Level1:
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. "
+                            "By using the key will be trusted more. "
+                            "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                            "Click the icon for details.");
+            break;
+        case Kleo::Level2:
+            if (uid.tofuInfo().isNull()) {
+                tooltip = i18nc("@info:tooltip",
+                                "The encryption key is only marginally trusted. "
+                                "You can sign the key, if you communicated the fingerprint by another channel. "
+                                "Click the icon for details.");
+            } else {
+                tooltip =
+                    i18nc("@info:tooltip",
+                          "The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. "
+                          "By using the key will be trusted more. "
+                          "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                          "Click the icon for details.");
+            }
+            break;
+        case Kleo::Level3:
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is fully trusted. You can raise the security level, by signing the key. "
+                            "Click the icon for details.");
+            break;
+        case Kleo::Level4:
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is ultimately trusted or is signed by another ultimately trusted key. "
+                            "Click the icon for details.");
+            break;
+        default:
+            Q_UNREACHABLE();
+        }
+
+        if (keyState == NoKey) {
+            mEncryptionState.setAcceptedSolution(false);
+            if (showAllIcons) {
+                line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+            } else {
+                line->setIcon(QIcon());
+            }
+        } else if (trustLevel == Kleo::Level0 && encrypt) {
+            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-warning")), tooltip);
+        } else if (showPositiveIcons) {
+            // Magically, the icon name maps precisely to each trust level
+            // line->setIcon(QIcon::fromTheme(QStringLiteral("gpg-key-trust-level-%1").arg(trustLevel)), tooltip);
+            line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-success")), tooltip);
+        } else {
+            line->setIcon(QIcon());
+        }
+    }
+
+    if (line->property("keyStatus") != keyState) {
+        line->setProperty("keyStatus", keyState);
     }
 }
 
@@ -3552,7 +4067,7 @@ void KMComposerWin::setMaximumHeaderSize()
 
 void KMComposerWin::updateSignatureAndEncryptionStateIndicators()
 {
-    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(mSignAction->isChecked(), mEncryptAction->isChecked());
+    mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(sign(), mEncryptionState.encrypt());
 }
 
 void KMComposerWin::slotDictionaryLanguageChanged(const QString &language)
@@ -3685,56 +4200,32 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
         this->slotRecipientLineIconClicked(line);
     });
     connect(line, &MessageComposer::RecipientLineNG::destroyed, this, &KMComposerWin::slotRecipientEditorFocusChanged, Qt::QueuedConnection);
-    connect(line, &MessageComposer::RecipientLineNG::activeChanged, this, [this, line]() {
-        this->slotRecipientFocusLost(line);
-    });
+    connect(
+        line,
+        &MessageComposer::RecipientLineNG::activeChanged,
+        this,
+        [this, line]() {
+            this->slotRecipientFocusLost(line);
+        },
+        Qt::QueuedConnection);
 
     slotRecipientEditorFocusChanged();
 }
 
+bool KMComposerWin::sign() const
+{
+    return mSignAction->isChecked();
+}
+
 void KMComposerWin::slotRecipientEditorFocusChanged()
 {
-    // Already disabled
-    if (mEncryptAction->property("setByUser").toBool()) {
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
-    // Identity has no encryption key so no encryption is possible.
-    if (identity().pgpEncryptionKey().isEmpty()) {
-        setEncryption(false, false);
-        return;
-    }
-
-    // Focus changed, which basically means that user "committed" a new recipient.
-    // If we have at least one recipient that does not have a key, disable encryption
-    // (unless user enabled it manually), because we want to encrypt by default,
-    // but not by force
-    bool encrypt = false;
-    const auto lst = mComposerBase->recipientsEditor()->lines();
-    for (auto line_ : lst) {
-        auto line = qobject_cast<MessageComposer::RecipientLineNG *>(line_);
-
-        // There's still a lookup job running, so wait, slotKeyForMailBoxResult()
-        // will call us if the job returns empty key
-        if (line->property("keyLookupJob").isValid()) {
-            return;
-        }
-
-        const auto keyStatus = static_cast<CryptoKeyState>(line->property("keyStatus").toInt());
-        if (keyStatus == NoState) {
-            continue;
-        }
-
-        if (!line->recipient()->isEmpty() && keyStatus != KeyOk) {
-            setEncryption(false, false);
-            return;
-        }
-
-        encrypt = true;
-    }
-
-    if (encrypt) {
-        setEncryption(true, false);
+    if (mKeyCache->initialized()) {
+        mRunKeyResolverTimer->stop();
+        runKeyResolver();
     }
 }
 
@@ -3757,13 +4248,8 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
 
 void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
 {
-    // User has disabled encryption, don't bother checking the key...
-    if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    // Same if auto-encryption is not enabled in current identity settings
-    if (!pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    // Encryption is possible not possible to find encryption keys.
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
@@ -3771,50 +4257,28 @@ void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)
         return;
     }
 
-    const auto protocol = QGpgME::openpgp();
-    // If we don't have gnupg we can't look for keys
-    if (!protocol) {
+    if (!mKeyCache->initialized()) {
+        if (line->property("keyLookupJob").toBool()) {
+            return;
+        }
+
+        line->setProperty("keyLookupJob", true);
+        // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
+        connect(mKeyCache.get(), &Kleo::KeyCache::keyListingDone, this, [this, line]() {
+            slotRecipientAdded(line);
+        });
         return;
     }
 
-    auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
-    // check if is an already running key lookup job and if so, cancel it
-    // this is to prevent a slower job overwriting results of the job that we
-    // are about to start now.
-    const auto runningJob = line->property("keyLookupJob").value<QPointer<QGpgME::KeyForMailboxJob>>();
-    if (runningJob) {
-        disconnect(runningJob.data(), &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
-        runningJob->slotCancel();
-        line->setProperty("keyLookupJob", QVariant());
+    if (mKeyCache->initialized()) {
+        mRunKeyResolverTimer->start();
     }
-
-    QGpgME::KeyForMailboxJob *job = protocol->keyForMailboxJob();
-    if (!job) {
-        line->setProperty("keyStatus", NoKey);
-        recipient->setEncryptionAction(Kleo::Impossible);
-        return;
-    }
-
-    QString dummy;
-    QString addrSpec;
-    if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
-        addrSpec = recipient->email();
-    }
-    line->setProperty("keyLookupJob", QVariant::fromValue(QPointer<QGpgME::KeyForMailboxJob>(job)));
-    job->setProperty("recipient", QVariant::fromValue(recipient));
-    job->setProperty("line", QVariant::fromValue(QPointer<MessageComposer::RecipientLineNG>(line)));
-    connect(job, &QGpgME::KeyForMailboxJob::result, this, &KMComposerWin::slotKeyForMailBoxResult);
-    job->start(addrSpec, true);
 }
 
 void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *line)
 {
-    if (mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    // Same if auto-encryption is not enabled in current identity settings
-    if (!pgpAutoEncrypt() || identity().pgpEncryptionKey().isEmpty()) {
+    // Not possible to find encryption keys.
+    if (!mEncryptionState.possibleEncrypt()) {
         return;
     }
 
@@ -3822,126 +4286,8 @@ void KMComposerWin::slotRecipientFocusLost(MessageComposer::RecipientLineNG *lin
         return;
     }
 
-    if (line->property("keyLookupJob").toBool()) {
-        return;
-    }
-
-    if (static_cast<CryptoKeyState>(line->property("keyStatus").toInt()) != KeyOk) {
-        line->setProperty("keyStatus", NoKey);
-        setEncryption(false, false);
-    }
-}
-
-void KMComposerWin::slotKeyForMailBoxResult(const GpgME::KeyListResult &, const GpgME::Key &key, const GpgME::UserID &userID)
-{
-    QObject *job = sender();
-    Q_ASSERT(job);
-
-    // Check if the encryption was explicitly disabled while the job was running
-    if (!mEncryptAction->isChecked() && mEncryptAction->property("setByUser").toBool()) {
-        return;
-    }
-
-    auto recipient = job->property("recipient").value<MessageComposer::Recipient::Ptr>();
-    auto line = job->property("line").value<QPointer<MessageComposer::RecipientLineNG>>();
-
-    if (!recipient || !line) {
-        return;
-    }
-
-    line->setProperty("keyLookupJob", QVariant());
-    if (key.isNull() && identity().autocryptEnabled()) {
-        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
-        QIcon overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
-        QString tooltip;
-
-        QString dummy;
-        QString addrSpec;
-        if (KEmailAddress::splitAddress(recipient->email(), dummy, addrSpec, dummy) != KEmailAddress::AddressOk) {
-            addrSpec = recipient->email();
-        }
-        const auto storage = MessageCore::AutocryptStorage::self();
-        const auto rec = storage->getRecipient(addrSpec.toUtf8());
-        GpgME::Key autocryptKey;
-        if (rec) {
-            const auto key = rec->gpgKey();
-            if (!key.isNull() && !key.isRevoked() && !key.isExpired() && !key.isDisabled() && key.canEncrypt()) {
-                autocryptKey = key;
-                if (rec->prefer_encrypt()) {
-                    overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
-                    tooltip = i18n(
-                        "Autocrypt key is used for this recipient. This key is not verified. "
-                        "The recipient prefers encrypted replies.");
-                } else {
-                    tooltip = i18n(
-                        "Autocrypt key is used for this recipient. This key is not verified. "
-                        "The recipient does not prefer encrypted replies.");
-                }
-            } else {
-                const auto gossipKey = rec->gossipKey();
-                if (!gossipKey.isNull() && !gossipKey.isRevoked() && !gossipKey.isExpired() && !gossipKey.isDisabled() && gossipKey.canEncrypt()) {
-                    autocryptKey = gossipKey;
-                    tooltip = i18n("Autocrypt gossip key is used for this recipient. This key is not verified.");
-                }
-            }
-        }
-
-        if (!autocryptKey.isNull()) {
-            recipient->setEncryptionAction(Kleo::DoIt);
-            recipient->setKey(autocryptKey);
-            line->setProperty("keyStatus", KeyOk);
-            line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
-
-            slotRecipientEditorFocusChanged();
-        } else {
-            recipient->setEncryptionAction(Kleo::Impossible); // no key
-            line->setIcon(QIcon());
-            line->setProperty("keyStatus", InProgress);
-        }
-    } else if (key.isNull()) {
-        recipient->setEncryptionAction(Kleo::Impossible); // no key
-        line->setIcon(QIcon());
-        line->setProperty("keyStatus", InProgress);
-    } else {
-        recipient->setEncryptionAction(Kleo::DoIt);
-        recipient->setKey(key);
-
-        const QIcon icon = QIcon::fromTheme(QStringLiteral("gpg"));
-        QIcon overlay;
-        QString tooltip;
-        switch (userID.validity()) {
-        case GpgME::UserID::Ultimate:
-        case GpgME::UserID::Full:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-favorite"));
-            tooltip = i18n(
-                "High security encryption will be used for this recipient (the encryption key is fully trusted). "
-                "Click the icon for details.");
-            break;
-        case GpgME::UserID::Marginal:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-success"));
-            tooltip = i18n(
-                "Medium security encryption will be used for this recipient (the encryption key is marginally trusted). "
-                "Click the icon for details.");
-            break;
-        case GpgME::UserID::Never:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-error"));
-            tooltip = i18n(
-                "Low security encryption will be used for this recipient (the encryption key is untrusted). "
-                "Click the icon for details.");
-            break;
-        case GpgME::UserID::Undefined:
-        case GpgME::UserID::Unknown:
-            overlay = QIcon::fromTheme(QStringLiteral("emblem-information"));
-            tooltip = i18n(
-                "The email to this recipient will be encrypted, but the security of the encryption is unknown "
-                "(the encryption key could not be verified). Click the icon for details.");
-            break;
-        }
-
-        line->setProperty("keyStatus", KeyOk);
-        line->setIcon(KIconUtils::addOverlay(icon, overlay, Qt::BottomRightCorner), tooltip);
-
-        slotRecipientEditorFocusChanged();
+    if (mKeyCache->initialized()) {
+        mRunKeyResolverTimer->start();
     }
 }
 

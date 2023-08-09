@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-06 00:48+0000\n"
-"PO-Revision-Date: 2022-08-21 05:59+0200\n"
+"PO-Revision-Date: 2023-08-05 09:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
-msgstr ""
+msgstr "ფილტრის ჟურნალის ნახვა"
 
 #: filterlogdialog.cpp:74
 #, kde-format
@@ -32,7 +32,7 @@ msgstr "გაზიარება..."
 #: filterlogdialog.cpp:80
 #, kde-format
 msgid "&Log filter activities"
-msgstr ""
+msgstr "&ჟურნალის ფილტრის ქმდებები"
 
 #: filterlogdialog.cpp:85
 #, kde-format
@@ -44,7 +44,7 @@ msgstr ""
 #: filterlogdialog.cpp:89
 #, kde-format
 msgid "Logging Details"
-msgstr ""
+msgstr "ჟურნალის დეტალები"
 
 #: filterlogdialog.cpp:96
 #, kde-format
@@ -74,12 +74,12 @@ msgstr ""
 #: filterlogdialog.cpp:118
 #, kde-format
 msgid "Log filter actions"
-msgstr ""
+msgstr "ჟურნალის ფილტრის ქმდებები"
 
 #: filterlogdialog.cpp:128
 #, kde-format
 msgid "Log size limit:"
-msgstr ""
+msgstr "ჟურნალის ზომის ლიმიტი:"
 
 #: filterlogdialog.cpp:136
 #, kde-format
@@ -118,7 +118,7 @@ msgstr "KMail-ის შეცდომა"
 #: filtermanager.cpp:100
 #, kde-format
 msgid "Filtering message %1 of %2"
-msgstr ""
+msgstr "იფილტრება შეტყობინება %1/%2"
 
 #: filtermanager.cpp:187
 #, kde-format
@@ -153,7 +153,7 @@ msgstr ""
 #: filtermanager.cpp:580 filtermanager.cpp:608
 #, kde-format
 msgid "Filtering messages"
-msgstr ""
+msgstr "შეტყობინებების გაფილტვრა"
 
 #: mailfilteragent.cpp:109
 #, kde-format

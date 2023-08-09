@@ -8,7 +8,13 @@
 
 #include <QDir>
 #include <QObject>
+#include <QTemporaryDir>
 class KMKernel;
+
+namespace KMail
+{
+class Composer;
+}
 
 class KMComposerWinTest : public QObject
 {
@@ -20,18 +26,35 @@ public:
 private Q_SLOTS:
     void init();
     void cleanup();
+
     void initTestCase();
+    void cleanupTestCase();
 
     void testEncryption_data();
     void testEncryption();
 
-    void testSignature_data();
-    void testSignature();
+    void testSigning_data();
+    void testSigning();
+
+    void testNearExpiryWarningIdentity_data();
+    void testNearExpiryWarningIdentity();
 
     void testChangeIdentity();
+    void testChangeIdentityNearExpiryWarning();
+
+    void testOwnExpiry();
+    void testRecipientExpiry();
+
+    void testRecipientAnnotation_data();
+    void testRecipientAnnotation();
+
+    void checkKeys();
 
 private:
     void resetIdentities();
+    void toggleEncryption(KMail::Composer *composer);
+    void toggleSigning(KMail::Composer *composer);
     KMKernel *mKernel = nullptr;
     QDir autocryptDir;
+    QTemporaryDir gnupgDir;
 };

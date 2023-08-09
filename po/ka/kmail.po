@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-03 00:47+0000\n"
-"PO-Revision-Date: 2023-07-15 06:27+0200\n"
+"PO-Revision-Date: 2023-08-05 09:56+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3729,12 +3729,10 @@ msgid "Deleting messages"
 msgstr "შეტყობინებების წაშლა"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "დანართი"
+msgstr "დანართების წაშლა"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4240,12 +4238,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "დანართი"
+msgstr "დანართების წაშლა"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4520,11 +4516,10 @@ msgid "Save A&ttachments..."
 msgstr ""
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "მიმაგრებულ ფაილად"
+msgstr "ყველა დანართის წაშლა"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

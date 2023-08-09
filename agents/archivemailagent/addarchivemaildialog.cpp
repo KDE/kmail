@@ -25,6 +25,13 @@
 
 AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent)
     : QDialog(parent)
+    , mFolderRequester(new MailCommon::FolderRequester(this))
+    , mFormatComboBox(new FormatComboBox(this))
+    , mUnits(new UnitComboBox(this))
+    , mRecursiveCheckBox(new QCheckBox(i18n("Archive all subfolders"), this))
+    , mPath(new KUrlRequester(this))
+    , mDays(new QSpinBox(this))
+    , mMaximumArchive(new QSpinBox(this))
     , mInfo(info)
 {
     if (info) {
@@ -44,7 +51,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
 
     auto folderLabel = new QLabel(i18n("&Folder:"), this);
     mainLayout->addWidget(folderLabel, row, 0);
-    mFolderRequester = new MailCommon::FolderRequester(this);
     mFolderRequester->setObjectName(QStringLiteral("folder_requester"));
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
@@ -60,11 +66,9 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     formatLabel->setObjectName(QStringLiteral("label_format"));
     mainLayout->addWidget(formatLabel, row, 0);
 
-    mFormatComboBox = new FormatComboBox(this);
     mainLayout->addWidget(mFormatComboBox, row, 1);
     ++row;
 
-    mRecursiveCheckBox = new QCheckBox(i18n("Archive all subfolders"), this);
     mRecursiveCheckBox->setObjectName(QStringLiteral("recursive_checkbox"));
     mainLayout->addWidget(mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft);
     mRecursiveCheckBox->setChecked(true);
@@ -73,7 +77,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     auto pathLabel = new QLabel(i18n("Path:"), this);
     mainLayout->addWidget(pathLabel, row, 0);
     pathLabel->setObjectName(QStringLiteral("path_label"));
-    mPath = new KUrlRequester(this);
     mPath->lineEdit()->setTrapReturnKey(true);
     connect(mPath, &KUrlRequester::textChanged, this, &AddArchiveMailDialog::slotUpdateOkButton);
     mPath->setMode(KFile::Directory);
@@ -85,12 +88,10 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mainLayout->addWidget(dateLabel, row, 0);
 
     auto hlayout = new QHBoxLayout;
-    mDays = new QSpinBox(this);
     mDays->setMinimum(1);
     mDays->setMaximum(3600);
     hlayout->addWidget(mDays);
 
-    mUnits = new UnitComboBox(this);
     hlayout->addWidget(mUnits);
 
     mainLayout->addLayout(hlayout, row, 1);
@@ -98,7 +99,6 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
 
     auto maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
     mainLayout->addWidget(maxCountlabel, row, 0);
-    mMaximumArchive = new QSpinBox(this);
     mMaximumArchive->setMinimum(0);
     mMaximumArchive->setMaximum(9999);
     mMaximumArchive->setSpecialValueText(i18n("unlimited"));

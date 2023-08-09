@@ -15,6 +15,8 @@ target_sources(archivemailagent PRIVATE
     archivemailinfo.h
     job/archivejob.h
     archivemailagentutil.h
+    archivemailrangewidget.h
+    archivemailrangewidget.cpp
     )
 
 kconfig_add_kcfg_files(archivemailagent

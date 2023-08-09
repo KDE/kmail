@@ -31,14 +31,18 @@ ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries( cryptostateindicatorwidgettest Qt::Test  KPim6::MessageCore Qt::Widgets KF6::ConfigWidgets KF6::I18n kmailprivate)
 #####
 
+add_executable( encryptionstatetest encryptionstatetest.cpp encryptionstatetest.h)
+add_test(NAME encryptionstatetest COMMAND encryptionstatetest)
+ecm_mark_as_test(encryptionstatetest)
+target_link_libraries( encryptionstatetest Qt::Test kmailprivate)
+
 add_executable( kactionmenutransporttest kactionmenutransporttest.cpp kactionmenutransporttest.h)
 add_test(NAME kactionmenutransporttest COMMAND kactionmenutransporttest)
 ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries( kactionmenutransporttest Qt::Test  KPim6::AkonadiMime KF6::WidgetsAddons KF6::I18n KF6::ConfigGui kmailprivate)
 
-
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
-    "Qt::Test;KPim6::IdentityManagementWidgets;KPim6::MessageCore;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::ConfigWidgets;KF6::I18n;kmailprivate")
+    "Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::ConfigWidgets;KF6::I18n;kmailprivate")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim6::MailCommon;KPim6::Libkdepim;KF6::ItemViews;KPim6::TemplateParser;KF6::XmlGui;KF6::Completion;KF6::I18n")
 

@@ -14,6 +14,7 @@
 
 // KMail includes
 #include "editor/composer.h"
+#include "editor/encryptionstate.h"
 #include <MessageComposer/PluginEditorConvertTextInterface>
 // Qt includes
 #include <QFont>
@@ -29,6 +30,7 @@
 
 // Other includes
 #include <Libkleo/Enum>
+#include <Libkleo/KeyResolverCore>
 
 class QUrl;
 
@@ -58,6 +60,7 @@ class IncorrectIdentityFolderWarning;
 class KMailPluginEditorConvertTextManagerInterface;
 class KMailPluginGrammarEditorManagerInterface;
 class AttachmentAddedFromExternalWarning;
+class NearExpiryWarning;
 class KHamburgerMenu;
 class TooManyRecipientsWarning;
 class SubjectLineEditWithAutoCorrection;
@@ -69,6 +72,11 @@ class Transport;
 namespace KIdentityManagementCore
 {
 class Identity;
+}
+
+namespace Kleo
+{
+class KeyCache;
 }
 
 namespace KPIMTextEdit
@@ -346,12 +354,6 @@ private Q_SLOTS:
     void slotUpdateWindowTitle();
 
     /**
-     * Switch the icon to lock or unlock respectively.
-     * Change states of all encrypt check boxes in the attachments listview
-     */
-    void slotEncryptToggled(bool);
-
-    /**
      * Change states of all sign check boxes in the attachments listview
      */
     void slotSignToggled(bool);
@@ -421,10 +423,11 @@ private Q_SLOTS:
     void slotRecipientAdded(MessageComposer::RecipientLineNG *line);
     void slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line);
     void slotRecipientFocusLost(MessageComposer::RecipientLineNG *line);
-    void slotKeyForMailBoxResult(const GpgME::KeyListResult &result, const GpgME::Key &key, const GpgME::UserID &userID);
 
     void slotDelayedCheckSendNow();
     void slotUpdateComposer(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
+
+    void slotEncryptionButtonIconUpdate();
 
 public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
@@ -571,6 +574,7 @@ private:
     void slotTransportRemoved(int id, const QString &name);
 
     void updateComposerAfterIdentityChanged(const KIdentityManagementCore::Identity &ident, uint uoid, bool wasModified);
+    void checkOwnKeyExpiry(const KIdentityManagementCore::Identity &ident);
 
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
@@ -586,8 +590,16 @@ private:
     void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
 
+    Q_REQUIRED_RESULT bool sign() const;
+
+    std::unique_ptr<Kleo::KeyResolverCore> fillKeyResolver();
+    void runKeyResolver();
+    void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
+
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
+
+    EncryptionState mEncryptionState;
 
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
@@ -679,7 +691,9 @@ private:
     AttachmentMissingWarning *const mAttachmentMissing;
     ExternalEditorWarning *const mExternalEditorWarning;
     TooManyRecipientsWarning *const mTooMyRecipientWarning;
+    NearExpiryWarning *const mNearExpiryWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
+    QTimer *mRunKeyResolverTimer = nullptr;
     MailCommon::FolderRequester *mFccFolder = nullptr;
     bool mPreventFccOverwrite = false;
     bool mCheckForForgottenAttachments = true;
@@ -703,6 +717,8 @@ private:
 
     AttachmentAddedFromExternalWarning *const mAttachmentFromExternalMissing;
     KHamburgerMenu *mHamburgerMenu = nullptr;
+
+    std::shared_ptr<Kleo::KeyCache> mKeyCache;
 
     ModeType mModeType = ModeType::ComposerType;
 };
