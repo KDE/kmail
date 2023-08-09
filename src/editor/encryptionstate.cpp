@@ -135,3 +135,5 @@ bool EncryptionState::encrypt() const
 {
     return m_encrypt;
 }
+
+#include "moc_encryptionstate.cpp"

@@ -261,3 +261,5 @@ void EncryptionStateTest::encrypt()
     QCOMPARE(spyEncrypt.count(), 5);
     QCOMPARE(spyEncrypt.at(4).at(0), true);
 }
+
+#include "moc_encryptionstatetest.cpp"

@@ -74,3 +74,5 @@ void NearExpiryWarningTest::addInfo()
     w.addInfo(QStringLiteral("test2"));
     QCOMPARE(w.text(), QStringLiteral("<p>test1</p>\n<p>test2</p>"));
 }
+
+#include "moc_nearexpirywarningtest.cpp"

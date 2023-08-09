@@ -38,3 +38,5 @@ void NearExpiryWarning::clearInfo()
     setWarning(false);
     setText(QString());
 }
+
+#include "moc_nearexpirywarning.cpp"
