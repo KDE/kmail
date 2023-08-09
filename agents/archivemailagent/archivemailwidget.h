@@ -49,7 +49,7 @@ public:
 
 private:
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
-    bool verifyExistingArchive(ArchiveMailInfo *info) const;
+    Q_REQUIRED_RESULT bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 
     void slotDeleteItem();
