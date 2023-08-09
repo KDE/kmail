@@ -251,9 +251,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
     , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
+    , mKeyCache(Kleo::KeyCache::mutableInstance())
 {
-    mKeyCache = Kleo::KeyCache::mutableInstance();
-
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());
@@ -3700,7 +3699,7 @@ void KMComposerWin::runKeyResolver()
             bool allResolved = true;
             const auto storage = MessageCore::AutocryptStorage::self();
             for (const auto &recipient : result.solution.encryptionKeys.keys()) {
-                auto key = result.solution.encryptionKeys[recipient];
+                const auto key = result.solution.encryptionKeys[recipient];
                 if (key.size() > 0) { // There are already keys found
                     continue;
                 }

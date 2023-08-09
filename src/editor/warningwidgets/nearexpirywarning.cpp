@@ -36,5 +36,5 @@ void NearExpiryWarning::setWarning(bool warning)
 void NearExpiryWarning::clearInfo()
 {
     setWarning(false);
-    setText(QStringLiteral());
+    setText(QString());
 }
