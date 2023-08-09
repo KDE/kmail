@@ -26,7 +26,7 @@ void NearExpiryWarning::addInfo(const QString &msg)
 
 void NearExpiryWarning::setWarning(bool warning)
 {
-    if(warning) {
+    if (warning) {
         setMessageType(Warning);
     } else {
         setMessageType(Information);

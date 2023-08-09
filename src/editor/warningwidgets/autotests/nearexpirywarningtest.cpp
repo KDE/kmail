@@ -34,7 +34,6 @@ void NearExpiryWarningTest::shouldHaveDefaultValue()
     QVERIFY(w.isCloseButtonVisible());
 }
 
-
 void NearExpiryWarningTest::clearInfo()
 {
     QWidget wid;
@@ -73,5 +72,5 @@ void NearExpiryWarningTest::addInfo()
     w.addInfo(QStringLiteral("test1"));
     QCOMPARE(w.text(), QStringLiteral("<p>test1</p>"));
     w.addInfo(QStringLiteral("test2"));
-    QCOMPARE(w.text(),  QStringLiteral("<p>test1</p>\n<p>test2</p>"));
+    QCOMPARE(w.text(), QStringLiteral("<p>test1</p>\n<p>test2</p>"));
 }

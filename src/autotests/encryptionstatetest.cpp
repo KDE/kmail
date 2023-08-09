@@ -67,7 +67,6 @@ void EncryptionStateTest::override()
     QCOMPARE(spyEncrypt.at(1).at(0), false);
 }
 
-
 void EncryptionStateTest::unsetOverride()
 {
     EncryptionState e;
@@ -138,8 +137,6 @@ void EncryptionStateTest::toggleOverride()
     QCOMPARE(spyHasOverride.count(), 1);
     QCOMPARE(spyEncrypt.count(), 3);
     QCOMPARE(spyEncrypt.at(2).at(0), false);
-
-
 }
 
 void EncryptionStateTest::acceptedSolution()
@@ -171,7 +168,6 @@ void EncryptionStateTest::acceptedSolution()
     QCOMPARE(spyEncrypt.count(), 0);
 }
 
-
 void EncryptionStateTest::possibleEncrypt()
 {
     EncryptionState e;
@@ -201,7 +197,6 @@ void EncryptionStateTest::possibleEncrypt()
     QCOMPARE(spyEncrypt.count(), 0);
 }
 
-
 void EncryptionStateTest::autoEncrypt()
 {
     EncryptionState e;
@@ -230,7 +225,6 @@ void EncryptionStateTest::autoEncrypt()
     QCOMPARE(spy.at(1).at(0), false);
     QCOMPARE(spyEncrypt.count(), 0);
 }
-
 
 void EncryptionStateTest::encrypt()
 {

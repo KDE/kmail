@@ -7,12 +7,13 @@
 #pragma once
 
 #include <QDir>
-#include <QTemporaryDir>
 #include <QObject>
+#include <QTemporaryDir>
 class KMKernel;
 
-namespace KMail {
-    class Composer;
+namespace KMail
+{
+class Composer;
 }
 
 class KMComposerWinTest : public QObject
@@ -48,10 +49,11 @@ private Q_SLOTS:
     void testRecipientAnnotation();
 
     void checkKeys();
+
 private:
     void resetIdentities();
-    void toggleEncryption(KMail::Composer* composer);
-    void toggleSigning(KMail::Composer* composer);
+    void toggleEncryption(KMail::Composer *composer);
+    void toggleSigning(KMail::Composer *composer);
     KMKernel *mKernel = nullptr;
     QDir autocryptDir;
     QTemporaryDir gnupgDir;

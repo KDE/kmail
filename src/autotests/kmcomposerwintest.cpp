@@ -11,9 +11,9 @@
 #include <MessageComposer/Composer>
 #include <MessageComposer/RecipientsEditor>
 
-#include <gpgme.h>
 #include <gpgme++/key.h>
 #include <gpgme++/tofuinfo.h>
+#include <gpgme.h>
 
 #include <KEmailAddress>
 #include <KToggleAction>
@@ -32,9 +32,9 @@
 #include <QProcess>
 #include <QSignalSpy>
 #include <QStandardPaths>
-#include <QToolButton>
 #include <QTest>
 #include <QTimer>
+#include <QToolButton>
 
 #include <chrono>
 
@@ -63,7 +63,8 @@ auto mapValidity(GpgME::UserID::Validity validity)
     }
 }
 
-GpgME::Key createTestKey(QByteArray uid, QByteArray fingerprint,
+GpgME::Key createTestKey(QByteArray uid,
+                         QByteArray fingerprint,
                          time_t expires = 0,
                          GpgME::Protocol protocol = GpgME::UnknownProtocol,
                          Kleo::KeyCache::KeyUsage usage = Kleo::KeyCache::KeyUsage::AnyUsage,
@@ -81,21 +82,20 @@ GpgME::Key createTestKey(QByteArray uid, QByteArray fingerprint,
     }
     key->fpr = strdup(fingerprint.rightJustified(40, '0').constData());
     key->revoked = 0;
-    key->expired = expires ? expires < std::time(nullptr): 0;
+    key->expired = expires ? expires < std::time(nullptr) : 0;
     key->disabled = 0;
     key->can_encrypt = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Encrypt);
     key->can_sign = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Sign);
     key->secret = 1;
     key->uids->validity = mapValidity(validity);
     gpgme_subkey_t subkey;
-    subkey = (gpgme_subkey_t) calloc (1, sizeof *subkey);
+    subkey = (gpgme_subkey_t)calloc(1, sizeof *subkey);
     key->subkeys = subkey;
     key->_last_subkey = subkey;
     subkey->timestamp = 123456789;
     subkey->revoked = 0;
     subkey->expired = 0;
-    subkey->expires = expires,
-    subkey->disabled = 0;
+    subkey->expires = expires, subkey->disabled = 0;
     subkey->keyid = strdup(fingerprint.constData());
     subkey->can_encrypt = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Encrypt);
     subkey->can_sign = int(usage == Kleo::KeyCache::KeyUsage::AnyUsage || usage == Kleo::KeyCache::KeyUsage::Sign);
@@ -115,7 +115,7 @@ void killAgent()
     proc.waitForFinished();
 }
 
-KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident, QByteArray recipient="Friends <friends@kde.example>")
+KMime::Message::Ptr createItem(const KIdentityManagement::Identity &ident, QByteArray recipient = "Friends <friends@kde.example>")
 {
     QByteArray data
         = "From: Konqui <konqui@kde.example>\n"
@@ -146,8 +146,7 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
     QDir gnupgHomeData(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/gnupg"));
     for (const auto &fileInfo : gnupgHomeData.entryInfoList(QDir::Files)) {
-        QVERIFY(QFile(fileInfo.filePath()).copy(gnupgDir.path()+QStringLiteral("/")+fileInfo.fileName()));
-
+        QVERIFY(QFile(fileInfo.filePath()).copy(gnupgDir.path() + QStringLiteral("/") + fileInfo.fileName()));
     }
     qputenv("GNUPGHOME", gnupgDir.path().toUtf8());
 
@@ -186,24 +185,48 @@ void KMComposerWinTest::initTestCase()
     // Keep a KeyCache reference. Make sure that the cache stays hot between the tests.
     mKernel->init();
 
-    Kleo::KeyCache::mutableInstance()->setKeys({
-        createTestKey("encrypt <encrypt@test.example>",   "345678901"),
-        createTestKey("wrongkey <wrongkey@test.example>",   "22222222"),
-        createTestKey("friends@kde.example", "1"),
-        createTestKey("nearexpiry@test.example", "2", std::time(nullptr)+2*86300),
-        createTestKey("expired@test.example", "3", std::time(nullptr)-2*86300),
-        createTestKey("level0 <level0@tofu.example>", "023DFCA4424EA644B174AD14C6F20F3A31F563CF", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("level1 <level1@tofu.example>", "B571A07AF0CE7BC645C98DDA3D081FB0E3ADDA15", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("level2 <level2@tofu.example>", "C6359BFCBC418D756D52B9D095FC1B2659BD3F38", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("level3 <level3@tofu.example>", "5FB1048166DF03F6AA15D57762EF1B9108E04EC9", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("bad <bad@tofu.example>", "EF86281B34F05348610D5A6F3579DB31A5384419", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("validity0@kde.example", "20", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Unknown),
-        createTestKey("validity1@kde.example", "21", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Undefined),
-        createTestKey("validity2@kde.example", "22", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Never),
-        createTestKey("validity3@kde.example", "23", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
-        createTestKey("validity4@kde.example", "24", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Full),
-        createTestKey("validity5@kde.example", "25", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Ultimate)
-    });
+    Kleo::KeyCache::mutableInstance()->setKeys(
+        {createTestKey("encrypt <encrypt@test.example>", "345678901"),
+         createTestKey("wrongkey <wrongkey@test.example>", "22222222"),
+         createTestKey("friends@kde.example", "1"),
+         createTestKey("nearexpiry@test.example", "2", std::time(nullptr) + 2 * 86300),
+         createTestKey("expired@test.example", "3", std::time(nullptr) - 2 * 86300),
+         createTestKey("level0 <level0@tofu.example>",
+                       "023DFCA4424EA644B174AD14C6F20F3A31F563CF",
+                       0,
+                       GpgME::UnknownProtocol,
+                       Kleo::KeyCache::KeyUsage::AnyUsage,
+                       GpgME::UserID::Marginal),
+         createTestKey("level1 <level1@tofu.example>",
+                       "B571A07AF0CE7BC645C98DDA3D081FB0E3ADDA15",
+                       0,
+                       GpgME::UnknownProtocol,
+                       Kleo::KeyCache::KeyUsage::AnyUsage,
+                       GpgME::UserID::Marginal),
+         createTestKey("level2 <level2@tofu.example>",
+                       "C6359BFCBC418D756D52B9D095FC1B2659BD3F38",
+                       0,
+                       GpgME::UnknownProtocol,
+                       Kleo::KeyCache::KeyUsage::AnyUsage,
+                       GpgME::UserID::Marginal),
+         createTestKey("level3 <level3@tofu.example>",
+                       "5FB1048166DF03F6AA15D57762EF1B9108E04EC9",
+                       0,
+                       GpgME::UnknownProtocol,
+                       Kleo::KeyCache::KeyUsage::AnyUsage,
+                       GpgME::UserID::Marginal),
+         createTestKey("bad <bad@tofu.example>",
+                       "EF86281B34F05348610D5A6F3579DB31A5384419",
+                       0,
+                       GpgME::UnknownProtocol,
+                       Kleo::KeyCache::KeyUsage::AnyUsage,
+                       GpgME::UserID::Marginal),
+         createTestKey("validity0@kde.example", "20", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Unknown),
+         createTestKey("validity1@kde.example", "21", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Undefined),
+         createTestKey("validity2@kde.example", "22", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Never),
+         createTestKey("validity3@kde.example", "23", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Marginal),
+         createTestKey("validity4@kde.example", "24", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Full),
+         createTestKey("validity5@kde.example", "25", 0, GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::AnyUsage, GpgME::UserID::Ultimate)});
 }
 
 void KMComposerWinTest::cleanupTestCase()
@@ -334,7 +357,7 @@ void KMComposerWinTest::testSigning()
     toggleSigning(composer);
 }
 
-void KMComposerWinTest::toggleSigning(KMail::Composer* composer)
+void KMComposerWinTest::toggleSigning(KMail::Composer *composer)
 {
     QFETCH(bool, sign);
     QFETCH(bool, sign_possible);
@@ -381,7 +404,8 @@ void KMComposerWinTest::testEncryption_data()
     QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << recipient << false << true;
     QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << recipient << true << true;
     QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << recipient << true << true;
-    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true << true;
+    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true
+                               << true;
     QTest::newRow("wrongkey") << im->identityForAddress(QStringLiteral("wrongkey@test.example")).uoid() << recipient << false << false;
     QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << recipient << true << true;
 }
@@ -399,7 +423,7 @@ void KMComposerWinTest::testEncryption()
     }
 
     QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(QStringLiteral("@"),QStringLiteral("%40")) + QStringLiteral(".json"))));
+    QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(QStringLiteral("@"), QStringLiteral("%40")) + QStringLiteral(".json"))));
 
     const auto ident = mKernel->identityManager()->identityForUoid(uoid);
     const auto msg(createItem(ident, recipient.toUtf8()));
@@ -412,7 +436,7 @@ void KMComposerWinTest::testEncryption()
     const auto instance = Kleo::KeyCache::instance();
     if (!instance->initialized()) {
         QEventLoop loop;
-        connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop](){
+        connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop]() {
             loop.quit();
         });
         loop.exec();
@@ -424,7 +448,7 @@ void KMComposerWinTest::testEncryption()
     toggleEncryption(composer);
 }
 
-void KMComposerWinTest::toggleEncryption(KMail::Composer* composer)
+void KMComposerWinTest::toggleEncryption(KMail::Composer *composer)
 {
     QFETCH(bool, encrypt);
     QFETCH(bool, encrypt_possible);
@@ -570,7 +594,6 @@ void KMComposerWinTest::testChangeIdentity()
         QCOMPARE(encryptAction->isEnabled(), false);
     }
 
-
     {
         ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
         identCombo->setCurrentIdentity(ident);
@@ -585,7 +608,6 @@ void KMComposerWinTest::testChangeIdentity()
         QCOMPARE(encryptAction->isEnabled(), true);
     }
 }
-
 
 void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
 {
@@ -658,7 +680,7 @@ void KMComposerWinTest::testOwnExpiry()
     QVERIFY(identCombo);
     QCOMPARE(nearExpiryWarning->isVisible(), true);
     QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
-    QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+    QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
     QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
 
     {
@@ -681,7 +703,7 @@ void KMComposerWinTest::testOwnExpiry()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
         QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
-        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expired 2 days ago.")));
     }
     {
@@ -694,10 +716,9 @@ void KMComposerWinTest::testOwnExpiry()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
         QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
-        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x"+ident.pgpEncryptionKey())));
+        QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
     }
-
 }
 
 void KMComposerWinTest::testRecipientExpiry()
@@ -712,7 +733,7 @@ void KMComposerWinTest::testRecipientExpiry()
     const auto instance = Kleo::KeyCache::instance();
     if (!instance->initialized()) {
         QEventLoop loop;
-        connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop](){
+        connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop]() {
             loop.quit();
         });
         loop.exec();
@@ -805,7 +826,7 @@ void KMComposerWinTest::testRecipientExpiry()
     }
 }
 
-void  KMComposerWinTest::testRecipientAnnotation_data()
+void KMComposerWinTest::testRecipientAnnotation_data()
 {
     QTest::addColumn<QString>("mailaddress");
     QTest::addColumn<Kleo::TrustLevel>("trustlevel");
@@ -813,21 +834,30 @@ void  KMComposerWinTest::testRecipientAnnotation_data()
     QTest::addColumn<QString>("iconname");
     QTest::addColumn<bool>("encrypt");
 
-    QTest::newRow("friends@kde.example") << QStringLiteral("friends@kde.example") << Kleo::Level3 << QString() << QStringLiteral("emblem-success")  << true;
-    QTest::newRow("validity0@kde.example") << QStringLiteral("validity0@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.") << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity1@kde.example") << QStringLiteral("validity1@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.") << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity2@kde.example") << QStringLiteral("validity2@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.") << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity3@kde.example") << QStringLiteral("validity3@kde.example") << Kleo::Level2 << QStringLiteral("You can sign the key, if you communicated") << QStringLiteral("emblem-success") << true;
-    QTest::newRow("validity4@kde.example") << QStringLiteral("validity4@kde.example")<< Kleo::Level3 << QString() << QStringLiteral("emblem-success") << true;
+    QTest::newRow("friends@kde.example") << QStringLiteral("friends@kde.example") << Kleo::Level3 << QString() << QStringLiteral("emblem-success") << true;
+    QTest::newRow("validity0@kde.example") << QStringLiteral("validity0@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
+                                           << QStringLiteral("emblem-error") << false;
+    QTest::newRow("validity1@kde.example") << QStringLiteral("validity1@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
+                                           << QStringLiteral("emblem-error") << false;
+    QTest::newRow("validity2@kde.example") << QStringLiteral("validity2@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
+                                           << QStringLiteral("emblem-error") << false;
+    QTest::newRow("validity3@kde.example") << QStringLiteral("validity3@kde.example") << Kleo::Level2
+                                           << QStringLiteral("You can sign the key, if you communicated") << QStringLiteral("emblem-success") << true;
+    QTest::newRow("validity4@kde.example") << QStringLiteral("validity4@kde.example") << Kleo::Level3 << QString() << QStringLiteral("emblem-success") << true;
     QTest::newRow("validity5@kde.example") << QStringLiteral("validity5@kde.example") << Kleo::Level4 << QString() << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level0@tofu.example") << QStringLiteral("level0@tofu.example") << Kleo::Level0 << QStringLiteral("By using the key will be trusted more.") << QStringLiteral("emblem-warning") << true;
-    QTest::newRow("level1@tofu.example") << QStringLiteral("level1@tofu.example") << Kleo::Level1 << QStringLiteral("By using the key will be trusted more.") << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level2@tofu.example") << QStringLiteral("level2@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.") << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level3@tofu.example") << QStringLiteral("level3@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.") << QStringLiteral("emblem-success") << true;
-    QTest::newRow("bad@tofu.example") << QStringLiteral("bad@tofu.example") << Kleo::Level0 << QStringLiteral("The key is marked as bad.") << QStringLiteral("emblem-error") << false;
+    QTest::newRow("level0@tofu.example") << QStringLiteral("level0@tofu.example") << Kleo::Level0 << QStringLiteral("By using the key will be trusted more.")
+                                         << QStringLiteral("emblem-warning") << true;
+    QTest::newRow("level1@tofu.example") << QStringLiteral("level1@tofu.example") << Kleo::Level1 << QStringLiteral("By using the key will be trusted more.")
+                                         << QStringLiteral("emblem-success") << true;
+    QTest::newRow("level2@tofu.example") << QStringLiteral("level2@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.")
+                                         << QStringLiteral("emblem-success") << true;
+    QTest::newRow("level3@tofu.example") << QStringLiteral("level3@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.")
+                                         << QStringLiteral("emblem-success") << true;
+    QTest::newRow("bad@tofu.example") << QStringLiteral("bad@tofu.example") << Kleo::Level0 << QStringLiteral("The key is marked as bad.")
+                                      << QStringLiteral("emblem-error") << false;
 }
 
-void  KMComposerWinTest::testRecipientAnnotation()
+void KMComposerWinTest::testRecipientAnnotation()
 {
     QFETCH(QString, mailaddress);
     QFETCH(Kleo::TrustLevel, trustlevel);
@@ -900,7 +930,7 @@ void  KMComposerWinTest::testRecipientAnnotation()
     default:
         Q_UNREACHABLE();
     }
-    if (!searchpattern.isEmpty()){
+    if (!searchpattern.isEmpty()) {
         QVERIFY(toolButton->toolTip().contains(searchpattern));
     }
 }
