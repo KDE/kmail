@@ -3664,9 +3664,9 @@ void KMComposerWin::slotEncryptionButtonIconUpdate()
     auto icon = QIcon::fromTheme(QStringLiteral("document-encrypt"));
     QString tooltip;
     if (state) {
-        tooltip = i18n("Encrypt");
+        tooltip = i18nc("@info:tooltip", "Encrypt");
     } else {
-        tooltip = i18n("Not Encrypt");
+        tooltip = i18nc("@info:tooltip", "Not Encrypt");
         icon = QIcon::fromTheme(QStringLiteral("document-decrypt"));
     }
 
@@ -3806,7 +3806,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         recipient->setEncryptionAction(Kleo::Impossible);
         if (showAllIcons && !invalidEmail) {
             const auto icon = QIcon::fromTheme(QStringLiteral("emblem-error"));
-            line->setIcon(icon, i18n("No key found for the recipient."));
+            line->setIcon(icon, i18n("@info:tooltip", "No key found for the recipient."));
         } else {
             line->setIcon(QIcon());
         }
@@ -3827,15 +3827,17 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         const auto rec = storage->getRecipient(addrSpec.toUtf8());
         if (gossipKey) { // We found an Autocrypt gossip key for recipient
             icon = QIcon::fromTheme(QStringLiteral("emblem-informations"));
-            tooltip = i18n("Autocrypt gossip key is used for this recipient. We got this key from 3rd party recipients. This key is not verified.");
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt gossip key is used for this recipient. We got this key from 3rd party recipients. "
+                            "This key is not verified.");
         } else if (rec->prefer_encrypt()) {
-            tooltip = i18n(
-                "Autocrypt key is used for this recipient. This key is not verified. "
-                "The recipient prefers encrypted replies.");
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt key is used for this recipient. "
+                            "This key is not verified. The recipient prefers encrypted replies.");
         } else {
-            tooltip = i18n(
-                "Autocrypt key is used for this recipient. This key is not verified. "
-                "The recipient does not prefer encrypted replies.");
+            tooltip = i18nc("@info:tooltip",
+                            "Autocrypt key is used for this recipient. "
+                            "This key is not verified. The recipient does not prefer encrypted replies.");
         }
         if (showAllIcons) {
             line->setIcon(icon, tooltip);
@@ -3860,66 +3862,72 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
         switch (trustLevel) {
         case Kleo::Level0:
             if (uid.tofuInfo().isNull()) {
-                tooltip = i18n(
-                    "The encryption key is not trusted. It hasn't enough validity. You can sign the key, if you communicated the fingerprint by another "
-                    "channel."
-                    "Click the icon for details.");
+                tooltip = i18nc("@info:tooltip",
+                                "The encryption key is not trusted. It hasn't enough validity. "
+                                "You can sign the key, if you communicated the fingerprint by another channel. "
+                                "Click the icon for details.");
                 keyState = NoKey;
             } else {
                 switch (uid.tofuInfo().validity()) {
                 case GpgME::TofuInfo::NoHistory:
-                    tooltip = i18n(
-                        "The encryption key is not trusted. It hasn't used anywhere to guarantee it belongs to the stated person. By using the key will be "
-                        "trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
-                        "Click the icon for details.");
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. "
+                                    "It hasn't used anywhere to guarantee it belongs to the stated person. "
+                                    "By using the key will be trusted more. "
+                                    "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                                    "Click the icon for details.");
                     break;
                 case GpgME::TofuInfo::Conflict:
-                    tooltip = i18n(
-                        "The encryption key is not trusted. It has conflicting TOFU data."
-                        "Click the icon for details.");
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. It has conflicting TOFU data. "
+                                    "Click the icon for details.");
                     keyState = NoKey;
                     break;
                 case GpgME::TofuInfo::ValidityUnknown:
-                    tooltip = i18n(
-                        "The encryption key is not trusted. It has unknown validity in TOFU data."
-                        "Click the icon for details.");
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. It has unknown validity in TOFU data. "
+                                    "Click the icon for details.");
                     keyState = NoKey;
                     break;
                 default:
-                    tooltip = i18n(
-                        "The encryption key is not trusted. The key is marked as bad."
-                        "Click the icon for details.");
+                    tooltip = i18nc("@info:tooltip",
+                                    "The encryption key is not trusted. The key is marked as bad. "
+                                    "Click the icon for details.");
                     keyState = NoKey;
                 }
             }
             break;
         case Kleo::Level1:
-            tooltip = i18n(
-                "The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. By using the key "
-                "will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
-                "Click the icon for details.");
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is only marginally trusted and hasn't been used enough time to guarantee it belongs to the stated person. "
+                            "By using the key will be trusted more. "
+                            "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                            "Click the icon for details.");
             break;
         case Kleo::Level2:
             if (uid.tofuInfo().isNull()) {
-                tooltip = i18n(
-                    "The encryption key is only marginally trusted. You can sign the key, if you communicated the fingerprint by another channel."
-                    "Click the icon for details.");
+                tooltip = i18nc("@info:tooltip",
+                                "The encryption key is only marginally trusted. "
+                                "You can sign the key, if you communicated the fingerprint by another channel. "
+                                "Click the icon for details.");
             } else {
-                tooltip = i18n(
-                    "The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. By using "
-                    "the key will be trusted more. Or you can sign the key, if you communicated the fingerprint by another channel."
-                    "Click the icon for details.");
+                tooltip =
+                    i18nc("@info:tooltip",
+                          "The encryption key is only marginally trusted, but has been used enough times to be very likely controlled by the stated person. "
+                          "By using the key will be trusted more. "
+                          "Or you can sign the key, if you communicated the fingerprint by another channel. "
+                          "Click the icon for details.");
             }
             break;
         case Kleo::Level3:
-            tooltip = i18n(
-                "The encryption key is fully trusted. You can raise the security level, by signing the key."
-                "Click the icon for details.");
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is fully trusted. You can raise the security level, by signing the key. "
+                            "Click the icon for details.");
             break;
         case Kleo::Level4:
-            tooltip = i18n(
-                "The encryption key is ultimately trusted or is signed by another ultimately trusted key."
-                "Click the icon for details.");
+            tooltip = i18nc("@info:tooltip",
+                            "The encryption key is ultimately trusted or is signed by another ultimately trusted key. "
+                            "Click the icon for details.");
             break;
         default:
             Q_UNREACHABLE();
