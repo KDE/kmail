@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-08-10 00:47+0000\n"
 "PO-Revision-Date: 2022-11-22 07:22+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -20,42 +20,42 @@ msgstr ""
 
 #: addarchivemaildialog.cpp:31
 #, kde-format
+msgid "Archive all subfolders"
+msgstr "ყველა ქვესაქაღალდის დაარქივება"
+
+#: addarchivemaildialog.cpp:38
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "არქივის ელფოსტის შეცვლა"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "არქივი ელფოსტის დამატება"
 
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:52
 #, kde-format
 msgid "&Folder:"
 msgstr "&საქაღალდე:"
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:65
 #, kde-format
 msgid "Format:"
 msgstr "ფორმატი:"
 
-#: addarchivemaildialog.cpp:67
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "ყველა ქვესაქაღალდის დაარქივება"
-
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:77
 #, kde-format
 msgid "Path:"
 msgstr "ბილიკი:"
 
-#: addarchivemaildialog.cpp:83
+#: addarchivemaildialog.cpp:86
 #, kde-format
 msgid "Backup each:"
 msgstr "მარქაფი ყოველ:"
 
-#: addarchivemaildialog.cpp:99
+#: addarchivemaildialog.cpp:100
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "მარქაფების მაქსიმალური რაოდენობა:"
@@ -70,6 +70,11 @@ msgstr "შეუზღუდავი"
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "არქივი"
+
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
 
 #: archivemailwidget.cpp:69
 #, kde-format

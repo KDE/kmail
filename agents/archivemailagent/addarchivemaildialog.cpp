@@ -5,8 +5,10 @@
 */
 
 #include "addarchivemaildialog.h"
+#include "archivemailrangewidget.h"
 #include "widgets/formatcombobox.h"
 #include "widgets/unitcombobox.h"
+
 #include <MailCommon/FolderRequester>
 
 #include <KLineEdit>
@@ -32,6 +34,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     , mPath(new KUrlRequester(this))
     , mDays(new QSpinBox(this))
     , mMaximumArchive(new QSpinBox(this))
+    , mArchiveMailRangeWidget(new ArchiveMailRangeWidget(this))
     , mInfo(info)
 {
     if (info) {
@@ -104,6 +107,10 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     mMaximumArchive->setSpecialValueText(i18n("unlimited"));
     maxCountlabel->setBuddy(mMaximumArchive);
     mainLayout->addWidget(mMaximumArchive, row, 1);
+    ++row;
+
+    mArchiveMailRangeWidget->setObjectName(QStringLiteral("mArchiveMailRangeWidget"));
+    mainLayout->addWidget(mArchiveMailRangeWidget, row, 1);
     ++row;
 
     mainLayout->addWidget(new KSeparator, row, 0, row, 2);

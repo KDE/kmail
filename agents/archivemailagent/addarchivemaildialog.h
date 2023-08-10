@@ -18,6 +18,7 @@ class QPushButton;
 
 class FormatComboBox;
 class UnitComboBox;
+class ArchiveMailRangeWidget;
 namespace MailCommon
 {
 class FolderRequester;
@@ -59,6 +60,7 @@ private:
     KUrlRequester *const mPath;
     QSpinBox *const mDays;
     QSpinBox *const mMaximumArchive;
+    ArchiveMailRangeWidget *const mArchiveMailRangeWidget;
 
     ArchiveMailInfo *mInfo = nullptr;
     QPushButton *mOkButton = nullptr;

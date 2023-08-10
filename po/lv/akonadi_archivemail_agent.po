@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-08-10 00:47+0000\n"
 "PO-Revision-Date: 2012-07-01 15:43+0300\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -19,46 +19,46 @@ msgstr ""
 "X-Generator: Lokalize 1.4\n"
 
 #: addarchivemaildialog.cpp:31
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Arhivēt visas apakšmapes"
+
+#: addarchivemaildialog.cpp:38
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modificēt arhivēto pastu"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Pievienot arhivēto pastu"
 
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:52
 #, kde-format
 msgid "&Folder:"
 msgstr "&Mape:"
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:65
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "F&ormāts:"
 
-#: addarchivemaildialog.cpp:67
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "Arhivēt visas apakšmapes"
-
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:77
 #, kde-format
 msgid "Path:"
 msgstr "Ceļš:"
 
-#: addarchivemaildialog.cpp:83
+#: addarchivemaildialog.cpp:86
 #, kde-format
 msgid "Backup each:"
 msgstr "Veidot rezerves kopiju katras:"
 
-#: addarchivemaildialog.cpp:99
+#: addarchivemaildialog.cpp:100
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr ""
@@ -73,6 +73,11 @@ msgstr ""
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arhīvs"
+
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
 
 #: archivemailwidget.cpp:69
 #, kde-format

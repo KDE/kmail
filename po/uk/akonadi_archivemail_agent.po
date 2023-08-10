@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-08-10 00:47+0000\n"
 "PO-Revision-Date: 2022-01-02 09:01+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -22,42 +22,42 @@ msgstr ""
 
 #: addarchivemaildialog.cpp:31
 #, kde-format
+msgid "Archive all subfolders"
+msgstr "Архівувати всі підтеки"
+
+#: addarchivemaildialog.cpp:38
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Внесення змін до архівування пошти"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Додавання архіву з поштою"
 
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:52
 #, kde-format
 msgid "&Folder:"
 msgstr "&Тека:"
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:65
 #, kde-format
 msgid "Format:"
 msgstr "Формат:"
 
-#: addarchivemaildialog.cpp:67
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "Архівувати всі підтеки"
-
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:77
 #, kde-format
 msgid "Path:"
 msgstr "Шлях:"
 
-#: addarchivemaildialog.cpp:83
+#: addarchivemaildialog.cpp:86
 #, kde-format
 msgid "Backup each:"
 msgstr "Інтервал створення копій:"
 
-#: addarchivemaildialog.cpp:99
+#: addarchivemaildialog.cpp:100
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Максимальна кількість записів у архіві:"
@@ -72,6 +72,11 @@ msgstr "без обмежень"
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Архів"
+
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
 
 #: archivemailwidget.cpp:69
 #, kde-format

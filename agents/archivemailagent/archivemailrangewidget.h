@@ -22,6 +22,7 @@ public:
     void setRange(const QList<int> &hours);
 
 private:
+    void changeRangeState(bool enabled);
     KTimeComboBox *const mStartRange;
     KTimeComboBox *const mEndRange;
     QCheckBox *const mEnabled;
