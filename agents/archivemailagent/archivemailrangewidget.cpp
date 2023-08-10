@@ -35,13 +35,17 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     mainLayout->addWidget(mStartRange);
     mainLayout->addWidget(mEndRange);
 
-    connect(mEnabled, &QCheckBox::toggled, this, [this](bool enabled) {
-        mStartRange->setEnabled(enabled);
-        mEndRange->setEnabled(enabled);
-    });
+    connect(mEnabled, &QCheckBox::toggled, this, &ArchiveMailRangeWidget::changeRangeState);
+    changeRangeState(false);
 }
 
 ArchiveMailRangeWidget::~ArchiveMailRangeWidget() = default;
+
+void ArchiveMailRangeWidget::changeRangeState(bool enabled)
+{
+    mStartRange->setEnabled(enabled);
+    mEndRange->setEnabled(enabled);
+}
 
 bool ArchiveMailRangeWidget::isEnabled() const
 {
