@@ -110,10 +110,10 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     ++row;
 
     mArchiveMailRangeWidget->setObjectName(QStringLiteral("mArchiveMailRangeWidget"));
-    mainLayout->addWidget(mArchiveMailRangeWidget, row, 1);
+    mainLayout->addWidget(mArchiveMailRangeWidget, row, 0, 1, 2);
     ++row;
 
-    mainLayout->addWidget(new KSeparator, row, 0, row, 2);
+    mainLayout->addWidget(new KSeparator, row, 0, 1, 2);
     mainLayout->setColumnStretch(1, 1);
     mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);
 
@@ -147,6 +147,8 @@ void AddArchiveMailDialog::load(ArchiveMailInfo *info)
     mDays->setValue(info->archiveAge());
     mUnits->setUnit(info->archiveUnit());
     mMaximumArchive->setValue(info->maximumArchiveCount());
+    mArchiveMailRangeWidget->setRangeEnabled(info->useRange());
+    mArchiveMailRangeWidget->setRange(info->range());
     slotUpdateOkButton();
 }
 
@@ -162,6 +164,11 @@ ArchiveMailInfo *AddArchiveMailDialog::info()
     mInfo->setArchiveAge(mDays->value());
     mInfo->setArchiveUnit(mUnits->unit());
     mInfo->setMaximumArchiveCount(mMaximumArchive->value());
+    const bool isRangeEnabled = mArchiveMailRangeWidget->isRangeEnabled();
+    mInfo->setUseRange(isRangeEnabled);
+    if (isRangeEnabled) {
+        mInfo->setRange(mArchiveMailRangeWidget->range());
+    }
     return mInfo;
 }
 

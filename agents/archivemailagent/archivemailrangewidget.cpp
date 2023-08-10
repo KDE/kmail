@@ -6,7 +6,7 @@
 
 #include "archivemailrangewidget.h"
 #include "archivemailagent_debug.h"
-#include "hourcombobox.h"
+#include "widgets/hourcombobox.h"
 #include <KLocalizedString>
 #include <QCheckBox>
 #include <QHBoxLayout>
@@ -17,14 +17,14 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     : QWidget{parent}
     , mStartRange(new HourComboBox(this))
     , mEndRange(new HourComboBox(this))
-    , mEnabled(new QCheckBox(i18n("Use Range"), this))
+    , mRangeEnabled(new QCheckBox(i18n("Use Range"), this))
 {
     auto mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName(QStringLiteral("mainLayout"));
     mainLayout->setContentsMargins({});
 
-    mEnabled->setObjectName(QStringLiteral("mEnabled"));
-    mainLayout->addWidget(mEnabled);
+    mRangeEnabled->setObjectName(QStringLiteral("mRangeEnabled"));
+    mainLayout->addWidget(mRangeEnabled);
 
     mStartRange->setObjectName(QStringLiteral("mStartRange"));
 
@@ -33,14 +33,37 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     mainLayout->addWidget(mStartRange);
     mainLayout->addWidget(mEndRange);
 
-    connect(mEnabled, &QCheckBox::toggled, this, &ArchiveMailRangeWidget::changeRangeState);
+    connect(mRangeEnabled, &QCheckBox::toggled, this, &ArchiveMailRangeWidget::changeRangeState);
     changeRangeState(false);
-    //    connect(mStartRange, &KTimeComboBox::timeChanged, this, [this](const QTime &time) {
-    //        // TODO
-    //    });
-    //    connect(mEndRange, &KTimeComboBox::timeChanged, this, [this](const QTime &time) {
-    //        // TODO
-    //    });
+    mEndRange->setCurrentIndex(1); // Make sure that we have 1 hour between start/end
+    connect(mStartRange, &HourComboBox::activated, this, [this](int index) {
+        const int startHours = mStartRange->itemData(index).toInt();
+        int endHours = mEndRange->currentData().toInt();
+        if (startHours == endHours) {
+            if (endHours == 23) {
+                endHours = 0;
+            } else {
+                endHours = startHours + 1;
+            }
+            mEndRange->blockSignals(true);
+            mEndRange->setHour(endHours);
+            mEndRange->blockSignals(false);
+        }
+    });
+    connect(mEndRange, &HourComboBox::activated, this, [this](int index) {
+        int startHours = mStartRange->currentData().toInt();
+        const int endHours = mEndRange->itemData(index).toInt();
+        if (startHours == endHours) {
+            if (endHours == 0) {
+                startHours = 23;
+            } else {
+                startHours = startHours - 1;
+            }
+            mStartRange->blockSignals(true);
+            mStartRange->setHour(startHours);
+            mStartRange->blockSignals(false);
+        }
+    });
 }
 
 ArchiveMailRangeWidget::~ArchiveMailRangeWidget() = default;
@@ -51,21 +74,19 @@ void ArchiveMailRangeWidget::changeRangeState(bool enabled)
     mEndRange->setEnabled(enabled);
 }
 
-bool ArchiveMailRangeWidget::isEnabled() const
+bool ArchiveMailRangeWidget::isRangeEnabled() const
 {
-    return mEnabled->isChecked();
+    return mRangeEnabled->isChecked();
 }
 
-void ArchiveMailRangeWidget::setEnabled(bool isEnabled)
+void ArchiveMailRangeWidget::setRangeEnabled(bool isEnabled)
 {
-    mEnabled->setChecked(isEnabled);
+    mRangeEnabled->setChecked(isEnabled);
 }
 
 QList<int> ArchiveMailRangeWidget::range() const
 {
-    QList<int> timeRange;
-    timeRange.append(mStartRange->hour());
-    timeRange.append(mEndRange->hour());
+    const QList<int> timeRange{mStartRange->hour(), mEndRange->hour()};
     return timeRange;
 }
 
@@ -75,7 +96,7 @@ void ArchiveMailRangeWidget::setRange(const QList<int> &hours)
         qCWarning(ARCHIVEMAILAGENT_LOG) << "Ranges is invalid " << hours;
     } else {
         mStartRange->setHour(hours.at(0));
-        mStartRange->setHour(hours.at(1));
+        mEndRange->setHour(hours.at(1));
     }
 }
 

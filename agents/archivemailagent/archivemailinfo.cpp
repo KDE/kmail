@@ -23,7 +23,7 @@ ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
     , mArchiveUnit(info.archiveUnit())
     , mSaveCollectionId(info.saveCollectionId())
     , mPath(info.url())
-    , mRanges(info.ranges())
+    , mRanges(info.range())
     , mMaximumArchiveCount(info.maximumArchiveCount())
     , mSaveSubCollection(info.saveSubCollection())
     , mIsEnabled(info.isEnabled())
@@ -45,7 +45,7 @@ ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
     mPath = old.url();
     mIsEnabled = old.isEnabled();
     mUseRange = old.useRange();
-    mRanges = old.ranges();
+    mRanges = old.range();
     return *this;
 }
 
@@ -70,12 +70,12 @@ QString ArchiveMailInfo::dirArchive(bool &dirExit) const
     return dirPath;
 }
 
-QList<int> ArchiveMailInfo::ranges() const
+QList<int> ArchiveMailInfo::range() const
 {
     return mRanges;
 }
 
-void ArchiveMailInfo::setRanges(const QList<int> &newRanges)
+void ArchiveMailInfo::setRange(const QList<int> &newRanges)
 {
     mRanges = newRanges;
 }
@@ -263,5 +263,5 @@ bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
     return saveCollectionId() == other.saveCollectionId() && saveSubCollection() == other.saveSubCollection() && url() == other.url()
         && archiveType() == other.archiveType() && archiveUnit() == other.archiveUnit() && archiveAge() == other.archiveAge()
         && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled()
-        && useRange() == other.useRange() && ranges() == other.ranges();
+        && useRange() == other.useRange() && range() == other.range();
 }

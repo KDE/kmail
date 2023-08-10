@@ -97,8 +97,8 @@ target_sources(archivemailagentconfig PRIVATE
     widgets/unitcombobox.h
     archivemailrangewidget.h
     archivemailrangewidget.cpp
-    hourcombobox.h
-    hourcombobox.cpp
+    widgets/hourcombobox.h
+    widgets/hourcombobox.cpp
 )
 target_link_libraries(archivemailagentconfig
     archivemailagent
