@@ -6,7 +6,7 @@
 #pragma once
 
 #include <QWidget>
-class KTimeComboBox;
+class HourComboBox;
 class QCheckBox;
 class ArchiveMailRangeWidget : public QWidget
 {
@@ -23,7 +23,7 @@ public:
 
 private:
     void changeRangeState(bool enabled);
-    KTimeComboBox *const mStartRange;
-    KTimeComboBox *const mEndRange;
+    HourComboBox *const mStartRange;
+    HourComboBox *const mEndRange;
     QCheckBox *const mEnabled;
 };

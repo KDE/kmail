@@ -6,7 +6,7 @@
 
 #include "archivemailrangewidgettest.h"
 #include "../archivemailrangewidget.h"
-#include <KTimeComboBox>
+#include "hourcombobox.h"
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QTest>
@@ -29,13 +29,11 @@ void ArchiveMailRangeWidgetTest::shouldHaveDefaultValues()
     QVERIFY(mEnabled);
     QVERIFY(!mEnabled->isChecked());
 
-    auto mStartRange = w.findChild<KTimeComboBox *>(QStringLiteral("mStartRange"));
+    auto mStartRange = w.findChild<HourComboBox *>(QStringLiteral("mStartRange"));
     QVERIFY(mStartRange);
-    QCOMPARE(mStartRange->timeListInterval(), 60);
 
-    auto mEndRange = w.findChild<KTimeComboBox *>(QStringLiteral("mEndRange"));
+    auto mEndRange = w.findChild<HourComboBox *>(QStringLiteral("mEndRange"));
     QVERIFY(mEndRange);
-    QCOMPARE(mEndRange->timeListInterval(), 60);
 }
 
 #include "moc_archivemailrangewidgettest.cpp"
