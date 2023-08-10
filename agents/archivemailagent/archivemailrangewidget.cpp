@@ -6,8 +6,8 @@
 
 #include "archivemailrangewidget.h"
 #include "archivemailagent_debug.h"
+#include "hourcombobox.h"
 #include <KLocalizedString>
-#include <KTimeComboBox>
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -15,8 +15,8 @@
 
 ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     : QWidget{parent}
-    , mStartRange(new KTimeComboBox(this))
-    , mEndRange(new KTimeComboBox(this))
+    , mStartRange(new HourComboBox(this))
+    , mEndRange(new HourComboBox(this))
     , mEnabled(new QCheckBox(i18n("Use Range"), this))
 {
     auto mainLayout = new QHBoxLayout(this);
@@ -27,16 +27,20 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     mainLayout->addWidget(mEnabled);
 
     mStartRange->setObjectName(QStringLiteral("mStartRange"));
-    mStartRange->setTimeListInterval(60);
 
     mEndRange->setObjectName(QStringLiteral("mEndRange"));
-    mEndRange->setTimeListInterval(60);
 
     mainLayout->addWidget(mStartRange);
     mainLayout->addWidget(mEndRange);
 
     connect(mEnabled, &QCheckBox::toggled, this, &ArchiveMailRangeWidget::changeRangeState);
     changeRangeState(false);
+    //    connect(mStartRange, &KTimeComboBox::timeChanged, this, [this](const QTime &time) {
+    //        // TODO
+    //    });
+    //    connect(mEndRange, &KTimeComboBox::timeChanged, this, [this](const QTime &time) {
+    //        // TODO
+    //    });
 }
 
 ArchiveMailRangeWidget::~ArchiveMailRangeWidget() = default;
@@ -60,8 +64,8 @@ void ArchiveMailRangeWidget::setEnabled(bool isEnabled)
 QList<int> ArchiveMailRangeWidget::range() const
 {
     QList<int> timeRange;
-    timeRange.append(mStartRange->time().hour());
-    timeRange.append(mEndRange->time().hour());
+    timeRange.append(mStartRange->hour());
+    timeRange.append(mEndRange->hour());
     return timeRange;
 }
 
@@ -70,10 +74,8 @@ void ArchiveMailRangeWidget::setRange(const QList<int> &hours)
     if (hours.count() != 2) {
         qCWarning(ARCHIVEMAILAGENT_LOG) << "Ranges is invalid " << hours;
     } else {
-        const QTime startTime{hours.at(0), 0, 0};
-        mStartRange->setTime(startTime);
-        const QTime endTime{hours.at(1), 0, 0};
-        mStartRange->setTime(endTime);
+        mStartRange->setHour(hours.at(0));
+        mStartRange->setHour(hours.at(1));
     }
 }
 
