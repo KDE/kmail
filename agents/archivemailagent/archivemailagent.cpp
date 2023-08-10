@@ -63,7 +63,8 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     }
 
     connect(mTimer, &QTimer::timeout, this, &ArchiveMailAgent::reload);
-    mTimer->start(24h);
+    // Now we have range support we need to reload each hour.
+    mTimer->start(1h);
 }
 
 ArchiveMailAgent::~ArchiveMailAgent() = default;
