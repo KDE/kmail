@@ -67,6 +67,12 @@ public:
 
     Q_REQUIRED_RESULT bool operator==(const ArchiveMailInfo &other) const;
 
+    Q_REQUIRED_RESULT bool useRange() const;
+    void setUseRange(bool newUseRange);
+
+    Q_REQUIRED_RESULT QList<int> ranges() const;
+    void setRanges(const QList<int> &newRanges);
+
 private:
     Q_REQUIRED_RESULT QString dirArchive(bool &dirExit) const;
     QDate mLastDateSaved;
@@ -75,7 +81,9 @@ private:
     ArchiveUnit mArchiveUnit = ArchiveMailInfo::ArchiveDays;
     Akonadi::Collection::Id mSaveCollectionId = -1;
     QUrl mPath;
+    QList<int> mRanges;
     int mMaximumArchiveCount = 0;
     bool mSaveSubCollection = false;
     bool mIsEnabled = true;
+    bool mUseRange = false;
 };
