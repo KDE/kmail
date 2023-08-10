@@ -23,9 +23,11 @@ ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
     , mArchiveUnit(info.archiveUnit())
     , mSaveCollectionId(info.saveCollectionId())
     , mPath(info.url())
+    , mRanges(info.ranges())
     , mMaximumArchiveCount(info.maximumArchiveCount())
     , mSaveSubCollection(info.saveSubCollection())
     , mIsEnabled(info.isEnabled())
+    , mUseRange(info.useRange())
 {
 }
 
@@ -42,6 +44,8 @@ ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
     mSaveSubCollection = old.saveSubCollection();
     mPath = old.url();
     mIsEnabled = old.isEnabled();
+    mUseRange = old.useRange();
+    mRanges = old.ranges();
     return *this;
 }
 
@@ -64,6 +68,26 @@ QString ArchiveMailInfo::dirArchive(bool &dirExit) const
         dirExit = true;
     }
     return dirPath;
+}
+
+QList<int> ArchiveMailInfo::ranges() const
+{
+    return mRanges;
+}
+
+void ArchiveMailInfo::setRanges(const QList<int> &newRanges)
+{
+    mRanges = newRanges;
+}
+
+bool ArchiveMailInfo::useRange() const
+{
+    return mUseRange;
+}
+
+void ArchiveMailInfo::setUseRange(bool newUseRange)
+{
+    mUseRange = newUseRange;
 }
 
 QUrl ArchiveMailInfo::realUrl(const QString &folderName, bool &dirExist) const
@@ -153,6 +177,8 @@ void ArchiveMailInfo::readConfig(const KConfigGroup &config)
     Akonadi::Collection::Id tId = config.readEntry("saveCollectionId", mSaveCollectionId);
     mArchiveAge = config.readEntry("archiveAge", 1);
     mMaximumArchiveCount = config.readEntry("maximumArchiveCount", 0);
+    mUseRange = config.readEntry("useRange", false);
+    mRanges = config.readEntry("ranges", QList<int>());
     if (tId >= 0) {
         mSaveCollectionId = tId;
     }
@@ -177,6 +203,8 @@ void ArchiveMailInfo::writeConfig(KConfigGroup &config)
     config.writeEntry("archiveAge", mArchiveAge);
     config.writeEntry("maximumArchiveCount", mMaximumArchiveCount);
     config.writeEntry("enabled", mIsEnabled);
+    config.writeEntry("useRange", mUseRange);
+    config.writeEntry("ranges", mRanges);
     config.sync();
 }
 
@@ -234,5 +262,6 @@ bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
 {
     return saveCollectionId() == other.saveCollectionId() && saveSubCollection() == other.saveSubCollection() && url() == other.url()
         && archiveType() == other.archiveType() && archiveUnit() == other.archiveUnit() && archiveAge() == other.archiveAge()
-        && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled();
+        && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled()
+        && useRange() == other.useRange() && ranges() == other.ranges();
 }
