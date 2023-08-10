@@ -26,6 +26,15 @@ QDate ArchiveMailAgentUtil::diffDate(ArchiveMailInfo *info)
     return diffDate;
 }
 
+bool ArchiveMailAgentUtil::timeIsInRange(const QList<int> &range, const QTime &time)
+{
+    if ((time.hour() >= range.at(0)) && (time.hour() <= range.at(1))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 bool ArchiveMailAgentUtil::needToArchive(ArchiveMailInfo *info)
 {
     if (!info->isEnabled()) {
@@ -35,9 +44,15 @@ bool ArchiveMailAgentUtil::needToArchive(ArchiveMailInfo *info)
         return false;
     }
     if (!info->lastDateSaved().isValid()) {
+        if (info->useRange()) {
+            // TODO
+        }
         return true;
     } else {
         if (QDate::currentDate() >= diffDate(info)) {
+            if (info->useRange()) {
+                return ArchiveMailAgentUtil::timeIsInRange(info->range(), QTime::currentTime());
+            }
             return true;
         }
     }

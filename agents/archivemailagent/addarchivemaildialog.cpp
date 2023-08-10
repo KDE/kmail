@@ -147,8 +147,11 @@ void AddArchiveMailDialog::load(ArchiveMailInfo *info)
     mDays->setValue(info->archiveAge());
     mUnits->setUnit(info->archiveUnit());
     mMaximumArchive->setValue(info->maximumArchiveCount());
-    mArchiveMailRangeWidget->setRangeEnabled(info->useRange());
-    mArchiveMailRangeWidget->setRange(info->range());
+    const bool useRange{info->useRange()};
+    mArchiveMailRangeWidget->setRangeEnabled(useRange);
+    if (useRange) {
+        mArchiveMailRangeWidget->setRange(info->range());
+    }
     slotUpdateOkButton();
 }
 
