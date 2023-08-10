@@ -70,8 +70,8 @@ public:
     Q_REQUIRED_RESULT bool useRange() const;
     void setUseRange(bool newUseRange);
 
-    Q_REQUIRED_RESULT QList<int> ranges() const;
-    void setRanges(const QList<int> &newRanges);
+    Q_REQUIRED_RESULT QList<int> range() const;
+    void setRange(const QList<int> &newRanges);
 
 private:
     Q_REQUIRED_RESULT QString dirArchive(bool &dirExit) const;

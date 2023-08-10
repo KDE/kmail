@@ -6,7 +6,7 @@
 
 #include "archivemailrangewidgettest.h"
 #include "../archivemailrangewidget.h"
-#include "hourcombobox.h"
+#include "../widgets/hourcombobox.h"
 #include <QCheckBox>
 #include <QHBoxLayout>
 #include <QTest>
@@ -25,9 +25,9 @@ void ArchiveMailRangeWidgetTest::shouldHaveDefaultValues()
     QVERIFY(mainLayout);
     QCOMPARE(mainLayout->contentsMargins(), QMargins{});
 
-    auto mEnabled = w.findChild<QCheckBox *>(QStringLiteral("mEnabled"));
-    QVERIFY(mEnabled);
-    QVERIFY(!mEnabled->isChecked());
+    auto mRangeEnabled = w.findChild<QCheckBox *>(QStringLiteral("mRangeEnabled"));
+    QVERIFY(mRangeEnabled);
+    QVERIFY(!mRangeEnabled->isChecked());
 
     auto mStartRange = w.findChild<HourComboBox *>(QStringLiteral("mStartRange"));
     QVERIFY(mStartRange);
