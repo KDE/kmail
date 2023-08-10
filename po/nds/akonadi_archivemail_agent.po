@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-08-10 00:47+0000\n"
 "PO-Revision-Date: 2014-08-13 00:56+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -18,46 +18,46 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 
 #: addarchivemaildialog.cpp:31
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "All Ünnerornern archiveren"
+
+#: addarchivemaildialog.cpp:38
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Nettpostarchiev ännern"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Nettpostarchiev tofögen"
 
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:52
 #, kde-format
 msgid "&Folder:"
 msgstr "&Orner:"
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:65
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "F&ormaat:"
 
-#: addarchivemaildialog.cpp:67
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "All Ünnerornern archiveren"
-
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:77
 #, kde-format
 msgid "Path:"
 msgstr "Padd:"
 
-#: addarchivemaildialog.cpp:83
+#: addarchivemaildialog.cpp:86
 #, kde-format
 msgid "Backup each:"
 msgstr "Sekerheitkopie opstellen elk:"
 
-#: addarchivemaildialog.cpp:99
+#: addarchivemaildialog.cpp:100
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Hööchsttall för Archiev:"
@@ -72,6 +72,11 @@ msgstr "keen Grenz"
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Archiev"
+
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
 
 #: archivemailwidget.cpp:69
 #, kde-format

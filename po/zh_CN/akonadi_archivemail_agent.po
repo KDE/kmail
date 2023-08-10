@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-08-10 00:47+0000\n"
 "PO-Revision-Date: 2023-08-02 12:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -19,42 +19,42 @@ msgstr ""
 
 #: addarchivemaildialog.cpp:31
 #, kde-format
+msgid "Archive all subfolders"
+msgstr "归档全部子文件夹"
+
+#: addarchivemaildialog.cpp:38
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "修改存档的邮件"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "添加存档邮件"
 
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:52
 #, kde-format
 msgid "&Folder:"
 msgstr "文件夹(&F)："
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:65
 #, kde-format
 msgid "Format:"
 msgstr "格式："
 
-#: addarchivemaildialog.cpp:67
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "归档全部子文件夹"
-
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:77
 #, kde-format
 msgid "Path:"
 msgstr "路径："
 
-#: addarchivemaildialog.cpp:83
+#: addarchivemaildialog.cpp:86
 #, kde-format
 msgid "Backup each:"
 msgstr "备份间隔："
 
-#: addarchivemaildialog.cpp:99
+#: addarchivemaildialog.cpp:100
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "归档数上限："
@@ -69,6 +69,11 @@ msgstr "无限制"
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "归档"
+
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
 
 #: archivemailwidget.cpp:69
 #, kde-format
