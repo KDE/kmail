@@ -41,7 +41,7 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 private:
-    QString infoToStr(ArchiveMailInfo *info) const;
+    Q_REQUIRED_RESULT QString infoToStr(ArchiveMailInfo *info) const;
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;
     QList<ArchiveMailInfo *> mListArchiveInfo;
