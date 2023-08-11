@@ -38,8 +38,8 @@ public:
     void insertBox(std::unique_ptr<UnifiedMailbox> box);
     void removeBox(const QString &id);
 
-    UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
-    UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
+    Q_REQUIRED_RESULT UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
+    Q_REQUIRED_RESULT UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
 
     inline auto begin() const
     {
