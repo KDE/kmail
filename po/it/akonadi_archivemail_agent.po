@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
+"POT-Creation-Date: 2023-08-11 00:46+0000\n"
 "PO-Revision-Date: 2022-01-03 21:40+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -17,54 +17,54 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 21.08.0\n"
 
-#: addarchivemaildialog.cpp:31
+#: addarchivemaildialog.cpp:33
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Archivia tutte le sottocartelle"
 
-#: addarchivemaildialog.cpp:38
+#: addarchivemaildialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modifica archivio di posta"
 
-#: addarchivemaildialog.cpp:40
+#: addarchivemaildialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Aggiungi archivio di posta"
 
-#: addarchivemaildialog.cpp:52
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Cartella:"
 
-#: addarchivemaildialog.cpp:65
+#: addarchivemaildialog.cpp:68
 #, kde-format
 msgid "Format:"
 msgstr "Formato:"
 
-#: addarchivemaildialog.cpp:77
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Percorso:"
 
-#: addarchivemaildialog.cpp:86
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr "Crea copia di sicurezza ogni:"
 
-#: addarchivemaildialog.cpp:100
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Numero massimo di archivi:"
 
-#: addarchivemaildialog.cpp:104
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "illimitato"
 
-#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

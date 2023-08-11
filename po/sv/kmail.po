@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2023-08-03 07:24+0200\n"
+"PO-Revision-Date: 2023-08-10 07:41+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -2486,6 +2486,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Den valda PGP-nyckeln (%1) finns inte i din nyckelring eller är inte lämplig "
+"för kryptering."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2494,6 +2496,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Den valda PGP-signeringsnyckeln (%1) finns inte i din nyckelring eller är "
+"inte lämplig för signering."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2502,6 +2506,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Den valda S/MIME-nyckeln (%1) finns inte i din nyckelring eller är inte "
+"lämplig för kryptering."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2510,43 +2516,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Den valda S/MIME-signeringsnyckeln (%1) finns inte i din nyckelring eller är "
+"inte lämplig för signering."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Kryptera"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "&Kryptera inte"
+msgstr "Kryptera inte"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Ingen nyckel hittades för mottagaren."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Autocrypt gossip-nyckel används för mottagaren. Nyckeln är inte verifierad."
+"Autocrypt gossip-nyckel används för mottagaren. Vi fick nyckeln från "
+"tredjepartsmottagare. Nyckeln är inte verifierad."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2556,10 +2558,7 @@ msgstr ""
 "Mottagaren föredrar krypterade svar."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2576,6 +2575,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Krypteringsnyckeln är opålitlig Den har inte tillräcklig giltighet. Du kan "
+"signera nyckeln om du kommunicerade fingeravtrycket via en annan kanal. "
+"Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2586,19 +2588,21 @@ msgid ""
 "can sign the key, if you communicated the fingerprint by another channel. "
 "Click the icon for details."
 msgstr ""
+"Krypteringsnyckeln är opålitlig Den har inte används någonstans för att "
+"garantera att den hör till den angivna personen. Genom att använda nyckeln "
+"blir den pålitligare. Eller kan du signera nyckeln om du kommunicerade "
+"fingeravtrycket via en annan kanal. Klicka på ikonen för detaljerad "
+"information."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Kryptering med låg säkerhet används för mottagaren (krypteringsnyckeln är "
-"opålitlig). Klicka på ikonen för detaljerad information."
+"Krypteringsnyckeln är opålitlig. Den har konflikter i TOFU-data. Klicka på "
+"ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2607,19 +2611,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Krypteringsnyckeln är opålitlig. Den har okänd giltighet i TOFU-data. Klicka "
+"på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Kryptering med låg säkerhet används för mottagaren (krypteringsnyckeln är "
-"opålitlig). Klicka på ikonen för detaljerad information."
+"Krypteringsnyckeln är opålitlig. Nyckeln är markerad som dålig. Klicka på "
+"ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2630,6 +2633,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Krypteringsnyckeln är bara marginellt pålitlig och har inte används "
+"tillräckligt lång tid för att garantera att den hör till den angivna "
+"personen Genom att använda nyckeln blir den pålitligare. Eller kan du "
+"signera nyckeln om du kommunicerade fingeravtrycket via en annan kanal. "
+"Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2638,6 +2646,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Krypteringsnyckeln är bara marginellt pålitlig. Du kan signera nyckeln om du "
+"kommunicerade fingeravtrycket via en annan kanal. Klicka på ikonen för "
+"detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2648,32 +2659,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Krypteringsnyckeln är bara marginellt pålitlig, men har används tillräckligt "
+"lång tid för att det ska vara mycket troligt att den kontrolleras av den "
+"angivna personen Genom att använda nyckeln blir den pålitligare. Eller kan "
+"du signera nyckeln om du kommunicerade fingeravtrycket via en annan kanal. "
+"Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Kryptering med hög säkerhet används för mottagaren (krypteringsnyckeln är "
-"helt pålitlig). Klicka på ikonen för detaljerad information."
+"Krypteringsnyckeln är helt pålitlig. Du kan höja säkerhetsnivån genom att "
+"signera nyckeln. Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Kryptering med hög säkerhet används för mottagaren (krypteringsnyckeln är "
-"helt pålitlig). Klicka på ikonen för detaljerad information."
+"Krypteringsnyckeln är ultimat pålitlig eller signerad av en annan ultimat "
+"pålitlig nyckel. Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
