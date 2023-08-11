@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
+"POT-Creation-Date: 2023-08-11 00:46+0000\n"
 "PO-Revision-Date: 2019-07-06 14:13+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -20,56 +20,56 @@ msgstr ""
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: addarchivemaildialog.cpp:31
+#: addarchivemaildialog.cpp:33
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Archyvuoti visus poaplankius"
 
-#: addarchivemaildialog.cpp:38
+#: addarchivemaildialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modifikuoti archyvuojamą paštą"
 
-#: addarchivemaildialog.cpp:40
+#: addarchivemaildialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Pridėti archyvuojamą paštą"
 
-#: addarchivemaildialog.cpp:52
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Aplankas:"
 
-#: addarchivemaildialog.cpp:65
+#: addarchivemaildialog.cpp:68
 #, kde-format
 msgid "Format:"
 msgstr "Formatas:"
 
-#: addarchivemaildialog.cpp:77
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Kelias:"
 
-#: addarchivemaildialog.cpp:86
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr "Daryti atsarginę kopiją kas:"
 
-#: addarchivemaildialog.cpp:100
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Didžiausias archyvų skaičius:"
 
-#: addarchivemaildialog.cpp:104
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "neribotas"
 
-#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

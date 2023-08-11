@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2023-08-03 09:55+0300\n"
+"PO-Revision-Date: 2023-08-10 09:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2521,6 +2521,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Вибраного вами ключа PGP (%1) немає у сховищі ключів або він є непридатним "
+"для шифрування."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2529,6 +2531,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Вибраного вами ключа PGP для підписування (%1) немає у сховищі ключів або "
+"він є непридатним для підписування."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2537,6 +2541,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Вибраного вами ключа SMIME (%1) немає у сховищі ключів або він є непридатним "
+"для шифрування."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2545,44 +2551,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Вибраного вами ключа SMIME для підписування (%1) немає у сховищі ключів або "
+"він є непридатним для підписування."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Зашифрувати"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Зашифрувати"
+msgstr "Не шифрувати"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Не знайдено ключа для отримувача."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Для цього отримувача використано gossip-ключ Autocrypt. Цей ключ не "
-"перевірено."
+"Для цього отримувача використано gossip-ключ Autocrypt. Нами цей ключ "
+"отримано від сторонніх отримувачів. Цей ключ не перевірено."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2592,10 +2593,7 @@ msgstr ""
 "Отримувач надає перевагу зашифрованим відповідям."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2612,6 +2610,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Ключ для шифрування не є довіреним. Його чинність не є достатньою. Ви можете "
+"підписати ключ, якщо виконали підтвердження відбитка іншими каналами. "
+"Натисніть піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2622,20 +2623,21 @@ msgid ""
 "can sign the key, if you communicated the fingerprint by another channel. "
 "Click the icon for details."
 msgstr ""
+"Ключ для шифрування не є довіреним. Його не було використано десь для "
+"гарантування того, що він належить вказаній особі. Використання ключа "
+"збільшить довіру до нього. Крім того, ви можете підписати ключ, якщо "
+"виконали підтвердження відбитка іншими каналами. Натисніть піктограму, щоб "
+"дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Для цього отримувача буде використано низькобезпечне шифрування (ключ "
-"шифрування вважається не гідним довіри). Натисніть піктограму, щоб дізнатися "
-"більше."
+"Ключ шифрування не є довіреним. Маємо конфлікт його даних TOFU. Натисніть "
+"піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2644,20 +2646,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Ключ шифрування не є довіреним. Його чинність у даних TOFU є невідомою. "
+"Натисніть піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Для цього отримувача буде використано низькобезпечне шифрування (ключ "
-"шифрування вважається не гідним довіри). Натисніть піктограму, щоб дізнатися "
-"більше."
+"Ключ шифрування не є довіреним. Ключ позначено як поганий. Натисніть "
+"піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2668,6 +2668,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Ключ для шифрування є лише обмежено довіреним. Його використання не є "
+"достатньо тривалим для гарантування того, що він належить вказаній особі. "
+"Використання ключа збільшить довіру до нього. Крім того, ви можете підписати "
+"ключ, якщо виконали підтвердження відбитка іншими каналами. Натисніть "
+"піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2676,6 +2681,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Ключ для шифрування є лише обмежено довіреним. Ви можете підписати ключ, "
+"якщо виконали підтвердження відбитка іншими каналами. Натисніть піктограму, "
+"щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2686,34 +2694,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Ключ для шифрування має лише обмежено довіреним, але його використовували "
+"достатньо довго, щоб можна було стверджувати, що він належить вказаній "
+"особі. Використання ключа збільшить довіру до нього. Крім того, ви можете "
+"підписати ключ, якщо виконали підтвердження відбитка іншими каналами. "
+"Натисніть піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Для цього отримувача буде використано високобезпечне шифрування (ключ "
-"шифрування має необмежену довіру). Натисніть піктограму, щоб дізнатися "
-"більше."
+"Ключ шифрування має необмежену довіру. Ви можете підняти рівень безпеки, "
+"якщо підпишете ключ. Натисніть піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Для цього отримувача буде використано високобезпечне шифрування (ключ "
-"шифрування має необмежену довіру). Натисніть піктограму, щоб дізнатися "
-"більше."
+"Ключ шифрування не є необмежено довіреним або його підписано іншим "
+"необмежено довіреним ключем. Натисніть піктограму, щоб дізнатися більше."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format

@@ -1,17 +1,17 @@
 # Translation of akonadi_archivemail_agent.po to Catalan
-# Copyright (C) 2012-2022 This_file_is_part_of_KDE
+# Copyright (C) 2012-2023 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Orestes Mas <orestes@tsc.upc.edu>, 2012.
-# Josep M. Ferrer <txemaq@gmail.com>, 2012, 2014, 2015, 2018, 2020, 2021.
+# Josep M. Ferrer <txemaq@gmail.com>, 2012, 2014, 2015, 2018, 2020, 2021, 2023.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2022-01-02 07:36+0100\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"PO-Revision-Date: 2023-08-10 19:07+0200\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -19,56 +19,56 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 21.12.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 
-#: addarchivemaildialog.cpp:31
+#: addarchivemaildialog.cpp:33
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Arxiva totes les subcarpetes"
 
-#: addarchivemaildialog.cpp:38
+#: addarchivemaildialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modificació d'un arxiu de correu"
 
-#: addarchivemaildialog.cpp:40
+#: addarchivemaildialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Afegeix un arxiu de correu"
 
-#: addarchivemaildialog.cpp:52
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Carpeta:"
 
-#: addarchivemaildialog.cpp:65
+#: addarchivemaildialog.cpp:68
 #, kde-format
 msgid "Format:"
 msgstr "Format:"
 
-#: addarchivemaildialog.cpp:77
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Camí:"
 
-#: addarchivemaildialog.cpp:86
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr "Fes una còpia de seguretat cada:"
 
-#: addarchivemaildialog.cpp:100
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Nombre màxim d'arxius:"
 
-#: addarchivemaildialog.cpp:104
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "Sense límit"
 
-#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
@@ -77,7 +77,7 @@ msgstr "Arxiu"
 #: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr ""
+msgstr "Usa un interval"
 
 #: archivemailwidget.cpp:69
 #, kde-format
@@ -251,9 +251,3 @@ msgstr "Mesos"
 #, kde-format
 msgid "Years"
 msgstr "Anys"
-
-#~ msgid "Remove items"
-#~ msgstr "Elimina els elements"
-
-#~ msgid "Remove"
-#~ msgstr "Elimina"

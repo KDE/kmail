@@ -28,9 +28,19 @@ QDate ArchiveMailAgentUtil::diffDate(ArchiveMailInfo *info)
 
 bool ArchiveMailAgentUtil::timeIsInRange(const QList<int> &range, const QTime &time)
 {
-    if ((time.hour() >= range.at(0)) && (time.hour() <= range.at(1))) {
+    const int hour = time.hour();
+    const int startRange = range.at(0);
+    const int endRange = range.at(1);
+    if ((hour >= startRange) && (hour <= endRange)) {
         return true;
     } else {
+        // Range as 23h -> 5h
+        if ((hour >= startRange) && (hour > endRange)) {
+            return true;
+
+        } else if ((startRange > endRange) && (hour < startRange && (hour <= endRange))) { // Range as 23h -> 5h
+            return true;
+        }
         return false;
     }
 }
@@ -45,7 +55,7 @@ bool ArchiveMailAgentUtil::needToArchive(ArchiveMailInfo *info)
     }
     if (!info->lastDateSaved().isValid()) {
         if (info->useRange()) {
-            // TODO
+            return ArchiveMailAgentUtil::timeIsInRange(info->range(), QTime::currentTime());
         }
         return true;
     } else {

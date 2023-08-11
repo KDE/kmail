@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022.
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2022-01-02 14:20+0100\n"
+"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"PO-Revision-Date: 2023-08-10 07:30+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -17,54 +17,54 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 20.08.1\n"
 
-#: addarchivemaildialog.cpp:31
+#: addarchivemaildialog.cpp:33
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Arkivera alla underkorgar"
 
-#: addarchivemaildialog.cpp:38
+#: addarchivemaildialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Ändra arkivera post"
 
-#: addarchivemaildialog.cpp:40
+#: addarchivemaildialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Lägg till arkivera post"
 
-#: addarchivemaildialog.cpp:52
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Katalog:"
 
-#: addarchivemaildialog.cpp:65
+#: addarchivemaildialog.cpp:68
 #, kde-format
 msgid "Format:"
 msgstr "Format:"
 
-#: addarchivemaildialog.cpp:77
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Sökväg:"
 
-#: addarchivemaildialog.cpp:86
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr "Säkerhetskopiera var:"
 
-#: addarchivemaildialog.cpp:100
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Maximalt antal arkiv:"
 
-#: addarchivemaildialog.cpp:104
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "obegränsat"
 
-#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
@@ -73,7 +73,7 @@ msgstr "Arkivera"
 #: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr ""
+msgstr "Använd intervall"
 
 #: archivemailwidget.cpp:69
 #, kde-format

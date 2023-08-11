@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
+"POT-Creation-Date: 2023-08-11 00:46+0000\n"
 "PO-Revision-Date: 2012-05-14 16:25-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -17,57 +17,57 @@ msgstr ""
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
 "3 : 4\n"
 
-#: addarchivemaildialog.cpp:31
+#: addarchivemaildialog.cpp:33
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Cuir gach fofhillteán i gcartlann"
 
-#: addarchivemaildialog.cpp:38
+#: addarchivemaildialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Archive all subfolders"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Cuir gach fofhillteán i gcartlann"
 
-#: addarchivemaildialog.cpp:40
+#: addarchivemaildialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "Archive all subfolders"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Cuir gach fofhillteán i gcartlann"
 
-#: addarchivemaildialog.cpp:52
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Fillteán:"
 
-#: addarchivemaildialog.cpp:65
+#: addarchivemaildialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "F&ormáid:"
 
-#: addarchivemaildialog.cpp:77
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Conair:"
 
-#: addarchivemaildialog.cpp:86
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr ""
 
-#: addarchivemaildialog.cpp:100
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr ""
 
-#: addarchivemaildialog.cpp:104
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "gan teorainn"
 
-#: archivemailinfo.cpp:76 archivemailinfo.cpp:92
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
