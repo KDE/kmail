@@ -3871,7 +3871,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                 case GpgME::TofuInfo::NoHistory:
                     tooltip = i18nc("@info:tooltip",
                                     "The encryption key is not trusted. "
-                                    "It hasn't used anywhere to guarantee it belongs to the stated person. "
+                                    "It hasn't been used anywhere to guarantee it belongs to the stated person. "
                                     "By using the key will be trusted more. "
                                     "Or you can sign the key, if you communicated the fingerprint by another channel. "
                                     "Click the icon for details.");
