@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2023-08-05 19:10+0200\n"
+"PO-Revision-Date: 2023-08-11 16:43+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2509,6 +2509,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"La vostra clau PGP seleccionada (%1) no existix en l'anell de claus o no és "
+"adequada per a l'encriptació."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2517,6 +2519,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"La vostra clau PGP de signatura seleccionada (%1) no existix en l'anell de "
+"claus o no és adequada per a signar."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2525,6 +2529,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"La vostra clau SMIME seleccionada (%1) no existix en l'anell de claus o no "
+"és adequada per a l'encriptació."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2533,44 +2539,40 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"La vostra clau SMIME de signatura seleccionada (%1) no existix en l'anell de "
+"claus o no és adequada per a signar."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Encripta"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Encripta"
+msgstr "No l'encriptes"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "No s'ha trobat la clau del destinatari."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Per a este destinatari s'utilitza la clau de xafarderia d'Autocrypt. Esta "
-"clau no està verificada."
+"Per a este destinatari s'utilitza la clau de xafarderia d'Autocrypt. La clau "
+"s'ha aconseguit a partir de destinataris de terceres parts. Esta clau no "
+"està verificada."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2580,10 +2582,7 @@ msgstr ""
 "verificada. El destinatari preferix respostes encriptades."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2600,6 +2599,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"La clau d'encriptació no és fiable. No té prou validesa. Podeu signar la "
+"clau, si comuniqueu l'empremta digital per un altre canal. Per a més "
+"detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2610,20 +2612,20 @@ msgid ""
 "can sign the key, if you communicated the fingerprint by another channel. "
 "Click the icon for details."
 msgstr ""
+"La clau d'encriptació no és fiable. No s'ha utilitzat enlloc per a garantir "
+"que pertany a la persona establida. Utilitzant la clau serà més fiable. O "
+"podeu signar la clau, si comuniqueu l'empremta digital per un altre canal. "
+"Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"S'emprarà encriptació de baixa seguretat per a este destinatari (la clau "
-"d'encriptació és de confiança no fiable). Per a més detalls, feu clic damunt "
-"de la icona."
+"La clau d'encriptació no és fiable. Té dades TOFU conflictives. Per a més "
+"detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2632,20 +2634,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"La clau d'encriptació no és fiable. Té una validesa desconeguda en les dades "
+"TOFU. Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"S'emprarà encriptació de baixa seguretat per a este destinatari (la clau "
-"d'encriptació és de confiança no fiable). Per a més detalls, feu clic damunt "
-"de la icona."
+"La clau d'encriptació no és fiable. La clau està marcada com a roïna. Per a "
+"més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2656,6 +2656,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"La clau d'encriptació només és fiable marginalment i no s'ha utilitzat prou "
+"temps per a garantir que pertany a la persona establida. Utilitzant la clau "
+"serà més fiable. O podeu signar la clau, si comuniqueu l'empremta digital "
+"per un altre canal. Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2664,6 +2668,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"La clau d'encriptació només és fiable marginalment. Podeu signar la clau, si "
+"comuniqueu l'empremta digital per un altre canal. Per a més detalls, feu "
+"clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2674,34 +2681,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"La clau d'encriptació només és fiable marginalment, però s'ha utilitzat prou "
+"vegades per a ser molt possible que la controle la persona establida. "
+"Utilitzant la clau serà més fiable. O podeu signar la clau, si comuniqueu "
+"l'empremta digital per un altre canal. Per a més detalls, feu clic damunt de "
+"la icona."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"S'emprarà encriptació d'alta seguretat per a este destinatari (la clau "
-"d'encriptació és de plena confiança). Per a més detalls, feu clic damunt de "
-"la icona."
+"La clau d'encriptació és completament fiable. Podeu elevar el nivell de "
+"seguretat signant la clau. Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"S'emprarà encriptació d'alta seguretat per a este destinatari (la clau "
-"d'encriptació és de plena confiança). Per a més detalls, feu clic damunt de "
-"la icona."
+"La clau d'encriptació és totalment fiable o està signada per una altra clau "
+"de fiabilitat total. Per a més detalls, feu clic damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
@@ -8010,20 +8014,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid ""
-#~ "Medium security encryption will be used for this recipient (the "
-#~ "encryption key is marginally trusted). Click the icon for details."
-#~ msgstr ""
-#~ "S'emprarà encriptació de seguretat mitjana per a este destinatari (la "
-#~ "clau d'encriptació és de confiança parcial). Per a més detalls, feu clic "
-#~ "damunt de la icona."
-
-#~ msgid ""
-#~ "The email to this recipient will be encrypted, but the security of the "
-#~ "encryption is unknown (the encryption key could not be verified). Click "
-#~ "the icon for details."
-#~ msgstr ""
-#~ "El correu electrònic per a este destinatari serà encriptat, però la "
-#~ "seguretat de l'encriptació és desconeguda (la clau d'encriptació no s'ha "
-#~ "pogut verificar). Per a més detalls, feu clic damunt de la icona."

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2023-08-03 06:41+0100\n"
+"PO-Revision-Date: 2023-08-11 10:45+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2506,61 +2506,51 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Ĉifradi"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Ĉifradi"
+msgstr "Ne Ĉifradi"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Neniu ŝlosilo trovita por la ricevanto."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Aŭtomata klaĉoŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
-"estas kontrolita."
+"Aŭtomata klaĉoŝlosilo estas uzata por ĉi tiu ricevanto. Ni ekhavis ĉi "
+"ŝlosilon de triapartiaj ricevantoj. Ĉi tiu ŝlosilo ne estas kontrolita."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"Aŭtomata ĉifrita ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
+"Aŭtomatoĉifra ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
 "estas kontrolita. La ricevanto preferas ĉifritajn respondojn."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"Aŭtomata ĉifrita ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
+"Aŭtomatoĉifra ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
 "estas kontrolita. La ricevanto ne preferas ĉifritajn respondojn."
 
 #: editor/kmcomposerwin.cpp:3865
@@ -2571,6 +2561,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"La ĉifrada ŝlosilo ne estas fidinda. Ĝi ne havas sufiĉan validecon. Vi povas "
+"subskribi la ŝlosilon, se vi komunikis  la fingrospuron per alia kanalo. "
+"Alklaku la piktogramon por detaloj."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2583,17 +2576,14 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Malalta sekureca ĉifrado estos uzata por ĉi tiu ricevanto (la ĉifrada "
-"ŝlosilo estas nefidinda). Alklaku la piktogramon por detaloj."
+"La ĉifrada ŝlosilo ne estas fidinda. Ĝi havas konfliktajn TOFU-datumojn. "
+"Alklaku la piktogramon por detaloj."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2604,17 +2594,14 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Malalta sekureca ĉifrado estos uzata por ĉi tiu ricevanto (la ĉifrada "
-"ŝlosilo estas nefidinda). Alklaku la piktogramon por detaloj."
+"La ĉifrada ŝlosilo ne estas fidinda. Ĝi estas markita kiel malbona. Alklaku "
+"la piktogramon por detaloj."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2645,30 +2632,24 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Altsekureca ĉifrado estos uzata por ĉi tiu ricevanto (la ĉifrada ŝlosilo "
-"estas plene fidinda). Alklaku la piktogramon por detaloj."
+"La ĉifrada ŝlosilo estas plene fidinda. Vi povas altigi la sekurecnivelon "
+"subskribante la ŝlosilon. Alklaku la piktogramon por detaloj."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Altsekureca ĉifrado estos uzata por ĉi tiu ricevanto (la ĉifrada ŝlosilo "
-"estas plene fidinda). Alklaku la piktogramon por detaloj."
+"La ĉifrada ŝlosilo estas finfine fidinda aŭ ĝi estas subskribita de alia "
+"finfine prifidata ŝlosilo. Alklaku la piktogramon por detaloj."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
@@ -7916,19 +7897,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid ""
-#~ "Medium security encryption will be used for this recipient (the "
-#~ "encryption key is marginally trusted). Click the icon for details."
-#~ msgstr ""
-#~ "Meza sekureca ĉifrado estos uzata por ĉi tiu ricevanto (la ĉifrada "
-#~ "ŝlosilo estas marĝene fidinda). Alklaku la piktogramon por detaloj."
-
-#~ msgid ""
-#~ "The email to this recipient will be encrypted, but the security of the "
-#~ "encryption is unknown (the encryption key could not be verified). Click "
-#~ "the icon for details."
-#~ msgstr ""
-#~ "La retpoŝto al ĉi tiu ricevanto estos ĉifrita, sed la sekureco de la "
-#~ "ĉifrado estas nekonata (la ĉifrada ŝlosilo ne povis esti kontrolita). "
-#~ "Alklaku la piktogramon por detaloj."
