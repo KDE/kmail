@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: BSD-3-Clause
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
-set(PIM_VERSION "5.23.90")
+set(PIM_VERSION "5.24.0")
 
 project(kmail VERSION ${PIM_VERSION})
 
@@ -35,8 +35,8 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
 
 # Do NOT add quote
-set(KDEPIM_DEV_VERSION rc)
-set(RELEASE_SERVICE_VERSION "23.07.90")
+set(KDEPIM_DEV_VERSION)
+set(RELEASE_SERVICE_VERSION "23.08.0")
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
