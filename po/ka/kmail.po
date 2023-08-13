@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-10 00:47+0000\n"
-"PO-Revision-Date: 2023-08-05 09:56+0200\n"
+"POT-Creation-Date: 2023-08-13 00:47+0000\n"
+"PO-Revision-Date: 2023-08-11 08:19+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2405,18 +2405,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "დაშიფრვა"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "დაშიფრვა"
+msgstr "არ-დაშიფრვა"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -2461,10 +2459,10 @@ msgstr ""
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
-"The encryption key is not trusted. It hasn't used anywhere to guarantee it "
-"belongs to the stated person. By using the key will be trusted more. Or you "
-"can sign the key, if you communicated the fingerprint by another channel. "
-"Click the icon for details."
+"The encryption key is not trusted. It hasn't been used anywhere to guarantee "
+"it belongs to the stated person. By using the key will be trusted more. Or "
+"you can sign the key, if you communicated the fingerprint by another "
+"channel. Click the icon for details."
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3881
