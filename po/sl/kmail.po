@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-13 00:43+0200\n"
+"PO-Revision-Date: 2023-08-13 09:04+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
 "%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2490,6 +2490,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Vaš izbrani ključ PGP (%1) ne obstaja v zbirki ključev ali pa ni primeren za "
+"šifriranje."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2498,6 +2500,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Vaš izbrani podpisni ključ PGP (%1) ne obstaja v vaši zbirki ključev ali pa "
+"ga ni primeren za podpisovanje."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2506,6 +2510,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Vaš izbrani ključ SMIME (%1) ne obstaja v zbirki ključev ali pa ni primeren "
+"za šifriranje."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2514,6 +2520,8 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Vaš izbrani podpisni ključ SMIME (%1) ne obstaja v vaši zbirki ključev ali "
+"pa ga ni primeren za podpisovanje."
 
 #: editor/kmcomposerwin.cpp:3666
 #, kde-format
@@ -2534,42 +2542,34 @@ msgid "No key found for the recipient."
 msgstr "Ni mogoče najti ključa prejemnika."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Za tega prejemnika uporabljamo ključ za trač samodejnega šifriranja. Ta "
-"ključ ni preverjen."
+"Za tega prejemnika se uporablja samodejni ključ. Ta ključ smo dobili od "
+"prejemnikov tretje stranke. Ta ključ ni preverjen."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"Za tega naslovnika uporabljamo avtošifrirni ključ. Ta ključ ni preverjen. "
+"Za tega naslovnika se uporablja avtošifrirni ključ. Ta ključ ni preverjen. "
 "Prejemnik raje dobiva šifrirane odgovore."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"Za tega naslovnika uporabljamo avtošifrirni ključ. Ta ključ ni preverjen. "
-"Prejemnik nima raje šifriranih odgovorov."
+"Za tega naslovnika se uporablja avtošifrirni ključ. Ta ključ ni preverjen. "
+"Prejemnik raje nima šifriranih odgovorov."
 
 #: editor/kmcomposerwin.cpp:3865
 #, kde-format
@@ -2579,6 +2579,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Šifrirni ključ ni zaupanja vreden. Nima dovolj veljavnosti. Lahko podpišete "
+"ta ključ, če ste prstni odtis posredovali po drugem kanalu. Kliknite na "
+"ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2589,19 +2592,20 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Šifrirni ključ ni zaupanja vreden. Nikjer ni bil uporabljen, da bi "
+"zagotovili, da pripada navedeni osebi. Z uporabo tega ključa bo bolj "
+"zaupanja vreden. Ta ključ lahko podpišete, če vam je prstni odtis posredoval "
+"drugi kanal. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Za tega prejemnika bo uporabljeno šifriranje z nizko stopnjo varnosti "
-"(šifrirnemu ključu ni zaupano) Kliknite ikono za podrobnosti."
+"Ta šifrirni ključ ni zaupanja vreden. Ima nasprotujoče si podatke TOFU. "
+"Kliknite na ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2610,19 +2614,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Ta šifrirni ključ ni zaupanja vreden. V podatkih TOFU ima neznano "
+"veljavnost. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Za tega prejemnika bo uporabljeno šifriranje z nizko stopnjo varnosti "
-"(šifrirnemu ključu ni zaupano) Kliknite ikono za podrobnosti."
+"Ta šifrirni ključ ni zaupanja vreden. Ključ je označen kot slab. Kliknite "
+"ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2633,6 +2636,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Ta šifrirni ključ je le robno zaupanja vreden in ni bil uporabljen dovolj "
+"dolgo časa, da bi zagotavljal, da pripada navedeni osebi. Z uporabo ključa "
+"bo bolj zaupanja vreden. Lahko pa podpišete ključ, če ste sporočili prstni "
+"odtis po drugem kanalu. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2641,6 +2648,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Ta šifrirni ključ je le robno zaupanja vreden. Ključ lahko podpišete, če ste "
+"posredovali prstni odtis po drugem kanalu. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2651,32 +2660,30 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Ta šifrirni ključ le robno zaupanja vreden, vendar je bil uporabljen dovolj "
+"dolgo časa, da ga zelo verjetno nadzoruje navedena oseba. Z uporabo ključa "
+"bo bolj zaupanja vreden. Lahko pa podpišete ključ, če ste sporočili prstni "
+"odtis prek drugega kanala. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Za tega prejemnika bo uporabljeno šifriranje z visoko stopnjo varnosti "
-"(šifrirnemu ključu je polno zaupano). Kliknite ikono za podrobnosti."
+"Ta šifrirni ključ je v celoti zaupanja vreden. Raven varnosti lahko dvignete "
+"tako, da podpišete ključ. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Za tega prejemnika bo uporabljeno šifriranje z visoko stopnjo varnosti "
-"(šifrirnemu ključu je polno zaupano). Kliknite ikono za podrobnosti."
+"Ta šifrirni ključ je polno zaupanja vreden ali je podpisan od drugega polno "
+"zaupanja vrednega ključa. Kliknite ikono za podrobnosti."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
