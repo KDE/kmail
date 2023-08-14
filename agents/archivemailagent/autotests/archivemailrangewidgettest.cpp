@@ -34,6 +34,8 @@ void ArchiveMailRangeWidgetTest::shouldHaveDefaultValues()
 
     auto mEndRange = w.findChild<HourComboBox *>(QStringLiteral("mEndRange"));
     QVERIFY(mEndRange);
+
+    QVERIFY(!w.isRangeEnabled());
 }
 
 #include "moc_archivemailrangewidgettest.cpp"

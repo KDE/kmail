@@ -53,7 +53,7 @@ void ArchiveMailInfoTest::shouldRestoreFromSettings()
     KConfigGroup grp(KSharedConfig::openConfig(), "testsettings");
     info.writeConfig(grp);
 
-    ArchiveMailInfo restoreInfo(grp);
+    const ArchiveMailInfo restoreInfo(grp);
     QCOMPARE(info, restoreInfo);
 }
 
@@ -71,7 +71,7 @@ void ArchiveMailInfoTest::shouldCopyArchiveInfo()
     info.setUseRange(true);
     info.setRange({8, 7});
 
-    ArchiveMailInfo copyInfo(info);
+    const ArchiveMailInfo copyInfo(info);
     QCOMPARE(info, copyInfo);
 }
 

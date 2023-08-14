@@ -37,7 +37,6 @@ bool ArchiveMailAgentUtil::timeIsInRange(const QList<int> &range, const QTime &t
         // Range as 23h -> 5h
         if ((hour >= startRange) && (hour > endRange)) {
             return true;
-
         } else if ((startRange > endRange) && (hour < startRange && (hour <= endRange))) { // Range as 23h -> 5h
             return true;
         }
