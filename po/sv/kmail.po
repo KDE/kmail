@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-10 07:41+0200\n"
+"PO-Revision-Date: 2023-08-13 07:04+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -2580,13 +2580,7 @@ msgstr ""
 "Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:3873
-#, fuzzy, kde-format
-#| msgctxt "@info:tooltip"
-#| msgid ""
-#| "The encryption key is not trusted. It hasn't used anywhere to guarantee "
-#| "it belongs to the stated person. By using the key will be trusted more. "
-#| "Or you can sign the key, if you communicated the fingerprint by another "
-#| "channel. Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It hasn't been used anywhere to guarantee "
