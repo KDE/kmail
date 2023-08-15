@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-06-25 17:02+0200\n"
+"PO-Revision-Date: 2023-08-14 21:29+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.07.70\n"
+"X-Generator: Lokalize 23.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2543,24 +2543,22 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Verschlüsseln"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "N&icht verschlüsseln"
+msgstr "Nicht verschlüsseln"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Zu diesem Empfänger wurde kein Schlüssel gefunden."
 
 #: editor/kmcomposerwin.cpp:3830
 #, fuzzy, kde-format
@@ -2575,10 +2573,7 @@ msgstr ""
 "nicht verifiziert."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2589,10 +2584,7 @@ msgstr ""
 "Antworten."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -3460,10 +3452,9 @@ msgid "You must provide an email for this identity."
 msgstr "Eigene Nachrichten&vorlagen benutzen"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Copy Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "E-Mail-Adresse kopieren"
+msgstr "Leere E-Mail-Adresse"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -4171,11 +4162,10 @@ msgid "Deleting messages"
 msgstr "Nachrichten werden gelöscht"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Anhang auswählen"
+msgstr "Anhänge löschen"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4742,11 +4732,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Anhang auswählen"
+msgstr "Anhänge löschen"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -5022,11 +5011,10 @@ msgid "Save A&ttachments..."
 msgstr "A&nhänge speichern ..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Alle A&nhänge speichern ..."
+msgstr "Alle Anhänge löschen"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
