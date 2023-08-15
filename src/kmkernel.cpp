@@ -834,7 +834,6 @@ void KMKernel::setAccountStatus(bool goOnline)
                                      i18n("Send Email"),
                                      i18n("Impossible to send email"),
                                      QStringLiteral("kmail"),
-                                     KMKernel::self()->mainWin(),
                                      KNotification::CloseOnTimeout);
             }
         }
@@ -1734,7 +1733,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
     const QString summary = i18n("Resource %1 is broken.\n%2", instance.name(), instance.statusMessage());
-    KNotification::event(QStringLiteral("akonadi-resource-broken"), QString(), summary, QStringLiteral("kmail"), nullptr, KNotification::CloseOnTimeout);
+    KNotification::event(QStringLiteral("akonadi-resource-broken"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item)
@@ -1910,13 +1909,13 @@ const QAbstractItemModel *KMKernel::treeviewModelSelection()
 void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QStringLiteral("akonadi-instance-warning"), QString(), summary, QStringLiteral("kmail"), nullptr, KNotification::CloseOnTimeout);
+    KNotification::event(QStringLiteral("akonadi-instance-warning"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QStringLiteral("akonadi-instance-error"), QString(), summary, QStringLiteral("kmail"), nullptr, KNotification::CloseOnTimeout);
+    KNotification::event(QStringLiteral("akonadi-instance-error"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)

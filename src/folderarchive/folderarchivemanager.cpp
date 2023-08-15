@@ -165,7 +165,6 @@ void FolderArchiveManager::moveDone()
                          QString(),
                          i18n("Messages archived"),
                          QStringLiteral("kmail"),
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));
     nextJob();
@@ -177,7 +176,6 @@ void FolderArchiveManager::moveFailed(const QString &msg)
                          QString(),
                          msg,
                          QStringLiteral("kmail"),
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("kmail2"));
     nextJob();

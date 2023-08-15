@@ -131,7 +131,6 @@ void SendLaterJob::sendDone()
                          QString(),
                          i18n("Message sent"),
                          QStringLiteral("kmail"),
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));
     mManager->sendDone(mInfo);
@@ -144,7 +143,6 @@ void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType t
                          QString(),
                          error,
                          QStringLiteral("kmail"),
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_sendlater_agent"));
     mManager->sendError(mInfo, type);

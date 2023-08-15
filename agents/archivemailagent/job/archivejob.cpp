@@ -57,7 +57,6 @@ void ArchiveJob::execute()
                                  QString(),
                                  i18n("Directory does not exist. Please verify settings. Archive postponed."),
                                  mDefaultIconName,
-                                 nullptr,
                                  KNotification::CloseOnTimeout,
                                  QStringLiteral("akonadi_archivemail_agent"));
             deleteLater();
@@ -78,7 +77,6 @@ void ArchiveJob::execute()
                              QString(),
                              summary,
                              mDefaultIconName,
-                             nullptr,
                              KNotification::CloseOnTimeout,
                              QStringLiteral("akonadi_archivemail_agent"));
         connect(backupJob, &MailCommon::BackupJob::backupDone, this, &ArchiveJob::slotBackupDone);
@@ -93,7 +91,6 @@ void ArchiveJob::slotError(const QString &error)
                          QString(),
                          error,
                          mDefaultIconName,
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
     mManager->backupDone(mInfo);
@@ -106,7 +103,6 @@ void ArchiveJob::slotBackupDone(const QString &info)
                          QString(),
                          info,
                          mDefaultIconName,
-                         nullptr,
                          KNotification::CloseOnTimeout,
                          QStringLiteral("akonadi_archivemail_agent"));
     mManager->backupDone(mInfo);

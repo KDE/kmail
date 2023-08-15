@@ -2431,7 +2431,6 @@ void KMMainWidget::slotSendQueued()
                                  i18n("Send Email"),
                                  i18n("Impossible to send email"),
                                  QStringLiteral("kmail"),
-                                 this,
                                  KNotification::CloseOnTimeout);
         }
     }
@@ -2447,7 +2446,6 @@ void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
                                      i18n("Send Email"),
                                      i18n("Impossible to send email"),
                                      QStringLiteral("kmail"),
-                                     this,
                                      KNotification::CloseOnTimeout);
             }
         }
