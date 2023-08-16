@@ -48,5 +48,6 @@ Dependencies:
     'frameworks/kwindowsystem': '@latest-kf6'
     'frameworks/kxmlgui': '@latest-kf6'
     'frameworks/kiconthemes': '@latest-kf6'
+    'frameworks/kstatusnotifieritem': '@latest-kf6'
     'third-party/qtkeychain': '@latest-kf6'
     'libraries/ktextaddons': '@latest-kf6'
