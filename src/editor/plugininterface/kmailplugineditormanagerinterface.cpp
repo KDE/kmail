@@ -21,12 +21,12 @@ KMailPluginEditorManagerInterface::KMailPluginEditorManagerInterface(QObject *pa
 
 KMailPluginEditorManagerInterface::~KMailPluginEditorManagerInterface() = default;
 
-KPIMTextEdit::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
+TextCustomEditor::RichTextEditor *KMailPluginEditorManagerInterface::richTextEditor() const
 {
     return mRichTextEditor;
 }
 
-void KMailPluginEditorManagerInterface::setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor)
+void KMailPluginEditorManagerInterface::setRichTextEditor(TextCustomEditor::RichTextEditor *richTextEditor)
 {
     mRichTextEditor = richTextEditor;
 }

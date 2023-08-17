@@ -70,8 +70,8 @@
 #include <KPIMTextEdit/RichTextComposerActions>
 #include <KPIMTextEdit/RichTextComposerControler>
 #include <KPIMTextEdit/RichTextComposerImages>
-#include <KPIMTextEdit/RichTextEditorWidget>
 #include <KPIMTextEdit/RichTextExternalComposer>
+#include <TextCustomEditor/RichTextEditorWidget>
 
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
@@ -422,7 +422,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     vbox->addWidget(mAttachmentMissing);
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
-    mRichTextEditorwidget = new KPIMTextEdit::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
+    mRichTextEditorwidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
     composerEditorNg->installEventFilter(this);
 
     connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
@@ -1334,10 +1334,10 @@ void KMComposerWin::setupActions()
     KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
     mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
-    mFindText = KStandardAction::find(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFind, actionCollection());
-    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotFindNext, actionCollection());
+    mFindText = KStandardAction::find(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotFind, actionCollection());
+    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotFindNext, actionCollection());
 
-    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, &KPIMTextEdit::RichTextEditorWidget::slotReplace, actionCollection());
+    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"), mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
     action = new QAction(i18n("Paste as Attac&hment"), this);
@@ -1387,7 +1387,7 @@ void KMComposerWin::setupActions()
     mAutoSpellCheckingAction->setChecked(spellCheckingEnabled);
     slotAutoSpellCheckingToggled(spellCheckingEnabled);
     connect(mAutoSpellCheckingAction, &KToggleAction::toggled, this, &KMComposerWin::slotAutoSpellCheckingToggled);
-    connect(mComposerBase->editor(), &KPIMTextEdit::RichTextEditor::checkSpellingChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
+    connect(mComposerBase->editor(), &TextCustomEditor::RichTextEditor::checkSpellingChanged, this, &KMComposerWin::slotAutoSpellCheckingToggled);
 
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::textModeChanged, this, &KMComposerWin::slotTextModeChanged);
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorClosed, this, &KMComposerWin::slotExternalEditorClosed);

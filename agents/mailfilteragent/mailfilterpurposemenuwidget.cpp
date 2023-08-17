@@ -4,7 +4,7 @@
    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 #include "mailfilterpurposemenuwidget.h"
-#include <KPIMTextEdit/PlainTextEditor>
+#include <TextCustomEditor/PlainTextEditor>
 
 MailfilterPurposeMenuWidget::MailfilterPurposeMenuWidget(QWidget *parentWidget, QObject *parent)
     : PimCommon::PurposeMenuWidget(parentWidget, parent)
@@ -21,7 +21,7 @@ QByteArray MailfilterPurposeMenuWidget::text()
     return {};
 }
 
-void MailfilterPurposeMenuWidget::setEditorWidget(KPIMTextEdit::PlainTextEditor *editor)
+void MailfilterPurposeMenuWidget::setEditorWidget(TextCustomEditor::PlainTextEditor *editor)
 {
     mEditor = editor;
 }

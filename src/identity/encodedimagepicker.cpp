@@ -14,7 +14,7 @@
 #include <Akonadi/ContactSearchJob>
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
-#include <KPIMTextEdit/PlainTextEditor>
+#include <TextCustomEditor/PlainTextEditor>
 
 #include <KIO/StoredTransferJob>
 #include <KJobWidgets>
@@ -40,7 +40,7 @@ EncodedImagePicker::EncodedImagePicker(QWidget *parent)
 
     connect(mUi->openImageButton, &QAbstractButton::clicked, this, &EncodedImagePicker::selectFile);
     connect(mUi->selectContactsButton, &QPushButton::released, this, &EncodedImagePicker::selectFromAddressBook);
-    connect(mUi->source->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &EncodedImagePicker::sourceChanged);
+    connect(mUi->source->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &EncodedImagePicker::sourceChanged);
 }
 
 EncodedImagePicker::~EncodedImagePicker() = default;

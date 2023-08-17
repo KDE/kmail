@@ -79,7 +79,7 @@ namespace Kleo
 class KeyCache;
 }
 
-namespace KPIMTextEdit
+namespace TextCustomEditor
 {
 class RichTextEditorWidget;
 }
@@ -707,7 +707,7 @@ private:
     PotentialPhishingEmailWarning *const mPotentialPhishingEmailWarning;
     IncorrectIdentityFolderWarning *const mIncorrectIdentityFolderWarning;
     KMComposerGlobalAction *mGlobalAction = nullptr;
-    KPIMTextEdit::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
+    TextCustomEditor::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
 
     KMailPluginEditorManagerInterface *const mPluginEditorManagerInterface;
     KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface = nullptr;

@@ -56,7 +56,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="KPIMTextEdit::PlainTextEditorWidget" name="source" native="true"/>
+      <widget class="TextCustomEditor::PlainTextEditorWidget" name="source" native="true"/>
      </item>
      <item>
       <widget class="QLabel" name="infoLabel">
@@ -105,9 +105,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KPIMTextEdit::PlainTextEditorWidget</class>
+   <class>TextCustomEditor::PlainTextEditorWidget</class>
    <extends>QWidget</extends>
-   <header>KPIMTextEdit/PlainTextEditorWidget</header>
+   <header>TextCustomEditor/PlainTextEditorWidget</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

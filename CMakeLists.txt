@@ -62,7 +62,7 @@ set(GRANTLEETHEME_LIB_VERSION "5.240.40")
 set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "6")
 
-set(KTEXTADDONS_MIN_VERSION "1.4.0")
+set(KTEXTADDONS_MIN_VERSION "1.4.42")
 option(KDEPIM_ENTERPRISE_BUILD "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client." FALSE)
 
 find_package(Qt6 ${QT_REQUIRED_VERSION} CONFIG REQUIRED DBus Network Test Widgets WebEngineWidgets)
@@ -152,6 +152,7 @@ if (TARGET KF6::TextEditTextToSpeech)
 endif()
 find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextUtils ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
+find_package(KF6TextCustomEditor ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(Qt6Keychain CONFIG)
 set_package_properties(Qt6Keychain PROPERTIES
                                    DESCRIPTION "Provides support for secure credentials storage"

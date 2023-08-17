@@ -9,7 +9,7 @@
 #include <MessageComposer/PluginEditorInterface>
 #include <QHash>
 #include <QObject>
-namespace KPIMTextEdit
+namespace TextCustomEditor
 {
 class RichTextEditor;
 }
@@ -26,8 +26,8 @@ public:
     explicit KMailPluginEditorManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorManagerInterface() override;
 
-    Q_REQUIRED_RESULT KPIMTextEdit::RichTextEditor *richTextEditor() const;
-    void setRichTextEditor(KPIMTextEdit::RichTextEditor *richTextEditor);
+    Q_REQUIRED_RESULT TextCustomEditor::RichTextEditor *richTextEditor() const;
+    void setRichTextEditor(TextCustomEditor::RichTextEditor *richTextEditor);
 
     Q_REQUIRED_RESULT QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
@@ -54,7 +54,7 @@ Q_SIGNALS:
 
 private:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);
-    KPIMTextEdit::RichTextEditor *mRichTextEditor = nullptr;
+    TextCustomEditor::RichTextEditor *mRichTextEditor = nullptr;
     MessageComposer::ComposerViewBase *mComposerInterface = nullptr;
     QWidget *mParentWidget = nullptr;
     KActionCollection *mActionCollection = nullptr;

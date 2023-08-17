@@ -7,8 +7,8 @@
 
 #include "filterlogdialog.h"
 #include "mailfilterpurposemenuwidget.h"
-#include <KPIMTextEdit/PlainTextEditorWidget>
 #include <MailCommon/FilterLog>
+#include <TextCustomEditor/PlainTextEditorWidget>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -60,7 +60,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     pageVBoxLayout->setContentsMargins({});
     mainLayout->addWidget(page);
 
-    mTextEdit = new KPIMTextEdit::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
+    mTextEdit = new TextCustomEditor::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
     pageVBoxLayout->addWidget(mTextEdit);
 
     mTextEdit->setReadOnly(true);
@@ -154,7 +154,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
 
     connect(mUser1Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser1);
     connect(mUser2Button, &QPushButton::clicked, this, &FilterLogDialog::slotUser2);
-    connect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
+    connect(mTextEdit->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
 
     slotTextChanged();
     readConfig();
@@ -209,7 +209,7 @@ void FilterLogDialog::readConfig()
 
 FilterLogDialog::~FilterLogDialog()
 {
-    disconnect(mTextEdit->editor(), &KPIMTextEdit::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
+    disconnect(mTextEdit->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
     KConfigGroup myGroup(KSharedConfig::openConfig(), "Geometry");
     myGroup.writeEntry("filterLogSize", size());
     myGroup.sync();
@@ -329,7 +329,7 @@ void FilterLogDialog::slotUser2()
 }
 
 FilterLogTextEdit::FilterLogTextEdit(QWidget *parent)
-    : KPIMTextEdit::PlainTextEditor(parent)
+    : TextCustomEditor::PlainTextEditor(parent)
 {
 }
 

@@ -8,7 +8,7 @@
 
 #include <QDialog>
 
-#include <KPIMTextEdit/PlainTextEditor>
+#include <TextCustomEditor/PlainTextEditor>
 
 class QCheckBox;
 class QSpinBox;
@@ -21,7 +21,7 @@ class QPushButton;
   The filter log dialog allows a continued observation of the
   filter log of MailFilterAgent.
 */
-namespace KPIMTextEdit
+namespace TextCustomEditor
 {
 class PlainTextEditorWidget;
 }
@@ -61,7 +61,7 @@ private:
     void readConfig();
     void writeConfig();
 
-    KPIMTextEdit::PlainTextEditorWidget *mTextEdit = nullptr;
+    TextCustomEditor::PlainTextEditorWidget *mTextEdit = nullptr;
     QCheckBox *mLogActiveBox = nullptr;
     QGroupBox *mLogDetailsBox = nullptr;
     QCheckBox *mLogPatternDescBox = nullptr;
