@@ -26,7 +26,7 @@ namespace TextCustomEditor
 class PlainTextEditorWidget;
 }
 
-class FilterLogTextEdit : public KPIMTextEdit::PlainTextEditor
+class FilterLogTextEdit : public TextCustomEditor::PlainTextEditor
 {
     Q_OBJECT
 public:
