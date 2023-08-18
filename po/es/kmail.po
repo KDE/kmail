@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-07-14 00:50+0200\n"
+"PO-Revision-Date: 2023-08-17 20:50+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2523,24 +2523,22 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Cifrar"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Cifrar"
+msgstr "No cifrar"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "No se ha encontrado ninguna clave para el destinatario."
 
 #: editor/kmcomposerwin.cpp:3830
 #, fuzzy, kde-format
@@ -2555,10 +2553,7 @@ msgstr ""
 "está verificada."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2568,10 +2563,7 @@ msgstr ""
 "verificada. El destinatario prefiere respuestas cifradas."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -4126,12 +4118,10 @@ msgid "Deleting messages"
 msgstr "Eliminando mensajes"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Adjuntos"
+msgstr "Borrando adjuntos"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4637,15 +4627,19 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"El mensaje seleccionado está cifrado. En la actualidad no es posible borrar "
+"adjuntos de los mensajes cifrados."
 msgstr[1] ""
+"La selección contiene solo mensajes cifrados, de los que no es posible "
+"borrar adjuntos en la actualidad."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Borrar adjuntos del mensaje cifrado"
+msgstr[1] "Borrar adjuntos de los mensajes cifrados"
 
 #: kmmainwidget.cpp:2374
 #, fuzzy, kde-format
@@ -4683,12 +4677,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Adjuntos"
+msgstr "Borrar adjuntos"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4964,11 +4956,10 @@ msgid "Save A&ttachments..."
 msgstr "Guardar ad&juntos..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Como adjunto"
+msgstr "Borrar todos los adjuntos"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

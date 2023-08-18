@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Javier Viñal <fjvinal@gmail.com>, 2013, 2014, 2015, 2016, 2017, 2018.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2019, 2020, 2021, 2022.
+# Eloy Cuadra <ecuadra@eloihr.net>, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-11 00:46+0000\n"
-"PO-Revision-Date: 2022-01-03 00:56+0100\n"
+"PO-Revision-Date: 2023-08-17 20:46+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.0\n"
+"X-Generator: Lokalize 23.04.3\n"
 
 #: addarchivemaildialog.cpp:33
 #, kde-format
@@ -74,7 +74,7 @@ msgstr "Archivo comprimido"
 #: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr ""
+msgstr "Usar intervalo"
 
 #: archivemailwidget.cpp:69
 #, kde-format
