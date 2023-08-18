@@ -51,3 +51,4 @@ Dependencies:
     'frameworks/kstatusnotifieritem': '@latest-kf6'
     'third-party/qtkeychain': '@latest-kf6'
     'libraries/ktextaddons': '@latest-kf6'
+    'libraries/kuserfeedback': '@latest-kf6'
