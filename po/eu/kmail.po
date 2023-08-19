@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-03 12:38+0200\n"
+"PO-Revision-Date: 2023-08-18 22:32+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -2487,6 +2487,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Zuk aukeratutako PGP gakoa (%1) ez dago zure gako-sortan edo ez da "
+"zifratzeko egokia."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2495,6 +2497,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Zuk aukeratutako sinatzeko PGP gakoa (%1) ez dago zure gako-sortan edo ez da "
+"sinatzeko egokia."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2503,6 +2507,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Zuk aukeratutako SMIME gakoa (%1) ez dago zure gako-sortan edo ez da "
+"zifratzeko egokia."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2511,64 +2517,56 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Zuk aukeratutako sinatzeko SMIME gakoa (%1) ez dago zure gako-sortan edo ez "
+"da sinatzeko egokia."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
-msgstr "Enkriptatu"
+msgstr "Zifratu"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "E&z enkriptatu"
+msgstr "Ez zifratu"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Ez da hartzailearentzako gakorik aurkitu."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"«Autocrypt gossip» gako bat erabiltzen da hartzaile honekin. Gako hau ez da "
-"egiaztatu."
+"Hartzaile honetarako «Autocrypt» gako esamesa erabiltzen da. Gako hori beste "
+"batzuengandik lortu genuen. Gako hori ez da egiaztatu."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"Hartzaile horretarako zifratzeko gako automatikoa erabiltzen da. Gako hau ez "
-"da egiaztatu. Hartzaileak nahiago ditu zifratutako erantzunak."
+"Hartzaile honetarako «Autocrypt» gakoa erabiltzen da. Gako hori ez da "
+"egiaztatu. Hartzaileak nahiago ditu zifratutako erantzunak."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"Hartzaile horretarako zifratzeko gako automatikoa erabiltzen da. Gako hau ez "
-"da egiaztatu. Hartzaileak ez ditu nahiago zifratutako erantzunak."
+"Hartzaile honetarako «Autocrypt» gakoa erabiltzen da. Gako hori ez da "
+"egiaztatu. Hartzaileak ez ditu nahiago zifratutako erantzunak."
 
 #: editor/kmcomposerwin.cpp:3865
 #, kde-format
@@ -2578,6 +2576,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Ez dago zifratzeko gakoarekiko konfiantzarik. Ez dauka baliozkotasun "
+"nahikorik. Hatz-marka beste kanal baten bidez komunikatu bazenuen, gakoa "
+"sina dezakezu. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2588,19 +2589,20 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Ez dago zifratzeko gakoarekiko konfiantzarik. Ez da inon erabili "
+"adierazitako pertsonari dagokiola bermatzeko. Gakoa erabiliz konfiantza "
+"handiagoa izango du. Edo hatz-marka beste kanal baten bidez komunikatu "
+"bazenuen, gakoa sina dezakezu. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Segurtasun eskaseko zifratzea erabilik da hartzaile horretarako (zifratzeko "
-"gakoak ez du fidagarritasunik). Ikonoan klik egin xehetasunak ikusteko."
+"Ez dago zifratzeko gakoarekiko konfiantzarik. TOFU datu kontraesankorrak "
+"ditu. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2609,19 +2611,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Ez dago zifratzeko gakoarekiko konfiantzarik. TOFU datuetan baliozkotasun "
+"ezezaguna du. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Segurtasun eskaseko zifratzea erabilik da hartzaile horretarako (zifratzeko "
-"gakoak ez du fidagarritasunik). Ikonoan klik egin xehetasunak ikusteko."
+"Ez dago zifratzeko gakoarekiko konfiantzarik. Gakoa txarra bezala markatuta "
+"dago. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2632,6 +2633,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Zifratzeko gakoak bazterreko konfiantza du bakarrik eta ez da erabili "
+"adierazitako pertsonari dagokiola bermatzeko behar adina aldiz. Gakoa "
+"erabiliz konfiantza handiagoa izango du. Edo hatz-marka beste kanal baten "
+"bidez komunikatu bazenuen, gakoa sina dezakezu. Ikonoan klik egin "
+"xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2640,6 +2646,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Zifratzeko gakoak bazterreko konfiantza du bakarrik. Hatz-marka beste kanal "
+"baten bidez komunikatu bazenuen, gakoa sina dezakezu. Ikonoan klik egin "
+"xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2650,32 +2659,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Zifratzeko gakoak bazterreko konfiantza du bakarrik, baina adierazitako "
+"pertsonari dagokiola bermatzeko behar adina aldiz erabili da. Gakoa erabiliz "
+"konfiantza handiagoa izango du. Edo hatz-marka beste kanal baten bidez "
+"komunikatu bazenuen, gakoa sina dezakezu. Ikonoan klik egin xehetasunak "
+"ikusteko."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Segurtasun handiko zifratzea erabiliko da hartzaile horretarako (zifratzeko "
-"gakoak erabateko fidagarritasuna du). Ikonoak klik egin xehetasunak ikusteko."
+"Zifratzeko gakoak konfiantza osoa du. Gakoa sinatuz bere segurtasun maila "
+"altxa dezakezu. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Segurtasun handiko zifratzea erabiliko da hartzaile horretarako (zifratzeko "
-"gakoak erabateko fidagarritasuna du). Ikonoak klik egin xehetasunak ikusteko."
+"Zifratzeko gakoak erabateko konfiantza du edo erabateko konfiantza duen "
+"beste gako batek sinatua dago. Ikonoan klik egin xehetasunak ikusteko."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
