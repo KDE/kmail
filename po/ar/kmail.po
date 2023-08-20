@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-06-22 09:20+0400\n"
+"PO-Revision-Date: 2023-08-19 22:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2494,18 +2494,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "عمّ"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "&لا تشفير"
+msgstr "لا تشفير"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -2514,20 +2512,17 @@ msgid "No key found for the recipient."
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
-msgstr "يستخدم مفتاح الثرثرة الآليّ لهذا المستخدم، هذا المفتاح غير موثَّق."
+msgstr ""
+"يستخدم مفتاح الثرثرة الآليّ لهذا المُستقبِل. حصلنا عليه من مستقبلين من أطراف "
+"ثالثة. هذا المفتاح غير موثَّق."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2537,10 +2532,7 @@ msgstr ""
 "المستقبل ردود  مُعمَّاة."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
