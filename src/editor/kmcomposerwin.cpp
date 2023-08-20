@@ -66,7 +66,6 @@
 
 #include <KMime/Message>
 
-#include <KPIMTextEdit/EditorUtil>
 #include <KPIMTextEdit/RichTextComposerActions>
 #include <KPIMTextEdit/RichTextComposerControler>
 #include <KPIMTextEdit/RichTextComposerImages>
