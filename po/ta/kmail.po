@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-07-13 00:50+0000\n"
-"PO-Revision-Date: 2023-07-16 14:49+0530\n"
+"PO-Revision-Date: 2023-08-20 15:45+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -2534,6 +2534,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"இப்பெறுநருக்கு Autocrypt சாவி பயன்படுத்தப்படுகிறது. இச்சாவி சரிபார்க்கப்படாது. பெறுநர் "
+"மறையாக்கப்பட்டுள்ள பதில்களை விரும்புகிறார்."
 
 #: editor/kmcomposerwin.cpp:3877
 #, kde-format
@@ -2541,6 +2543,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"இப்பெறுநருக்கு Autocrypt சாவி பயன்படுத்தப்படுகிறது. இச்சாவி சரிபார்க்கப்படாது. பெறுநர் "
+"மறையாக்கப்பட்டுள்ள பதில்களை விரும்பவில்லை."
 
 #: editor/kmcomposerwin.cpp:3884
 #, kde-format
@@ -2972,13 +2976,7 @@ msgid "Cryptography"
 msgstr "மறைக்குறியாக்கம்"
 
 #: identity/identitydialog.cpp:361
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
-#| "messages. You can also use GnuPG keys.</p><p>You can leave this blank, "
-#| "but KMail will not be able to digitally sign emails using OpenPGP; normal "
-#| "mail functions will not be affected.</p><p>You can find out more about "
-#| "keys at <a>http://www.gnupg.org</a></p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
 "messages. You can also use GnuPG keys.</p><p>You can leave this blank, but "
@@ -2986,11 +2984,11 @@ msgid ""
 "functions will not be affected.</p><p>You can find out more about keys at "
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>நீங்கள் இங்கு தேர்ந்தெடுத்த OpenPGP சாவி, செய்திகளை கையெழுத்திடவும், உங்களுக்கே "
-"செய்திகள் மறைக்குறீயிட்டவும் உபயோகப்படுத்தப்படும்.  க்னூPG சாவிகளையும் நீங்கள் "
-"உபயோகப்படுத்தலாம். </p><p>இதை வெற்றாக விடலாம், ஆனால் Kமின்னஞ்சலால் செய்திகளை "
-"மறைக்குறியீட்டு கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</"
-"p><p>சாவிகள் பற்றி மேலும் <a>https://www.gnupg.org</a>அறியலாம்</p></qt>."
+"<qt><p>நீங்கள் இங்கு தேர்ந்தெடுக்கும் OpenPGP சாவி, செய்திகளுக்கு கையெழுத்திட "
+"பயன்படுத்தப்படும்.  GnuPG சாவிகளையும் நீங்கள் பயன்படுத்தலாம்.</p> <p>இங்கு எதையும் "
+"தேர்ந்தெடுக்காமலும் விடலாம், ஆனால் அவ்வாறு செய்தால் கேமெயிலால் OpenPGP மூலம் அஞ்சல்களுக்கு "
+"கையொப்பமிட முடியாது; அஞ்சல் தொடர்புடைய மற்ற செயல்கள் பாதிக்கப்படாது.</p> <p>சாவிகள் "
+"பற்றி மேலும் அறிய <a>https://www.gnupg.org</a> எனும் பக்கத்திற்கு செல்ல‍லாம்.</p></qt>"
 
 #: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
 #, kde-format
@@ -3008,14 +3006,7 @@ msgid "OpenPGP key:"
 msgstr "OpenPGP சாவி:"
 
 #: identity/identitydialog.cpp:408
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
-#| "to yourself and for the \"Attach My Public Key\" feature in the composer. "
-#| "You can also use GnuPG keys.</p><p>You can leave this blank, but KMail "
-#| "will not be able to encrypt copies of outgoing messages to you using "
-#| "OpenPGP; normal mail functions will not be affected.</p><p>You can find "
-#| "out more about keys at <a>http://www.gnupg.org</a></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
 "yourself and for the \"Attach My Public Key\" feature in the composer. You "
@@ -3024,11 +3015,13 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>நீங்கள் இங்கு தேர்ந்தெடுத்த OpenPGP சாவி, செய்திகளை கையெழுத்திடவும், உங்களுக்கே "
-"செய்திகள் மறைக்குறீயிட்டவும் உபயோகப்படுத்தப்படும்.  க்னூPG சாவிகளையும் நீங்கள் "
-"உபயோகப்படுத்தலாம். </p>இதை வெற்றாக விடலாம், ஆனால் Kமின்னஞ்சலால் செய்திகளை மறைக்குறியீட்டு "
-"கையெழுத்திட முடியாது. வழக்கமான அஞ்சல் செயல்கள் பாதிக்கப்படாது</p>சாவிகள் பற்றி மேலும் "
-"<a>http://www.gnupg.org</a>அறியலாம்</qt>."
+"<qt><p>நீங்கள் இங்கு தேர்ந்தெடுக்கும் OpenPGP சாவி, செய்திகளை நீங்கள் படிக்குமாறு "
+"மறையாக்கவும், அஞ்சலெழுதும் இடத்திலுள்ள \"என் பொது சாவியை இணை\" என்ற அம்சத்திற்கும் "
+"பயன்படுத்தப்படும்.  GnuPG சாவிகளையும் நீங்கள் பயன்படுத்தலாம்.</p> <p>இங்கு எதையும் "
+"தேர்ந்தெடுக்காமலும் விடலாம், ஆனால் அவ்வாறு செய்தால் கேமெயிலால் வெளிசெல்லும் அஞ்சல்களை நீங்கள் "
+"படிக்குமாறு கையொப்பமிட முடியாது; அஞ்சல் தொடர்புடைய மற்ற செயல்கள் பாதிக்கப்படாது.</p> "
+"<p>சாவிகள் பற்றி மேலும் அறிய <a>https://www.gnupg.org</a> எனும் பக்கத்திற்கு செல்ல‍"
+"லாம்.</p></qt>"
 
 #: identity/identitydialog.cpp:415
 #, kde-format
@@ -6916,10 +6909,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For &root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "&மூல (root) சான்றிதழ்களுக்கு:"
+msgstr "&சொந்த சான்றிதழ்களுக்கு:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
@@ -6942,7 +6934,7 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"<h1>சொந்த சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
 "SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
