@@ -29,7 +29,6 @@ public:
     void setAkonadiIndex(qint64 akonadiIndex);
 
 private:
-    void slotActivateNotificationAction(unsigned int index);
     void slotNotificationClosed();
     void undoSendEmail();
     void slotTimeOut();

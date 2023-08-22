@@ -43,9 +43,10 @@ bool UndoSendCreateJob::start()
     mTimer->start(mDelay * 1s);
     mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent, this);
     mNotification->setText(mSubject);
-    mNotification->setActions(QStringList() << i18n("Undo send"));
 
-    connect(mNotification, &KNotification::activated, this, &UndoSendCreateJob::slotActivateNotificationAction);
+    auto undoSendAction = mNotification->addAction(i18n("Undo send"));
+    connect(undoSendAction, &KNotificationAction::activated, this, &UndoSendCreateJob::undoSendEmail);
+
     connect(mNotification, &KNotification::closed, this, &UndoSendCreateJob::slotNotificationClosed);
     mNotification->sendEvent();
 
@@ -64,17 +65,6 @@ void UndoSendCreateJob::slotNotificationClosed()
     qCDebug(KMAIL_UNDO_SEND_LOG) << "undo send slotNotificationClosed";
     mTimer->stop();
     deleteLater();
-}
-
-void UndoSendCreateJob::slotActivateNotificationAction(unsigned int index)
-{
-    // Index == 0 => is the default action. We don't have it.
-    switch (index) {
-    case 1:
-        undoSendEmail();
-        return;
-    }
-    qCWarning(KMAIL_UNDO_SEND_LOG) << " SpecialNotifierJob::slotActivateNotificationAction unknown index " << index;
 }
 
 void UndoSendCreateJob::undoSendEmail()
