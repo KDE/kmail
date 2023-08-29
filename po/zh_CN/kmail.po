@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-02 12:40\n"
+"PO-Revision-Date: 2023-08-27 03:40\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2446,18 +2446,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "加密"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "加密"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -2466,38 +2464,28 @@ msgid "No key found for the recipient."
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
-msgstr "此收件人已使用 Autocrypt gossip 密钥，但密钥未经验证。"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"此收件人使用了 Autocrypt 密钥，但密钥未经验证。收件人希望收到加密回复。"
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"此收件人使用了 Autocrypt 密钥，但密钥未经验证。收件人不希望收到加密回复。"
 
 #: editor/kmcomposerwin.cpp:3865
 #, kde-format
@@ -2519,15 +2507,12 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
-msgstr "低级安全加密将被用于此收信人 (加密密钥不可信)。点击图标查看详情。"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2538,15 +2523,12 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
-msgstr "低级安全加密将被用于此收信人 (加密密钥不可信)。点击图标查看详情。"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2577,26 +2559,20 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
-msgstr "高级安全加密将被用于此收信人 (加密密钥完全可信)。点击图标查看详情。"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
-msgstr "高级安全加密将被用于此收信人 (加密密钥完全可信)。点击图标查看详情。"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
@@ -3966,12 +3942,10 @@ msgid "Deleting messages"
 msgstr "删除消息中"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "附件"
+msgstr ""
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4451,20 +4425,14 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
 msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
-msgstr[0] "<qt>您是否要删除选中的 %1 条消息？<br />一旦删除将无法恢复。</qt>"
+msgstr[0] ""
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4481,12 +4449,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "附件"
+msgstr ""
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4761,11 +4727,10 @@ msgid "Save A&ttachments..."
 msgstr "保存附件(&T)..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "有附件"
+msgstr ""
 
 #: kmmainwidget.cpp:3252
 #, kde-format
@@ -7673,16 +7638,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid ""
-#~ "Medium security encryption will be used for this recipient (the "
-#~ "encryption key is marginally trusted). Click the icon for details."
-#~ msgstr "中级安全加密将被用于此收信人 (加密密钥大致可信)。点击图标查看详情。"
-
-#~ msgid ""
-#~ "The email to this recipient will be encrypted, but the security of the "
-#~ "encryption is unknown (the encryption key could not be verified). Click "
-#~ "the icon for details."
-#~ msgstr ""
-#~ "此收信人的邮件将被加密，但是加密的安全性位置 (加密密钥无法验证)。点击图标"
-#~ "查看详情。"

@@ -19,7 +19,7 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008, 2009.
 # Anne-Marie Mahfouf <annemarie.mahfouf@free.fr>, 2009.
 # Sébastien Renard <renard@kde.org>, 2011, 2012.
-# xavier <xavier.besnard@neuf.fr>, 2012, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2012, 2020, 2021, 2022, 2023 xavier <xavier.besnard@neuf.fr>
 # Sebastien Renard <renard@kde.org>, 2012, 2013, 2014, 2015.
 # Vincent Pinon <vpinon@kde.org>, 2017, 2018.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
@@ -29,15 +29,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-05-05 16:21+0200\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
+"PO-Revision-Date: 2023-08-20 17:27+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.07.90\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -2557,6 +2557,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Votre clé de signature « SMIME » sélectionnée (%1) n’existe pas dans votre "
+"trousseau de clés ou ne convient pas pour le chiffrement."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2565,26 +2567,26 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Votre clé de signature « SMIME » sélectionnée (%1) n’existe pas dans votre "
+"trousseau de clés ou ne convient pas à la signature."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
-msgstr "Chiffrer"
+msgstr "Chiffré"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Ne &pas chiffrer"
+msgstr "Ne pas chiffrer"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Aucune clé trouvée pour le destinataire."
 
 #: editor/kmcomposerwin.cpp:3830
 #, fuzzy, kde-format
@@ -3480,10 +3482,9 @@ msgid "You must provide an email for this identity."
 msgstr "&Utiliser les modèles de messages personnalisés pour cette identité"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "Adresse électronique"
+msgstr "Adresse de courriel vide"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -4198,11 +4199,10 @@ msgid "Deleting messages"
 msgstr "Suppression des messages"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Sélectionner la pièce jointe : "
+msgstr "Suppression des pièces jointes en cours"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4717,8 +4717,8 @@ msgstr[1] ""
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Supprimer les pièces jointes du message chiffré"
+msgstr[1] "Supprimer les pièces jointes des messages chiffrés"
 
 #: kmmainwidget.cpp:2374
 #, fuzzy, kde-format
@@ -4756,11 +4756,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Sélectionner la pièce jointe : "
+msgstr "Supprimer les pièces jointes"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4823,11 +4822,9 @@ msgid "Filter &Log Viewer..."
 msgstr "Affichage des journaux de fi&ltrage..."
 
 #: kmmainwidget.cpp:2976
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Notification"
+msgstr "Historique des notifications..."
 
 #: kmmainwidget.cpp:2981
 #, kde-format
@@ -5037,11 +5034,10 @@ msgid "Save A&ttachments..."
 msgstr "&Enregistrer les pièces jointes..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Enregistrer toutes les pièces jointes..."
+msgstr "Supprimer toutes les pièces jointes"
 
 #: kmmainwidget.cpp:3252
 #, kde-format

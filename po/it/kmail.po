@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-05 14:47+0200\n"
+"PO-Revision-Date: 2023-08-18 10:39+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2504,6 +2504,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"La chiave PGP selezionata (%1) non esiste nel portachiavi o non è adatta per "
+"cifrare."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2512,6 +2514,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"La chiave PGP di firma selezionata (%1) non esiste nel portachiavi o non è "
+"adatta per firmare."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2520,6 +2524,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"La chiave SMIME selezionata (%1) non esiste nel portachiavi o non è adatta "
+"per cifrare."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2528,44 +2534,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"La chiave SMIME di firma selezionata (%1) non esiste nel portachiavi o non è "
+"adatta per firmare."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Cifra"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "&Non cifrare"
+msgstr "Non cifrare"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nessuna chiave trovata per il destinatario."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
 "Viene usata una chiave «gossip» Autocrypt per questo destinatario. La chiave "
-"non è verificata."
+"è stata ottenuta da destinatari di terze parti. La chiave non è verificata."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2575,10 +2576,7 @@ msgstr ""
 "verificata. Il destinatario preferisce risposte cifrate."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2595,6 +2593,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"La chiave di cifratura non è affidabile. Non ha sufficiente validità. Puoi "
+"firmare la chiave se ne hai comunicato l'impronta tramite un canale diverso. "
+"Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2605,20 +2606,21 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"La chiave di cifratura non è affidabile. Non è stata usata da nessuna parte "
+"per garantire che appartenga alla persona a cui è intestata. Usando questa "
+"chiave sarà ritenuta maggiormente affidabile. O puoi firmare la chiave se ne "
+"hai comunicato l'impronta tramite un canale diverso. Fai clic sull'icona per "
+"maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Sarà usata una cifratura con un basso livello di sicurezza per questo "
-"destinatario (la chiave di cifratura non è affidabile). Fai clic sull'icona "
-"per maggiori informazioni."
+"La chiave di cifratura non è affidabile. Ha dei dati TOFU (trust on first "
+"use) discordanti. Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2627,20 +2629,19 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"La chiave di cifratura non è affidabile. Ha una validità sconosciuta nei "
+"dati TOFU (trust on first use). Fai clic sull'icona per maggiori "
+"informazioni."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Sarà usata una cifratura con un basso livello di sicurezza per questo "
-"destinatario (la chiave di cifratura non è affidabile). Fai clic sull'icona "
-"per maggiori informazioni."
+"La chiave di cifratura non è affidabile. La chiave è segnata come difettosa. "
+"Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2651,6 +2652,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"La chiave di cifratura è solo lievemente affidabile e non è stata usata "
+"abbastanza per garantire che appartenga alla persona a cui è intestata. "
+"Usando questa chiave sarà ritenuta maggiormente affidabile. O puoi firmare "
+"la chiave se ne hai comunicato l'impronta tramite un canale diverso. Fai "
+"clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2659,6 +2665,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"La chiave di cifratura è solo lievemente affidabile. Puoi firmare la chiave "
+"se ne hai comunicato l'impronta tramite un canale diverso. Fai clic "
+"sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2669,34 +2678,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"La chiave di cifratura è solo lievemente affidabile, ma è stata usata "
+"abbastanza per essere considerata molto probabilmente controllata dalla "
+"persona a cui è intestata. Usando questa chiave sarà ritenuta maggiormente "
+"affidabile. O puoi firmare la chiave se ne hai comunicato l'impronta tramite "
+"un canale diverso. Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Sarà usata una cifratura con un alto livello di sicurezza per questo "
-"destinatario (la chiave di cifratura è completamente affidabile). Fai clic "
-"sull'icona per maggiori informazioni."
+"La chiave di cifratura è completamente affidabile. Puoi alzare il livello di "
+"sicurezza firmando la chiave. Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Sarà usata una cifratura con un alto livello di sicurezza per questo "
-"destinatario (la chiave di cifratura è completamente affidabile). Fai clic "
-"sull'icona per maggiori informazioni."
+"La chiave di cifratura è definitivamente affidabile o è firmata da un'altra "
+"chiave totalmente affidabile. Fai clic sull'icona per maggiori informazioni."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format

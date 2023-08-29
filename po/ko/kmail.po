@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-07 00:15+0200\n"
+"PO-Revision-Date: 2023-08-25 22:38+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -2445,6 +2445,7 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"선택한 PGP 키(%1)가 키 모음에 존재하지 않거나 암호화에 적합하지 않습니다."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2453,6 +2454,7 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"선택한 PGP 서명 키(%1)가 키 모음에 존재하지 않거나 서명에 적합하지 않습니다."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2461,6 +2463,7 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"선택한 S/MIME 키(%1)가 키 모음에 존재하지 않거나 암호화에 적합하지 않습니다."
 
 #: editor/kmcomposerwin.cpp:3493
 #, kde-format
@@ -2469,43 +2472,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"선택한 S/MIME 서명 키(%1)가 키 모음에 존재하지 않거나 서명에 적합하지 않습니"
+"다."
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "암호화"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "암호화"
+msgstr "암호화하지 않음"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "받는 사람의 키를 찾을 수 없습니다."
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"이 수신자에게 자동 암호화 가십 키를 사용합니다. 이 키는 검증되지 않았습니다."
+"이 수신자에게 자동 암호화 가십 키를 사용합니다. 이 키는 제3자 수신자로부터 얻"
+"었으며 검증되지 않았습니다."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2515,10 +2514,7 @@ msgstr ""
 "자는 암호화된 답장을 받기를 선호합니다."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2535,6 +2531,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"이 암호화 키는 신뢰되지 않습니다. 유효성이 충분하지 않습니다. 다른 채널을 통"
+"해서 지문을 확인했다면 키에 서명할 수 있습니다. 아이콘을 클릭하면 자세한 정보"
+"를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2545,19 +2544,20 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"이 암호화 키는 신뢰되지 않습니다. 키가 사용되지 않았기 때문에 키에 명시된 소"
+"유자의 소유권을 보증할 수 없습니다. 해당 키를 사용하면 신뢰 수준이 증가합니"
+"다. 다른 채널을 통해서 지문을 확인했다면 키에 서명할 수 있습니다. 아이콘을 클"
+"릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"이 사람에게 보내는 이메일은 낮은 단계의 암호화를 사용합니다(암호화 키를 믿지 "
-"않음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
+"이 암호화 키는 신뢰되지 않습니다. 충돌하는 TOFU 데이터가 포함되어 있습니다. "
+"아이콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2566,19 +2566,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"이 암호화 키는 신뢰되지 않습니다. TOFU 데이터의 유효성을 알 수 없습니다. 아이"
+"콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"이 사람에게 보내는 이메일은 낮은 단계의 암호화를 사용합니다(암호화 키를 믿지 "
-"않음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
+"이 암호화 키는 신뢰되지 않습니다. 키가 잘못된 것으로 표시되어 있습니다. 아이"
+"콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2589,6 +2588,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"이 암호화 키는 약간만 신뢰되며, 키가 사용되지 않았기 때문에 키에 명시된 소유"
+"자의 소유권을 보증할 수 없습니다. 해당 키를 사용하면 신뢰 수준이 증가합니다. "
+"다른 채널을 통해서 지문을 확인했다면 키에 서명할 수 있습니다. 아이콘을 클릭하"
+"면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2597,6 +2600,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"이 암호화 키는 약간만 신뢰됩니다. 다른 채널을 통해서 지문을 확인했다면 키에 "
+"서명할 수 있습니다. 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2607,32 +2612,30 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"이 암호화 키는 약간만 신뢰되며, 키가 충분히 사용되지 않았기 때문에 키에 명시"
+"된 소유자의 소유권을 보증할 수 없습니다. 해당 키를 사용하면 신뢰 수준이 증가"
+"합니다. 다른 채널을 통해서 지문을 확인했다면 키에 서명할 수 있습니다. 아이콘"
+"을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"이 사람에게 보내는 이메일은 높은 단계의 암호화를 사용합니다(암호화 키를 완전"
-"히 믿음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
+"이 암호화 키는 완전히 신뢰됩니다. 키에 서명하여 보안 등급을 향상시킬 수 있습"
+"니다. 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"이 사람에게 보내는 이메일은 높은 단계의 암호화를 사용합니다(암호화 키를 완전"
-"히 믿음). 아이콘을 클릭하면 자세한 정보를 표시합니다."
+"이 암호화 키는 완전히 신뢰되거나 다른 완전히 신뢰되는 키로 서명되어 있습니"
+"다. 아이콘을 클릭하면 자세한 정보를 표시합니다."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
