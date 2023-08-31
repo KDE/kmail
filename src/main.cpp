@@ -36,6 +36,10 @@
 #endif
 #endif
 
+#ifdef Q_OS_WINDOWS
+#include <Windows.h>
+#endif
+
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
@@ -130,6 +134,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
+
+#ifdef Q_OS_WINDOWS
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+    }
+#endif
+
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
     cidScheme.setFlags(QWebEngineUrlScheme::SecureScheme | QWebEngineUrlScheme::ContentSecurityPolicyIgnored | QWebEngineUrlScheme::LocalScheme
@@ -144,6 +156,14 @@ int main(int argc, char *argv[])
     KCrash::initialize();
     KMail::AboutData about;
     app.setAboutData(about);
+
+#ifdef Q_OS_WINDOWS
+    QApplication::setStyle(QStringLiteral("breeze"));
+    QFont font(QStringLiteral("Segoe UI Emoji"));
+    font.setPointSize(10);
+    font.setHintingPreference(QFont::PreferNoHinting);
+    app.setFont(font);
+#endif
 
     QCommandLineParser *cmdArgs = app.cmdArgs();
     kmail_options(cmdArgs);
