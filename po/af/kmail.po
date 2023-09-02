@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-13 00:47+0000\n"
+"POT-Creation-Date: 2023-09-01 00:47+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -382,8 +382,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:48
-#: kmsystemtray.cpp:77
+#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:75
 #, kde-format
 msgid "KMail"
 msgstr ""
@@ -5466,17 +5466,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Boodskappe suksesvol geskuif"
 
-#: kmsystemtray.cpp:91
+#: kmsystemtray.cpp:89
 #, kde-format
 msgid "New Messages In"
 msgstr ""
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "Gaan na die vorige ongeleesde boodskap"
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, fuzzy, kde-format
 #| msgid "&Thread Messages"
 msgid "1 unread message"

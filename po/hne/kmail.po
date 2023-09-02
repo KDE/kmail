@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-13 00:47+0000\n"
+"POT-Creation-Date: 2023-09-01 00:47+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -400,8 +400,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:48
-#: kmsystemtray.cpp:77
+#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:75
 #, kde-format
 msgid "KMail"
 msgstr "के-मेल"
@@ -5676,18 +5676,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "संदेस मन ल सफलतापूर्वक खिसकाइस."
 
-#: kmsystemtray.cpp:91
+#: kmsystemtray.cpp:89
 #, kde-format
 msgid "New Messages In"
 msgstr "में नवा संदेस"
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, fuzzy, kde-format
 #| msgid "KMail - There are no unread messages"
 msgid "There are no unread messages"
 msgstr "केमेल - ओ तिर कोनो बिनपढ़े संदेस नइ हे"
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

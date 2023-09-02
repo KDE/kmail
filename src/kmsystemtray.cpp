@@ -22,8 +22,6 @@
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
 #define HAVE_X11 1
 #include <KX11Extras>
-#else
-#define HAVE_X11 0
 #endif
 
 using namespace MailCommon;

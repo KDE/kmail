@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-13 00:47+0000\n"
-"PO-Revision-Date: 2023-08-18 22:32+0200\n"
+"POT-Creation-Date: 2023-09-01 00:47+0000\n"
+"PO-Revision-Date: 2023-09-01 18:37+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -375,8 +375,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "IMAP akats asko konpontzea"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:48
-#: kmsystemtray.cpp:77
+#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:75
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4728,7 +4728,7 @@ msgstr "Jakinarazpen historia..."
 #: kmmainwidget.cpp:2981
 #, kde-format
 msgid "&Import from another Email Client..."
-msgstr "%Inportatu beste e-posta bezero batetik..."
+msgstr "&Inportatu beste e-posta bezero batetik..."
 
 #: kmmainwidget.cpp:2986
 #, kde-format
@@ -5601,17 +5601,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Kontaktua ongi aldatu dira"
 
-#: kmsystemtray.cpp:91
+#: kmsystemtray.cpp:89
 #, kde-format
 msgid "New Messages In"
 msgstr "Mezu berria hemen"
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Ez dago irakurri gabeko mezurik"
 
-#: kmsystemtray.cpp:263
+#: kmsystemtray.cpp:261
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
