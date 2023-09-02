@@ -2470,18 +2470,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
-msgstr "Šifrovat"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Šifrovat"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -3994,12 +3992,10 @@ msgid "Deleting messages"
 msgstr "Mazání zpráv"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Přílohy"
+msgstr ""
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4506,13 +4502,7 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4520,14 +4510,8 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Opravdu si přejete smazat označenou zprávu?<br />Jakmile je smazána, "
-"nelze ji obnovit.</qt>"
 msgstr[1] ""
-"<qt>Opravdu si přejete smazat %1 označené zprávy?<br />Jakmile jsou smazány, "
-"nelze je obnovit.</qt>"
 msgstr[2] ""
-"<qt>Opravdu si přejete smazat %1 označených zpráv?<br />Jakmile jsou "
-"smazány, nelze je obnovit.</qt>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4544,12 +4528,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Přílohy"
+msgstr ""
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4824,11 +4806,10 @@ msgid "Save A&ttachments..."
 msgstr "Uloži&t přílohy..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Jako příloha"
+msgstr ""
 
 #: kmmainwidget.cpp:3252
 #, kde-format
