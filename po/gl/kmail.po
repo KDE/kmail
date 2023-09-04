@@ -2286,7 +2286,7 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Isto agocha a barra do menú por completo. Pódese amosar de novo "
+"<qt>Isto agocha a barra de menú por completo. Pódese amosar de novo "
 "escribindo %1.</qt>"
 
 #: editor/kmcomposerwin.cpp:1557 kmmainwin.cpp:186 kmreadermainwin.cpp:524
