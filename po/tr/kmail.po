@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 00:47+0000\n"
-"PO-Revision-Date: 2023-08-22 23:16+0300\n"
+"PO-Revision-Date: 2023-09-03 21:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -284,7 +284,7 @@ msgstr "Solaris'teki çökmeleri düzeltme"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr "Yeni/okunmamış/önemli iletiler için yazıtipi seçimi"
+msgstr "Yeni/okunmayan/önemli iletiler için yazıtipi seçimi"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
@@ -561,7 +561,7 @@ msgstr "&Normal:"
 #, kde-format
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
-msgstr "&Okunmamış:"
+msgstr "&Okunmayan:"
 
 #: configuredialog/configagentdelegate.cpp:217
 #, kde-format
@@ -741,7 +741,7 @@ msgstr "İleti Gövdesi"
 
 #: configuredialog/configureappearancepage.cpp:137
 msgid "Message List - Unread Messages"
-msgstr "İleti Listesi - Okunmamış İletiler"
+msgstr "İleti Listesi - Okunmayan İletiler"
 
 #: configuredialog/configureappearancepage.cpp:138
 msgid "Message List - Important Messages"
@@ -791,7 +791,7 @@ msgstr "Bağlantı"
 
 #: configuredialog/configureappearancepage.cpp:311
 msgid "Unread Message"
-msgstr "Okunmamış İleti"
+msgstr "Okunmayan İleti"
 
 #: configuredialog/configureappearancepage.cpp:312
 msgid "Important Message"
@@ -993,7 +993,7 @@ msgstr "Tepsiye küçültülmüş olarak başlat"
 #: configuredialog/configureappearancepage.cpp:843
 #, kde-format
 msgid "Show unread email in Taskbar"
-msgstr "Sistem tepsisinde okunmamış e-postayı göster"
+msgstr "Sistem tepsisinde okunmayan e-postaları göster"
 
 #: configuredialog/configureappearancepage.cpp:911
 #, kde-format
@@ -1796,7 +1796,7 @@ msgstr "&Arşiv Dosyası:"
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
 msgid "&Delete folder and subfolders after completion"
-msgstr "Tamamlandıktan sonra klasörleri ve alt klasörleri &sil"
+msgstr "Tamamlandıktan sonra klasörü ve alt klasörleri &sil"
 
 #: dialog/archivefolderdialog.cpp:112
 #, kde-format
@@ -3312,7 +3312,7 @@ msgstr "Gönderilen Klasörünü Seç"
 #: identity/identitydialog.cpp:586
 #, kde-format
 msgid "Sent-mail &folder:"
-msgstr "&Gönderilmiş postalar klasörü:"
+msgstr "&Gönderilen postalar klasörü:"
 
 #: identity/identitydialog.cpp:592
 #, kde-format
@@ -4879,22 +4879,22 @@ msgstr "&Konuyu İmle"
 #: kmmainwidget.cpp:3200
 #, kde-format
 msgid "Mark Thread as &Read"
-msgstr "Konuyu &Okunmuş Olarak İmle"
+msgstr "Konuyu &Okundu Olarak İmle"
 
 #: kmmainwidget.cpp:3203
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
-msgstr "Bu tartışmadaki bütün iletileri okunmuş olarak imle"
+msgstr "Bu tartışmadaki bütün iletileri okundu olarak imle"
 
 #: kmmainwidget.cpp:3206
 #, kde-format
 msgid "Mark Thread as &Unread"
-msgstr "Konuyu &Okunmamış Olarak İmle"
+msgstr "Konuyu &Okunmadı Olarak İmle"
 
 #: kmmainwidget.cpp:3209
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
-msgstr "Konudaki bütün iletileri okunmamış olarak imle"
+msgstr "Konudaki bütün iletileri okunmadı olarak imle"
 
 #: kmmainwidget.cpp:3215
 #, kde-format
@@ -5051,33 +5051,33 @@ msgstr "Önceki okunmayan iletiye git"
 #: kmmainwidget.cpp:3340
 #, kde-format
 msgid "Next Unread &Folder"
-msgstr "Sonraki Okunmamış &Klasör"
+msgstr "Sonraki Okunmayan &Klasör"
 
 #: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Go to the next folder with unread messages"
-msgstr "Okunmamış iletileri olan sonraki klasöre git"
+msgstr "Okunmayan iletileri olan sonraki klasöre git"
 
 #: kmmainwidget.cpp:3349
 #, kde-format
 msgid "Previous Unread F&older"
-msgstr "Önceki Okunmamış &Klasör"
+msgstr "Önceki Okunmayan &Klasör"
 
 #: kmmainwidget.cpp:3354
 #, kde-format
 msgid "Go to the previous folder with unread messages"
-msgstr "Okunmamış iletileri olan önceki klasöre git"
+msgstr "Okunmayan iletileri olan önceki klasöre git"
 
 #: kmmainwidget.cpp:3358
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
-msgstr "Sonraki Ok&unmamış Metin"
+msgstr "Sonraki Ok&unmayan Metin"
 
 #: kmmainwidget.cpp:3361
 #, kde-format
 msgid "Go to the next unread text"
-msgstr "Sonraki okunmayan metine git"
+msgstr "Sonraki okunmayan metne git"
 
 #: kmmainwidget.cpp:3363
 #, kde-format
@@ -5086,7 +5086,7 @@ msgid ""
 "message."
 msgstr ""
 "Geçerli iletinin sonuna sar. Geçerli iletinin sonundaysanız sonraki "
-"okunmamış iletiye geçin."
+"okunmayan iletiye geçin."
 
 #: kmmainwidget.cpp:3371
 #, kde-format
@@ -5606,14 +5606,14 @@ msgstr "Yeni İletiler"
 #: kmsystemtray.cpp:261
 #, kde-format
 msgid "There are no unread messages"
-msgstr "Okunmamış ileti yok"
+msgstr "Okunmayan ileti yok"
 
 #: kmsystemtray.cpp:261
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
-msgstr[0] "1 okunmamış ileti"
-msgstr[1] "%1 okunmamış ileti"
+msgstr[0] "1 okunmayan ileti"
+msgstr[1] "%1 okunmayan ileti"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
 #: kontactplugin/kmail/kcmkmailsummary.cpp:36
@@ -5676,7 +5676,7 @@ msgstr "Yeni İletiler"
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr "<qt><b>%1</b><br/>Toplam: %2<br/>Okunmamış: %3</qt>"
+msgstr "<qt><b>%1</b><br/>Toplam: %2<br/>Okunmayan: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:155
 #, kde-format
@@ -5687,7 +5687,7 @@ msgstr "%1 / %2"
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, kde-format
 msgid "No unread messages in your monitored folders"
-msgstr "İzlenen klasörlerde okunmamış ileti yok"
+msgstr "İzlenen klasörlerde okunmayan ileti yok"
 
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
@@ -6229,7 +6229,7 @@ msgstr "Klasör seçim iletişim kutusunda en son seçilmiş klasör"
 #: settings/kmail.kcfg.cmake:96
 #, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr "Sistem Tepsisinde Okunmamış E-postayı Göster"
+msgstr "Sistem Tepsisinde Okunmayan E-postayı Göster"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.cmake:100
@@ -6794,7 +6794,7 @@ msgctxt ""
 "to be continued with \"do not loop\", \"loop in current folder\", and \"loop "
 "in all folders\""
 msgid "When &trying to find unread messages:"
-msgstr "Okunmamış e-postaları &ararken:"
+msgstr "Okunmayan e-postaları &ararken:"
 
 #. i18n: ectx: property (text), widget (QLabel, mEnterFolderLabel)
 #: ui/miscpagemaintab.ui:58
@@ -6815,7 +6815,7 @@ msgstr "Önemli iletiler için süre bitimini iptal &et"
 #: ui/miscpagemaintab.ui:76
 #, kde-format
 msgid "Jump to First Unread Message"
-msgstr "İlk Okunmamış İletiye Git"
+msgstr "İlk Okunmayan İletiye Git"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
@@ -6839,7 +6839,7 @@ msgstr "En Eski İletiye Git"
 #: ui/miscpagemaintab.ui:105
 #, kde-format
 msgid "Mar&k selected message as read after"
-msgstr "Seçili iletiyi o&kunmuş işaretle"
+msgstr "Seçili iletileri şu süreden sonra okundu olarak im&le"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
@@ -6890,8 +6890,8 @@ msgstr ""
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
 "weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Sonraki okunmamış iletiye "
-"atlama sırasında, geçerli iletinin altında hiçbir okunmamış ileti kalmamış "
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Sonraki okunmayan iletiye "
+"atlama sırasında, geçerli iletinin altında hiçbir okunmayan ileti kalmamış "
 "olabilir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
@@ -6904,16 +6904,16 @@ msgstr ""
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Tüm klasörlerde döngüye gir:</span> Arama, ileti listesinin "
-"başından sürecektir. Okunmamış başka bir ileti bulunamazsa sonraki klasörde "
+"başından sürecektir. Okunmayan başka bir ileti bulunamazsa sonraki klasörde "
 "sürecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">Benzer şekilde önceki "
-"okunmamış iletiler aranırken, ileti listesinin sonundan başlanacak ve "
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Benzer biçimde, önceki "
+"okunmayan iletiler aranırken, ileti listesinin sonundan başlanacak ve "
 "seçilen yönteme bağlı olarak önceki klasörde sürdürülecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">Tüm işaretli klasörlerde döngüye gir: </span>Yalnızca \"Bu "
-"klasöre yeni/okunmamış posta geldiğinde uyar\" özelliği işaretli olan "
+"klasöre yeni/okunmayan posta geldiğinde uyar\" özelliği işaretli olan "
 "klasörlerin dikkate alınması dışında \"Tüm klasörlerde döngüye gir\" "
 "seçeneği ile aynıdır.</p></body></html>"
 
@@ -7059,7 +7059,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:44
 #, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Gö&nderilmiş iletileri şifrele"
+msgstr "&Gönderilen iletileri şifrele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
