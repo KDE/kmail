@@ -1,5 +1,5 @@
 <!DOCTYPE gui>
-<gui version="532" name="kmreadermainwin" translationDomain="kmail">
+<gui version="533" name="kmreadermainwin" translationDomain="kmail">
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -62,6 +62,8 @@
    <Action name="send_again" />
    <Action name="mailing_list"/>
    <Separator/>
+   <Separator/>
+   <Action name="archive_message" />
    <Action name="set_status" />
    <Separator/>
    <Action name="create_todo"/>

@@ -45,6 +45,7 @@
 #include <QIcon>
 #include <QMenu>
 
+#include "folderarchive/folderarchivemanager.h"
 #include <Akonadi/Collection>
 #include <Akonadi/EntityAnnotationsAttribute>
 #include <Akonadi/StandardMailActionManager>
@@ -81,6 +82,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mNewMessageFromTemplateAction(new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
     , mExportToPdfAction(new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF..."), this))
+    , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
 
 {
     ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
@@ -182,6 +184,9 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     ac->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
     connect(mExportToPdfAction, &QAction::triggered, this, &MessageActions::slotExportToPdf);
+
+    ac->addAction(QStringLiteral("archive_message"), mArchiveMessageAction);
+    connect(mArchiveMessageAction, &QAction::triggered, this, &MessageActions::slotArchiveMessage);
 
     updateActions();
 }
@@ -386,6 +391,7 @@ void MessageActions::updateActions()
         }
     }
     mEditAsNewAction->setEnabled(uniqItem);
+    mArchiveMessageAction->setEnabled(hasPayload);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)
@@ -779,6 +785,17 @@ void MessageActions::slotExportToPdf()
     }
 }
 
+void MessageActions::slotArchiveMessage()
+{
+    if (!mCurrentItem.isValid() || !mCurrentItem.parentCollection().isValid()) {
+        return;
+    }
+    Akonadi::Item::List items;
+    items << mCurrentItem;
+    auto resource = CommonKernel->collectionFromId(mCurrentItem.parentCollection().id()).resource();
+    KMKernel::self()->folderArchiveManager()->setArchiveItems(items, resource);
+}
+
 Akonadi::Item MessageActions::currentItem() const
 {
     return mCurrentItem;
@@ -787,4 +804,9 @@ Akonadi::Item MessageActions::currentItem() const
 QAction *MessageActions::exportToPdfAction() const
 {
     return mExportToPdfAction;
+}
+
+QAction *MessageActions::archiveMessageAction() const
+{
+    return mArchiveMessageAction;
 }
