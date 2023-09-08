@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-01 00:47+0000\n"
+"POT-Creation-Date: 2023-09-08 00:46+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -491,7 +491,7 @@ msgstr "Тып &адрасу:"
 msgid "URL for mailing list posting:"
 msgstr "Апісанне спісу распаўсюджвання:"
 
-#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:466
+#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Падпісацца на спіс"
@@ -4145,15 +4145,15 @@ msgid "F&older"
 msgstr "Т&эчка"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3444 kmmainwin.rc:134
-#: kmmainwin.rc:287
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3444 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "Ужы&ць усе фільтры"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
+#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Каранёвая тэчка крыніцы:"
@@ -4178,20 +4178,20 @@ msgid "&Forward"
 msgstr "&Пераслаць"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:189 kmmainwidget.cpp:3261 kmmainwin.rc:189
+#: kmail_part.rc:191 kmmainwidget.cpp:3261 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "У&жыць фільтр"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:203 kmmainwin.rc:203
+#: kmail_part.rc:205 kmmainwin.rc:205
 #, fuzzy, kde-format
 #| msgid "&To"
 msgid "&Tools"
 msgstr "Н&ачынне"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
+#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, fuzzy, kde-format
 #| msgid "&Sending"
@@ -4199,13 +4199,13 @@ msgid "&Settings"
 msgstr "&Настаўленні"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:244
+#: kmail_part.rc:242 kmmainwin.rc:246
 #, fuzzy, kde-format
 msgid "&Help"
 msgstr "&Дапамога"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
+#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, fuzzy, kde-format
 msgid "Main Toolbar"
 msgstr "Галоўная панель начыння"
@@ -6163,194 +6163,201 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Уласцівасці тэчкі %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:62
 #, fuzzy, kde-format
 #| msgid "&Reply To"
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Адказаць"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:155
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:155
 #, kde-format
 msgid "&Reply..."
 msgstr "&Адказаць..."
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:159
+#: messageactions.cpp:64 searchdialog/searchwindow.cpp:159
 #, kde-format
 msgid "Reply to &All..."
 msgstr "Адказаць &усім..."
 
-#: messageactions.cpp:64
+#: messageactions.cpp:65
 #, kde-format
 msgid "Reply to A&uthor..."
 msgstr "Адказаць а&ўтару(цы)..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:163
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:163
 #, kde-format
 msgid "Reply to Mailing-&List..."
 msgstr "Адказаць у &спіс распаўсюджвання..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply Without &Quote..."
 msgstr "Адказаць без &цытавання..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:68
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline..."
 msgstr "У паведамленні..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgid "Add Attachment..."
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
 msgstr "Дадаць далучэнне..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgid "Redirect To"
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
 msgstr "Перанакіраваць да"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 msgid "New Message to Recipients..."
 msgstr "Адправіць у спіс рассылання..."
 
-#: messageactions.cpp:72
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Паз&начыць паведамленне"
 
-#: messageactions.cpp:73 searchdialog/searchwindow.cpp:167
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:167
 #, fuzzy, kde-format
 #| msgid "&Forward"
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Далей"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Адказаць у &спіс распаўсюджвання..."
 
-#: messageactions.cpp:75 messageactions.cpp:366
+#: messageactions.cpp:76 messageactions.cpp:371
 #, fuzzy, kde-format
 #| msgid "Add..."
 msgid "Add Note..."
 msgstr "Дадаць..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Рэдагаваць паведамленне"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 msgid "Filter on Mailing-&List..."
 msgstr "Фільтраваць па спісе рассылання..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Add Followup Reminder..."
 msgstr "&Шукаць паведамленні..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:81
 #, kde-format
 msgid "Send A&gain..."
 msgstr "Даслаць з&ноў..."
 
-#: messageactions.cpp:81
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 #| msgid "No new messages from server"
 msgid "New Message From &Template"
 msgstr "Няма новых паведамленняў з сервера"
 
-#: messageactions.cpp:83
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 msgid "Export to PDF..."
 msgstr "Вызваліць ад састарэлых"
 
-#: messageactions.cpp:368
+#: messageactions.cpp:85
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgctxt "@action:inmenu"
+msgid "Archive Message"
+msgstr "Новае паведамленне да..."
+
+#: messageactions.cpp:373
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Note..."
 msgstr "Рэдагаваць скрыпт..."
 
-#: messageactions.cpp:412
+#: messageactions.cpp:418
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List..."
 msgstr "Фільтраваць па спісе рассылання..."
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr "<невядомы>"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Адказаць у &спіс распаўсюджвання..."
 
-#: messageactions.cpp:451
+#: messageactions.cpp:457
 #, fuzzy, kde-format
 msgid "Open Message in List Archive"
 msgstr "Паведамленне OpenPGP - няслушны подпіс"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:460
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "Новае паведамленне"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:463
 #, fuzzy, kde-format
 msgid "Go to Archive"
 msgstr "Ісці да радка"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:466
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "Дапамога спісу"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:469
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Кантакты"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:475
 #, fuzzy, kde-format
 msgid "Unsubscribe from List"
 msgstr "Адпіска"
 
-#: messageactions.cpp:478
+#: messageactions.cpp:484
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List %1..."
 msgstr "Фільтр па спісе рассылання %1..."
 
-#: messageactions.cpp:659
+#: messageactions.cpp:665
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "Электронная пошта"
 
-#: messageactions.cpp:662
+#: messageactions.cpp:668
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:667
+#: messageactions.cpp:673
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6359,12 +6366,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Пошта: %1"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, fuzzy, kde-format
 msgid "Export to PDF"
 msgstr "Вызваліць ад састарэлых"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

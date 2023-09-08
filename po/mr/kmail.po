@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-01 00:47+0000\n"
+"POT-Creation-Date: 2023-09-08 00:46+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -464,7 +464,7 @@ msgstr "पत्ता प्रकार :"
 msgid "URL for mailing list posting:"
 msgstr "मेलिंग यादी वर्णन :"
 
-#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:466
+#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "यादीत सबस्क्राइब करा"
@@ -4058,15 +4058,15 @@ msgid "F&older"
 msgstr "संचयीका (&O)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3444 kmmainwin.rc:134
-#: kmmainwin.rc:287
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3444 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgid "Apply Filters on Folder"
 msgstr "संचयीकेवर सर्व गाळण्या लागू करा (&Y)"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
+#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr ""
@@ -4091,32 +4091,32 @@ msgid "&Forward"
 msgstr "पुढे (&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:189 kmmainwidget.cpp:3261 kmmainwin.rc:189
+#: kmail_part.rc:191 kmmainwidget.cpp:3261 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "गाळणी लावा (&P)"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:203 kmmainwin.rc:203
+#: kmail_part.rc:205 kmmainwin.rc:205
 #, kde-format
 msgid "&Tools"
 msgstr "साधने (&T)"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
+#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "संयोजना (&S)"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:244
+#: kmail_part.rc:242 kmmainwin.rc:246
 #, kde-format
 msgid "&Help"
 msgstr "मदत (&H)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
+#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "मुख्य साधनपट्टी"
@@ -5925,184 +5925,191 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "संचयीकेची वैशिष्ट्ये/वैकल्पिक गोष्टी %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:62
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "उत्तर द्या (&R)"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:155
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:155
 #, kde-format
 msgid "&Reply..."
 msgstr "उत्तर द्या (&R)..."
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:159
+#: messageactions.cpp:64 searchdialog/searchwindow.cpp:159
 #, kde-format
 msgid "Reply to &All..."
 msgstr "सर्वाना उत्तर द्या (&A)"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:65
 #, kde-format
 msgid "Reply to A&uthor..."
 msgstr "लेखकाला उत्तर द्या (&U)"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:163
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:163
 #, kde-format
 msgid "Reply to Mailing-&List..."
 msgstr "मेलिंग यादीला उत्तर द्या (&L)"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply Without &Quote..."
 msgstr "उद्धृत केल्याशिवाय उत्तर द्या (&Q)"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline..."
 msgstr "इनलाइन (&I)..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
 msgstr "अटॅचमेंट प्रमाणे (&A)..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
 msgstr "कडे पुन्हा वळवा (&R)..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgid "New Message to Recipients..."
 msgstr "पाठवायच्या मेल-यादीसाठी नवा संदेश (&O)"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "संदेशावर खुण करा (&K)"
 
-#: messageactions.cpp:73 searchdialog/searchwindow.cpp:167
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:167
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "पुढे (&F)"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "मैलिंग यादी (&L)"
 
-#: messageactions.cpp:75 messageactions.cpp:366
+#: messageactions.cpp:76 messageactions.cpp:371
 #, kde-format
 msgid "Add Note..."
 msgstr "सूचना/नोंद वाढवा..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "संदेश संपादित करा (&E)"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:78
 #, kde-format
 msgid "Filter on Mailing-&List..."
 msgstr "मेलिंग यादीला गाळणी लावा (&L)"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Add Followup Reminder..."
 msgstr "संदेश शोधा (&F)..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:81
 #, kde-format
 msgid "Send A&gain..."
 msgstr "पुन्हा पाठवा (&G)..."
 
-#: messageactions.cpp:81
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "नमून्यातून नवा संदेश (&T)"
 
-#: messageactions.cpp:83
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF..."
 msgstr ""
 
-#: messageactions.cpp:368
+#: messageactions.cpp:85
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgctxt "@action:inmenu"
+msgid "Archive Message"
+msgstr "संदेश    कडे हलवा"
+
+#: messageactions.cpp:373
 #, kde-format
 msgid "Edit Note..."
 msgstr "नोंद संपादित करा..."
 
-#: messageactions.cpp:412
+#: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List..."
 msgstr "मेलिंग यादीसाठी गाळणी..."
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr ""
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgctxt "@title:tab Mailing list settings for a folder."
 #| msgid "Mailing List"
 msgid "Mailing List Name: %1"
 msgstr "मेलिंग यादी"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "संग्रहित जुन्या माहितीच्या यादीतून संदेश उघडा"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "नवीन संदेश पाठवा"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "जुन्या माहितीच्या संग्रहित साठ्याकडे जा"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "मदतीसाठी विनंती करा"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:469
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "मालकाशी संपर्क साधा"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "यादीमधून काढून टाका"
 
-#: messageactions.cpp:478
+#: messageactions.cpp:484
 #, kde-format
 msgid "Filter on Mailing-List %1..."
 msgstr "मेलिंग याडी %1ला गाळणी..."
 
-#: messageactions.cpp:659
+#: messageactions.cpp:665
 #, kde-format
 msgid "email"
 msgstr "इमेल"
 
-#: messageactions.cpp:662
+#: messageactions.cpp:668
 #, kde-format
 msgid "web"
 msgstr "वेब"
 
-#: messageactions.cpp:667
+#: messageactions.cpp:673
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6110,12 +6117,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "Export to PDF"
 msgstr ""
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""

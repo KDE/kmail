@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-01 00:47+0000\n"
+"POT-Creation-Date: 2023-09-08 00:46+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -482,7 +482,7 @@ msgstr "&Vrsta adrese:"
 msgid "URL for mailing list posting:"
 msgstr "Opis poštanske liste:"
 
-#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:466
+#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Pretplati se na listu"
@@ -3981,15 +3981,15 @@ msgid "F&older"
 msgstr "&Mapa"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3444 kmmainwin.rc:134
-#: kmmainwin.rc:287
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3444 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "Primij&eni sve filtre"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
+#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Mape re&sursa su podmape:"
@@ -4014,32 +4014,32 @@ msgid "&Forward"
 msgstr "&Proslijedi"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:189 kmmainwidget.cpp:3261 kmmainwin.rc:189
+#: kmail_part.rc:191 kmmainwidget.cpp:3261 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&Primijeni filtar"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:203 kmmainwin.rc:203
+#: kmail_part.rc:205 kmmainwin.rc:205
 #, fuzzy, kde-format
 msgid "&Tools"
 msgstr "&Za:"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
+#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, fuzzy, kde-format
 msgid "&Settings"
 msgstr "&Slanje"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:244
+#: kmail_part.rc:242 kmmainwin.rc:246
 #, fuzzy, kde-format
 msgid "&Help"
 msgstr "&Beep"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
+#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr ""
@@ -5847,184 +5847,191 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Svojstva mape %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:62
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Odgovori"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:155
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:155
 #, kde-format
 msgid "&Reply..."
 msgstr "Odgovo&ri …"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:159
+#: messageactions.cpp:64 searchdialog/searchwindow.cpp:159
 #, kde-format
 msgid "Reply to &All..."
 msgstr "Odgovori svim&a…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:65
 #, kde-format
 msgid "Reply to A&uthor..."
 msgstr "Odgovori a&utoru.."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:163
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:163
 #, kde-format
 msgid "Reply to Mailing-&List..."
 msgstr "Odgovori na poštansku &listu…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply Without &Quote..."
 msgstr "Odgovori bez &citata…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline..."
 msgstr "&Unutar…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
 msgstr "Kao &privitak…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
 msgstr "P&reusmjeri …"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 msgid "New Message to Recipients..."
 msgstr "Nova poruka u &raspravnoj listi …"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Označi poru&ku"
 
-#: messageactions.cpp:73 searchdialog/searchwindow.cpp:167
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:167
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Proslijedi"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Poštanska &lista"
 
-#: messageactions.cpp:75 messageactions.cpp:366
+#: messageactions.cpp:76 messageactions.cpp:371
 #, kde-format
 msgid "Add Note..."
 msgstr "Dodaj bilješku…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "Ur&edi poruku"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:78
 #, kde-format
 msgid "Filter on Mailing-&List..."
 msgstr "Filtriraj po listi za raspravu …"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Add Followup Reminder..."
 msgstr "&Nađi poruke…"
 
-#: messageactions.cpp:80
+#: messageactions.cpp:81
 #, kde-format
 msgid "Send A&gain..."
 msgstr "&Pošalji ponovno …"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 msgid "New Message From &Template"
 msgstr "Nema novih poruka s poslužitelja"
 
-#: messageactions.cpp:83
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF..."
 msgstr "Izbaci stare poruke"
 
-#: messageactions.cpp:368
+#: messageactions.cpp:85
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgctxt "@action:inmenu"
+msgid "Archive Message"
+msgstr "Nova poruka za…"
+
+#: messageactions.cpp:373
 #, kde-format
 msgid "Edit Note..."
 msgstr "Uredi bilješku…"
 
-#: messageactions.cpp:412
+#: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List..."
 msgstr "Filtriraj po listi za raspravu …"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 msgid "<unknown>"
 msgstr "nepoznato"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "Mailing-&List"
 msgid "Mailing List Name: %1"
 msgstr "Poštanska &lista"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Otvori poruku u arhivi lista"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "Pošalji novu poruku"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "Idi u arhivu"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "Zatraži pomoć"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:469
 #, fuzzy, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "&Zbijeno"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Otkaži pretplatu na listu"
 
-#: messageactions.cpp:478
+#: messageactions.cpp:484
 #, kde-format
 msgid "Filter on Mailing-List %1..."
 msgstr "Filtriraj po listi za raspravu %1 …"
 
-#: messageactions.cpp:659
+#: messageactions.cpp:665
 #, kde-format
 msgid "email"
 msgstr "e-pošta"
 
-#: messageactions.cpp:662
+#: messageactions.cpp:668
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:667
+#: messageactions.cpp:673
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6032,13 +6039,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF"
 msgstr "Izbaci stare poruke"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
