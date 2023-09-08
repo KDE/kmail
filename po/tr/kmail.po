@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-09-03 21:41+0300\n"
+"PO-Revision-Date: 2023-09-07 14:39+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2910,13 +2910,13 @@ msgstr ""
 "<qt><h3>E-posta adresi</h3><p>Bu alan tam e-posta adresinizi içermelidir.</"
 "p><p>Bu adres, tüm giden postalarda kullanılan birincil adrestir. Eğer "
 "birden fazla adresiniz varsa yeni bir kimlik oluşturabilir veya aşağıdaki "
-"alana takma adresler girebilirsiniz.</p><p>Bu alanı boş bırakır ya da hatalı "
-"yazarsanız, insanlar size yanıt yazmakta sorun yaşayacaklardır.</p></qt>"
+"alana arma adresler girebilirsiniz.</p><p>Bu alanı boş bırakır ya da hatalı "
+"yazarsanız insanlar size yanıt yazmakta sorun yaşayacaklardır.</p></qt>"
 
 #: identity/identitydialog.cpp:333
 #, kde-format
 msgid "Email a&liases:"
-msgstr "&Takma E-postalar:"
+msgstr "&E-posta armaları:"
 
 #: identity/identitydialog.cpp:338
 #, kde-format
@@ -2928,12 +2928,12 @@ msgid ""
 "th><td>first@example.org<br>last@example.org</td></tr></table><p>Type one "
 "alias address per line.</p></qt>"
 msgstr ""
-"<qt><h3>Takma E-Postalar</h3><p>Bu alandakilerin de bu kişiye ait olduğu "
-"varsayılması gereken takma adresleri içerir (farklı bir kimliğe tam zıt "
+"<qt><h3>E-posta armaları</h3><p>Bu alandakilerin de bu kişiye ait olduğu "
+"varsayılması gereken ikincil adresleri içerir (farklı bir kimliğe karşıt "
 "olarak).</p><p>Örneğin:</p><table><tr><th>Birincil adres:</th><td>ad."
-"soyad@ornek.org</td></tr><tr><th>Takma e-postalar:</th><td>ad@ornek."
-"org<br>soyad@ornek.org</td></tr></table><p>Her satıra bir takma adres yazın</"
-"p></qt>"
+"soyad@ornek.org</td></tr><tr><th>E-posta arması:</th><td>ad@ornek."
+"org<br>soyad@ornek.org</td></tr></table><p>Her satıra bir adres arması "
+"yazın</p></qt>"
 
 #: identity/identitydialog.cpp:355
 #, kde-format
@@ -3138,7 +3138,7 @@ msgstr ""
 #: identity/identitydialog.cpp:560
 #, kde-format
 msgid "&BCC addresses:"
-msgstr "&Gizli Kopya adresleri:"
+msgstr "&Gizli kopya adresleri:"
 
 #: identity/identitydialog.cpp:564
 #, kde-format
@@ -3255,7 +3255,7 @@ msgstr "Resim"
 #: identity/identitydialog.cpp:748
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
-msgstr "Geçersiz Takma E-posta\"%1\""
+msgstr "Geçersiz E-posta Arması \"%1\""
 
 #: identity/identitydialog.cpp:756
 #, kde-format
@@ -3724,7 +3724,7 @@ msgstr "Kopya:'yı 'adres'e gönder. Bu yinelenebilir"
 #: kmail_options.h:20
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "Gizli Kopya:'yı 'adres'e gönder. Bu yinelenebilir"
+msgstr "Gizli kopya:'yı 'adres'e gönder. Bu yinelenebilirdir"
 
 #: kmail_options.h:23
 #, kde-format

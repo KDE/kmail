@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-08-20 17:27+0200\n"
+"PO-Revision-Date: 2023-09-06 17:07+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -37,7 +37,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.07.90\n"
+"X-Generator: Lokalize 23.08.0\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
@@ -3340,10 +3340,9 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Alias d'adresse électronique « %1 » non valable"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&Utiliser les modèles de messages personnalisés pour cette identité"
+msgstr "Vous devez fournir une adresse de courriel pour cette identité."
 
 #: identity/identitydialog.cpp:756
 #, kde-format
