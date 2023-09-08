@@ -94,6 +94,8 @@ public:
 
     QAction *exportToPdfAction() const;
 
+    QAction *archiveMessageAction() const;
+
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
     Q_REQUIRED_RESULT Akonadi::Item currentItem() const;
 
@@ -141,6 +143,8 @@ private Q_SLOTS:
 
     void slotExportToPdf();
 
+    void slotArchiveMessage();
+
 private:
     QList<QAction *> mMailListActionList;
     Akonadi::Item mCurrentItem;
@@ -173,5 +177,6 @@ private:
     QAction *const mNewMessageFromTemplateAction;
     KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
     QAction *const mExportToPdfAction;
+    QAction *const mArchiveMessageAction;
 };
 }

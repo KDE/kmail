@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-01 00:47+0000\n"
+"POT-Creation-Date: 2023-09-08 00:46+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -426,7 +426,7 @@ msgstr "Ünvan növü:"
 msgid "URL for mailing list posting:"
 msgstr "Poçt siyahısının göndərilməsi üçün URL:"
 
-#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:466
+#: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Poçt siyahısına yazılmaq"
@@ -3957,14 +3957,14 @@ msgid "F&older"
 msgstr "Q&ovluq"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:283 kmmainwidget.cpp:3444 kmmainwin.rc:134
-#: kmmainwin.rc:287
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3444 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Süzgəcləri qovluğa tətbiq edin"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
+#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Süzgəcləri qovluğa və onun bütün alt qovluqlarına tətbiq edin"
@@ -3989,32 +3989,32 @@ msgid "&Forward"
 msgstr "&Yönləndirmək"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:189 kmmainwidget.cpp:3261 kmmainwin.rc:189
+#: kmail_part.rc:191 kmmainwidget.cpp:3261 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Süzgəci &tətbiq edin"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:203 kmmainwin.rc:203
+#: kmail_part.rc:205 kmmainwin.rc:205
 #, kde-format
 msgid "&Tools"
 msgstr "Alə&tlər"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:223 kmcomposerui.rc:107 kmmainwin.rc:224 kmreadermainwin.rc:76
+#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "&Ayarlar"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:240 kmmainwin.rc:244
+#: kmail_part.rc:242 kmmainwin.rc:246
 #, kde-format
 msgid "&Help"
 msgstr "&Kömək"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:340 kmcomposerui.rc:112 kmmainwin.rc:344 kmreadermainwin.rc:87
+#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Əsas alətlər paneli"
@@ -5789,179 +5789,187 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "%1 qovluğunun xüsusiyyətləri"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:62
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "Cavab ve&rin"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:155
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:155
 #, kde-format
 msgid "&Reply..."
 msgstr "Cavab ve&rin..."
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:159
+#: messageactions.cpp:64 searchdialog/searchwindow.cpp:159
 #, kde-format
 msgid "Reply to &All..."
 msgstr "H&amısını cavablayın..."
 
-#: messageactions.cpp:64
+#: messageactions.cpp:65
 #, kde-format
 msgid "Reply to A&uthor..."
 msgstr "M&üəllifinə cavab verin..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:163
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:163
 #, kde-format
 msgid "Reply to Mailing-&List..."
 msgstr "Poçt-&siyahısına cavab verin..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply Without &Quote..."
 msgstr "Si&tat olmadan cavab verin..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline..."
 msgstr "Sət&irdaxili..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
 msgstr "Qoşm&a fayl kimi..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
 msgstr "Tək&rar yönləndirmək..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:72
 #, kde-format
 msgid "New Message to Recipients..."
 msgstr "Alıcılara yeni məktub"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Mə&ktubu işarələyin"
 
-#: messageactions.cpp:73 searchdialog/searchwindow.cpp:167
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:167
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Yönləndirmək"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Poçt-&siyahısı"
 
-#: messageactions.cpp:75 messageactions.cpp:366
+#: messageactions.cpp:76 messageactions.cpp:371
 #, kde-format
 msgid "Add Note..."
 msgstr "Qeyd əlavə edin..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "Yeni kimi düzəliş &edin"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:78
 #, kde-format
 msgid "Filter on Mailing-&List..."
 msgstr "Poçt siyahısında süzgəcləyin..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:79
 #, kde-format
 msgid "Add Followup Reminder..."
 msgstr "Xatırlatmaların izlənməsini əlavə etmək..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:81
 #, kde-format
 msgid "Send A&gain..."
 msgstr "Yenidən &göndərin..."
 
-#: messageactions.cpp:81
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Şa&blonlardan yeni məktub"
 
-#: messageactions.cpp:83
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF..."
 msgstr "PDF-ə ixrac edin"
 
-#: messageactions.cpp:368
+#: messageactions.cpp:85
+#, fuzzy, kde-format
+#| msgid "Move Message"
+#| msgid_plural "Move Messages"
+msgctxt "@action:inmenu"
+msgid "Archive Message"
+msgstr "Məktubu köçürün"
+
+#: messageactions.cpp:373
 #, kde-format
 msgid "Edit Note..."
 msgstr "Qeydə düzəliş edin..."
 
-#: messageactions.cpp:412
+#: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List..."
 msgstr "Poçt siyahısında süzgəcləyin..."
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr "<bilinməyən>"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:454
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Poçt syahısının adı: %1"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Məktubu arxivdə aşmaq"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "Yeni məktub göndərmək"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "Arxivə keçin"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "Kömək istəyin"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:469
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Sahibi ilə əlaqə yaradın"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Abunəlik siyahısından çıxın"
 
-#: messageactions.cpp:478
+#: messageactions.cpp:484
 #, kde-format
 msgid "Filter on Mailing-List %1..."
 msgstr "%1 Poçt siyahısında süzgəcləmək..."
 
-#: messageactions.cpp:659
+#: messageactions.cpp:665
 #, kde-format
 msgid "email"
 msgstr "e-poçt üzrə"
 
-#: messageactions.cpp:662
+#: messageactions.cpp:668
 #, kde-format
 msgid "web"
 msgstr "sayt üzrə"
 
-#: messageactions.cpp:667
+#: messageactions.cpp:673
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -5969,12 +5977,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "Export to PDF"
 msgstr "PDF-ə ixrac edin"
 
-#: messageactions.cpp:776
+#: messageactions.cpp:782
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF sənədi (*.pdf)"
