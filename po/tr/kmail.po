@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-08 00:46+0000\n"
-"PO-Revision-Date: 2023-09-07 14:39+0300\n"
+"PO-Revision-Date: 2023-09-08 04:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -46,7 +46,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1 is version"
 msgid "Welcome to KMail %1"
-msgstr "K Posta %1 Sürümüne Hoş Geldiniz"
+msgstr "K Posta %1 sürümüne hoş geldiniz"
 
 #: about/introduction_kmail.html:7
 msgid ""
@@ -5901,12 +5901,10 @@ msgid "Export to PDF..."
 msgstr "PDF Olarak Dışa Aktar..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "İletiyi Taşı"
+msgstr "İletiyi Arşivle"
 
 #: messageactions.cpp:373
 #, kde-format
