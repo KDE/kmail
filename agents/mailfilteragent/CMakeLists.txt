@@ -2,6 +2,37 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
+
+if (0)
+    add_library(mailfilteragentprivate)
+
+
+    target_sources(mailfilteragentprivate PRIVATE
+        filterlogdialog.cpp
+        filterlogdialog.h
+
+        adblockplugin_private_export.h
+        )
+
+    if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+        set_target_properties(mailfilteragentprivate PROPERTIES UNITY_BUILD ON)
+    endif()
+
+    generate_export_header(mailfilteragentprivate BASE_NAME mailfilteragentprivate)
+    target_link_libraries(mailfilteragentprivate
+        KF6::I18n
+        )
+
+    set_target_properties(mailfilteragentprivate
+        PROPERTIES OUTPUT_NAME mailfilteragentprivate VERSION ${KDEPIMADDONS_LIB_VERSION} SOVERSION ${KDEPIMADDONS_LIB_SOVERSION}
+        )
+
+    install(TARGETS mailfilteragentprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
+
+
+endif()
+
+
 add_executable(akonadi_mailfilter_agent)
 
 qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
