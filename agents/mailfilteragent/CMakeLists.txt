@@ -3,34 +3,35 @@
 
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
 
-if (0)
-    add_library(mailfilteragentprivate)
+add_library(mailfilteragentprivate)
 
 
-    target_sources(mailfilteragentprivate PRIVATE
-        filterlogdialog.cpp
-        filterlogdialog.h
+target_sources(mailfilteragentprivate PRIVATE
+    filterlogdialog.cpp
+    filterlogdialog.h
+    mailfilterpurposemenuwidget.cpp
+    mailfilterpurposemenuwidget.h
 
-        adblockplugin_private_export.h
-        )
+    mailfilteragent_private_export.h
+)
 
-    if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-        set_target_properties(mailfilteragentprivate PROPERTIES UNITY_BUILD ON)
-    endif()
-
-    generate_export_header(mailfilteragentprivate BASE_NAME mailfilteragentprivate)
-    target_link_libraries(mailfilteragentprivate
-        KF6::I18n
-        )
-
-    set_target_properties(mailfilteragentprivate
-        PROPERTIES OUTPUT_NAME mailfilteragentprivate VERSION ${KDEPIMADDONS_LIB_VERSION} SOVERSION ${KDEPIMADDONS_LIB_SOVERSION}
-        )
-
-    install(TARGETS mailfilteragentprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
-
-
+if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+    set_target_properties(mailfilteragentprivate PROPERTIES UNITY_BUILD ON)
 endif()
+
+generate_export_header(mailfilteragentprivate BASE_NAME mailfilteragentprivate)
+target_link_libraries(mailfilteragentprivate
+    KF6::I18n
+    Qt::Widgets
+    KF6::TextCustomEditor
+    KPim6::PimCommon
+    KPim6::MailCommon
+)
+
+set_target_properties(mailfilteragentprivate
+    PROPERTIES OUTPUT_NAME mailfilteragentprivate VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
+)
+install(TARGETS mailfilteragentprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)
 
 
 add_executable(akonadi_mailfilter_agent)
