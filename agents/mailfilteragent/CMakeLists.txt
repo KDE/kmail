@@ -39,15 +39,11 @@ add_executable(akonadi_mailfilter_agent)
 qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
 target_sources(akonadi_mailfilter_agent PRIVATE
     dummykernel.cpp
-    filterlogdialog.cpp
     filtermanager.cpp
     mailfilteragent.cpp
-    mailfilterpurposemenuwidget.cpp
     dummykernel.h
-    filterlogdialog.h
     filtermanager.h
     mailfilteragent.h
-    mailfilterpurposemenuwidget.h
     ${akonadi_mailfilter_agent_SRCS}
     )
 
@@ -84,6 +80,7 @@ target_link_libraries(akonadi_mailfilter_agent
     KF6::Notifications
     KF6::WindowSystem
     KF6::I18n
+    mailfilteragentprivate
     )
 
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})

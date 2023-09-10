@@ -8,6 +8,7 @@
 
 #include <QDialog>
 
+#include "mailfilteragentprivate_export.h"
 #include <TextCustomEditor/PlainTextEditor>
 
 class QCheckBox;
@@ -37,7 +38,7 @@ protected:
     void addExtraMenuEntry(QMenu *menu, QPoint pos) override;
 };
 
-class FilterLogDialog : public QDialog
+class MAILFILTERAGENTPRIVATE_EXPORT FilterLogDialog : public QDialog
 {
     Q_OBJECT
 
