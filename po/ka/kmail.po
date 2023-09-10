@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-08 00:46+0000\n"
-"PO-Revision-Date: 2023-08-11 08:19+0200\n"
+"PO-Revision-Date: 2023-09-09 09:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4860,7 +4860,7 @@ msgstr ""
 #: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Restart Account"
-msgstr ""
+msgstr "ანგარიშის გადატვირთვა"
 
 #: kmmainwidget.cpp:3488
 #, kde-format
@@ -5573,12 +5573,10 @@ msgid "Export to PDF..."
 msgstr ""
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "შეტყობინების გადატანა"
+msgstr "შეტყობინების დაარქივება"
 
 #: messageactions.cpp:373
 #, kde-format
