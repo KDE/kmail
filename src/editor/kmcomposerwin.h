@@ -108,6 +108,7 @@ namespace PimCommon
 {
 class CustomToolsWidgetNg;
 class LineEditWithAutoCorrection;
+class PurposeMenuMessageWidget;
 }
 
 namespace GpgME
@@ -717,6 +718,7 @@ private:
 
     AttachmentAddedFromExternalWarning *const mAttachmentFromExternalMissing;
     KHamburgerMenu *mHamburgerMenu = nullptr;
+    PimCommon::PurposeMenuMessageWidget *const mPluginEditorMessageWidget;
 
     std::shared_ptr<Kleo::KeyCache> mKeyCache;
 

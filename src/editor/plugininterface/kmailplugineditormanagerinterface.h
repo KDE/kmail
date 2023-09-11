@@ -51,6 +51,8 @@ Q_SIGNALS:
     void textSelectionChanged(bool hasSelection);
     void message(const QString &str);
     void insertText(const QString &str);
+    void errorMessage(const QString &message);
+    void successMessage(const QString &message);
 
 private:
     void slotPluginActivated(MessageComposer::PluginEditorInterface *interface);

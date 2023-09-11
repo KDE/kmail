@@ -68,7 +68,8 @@ void KMailPluginEditorManagerInterface::initializePlugins()
             interface->setPlugin(plugin);
             connect(interface, &MessageComposer::PluginEditorInterface::emitPluginActivated, this, &KMailPluginEditorManagerInterface::slotPluginActivated);
             connect(interface, &MessageComposer::PluginEditorInterface::message, this, &KMailPluginEditorManagerInterface::message);
-            connect(interface, &MessageComposer::PluginEditorInterface::insertText, this, &KMailPluginEditorManagerInterface::insertText);
+            connect(interface, &MessageComposer::PluginEditorInterface::errorMessage, this, &KMailPluginEditorManagerInterface::errorMessage);
+            connect(interface, &MessageComposer::PluginEditorInterface::successMessage, this, &KMailPluginEditorManagerInterface::successMessage);
             mListPluginInterface.append(interface);
         }
     }

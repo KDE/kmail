@@ -142,6 +142,7 @@
 #include <PimCommon/CustomToolsWidgetng>
 #include <PimCommon/KActionMenuChangeCase>
 #include <PimCommon/LineEditWithAutoCorrection>
+#include <PimCommon/PurposeMenuMessageWidget>
 
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
@@ -250,6 +251,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
     , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
+    , mPluginEditorMessageWidget(new PimCommon::PurposeMenuMessageWidget(this))
     , mKeyCache(Kleo::KeyCache::mutableInstance())
 {
     mGlobalAction = new KMComposerGlobalAction(this, this);
@@ -261,6 +263,15 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mPluginEditorCheckBeforeSendManagerInterface = new KMailPluginEditorCheckBeforeSendManagerInterface(this);
     mPluginEditorInitManagerInterface = new KMailPluginEditorInitManagerInterface(this);
     mPluginEditorConvertTextManagerInterface = new KMailPluginEditorConvertTextManagerInterface(this);
+
+    connect(mPluginEditorManagerInterface,
+            &KMailPluginEditorManagerInterface::errorMessage,
+            mPluginEditorMessageWidget,
+            &PimCommon::PurposeMenuMessageWidget::slotShareError);
+    connect(mPluginEditorManagerInterface,
+            &KMailPluginEditorManagerInterface::successMessage,
+            mPluginEditorMessageWidget,
+            &PimCommon::PurposeMenuMessageWidget::slotShareSuccess);
 
     connect(mComposerBase, &MessageComposer::ComposerViewBase::disableHtml, this, &KMComposerWin::disableHtml);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::enableHtml, this, &KMComposerWin::enableHtml);
@@ -433,6 +444,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     vbox->addWidget(mIncorrectIdentityFolderWarning);
 
+    vbox->addWidget(mPluginEditorMessageWidget);
     vbox->addWidget(mAttachmentFromExternalMissing);
     vbox->addWidget(mTooMyRecipientWarning);
     vbox->addWidget(mNearExpiryWarning);

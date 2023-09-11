@@ -8,6 +8,7 @@
 #include "filterlogdialog.h"
 #include "mailfilterpurposemenuwidget.h"
 #include <MailCommon/FilterLog>
+#include <PimCommon/PurposeMenuMessageWidget>
 #include <TextCustomEditor/PlainTextEditorWidget>
 
 #include <KLocalizedString>
@@ -60,6 +61,9 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     pageVBoxLayout->setContentsMargins({});
     mainLayout->addWidget(page);
 
+    auto purposeMenuMessageWidget = new PimCommon::PurposeMenuMessageWidget(this);
+    pageVBoxLayout->addWidget(purposeMenuMessageWidget);
+
     mTextEdit = new TextCustomEditor::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
     pageVBoxLayout->addWidget(mTextEdit);
 
@@ -71,6 +75,8 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     }
 
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
+    connect(purposeMenu, &MailfilterPurposeMenuWidget::shareError, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareError);
+    connect(purposeMenu, &MailfilterPurposeMenuWidget::shareSuccess, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareSuccess);
     auto mShareButton = new QPushButton(i18n("Share..."), this);
     mShareButton->setMenu(purposeMenu->menu());
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
