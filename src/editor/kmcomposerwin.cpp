@@ -81,6 +81,7 @@
 #include <Libkleo/ExpiryChecker>
 #include <Libkleo/KeyCache>
 #include <Libkleo/KeyResolverCore>
+#include <Libkleo/KeySelectionDialog>
 
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/FolderRequester>
@@ -3732,7 +3733,7 @@ void KMComposerWin::runKeyResolver()
 
         const bool autocryptKey = autocryptKeys.contains(addrSpec);
         const bool gossipKey = gossipKeys.contains(addrSpec);
-        annotateRecipientEditorLineWithCrpytoInfo(line, autocryptKey, gossipKey);
+        annotateRecipientEditorLineWithCryptoInfo(line, autocryptKey, gossipKey);
 
         if (!key.isNull()) {
             mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::EncryptionKey);
@@ -3740,7 +3741,7 @@ void KMComposerWin::runKeyResolver()
     }
 }
 
-void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey)
+void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey)
 {
     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
     const auto key = recipient->key();
@@ -4190,19 +4191,53 @@ void KMComposerWin::slotRecipientEditorFocusChanged()
 
 void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineNG *line)
 {
-    const auto data = line->data().dynamicCast<MessageComposer::Recipient>();
+    const auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
 
-    if (!data->key().isNull()) {
+    if (!recipient->key().isNull()) {
         const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
         if (exec.isEmpty()
             || !QProcess::startDetached(exec,
                                         {QStringLiteral("--query"),
-                                         QString::fromLatin1(data->key().primaryFingerprint()),
+                                         QString::fromLatin1(recipient->key().primaryFingerprint()),
                                          QStringLiteral("--parent-windowid"),
                                          QString::number(winId())})) {
             qCWarning(KMAIL_LOG) << "Unable to execute kleopatra";
         }
+        return;
     }
+
+    const auto msg = i18nc(
+        "if in your language something like "
+        "'certificate(s)' is not possible please "
+        "use the plural in the translation",
+        "<qt>No valid and trusted encryption certificate was "
+        "found for \"%1\".<br/><br/>"
+        "Select the certificate(s) which should "
+        "be used for this recipient. If there is no suitable certificate in the list "
+        "you can also search for external certificates by clicking the button: "
+        "search for external certificates.</qt>",
+        recipient->name().isEmpty() ? recipient->email() : recipient->name());
+
+    const bool opgp = containsOpenPGP(cryptoMessageFormat());
+    const bool x509 = containsSMIME(cryptoMessageFormat());
+
+    QPointer<Kleo::KeySelectionDialog> dlg = new Kleo::KeySelectionDialog(
+        i18n("Encryption Key Selection"),
+        msg,
+        recipient->email(),
+        {},
+        Kleo::KeySelectionDialog::ValidEncryptionKeys | (opgp ? Kleo::KeySelectionDialog::OpenPGPKeys : 0) | (x509 ? Kleo::KeySelectionDialog::SMIMEKeys : 0),
+        false, // multi-selection
+        false); // "remember choice" box;
+
+    dlg->open();
+
+    connect(dlg, &QDialog::accepted, this, [dlg, recipient, line, this]() {
+        auto key = dlg->selectedKey();
+        key.update(); // We need tofu information for key.
+        recipient->setKey(key);
+        annotateRecipientEditorLineWithCryptoInfo(line, false, false);
+    });
 }
 
 void KMComposerWin::slotRecipientAdded(MessageComposer::RecipientLineNG *line)

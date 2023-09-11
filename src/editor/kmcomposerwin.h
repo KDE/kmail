@@ -587,7 +587,7 @@ private:
 
     std::unique_ptr<Kleo::KeyResolverCore> fillKeyResolver();
     void runKeyResolver();
-    void annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
+    void annotateRecipientEditorLineWithCryptoInfo(MessageComposer::RecipientLineNG *line, bool autocryptKey, bool gossipKey);
 
     Akonadi::Collection mCollectionForNewMessage;
     QMap<QByteArray, QString> mExtraHeaders;
