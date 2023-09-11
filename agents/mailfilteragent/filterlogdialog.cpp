@@ -93,12 +93,12 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mLogDetailsBox->setEnabled(mLogActiveBox->isChecked());
     connect(mLogActiveBox, &QCheckBox::toggled, mLogDetailsBox, &QGroupBox::setEnabled);
 
-    mLogPatternDescBox = new QCheckBox(i18n("Log pattern description"));
+    mLogPatternDescBox = new QCheckBox(i18n("Log pattern description"), mLogDetailsBox);
     layout->addWidget(mLogPatternDescBox);
     mLogPatternDescBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription));
     connect(mLogPatternDescBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
 
-    mLogRuleEvaluationBox = new QCheckBox(i18n("Log filter &rule evaluation"));
+    mLogRuleEvaluationBox = new QCheckBox(i18n("Log filter &rule evaluation"), mLogDetailsBox);
     layout->addWidget(mLogRuleEvaluationBox);
     mLogRuleEvaluationBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult));
     connect(mLogRuleEvaluationBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
@@ -110,24 +110,24 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
              "feedback about the result of the evaluation of all rules "
              "of a single filter will be given."));
 
-    mLogPatternResultBox = new QCheckBox(i18n("Log filter pattern evaluation"));
+    mLogPatternResultBox = new QCheckBox(i18n("Log filter pattern evaluation"), mLogDetailsBox);
     layout->addWidget(mLogPatternResultBox);
     mLogPatternResultBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult));
     connect(mLogPatternResultBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
 
-    mLogFilterActionBox = new QCheckBox(i18n("Log filter actions"));
+    mLogFilterActionBox = new QCheckBox(i18n("Log filter actions"), mLogDetailsBox);
     layout->addWidget(mLogFilterActionBox);
     mLogFilterActionBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction));
     connect(mLogFilterActionBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
 
-    auto hbox = new QWidget(page);
+    auto hboxWidget = new QWidget(page);
     auto hboxHBoxLayout = new QHBoxLayout;
-    hbox->setLayout(hboxHBoxLayout);
+    hboxWidget->setLayout(hboxHBoxLayout);
     hboxHBoxLayout->setContentsMargins({});
-    pageVBoxLayout->addWidget(hbox);
-    auto logSizeLab = new QLabel(i18n("Log size limit:"), hbox);
+    pageVBoxLayout->addWidget(hboxWidget);
+    auto logSizeLab = new QLabel(i18n("Log size limit:"), hboxWidget);
     hboxHBoxLayout->addWidget(logSizeLab);
-    mLogMemLimitSpin = new QSpinBox(hbox);
+    mLogMemLimitSpin = new QSpinBox(hboxWidget);
     hboxHBoxLayout->addWidget(mLogMemLimitSpin, 1);
     mLogMemLimitSpin->setMinimum(1);
     mLogMemLimitSpin->setMaximum(1024 * 256); // 256 MB
