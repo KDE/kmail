@@ -3865,7 +3865,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                                 "The encryption key is not trusted. It hasn't enough validity. "
                                 "You can sign the key, if you communicated the fingerprint by another channel. "
                                 "Click the icon for details.");
-                keyState = NoKey;
+                keyState = Unknown;
             } else {
                 switch (uid.tofuInfo().validity()) {
                 case GpgME::TofuInfo::NoHistory:
@@ -3886,7 +3886,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
                     tooltip = i18nc("@info:tooltip",
                                     "The encryption key is not trusted. It has unknown validity in TOFU data. "
                                     "Click the icon for details.");
-                    keyState = NoKey;
+                    keyState = Unknown;
                     break;
                 default:
                     tooltip = i18nc("@info:tooltip",
@@ -3932,10 +3932,11 @@ void KMComposerWin::annotateRecipientEditorLineWithCrpytoInfo(MessageComposer::R
             Q_UNREACHABLE();
         }
 
-        if (keyState == NoKey) {
+        if (keyState == NoKey || keyState == Unknown) {
             mEncryptionState.setAcceptedSolution(false);
             if (showAllIcons) {
-                line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
+                const auto iconName = keyState == NoKey ? QStringLiteral("emblem-error") : QStringLiteral("emblem-question");
+                line->setIcon(QIcon::fromTheme(iconName), tooltip);
             } else {
                 line->setIcon(QIcon());
             }

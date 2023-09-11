@@ -565,6 +565,7 @@ private:
         InProgress,
         KeyOk,
         NoKey,
+        Unknown,
     };
     void slotToggleMenubar(bool dontShowWarning);
 
