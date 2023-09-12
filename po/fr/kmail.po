@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-08 00:46+0000\n"
-"PO-Revision-Date: 2023-09-06 17:07+0200\n"
+"PO-Revision-Date: 2023-09-10 20:06+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -37,9 +37,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.0\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.0\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -2541,6 +2541,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Votre clé « PGP » sélectionnée (%1) n'existe pas dans votre trousseau de "
+"clés ou ne convient pas au chiffrement."
 
 #: editor/kmcomposerwin.cpp:3464
 #, kde-format
@@ -2549,6 +2551,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Votre clé de signature « PGP » sélectionnée (%1) n’existe pas dans votre "
+"trousseau de clés ou ne convient pas à la signature."
 
 #: editor/kmcomposerwin.cpp:3480
 #, kde-format
@@ -2634,6 +2638,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"La clé de chiffrement est non fiable. Sa validité n'est pas suffisante. Vous "
+"pouvez signer la clé, si vous avez communiqué l'empreinte numérique par une "
+"autre canal. Veuillez cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2644,20 +2651,21 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"La clé de cryptage est non fiable. Elle n'a été utilisée nulle part pour "
+"garantir qu'elle appartient à la personne déclarée. L'utilisation de la clé "
+"permet d'augmenter son niveau de confiance. Ou, vous pouvez signer la clé, "
+"si vous avez communiqué l'empreinte numérique par un autre canal. Veuillez "
+"cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Un chiffrement de sécurité faible sera utilisé pour ce destinataire (pas de "
-"confiance dans la clé de chiffrement). Cliquez sur l'icône pour plus de "
-"détails."
+"La clé de chiffrement est non fiable. Elle présente un conflit avec les "
+"données « TOFU ». Veuillez cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2666,20 +2674,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"La clé de chiffrement est non fiable. Elle présente une validité inconnue "
+"dans les données « TOFU ». Veuillez cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Un chiffrement de sécurité faible sera utilisé pour ce destinataire (pas de "
-"confiance dans la clé de chiffrement). Cliquez sur l'icône pour plus de "
-"détails."
+"La clé de chiffrement est non fiable. la clé est marquée comme mauvaise. "
+"Veuillez cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2690,6 +2696,12 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"La clé de chiffrement n'a qu'un niveau de confiance faible et n'a pas été "
+"utilisée suffisamment de temps pour garantir qu'elle appartient à la "
+"personne déclarée. L'utilisation de la clé permettra d'augmenter le niveau "
+"de confiance. Ou, vous pouvez signer la clé, si vous avez communiqué "
+"l'empreinte numérique par un autre canal. Veuillez cliquer sur l'icône pour "
+"plus de détails."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2698,6 +2710,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"La clé de chiffrement n'a qu'un niveau de confiance faible. Vous pouvez "
+"signer la clé, si vous avez communiqué l'empreinte numérique par un autre "
+"canal. Veuillez cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:3915
 #, kde-format
@@ -2710,32 +2725,26 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3923
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Un chiffrement de sécurité forte sera utilisé pour ce destinataire "
-"(confiance totale dans la clé de chiffrement). Cliquez sur l'icône pour plus "
-"de détails."
+"La clé de cryptage est totalement fiable. Vous pouvez augmenter le niveau de "
+"sécurité, en signer la clé. Veuillez cliquer sur l’icône pour plus de "
+"détails."
 
 #: editor/kmcomposerwin.cpp:3928
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Un chiffrement de sécurité forte sera utilisé pour ce destinataire "
-"(confiance totale dans la clé de chiffrement). Cliquez sur l'icône pour plus "
-"de détails."
+"La clé de chiffrement possède un niveau de fiabilité très élevée ou est "
+"signée par une autre clé avec un niveau de fiabilité très élevée. Veuillez "
+"cliquer sur l'icône pour plus de détails."
 
 #: editor/kmcomposerwin.cpp:4316
 #, kde-format
@@ -4709,7 +4718,11 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Le message sélectionné est chiffré. Il n’est actuellement pas possible de "
+"supprimer les pièces jointes provenant de messages chiffrés."
 msgstr[1] ""
+"La sélection ne contient que des messages chiffrés, pour lesquels il est "
+"actuellement pas possible de supprimer les pièces jointes."
 
 #: kmmainwidget.cpp:2369
 #, kde-format
@@ -4720,13 +4733,7 @@ msgstr[0] "Supprimer les pièces jointes du message chiffré"
 msgstr[1] "Supprimer les pièces jointes des messages chiffrés"
 
 #: kmmainwidget.cpp:2374
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4734,11 +4741,13 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Voulez-vous vraiment supprimer le message sélectionné ?<br />Une fois "
-"supprimé, il ne pourra pas être restauré.</qt>"
+"<html>Voulez-vous vraiment supprimer toutes les pièces jointes du message "
+"sélectionné ? <br/>Une fois supprimé, elles ne pourront pas être restaurées."
+"</html>"
 msgstr[1] ""
-"<qt>Voulez-vous vraiment supprimer les %1 messages sélectionnés ?<br />Une "
-"fois supprimés, ils ne pourront pas être restaurés.</qt>"
+"<html>Voulez-vous vraiment supprimer toutes les pièces jointes des %1 "
+"messages sélectionnés ? <br/>Une fois supprimé, elles ne pourront pas être "
+"restaurées.</html>"
 
 #: kmmainwidget.cpp:2381
 #, kde-format
@@ -4746,6 +4755,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Veuillez noter que la suppression des pièces jointes d'un message "
+"signé cryptographiquement invalidera sa signature. </p><html>"
 
 #: kmmainwidget.cpp:2386
 #, kde-format
@@ -4753,6 +4764,9 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Il n'est actuellement pas possible de supprimer les pièces jointes "
+"des messages chiffrés. <br/> Les messages chiffrés seront ignorés. </p> </"
+"html>"
 
 #: kmmainwidget.cpp:2391
 #, kde-format
@@ -6017,12 +6031,10 @@ msgid "Export to PDF..."
 msgstr "Exporter au format PDF..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Déplacer le message"
+msgstr "Archiver un message"
 
 #: messageactions.cpp:373
 #, kde-format
