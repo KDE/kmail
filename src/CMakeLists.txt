@@ -325,6 +325,9 @@ target_sources(kmailprivate PRIVATE
     historyswitchfolder/collectionswitchertreeviewmanager.cpp
     historyswitchfolder/collectionswitchermodel.h
     historyswitchfolder/collectionswitchermodel.cpp
+
+    historyclosedreader/historyclosedreaderinfo.h
+    historyclosedreader/historyclosedreaderinfo.cpp
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
@@ -480,6 +483,7 @@ pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail_static  kmailprivate KF6::KCMUtils KF6::Completion KF6::I18n KF6::TextWidgets)
 
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
+
 target_link_libraries(kcm_kmail_accounts kcm_kmail_static)
 
 kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
