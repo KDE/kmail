@@ -24,14 +24,14 @@ add_subdirectory(kontactplugin)
 
 
 
-set(kmail_common_SRCS)
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
+set(kmail_debugcategory_SRCS)
+ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
         DESCRIPTION "kmail (kmail)"
         OLD_CATEGORY_NAMES log_kmail
         EXPORT KMAIL
     )
 
-ecm_qt_declare_logging_category(kmail_common_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
+ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
         DESCRIPTION "kmail undo send (kmail)"
         OLD_CATEGORY_NAMES log_undo_send_kmail
         EXPORT KMAIL
@@ -50,7 +50,7 @@ if (TARGET KUserFeedbackWidgetsQt6)
 endif()
 
 target_sources(kmailprivate PRIVATE
-    ${kmail_common_SRCS}
+    ${kmail_debugcategory_SRCS}
     attributes/taskattribute.cpp
     folderarchive/folderarchiveaccountinfo.cpp
     folderarchive/folderarchiveutil.cpp
@@ -498,7 +498,7 @@ kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_secu
 target_link_libraries(kcm_kmail_security kcm_kmail_static)
 ########### kmailpart ###############
 
-set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_common_SRCS})
+set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_debugcategory_SRCS})
 qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
@@ -520,7 +520,7 @@ target_link_libraries(kmailpart
 
 ########### KMail executable ###############
 
-set(kmail_SRCS main.cpp ${kmail_common_SRCS})
+set(kmail_SRCS main.cpp ${kmail_debugcategory_SRCS})
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
