@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <Akonadi/Item>
 #include <QDebug>
 #include <QString>
 
@@ -17,9 +18,12 @@ public:
     Q_REQUIRED_RESULT QString subject() const;
     void setSubject(const QString &newSubject);
 
+    Q_REQUIRED_RESULT Akonadi::Item::Id item() const;
+    void setItem(Akonadi::Item::Id newItem);
+
 private:
     QString mSubject;
-    // TODO add Item::Id
+    Akonadi::Item::Id mItem;
     // TODO add Item::Collection ?
 };
 
