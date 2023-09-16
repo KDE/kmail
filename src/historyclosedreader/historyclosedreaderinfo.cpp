@@ -12,3 +12,19 @@ HistoryClosedReaderInfo::HistoryClosedReaderInfo()
 HistoryClosedReaderInfo::~HistoryClosedReaderInfo()
 {
 }
+
+QString HistoryClosedReaderInfo::subject() const
+{
+    return mSubject;
+}
+
+void HistoryClosedReaderInfo::setSubject(const QString &newSubject)
+{
+    mSubject = newSubject;
+}
+
+QDebug operator<<(QDebug d, const HistoryClosedReaderInfo &t)
+{
+    d << " mSubject " << t.subject();
+    return d;
+}
