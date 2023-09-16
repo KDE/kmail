@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-08 00:46+0000\n"
-"PO-Revision-Date: 2023-08-17 21:19+0200\n"
+"PO-Revision-Date: 2023-09-15 18:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -5946,12 +5946,10 @@ msgid "Export to PDF..."
 msgstr "Експортиране в PDF..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Преместване на съобщение"
+msgstr "Архивиране на съобщение"
 
 #: messageactions.cpp:373
 #, kde-format

@@ -5763,12 +5763,10 @@ msgid "Export to PDF..."
 msgstr "Exportovat do PDF..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Přesunout zprávu"
+msgstr ""
 
 #: messageactions.cpp:373
 #, kde-format
