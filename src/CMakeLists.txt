@@ -328,6 +328,8 @@ target_sources(kmailprivate PRIVATE
 
     historyclosedreader/historyclosedreaderinfo.h
     historyclosedreader/historyclosedreaderinfo.cpp
+    historyclosedreader/historyclosedreadermanager.h
+    historyclosedreader/historyclosedreadermanager.cpp
     )
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
