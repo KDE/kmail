@@ -340,7 +340,7 @@
       </entry>
 
       <entry name="readerWindowMode" type="Enum">
-       <label>Message Preview Pane</label>
+       <label>Message preview pane:</label>
        <choices>
          <choice name="hide">
            <label>Do not show a message preview pane</label>
@@ -356,7 +356,7 @@
       </entry>
 
       <entry name="FolderList" type="Enum">
-       <label>Folder List</label>
+       <label>Folder list:</label>
        <choices>
          <choice name="longlist">
            <label>Long folder list</label>

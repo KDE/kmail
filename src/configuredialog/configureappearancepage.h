@@ -103,13 +103,9 @@ private:
 
 private: // data
     QButtonGroup *mFolderListGroup = nullptr;
-    QGroupBox *mFolderListGroupBox = nullptr;
     QButtonGroup *mReaderWindowModeGroup = nullptr;
-    QGroupBox *mReaderWindowModeGroupBox = nullptr;
     QButtonGroup *mFolderToolTipsGroup = nullptr;
-    QGroupBox *mFolderToolTipsGroupBox = nullptr;
     QButtonGroup *mFavoriteFoldersViewGroup = nullptr;
-    QGroupBox *mFavoriteFoldersViewGroupBox = nullptr;
     QCheckBox *mFolderQuickSearchCB = nullptr;
 };
 
