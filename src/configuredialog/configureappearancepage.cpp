@@ -454,81 +454,99 @@ QString AppearancePageLayoutTab::helpAnchor() const
 AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    auto vlay = new QVBoxLayout(this);
+    auto formLayout = new QFormLayout(this);
 
     // "folder list" radio buttons:
-    populateButtonGroup(mFolderListGroupBox = new QGroupBox(this),
-                        mFolderListGroup = new QButtonGroup(this),
-                        Qt::Vertical,
-                        KMailSettings::self()->folderListItem());
-    vlay->addWidget(mFolderListGroupBox);
+    const auto folderListItem = KMailSettings::self()->folderListItem();
+    mFolderListGroup = new QButtonGroup(this);
+    {
+        const int numberChoices(folderListItem->choices().size());
+        for (int i = 0; i < numberChoices; ++i) {
+            auto button = new QRadioButton(folderListItem->choices().at(i).label, this);
+            mFolderListGroup->addButton(button, i);
+            checkLockDown(button, folderListItem);
+            if (i == 0) {
+                formLayout->addRow(folderListItem->label(), button);
+            } else {
+                formLayout->addRow(nullptr, button);
+            }
+        }
+    }
+
     connect(mFolderListGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    auto folderCBHLayout = new QHBoxLayout;
     mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
     connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
-    folderCBHLayout->addWidget(mFolderQuickSearchCB);
-    vlay->addLayout(folderCBHLayout);
+    formLayout->addRow(nullptr, mFolderQuickSearchCB);
 
     // "favorite folders view mode" radio buttons:
-    mFavoriteFoldersViewGroupBox = new QGroupBox(this);
-    mFavoriteFoldersViewGroupBox->setTitle(i18n("Show Favorite Folders View"));
-    mFavoriteFoldersViewGroupBox->setLayout(new QVBoxLayout());
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
     connect(mFavoriteFoldersViewGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode));
-    mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewHiddenRadio);
+    formLayout->addRow(i18nc("@label", "Show favorite folders view:"), favoriteFoldersViewHiddenRadio);
 
-    auto favoriteFoldersViewIconsRadio = new QRadioButton(i18n("As icons"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewIconsRadio = new QRadioButton(i18n("As icons"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewIconsRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode));
-    mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewIconsRadio);
+    formLayout->addRow(nullptr, favoriteFoldersViewIconsRadio);
 
-    auto favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), mFavoriteFoldersViewGroupBox);
+    auto favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewListRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode));
-    mFavoriteFoldersViewGroupBox->layout()->addWidget(favoriteFoldersViewListRadio);
-
-    vlay->addWidget(mFavoriteFoldersViewGroupBox);
+    formLayout->addRow(nullptr, favoriteFoldersViewListRadio);
 
     // "folder tooltips" radio buttons:
-    mFolderToolTipsGroupBox = new QGroupBox(this);
-    mFolderToolTipsGroupBox->setTitle(i18n("Folder Tooltips"));
-    mFolderToolTipsGroupBox->setLayout(new QVBoxLayout());
     mFolderToolTipsGroup = new QButtonGroup(this);
     connect(mFolderToolTipsGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    auto folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), mFolderToolTipsGroupBox);
+    auto folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), this);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast<int>(FolderTreeWidget::DisplayAlways));
-    mFolderToolTipsGroupBox->layout()->addWidget(folderToolTipsAlwaysRadio);
+    formLayout->addRow(i18nc("@label", "Folder tooltips:"), folderToolTipsAlwaysRadio);
 
-    auto folderToolTipsNeverRadio = new QRadioButton(i18n("Never"), mFolderToolTipsGroupBox);
+    auto folderToolTipsNeverRadio = new QRadioButton(i18n("Never"), this);
     mFolderToolTipsGroup->addButton(folderToolTipsNeverRadio, static_cast<int>(FolderTreeWidget::DisplayNever));
-    mFolderToolTipsGroupBox->layout()->addWidget(folderToolTipsNeverRadio);
-
-    vlay->addWidget(mFolderToolTipsGroupBox);
+    formLayout->addRow(nullptr, folderToolTipsNeverRadio);
 
     // "show reader window" radio buttons:
-    populateButtonGroup(mReaderWindowModeGroupBox = new QGroupBox(this),
-                        mReaderWindowModeGroup = new QButtonGroup(this),
-                        Qt::Vertical,
-                        KMailSettings::self()->readerWindowModeItem());
-    vlay->addWidget(mReaderWindowModeGroupBox);
+    mReaderWindowModeGroup = new QButtonGroup(this);
+    const auto readerWindowModeItem = KMailSettings::self()->readerWindowModeItem();
+    const auto readerWindowModeLayout = new QVBoxLayout;
+    mReaderWindowModeGroup = new QButtonGroup(this);
+    {
+        const int numberChoices(folderListItem->choices().size());
+        for (int i = 0; i < numberChoices; ++i) {
+            auto button = new QRadioButton(readerWindowModeItem->choices().at(i).label, this);
+            mReaderWindowModeGroup->addButton(button, i);
+            readerWindowModeLayout->addWidget(button);
+            checkLockDown(button, readerWindowModeItem);
+
+            if (i == 0) {
+                formLayout->addRow(readerWindowModeItem->label(), button);
+            } else {
+                formLayout->addRow(nullptr, button);
+            }
+        }
+    }
 
     connect(mReaderWindowModeGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
-
-    vlay->addStretch(10); // spacer
 }
 
 void AppearancePageLayoutTab::doLoadOther()
 {
-    loadWidget(mFolderListGroupBox, mFolderListGroup, KMailSettings::self()->folderListItem());
-    loadWidget(mReaderWindowModeGroupBox, mReaderWindowModeGroup, KMailSettings::self()->readerWindowModeItem());
+    mFolderListGroup->buttons().at(KMailSettings::self()->folderListItem()->value())->setChecked(true);
+    mReaderWindowModeGroup->buttons().at(KMailSettings::self()->readerWindowModeItem()->value())->setChecked(true);
+
     if (KMKernel::self()) {
-        loadWidget(mFavoriteFoldersViewGroupBox, mFavoriteFoldersViewGroup, KMKernel::self()->mailCommonSettings()->favoriteCollectionViewModeItem());
+        const auto item = KMKernel::self()->mailCommonSettings()->favoriteCollectionViewModeItem();
+        mFavoriteFoldersViewGroup->buttons().at(item->value())->setChecked(true);
+        if (item->isImmutable()) {
+            for (int i = 0, count = mFavoriteFoldersViewGroup->buttons().count(); i < count; i++) {
+                checkLockDown(mFavoriteFoldersViewGroup->buttons().at(i), item);
+            }
+        }
     }
     loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
