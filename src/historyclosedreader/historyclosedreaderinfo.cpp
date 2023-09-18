@@ -33,6 +33,11 @@ void HistoryClosedReaderInfo::setItem(Akonadi::Item::Id newItem)
     mItem = newItem;
 }
 
+bool HistoryClosedReaderInfo::isValid() const
+{
+    return mItem != -1;
+}
+
 QDebug operator<<(QDebug d, const HistoryClosedReaderInfo &t)
 {
     d << " mSubject " << t.subject();

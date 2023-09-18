@@ -21,10 +21,12 @@ public:
     Q_REQUIRED_RESULT Akonadi::Item::Id item() const;
     void setItem(Akonadi::Item::Id newItem);
 
+    Q_REQUIRED_RESULT bool isValid() const;
+
 private:
     QString mSubject;
     Akonadi::Item::Id mItem;
     // TODO add Item::Collection ?
 };
-
+Q_DECLARE_TYPEINFO(HistoryClosedReaderInfo, Q_MOVABLE_TYPE);
 QDebug operator<<(QDebug d, const HistoryClosedReaderInfo &t);

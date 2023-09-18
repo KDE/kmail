@@ -4,6 +4,8 @@
 */
 #pragma once
 
+#include "historyclosedreaderinfo.h"
+
 #include <QObject>
 
 class HistoryClosedReaderManager : public QObject
@@ -12,4 +14,11 @@ class HistoryClosedReaderManager : public QObject
 public:
     explicit HistoryClosedReaderManager(QObject *parent = nullptr);
     ~HistoryClosedReaderManager() override;
+
+    void addInfo(const HistoryClosedReaderInfo &info);
+
+    Q_REQUIRED_RESULT HistoryClosedReaderInfo lastInfo() const;
+
+private:
+    QList<HistoryClosedReaderInfo> mClosedReaderInfos;
 };
