@@ -96,7 +96,7 @@ void KMKnotify::initCombobox()
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
             QString appname = fullPath.right(fullPath.length() - slash - 1);
-            appname.remove(QStringLiteral(".notifyrc"));
+            appname.remove(QLatin1StringView(".notifyrc"));
             if (!appname.isEmpty()) {
                 KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
                 KConfigGroup globalConfig(&config, QStringLiteral("Global"));

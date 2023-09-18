@@ -88,7 +88,7 @@ void XFaceConfigurator::setFaceEnabled(bool enable)
 QString XFaceConfigurator::xface() const
 {
     QString str = mUi->xFaceConfig->source().trimmed();
-    str.remove(QStringLiteral("x-face:"), Qt::CaseInsensitive);
+    str.remove(QLatin1StringView("x-face:"), Qt::CaseInsensitive);
     str = str.trimmed();
 
     return str;
@@ -102,7 +102,7 @@ void XFaceConfigurator::setXFace(const QString &text)
 QString XFaceConfigurator::face() const
 {
     QString str = mUi->faceConfig->source().trimmed();
-    str.remove(QStringLiteral("face:"), Qt::CaseInsensitive);
+    str.remove(QLatin1StringView("face:"), Qt::CaseInsensitive);
     str = str.trimmed();
 
     return str;
