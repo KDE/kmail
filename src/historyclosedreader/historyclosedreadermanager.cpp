@@ -25,3 +25,10 @@ HistoryClosedReaderInfo HistoryClosedReaderManager::lastInfo() const
     }
     return mClosedReaderInfos.last();
 }
+
+void HistoryClosedReaderManager::clear()
+{
+    mClosedReaderInfos.clear();
+}
+
+#include "moc_historyclosedreadermanager.cpp"

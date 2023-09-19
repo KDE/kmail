@@ -19,6 +19,8 @@ public:
 
     Q_REQUIRED_RESULT HistoryClosedReaderInfo lastInfo() const;
 
+    void clear();
+
 private:
     QList<HistoryClosedReaderInfo> mClosedReaderInfos;
 };

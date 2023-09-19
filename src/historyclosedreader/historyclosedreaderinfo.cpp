@@ -5,13 +5,9 @@
 
 #include "historyclosedreaderinfo.h"
 
-HistoryClosedReaderInfo::HistoryClosedReaderInfo()
-{
-}
+HistoryClosedReaderInfo::HistoryClosedReaderInfo() = default;
 
-HistoryClosedReaderInfo::~HistoryClosedReaderInfo()
-{
-}
+HistoryClosedReaderInfo::~HistoryClosedReaderInfo() = default;
 
 QString HistoryClosedReaderInfo::subject() const
 {
