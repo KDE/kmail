@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-08 00:46+0000\n"
-"PO-Revision-Date: 2023-07-25 10:10-0300\n"
+"PO-Revision-Date: 2023-09-18 10:11-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -2540,18 +2540,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3666
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Criptografar"
 
 #: editor/kmcomposerwin.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Criptografar"
+msgstr "Não criptografar"
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -2560,22 +2558,17 @@ msgid "No key found for the recipient."
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3830
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"A chave gossip do Autocrypt usada para este destinatário. Esta chave não é "
-"verificada."
+"A chave gossip do Autocrypt usada para este destinatário. Recebemos esta "
+"chave de destinatários terceiros. Esta chave não é verificada."
 
 #: editor/kmcomposerwin.cpp:3834
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2585,10 +2578,7 @@ msgstr ""
 "verificada. O destinatário prefere respostas criptografadas."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -4696,12 +4686,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2391
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Anexos"
+msgstr "Excluir anexos"
 
 #: kmmainwidget.cpp:2884
 #, kde-format
@@ -4976,11 +4964,10 @@ msgid "Save A&ttachments..."
 msgstr "Salvar &anexos..."
 
 #: kmmainwidget.cpp:3244
-#, fuzzy, kde-format
-#| msgid "As Attachment"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Como anexo"
+msgstr "Excluir todos os anexos"
 
 #: kmmainwidget.cpp:3252
 #, kde-format
@@ -5950,12 +5937,10 @@ msgid "Export to PDF..."
 msgstr "Exportar para PDF..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Mover mensagem"
+msgstr "Arquivar mensagem"
 
 #: messageactions.cpp:373
 #, kde-format
