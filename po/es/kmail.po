@@ -3,13 +3,13 @@
 #
 # Javier Viñal <fjvinal@gmail.com>, 2012, 2013, 2014.
 # Javier Vinal <fjvinalgmail.com>, 2012, 2014, 2015, 2016, 2017, 2018, 2019.
-# Eloy Cuadra <ecuadra@eloihr.net>, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-07-14 00:50+0200\n"
+"PO-Revision-Date: 2023-09-20 01:27+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2340,8 +2340,8 @@ msgid ""
 msgstr ""
 "<qt><p>Ha solicitado que se cifren los mensajes para sí mismo, pero la "
 "identidad seleccionada actualmente no tiene definida una clave de cifrado "
-"(OpenPGP o S/MIME) para que pueda usarla.</p><p>Haga el favor de elegir las "
-"claves en la configuración de la identidad.</p></qt>"
+"(OpenPGP o S/MIME) para que pueda usarla.</p><p>Elija las claves en la "
+"configuración de la identidad.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2569
 #, kde-format
@@ -2382,7 +2382,7 @@ msgid ""
 "as BCC."
 msgstr ""
 "Debe especificar al menos un destinatario, bien en el campo «Para:», o bien "
-"como CC o CCO."
+"como Cc o Cco."
 
 #: editor/kmcomposerwin.cpp:2814
 #, kde-format
@@ -3146,7 +3146,7 @@ msgstr ""
 #: identity/identitydialog.cpp:540
 #, kde-format
 msgid "&CC addresses:"
-msgstr "Direcciones &CC:"
+msgstr "Direcciones &Cc:"
 
 #: identity/identitydialog.cpp:545
 #, kde-format
@@ -3158,17 +3158,17 @@ msgid ""
 "separate the list of CC recipients.</p><p>If in doubt, leave this field "
 "blank.</p></qt>"
 msgstr ""
-"<qt><h3>Direcciones CC (copia carbono)</h3><p>Las direcciones que introduzca "
+"<qt><h3>Direcciones Cc (con copia)</h3><p>Las direcciones que introduzca "
 "aquí se añadirán a cada mensaje saliente cuando envíe correo con esta "
 "identidad.</p><p>Se suele usar para enviar una copia de cada mensajes a otra "
 "de sus cuentas.</p><p>Para indicar más de una dirección, use una coma para "
-"separar la lista de destinatarios de CC.</p><p>En caso de duda, deje vacío "
+"separar la lista de destinatarios de Cc.</p><p>En caso de duda, deje vacío "
 "este campo.</p></qt>"
 
 #: identity/identitydialog.cpp:560
 #, kde-format
 msgid "&BCC addresses:"
-msgstr "Direcciones &CCO:"
+msgstr "Direcciones Cc&o:"
 
 #: identity/identitydialog.cpp:564
 #, kde-format
@@ -3180,12 +3180,12 @@ msgid ""
 "yours.</p><p>To specify more than one address, use commas to separate the "
 "list of BCC recipients.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
-"<qt><h3>Direcciones CCO (con copia oculta)</h3><p>Las direcciones que "
+"<qt><h3>Direcciones Cco (con copia oculta)</h3><p>Las direcciones que "
 "introduzca aquí se añadirán a cada mensaje saliente cuando envíe correo con "
 "esta identidad. No serán visibles para otros destinatarios.</p><p>Se suele "
 "usar para enviar una copia de cada mensajes a otra de sus cuentas.</"
 "p><p>Para indicar más de una dirección, use una coma para separar la lista "
-"de destinatarios de CCO.</p><p>En caso de duda, deje vacío este campo.</p></"
+"de destinatarios de Cco.</p><p>En caso de duda, deje vacío este campo.</p></"
 "qt>"
 
 #: identity/identitydialog.cpp:578
@@ -3752,12 +3752,12 @@ msgstr "Poner el asunto del mensaje"
 #: kmail_options.h:17
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "Enviar CC a «dirección». Se puede repetir."
+msgstr "Enviar Cc a «dirección». Se puede repetir."
 
 #: kmail_options.h:20
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "Enviar BCC a «dirección». Se puede repetir."
+msgstr "Enviar Cco a «dirección». Se puede repetir."
 
 #: kmail_options.h:23
 #, kde-format
