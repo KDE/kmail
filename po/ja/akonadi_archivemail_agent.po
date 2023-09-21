@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2012-04-12 22:43-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -189,7 +189,7 @@ msgstr ""
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
 
-#: job/archivejob.cpp:76
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr ""

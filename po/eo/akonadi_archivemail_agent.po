@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2023-08-11 10:45+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -198,7 +198,7 @@ msgstr "Aldoni Arkivan Poŝton"
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Dosierujo ne ekzistas. Bonvolu kontroli agordojn. Arkivo prokrastita."
 
-#: job/archivejob.cpp:76
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Komenci arkivi %1"

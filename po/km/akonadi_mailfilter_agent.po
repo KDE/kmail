@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-06 00:48+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -20,24 +20,24 @@ msgstr ""
 "X-Generator: WordForge 0.8 RC1\n"
 "X-Language: km-KH\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "កម្មវិធី​​មើល​កំណត់ហេតុ​តម្រង"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:80
 #, kde-format
 msgid "Share..."
 msgstr ""
 
-#: filterlogdialog.cpp:80
+#: filterlogdialog.cpp:86
 #, kde-format
 msgid "&Log filter activities"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​របស់​តម្រង"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:91
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,22 +46,22 @@ msgstr ""
 "អ្នក​អាច​បើក​/បិទ​​ការ​ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​តម្រង​នៅ​ទីនេះ​បាន ។ ពិតមែន​ហើយ ទិន្នន័យ​កំណត់ហេតុ​ត្រូវ​បាន​"
 "ប្រមូល និង​បង្ហាញ​តែ​នៅ​ពេល​ការ​ចុះ​កំណត់ហេតុ​ត្រូវ​បាន​បើក​តែប៉ុណ្ណោះ ។"
 
-#: filterlogdialog.cpp:89
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "សេចក្ដី​លម្អិត​អំពី​ការ​ចុះ​កំណត់ហេតុ"
 
-#: filterlogdialog.cpp:96
+#: filterlogdialog.cpp:102
 #, kde-format
 msgid "Log pattern description"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​ពិពណ៌នា​អំពី​លំនាំ"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:107
 #, kde-format
 msgid "Log filter &rule evaluation"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​វាយតម្លៃ​អំពី​ច្បាប់​តម្រង"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -74,33 +74,33 @@ msgstr ""
 "៖ ការ​គូស​ធីក​ជម្រើស​នេះ​នឹង​ផ្ដល់​នូវ​មតិ​អ្នកប្រើ​ដ៏​លម្អិត​សម្រាប់​ច្បាប់​តម្រង​ទោល​នីមួយ​ៗ​បាន ហើយ​មាន​តែ​មតិ​អ្នកប្រើ​"
 "អំពី​លទ្ធផល​នៃ​ការ​វាយតម្លៃ​ទាក់ទង​នឹង​ច្បាប់​ទាំងអស់​របស់​តម្រង​ទោល​ប៉ុណ្ណោះ​នឹង​ត្រូវ​បាន​ផ្ដល់ ។"
 
-#: filterlogdialog.cpp:113
+#: filterlogdialog.cpp:119
 #, kde-format
 msgid "Log filter pattern evaluation"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​វាយតម្លៃ​អំពី​លំនាំតម្រង"
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:124
 #, kde-format
 msgid "Log filter actions"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​តម្រង"
 
-#: filterlogdialog.cpp:128
+#: filterlogdialog.cpp:134
 #, kde-format
 msgid "Log size limit:"
 msgstr "កំណត់​ទំហំ​ក្នុង​ការ​ចុះ​កំណត់ហេតុ ៖"
 
-#: filterlogdialog.cpp:136
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr ""
 
-#: filterlogdialog.cpp:137
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "មិនកំណត់"
 
-#: filterlogdialog.cpp:140
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -112,7 +112,7 @@ msgstr ""
 "អាច​កំណត់​ចំនួន​អង្គ​ចងចាំ​ដែល​ត្រូវ​ប្រើ​ជា​អតិបរមាបាន ៖ ប្រសិនបើ ទំហំ​ទិន្នន័យ​កំណត់ហេតុ​ដែល​បាន​ប្រមូល​លើស​ពី​ការ​"
 "កំណត់​នេះ​ ពេល​នោះ​ទិន្នន័យ​ដែល​ចាស់​បំផុត​នឹង​ត្រូវ​បាន​បោះបង់​ រហូត​ទាល់តែ​​​លែង​មាន​ការ​លើស​កំណត់​ទៀត ។"
 
-#: filterlogdialog.cpp:321
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -121,7 +121,7 @@ msgstr ""
 "មិន​អាច​សរសេរ​ឯកសារ %1 ៖\n"
 "\"%2\" គឺជា​សេចក្ដី​ពិពណ៌នា​អំពី​កំហុស​ដែល​លម្អិត ។"
 
-#: filterlogdialog.cpp:325
+#: filterlogdialog.cpp:331
 #, kde-format
 msgid "KMail Error"
 msgstr "កំហុស KMail"
@@ -167,18 +167,18 @@ msgstr "<b>ចាប់ផ្ដើម​ត្រង​សារ \"%1\" ពី 
 msgid "Filtering messages"
 msgstr "ត្រង​សារ"
 
-#: mailfilteragent.cpp:109
+#: mailfilteragent.cpp:100
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "បាន​បើក​កំណត់ហេតុ​តម្រង​សារ"
 
-#: mailfilteragent.cpp:173
+#: mailfilteragent.cpp:164
 #, kde-format
 msgid "Ready"
 msgstr "រួច​ហើយ"
 
-#: mailfilteragent.cpp:259
+#: mailfilteragent.cpp:250
 #, kde-format
 msgid "Filtering in %1"
 msgstr "ការ​ត្រង​នៅ​ក្នុង %1"

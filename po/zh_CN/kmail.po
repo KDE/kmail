@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-08 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2023-09-16 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -365,8 +365,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "修复了许多 IMAP 错误"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2398 kmreaderwin.cpp:306 kmsystemtray.cpp:46
-#: kmsystemtray.cpp:75
+#: editor/kmcomposerwin.cpp:2409 kmreaderwin.cpp:305 kmsystemtray.cpp:45
+#: kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -517,7 +517,7 @@ msgstr ""
 "文件夹关联的按键。</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
-#: identity/identitydialog.cpp:682
+#: identity/identitydialog.cpp:676
 #, kde-format
 msgid "Templates"
 msgstr "模板"
@@ -545,353 +545,353 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "未读(&U)："
 
-#: configuredialog/configagentdelegate.cpp:217
+#: configuredialog/configagentdelegate.cpp:213
 #, kde-format
 msgid "Retrieval Options"
 msgstr "获取选项"
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:51
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "身份"
 
-#: configuredialog/configureaccountpage.cpp:62
+#: configuredialog/configureaccountpage.cpp:57
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "接收"
 
-#: configuredialog/configureaccountpage.cpp:69
+#: configuredialog/configureaccountpage.cpp:64
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "发送"
 
-#: configuredialog/configureaccountpage.cpp:75
+#: configuredialog/configureaccountpage.cpp:70
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP 服务器"
 
-#: configuredialog/configureaccountpage.cpp:90
+#: configuredialog/configureaccountpage.cpp:85
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
 msgstr "发送账户(至少添加一个)："
 
-#: configuredialog/configureaccountpage.cpp:97
+#: configuredialog/configureaccountpage.cpp:92
 #, kde-format
 msgid "&Confirm action"
 msgstr "确认操作(&C)"
 
-#: configuredialog/configureaccountpage.cpp:98
+#: configuredialog/configureaccountpage.cpp:93
 #, kde-format
 msgid "Before sending:"
 msgstr "发送前："
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:96
 #, kde-format
 msgid "Check spelling"
 msgstr "拼写检查"
 
-#: configuredialog/configureaccountpage.cpp:108
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Never Automatically"
 msgstr "不自动"
 
-#: configuredialog/configureaccountpage.cpp:108
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "手动检查邮件时"
 
-#: configuredialog/configureaccountpage.cpp:108
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "检查全部邮件时"
 
-#: configuredialog/configureaccountpage.cpp:110
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "发送发件箱中的消息(&M)："
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
 #, kde-format
 msgid "Send Now"
 msgstr "现在发送"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Send Later"
 msgstr "稍后发送"
 
-#: configuredialog/configureaccountpage.cpp:117
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "默认发送方式(&U)："
 
-#: configuredialog/configureaccountpage.cpp:121
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Enable Undo Send"
 msgstr "启用撤销发送"
 
-#: configuredialog/configureaccountpage.cpp:201
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Add Mail Account..."
 msgstr "添加邮件账户..."
 
-#: configuredialog/configureaccountpage.cpp:202
+#: configuredialog/configureaccountpage.cpp:197
 #, kde-format
 msgid "Custom Account..."
 msgstr "自定义账户..."
 
-#: configuredialog/configureaccountpage.cpp:224
-#: kmlaunchexternalcomponent.cpp:150
+#: configuredialog/configureaccountpage.cpp:217
+#: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr "无法启动账户向导。请确保您正确安装了账户向导。"
 
-#: configuredialog/configureaccountpage.cpp:226
-#: kmlaunchexternalcomponent.cpp:152
+#: configuredialog/configureaccountpage.cpp:219
+#: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgid "Unable to start account wizard"
 msgstr "无法启动账户向导"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:267
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手动检查邮件时包含"
 
-#: configuredialog/configureaccountpage.cpp:282
+#: configuredialog/configureaccountpage.cpp:275
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "关闭 KMail 时切换到脱机模式"
 
-#: configuredialog/configureaccountpage.cpp:289
+#: configuredialog/configureaccountpage.cpp:282
 #, kde-format
 msgid "Check mail on startup"
 msgstr "启动时检查邮件"
 
-#: configuredialog/configureaccountpage.cpp:336
+#: configuredialog/configureaccountpage.cpp:329
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr "未注册新邮件通知助手，请联系系统管理员。"
 
-#: configuredialog/configureappearancepage.cpp:90
+#: configuredialog/configureappearancepage.cpp:85
 #, kde-format
 msgid "General"
 msgstr "通用"
 
-#: configuredialog/configureappearancepage.cpp:97
+#: configuredialog/configureappearancepage.cpp:92
 #, kde-format
 msgid "Fonts"
 msgstr "字体"
 
-#: configuredialog/configureappearancepage.cpp:103
+#: configuredialog/configureappearancepage.cpp:98
 #, kde-format
 msgid "Colors"
 msgstr "颜色"
 
-#: configuredialog/configureappearancepage.cpp:109
+#: configuredialog/configureappearancepage.cpp:104
 #, kde-format
 msgid "Layout"
 msgstr "布局"
 
-#: configuredialog/configureappearancepage.cpp:115
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:110
+#: configuredialog/configureappearancepage.cpp:131
 #, kde-format
 msgid "Message List"
 msgstr "消息列表"
 
-#: configuredialog/configureappearancepage.cpp:121
+#: configuredialog/configureappearancepage.cpp:116
 #, kde-format
 msgid "Message Tags"
 msgstr "消息标签"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:130
 msgid "Message Body"
 msgstr "消息正文"
 
-#: configuredialog/configureappearancepage.cpp:137
+#: configuredialog/configureappearancepage.cpp:132
 msgid "Message List - Unread Messages"
 msgstr "消息列表 - 未读消息"
 
-#: configuredialog/configureappearancepage.cpp:138
+#: configuredialog/configureappearancepage.cpp:133
 msgid "Message List - Important Messages"
 msgstr "消息列表 - 重要消息"
 
-#: configuredialog/configureappearancepage.cpp:139
+#: configuredialog/configureappearancepage.cpp:134
 msgid "Message List - Action Item Messages"
 msgstr "消息列表 - 活动消息"
 
-#: configuredialog/configureappearancepage.cpp:140
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
 msgstr "等宽字体"
 
-#: configuredialog/configureappearancepage.cpp:141
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Composer"
 msgstr "撰写器"
 
-#: configuredialog/configureappearancepage.cpp:142
+#: configuredialog/configureappearancepage.cpp:137
 msgid "Printing Output"
 msgstr "打印输出"
 
-#: configuredialog/configureappearancepage.cpp:153
+#: configuredialog/configureappearancepage.cpp:148
 #, kde-format
 msgid "&Use custom fonts"
 msgstr "使用自定义字体(&U)"
 
-#: configuredialog/configureappearancepage.cpp:171
+#: configuredialog/configureappearancepage.cpp:166
 #, kde-format
 msgid "Apply &to:"
 msgstr "应用到(&T)："
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Quoted Text - First Level"
 msgstr "引文 - 第一级"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - Second Level"
 msgstr "引文 - 第二级"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Quoted Text - Third Level"
 msgstr "引文 - 第三级"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:305
 msgid "Link"
 msgstr "链接"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:306
 msgid "Unread Message"
 msgstr "未读消息"
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:307
 msgid "Important Message"
 msgstr "重要消息"
 
-#: configuredialog/configureappearancepage.cpp:313
+#: configuredialog/configureappearancepage.cpp:308
 msgid "Action Item Message"
 msgstr "活动消息"
 
-#: configuredialog/configureappearancepage.cpp:314
+#: configuredialog/configureappearancepage.cpp:309
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "HTML 状态栏背景 - 无 HTML 消息"
 
-#: configuredialog/configureappearancepage.cpp:315
+#: configuredialog/configureappearancepage.cpp:310
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "HTML 状态栏前景 - 无 HTML 消息"
 
-#: configuredialog/configureappearancepage.cpp:316
+#: configuredialog/configureappearancepage.cpp:311
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "HTML 状态栏背景 - HTML 消息"
 
-#: configuredialog/configureappearancepage.cpp:317
+#: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "HTML 状态栏前景 - HTML 消息"
 
-#: configuredialog/configureappearancepage.cpp:325
+#: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "&Use custom colors"
 msgstr "使用自定义颜色(&U)"
 
-#: configuredialog/configureappearancepage.cpp:329
+#: configuredialog/configureappearancepage.cpp:324
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr "不要更改原始 HTML 邮件的颜色(&D)"
 
-#: configuredialog/configureappearancepage.cpp:342
+#: configuredialog/configureappearancepage.cpp:337
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "深层次引用时循环使用颜色(&Q)"
 
-#: configuredialog/configureappearancepage.cpp:350
+#: configuredialog/configureappearancepage.cpp:345
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr "配额警告阈值："
 
-#: configuredialog/configureappearancepage.cpp:356
+#: configuredialog/configureappearancepage.cpp:351
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:473
+#: configuredialog/configureappearancepage.cpp:468
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "显示文件夹快速搜索条"
 
-#: configuredialog/configureappearancepage.cpp:480
+#: configuredialog/configureappearancepage.cpp:475
 #, kde-format
 msgid "Show Favorite Folders View"
 msgstr "显示收藏文件夹视图"
 
-#: configuredialog/configureappearancepage.cpp:485
-#: configuredialog/configureappearancepage.cpp:513
+#: configuredialog/configureappearancepage.cpp:480
+#: configuredialog/configureappearancepage.cpp:508
 #, kde-format
 msgid "Never"
 msgstr "从不显示"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:485
 #, kde-format
 msgid "As icons"
 msgstr "作为图标"
 
-#: configuredialog/configureappearancepage.cpp:495
+#: configuredialog/configureappearancepage.cpp:490
 #, kde-format
 msgid "As list"
 msgstr "作为列表"
 
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:499
 #, kde-format
 msgid "Folder Tooltips"
 msgstr "文件夹提示"
 
-#: configuredialog/configureappearancepage.cpp:509
+#: configuredialog/configureappearancepage.cpp:504
 #, kde-format
 msgid "Always"
 msgstr "总是显示"
 
-#: configuredialog/configureappearancepage.cpp:568
+#: configuredialog/configureappearancepage.cpp:563
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "标准格式(&N) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:569
+#: configuredialog/configureappearancepage.cpp:564
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "本地化格式(&Z) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:570
+#: configuredialog/configureappearancepage.cpp:565
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "智能格式(&M) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:571
+#: configuredialog/configureappearancepage.cpp:566
 msgid "C&ustom format:"
 msgstr "自定义格式(&U)："
 
-#: configuredialog/configureappearancepage.cpp:594
+#: configuredialog/configureappearancepage.cpp:589
 #, kde-format
 msgid "Default aggregation:"
 msgstr "默认聚合模式："
 
-#: configuredialog/configureappearancepage.cpp:612
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default theme:"
 msgstr "默认主题："
 
-#: configuredialog/configureappearancepage.cpp:649
+#: configuredialog/configureappearancepage.cpp:644
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis\">自定义格式信息...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:655
+#: configuredialog/configureappearancepage.cpp:650
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -932,182 +932,182 @@ msgstr ""
 "为“am”或“pm”。</li><li>Z - 数字形式的时区(-0500)</li></ul><p><strong>所有输入"
 "的其他字符都将被忽略。</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:692
+#: configuredialog/configureappearancepage.cpp:687
 #, kde-format
 msgid "Date Display:"
 msgstr "显示日期："
 
-#: configuredialog/configureappearancepage.cpp:800
+#: configuredialog/configureappearancepage.cpp:795
 #, kde-format
 msgid "Message Window"
 msgstr "消息窗口"
 
-#: configuredialog/configureappearancepage.cpp:807
+#: configuredialog/configureappearancepage.cpp:802
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "回复或转发消息后关闭单独的消息窗口"
 
-#: configuredialog/configureappearancepage.cpp:815
+#: configuredialog/configureappearancepage.cpp:810
 #, kde-format
 msgid "System Tray"
 msgstr "系统托盘"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:821 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "启用系统托盘图标"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:825 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "启动时最小化到托盘"
 
-#: configuredialog/configureappearancepage.cpp:843
+#: configuredialog/configureappearancepage.cpp:838
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "在任务栏显示未读邮件"
 
-#: configuredialog/configureappearancepage.cpp:911
+#: configuredialog/configureappearancepage.cpp:906
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "可用标签(&V)"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:919
 #, kde-format
 msgid "Add new tag"
 msgstr "新加标签"
 
-#: configuredialog/configureappearancepage.cpp:929
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "Remove selected tag"
 msgstr "删除选中标签"
 
-#: configuredialog/configureappearancepage.cpp:938
+#: configuredialog/configureappearancepage.cpp:933
 #, kde-format
 msgid "Increase tag priority"
 msgstr "增加标签优先级"
 
-#: configuredialog/configureappearancepage.cpp:944
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "减少标签优先级"
 
-#: configuredialog/configureappearancepage.cpp:968
+#: configuredialog/configureappearancepage.cpp:963
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "标签设定(&G)"
 
-#: configuredialog/configureappearancepage.cpp:1018
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgid "Delete"
 msgstr "删除"
 
-#: configuredialog/configureappearancepage.cpp:1148
+#: configuredialog/configureappearancepage.cpp:1143
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "您是否要删除标签“%1”？"
 
-#: configuredialog/configureappearancepage.cpp:1149
+#: configuredialog/configureappearancepage.cpp:1144
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "移除标签"
 
-#: configuredialog/configureappearancepage.cpp:1194
-#: configuredialog/configureappearancepage.cpp:1229
+#: configuredialog/configureappearancepage.cpp:1189
+#: configuredialog/configureappearancepage.cpp:1224
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "无法创建标签，同名标签已经存在。"
 
-#: configuredialog/configurecomposerpage.cpp:73
+#: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "常规"
 
-#: configuredialog/configurecomposerpage.cpp:80
+#: configuredialog/configurecomposerpage.cpp:72
 #, kde-format
 msgid "Standard Templates"
 msgstr "标准模板"
 
-#: configuredialog/configurecomposerpage.cpp:86
+#: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgid "Custom Templates"
 msgstr "自定义模板"
 
-#: configuredialog/configurecomposerpage.cpp:92
+#: configuredialog/configurecomposerpage.cpp:84
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "主题"
 
-#: configuredialog/configurecomposerpage.cpp:99
+#: configuredialog/configurecomposerpage.cpp:91
 #, kde-format
 msgid "Charset"
 msgstr "字符集"
 
-#: configuredialog/configurecomposerpage.cpp:105
+#: configuredialog/configurecomposerpage.cpp:97
 #, kde-format
 msgid "Headers"
 msgstr "信头"
 
-#: configuredialog/configurecomposerpage.cpp:111
+#: configuredialog/configurecomposerpage.cpp:103
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "附件"
 
-#: configuredialog/configurecomposerpage.cpp:117
+#: configuredialog/configurecomposerpage.cpp:109
 #, kde-format
 msgid "Autocorrection"
 msgstr "自动更正"
 
-#: configuredialog/configurecomposerpage.cpp:123
+#: configuredialog/configurecomposerpage.cpp:115
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "自动缩放图片"
 
-#: configuredialog/configurecomposerpage.cpp:140
+#: configuredialog/configurecomposerpage.cpp:132
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "签名"
 
-#: configuredialog/configurecomposerpage.cpp:146
+#: configuredialog/configurecomposerpage.cpp:138
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr "在开始撰写邮件时自动插入配置的签名"
 
-#: configuredialog/configurecomposerpage.cpp:157
+#: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "在所有引用的文本前插入签名"
 
-#: configuredialog/configurecomposerpage.cpp:169
+#: configuredialog/configurecomposerpage.cpp:161
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr "在签名前插入 RFC 兼容格式的分隔符 (两个连字符和一个空格构成的行)"
 
-#: configuredialog/configurecomposerpage.cpp:180
+#: configuredialog/configurecomposerpage.cpp:172
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "回复时不引用已经存在的签名"
 
-#: configuredialog/configurecomposerpage.cpp:192
+#: configuredialog/configurecomposerpage.cpp:184
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "格式"
 
-#: configuredialog/configurecomposerpage.cpp:197
+#: configuredialog/configurecomposerpage.cpp:189
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1116,7 +1116,7 @@ msgstr ""
 "在回复时，如果您事先在消息窗口中选中了一段文字，将只把这部分文字作为引用内"
 "容。"
 
-#: configuredialog/configurecomposerpage.cpp:207
+#: configuredialog/configurecomposerpage.cpp:199
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1126,17 +1126,17 @@ msgstr ""
 "在回复时，在引用文字的全部行的前面添加引用标记，即使这些行是由于在自动换行时"
 "添加了多余的换行而产生的。"
 
-#: configuredialog/configurecomposerpage.cpp:218
+#: configuredialog/configurecomposerpage.cpp:210
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "启用文字在特定宽度自动折行"
 
-#: configuredialog/configurecomposerpage.cpp:229
+#: configuredialog/configurecomposerpage.cpp:221
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "设置自动折行的文字宽度"
 
-#: configuredialog/configurecomposerpage.cpp:249
+#: configuredialog/configurecomposerpage.cpp:241
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1144,7 +1144,7 @@ msgid ""
 msgstr ""
 "回复或转发时只以接收时的原始格式引用消息。如果不选，则默认使用纯文本回复。"
 
-#: configuredialog/configurecomposerpage.cpp:261
+#: configuredialog/configurecomposerpage.cpp:253
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1153,34 +1153,34 @@ msgstr ""
 "将消息的 HTML 标记格式化为纯文本标记。支持加粗，倾斜，下划线，列表和外部引"
 "用。"
 
-#: configuredialog/configurecomposerpage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:263
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "在消息内"
 
-#: configuredialog/configurecomposerpage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:263
 #, kde-format
 msgid "As Attachment"
 msgstr "有附件"
 
-#: configuredialog/configurecomposerpage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "设定默认转发格式"
 
-#: configuredialog/configurecomposerpage.cpp:277
+#: configuredialog/configurecomposerpage.cpp:269
 #, kde-format
 msgid "Default forwarding type:"
 msgstr "默认转发类型："
 
-#: configuredialog/configurecomposerpage.cpp:295
+#: configuredialog/configurecomposerpage.cpp:287
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "收件人"
 
-#: configuredialog/configurecomposerpage.cpp:308
+#: configuredialog/configurecomposerpage.cpp:300
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1190,17 +1190,17 @@ msgstr ""
 "默认情况下，撰写邮件时会请求消息处置通知(MDN)。您可以在每封邮件中修改此选"
 "项，“选项 - 请求消息处置通知”。"
 
-#: configuredialog/configurecomposerpage.cpp:333
+#: configuredialog/configurecomposerpage.cpp:325
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr "收件人过多时警告"
 
-#: configuredialog/configurecomposerpage.cpp:344
+#: configuredialog/configurecomposerpage.cpp:336
 #, kde-format
 msgid "Set the maximum number of recipients for the warning"
 msgstr "收件人大于一定数量时警告"
 
-#: configuredialog/configurecomposerpage.cpp:364
+#: configuredialog/configurecomposerpage.cpp:356
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1213,65 +1213,65 @@ msgstr ""
 "择...”对话框。设置此限制帮助您避免意外地发送邮件给太多人。但是请注意，它对邮"
 "件列表和联系人列表无效。"
 
-#: configuredialog/configurecomposerpage.cpp:385
+#: configuredialog/configurecomposerpage.cpp:377
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "记住最近输入的邮箱地址，用于自动补全提示"
 
-#: configuredialog/configurecomposerpage.cpp:397
+#: configuredialog/configurecomposerpage.cpp:389
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "不保存"
 
-#: configuredialog/configurecomposerpage.cpp:400
+#: configuredialog/configurecomposerpage.cpp:392
 #, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr "最近地址的最大数量："
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:396
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "自动补全记忆邮箱地址数量的上限"
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:409
 #, kde-format
 msgid "Configure Completion..."
 msgstr "配置补全..."
 
-#: configuredialog/configurecomposerpage.cpp:426
+#: configuredialog/configurecomposerpage.cpp:418
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "自动保存"
 
-#: configuredialog/configurecomposerpage.cpp:436
+#: configuredialog/configurecomposerpage.cpp:428
 #, kde-format
 msgid "No autosave"
 msgstr "不自动保存"
 
-#: configuredialog/configurecomposerpage.cpp:437
+#: configuredialog/configurecomposerpage.cpp:429
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " 分钟"
 
-#: configuredialog/configurecomposerpage.cpp:439
+#: configuredialog/configurecomposerpage.cpp:431
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "按指定的时间间隔自动保存消息"
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "回信时主题的前缀(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, kde-format
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
@@ -1280,79 +1280,79 @@ msgstr ""
 "识别下列前缀的任意组合\n"
 "(各项都是不区分大小写的正则表达式)："
 
-#: configuredialog/configurecomposerpage.cpp:661
-#: configuredialog/configurecomposerpage.cpp:744
-#: configuredialog/configurecomposerpage.cpp:1124
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:736
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "A&dd..."
 msgstr "添加(&D)..."
 
-#: configuredialog/configurecomposerpage.cpp:661
-#: configuredialog/configurecomposerpage.cpp:897
-#: configuredialog/configurecomposerpage.cpp:1124
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "Re&move"
 msgstr "删除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:661
-#: configuredialog/configurecomposerpage.cpp:1124
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "Mod&ify..."
 msgstr "修改(&I)..."
 
-#: configuredialog/configurecomposerpage.cpp:661
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "输入新的回复前缀："
 
-#: configuredialog/configurecomposerpage.cpp:662
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "您是否要移除回复前缀？"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "回信前缀："
 
-#: configuredialog/configurecomposerpage.cpp:675
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "转发时主题的前缀(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:685
-#: configuredialog/configurecomposerpage.cpp:745 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "删除(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:685 identity/identitypage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "添加..."
 
-#: configuredialog/configurecomposerpage.cpp:685 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "修改..."
 
-#: configuredialog/configurecomposerpage.cpp:685
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "输入新的转发前缀："
 
-#: configuredialog/configurecomposerpage.cpp:686
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "您是否要移除转发前缀？"
 
-#: configuredialog/configurecomposerpage.cpp:687
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "转发前缀："
 
-#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:727
 #, kde-format
 msgid ""
 "This list is checked for every outgoing message from the top to the bottom "
@@ -1360,145 +1360,145 @@ msgid ""
 msgstr "这个列表将会由上而下的检查哪个字符集包括发送消息需要的所有字符。"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: configuredialog/configurecomposerpage.cpp:746 ui/identitypage.ui:40
+#: configuredialog/configurecomposerpage.cpp:738 ui/identitypage.ui:40
 #, kde-format
 msgid "&Modify..."
 msgstr "修改(&M)..."
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgid "Enter charset:"
 msgstr "输入字符集："
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgid "Do you want to remove this selected charset?"
 msgstr "您是否要移除选中的字符集？"
 
-#: configuredialog/configurecomposerpage.cpp:749
+#: configuredialog/configurecomposerpage.cpp:741
 #, kde-format
 msgid "Add Charset:"
 msgstr "添加字符集："
 
-#: configuredialog/configurecomposerpage.cpp:755
+#: configuredialog/configurecomposerpage.cpp:747
 #, kde-format
 msgid "&Keep original charset when replying or forwarding (if possible)"
 msgstr "在回复或转发时尽可能保持原有字符集(&K)"
 
-#: configuredialog/configurecomposerpage.cpp:789
+#: configuredialog/configurecomposerpage.cpp:781
 #, kde-format
 msgid "This charset is not supported."
 msgstr "不支持这个字符集。"
 
-#: configuredialog/configurecomposerpage.cpp:852
+#: configuredialog/configurecomposerpage.cpp:844
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "使用自定义的 message-id 后缀(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:864
+#: configuredialog/configurecomposerpage.cpp:856
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "自定义 message-&id 后缀："
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:868
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "定义 MIME 信头标记："
 
-#: configuredialog/configurecomposerpage.cpp:884
+#: configuredialog/configurecomposerpage.cpp:876
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "名称"
 
-#: configuredialog/configurecomposerpage.cpp:885
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "值"
 
-#: configuredialog/configurecomposerpage.cpp:893
+#: configuredialog/configurecomposerpage.cpp:885
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "新建(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:898
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "名称(&N)："
 
-#: configuredialog/configurecomposerpage.cpp:916
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "&Value:"
 msgstr "值(&V)："
 
-#: configuredialog/configurecomposerpage.cpp:1055
+#: configuredialog/configurecomposerpage.cpp:1047
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "\"内容类型\"不是授权字符串。此标头将不被保存。"
 
-#: configuredialog/configurecomposerpage.cpp:1055
+#: configuredialog/configurecomposerpage.cpp:1047
 #, kde-format
 msgid "Invalid header"
 msgstr "无效头部"
 
-#: configuredialog/configurecomposerpage.cpp:1096
+#: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
 msgid "Outlook-compatible attachment naming"
 msgstr "Outlook 兼容的附件命名"
 
-#: configuredialog/configurecomposerpage.cpp:1099
+#: configuredialog/configurecomposerpage.cpp:1091
 #, kde-format
 msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr "启用此选项，才能让 Outlook(tm) 理解包含非英语字符的附件名"
 
-#: configuredialog/configurecomposerpage.cpp:1107
+#: configuredialog/configurecomposerpage.cpp:1099
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "启用对丢失附件的检测(&N)"
 
-#: configuredialog/configurecomposerpage.cpp:1113
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "识别下列关键字为附件："
 
-#: configuredialog/configurecomposerpage.cpp:1124
+#: configuredialog/configurecomposerpage.cpp:1116
 #, kde-format
 msgid "Enter new key word:"
 msgstr "输入新关键字："
 
-#: configuredialog/configurecomposerpage.cpp:1125
+#: configuredialog/configurecomposerpage.cpp:1117
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "您是否要移除此附件关键字？"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1118
 #, kde-format
 msgid "Attachment Word:"
 msgstr "附件关键字："
 
-#: configuredialog/configurecomposerpage.cpp:1134
+#: configuredialog/configurecomposerpage.cpp:1126
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "最大附件大小："
 
-#: configuredialog/configurecomposerpage.cpp:1141
+#: configuredialog/configurecomposerpage.cpp:1133
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1143
+#: configuredialog/configurecomposerpage.cpp:1135
 #, kde-format
 msgid "No limit"
 msgstr "无限制"
 
-#: configuredialog/configurecomposerpage.cpp:1172
+#: configuredialog/configurecomposerpage.cpp:1164
 #, kde-format
 msgid ""
 "You have chosen to encode attachment names containing non-English characters "
@@ -1524,22 +1524,22 @@ msgstr "添加"
 msgid "Remove"
 msgstr "删除"
 
-#: configuredialog/configuremiscpage.cpp:43
+#: configuredialog/configuremiscpage.cpp:34
 #, kde-format
 msgid "Folders"
 msgstr "文件夹"
 
-#: configuredialog/configuremiscpage.cpp:46
+#: configuredialog/configuremiscpage.cpp:37
 #, kde-format
 msgid "Invitations"
 msgstr "邀请"
 
-#: configuredialog/configuremiscpage.cpp:49
+#: configuredialog/configuremiscpage.cpp:40
 #, kde-format
 msgid "Printing"
 msgstr "打印"
 
-#: configuredialog/configuremiscpage.cpp:52
+#: configuredialog/configuremiscpage.cpp:43
 #, kde-format
 msgid "User Feedback"
 msgstr "用户反馈"
@@ -1604,81 +1604,81 @@ msgstr "邮件删前确认插件"
 msgid "Akonadi Agents"
 msgstr "Akonadi 代理"
 
-#: configuredialog/configuresecuritypage.cpp:52
+#: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
 msgid "Reading"
 msgstr "阅读"
 
-#: configuredialog/configuresecuritypage.cpp:54
+#: configuredialog/configuresecuritypage.cpp:49
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "消息处理回执"
 
-#: configuredialog/configuresecuritypage.cpp:60
+#: configuredialog/configuresecuritypage.cpp:55
 #, kde-format
 msgid "Encryption"
 msgstr "加密"
 
-#: configuredialog/configuresecuritypage.cpp:66
+#: configuredialog/configuresecuritypage.cpp:61
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME 校验"
 
-#: configuredialog/configuresecuritypage.cpp:93
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Email Address:"
 msgstr "邮件地址："
 
-#: configuredialog/configuresecuritypage.cpp:94
+#: configuredialog/configuresecuritypage.cpp:89
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "您是否要移除此电邮地址？"
 
-#: configuredialog/configuresecuritypage.cpp:129
+#: configuredialog/configuresecuritypage.cpp:124
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改变全局的 HTML 设置，将会覆盖所有文件夹的特定设置。"
 
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
-#: configuredialog/configuresecuritypage.cpp:301
-#: configuredialog/configuresecuritypage.cpp:303
+#: configuredialog/configuresecuritypage.cpp:292
+#: configuredialog/configuresecuritypage.cpp:294
+#: configuredialog/configuresecuritypage.cpp:296
+#: configuredialog/configuresecuritypage.cpp:298
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " 天"
 
-#: configuredialog/configuresecuritypage.cpp:339
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 设置"
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:341
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "模块缺失。请验证您的安装是否完整。此模块由 Kleopatra 提供。"
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:346
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 配置模块错误"
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:413
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "此选项需要 dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "无代理"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:554
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(当前系统设置：%1)"
@@ -1706,7 +1706,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "归档文件夹"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3595
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3591
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1746,6 +1746,11 @@ msgstr "GZ 压缩的 Tar 归档文件 (.tar.gz)"
 #, kde-format
 msgid "&Archive File:"
 msgstr "归档文件(&A)："
+
+#: dialog/archivefolderdialog.cpp:100
+#, kde-format
+msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -1789,482 +1794,482 @@ msgstr "隐藏附件列表"
 msgid "Show attachment list"
 msgstr "显示附件列表"
 
-#: editor/codec/codecaction.cpp:36
+#: editor/codec/codecaction.cpp:35
 #, kde-format
 msgctxt "Encodings menu"
 msgid "us-ascii"
 msgstr "us-ascii"
 
-#: editor/codec/codecaction.cpp:46
+#: editor/codec/codecaction.cpp:45
 #, kde-format
 msgctxt "Menu item"
 msgid "Encoding"
 msgstr "编码"
 
-#: editor/kmcomposerwin.cpp:321 kmail_part.cpp:48 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:60
 #: kmreadermainwin.cpp:462 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:348
+#: editor/kmcomposerwin.cpp:358
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "选择对此消息拼写检查时所用的词典"
 
-#: editor/kmcomposerwin.cpp:355
+#: editor/kmcomposerwin.cpp:365
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "选择保存此消息副本所用的发件夹"
 
-#: editor/kmcomposerwin.cpp:360
+#: editor/kmcomposerwin.cpp:370
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "选择用于发送此消息的账户"
 
-#: editor/kmcomposerwin.cpp:368
+#: editor/kmcomposerwin.cpp:378
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "设定此消息的“发件人”地址"
 
-#: editor/kmcomposerwin.cpp:396
+#: editor/kmcomposerwin.cpp:406
 #, kde-format
 msgid "&Identity:"
 msgstr "身份(&I)："
 
-#: editor/kmcomposerwin.cpp:397
+#: editor/kmcomposerwin.cpp:407
 #, kde-format
 msgid "&Dictionary:"
 msgstr "字典(&D)："
 
-#: editor/kmcomposerwin.cpp:398
+#: editor/kmcomposerwin.cpp:408
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "已发文件夹(&S)："
 
-#: editor/kmcomposerwin.cpp:399
+#: editor/kmcomposerwin.cpp:409
 #, kde-format
 msgid "&Mail transport:"
 msgstr "邮件传送(&M)："
 
-#: editor/kmcomposerwin.cpp:400
+#: editor/kmcomposerwin.cpp:410
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "发件人(&F)："
 
-#: editor/kmcomposerwin.cpp:401
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "主题(&U)："
 
-#: editor/kmcomposerwin.cpp:472
+#: editor/kmcomposerwin.cpp:483
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "撰写器"
 
-#: editor/kmcomposerwin.cpp:1226 editor/kmcomposerwin.cpp:1260
+#: editor/kmcomposerwin.cpp:1237 editor/kmcomposerwin.cpp:1271
 #, kde-format
 msgid "&Send Mail"
 msgstr "发送邮件(&S)"
 
-#: editor/kmcomposerwin.cpp:1233 editor/kmcomposerwin.cpp:1266
+#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1277
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "发送邮件的身份(&S)"
 
-#: editor/kmcomposerwin.cpp:1235
+#: editor/kmcomposerwin.cpp:1246
 #, kde-format
 msgid "Send"
 msgstr "发送"
 
-#: editor/kmcomposerwin.cpp:1238 editor/kmcomposerwin.cpp:1250
-#: editor/kmcomposerwin.cpp:3120
+#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
+#: editor/kmcomposerwin.cpp:3131
 #, kde-format
 msgid "Send &Later"
 msgstr "稍后发送(&L)"
 
-#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1257
+#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1268
 #, kde-format
 msgid "Send &Later Via"
 msgstr "稍后发送的身份(&L)"
 
-#: editor/kmcomposerwin.cpp:1246
+#: editor/kmcomposerwin.cpp:1257
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "队列"
 
-#: editor/kmcomposerwin.cpp:1275
+#: editor/kmcomposerwin.cpp:1286
 #, kde-format
 msgid "Save as &Draft"
 msgstr "保存为草稿(&D)"
 
-#: editor/kmcomposerwin.cpp:1277
+#: editor/kmcomposerwin.cpp:1288
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "保存邮件到草稿箱"
 
-#: editor/kmcomposerwin.cpp:1281
+#: editor/kmcomposerwin.cpp:1292
 #, kde-format
 msgid "Save as &Template"
 msgstr "保存为模板(&T)"
 
-#: editor/kmcomposerwin.cpp:1282
+#: editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "保存邮件到模板文件夹"
 
-#: editor/kmcomposerwin.cpp:1286
+#: editor/kmcomposerwin.cpp:1297
 #, kde-format
 msgid "Save as &File"
 msgstr "另存为文件(&F)"
 
-#: editor/kmcomposerwin.cpp:1287
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "邮件另存为文本或 html 文件"
 
-#: editor/kmcomposerwin.cpp:1291
+#: editor/kmcomposerwin.cpp:1302
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "插入文本文件(&I)..."
 
-#: editor/kmcomposerwin.cpp:1295
+#: editor/kmcomposerwin.cpp:1306
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "插入最近的文本文件(&I)"
 
-#: editor/kmcomposerwin.cpp:1305 kmmainwidget.cpp:2935
+#: editor/kmcomposerwin.cpp:1316 kmmainwidget.cpp:2930
 #, kde-format
 msgid "&Address Book"
 msgstr "地址簿(&A)"
 
-#: editor/kmcomposerwin.cpp:1306
+#: editor/kmcomposerwin.cpp:1317
 #, kde-format
 msgid "Open Address Book"
 msgstr "打开地址簿"
 
-#: editor/kmcomposerwin.cpp:1313
+#: editor/kmcomposerwin.cpp:1324
 #, kde-format
 msgid "&New Composer"
 msgstr "新建撰写器(&N)"
 
-#: editor/kmcomposerwin.cpp:1319
+#: editor/kmcomposerwin.cpp:1330
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "选择收件人(&R)..."
 
-#: editor/kmcomposerwin.cpp:1322
+#: editor/kmcomposerwin.cpp:1333
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "保存分发列表(&D)..."
 
-#: editor/kmcomposerwin.cpp:1343
+#: editor/kmcomposerwin.cpp:1354
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "粘贴为附件(&H)"
 
-#: editor/kmcomposerwin.cpp:1347
+#: editor/kmcomposerwin.cpp:1358
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "清理空格(&E)"
 
-#: editor/kmcomposerwin.cpp:1351
+#: editor/kmcomposerwin.cpp:1362
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "使用等宽字体(&X)"
 
-#: editor/kmcomposerwin.cpp:1357
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "标记为紧急(&U)"
 
-#: editor/kmcomposerwin.cpp:1359
+#: editor/kmcomposerwin.cpp:1370
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "请求处理回执(&R)"
 
-#: editor/kmcomposerwin.cpp:1363
+#: editor/kmcomposerwin.cpp:1374
 #, kde-format
 msgid "&Request Delivery Confirmation"
 msgstr "请求送达通知(&R)"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1381
 #, kde-format
 msgid "&Wordwrap"
 msgstr "自动换行(&W)"
 
-#: editor/kmcomposerwin.cpp:1375
+#: editor/kmcomposerwin.cpp:1386
 #, kde-format
 msgid "&Snippets"
 msgstr "片断(&S)"
 
-#: editor/kmcomposerwin.cpp:1380
+#: editor/kmcomposerwin.cpp:1391
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "自动拼写检查(&A)"
 
-#: editor/kmcomposerwin.cpp:1396
+#: editor/kmcomposerwin.cpp:1407
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "富文本编辑"
 
-#: editor/kmcomposerwin.cpp:1398
+#: editor/kmcomposerwin.cpp:1409
 #, kde-format
 msgid "Rich Text"
 msgstr "富文本"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1410
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr "切换富文本编辑模式"
 
-#: editor/kmcomposerwin.cpp:1403
+#: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgid "&All Fields"
 msgstr "全部字段(&A)"
 
-#: editor/kmcomposerwin.cpp:1406
+#: editor/kmcomposerwin.cpp:1417
 #, kde-format
 msgid "&Identity"
 msgstr "身份(&I)"
 
-#: editor/kmcomposerwin.cpp:1409
+#: editor/kmcomposerwin.cpp:1420
 #, kde-format
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
-#: editor/kmcomposerwin.cpp:1412
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "已发文件夹(&S)"
 
-#: editor/kmcomposerwin.cpp:1415
+#: editor/kmcomposerwin.cpp:1426
 #, kde-format
 msgid "&Mail Transport"
 msgstr "邮件传送(&M)"
 
-#: editor/kmcomposerwin.cpp:1418
+#: editor/kmcomposerwin.cpp:1429
 #, kde-format
 msgid "&From"
 msgstr "发件人(&F)"
 
-#: editor/kmcomposerwin.cpp:1421
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "主题(&U)"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1437
 #, kde-format
 msgid "Append S&ignature"
 msgstr "在结尾附加签名(&I)"
 
-#: editor/kmcomposerwin.cpp:1430
+#: editor/kmcomposerwin.cpp:1441
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "在开头附加签名(&E)"
 
-#: editor/kmcomposerwin.cpp:1434
+#: editor/kmcomposerwin.cpp:1445
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "在光标位置处插入签名(&U)"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1460
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "拼写检查器(&S)..."
 
-#: editor/kmcomposerwin.cpp:1450
+#: editor/kmcomposerwin.cpp:1461
 #, kde-format
 msgid "Spellchecker"
 msgstr "拼写检查器"
 
-#: editor/kmcomposerwin.cpp:1454
+#: editor/kmcomposerwin.cpp:1465
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "加密消息(&E)"
 
-#: editor/kmcomposerwin.cpp:1455
+#: editor/kmcomposerwin.cpp:1466
 #, kde-format
 msgid "Encrypt"
 msgstr "加密"
 
-#: editor/kmcomposerwin.cpp:1457
+#: editor/kmcomposerwin.cpp:1468
 #, kde-format
 msgid "&Sign Message"
 msgstr "给消息签名(&S)"
 
-#: editor/kmcomposerwin.cpp:1458
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "Sign"
 msgstr "签名"
 
-#: editor/kmcomposerwin.cpp:1482
+#: editor/kmcomposerwin.cpp:1493
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "密文消息格式(&C)"
 
-#: editor/kmcomposerwin.cpp:1485
+#: editor/kmcomposerwin.cpp:1496
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "为这封信选择加密格式"
 
-#: editor/kmcomposerwin.cpp:1490
+#: editor/kmcomposerwin.cpp:1501
 #, kde-format
 msgid "Create Follow Up Reminder..."
 msgstr "创建后续提醒..."
 
-#: editor/kmcomposerwin.cpp:1524
+#: editor/kmcomposerwin.cpp:1535
 #, kde-format
 msgid "Configure KMail..."
 msgstr "配置 KMail..."
 
-#: editor/kmcomposerwin.cpp:1554 kmmainwin.cpp:183 kmreadermainwin.cpp:521
+#: editor/kmcomposerwin.cpp:1565 kmmainwin.cpp:183 kmreadermainwin.cpp:521
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr "<qt>这将完全隐藏菜单栏。您可以按下 %1 使其重新显示。</qt>"
 
-#: editor/kmcomposerwin.cpp:1557 kmmainwin.cpp:186 kmreadermainwin.cpp:524
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186 kmreadermainwin.cpp:524
 #, kde-format
 msgid "Hide menu bar"
 msgstr "隐藏菜单栏"
 
-#: editor/kmcomposerwin.cpp:1657 editor/kmcomposerwin.cpp:4043
+#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4054
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " 行：%1 "
 
-#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:4045
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4056
 #, kde-format
 msgid " Column: %1 "
 msgstr " 列：%1 "
 
-#: editor/kmcomposerwin.cpp:1665
+#: editor/kmcomposerwin.cpp:1676
 #, kde-format
 msgid "OVR"
 msgstr "覆盖"
 
-#: editor/kmcomposerwin.cpp:1665
+#: editor/kmcomposerwin.cpp:1676
 #, kde-format
 msgid "INS"
 msgstr "插入"
 
-#: editor/kmcomposerwin.cpp:1673
+#: editor/kmcomposerwin.cpp:1684
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "拼写检查：开"
 
-#: editor/kmcomposerwin.cpp:1673
+#: editor/kmcomposerwin.cpp:1684
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "拼写检查：关"
 
-#: editor/kmcomposerwin.cpp:2055
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Re&save as Template"
 msgstr "重新保存为模板(&S)"
 
-#: editor/kmcomposerwin.cpp:2055
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "&Save as Draft"
 msgstr "保存为草稿(&S)"
 
-#: editor/kmcomposerwin.cpp:2056
+#: editor/kmcomposerwin.cpp:2067
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr "将这封信重新保存在模板文件夹中。您可以稍后再编辑或者发送。"
 
-#: editor/kmcomposerwin.cpp:2058
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr "将这封信保存在草稿文件夹中。您可以稍后再编辑或者发送。"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "您想要丢弃消息，还是保存留作以后使用？"
 
-#: editor/kmcomposerwin.cpp:2063
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgid "Close Composer"
 msgstr "关闭撰写器"
 
-#: editor/kmcomposerwin.cpp:2131
+#: editor/kmcomposerwin.cpp:2142
 #, kde-format
 msgid "Autosave Message Failed"
 msgstr "自动保存消息失败"
 
-#: editor/kmcomposerwin.cpp:2131
+#: editor/kmcomposerwin.cpp:2142
 #, kde-format
 msgid "Sending Message Failed"
 msgstr "发送消息失败"
 
-#: editor/kmcomposerwin.cpp:2317
+#: editor/kmcomposerwin.cpp:2328
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "插入文件"
 
-#: editor/kmcomposerwin.cpp:2382
+#: editor/kmcomposerwin.cpp:2393
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "添加为内嵌图像(&I)"
 
-#: editor/kmcomposerwin.cpp:2383
+#: editor/kmcomposerwin.cpp:2394
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "添加为附件(&A)"
 
-#: editor/kmcomposerwin.cpp:2398 editor/kmcomposerwin.cpp:2502
+#: editor/kmcomposerwin.cpp:2409 editor/kmcomposerwin.cpp:2513
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "附件名："
 
-#: editor/kmcomposerwin.cpp:2404
+#: editor/kmcomposerwin.cpp:2415
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "附件名不能是空的。"
 
-#: editor/kmcomposerwin.cpp:2404
+#: editor/kmcomposerwin.cpp:2415
 #, kde-format
 msgid "Invalid Attachment Name"
 msgstr "无效的附件名"
 
-#: editor/kmcomposerwin.cpp:2455
+#: editor/kmcomposerwin.cpp:2466
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "在邮件中添加链接"
 
-#: editor/kmcomposerwin.cpp:2456
+#: editor/kmcomposerwin.cpp:2467
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "添加文件为附件(&A)"
 
-#: editor/kmcomposerwin.cpp:2502
+#: editor/kmcomposerwin.cpp:2513
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "将剪贴板内的文字作为附件插入"
 
-#: editor/kmcomposerwin.cpp:2599
+#: editor/kmcomposerwin.cpp:2610
 #, kde-format
 msgid "unnamed"
 msgstr "未命名"
 
-#: editor/kmcomposerwin.cpp:2619
+#: editor/kmcomposerwin.cpp:2630
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2275,12 +2280,12 @@ msgstr ""
 "<qt><p>您请求了消息对您自己加密，但目前所选的身份尚未定义此用途的加密密钥"
 "(OpenPGP 或 S/MIME)。</p><p>请在身份配置中选择要使用的密钥。</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2626
+#: editor/kmcomposerwin.cpp:2637
 #, kde-format
 msgid "Undefined Encryption Key"
 msgstr "未定义的加密密钥"
 
-#: editor/kmcomposerwin.cpp:2682
+#: editor/kmcomposerwin.cpp:2693
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2290,12 +2295,12 @@ msgstr ""
 "<qt><p>为了对此消息签名，您必须首先定义要使用的签名密钥(OpenPGP 或 S/MIME)。"
 "</p><p>请在身份配置中选择要使用的密钥。</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2689
+#: editor/kmcomposerwin.cpp:2700
 #, kde-format
 msgid "Undefined Signing Key"
 msgstr "未定义的签名密钥"
 
-#: editor/kmcomposerwin.cpp:2848
+#: editor/kmcomposerwin.cpp:2859
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2305,115 +2310,115 @@ msgstr ""
 "您必须在发件人字段中输入您自己的电子邮件地址。您还应该为全部身份都设置电子邮"
 "件地址，以免每封信都要重新输入一次。"
 
-#: editor/kmcomposerwin.cpp:2857
+#: editor/kmcomposerwin.cpp:2868
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "您必须在收件人、抄送或密送字段中指定至少一个接收者。"
 
-#: editor/kmcomposerwin.cpp:2863
+#: editor/kmcomposerwin.cpp:2874
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "收件人字段为空。仍然要发送吗？"
 
-#: editor/kmcomposerwin.cpp:2865
+#: editor/kmcomposerwin.cpp:2876
 #, kde-format
 msgid "No To: specified"
 msgstr "未指定收件人"
 
-#: editor/kmcomposerwin.cpp:2866 editor/kmcomposerwin.cpp:2880
+#: editor/kmcomposerwin.cpp:2877 editor/kmcomposerwin.cpp:2891
 #, kde-format
 msgid "S&end as Is"
 msgstr "原样发送(&E)"
 
-#: editor/kmcomposerwin.cpp:2867
+#: editor/kmcomposerwin.cpp:2878
 #, kde-format
 msgid "&Specify the To field"
 msgstr "指定收件人字段(&S)"
 
-#: editor/kmcomposerwin.cpp:2877
+#: editor/kmcomposerwin.cpp:2888
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "您没有指定主题。仍然要发送吗？"
 
-#: editor/kmcomposerwin.cpp:2879
+#: editor/kmcomposerwin.cpp:2890
 #, kde-format
 msgid "No Subject Specified"
 msgstr "未指定主题"
 
-#: editor/kmcomposerwin.cpp:2881
+#: editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "指定主题(&S)"
 
-#: editor/kmcomposerwin.cpp:2926
+#: editor/kmcomposerwin.cpp:2937
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "您必须指定至少一个收件人才能加密草稿。"
 
-#: editor/kmcomposerwin.cpp:3117
+#: editor/kmcomposerwin.cpp:3128
 #, kde-format
 msgid "About to send email..."
 msgstr "即将发送邮件..."
 
-#: editor/kmcomposerwin.cpp:3118
+#: editor/kmcomposerwin.cpp:3129
 #, kde-format
 msgid "Send Confirmation"
 msgstr "发送确认"
 
-#: editor/kmcomposerwin.cpp:3119
+#: editor/kmcomposerwin.cpp:3130
 #, kde-format
 msgid "&Send Now"
 msgstr "立即发送(&S)"
 
-#: editor/kmcomposerwin.cpp:3195
+#: editor/kmcomposerwin.cpp:3206
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "您正尝试一次向多于 %1 名收件人发送邮件，确认要发送吗？"
 
-#: editor/kmcomposerwin.cpp:3196
+#: editor/kmcomposerwin.cpp:3207
 #, kde-format
 msgid "Too many recipients"
 msgstr "收件人过多"
 
-#: editor/kmcomposerwin.cpp:3197
+#: editor/kmcomposerwin.cpp:3208
 #, kde-format
 msgid "&Send as Is"
 msgstr "原样发送(&S)"
 
-#: editor/kmcomposerwin.cpp:3198
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "编辑收件人(&E)"
 
-#: editor/kmcomposerwin.cpp:3235
+#: editor/kmcomposerwin.cpp:3246
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "关闭 HTML 模式将使消息中的一些格式丢失。您确认吗？"
 
-#: editor/kmcomposerwin.cpp:3237
+#: editor/kmcomposerwin.cpp:3248
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "丢弃格式吗？"
 
-#: editor/kmcomposerwin.cpp:3238
+#: editor/kmcomposerwin.cpp:3249
 #, kde-format
 msgid "Lose Formatting"
 msgstr "丢弃格式"
 
-#: editor/kmcomposerwin.cpp:3239
+#: editor/kmcomposerwin.cpp:3250
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "添加标记纯文本"
 
-#: editor/kmcomposerwin.cpp:3451
+#: editor/kmcomposerwin.cpp:3462
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2421,7 +2426,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3464
+#: editor/kmcomposerwin.cpp:3475
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2429,7 +2434,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3480
+#: editor/kmcomposerwin.cpp:3491
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2437,7 +2442,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3493
+#: editor/kmcomposerwin.cpp:3504
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2445,25 +2450,25 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3666
+#: editor/kmcomposerwin.cpp:3677
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "加密"
 
-#: editor/kmcomposerwin.cpp:3668
+#: editor/kmcomposerwin.cpp:3679
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3808
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3830
+#: editor/kmcomposerwin.cpp:3841
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2471,7 +2476,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3834
+#: editor/kmcomposerwin.cpp:3845
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2479,7 +2484,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3838
+#: editor/kmcomposerwin.cpp:3849
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2487,7 +2492,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3865
+#: editor/kmcomposerwin.cpp:3876
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2496,7 +2501,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3873
+#: editor/kmcomposerwin.cpp:3884
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2506,7 +2511,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3881
+#: editor/kmcomposerwin.cpp:3892
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2514,7 +2519,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3887
+#: editor/kmcomposerwin.cpp:3898
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2522,7 +2527,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3893
+#: editor/kmcomposerwin.cpp:3904
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2530,7 +2535,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3901
+#: editor/kmcomposerwin.cpp:3912
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2540,7 +2545,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3909
+#: editor/kmcomposerwin.cpp:3920
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2548,7 +2553,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3915
+#: editor/kmcomposerwin.cpp:3926
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2558,7 +2563,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3923
+#: editor/kmcomposerwin.cpp:3934
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2566,7 +2571,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3928
+#: editor/kmcomposerwin.cpp:3939
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2574,7 +2579,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4316
+#: editor/kmcomposerwin.cpp:4327
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "插件编辑器信息"
@@ -2789,7 +2794,7 @@ msgstr "无法返回文件夹列表。"
 msgid "Messages archived"
 msgstr "已经存档消息"
 
-#: foldershortcutactionmanager.cpp:120 foldershortcutactionmanager.cpp:121
+#: foldershortcutactionmanager.cpp:123 foldershortcutactionmanager.cpp:124
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr "文件夹快捷键 %1"
@@ -2818,7 +2823,7 @@ msgid "No picture set for your address book entry."
 msgstr "您的地址簿项未设定图像。"
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:43
+#: identity/identityeditvcarddialog.cpp:42
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -2849,49 +2854,49 @@ msgstr "复制已有vcard(&D)"
 msgid "&Existing identities:"
 msgstr "已有身份(&E)："
 
-#: identity/identitydialog.cpp:177
+#: identity/identitydialog.cpp:172
 #, kde-format
 msgid "Error while generating new key pair: %1"
 msgstr "生成密钥对时出错：%1"
 
-#: identity/identitydialog.cpp:178
+#: identity/identitydialog.cpp:173
 #, kde-format
 msgid "Key Generation Error"
 msgstr "密钥生成出错"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:213
 #, kde-format
 msgid "No key"
 msgstr "没有密钥"
 
-#: identity/identitydialog.cpp:220
+#: identity/identitydialog.cpp:215
 #, kde-format
 msgid "Generate a new key pair"
 msgstr "生成新密钥对"
 
-#: identity/identitydialog.cpp:232
+#: identity/identitydialog.cpp:227
 #, kde-format
 msgid "Generating new key pair..."
 msgstr "正在生成新的密钥对..."
 
-#: identity/identitydialog.cpp:245
+#: identity/identitydialog.cpp:240
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "编辑身份"
 
-#: identity/identitydialog.cpp:269
+#: identity/identitydialog.cpp:264
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "常规"
 
-#: identity/identitydialog.cpp:276
+#: identity/identitydialog.cpp:271
 #, kde-format
 msgid "&Your name:"
 msgstr "您的名字(&Y)："
 
-#: identity/identitydialog.cpp:281
+#: identity/identitydialog.cpp:276
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2902,12 +2907,12 @@ msgstr ""
 "头中的姓名；</p><p>如果您将此域留空，将不会出现您真实的姓名，而仅仅是电子邮件"
 "地址。</p></qt>"
 
-#: identity/identitydialog.cpp:292
+#: identity/identitydialog.cpp:287
 #, kde-format
 msgid "Organi&zation:"
 msgstr "组织(&Z)："
 
-#: identity/identitydialog.cpp:297
+#: identity/identitydialog.cpp:292
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -2917,12 +2922,12 @@ msgstr ""
 "<qt><h3>组织</h3><p>您应该在此域中输入您组织的名称，如果您想要在发出信的信头"
 "中显示组织名称的话。</p><p>一般来说将此域留空很安全。</p></qt>"
 
-#: identity/identitydialog.cpp:309
+#: identity/identitydialog.cpp:304
 #, kde-format
 msgid "&Email address:"
 msgstr "电子邮件地址(&E)："
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:309
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -2936,12 +2941,12 @@ msgstr ""
 "个身份，或者在下面的字段中加入额外的地址别名。</p><p>若是您将此字段留空，或者"
 "写错了，别人就无法回信给您。</p></qt>"
 
-#: identity/identitydialog.cpp:333
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgid "Email a&liases:"
 msgstr "电子邮件地址别名(&L)："
 
-#: identity/identitydialog.cpp:338
+#: identity/identitydialog.cpp:333
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -2956,12 +2961,12 @@ msgstr ""
 "td></tr><tr><th>别名：</th><td>first@example.org<br>last@example.org</td></"
 "tr></table><p>请每行输入一个别名地址。</p></qt>"
 
-#: identity/identitydialog.cpp:355
+#: identity/identitydialog.cpp:350
 #, kde-format
 msgid "Cryptography"
 msgstr "加密"
 
-#: identity/identitydialog.cpp:361
+#: identity/identitydialog.cpp:356
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -2975,22 +2980,22 @@ msgstr ""
 "邮件功能不会因此受到影响。</p><p>您可以在 <a>https://www.gnupg.org</a> 找到关"
 "于密钥的更多信息。</p></qt>"
 
-#: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
+#: identity/identitydialog.cpp:362 identity/identitydialog.cpp:386
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 签名密钥："
 
-#: identity/identitydialog.cpp:373
+#: identity/identitydialog.cpp:368
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr "使用相同的密钥进行加密和签名"
 
-#: identity/identitydialog.cpp:383
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP 密钥："
 
-#: identity/identitydialog.cpp:408
+#: identity/identitydialog.cpp:403
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3005,12 +3010,12 @@ msgstr ""
 "使用 OpenPGP 对您寄出消息的副本进行加密；普通的邮件功能不会因此受到影响。</"
 "p><p>您可以在 <a>https://www.gnupg.org</a> 找到关于密钥的更多信息</p></qt>"
 
-#: identity/identitydialog.cpp:415
+#: identity/identitydialog.cpp:410
 #, kde-format
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP 加密密钥："
 
-#: identity/identitydialog.cpp:425
+#: identity/identitydialog.cpp:420
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3022,12 +3027,12 @@ msgstr ""
 "以将此处留空，但是 KMail 将无法使用 S/MIME 对电子邮件进行数字签名；普通的邮件"
 "功能不会因此受到影响。</p></qt>"
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:425
 #, kde-format
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 签名证书："
 
-#: identity/identitydialog.cpp:444
+#: identity/identitydialog.cpp:439
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3040,76 +3045,76 @@ msgstr ""
 "的“附加我的证书”功能。</p><p>您可以将此处留空，但是 KMail 将无法使用 S/MIME "
 "对电子邮件进行数字签名；普通的邮件功能不会因此受到影响。</p></qt>"
 
-#: identity/identitydialog.cpp:450
+#: identity/identitydialog.cpp:445
 #, kde-format
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 加密证书："
 
-#: identity/identitydialog.cpp:467
+#: identity/identitydialog.cpp:462
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "首选格式："
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:467
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "启用 Autocrypt"
 
-#: identity/identitydialog.cpp:476
+#: identity/identitydialog.cpp:471
 #, kde-format
 msgid "Autocrypt:"
 msgstr "Autocrypt："
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr "让别人知道您喜欢加密"
 
-#: identity/identitydialog.cpp:484
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "覆盖安全默认值的全局设置"
 
-#: identity/identitydialog.cpp:487
+#: identity/identitydialog.cpp:482
 #, kde-format
 msgid "Overwrite defaults:"
 msgstr "覆盖默认值："
 
-#: identity/identitydialog.cpp:492
+#: identity/identitydialog.cpp:487
 #, kde-format
 msgid "Sign messages"
 msgstr "签名消息"
 
-#: identity/identitydialog.cpp:495
+#: identity/identitydialog.cpp:490
 #, kde-format
 msgid "Encrypt messages when possible"
 msgstr "尽可能加密消息"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:498 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:493 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "试图发送未签名消息时警告"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:501 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:496 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "试图发送未加密消息时警告"
 
-#: identity/identitydialog.cpp:511
+#: identity/identitydialog.cpp:506
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "高级"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:514
 #, kde-format
 msgid "&Reply-To address:"
 msgstr "回信地址(&R)："
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:518
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3125,12 +3130,12 @@ msgstr ""
 "却让回信发到一组地址。</p><p>如果您对此选项不太确定的话，请将此域留空。</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:540
+#: identity/identitydialog.cpp:536
 #, kde-format
 msgid "&CC addresses:"
 msgstr "抄送地址(&C)："
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:542
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3145,12 +3150,12 @@ msgstr ""
 "p><p>要指定多个地址，请使用逗号分隔抄送收件人列表。</p><p>如果您对此选项不太"
 "确定的话，请将此字段留空。</p></qt>"
 
-#: identity/identitydialog.cpp:560
+#: identity/identitydialog.cpp:558
 #, kde-format
 msgid "&BCC addresses:"
 msgstr "密件抄送地址(&B)："
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:562
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3165,120 +3170,120 @@ msgstr ""
 "息发送到您的另外一个账户中。</p><p>要指定多个地址，请使用逗号分隔密件抄送收件"
 "人列表。</p><p>如果您对此选项不太确定的话，请将此域留空。</p></qt>"
 
-#: identity/identitydialog.cpp:578
+#: identity/identitydialog.cpp:576
 #, kde-format
 msgid "D&ictionary:"
 msgstr "字典(&I)："
 
-#: identity/identitydialog.cpp:584
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "选择发件箱文件夹"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "已发文件夹(&F)："
 
-#: identity/identitydialog.cpp:592
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "选择草稿文件夹"
 
-#: identity/identitydialog.cpp:594
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgid "&Drafts folder:"
 msgstr "草稿文件夹(&D)："
 
-#: identity/identitydialog.cpp:600
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "选择模板文件夹"
 
-#: identity/identitydialog.cpp:602
+#: identity/identitydialog.cpp:600
 #, kde-format
 msgid "&Templates folder:"
 msgstr "模板文件夹(&T)："
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:605
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "对外账户："
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "将我的 vCard 附加到消息"
 
-#: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
+#: identity/identitydialog.cpp:613 identity/identitydialog.cpp:1165
 #, kde-format
 msgid "Create..."
 msgstr "创建..."
 
-#: identity/identitydialog.cpp:623
+#: identity/identitydialog.cpp:617
 #, kde-format
 msgid "Autocorrection language:"
 msgstr "自动更正语言："
 
-#: identity/identitydialog.cpp:635
+#: identity/identitydialog.cpp:629
 #, kde-format
 msgid "Restore default domain name"
 msgstr "恢复默认域名"
 
-#: identity/identitydialog.cpp:638
+#: identity/identitydialog.cpp:632
 #, kde-format
 msgid "Defaul&t domain:"
 msgstr "默认域名(&T)："
 
-#: identity/identitydialog.cpp:644
+#: identity/identitydialog.cpp:638
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr "<qt><p>默认域名用于在只有用户名的情况下补全电子邮件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:661
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "为此身份使用自定义消息模板(&U)"
 
-#: identity/identitydialog.cpp:675
+#: identity/identitydialog.cpp:669
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "复制全局模板(&C)"
 
-#: identity/identitydialog.cpp:688
+#: identity/identitydialog.cpp:682
 #, kde-format
 msgid "Signature"
 msgstr "签名"
 
-#: identity/identitydialog.cpp:695
+#: identity/identitydialog.cpp:689
 #, kde-format
 msgid "Picture"
 msgstr "图像"
 
-#: identity/identitydialog.cpp:748
+#: identity/identitydialog.cpp:742
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "无效的电子邮件别名“%1”"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr ""
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgid "Empty Email Address"
 msgstr ""
 
-#: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
+#: identity/identitydialog.cpp:755 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "无效的电子邮件地址"
 
-#: identity/identitydialog.cpp:819
+#: identity/identitydialog.cpp:813
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3289,14 +3294,14 @@ msgstr ""
 "所配置的 OpenPGP 签名密钥之一不包含为此身份(%1)配置的电子邮件地址。\n"
 "这可能导致接收方试图校验此配置制作的签名时得到警告。"
 
-#: identity/identitydialog.cpp:828
+#: identity/identitydialog.cpp:822
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr "所配置的 OpenPGP 加密密钥之一不包含为此身份(%1)配置的电子邮件地址。"
 
-#: identity/identitydialog.cpp:835
+#: identity/identitydialog.cpp:829
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3307,87 +3312,87 @@ msgstr ""
 "所配置的 S/MIME 签名证书之一不包含为此身份(%1)配置的电子邮件地址。\n"
 "这可能导致接收方试图校验此配置制作的签名时得到警告。"
 
-#: identity/identitydialog.cpp:844
+#: identity/identitydialog.cpp:838
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr "所配置的 S/MIME 加密证书之一不包含为此身份(%1)配置的电子邮件地址。"
 
-#: identity/identitydialog.cpp:854
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "未在密钥/证书中找到电子邮件地址"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:860
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "签名文件无效"
 
-#: identity/identitydialog.cpp:882
+#: identity/identitydialog.cpp:876
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "编辑身份“%1”"
 
-#: identity/identitydialog.cpp:951
+#: identity/identitydialog.cpp:945
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr "当前身份的一些自定义文件夹不存在；因此会使用默认的草稿文件夹。"
 
-#: identity/identitydialog.cpp:1173
+#: identity/identitydialog.cpp:1167
 #, kde-format
 msgid "Edit..."
 msgstr "编辑..."
 
-#: identity/identityeditvcarddialog.cpp:37
+#: identity/identityeditvcarddialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "编辑我的 vcard"
 
-#: identity/identityeditvcarddialog.cpp:40
+#: identity/identityeditvcarddialog.cpp:39
 #, kde-format
 msgid "Delete current vCard"
 msgstr "删除当前 vCard"
 
-#: identity/identityeditvcarddialog.cpp:59
+#: identity/identityeditvcarddialog.cpp:58
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "您确定要删除这个名片吗？"
 
-#: identity/identityeditvcarddialog.cpp:60
-#: identity/identityeditvcarddialog.cpp:80
+#: identity/identityeditvcarddialog.cpp:59
+#: identity/identityeditvcarddialog.cpp:79
 #, kde-format
 msgid "Delete vCard"
 msgstr "删除 vCard"
 
-#: identity/identityeditvcarddialog.cpp:80
+#: identity/identityeditvcarddialog.cpp:79
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "不能删除 vCard 文件。"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "您是否想要取消？"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "确认"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "取消编辑"
 
-#: identity/identityeditvcarddialog.cpp:129
+#: identity/identityeditvcarddialog.cpp:128
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -3569,12 +3574,12 @@ msgstr "添加到地址簿中"
 msgid "Contact created successfully"
 msgstr "成功创建联系人"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:898
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "无法保存联系人：%1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:898
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, kde-format
 msgid "Failed to store contact"
 msgstr "无法保存账户"
@@ -3803,7 +3808,7 @@ msgid "F&older"
 msgstr "文件夹(&O)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3444 kmmainwin.rc:134
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3440 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -3835,7 +3840,7 @@ msgid "&Forward"
 msgstr "转发(&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3261 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3256 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "应用过滤器(&P)"
@@ -3977,64 +3982,64 @@ msgstr "HTML 工具栏"
 msgid "Text Direction Toolbar"
 msgstr "文本方向工具栏"
 
-#: kmkernel.cpp:827
+#: kmkernel.cpp:814
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 设置为脱机；所有的网络任务都将被推迟"
 
-#: kmkernel.cpp:847 kmmainwidget.cpp:2434 kmmainwidget.cpp:2450
+#: kmkernel.cpp:834 kmmainwidget.cpp:2431 kmmainwidget.cpp:2446
 #, kde-format
 msgid "Send Email"
 msgstr "发送电子邮件"
 
-#: kmkernel.cpp:848 kmmainwidget.cpp:2435 kmmainwidget.cpp:2451
+#: kmkernel.cpp:835 kmmainwidget.cpp:2432 kmmainwidget.cpp:2447
 #, kde-format
 msgid "Impossible to send email"
 msgstr "无法发送邮件。"
 
-#: kmkernel.cpp:880
+#: kmkernel.cpp:866
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 设置为联机；所有的网络任务都已恢复"
 
-#: kmkernel.cpp:882
+#: kmkernel.cpp:868
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 已设置为联机；所有的网络任务都将在检测到网络链接时恢复"
 
-#: kmkernel.cpp:955
+#: kmkernel.cpp:941
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前处于脱机模式。您打算如何继续？"
 
-#: kmkernel.cpp:957
+#: kmkernel.cpp:943
 #, kde-format
 msgid "Online/Offline"
 msgstr "联机/脱机"
 
-#: kmkernel.cpp:958 kmmainwidget.cpp:2423
+#: kmkernel.cpp:944 kmmainwidget.cpp:2420
 #, kde-format
 msgid "Work Online"
 msgstr "联机工作"
 
-#: kmkernel.cpp:959 kmmainwidget.cpp:2420
+#: kmkernel.cpp:945 kmmainwidget.cpp:2417
 #, kde-format
 msgid "Work Offline"
 msgstr "脱机工作"
 
-#: kmkernel.cpp:983
+#: kmkernel.cpp:969
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "检测到网络连接，所有的网络任务都已恢复"
 
-#: kmkernel.cpp:986
+#: kmkernel.cpp:972
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "未检测到网络连接，所有的网络任务都已挂起"
 
-#: kmkernel.cpp:1081
+#: kmkernel.cpp:1067
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4043,36 +4048,36 @@ msgstr ""
 "打开位于 %1 的自动保存文件失败。\n"
 "原因：%2"
 
-#: kmkernel.cpp:1082
+#: kmkernel.cpp:1068
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "打开自动保存文件失败"
 
-#: kmkernel.cpp:1644
+#: kmkernel.cpp:1616
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "这 %1 个身份已经更改为使用默认传送方式："
 
-#: kmkernel.cpp:1668
+#: kmkernel.cpp:1640
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "这 %1 个身份已经更改为使用修改的传送方式："
 
-#: kmkernel.cpp:1683
+#: kmkernel.cpp:1655
 #, kde-format
 msgid "Sending messages"
 msgstr "发送消息中"
 
-#: kmkernel.cpp:1684
+#: kmkernel.cpp:1656
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "正在初始化发送进程..."
 
-#: kmkernel.cpp:1763
+#: kmkernel.cpp:1735
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4081,7 +4086,7 @@ msgstr ""
 "资源 %1 已损坏。\n"
 "%2"
 
-#: kmkernel.cpp:1939 kmkernel.cpp:1945
+#: kmkernel.cpp:1911 kmkernel.cpp:1917
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4126,7 +4131,7 @@ msgid ""
 "properly installed."
 msgstr "无法启动导入向导。请确保导入向导已正确安装。"
 
-#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:313
+#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:310
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "无法启动导入向导"
@@ -4155,101 +4160,101 @@ msgstr "无法启动导入向导。请确保您正确安装了导入向导。"
 msgid "Unable to start ImportWizard"
 msgstr "无法启动导入向导"
 
-#: kmmainwidget.cpp:302
+#: kmmainwidget.cpp:299
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr "系统中检测到其他邮件客户端。您是否要导入它的数据？"
 
-#: kmmainwidget.cpp:305
+#: kmmainwidget.cpp:302
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "导入"
 
-#: kmmainwidget.cpp:306
+#: kmmainwidget.cpp:303
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "不导入"
 
-#: kmmainwidget.cpp:311
+#: kmmainwidget.cpp:308
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "无法启动导入向导。请检查您的安装。"
 
-#: kmmainwidget.cpp:1367
+#: kmmainwidget.cpp:1364
 #, kde-format
 msgid "No Subject"
 msgstr "无主题"
 
-#: kmmainwidget.cpp:1380
+#: kmmainwidget.cpp:1377
 #, kde-format
 msgid "(no templates)"
 msgstr "(无模板)"
 
-#: kmmainwidget.cpp:1432
+#: kmmainwidget.cpp:1429
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "文件夹没有设置任何过期选项"
 
-#: kmmainwidget.cpp:1438
+#: kmmainwidget.cpp:1435
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>您确定要对文件夹 <b>%1</b> 进行过期删除？</qt>"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1436
 #, kde-format
 msgid "Expire Folder"
 msgstr "将文件夹设为过期删除"
 
-#: kmmainwidget.cpp:1439
+#: kmmainwidget.cpp:1436
 #, kde-format
 msgid "&Expire"
 msgstr "过期(&E)"
 
-#: kmmainwidget.cpp:1455
+#: kmmainwidget.cpp:1452
 #, kde-format
 msgid "Empty Trash"
 msgstr "清空废件夹"
 
-#: kmmainwidget.cpp:1455 util.cpp:151
+#: kmmainwidget.cpp:1452 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "移动到废件夹"
 
-#: kmmainwidget.cpp:1456
+#: kmmainwidget.cpp:1453
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "您确定要清空废件夹？"
 
-#: kmmainwidget.cpp:1458
+#: kmmainwidget.cpp:1455
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr "<qt>您确定要将文件夹 <b>%1</b> 中的全部消息移动到废件夹？</qt>"
 
-#: kmmainwidget.cpp:1481
+#: kmmainwidget.cpp:1478
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "将所有消息放入废件夹"
 
-#: kmmainwidget.cpp:1535
+#: kmmainwidget.cpp:1532
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "您确定要删除所有过期的旧消息？"
 
-#: kmmainwidget.cpp:1536
+#: kmmainwidget.cpp:1533
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "删除过期旧消息？"
 
-#: kmmainwidget.cpp:1537
+#: kmmainwidget.cpp:1534
 #, kde-format
 msgid "Expire"
 msgstr "删除过期消息"
 
-#: kmmainwidget.cpp:1562
+#: kmmainwidget.cpp:1559
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4259,17 +4264,17 @@ msgstr ""
 "在 HTML 邮件中加载外部引用将使您更容易受到“垃圾邮件”的攻击，还会增大被其它已"
 "有的和将有的安全漏洞危及的可能性。"
 
-#: kmmainwidget.cpp:1565 kmmainwidget.cpp:4736
+#: kmmainwidget.cpp:1562 kmmainwidget.cpp:4734
 #, kde-format
 msgid "Security Warning"
 msgstr "安全警告"
 
-#: kmmainwidget.cpp:1566
+#: kmmainwidget.cpp:1563
 #, kde-format
 msgid "Load External References"
 msgstr "加载外部引用"
 
-#: kmmainwidget.cpp:1638
+#: kmmainwidget.cpp:1635
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4279,135 +4284,135 @@ msgid_plural ""
 "deleted, they cannot be restored.</qt>"
 msgstr[0] "<qt>您是否要删除选中的 %1 条消息？<br />一旦删除将无法恢复。</qt>"
 
-#: kmmainwidget.cpp:1643
+#: kmmainwidget.cpp:1640
 #, kde-format
 msgid "Delete Messages"
 msgstr "删除消息"
 
-#: kmmainwidget.cpp:1643
+#: kmmainwidget.cpp:1640
 #, kde-format
 msgid "Delete Message"
 msgstr "删除消息"
 
-#: kmmainwidget.cpp:1658
+#: kmmainwidget.cpp:1655
 #, kde-format
 msgid "Moving messages..."
 msgstr "移动消息中..."
 
-#: kmmainwidget.cpp:1660 kmmainwidget.cpp:1854
+#: kmmainwidget.cpp:1657 kmmainwidget.cpp:1851
 #, kde-format
 msgid "Deleting messages..."
 msgstr "删除消息中..."
 
-#: kmmainwidget.cpp:1675 kmmainwidget.cpp:1874
+#: kmmainwidget.cpp:1672 kmmainwidget.cpp:1871
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "消息删除成功。"
 
-#: kmmainwidget.cpp:1677
+#: kmmainwidget.cpp:1674
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "消息移动成功。"
 
-#: kmmainwidget.cpp:1682 kmmainwidget.cpp:1887
+#: kmmainwidget.cpp:1679 kmmainwidget.cpp:1884
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "消息删除失败。"
 
-#: kmmainwidget.cpp:1684 kmmainwidget.cpp:1900
+#: kmmainwidget.cpp:1681 kmmainwidget.cpp:1897
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "消息删除已取消。"
 
-#: kmmainwidget.cpp:1688
+#: kmmainwidget.cpp:1685
 #, kde-format
 msgid "Moving messages failed."
 msgstr "消息移动失败。"
 
-#: kmmainwidget.cpp:1690
+#: kmmainwidget.cpp:1687
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "消息移动已取消。"
 
-#: kmmainwidget.cpp:1756
+#: kmmainwidget.cpp:1753
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "移动消息到文件夹"
 
-#: kmmainwidget.cpp:1783
+#: kmmainwidget.cpp:1780
 #, kde-format
 msgid "Copying messages..."
 msgstr "复制消息中..."
 
-#: kmmainwidget.cpp:1791
+#: kmmainwidget.cpp:1788
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "消息复制成功。"
 
-#: kmmainwidget.cpp:1794
+#: kmmainwidget.cpp:1791
 #, kde-format
 msgid "Copying messages failed."
 msgstr "消息复制失败。"
 
-#: kmmainwidget.cpp:1796
+#: kmmainwidget.cpp:1793
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "消息复制已取消。"
 
-#: kmmainwidget.cpp:1806
+#: kmmainwidget.cpp:1803
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "复制消息到文件夹"
 
-#: kmmainwidget.cpp:1851
+#: kmmainwidget.cpp:1848
 #, kde-format
 msgid "Moving messages to trash..."
 msgstr "将消息放入废件夹..."
 
-#: kmmainwidget.cpp:1858
+#: kmmainwidget.cpp:1855
 #, kde-format
 msgid "Deleting and moving messages to trash..."
 msgstr "正在删除/移动此邮件至垃圾箱..."
 
-#: kmmainwidget.cpp:1871
+#: kmmainwidget.cpp:1868
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "消息成功放入废件夹。"
 
-#: kmmainwidget.cpp:1878
+#: kmmainwidget.cpp:1875
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "邮件移动至垃圾箱/删除成功。"
 
-#: kmmainwidget.cpp:1884
+#: kmmainwidget.cpp:1881
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "消息放入废件夹的操作失败。"
 
-#: kmmainwidget.cpp:1891
+#: kmmainwidget.cpp:1888
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "删除/移动邮件至垃圾箱失败。"
 
-#: kmmainwidget.cpp:1897
+#: kmmainwidget.cpp:1894
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "消息放入废件夹的操作已取消。"
 
-#: kmmainwidget.cpp:1904
+#: kmmainwidget.cpp:1901
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "删除/移动邮件至垃圾箱操作已取消。"
 
-#: kmmainwidget.cpp:2174
+#: kmmainwidget.cpp:2171
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "跳转到文件夹"
 
-#: kmmainwidget.cpp:2366
+#: kmmainwidget.cpp:2363
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4417,14 +4422,14 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2369
+#: kmmainwidget.cpp:2366
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2374
+#: kmmainwidget.cpp:2371
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4434,691 +4439,691 @@ msgid_plural ""
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2381
+#: kmmainwidget.cpp:2378
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2386
+#: kmmainwidget.cpp:2383
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2391
+#: kmmainwidget.cpp:2388
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr ""
 
-#: kmmainwidget.cpp:2884
+#: kmmainwidget.cpp:2879
 #, kde-format
 msgid "Save &As..."
 msgstr "另存为(&A)..."
 
-#: kmmainwidget.cpp:2895
+#: kmmainwidget.cpp:2890
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "所有文件夹设置为过期删除(&E)"
 
-#: kmmainwidget.cpp:2900
+#: kmmainwidget.cpp:2895
 #, kde-format
 msgid "Check &Mail"
 msgstr "检查邮件(&M)"
 
-#: kmmainwidget.cpp:2908
+#: kmmainwidget.cpp:2903
 #, kde-format
 msgid "Check Mail In"
 msgstr "检查邮件于"
 
-#: kmmainwidget.cpp:2910 kmmainwidget.cpp:2911
+#: kmmainwidget.cpp:2905 kmmainwidget.cpp:2906
 #, kde-format
 msgid "Check Mail"
 msgstr "检查邮件"
 
-#: kmmainwidget.cpp:2915
+#: kmmainwidget.cpp:2910
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "发出队列中的消息(&S)"
 
-#: kmmainwidget.cpp:2923
+#: kmmainwidget.cpp:2918
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "在线状态(未知)"
 
-#: kmmainwidget.cpp:2928
+#: kmmainwidget.cpp:2923
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "发出队列中的消息身份"
 
-#: kmmainwidget.cpp:2944
+#: kmmainwidget.cpp:2939
 #, kde-format
 msgid "Certificate Manager"
 msgstr "证书管理器"
 
-#: kmmainwidget.cpp:2954
+#: kmmainwidget.cpp:2949
 #, kde-format
 msgid "&Import Messages..."
 msgstr "导入消息(&I)..."
 
-#: kmmainwidget.cpp:2964
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "调试筛选(&D)..."
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:2966
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "过滤器日志查看器(&L)..."
 
-#: kmmainwidget.cpp:2976
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Notification History..."
 msgstr ""
 
-#: kmmainwidget.cpp:2981
+#: kmmainwidget.cpp:2976
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr "从另一个电子邮件客户端导入(&I)..."
 
-#: kmmainwidget.cpp:2986
+#: kmmainwidget.cpp:2981
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "编辑“外出”自动回复..."
 
-#: kmmainwidget.cpp:2992
+#: kmmainwidget.cpp:2987
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "配置自动存档(&C)..."
 
-#: kmmainwidget.cpp:2998
+#: kmmainwidget.cpp:2993
 #, kde-format
 msgid "Delayed Messages..."
 msgstr "已延迟消息..."
 
-#: kmmainwidget.cpp:3004
+#: kmmainwidget.cpp:2999
 #, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "提醒后续邮件..."
 
-#: kmmainwidget.cpp:3015 util.cpp:148
+#: kmmainwidget.cpp:3010 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "删除(&D)"
 
-#: kmmainwidget.cpp:3020 kmmainwidget.cpp:4075
+#: kmmainwidget.cpp:3015 kmmainwidget.cpp:4072
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "将线索移至废件夹(&O)"
 
-#: kmmainwidget.cpp:3024
+#: kmmainwidget.cpp:3019
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "将线索放入废件夹"
 
-#: kmmainwidget.cpp:3027 kmmainwidget.cpp:4075
+#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4072
 #, kde-format
 msgid "Delete T&hread"
 msgstr "删除线索(&H)"
 
-#: kmmainwidget.cpp:3033 kmmainwidget.cpp:4077
+#: kmmainwidget.cpp:3028 kmmainwidget.cpp:4074
 #, kde-format
 msgid "&Find Messages..."
 msgstr "查找消息(&F)..."
 
-#: kmmainwidget.cpp:3038
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgid "Select &All Messages"
 msgstr "选中所有的消息(&A)"
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3040
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "邮件列表管理(&M)..."
 
-#: kmmainwidget.cpp:3053
+#: kmmainwidget.cpp:3048
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr "清除 Akonadi 缓存..."
 
-#: kmmainwidget.cpp:3058
+#: kmmainwidget.cpp:3053
 #, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 
-#: kmmainwidget.cpp:3063
+#: kmmainwidget.cpp:3058
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "设定快捷键(&A)..."
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3076
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "过期设置(&E)"
 
-#: kmmainwidget.cpp:3106
+#: kmmainwidget.cpp:3101
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "归档文件夹(&A)..."
 
-#: kmmainwidget.cpp:3114
+#: kmmainwidget.cpp:3109
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "加载外部引用(&X)"
 
-#: kmmainwidget.cpp:3137
+#: kmmainwidget.cpp:3132
 #, kde-format
 msgid "Copy Message To..."
 msgstr "抄送消息到..."
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3134
 #, kde-format
 msgid "Move Message To..."
 msgstr "移动消息到..."
 
-#: kmmainwidget.cpp:3144
+#: kmmainwidget.cpp:3139
 #, kde-format
 msgid "&New Message..."
 msgstr "新消息(&N)..."
 
-#: kmmainwidget.cpp:3146
+#: kmmainwidget.cpp:3141
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "新建"
 
-#: kmmainwidget.cpp:3154
+#: kmmainwidget.cpp:3149
 #, kde-format
 msgid "Message From &Template"
 msgstr "新建基于模板的消息(&T)"
 
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3155
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "新建到邮件列表的新建(&O)..."
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3161
 #, kde-format
 msgid "&Create Filter"
 msgstr "创建过滤器(&C)"
 
-#: kmmainwidget.cpp:3170
+#: kmmainwidget.cpp:3165
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "按主题过滤(&S)..."
 
-#: kmmainwidget.cpp:3177
+#: kmmainwidget.cpp:3172
 #, kde-format
 msgid "Filter on &From..."
 msgstr "按发件人过滤(&F)..."
 
-#: kmmainwidget.cpp:3183
+#: kmmainwidget.cpp:3178
 #, kde-format
 msgid "Filter on &To..."
 msgstr "按收件人过滤(&T)..."
 
-#: kmmainwidget.cpp:3189
+#: kmmainwidget.cpp:3184
 #, kde-format
 msgid "Filter on &Cc..."
 msgstr "按抄送过滤(&C)..."
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3192
 #, kde-format
 msgid "Mark &Thread"
 msgstr "标记线索(&T)"
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3195
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "将线索标为已读(&R)"
 
-#: kmmainwidget.cpp:3203
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "将选中主题中的全部消息标为已读"
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3201
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "将线索标为未读(&U)"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "将选中主题中的全部消息标为未读"
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3210
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "将线索标为重要(&I)"
 
-#: kmmainwidget.cpp:3218
+#: kmmainwidget.cpp:3213
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "删除重要线索标记(&I)"
 
-#: kmmainwidget.cpp:3221
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "将线索标为活动项(&A)"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "删除活动项线索标记(&A)"
 
-#: kmmainwidget.cpp:3228
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgid "&Watch Thread"
 msgstr "观察线索(&W)"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3227
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "忽略线索(&I)"
 
-#: kmmainwidget.cpp:3240 kmreadermainwin.cpp:473
+#: kmmainwidget.cpp:3235 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "保存附件(&T)..."
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3239
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr ""
 
-#: kmmainwidget.cpp:3252
+#: kmmainwidget.cpp:3247
 #, kde-format
 msgid "Copy Decrypted To..."
 msgstr "复制解密的文件至..."
 
-#: kmmainwidget.cpp:3256
+#: kmmainwidget.cpp:3251
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "应用全部过滤器(&Y)"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "展开线索/分组(&E)"
 
-#: kmmainwidget.cpp:3268
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "展开当前线索或分组"
 
-#: kmmainwidget.cpp:3272
+#: kmmainwidget.cpp:3267
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "折叠线索/分组(&C)"
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3270
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "折叠当前线索或分组"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "展开全部线索(&P)"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "展开当前文件夹内的所有线索"
 
-#: kmmainwidget.cpp:3286
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "折叠全部线索(&O)"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3284
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "折叠当前文件夹内的所有线索"
 
-#: kmmainwidget.cpp:3293
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid "&Display Message"
 msgstr "显示消息(&D)"
 
-#: kmmainwidget.cpp:3300
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "&Next Message"
 msgstr "下一条消息(&N)"
 
-#: kmmainwidget.cpp:3303
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Go to the next message"
 msgstr "跳转到下一条消息"
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "下一条未读消息(&U)"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3310
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "下一封"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3311
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "跳转到下一条未读的消息"
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgid "&Previous Message"
 msgstr "上一条消息(&P)"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3317
 #, kde-format
 msgid "Go to the previous message"
 msgstr "跳转到上一条消息"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "上一条未读消息(&M)"
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3330
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "上一封"
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3331
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "跳转到上一条未读的消息"
 
-#: kmmainwidget.cpp:3340
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "下一个未读文件夹(&F)"
 
-#: kmmainwidget.cpp:3346
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "跳转到下一个有未读消息的文件夹"
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3344
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "上一个未读文件夹(&O)"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3350
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "跳转到上一个有未读消息的文件夹"
 
-#: kmmainwidget.cpp:3358
+#: kmmainwidget.cpp:3354
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "下一段未读文本(&T)"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3357
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "移动到下一段未读的文本"
 
-#: kmmainwidget.cpp:3363
+#: kmmainwidget.cpp:3359
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr "向下滚动当前消息。如果遇到了消息尾部，则跳转到下一封未读消息。"
 
-#: kmmainwidget.cpp:3371
+#: kmmainwidget.cpp:3367
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "配置过滤器(&F)..."
 
-#: kmmainwidget.cpp:3377
+#: kmmainwidget.cpp:3373
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "管理筛选脚本(&S)..."
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgid "&Add Account..."
 msgstr "添加账户(&A)..."
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3383
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail 介绍(&I)"
 
-#: kmmainwidget.cpp:3389
+#: kmmainwidget.cpp:3385
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "显示 KMail 欢迎页"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3392
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "配置通知(&N)..."
 
-#: kmmainwidget.cpp:3403
+#: kmmainwidget.cpp:3399
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "配置 KMail(&C)..."
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3406
 #, kde-format
 msgid "Expire..."
 msgstr "过期..."
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3412
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "新建收藏夹目录..."
 
-#: kmmainwidget.cpp:3422
+#: kmmainwidget.cpp:3418
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "服务器端订阅..."
 
-#: kmmainwidget.cpp:3428 kmmainwidget.cpp:3436
+#: kmmainwidget.cpp:3424 kmmainwidget.cpp:3432
 #, kde-format
 msgid "Apply All Filters"
 msgstr "应用所有过滤器"
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3445
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr ""
 
-#: kmmainwidget.cpp:3454
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "导入/导出 KMail 数据..."
 
-#: kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "新建地址簿联系人..."
 
-#: kmmainwidget.cpp:3468 kmmainwidget.cpp:4116
+#: kmmainwidget.cpp:3464 kmmainwidget.cpp:4113
 #, kde-format
 msgid "Account &Settings"
 msgstr "账户设置(&S)"
 
-#: kmmainwidget.cpp:3472
+#: kmmainwidget.cpp:3468
 #, kde-format
 msgid "Restart Account"
 msgstr "重新启动账户"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3484
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "复制消息到文件夹"
 
-#: kmmainwidget.cpp:3494
+#: kmmainwidget.cpp:3490
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "跳转到文件夹..."
 
-#: kmmainwidget.cpp:3500
+#: kmmainwidget.cpp:3496
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "中止当前操作"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3502
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "焦点移到下一个文件夹"
 
-#: kmmainwidget.cpp:3512
+#: kmmainwidget.cpp:3508
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "焦点移到上一个文件夹"
 
-#: kmmainwidget.cpp:3518
+#: kmmainwidget.cpp:3514
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "选择带焦点的文件夹"
 
-#: kmmainwidget.cpp:3525
+#: kmmainwidget.cpp:3521
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "焦点移到第一个文件夹"
 
-#: kmmainwidget.cpp:3531
+#: kmmainwidget.cpp:3527
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "焦点移到最后一个文件夹"
 
-#: kmmainwidget.cpp:3537
+#: kmmainwidget.cpp:3533
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "焦点移到下一封信"
 
-#: kmmainwidget.cpp:3543
+#: kmmainwidget.cpp:3539
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "焦点移到上一封信"
 
-#: kmmainwidget.cpp:3549
+#: kmmainwidget.cpp:3545
 #, kde-format
 msgid "Select First Message"
 msgstr "选中第一条消息"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3551
 #, kde-format
 msgid "Select Last Message"
 msgstr "选中最后的消息"
 
-#: kmmainwidget.cpp:3561
+#: kmmainwidget.cpp:3557
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "带焦点选中消息"
 
-#: kmmainwidget.cpp:3568
+#: kmmainwidget.cpp:3564
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "焦点设置到快速搜索栏"
 
-#: kmmainwidget.cpp:3576
+#: kmmainwidget.cpp:3572
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "延伸所选项到上一封信"
 
-#: kmmainwidget.cpp:3582
+#: kmmainwidget.cpp:3578
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "延伸所选项到下一封信"
 
-#: kmmainwidget.cpp:3589
+#: kmmainwidget.cpp:3585
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "移动消息到文件夹"
 
-#: kmmainwidget.cpp:3599
+#: kmmainwidget.cpp:3595
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "标记此文件夹及其所有子文件夹的邮件为已读"
 
-#: kmmainwidget.cpp:3604
+#: kmmainwidget.cpp:3600
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "移除此文件夹及其所有子文件夹的重复邮件"
 
-#: kmmainwidget.cpp:3610
+#: kmmainwidget.cpp:3606
 #, kde-format
 msgid "Previous Selected Folder"
 msgstr "上一个选定的文件夹"
 
-#: kmmainwidget.cpp:3617
+#: kmmainwidget.cpp:3613
 #, kde-format
 msgid "Next Selected Folder"
 msgstr "下一个选定的文件夹"
 
-#: kmmainwidget.cpp:3645
+#: kmmainwidget.cpp:3642
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "新建收藏夹目录"
 
-#: kmmainwidget.cpp:4063
+#: kmmainwidget.cpp:4060
 #, kde-format
 msgid "&Delete Search"
 msgstr "删除搜索(&D)"
 
-#: kmmainwidget.cpp:4077
+#: kmmainwidget.cpp:4074
 #, kde-format
 msgid "Edit Search..."
 msgstr "编辑搜索..."
 
-#: kmmainwidget.cpp:4114
+#: kmmainwidget.cpp:4111
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "配置聚合邮箱"
 
-#: kmmainwidget.cpp:4125
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "清空废件夹(&M)"
 
-#: kmmainwidget.cpp:4125
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "将所有消息放入废件夹(&M)"
 
-#: kmmainwidget.cpp:4199
+#: kmmainwidget.cpp:4196
 #, kde-format
 msgid "&Undo"
 msgstr "撤销(&U)"
 
-#: kmmainwidget.cpp:4201
+#: kmmainwidget.cpp:4198
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "撤销(&U): “%1”"
 
-#: kmmainwidget.cpp:4258
+#: kmmainwidget.cpp:4255
 #, kde-format
 msgid "Filter %1"
 msgstr "过滤器 %1"
 
-#: kmmainwidget.cpp:4725
+#: kmmainwidget.cpp:4723
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "搜索...<%1>"
 
-#: kmmainwidget.cpp:4733
+#: kmmainwidget.cpp:4731
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5128,12 +5133,12 @@ msgstr ""
 "在邮件中使用 HTML 将使您更容易受到“垃圾邮件”的攻击，还会增大被其他已有的和将"
 "有的安全漏洞危及的可能性。"
 
-#: kmmainwidget.cpp:4737
+#: kmmainwidget.cpp:4735
 #, kde-format
 msgid "Use HTML"
 msgstr "使用 HTML"
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4881
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5147,37 +5152,37 @@ msgstr ""
 "您可以于 KMail 插件设置中\n"
 "配置、创建自定义聚合邮箱或完全禁用此功能。"
 
-#: kmmainwidget.cpp:4886
+#: kmmainwidget.cpp:4884
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "启动聚合邮箱？"
 
-#: kmmainwidget.cpp:4887
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "启用聚合邮箱"
 
-#: kmmainwidget.cpp:4888
+#: kmmainwidget.cpp:4886
 #, kde-format
 msgid "Cancel"
 msgstr "取消"
 
-#: kmmainwidget.cpp:4923
+#: kmmainwidget.cpp:4921
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "您想重启 Akonadi 吗？"
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4922
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "重启 Akonadi"
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Restart"
 msgstr "重启"
 
-#: kmmainwidget.cpp:4932
+#: kmmainwidget.cpp:4930
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi 已重启。"
@@ -5208,162 +5213,162 @@ msgstr "将消息放入废件夹"
 msgid "Cannot copy item. %1"
 msgstr "无法复制条目。%1"
 
-#: kmreaderwin.cpp:122
+#: kmreaderwin.cpp:121
 #, kde-format
 msgid "New Message To..."
 msgstr "撰写新消息给..."
 
-#: kmreaderwin.cpp:128
+#: kmreaderwin.cpp:127
 #, kde-format
 msgid "Reply To..."
 msgstr "回复给..."
 
-#: kmreaderwin.cpp:134
+#: kmreaderwin.cpp:133
 #, kde-format
 msgid "Forward To..."
 msgstr "转发给..."
 
-#: kmreaderwin.cpp:140
+#: kmreaderwin.cpp:139
 #, kde-format
 msgid "Add to Address Book"
 msgstr "添加到地址簿中"
 
-#: kmreaderwin.cpp:145
+#: kmreaderwin.cpp:144
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "添加到已有账户"
 
-#: kmreaderwin.cpp:151
+#: kmreaderwin.cpp:150
 #, kde-format
 msgid "Open in Address Book"
 msgstr "在地址簿中打开"
 
-#: kmreaderwin.cpp:156
+#: kmreaderwin.cpp:155
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "将此链接加为书签"
 
-#: kmreaderwin.cpp:161
+#: kmreaderwin.cpp:160
 #, kde-format
 msgid "Edit contact..."
 msgstr "编辑联系人..."
 
-#: kmreaderwin.cpp:167
+#: kmreaderwin.cpp:166
 #, kde-format
 msgid "Save Link As..."
 msgstr "链接另存为..."
 
-#: kmreaderwin.cpp:173
+#: kmreaderwin.cpp:172
 #, kde-format
 msgid "&Find in Message..."
 msgstr "在消息中查找(&F)..."
 
-#: kmreaderwin.cpp:179
+#: kmreaderwin.cpp:178
 #, kde-format
 msgid "Save Image On Disk..."
 msgstr "保存相片到本地..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
-#: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
+#: kmreaderwin.cpp:184 ui/encodedimagepicker.ui:78
 #, kde-format
 msgid "Open Image..."
 msgstr "打开图像..."
 
-#: kmreaderwin.cpp:191
+#: kmreaderwin.cpp:190
 #, kde-format
 msgid "Show HTML Format"
 msgstr "显示 HTML 格式"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:191
 #, kde-format
 msgid "Show HTML format when mail comes from this contact"
 msgstr "对来自此收件人的邮件显示 HTML 格式"
 
-#: kmreaderwin.cpp:198
+#: kmreaderwin.cpp:197
 #, kde-format
 msgid "Load external reference when mail comes for this contact"
 msgstr "对来自此收件人的邮件加载外部引用"
 
-#: kmreaderwin.cpp:204
+#: kmreaderwin.cpp:203
 #, kde-format
 msgid "Share image..."
 msgstr "共享图像..."
 
-#: kmreaderwin.cpp:259
+#: kmreaderwin.cpp:258
 msgid ""
 "KMail is now based on the Akonadi Personal Information Management framework, "
 "which brings many changes all around."
 msgstr "KMail 现基于 Akonadi 个人信息管理框架，该框架带来了许多变化。"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 msgid "Push email (IMAP IDLE)"
 msgstr "推送邮件 (IMAP 空闲)"
 
-#: kmreaderwin.cpp:270
+#: kmreaderwin.cpp:269
 msgid "Improved searches"
 msgstr "改进搜索"
 
-#: kmreaderwin.cpp:271
+#: kmreaderwin.cpp:270
 msgid "Support for adding notes (annotations) to mails"
 msgstr "支持向邮件添加备注 (批注)"
 
-#: kmreaderwin.cpp:272
+#: kmreaderwin.cpp:271
 msgid "Less GUI freezes, mail checks happen in the background"
 msgstr "后台检查邮件，较低的图形界面冻结机率"
 
-#: kmreaderwin.cpp:273
+#: kmreaderwin.cpp:272
 msgid "Plugins support"
 msgstr "插件支持"
 
-#: kmreaderwin.cpp:274
+#: kmreaderwin.cpp:273
 msgid "New HTML renderer (QtWebEngine)"
 msgstr "新的 HTML 渲染引擎（QtWebEngine）"
 
-#: kmreaderwin.cpp:275
+#: kmreaderwin.cpp:274
 msgid "Added Check for Phishing URL"
 msgstr "添加了钓鱼链接检测"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 msgid "Added Check DKIM"
 msgstr "添加了 DKIM 检查"
 
-#: kmreaderwin.cpp:277
+#: kmreaderwin.cpp:276
 msgid "Added Markdown Editing Support"
 msgstr "添加 Markdown 编辑支持"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 msgid "Added Grammar Plugin Support"
 msgstr "添加语法插件支持"
 
-#: kmreaderwin.cpp:279
+#: kmreaderwin.cpp:278
 msgid "Added etesync resource support"
 msgstr "添加了对 EteSync 资源的支持"
 
-#: kmreaderwin.cpp:280
+#: kmreaderwin.cpp:279
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "添加了对 Microsoft Exchange Web Services 资源的支持"
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:308
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 电子邮件客户端"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:317
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "正在获取文件夹内容"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:317
 #, kde-format
 msgid "Please wait . . ."
 msgstr "请等待..."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:323 kmreaderwin.cpp:332
 #, kde-format
 msgid "Offline"
 msgstr "离线"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:325
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5371,7 +5376,7 @@ msgid ""
 msgstr ""
 "KMail 处于离线模式。点击<a href=\"kmail:goOnline\">此处</a>转为在线. . .</p>"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:334
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5380,40 +5385,39 @@ msgstr ""
 "账户处于离线模式。点击<a href=\"kmail:goResourceOnline\">此处</a>转为在"
 "线. . .</p>"
 
-#: kmreaderwin.cpp:908
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "成功修改联系人"
 
-#: kmsystemtray.cpp:89
+#: kmsystemtray.cpp:88
 #, kde-format
 msgid "New Messages In"
 msgstr "新邮件位于"
 
-#: kmsystemtray.cpp:261
+#: kmsystemtray.cpp:260
 #, kde-format
 msgid "There are no unread messages"
 msgstr "无未读消息"
 
-#: kmsystemtray.cpp:261
+#: kmsystemtray.cpp:260
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "%1 条未读消息"
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#: kontactplugin/kmail/kcmkmailsummary.cpp:36
+#: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, kde-format
 msgid "Show full path for folders"
 msgstr "显示文件夹完整路径"
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:72
+#: kontactplugin/kmail/kcmkmailsummary.cpp:54
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show full path for each folder"
 msgstr "显示每个文件夹的完整路径"
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:74
+#: kontactplugin/kmail/kcmkmailsummary.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5482,14 +5486,13 @@ msgctxt "@title:column plugin name"
 msgid "Summary Plugin Name"
 msgstr "摘要插件名称"
 
-#: kontactplugin/summary/kcmkontactsummary.cpp:87
-#: kontactplugin/summary/kcmkontactsummary.cpp:89
+#: kontactplugin/summary/kcmkontactsummary.cpp:76
 #, kde-format
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "选择要在摘要页显示的摘要插件。"
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:104
+#: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Kontact 摘要"
@@ -5528,33 +5531,33 @@ msgstr "接下来..."
 msgid "Sync All"
 msgstr "全部同步"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:46
+#: kontactplugin/summary/summaryview_plugin.cpp:42
 #, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
 msgstr "全部"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:106
+#: kontactplugin/summary/summaryview_plugin.cpp:102
 #, kde-format
 msgid "Kontact Summary View"
 msgstr "Kontact 摘要视图"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:108
+#: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
 msgstr "(c) 2003-2021 The Kontact developers"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:110
+#: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:111
+#: kontactplugin/summary/summaryview_plugin.cpp:107
 #, kde-format
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:112
+#: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
@@ -5743,17 +5746,17 @@ msgstr "从列表取消订阅"
 msgid "Filter on Mailing-List %1..."
 msgstr "按邮件列表 %1 过滤..."
 
-#: messageactions.cpp:665
+#: messageactions.cpp:661
 #, kde-format
 msgid "email"
 msgstr "电子邮件"
 
-#: messageactions.cpp:668
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr "网页"
 
-#: messageactions.cpp:673
+#: messageactions.cpp:669
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -5761,12 +5764,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1(%2)"
 
-#: messageactions.cpp:782
+#: messageactions.cpp:778
 #, kde-format
 msgid "Export to PDF"
 msgstr "导出为 PDF"
 
-#: messageactions.cpp:782
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF 文档 (*.pdf)"
@@ -7588,22 +7591,22 @@ msgstr "没有操作可供撤销。"
 msgid "Cannot move message. %1"
 msgstr "无法移动消息。%1"
 
-#: userfeedback/accountinfosource.cpp:26
+#: userfeedback/accountinfosource.cpp:22
 #, kde-format
 msgid "Account information"
 msgstr "账户信息"
 
-#: userfeedback/accountinfosource.cpp:31
+#: userfeedback/accountinfosource.cpp:27
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr "KMail 中已配置的账户数量及类型 (接收账号和发送账号)。"
 
-#: userfeedback/plugininfosource.cpp:23
+#: userfeedback/plugininfosource.cpp:19
 #, kde-format
 msgid "Plugins Information"
 msgstr "插件信息"
 
-#: userfeedback/plugininfosource.cpp:28
+#: userfeedback/plugininfosource.cpp:24
 #, kde-format
 msgid "Plugins used in KMail."
 msgstr "KMail 中使用的插件。"

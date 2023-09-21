@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-06 00:48+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2020-03-22 13:23+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "X-Generator: Lokalize 19.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Prohlížeč záznamů filtru"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:80
 #, kde-format
 msgid "Share..."
 msgstr "Sdílet..."
 
-#: filterlogdialog.cpp:80
+#: filterlogdialog.cpp:86
 #, kde-format
 msgid "&Log filter activities"
 msgstr "Zaznamenávat činnost fi&ltrů"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:91
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -42,22 +42,22 @@ msgstr ""
 "Zde můžete zapnout a vypnout záznam aktivit filtrů. Záznamy jsou pořizovány "
 "jen při zapnutí této funkce. "
 
-#: filterlogdialog.cpp:89
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Podrobnosti záznamů"
 
-#: filterlogdialog.cpp:96
+#: filterlogdialog.cpp:102
 #, kde-format
 msgid "Log pattern description"
 msgstr "Zaznamenávat popis vzorku"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:107
 #, kde-format
 msgid "Log filter &rule evaluation"
 msgstr "Zaznamenávat vyhodnocení p&ravidla filtru"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -67,33 +67,33 @@ msgid ""
 "given."
 msgstr ""
 
-#: filterlogdialog.cpp:113
+#: filterlogdialog.cpp:119
 #, kde-format
 msgid "Log filter pattern evaluation"
 msgstr "Zaznamenávat vyhodnocení vzorku filtru"
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:124
 #, kde-format
 msgid "Log filter actions"
 msgstr "Zaznamenávat činnosti filtru"
 
-#: filterlogdialog.cpp:128
+#: filterlogdialog.cpp:134
 #, kde-format
 msgid "Log size limit:"
 msgstr "Limit velikosti záznamu:"
 
-#: filterlogdialog.cpp:136
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:137
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "neomezená"
 
-#: filterlogdialog.cpp:140
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -105,7 +105,7 @@ msgstr ""
 "velikost paměti, která se pro tento účel použije. Jestliže záznamy dosáhnou "
 "zde stanové velikosti, starší data se smažou a bude se pokračovat v záznamu. "
 
-#: filterlogdialog.cpp:321
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -114,7 +114,7 @@ msgstr ""
 "Nelze zapsat soubor %1:\n"
 "Podrobný popis chyby: %2."
 
-#: filterlogdialog.cpp:325
+#: filterlogdialog.cpp:331
 #, kde-format
 msgid "KMail Error"
 msgstr "Chyba KMailu"
@@ -159,18 +159,18 @@ msgstr "<b>Začít filtrování na zprávě \"%1\" od \"%2\" v \"%3\" :</b>"
 msgid "Filtering messages"
 msgstr "Filtrování zpráv"
 
-#: mailfilteragent.cpp:109
+#: mailfilteragent.cpp:100
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Záznam filtrování pošty povolen"
 
-#: mailfilteragent.cpp:173
+#: mailfilteragent.cpp:164
 #, kde-format
 msgid "Ready"
 msgstr "Připraven"
 
-#: mailfilteragent.cpp:259
+#: mailfilteragent.cpp:250
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrování v %1"

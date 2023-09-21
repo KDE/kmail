@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2021-08-31 23:31+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -46,25 +46,25 @@ msgstr "%1 eranskinaren propietateak"
 msgid " bytes"
 msgstr " byte"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:159
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF atributuak"
 
-#: attachpropertydialog.cpp:176
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Aurrena elementu bat hautatu behar da."
 
-#: attachpropertydialog.cpp:182
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Hautatutako elementua ezin da gorde etiketa huts bat duelako."
 
-#: attachpropertydialog.cpp:207
+#: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -263,17 +263,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Neurria"
 
-#: main.cpp:44
+#: main.cpp:31
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:46
+#: main.cpp:33
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "TNEF formatua erabiltzen duten posta eranskinetarako ikustailea"
 
-#: main.cpp:48
+#: main.cpp:35
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -282,27 +282,27 @@ msgstr ""
 "Copyright 2000 Michael Goffioul \n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Author"
 msgstr "Egilea"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Egilea, Qt4/KDE4-ra eratorri zuen"
 
-#: main.cpp:58
+#: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "Hautazko «file» argumentu bat"

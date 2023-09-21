@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2023-08-10 21:44+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -193,7 +193,7 @@ msgstr "Posta Arşivi Ekle"
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Dizin mevcut değil. Lütfen ayarları doğrulayın. Arşiv ertelendi."
 
-#: job/archivejob.cpp:76
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr "%1 arşivlemesini başlat"

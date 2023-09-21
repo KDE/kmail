@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2021-05-14 10:34+0200\n"
 "Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -44,19 +44,19 @@ msgstr "Eigenschaften von Anhang %1"
 msgid " bytes"
 msgstr " Bytes"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:159
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF-Attribute"
 
-#: attachpropertydialog.cpp:176
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Sie müssen zuerst einen Eintrag auswählen."
 
-#: attachpropertydialog.cpp:182
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
@@ -64,7 +64,7 @@ msgstr ""
 "Der gewählte Eintrag kann nicht gespeichert werden, da er ein leeres Tag "
 "enthält."
 
-#: attachpropertydialog.cpp:207
+#: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -267,17 +267,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Größe"
 
-#: main.cpp:44
+#: main.cpp:31
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:46
+#: main.cpp:33
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "Anzeigeprogramm für E-Mail-Anhänge im TNEF-Format"
 
-#: main.cpp:48
+#: main.cpp:35
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -286,27 +286,27 @@ msgstr ""
 "Copyright 2000 Michael Goffioul \n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Autor. Portierung auf Qt4/KDE4"
 
-#: main.cpp:58
+#: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "Ein optionales Argument „Datei“"

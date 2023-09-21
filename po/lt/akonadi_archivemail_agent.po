@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2019-07-06 14:13+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -204,7 +204,7 @@ msgstr "Pridėti archyvuojamą paštą"
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Katalogo nėra. Patikrinkite nustatymus. Archyvavimas atidėtas."
 
-#: job/archivejob.cpp:76
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Pradėti archyvuoti %1"

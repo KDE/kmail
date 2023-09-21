@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2021-05-16 22:24+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -43,25 +43,25 @@ msgstr "첨부 파일 %1의 속성"
 msgid " bytes"
 msgstr " 바이트"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:159
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF 속성"
 
-#: attachpropertydialog.cpp:176
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "항목을 선택하십시오."
 
-#: attachpropertydialog.cpp:182
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "빈 태그가 들어 있어서 선택한 항목을 저장할 수 없습니다."
 
-#: attachpropertydialog.cpp:207
+#: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -255,17 +255,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "크기"
 
-#: main.cpp:44
+#: main.cpp:31
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:46
+#: main.cpp:33
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "TNEF 형식 메일 첨부 뷰어"
 
-#: main.cpp:48
+#: main.cpp:35
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -274,27 +274,27 @@ msgstr ""
 "Copyright 2000 Michael Goffioul \n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Author"
 msgstr "작성자"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "작성자, Qt4/KDE4 포팅"
 
-#: main.cpp:58
+#: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "선택 사항 인자 'file'"

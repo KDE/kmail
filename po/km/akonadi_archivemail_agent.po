@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-08-11 00:46+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2012-12-25 10:57+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -201,7 +201,7 @@ msgstr "បន្ថែម​សំបុត្រ​ប័ណ្ណសារ"
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
 
-#: job/archivejob.cpp:76
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr "ចាប់ផ្ដើម​ទុក​ក្នុង​ប័ណ្ណសារ %1"

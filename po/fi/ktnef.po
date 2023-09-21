@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2021-08-18 19:15+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -47,25 +47,25 @@ msgstr "Liitteen %1 ominaisuudet"
 msgid " bytes"
 msgstr " tavua"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:159
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNET-määritteet"
 
-#: attachpropertydialog.cpp:176
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Tietue on valittava ensin."
 
-#: attachpropertydialog.cpp:182
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Valittua tietuetta ei voi tallentaa, koska sen tunniste on tyhjä."
 
-#: attachpropertydialog.cpp:207
+#: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -263,17 +263,17 @@ msgstr "Koko"
 
 # pmap: =:gen=KTnefin:
 # pmap: =:elat=KTnefistä:
-#: main.cpp:44
+#: main.cpp:31
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:46
+#: main.cpp:33
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "TNEF-muotoisten sähköpostiliitteiden katselin"
 
-#: main.cpp:48
+#: main.cpp:35
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -282,27 +282,27 @@ msgstr ""
 "Tekijänoikeudet © 2000 Michael Goffioul\n"
 "Tekijänoikeudet © 2012 Allen Winter"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Author"
 msgstr "Tekijä"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Tekijä, sovitus Qt4:ään/KDE4:ään"
 
-#: main.cpp:58
+#: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "Valinnainen parametri ”tiedosto” "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-31 00:59+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2018-05-01 23:19+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -44,25 +44,25 @@ msgstr "附檔 %1 的屬性"
 msgid " bytes"
 msgstr " 位元組"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:159
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF 屬性"
 
-#: attachpropertydialog.cpp:176
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "需要先選擇一個項目。"
 
-#: attachpropertydialog.cpp:182
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "選取的項目不能被儲存，因為有空的標籤。"
 
-#: attachpropertydialog.cpp:207
+#: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -256,17 +256,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "大小"
 
-#: main.cpp:44
+#: main.cpp:31
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:46
+#: main.cpp:33
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "使用 TNEF 格式的郵件附檔檢視器"
 
-#: main.cpp:48
+#: main.cpp:35
 #, fuzzy, kde-format
 #| msgid ""
 #| "Copyright 2000 Michael Goffioul\n"
@@ -278,27 +278,27 @@ msgstr ""
 "Copyright 2000 Michael Goffioul\n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:50
+#: main.cpp:37
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:52
+#: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "作者，移植至 Qt4/KDE4"
 
-#: main.cpp:58
+#: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "選擇性參數 'file'"

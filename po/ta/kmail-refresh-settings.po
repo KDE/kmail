@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-01-02 01:04+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2022-09-15 19:40+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -27,22 +27,22 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
 
-#: main.cpp:32 main.cpp:34
+#: main.cpp:28 main.cpp:30
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
 msgstr "கேமெயில் அமைப்புகளை புதுப்பிக்கும் உதவிநிரல்"
 
-#: main.cpp:36
+#: main.cpp:32
 #, kde-format
 msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
 msgstr ""
 
-#: main.cpp:37
+#: main.cpp:33
 #, kde-format
 msgid "Laurent Montel"
 msgstr "லாரெண்டு மாண்டெல்"
 
-#: main.cpp:37
+#: main.cpp:33
 #, kde-format
 msgid "Author"
 msgstr "இயற்றியவர்"
