@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-05-06 00:48+0000\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2015-02-07 19:02+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -19,23 +19,23 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr ""
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:80
 #, kde-format
 msgid "Share..."
 msgstr ""
 
-#: filterlogdialog.cpp:80
+#: filterlogdialog.cpp:86
 #, kde-format
 msgid "&Log filter activities"
 msgstr "&Logg filteraktiviteter"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:91
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -44,22 +44,22 @@ msgstr ""
 "Her kan du slå av og på logging av filteraktiviteter. Loggdata blir "
 "naturligvis bare samlet og vist hvis logging er slått på."
 
-#: filterlogdialog.cpp:89
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Loggedetaljer"
 
-#: filterlogdialog.cpp:96
+#: filterlogdialog.cpp:102
 #, kde-format
 msgid "Log pattern description"
 msgstr "Beskrivelse av loggmønster"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:107
 #, kde-format
 msgid "Log filter &rule evaluation"
 msgstr "Logg behandling av filter&regler"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -73,33 +73,33 @@ msgstr ""
 "om hver enkelt filterregel, ellers blir det bare meldt om resultatet av alle "
 "regler i hvert enkelt filter."
 
-#: filterlogdialog.cpp:113
+#: filterlogdialog.cpp:119
 #, kde-format
 msgid "Log filter pattern evaluation"
 msgstr "Logg behandling av filtermønstre"
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:124
 #, kde-format
 msgid "Log filter actions"
 msgstr "Logg filterhandlinger"
 
-#: filterlogdialog.cpp:128
+#: filterlogdialog.cpp:134
 #, kde-format
 msgid "Log size limit:"
 msgstr "Maksimal størrelse for loggen:"
 
-#: filterlogdialog.cpp:136
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:137
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "ubegrenset"
 
-#: filterlogdialog.cpp:140
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -112,7 +112,7 @@ msgstr ""
 "størrelsen blir de eldste dataene slettet til grensen ikke er overskredet "
 "lenger. "
 
-#: filterlogdialog.cpp:321
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -121,7 +121,7 @@ msgstr ""
 "Klarte ikke skrive fila %1:\n"
 "«%2» er detaljert feilbeskrivelse."
 
-#: filterlogdialog.cpp:325
+#: filterlogdialog.cpp:331
 #, kde-format
 msgid "KMail Error"
 msgstr "KMail-feil"
@@ -166,18 +166,18 @@ msgstr "<b>Begynn filtrering på melding «%1» fra «%2» på «%3» :</b>"
 msgid "Filtering messages"
 msgstr "Filtrerer meldinger"
 
-#: mailfilteragent.cpp:109
+#: mailfilteragent.cpp:100
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "E-post filterlogg slått på"
 
-#: mailfilteragent.cpp:173
+#: mailfilteragent.cpp:164
 #, kde-format
 msgid "Ready"
 msgstr "Klar"
 
-#: mailfilteragent.cpp:259
+#: mailfilteragent.cpp:250
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrering i %1"

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-21 00:45+0000\n"
-"PO-Revision-Date: 2023-09-20 01:27+0200\n"
+"PO-Revision-Date: 2023-09-21 16:48+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -451,7 +451,7 @@ msgstr "Darse de baja de la lista"
 #: collectionpage/collectionmailinglistpage.cpp:111
 #, kde-format
 msgid "List Archives"
-msgstr "Archivos comprimidos de la lista"
+msgstr "Archivos de la lista"
 
 #: collectionpage/collectionmailinglistpage.cpp:111
 #, kde-format
@@ -1751,7 +1751,7 @@ msgstr "Seleccionar"
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
-msgstr "Archivo comprimido"
+msgstr "Archivador"
 
 #: dialog/archivefolderdialog.cpp:51
 #, kde-format
@@ -1763,7 +1763,7 @@ msgstr "Archivar carpeta"
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
-msgstr "Archivo comprimido"
+msgstr "Archivar"
 
 #: dialog/archivefolderdialog.cpp:71
 #, kde-format
@@ -1778,32 +1778,32 @@ msgstr "F&ormato:"
 #: dialog/archivefolderdialog.cpp:87
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
-msgstr "Archivo comprimido Zip (.zip)"
+msgstr "Archivador comprimido Zip (.zip)"
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
-msgstr "Archivo descomprimido (.tar)"
+msgstr "Archivador descomprimido (.tar)"
 
 #: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
-msgstr "Archivo comprimido Tar BZ2 (.tar.bz2)"
+msgstr "Archivador Tar comprimido con BZ2 (.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
-msgstr "Archivo comprimido Tar GZ (.tar.gz)"
+msgstr "Archivador Tar comprimido con GZ (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:96
 #, kde-format
 msgid "&Archive File:"
-msgstr "&Archivo comprimido:"
+msgstr "&Archivador:"
 
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "Archivador (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -5977,7 +5977,7 @@ msgstr "Nombre de la lista de correo: %1"
 #: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
-msgstr "Abrir mensaje en archivo comprimido de lista"
+msgstr "Abrir mensaje del archivo de la lista"
 
 #: messageactions.cpp:460
 #, kde-format
@@ -5987,7 +5987,7 @@ msgstr "Publicar un nuevo mensaje"
 #: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
-msgstr "Ir al archivo comprimido"
+msgstr "Ir al archivo"
 
 #: messageactions.cpp:466
 #, kde-format
@@ -6250,8 +6250,8 @@ msgid ""
 "'Action Item'"
 msgstr ""
 "Esto previene la expiración automática de mensajes antiguos en una carpeta "
-"al borrar (o mover a una carpeta de archivo comprimido) los mensajes "
-"marcados como «Importante» o «Elemento de Acción»"
+"al borrar (o mover a una carpeta de archivado) los mensajes marcados como "
+"«Importante» o «Elemento de Acción»"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg.cmake:58

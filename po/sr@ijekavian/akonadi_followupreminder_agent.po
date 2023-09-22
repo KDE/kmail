@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-05-31 18:10+0200\n"
+"POT-Creation-Date: 2022-09-28 00:50+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,114 +18,128 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: followupreminderinfoconfigwidget.cpp:38
+#: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
 msgid "Follow Up Reminder Agent"
 msgstr "Подсетник на одговор"
 
-#: followupreminderinfoconfigwidget.cpp:40
+#: followupreminderinfoconfigwidget.cpp:27
 #, kde-format
 msgid "Follow Up Reminder"
 msgstr "Подсетник на одговор"
 
-#: followupreminderinfoconfigwidget.cpp:42
+#: followupreminderinfoconfigwidget.cpp:29
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2018 Laurent Montel"
-msgid "Copyright (C) 2014-2020 Laurent Montel"
+msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "© 2014–2018, Лорен Монтел"
 
-#: followupreminderinfoconfigwidget.cpp:44
+#: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Лорен Монтел"
 
-#: followupreminderinfoconfigwidget.cpp:45
+#: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
 msgid "Maintainer"
 msgstr "Одржавалац"
 
-#: followupreminderinfoconfigwidget.cpp:47
+#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Часлав Илић"
 
-#: followupreminderinfoconfigwidget.cpp:48
+#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "caslav.ilic@gmx.net"
 
 # >> @title:column
-#: followupreminderinfowidget.cpp:74
+#: followupreminderinfowidget.cpp:61
 #, kde-format
 msgid "To"
 msgstr "за"
 
 # >> @title:column
-#: followupreminderinfowidget.cpp:75
+#: followupreminderinfowidget.cpp:61
 #, kde-format
 msgid "Subject"
 msgstr "тема"
 
 # >> @title:column
 # rewrite-msgid: /Dead Line/Deadline/
-#: followupreminderinfowidget.cpp:76
-#, kde-format
-msgid "Dead Line"
+#: followupreminderinfowidget.cpp:61
+#, fuzzy, kde-format
+#| msgid "Dead Line"
+msgid "Deadline"
 msgstr "рок"
 
 # >> @title:column
-#: followupreminderinfowidget.cpp:77
+#: followupreminderinfowidget.cpp:61
 #, kde-format
 msgid "Answer"
 msgstr "одговор"
 
 # >> @item
-#: followupreminderinfowidget.cpp:142
+#: followupreminderinfowidget.cpp:145
 #, kde-format
 msgid "Received"
 msgstr "примљен"
 
 # >> @item
-#: followupreminderinfowidget.cpp:142
+#: followupreminderinfowidget.cpp:145
 #, kde-format
 msgid "On hold"
 msgstr "на чекању"
 
-#: followupreminderinfowidget.cpp:199
+#: followupreminderinfowidget.cpp:217
 #, kde-format
 msgid "Show Message"
 msgstr "Прикажи поруку"
 
-#: followupreminderinfowidget.cpp:203 followupreminderinfowidget.cpp:227
+#: followupreminderinfowidget.cpp:220
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgid "Show Original Message"
+msgstr "Прикажи поруку"
+
+#: followupreminderinfowidget.cpp:223
 #, kde-format
 msgid "Delete"
 msgstr "Обриши"
 
-#: followupreminderinfowidget.cpp:227
+#: followupreminderinfowidget.cpp:250
 #, fuzzy, kde-format
 #| msgid "Do you want to remove selected item?"
-msgid "Do you want to remove this selected item?"
-msgid_plural "Do you want to remove these %1 selected items?"
+msgid "Do you want to delete this selected item?"
+msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "Желите ли да уклоните изабрану ставку?"
 msgstr[1] "Желите ли да уклоните изабрану ставку?"
 msgstr[2] "Желите ли да уклоните изабрану ставку?"
 msgstr[3] "Желите ли да уклоните изабрану ставку?"
 
-#: followupremindermanager.cpp:167
+#: followupreminderinfowidget.cpp:251
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Обриши"
+
+#: followupremindermanager.cpp:154
 #, kde-format
 msgid "Answer from %1 received"
 msgstr "Одговор од %1 примљен"
 
-#: followupremindernoanswerdialog.cpp:46
+#: followupremindernoanswerdialog.cpp:37
 #, fuzzy, kde-format
 #| msgid "Follow Up Reminder"
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Подсетник на одговор"
 
-#: followupremindernoanswerdialog.cpp:52
+#: followupremindernoanswerdialog.cpp:43
 #, kde-format
 msgid "You still wait an answer about this mail:"
 msgstr "И даље чекате одговор на ову поруку:"

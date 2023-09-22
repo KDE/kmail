@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-21 00:45+0000\n"
-"PO-Revision-Date: 2023-09-09 01:48+0200\n"
+"PO-Revision-Date: 2023-09-21 13:33+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -1811,7 +1811,7 @@ msgstr "File &archivio:"
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "File archivio (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format

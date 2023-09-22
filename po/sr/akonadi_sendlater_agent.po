@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-05-31 18:10+0200\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -19,109 +19,110 @@ msgstr ""
 "X-Environment: kde\n"
 
 # >> @title:window
-#: sendlaterconfiguredialog.cpp:37
+#: sendlaterconfiguredialog.cpp:31
 #, fuzzy, kde-format
 #| msgid "Configure"
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Подешавање"
 
-#: sendlaterconfiguredialog.cpp:57
+#: sendlaterconfiguredialog.cpp:49
 #, kde-format
 msgid "Send Later Agent"
 msgstr "Агент за касније слање"
 
-#: sendlaterconfiguredialog.cpp:59
+#: sendlaterconfiguredialog.cpp:51
 #, kde-format
 msgid "Send emails later agent."
 msgstr "Агент за касније слање е‑поште."
 
-#: sendlaterconfiguredialog.cpp:61
+#: sendlaterconfiguredialog.cpp:53
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2013-2018 Laurent Montel"
-msgid "Copyright (C) 2013-2020 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "© 2013–2018, Лорен Монтел"
 
-#: sendlaterconfiguredialog.cpp:63
+#: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Лорен Монтел"
 
-#: sendlaterconfiguredialog.cpp:64
+#: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Maintainer"
 msgstr "Одржавалац"
 
-#: sendlaterconfiguredialog.cpp:67
+#: sendlaterconfiguredialog.cpp:58
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Часлав Илић"
 
-#: sendlaterconfiguredialog.cpp:68
+#: sendlaterconfiguredialog.cpp:58
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "caslav.ilic@gmx.net"
 
 # >> @title:column
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "To"
 msgstr "за"
 
 # >> @title:column
-#: sendlaterconfigurewidget.cpp:70
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Subject"
 msgstr "тема"
 
 # >> @title:column
-#: sendlaterconfigurewidget.cpp:71
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Send around"
 msgstr "пошаљи око"
 
 # >> @title:column
-#: sendlaterconfigurewidget.cpp:72
+#: sendlaterconfigurewidget.cpp:55
 #, kde-format
 msgid "Recurrent"
 msgstr "понављање"
 
 # >> @title:column
-#: sendlaterconfigurewidget.cpp:74
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Message Id"
 msgstr "ИД поруке"
 
-#: sendlaterconfigurewidget.cpp:85
+#: sendlaterconfigurewidget.cpp:68
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Нема порука на чекању."
 
-#: sendlaterconfigurewidget.cpp:108
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgid "Send now"
 msgstr "Пошаљи сада"
 
-#: sendlaterconfigurewidget.cpp:111
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Обриши"
 
 # >> @item
-#: sendlaterconfigurewidget.cpp:172
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "Yes"
 msgstr "да"
 
 # >> @item
-#: sendlaterconfigurewidget.cpp:172
+#: sendlaterconfigurewidget.cpp:157
 #, kde-format
 msgid "No"
 msgstr "не"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -130,71 +131,93 @@ msgstr[1] "Желите ли да обришете изабране ставке
 msgstr[2] "Желите ли да обришете изабране ставке?"
 msgstr[3] "Желите ли да обришете изабрану ставку?"
 
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Обриши"
+
 #: sendlaterconfigurewidget.cpp:216
-#, kde-format
-msgid "Remove items"
-msgstr "Уклони ставке"
+#, fuzzy, kde-format
+#| msgid "Do you want to remove the messages as well?"
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Желите ли да уклоните и поруке?"
+msgstr[1] "Желите ли да уклоните и поруке?"
+msgstr[2] "Желите ли да уклоните и поруке?"
+msgstr[3] "Желите ли да уклоните и поруке?"
 
-#: sendlaterconfigurewidget.cpp:221
-#, kde-format
-msgid "Do you want to remove the messages as well?"
-msgstr "Желите ли да уклоните и поруке?"
-
-#: sendlaterconfigurewidget.cpp:221
-#, kde-format
-msgid "Remove messages"
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+#| msgid "Remove messages"
+msgctxt "@title:window"
+msgid "Delete Messages"
 msgstr "Уклони поруке"
 
-#: sendlaterjob.cpp:68 sendlaterjob.cpp:71
+#: sendlaterconfigurewidget.cpp:219
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Обриши"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "Нема ниједне поруке."
 
-#: sendlaterjob.cpp:79
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "Нема ниједне поруке."
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Грешка при добављању поруке."
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Не могу да добавим поруку. %1"
 
-#: sendlaterjob.cpp:99
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "Не могу да направим транспорт."
 
-#: sendlaterjob.cpp:106
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Порука није права порука."
 
-#: sendlaterjob.cpp:113
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "Не могу да пошаљем поруку."
 
-#: sendlaterjob.cpp:144
+#: sendlaterjob.cpp:132
 #, kde-format
 msgid "Message sent"
 msgstr "Порука послата."
 
-#: sendlatermanager.cpp:204
+#: sendlatermanager.cpp:193
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Дошло је до грешке. Желите ли да пошаљете поново?"
 
 # >> @title:window
-#: sendlatermanager.cpp:204
+#: sendlatermanager.cpp:194
 #, kde-format
 msgid "Error found"
 msgstr "Грешка"
+
+#: sendlatermanager.cpp:195
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
@@ -202,8 +225,8 @@ msgstr "Грешка"
 msgid "Modify..."
 msgstr "Измени..."
 
-#. i18n: ectx: property (text), widget (QPushButton, removeItem)
-#: ui/sendlaterconfigurewidget.ui:38
-#, kde-format
-msgid "Remove"
-msgstr "Уклони"
+#~ msgid "Remove items"
+#~ msgstr "Уклони ставке"
+
+#~ msgid "Remove"
+#~ msgstr "Уклони"

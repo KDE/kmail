@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-06-15 02:17+0200\n"
+"POT-Creation-Date: 2023-09-21 00:45+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,8 +18,13 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
+#: addarchivemaildialog.cpp:33
+#, kde-format
+msgid "Archive all subfolders"
+msgstr "Архивирај све потфасцикле"
+
 # >> @title:window
-#: addarchivemaildialog.cpp:45
+#: addarchivemaildialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
@@ -27,139 +32,140 @@ msgid "Modify Archive Mail"
 msgstr "Измена архиве поште"
 
 # >> @title:window
-#: addarchivemaildialog.cpp:47
+#: addarchivemaildialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Додавање архиве поште"
 
-#: addarchivemaildialog.cpp:59
+#: addarchivemaildialog.cpp:55
 #, kde-format
 msgid "&Folder:"
 msgstr "&Фасцикла:"
 
-#: addarchivemaildialog.cpp:73
+#: addarchivemaildialog.cpp:68
 #, kde-format
 msgid "Format:"
 msgstr "Формат:"
 
-#: addarchivemaildialog.cpp:81
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "Архивирај све потфасцикле"
-
-#: addarchivemaildialog.cpp:87
+#: addarchivemaildialog.cpp:80
 #, kde-format
 msgid "Path:"
 msgstr "Путања:"
 
-#: addarchivemaildialog.cpp:97
+#: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
 msgstr "Прави резерву сваких:"
 
-#: addarchivemaildialog.cpp:113
+#: addarchivemaildialog.cpp:103
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Највећи број архива:"
 
-#: addarchivemaildialog.cpp:118
+#: addarchivemaildialog.cpp:107
 #, kde-format
 msgid "unlimited"
 msgstr "неограничено"
 
 # literal-segment: Archive
-#: archivemailinfo.cpp:93 archivemailinfo.cpp:110
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "arhiva"
 
+#: archivemailrangewidget.cpp:20
+#, kde-format
+msgid "Use Range"
+msgstr ""
+
 # >> @title:column
-#: archivemailwidget.cpp:83
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "име"
 
 # >> @title:column
-#: archivemailwidget.cpp:83
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "последње архивирано"
 
 # >> @title:column
-#: archivemailwidget.cpp:83
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "следеће архивирање за"
 
 # >> @title:column
-#: archivemailwidget.cpp:83
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "фасцикла складиштења"
 
-#: archivemailwidget.cpp:104
+#: archivemailwidget.cpp:88
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Агент за архивирање поште"
 
-#: archivemailwidget.cpp:106
+#: archivemailwidget.cpp:90
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Архивирајте пошту аутоматски."
 
-#: archivemailwidget.cpp:108
+#: archivemailwidget.cpp:92
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2012-2018 Laurent Montel"
-msgid "Copyright (C) 2014-2020 Laurent Montel"
+msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "© 2012–2018, Лорен Монтел"
 
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Лорен Монтел"
 
-#: archivemailwidget.cpp:110
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Maintainer"
 msgstr "Одржавалац"
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Часлав Илић"
 
-#: archivemailwidget.cpp:113
+#: archivemailwidget.cpp:95
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "caslav.ilic@gmx.net"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:125 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Додај..."
 
-#: archivemailwidget.cpp:128
+#: archivemailwidget.cpp:112
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Отвори обухватајућу фасциклу..."
 
-#: archivemailwidget.cpp:131
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Обриши"
 
-#: archivemailwidget.cpp:181
+#: archivemailwidget.cpp:165
 #, kde-format
 msgid "Folder: %1"
 msgstr "Фасцикла: %1"
 
-#: archivemailwidget.cpp:197
+#: archivemailwidget.cpp:187
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -168,25 +174,26 @@ msgstr[1] "%1 дана"
 msgstr[2] "%1 дана"
 msgstr[3] "сутра"
 
-#: archivemailwidget.cpp:205
+#: archivemailwidget.cpp:196
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 "Архивирање ће бити завршено %1|/|Архивирање ће бити завршено $[на-ријеч %1 "
 "ген]"
 
-#: archivemailwidget.cpp:240
+#: archivemailwidget.cpp:232
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Желите ли да обришете изабране ставке?"
 
-# >> @title:window
-#: archivemailwidget.cpp:240
-#, kde-format
-msgid "Remove items"
-msgstr "Уклањање ставки"
+#: archivemailwidget.cpp:233
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Обриши"
 
-#: archivemailwidget.cpp:276
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -194,17 +201,17 @@ msgstr ""
 "Не могу да додам другу архиву за ову фасциклу. Уместо тога мењам постојећу."
 
 # >> @title:window
-#: archivemailwidget.cpp:276
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid "Add Archive Mail"
 msgstr "Додавање архиве поште"
 
-#: job/archivejob.cpp:71
+#: job/archivejob.cpp:58
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Фасцикла не постоји. Проверите поставке. Архивирање одложено."
 
-#: job/archivejob.cpp:89
+#: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Почело архивирање %1"
@@ -215,49 +222,50 @@ msgstr "Почело архивирање %1"
 msgid "Modify..."
 msgstr "Измени..."
 
-#. i18n: ectx: property (text), widget (QPushButton, removeItem)
-#: ui/archivemailwidget.ui:45
-#, kde-format
-msgid "Remove"
-msgstr "Уклони"
-
 # >> @item:inlistbox
-#: widgets/formatcombobox.cpp:27
+#: widgets/formatcombobox.cpp:14
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr "компресована ЗИП архива (.zip)"
 
-#: widgets/formatcombobox.cpp:28
+#: widgets/formatcombobox.cpp:15
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr "некомпресована архива (.tar)"
 
-#: widgets/formatcombobox.cpp:29
+#: widgets/formatcombobox.cpp:16
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr "бзип2 компресована тар архива (.tar.bz2)"
 
-#: widgets/formatcombobox.cpp:30
+#: widgets/formatcombobox.cpp:17
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "гзип компресована тар архива (.tar.gz)"
 
-#: widgets/unitcombobox.cpp:26
+#: widgets/unitcombobox.cpp:13
 #, kde-format
 msgid "Days"
 msgstr "дана"
 
-#: widgets/unitcombobox.cpp:27
+#: widgets/unitcombobox.cpp:14
 #, kde-format
 msgid "Weeks"
 msgstr "седмица"
 
-#: widgets/unitcombobox.cpp:28
+#: widgets/unitcombobox.cpp:15
 #, kde-format
 msgid "Months"
 msgstr "месеци"
 
-#: widgets/unitcombobox.cpp:29
+#: widgets/unitcombobox.cpp:16
 #, kde-format
 msgid "Years"
 msgstr "година"
+
+# >> @title:window
+#~ msgid "Remove items"
+#~ msgstr "Уклањање ставки"
+
+#~ msgid "Remove"
+#~ msgstr "Уклони"
