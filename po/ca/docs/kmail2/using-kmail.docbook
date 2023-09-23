@@ -730,8 +730,8 @@
         <listitem>
           <para
 >L'opció <guimenuitem
->Usa un tipus de lletra d'amplada fixa</guimenuitem
-> alterna l'ús del tipus de lletra d'amplada fixa.</para>
+>Usa una lletra d'amplada fixa</guimenuitem
+> alterna l'ús de la lletra d'amplada fixa.</para>
         </listitem>
         <listitem>
           <para
@@ -973,7 +973,7 @@
 > <imagedata fileref="go-down.png" format="PNG"/></imageobject
 ></inlinemediaobject
 ></guilabel
-> en la vora esquerra de la barra d'eines per a controlar l'estil de les llistes numerades / amb pics). També podreu controlar la família, la mida, l'estil (negreta, cursiva, subratllat o ratllat) i el color del text/fons del tipus de lletra. I podreu especificar l'alineació del text (alineat a l'esquerra, centrat, a la dreta o justificat) i inserir etiquetes d'ancoratge (també conegudes com a enllaços), línies horitzontals, imatges, taules i codi &HTML; arbitrari (tot i que és compatible amb algunes de les etiquetes &HTML; més avançades, encara estan incompletes).</para>
+> en la vora esquerra de la barra d'eines per a controlar l'estil de les llistes numerades / amb pics). També podreu controlar la família, la mida, l'estil (negreta, cursiva, subratllat o ratllat) i el color del text/fons de la lletra. I podreu especificar l'alineació del text (alineat a l'esquerra, centrat, a la dreta o justificat) i inserir etiquetes d'ancoratge (també conegudes com a enllaços), línies horitzontals, imatges, taules i codi &HTML; arbitrari (tot i que és compatible amb algunes de les etiquetes &HTML; més avançades, encara estan incompletes).</para>
 <para
 >&nbsp;</para
 > <!-- whitespace -->

@@ -1169,13 +1169,13 @@
 > <guimenu
 >Visualitza</guimenu
 > <guimenuitem
->Usa un tipus de lletra d'amplada fixa</guimenuitem
+>Usa una lletra d'amplada fixa</guimenuitem
 ></menuchoice
 ></term>
   <listitem
 ><para
->Usa un tipus de lletra d'amplada fixa (monoespai) per a mostrar els missatges que hi ha a la carpeta actual. El tipus de lletra a emprar es pot configurar a la pestanya <link linkend="configure-appearance-fonts"
->Tipus de lletra</link
+>Usa una lletra d'amplada fixa (monoespai) per a mostrar els missatges que hi ha a la carpeta actual. La lletra a emprar es pot configurar a la pestanya <link linkend="configure-appearance-fonts"
+>Lletra</link
 > de la pàgina <guilabel
 >Aparença</guilabel
 > en el diàleg de configuració del &kmail;.</para
@@ -3937,12 +3937,12 @@
 ><guimenu
 >Visualitza</guimenu
 > <guimenuitem
->Usa un tipus de lletra d'amplada fixa</guimenuitem
+>Usa una lletra d'amplada fixa</guimenuitem
 ></menuchoice
 ></term>
   <listitem
 ><para
->Utilitza un tipus de lletra d'amplada fixa (monoespai) per a mostrar el missatge editat. El tipus de lletra en particular a emprar pot configurar-se a la secció <guilabel
+>Utilitza una lletra d'amplada fixa (monoespai) per a mostrar el missatge editat. La lletra en particular a emprar pot configurar-se a la secció <guilabel
 >Aparença</guilabel
 > del diàleg de configuració del &kmail;.</para
 ></listitem>
@@ -4642,7 +4642,7 @@
 >, &etc;), Barra d'eines HTML (<guilabel
 >Estil</guilabel
 >, <guilabel
->Tipus de lletra / Mida</guilabel
+>Lletra / Mida</guilabel
 >, &etc;) i Direcció del text (en cas que feu servir un alfabet de dreta a esquerra). Recordeu que la barra d'eines HTML s'activa i desactiva amb facilitat mitjançant el botó <guibutton
 >Text enriquit</guibutton
 > de la barra d'eines principal.</para

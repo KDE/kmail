@@ -1356,7 +1356,7 @@ fileref="go-down.png" format="PNG"/></imageobject
 >La pàgina Aparença</title>
 
 <para
->La pàgina Aparença permet ajustar molts aspectes de la interfície gràfica d'usuari del &kmail;, inclosos els esquemes de color, la selecció del tipus de lletra i fins i tot la disposició física de la llista de missatges a la finestra principal.</para>
+>La pàgina Aparença permet ajustar molts aspectes de la interfície gràfica d'usuari del &kmail;, inclosos els esquemes de color, la selecció de la lletra i fins i tot la disposició física de la llista de missatges a la finestra principal.</para>
 
 <!-- <sect2 id="configure-appearance-message-window"
 > -->
@@ -1419,8 +1419,8 @@ replaced by emoticons (small pictures) such as
 
 <para
 >Habiliteu <guilabel
->Redueix la mida del tipus de lletra per al text citat</guilabel
-> per a mostrar el text entre cometes (en una resposta) amb un tipus de lletra més petit. <guilabel
+>Redueix la mida de la lletra per al text citat</guilabel
+> per a mostrar el text entre cometes (en una resposta) amb una lletra més petita. <guilabel
 >Mostra les marques per a plegar/desplegar les cites</guilabel
 > mostrarà petits ginys juntament amb cada fragment de text citat. Aquests permeten mostrar (+) o ocultar (-) les cometes niuades més enllà d'un cert nivell. Això és útil en converses de correu electrònic prolongades on ningú elimina el que ha succeït abans.</para>
 
@@ -1441,8 +1441,8 @@ the world. As a default the encoding configured for the whole system is used.</p
 > des del seu valor predeterminat <guilabel
 >Automàtic</guilabel
 > forçarà l'ús de la codificació especificada per a tots els missatges, sense importar el que diguin les capçaleres &MIME;. <guilabel
->Mida mínima del tipus de lletra:</guilabel
-> permet controlar el tipus de lletra més petit que utilitzarà el &kmail;. Ajusteu-lo més alt si teniu problemes per a llegir tipus de lletra molt petits.</para>
+>Mida mínima de la lletra:</guilabel
+> permet controlar la lletra més petita que utilitzarà el &kmail;. Ajusteu-lo més alt si teniu problemes per a llegir lletres molt petites.</para>
 
 <para
 ><guilabel
@@ -1470,11 +1470,11 @@ the world. As a default the encoding configured for the whole system is used.</p
 
 <sect2 id="configure-appearance-fonts">
 <title
->Tipus de lletra</title>
+>Lletres</title>
 
 <screenshot>
 <screeninfo
->Aparença dels tipus de lletra</screeninfo>
+>Aparença de les lletres</screeninfo>
   <mediaobject>
     <imageobject>
       <imagedata fileref="appearancefonts.png" format="PNG"/>
@@ -1485,7 +1485,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </textobject>
     <caption>
       <para
->La pestanya Tipus de lletra - Aparença</para>
+>La pestanya Lletra - Aparença</para>
     </caption>
   </mediaobject>
 </screenshot>
@@ -1494,24 +1494,24 @@ the world. As a default the encoding configured for the whole system is used.</p
 ><!-- add whitespace -->
 
 <para
->Aquesta secció permet personalitzar els tipus de lletra que empra el &kmail;. Seleccioneu <guilabel
->Empra tipus de lletra personalitzats</guilabel
+>Aquesta secció permet personalitzar les lletres que empra el &kmail;. Seleccioneu <guilabel
+>Empra lletres personalitzades</guilabel
 > per a activar el diàleg. Aplicar al: <guilabel
 >Cos del missatge</guilabel
-> establirà el tipus de lletra per a la subfinestra del lector. L'opció <guilabel
+> establirà la lletra per a la subfinestra del lector. L'opció <guilabel
 >Editor</guilabel
-> establirà el tipus de lletra en què es mostraran els missatges nous de text sense format mentre s'escriuen. <guilabel
+> establirà la lletra en què es mostraran els missatges nous de text sense format mentre s'escriuen. <guilabel
 >Llista de missatges</guilabel
-> canviarà el tipus de lletra emprada per a mostrar la llista de missatges. També podreu triar tipus de lletra especials per a les entrades Sense llegir, Important i Element d'acció de la llista de missatges. <guilabel
+> canviarà la lletra emprada per a mostrar la llista de missatges. També podreu triar lletres especials per a les entrades Sense llegir, Important i Element d'acció de la llista de missatges. <guilabel
 >Sortida de la impressió</guilabel
-> alterarà el tipus de lletra emprada en imprimir. <guilabel
->Tipus de lletra d'amplada fixa</guilabel
+> alterarà la lletra emprada en imprimir. <guilabel
+>Lletra d'amplada fixa</guilabel
 > afectarà la visualització d'alguns missatges en &HTML;.</para>
 
 <para
 ><guilabel
->Mostra només els tipus de lletra monoespai</guilabel
-> restringeix el nombre de tipus de lletra disponibles. Quan estigui activa aquesta opció, només es mostraran els noms dels tipus de lletra d'amplada fixa.</para>
+>Mostra només les lletres monoespai</guilabel
+> restringeix el nombre de lletres disponibles. Quan estigui activa aquesta opció, només es mostraran els noms de les lletres d'amplada fixa.</para>
 <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -1934,7 +1934,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Visible de manera predeterminada</guilabel
 > estarà marcada, desmarqueu-la només si voleu que la columna estigui disponible sobre el menú contextual per a la barra d'ordenació clicable. A continuació, arrossegueu l'etiqueta apropiada des dels <guilabel
 >Elements de contingut</guilabel
-> al quadre de vista de la columna que hi ha a sota la barra de columnes, &pex;, si trieu afegir una columna de mida, arrossegueu l'etiqueta de mida fins a sota de la columna Mida. Continueu fent això fins que tingueu totes les columnes que desitgeu. Podeu canviar el tipus de lletra i el color dels elements de la columna utilitzant l'àrea de vista mitjançant el menú del &BDR;. Moveu, suprimiu i canvieu la mida de les columnes mitjançant el menú del &BDR; a la barra de columnes.</para>
+> al quadre de vista de la columna que hi ha a sota la barra de columnes, &pex;, si trieu afegir una columna de mida, arrossegueu l'etiqueta de mida fins a sota de la columna Mida. Continueu fent això fins que tingueu totes les columnes que desitgeu. Podeu canviar la lletra i el color dels elements de la columna utilitzant l'àrea de vista mitjançant el menú del &BDR;. Moveu, suprimiu i canvieu la mida de les columnes mitjançant el menú del &BDR; a la barra de columnes.</para>
 
 <para
 >La pestanya <guilabel
@@ -2046,11 +2046,11 @@ the world. As a default the encoding configured for the whole system is used.</p
     <varlistentry>
         <term
 ><guilabel
->Canvia el tipus de lletra:</guilabel
+>Canvia la lletra:</guilabel
 ></term>
         <listitem
 ><para
->Podeu seleccionar un tipus de lletra en negreta o <emphasis
+>Podeu seleccionar una lletra en negreta o <emphasis
 >cursiva</emphasis
 >.</para
 ></listitem>

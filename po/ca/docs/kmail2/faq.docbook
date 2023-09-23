@@ -284,12 +284,12 @@
 ><guimenuitem
 >Aparença</guimenuitem
 ><guimenuitem
->Tipus de lletra</guimenuitem
+>Lletra</guimenuitem
 ></menuchoice
 > podeu seleccionar <guilabel
->Empra tipus de lletra personalitzats</guilabel
-> per a canviar la configuració per a la llista de missatges. També podreu establir la mida del tipus de lletra en el diàleg <guilabel
->Empra tipus de lletra personalitzats</guilabel
+>Empra lletres personalitzades</guilabel
+> per a canviar la configuració per a la llista de missatges. També podreu establir la mida de la lletra en el diàleg <guilabel
+>Empra lletres personalitzades</guilabel
 >.</para>
     <para
 >&nbsp;</para>
