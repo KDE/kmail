@@ -86,7 +86,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
         KMessageBox::error(mParentWidget,
                            i18n("Could not start certificate manager; "
                                 "please make sure you have Kleopatra properly installed."),
-                           i18n("KMail Error"));
+                           i18nc("@title:window", "KMail Error"));
     }
 }
 
@@ -101,7 +101,7 @@ void KMLaunchExternalComponent::slotImportWizard()
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the import wizard. "
                                 "Please make sure you have ImportWizard properly installed."),
-                           i18n("Unable to start import wizard"));
+                           i18nc("@title:window", "Unable to start import wizard"));
     }
 }
 
@@ -116,7 +116,7 @@ void KMLaunchExternalComponent::slotExportData()
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"PIM Data Exporter\" program. "
                                 "Please check your installation."),
-                           i18n("Unable to start \"PIM Data Exporter\" program"));
+                           i18nc("@title:window", "Unable to start \"PIM Data Exporter\" program"));
     }
 }
 
@@ -136,7 +136,7 @@ void KMLaunchExternalComponent::slotImport()
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "
                                 "Please make sure you have ImportWizard properly installed."),
-                           i18n("Unable to start ImportWizard"));
+                           i18nc("@title:window", "Unable to start ImportWizard"));
     }
 }
 
@@ -147,7 +147,7 @@ void KMLaunchExternalComponent::slotAccountWizard()
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),
-                           i18n("Unable to start account wizard"));
+                           i18nc("@title:window", "Unable to start account wizard"));
     }
 }
 

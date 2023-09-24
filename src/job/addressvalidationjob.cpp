@@ -77,13 +77,13 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
                          "Distribution lists %2 are empty, they cannot be used.",
                          numberOfDistributionList,
                          listOfDistributionList);
-        KMessageBox::error(mParentWidget, errorMsg, i18n("Invalid Email Address"));
+        KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
         mIsValid = false;
     } else {
         if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
             const QString errorMsg(QLatin1String("<qt><p><b>") + brokenAddress + QLatin1String("</b></p><p>")
                                    + KEmailAddress::emailParseResultToString(errorCode) + QLatin1String("</p></qt>"));
-            KMessageBox::error(mParentWidget, errorMsg, i18n("Invalid Email Address"));
+            KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
             mIsValid = false;
         }
     }

@@ -167,7 +167,7 @@ void ArchiveFolderDialog::slotAccepted()
     }
 
     if (!mFolderRequester->hasCollection()) {
-        KMessageBox::information(this, i18n("Please select the folder that should be archived."), i18n("No folder selected"));
+        KMessageBox::information(this, i18n("Please select the folder that should be archived."), i18nc("@title:window", "No folder selected"));
         return;
     }
 

@@ -4731,7 +4731,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                                                               i18n("Use of HTML in mail will make you more vulnerable to "
                                                                    "\"spam\" and may increase the likelihood that your system will be "
                                                                    "compromised by other present and anticipated security exploits."),
-                                                              i18n("Security Warning"),
+                                                              i18nc("@title:window", "Security Warning"),
                                                               KGuiItem(i18n("Use HTML")),
                                                               KStandardGuiItem::cancel(),
                                                               QStringLiteral("OverrideHtmlWarning"),

@@ -59,7 +59,9 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
         item = nullptr;
     }
     if (job->error()) {
-        KMessageBox::error(mParent, i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()), i18n("Error while removing duplicates"));
+        KMessageBox::error(mParent,
+                           i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()),
+                           i18nc("@title:window", "Error while removing duplicates"));
     }
     deleteLater();
 }

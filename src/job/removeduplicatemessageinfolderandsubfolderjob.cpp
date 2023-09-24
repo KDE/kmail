@@ -94,7 +94,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
         qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
         KMessageBox::error(mParentWidget,
                            i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()),
-                           i18n("Error while removing duplicates"));
+                           i18nc("@title:window", "Error while removing duplicates"));
     }
 
     deleteLater();

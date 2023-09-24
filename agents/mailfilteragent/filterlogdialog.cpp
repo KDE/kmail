@@ -328,7 +328,7 @@ void FilterLogDialog::slotUser2()
                                     "\"%2\" is the detailed error description.",
                                     fileName.at(0),
                                     QString::fromLocal8Bit(strerror(errno))),
-                               i18n("KMail Error"));
+                               i18nc("@title:window", "KMail Error"));
         }
     }
     delete fdlg;

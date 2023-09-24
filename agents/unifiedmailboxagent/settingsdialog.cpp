@@ -98,7 +98,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             const auto mailbox = item->data().value<UnifiedMailbox *>();
             if (KMessageBox::warningTwoActions(this,
                                                i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
-                                               i18n("Really Remove?"),
+                                               i18nc("@title:window", "Really Remove?"),
                                                KStandardGuiItem::remove(),
                                                KStandardGuiItem::cancel())
                 == KMessageBox::ButtonCode::PrimaryAction) {

@@ -747,7 +747,7 @@ void IdentityDialog::slotAccepted()
     // Validate email addresses
     const QString email = mEmailEdit->text().trimmed();
     if (email.isEmpty()) {
-        KMessageBox::error(this, i18n("You must provide an email for this identity."), i18n("Empty Email Address"));
+        KMessageBox::error(this, i18n("You must provide an email for this identity."), i18nc("@title:window", "Empty Email Address"));
         return;
     }
     if (!KEmailAddress::isValidSimpleAddress(email)) {
@@ -845,7 +845,7 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
     if (err) {
         if (KMessageBox::warningContinueCancel(this,
                                                msg,
-                                               i18n("Email Address Not Found in Key/Certificates"),
+                                               i18nc("@title:window", "Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
                                                QStringLiteral("warn_email_not_in_certificate"))

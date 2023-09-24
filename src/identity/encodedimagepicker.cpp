@@ -129,7 +129,7 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
     const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob *>(job);
 
     if (searchJob->contacts().isEmpty()) {
-        KMessageBox::information(this, i18n("You do not have your own contact defined in the address book."), i18n("No Picture"));
+        KMessageBox::information(this, i18n("You do not have your own contact defined in the address book."), i18nc("@title:window", "No Picture"));
         return;
     }
 
@@ -139,7 +139,7 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
         const QImage photo = contact.photo().data();
 
         if (photo.isNull()) {
-            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
+            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18nc("@title:window", "No Picture"));
         } else {
             Q_EMIT imageSelected(photo);
         }
@@ -147,7 +147,7 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
         const QUrl url(contact.photo().url());
 
         if (url.isEmpty()) {
-            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18n("No Picture"));
+            KMessageBox::information(this, i18n("No picture set for your address book entry."), i18nc("@title:window", "No Picture"));
         } else {
             setFromFile(url);
         }

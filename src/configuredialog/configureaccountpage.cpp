@@ -216,7 +216,7 @@ void AccountsPageReceivingTab::slotAddMailAccount()
         KMessageBox::error(this,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),
-                           i18n("Unable to start account wizard"));
+                           i18nc("@title:window", "Unable to start account wizard"));
     }
 }
 

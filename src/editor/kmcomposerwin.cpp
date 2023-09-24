@@ -1565,7 +1565,7 @@ void KMComposerWin::slotToggleMenubar(bool dontShowWarning)
                                          i18n("<qt>This will hide the menu bar completely."
                                               " You can show it again by typing %1.</qt>",
                                               accel),
-                                         i18n("Hide menu bar"),
+                                         i18nc("@title:window", "Hide menu bar"),
                                          QStringLiteral("HideMenuBarWarning"));
             }
             menuBar()->hide();
@@ -2071,7 +2071,7 @@ bool KMComposerWin::queryClose()
 
         const int rc = KMessageBox::warningTwoActionsCancel(this,
                                                             i18n("Do you want to save the message for later or discard it?"),
-                                                            i18n("Close Composer"),
+                                                            i18nc("@title:window", "Close Composer"),
                                                             KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
                                                             KStandardGuiItem::discard(),
                                                             KStandardGuiItem::cancel());
@@ -2139,7 +2139,8 @@ void KMComposerWin::slotSendFailed(const QString &msg, MessageComposer::Composer
     if (!msg.isEmpty()) {
         KMessageBox::error(mMainWidget,
                            msg,
-                           (type == MessageComposer::ComposerViewBase::AutoSave) ? i18n("Autosave Message Failed") : i18n("Sending Message Failed"));
+                           (type == MessageComposer::ComposerViewBase::AutoSave) ? i18nc("@title:window", "Autosave Message Failed")
+                                                                                 : i18nc("@title:window", "Sending Message Failed"));
     }
 }
 
@@ -2412,7 +2413,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         }
         attName = attName.trimmed();
         if (attName.isEmpty()) {
-            KMessageBox::error(this, i18n("Attachment name can't be empty"), i18n("Invalid Attachment Name"));
+            KMessageBox::error(this, i18n("Attachment name can't be empty"), i18nc("@title:window", "Invalid Attachment Name"));
 
             return true;
         }
@@ -2634,7 +2635,7 @@ void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
                                     "<p>Please select the key(s) to use "
                                     "in the identity configuration.</p>"
                                     "</qt>"),
-                               i18n("Undefined Encryption Key"));
+                               i18nc("@title:window", "Undefined Encryption Key"));
             setModified(wasModified);
         }
         encrypt = false;
@@ -2697,7 +2698,7 @@ void KMComposerWin::setSigning(bool sign, bool setByUser)
                                     "<p>Please select the key to use "
                                     "in the identity configuration.</p>"
                                     "</qt>"),
-                               i18n("Undefined Signing Key"));
+                               i18nc("@title:window", "Undefined Signing Key"));
             setModified(wasModified);
         }
         sign = false;
@@ -2873,7 +2874,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                 const int rc = KMessageBox::questionTwoActions(this,
                                                                i18n("To: field is empty. "
                                                                     "Send message anyway?"),
-                                                               i18n("No To: specified"),
+                                                               i18nc("@title:window", "No To: specified"),
                                                                KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
                                                                KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
                 if (rc == KMessageBox::ButtonCode::SecondaryAction) {
@@ -2887,7 +2888,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
             const int rc = KMessageBox::questionTwoActions(this,
                                                            i18n("You did not specify a subject. "
                                                                 "Send message anyway?"),
-                                                           i18n("No Subject Specified"),
+                                                           i18nc("@title:window", "No Subject Specified"),
                                                            KGuiItem(i18n("S&end as Is"), QStringLiteral("mail-send")),
                                                            KGuiItem(i18n("&Specify the Subject"), QStringLiteral("edit-rename")));
             if (rc == KMessageBox::ButtonCode::SecondaryAction) {
@@ -3126,7 +3127,7 @@ void KMComposerWin::confirmBeforeSend()
 {
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
                                                         i18n("About to send email..."),
-                                                        i18n("Send Confirmation"),
+                                                        i18nc("@title:window", "Send Confirmation"),
                                                         KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
                                                         KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
 

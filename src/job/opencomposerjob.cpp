@@ -114,7 +114,7 @@ void OpenComposerJob::slotOpenComposer()
         if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
-                                                               i18n("Attach Folder"),
+                                                               i18nc("@title:window", "Attach Folder"),
                                                                KGuiItem(i18nc("@action:button", "Attach"), QStringLiteral("dialog-ok")),
                                                                KGuiItem(i18nc("@action:button", "Do Not Attach"), QStringLiteral("dialog-cancel")));
             if (answer == KMessageBox::ButtonCode::SecondaryAction) {

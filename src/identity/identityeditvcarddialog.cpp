@@ -56,7 +56,7 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
     }
     const int answer = KMessageBox::questionTwoActions(this,
                                                        i18n("Are you sure you want to delete this vCard?"),
-                                                       i18n("Delete vCard"),
+                                                       i18nc("@title:window", "Delete vCard"),
                                                        KStandardGuiItem::del(),
                                                        KStandardGuiItem::cancel());
     if (answer == KMessageBox::ButtonCode::PrimaryAction) {
@@ -76,7 +76,7 @@ void IdentityEditVcardDialog::deleteCurrentVcard(bool deleteOnDisk)
             QFile file(mVcardFileName);
             if (file.exists()) {
                 if (!file.remove()) {
-                    KMessageBox::error(this, i18n("We cannot delete vCard file."), i18n("Delete vCard"));
+                    KMessageBox::error(this, i18n("We cannot delete vCard file."), i18nc("@title:window", "Delete vCard"));
                 }
             }
         }

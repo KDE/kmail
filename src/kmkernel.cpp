@@ -940,7 +940,7 @@ bool KMKernel::askToGoOnline()
         int rc = KMessageBox::questionTwoActions(KMKernel::self()->mainWin(),
                                                  i18n("KMail is currently in offline mode. "
                                                       "How do you want to proceed?"),
-                                                 i18n("Online/Offline"),
+                                                 i18nc("@title:window", "Online/Offline"),
                                                  KGuiItem(i18n("Work Online")),
                                                  KGuiItem(i18n("Work Offline")));
 
