@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-21 00:45+0000\n"
-"PO-Revision-Date: 2023-08-20 10:48+0200\n"
+"PO-Revision-Date: 2023-09-23 07:40+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.04.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -1803,7 +1803,7 @@ msgstr "Plik &archiwum:"
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "Plik archiwum (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -2502,6 +2502,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Twój wybrany klucz PGP (%1) nie istnieje w twoim pęku kluczy lub nie nadaje "
+"się do szyfrowania."
 
 #: editor/kmcomposerwin.cpp:3475
 #, kde-format
@@ -2510,6 +2512,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Twój wybrany klucz PGP (%1) nie istnieje w twoim pęku kluczy lub nie nadaje "
+"się do popisywania."
 
 #: editor/kmcomposerwin.cpp:3491
 #, kde-format
@@ -2518,6 +2522,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Twój wybrany klucz SMIME (%1) nie istnieje w twoim pęku kluczy lub nie "
+"nadaje się do szyfrowania."
 
 #: editor/kmcomposerwin.cpp:3504
 #, kde-format
@@ -2526,44 +2532,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Twój wybrany klucz SMIME (%1) nie istnieje w twoim pęku kluczy lub nie "
+"nadaje się do popisywania."
 
 #: editor/kmcomposerwin.cpp:3677
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Zaszyfruj"
 
 #: editor/kmcomposerwin.cpp:3679
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "&Nie szyfruj"
+msgstr "Nie szyfruj"
 
 #: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nie znaleziono klucza dla odbiorcy."
 
 #: editor/kmcomposerwin.cpp:3841
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Dla tego odbiorcy używany jest klucz autocrypt. Klucz ten jest "
-"niepotwierdzony."
+"Dla tego odbiorcy używany jest klucz autocrypt. Dostaliśmy go od pozostałych "
+"odbiorców. Klucz ten jest niepotwierdzony."
 
 #: editor/kmcomposerwin.cpp:3845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2573,10 +2574,7 @@ msgstr ""
 "niepotwierdzony. Odbiorca woli zaszyfrowane odpowiedzi."
 
 #: editor/kmcomposerwin.cpp:3849
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2593,6 +2591,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Klucz szyfrowania nie jest zaufany. Nie ma wystarczającej poprawności. "
+"Możesz podpisać ten klucz, jeśli sprawdziłeś jego odcisk innym kanałem. "
+"Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3884
 #, kde-format
@@ -2603,20 +2604,20 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Klucz szyfrowania nie jest zaufany. Nie został nigdzie użyty, aby móc "
+"przypuścić, że znajduje się w posiadaniu statecznej osoby. Poprzez ciągłe "
+"używanie tego klucza, zyska on na zaufaniu. Możesz także podpisać ten klucz, "
+"jeśli sprawdziłeś jego odcisk innym kanałem. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3892
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Dla tego odbiorcy będzie stosowane szyfrowanie o niskim poziomie "
-"bezpieczeństwa (klucz szyfrowania jest w niezaufany) Naciśnij na ikonę po "
-"szczegóły."
+"Klucz szyfrowania jest w niezaufany. Zawiera sprzeczne dane TOFU. Naciśnij "
+"na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3898
 #, kde-format
@@ -2625,20 +2626,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Klucz szyfrowania jest w niezaufany. Zawiera nieznaną poprawność w danych "
+"TOFU. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3904
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Dla tego odbiorcy będzie stosowane szyfrowanie o niskim poziomie "
-"bezpieczeństwa (klucz szyfrowania jest w niezaufany) Naciśnij na ikonę po "
-"szczegóły."
+"Klucz szyfrowania jest w niezaufany. Klucz jest oznaczony jako zły. Naciśnij "
+"na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3912
 #, kde-format
@@ -2649,6 +2648,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Klucz szyfrowania ma tylko marginalne zaufanie i nie został użyty "
+"dostateczną liczbę razy, żeby przypuszczać, że znajduje się w posiadaniu "
+"statecznej osoby. Poprzez ciągłe używanie tego klucza, zyska on na zaufaniu. "
+"Możesz także podpisać ten klucz, jeśli sprawdziłeś jego odcisk innym "
+"kanałem. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3920
 #, kde-format
@@ -2657,6 +2661,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Klucz szyfrowania ma tylko marginalne zaufanie. Możesz podpisać ten klucz, "
+"jeśli sprawdziłeś jego odcisk innym kanałem. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3926
 #, kde-format
@@ -2667,34 +2673,31 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Klucz szyfrowania ma tylko marginalne zaufanie, lecz został użyty już tyle "
+"razy, że prawdopodobnie znajduje się w posiadaniu statecznej osoby. Poprzez "
+"ciągłe używanie tego klucza, zyska on na zaufaniu. Możesz także podpisać ten "
+"klucz, jeśli sprawdziłeś jego odcisk innym kanałem. Naciśnij na ikonę po "
+"szczegóły."
 
 #: editor/kmcomposerwin.cpp:3934
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Dla tego odbiorcy będzie stosowane szyfrowanie o wysokim poziomie "
-"bezpieczeństwa (klucz szyfrowania jest w pełni zaufany). Naciśnij na ikonę "
-"po szczegóły."
+"Klucz szyfrowania jest w pełni zaufany. Możesz zwiększyć poziom "
+"bezpieczeństwa, podpisując klucz. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:3939
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Dla tego odbiorcy będzie stosowane szyfrowanie o wysokim poziomie "
-"bezpieczeństwa (klucz szyfrowania jest w pełni zaufany). Naciśnij na ikonę "
-"po szczegóły."
+"Klucz szyfrowania ma najwyższy poziom zaufania, lub jest podpisany przez "
+"inny klucz o takim poziomie zaufania. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:4327
 #, kde-format
@@ -3969,7 +3972,7 @@ msgstr "&Widok"
 #: kmail_part.rc:97 kmmainwin.rc:97
 #, kde-format
 msgid "&Go"
-msgstr "&Idź"
+msgstr "&Przejdź"
 
 #. i18n: ectx: Menu (folder)
 #: kmail_part.rc:111 kmmainwin.rc:111
@@ -4119,11 +4122,10 @@ msgid "Deleting messages"
 msgstr "Usuwanie wiadomości"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Wybierz załącznik:"
+msgstr "Usuwanie załączników"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4626,26 +4628,26 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Zaznaczona wiadomość jest zaszyfrowana. Obecnie nie ma możliwości usuwania "
+"załączników z takich wiadomości."
 msgstr[1] ""
+"Zaznaczone wiadomości są zaszyfrowane. Obecnie nie ma możliwości usuwania "
+"załączników z takich wiadomości."
 msgstr[2] ""
+"Zaznaczone wiadomości są zaszyfrowane. Obecnie nie ma możliwości usuwania "
+"załączników z takich wiadomości."
 
 #: kmmainwidget.cpp:2366
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Usuń załączniki z wiadomości zaszyfrowanej"
+msgstr[1] "Usuń załączniki z wiadomości zaszyfrowanych"
+msgstr[2] "Usuń załączniki z wiadomości zaszyfrowanych"
 
 #: kmmainwidget.cpp:2371
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4653,14 +4655,14 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Czy na pewno usunąć wybraną wiadomość?<br/> Nie będzie można jej "
-"odtworzyć.</qt>"
+"<html><p>Czy na pewno usunąć wszystkie załączniki z zaznaczonej wiadomości?"
+"<br />Nie będzie można cofnąć tego działania.</p></html>"
 msgstr[1] ""
-"<qt>Czy na pewno usunąć %1 wybrane wiadomości?<br/> Nie będzie można ich "
-"odtworzyć.</qt>"
+"<html><p>Czy na pewno usunąć wszystkie załączniki z %1 zaznaczonych "
+"wiadomości?<br />Nie będzie można cofnąć tego działania.</p></html>"
 msgstr[2] ""
-"<qt>Czy na pewno usunąć %1 wybranych wiadomości?<br/>Nie będzie można ich "
-"odtworzyć.</qt>"
+"<html><p>Czy na pewno usunąć wszystkie załączniki z %1 zaznaczonych "
+"wiadomości?<br />Nie będzie można cofnąć tego działania.</p></html>"
 
 #: kmmainwidget.cpp:2378
 #, kde-format
@@ -4668,6 +4670,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Pamiętaj, że usunięcie załącznika z kryptograficznie podpisanej "
+"wiadomości unieważni jej podpisanie.</p></html>"
 
 #: kmmainwidget.cpp:2383
 #, kde-format
@@ -4675,13 +4679,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Obecnie nie ma możliwości usuwania załączników z wiadomości "
+"zaszyfrowanych.<br />Wiadomości takie będą pomijane.</p></html>"
 
 #: kmmainwidget.cpp:2388
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Wybierz załącznik:"
+msgstr "Usuń załączniki"
 
 #: kmmainwidget.cpp:2879
 #, kde-format
@@ -4832,7 +4837,7 @@ msgstr "Ustawi&enia usuwania starych wiadomości"
 #: kmmainwidget.cpp:3101
 #, kde-format
 msgid "&Archive Folder..."
-msgstr "&Archiwizuj katalog..."
+msgstr "Z&archiwizuj katalog..."
 
 #: kmmainwidget.cpp:3109
 #, kde-format
@@ -4956,11 +4961,10 @@ msgid "Save A&ttachments..."
 msgstr "&Zapisz załączniki..."
 
 #: kmmainwidget.cpp:3239
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Zapisz wszystkie załączniki..."
+msgstr "Usuń wszystkie załączniki"
 
 #: kmmainwidget.cpp:3247
 #, kde-format
@@ -5029,7 +5033,7 @@ msgstr "&Następna wiadomość"
 #: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Go to the next message"
-msgstr "Idź do następnej wiadomości"
+msgstr "Przejdź do następnej wiadomości"
 
 #: kmmainwidget.cpp:3302
 #, kde-format
@@ -5045,7 +5049,7 @@ msgstr "Następna"
 #: kmmainwidget.cpp:3311
 #, kde-format
 msgid "Go to the next unread message"
-msgstr "Idź do następnej nieprzeczytanej wiadomości"
+msgstr "Przejdź do następnej nieprzeczytanej wiadomości"
 
 #: kmmainwidget.cpp:3315
 #, kde-format
@@ -5055,7 +5059,7 @@ msgstr "&Poprzednia wiadomość"
 #: kmmainwidget.cpp:3317
 #, kde-format
 msgid "Go to the previous message"
-msgstr "Idź do poprzedniej nieprzeczytanej wiadomości"
+msgstr "Przejdź do poprzedniej nieprzeczytanej wiadomości"
 
 #: kmmainwidget.cpp:3322
 #, kde-format
@@ -5071,7 +5075,7 @@ msgstr "Poprzednia"
 #: kmmainwidget.cpp:3331
 #, kde-format
 msgid "Go to the previous unread message"
-msgstr "Idź do poprzedniej nieprzeczytanej wiadomości"
+msgstr "Przejdź do poprzedniej nieprzeczytanej wiadomości"
 
 #: kmmainwidget.cpp:3335
 #, kde-format
@@ -5081,7 +5085,7 @@ msgstr "Następny nieprzeczytany &katalog"
 #: kmmainwidget.cpp:3341
 #, kde-format
 msgid "Go to the next folder with unread messages"
-msgstr "Idź do następnego katalogu z nieprzeczytanymi wiadomościami"
+msgstr "Przejdź do następnego katalogu z nieprzeczytanymi wiadomościami"
 
 #: kmmainwidget.cpp:3344
 #, kde-format
@@ -5091,7 +5095,7 @@ msgstr "Poprzedni nieprzeczytany katal&og"
 #: kmmainwidget.cpp:3350
 #, kde-format
 msgid "Go to the previous folder with unread messages"
-msgstr "Idź do poprzedniego katalogu z nieprzeczytanymi wiadomościami"
+msgstr "Przejdź do poprzedniego katalogu z nieprzeczytanymi wiadomościami"
 
 #: kmmainwidget.cpp:3354
 #, kde-format
@@ -5102,7 +5106,7 @@ msgstr "Następny nieprze&czytany tekst"
 #: kmmainwidget.cpp:3357
 #, kde-format
 msgid "Go to the next unread text"
-msgstr "Idź do następnego nieprzeczytanego tekstu"
+msgstr "Przejdź do następnego nieprzeczytanego tekstu"
 
 #: kmmainwidget.cpp:3359
 #, kde-format
@@ -5926,12 +5930,10 @@ msgid "Export to PDF..."
 msgstr "Wyeksportuj do PDFa..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Przenieś wiadomość"
+msgstr "Zarchiwizuj wiadomość"
 
 #: messageactions.cpp:373
 #, kde-format

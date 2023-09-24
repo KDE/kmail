@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-21 00:45+0000\n"
-"PO-Revision-Date: 2023-09-21 15:15+0200\n"
+"PO-Revision-Date: 2023-09-22 11:23+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -283,8 +283,7 @@ msgstr "Pedaç d'una fallada a Solaris"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
-"Elecció dels tipus de lletra per als missatges nous/sense llegir/importants"
+msgstr "Elecció de les lletres per als missatges nous/sense llegir/importants"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
@@ -712,7 +711,7 @@ msgstr "General"
 #: configuredialog/configureappearancepage.cpp:92
 #, kde-format
 msgid "Fonts"
-msgstr "Tipus de lletra"
+msgstr "Lletres"
 
 #: configuredialog/configureappearancepage.cpp:98
 #, kde-format
@@ -753,7 +752,7 @@ msgstr "Llista de missatges - Missatges amb un element d'acció"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
-msgstr "Tipus de lletra fixa"
+msgstr "Lletra d'amplària fixa"
 
 #: configuredialog/configureappearancepage.cpp:136
 msgid "Composer"
@@ -766,7 +765,7 @@ msgstr "Eixida de la impressió"
 #: configuredialog/configureappearancepage.cpp:148
 #, kde-format
 msgid "&Use custom fonts"
-msgstr "&Utilitza tipus de lletra personalitzats"
+msgstr "&Utilitza lletres personalitzades"
 
 #: configuredialog/configureappearancepage.cpp:166
 #, kde-format
@@ -2052,7 +2051,7 @@ msgstr "Neteja els &espais"
 #: editor/kmcomposerwin.cpp:1362
 #, kde-format
 msgid "Use Fi&xed Font"
-msgstr "Utilitza un tipus de lletra fi&xa"
+msgstr "Utilitza una lletra d'amplària fi&xa"
 
 #: editor/kmcomposerwin.cpp:1368
 #, kde-format
