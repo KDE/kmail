@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2014-03-17 20:32+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -113,7 +113,9 @@ msgid ""
 msgstr ""
 
 #: filterlogdialog.cpp:331
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail Error"
+msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail klaida"
 

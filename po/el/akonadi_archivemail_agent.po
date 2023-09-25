@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2020-09-20 09:02+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Τροποποίηση αρχειοθήκης ηλ. αλληλογραφίας"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -182,18 +182,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Διαγραφή"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Αδυναμία προσθήκης δεύτερης αρχειοθήκης για αυτόν το φάκελο. Να γίνει "
 "τροποποίηση του υφιστάμενου."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Προσθήκη αρχειοθήκης ηλ. αλληλογραφίας"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -251,6 +246,9 @@ msgstr "Μήνες"
 #, kde-format
 msgid "Years"
 msgstr "Έτη"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Προσθήκη αρχειοθήκης ηλ. αλληλογραφίας"
 
 #~ msgid "Remove items"
 #~ msgstr "Αφαίρεση αντικειμένων"

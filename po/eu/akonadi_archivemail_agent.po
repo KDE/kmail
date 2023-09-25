@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-18 21:44+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Aldatu posta artxiboa"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -180,18 +180,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ezabatu elementuak"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Ezin du karpeta honetarako bigarren artxibo bat gehitu. Horren ordez, "
 "dagoena aldatu."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Gehitu posta artxiboa"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -250,6 +245,9 @@ msgstr "Hilabete"
 #, kde-format
 msgid "Years"
 msgstr "Urte"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Gehitu posta artxiboa"
 
 #~ msgid "Remove items"
 #~ msgstr "Kendu elementuak"

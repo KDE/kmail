@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-11 08:18+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -29,7 +29,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "არქივის ელფოსტის შეცვლა"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -178,17 +178,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "ჩანაწერების წაშლა"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "ამ საქაღალდისთვის მეორე მარქაფს ვერ დავამატებთ. საჭიროა არსებულის შეცვლა."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "არქივი ელფოსტის დამატება"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -245,3 +240,6 @@ msgstr "თვე"
 #, kde-format
 msgid "Years"
 msgstr "წელი"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "არქივი ელფოსტის დამატება"

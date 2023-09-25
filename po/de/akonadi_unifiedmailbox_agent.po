@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-11-16 00:47+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2022-12-13 23:34+0100\n"
 "Last-Translator: Frank Steinmetzger <dev-kde@felsenfleischer.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -39,7 +39,9 @@ msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Möchten Sie das einheitliche Postfach <b>%1</b> wirklich löschen?"
 
 #: settingsdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Really Remove?"
+msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Wirklich entfernen?"
 

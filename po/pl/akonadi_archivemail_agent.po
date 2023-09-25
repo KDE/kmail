@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-09-23 07:40+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -30,7 +30,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Zmień archiwum poczty"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -180,18 +180,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Usuń elementy"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Nie można dodać drugiego archiwum dla tego katalogu. Zamiast tego zmień już "
 "to istniejące."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Dodaj archiwum poczty"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -248,6 +243,9 @@ msgstr "Miesiące"
 #, kde-format
 msgid "Years"
 msgstr "Lata"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Dodaj archiwum poczty"
 
 #~ msgid "Remove items"
 #~ msgstr "Usuń elementy"

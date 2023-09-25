@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2022-10-01 14:59+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -36,7 +36,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Изменение почтового архива"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -187,18 +187,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Удаление элементов"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Невозможно добавить второй архив для этой папки, вместо этого измените "
 "существующий."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Добавление почтового архива"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -257,6 +252,9 @@ msgstr "месяцев"
 #, kde-format
 msgid "Years"
 msgstr "лет"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Добавление почтового архива"
 
 #~ msgid "Remove items"
 #~ msgstr "Удаление файлов"

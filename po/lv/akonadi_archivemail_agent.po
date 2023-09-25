@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2012-07-01 15:43+0300\n"
 "Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -30,7 +30,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modificēt arhivēto pastu"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
@@ -184,16 +184,11 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr ""
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr "Šajai mapei nevar pievienot otru arhīvu. Labojiet jau esošo."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Pievienot arhivēto pastu"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -250,6 +245,9 @@ msgstr "mēnešus"
 #, kde-format
 msgid "Years"
 msgstr ""
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Pievienot arhivēto pastu"
 
 #~ msgid "Remove items"
 #~ msgstr "Izņemt vienības"

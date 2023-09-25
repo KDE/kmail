@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-10 09:45+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Внесення змін до архівування пошти"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -182,18 +182,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Вилучення записів"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Не можна додавати ще один архів для цієї теки. Слід внести зміни до "
 "поточного архіву."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Додавання архіву з поштою"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -252,6 +247,9 @@ msgstr "місяці"
 #, kde-format
 msgid "Years"
 msgstr "роки"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Додавання архіву з поштою"
 
 #~ msgid "Remove items"
 #~ msgstr "Вилучити елементи"

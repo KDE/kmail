@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2020-01-02 11:42+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Kirjaarhiivi muutmine"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -179,17 +179,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Kustuta"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Teist arhiivi ei saa selle kausta puhul lisada. Muuda parem olemasolevat."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Kirjaarhiivi lisamine"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -248,6 +243,9 @@ msgstr "kuud"
 #, kde-format
 msgid "Years"
 msgstr "aastat"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Kirjaarhiivi lisamine"
 
 #~ msgid "Remove items"
 #~ msgstr "Elementide eemaldamine"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-17 21:22+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Модифициране на архивна поща"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -177,18 +177,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Изтриване на елементи"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Не може да се добави втори архив за тази папка. Вместо това променете "
 "съществуващия."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Добавяне на архивна поща"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -246,3 +241,6 @@ msgstr "Месеци"
 #, kde-format
 msgid "Years"
 msgstr "Години"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Добавяне на архивна поща"

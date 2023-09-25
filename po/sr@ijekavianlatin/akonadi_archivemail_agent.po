@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -32,7 +32,7 @@ msgid "Modify Archive Mail"
 msgstr "Izmena arhive pošte"
 
 # >> @title:window
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
@@ -193,18 +193,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Obriši"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Ne mogu da dodam drugu arhivu za ovu fasciklu. Umesto toga menjam postojeću."
-
-# >> @title:window
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Dodavanje arhive pošte"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -262,6 +256,10 @@ msgstr "meseci"
 #, kde-format
 msgid "Years"
 msgstr "godina"
+
+# >> @title:window
+#~ msgid "Add Archive Mail"
+#~ msgstr "Dodavanje arhive pošte"
 
 # >> @title:window
 #~ msgid "Remove items"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -407,7 +407,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2409 kmreaderwin.cpp:305 kmsystemtray.cpp:45
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
 #: kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
@@ -730,6 +730,7 @@ msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Tidak dapat mencipta akaun"
 
@@ -1966,6 +1967,7 @@ msgstr "Pilih kekunci umum yang sepatutnya dilampirkan"
 #: dialog/archivefolderdialog.cpp:170
 #, fuzzy, kde-format
 #| msgid "No Folder Selected"
+msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Tiada Folder Dipilih"
 
@@ -2092,7 +2094,7 @@ msgid "Send"
 msgstr "&Hantar"
 
 #: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
-#: editor/kmcomposerwin.cpp:3131
+#: editor/kmcomposerwin.cpp:3132
 #, kde-format
 msgid "Send &Later"
 msgstr "Hantar &Kemudian"
@@ -2354,19 +2356,20 @@ msgid ""
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186 kmreadermainwin.cpp:524
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
 #, kde-format
+msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4054
+#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4055
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr "Baris: %1 "
 
-#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4056
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4057
 #, kde-format
 msgid " Column: %1 "
 msgstr "Lajur: %1 "
@@ -2425,64 +2428,69 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Anda ingin simpan mesej untuk digunakan kemudian atau buang mesej?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close Composer"
+msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Tutup Penggubah"
 
 #: editor/kmcomposerwin.cpp:2142
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
+msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Autosimpan Gagal"
 
-#: editor/kmcomposerwin.cpp:2142
+#: editor/kmcomposerwin.cpp:2143
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
+msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Autosimpan Gagal"
 
-#: editor/kmcomposerwin.cpp:2328
+#: editor/kmcomposerwin.cpp:2329
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "&Sisipkan Fail..."
 
-#: editor/kmcomposerwin.cpp:2393
+#: editor/kmcomposerwin.cpp:2394
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2394
+#: editor/kmcomposerwin.cpp:2395
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add as &Attachment"
 msgstr "Tambah sebagai Lampiran"
 
-#: editor/kmcomposerwin.cpp:2409 editor/kmcomposerwin.cpp:2513
+#: editor/kmcomposerwin.cpp:2410 editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Nama lampiran"
 
-#: editor/kmcomposerwin.cpp:2415
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2415
+#: editor/kmcomposerwin.cpp:2416
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
+msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Alamat E-mel Tidak Sah"
 
-#: editor/kmcomposerwin.cpp:2466
+#: editor/kmcomposerwin.cpp:2467
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Mesej Disulitkan"
 msgstr[1] "Mesej Disulitkan"
 
-#: editor/kmcomposerwin.cpp:2467
+#: editor/kmcomposerwin.cpp:2468
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add File as &Attachment"
@@ -2490,18 +2498,18 @@ msgid_plural "Add Files as &Attachment"
 msgstr[0] "Tambah sebagai Lampiran"
 msgstr[1] "Tambah sebagai Lampiran"
 
-#: editor/kmcomposerwin.cpp:2513
+#: editor/kmcomposerwin.cpp:2514
 #, fuzzy, kde-format
 #| msgid "Paste as Attac&hment"
 msgid "Insert clipboard text as attachment"
 msgstr "Tampalkan sebagai Lampi&ran"
 
-#: editor/kmcomposerwin.cpp:2610
+#: editor/kmcomposerwin.cpp:2611
 #, kde-format
 msgid "unnamed"
 msgstr "tak dinamakan"
 
-#: editor/kmcomposerwin.cpp:2630
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2514,12 +2522,14 @@ msgstr ""
 "yang hendak digunakan untuk tujuan tersebut (OpenPGP atau S/MIME) .</"
 "p><p>Pilih kekunci yang hendak digunakan dalam konfigurasi identiti.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2637
-#, kde-format
+#: editor/kmcomposerwin.cpp:2638
+#, fuzzy, kde-format
+#| msgid "Undefined Encryption Key"
+msgctxt "@title:window"
 msgid "Undefined Encryption Key"
 msgstr "Kekunci Penyulitan Tak Ditakrif"
 
-#: editor/kmcomposerwin.cpp:2693
+#: editor/kmcomposerwin.cpp:2694
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2530,12 +2540,14 @@ msgstr ""
 "digunakan terlebih dahulu supaya boleh menandatangani mesej ini.</p><p>Pilih "
 "kekunci yang hendak digunakan dalam konfigurasi identiti.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2700
-#, kde-format
+#: editor/kmcomposerwin.cpp:2701
+#, fuzzy, kde-format
+#| msgid "Undefined Signing Key"
+msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Kekunci Tandatangan Tak Ditakrif"
 
-#: editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2546,7 +2558,7 @@ msgstr ""
 "mengeset alamat e-mel untuk semua identiti supaya anda tidak perlu "
 "memasukkannya di setiap mesej"
 
-#: editor/kmcomposerwin.cpp:2868
+#: editor/kmcomposerwin.cpp:2869
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2558,43 +2570,46 @@ msgstr ""
 "Anda mesti nyatakan sekurang-kurangnya satu penerima samada di dalam medan "
 "Kepada: atau sebagai Sk atau sebagai SRk"
 
-#: editor/kmcomposerwin.cpp:2874
+#: editor/kmcomposerwin.cpp:2875
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Anda tidak menyatakan  subjek. Hantarkan jua mesej?"
 
-#: editor/kmcomposerwin.cpp:2876
+#: editor/kmcomposerwin.cpp:2877
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Tiada nama dinyatakan"
 
-#: editor/kmcomposerwin.cpp:2877 editor/kmcomposerwin.cpp:2891
+#: editor/kmcomposerwin.cpp:2878 editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid "S&end as Is"
 msgstr "H&antar seperti adanya"
 
-#: editor/kmcomposerwin.cpp:2878
+#: editor/kmcomposerwin.cpp:2879
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "&Nyatakan Subjek"
 
-#: editor/kmcomposerwin.cpp:2888
+#: editor/kmcomposerwin.cpp:2889
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Anda tidak menyatakan  subjek. Hantarkan jua mesej?"
 
-#: editor/kmcomposerwin.cpp:2890
-#, kde-format
+#: editor/kmcomposerwin.cpp:2891
+#, fuzzy, kde-format
+#| msgid "No Subject Specified"
+msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Tiada Subjek Dinyatakan"
 
-#: editor/kmcomposerwin.cpp:2892
+#: editor/kmcomposerwin.cpp:2893
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Nyatakan Subjek"
 
-#: editor/kmcomposerwin.cpp:2937
+#: editor/kmcomposerwin.cpp:2938
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2606,69 +2621,71 @@ msgstr ""
 "Anda mesti nyatakan sekurang-kurangnya satu penerima samada di dalam medan "
 "Kepada: atau sebagai Sk atau sebagai SRk"
 
-#: editor/kmcomposerwin.cpp:3128
+#: editor/kmcomposerwin.cpp:3129
 #, kde-format
 msgid "About to send email..."
 msgstr "Akan menghantar e-mel..."
 
-#: editor/kmcomposerwin.cpp:3129
-#, kde-format
+#: editor/kmcomposerwin.cpp:3130
+#, fuzzy, kde-format
+#| msgid "Send Confirmation"
+msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Hantar Pengesahan"
 
-#: editor/kmcomposerwin.cpp:3130
+#: editor/kmcomposerwin.cpp:3131
 #, kde-format
 msgid "&Send Now"
 msgstr "&Hantar Sekarang"
 
-#: editor/kmcomposerwin.cpp:3206
+#: editor/kmcomposerwin.cpp:3207
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3207
+#: editor/kmcomposerwin.cpp:3208
 #, fuzzy, kde-format
 #| msgid "No recipients"
 msgid "Too many recipients"
 msgstr "Tiada penerima"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Hantar Seperti Adanya"
 
-#: editor/kmcomposerwin.cpp:3209
+#: editor/kmcomposerwin.cpp:3210
 #, fuzzy, kde-format
 #| msgid "Additional Recipients"
 msgid "&Edit Recipients"
 msgstr "Penerima Tambahan"
 
-#: editor/kmcomposerwin.cpp:3246
+#: editor/kmcomposerwin.cpp:3247
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3248
+#: editor/kmcomposerwin.cpp:3249
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3249
+#: editor/kmcomposerwin.cpp:3250
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Lose Formatting"
 msgstr "Maklumat Log Masuk"
 
-#: editor/kmcomposerwin.cpp:3250
+#: editor/kmcomposerwin.cpp:3251
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3462
+#: editor/kmcomposerwin.cpp:3463
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2676,7 +2693,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3475
+#: editor/kmcomposerwin.cpp:3476
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2684,7 +2701,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3491
+#: editor/kmcomposerwin.cpp:3492
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2692,7 +2709,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3504
+#: editor/kmcomposerwin.cpp:3505
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2700,27 +2717,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3677
+#: editor/kmcomposerwin.cpp:3678
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Sulitkan"
 
-#: editor/kmcomposerwin.cpp:3679
+#: editor/kmcomposerwin.cpp:3680
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Sulitkan"
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3820
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3842
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2728,7 +2745,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3845
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2736,7 +2753,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3849
+#: editor/kmcomposerwin.cpp:3850
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2744,7 +2761,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3877
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2753,7 +2770,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3885
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2763,7 +2780,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3892
+#: editor/kmcomposerwin.cpp:3893
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2771,7 +2788,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3898
+#: editor/kmcomposerwin.cpp:3899
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2779,7 +2796,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3904
+#: editor/kmcomposerwin.cpp:3905
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2787,7 +2804,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3912
+#: editor/kmcomposerwin.cpp:3913
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2797,7 +2814,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3920
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2805,7 +2822,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3926
+#: editor/kmcomposerwin.cpp:3927
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2815,7 +2832,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3934
+#: editor/kmcomposerwin.cpp:3935
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2823,7 +2840,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3939
+#: editor/kmcomposerwin.cpp:3940
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2831,7 +2848,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4327
+#: editor/kmcomposerwin.cpp:4328
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Plugin Editor Information"
@@ -3085,7 +3102,9 @@ msgstr ""
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Picture"
+msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Tiada Gambar"
 
@@ -3614,11 +3633,11 @@ msgstr "&Gunakan akhiran id mesej kebiasaan"
 #: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Email Address"
+msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Alamat E-mel"
 
-#: identity/identitydialog.cpp:755 job/addressvalidationjob.cpp:80
-#: job/addressvalidationjob.cpp:86
+#: identity/identitydialog.cpp:755
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Alamat E-mel Tidak Sah"
@@ -3670,7 +3689,9 @@ msgstr ""
 "alamat e-mel yang dikonfigurasi dengan identiti ini (%1)."
 
 #: identity/identitydialog.cpp:848
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Email Address Not Found in Key/Certificates"
+msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Alamat E-mel Tidak Ditemui Dalam Kekunci/Sijil"
 
@@ -3725,6 +3746,7 @@ msgstr "Anda pasti ingin mengosongkan folder sampah?"
 #: identity/identityeditvcarddialog.cpp:79
 #, fuzzy, kde-format
 #| msgid "Deleted"
+msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Dihapuskan"
 
@@ -3923,6 +3945,13 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 msgstr[1] ""
 
+#: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
+#, fuzzy, kde-format
+#| msgid "Invalid Email Address"
+msgctxt "@title:window"
+msgid "Invalid Email Address"
+msgstr "Alamat E-mel Tidak Sah"
+
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, fuzzy, kde-format
 #| msgid "Identity Name"
@@ -3958,6 +3987,7 @@ msgstr ""
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Tidak dapat mencipta akaun"
 
@@ -3970,6 +4000,7 @@ msgstr "Anda pasti ingin mengosongkan folder sampah?"
 #: job/opencomposerjob.cpp:117
 #, fuzzy, kde-format
 #| msgid "New Folder"
+msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Folder Baru"
 
@@ -4064,17 +4095,19 @@ msgstr "Dihapuskan"
 msgid "Removing duplicates"
 msgstr "Buang Mesej Duplikasi"
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:63
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr ""
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove Duplicate Messages"
+msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr ""
+msgstr "Buang Mesej Duplikasi"
 
 #: job/saveasfilejob.cpp:26
 #, fuzzy, kde-format
@@ -4413,9 +4446,12 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
 #: kmkernel.cpp:943
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "View->attachments->"
+#| msgid "&Inline"
+msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr ""
+msgstr "&Dalam garisan"
 
 #: kmkernel.cpp:944 kmmainwidget.cpp:2420
 #, kde-format
@@ -4523,7 +4559,9 @@ msgid ""
 msgstr "Tidak dapat memulakan pengurus sijil; semak pemasangan anda."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail Error"
+msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Ralat KMail"
 
@@ -4535,9 +4573,10 @@ msgid ""
 "properly installed."
 msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 
-#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:310
+#: kmlaunchexternalcomponent.cpp:104
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Tidak dapat mencipta akaun"
 
@@ -4552,6 +4591,7 @@ msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 #: kmlaunchexternalcomponent.cpp:119
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Tidak dapat mencipta akaun"
 
@@ -4566,6 +4606,7 @@ msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 #: kmlaunchexternalcomponent.cpp:139
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Tidak dapat mencipta akaun"
 
@@ -4592,6 +4633,12 @@ msgstr "Jangan Stor Kata Laluan"
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
+
+#: kmmainwidget.cpp:310
+#, fuzzy, kde-format
+#| msgid "Unable to create account"
+msgid "Unable to start import wizard"
+msgstr "Tidak dapat mencipta akaun"
 
 #: kmmainwidget.cpp:1364
 #, kde-format
@@ -4678,7 +4725,7 @@ msgstr ""
 "terhadap  \"spam\" dan mungkin meningkatkan kemungkinan sistem diekploitasi "
 "dari segi keselamatan."
 
-#: kmmainwidget.cpp:1562 kmmainwidget.cpp:4734
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid "Security Warning"
 msgstr "Amaran Keselamatan"
@@ -5619,6 +5666,13 @@ msgstr ""
 "\" dan mungkin meningkatkan kemungkinan sistem dieksploit dari segi "
 "keselamatan."
 
+#: kmmainwidget.cpp:4734
+#, fuzzy, kde-format
+#| msgid "Security Warning"
+msgctxt "@title:window"
+msgid "Security Warning"
+msgstr "Amaran Keselamatan"
+
 #: kmmainwidget.cpp:4735
 #, kde-format
 msgid "Use HTML"
@@ -5694,6 +5748,11 @@ msgstr "Sampah"
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Alihkan mesej ke tong sampah"
+
+#: kmreadermainwin.cpp:524
+#, kde-format
+msgid "Hide menu bar"
+msgstr ""
 
 #: kmreadermainwin.cpp:607
 #, fuzzy, kde-format

@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -426,7 +426,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2409 kmreaderwin.cpp:305 kmsystemtray.cpp:45
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
 #: kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
@@ -743,6 +743,7 @@ msgstr ""
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Немагчыма стварыць рахунак"
 
@@ -1939,6 +1940,7 @@ msgstr "Вылучыце адчынены ключ, які варта ўклас
 #: dialog/archivefolderdialog.cpp:170
 #, fuzzy, kde-format
 #| msgid "No Folder Selected"
+msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Няма вылучаных тэчак"
 
@@ -2066,7 +2068,7 @@ msgid "Send"
 msgstr "Даслаць"
 
 #: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
-#: editor/kmcomposerwin.cpp:3131
+#: editor/kmcomposerwin.cpp:3132
 #, kde-format
 msgid "Send &Later"
 msgstr "Даслаць &пазней"
@@ -2331,19 +2333,20 @@ msgid ""
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186 kmreadermainwin.cpp:524
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
 #, kde-format
+msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4054
+#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4055
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Радок: %1 "
 
-#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4056
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4057
 #, kde-format
 msgid " Column: %1 "
 msgstr " Калонка: %1 "
@@ -2406,56 +2409,60 @@ msgstr "Захаваць паведамленне як чарнавік або �
 
 #: editor/kmcomposerwin.cpp:2074
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Зачыніць акно рэдактара"
 
 #: editor/kmcomposerwin.cpp:2142
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
+msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Аўтазапіс схібіў."
 
-#: editor/kmcomposerwin.cpp:2142
+#: editor/kmcomposerwin.cpp:2143
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
+msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Аўтазапіс схібіў."
 
-#: editor/kmcomposerwin.cpp:2328
+#: editor/kmcomposerwin.cpp:2329
 #, fuzzy, kde-format
 #| msgid "Insert File Content"
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Уставіць файл"
 
-#: editor/kmcomposerwin.cpp:2393
+#: editor/kmcomposerwin.cpp:2394
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2394
+#: editor/kmcomposerwin.cpp:2395
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add as &Attachment"
 msgstr "Дадаць як далучэнне"
 
-#: editor/kmcomposerwin.cpp:2409 editor/kmcomposerwin.cpp:2513
+#: editor/kmcomposerwin.cpp:2410 editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Назва далучэння:"
 
-#: editor/kmcomposerwin.cpp:2415
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2415
+#: editor/kmcomposerwin.cpp:2416
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
+msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "&Уключыць подпіс"
 
-#: editor/kmcomposerwin.cpp:2466
+#: editor/kmcomposerwin.cpp:2467
 #, fuzzy, kde-format
 #| msgid "Encrypted message"
 msgid "Add URL into Message"
@@ -2464,7 +2471,7 @@ msgstr[0] "Зашыфраванае паведамленне"
 msgstr[1] "Зашыфраванае паведамленне"
 msgstr[2] "Зашыфраванае паведамленне"
 
-#: editor/kmcomposerwin.cpp:2467
+#: editor/kmcomposerwin.cpp:2468
 #, fuzzy, kde-format
 #| msgid "Add as Attachment"
 msgid "Add File as &Attachment"
@@ -2473,17 +2480,17 @@ msgstr[0] "Дадаць як далучэнне"
 msgstr[1] "Дадаць як далучэнне"
 msgstr[2] "Дадаць як далучэнне"
 
-#: editor/kmcomposerwin.cpp:2513
+#: editor/kmcomposerwin.cpp:2514
 #, fuzzy, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Зьмяшчае далучэнне"
 
-#: editor/kmcomposerwin.cpp:2610
+#: editor/kmcomposerwin.cpp:2611
 #, kde-format
 msgid "unnamed"
 msgstr "безназоўны"
 
-#: editor/kmcomposerwin.cpp:2630
+#: editor/kmcomposerwin.cpp:2631
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>You have requested that messages be encrypted to yourself, but the "
@@ -2495,12 +2502,13 @@ msgstr ""
 "няма ключоў для шыфравання (OpenPGP або S/MIME).</p><p>Вылучыце ключы ў "
 "дыялогу налады профіля.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2637
+#: editor/kmcomposerwin.cpp:2638
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Undefined Encryption Key"
 msgstr "Не паказаны ключ шыфравання"
 
-#: editor/kmcomposerwin.cpp:2693
+#: editor/kmcomposerwin.cpp:2694
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2511,12 +2519,13 @@ msgstr ""
 "магчымасці падпісвання вашых паведамленняў.</p><p>Вы можаце паказаць "
 "выкарыстоўваны ключ у канфігурацыі профіля.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2700
+#: editor/kmcomposerwin.cpp:2701
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Не паказаны ключ подпісу"
 
-#: editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2860
 #, fuzzy, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2527,119 +2536,124 @@ msgstr ""
 "Акрамя таго, вы можаце паказаць свой адрас адпраўніка ва ўсіх профілях, каб "
 "не ўводзіць яго ўручную пры складанні кожнага ліста."
 
-#: editor/kmcomposerwin.cpp:2868
+#: editor/kmcomposerwin.cpp:2869
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Варта паказаць хоць бы аднаго адрасата."
 
-#: editor/kmcomposerwin.cpp:2874
+#: editor/kmcomposerwin.cpp:2875
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Вы не паказалі тэму. Адправіць паведамленне без тэмы?"
 
-#: editor/kmcomposerwin.cpp:2876
+#: editor/kmcomposerwin.cpp:2877
 #, fuzzy, kde-format
 #| msgid "No Name Specified"
+msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Імя не ўказаная"
 
-#: editor/kmcomposerwin.cpp:2877 editor/kmcomposerwin.cpp:2891
+#: editor/kmcomposerwin.cpp:2878 editor/kmcomposerwin.cpp:2892
 #, kde-format
 msgid "S&end as Is"
 msgstr "Д&аслаць як ёсць"
 
-#: editor/kmcomposerwin.cpp:2878
+#: editor/kmcomposerwin.cpp:2879
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "&Указаць тэму"
 
-#: editor/kmcomposerwin.cpp:2888
+#: editor/kmcomposerwin.cpp:2889
 #, fuzzy, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Вы не паказалі тэму. Адправіць паведамленне без тэмы?"
 
-#: editor/kmcomposerwin.cpp:2890
-#, kde-format
+#: editor/kmcomposerwin.cpp:2891
+#, fuzzy, kde-format
+#| msgid "No Subject Specified"
+msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Тэма не ўказаная"
 
-#: editor/kmcomposerwin.cpp:2892
+#: editor/kmcomposerwin.cpp:2893
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Указаць тэму"
 
-#: editor/kmcomposerwin.cpp:2937
+#: editor/kmcomposerwin.cpp:2938
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Варта паказаць хоць бы аднаго адрасата."
 
-#: editor/kmcomposerwin.cpp:3128
+#: editor/kmcomposerwin.cpp:3129
 #, fuzzy, kde-format
 msgid "About to send email..."
 msgstr "Паведамленне гатова да адпраўкі..."
 
-#: editor/kmcomposerwin.cpp:3129
-#, kde-format
+#: editor/kmcomposerwin.cpp:3130
+#, fuzzy, kde-format
+#| msgid "Send Confirmation"
+msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Даслаць пацверджанне"
 
-#: editor/kmcomposerwin.cpp:3130
+#: editor/kmcomposerwin.cpp:3131
 #, kde-format
 msgid "&Send Now"
 msgstr "&Даслаць зараз"
 
-#: editor/kmcomposerwin.cpp:3206
+#: editor/kmcomposerwin.cpp:3207
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3207
+#: editor/kmcomposerwin.cpp:3208
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "<адрасаты>"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Даслаць як ёсць"
 
-#: editor/kmcomposerwin.cpp:3209
+#: editor/kmcomposerwin.cpp:3210
 #, fuzzy, kde-format
 #| msgid "Additional Recipients"
 msgid "&Edit Recipients"
 msgstr "Дадатковыя адрасаты"
 
-#: editor/kmcomposerwin.cpp:3246
+#: editor/kmcomposerwin.cpp:3247
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3248
+#: editor/kmcomposerwin.cpp:3249
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3249
+#: editor/kmcomposerwin.cpp:3250
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Lose Formatting"
 msgstr "Даслаць пацверджанне"
 
-#: editor/kmcomposerwin.cpp:3250
+#: editor/kmcomposerwin.cpp:3251
 #, fuzzy, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Паведамленне ў выглядзе звычайнага тэксту"
 
-#: editor/kmcomposerwin.cpp:3462
+#: editor/kmcomposerwin.cpp:3463
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2647,7 +2661,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3475
+#: editor/kmcomposerwin.cpp:3476
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2655,7 +2669,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3491
+#: editor/kmcomposerwin.cpp:3492
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2663,7 +2677,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3504
+#: editor/kmcomposerwin.cpp:3505
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2671,27 +2685,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3677
+#: editor/kmcomposerwin.cpp:3678
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Зашыфраваць"
 
-#: editor/kmcomposerwin.cpp:3679
+#: editor/kmcomposerwin.cpp:3680
 #, fuzzy, kde-format
 #| msgid "Do &Not Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "&Не зашыфроўваць"
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3820
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3842
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2699,7 +2713,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3845
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2707,7 +2721,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3849
+#: editor/kmcomposerwin.cpp:3850
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2715,7 +2729,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3877
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2724,7 +2738,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3885
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2734,7 +2748,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3892
+#: editor/kmcomposerwin.cpp:3893
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2742,7 +2756,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3898
+#: editor/kmcomposerwin.cpp:3899
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2750,7 +2764,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3904
+#: editor/kmcomposerwin.cpp:3905
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2758,7 +2772,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3912
+#: editor/kmcomposerwin.cpp:3913
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2768,7 +2782,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3920
+#: editor/kmcomposerwin.cpp:3921
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2776,7 +2790,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3926
+#: editor/kmcomposerwin.cpp:3927
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2786,7 +2800,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3934
+#: editor/kmcomposerwin.cpp:3935
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2794,7 +2808,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3939
+#: editor/kmcomposerwin.cpp:3940
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2802,7 +2816,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4327
+#: editor/kmcomposerwin.cpp:4328
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -3059,7 +3073,9 @@ msgstr "Няма вашага кантакту ў вашай адраснай к
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Picture"
+msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Няма выявы"
 
@@ -3553,11 +3569,11 @@ msgstr "Паказаць свой суфікс у Message-Id"
 #: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Email Address"
+msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Адрас электроннай пошты"
 
-#: identity/identitydialog.cpp:755 job/addressvalidationjob.cpp:80
-#: job/addressvalidationjob.cpp:86
+#: identity/identitydialog.cpp:755
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Некарэктны адрас электроннай пошты"
@@ -3610,6 +3626,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:848
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Адрас E-mail не знойдзены ў ключы/сертыфікаце"
 
@@ -3662,6 +3679,7 @@ msgstr "Вы ўпэўнены ў тым, што жадаеце ачысцiць �
 #: identity/identityeditvcarddialog.cpp:79
 #, fuzzy, kde-format
 #| msgid "Deleted"
+msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Выдаленае"
 
@@ -3868,6 +3886,13 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
+#: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
+#, fuzzy, kde-format
+#| msgid "Invalid Email Address"
+msgctxt "@title:window"
+msgid "Invalid Email Address"
+msgstr "Некарэктны адрас электроннай пошты"
+
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, fuzzy, kde-format
 #| msgid "Identity Name"
@@ -3903,6 +3928,7 @@ msgstr ""
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, fuzzy, kde-format
 #| msgid "Name of the attachment:"
+msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Назва далучэння:"
 
@@ -3915,6 +3941,7 @@ msgstr "Вы ўпэўнены ў тым, што жадаеце ачысцiць �
 #: job/opencomposerjob.cpp:117
 #, fuzzy, kde-format
 #| msgid "New Folder"
+msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Новая тэчка"
 
@@ -4013,17 +4040,18 @@ msgstr "В&ыдаліць"
 msgid "Removing duplicates"
 msgstr "Выдаліць копіі паведамленняў"
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:63
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
 msgid "Error occurred during removing duplicate emails: '%1'"
 msgstr "Немагчыма выдаліць тэчку."
 
-#: job/removeduplicatemailjob.cpp:62
+#: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, fuzzy, kde-format
 #| msgid "Error while removing a folder."
+msgctxt "@title:window"
 msgid "Error while removing duplicates"
 msgstr "Немагчыма выдаліць тэчку."
 
@@ -4388,6 +4416,7 @@ msgstr ""
 
 #: kmkernel.cpp:943
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "У сеткі/Аўтаномны"
 
@@ -4526,7 +4555,9 @@ msgstr ""
 "усталёўкі праграмы."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail Error"
+msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Памылка KMail"
 
@@ -4540,9 +4571,10 @@ msgstr ""
 "Не атрымалася запусціць мэнэджэр сертыфікатаў. Праверце правільнасць "
 "усталёўкі праграмы."
 
-#: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:310
+#: kmlaunchexternalcomponent.cpp:104
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Немагчыма стварыць рахунак"
 
@@ -4558,6 +4590,7 @@ msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:119
 #, fuzzy, kde-format
+msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Не атрымоўваецца запусціць знешні рэдактар."
 
@@ -4574,6 +4607,7 @@ msgstr ""
 #: kmlaunchexternalcomponent.cpp:139
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
+msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Немагчыма стварыць рахунак"
 
@@ -4602,6 +4636,12 @@ msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
 "Не атрымалася запусціць мэнэджэр сертыфікатаў. Праверце правільнасць "
 "усталёўкі праграмы."
+
+#: kmmainwidget.cpp:310
+#, fuzzy, kde-format
+#| msgid "Unable to create account"
+msgid "Unable to start import wizard"
+msgstr "Немагчыма стварыць рахунак"
 
 #: kmmainwidget.cpp:1364
 #, kde-format
@@ -4688,7 +4728,7 @@ msgstr ""
 "уразлівым да \"спаму\" і можа павялічыць верагоднасць таго, што ваша сістэма "
 "будзе пашкоджаная з дапамогай ужо наяўных і будучых метадаў узлому."
 
-#: kmmainwidget.cpp:1562 kmmainwidget.cpp:4734
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid "Security Warning"
 msgstr "Папярэджанне сыстэмы бясьпекі"
@@ -5691,6 +5731,13 @@ msgstr ""
 "павялічыць верагоднасць таго, што ваша сістэма будзе пашкоджаная з дапамогай "
 "ужо наяўных і будучых метадаў узлому."
 
+#: kmmainwidget.cpp:4734
+#, fuzzy, kde-format
+#| msgid "Security Warning"
+msgctxt "@title:window"
+msgid "Security Warning"
+msgstr "Папярэджанне сыстэмы бясьпекі"
+
 #: kmmainwidget.cpp:4735
 #, fuzzy, kde-format
 msgid "Use HTML"
@@ -5767,6 +5814,11 @@ msgstr "Сметніца"
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Перанесці паведамленне ў сметнік"
+
+#: kmreadermainwin.cpp:524
+#, kde-format
+msgid "Hide menu bar"
+msgstr ""
 
 #: kmreadermainwin.cpp:607
 #, fuzzy, kde-format

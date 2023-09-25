@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-09-16 10:08\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "修改存档的邮件"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -176,16 +176,11 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "删除项目"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr "无法为此文件加添加第二个归档。请编辑已有的归档。"
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "添加存档邮件"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -242,3 +237,6 @@ msgstr "月"
 #, kde-format
 msgid "Years"
 msgstr "年"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "添加存档邮件"

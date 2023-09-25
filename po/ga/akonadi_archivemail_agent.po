@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2012-05-14 16:25-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -29,7 +29,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Cuir gach fofhillteán i gcartlann"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Archive all subfolders"
 msgctxt "@title:window"
@@ -185,15 +185,10 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Scrios"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
-msgstr ""
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
 msgstr ""
 
 #: job/archivejob.cpp:58

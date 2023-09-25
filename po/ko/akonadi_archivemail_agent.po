@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-25 22:38+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "보관된 메일 수정"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -176,17 +176,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "항목 삭제"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "이 폴더에 두 번째 보관 파일을 추가할 수 없습니다. 존재하는 파일을 수정합니다."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "보관된 메일 추가"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -243,6 +238,9 @@ msgstr "개월"
 #, kde-format
 msgid "Years"
 msgstr "년"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "보관된 메일 추가"
 
 #~ msgid "Remove items"
 #~ msgstr "항목 삭제"

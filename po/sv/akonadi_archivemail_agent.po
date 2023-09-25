@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2023-08-10 07:30+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Ändra arkivera post"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -177,17 +177,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ta bort objekt"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Kan inte lägga till ett andra arkiv i korgen. Ändra det befintliga istället."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Lägg till arkiverad post"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -245,6 +240,9 @@ msgstr "Månader"
 #, kde-format
 msgid "Years"
 msgstr "År"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Lägg till arkiverad post"
 
 #~ msgid "Remove items"
 #~ msgstr "Ta bort objekt"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2022-01-11 23:45+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -28,7 +28,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Poçt arxivini dəyişdirmək"
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -177,17 +177,12 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Elementləri silin"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Bu qovluğa ikinci arxiv əlavə edilə biməz. Əvəzinə mövcud olanı dəyişin."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Poçt arxivi əlavə edin"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -245,6 +240,9 @@ msgstr "Aylar"
 #, kde-format
 msgid "Years"
 msgstr "İllər"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Poçt arxivi əlavə edin"
 
 #~ msgid "Remove items"
 #~ msgstr "Elementləri silin"

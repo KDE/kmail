@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2023-09-25 01:40+0000\n"
 "PO-Revision-Date: 2015-02-07 19:01+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -30,7 +30,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr ""
 
-#: addarchivemaildialog.cpp:43
+#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -179,18 +179,13 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr ""
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
 "Kan ikke legge til et nytt arkiv for denne mappa. Endre det eksisterende "
 "arkivet i stedet."
-
-#: archivemailwidget.cpp:272
-#, kde-format
-msgid "Add Archive Mail"
-msgstr "Legg til Postarkiv"
 
 #: job/archivejob.cpp:58
 #, kde-format
@@ -247,3 +242,6 @@ msgstr "måneder"
 #, kde-format
 msgid "Years"
 msgstr "År"
+
+#~ msgid "Add Archive Mail"
+#~ msgstr "Legg til Postarkiv"
