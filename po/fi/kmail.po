@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-04-12 15:09+0300\n"
+"PO-Revision-Date: 2023-08-26 18:16+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -3272,16 +3272,14 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Virheellinen sähköpostialias ”%1”"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "M&ukauta tämän henkilöyden viestipohjia"
+msgstr "Tälle henkilöydelle on annettava sähköpostiosoite."
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Empty Email Address"
-msgstr "Sähköpostiosoite"
+msgstr "Tyhjä sähköpostiosoite"
 
 #: identity/identitydialog.cpp:761 job/addressvalidationjob.cpp:80
 #: job/addressvalidationjob.cpp:86
@@ -3573,10 +3571,9 @@ msgstr[0] "Jakelulista ”%2” on tyhjä eikä sitä voi käyttää."
 msgstr[1] "Jakelulistat ”%2” ovat tyhjiä eikä niitä voi käyttää."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "T&yhjennä Akonadin välimuisti…"
+msgstr "Tyhjennä Akonadin välimuisti"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4519,11 +4516,9 @@ msgid "Filter &Log Viewer..."
 msgstr "Suodati&nloki…"
 
 #: kmmainwidget.cpp:2909
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Ilmoitus"
+msgstr "Ilmoitushistoria…"
 
 #: kmmainwidget.cpp:2914
 #, kde-format
@@ -4592,10 +4587,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "T&yhjennä Akonadin välimuisti…"
 
 #: kmmainwidget.cpp:2991
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Poista kaksoiskappaleet tästä kansiossa ja sen alikansioista"
+msgstr "T&yhjennä Akonadin välimuisti tästä kansiosta kaikkine alikansioineen"
 
 #: kmmainwidget.cpp:2996
 #, kde-format
@@ -4940,10 +4934,9 @@ msgid "Apply All Filters"
 msgstr "Käytä kaikkia suodattimia"
 
 #: kmmainwidget.cpp:3378
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Käytä kansiossa alikansioineen suodattimia"
+msgstr "Käytä suodattimia kansioon kaikkine alikansioineen"
 
 #: kmmainwidget.cpp:3383
 #, kde-format
