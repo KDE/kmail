@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2023-09-21 16:17+0200\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"PO-Revision-Date: 2023-09-25 11:20+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
+"%100<=4 ? 2 : 3);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
 "X-Generator: Poedit 3.3.2\n"
 
@@ -669,8 +669,7 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Ni mogoče zagnati čarovnika za račune"
@@ -838,77 +837,81 @@ msgstr "Blizu omejitve količine:"
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Pokaži polje hitrega iskanja po mapi"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Pokaži pogled priljubljenih map"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Nikoli"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Pokaži pogled priljubljenih map"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Kot ikone"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Kot seznam"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Namigi za mape"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Vedno"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Namigi za mape"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Običaj&na oblika (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Lokali&zirana oblika (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Pa&metna oblika (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "Oblika po meri:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Privzeto združevanje:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Privzeta tema:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">Podatki o obliki po meri ...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -954,94 +957,94 @@ msgstr ""
 "li><li>Z - časovni pas v številčni obliki (-0500)</li></ul><p><strong>Vsi "
 "drugi znaki bodo prezrti.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Prikaz datuma:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Okno sporočila"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 "Po odgovoru ali posredovanju sporočila zapri samostojno okno s sporočilom"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Sistemska vrstica"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Omogoči ikono v sistemski vrstici"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Začni minimizirano na pladnju"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Pokaži neprebrano pošto v orodni vrstici"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Razpoložljive oznake"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Dodaj novo oznako"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Odstrani izbrano oznako"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Povečaj prednost oznake"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Zmanjšaj prednost oznake"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Nastavitve oznake"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, kde-format
 msgid "Delete"
 msgstr "Zbriši"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Ali želite odstraniti oznako »%1«?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Odstrani oznako"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Oznake ni mogoče ustvariti. Oznaka s tem imenom že obstaja."
@@ -1818,11 +1821,10 @@ msgid "Please select the folder that should be archived."
 msgstr "Izberite mapo, ki naj bo arhivirana."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
-msgstr "Izbrana ni nobena mapa"
+msgstr "Ni izbrane ni nobene mape"
 
 #: dialog/kmknotify.cpp:30
 #, kde-format
@@ -2195,8 +2197,7 @@ msgstr ""
 "pritiskom %1.</qt>"
 
 #: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Skrij menijsko vrstico"
@@ -2265,22 +2266,19 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Ali želite zavreči sporočilo ali ga shraniti za kasneje?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Zapri sestavljalnik"
 
 #: editor/kmcomposerwin.cpp:2142
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Samodejno shranjevanje sporočila ni uspelo"
 
 #: editor/kmcomposerwin.cpp:2143
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Pošiljanje sporočila ni uspelo"
@@ -2312,8 +2310,7 @@ msgid "Attachment name can't be empty"
 msgstr "Ime priloge ne more biti prazno"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Neveljavno ime priloge"
@@ -2360,8 +2357,7 @@ msgstr ""
 "qt>"
 
 #: editor/kmcomposerwin.cpp:2638
-#, fuzzy, kde-format
-#| msgid "Undefined Encryption Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Encryption Key"
 msgstr "Nedoločen šifrirni ključ"
@@ -2378,8 +2374,7 @@ msgstr ""
 "se uporabi, v nastavitvah istovetnosti.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2701
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Nedoločen podpisovalni ključ"
@@ -2408,11 +2403,10 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "Polje Za: je prazno. Ali vseeno pošljem sporočilo?"
 
 #: editor/kmcomposerwin.cpp:2877
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
-msgstr "Prazno polje Za"
+msgstr "Ni določenega polja Za"
 
 #: editor/kmcomposerwin.cpp:2878 editor/kmcomposerwin.cpp:2892
 #, kde-format
@@ -2430,11 +2424,10 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "Niste navedli zadeve. Ali vseeno pošljem sporočilo?"
 
 #: editor/kmcomposerwin.cpp:2891
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
-msgstr "Brez »Zadeve«"
+msgstr "Ni določenega polja Zadeva"
 
 #: editor/kmcomposerwin.cpp:2893
 #, kde-format
@@ -2451,14 +2444,13 @@ msgstr "Da bi lahko šifrirali osnutek, morate navesti vsaj enega prejemnika."
 #: editor/kmcomposerwin.cpp:3129
 #, kde-format
 msgid "About to send email..."
-msgstr "E-pošta bo poslana ..."
+msgstr "E-pošta bo poslana..."
 
 #: editor/kmcomposerwin.cpp:3130
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "Potrditev pošiljanja"
+msgstr "Pošlji potrditev"
 
 #: editor/kmcomposerwin.cpp:3131
 #, kde-format
@@ -2958,11 +2950,10 @@ msgstr "V imeniku nimate določenega svojega lastnega stika."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
-msgstr "Brez slike"
+msgstr "Ni slike"
 
 #: identity/encodedimagepicker.cpp:142 identity/encodedimagepicker.cpp:150
 #, kde-format
@@ -3438,8 +3429,7 @@ msgid "You must provide an email for this identity."
 msgstr "Za to identiteto morate navesti e-poštni naslov."
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Prazen e-poštni naslov"
@@ -3495,8 +3485,7 @@ msgstr ""
 "poštnega naslova za to istovetnost (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-poštni naslov ni najden v ključu ali potrdilih"
@@ -3544,8 +3533,7 @@ msgstr "Ali resnično želite izbrisati to vizitko vCard?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Izbriši vCard"
@@ -3743,8 +3731,7 @@ msgstr[2] "Seznami za razpošiljanje »%2« so prazni in jih ni mogoče uporabit
 msgstr[3] "Seznami za razpošiljanje »%2« so prazni in jih ni mogoče uporabiti."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Neveljaven e-poštni naslov"
@@ -3779,8 +3766,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "Stika ni mogoče shraniti: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Stika ni bilo mogoče shraniti"
@@ -3791,8 +3777,7 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Ali želite priložiti mapo »%1«?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Priloži mapo"
@@ -3897,8 +3882,7 @@ msgstr "Med odstranjevanjem podvojene e-pošte je prišlo do napake: »%1«"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
 msgstr "Napaka med odstranjevanjem podvojitev"
@@ -4234,8 +4218,7 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail trenutno deluje v nepovezanem načinu. Kako želite nadaljevati?"
 
 #: kmkernel.cpp:943
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Povezan/nepovezan"
@@ -4362,11 +4345,10 @@ msgstr ""
 "program Kleopatra."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "Napaka KMaila"
+msgstr "Napaka programa KMail"
 
 #: kmlaunchexternalcomponent.cpp:102
 #, kde-format
@@ -4378,8 +4360,7 @@ msgstr ""
 "program ImportWizard."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Ni mogoče zagnati čarovnika za uvoz"
@@ -4394,11 +4375,10 @@ msgstr ""
 "namestitev."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "Ni bilo mogoče zagnati programa »Izvažanje nastavitev PIM"
+msgstr "Ni bilo mogoče zagnati programa Izvažanje nastavitev PIM"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -4410,11 +4390,10 @@ msgstr ""
 "nameščen."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Ni mogoče zagnati ImportWizard"
+msgstr "Ni mogoče zagnati programa ImportWizard"
 
 #: kmmainwidget.cpp:299
 #, kde-format
@@ -5443,8 +5422,7 @@ msgstr ""
 "obstoječimi in prihodnjimi varnostnimi zlorabami."
 
 #: kmmainwidget.cpp:4734
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Varnostno opozorilo"
@@ -6612,8 +6590,9 @@ msgstr "Višina pogovornega okna za nastavitev KMaila (le za notranjo uporabo)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Pladenj za predogled sporočila"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6636,8 +6615,9 @@ msgstr "Pokaži pladenj za predogled sporočila poleg seznama sporočil"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Seznam map"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

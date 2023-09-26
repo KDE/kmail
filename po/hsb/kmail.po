@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -847,78 +847,82 @@ msgstr "Hač ke kóncej přidźěleneho městna:"
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Pólko za spěšne pytanje w zapisku pokazać"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Preferowany napohlad zapiskow pokazać"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Ženje"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Preferowany napohlad zapiskow pokazać"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Jako piktogramy"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Jako lisćinu"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Tooltips za zapiski"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Přeco"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Tooltips za zapiski"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "&Normalny format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "&Lokalizowany format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "&Mudry format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "&Postajeny format:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Standardna agregacija:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Standardna tema:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis1\">Připrawjena informacija wo formaće...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -962,93 +966,93 @@ msgstr ""
 "numeriskej formje (-0500)</li></ul><p><strong>Wšitke druhe zapodate pismiki "
 "so ignoruja.</strong></p></qt></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Pokazowanje datuma:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Wokno za powěsće"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "Samostatne powěsćowe wokno po wotmołwje abo dopósłanju začinić"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Systemowa wotkładka"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Systemowu wotkładku wužiwać"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Minimizowany we wotkładce startować"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Nječitane mejlki w pasku nadawkow pokazać"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Móžne etikety"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Etiket dodać"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Wuzwoleny etiket wotstronić"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Prioritu etiketa zwyšić"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Prioritu etiketa znižić"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Nastajenja eti&ketow"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "Z&ničić"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Chceće etiket '%1' wotstronić?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Etiket wotstronić"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Etiket njehodźi so wutworić. Etiket ze samsnym mjenom hižo eksistuje."
@@ -6483,7 +6487,7 @@ msgstr ""
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
 #, fuzzy, kde-format
-msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Powěsć jako prosty tekst"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6506,8 +6510,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Lisćina zapiskow"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

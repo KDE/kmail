@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2023-09-22 11:23+0200\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"PO-Revision-Date: 2023-09-25 09:31+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -675,8 +675,7 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "No s'ha pogut iniciar l'assistent de comptes"
@@ -844,79 +843,83 @@ msgstr "Llindar d'apropament a la quota:"
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Mostra el camp de cerca ràpida de carpeta"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Mostra la vista de carpetes preferides"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Mai"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Mostra la vista de carpetes preferides"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Com a icones"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Com a llista"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Consells de les carpetes"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Sempre"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Consells de les carpetes"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Format està&ndard (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Format localit&zat (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "For&mat intel·ligent (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "F&ormat personalitzat:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Agregació predeterminada:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Tema predeterminat:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis\">Informació sobre els formats personalitzats...</"
 "a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -963,17 +966,17 @@ msgstr ""
 "- la zona horària en format numèric (-0500)</li></ul><p><strong>Tots els "
 "altres caràcters introduïts s'ometran.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Mostra la data:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Finestra de missatge"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -981,77 +984,77 @@ msgstr ""
 "Tanca la finestra individual de missatge després de contestar o reenviar el "
 "missatge"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Safata del sistema"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Activa la icona a la safata del sistema"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Inicia minimitzat a la safata"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Mostra els correus sense llegir a la barra de tasques"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Eti&quetes disponibles"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Afegeix una etiqueta nova"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Elimina l'etiqueta seleccionada"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Augmenta la prioritat de l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Disminueix la prioritat de l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Paràmetres de l'eti&queta"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, kde-format
 msgid "Delete"
 msgstr "Suprimeix"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Voleu eliminar l'etiqueta «%1»?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Elimina l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "No s'ha pogut crear l'etiqueta. Ja n'existeix una amb el mateix nom."
@@ -1835,8 +1838,7 @@ msgid "Please select the folder that should be archived."
 msgstr "Seleccioneu la carpeta que s'ha d'arxivar."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Cap carpeta seleccionada"
@@ -2212,8 +2214,7 @@ msgstr ""
 "prement %1.</qt>"
 
 #: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Oculta la barra de menús"
@@ -2283,22 +2284,19 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Voleu desar el missatge per a més tard o descartar-lo?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Tanca l'editor"
 
 #: editor/kmcomposerwin.cpp:2142
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Ha fallat en desar automàticament el missatge"
 
 #: editor/kmcomposerwin.cpp:2143
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Ha fallat en enviar el missatge"
@@ -2330,8 +2328,7 @@ msgid "Attachment name can't be empty"
 msgstr "El nom de l'adjunt no pot estar buit"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Nom no vàlid de l'adjunt"
@@ -2374,8 +2371,7 @@ msgstr ""
 "a la configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2638
-#, fuzzy, kde-format
-#| msgid "Undefined Encryption Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Encryption Key"
 msgstr "Clau d'encriptatge no definida"
@@ -2392,8 +2388,7 @@ msgstr ""
 "configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2701
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Clau de signatura no definida"
@@ -2424,8 +2419,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "El camp «A:» està buit. Voleu que enviï el missatge igualment?"
 
 #: editor/kmcomposerwin.cpp:2877
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "No s'ha especificat res a «A:»"
@@ -2446,8 +2440,7 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "No heu especificat un assumpte. Voleu que enviï el missatge igualment?"
 
 #: editor/kmcomposerwin.cpp:2891
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "No s'ha especificat l'assumpte"
@@ -2471,8 +2464,7 @@ msgid "About to send email..."
 msgstr "A punt d'enviar el correu..."
 
 #: editor/kmcomposerwin.cpp:3130
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Envia la confirmació"
@@ -2982,8 +2974,7 @@ msgstr "No teniu el vostre propi contacte definit a la llibreta d'adreces."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Cap imatge"
@@ -3471,8 +3462,7 @@ msgid "You must provide an email for this identity."
 msgstr "Cal proporcionar un correu electrònic per a aquesta identitat."
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Adreça de correu buida"
@@ -3527,8 +3517,7 @@ msgstr ""
 "de correu configurada per a aquesta identitat (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "No s'ha trobat l'adreça de correu a la clau/certificat"
@@ -3576,8 +3565,7 @@ msgstr "Esteu segur que voleu suprimir aquesta vCard?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Suprimeix la vCard"
@@ -3773,8 +3761,7 @@ msgstr[0] "La llista de distribució «%2» està buida, no es pot usar."
 msgstr[1] "Les llistes de distribució «%2» estan buides, no es poden usar."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Adreça de correu no vàlida"
@@ -3809,8 +3796,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "El contacte no s'ha pogut emmagatzemar: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Ha fallat en emmagatzemar el contacte"
@@ -3821,8 +3807,7 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Desitgeu adjuntar aquesta carpeta «%1»?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Adjunta la carpeta"
@@ -3928,8 +3913,7 @@ msgstr "S'ha produït un error en eliminar els correus duplicats: «%1»"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
 msgstr "S'ha produït un error en eliminar els duplicats"
@@ -4264,8 +4248,7 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "El KMail està actualment en el mode desconnectat. Com voleu continuar?"
 
 #: kmkernel.cpp:943
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Connectat/desconnectat"
@@ -4381,8 +4364,7 @@ msgstr ""
 "estigui instal·lat correctament."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "S'ha produït un error al KMail"
@@ -4397,8 +4379,7 @@ msgstr ""
 "estigui instal·lat correctament."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "No s'ha pogut iniciar l'assistent d'importació"
@@ -4413,8 +4394,7 @@ msgstr ""
 "comproveu la instal·lació."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "No s'ha pogut iniciar el programa «Exportador de dades PIM»"
@@ -4429,8 +4409,7 @@ msgstr ""
 "instal·lat correctament."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "No s'ha pogut iniciar l'ImportWizard"
@@ -5450,8 +5429,7 @@ msgstr ""
 "forats de seguretat presents i futurs."
 
 #: kmmainwidget.cpp:4734
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Avís de seguretat"
@@ -6624,8 +6602,9 @@ msgstr "L'alçada del diàleg de configuració del KMail (només per a ús inter
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Subfinestra de vista prèvia del missatge"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6652,8 +6631,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Llista de carpetes"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

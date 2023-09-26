@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -921,86 +921,88 @@ msgstr ""
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, fuzzy, kde-format
 #| msgid "Show quick search line edit"
 msgid "Show folder quick search field"
 msgstr "نمایش ویرایش خط جستجوی سریع"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, fuzzy, kde-format
-#| msgid "Shor&t folder list"
-msgid "Show Favorite Folders View"
-msgstr "فهرست پوشه &کوتاه‌"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "هرگز"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Shor&t folder list"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "فهرست پوشه &کوتاه‌"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&As Icons"
 msgid "As icons"
 msgstr "&به عنوان شمایلها‌"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:499
-#, fuzzy, kde-format
-#| msgid "Folder List"
-msgid "Folder Tooltips"
-msgstr "فهرست پوشه"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "همیشه"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "فهرست پوشه"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "قالب &استاندارد )%1(‌"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "قالب &محلی‌شده )%1(‌"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "&قالب تزئینی )%1(‌"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "قالب سفارشی:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default aggregation:"
 msgstr "حذف &رشته‌"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default theme:"
 msgstr "حذف &رشته‌"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, fuzzy, kde-format
 #| msgid "<a href=\"whatsthis\">How does this work?</a>"
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<a href=\"whatsthis\">این چگونه کار می‌کند؟</a>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1067,98 +1069,98 @@ msgstr ""
 "جایگزین ap می‌شود.</li><li>Z - ناحیه زمانی به شکل عددی )۰۵۰۰-(</li></"
 "ul><p><strong>از تمام نویسه‌های ورودی دیگر چشم‌پوشی می‌شود."
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "نمایش تاریخ"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "پنجره پیام‌"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "بستن پنجره‌ی خوداتکای پیام پس از پاسخ دادن یا پیش‌سو کردن پیام"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "سینی سیستم"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "فعال‌سازی شمایل سینی سیستم"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, fuzzy, kde-format
 #| msgid "Always show KMail in system tray"
 msgid "Show unread email in Taskbar"
 msgstr "نمایش همیشگی KMail در سینی سیستم"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "برچسبهای &موجود‌"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, fuzzy, kde-format
 msgid "Add new tag"
 msgstr "افزودن برچسب جدید..."
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "حذف برچسب برگزیده"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "افزایش اولویت برچسب"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "تنظیمات &برچسب‌"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "حذف"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "حذف"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -6934,8 +6936,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "پنجرک پیش‌نمایش پیام"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6961,8 +6964,9 @@ msgstr "نمایش پنجرک پیش‌نمایش پیام &مجاور فهرس�
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "فهرست پوشه"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

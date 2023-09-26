@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2023-09-21 19:09+0200\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"PO-Revision-Date: 2023-09-25 23:51+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -671,11 +671,10 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
-msgstr "Ezin da kontuen morroia abiarazi"
+msgstr "Ez da kontuen morroia abiarazteko gai"
 
 #: configuredialog/configureaccountpage.cpp:267
 #, kde-format
@@ -840,79 +839,83 @@ msgstr "Kuota-atalasetik gertu:"
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Erakutsi karpeten bilaketa bizkorrerako eremua"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Erakutsi gogoko karpeten ikuspegia"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Inoiz ez"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Erakutsi gogoko karpeten ikuspegia"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Ikono gisa"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Zerrenda gisa"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Karpetei buruzko argibideak"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Beti"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Karpetei buruzko argibideak"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Formatu e&standarra (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Formatu it&zulia (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Formatu adi&menduna (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "Norberak finkat&utako formatua:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Multzokatze lehenetsia:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Gai lehenetsia:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis1\">Norberak finkatutako formatuari buruzko "
 "informazioa...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -959,93 +962,93 @@ msgstr ""
 "li></ul><p><strong>Beste sarrerako karaktere guztiak baztertu egingo dira.</"
 "strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Data azaltzea:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Mezuen leihoa"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "Itxi mezu-leiho bereizia mezuari erantzun edo birbidali ondoren"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Sistemaren erretilua"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Gaitu sistema-erretiluaren ikonoa"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Hasi erretiluan ikonotuta"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Erakutsi ataza-barran irakurri gabeko e-posta"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Etiketa era&bilgarriak"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Gehitu etiketa berria"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Kendu hautatutako etiketa"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Handiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Txikiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Eti&keta ezarpenak"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, kde-format
 msgid "Delete"
 msgstr "Ezabatuta"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "«%1» etiketa kendu nahi duzu?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Kendu etiketa"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Ezin dugu etiketa sortu. Izen bereko etiketa bat dago."
@@ -1821,8 +1824,7 @@ msgid "Please select the folder that should be archived."
 msgstr "Mesedez hautatu artxibatu beharko litzateen karpeta"
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Ez da karpetarik hautatu"
@@ -2196,8 +2198,7 @@ msgstr ""
 "da.</qt>"
 
 #: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Ezkutatu menu-barra"
@@ -2264,22 +2265,19 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Mezua gerorako gorde edo baztertu nahi duzu?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Itxi konposatzailea"
 
 #: editor/kmcomposerwin.cpp:2142
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Mezua automatikoki gordetzea huts egin du"
 
 #: editor/kmcomposerwin.cpp:2143
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Mezua bidaltzea huts egin du"
@@ -2311,8 +2309,7 @@ msgid "Attachment name can't be empty"
 msgstr "Eranskin izena ezin da hutsik egon"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Eranskinaren izen baliogabea"
@@ -2354,11 +2351,10 @@ msgstr ""
 "p><p>Hautatu identitatearen konfigurazioaren erabiltzeko gakoak.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2638
-#, fuzzy, kde-format
-#| msgid "Undefined Encryption Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Encryption Key"
-msgstr "Definitu gabeko enkriptazio-gakoa"
+msgstr "Definitu gabeko zifratzeko gakoa"
 
 #: editor/kmcomposerwin.cpp:2694
 #, kde-format
@@ -2372,8 +2368,7 @@ msgstr ""
 "gakoa.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2701
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Definitu gabeko sinatzeko gakoa"
@@ -2404,8 +2399,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "Nori: eremua hutsik dago. Hala ere mezua bidali?"
 
 #: editor/kmcomposerwin.cpp:2877
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Ez da Nori: zehaztu"
@@ -2426,8 +2420,7 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "Ez duzu gairik zehaztu. Edonola ere, mezua bidali?"
 
 #: editor/kmcomposerwin.cpp:2891
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Ez da gairik zehaztu"
@@ -2452,11 +2445,10 @@ msgid "About to send email..."
 msgstr "Posta bidaltzeko zorian..."
 
 #: editor/kmcomposerwin.cpp:3130
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "Bidali berrespena"
+msgstr "Bidali baieztapena"
 
 #: editor/kmcomposerwin.cpp:3131
 #, kde-format
@@ -2966,8 +2958,7 @@ msgstr "Ez duzu zure kontaktua definituta helbide-liburuan."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Irudirik ez"
@@ -3446,11 +3437,10 @@ msgid "You must provide an email for this identity."
 msgstr "Nortasun honetarako e-posta bat eman behar duzu."
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "Helbide elektronikoa hutsik"
+msgstr "E-posta helbidea hutsik"
 
 #: identity/identitydialog.cpp:755
 #, kde-format
@@ -3502,11 +3492,10 @@ msgstr ""
 "IDrik identitate honentzako (%1) konfiguratutako helbide elektronikoarekin."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
-msgstr "Ez da helbide elektronikorik aurkitu gako/ziurtagirietan"
+msgstr "E-posta helbidea ez du aurkitu gakoetan/ziurtagirietan"
 
 #: identity/identitydialog.cpp:860
 #, kde-format
@@ -3551,8 +3540,7 @@ msgstr "Ziur zaude vCard hau ezabatu nahi duzula?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Ezabatuta vCard"
@@ -3744,8 +3732,7 @@ msgstr[0] "%2 banaketa zerrenda hutsik dago, ezin da erabili."
 msgstr[1] "%2 banaketa zerrendak hutsik daude, ezin dira erabili."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "E-posta helbide baliogabea"
@@ -3780,8 +3767,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "Kontaktua ezin da biltegiratu: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Kontaktua gordetzea huts egin du"
@@ -3792,8 +3778,7 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Karpeta hau «%1» erantsi nahi duzu?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Erantsi karpeta"
@@ -3897,11 +3882,10 @@ msgstr "Errorea gertatu da bikoiztutako e-postak kentzean: «%1»"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "Errorea bikoiztutakoak kentzean."
+msgstr "Errorea bikoiztutakoak kentzean"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -4229,11 +4213,10 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Unean KMail lineaz kanpoko moduan dago. Nola jarraitu nahi duzu?"
 
 #: kmkernel.cpp:943
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "Linean/Lineaz kanpo"
+msgstr "Lerroan/Lerroz kanpo"
 
 #: kmkernel.cpp:944 kmmainwidget.cpp:2420
 #, kde-format
@@ -4340,11 +4323,10 @@ msgstr ""
 "behar bezala instalatuta duzula."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "KMail errorea"
+msgstr "«KMail»en errorea"
 
 #: kmlaunchexternalcomponent.cpp:102
 #, kde-format
@@ -4356,11 +4338,10 @@ msgstr ""
 "ImportWizardondo instalatuta duzula."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
-msgstr "Ezin du inportatzeko morroia abiarazi"
+msgstr "Eza da inportatzeko morroia abiarazteko gai"
 
 #: kmlaunchexternalcomponent.cpp:117
 #, kde-format
@@ -4372,11 +4353,10 @@ msgstr ""
 "instalazioa."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "Ezin du «PIM datu esportatzailea» programa abiarazi"
+msgstr "Ez da «PIM datu esportatzailea» programa abiarazteko gai"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -4388,11 +4368,10 @@ msgstr ""
 "instalatuta duzula."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Ezin du ImportWizard abiarazi"
+msgstr "Ez da «ImportWizard» abiarazteko gai"
 
 #: kmmainwidget.cpp:299
 #, kde-format
@@ -5404,8 +5383,7 @@ msgstr ""
 "izateko aukera gehiago dago, eta sistema arriskuan jar dezakezu."
 
 #: kmmainwidget.cpp:4734
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Segurtasun abisua"
@@ -6570,8 +6548,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Mezuen aurrebista-panela"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6594,8 +6573,9 @@ msgstr "Erakutsi mezuak aurreikusteko beiratea mezu-zerrendaren ondoan"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Karpeten zerrenda"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

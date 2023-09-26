@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -870,81 +870,85 @@ msgstr "បិទ​កម្រិត​ពន្លឺ​កូតា"
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "បង្ហាញ​វាល​ស្វែងរក​ថត​រហ័ស"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "បង្ហាញ​ទិដ្ឋភាព​ថត​ដែល​ពេញចិត្ត"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "កុំ"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "បង្ហាញ​ទិដ្ឋភាព​ថត​ដែល​ពេញចិត្ត"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, fuzzy, kde-format
 #| msgid "As Icons"
 msgid "As icons"
 msgstr "ជា​រូបតំណាង"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "ព័ត៌មាន​ជំនួយ​ថត"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "​ជានិច្ច"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "ព័ត៌មាន​ជំនួយ​ថត"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "ទ្រង់ទ្រាយ​ស្តង់ដារ (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "ទ្រង់ទ្រាយ​ដែល​បាន​ធ្វើ​មូលដ្ឋានីយកម្ម (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "ទ្រង់ទ្រាយ​ស្អាតបាត (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "ទ្រង់ទ្រាយ​ផ្ទាល់ខ្លួន"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 #| msgid "Default Aggregation:"
 msgid "Default aggregation:"
 msgstr "ការ​រួមបញ្ចូល​លំនាំដើម ៖"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, fuzzy, kde-format
 #| msgid "Default Theme:"
 msgid "Default theme:"
 msgstr "ស្បែក​លំនាំដើម ៖"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">ព័ត៌មាន​ទ្រង់ទ្រាយ​ផ្ទាល់ខ្លួន...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -987,99 +991,99 @@ msgstr ""
 "ជា​លេខ (-០៥០០)</li></ul><p><strong>តួអក្សរ​បញ្ចូល​ទាំងអស់​ផ្សេង​ទៀត​នឹង​​ត្រូវ​បានមិនអើពើ ។</"
 "strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "បង្ហាញ​កាលបរិច្ឆេទ"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "បង្អួច​សារ"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "បិទ​​បង្អួច​សារ​តែ​ឯង​បន្ទាប់ពី​ឆ្លើយតប​ ឬ​បញ្ជូនសារ​បន្ត"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "ថាសប្រព័ន្ធ​"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "អនុញ្ញាត​រូបតំណាង​ក្នុង​ថាស​ប្រព័ន្ធ"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show unread email in Taskbar"
 msgstr "បង្ហាញ​សំបុត្រ​ដែល​មិន​ទាន់​បាន​​អាន​នៅ​ក្នុង​ថាស​ប្រព័ន្ធ​"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "ស្លាក​ដែលមាន"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "បន្ថែម​ស្លាក​ថ្មី"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "យក​ស្លាក​ដែល​បាន​ជ្រើស​ចេញ"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "បង្កើន​អាទិភាព​ស្លាក"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "បន្ថយ​អាទិភាព​ស្លាក"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "កា​រកំណត់​ស្លាក"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, fuzzy, kde-format
 #| msgctxt "@action:button Delete search"
 #| msgid "&Delete"
 msgid "Delete"
 msgstr "លុប"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove tag '%1'?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "យកចេញ"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, fuzzy, kde-format
 #| msgid "We can not create tag. A tag with same name already exists."
 msgid "We cannot create tag. A tag with same name already exists."
@@ -6672,8 +6676,9 @@ msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6696,8 +6701,9 @@ msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "បញ្ជី​ថត"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

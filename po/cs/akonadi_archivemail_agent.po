@@ -239,6 +239,3 @@ msgstr "Měsíců"
 #, kde-format
 msgid "Years"
 msgstr "Roky"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Přidat agenta archivace"

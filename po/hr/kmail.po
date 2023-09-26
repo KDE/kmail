@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -914,83 +914,85 @@ msgstr ""
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:475
-#, fuzzy, kde-format
-msgid "Show Favorite Folders View"
-msgstr "&Kratka lista mapi"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, fuzzy, kde-format
 #| msgid "Receiver"
 msgid "Never"
 msgstr "Primatelj"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "&Kratka lista mapi"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, fuzzy, kde-format
 msgid "As icons"
 msgstr "&Kao sličice"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:499
-#, fuzzy, kde-format
-#| msgid "Folder List"
-msgid "Folder Tooltips"
-msgstr "Popis direktorija"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, fuzzy, kde-format
 #| msgid "Always"
 msgid "Always"
 msgstr "Uvijek"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Popis direktorija"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Sta&ndardni format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Lokali&zirani format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, fuzzy, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "&Moderan format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 #, fuzzy
 msgid "C&ustom format:"
 msgstr "&Format pohranjivanja:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 #| msgid "Default Aggregation:"
 msgid "Default aggregation:"
 msgstr "Zadana agregacija:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, fuzzy, kde-format
 #| msgid "Default Theme:"
 msgid "Default theme:"
 msgstr "Zadana tema:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1016,98 +1018,98 @@ msgid ""
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "Prikaz datuma"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, fuzzy, kde-format
 msgid "Message Window"
 msgstr "Popisa poruka"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, fuzzy, kde-format
 msgid "System Tray"
 msgstr "Način radai sustavske kasete"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, fuzzy, kde-format
 msgid "Enable system tray icon"
 msgstr "obavijest u sustavskoj kaseti"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, fuzzy, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "&Uvijek prikazuj sustemska traka"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Postojeći Filteri"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Remove selected tag"
 msgstr "Ukloni duplicirane poruke"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Slanje"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "Izbriši"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, fuzzy, kde-format
 #| msgid "Do you really want to remove this group and all its snippets?"
 msgid "Do you want to remove tag '%1'?"
 msgstr "Želite li zaista ukloniti ovu grupu i sve njene svaštice?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "U&Kloni"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -6594,8 +6596,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Ploča za pregled poruke"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6619,8 +6622,9 @@ msgstr "Pokaži pano za pregled poruke &pored liste poruka"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Popis direktorija"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

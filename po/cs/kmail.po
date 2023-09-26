@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
 "PO-Revision-Date: 2023-06-23 12:34+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -659,11 +659,10 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
-msgstr "Nelze spustit průvodce účtem"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:267
 #, kde-format
@@ -826,77 +825,81 @@ msgstr "Blízko hranice kvóty:"
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Zobrazovat pole pro rychlé hledání"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Zobrazit pohled na oblíbené složky"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Nikdy"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Zobrazit pohled na oblíbené složky"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Jako ikony"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Jako seznam"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Nástrojové tipy složek"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Vždy"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Nástrojové tipy složek"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Sta&ndardní formát (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Lokal&izovaný formát (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Inteligentní for&mát (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "&Vlastní formát:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Výchozí agregace:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Výchozí motiv:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis\">Více o vlastním formátu...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -941,93 +944,93 @@ msgstr ""
 "časová zóna v numerickém formátu (-0500)</li></ul><p><strong>Všechny ostatní "
 "vstupní znaky budou ignorovány.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Zobrazení dat:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Okno se zprávou"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Systémová část panelu"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Povolit ikonu v systémové části panelu"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Spustit minimalizovaný do lišty"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Zobrazit nepřečtenou poštu v panelu úloh"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Dostupné značk&y"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Přidat novou značku"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Odstranit vybranou značku"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Zvýšit prioritu značky"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Snížit prioritu značky"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Nastav&ení značek"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Přejete si odstranit značku '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Odstranit značku"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -1779,11 +1782,10 @@ msgid "Please select the folder that should be archived."
 msgstr "Prosím vyberte složku, která bude archivována."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
-msgstr "Nevybrána žádná složka"
+msgstr ""
 
 #: dialog/kmknotify.cpp:30
 #, kde-format
@@ -2154,11 +2156,10 @@ msgstr ""
 "qt>"
 
 #: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
-msgstr "Skrýt nabídku"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4055
 #, kde-format
@@ -2223,25 +2224,22 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Přejete si zprávu uložit pro pozdější použití nebo ji zahodit?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
-msgstr "Zavřít editor"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2142
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
-msgstr "Automatické uložení zprávy selhalo"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2143
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
-msgstr "Odesílání zprávy selhalo"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2329
 #, kde-format
@@ -2270,11 +2268,10 @@ msgid "Attachment name can't be empty"
 msgstr "Název přílohy nemůže být prázdný"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
-msgstr "Neplatný název přílohy"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2467
 #, kde-format
@@ -2315,11 +2312,10 @@ msgstr ""
 "p><p>Prosím nastavte patřičné klíče pro tuto identitu.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2638
-#, fuzzy, kde-format
-#| msgid "Undefined Encryption Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Encryption Key"
-msgstr "Nedefinovaný šifrovací klíč"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2694
 #, kde-format
@@ -2333,11 +2329,10 @@ msgstr ""
 "vhodný klíč v dialogu nastavení identity.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2701
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
-msgstr "Nedefinovaný podepisovací klíč"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2860
 #, kde-format
@@ -2365,11 +2360,10 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "Nebyl zadán adresát zprávy. I přesto zprávu odeslat?"
 
 #: editor/kmcomposerwin.cpp:2877
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
-msgstr "Nebyl zadán adresát"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2878 editor/kmcomposerwin.cpp:2892
 #, kde-format
@@ -2387,11 +2381,10 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "Nebyl zadán předmět zprávy. I přesto zprávu odeslat?"
 
 #: editor/kmcomposerwin.cpp:2891
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
-msgstr "Nebyl zadán předmět"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2893
 #, kde-format
@@ -2411,11 +2404,10 @@ msgid "About to send email..."
 msgstr "Chystáte se poslat e-mail..."
 
 #: editor/kmcomposerwin.cpp:3130
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "Potvrzení odeslání"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3131
 #, kde-format
@@ -2863,11 +2855,10 @@ msgstr "V knize adres nemáte svůj vlastní kontakt."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
-msgstr "Žádný obrázek"
+msgstr ""
 
 #: identity/encodedimagepicker.cpp:142 identity/encodedimagepicker.cpp:150
 #, kde-format
@@ -3331,11 +3322,10 @@ msgid "You must provide an email for this identity."
 msgstr ""
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "E-mailová adresa"
+msgstr ""
 
 #: identity/identitydialog.cpp:755
 #, kde-format
@@ -3387,11 +3377,10 @@ msgstr ""
 "mailovou adresu této identity (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
-msgstr "E-mailová adresa nenalezena v klíči/certifikátech"
+msgstr ""
 
 #: identity/identitydialog.cpp:860
 #, kde-format
@@ -3434,11 +3423,10 @@ msgstr "Opravdu si přejete smazat tuto vizitku?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
-msgstr "Smazat vizitku"
+msgstr ""
 
 #: identity/identityeditvcarddialog.cpp:79
 #, kde-format
@@ -3627,8 +3615,7 @@ msgstr[1] "Distribuční seznamy %2 jsou prázdné, nelze je použít."
 msgstr[2] "Distribuční seznamy %2 jsou prázdné, nelze je použít."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Neplatná e-mailová adresa"
@@ -3663,11 +3650,10 @@ msgid "Contact cannot be stored: %1"
 msgstr "Kontakt nelze uložit: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
-msgstr "Nelze uložit kontakt"
+msgstr ""
 
 #: job/opencomposerjob.cpp:116
 #, kde-format
@@ -3675,11 +3661,10 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Opravdu si přejete přiložit tuto složku \"%1\"?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
-msgstr "Přiložit složku"
+msgstr ""
 
 #: job/opencomposerjob.cpp:118
 #, kde-format
@@ -3779,11 +3764,10 @@ msgstr ""
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "Odstraňuji duplicity"
+msgstr ""
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -4109,11 +4093,10 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail je právě v odpojeném režimu; jak si přejete pokračovat?"
 
 #: kmkernel.cpp:943
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "Připojen/Odpojen"
+msgstr ""
 
 #: kmkernel.cpp:944 kmmainwidget.cpp:2420
 #, kde-format
@@ -4222,11 +4205,10 @@ msgstr ""
 "nainstalována Kleopatra."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "Chyba KMailu"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:102
 #, kde-format
@@ -4238,11 +4220,10 @@ msgstr ""
 "nainstalován ImportWizard."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
-msgstr "Nelze spustit průvodce importem"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:117
 #, kde-format
@@ -4254,11 +4235,10 @@ msgstr ""
 "instalaci."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "Nelze spustit program \"Exportér dat PIM\""
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -4270,11 +4250,10 @@ msgstr ""
 "ImportWizard."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Nelze spustit průvodce importem"
+msgstr ""
 
 #: kmmainwidget.cpp:299
 #, kde-format
@@ -5275,8 +5254,7 @@ msgstr ""
 "neznámé, bezpečnostní chyby."
 
 #: kmmainwidget.cpp:4734
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Bezpečnostní varování"
@@ -6414,8 +6392,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Rám s náhledem zprávy"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6438,8 +6417,9 @@ msgstr "Zobrazovat rám s náhledem zprávy vedle seznamu zpráv"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Seznam složek"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

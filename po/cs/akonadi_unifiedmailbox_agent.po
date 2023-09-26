@@ -38,11 +38,10 @@ msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 
 #: settingsdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Really Remove?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
-msgstr "Opravdu odstranit?"
+msgstr ""
 
 #: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
 #, kde-format

@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2023-04-12 15:09+0300\n"
+"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"PO-Revision-Date: 2023-08-26 18:16+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -854,77 +854,81 @@ msgstr "Lähellä täyttymistä -raja"
 msgid "%"
 msgstr " %"
 
-#: configuredialog/configureappearancepage.cpp:468
+#: configuredialog/configureappearancepage.cpp:478
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "Näytä kansion pikahakukenttä"
 
-#: configuredialog/configureappearancepage.cpp:475
-#, kde-format
-msgid "Show Favorite Folders View"
-msgstr "Näytä suosikkikansionäkymä"
-
-#: configuredialog/configureappearancepage.cpp:480
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:509
 #, kde-format
 msgid "Never"
 msgstr "Ei koskaan"
 
-#: configuredialog/configureappearancepage.cpp:485
+#: configuredialog/configureappearancepage.cpp:489
+#, fuzzy, kde-format
+#| msgid "Show Favorite Folders View"
+msgctxt "@label"
+msgid "Show favorite folders view:"
+msgstr "Näytä suosikkikansionäkymä"
+
+#: configuredialog/configureappearancepage.cpp:491
 #, kde-format
 msgid "As icons"
 msgstr "Kuvakkeina"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:496
 #, kde-format
 msgid "As list"
 msgstr "Luettelona"
 
-#: configuredialog/configureappearancepage.cpp:499
-#, kde-format
-msgid "Folder Tooltips"
-msgstr "Kansion työkaluvihjeet"
-
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgid "Always"
 msgstr "Aina"
 
-#: configuredialog/configureappearancepage.cpp:563
+#: configuredialog/configureappearancepage.cpp:507
+#, fuzzy, kde-format
+#| msgid "Folder Tooltips"
+msgctxt "@label"
+msgid "Folder tooltips:"
+msgstr "Kansion työkaluvihjeet"
+
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "&Vakiomuoto (%1)"
 
-#: configuredialog/configureappearancepage.cpp:564
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Paika&llinen muoto (%1)"
 
-#: configuredialog/configureappearancepage.cpp:565
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "&Älykäs muoto (%1)"
 
-#: configuredialog/configureappearancepage.cpp:566
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "&Oma muoto:"
 
-#: configuredialog/configureappearancepage.cpp:589
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Oletuskoonta:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Oletusteema:"
 
-#: configuredialog/configureappearancepage.cpp:644
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">Tietoa omasta muodosta…</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -968,17 +972,17 @@ msgstr ""
 "li><li>Z – aikavyöhyke lukumuodossa (-0500)</li></ul><p><strong>Kaikki muut "
 "merkit näkyvät päivämäärässä sinänsä.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Päiväyksen muoto:"
 
-#: configuredialog/configureappearancepage.cpp:795
+#: configuredialog/configureappearancepage.cpp:813
 #, kde-format
 msgid "Message Window"
 msgstr "Viesti-ikkuna"
 
-#: configuredialog/configureappearancepage.cpp:802
+#: configuredialog/configureappearancepage.cpp:820
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -986,77 +990,77 @@ msgstr ""
 "Sulje erillinen viesti-ikkuna, kun viestiin on vastattu tai viesti on "
 "välitetty"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
 msgstr "Ilmoitusalue"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:816 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Näytä kuvake ilmoitusalueella"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:820 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Käynnistä pienennettynä ilmoitusalueelle"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:856
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "Näytä lukematon posti ilmoitusaluekuvakkeessa"
 
-#: configuredialog/configureappearancepage.cpp:906
+#: configuredialog/configureappearancepage.cpp:924
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "&Käytettävissä olevat luokitukset"
 
-#: configuredialog/configureappearancepage.cpp:919
+#: configuredialog/configureappearancepage.cpp:937
 #, kde-format
 msgid "Add new tag"
 msgstr "Lisää uusi luokitus"
 
-#: configuredialog/configureappearancepage.cpp:924
+#: configuredialog/configureappearancepage.cpp:942
 #, kde-format
 msgid "Remove selected tag"
 msgstr "Poista valitut luokitus"
 
-#: configuredialog/configureappearancepage.cpp:933
+#: configuredialog/configureappearancepage.cpp:951
 #, kde-format
 msgid "Increase tag priority"
 msgstr "Kasvata luokituksen tärkeyttä"
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "Pienennä luokituksen tärkeyttä"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:981
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "&Luokitusten asetukset"
 
-#: configuredialog/configureappearancepage.cpp:1013
+#: configuredialog/configureappearancepage.cpp:1031
 #, kde-format
 msgid "Delete"
 msgstr "Poista"
 
-#: configuredialog/configureappearancepage.cpp:1143
+#: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Haluatko poistaa luokituksen %1?"
 
-#: configuredialog/configureappearancepage.cpp:1144
+#: configuredialog/configureappearancepage.cpp:1162
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Poista luokitus"
 
-#: configuredialog/configureappearancepage.cpp:1189
-#: configuredialog/configureappearancepage.cpp:1224
+#: configuredialog/configureappearancepage.cpp:1207
+#: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Tunnistetta ei voi luoda. Samanniminen tunniste on jo olemassa."
@@ -2527,6 +2531,7 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Valittua PGP-avainta (%1) ei ole avainrenkaassasi tai se ei sovi salaukseen."
 
 #: editor/kmcomposerwin.cpp:3476
 #, kde-format
@@ -2535,6 +2540,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Valittua PGP-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei sovi "
+"allekirjoittamiseen."
 
 #: editor/kmcomposerwin.cpp:3492
 #, kde-format
@@ -2543,6 +2550,7 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Valittua S/MIME-avainta (%1) ei ole avainrenkaassa tai se ei sovi salaukseen."
 
 #: editor/kmcomposerwin.cpp:3505
 #, kde-format
@@ -2551,44 +2559,39 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Valittua S/MIME-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei "
+"sovi allekirjoittamiseen."
 
 #: editor/kmcomposerwin.cpp:3678
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
-msgstr "Salaus"
+msgstr "Salaa"
 
 #: editor/kmcomposerwin.cpp:3680
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "&Älä salaa"
+msgstr "Ei salata"
 
 #: editor/kmcomposerwin.cpp:3820
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Vastaanottajalle ei löytynyt avainta."
 
 #: editor/kmcomposerwin.cpp:3842
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt gossip key is used for this recipient. This key is not verified."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Tälle vastaanottajalle käytettään automaattisalauksen juoruavainta. Avainta "
-"ei ole varmennettu."
+"Tälle vastaanottajalle käytettään automaattisalauksen juoruavainta. Avain "
+"saatiin kolmannen osapuolen vastaanottajilta. Avainta ei ole varmennettu."
 
 #: editor/kmcomposerwin.cpp:3846
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient prefers encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2598,10 +2601,7 @@ msgstr ""
 "todenneta. Vastaanottaja suosii salattuja viestejä."
 
 #: editor/kmcomposerwin.cpp:3850
-#, fuzzy, kde-format
-#| msgid ""
-#| "Autocrypt key is used for this recipient. This key is not verified. The "
-#| "recipient does not prefer encrypted replies."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
@@ -2618,6 +2618,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Salausavain ei ole luotettava: sen kelpoisuus ei riitä. Voit allekirjoittaa "
+"avaimen, jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla "
+"kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3885
 #, kde-format
@@ -2630,17 +2633,14 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3893
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Tälle vastaanottajalle käytetään heikkoa salausta (salausavain on "
-"epäluotettava). Saat lisätietoa napsauttamalla kuvaketta."
+"Salausavain ei ole luotettava: sen TOFU-tiedot ovat ristiriitaiset. "
+"Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3899
 #, kde-format
@@ -2649,19 +2649,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Salausavain ei ole luotettava: TOFU-tiedoissa sen kelpoisuus on tuntematon. "
+"Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3905
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Tälle vastaanottajalle käytetään heikkoa salausta (salausavain on "
-"epäluotettava). Saat lisätietoa napsauttamalla kuvaketta."
+"Salausavain ei ole luotettava: avain on merkitty huonoksi. Lisätietoa saa "
+"napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3913
 #, kde-format
@@ -2672,6 +2671,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Salausavain on vain ehdollisesti luotettava eikä sitä ole käytetty tarpeeksi "
+"kauan, jotta voitaisiin tietää sen kuuluvan väitetylle henkilölle. Avainta "
+"käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
+"sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3921
 #, kde-format
@@ -2680,6 +2683,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Salausavain on vain ehdollisesti luotettava. Voit allekirjoittaa avaimen, "
+"jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3927
 #, kde-format
@@ -2690,32 +2695,30 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Salausavain on vain ehdollisesti luotettava, mutta sitä on käytetty "
+"riittävän kauan, jotta sen voi uskoa kuuluvan väitetylle henkilölle. Avainta "
+"käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
+"sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3935
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Tälle vastaanottajalle käytetään vahvaa salausta (salausavaimeen luotetaan "
-"täysin). Saat lisätietoa napsauttamalla kuvaketta."
+"Salausavaimen luottamus on täysi. Turvatasoa voi kohottaa allekirjoittamalla "
+"avaimen. Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:3940
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Tälle vastaanottajalle käytetään vahvaa salausta (salausavaimeen luotetaan "
-"täysin). Saat lisätietoa napsauttamalla kuvaketta."
+"Salausavaimen luottamus on äärimmäinen tai sen on allekirjoittanut toinen "
+"näin luotettava avain. Lisätietoa saa napsauttamalla kuvaketta."
 
 # *** TARKISTA: ID merkitykseltään epäselvä
 #: editor/kmcomposerwin.cpp:4328
@@ -3436,10 +3439,9 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Virheellinen sähköpostialias ”%1”"
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "M&ukauta tämän henkilöyden viestipohjia"
+msgstr "Tälle henkilöydelle on annettava sähköpostiosoite."
 
 #: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
@@ -3748,10 +3750,9 @@ msgid "Invalid Email Address"
 msgstr "Virheellinen sähköpostiosoite"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache..."
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "T&yhjennä Akonadin välimuisti…"
+msgstr "Tyhjennä Akonadin välimuisti"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4157,11 +4158,10 @@ msgid "Deleting messages"
 msgstr "Poistetaan viestejä"
 
 #: kmcommands.cpp:1802
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Valitse liite:"
+msgstr "Poistetaan liitteitä"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4670,15 +4670,19 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Valittu viesti on salattu. Toistaiseksi ei salatuista viesteistä voi poistaa "
+"liitteitä."
 msgstr[1] ""
+"Valinnassa on vain salattuja viestejä, joista ei liitteitä toistaiseksi voi "
+"poistaa."
 
 #: kmmainwidget.cpp:2366
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Poista liitteet salatusta viestistä"
+msgstr[1] "Poista liitteet salatuista viesteistä"
 
 #: kmmainwidget.cpp:2371
 #, fuzzy, kde-format
@@ -4707,6 +4711,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Huomaa, että kryptografisesti allekirjoitetun viestin liitteiden "
+"poistaminen mitätöi allekirjoituksen.</p></html>"
 
 #: kmmainwidget.cpp:2383
 #, kde-format
@@ -4714,13 +4720,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Toistaiseksi ei liitteitä voi poistaa salatuista viesteistä.<br /"
+">Salatut viestit sivuutetaan.</p></html>"
 
 #: kmmainwidget.cpp:2388
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Valitse liite:"
+msgstr "Poista liitteet"
 
 #: kmmainwidget.cpp:2879
 #, kde-format
@@ -4783,11 +4790,9 @@ msgid "Filter &Log Viewer..."
 msgstr "Suodati&nloki…"
 
 #: kmmainwidget.cpp:2971
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Ilmoitus"
+msgstr "Ilmoitushistoria…"
 
 #: kmmainwidget.cpp:2976
 #, kde-format
@@ -4856,10 +4861,9 @@ msgid "&Clear Akonadi Cache..."
 msgstr "T&yhjennä Akonadin välimuisti…"
 
 #: kmmainwidget.cpp:3053
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Poista kaksoiskappaleet tästä kansiossa ja sen alikansioista"
+msgstr "T&yhjennä Akonadin välimuisti tästä kansiosta kaikkine alikansioineen"
 
 #: kmmainwidget.cpp:3058
 #, kde-format
@@ -4998,11 +5002,10 @@ msgid "Save A&ttachments..."
 msgstr "Tallenna &liitteet…"
 
 #: kmmainwidget.cpp:3239
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Tallenna kaikki liitteet..."
+msgstr "Poista kaikki liitteet"
 
 #: kmmainwidget.cpp:3247
 #, kde-format
@@ -5211,10 +5214,9 @@ msgid "Apply All Filters"
 msgstr "Käytä kaikkia suodattimia"
 
 #: kmmainwidget.cpp:3445
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Käytä kansiossa alikansioineen suodattimia"
+msgstr "Käytä suodattimia kansioon kaikkine alikansioineen"
 
 #: kmmainwidget.cpp:3450
 #, kde-format
@@ -6566,8 +6568,9 @@ msgstr "KMailin asetusdialogin korkeus (vain sisäiseen käyttöön)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message Preview Pane"
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
 msgstr "Esikatseluruutu"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
@@ -6590,8 +6593,9 @@ msgstr "Näytä esikatseluruutu v&iestiluettelon vieressä"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder List"
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
 msgstr "Kansioluettelo"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)

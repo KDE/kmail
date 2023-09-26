@@ -115,11 +115,10 @@ msgstr ""
 "Podrobný popis chyby: %2."
 
 #: filterlogdialog.cpp:331
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "Chyba KMailu"
+msgstr ""
 
 #: filtermanager.cpp:100
 #, kde-format
