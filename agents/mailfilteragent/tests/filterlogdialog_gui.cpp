@@ -5,6 +5,7 @@
 */
 
 #include "filterlogdialog.h"
+#include <MailCommon/FilterLog>
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QStandardPaths>
@@ -17,6 +18,13 @@ int main(int argc, char **argv)
     parser.addVersionOption();
     parser.addHelpOption();
     parser.process(app);
+
+    auto log = MailCommon::FilterLog::instance();
+    log->setLogging(true);
+    for (int i = 0; i < 50; ++i) {
+        log->add(QStringLiteral("Test %1").arg(i), MailCommon::FilterLog::AppliedAction);
+    }
+
     auto dialog = new FilterLogDialog(nullptr);
     dialog->exec();
     delete dialog;
