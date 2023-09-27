@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-26 00:59+0200\n"
+"PO-Revision-Date: 2023-09-27 00:30+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -847,11 +847,10 @@ msgid "Never"
 msgstr "Nunca"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Mostrar la vista de carpetas favoritas"
+msgstr "Mostrar la vista de carpetas favoritas:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -869,11 +868,10 @@ msgid "Always"
 msgstr "Siempre"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Consejos emergentes sobre carpetas"
+msgstr "Ayudas emergentes de las carpetas:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -2665,7 +2663,7 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
-"La clave de cifrado solo es de confianza marginal y no se ha usado el tiempo "
+"La clave de cifrado solo es de confianza mínima y no se ha usado el tiempo "
 "suficiente para garantizar que pertenece a la persona indicada. Al usar la "
 "clave aumentará su confianza. También puede firmar la clave si ha comunicado "
 "la huella digital por otro canal. Pulse el icono para más detalles."
@@ -2677,8 +2675,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
-"La clave de cifrado solo es de confianza marginal. Puede firmar la clave si "
-"ha comunicado la huella digital por otro canal. Pulse el icono para más "
+"La clave de cifrado solo es de confianza mínima. Puede firmar la clave si ha "
+"comunicado la huella digital por otro canal. Pulse el icono para más "
 "detalles."
 
 #: editor/kmcomposerwin.cpp:3927
@@ -2690,8 +2688,8 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
-"La clave de cifrado solo es de confianza marginal, pero se ha usado un "
-"número suficiente de veces como para que sea muy probable que la controle la "
+"La clave de cifrado solo es de confianza mínima, pero se ha usado un número "
+"suficiente de veces como para que sea muy probable que la controle la "
 "persona indicada. Al usar la clave aumentará su confianza. También puede "
 "firmar la clave si ha comunicado la huella digital por otro canal. Pulse el "
 "icono para más detalles."
@@ -6523,8 +6521,7 @@ msgstr ""
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
-"Mostrar Administración de recortes de texto y Panel de inserción en el "
-"editor."
+"Mostrar «Gestión de recortes de texto» y «Panel de inserción» en el editor."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.cmake:260
@@ -6596,16 +6593,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Zona de visionado de mensajes"
+msgstr "Panel de vista previa de mensajes:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
-msgstr "No mostrar la zona de visionado de mensajes"
+msgstr "No mostrar el panel de vista previa de mensajes"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:349
@@ -6621,10 +6617,9 @@ msgstr "Mostrar el panel de vista previa junto a la lista de mensajes"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Lista de carpetas"
+msgstr "Lista de carpetas:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362

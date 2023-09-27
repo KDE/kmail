@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-25 11:20+0200\n"
+"PO-Revision-Date: 2023-09-26 09:24+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -849,11 +849,10 @@ msgid "Never"
 msgstr "Nikoli"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Pokaži pogled priljubljenih map"
+msgstr "Pokaži pogled priljubljenih map:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -871,11 +870,10 @@ msgid "Always"
 msgstr "Vedno"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Namigi za mape"
+msgstr "Namigi za mape:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -6590,10 +6588,9 @@ msgstr "Višina pogovornega okna za nastavitev KMaila (le za notranjo uporabo)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Pladenj za predogled sporočila"
+msgstr "Plošča za predogled sporočila:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
@@ -6615,10 +6612,9 @@ msgstr "Pokaži pladenj za predogled sporočila poleg seznama sporočil"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Seznam map"
+msgstr "Seznam map:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362

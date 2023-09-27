@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-25 14:15+0200\n"
+"PO-Revision-Date: 2023-09-26 14:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -39,12 +39,16 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
+"KMail KDE-ის ელფოსტის კლიენტია. ის აგებულია, რომ იყოს სრულად თავსებადი "
+"ინტერნეტის ელფოსტის ისეთ სტანდარტებთან, როგორიცაა IMAP, POP3 და SMTP."
 
 #: about/introduction_kmail.html:10
 msgid ""
 "KMail has many powerful features that are described in the <a href='help:/"
 "kmail2/index.html'>documentation</a>."
 msgstr ""
+"KMail-ს მრავალი მძლავრი ფუნქცია გააჩნია. მათ შესახებ იხილეთ <a href='help:/"
+"kmail2/index.html'>დოკუმენტაციაში</a>."
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
@@ -52,7 +56,7 @@ msgstr "მნიშვნელოვანი ცვლილებები �
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
-msgstr ""
+msgstr "KMail-ის ახალ ფუნქციებში შედის:"
 
 #: about/introduction_kmail.html:34
 msgid ""
@@ -295,7 +299,7 @@ msgstr "ფანჯრის ზმის შეცვლის პაჩი"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
-msgstr ""
+msgstr "'qt-cast'-ის ოპტიმიზაცია; გასწორდა QUrl()"
 
 #: aboutdata.cpp:161
 msgid "Usability tests and improvements"
@@ -323,11 +327,11 @@ msgstr "ავტომატური მიმღების დადგე�
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
-msgstr ""
+msgstr "PGP 6-ის მხარდაჭერის ბეტა ტესტი"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "გასწორებები, გასუფთავდა კონტექსტური მენიუები"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
@@ -339,7 +343,7 @@ msgstr "IM სტატუსის მაჩვენებელი"
 
 #: aboutdata.cpp:182
 msgid "Improve layout of recipients editor"
-msgstr ""
+msgstr "გაუმჯობესდა მიმღებების რედაქტორის განლაგება"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
@@ -372,7 +376,7 @@ msgstr "KDE -ის ელფოსტის კლიენტი"
 #: aboutdata.cpp:198
 #, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr ""
+msgstr "Copyright © %1, KMail-ის ავტორები"
 
 #: collectionpage/collectionmailinglistpage.cpp:39
 #, kde-format
@@ -383,7 +387,7 @@ msgstr "ელ-ფოსტის სიები"
 #: collectionpage/collectionmailinglistpage.cpp:62
 #, kde-format
 msgid "Folder holds a mailing list"
-msgstr ""
+msgstr "საქაღალდე დაგზავნის სიას შეიცავს"
 
 #: collectionpage/collectionmailinglistpage.cpp:67
 #, kde-format
@@ -418,7 +422,7 @@ msgstr "მისამართის ტიპი:"
 #: collectionpage/collectionmailinglistpage.cpp:102
 #, kde-format
 msgid "URL for mailing list posting:"
-msgstr ""
+msgstr "ბმული დაგზავნის სიაში დაპოსტვისთვის:"
 
 #: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
@@ -656,7 +660,7 @@ msgstr "ანგარიშის ოსტატის გაშვები�
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
-msgstr ""
+msgstr "ელფოსტის ხელით შემოწმებაში ჩასმა"
 
 #: configuredialog/configureaccountpage.cpp:275
 #, kde-format
@@ -720,7 +724,7 @@ msgstr "შეტყობინებების სია - მნიშვ�
 
 #: configuredialog/configureappearancepage.cpp:134
 msgid "Message List - Action Item Messages"
-msgstr ""
+msgstr "შეტყობინებების სია - ქმედების ელემენტის შეტყობინებები"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Fixed Width Font"
@@ -1239,7 +1243,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
-msgstr ""
+msgstr "&პასუხის სათაურის პრეფიქსები"
 
 #: configuredialog/configurecomposerpage.cpp:645
 #: configuredialog/configurecomposerpage.cpp:671
@@ -1287,7 +1291,7 @@ msgstr "პასუხის პრეფიქსი:"
 #: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
-msgstr ""
+msgstr "&გადაგზავნის სათაურის პრეფიქსები"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:677
@@ -1314,7 +1318,7 @@ msgstr "შეიყვანეთ ახალი გადაგზავნ�
 #: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Do you want to remove forward prefix?"
-msgstr ""
+msgstr "გნებავთ გადაგზავნის პრეფიქსის წაშლა?"
 
 #: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
@@ -1846,7 +1850,7 @@ msgstr "&ელფოსტის გაგზავნა"
 #: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1277
 #, kde-format
 msgid "&Send Mail Via"
-msgstr ""
+msgstr "ელფოსტის გაგზავნა &გავლით"
 
 #: editor/kmcomposerwin.cpp:1246
 #, kde-format
@@ -1862,7 +1866,7 @@ msgstr "&მოგვიანებით გაგზავნა"
 #: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1268
 #, kde-format
 msgid "Send &Later Via"
-msgstr ""
+msgstr "გაგზავნა მოგვიანებით, გ&ავლით"
 
 #: editor/kmcomposerwin.cpp:1257
 #, kde-format
@@ -1878,7 +1882,7 @@ msgstr "&მონახაზად შენახვა"
 #: editor/kmcomposerwin.cpp:1288
 #, kde-format
 msgid "Save email in Draft folder"
-msgstr ""
+msgstr "ელფოსტის შენახვა მონახაზების საქაღალდეში"
 
 #: editor/kmcomposerwin.cpp:1292
 #, kde-format
@@ -1888,7 +1892,7 @@ msgstr "&ნიმუშად შენახვა"
 #: editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Save email in Template folder"
-msgstr ""
+msgstr "ელფოტის შენახვა ნიმუშების საქაღალდეში"
 
 #: editor/kmcomposerwin.cpp:1297
 #, kde-format
@@ -1898,7 +1902,7 @@ msgstr "&ფაილად შენახვა"
 #: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save email as text or html file"
-msgstr ""
+msgstr "ელფოსტის შენახვა ტექსტურ ან html failSi"
 
 #: editor/kmcomposerwin.cpp:1302
 #, kde-format
@@ -2569,7 +2573,7 @@ msgstr "დეტალები"
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:22
 #, kde-format
 msgid "Select email to put in whitelist:"
-msgstr ""
+msgstr "აირჩიეთ თეთრ სიაში ჩასამატებელი ელფოსტა:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
 #, kde-format

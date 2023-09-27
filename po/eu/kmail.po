@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-25 23:51+0200\n"
+"PO-Revision-Date: 2023-09-26 22:17+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -851,11 +851,10 @@ msgid "Never"
 msgstr "Inoiz ez"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Erakutsi gogoko karpeten ikuspegia"
+msgstr "Erakutsi gogoko karpeten ikuspegia:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -873,11 +872,10 @@ msgid "Always"
 msgstr "Beti"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Karpetei buruzko argibideak"
+msgstr "Karpetei buruzko argibideak:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -6089,7 +6087,7 @@ msgstr "Data"
 #: searchdialog/kmsearchmessagemodel.cpp:87
 #, kde-format
 msgid "Preview"
-msgstr "Aurreikuspegia"
+msgstr "Aurreikustea"
 
 #: searchdialog/kmsearchmessagemodel.cpp:144
 #, kde-format
@@ -6548,10 +6546,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Mezuen aurrebista-panela"
+msgstr "Mezuen aurreikuste-beiratea:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
@@ -6573,10 +6570,9 @@ msgstr "Erakutsi mezuak aurreikusteko beiratea mezu-zerrendaren ondoan"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Karpeten zerrenda"
+msgstr "Karpeten zerrenda:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362

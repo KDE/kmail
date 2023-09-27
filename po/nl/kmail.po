@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-25 09:19+0200\n"
+"PO-Revision-Date: 2023-09-26 10:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -861,11 +861,10 @@ msgid "Never"
 msgstr "Nooit"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Mappenweergave van favorieten tonen"
+msgstr "Mappenweergave van favorieten tonen:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -883,11 +882,10 @@ msgid "Always"
 msgstr "Altijd"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Tekstballonnen van folders"
+msgstr "Tekstballonnen van folders:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -6615,10 +6613,9 @@ msgstr "De hoogte van de dialoog KMail instellen (alleen voor intern gebruik)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Berichtvoorbeeldvak"
+msgstr "Berichtvoorbeeldvak:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
@@ -6640,10 +6637,9 @@ msgstr "Berichtvoorbeeldvak naast de berichtenlijst tonen"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Mappenlijst"
+msgstr "Mappenlijst:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362

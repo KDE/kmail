@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2022-08-21 06:05+0200\n"
+"PO-Revision-Date: 2023-09-26 05:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian<kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
@@ -39,8 +39,7 @@ msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "ნამდვილად გსურთ ერთიან საფოსტო ყუთის წაშლა <b>%1</b>?"
 
 #: settingsdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Really Remove?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "მართლა წავშალო?"

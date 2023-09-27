@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-25 09:31+0200\n"
+"PO-Revision-Date: 2023-09-26 12:23+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -854,11 +854,10 @@ msgid "Never"
 msgstr "Mai"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Mostra la vista de carpetes preferides"
+msgstr "Mostra la vista de carpetes preferides:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -876,11 +875,10 @@ msgid "Always"
 msgstr "Sempre"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Consells de les carpetes"
+msgstr "Consells de les carpetes:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -6604,10 +6602,9 @@ msgstr "L'alçària del diàleg de configuració de KMail (només per a ús inte
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Subfinestra de vista prèvia del missatge"
+msgstr "Subfinestra de vista prèvia del missatge:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
@@ -6633,10 +6630,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Llista de carpetes"
+msgstr "Llista de carpetes:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362
