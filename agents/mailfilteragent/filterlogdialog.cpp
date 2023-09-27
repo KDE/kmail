@@ -70,9 +70,8 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mTextEdit->setReadOnly(true);
     mTextEdit->editor()->setWordWrapMode(QTextOption::NoWrap);
     const QStringList logEntries = FilterLog::instance()->logEntries();
-    for (const QString &str : logEntries) {
-        mTextEdit->editor()->appendHtml(str);
-    }
+    const QString log = logEntries.join(QStringLiteral("<br>"));
+    mTextEdit->editor()->appendHtml(log);
 
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareError, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareError);
