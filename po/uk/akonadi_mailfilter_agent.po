@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-28 01:40+0000\n"
 "PO-Revision-Date: 2023-09-25 08:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -26,17 +26,17 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Переглядач журналу фільтрування"
 
-#: filterlogdialog.cpp:80
+#: filterlogdialog.cpp:79
 #, kde-format
 msgid "Share..."
 msgstr "Оприлюднити…"
 
-#: filterlogdialog.cpp:86
+#: filterlogdialog.cpp:85
 #, kde-format
 msgid "&Log filter activities"
 msgstr "Вести &журнал діяльності фільтра"
 
-#: filterlogdialog.cpp:91
+#: filterlogdialog.cpp:90
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,22 +46,22 @@ msgstr ""
 "дані в журнал будуть збиратися та відображатися, лише якщо ведення журналу "
 "ввімкнено. "
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:94
 #, kde-format
 msgid "Logging Details"
 msgstr "Подробиці в журналі"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:101
 #, kde-format
 msgid "Log pattern description"
 msgstr "Записувати опис взірця"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:106
 #, kde-format
 msgid "Log filter &rule evaluation"
 msgstr "Записувати оцінювання &правил фільтра"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:111
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -76,33 +76,33 @@ msgstr ""
 "окремого фільтра буде надано тільки результат оцінки всіх правил, з яких "
 "складається цей фільтр."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:118
 #, kde-format
 msgid "Log filter pattern evaluation"
 msgstr "Заносити оцінювання взірця фільтра"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:123
 #, kde-format
 msgid "Log filter actions"
 msgstr "Заносити дії фільтра"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:133
 #, kde-format
 msgid "Log size limit:"
 msgstr "Обмеження розміру журналу:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:141
 #, kde-format
 msgid " KB"
 msgstr " кБ"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:142
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "необмежений"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:145
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -115,7 +115,7 @@ msgstr ""
 "потреби. Якщо розмір накопичених даних перевищить вказане обмеження, "
 "найстаріші дані буде вилучено: розмір даних не буде перевищувати обмеження. "
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -124,7 +124,7 @@ msgstr ""
 "Не вдалося виконати запис до файла %1.\n"
 "Докладний опис помилки: «%2»."
 
-#: filterlogdialog.cpp:331
+#: filterlogdialog.cpp:330
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

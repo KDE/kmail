@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-09-28 01:40+0000\n"
 "PO-Revision-Date: 2014-11-09 22:31+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -25,17 +25,17 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Prikazivač dnevnika filtriranja"
 
-#: filterlogdialog.cpp:80
+#: filterlogdialog.cpp:79
 #, kde-format
 msgid "Share..."
 msgstr ""
 
-#: filterlogdialog.cpp:86
+#: filterlogdialog.cpp:85
 #, kde-format
 msgid "&Log filter activities"
 msgstr "&Beleži aktivnost filtriranja"
 
-#: filterlogdialog.cpp:91
+#: filterlogdialog.cpp:90
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -45,22 +45,22 @@ msgstr ""
 "Naravno, dnevnički podaci se sakupljaju i prikazuju samo ako je beleženje "
 "uključeno."
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:94
 #, kde-format
 msgid "Logging Details"
 msgstr "Detalji beleženja"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:101
 #, kde-format
 msgid "Log pattern description"
 msgstr "Opis obrasca beleženja"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:106
 #, kde-format
 msgid "Log filter &rule evaluation"
 msgstr "Beleži &izračunavanje filterskih pravila"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:111
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -74,33 +74,33 @@ msgstr ""
 "rezultat svakog filterskog pravila. U suprotnom, beleži se samo rezultat "
 "izračunavanja svih filterskih pravila jednog filtera."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:118
 #, kde-format
 msgid "Log filter pattern evaluation"
 msgstr "Beleži izračunavanje filterskih obrazaca"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:123
 #, kde-format
 msgid "Log filter actions"
 msgstr "Beleži radnje filtera"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:133
 #, kde-format
 msgid "Log size limit:"
 msgstr "Ograničenje veličine dnevnika:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:141
 #, kde-format
 msgid " KB"
 msgstr " KiB"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:142
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "neograničeno"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:145
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -113,7 +113,7 @@ msgstr ""
 "koristi. Čim količina podataka premaši zadatu vrednost, najstariji podaci "
 "biće odbacivani dok se ne spadne ispod ograničenja."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -122,7 +122,7 @@ msgstr ""
 "Ne mogu da pišem u fajl %1:\n"
 "Detaljni opis greške: %2"
 
-#: filterlogdialog.cpp:331
+#: filterlogdialog.cpp:330
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
