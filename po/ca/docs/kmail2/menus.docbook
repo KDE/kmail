@@ -1798,7 +1798,7 @@
 ><para
 >Obre la <link linkend="the-composer-window"
 >finestra de l'editor</link
-> per poder escriure un missatge nou.</para
+> a on es pot escriure un missatge nou.</para
 ></listitem>
 </varlistentry>
 
@@ -3241,7 +3241,7 @@
 ></term>
   <listitem
 ><para
->Obre una finestra nova de l'editor per poder crear un missatge.</para
+>Obre una finestra nova de l'editor a on es pot crear un missatge.</para
 ></listitem>
 </varlistentry>
 

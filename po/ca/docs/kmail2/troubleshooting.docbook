@@ -951,7 +951,7 @@ Query OK, 9 rows affected (0.003 sec)
 
 MariaDB [akonadi]> \q                                                  &lt;==
 Bye</screen
-> Les tres ordres de MySQL són «use akonadi;», «delete from pimitemtable where remoteid is NULL;» i «\q». Després de dir «mysql --socket= ...» estareu en un diàleg amb el servidor MySQL (també conegut com «MariaDB»), el qual proporciona un missatge. Per a més claredat, aquí es presenta tot el diàleg. En la il·lustració anterior, les línies d'entrada de l'usuari estan marcades amb «&lt;==».</para
+> Les tres ordres de MySQL són «use akonadi;», «delete from pimitemtable where remoteid is NULL;» i «\q». Després de dir «mysql --socket= ...» estareu en un diàleg amb el servidor MySQL (també conegut com a «MariaDB»), el qual proporciona un missatge. Per a més claredat, aquí es presenta tot el diàleg. En la il·lustració anterior, les línies d'entrada de l'usuari estan marcades amb «&lt;==».</para
 ></step>
   
 </procedure>
@@ -966,7 +966,7 @@ Bye</screen
 >Mantenir netes les àrees d'emmagatzematge auxiliar del &kmail;</title>
     
   <para
->El &kmail; emmagatzema dades en diversos llocs diferents al sistema. La majoria d'aquests llocs estan en algun lloc dins de la carpeta <filename
+>El &kmail; emmagatzema dades en diversos llocs diferents del sistema. La majoria d'aquests llocs estan en algun lloc dins de la carpeta <filename
 >~/.local/share/</filename
 >. Per exemple, en la majoria de les distribucions de Linux, les vostres <guilabel
 >Carpetes locals</guilabel

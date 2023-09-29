@@ -442,7 +442,7 @@ format="PNG"/></imageobject
 ></term>
 <listitem>
 <para
->Aquí podeu seleccionar una clau &openpgp; per a signar els missatges escrits amb aquesta identitat. Per abreujar, només es mostra l'ID de la clau de les claus seleccionades. En passar el cursor per sobre de l'element, es mostrarà més informació en un consell d'eina. Per a seleccionar una clau existent, empreu la llista desplegable. Si voleu crear un parell nou de claus pública/privada, seleccioneu <guilabel
+>Aquí podeu seleccionar una clau &openpgp; per a signar els missatges escrits amb aquesta identitat. Per a abreujar, només es mostra l'ID de la clau de les claus seleccionades. En passar el cursor per sobre de l'element, es mostrarà més informació en un consell d'eina. Per a seleccionar una clau existent, empreu la llista desplegable. Si voleu crear un parell nou de claus pública/privada, seleccioneu <guilabel
 >Genera un parell nou de claus:</guilabel
 >.</para>
 </listitem
@@ -2063,7 +2063,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></term>
         <listitem
 ><para
->Feu clic en aquest botó per obrir un diàleg per a la selecció d'icones. La icona es mostrarà a les entrades en la llista de missatges etiquetada.</para
+>Feu clic en aquest botó per a obrir un diàleg per a la selecció d'icones. La icona es mostrarà a les entrades en la llista de missatges etiquetada.</para
 ></listitem>
     </varlistentry>
     
@@ -3960,7 +3960,7 @@ that is used when you create a new folder.</para>
           <para
 >El <application
 >&Microsoft; Outlook</application
->, quan s'utilitza en combinació amb un servidor &Microsoft; Exchange, té un problema en entendre el correu electrònic de treball en grup que compleix els estàndards. Habiliteu aquesta opció per a enviaran les invitacions de treball en grup de manera que el &Microsoft; Exchange les pugui desxifrar. La invitació s'enviarà com a un adjunt amb el nom <filename
+>, quan s'utilitza en combinació amb un servidor &Microsoft; Exchange, té un problema en entendre el correu electrònic de treball en grup que compleix els estàndards. Habiliteu aquesta opció per a enviar les invitacions de treball en grup de manera que el &Microsoft; Exchange les pugui desxifrar. La invitació s'enviarà com a un adjunt amb el nom <filename
 >ical.ics</filename
 >. </para>
         </listitem>

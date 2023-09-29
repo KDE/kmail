@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-26 22:52+0200\n"
+"PO-Revision-Date: 2023-09-28 11:08+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2691,6 +2691,11 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Le clave de cryptation es solmente a pena fidate, maha essite usate assatis "
+"vices per esser multe probabilemente  controlate per le persona declarate. "
+"Per usar le clave essera fidate plus. O tu pot esignar le clave, si tu "
+"communicava le impression digital per un altere canal.Pulsa sur le icone per "
+"detalios."
 
 #: editor/kmcomposerwin.cpp:3935
 #, kde-format
@@ -4673,7 +4678,11 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Le message selectionate es cryptate. Currentemente il non es possibile deler "
+"attachamentos ex iste message cryptate."
 msgstr[1] ""
+"Le selection contine solmente messaghes criptate, ex le quales currentemente "
+"non es possibile deler attachamentos."
 
 #: kmmainwidget.cpp:2366
 #, kde-format
@@ -4704,6 +4713,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Nota que deler attachamentos ex  un message signate "
+"cryptographicamente invalidara su signatura.</p></html>"
 
 #: kmmainwidget.cpp:2383
 #, kde-format
@@ -4711,6 +4722,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Currentemente il non es possibile deler attachamentos ex messages "
+"cryptate.<br />Messages cryptate essera ignorate.</p></html>"
 
 #: kmmainwidget.cpp:2388
 #, kde-format

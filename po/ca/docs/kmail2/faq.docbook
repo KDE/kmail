@@ -523,7 +523,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
       
       <listitem>
         <para
->El &kmail; no encriptarà els missatges amb una clau pública que no sigui de confiança (sense signar). Si voleu encriptar amb una clau, haureu de comprovar la identitat del seu propietari i tan sols signar-la amb la vostra clau secreta si aquesta és bona. Si no voleu o no podeu comprovar la identitat del propietari de la clau, però tot i això voleu encriptar el missatge, si us plau, signeu la clau local amb <userinput
+>El &kmail; no encriptarà els missatges amb una clau pública que no sigui de confiança (sense signar). Si voleu encriptar amb una clau, haureu de comprovar la identitat del seu propietari i tan sols signar-la amb la vostra clau secreta si aquesta és bona. Si no voleu o no podeu comprovar la identitat del propietari de la clau, però així i tot voleu encriptar el missatge, si us plau, signeu la clau local amb <userinput
 ><command
 >gpg</command
 > <option
@@ -598,9 +598,9 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >Un índex obsolet es pot deure a diversos motius. Aquests són els més habituals. <itemizedlist>
         <listitem
 ><para
->Un altre programa ha modificat el contingut de la carpeta. Si voleu emprar el &kmail; amb el procmail, si us plau, llegiu-vos <link linkend="faq-procmail"
+>Un altre programa ha modificat el contingut de la carpeta. Si voleu emprar el &kmail; amb el procmail, si us plau, llegiu <link linkend="faq-procmail"
 >aquesta &PMF;</link
->. Si voleu emprar el &kmail; junt amb un altre client de correu, si us plau, llegiu-vos <link linkend="faq-other-muas"
+>. Si voleu emprar el &kmail; junt amb un altre client de correu, si us plau, llegiu <link linkend="faq-other-muas"
 >aquesta altra &PMF;</link
 >.</para
 ></listitem>
