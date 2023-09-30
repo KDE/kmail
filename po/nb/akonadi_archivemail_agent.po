@@ -242,6 +242,3 @@ msgstr "måneder"
 #, kde-format
 msgid "Years"
 msgstr "År"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Legg til Postarkiv"
