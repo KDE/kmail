@@ -164,7 +164,7 @@ msgstr "Produciuse un erro ao obter a mensaxe."
 #: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
-msgstr "Non se pode obter a mensaxe. %1"
+msgstr "Non é posíbel obter a mensaxe. %1"
 
 #: sendlaterjob.cpp:87
 #, kde-format
@@ -179,7 +179,7 @@ msgstr "A mensaxe non é unha mensaxe real"
 #: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
-msgstr "Non se pode enviar a mensaxe."
+msgstr "Non é posíbel enviar a mensaxe."
 
 #: sendlaterjob.cpp:132
 #, kde-format
