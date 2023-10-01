@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Xosé <xosecalvo@gmail.com>, 2011, 2012, 2013.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2013, 2015.
-# Adrián Chaves (Gallaecio) <adrian@chaves.io>, 2017, 2018, 2019, 2023.
+# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-28 01:40+0000\n"
-"PO-Revision-Date: 2023-06-18 13:44+0200\n"
+"PO-Revision-Date: 2023-09-30 12:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.2\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -118,12 +118,11 @@ msgid ""
 "Could not write the file %1:\n"
 "\"%2\" is the detailed error description."
 msgstr ""
-"Non se puido escribir no ficheiro %1:\n"
+"Non foi posíbel escribir no ficheiro %1:\n"
 "«%2» é a descrición detallada do erro."
 
 #: filterlogdialog.cpp:330
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Erro de KMail"
@@ -131,7 +130,7 @@ msgstr "Erro de KMail"
 #: filtermanager.cpp:100
 #, kde-format
 msgid "Filtering message %1 of %2"
-msgstr "Estase a filtrar a mensaxe %1 de %2"
+msgstr "Filtrando a mensaxe %1 de %2"
 
 #: filtermanager.cpp:187
 #, kde-format
@@ -148,10 +147,11 @@ msgstr "Produciuse un erro ao aplicar a eliminación do filtro de correo"
 msgid "Error applying mail filter modifications"
 msgstr "Produciuse un erro ao aplicar as modificacións do filtro de correo"
 
+# skip-rule: proposta-gl-dous-puntos-finais
 #: filtermanager.cpp:220
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
-msgstr "<b>Estanse a avaliar as regras de filtrado:</b>"
+msgstr "<b>Estanse a avaliar as regras de filtrado:</b> "
 
 #: filtermanager.cpp:227
 #, kde-format

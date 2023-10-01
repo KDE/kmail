@@ -55,7 +55,7 @@ msgstr "Ruta:"
 #: addarchivemaildialog.cpp:89
 #, kde-format
 msgid "Backup each:"
-msgstr "Crear unha copia de seguridade cada:"
+msgstr "Crear unha salvagarda cada:"
 
 #: addarchivemaildialog.cpp:103
 #, kde-format
@@ -186,7 +186,7 @@ msgstr "Eliminar elementos"
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
 msgstr ""
-"Non se pode engadir un segundo arquivo para este cartafol. Modifique o "
+"Non é posíbel engadir un segundo arquivo para este cartafol. Modifique o "
 "existente no canto diso."
 
 #: job/archivejob.cpp:58

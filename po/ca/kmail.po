@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-26 12:23+0200\n"
+"PO-Revision-Date: 2023-09-30 18:11+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -4694,7 +4694,7 @@ msgstr[0] ""
 "El missatge seleccionat està encriptat. Actualment no és possible suprimir "
 "els adjunts dels missatges encriptats."
 msgstr[1] ""
-"La selecció només conte missatges encriptats, dels quals actualment no és "
+"La selecció només conté missatges encriptats, dels quals actualment no és "
 "possible suprimir els adjunts."
 
 #: kmmainwidget.cpp:2366
@@ -6920,7 +6920,7 @@ msgctxt ""
 "to be continued with \"jump to first new message\", \"jump to first unread "
 "or new message\", and \"jump to last selected message\""
 msgid "When ente&ring a folder:"
-msgstr "En ent&rar a una carpeta:"
+msgstr "En ent&rar en una carpeta:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
 #: ui/miscpagemaintab.ui:68

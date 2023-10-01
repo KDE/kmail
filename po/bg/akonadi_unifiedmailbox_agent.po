@@ -1,20 +1,20 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# Mincho Kondarev <mkondarev@yahoo.de>, 2022.
+# SPDX-FileCopyrightText: 2022, 2023 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2022-05-21 11:37+0200\n"
+"PO-Revision-Date: 2023-09-30 10:49+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
-"Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
+"Language-Team: \n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.04.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
@@ -39,8 +39,7 @@ msgstr ""
 "Наистина ли искате да премахнете унифицирана пощенска кутия <b> %1 </b>?"
 
 #: settingsdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Really Remove?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Наистина ли да се премахне?"

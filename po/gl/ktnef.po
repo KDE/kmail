@@ -62,14 +62,14 @@ msgstr "Hai que escoller un elemento primeiro."
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr ""
-"Non se pode gardar o elemento escollido porque ten unha etiqueta baleira."
+"Non é posíbel gardar o elemento escollido porque ten unha etiqueta baleira."
 
 #: attachpropertydialog.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
 msgstr ""
-"Non se pode abrir o ficheiro para escribir nel; comprobe os permisos do "
+"Non é posíbel abrir o ficheiro para escribir nel; comprobe os permisos do "
 "ficheiro."
 
 #: ktnefmain.cpp:94
@@ -152,7 +152,7 @@ msgstr "Non se cargou ningún ficheiro."
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
-msgstr "Non se pode abrir o ficheiro «%1»."
+msgstr "Non é posíbel abrir o ficheiro «%1»."
 
 #: ktnefmain.cpp:198
 #, kde-format
@@ -179,7 +179,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
-msgstr "Non se pode extraer o ficheiro «%1»."
+msgstr "Non é posíbel extraer o ficheiro «%1»."
 
 #: ktnefmain.cpp:486
 #, kde-format
@@ -192,8 +192,8 @@ msgstr "A mensaxe non contén ningún dato en texto enriquecido."
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr ""
-"Non se pode abrir o ficheiro «%1» para escribir nel; comprobe os permisos do "
-"ficheiro."
+"Non é posíbel abrir o ficheiro «%1» para escribir nel; comprobe os permisos "
+"do ficheiro."
 
 #: ktnefmain.cpp:526
 #, kde-format

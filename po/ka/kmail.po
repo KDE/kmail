@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-29 15:44+0200\n"
+"PO-Revision-Date: 2023-09-30 09:44+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -466,7 +466,7 @@ msgstr "მიუწვდომელია."
 #: collectionpage/collectionmailinglistpage.cpp:212
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
-msgstr ""
+msgstr "KMail-მა ამ საქაღალდეში დაგზავნის სია ვერ აღმოაჩინა."
 
 #: collectionpage/collectionmailinglistpage.cpp:215
 #, kde-format
@@ -474,6 +474,8 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
+"KMail-მა ამ საქაღალდეში დაგზავნის სია სრულად ვერ აღმოაჩინა. შეავსეთ "
+"მისამართები ხელით."
 
 #: collectionpage/collectionquotapage.cpp:21
 #, kde-format
@@ -611,7 +613,7 @@ msgstr "ელფოსტის შემოწმებისას"
 #: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr ""
+msgstr "შეტყობინებების &გაგზავნა განავალ საქაღალდეში:"
 
 #: configuredialog/configureaccountpage.cpp:111
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
@@ -651,6 +653,8 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
+"ანგარიშის ოსტატის გაშვება შეუძლებელია. დარწმუნდით, რომ AccountWizard სწორად "
+"გიყენიათ."
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
@@ -935,7 +939,7 @@ msgstr "შეტყობინებების ფანჯარა"
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
-msgstr ""
+msgstr "შეტყობინების ფანჯრის დახურვა პასუხის/გადაგზავნის შემდეგ"
 
 #: configuredialog/configureappearancepage.cpp:828
 #, kde-format
@@ -1071,7 +1075,7 @@ msgstr "ხელმოწერა"
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
-msgstr ""
+msgstr "მორგებული ხელმოწერის ავტომატური ჩასმა შეტყობინების შედგენის დაწყებისას"
 
 #: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
@@ -1084,6 +1088,8 @@ msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
+"ხელმოწერამდე RFC-სთან თავსებადი ხელმოწერის გამყოფის ჩასმა (ორი ტირე და "
+"გამოტოვება ერთ ხაზზე)"
 
 #: configuredialog/configurecomposerpage.cpp:172
 #, kde-format
@@ -1417,6 +1423,7 @@ msgstr "მნიშვნელობა:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
+"'Content-Type' ავტორიზებული სტრიქონი არაა. ეს თავსართი შენახული არ იქნება."
 
 #: configuredialog/configurecomposerpage.cpp:1047
 #, kde-format
@@ -1434,6 +1441,8 @@ msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr ""
+"ჩართეთ ეს პარამეტრი, რომ პროგრამას Outlook (tm) გააგებინოთ მიმაგრებული "
+"ფაილები, რომლებიც არა-ინგლისურ სიმბოლოებს შეიცავენ"
 
 #: configuredialog/configurecomposerpage.cpp:1099
 #, kde-format
@@ -2600,6 +2609,8 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details...)</a>"
 msgstr ""
+"აღმოჩენილია პოტენციური ფიშინგის ელფოსტის მისამართები <a href="
+"\"phishingdetails\">(დეტალები...)</a>"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
@@ -2613,6 +2624,9 @@ msgid ""
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
+"ეს მალსახმობი საშუალებას გაძლევთ, ელფოსტა პირდაპირ გააგზავნოთ.\n"
+"ელფოსტა შეიძლება შემთხვევით გააგზავნოთ.\n"
+"რას იზამთ?"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
@@ -2640,6 +2654,8 @@ msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
+"მიმაგრებული ფაილი: <ul><li>%1</li></ul> გარედან დაემატა. წაშალეთ ის, თუ ეს "
+"შეცდომაა."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
@@ -2647,6 +2663,8 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
+"მიმაგრებული ფაილები: <ul><li>%1</li></ul> გარედან დაემატა. წაშალეთ ისინი, თუ "
+"ეს შეცდომაა."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:19
 #, kde-format
@@ -2654,6 +2672,8 @@ msgid ""
 "The message you have composed seems to refer to an attached file but you "
 "have not attached anything. Do you want to attach a file to your message?"
 msgstr ""
+"შეტყობინება, რომელიც შეადგინეთ, როგორც ჩანს, მიუთითებს მიმაგრებულ ფაილზე, "
+"მაგრამ არაფერი მიგიმაგრებიათ. გნებავთ, მიამაგროთ ფაილი თქვენს შეტყობინებას?"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -3962,6 +3982,8 @@ msgstr "ელფოსტის გაგზავნის შეცდომ�
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
+"KMail დაყენებულია სტატუსზე - ხაზზეა. ყველა ქსელური დავალების შესრულება "
+"გაგრძელდა"
 
 #: kmkernel.cpp:868
 #, kde-format
@@ -3969,6 +3991,8 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
+"KMail დაყენებულია სტატუსზე - ხაზზეა. როცა ქსელთან მიერთებას აღმოვაჩენ, ყველა "
+"ქსელური დავალების შესრულება გაგრძელება"
 
 #: kmkernel.cpp:941
 #, kde-format
@@ -4007,6 +4031,8 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
+"ავტომატურად შენახვის ფაილის (მისამართზე %1) გახსნა ჩავარდა.\n"
+"მიზეზი: %2"
 
 #: kmkernel.cpp:1068
 #, kde-format
@@ -4018,16 +4044,17 @@ msgstr "ავტომატური შენახვის ფაილი�
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
-msgstr[0] ""
+msgstr[0] "ეს იდენტიფიკატორი შეიცვალა, რომ ნაგულისხმევი ტრანსპორტი გამოიყენოს:"
 msgstr[1] ""
+"ეს %1 იდენტიფიკატორი შეიცვალა, რომ ნაგულისხმევი ტრანსპორტი გამოიყენოს:"
 
 #: kmkernel.cpp:1640
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ეს იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
+msgstr[1] "ეს %1 იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
 
 #: kmkernel.cpp:1655
 #, kde-format

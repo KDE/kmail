@@ -131,7 +131,7 @@ msgstr ""
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
-msgstr "Notificación na bandexa do sistema"
+msgstr "Notificación na área de notificación"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -533,7 +533,7 @@ msgstr "%p% completa"
 #: collectionpage/collectionquotawidget.cpp:42
 #, kde-format
 msgid "%1 of %2 used"
-msgstr "%1 de %2 utilizado"
+msgstr "%1 de %2 usado"
 
 #: collectionpage/collectionshortcutpage.cpp:29
 #, kde-format
@@ -693,7 +693,7 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"Non se puido iniciar o asistente de contas. Asegúrese de que instalou "
+"Non foi posíbel iniciar o asistente de contas. Asegúrese de que instalou "
 "axeitadamente o asistente de contas (AccountWizard)."
 
 #: configuredialog/configureaccountpage.cpp:219
@@ -1010,13 +1010,13 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:828
 #, kde-format
 msgid "System Tray"
-msgstr "Bandexa do sistema"
+msgstr "Área de notificación"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "Activar a icona na bandexa do sistema"
+msgstr "Activar a icona na área de notificación"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
@@ -1083,7 +1083,7 @@ msgstr "Retirar"
 #: configuredialog/configureappearancepage.cpp:1242
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
-msgstr "Non se pode crear a etiqueta, xa existe unha co mesmo nome."
+msgstr "Non é posíbel crear a etiqueta, xa existe unha co mesmo nome."
 
 #: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
@@ -1975,7 +1975,7 @@ msgstr "KMail2"
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
-"Seleccione o dicionario que desexe utilizar para corrixir a ortografía desta "
+"Seleccione o dicionario que desexe usar para corrixir a ortografía desta "
 "mensaxe"
 
 #: editor/kmcomposerwin.cpp:365
@@ -2963,7 +2963,7 @@ msgstr "Non se cifrará a mensaxe"
 #: folderarchive/folderarchiveagentjob.cpp:65
 #, kde-format
 msgid "Cannot fetch collection. %1"
-msgstr "Non se pode obter a colección. %1"
+msgstr "Non é posíbel obter a colección. %1"
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:54
 #, kde-format
@@ -2973,7 +2973,7 @@ msgstr "Non se definiu o nome do cartafol."
 #: folderarchive/folderarchiveagentcheckcollection.cpp:86
 #, kde-format
 msgid "Unable to create folder. %1"
-msgstr "Non se pode crear o cartafol. %1"
+msgstr "Non é posíbel crear o cartafol. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:32
 #, kde-format
@@ -3001,12 +3001,12 @@ msgstr ""
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
 msgid "Cannot move messages."
-msgstr "Non se poden mover as mensaxes."
+msgstr "Non é posíbel mover as mensaxes."
 
 #: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
-msgstr "Non se pode obter o cartafol. Infórmase deste erro: %1"
+msgstr "Non é posíbel obter o cartafol. Infórmase deste erro: %1"
 
 #: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
@@ -3016,12 +3016,12 @@ msgstr "Non se devolveu ningún cartafol."
 #: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
-msgstr "Non se pode obter o cartafol pai. Infórmase deste erro: %1"
+msgstr "Non é posíbel obter o cartafol pai. Infórmase deste erro: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
 msgid "Unable to return list of folders."
-msgstr "Non se pode devolver a lista de cartafoles."
+msgstr "Non é posíbel devolver a lista de cartafoles."
 
 #: folderarchive/folderarchivemanager.cpp:166
 #, kde-format
@@ -3114,7 +3114,7 @@ msgstr "Xerar unha nova parella de chaves"
 #: identity/identitydialog.cpp:227
 #, kde-format
 msgid "Generating new key pair..."
-msgstr "Estase a xerar un novo par de chaves…"
+msgstr "Xerando un novo par de chaves…"
 
 #: identity/identitydialog.cpp:240
 #, fuzzy, kde-format
@@ -3179,10 +3179,10 @@ msgid ""
 msgstr ""
 "<qt><h3>Enderezo de correo electrónico</h3><p>Este campo debería ter o seu "
 "enderezo de correo electrónico completo.</p><p>Este enderezo é o principal, "
-"o que se utiliza para o correo saínte. Se dispón de máis dun enderezo, cree "
-"unha identidade nova ou engada enderezos adicionais no campo de embaixo.</"
-"p><p>Se o deixa en branco, ou o especifica mal, a xente terá problemas para "
-"lle responder.</p></qt>"
+"o que se usa para o correo saínte. Se dispón de máis dun enderezo, cree unha "
+"identidade nova ou engada enderezos adicionais no campo de embaixo.</p><p>Se "
+"o deixa en branco, ou o especifica mal, a xente terá problemas para lle "
+"responder.</p></qt>"
 
 #: identity/identitydialog.cpp:328
 #, kde-format
@@ -3664,7 +3664,7 @@ msgstr "Eliminar a vCard"
 #: identity/identityeditvcarddialog.cpp:79
 #, kde-format
 msgid "We cannot delete vCard file."
-msgstr "Non se pode eliminar o ficheiro vCard."
+msgstr "Non é posíbel eliminar o ficheiro vCard."
 
 #: identity/identityeditvcarddialog.cpp:125
 #, kde-format
@@ -3885,7 +3885,7 @@ msgstr "O contacto creouse satisfactoriamente"
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
-msgstr "Non se pode almacenar o contacto: %1"
+msgstr "Non é posíbel almacenar o contacto: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:897
 #, fuzzy, kde-format
@@ -4325,7 +4325,7 @@ msgstr "Enviar a mensaxe"
 #: kmkernel.cpp:835 kmmainwidget.cpp:2432 kmmainwidget.cpp:2447
 #, kde-format
 msgid "Impossible to send email"
-msgstr "Non se pode enviar a mensaxe"
+msgstr "Non é posíbel enviar a mensaxe"
 
 #: kmkernel.cpp:866
 #, kde-format
@@ -4381,7 +4381,7 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
-"Non se puido abrir ficheiro de garda automática de %1.\n"
+"Non foi posíbel abrir ficheiro de garda automática de %1.\n"
 "Razón: %2"
 
 #: kmkernel.cpp:1068
@@ -4415,7 +4415,7 @@ msgstr "Estanse a enviar as mensaxes"
 #: kmkernel.cpp:1656
 #, kde-format
 msgid "Initiating sending process..."
-msgstr "Estase a iniciar o proceso de envío…"
+msgstr "Iniciando o proceso de envío…"
 
 #: kmkernel.cpp:1735
 #, kde-format
@@ -4459,7 +4459,7 @@ msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr ""
-"Non se puido iniciar o xestor de certificados. Asegúrese de que instalou "
+"Non foi posíbel iniciar o xestor de certificados. Asegúrese de que instalou "
 "Kleopatra axeitadamente."
 
 #: kmlaunchexternalcomponent.cpp:89
@@ -4475,8 +4475,8 @@ msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Non se puido iniciar o asistente de importación. Asegúrese de que instalou "
-"axeitadamente o asistente de importanción (ImportWizard)."
+"Non foi posíbel iniciar o asistente de importación. Asegúrese de que "
+"instalou axeitadamente o asistente de importanción (ImportWizard)."
 
 #: kmlaunchexternalcomponent.cpp:104
 #, fuzzy, kde-format
@@ -4491,7 +4491,7 @@ msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
-"Non se puido iniciar o «Exportador de datos PIM». Comprobe que estea "
+"Non foi posíbel iniciar o «Exportador de datos PIM». Comprobe que estea "
 "instalado correctamente."
 
 #: kmlaunchexternalcomponent.cpp:119
@@ -4507,8 +4507,8 @@ msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Non se puido iniciar o asistente de importación. Asegúrese de que instalou "
-"axeitadamente o asistente de importanción (ImportWizard)."
+"Non foi posíbel iniciar o asistente de importación. Asegúrese de que "
+"instalou axeitadamente o asistente de importanción (ImportWizard)."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, fuzzy, kde-format
@@ -4539,12 +4539,12 @@ msgstr ""
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
-"Non se puido iniciar o asistente de importación. Comprobe a instalación."
+"Non foi posíbel iniciar o asistente de importación. Comprobe a instalación."
 
 #: kmmainwidget.cpp:310
 #, kde-format
 msgid "Unable to start import wizard"
-msgstr "Non se pode iniciar o asistente de importación"
+msgstr "Non é posíbel iniciar o asistente de importación"
 
 #: kmmainwidget.cpp:1364
 #, kde-format
@@ -5604,7 +5604,7 @@ msgstr "Axentes de Akonadi"
 #: kmmainwin.cpp:38
 #, kde-format
 msgid "Starting..."
-msgstr "Estase a iniciar…"
+msgstr "Iniciando…"
 
 #: kmreadermainwin.cpp:476 util.cpp:148
 #, kde-format
@@ -5630,7 +5630,7 @@ msgstr "Agochar a barra de menú"
 #: kmreadermainwin.cpp:607
 #, kde-format
 msgid "Cannot copy item. %1"
-msgstr "Non se pode copiar o elemento. %1"
+msgstr "Non é posíbel copiar o elemento. %1"
 
 #: kmreaderwin.cpp:121
 #, kde-format
@@ -6353,8 +6353,8 @@ msgstr "Esqueceu engadir condicións."
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
-"Non se poden usar as condicións «contén» cun número de caracteres inferior a "
-"catro."
+"Non é posíbel usar as condicións «contén» cun número de caracteres inferior "
+"a catro."
 
 #: searchdialog/searchwindow.cpp:520
 #, kde-format
@@ -6364,7 +6364,7 @@ msgstr "Buscando…"
 #: searchdialog/searchwindow.cpp:533
 #, kde-format
 msgid "Cannot get search result. %1"
-msgstr "Non se pode obter o resultado da busca. %1"
+msgstr "Non é posíbel obter o resultado da busca. %1"
 
 #: searchdialog/searchwindow.cpp:536
 #, kde-format
@@ -6636,10 +6636,9 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
-"Pódese crear regularmente unha copia de seguridade do texto da xanela de "
-"edición. O intervalo empregado para crear as copias de seguridade "
-"estabelécese aquí. Pode desactivar o gravado automático configurando o valor "
-"como 0."
+"Pódese crear regularmente unha salvagarda do texto da xanela de edición. O "
+"intervalo empregado para crear as salvagardas estabelécese aquí. Pode "
+"desactivar o gravado automático configurando o valor como 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.cmake:254
@@ -7829,8 +7828,8 @@ msgid ""
 "responder below."
 msgstr ""
 "Se se escolle esta opción, os certificados S/MIME valídanse por Internet "
-"utilizando o protocolo de estado de certificados por Internet (OCSP). "
-"Introduza o URL do servidor de OCSP embaixo."
+"usando o protocolo de estado de certificados por Internet (OCSP). Introduza "
+"o URL do servidor de OCSP embaixo."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
@@ -8178,7 +8177,7 @@ msgstr "Non hai nada que desfacer."
 #: undostack.cpp:108
 #, kde-format
 msgid "Cannot move message. %1"
-msgstr "Non se pode mover a mensaxe. %1"
+msgstr "Non é posíbel mover a mensaxe. %1"
 
 #: userfeedback/accountinfosource.cpp:22
 #, fuzzy, kde-format
