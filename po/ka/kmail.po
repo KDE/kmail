@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-30 09:44+0200\n"
+"PO-Revision-Date: 2023-10-01 15:36+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2508,6 +2508,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"დაშიფვრის გასაღები სანდო არაა. მას საკმარისი ვარგისიანობა არ გააჩნია. "
+"შეგიძლიათ, გასაღებს ხელი მოაწეროთ, თუ სხვა არხის მიერ ანაბეჭდს დაელაპარაკეთ. "
+"დეტალებისთვის დააწკაპუნეთ ხატულას."
 
 #: editor/kmcomposerwin.cpp:3885
 #, kde-format
@@ -2696,6 +2699,7 @@ msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
+"ტრანსპორტი ვერ ვიპოვე. გადაამოწმეთ, რომ სწორ ელფოსტის ტრანსპორტს იყენებთ."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
 #, kde-format
@@ -3624,6 +3628,8 @@ msgstr "საქაღალდის წაშლა"
 #, kde-format
 msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ ცარიელი საქაღალდე <b>%1</"
+"b> ?</qt>"
 
 #: job/removecollectionjob.cpp:73
 #, kde-format
@@ -3690,22 +3696,22 @@ msgstr "შეტყობინების სათაურის დაყ�
 #: kmail_options.h:17
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr ""
+msgstr "ასლის გაგზავნა 'მისამართზე'. შეგიძლიათ, გამეოროთ"
 
 #: kmail_options.h:20
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr ""
+msgstr "ბრმა ასლის გაგზავნა 'მისამართზე'. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:23
 #, kde-format
 msgid "Set replyTo to 'address'"
-msgstr ""
+msgstr "პასუხის 'მისამართზე' დაბრუნება"
 
 #: kmail_options.h:25
 #, kde-format
 msgid "Add 'header' to message. This can be repeated"
-msgstr ""
+msgstr "შეტყობინებისთვის 'თავსართის' დამატება. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:26
 #, kde-format
@@ -3720,7 +3726,7 @@ msgstr "შეტყობინების სხეულისდაყე�
 #: kmail_options.h:28
 #, kde-format
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr ""
+msgstr "შეტყობინებისთვის მიმაგრებული ფაილის დამატება. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4583,7 +4589,7 @@ msgstr "&ყველა შეცდომის მონიშვნა"
 #: kmmainwidget.cpp:3040
 #, kde-format
 msgid "&Mailing List Management..."
-msgstr ""
+msgstr "&დაგზავნის სიის მართვა..."
 
 #: kmmainwidget.cpp:3048
 #, kde-format
@@ -4685,7 +4691,7 @@ msgstr "დისკუსიის &წაკითხულად დანი
 #: kmmainwidget.cpp:3198
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
-msgstr ""
+msgstr "მონიშნულ დისკუსიაში ყველა შეტყობინების წაკითხულად მონიშვნა"
 
 #: kmmainwidget.cpp:3201
 #, kde-format
@@ -4695,7 +4701,7 @@ msgstr "დისკუსიის წაუკითხავად მონ�
 #: kmmainwidget.cpp:3204
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
-msgstr ""
+msgstr "მონიშნულ დისკუსიაში ყველა შეტყობინების წაუკითხავად მონიშვნა"
 
 #: kmmainwidget.cpp:3210
 #, kde-format
@@ -4705,7 +4711,7 @@ msgstr "&დისკუსიის მნიშვნელოვნად მ
 #: kmmainwidget.cpp:3213
 #, kde-format
 msgid "Remove &Important Thread Mark"
-msgstr ""
+msgstr "&დისკუსიის მნიშვნელოვნად მონიშვნის მოხსნა"
 
 #: kmmainwidget.cpp:3216
 #, kde-format
@@ -4752,18 +4758,18 @@ msgstr "&ყველა ფილტრის გადატარება"
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
-msgstr ""
+msgstr "დისკუსიის / ჯგუფის &ამოკეცვა"
 
 #: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Expand the current thread or group"
-msgstr ""
+msgstr "მიმდინარე ჯგუფის ან დისკუსიის ამოკეცვა"
 
 #: kmmainwidget.cpp:3267
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
-msgstr ""
+msgstr "&დისკუსიის / ჯგუფის ჩაკეცვა"
 
 #: kmmainwidget.cpp:3270
 #, kde-format
@@ -4790,7 +4796,7 @@ msgstr "&ყველა დისკუსიის ჩაკეცვა"
 #: kmmainwidget.cpp:3284
 #, kde-format
 msgid "Collapse all threads in the current folder"
-msgstr ""
+msgstr "მიმდინარე ხედში ყველა დისკუსიის ჩაკეცვა"
 
 #: kmmainwidget.cpp:3288
 #, kde-format
@@ -4857,7 +4863,7 @@ msgstr "შემდეგი წაუკითხავი &საქაღა
 #: kmmainwidget.cpp:3341
 #, kde-format
 msgid "Go to the next folder with unread messages"
-msgstr ""
+msgstr "შემდეგ წაუკითხავი შეტყობინებების მქონე საქაღალდეზე გადასვლა"
 
 #: kmmainwidget.cpp:3344
 #, kde-format
@@ -4867,7 +4873,7 @@ msgstr "წინა წაუკითხავი &საქაღალდე
 #: kmmainwidget.cpp:3350
 #, kde-format
 msgid "Go to the previous folder with unread messages"
-msgstr ""
+msgstr "წინა წაუკითხავი შეტყობინებების მქონე საქაღალდეზე გადასვლა"
 
 #: kmmainwidget.cpp:3354
 #, kde-format
@@ -5669,7 +5675,7 @@ msgstr "&ფილტრი დაგზავნის სიაზე..."
 #: messageactions.cpp:79
 #, kde-format
 msgid "Add Followup Reminder..."
-msgstr ""
+msgstr "მიყოლების შეხსენების დამატება..."
 
 #: messageactions.cpp:81
 #, kde-format
@@ -5700,7 +5706,7 @@ msgstr "შენიშვნის ჩასწორება..."
 #: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List..."
-msgstr ""
+msgstr "ფილტრი დაგზავნის სიაზე..."
 
 #: messageactions.cpp:454
 #, kde-format
@@ -5870,7 +5876,7 @@ msgstr "მონიშნულის გასუფთავება"
 #: searchdialog/searchwindow.cpp:201
 #, kde-format
 msgid "Jump to original folder"
-msgstr ""
+msgstr "საწყის საქაღალდეზე გადასვლა"
 
 #: searchdialog/searchwindow.cpp:292
 #, kde-format
