@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-26 01:46+0000\n"
-"PO-Revision-Date: 2023-09-27 00:30+0200\n"
+"PO-Revision-Date: 2023-10-02 20:52+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -512,7 +512,7 @@ msgstr "%1 de %2 usado"
 #, kde-format
 msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
-msgstr "Acceso rápido"
+msgstr "Atajo de teclado"
 
 #: collectionpage/collectionshortcutpage.cpp:41
 #, kde-format
@@ -2751,19 +2751,19 @@ msgid ""
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
-"Este acceso rápido permite enviar correo directamente.\n"
+"Este atajo de teclado permite enviar correo directamente.\n"
 "El correo se puede enviar accidentalmente.\n"
 "¿Qué desea hacer?"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
 msgid "Configure shortcut"
-msgstr "Configurar acceso rápido"
+msgstr "Configurar atajo de teclado"
 
 #: editor/validatesendmailshortcut.cpp:32
 #, kde-format
 msgid "Remove Shortcut"
-msgstr "Eliminar acceso rápido"
+msgstr "Eliminar atajo de teclado"
 
 #: editor/validatesendmailshortcut.cpp:33
 #, kde-format
@@ -2950,7 +2950,7 @@ msgstr "Mensajes archivados"
 #: foldershortcutactionmanager.cpp:123 foldershortcutactionmanager.cpp:124
 #, kde-format
 msgid "Folder Shortcut %1"
-msgstr "Acceso rápido a carpeta %1"
+msgstr "Atajo de teclado para la carpeta %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
@@ -4876,7 +4876,7 @@ msgstr "Borrar &la caché de Akonadi en esta carpeta y todas sus subcarpetas"
 #: kmmainwidget.cpp:3058
 #, kde-format
 msgid "&Assign Shortcut..."
-msgstr "&Asignar acceso rápido..."
+msgstr "&Asignar atajo de teclado..."
 
 #: kmmainwidget.cpp:3076
 #, kde-format
@@ -6558,7 +6558,7 @@ msgstr "Mostrar iconos de confianza en el propietario criptográfico"
 #: settings/kmail.kcfg.cmake:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr "Validar acceso rápido de envío por omisión"
+msgstr "Validar atajo de teclado de envío por omisión"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
 #: settings/kmail.kcfg.cmake:301
