@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-05-06 00:48+0000\n"
-"PO-Revision-Date: 2023-08-04 07:30+0200\n"
+"PO-Revision-Date: 2023-10-04 18:55+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -40,6 +40,9 @@ msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
 "data is collected and shown only when logging is turned on. "
 msgstr ""
+"შეგიძლიათ, ჩართოთ ჟურნალი, ან გაფილტროთ აქტივობები. რა ტქმა უნდა, ჟურნალის "
+"მონაცემების შეგროვება და ჩვენება მხოლოდ მაშინ მოხდება, როცა ჟურნალი "
+"ჩართულია. "
 
 #: filterlogdialog.cpp:89
 #, kde-format
@@ -49,12 +52,12 @@ msgstr "ჟურნალის დეტალები"
 #: filterlogdialog.cpp:96
 #, kde-format
 msgid "Log pattern description"
-msgstr ""
+msgstr "ჟურნალის ნიმუშის აღწერა"
 
 #: filterlogdialog.cpp:101
 #, kde-format
 msgid "Log filter &rule evaluation"
-msgstr ""
+msgstr "ჟურნალის ფილტრის &წესის შეფასება"
 
 #: filterlogdialog.cpp:106
 #, kde-format
@@ -65,11 +68,15 @@ msgid ""
 "about the result of the evaluation of all rules of a single filter will be "
 "given."
 msgstr ""
+"შეგიძლიათ აკონტროლოთ უკუკავშირი ჟურნალში ფილტრების შემოწმებასთან "
+"დაკავშირებით, რომლების გადატარებაც ხდება: ამ პარამეტრის ჩართვა დაგიბრუნებთ "
+"თითოეულ ფილტრის წესის დეტალურ უკუკავშირს. ან, მხოლოდ უკუკავშირს ერთი "
+"მითითებული ფილტრის ყველა წესის შემოწმების შედეგის შესახებ."
 
 #: filterlogdialog.cpp:113
 #, kde-format
 msgid "Log filter pattern evaluation"
-msgstr ""
+msgstr "ჟურნალის ფილტრის ნიმუშის შეფასება"
 
 #: filterlogdialog.cpp:118
 #, kde-format
@@ -123,32 +130,34 @@ msgstr "იფილტრება შეტყობინება %1/%2"
 #: filtermanager.cpp:187
 #, kde-format
 msgid "Error applying mail filter move"
-msgstr ""
+msgstr "ელფოსტის ფილტრის გადატანის გადატარების შეცდომა"
 
 #: filtermanager.cpp:195
 #, kde-format
 msgid "Error applying mail filter delete"
-msgstr ""
+msgstr "ელფოსტის ფილტრის გადატანის წაშლის შეცდომა"
 
 #: filtermanager.cpp:203
 #, kde-format
 msgid "Error applying mail filter modifications"
-msgstr ""
+msgstr "ელფოსტის ფილტრის გადატანის შეცვლის შეცდომა"
 
 #: filtermanager.cpp:220
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
-msgstr ""
+msgstr "<b>ფილტრის წესების შეფასება:</b> "
 
 #: filtermanager.cpp:227
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
-msgstr ""
+msgstr "<b>ფილტრის წესები, რომლებიც დაემთხვა.</b>"
 
 #: filtermanager.cpp:246
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
+"<b>გაფილტვრა დაიწყება შეტყობინებაზე \"%1\" \"%2\"-სგან მისამართზე \"%3\" :</"
+"b>"
 
 #: filtermanager.cpp:580 filtermanager.cpp:608
 #, kde-format
@@ -159,7 +168,7 @@ msgstr "შეტყობინებების გაფილტვრა"
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
-msgstr ""
+msgstr "ელფოსტის ფილტრის ჟურნალი ჩართულია"
 
 #: mailfilteragent.cpp:173
 #, kde-format
@@ -169,4 +178,4 @@ msgstr "მზადაა"
 #: mailfilteragent.cpp:259
 #, kde-format
 msgid "Filtering in %1"
-msgstr ""
+msgstr "ფილტრი %1-ში"

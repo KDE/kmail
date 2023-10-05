@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-08-04 07:30+0200\n"
+"PO-Revision-Date: 2023-10-04 18:55+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -39,12 +39,16 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
+"KMail KDE-ის ელფოსტის კლიენტია. ის აგებულია, რომ იყოს სრულად თავსებადი "
+"ინტერნეტის ელფოსტის ისეთ სტანდარტებთან, როგორიცაა IMAP, POP3 და SMTP."
 
 #: about/introduction_kmail.html:10
 msgid ""
 "KMail has many powerful features that are described in the <a href='help:/"
 "kmail2/index.html'>documentation</a>."
 msgstr ""
+"KMail-ს მრავალი მძლავრი ფუნქცია გააჩნია. მათ შესახებ იხილეთ <a href='help:/"
+"kmail2/index.html'>დოკუმენტაციაში</a>."
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
@@ -52,7 +56,7 @@ msgstr "მნიშვნელოვანი ცვლილებები �
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
-msgstr ""
+msgstr "KMail-ის ახალ ფუნქციებში შედის:"
 
 #: about/introduction_kmail.html:34
 msgid ""
@@ -60,6 +64,9 @@ msgid ""
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
+"იპოვოთ დრო, რომ შეავსოთ KMail-ის მორგების პანელი მენუში მორგება -> KMail-ის "
+"მორგება. საჭიროა, ერთი იდენტიფიკატორი მაინც შექმნათ, როგორც შემომავალი, ისე "
+"გამავალი ანგარიში."
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
@@ -123,7 +130,7 @@ msgstr "დაშიფვრის მხარდაჭერა"
 
 #: aboutdata.cpp:50
 msgid "Improved internal program documentation"
-msgstr ""
+msgstr "გაუმჯობესდა შიდა პროგრამის დოკუმენტაცია"
 
 #: aboutdata.cpp:52 aboutdata.cpp:122 aboutdata.cpp:187
 msgid "Major contributor, still active"
@@ -135,11 +142,11 @@ msgstr "დაემატა maildir-ის მხარდაჭერა"
 
 #: aboutdata.cpp:56
 msgid "PGP 6 support and further enhancements of the encryption support"
-msgstr ""
+msgstr "PGP 6-ის მხარდაჭერა და დამატებითი კოდი დაშიფვრის მხარდაჭერისთვის"
 
 #: aboutdata.cpp:63
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr ""
+msgstr "დაშიფვრის საწყისი მხარდაჭერა. PGP2 და PGP5-ის მხარდაჭერა"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
@@ -163,19 +170,19 @@ msgstr "გაუმჯობესებული მორგების ფ�
 
 #: aboutdata.cpp:76
 msgid "Notes/calendar integration"
-msgstr ""
+msgstr "შენიშვნების/კალენდრის ინტეგრაცია"
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
-msgstr ""
+msgstr "კოდის ეფექტურობის და მუდმივობის გაუმჯობესება"
 
 #: aboutdata.cpp:78
 msgid "New message list and new folder tree"
-msgstr ""
+msgstr "ახალი შეტყობინების სია და ახალი საქაღალდის სია"
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "ბევრი ძვირფასი წვლილი"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
@@ -183,11 +190,11 @@ msgstr "გაასწორა ძალიან ბევრი შეცდ
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
-msgstr ""
+msgstr "სიცილაკების -->ემოციებამდე გადაყვანა"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
-msgstr ""
+msgstr "გაუმჯობესდა 'შეტყობინების დანიშვნა, როგორც' მხტუნარა მენიუში"
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
@@ -199,15 +206,15 @@ msgstr "გაშვების აჩქარება"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
-msgstr ""
+msgstr "მიმაგრებული ფაილების არასავალდებულო შეკუმშვა"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
-msgstr ""
+msgstr "მდიდრულ თავსართებში სპამის სტატუსის ჩამატება"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
-msgstr ""
+msgstr "გასაკეთებლის სტატუსის დამუშავების განხორციელება"
 
 #: aboutdata.cpp:109
 msgid "Bug fixes, code cleanup"
@@ -219,7 +226,7 @@ msgstr "LDAP -ის მხარდაჭერა და მისი მო�
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Akonadi-ის ძირითადი მოხალისე"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
@@ -227,7 +234,7 @@ msgstr "დოკუმენტაცია. ჯერ კიდევ აქ�
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
-msgstr ""
+msgstr "მნიშვნელოვანი მოხალისე, ჯერ კიდევ აქტიური"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
@@ -235,7 +242,7 @@ msgstr "ანტივირუსის მხარდაჭერა"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
-msgstr ""
+msgstr "ფიქსირებული ვიჯეტის სტილები"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
@@ -247,11 +254,11 @@ msgstr "რამდენიმე პაჩი"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr ""
+msgstr "გარე მიმართვების მხარდაჭერის ჩართვა მთელი საქაღალდისთვის"
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
-msgstr ""
+msgstr "სრული ძაფის წაშლა"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -259,55 +266,55 @@ msgstr "POP ფილტრები"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr ""
+msgstr "გასწორდა Solaris-ის ავარიები"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
+msgstr "ფონტების არჩევანი ახალი/წაუკითხავი მნიშვნელოვანი შეტყობინებებისთვის"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
-msgstr ""
+msgstr "გასწორდა სწრაფ ძებნაში კლავიატურის ნავიგაცია"
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
-msgstr ""
+msgstr "გასწორდა მისამართების წიგნიდან კომპოზიტორში გადმოთრევა და დაგდება"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
-msgstr ""
+msgstr "მნიშვნელოვანი მოხალისე"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
-msgstr ""
+msgstr "გაუმჯობესდა მორგების ფანჯარა"
 
 #: aboutdata.cpp:150
 msgid "Improved message importing"
-msgstr ""
+msgstr "გაუმჯობესდა შეტყობინების შემოტანა"
 
 #: aboutdata.cpp:151
 msgid "Improve status bar messages"
-msgstr ""
+msgstr "გაუმჯობესდა სტატუსის პანელის შეტყობინებები"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr ""
+msgstr "ფანჯრის ზმის შეცვლის პაჩი"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
-msgstr ""
+msgstr "'qt-cast'-ის ოპტიმიზაცია; გასწორდა QUrl()"
 
 #: aboutdata.cpp:161
 msgid "Usability tests and improvements"
-msgstr ""
+msgstr "გამოყენებადობის გაუმჯობესებები და ტესტები"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
-msgstr ""
+msgstr "პაჩის კომპოზიტორის მორგება"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
-msgstr ""
+msgstr "Ägypten და Kroupware პროექტის მართვა"
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
@@ -319,15 +326,15 @@ msgstr "X-Face -ის მხარდაჭერა"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
-msgstr ""
+msgstr "ავტომატური მიმღების დადგენა"
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
-msgstr ""
+msgstr "PGP 6-ის მხარდაჭერის ბეტა ტესტი"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "გასწორებები, გასუფთავდა კონტექსტური მენიუები"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
@@ -339,23 +346,23 @@ msgstr "IM სტატუსის მაჩვენებელი"
 
 #: aboutdata.cpp:182
 msgid "Improve layout of recipients editor"
-msgstr ""
+msgstr "გაუმჯობესდა მიმღებების რედაქტორის განლაგება"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr ""
+msgstr "დროის შტამპი 'გადაცემა დასრულებულია' სტატუსის შეტყობინებებისთვის"
 
 #: aboutdata.cpp:186
 msgid "Multiple encryption keys per address"
-msgstr ""
+msgstr "ერთზე მეტი დაშიფვრის გასაღებ თითოეული მისამართისთვის"
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
-msgstr ""
+msgstr "გაუმჯობესდა ხატულის/გამოსახულების დამუშავება"
 
 #: aboutdata.cpp:190
 msgid "Fixed many IMAP bugs"
-msgstr ""
+msgstr "გასწორდა ბევრი IMAP-ის შეცდომა"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2335 kmreaderwin.cpp:306 kmsystemtray.cpp:46
@@ -372,7 +379,7 @@ msgstr "KDE -ის ელფოსტის კლიენტი"
 #: aboutdata.cpp:198
 #, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr ""
+msgstr "Copyright © %1, KMail-ის ავტორები"
 
 #: collectionpage/collectionmailinglistpage.cpp:39
 #, kde-format
@@ -383,7 +390,7 @@ msgstr "ელ-ფოსტის სიები"
 #: collectionpage/collectionmailinglistpage.cpp:62
 #, kde-format
 msgid "Folder holds a mailing list"
-msgstr ""
+msgstr "საქაღალდე დაგზავნის სიას შეიცავს"
 
 #: collectionpage/collectionmailinglistpage.cpp:67
 #, kde-format
@@ -418,7 +425,7 @@ msgstr "მისამართის ტიპი:"
 #: collectionpage/collectionmailinglistpage.cpp:102
 #, kde-format
 msgid "URL for mailing list posting:"
-msgstr ""
+msgstr "ბმული დაგზავნის სიაში დაპოსტვისთვის:"
 
 #: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:466
 #, kde-format
@@ -459,7 +466,7 @@ msgstr "მიუწვდომელია."
 #: collectionpage/collectionmailinglistpage.cpp:212
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
-msgstr ""
+msgstr "KMail-მა ამ საქაღალდეში დაგზავნის სია ვერ აღმოაჩინა."
 
 #: collectionpage/collectionmailinglistpage.cpp:215
 #, kde-format
@@ -467,6 +474,8 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
+"KMail-მა ამ საქაღალდეში დაგზავნის სია სრულად ვერ აღმოაჩინა. შეავსეთ "
+"მისამართები ხელით."
 
 #: collectionpage/collectionquotapage.cpp:21
 #, kde-format
@@ -506,6 +515,9 @@ msgid ""
 "folder, click the button below and then press the key(s) you wish to "
 "associate with this folder.</qt>"
 msgstr ""
+"<qt>რომ აირჩიოთ ღილაკი ან ღილაკების კომბინაცია, რომელიც მიმდინარე საქაღალდეს "
+"მონიშნავს. დააწკაპუნეთ ღილაკს ქვემოთ, შემდეგ კი დააწექით ღილაკებს, რომლების "
+"ასოცირებაც გნებავთ ამ საქაღალდესთან.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:26
 #: identity/identitydialog.cpp:682
@@ -569,7 +581,7 @@ msgstr "ldap სერვერი"
 #: configuredialog/configureaccountpage.cpp:90
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
-msgstr ""
+msgstr "გამავალი ანგარიშები (დაამატეთ ერთი მაინც):"
 
 #: configuredialog/configureaccountpage.cpp:97
 #, kde-format
@@ -594,7 +606,7 @@ msgstr "არასდროს ავტომატურად"
 #: configuredialog/configureaccountpage.cpp:108
 #, kde-format
 msgid "On Manual Mail Checks"
-msgstr ""
+msgstr "ელფოსტის ხელით შემოწმებისას"
 
 #: configuredialog/configureaccountpage.cpp:108
 #, kde-format
@@ -604,7 +616,7 @@ msgstr "ელფოსტის შემოწმებისას"
 #: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr ""
+msgstr "შეტყობინებების &გაგზავნა განავალ საქაღალდეში:"
 
 #: configuredialog/configureaccountpage.cpp:116
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
@@ -644,6 +656,8 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
+"ანგარიშის ოსტატის გაშვება შეუძლებელია. დარწმუნდით, რომ AccountWizard სწორად "
+"გიყენიათ."
 
 #: configuredialog/configureaccountpage.cpp:226
 #: kmlaunchexternalcomponent.cpp:152
@@ -655,13 +669,13 @@ msgstr "ანგარიშის ოსტატის გაშვები�
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
-msgstr ""
+msgstr "ელფოსტის ხელით შემოწმებაში ჩასმა"
 
 #: configuredialog/configureaccountpage.cpp:282
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
-msgstr ""
+msgstr "KMail-ის გამორთვისას ოფლაინში გასვლა"
 
 #: configuredialog/configureaccountpage.cpp:289
 #, kde-format
@@ -673,6 +687,8 @@ msgstr "გაშვებისას ელფოსტის შემოწ�
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
+"ახალი ელფოსტის გაფრთხილების აგენტი რეგისტრირებული არაა. დაუკავშირდით "
+"ადმინისტრატორს."
 
 #: configuredialog/configureappearancepage.cpp:90
 #, kde-format
@@ -719,7 +735,7 @@ msgstr "შეტყობინებების სია - მნიშვ�
 
 #: configuredialog/configureappearancepage.cpp:139
 msgid "Message List - Action Item Messages"
-msgstr ""
+msgstr "შეტყობინებების სია - ქმედების ელემენტის შეტყობინებები"
 
 #: configuredialog/configureappearancepage.cpp:140
 msgid "Fixed Width Font"
@@ -769,23 +785,23 @@ msgstr "მნიშვნელოვანი შეტყობინებ�
 
 #: configuredialog/configureappearancepage.cpp:313
 msgid "Action Item Message"
-msgstr ""
+msgstr "ქმედების ელემენტის შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:314
 msgid "HTML Status Bar Background - No HTML Message"
-msgstr ""
+msgstr "HTML სტატუსის პანელის ფონი - შეტყობინება HTML არაა"
 
 #: configuredialog/configureappearancepage.cpp:315
 msgid "HTML Status Bar Foreground - No HTML Message"
-msgstr ""
+msgstr "HTML სტატუსის პანელის წინა პლანი - შეტყობინება HTML არაა"
 
 #: configuredialog/configureappearancepage.cpp:316
 msgid "HTML Status Bar Background - HTML Message"
-msgstr ""
+msgstr "HTML სტატუსის პანელის ფონი - HTML შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:317
 msgid "HTML Status Bar Foreground - HTML Message"
-msgstr ""
+msgstr "HTML სტატუსის პანელის წინა პლანი - HTML შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:325
 #, kde-format
@@ -795,17 +811,17 @@ msgstr "ფერების &ხელით მითითება"
 #: configuredialog/configureappearancepage.cpp:329
 #, kde-format
 msgid "&Do not change color from original HTML mail"
-msgstr ""
+msgstr "&საწყისი HTML ელფოსტის ფერი არ შეიცვლება"
 
 #: configuredialog/configureappearancepage.cpp:342
 #, kde-format
 msgid "Recycle colors on deep &quoting"
-msgstr ""
+msgstr "ღრმა &ციტირებისას ფერების თავიდან გამოყენება"
 
 #: configuredialog/configureappearancepage.cpp:350
 #, kde-format
 msgid "Close to quota threshold:"
-msgstr ""
+msgstr "უახლოვდებით კვოტის ზღვარს:"
 
 #: configuredialog/configureappearancepage.cpp:356
 #, kde-format
@@ -815,12 +831,12 @@ msgstr "%"
 #: configuredialog/configureappearancepage.cpp:473
 #, kde-format
 msgid "Show folder quick search field"
-msgstr ""
+msgstr "საქაღალდის სწრაფი ძებნის ველის ჩვენება"
 
 #: configuredialog/configureappearancepage.cpp:480
 #, kde-format
 msgid "Show Favorite Folders View"
-msgstr ""
+msgstr "რჩეული საქაღალდეების ხედის ჩვენება"
 
 #: configuredialog/configureappearancepage.cpp:485
 #: configuredialog/configureappearancepage.cpp:513
@@ -881,6 +897,7 @@ msgstr "ნაგულისხმები თემა:"
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
+"<qt><a href=\"whatsthis1\">მომხმარებლის ფორმატის ინფორმაცია...</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:655
 #, kde-format
@@ -945,7 +962,7 @@ msgstr "ჩაკეცილად გაშვება"
 #: configuredialog/configureappearancepage.cpp:843
 #, kde-format
 msgid "Show unread email in Taskbar"
-msgstr ""
+msgstr "წაუკითხავი ელფოსტების ამოცანების პანელზე ჩვენება"
 
 #: configuredialog/configureappearancepage.cpp:911
 #, kde-format
@@ -997,7 +1014,7 @@ msgstr "ჭდის წაშლა"
 #: configuredialog/configureappearancepage.cpp:1229
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
-msgstr ""
+msgstr "ჭდე ვერ შევქმენი. მისი სახელი უკვე დაკავებულია."
 
 #: configuredialog/configurecomposerpage.cpp:73
 #, kde-format
@@ -1058,12 +1075,12 @@ msgstr "ხელმოწერა"
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
-msgstr ""
+msgstr "მორგებული ხელმოწერის ავტომატური ჩასმა შეტყობინების შედგენის დაწყებისას"
 
 #: configuredialog/configurecomposerpage.cpp:157
 #, kde-format
 msgid "Insert the signature above any quoted text"
-msgstr ""
+msgstr "ზემო ხელმოწერის ჩასმა ნებისმიერ ციტირებულ ტექსტზე ზემოთ"
 
 #: configuredialog/configurecomposerpage.cpp:169
 #, kde-format
@@ -1071,11 +1088,13 @@ msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
+"ხელმოწერამდე RFC-სთან თავსებადი ხელმოწერის გამყოფის ჩასმა (ორი ტირე და "
+"გამოტოვება ერთ ხაზზე)"
 
 #: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
 msgid "When replying, do not quote any existing signature"
-msgstr ""
+msgstr "პასუხისას არსებული ხელმოწერების ციტირება არ მოხდება"
 
 #: configuredialog/configurecomposerpage.cpp:192
 #, kde-format
@@ -1089,6 +1108,8 @@ msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
+"პასუხისას, მთელი შეტყობინების მაგიერ, მხოლოდ, მონიშნული ტექსტის ციტირება, თუ "
+"შეტყობინების ფანჯარაში ტექსტი მონიშნულია."
 
 #: configuredialog/configurecomposerpage.cpp:207
 #, kde-format
@@ -1097,16 +1118,18 @@ msgid ""
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
+"პასუხისას, ციტირებული ტექსტის ყველა ხაზის წინ ციტირების ნიშნების დასმა "
+"მაშინაც კი, როცა ხაზი გადატანილია მისი სიგრძის გამო."
 
 #: configuredialog/configurecomposerpage.cpp:218
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr ""
+msgstr "მითითებული სიგანისას სიტყვების ავტომატური გადატანის ჩართვა"
 
 #: configuredialog/configurecomposerpage.cpp:229
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
-msgstr ""
+msgstr "დააყენეთ ტექსტის ზომა ავტომატური სიტყვის გადატანისთვის"
 
 #: configuredialog/configurecomposerpage.cpp:249
 #, kde-format
@@ -1114,6 +1137,8 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
+"პასუხისას ან გადაგზავნისას, შეტყობინების ორიგინალ, მიღებულ ფორმატში "
+"ციტირება. თუ ეს გამორთულია, პასუხი უბრალო ტექსტით მოხდება."
 
 #: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
@@ -1121,6 +1146,8 @@ msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
+"შეტყობინების უბრალო ტექსტის დაფორმატება HTML მარკიდებიდან. მხარდაჭერიია "
+"სქელი, კურსივი და ხაზგასმული ტექსტი, სიები და გარე მიმართვები."
 
 #: configuredialog/configurecomposerpage.cpp:271
 #, kde-format
@@ -1136,7 +1163,7 @@ msgstr "მიმაგრებულ ფაილად"
 #: configuredialog/configurecomposerpage.cpp:273
 #, kde-format
 msgid "Set the default forwarded message format"
-msgstr ""
+msgstr "დააყენეთ ნაგულისხმევი გადაგზავნილი შეტყობინების ფორმატი"
 
 #: configuredialog/configurecomposerpage.cpp:277
 #, kde-format
@@ -1156,16 +1183,19 @@ msgid ""
 "select this on a per-message basis using \"Options - Request Disposition "
 "Notification\""
 msgstr ""
+"ნაგულისხმევად, შეტყობინების შედგენის დაწყებისას, MDN-ის გამოთხოვა. ეს "
+"თითოეული შეტყობინებისთვის შეგიძლიათ, ცალ-ცალკე მართოთ. ამისთვის გამოიყენეთ "
+"\"პარამეტრები ->შეტყობინების მიტანის გაფრთხილება\""
 
 #: configuredialog/configurecomposerpage.cpp:333
 #, kde-format
 msgid "Warn if too many recipients are specified"
-msgstr ""
+msgstr "გაფრთხილება, თუ მითითებულია მეტისმეტად ბევრი მიმღები"
 
 #: configuredialog/configurecomposerpage.cpp:344
 #, kde-format
 msgid "Set the maximum number of recipients for the warning"
-msgstr ""
+msgstr "დააყენეთ მიმღებების მაქსიმალური რაოდენობა, გაფრთხილებისთვის"
 
 #: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
@@ -1176,12 +1206,19 @@ msgid ""
 "accidentally sending a message to too many people.  Note, however, that it "
 "does not take account of distribution lists or mailing lists."
 msgstr ""
+"შეტყობინების მხოლოდ მითითებული რაოდენობის მიმღებების ქონის დაშვება. ეს ასევე "
+"ეხება \"ყველასთვის პასუხს\", მიმღებების ხელით შეყვანას ან \"არჩევით\".....  "
+"ამ ზღვრის დაყენება დაგეხმარებათ, ელფოსტა შემთხვევით მეტისმეტად ბევრ ხალხს არ "
+"გაუგზავნოთ.  დაიმახსოვრეთ, რომ ეს ფუნქცია დაგზავნის სიების არსებობას არ "
+"ითვალისწინებს."
 
 #: configuredialog/configurecomposerpage.cpp:385
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
+"უახლესი შეყვანილი მისამართების დამახსოვრება და მიმღების მისამართის "
+"დასრულებისთვის გამოყენება"
 
 #: configuredialog/configurecomposerpage.cpp:397
 #, kde-format
@@ -1192,7 +1229,7 @@ msgstr "შენახვის გარეშე"
 #: configuredialog/configurecomposerpage.cpp:400
 #, kde-format
 msgid "Maximum recent addresses retained:"
-msgstr ""
+msgstr "დამახსოვრებული მისამართების მაქსიმალური რაოდენობა:"
 
 #: configuredialog/configurecomposerpage.cpp:404
 #, kde-format
@@ -1200,6 +1237,8 @@ msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
+"ახლახანს შეყვანილი მისამართების რაოდენობა, რომელიც დასრულებისთვის იქნება "
+"დამახსოვრებული"
 
 #: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
@@ -1228,12 +1267,12 @@ msgstr[1] " წუთი"
 #: configuredialog/configurecomposerpage.cpp:439
 #, kde-format
 msgid "Automatically save the message at this specified interval"
-msgstr ""
+msgstr "შეტყობინების ავტომატური შენახვა მითითებულ ინტერვალში ერთხელ"
 
 #: configuredialog/configurecomposerpage.cpp:649
 #, kde-format
 msgid "Repl&y Subject Prefixes"
-msgstr ""
+msgstr "&პასუხის სათაურის პრეფიქსები"
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:679
@@ -1242,6 +1281,8 @@ msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
+"შემდეგი პრეფიქსების ნებისმიერი მიმდევრობის გამოცნობა (ჩანაწერები რეგისტრზე-"
+"არადამოკიდებულებული რეგულარული გამოსახულებებია):"
 
 #: configuredialog/configurecomposerpage.cpp:661
 #: configuredialog/configurecomposerpage.cpp:744
@@ -1271,7 +1312,7 @@ msgstr "შეიყვანეთ ახალი პასუხის პრ
 #: configuredialog/configurecomposerpage.cpp:662
 #, kde-format
 msgid "Do you want to remove reply prefix?"
-msgstr ""
+msgstr "გნებავთ პასუხის პრეფიქსის წაშლა?"
 
 #: configuredialog/configurecomposerpage.cpp:664
 #, kde-format
@@ -1281,7 +1322,7 @@ msgstr "პასუხის პრეფიქსი:"
 #: configuredialog/configurecomposerpage.cpp:675
 #, kde-format
 msgid "For&ward Subject Prefixes"
-msgstr ""
+msgstr "&გადაგზავნის სათაურის პრეფიქსები"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:685
@@ -1303,12 +1344,12 @@ msgstr "ჩასწორება..."
 #: configuredialog/configurecomposerpage.cpp:685
 #, kde-format
 msgid "Enter new forward prefix:"
-msgstr ""
+msgstr "შეიყვანეთ ახალი გადაგზავნის პრეფიქსი:"
 
 #: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgid "Do you want to remove forward prefix?"
-msgstr ""
+msgstr "გნებავთ გადაგზავნის პრეფიქსის წაშლა?"
 
 #: configuredialog/configurecomposerpage.cpp:687
 #, kde-format
@@ -1321,6 +1362,8 @@ msgid ""
 "This list is checked for every outgoing message from the top to the bottom "
 "for a charset that contains all required characters."
 msgstr ""
+"ეს სია მოწმდება თითოეული გამავალი შეტყობინებისთვის ზემოდან ქვემოთ "
+"სიმბოლოების კოდირებისთვის, რომელიც ყველა მოთხოვნილ სიმბოლოს შეიცავს."
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: configuredialog/configurecomposerpage.cpp:746 ui/identitypage.ui:40
@@ -1336,7 +1379,7 @@ msgstr "შეყვანეთ სიმბოლოების კოდი�
 #: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgid "Do you want to remove this selected charset?"
-msgstr ""
+msgstr "მართლა გნებავთ მონიშნული სიმბოლოების კოდირების წაშლა?"
 
 #: configuredialog/configurecomposerpage.cpp:749
 #, kde-format
@@ -1347,26 +1390,28 @@ msgstr "სიმბოლოების კოდირების დამ�
 #, kde-format
 msgid "&Keep original charset when replying or forwarding (if possible)"
 msgstr ""
+"&საწყისი სიმბოლოების კოდირების შენარჩუნება პასუხის ან გადაგზავნისას (თუ ეს "
+"შესაძლებელია)"
 
 #: configuredialog/configurecomposerpage.cpp:789
 #, kde-format
 msgid "This charset is not supported."
-msgstr ""
+msgstr "ეს სიმბოლოების კოდირება მხარდაჭერილი არაა."
 
 #: configuredialog/configurecomposerpage.cpp:852
 #, kde-format
 msgid "&Use custom message-id suffix"
-msgstr ""
+msgstr "&მომხმარებლის message-id სუფიქსის გამოყენება"
 
 #: configuredialog/configurecomposerpage.cpp:864
 #, kde-format
 msgid "Custom message-&id suffix:"
-msgstr ""
+msgstr "&მომხმარებლის message-id სუფიქსი:"
 
 #: configuredialog/configurecomposerpage.cpp:876
 #, kde-format
 msgid "Define custom mime header fields:"
-msgstr ""
+msgstr "აღწერეთ თქვენი MIME თავსართის ველები:"
 
 #: configuredialog/configurecomposerpage.cpp:884
 #, kde-format
@@ -1402,6 +1447,7 @@ msgstr "მნიშვნელობა:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
+"'Content-Type' ავტორიზებული სტრიქონი არაა. ეს თავსართი შენახული არ იქნება."
 
 #: configuredialog/configurecomposerpage.cpp:1055
 #, kde-format
@@ -1411,7 +1457,7 @@ msgstr "არასწორი თავსართი"
 #: configuredialog/configurecomposerpage.cpp:1096
 #, kde-format
 msgid "Outlook-compatible attachment naming"
-msgstr ""
+msgstr "Outlook-სთან თავსებადი მიმაგრებული ფაილის სახელები"
 
 #: configuredialog/configurecomposerpage.cpp:1099
 #, kde-format
@@ -1419,16 +1465,18 @@ msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr ""
+"ჩართეთ ეს პარამეტრი, რომ პროგრამას Outlook (tm) გააგებინოთ მიმაგრებული "
+"ფაილები, რომლებიც არა-ინგლისურ სიმბოლოებს შეიცავენ"
 
 #: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
 msgid "E&nable detection of missing attachments"
-msgstr ""
+msgstr "&ნაკლული მიმაგრებული ფაილების დადგენის ჩართვა"
 
 #: configuredialog/configurecomposerpage.cpp:1113
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
-msgstr ""
+msgstr "შემდეგი საკვანძო სიტყვების აღქმა, როგორც ფაილის მიბმის სურვილი:"
 
 #: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
@@ -1438,12 +1486,12 @@ msgstr "შეიყვანეთ ახალი საკვანძო ს
 #: configuredialog/configurecomposerpage.cpp:1125
 #, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr ""
+msgstr "გნებავთ, მიმაგრების სიტყვა წაშალოთ?"
 
 #: configuredialog/configurecomposerpage.cpp:1126
 #, kde-format
 msgid "Attachment Word:"
-msgstr ""
+msgstr "მიმაგრების სიტყვა:"
 
 #: configuredialog/configurecomposerpage.cpp:1134
 #, kde-format
@@ -1472,6 +1520,14 @@ msgid ""
 "compliant mail clients; so, unless you have no other choice, you should not "
 "enable this option."
 msgstr ""
+"აირჩიეთ, დაშიფროთ მიმაგრებული ფაილი სახელები, რომლებიც არაინგლისური ანბანის "
+"ასოების ისე შეიცავენ, რომ ის გასაგებია Outlook-სთვის(tm) და სხვა ელფოსტის "
+"კლიენტებისთვის, რომელთაც სტანდარტთან თავსებადი კოდირებული მიმაგრებული ფაილის "
+"სახელების მხარდაჭერა არ გააჩნიათ.\n"
+"დაიმახსოვრეთ, რო KMail-ს შეუძლია, შექმნას არასტანდარტული მუშა შეტყობინებები "
+"და შედეგად, შესაძლებელია, რომ თქვენი შეტყობინებები გაუგებარი იქნება "
+"სტანდარტთან თავსებად ელფოსტის კლიენტებისთვის. ასე რომ, თუ სხვა არ გაქვთ და "
+"იმიტომ არ აკეთებთ ამას, არ ჩართოთ ეს პარამეტრი."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -1506,7 +1562,7 @@ msgstr "მომხარებლის უკუკავშირი"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
 #, kde-format
 msgid "Check Before Send Plugins"
-msgstr ""
+msgstr "გაგზავნამდე დამატებების შემოწმება"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
 #, kde-format
@@ -1571,7 +1627,7 @@ msgstr "რედინგი"
 #: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
 msgid "Message Disposition Notifications"
-msgstr ""
+msgstr "შეტყობინების ჩაბარების გაფრთხილებები"
 
 #: configuredialog/configuresecuritypage.cpp:60
 #, kde-format
@@ -1598,6 +1654,8 @@ msgstr "მართლა გნებავთ ელფოსტის ამ
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
+"გლობალური HTML პარამეტრის შეცვლა ყველა საქაღალდის საკუთარ მნიშვნელობას "
+"გადაფარავს."
 
 #: configuredialog/configuresecuritypage.cpp:297
 #: configuredialog/configuresecuritypage.cpp:299
@@ -1621,11 +1679,13 @@ msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
+"მოდული ვერ ვიპოვე. შეამოწმეთ თქვენი ფაილები. ეს მოდული Kleopatra-ის მერაა "
+"მოწოდებული."
 
 #: configuredialog/configuresecuritypage.cpp:352
 #, kde-format
 msgid "GnuPG Configure Module Error"
-msgstr ""
+msgstr "GnuPG-ის მორგების მოდულის შეცდომა"
 
 #: configuredialog/configuresecuritypage.cpp:419
 #, kde-format
@@ -1710,7 +1770,7 @@ msgstr "&არქივის ფაილი:"
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
 msgid "&Delete folder and subfolders after completion"
-msgstr ""
+msgstr "&დასრულების შემდეგ საქაღალდისა და ქვესაქაღალდების წაშლა"
 
 #: dialog/archivefolderdialog.cpp:112
 #, kde-format
@@ -1720,7 +1780,7 @@ msgstr "ყველა ქვესაქაღალდის დაარქ�
 #: dialog/archivefolderdialog.cpp:170
 #, kde-format
 msgid "Please select the folder that should be archived."
-msgstr ""
+msgstr "აირჩიეთ დასაარქივებელია საქაღალდე."
 
 #: dialog/archivefolderdialog.cpp:170
 #, kde-format
@@ -1771,22 +1831,23 @@ msgstr "KMail2"
 #: editor/kmcomposerwin.cpp:302
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr ""
+msgstr "აირჩიეთ ამ შეტყობინების მართლწერის შემოწმებისას გამოყენებული ლექსიკონი"
 
 #: editor/kmcomposerwin.cpp:309
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
+"აირჩიეთ გაგზავნილი-ელფოსტის საქაღალდე, სადაც ამ შეტყობინების ასლი შეინახება"
 
 #: editor/kmcomposerwin.cpp:314
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "აირჩიეთ გამავალი ანგარიში ამ შეტყობინების გასაგზავნად"
 
 #: editor/kmcomposerwin.cpp:322
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
-msgstr ""
+msgstr "მიუთითეთ ამ შეტყობინების \"ვისგან:\" ელფოსტის მისამართი"
 
 #: editor/kmcomposerwin.cpp:338
 #, kde-format
@@ -1834,7 +1895,7 @@ msgstr "&ელფოსტის გაგზავნა"
 #: editor/kmcomposerwin.cpp:1175 editor/kmcomposerwin.cpp:1208
 #, kde-format
 msgid "&Send Mail Via"
-msgstr ""
+msgstr "ელფოსტის გაგზავნა &გავლით"
 
 #: editor/kmcomposerwin.cpp:1177
 #, kde-format
@@ -1850,7 +1911,7 @@ msgstr "&მოგვიანებით გაგზავნა"
 #: editor/kmcomposerwin.cpp:1186 editor/kmcomposerwin.cpp:1199
 #, kde-format
 msgid "Send &Later Via"
-msgstr ""
+msgstr "გაგზავნა მოგვიანებით, გ&ავლით"
 
 #: editor/kmcomposerwin.cpp:1188
 #, kde-format
@@ -1866,7 +1927,7 @@ msgstr "&მონახაზად შენახვა"
 #: editor/kmcomposerwin.cpp:1219
 #, kde-format
 msgid "Save email in Draft folder"
-msgstr ""
+msgstr "ელფოსტის შენახვა მონახაზების საქაღალდეში"
 
 #: editor/kmcomposerwin.cpp:1223
 #, kde-format
@@ -1876,7 +1937,7 @@ msgstr "&ნიმუშად შენახვა"
 #: editor/kmcomposerwin.cpp:1224
 #, kde-format
 msgid "Save email in Template folder"
-msgstr ""
+msgstr "ელფოტის შენახვა ნიმუშების საქაღალდეში"
 
 #: editor/kmcomposerwin.cpp:1228
 #, kde-format
@@ -1886,7 +1947,7 @@ msgstr "&ფაილად შენახვა"
 #: editor/kmcomposerwin.cpp:1229
 #, kde-format
 msgid "Save email as text or html file"
-msgstr ""
+msgstr "ელფოსტის შენახვა ტექსტურ ან html failSi"
 
 #: editor/kmcomposerwin.cpp:1233
 #, kde-format
@@ -1896,7 +1957,7 @@ msgstr "&ტექსტური ფაილის ჩასმა..."
 #: editor/kmcomposerwin.cpp:1237
 #, kde-format
 msgid "&Insert Recent Text File"
-msgstr ""
+msgstr "&უახლესი ტექსტური ფაილის ჩასმა"
 
 #: editor/kmcomposerwin.cpp:1247 kmmainwidget.cpp:2868
 #, kde-format
@@ -1911,27 +1972,27 @@ msgstr "მისამართების წიგნის გახსნ�
 #: editor/kmcomposerwin.cpp:1255
 #, kde-format
 msgid "&New Composer"
-msgstr ""
+msgstr "&ახალი კომპოზიტორი"
 
 #: editor/kmcomposerwin.cpp:1261
 #, kde-format
 msgid "Select &Recipients..."
-msgstr ""
+msgstr "&აირჩიეთ მიმღებები..."
 
 #: editor/kmcomposerwin.cpp:1264
 #, kde-format
 msgid "Save &Distribution List..."
-msgstr ""
+msgstr "&დაგზავნიის სიის შენახვა..."
 
 #: editor/kmcomposerwin.cpp:1285
 #, kde-format
 msgid "Paste as Attac&hment"
-msgstr ""
+msgstr "მიმაგრებული ფაილის ჩ&ასმა"
 
 #: editor/kmcomposerwin.cpp:1289
 #, kde-format
 msgid "Cl&ean Spaces"
-msgstr ""
+msgstr "ადგილების &გასუფთავება"
 
 #: editor/kmcomposerwin.cpp:1293
 #, kde-format
@@ -1947,12 +2008,12 @@ msgstr "&გადაუდებელი"
 #: editor/kmcomposerwin.cpp:1301
 #, kde-format
 msgid "&Request Disposition Notification"
-msgstr ""
+msgstr "ჩაბარების გაფრთხილების &მოთხოვნა"
 
 #: editor/kmcomposerwin.cpp:1305
 #, kde-format
 msgid "&Request Delivery Confirmation"
-msgstr ""
+msgstr "ჩაბარების გაფრთხილების &მოთხოვნა"
 
 #: editor/kmcomposerwin.cpp:1312
 #, kde-format
@@ -1967,7 +2028,7 @@ msgstr "&ფრაზები"
 #: editor/kmcomposerwin.cpp:1322
 #, kde-format
 msgid "&Automatic Spellchecking"
-msgstr ""
+msgstr "&ავტომატური მართლწერის შემოწმება"
 
 #: editor/kmcomposerwin.cpp:1338
 #, kde-format
@@ -1982,7 +2043,7 @@ msgstr "მდიდარი ტექსტი"
 #: editor/kmcomposerwin.cpp:1341
 #, kde-format
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "მდიდარი ტექსტის ჩასწორების რეჟიმის გადართვა"
 
 #: editor/kmcomposerwin.cpp:1345
 #, kde-format
@@ -2033,7 +2094,7 @@ msgstr "ხელმოწერის &თავში დამატება
 #: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
-msgstr ""
+msgstr "ხელმოწერის ჩასმა კურსორის პოზიციაზე"
 
 #: editor/kmcomposerwin.cpp:1391
 #, kde-format
@@ -2068,17 +2129,17 @@ msgstr "ხელმოწერა"
 #: editor/kmcomposerwin.cpp:1422
 #, kde-format
 msgid "&Cryptographic Message Format"
-msgstr ""
+msgstr "&კრიპტოგრაფიული შეტყობინების ფორმატი"
 
 #: editor/kmcomposerwin.cpp:1425
 #, kde-format
 msgid "Select a cryptographic format for this message"
-msgstr ""
+msgstr "აირჩიეთ კრიპტოგრაფიული შეტყობინების ფორმატი ამ შეტყობინებისთვის"
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgid "Create Follow Up Reminder..."
-msgstr ""
+msgstr "საუბრის გაგრძელების შემხსენებლის დამატება..."
 
 #: editor/kmcomposerwin.cpp:1464
 #, kde-format
@@ -2133,7 +2194,7 @@ msgstr "მართლწერა: გამორთ"
 #: editor/kmcomposerwin.cpp:1992
 #, kde-format
 msgid "Re&save as Template"
-msgstr ""
+msgstr "თ&ავიდან შენახვა ნიმუშის სახით"
 
 #: editor/kmcomposerwin.cpp:1992
 #, kde-format
@@ -2146,6 +2207,8 @@ msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
+"ამ შეტყობინების თავიდან შენახვა ნიმუშების საქაღალდეში. ამ შემთხვევაში მას "
+"მოგვიანებითაც გამოიყენებთ."
 
 #: editor/kmcomposerwin.cpp:1995
 #, kde-format
@@ -2153,11 +2216,14 @@ msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr ""
+"ამ შეტყობინების მონახაზების საქაღალდეში შენახვა. ამის შემდეგ ის შეგიძლიათ, "
+"ნებისმერ დროს ჩაასწოროთ და გააგზავნოთ."
 
 #: editor/kmcomposerwin.cpp:1999
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
+"გნებავთ, შეინახოთ ეს შეტყობინება მოგვიანებით გამოსაყენებლად თუ მოვაცილო?"
 
 #: editor/kmcomposerwin.cpp:2000
 #, kde-format
@@ -2183,7 +2249,7 @@ msgstr "ფაილის ჩასმა"
 #: editor/kmcomposerwin.cpp:2319
 #, kde-format
 msgid "Add as &Inline Image"
-msgstr ""
+msgstr "&ხაზშივე გამოსახულების სახით დამატება"
 
 #: editor/kmcomposerwin.cpp:2320
 #, kde-format
@@ -2216,13 +2282,13 @@ msgstr[1] "შეტყობინებისთვის ბმულებ�
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ფაილის &მიმაგრება"
+msgstr[1] "ფაილების &მიმაგრება"
 
 #: editor/kmcomposerwin.cpp:2439
 #, kde-format
 msgid "Insert clipboard text as attachment"
-msgstr ""
+msgstr "ბუფერში არსებული ტექსტის მიმაგრება"
 
 #: editor/kmcomposerwin.cpp:2536
 #, kde-format
@@ -2237,6 +2303,10 @@ msgid ""
 "encryption key to use for this.</p><p>Please select the key(s) to use in the "
 "identity configuration.</p></qt>"
 msgstr ""
+"<qt><p>მოითხოვეთ, რომ შეტყობინებები თავის თავში დაიშიფროს, მაგრამ ამჟამად "
+"არჩეულ იდენტიფიკატორს (OpenPGP ან S/MIME) დაშიფვრის გასაღებები ამისთვის "
+"მითითებული არ აქვს.</p><p>აირჩიეთ გასაღებები იდენტიფიკატორის მორგების "
+"ფანჯარაში.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2569
 #, kde-format
@@ -2250,6 +2320,9 @@ msgid ""
 "(OpenPGP or S/MIME) signing key to use.</p><p>Please select the key to use "
 "in the identity configuration.</p></qt>"
 msgstr ""
+"<qt><p>იმისთვის, რომ ამ შეტყობინების ხელმოწერა შეგეძლოთ, ჯერ აუცილებელია "
+"(OpenPGP ან S/MIME) ხელმოწერის გასაღების მითითება.</p><p>აირჩიეთ გასაღები "
+"იდენტიფიკატორის მორგების ფანჯარაში.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2640
 #, kde-format
@@ -2263,6 +2336,9 @@ msgid ""
 "your email address for all identities, so that you do not have to enter it "
 "for each message."
 msgstr ""
+"უნდა შეიყვანეოთ თქვენი ელფოსტის მისამართი ველში 'ვისგან:'. ასევე უნდა "
+"დააყენოთ ყველა იდენტიფიკაციის ელფოსტის მისამართი, რათა მისი შეყვანა ყოველ "
+"ჯერზე არ გიწევდეთ."
 
 #: editor/kmcomposerwin.cpp:2808
 #, kde-format
@@ -2270,16 +2346,18 @@ msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr ""
+"აუცილებელია, ერთი მიმღები მაინც მიუთითოთ. ან ველში 'ვის:', ან როგორც ასლი, "
+"ან ბრმა ასლი."
 
 #: editor/kmcomposerwin.cpp:2814
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
-msgstr ""
+msgstr "შეტყობინების ველი 'ვის:' ცარიელია. მაინც გავაგზავნო შეტყობინება?"
 
 #: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "No To: specified"
-msgstr ""
+msgstr "ველი ვის: მითითებული არაა"
 
 #: editor/kmcomposerwin.cpp:2817 editor/kmcomposerwin.cpp:2831
 #, kde-format
@@ -2289,12 +2367,12 @@ msgstr "&გაგზავნა, როგორც არის"
 #: editor/kmcomposerwin.cpp:2818
 #, kde-format
 msgid "&Specify the To field"
-msgstr ""
+msgstr "&მიუთითეთ ვის ველი"
 
 #: editor/kmcomposerwin.cpp:2828
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
-msgstr ""
+msgstr "სათაური არ მიგითითებიათ. მაინც გავაგზავნო შეტყობინება?"
 
 #: editor/kmcomposerwin.cpp:2830
 #, kde-format
@@ -2304,19 +2382,19 @@ msgstr "თემა მითითებული არაა"
 #: editor/kmcomposerwin.cpp:2832
 #, kde-format
 msgid "&Specify the Subject"
-msgstr ""
+msgstr "მიუთითეთ &თემა"
 
 #: editor/kmcomposerwin.cpp:2877
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
-msgstr ""
+msgstr "მონახაზის დასაშიფრად, სულ ცოტა, ერთი მიმღები უნდა მიუთითოთ."
 
 #: editor/kmcomposerwin.cpp:3069
 #, kde-format
 msgid "About to send email..."
-msgstr ""
+msgstr "ელფოსტის გაგზავნის შესახებ..."
 
 #: editor/kmcomposerwin.cpp:3070
 #, kde-format
@@ -2334,6 +2412,7 @@ msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
+"ცდილობთ, ელფოსტა, %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
 
 #: editor/kmcomposerwin.cpp:3148
 #, kde-format
@@ -2356,21 +2435,23 @@ msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
+"HTML რეჟიმის გამორთვა ტექსტის ფორმატირებას დაკარგავს. დარწმუნებული "
+"ბრძანდებით?"
 
 #: editor/kmcomposerwin.cpp:3189
 #, kde-format
 msgid "Lose the formatting?"
-msgstr ""
+msgstr "დაკარგავთ დაფორმატებას?"
 
 #: editor/kmcomposerwin.cpp:3190
 #, kde-format
 msgid "Lose Formatting"
-msgstr ""
+msgstr "დაფორმატების დაკარგვა"
 
 #: editor/kmcomposerwin.cpp:3191
 #, kde-format
 msgid "Add Markup Plain Text"
-msgstr ""
+msgstr "მარკირების უბრალო ტექსტის დამატება"
 
 #: editor/kmcomposerwin.cpp:3873
 #, kde-format
@@ -2378,6 +2459,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"ამ მიმღებისთვის ავტომატური დაშიფვრის გასაღები გამოიყენება. ეს გასაღები არ "
+"გადამოწმებულა. მიმღებს დაშიფრული პასუხები ურჩევნია."
 
 #: editor/kmcomposerwin.cpp:3877
 #, kde-format
@@ -2385,6 +2468,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"ამ მიმღებისთვის ავტომატური დაშიფვრის გასაღები გამოიყენება. ეს გასაღები არ "
+"გადამოწმებულა. მიმღებს დაშიფრული პასუხები არ ურჩევნია."
 
 #: editor/kmcomposerwin.cpp:3884
 #, kde-format
@@ -2435,7 +2520,7 @@ msgstr "დეტალები"
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:22
 #, kde-format
 msgid "Select email to put in whitelist:"
-msgstr ""
+msgstr "აირჩიეთ თეთრ სიაში ჩასამატებელი ელფოსტა:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
 #, kde-format
@@ -2443,11 +2528,13 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details...)</a>"
 msgstr ""
+"აღმოჩენილია პოტენციური ფიშინგის ელფოსტის მისამართები <a href="
+"\"phishingdetails\">(დეტალები...)</a>"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
 msgid "Set a subject for this message"
-msgstr ""
+msgstr "დააყენეთ შეტყობინების სათაური"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -2456,6 +2543,9 @@ msgid ""
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
+"ეს მალსახმობი საშუალებას გაძლევთ, ელფოსტა პირდაპირ გააგზავნოთ.\n"
+"ელფოსტა შეიძლება შემთხვევით გააგზავნოთ.\n"
+"რას იზამთ?"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
@@ -2483,6 +2573,8 @@ msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
+"მიმაგრებული ფაილი: <ul><li>%1</li></ul> გარედან დაემატა. წაშალეთ ის, თუ ეს "
+"შეცდომაა."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
@@ -2490,6 +2582,8 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
+"მიმაგრებული ფაილები: <ul><li>%1</li></ul> გარედან დაემატა. წაშალეთ ისინი, თუ "
+"ეს შეცდომაა."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:19
 #, kde-format
@@ -2497,6 +2591,8 @@ msgid ""
 "The message you have composed seems to refer to an attached file but you "
 "have not attached anything. Do you want to attach a file to your message?"
 msgstr ""
+"შეტყობინება, რომელიც შეადგინეთ, როგორც ჩანს, მიუთითებს მიმაგრებულ ფაილზე, "
+"მაგრამ არაფერი მიგიმაგრებიათ. გნებავთ, მიამაგროთ ფაილი თქვენს შეტყობინებას?"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -2519,30 +2615,34 @@ msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
+"ტრანსპორტი ვერ ვიპოვე. გადაამოწმეთ, რომ სწორ ელფოსტის ტრანსპორტს იყენებთ."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
-msgstr ""
+msgstr "გაგზავნილების ელფოსტა აღწერილი არაა. დააყენეთ ის ელფოსტის გაგზავნამდე."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr ""
+"იდენტიფიკატორი ვერ ვიპოვე. გადაამოწმეთ გამოყენებული იდენტიფიკატორის სისწორე."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
-msgstr ""
+msgstr "ლექსიკონი ვერ ვიპოვე. გადაამოწმეთ გამოყენებული ლექსიკონის სისწორე."
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:18
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
 msgstr ""
+"მიაღწიეთ მიმღებების მაქსიმალურ რაოდენობას. მიმღებების რაოდენობა %1-მდე "
+"შეიკვეცება."
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:76
 #, kde-format
@@ -2585,6 +2685,7 @@ msgstr "საქაღალდის შექმნის შეცდომ�
 #, kde-format
 msgid "Archive folder not defined. Please verify settings for account %1"
 msgstr ""
+"არქივის საქაღალდე აღწერილი არაა. გადაამოწმეთ პარამეტრები ანგარიშისთვის %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:36
 #, kde-format
@@ -2600,7 +2701,7 @@ msgstr "კოლექციების სია ცარიელია. %1
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
-msgstr ""
+msgstr "საქაღალდე %1 მხოლოდ-კითხვადია. გადაამოწმეთ %2 ანგარიშის კონფიგურაცია"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -2610,7 +2711,7 @@ msgstr "შეტყობინებების გადატანის �
 #: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
-msgstr ""
+msgstr "საქაღალდის გამოთხოვის შეცდომა. მიღებული შეცდომა: %1"
 
 #: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
@@ -2620,12 +2721,12 @@ msgstr "საქაღალდე არ დაბრუნებულა."
 #: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
-msgstr ""
+msgstr "მშობელი საქაღალდის გამოთხოვის შეცდომა. მიღებული შეცდომა: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
 msgid "Unable to return list of folders."
-msgstr ""
+msgstr "საქაღალდეების სიის დაბრუნების შეცდომა."
 
 #: folderarchive/folderarchivemanager.cpp:166
 #, kde-format
@@ -2647,7 +2748,7 @@ msgstr "ასლი"
 #: identity/encodedimagepicker.cpp:132
 #, kde-format
 msgid "You do not have your own contact defined in the address book."
-msgstr ""
+msgstr "თქვენს მისამართების წიგნში საკუთარი კონტაქტები აღწერილი არ გაქვთ."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
@@ -2658,7 +2759,7 @@ msgstr "სურათი გარეშე"
 #: identity/encodedimagepicker.cpp:142 identity/encodedimagepicker.cpp:150
 #, kde-format
 msgid "No picture set for your address book entry."
-msgstr ""
+msgstr "თქვენს მისამართების წიგნის ჩანაწერში სურათი დაყენებული არაა."
 
 #: identity/identityaddvcarddialog.cpp:27
 #: identity/identityeditvcarddialog.cpp:43
@@ -2695,7 +2796,7 @@ msgstr "&არსებული იდენტიფიკატორებ�
 #: identity/identitydialog.cpp:177
 #, kde-format
 msgid "Error while generating new key pair: %1"
-msgstr ""
+msgstr "შეცდომა ახალი გასაღებების წყვილის გენერაციისას: %1"
 
 #: identity/identitydialog.cpp:178
 #, kde-format
@@ -2715,7 +2816,7 @@ msgstr "გასაღების ახალი წყვილის გე
 #: identity/identitydialog.cpp:232
 #, kde-format
 msgid "Generating new key pair..."
-msgstr ""
+msgstr "გასაღებების ახალი წყვილის გენერაცია..."
 
 #: identity/identitydialog.cpp:245
 #, kde-format
@@ -2809,7 +2910,7 @@ msgstr "OpenPGP ხელმოწერის გასაღები:"
 #: identity/identitydialog.cpp:373
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "ერთი და იგივე გასაღების გამოყენება დაშიფვრისა და ხელმოწერისთვის"
 
 #: identity/identitydialog.cpp:383
 #, kde-format
@@ -2859,7 +2960,7 @@ msgstr ""
 #: identity/identitydialog.cpp:450
 #, kde-format
 msgid "S/MIME encryption certificate:"
-msgstr ""
+msgstr "S/MIME დაშიფვრის სერტიფიკატი:"
 
 #: identity/identitydialog.cpp:467
 #, kde-format
@@ -2875,22 +2976,22 @@ msgstr "ავტომატური დაშიფვრის ჩართ�
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "ავტომატური დაშიფვრა:"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "გააგებინეთ სხვებსაც, რომ დაშიფვრა გირჩევნიათ"
 
 #: identity/identitydialog.cpp:484
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "უსაფრთხოების ნაგულისხმევი გლობალური პარამეტრების თავზე გადაწერა"
 
 #: identity/identitydialog.cpp:487
 #, kde-format
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "ნაგულისხმევების თავზე გადაწერა:"
 
 #: identity/identitydialog.cpp:492
 #, kde-format
@@ -2900,19 +3001,19 @@ msgstr "შეტყობინებების ხელმოწერა"
 #: identity/identitydialog.cpp:495
 #, kde-format
 msgid "Encrypt messages when possible"
-msgstr ""
+msgstr "შეტყობინებების დაშიფვრა, თუ შესაძლებელია"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:498 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr ""
+msgstr "გაფრთხილება ხელმოუწერელი შეტყობინებების გაგზავნისას"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:501 ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr ""
+msgstr "გაფრთხილება დაუშიფრავი შეტყობინებების გაგზავნისას"
 
 #: identity/identitydialog.cpp:511
 #, kde-format
@@ -2923,7 +3024,7 @@ msgstr "დამატებითი"
 #: identity/identitydialog.cpp:519
 #, kde-format
 msgid "&Reply-To address:"
-msgstr ""
+msgstr "&საპასუხო მისამართი:"
 
 #: identity/identitydialog.cpp:523
 #, kde-format
@@ -2976,7 +3077,7 @@ msgstr "&ლექსიკონი:"
 #: identity/identitydialog.cpp:584
 #, kde-format
 msgid "Select Send-mail Folder"
-msgstr ""
+msgstr "აირჩიეთ გაგზავნილი ელფოსტების საქაღალდე"
 
 #: identity/identitydialog.cpp:586
 #, kde-format
@@ -3011,7 +3112,7 @@ msgstr "გამავალი ანგარიში:"
 #: identity/identitydialog.cpp:614
 #, kde-format
 msgid "Attach my vCard to message"
-msgstr ""
+msgstr "შეტყობინებისთვის ჩემი vCard-ის მიმაგრება"
 
 #: identity/identitydialog.cpp:615 identity/identitydialog.cpp:1171
 #, kde-format
@@ -3026,7 +3127,7 @@ msgstr "ავტოკორექციის ენა:"
 #: identity/identitydialog.cpp:635
 #, kde-format
 msgid "Restore default domain name"
-msgstr ""
+msgstr "ნაგულისხმევი დომენის სახელის აღდგენა"
 
 #: identity/identitydialog.cpp:638
 #, kde-format
@@ -3043,12 +3144,12 @@ msgstr ""
 #: identity/identitydialog.cpp:661
 #, kde-format
 msgid "&Use custom message templates for this identity"
-msgstr ""
+msgstr "&ამ იდენტიფიკატორისთვის მომხმარებლის შეტყობინების ნიმუშების გამოყენება"
 
 #: identity/identitydialog.cpp:675
 #, kde-format
 msgid "&Copy Global Templates"
-msgstr ""
+msgstr "&გლობალური ნიმუშების კოპირება"
 
 #: identity/identitydialog.cpp:688
 #, kde-format
@@ -3063,12 +3164,12 @@ msgstr "სურათი"
 #: identity/identitydialog.cpp:748
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
-msgstr ""
+msgstr "არასწორი ელფოსტის ფსევდონიმი \"%1\""
 
 #: identity/identitydialog.cpp:756
 #, kde-format
 msgid "You must provide an email for this identity."
-msgstr ""
+msgstr "ამ იდენტიფიკატორისთვის ელფოსტის მისამართის მითითება აუცილებელია."
 
 #: identity/identitydialog.cpp:756
 #, kde-format
@@ -3116,7 +3217,7 @@ msgstr ""
 #: identity/identitydialog.cpp:854
 #, kde-format
 msgid "Email Address Not Found in Key/Certificates"
-msgstr ""
+msgstr "სერტიფიკატებში/გასაღებში ელფოსტის მისამართი აღმოჩენილი არაა"
 
 #: identity/identitydialog.cpp:866
 #, kde-format
@@ -3127,7 +3228,7 @@ msgstr "ხელმოწერის ფაილი არასწორი�
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr ""
+msgstr "იდენტიფიკაციის ჩასწორება \"%1\""
 
 #: identity/identitydialog.cpp:951
 #, kde-format
@@ -3135,6 +3236,8 @@ msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
+"ზოგიერთი მომხმარებლის საქაღალდე იდენტიფიკატორისთვის (უკვე) აღარ არსებობს. "
+"ამიტომ, გამოყენებული იქნება ნაგულისხმევი საქაღალდეები."
 
 #: identity/identitydialog.cpp:1173
 #, kde-format
@@ -3213,14 +3316,14 @@ msgstr "ელ-ფოსტის მისამართი"
 #: identity/identitypage.cpp:213
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgstr ""
+msgstr "<qt>მართლა გნებავთ, წაშალოთ იდენტიფიკატორი სახელით <b>%1</b>?</qt>"
 
 #: identity/identitypage.cpp:216
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "მართლა გნებავთ ამ %1 იდენტიფიკატორის წაშლა?"
+msgstr[1] "მართლა გნებავთ ამ %1 იდენტიფიკატორის წაშლა?"
 
 #: identity/identitypage.cpp:219
 #, kde-format
@@ -3263,7 +3366,7 @@ msgstr "&სისტემური პარამეტრების გა
 #: identity/newidentitydialog.cpp:81
 #, kde-format
 msgid "&Duplicate existing identity"
-msgstr ""
+msgstr "არსებული &იდენტიფიკატორის დუბლირება"
 
 #: identity/xfaceconfigurator.cpp:38
 #, kde-format
@@ -3281,6 +3384,8 @@ msgid ""
 "More information under <a href=\"https://quimby.gnus.org/circus/face/"
 "\">https://quimby.gnus.org/circus/face/</a>."
 msgstr ""
+"მეტი ინფორმაცია ბმულზე <a href=\"https://quimby.gnus.org/circus/face/"
+"\">https://quimby.gnus.org/circus/face/</a>."
 
 #: identity/xfaceconfigurator.cpp:41
 #, kde-format
@@ -3288,6 +3393,8 @@ msgid ""
 "Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/"
 "\">https://ace.home.xs4all.nl/X-Faces/</a>."
 msgstr ""
+"მაგალითები ხელმისაწვდომია ბმულზე <a href=\"https://ace.home.xs4all.nl/X-"
+"Faces/\">https://ace.home.xs4all.nl/X-Faces/</a>."
 
 #: identity/xfaceconfigurator.cpp:123
 #, kde-format
@@ -3297,22 +3404,22 @@ msgstr "სურათები გაგზავნილი არ იქნ
 #: identity/xfaceconfigurator.cpp:126
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr ""
+msgstr "KMail ფერად გამოსახულებად Face თავსართით გაგზავნის."
 
 #: identity/xfaceconfigurator.cpp:129
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
+msgstr "KMail შავთეთრ გამოსახულებას X-Face თავსართით გაგზავნის."
 
 #: identity/xfaceconfigurator.cpp:132
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
-msgstr ""
+msgstr "KMail, ორივე, შავთეთრ და ფერად გამოსახულებას გაგზავნის."
 
 #: identity/xfaceconfigurator.cpp:170
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr ""
+msgstr "თავსართში ჩასატევად გამოსახულების ზომის შემცირება ჩავარდა."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
@@ -3320,16 +3427,18 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
+"თავსართში ჩასატევად გამოსახულების ზომის შემცირება ჩავარდა. შეკუმშვის უკეთესი "
+"შედეგებისთვის დააყენეთ pngquant."
 
 #: identity/xfaceconfigurator.cpp:180
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
-msgstr ""
+msgstr "შეკუმშვის უკეთესი შედეგებისთვის დააყენეთ pngquant."
 
 #: identity/xfaceconfigurator.cpp:267
 #, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr ""
+msgstr "pngquant დასრულდა კოდით %1: %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
@@ -3340,8 +3449,8 @@ msgstr "ელფოსტა წარმატებით დაემატ�
 #, kde-format
 msgid "Distribution list %2 is empty, it cannot be used."
 msgid_plural "Distribution lists %2 are empty, they cannot be used."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "დაგზავნის სია %2 ცარიელია. მას ვერ გამოიყენებთ."
+msgstr[1] "დაგზავნის სია %2 ცარიელია. მას ვერ გამოიყენებთ."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, kde-format
@@ -3410,6 +3519,8 @@ msgid ""
 "<qt>Are you sure you want to delete the search <b>%1</b>?<br />Any messages "
 "it shows will still be available in their original folder.</qt>"
 msgstr ""
+"<qt>მართლა გნებავთ, წაშალოთ ძებნა <b>%1</b>?<br />შეტყობინებები, რომლებსაც "
+"ის გაჩვენებთ, ისევ იქნება ხელმისაწვდომი, თავის საწყის საქაღალდეებში.</qt>"
 
 #: job/removecollectionjob.cpp:61
 #, kde-format
@@ -3426,6 +3537,8 @@ msgstr "საქაღალდის წაშლა"
 #, kde-format
 msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ ცარიელი საქაღალდე <b>%1</"
+"b> ?</qt>"
 
 #: job/removecollectionjob.cpp:73
 #, kde-format
@@ -3469,13 +3582,13 @@ msgstr "დუბლიკატების წაშლა"
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr ""
+msgstr "შეცდომა დუბლირებული ელფოსტების წაშლისას: '%1'"
 
 #: job/removeduplicatemailjob.cpp:62
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, kde-format
 msgid "Error while removing duplicates"
-msgstr ""
+msgstr "დუბლიკატების წაშლა"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -3491,27 +3604,27 @@ msgstr "შეტყობინების სათაურის დაყ�
 #: kmail_options.h:17
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr ""
+msgstr "ასლის გაგზავნა 'მისამართზე'. შეგიძლიათ, გამეოროთ"
 
 #: kmail_options.h:20
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr ""
+msgstr "ბრმა ასლის გაგზავნა 'მისამართზე'. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:23
 #, kde-format
 msgid "Set replyTo to 'address'"
-msgstr ""
+msgstr "პასუხის 'მისამართზე' დაბრუნება"
 
 #: kmail_options.h:25
 #, kde-format
 msgid "Add 'header' to message. This can be repeated"
-msgstr ""
+msgstr "შეტყობინებისთვის 'თავსართის' დამატება. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:26
 #, kde-format
 msgid "Read message body from 'file'"
-msgstr ""
+msgstr "შეტყობინების ტანის მითითებული 'ფაილიდან' წაკითხვა"
 
 #: kmail_options.h:27
 #, kde-format
@@ -3521,27 +3634,27 @@ msgstr "შეტყობინების სხეულისდაყე�
 #: kmail_options.h:28
 #, kde-format
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr ""
+msgstr "შეტყობინებისთვის მიმაგრებული ფაილის დამატება. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:29
 #, kde-format
 msgid "Only check for new mail"
-msgstr ""
+msgstr "მხოლოდ ახალი ელფოსტის შემოწმება"
 
 #: kmail_options.h:31
 #, kde-format
 msgid "Only open composer window"
-msgstr ""
+msgstr "მხოლოდ კომპოზიტორის ფანჯრის გახსნა"
 
 #: kmail_options.h:32
 #, kde-format
 msgid "Set identity name"
-msgstr ""
+msgstr "იდენტიფიკატორის სახელის დაყენება"
 
 #: kmail_options.h:33
 #, kde-format
 msgid "View the given message file"
-msgstr ""
+msgstr "მითითებული შეტყობინების ფაილის გამოტანა"
 
 #: kmail_options.h:35
 #, kde-format
@@ -3552,6 +3665,8 @@ msgstr "მომხმარებლის უკუკავშირის �
 #, kde-format
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
+"'მისამართისთვის' შეტყობინების გაგზავნა ან იმ ფაილის მიმაგრება, რომელზეც "
+"'URL' მიუთითებს"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
@@ -3595,13 +3710,13 @@ msgstr "&საქაღალდე"
 #: kmmainwin.rc:287
 #, kde-format
 msgid "Apply Filters on Folder"
-msgstr ""
+msgstr "საქაღალდეზე ფილტრების გადატარება"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
 #: kmail_part.rc:136 kmail_part.rc:288 kmmainwin.rc:139 kmmainwin.rc:292
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
-msgstr ""
+msgstr "ფილტრის გადატარება საქაღალდეზე და მის ყველა ქვესაქაღალდეზე"
 
 #. i18n: ectx: Menu (file)
 #. i18n: ectx: Menu (message)
@@ -3614,7 +3729,7 @@ msgstr "&შეტყობინება"
 #: kmail_part.rc:163 kmmainwin.rc:163 kmreadermainwin.rc:47
 #, kde-format
 msgid "Reply Special"
-msgstr ""
+msgstr "სპეციალური პასუხი"
 
 #. i18n: ectx: Menu (menubar_message_forward)
 #: kmail_part.rc:172 kmmainwin.rc:172 kmreadermainwin.rc:56
@@ -3663,8 +3778,8 @@ msgstr "გთხოვთ, მოითმინოთ"
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "დაელოდეთ. მიმდინარეობს შეტყობინების გადაცემა"
+msgstr[1] "დაელოდეთ. მიმდინარეობს %1 შეტყობინების გადაცემა"
 
 #: kmcommands.cpp:509
 #, kde-format
@@ -3684,12 +3799,12 @@ msgstr "შეტყობინება"
 #: kmcommands.cpp:723
 #, kde-format
 msgid "The file does not contain a message."
-msgstr ""
+msgstr "ფაილი შეტყობინებას არ შეიცავს."
 
 #: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
-msgstr ""
+msgstr "ფაილი ერთზე მეტ შეტყობინებას შეიცავს. ნაჩვენებია, მხოლოდ, პირველი."
 
 #: kmcommands.cpp:907
 #, kde-format
@@ -3701,12 +3816,12 @@ msgstr ""
 #: kmcommands.cpp:911
 #, kde-format
 msgid "Send As Digest"
-msgstr ""
+msgstr "დაიჯესტის სახით გაგზავნა"
 
 #: kmcommands.cpp:912
 #, kde-format
 msgid "Send Individually"
-msgstr ""
+msgstr "სათითაოდ გაგზავნა"
 
 #: kmcommands.cpp:1299
 #, kde-format
@@ -3756,12 +3871,14 @@ msgstr "HTML -ის პანელი"
 #: kmcomposerui.rc:168
 #, kde-format
 msgid "Text Direction Toolbar"
-msgstr ""
+msgstr "ტექსტის მიმართულების პანელი"
 
 #: kmkernel.cpp:827
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
+"KMail დაყენებულია სტატუსზე - ხაზგარეშე. ყველა ქსელური დავალების შესრულება "
+"შეჩერდა"
 
 #: kmkernel.cpp:847 kmmainwidget.cpp:2368 kmmainwidget.cpp:2384
 #, kde-format
@@ -3777,6 +3894,8 @@ msgstr "ელფოსტის გაგზავნის შეცდომ�
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
+"KMail დაყენებულია სტატუსზე - ხაზზეა. ყველა ქსელური დავალების შესრულება "
+"გაგრძელდა"
 
 #: kmkernel.cpp:882
 #, kde-format
@@ -3784,21 +3903,24 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
+"KMail დაყენებულია სტატუსზე - ხაზზეა. როცა ქსელთან მიერთებას აღმოვაჩენ, ყველა "
+"ქსელური დავალების შესრულება გაგრძელება"
 
 #: kmkernel.cpp:955
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
+"KMail ამჟამად დაყენებულია ხაზგარეშე რეჟიმზე. როგორ გნებავთ, გავაგრძელო?"
 
 #: kmkernel.cpp:957
 #, kde-format
 msgid "Online/Offline"
-msgstr ""
+msgstr "გათიშული"
 
 #: kmkernel.cpp:958 kmmainwidget.cpp:2357
 #, kde-format
 msgid "Work Online"
-msgstr ""
+msgstr "ონლაინ-მუშაობა"
 
 #: kmkernel.cpp:959 kmmainwidget.cpp:2354
 #, kde-format
@@ -3808,12 +3930,12 @@ msgstr "ოფლაინ მუშაობა"
 #: kmkernel.cpp:983
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
-msgstr ""
+msgstr "ქსელთან მიერთება აღდგა. ყველა ქსელური დავალება გაგრძელდება"
 
 #: kmkernel.cpp:986
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
-msgstr ""
+msgstr "ქსელთან მიერთება არ არსებობს. ყველა ქსელური დავალება შეჩერებულია"
 
 #: kmkernel.cpp:1081
 #, kde-format
@@ -3821,27 +3943,30 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
+"ავტომატურად შენახვის ფაილის (მისამართზე %1) გახსნა ჩავარდა.\n"
+"მიზეზი: %2"
 
 #: kmkernel.cpp:1082
 #, kde-format
 msgid "Opening Autosave File Failed"
-msgstr ""
+msgstr "ავტომატური შენახვის ფაილის გახსნა ჩავარდა"
 
 #: kmkernel.cpp:1644
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
-msgstr[0] ""
+msgstr[0] "ეს იდენტიფიკატორი შეიცვალა, რომ ნაგულისხმევი ტრანსპორტი გამოიყენოს:"
 msgstr[1] ""
+"ეს %1 იდენტიფიკატორი შეიცვალა, რომ ნაგულისხმევი ტრანსპორტი გამოიყენოს:"
 
 #: kmkernel.cpp:1668
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ეს იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
+msgstr[1] "ეს %1 იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
 
 #: kmkernel.cpp:1683
 #, kde-format
@@ -3871,22 +3996,22 @@ msgstr "%1: %2"
 #: kmlaunchexternalcomponent.cpp:40
 #, kde-format
 msgid "Archive Mail Agent was not registered."
-msgstr ""
+msgstr "არქივის ელფოსტის აგენტი რეგისტრირებული არაა."
 
 #: kmlaunchexternalcomponent.cpp:51
 #, kde-format
 msgid "Send Later Agent was not registered."
-msgstr ""
+msgstr "ელფოსტის მოგვიანებით გაგზავნის აგენტი რეგისტრირებული არაა."
 
 #: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr ""
+msgstr "ელფოსტის შერწყმის აგენტი რეგისტრირებული არაა."
 
 #: kmlaunchexternalcomponent.cpp:74
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
-msgstr ""
+msgstr "რიგში შემდეგი ელფოსტების შემხსენებელი აგენტი რეგისტრირებული არაა."
 
 #: kmlaunchexternalcomponent.cpp:87
 #, kde-format
@@ -3894,6 +4019,8 @@ msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr ""
+"სერტიფიკატების მმართველის გაშვება შეუძლებელია. დარწმუნდით, რომ Kleopatra "
+"სწორად აყენია."
 
 #: kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -3906,11 +4033,13 @@ msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
+"შემოტანის ოსტატის გაშვება შეუძლებელია. დარწმუნდით, რომ თქვენი ImportWizard "
+"სწორად აყენია."
 
 #: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
-msgstr ""
+msgstr "შემოტანის ოსტატის გაშვების შეცდომა"
 
 #: kmlaunchexternalcomponent.cpp:117
 #, kde-format
@@ -3918,18 +4047,20 @@ msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
+"\"PIM-ის მონაცემების გამტანის\" პროგრამის გაშვება შეუძლებელია. შეამოწმეთ "
+"თქვენი ფაილები."
 
 #: kmlaunchexternalcomponent.cpp:119
 #, kde-format
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr ""
+msgstr "შემოტანის ოსტატის გაშვების შეცდომა"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
-msgstr ""
+msgstr "ImportWizard-ის გაშვების შეცდომა. დარწმუნდით, რომ ის სწორად აყენია."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, kde-format
@@ -3940,6 +4071,8 @@ msgstr "შემოტანის ოსტატის გაშვები�
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
+"სისტემაში კიდევ ერთი ელფოსტის კლიენტი ვიპოვე. გნებავთ, მონაცემები აქედანაც "
+"შემოვიტანო?"
 
 #: kmmainwidget.cpp:305
 #, kde-format
@@ -3956,7 +4089,7 @@ msgstr "არ შემოიტანო"
 #: kmmainwidget.cpp:311
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
-msgstr ""
+msgstr "შემოტანის ოსტატის გაშვება შეუძლებელია. შეამოწმეთ თქვენი ფაილები."
 
 #: kmmainwidget.cpp:1367
 #, kde-format
@@ -3966,22 +4099,26 @@ msgstr "სათაურის გარეშე"
 #: kmmainwidget.cpp:1380
 #, kde-format
 msgid "(no templates)"
-msgstr ""
+msgstr "(ნიმუშების გარეშე)"
 
 #: kmmainwidget.cpp:1432
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr ""
+"ამ საქაღალდეს შეტყობინებების მოძველებულად მონიშვნის პარამეტრები მითითებული "
+"არ აქვს"
 
 #: kmmainwidget.cpp:1438
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, მოძველებულად მონიშნოთ საქაღალდე <b>"
+"%1</b> ?</qt>"
 
 #: kmmainwidget.cpp:1439
 #, kde-format
 msgid "Expire Folder"
-msgstr ""
+msgstr "საქაღალდის მოძველებულადმონიშვნა"
 
 #: kmmainwidget.cpp:1439
 #, kde-format
@@ -4009,21 +4146,23 @@ msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, საქაღალდიდან <b>%1</b> ყველა "
+"შეტყობინება ნაგვის ყუთში გადაიტანოთ?</qt>"
 
 #: kmmainwidget.cpp:1481
 #, kde-format
 msgid "Moved all messages to the trash"
-msgstr ""
+msgstr "ყველა შეტყობინება გადატანილია სანაგვე ყუთში"
 
 #: kmmainwidget.cpp:1535
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
-msgstr ""
+msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ ძველი შეტყობინებები?"
 
 #: kmmainwidget.cpp:1536
 #, kde-format
 msgid "Expire Old Messages?"
-msgstr ""
+msgstr "წავშალო ძველი შეტყობინებები?"
 
 #: kmmainwidget.cpp:1537
 #, kde-format
@@ -4057,7 +4196,11 @@ msgid_plural ""
 "<qt>Do you really want to delete the %1 selected messages?<br />Once "
 "deleted, they cannot be restored.</qt>"
 msgstr[0] ""
+"<qt>მართლა გნებავთ მონიშნული შეტყობინების წაშლა?<br />თუ წაშლით, მას ვეღარ "
+"აღადგენთ.</qt>"
 msgstr[1] ""
+"<qt>მართლა გნებავთ %1 მონიშნული შეტყობინების წაშლა?<br />თუ წაშლით, მას "
+"ვეღარ აღადგენთ.</qt>"
 
 #: kmmainwidget.cpp:1643
 #, kde-format
@@ -4139,47 +4282,47 @@ msgstr "შეტყობინებების კოპირება გ�
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
-msgstr ""
+msgstr "შეტყობინებების კოპირება საქაღალდეში"
 
 #: kmmainwidget.cpp:1851
 #, kde-format
 msgid "Moving messages to trash..."
-msgstr ""
+msgstr "შეტყობინებების გადატანა ნაგვის ყუთში..."
 
 #: kmmainwidget.cpp:1858
 #, kde-format
 msgid "Deleting and moving messages to trash..."
-msgstr ""
+msgstr "წაშლა შეტყობინებების გადატანა ნაგვის ყუთში..."
 
 #: kmmainwidget.cpp:1871
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr ""
+msgstr "შეტყობინების ნაგვის ყუთში გადატანა წარმატებულია."
 
 #: kmmainwidget.cpp:1878
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr ""
+msgstr "შეტყობინების ნაგვის ყუთში გადატანა ან წაშლა წარმატებულია"
 
 #: kmmainwidget.cpp:1884
 #, kde-format
 msgid "Moving messages to trash failed."
-msgstr ""
+msgstr "შეტყობინებების გადატანა ნაგვის ყუთში ჩავარდა."
 
 #: kmmainwidget.cpp:1891
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
-msgstr ""
+msgstr "შეტყობინებების წაშლა ან გადატანა ნაგვის ყუთში ჩავარდა."
 
 #: kmmainwidget.cpp:1897
 #, kde-format
 msgid "Moving messages to trash canceled."
-msgstr ""
+msgstr "შეტყობინებების გადატანა ნაგვის ყუთში გაუქმდა."
 
 #: kmmainwidget.cpp:1904
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
-msgstr ""
+msgstr "შეტყობინებების წაშლა ან გადატანა ნაგვის ყუთში გაუქმდა."
 
 #: kmmainwidget.cpp:2174
 #, kde-format
@@ -4195,7 +4338,7 @@ msgstr "შენახვა &როგორც..."
 #: kmmainwidget.cpp:2828
 #, kde-format
 msgid "&Expire All Folders"
-msgstr ""
+msgstr "&მოძველებული ელფოსტების წაშლა ყველა საქაღალდიდან"
 
 #: kmmainwidget.cpp:2833
 #, kde-format
@@ -4205,7 +4348,7 @@ msgstr "ელფოსტის &შემოწმება"
 #: kmmainwidget.cpp:2841
 #, kde-format
 msgid "Check Mail In"
-msgstr ""
+msgstr "ელფოსტის შემოწმება"
 
 #: kmmainwidget.cpp:2843 kmmainwidget.cpp:2844
 #, kde-format
@@ -4220,12 +4363,12 @@ msgstr "&რიგში მყოფი შეტყობინებები
 #: kmmainwidget.cpp:2856
 #, kde-format
 msgid "Online status (unknown)"
-msgstr ""
+msgstr "ხაზზე ყოფნის სტატუსი (უცნობი)"
 
 #: kmmainwidget.cpp:2861
 #, kde-format
 msgid "Send Queued Messages Via"
-msgstr ""
+msgstr "რიგში მყოფების გაგზავნა"
 
 #: kmmainwidget.cpp:2877
 #, kde-format
@@ -4240,12 +4383,12 @@ msgstr "&შეტყობინებების შემოტანა..."
 #: kmmainwidget.cpp:2897
 #, kde-format
 msgid "&Debug Sieve..."
-msgstr ""
+msgstr "Sieve-ის სკრიპტის &გამართვა..."
 
 #: kmmainwidget.cpp:2904
 #, kde-format
 msgid "Filter &Log Viewer..."
-msgstr ""
+msgstr "&ჟურნალის ხედის გაფილტვრა..."
 
 #: kmmainwidget.cpp:2909
 #, kde-format
@@ -4255,27 +4398,27 @@ msgstr "გაფრთხილებების ისტორია..."
 #: kmmainwidget.cpp:2914
 #, kde-format
 msgid "&Import from another Email Client..."
-msgstr ""
+msgstr "სხვა ელფოსტის კლიენტიდან შ&ემოტანა..."
 
 #: kmmainwidget.cpp:2919
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
-msgstr ""
+msgstr "\"ოფისიდან გასულობის\" პასუხების ჩასწორება..."
 
 #: kmmainwidget.cpp:2925
 #, kde-format
 msgid "&Configure Automatic Archiving..."
-msgstr ""
+msgstr "ავტომატური დაარქივების &მორგება..."
 
 #: kmmainwidget.cpp:2931
 #, kde-format
 msgid "Delayed Messages..."
-msgstr ""
+msgstr "დაყოვნებული შეტყობინებები..."
 
 #: kmmainwidget.cpp:2937
 #, kde-format
 msgid "Followup Reminder Messages..."
-msgstr ""
+msgstr "მიყოლების შეხსენების შეტყობინებები..."
 
 #: kmmainwidget.cpp:2948 util.cpp:148
 #, kde-format
@@ -4286,12 +4429,12 @@ msgstr "&წაშლა"
 #: kmmainwidget.cpp:2953 kmmainwidget.cpp:4004
 #, kde-format
 msgid "M&ove Thread to Trash"
-msgstr ""
+msgstr "&ძაფის ნაგვის ყუთში გადატანა"
 
 #: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Move thread to trashcan"
-msgstr ""
+msgstr "ძაფის ნაგვის ყუთში გადატანა"
 
 #: kmmainwidget.cpp:2960 kmmainwidget.cpp:4004
 #, kde-format
@@ -4311,17 +4454,18 @@ msgstr "&ყველა შეცდომის მონიშვნა"
 #: kmmainwidget.cpp:2978
 #, kde-format
 msgid "&Mailing List Management..."
-msgstr ""
+msgstr "&დაგზავნის სიის მართვა..."
 
 #: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr ""
+msgstr "Akonadi-ის კეშის &გასუფთავება..."
 
 #: kmmainwidget.cpp:2991
 #, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
+"Akonadi-ის კეშის &გასუფთავება ამ საქაღალდეში და ყველა მის ქვესაქაღალდეში"
 
 #: kmmainwidget.cpp:2996
 #, kde-format
@@ -4331,17 +4475,17 @@ msgstr "&მალსახმობის მინიჭება..."
 #: kmmainwidget.cpp:3014
 #, kde-format
 msgid "&Expiration Settings"
-msgstr ""
+msgstr "&მოძველების მორგება"
 
 #: kmmainwidget.cpp:3039
 #, kde-format
 msgid "&Archive Folder..."
-msgstr ""
+msgstr "&არქივის საქაღალდე..."
 
 #: kmmainwidget.cpp:3047
 #, kde-format
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "გარე მიმართვების &ჩატვირთვა"
 
 #: kmmainwidget.cpp:3070
 #, kde-format
@@ -4372,7 +4516,7 @@ msgstr ""
 #: kmmainwidget.cpp:3093
 #, kde-format
 msgid "New Message t&o Mailing-List..."
-msgstr ""
+msgstr "&დაგზავნის სიაში შეტყობინების გაგზავნა..."
 
 #: kmmainwidget.cpp:3099
 #, kde-format
@@ -4382,12 +4526,12 @@ msgstr "ფილტრის &შექმნა"
 #: kmmainwidget.cpp:3103
 #, kde-format
 msgid "Filter on &Subject..."
-msgstr ""
+msgstr "ფილტრი &თემაზე..."
 
 #: kmmainwidget.cpp:3110
 #, kde-format
 msgid "Filter on &From..."
-msgstr ""
+msgstr "ფილტრი &ფორმაზე..."
 
 #: kmmainwidget.cpp:3116
 #, kde-format
@@ -4397,121 +4541,121 @@ msgstr ""
 #: kmmainwidget.cpp:3122
 #, kde-format
 msgid "Filter on &Cc..."
-msgstr ""
+msgstr "ფილტრი ველზე &ასლი..."
 
 #: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Mark &Thread"
-msgstr ""
+msgstr "დისკუსიის &დანიშვნა"
 
 #: kmmainwidget.cpp:3133
 #, kde-format
 msgid "Mark Thread as &Read"
-msgstr ""
+msgstr "დისკუსიის &წაკითხულად დანიშვნა"
 
 #: kmmainwidget.cpp:3136
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
-msgstr ""
+msgstr "მონიშნულ დისკუსიაში ყველა შეტყობინების წაკითხულად მონიშვნა"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
 msgid "Mark Thread as &Unread"
-msgstr ""
+msgstr "დისკუსიის წაუკითხავად მონიშვნა"
 
 #: kmmainwidget.cpp:3142
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
-msgstr ""
+msgstr "მონიშნულ დისკუსიაში ყველა შეტყობინების წაუკითხავად მონიშვნა"
 
 #: kmmainwidget.cpp:3148
 #, kde-format
 msgid "Mark Thread as &Important"
-msgstr ""
+msgstr "&დისკუსიის მნიშვნელოვნად მონიშვნა"
 
 #: kmmainwidget.cpp:3151
 #, kde-format
 msgid "Remove &Important Thread Mark"
-msgstr ""
+msgstr "&დისკუსიის მნიშვნელოვნად მონიშვნის მოხსნა"
 
 #: kmmainwidget.cpp:3154
 #, kde-format
 msgid "Mark Thread as &Action Item"
-msgstr ""
+msgstr "დისკუსიის &ქმედების ელემენტად მონიშვნა"
 
 #: kmmainwidget.cpp:3157
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
-msgstr ""
+msgstr "დისკუსიის &ქმედების ელემენტად მონიშვნის მოხსნა"
 
 #: kmmainwidget.cpp:3161
 #, kde-format
 msgid "&Watch Thread"
-msgstr ""
+msgstr "დისკუსიის &თვალთვალი"
 
 #: kmmainwidget.cpp:3165
 #, kde-format
 msgid "&Ignore Thread"
-msgstr ""
+msgstr "დისკუსიის &გამოტოვება"
 
 #: kmmainwidget.cpp:3173 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
-msgstr ""
+msgstr "&მიმაგრებული ფაილების შენახვა..."
 
 #: kmmainwidget.cpp:3181
 #, kde-format
 msgid "Copy Decrypted To..."
-msgstr ""
+msgstr "გაშიფრულის კოპირება..."
 
 #: kmmainwidget.cpp:3185
 #, kde-format
 msgid "Appl&y All Filters"
-msgstr ""
+msgstr "&ყველა ფილტრის გადატარება"
 
 #: kmmainwidget.cpp:3194
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
-msgstr ""
+msgstr "დისკუსიის / ჯგუფის &ამოკეცვა"
 
 #: kmmainwidget.cpp:3197
 #, kde-format
 msgid "Expand the current thread or group"
-msgstr ""
+msgstr "მიმდინარე ჯგუფის ან დისკუსიის ამოკეცვა"
 
 #: kmmainwidget.cpp:3201
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
-msgstr ""
+msgstr "&დისკუსიის / ჯგუფის ჩაკეცვა"
 
 #: kmmainwidget.cpp:3204
 #, kde-format
 msgid "Collapse the current thread or group"
-msgstr ""
+msgstr "მიმდინარე დისკუსიის ან ჯგუფის გაშლა"
 
 #: kmmainwidget.cpp:3208
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
-msgstr ""
+msgstr "&ყველა დისკუსიის გაშლა"
 
 #: kmmainwidget.cpp:3211
 #, kde-format
 msgid "Expand all threads in the current folder"
-msgstr ""
+msgstr "ყველა დისკუსიის ამოკეცვა მიმდინარე საქაღალდეში"
 
 #: kmmainwidget.cpp:3215
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
-msgstr ""
+msgstr "&ყველა დისკუსიის ჩაკეცვა"
 
 #: kmmainwidget.cpp:3218
 #, kde-format
 msgid "Collapse all threads in the current folder"
-msgstr ""
+msgstr "მიმდინარე ხედში ყველა დისკუსიის ჩაკეცვა"
 
 #: kmmainwidget.cpp:3222
 #, kde-format
@@ -4573,33 +4717,33 @@ msgstr "წინა წაუკითხავ შეტყობინებ�
 #: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Next Unread &Folder"
-msgstr ""
+msgstr "შემდეგი წაუკითხავი &საქაღალდე"
 
 #: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Go to the next folder with unread messages"
-msgstr ""
+msgstr "შემდეგ წაუკითხავი შეტყობინებების მქონე საქაღალდეზე გადასვლა"
 
 #: kmmainwidget.cpp:3278
 #, kde-format
 msgid "Previous Unread F&older"
-msgstr ""
+msgstr "წინა წაუკითხავი &საქაღალდე"
 
 #: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Go to the previous folder with unread messages"
-msgstr ""
+msgstr "წინა წაუკითხავი შეტყობინებების მქონე საქაღალდეზე გადასვლა"
 
 #: kmmainwidget.cpp:3287
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
-msgstr ""
+msgstr "შემდეგი წაუკითხავი &ტექსტი"
 
 #: kmmainwidget.cpp:3290
 #, kde-format
 msgid "Go to the next unread text"
-msgstr ""
+msgstr "შემდეგ წაუკითხავ ტექსტზე გადასვლა"
 
 #: kmmainwidget.cpp:3292
 #, kde-format
@@ -4607,16 +4751,18 @@ msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr ""
+"მიმდინარე შეტყობინების ქვემოთ ჩაწევა. თუ ეს მიმდინარე შეტყობინების ბოლოა, "
+"შემდეგ წაუკითხავ შეტყობინებაზე გადასვლა."
 
 #: kmmainwidget.cpp:3300
 #, kde-format
 msgid "Configure &Filters..."
-msgstr ""
+msgstr "ფილტრების &მორგება..."
 
 #: kmmainwidget.cpp:3306
 #, kde-format
 msgid "Manage &Sieve Scripts..."
-msgstr ""
+msgstr "&Sieve-ის სკრიპტების მართვა..."
 
 #: kmmainwidget.cpp:3311
 #, kde-format
@@ -4626,12 +4772,12 @@ msgstr "&ანგარიშის დამატება..."
 #: kmmainwidget.cpp:3316
 #, kde-format
 msgid "KMail &Introduction"
-msgstr ""
+msgstr "KMail-ის შ&ესავალი"
 
 #: kmmainwidget.cpp:3318
 #, kde-format
 msgid "Display KMail's Welcome Page"
-msgstr ""
+msgstr "KMail-ის საწყისი გვერდის ჩვენება"
 
 #: kmmainwidget.cpp:3325
 #, kde-format
@@ -4646,12 +4792,12 @@ msgstr "&KMail-ის მორგება..."
 #: kmmainwidget.cpp:3339
 #, kde-format
 msgid "Expire..."
-msgstr ""
+msgstr "მოძველებული შეტყობინებების წაშლა..."
 
 #: kmmainwidget.cpp:3345
 #, kde-format
 msgid "Add Favorite Folder..."
-msgstr ""
+msgstr "რჩეული საქაღალდის დამატება..."
 
 #: kmmainwidget.cpp:3351
 #, kde-format
@@ -4666,92 +4812,92 @@ msgstr "ყველა ფილტრის გადატარება"
 #: kmmainwidget.cpp:3378
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr ""
+msgstr "ფილტრის გადატარება საქაღალდეზე და მისი ქვესაქაღალდეებზე"
 
 #: kmmainwidget.cpp:3383
 #, kde-format
 msgid "Import/Export KMail Data..."
-msgstr ""
+msgstr "KMail-ის მონაცემების შეტანა/გატანა..."
 
 #: kmmainwidget.cpp:3389
 #, kde-format
 msgid "New AddressBook Contact..."
-msgstr ""
+msgstr "ახალი მისამართების წიგნის კონტაქტი..."
 
 #: kmmainwidget.cpp:3397 kmmainwidget.cpp:4045
 #, kde-format
 msgid "Account &Settings"
-msgstr ""
+msgstr "ანგარიშის &მორგება"
 
 #: kmmainwidget.cpp:3401
 #, kde-format
 msgid "Restart Account"
-msgstr ""
+msgstr "ანგარიშის გადატვირთვა"
 
 #: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Copy Message to Folder"
-msgstr ""
+msgstr "შეტყობინების კოპირება საქაღალდეში"
 
 #: kmmainwidget.cpp:3423
 #, kde-format
 msgid "Jump to Folder..."
-msgstr ""
+msgstr "გადასვლა საქაღალდეზე..."
 
 #: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Abort Current Operation"
-msgstr ""
+msgstr "მიმდინარე ოპერაციის გაუქმება"
 
 #: kmmainwidget.cpp:3435
 #, kde-format
 msgid "Focus on Next Folder"
-msgstr ""
+msgstr "ფოკუსი შემდეგ საქაღალდეზე"
 
 #: kmmainwidget.cpp:3441
 #, kde-format
 msgid "Focus on Previous Folder"
-msgstr ""
+msgstr "ფოკუსი წინა საქაღალდეზე"
 
 #: kmmainwidget.cpp:3447
 #, kde-format
 msgid "Select Folder with Focus"
-msgstr ""
+msgstr "ფოკუსის მქონე საქაღალდის მონიშვნა"
 
 #: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Focus on First Folder"
-msgstr ""
+msgstr "ფოკუსი პირველ საქაღალდეზე"
 
 #: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Focus on Last Folder"
-msgstr ""
+msgstr "ფოკუსი ბოლო საქაღალდეზე"
 
 #: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Focus on Next Message"
-msgstr ""
+msgstr "ფოკუსი შემდეგ შეტყობინებაზე"
 
 #: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Focus on Previous Message"
-msgstr ""
+msgstr "ფოკუსი წინა შეტყობინებაზე"
 
 #: kmmainwidget.cpp:3478
 #, kde-format
 msgid "Select First Message"
-msgstr ""
+msgstr "პირველი შეტყობინების მონიშვნა"
 
 #: kmmainwidget.cpp:3484
 #, kde-format
 msgid "Select Last Message"
-msgstr ""
+msgstr "ბოლო შეტყობინების მონიშვნა"
 
 #: kmmainwidget.cpp:3490
 #, kde-format
 msgid "Select Message with Focus"
-msgstr ""
+msgstr "ფოკუსის მქონე შეტყობინების მონიშვნა"
 
 #: kmmainwidget.cpp:3497
 #, kde-format
@@ -4761,48 +4907,50 @@ msgstr "ფოკუსის სწრაფ ძებნაზე დაყე
 #: kmmainwidget.cpp:3505
 #, kde-format
 msgid "Extend Selection to Previous Message"
-msgstr ""
+msgstr "მონიშვნის გაფართოება წინა შეტყობინებაზე"
 
 #: kmmainwidget.cpp:3511
 #, kde-format
 msgid "Extend Selection to Next Message"
-msgstr ""
+msgstr "მონიშვნის გაფართოება შემდეგ შეტყობინებაზე"
 
 #: kmmainwidget.cpp:3518
 #, kde-format
 msgid "Move Message to Folder"
-msgstr ""
+msgstr "შეტყობინების გადატანა საქაღლდეში"
 
 #: kmmainwidget.cpp:3528
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
+"ამ საქაღალდეში და მის ყველა ქვესაქაღალდეში არსებული ყველა შეტყობინების "
+"წაკითხულად მონიშვნა"
 
 #: kmmainwidget.cpp:3533
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
+msgstr "ამ საქაღალდეში და ყველა მის ქვესაქაღალდეში არსებული დუბლიკატების წაშლა"
 
 #: kmmainwidget.cpp:3539
 #, kde-format
 msgid "Previous Selected Folder"
-msgstr ""
+msgstr "წინა მონიშნული საქაღალდე"
 
 #: kmmainwidget.cpp:3546
 #, kde-format
 msgid "Next Selected Folder"
-msgstr ""
+msgstr "შემდეგი მონიშნული საქაღალდე"
 
 #: kmmainwidget.cpp:3574
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
-msgstr ""
+msgstr "რჩეული საქაღალდის დამატება"
 
 #: kmmainwidget.cpp:3992
 #, kde-format
 msgid "&Delete Search"
-msgstr ""
+msgstr "ძებნის &წაშლა"
 
 #: kmmainwidget.cpp:4006
 #, kde-format
@@ -4822,7 +4970,7 @@ msgstr "ნაგვის ყუთის &გასუფთავება"
 #: kmmainwidget.cpp:4054
 #, kde-format
 msgid "&Move All Messages to Trash"
-msgstr ""
+msgstr "&ყველა შეტყობინების ნაგვის ყუთში გადატანა"
 
 #: kmmainwidget.cpp:4128
 #, kde-format
@@ -4832,7 +4980,7 @@ msgstr "&დაბრუნება"
 #: kmmainwidget.cpp:4130
 #, kde-format
 msgid "&Undo: \"%1\""
-msgstr ""
+msgstr "&დაბრუნება: \"%1\""
 
 #: kmmainwidget.cpp:4187
 #, kde-format
@@ -4871,12 +5019,12 @@ msgstr ""
 #: kmmainwidget.cpp:4815
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr ""
+msgstr "ჩავრთო გაერთიანებული საფოსტო ყუთები?"
 
 #: kmmainwidget.cpp:4816
 #, kde-format
 msgid "Enable Unified Mailboxes"
-msgstr ""
+msgstr "გაერთიანებული საფოსტო ყუთების ჩართვა"
 
 #: kmmainwidget.cpp:4817
 #, kde-format
@@ -4886,12 +5034,12 @@ msgstr "გაუქმება"
 #: kmmainwidget.cpp:4852
 #, kde-format
 msgid "Do you want to restart Akonadi?"
-msgstr ""
+msgstr "გნებავთ Akonadi-ის გადატვირთვა?"
 
 #: kmmainwidget.cpp:4853
 #, kde-format
 msgid "Restart Akonadi"
-msgstr ""
+msgstr "Akonadi-ის გადატვირთვა"
 
 #: kmmainwidget.cpp:4854
 #, kde-format
@@ -4901,7 +5049,7 @@ msgstr "გადატვირთვა"
 #: kmmainwidget.cpp:4861
 #, kde-format
 msgid "Akonadi restarted."
-msgstr ""
+msgstr "Akonadi გადაიტვირთა."
 
 #: kmmainwin.cpp:38
 #, kde-format
@@ -4922,12 +5070,12 @@ msgstr "ნაგავი"
 #: kmreadermainwin.cpp:478
 #, kde-format
 msgid "Move message to trashcan"
-msgstr ""
+msgstr "შეტყობინების გადატანა ნაგვის ყუთში"
 
 #: kmreadermainwin.cpp:607
 #, kde-format
 msgid "Cannot copy item. %1"
-msgstr ""
+msgstr "ელემენტის კოპირება შეუძლებელია. %1"
 
 #: kmreaderwin.cpp:122
 #, kde-format
@@ -4942,7 +5090,7 @@ msgstr ""
 #: kmreaderwin.cpp:134
 #, kde-format
 msgid "Forward To..."
-msgstr ""
+msgstr "გადამისამართება სად..."
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -4952,17 +5100,17 @@ msgstr "მისამართების წიგნში ჩამატ�
 #: kmreaderwin.cpp:145
 #, kde-format
 msgid "Add to Existing Contact"
-msgstr ""
+msgstr "არსებულ კონტაქტში ჩამატება"
 
 #: kmreaderwin.cpp:151
 #, kde-format
 msgid "Open in Address Book"
-msgstr ""
+msgstr "მისამართების წიგნში გახსნა"
 
 #: kmreaderwin.cpp:156
 #, kde-format
 msgid "Bookmark This Link"
-msgstr ""
+msgstr "ამ ბმულის სანიშნებში ჩამატება"
 
 #: kmreaderwin.cpp:161
 #, kde-format
@@ -4998,17 +5146,17 @@ msgstr "HTML ფორმატის ჩვენება"
 #: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML format when mail comes from this contact"
-msgstr ""
+msgstr "როცა ელფოსტა ამ კონტაქტისგან მოვა, HTML ფორმატში მაჩვენე"
 
 #: kmreaderwin.cpp:198
 #, kde-format
 msgid "Load external reference when mail comes for this contact"
-msgstr ""
+msgstr "გარე მიმართვების ჩატვირთვა, როცა ელფოსტა კონტაქტისგანაა"
 
 #: kmreaderwin.cpp:204
 #, kde-format
 msgid "Share image..."
-msgstr ""
+msgstr "გამოსახულების გაზიარება..."
 
 #: kmreaderwin.cpp:259
 msgid ""
@@ -5018,19 +5166,19 @@ msgstr ""
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
-msgstr ""
+msgstr "Push ელფოსტა (IMAP IDLE)"
 
 #: kmreaderwin.cpp:270
 msgid "Improved searches"
-msgstr ""
+msgstr "გაუმჯობესებული ძებნა"
 
 #: kmreaderwin.cpp:271
 msgid "Support for adding notes (annotations) to mails"
-msgstr ""
+msgstr "ელფოსტებისთვის შენიშვნების (ანოტაციების) დამატება"
 
 #: kmreaderwin.cpp:272
 msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
+msgstr "ინტერფეისის ნაკლებად გაყინვა, ელფოსტის შემოწმება ფონურად ხდება"
 
 #: kmreaderwin.cpp:273
 msgid "Plugins support"
@@ -5038,31 +5186,31 @@ msgstr "დამატებების მხარდაჭერა"
 
 #: kmreaderwin.cpp:274
 msgid "New HTML renderer (QtWebEngine)"
-msgstr ""
+msgstr "ახალი HTML რენდერერი (QtWebEngine)"
 
 #: kmreaderwin.cpp:275
 msgid "Added Check for Phishing URL"
-msgstr ""
+msgstr "დაემატა ფიშინგის ბმულის შემოწმება"
 
 #: kmreaderwin.cpp:276
 msgid "Added Check DKIM"
-msgstr ""
+msgstr "დაემატა DKIM-ის შემოწმება"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
-msgstr ""
+msgstr "დაემატა Markdown-ის ჩასწორების მხარდაჭერა"
 
 #: kmreaderwin.cpp:278
 msgid "Added Grammar Plugin Support"
-msgstr ""
+msgstr "დაემატა Grammar-ის დამატების მხარდაჭერა"
 
 #: kmreaderwin.cpp:279
 msgid "Added etesync resource support"
-msgstr ""
+msgstr "დაემატა etesync რესურსის მხარდაჭერა"
 
 #: kmreaderwin.cpp:280
 msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
+msgstr "დაემატა Microsoft Exchange Web Services-ის რესურსის მხარდაჭერა"
 
 #: kmreaderwin.cpp:309
 #, kde-format
@@ -5072,7 +5220,7 @@ msgstr ""
 #: kmreaderwin.cpp:318
 #, kde-format
 msgid "Retrieving Folder Contents"
-msgstr ""
+msgstr "საქაღალდის შემცველობის მიღება"
 
 #: kmreaderwin.cpp:318
 #, kde-format
@@ -5090,6 +5238,8 @@ msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
+"KMail ამჟამად გათიშულ რეჟიმშია. ჩასართავად <a href=\"kmail:goResourceOnline"
+"\">აქ</a> დააწკაპუნეთ . . .</p>"
 
 #: kmreaderwin.cpp:335
 #, kde-format
@@ -5097,21 +5247,23 @@ msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
+"ანგარიში ამჟამად გათიშულია. ჩასართავად <a href=\"kmail:goResourceOnline"
+"\">აქ</a> დააწკაპუნეთ . . .</p>"
 
 #: kmreaderwin.cpp:908
 #, kde-format
 msgid "Contact modified successfully"
-msgstr ""
+msgstr "კონტაქტი წარმატებით შეიცვალა"
 
 #: kmsystemtray.cpp:89
 #, kde-format
 msgid "New Messages In"
-msgstr ""
+msgstr "ახალი შეტყობინებები საქაღალდეში"
 
 #: kmsystemtray.cpp:261
 #, kde-format
 msgid "There are no unread messages"
-msgstr ""
+msgstr "წაუკითხავი შეტყობინებების გარეშე"
 
 #: kmsystemtray.cpp:261
 #, kde-format
@@ -5124,13 +5276,13 @@ msgstr[1] "%1 წაუკითხავი შეტყობინება"
 #: kontactplugin/kmail/kcmkmailsummary.cpp:36
 #, kde-format
 msgid "Show full path for folders"
-msgstr ""
+msgstr "საქაღალდეების სრული ბილიკის ჩვენება"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:72
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show full path for each folder"
-msgstr ""
+msgstr "თითოეული საქაღალდის სრული ბილიკის ჩვენება"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:74
 #, kde-format
@@ -5140,6 +5292,9 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
+"ჩართეთ ეს პარამეტრი, თუ გნებავთ, შეჯამებაში ჩამოთვლილი ყველა საქაღალდის "
+"სრული ბილიკი დაინახოთ. თუ ეს პარამეტრი ჩართული არაა, ნაჩვენებია მხოლოდ "
+"საბაზისო საქაღალდის ბილიკი."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
@@ -5154,19 +5309,21 @@ msgid ""
 "You will be presented with a dialog where you can create and send a new "
 "email message."
 msgstr ""
+"გაჩვენებთ დიალოგს, სადაც შეგიძლიათ, შექმნათ და გააგზავნოთ ახალი ელფოსტის "
+"შეტყობინება."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:52
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
-msgstr ""
+msgstr "ფოსტის სინქი"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
 #: kontactplugin/kmail/kmail_plugin.cpp:55
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
-msgstr ""
+msgstr "აირჩიეთ ეს პარამეტრი თქვენი Groupware-ის ელფოსტის სინქრონიზაციისთვის."
 
 #: kontactplugin/kmail/summarywidget.cpp:48
 #, kde-format
@@ -5187,7 +5344,7 @@ msgstr "%1 / %2"
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, kde-format
 msgid "No unread messages in your monitored folders"
-msgstr ""
+msgstr "თვალთვალის ქვეშ მყოფ საქაღალდეებში წაუკითხავი შეტყობინებები არ აქვთ"
 
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
@@ -5198,29 +5355,29 @@ msgstr "საქაღალდის გახსნა: \"%1\""
 #, kde-format
 msgctxt "@title:column plugin name"
 msgid "Summary Plugin Name"
-msgstr ""
+msgstr "შეჯამების დამატების სახელი"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:87
 #: kontactplugin/summary/kcmkontactsummary.cpp:89
 #, kde-format
 msgid "Select the plugin summaries to show on the summary page."
-msgstr ""
+msgstr "აირჩიეთ შეჯამების გვერდზე საჩვენებელი დამატების შეჯამებები."
 
 #: kontactplugin/summary/summaryview_part.cpp:47
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "Kontact Summary"
-msgstr ""
+msgstr "Kontact-ის შეჯამება"
 
 #: kontactplugin/summary/summaryview_part.cpp:56
 #, kde-format
 msgid "&Configure Summary View..."
-msgstr ""
+msgstr "&შეჯამების ხედის მორგება..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
 msgid "Configure the summary view"
-msgstr ""
+msgstr "შეჯამების ხედის მორგება"
 
 #: kontactplugin/summary/summaryview_part.cpp:63
 #, kde-format
@@ -5229,11 +5386,13 @@ msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
+"ამის არჩევა გაჩვენებთ დიალოგს, სადაც, შეგიძლიათ, აირჩიოთ, რომელი შეჯამებები "
+"გნებავთ, იხილოთ და ასევე საშუალებას გაძლევთ, ეს შეჯამებები მოირგოთ."
 
 #: kontactplugin/summary/summaryview_part.cpp:105
 #, kde-format
 msgid "Summary for %1"
-msgstr ""
+msgstr "მიმოხილვა %1-სთვის"
 
 #: kontactplugin/summary/summaryview_part.cpp:363
 #, kde-format
@@ -5243,7 +5402,7 @@ msgstr "კიდევ რამე?"
 #: kontactplugin/summary/summaryview_plugin.cpp:29
 #, kde-format
 msgid "Sync All"
-msgstr ""
+msgstr "ყველას სინქი"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:46
 #, kde-format
@@ -5254,12 +5413,12 @@ msgstr "ყველა"
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Kontact Summary View"
-msgstr ""
+msgstr "Kontact-ის შეჯამების ხედი"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
-msgstr ""
+msgstr "(c) 2003-2021 Kontact-ის პროგრამისტები"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
@@ -5279,12 +5438,12 @@ msgstr "Tobias Koenig"
 #: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:136
 #, kde-format
 msgid "Retrieving folder properties"
-msgstr ""
+msgstr "საქაღალდის თვისებების მიღება"
 
 #: manageshowcollectionproperties.cpp:102
 #, kde-format
 msgid "Network is unconnected. Folder information cannot be updated."
-msgstr ""
+msgstr "ქსელი ჩართული არაა. საქაღალდის ინფორმაციის განახლება შეუძლებელია."
 
 #: manageshowcollectionproperties.cpp:183
 #, kde-format
@@ -5306,28 +5465,28 @@ msgstr ""
 #: messageactions.cpp:63 searchdialog/searchwindow.cpp:159
 #, kde-format
 msgid "Reply to &All..."
-msgstr ""
+msgstr "&ყველასთვის პასუხი..."
 
 #: messageactions.cpp:64
 #, kde-format
 msgid "Reply to A&uthor..."
-msgstr ""
+msgstr "&ავტორისთვის პასუხი..."
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:163
 #, kde-format
 msgid "Reply to Mailing-&List..."
-msgstr ""
+msgstr "პასუხი &დაგზავნის სიაზე..."
 
 #: messageactions.cpp:66
 #, kde-format
 msgid "Reply Without &Quote..."
-msgstr ""
+msgstr "პასუხი &ციტირების გარეშე..."
 
 #: messageactions.cpp:67
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline..."
-msgstr ""
+msgstr "&ხაზშივე..."
 
 #: messageactions.cpp:69
 #, kde-format
@@ -5339,12 +5498,12 @@ msgstr "მიმაგრებულ &ფაილად..."
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
-msgstr ""
+msgstr "&გადამსამართება..."
 
 #: messageactions.cpp:71
 #, kde-format
 msgid "New Message to Recipients..."
-msgstr ""
+msgstr "ახალი შეტყობინება მიმღებებს..."
 
 #: messageactions.cpp:72
 #, kde-format
@@ -5361,7 +5520,7 @@ msgstr "&წინ"
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
-msgstr ""
+msgstr "&დაგზავნის სია"
 
 #: messageactions.cpp:75 messageactions.cpp:366
 #, kde-format
@@ -5371,32 +5530,32 @@ msgstr "შენიშვნის დამატება..."
 #: messageactions.cpp:76
 #, kde-format
 msgid "&Edit As New"
-msgstr ""
+msgstr "ჩასწორება, &როგორც ახლის"
 
 #: messageactions.cpp:77
 #, kde-format
 msgid "Filter on Mailing-&List..."
-msgstr ""
+msgstr "&ფილტრი დაგზავნის სიაზე..."
 
 #: messageactions.cpp:78
 #, kde-format
 msgid "Add Followup Reminder..."
-msgstr ""
+msgstr "მიყოლების შეხსენების დამატება..."
 
 #: messageactions.cpp:80
 #, kde-format
 msgid "Send A&gain..."
-msgstr ""
+msgstr "თავიდან &გაგზავნა..."
 
 #: messageactions.cpp:81
 #, kde-format
 msgid "New Message From &Template"
-msgstr ""
+msgstr "ახალი შეტყობინება &ნიმუშიდან"
 
 #: messageactions.cpp:83
 #, kde-format
 msgid "Export to PDF..."
-msgstr ""
+msgstr "PDF-ად გატანა..."
 
 #: messageactions.cpp:368
 #, kde-format
@@ -5406,7 +5565,7 @@ msgstr "შენიშვნის ჩასწორება..."
 #: messageactions.cpp:412
 #, kde-format
 msgid "Filter on Mailing-List..."
-msgstr ""
+msgstr "ფილტრი დაგზავნის სიაზე..."
 
 #: messageactions.cpp:448
 #, kde-format
@@ -5416,27 +5575,27 @@ msgstr "<უცნობი>"
 #: messageactions.cpp:448
 #, kde-format
 msgid "Mailing List Name: %1"
-msgstr ""
+msgstr "დაგზავნის სიის სახელი: %1"
 
 #: messageactions.cpp:451
 #, kde-format
 msgid "Open Message in List Archive"
-msgstr ""
+msgstr "შეტყობინების გახსნა სიის არქივში"
 
 #: messageactions.cpp:454
 #, kde-format
 msgid "Post New Message"
-msgstr ""
+msgstr "ახალი შეტყობინები დაპოსტვა"
 
 #: messageactions.cpp:457
 #, kde-format
 msgid "Go to Archive"
-msgstr ""
+msgstr "არქივზე გადასვლა"
 
 #: messageactions.cpp:460
 #, kde-format
 msgid "Request Help"
-msgstr ""
+msgstr "დახმარების მოთხოვნა"
 
 #: messageactions.cpp:463
 #, kde-format
@@ -5452,7 +5611,7 @@ msgstr ""
 #: messageactions.cpp:478
 #, kde-format
 msgid "Filter on Mailing-List %1..."
-msgstr ""
+msgstr "ფილტრი დაგზავნის-სიაზე %1..."
 
 #: messageactions.cpp:659
 #, kde-format
@@ -5485,12 +5644,12 @@ msgstr "PDF დოკუმენტი (*.pdf)"
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
-msgstr ""
+msgstr "რეინდექსი"
 
 #: searchdialog/incompleteindexdialog.cpp:137
 #, kde-format
 msgid "Search Anyway"
-msgstr ""
+msgstr "მაინც ძებნა"
 
 #: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
@@ -5501,7 +5660,7 @@ msgstr "ინდექსირება"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections..."
-msgstr ""
+msgstr "კოლექციების დაინექსება..."
 
 #: searchdialog/kmsearchmessagemodel.cpp:76
 #: searchdialog/kmsearchmessagemodel.cpp:83
@@ -5537,7 +5696,7 @@ msgstr "საქაღალდე"
 #: searchdialog/searchpatternwarning.cpp:25
 #, kde-format
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
-msgstr ""
+msgstr "ძებნა ჩავარდა შემდეგი შეცდომების გამო: <ul><li>%1</li></ul>"
 
 #: searchdialog/searchwindow.cpp:73
 #, kde-format
@@ -5555,7 +5714,7 @@ msgstr "&ძებნა"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline..."
-msgstr ""
+msgstr "&ხაზშივე..."
 
 #: searchdialog/searchwindow.cpp:175
 #, kde-format
@@ -5576,7 +5735,7 @@ msgstr "მონიშნულის გასუფთავება"
 #: searchdialog/searchwindow.cpp:201
 #, kde-format
 msgid "Jump to original folder"
-msgstr ""
+msgstr "საწყის საქაღალდეზე გადასვლა"
 
 #: searchdialog/searchwindow.cpp:292
 #, kde-format
@@ -5598,28 +5757,28 @@ msgstr ""
 #: searchdialog/searchwindow.cpp:444
 #, kde-format
 msgid "You forgot to select collections."
-msgstr ""
+msgstr "დაგავიწყდათ კოლექციების მონიშვნა."
 
 #: searchdialog/searchwindow.cpp:462
 #, kde-format
 msgid "You forgot to define condition."
-msgstr ""
+msgstr "დაგავიწყდათ პირობის აღწერა."
 
 #: searchdialog/searchwindow.cpp:467
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
-msgstr ""
+msgstr "ყველა მონიშნული საქაღალდე ცარიელი ან ინდექსის გარეშეა."
 
 #: searchdialog/searchwindow.cpp:473
 #, kde-format
 msgid "You forgot to add conditions."
-msgstr ""
+msgstr "დაგავიწყდათ პირობების მითითება."
 
 #: searchdialog/searchwindow.cpp:477
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
-msgstr ""
+msgstr "შეიცავს პირობას, რომელიც ოთზე ნაკლებ სიმბოლოზე ვერ გამოიყენებთ."
 
 #: searchdialog/searchwindow.cpp:520
 #, kde-format
@@ -5629,7 +5788,7 @@ msgstr "ძებნა..."
 #: searchdialog/searchwindow.cpp:533
 #, kde-format
 msgid "Cannot get search result. %1"
-msgstr ""
+msgstr "ძებნის შედეგების მიღება შეუძლებელია. %1"
 
 #: searchdialog/searchwindow.cpp:536
 #, kde-format
@@ -5653,6 +5812,9 @@ msgid ""
 "that another search folder with the same name already exists. Error returned "
 "\"%1\"."
 msgstr ""
+"პრობლემა თქვენი ძებნის საქაღალდის სახელის გადარქმევისას. ამის გავრცელებული "
+"მიზეზი, სხვა, იგივე სახელის მქონე საქაღალდის არსებობაა. დაბრუნებულია შეცდომა "
+"\"%1\"."
 
 #: searchdialog/searchwindow.cpp:777
 #, kde-format
@@ -5692,13 +5854,13 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
-msgstr ""
+msgstr "ლოკალური ალმებს ჩართვა მხოლოდ-წაკითხვად საქაღალდეებში"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.cmake:64
 #, kde-format
 msgid "Send queued mail on mail check"
-msgstr ""
+msgstr "რიგში მყოფი ელფოსტების გაგზავნა ახალი ელფოსტის შემოწმებისას"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.cmake:65
@@ -5713,25 +5875,25 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
+msgstr "ბოლოს არჩეული საქაღალდე საქაღალდის არჩევის დიალოგში."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.cmake:96
 #, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr ""
+msgstr "წაუკითხავი ელფოსტების ჩვენება ამოცანების პანელზე"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.cmake:100
 #, kde-format
 msgid "Specify e&ditor:"
-msgstr ""
+msgstr "მიუთითეთ &რედაქტორი:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.cmake:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr ""
+msgstr "კომპოზიტორის მაგიერ &გარე რედაქტორის გამოყენება"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.cmake:108
@@ -5748,30 +5910,32 @@ msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
 msgstr ""
+"ზღვარი, როდის გავაფრთხილო მომხმარებელი, რომ ის საქაღალდე კვოტის ლიმიტთან "
+"ახლოსაა."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.cmake:115
 #, kde-format
 msgid "Empty the local trash folder on program exit"
-msgstr ""
+msgstr "გასვლისას ლოკალური ნაგვის საქაღალდის დაცარიელება"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.cmake:119
 #, kde-format
 msgid "Delete messages without confirmation"
-msgstr ""
+msgstr "შეტყობინებების დადასტურების გარეშე წაშლა"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.cmake:123
 #, kde-format
 msgid "Allow to start specific folder"
-msgstr ""
+msgstr "მითითებულ საქაღალდეში გაშვება"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg.cmake:127
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr ""
+msgstr "აირჩიეთ საქაღალდე, რომელიც გნებავთ, გაიხსნას, როცა პროგრამა გაეშვება"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
 #: settings/kmail.kcfg.cmake:134
@@ -5780,6 +5944,8 @@ msgid ""
 "Specifies whether the folders will expire in the background (for internal "
 "use only)"
 msgstr ""
+"მიუთითებს, მოხდება თუ არა ამ საქაღალდეების შემცველობის ძველი შემცველობის "
+"ფონური წაშლა (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
 #: settings/kmail.kcfg.cmake:138
@@ -5788,6 +5954,8 @@ msgid ""
 "Specifies whether this is the very first time that the application is run "
 "(for internal use only)"
 msgstr ""
+"მიუთითებს, არის თუ არა ეს პირველი შემთხვევა, როცა ეს აპლიკაცია გაეშვა "
+"(მხოლოდ შდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.cmake:163
@@ -5804,24 +5972,26 @@ msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
 msgstr ""
+"ეს მნიშვნელობა გამოიყენება დასადგებად, უნდა გაჩვენოთ KMail-ის პირველი "
+"გაშვების ეკრანი, თუ არა."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.cmake:178
 #, kde-format
 msgid "Show folder quick search line edit"
-msgstr ""
+msgstr "საქაღალდის სწრაფი ძებნის ველის ჩასწორების ჩვენება"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.cmake:186
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr ""
+msgstr "ხაზში გადაგზავნა ნაგულისხმევად."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.cmake:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
-msgstr ""
+msgstr "გაფრთხილება, თუ მიმღებების რაოდენობა მეტია, ვიდრე:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
@@ -5837,19 +6007,19 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:212
 #, kde-format
 msgid "Confirm &before send"
-msgstr ""
+msgstr "დადასტურება &გაგზავნამდე"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.cmake:219
 #, kde-format
 msgid "Check spelling before send"
-msgstr ""
+msgstr "&გაგზავნამდე მართლწერის შემოწმება"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.cmake:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr ""
+msgstr "შეტყობინების ჩაბარების გაფრთხილების &ავტომატური მოთხოვნა"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.cmake:224
@@ -5881,97 +6051,97 @@ msgstr ""
 #: settings/kmail.kcfg.cmake:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
+msgstr "ტექსტის ფრაგმენტებისა და ჩასმის პანელის ჩვენება კომპოზიტორში."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.cmake:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
+msgstr "გაგზავნის შემდეგ გაგზავნილი შეტყობინებები დაშიფრულად შეინახება"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
 #: settings/kmail.kcfg.cmake:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr ""
+msgstr "ახლახანს გამოყენებული ბმულების სია"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.cmake:270
 #, kde-format
 msgid "A list of all the recently used encodings"
-msgstr ""
+msgstr "ახლახანს გამოყენებული სიმბოლოს კოდირებების სია"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.cmake:276
 #, kde-format
 msgid "Show crypto label indicator"
-msgstr ""
+msgstr "კრიპტო ჭდის მაჩვენებლის ჩვენება"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.cmake:280
 #, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr ""
+msgstr "ნდობის დონის ხატულების ჩვენება"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.cmake:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "გაგზავნის ნაგულისხმევი მალსახმობის დადასტურება"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
 #: settings/kmail.kcfg.cmake:301
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
-msgstr ""
+msgstr "იდენტიფიკატორის ფანჯრის ზომა (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
 #: settings/kmail.kcfg.cmake:305
 #, kde-format
 msgid "The width of the search window (for internal use only)"
-msgstr ""
+msgstr "ძებნის ფანჯრის სიგანე (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
 #: settings/kmail.kcfg.cmake:309
 #, kde-format
 msgid "The height of the search window (for internal use only)"
-msgstr ""
+msgstr "ძებნის ფანჯრის სიმაღლე (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
 #: settings/kmail.kcfg.cmake:313
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
+msgstr "KMail-ის მორგების ფანჯრის სიგანე (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
 #: settings/kmail.kcfg.cmake:317
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
+msgstr "KMail-ის მორგების ფანჯრის სიმაღლე (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
 #, kde-format
 msgid "Message Preview Pane"
-msgstr ""
+msgstr "შეტყობინების გადახედვის პანელი"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
 #, kde-format
 msgid "Do not show a message preview pane"
-msgstr ""
+msgstr "შეტყობინების მინიატურის პანელი ნაჩვენები არ იქნება"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
-msgstr ""
+msgstr "შეტყობინების მინიატურის პანელის შეტყობინებების სიის ქვემოთ ჩვენება"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
-msgstr ""
+msgstr "შეტყობინების მინიატურის პანელის შეტყობინებების სიის გვერდით ჩვენება"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
@@ -5983,37 +6153,37 @@ msgstr "საქაღალდეების სია"
 #: settings/kmail.kcfg.cmake:362
 #, kde-format
 msgid "Long folder list"
-msgstr ""
+msgstr "გრძელი საქაღალდეების სია"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:365
 #, kde-format
 msgid "Short folder list"
-msgstr ""
+msgstr "მოკლე საქაღალდეების სია"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:374
 #, kde-format
 msgid "Message template for new message"
-msgstr ""
+msgstr "შეტყობინების შაბლონი ახალი შეტყობინებისთვის"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:379
 #, kde-format
 msgid "Message template for reply"
-msgstr ""
+msgstr "შეტყობინების შაბლონი პასუხისთვის"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:384
 #, kde-format
 msgid "Message template for reply to all"
-msgstr ""
+msgstr "შეტყობინების შაბლონი ყველასთვის პასუხისთვის"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:389
 #, kde-format
 msgid "Message template for forward"
-msgstr ""
+msgstr "შეტყობინების შაბლონი გადამისამართებისთვის"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.cmake:394
@@ -6025,7 +6195,7 @@ msgstr "ბრჭყალის სიმბოლოები"
 #: settings/kmail.kcfg.cmake:409
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr ""
+msgstr "მიუთითებს პოლიტიკის ჩვენებისთვის გამოყენებულპოლიტიკას"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:417
@@ -6034,6 +6204,8 @@ msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს კოლექციის ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა "
+"გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:421
@@ -6042,6 +6214,7 @@ msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს თემის ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:425
@@ -6050,6 +6223,8 @@ msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს გამომგზავნის ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა "
+"გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:429
@@ -6058,6 +6233,8 @@ msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს მიმღების ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა "
+"გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:433
@@ -6066,6 +6243,8 @@ msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს თარიღის ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა "
+"გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.cmake:437
@@ -6074,6 +6253,8 @@ msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"მიუთითებს საქაღალდის ველის სიგანეს ძებნის ფანჯარაში (მხოლოდ შიდა "
+"გამოყენებისთვის)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -6098,7 +6279,7 @@ msgstr "ჭდე ვერ ვპოვე"
 #: tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Toggle Message Tag: %1"
-msgstr ""
+msgstr "გადაირთვება შეტყობინების ჭდე: %1"
 
 #: tag/tagselectdialog.cpp:41
 #, kde-format
@@ -6114,43 +6295,43 @@ msgstr "ახალი ჭდის დამატება..."
 #: tag/tagselectdialog.cpp:66
 #, kde-format
 msgid "Search tag..."
-msgstr ""
+msgstr "ჭდის ძებნა..."
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order..."
-msgstr ""
+msgstr "ანგარიშების მიმდევრობის ჩასწორება..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
 #, kde-format
 msgid "New Mail Notification"
-msgstr ""
+msgstr "ახალი ელფოსტის შეტყობინება"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mVerboseNotificationCheck)
 #: ui/accountspagereceivingtab.ui:65
 #, kde-format
 msgid "Show for each folder the number of newly arrived messages"
-msgstr ""
+msgstr "თითოეული საქაღალდისთვის ახლადმოსული შეტყობინებების რაოდენობის ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mVerboseNotificationCheck)
 #: ui/accountspagereceivingtab.ui:68
 #, kde-format
 msgid "Deta&iled new mail notification"
-msgstr ""
+msgstr "&დეტალური ახალი ელფოსტის შეტყობინება"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
 #, kde-format
 msgid "Other Actio&ns..."
-msgstr ""
+msgstr "&სხვა ქმედებები..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
 #, kde-format
 msgid "Set from Address Book"
-msgstr ""
+msgstr "მისამართების წიგნიდან დაყენება"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:24
@@ -6168,13 +6349,13 @@ msgstr "&დამატება.."
 #: ui/identitypage.ui:37
 #, kde-format
 msgid "Modify the selected identity"
-msgstr ""
+msgstr "მონიშნული იდენტიფიკატორის ჩასწორება"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identitypage.ui:50
 #, kde-format
 msgid "Rename the selected identity"
-msgstr ""
+msgstr "მონიშნული იდენტიფიკატორის სახელის გადარქმევა"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
 #: ui/identitypage.ui:53
@@ -6186,13 +6367,13 @@ msgstr "&გადარქმევა"
 #: ui/identitypage.ui:63
 #, kde-format
 msgid "Remove the selected identity"
-msgstr ""
+msgstr "მონიშნული იდენტიფიკატორის წაშლა"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
 #: ui/identitypage.ui:79
 #, kde-format
 msgid "Use the selected identity by default"
-msgstr ""
+msgstr "მონიშნული იდენტიფიკატორის ნაგულისხმევად დაყენება"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
 #: ui/identitypage.ui:82
@@ -6226,13 +6407,13 @@ msgstr "მონიშვნის ყველაფერზე მოხს�
 #: ui/miscpagemaintab.ui:19
 #, kde-format
 msgid "&Ask for action after dragging messages to another folder"
-msgstr ""
+msgstr "&ქმედების არჩევა შეტყობინებების სხვა საქაღალდეში გადათრევს შემდეგ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mEmptyTrashCheck)
 #: ui/miscpagemaintab.ui:26
 #, kde-format
 msgid "Empty local &trash folder on program exit"
-msgstr ""
+msgstr "გასვლისას ლოკალური &ნაგვის საქაღალდის დაცარიელება"
 
 #. i18n: ectx: property (text), widget (QLabel, mLoopLabel)
 #: ui/miscpagemaintab.ui:39
@@ -6241,7 +6422,7 @@ msgctxt ""
 "to be continued with \"do not loop\", \"loop in current folder\", and \"loop "
 "in all folders\""
 msgid "When &trying to find unread messages:"
-msgstr ""
+msgstr "წაუკითხავი შეტყობინებების პოვნის &მცდელობისას:"
 
 #. i18n: ectx: property (text), widget (QLabel, mEnterFolderLabel)
 #: ui/miscpagemaintab.ui:58
@@ -6250,13 +6431,14 @@ msgctxt ""
 "to be continued with \"jump to first new message\", \"jump to first unread "
 "or new message\", and \"jump to last selected message\""
 msgid "When ente&ring a folder:"
-msgstr ""
+msgstr "&საქაღალდეში შესვლისას:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
 msgstr ""
+"&მნიშვნელოვანი შეტყობინებების ამოღება მოძველებული შეტყობინებების სიიდან"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
@@ -6268,25 +6450,25 @@ msgstr ""
 #: ui/miscpagemaintab.ui:81
 #, kde-format
 msgid "Jump to Last Selected Message"
-msgstr ""
+msgstr "ბოლო წაუკითხავ შეტყობინებაზე გადასვლა"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, kde-format
 msgid "Jump to Newest Message"
-msgstr ""
+msgstr "უახლეს შეტყობინებაზე გადასვლა"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, kde-format
 msgid "Jump to Oldest Message"
-msgstr ""
+msgstr "უძველეს შეტყობინებაზე გადასვლა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDelayedMarkAsRead)
 #: ui/miscpagemaintab.ui:105
 #, kde-format
 msgid "Mar&k selected message as read after"
-msgstr ""
+msgstr "მონიშნული შეტყობინების წაკითხულად მონიშვნა დროის შემდეგ"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
@@ -6334,25 +6516,25 @@ msgstr ""
 #: ui/miscpagemaintab.ui:131
 #, kde-format
 msgid "Do not Loop"
-msgstr ""
+msgstr "მარყუჟის გარეშე"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
 #, kde-format
 msgid "Loop in Current Folder"
-msgstr ""
+msgstr "მარყუჟი მიმდინარე საქაღალდეში"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
 #, kde-format
 msgid "Loop in All Folders"
-msgstr ""
+msgstr "მარყუჟი ყველა საქაღალდეში"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
 #, kde-format
 msgid "Loop in All Marked Folders"
-msgstr ""
+msgstr "მარყუჟი ყველა მონიშნულ საქაღალდეში"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, mDelayedMarkTime)
 #: ui/miscpagemaintab.ui:157
@@ -6364,61 +6546,61 @@ msgstr " წმ"
 #: ui/miscpagemaintab.ui:173
 #, kde-format
 msgid "Open this folder on &startup:"
-msgstr ""
+msgstr "&გაშვებისას ამ საქაღალდის გახსნა:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
 #, kde-format
 msgid "Allow deleting messages without confirmation"
-msgstr ""
+msgstr "შეტყობინებების დადასტურების გარეშე წაშლის დაშვება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
-msgstr ""
+msgstr "საქაღალდეების გადათრევა/დაგდების ჩართვა"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
 #, kde-format
 msgid "Search in &all folders"
-msgstr ""
+msgstr "ძებნა &ყველა საქაღალდეში"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxSpecificFolders)
 #: ui/searchwindow.ui:26
 #, kde-format
 msgid "Search &only in:"
-msgstr ""
+msgstr "ძებნა &მხოლოდ საქაღალდეში:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mChkSubFolders)
 #: ui/searchwindow.ui:39
 #, kde-format
 msgid "&Include sub-folders"
-msgstr ""
+msgstr "&ქვესაქაღალდეების ჩათვლით"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkMultiFolders)
 #: ui/searchwindow.ui:53
 #, kde-format
 msgid "Select specific folders:"
-msgstr ""
+msgstr "აირჩიეთ სასურველი საქაღალდეები:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
 #, kde-format
 msgid "Select Folders..."
-msgstr ""
+msgstr "აირჩიეთ საქაღალდეები..."
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
 #, kde-format
 msgid "Search folder &name:"
-msgstr ""
+msgstr "მოძებნეთ საქაღალდის &სახელი:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSearchFolderOpenBtn)
 #: ui/searchwindow.ui:133
 #, kde-format
 msgid "Open &Search Folder"
-msgstr ""
+msgstr "ძებნის &საქაღალდის გახსნა"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSearchResultOpenBtn)
 #: ui/searchwindow.ui:143
@@ -6436,13 +6618,13 @@ msgstr "უსაფრთხოები ნაგულისხმები �
 #: ui/securitypageencryptiontab.ui:23
 #, kde-format
 msgid "Encrypt draft messages"
-msgstr ""
+msgstr "მონახაზი შეტყობინებების დაშიფრვა"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
 #, kde-format
 msgid "Check to store messages encrypted "
-msgstr ""
+msgstr "ჩართეთ შეტყობინებების დაშიფრულად შესანახად "
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
@@ -6463,37 +6645,37 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:44
 #, kde-format
 msgid "Encry&pt sent messages"
-msgstr ""
+msgstr "&გაგზავნილი შეტყობინებების დაშიფვრა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
 #, kde-format
 msgid "Sign all messages"
-msgstr ""
+msgstr "ყველა შეტყობინების ხელმოწერა"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
 #, kde-format
 msgid "Encrypt all messages when possible"
-msgstr ""
+msgstr "ყველა შეტყობინების დაშიფვრა, თუ შესაძლებელია"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
 #, kde-format
 msgid "Encryption indicators"
-msgstr ""
+msgstr "დაშიფვრის ინდიკატორები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
 #, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr ""
+msgstr "დაშიფვრა/ხელმოწერის მაჩვენებლის ჩვენება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "დაშიფვრის გასაღების ნდობის დონის ჩვენება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
@@ -6505,19 +6687,21 @@ msgstr "შეტყობინებები"
 #: ui/securitypageencryptiontab.ui:106
 #, kde-format
 msgid "Always approve encryption keys before send"
-msgstr ""
+msgstr "გაგზავნამდე დაშიფვრის გასაღებების ყოველთვის დადასტურება"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
 #, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr ""
+"გაფრთხილება, თუ &გასაღებების/სერტიფიკატების ვადა მალე იწურება (ზღვრები "
+"ქვემოთ მიუთითეთ)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/securitypageencryptiontab.ui:139
 #, kde-format
 msgid "For end-user certificates/&keys:"
-msgstr ""
+msgstr "საბოლოო მომხმარებლის სერტიფიკატებისთვის/&გასაღებებისთვის:"
 
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
@@ -6527,7 +6711,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
 #, kde-format
 msgid "Select the number of days here"
-msgstr ""
+msgstr "აქ შეიყვანეთ დღეების რაოდენობა"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:169
@@ -6559,7 +6743,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:221
 #, kde-format
 msgid "For own certificates:"
-msgstr ""
+msgstr "საკუთარი სერტიფიკატებისთვის:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
@@ -6578,7 +6762,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:261
 #, kde-format
 msgid "For &root certificates:"
-msgstr ""
+msgstr "ძირითადი &სერტიფიკატებისთვის:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:307
@@ -6597,7 +6781,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:323
 #, kde-format
 msgid "For intermediate CA certificates:"
-msgstr ""
+msgstr "შუალედური CA სერტიფიკატებისთვის:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
@@ -6609,7 +6793,7 @@ msgstr "GnuPG -ის მორგება..."
 #: ui/securitypageencryptiontab.ui:393
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr ""
+msgstr "ყველა \"აღარ მკითხო\" შეტყობინების თავიდან ჩართვა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -6637,6 +6821,7 @@ msgstr ""
 #, kde-format
 msgid "Allow messages to load external references from the Internet"
 msgstr ""
+"შეტყობინებებისთვის ინტერნეტიდან გარე მიმართვების ჩატვირთვის ნების დართვა"
 
 #. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
 #: ui/securitypagegeneraltab.ui:52
@@ -6676,13 +6861,13 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:78
 #, kde-format
 msgid "Prefer HTML to plain text"
-msgstr ""
+msgstr "უბრალო ტექსტს HTML მირჩევნია"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: ui/securitypagegeneraltab.ui:94
 #, kde-format
 msgid "E-mails Scams"
-msgstr ""
+msgstr "ელფოსტის ქურდები"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/securitypagegeneraltab.ui:100
@@ -6691,66 +6876,68 @@ msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
 msgstr ""
+"KMail-ს შეუძლია საეჭვო ელფოსტების შემოწმება თქვენს მოსატყუებლად ჩვეულებრივ "
+"გამოყენებული ხერხების არსებობის შემოწმებით"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
 #: ui/securitypagegeneraltab.ui:110
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
-msgstr ""
+msgstr "შეგატყობინებთ, თუ შეტყობინების წაკითხვა პოტენციური ქურდობაა"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/securitypagegeneraltab.ui:117
 #, kde-format
 msgid "Whitelist:"
-msgstr ""
+msgstr "თეთრი სია:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
 #: ui/securitypagegeneraltab.ui:130
 #, kde-format
 msgid "Safe Browsing"
-msgstr ""
+msgstr "უსაფრთხო ბრაუზინგი"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
 #: ui/securitypagegeneraltab.ui:136
 #, kde-format
 msgid "Check URL With Phishing Google System"
-msgstr ""
+msgstr "ბმულის ფიშინგზე Google-ში შემოწმება"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
 #: ui/securitypagegeneraltab.ui:143
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr ""
+msgstr "ელფოსტების სკანირება ტრეკინგის ბმულებზე"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:159
 #, kde-format
 msgid "Encrypted Messages"
-msgstr ""
+msgstr "დაშიფრული შეტყობინებები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
 #: ui/securitypagegeneraltab.ui:165
 #, kde-format
 msgid "Attempt decryption of encrypted messages when viewing"
-msgstr ""
+msgstr "ნახვისას შეტყობინებების გაშიფვრის ან დაშიფვრის მცდელობა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
 #: ui/securitypagegeneraltab.ui:181
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
-msgstr ""
+msgstr "სერტიფიკატის && გასაღების პაკეტის მიმაგრებები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
 #: ui/securitypagegeneraltab.ui:187
 #, kde-format
 msgid "Automatically import keys and certificate"
-msgstr ""
+msgstr "გასაღებებისა და სერტიფიკატის ავტომატური შემოტანა"
 
 #. i18n: ectx: property (text), widget (QLabel, labelSend)
 #: ui/securitypagemdntab.ui:20
 #, kde-format
 msgid "Send policy:"
-msgstr ""
+msgstr "გაგზავნის პოლიტიკა:"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, radioIgnore)
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, radioAsk)
@@ -6810,13 +6997,13 @@ msgstr "უარყოფა"
 #: ui/securitypagemdntab.ui:63
 #, kde-format
 msgid "Always send"
-msgstr ""
+msgstr "ყოველტვის გგზავნა"
 
 #. i18n: ectx: property (text), widget (QLabel, labelQuote)
 #: ui/securitypagemdntab.ui:86
 #, kde-format
 msgid "Quote original message:"
-msgstr ""
+msgstr "საწყისი შეტყობინების ციტატა:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioNothing)
 #: ui/securitypagemdntab.ui:99
@@ -6840,7 +7027,7 @@ msgstr "მხოლოდ ჩანართები"
 #: ui/securitypagemdntab.ui:142
 #, kde-format
 msgid "Do not send MDNs in response to encrypted messages"
-msgstr ""
+msgstr "დაშიფრულ შეტყობინებებზე პასუხისას MDN გაგზავნილი არ იქნება"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarning)
 #: ui/securitypagemdntab.ui:152
@@ -6857,12 +7044,14 @@ msgid ""
 "If this option is selected, S/MIME certificates are validated using "
 "Certificate Revocation Lists (CRLs)."
 msgstr ""
+"თუ ეს თოლია დასმულია, S/MIME სერტიფიკატების გადამოწმება სერტიფიკატების "
+"გაუქმების სიებით (CRL-ები) ხდება."
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
 #, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr ""
+msgstr "&სერტიფიკატების გადამოწმება CRL-ებით"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
@@ -6877,7 +7066,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:33
 #, kde-format
 msgid "Validate certificates online (OCSP)"
-msgstr ""
+msgstr "სერტიფიკატების ონლაინ-გადამოწმება (OCSP)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, OCSPGroupBox)
 #: ui/smimeconfiguration.ui:40
@@ -6909,7 +7098,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:91
 #, kde-format
 msgid "Ignore service URL of certificates"
-msgstr ""
+msgstr "სერტიფიკატის სერვისის ბმულის გამოტოვება"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:101
@@ -6924,7 +7113,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:104
 #, kde-format
 msgid "Do not check certificate policies"
-msgstr ""
+msgstr "სერტიფიკატის პოლიტიკა არ შემოწმდება"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, neverConsultCB)
 #: ui/smimeconfiguration.ui:111
@@ -6933,12 +7122,14 @@ msgid ""
 "If this option is checked, Certificate Revocation Lists are never used to "
 "validate S/MIME certificates."
 msgstr ""
+"თუ ეს თოლია დასმულია, სერტიფიკატის გაუქმების სიები S/MIME სერტიფიკატების "
+"გადასამოწმებლად არასდროს გამოიყენება."
 
 #. i18n: ectx: property (text), widget (QCheckBox, neverConsultCB)
 #: ui/smimeconfiguration.ui:114
 #, kde-format
 msgid "Never consult a CRL"
-msgstr ""
+msgstr "CRL-სთან კონსულტაციის გარეშე"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:121
@@ -6952,7 +7143,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:124
 #, kde-format
 msgid "Fetch missing issuer certificates"
-msgstr ""
+msgstr "ნაკლული გამომცემლის სერტიფიკატების გამოთხოვა"
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabHTTP)
 #: ui/smimeconfiguration.ui:135
@@ -6964,13 +7155,13 @@ msgstr "HTTP მოთხოვნები"
 #: ui/smimeconfiguration.ui:141
 #, kde-format
 msgid "Entirely disables the use of HTTP for S/MIME."
-msgstr ""
+msgstr "S/MIME-სთვის HTTP-ის გამოყენების სრულად გამორთვა."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableHTTPCB)
 #: ui/smimeconfiguration.ui:144
 #, kde-format
 msgid "Do not perform any HTTP requests"
-msgstr ""
+msgstr "HTTP მოთხოვნები არ განხორციელდება"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:151
@@ -6987,7 +7178,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:154
 #, kde-format
 msgid "Ignore HTTP CRL distribution point of certificates"
-msgstr ""
+msgstr "HTTP CRL სერტიფიკატების განაწილების წერტილების გამოტოვება"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:176
@@ -7002,13 +7193,13 @@ msgstr ""
 #: ui/smimeconfiguration.ui:179
 #, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr ""
+msgstr "&სისტემური HTTP პროქსის გამოყენება:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
 #, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr ""
+msgstr "HTTP მოთხოვნებისთვის &ამ HTTP პროქსის გამოყენება: "
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
@@ -7029,7 +7220,7 @@ msgstr "LDAP მოთხოვნები"
 #: ui/smimeconfiguration.ui:224
 #, kde-format
 msgid "Entirely disables the use of LDAP for S/MIME."
-msgstr ""
+msgstr "S/MIME-სთვის LDAP-ის გამოყენების სრულად გამორთვა."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableLDAPCB)
 #: ui/smimeconfiguration.ui:227
@@ -7052,13 +7243,13 @@ msgstr ""
 #: ui/smimeconfiguration.ui:237
 #, kde-format
 msgid "Ignore LDAP CRL distribution point of certificates"
-msgstr ""
+msgstr "LDAP CRL სერტიფიკატების განაწილების წერტილების გამოტოვება"
 
 #. i18n: ectx: property (text), widget (QLabel, customLDAPLabel)
 #: ui/smimeconfiguration.ui:246
 #, kde-format
 msgid "Primary host for LDAP requests:"
-msgstr ""
+msgstr "ძირითადი ჰოსტი LDAP მოთხოვნებისთვის:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customLDAPProxy)
 #: ui/smimeconfiguration.ui:257
@@ -7083,7 +7274,7 @@ msgstr "ფორმა"
 #: ui/xfaceconfigurator.ui:22
 #, kde-format
 msgid "Send picture with every message:"
-msgstr ""
+msgstr "სურათის ყველა შეტყობინებით გაგზავნა:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:30
@@ -7095,13 +7286,13 @@ msgstr "არ გააგზავნო"
 #: ui/xfaceconfigurator.ui:35
 #, kde-format
 msgid "Send color (Face)"
-msgstr ""
+msgstr "ფერის გაგზავნა (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:40
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr ""
+msgstr "შავთეთრის გაგზავნა (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45
@@ -7122,7 +7313,7 @@ msgstr ""
 #: ui/xfaceconfigurator.ui:78
 #, kde-format
 msgid "An informative text about the current mode!"
-msgstr ""
+msgstr "ინფორმაციის ტექსტი მიმდინარე რეჟიმის შესახებ!"
 
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
@@ -7147,7 +7338,7 @@ msgstr ""
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>სათაური:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
@@ -7180,6 +7371,7 @@ msgstr "ანგარიშის ინფორმაცია"
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""
+"KMail-ში მორგებული ანგარიშების რაოდენობა და ტიპი (მიმღები და გამგზავნი)."
 
 #: userfeedback/plugininfosource.cpp:23
 #, kde-format
@@ -7189,7 +7381,7 @@ msgstr "დამატების ინფორმაცია"
 #: userfeedback/plugininfosource.cpp:28
 #, kde-format
 msgid "Plugins used in KMail."
-msgstr ""
+msgstr "KMail-ში გამოყენებული დამატებები."
 
 #: util.cpp:151
 #, kde-format
@@ -7200,17 +7392,17 @@ msgstr "წაშლა"
 #: widgets/displaymessageformatactionmenu.cpp:18
 #, kde-format
 msgid "Message Default Format"
-msgstr ""
+msgstr "შეტყობინების ნაგულისხმევი ფორმატი"
 
 #: widgets/displaymessageformatactionmenu.cpp:25
 #, kde-format
 msgid "Prefer &HTML to Plain Text"
-msgstr ""
+msgstr "&უბრალო ტექსტს HTML მირჩევნია"
 
 #: widgets/displaymessageformatactionmenu.cpp:31
 #, kde-format
 msgid "Prefer &Plain Text to HTML"
-msgstr ""
+msgstr "&HTML-ს უბრალო ტექსტი მირჩევნია"
 
 #: widgets/displaymessageformatactionmenu.cpp:37
 #, kde-format
@@ -7221,8 +7413,8 @@ msgstr "გლობალური პარამეტრის გამო�
 #, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ოფისიდან-გასულობის პასუხი ჩართულია სერვერზე"
+msgstr[1] "ოფისიდან-გასულობის პასუხი ჩართულია სერვერზე"
 
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format
