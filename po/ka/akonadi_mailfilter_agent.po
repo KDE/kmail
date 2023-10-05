@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-28 01:40+0000\n"
-"PO-Revision-Date: 2023-09-27 09:43+0200\n"
+"PO-Revision-Date: 2023-10-04 12:32+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -68,6 +68,10 @@ msgid ""
 "about the result of the evaluation of all rules of a single filter will be "
 "given."
 msgstr ""
+"შეგიძლიათ აკონტროლოთ უკუკავშირი ჟურნალში ფილტრების შემოწმებასთან "
+"დაკავშირებით, რომლების გადატარებაც ხდება: ამ პარამეტრის ჩართვა დაგიბრუნებთ "
+"თითოეულ ფილტრის წესის დეტალურ უკუკავშირს. ან, მხოლოდ უკუკავშირს ერთი "
+"მითითებული ფილტრის ყველა წესის შემოწმების შედეგის შესახებ."
 
 #: filterlogdialog.cpp:118
 #, kde-format
@@ -103,6 +107,10 @@ msgid ""
 "collected log data exceeds this limit then the oldest data will be discarded "
 "until the limit is no longer exceeded. "
 msgstr ""
+"ჟურნალის მონაცემების შეგროვება მონაცემების დროებით შესანახად მეხსიერებას "
+"იყენებს. აქ შეგძლიათ გამოყენებული მეხსიერების მაქსიმალური ზომა დააყენოთ. თუ "
+"მოგროვებული ჟურნალის მონაცემების ზომა ამ ზღვარს აჭარბებს, წაიშლება ყველაზე "
+"ძველი მონაცემები მანამდე, სანამ ზღვარი გადაჭარბებული აღარ იქნება. "
 
 #: filterlogdialog.cpp:326
 #, kde-format
