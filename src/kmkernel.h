@@ -430,6 +430,8 @@ public:
      */
     [[nodiscard]] bool haveSystemTrayApplet() const;
 
+    void setSystemTryAssociatedWindow(QWindow *window);
+
     [[nodiscard]] QTextCodec *networkCodec() const;
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */

@@ -1357,6 +1357,11 @@ bool KMKernel::haveSystemTrayApplet() const
     return mUnityServiceManager->haveSystemTrayApplet();
 }
 
+void KMKernel::setSystemTryAssociatedWindow(QWindow *window)
+{
+    mUnityServiceManager->setSystemTryAssociatedWindow(window);
+}
+
 QTextCodec *KMKernel::networkCodec() const
 {
     return mNetCodec;
