@@ -148,6 +148,14 @@ void UnityServiceManager::updateCount()
     }
 }
 
+void UnityServiceManager::setSystemTryAssociatedWindow(QWindow *window)
+{
+    if (!mSystemTray) {
+        return;
+    }
+    mSystemTray->setAssociatedWindow(window);
+}
+
 void UnityServiceManager::initUnity()
 {
     mUnityServiceWatcher->setConnection(QDBusConnection::sessionBus());

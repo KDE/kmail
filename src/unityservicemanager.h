@@ -11,6 +11,7 @@
 #include <QObject>
 class QDBusServiceWatcher;
 class QAbstractItemModel;
+class QWindow;
 namespace KMail
 {
 class KMSystemTray;
@@ -30,6 +31,8 @@ public:
     [[nodiscard]] bool excludeFolder(const Akonadi::Collection &collection) const;
     [[nodiscard]] bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
     void updateCount();
+
+    void setSystemTryAssociatedWindow(QWindow *window);
 
 private:
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
