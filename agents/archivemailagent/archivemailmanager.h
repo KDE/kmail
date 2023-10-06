@@ -25,10 +25,10 @@ public:
     void pause();
     void resume();
 
-    Q_REQUIRED_RESULT QString printArchiveListInfo() const;
+    [[nodiscard]] QString printArchiveListInfo() const;
     void collectionDoesntExist(ArchiveMailInfo *info);
 
-    Q_REQUIRED_RESULT QString printCurrentListInfo() const;
+    [[nodiscard]] QString printCurrentListInfo() const;
 
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 
@@ -41,7 +41,7 @@ Q_SIGNALS:
     void needUpdateConfigDialogBox();
 
 private:
-    Q_REQUIRED_RESULT QString infoToStr(ArchiveMailInfo *info) const;
+    [[nodiscard]] QString infoToStr(ArchiveMailInfo *info) const;
     void removeCollectionId(Akonadi::Collection::Id id);
     KSharedConfig::Ptr mConfig;
     QList<ArchiveMailInfo *> mListArchiveInfo;

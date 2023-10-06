@@ -30,7 +30,7 @@ public:
 
     void setInfo(const QString &info);
 
-    Q_REQUIRED_RESULT QString source() const;
+    [[nodiscard]] QString source() const;
     void setSource(const QString &source);
     void setImage(const QImage &image);
 

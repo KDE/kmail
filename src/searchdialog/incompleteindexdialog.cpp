@@ -47,7 +47,7 @@ public:
         }
     }
 
-    Q_REQUIRED_RESULT QVariant data(const QModelIndex &index, int role) const override
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override
     {
         if (role == Qt::CheckStateRole) {
             if (index.isValid() && index.column() == 0) {
@@ -72,7 +72,7 @@ public:
         return QSortFilterProxyModel::setData(index, data, role);
     }
 
-    Q_REQUIRED_RESULT Qt::ItemFlags flags(const QModelIndex &index) const override
+    [[nodiscard]] Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         if (index.isValid() && index.column() == 0) {
             return QSortFilterProxyModel::flags(index) | Qt::ItemIsUserCheckable;
@@ -82,7 +82,7 @@ public:
     }
 
 protected:
-    Q_REQUIRED_RESULT bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
+    [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override
     {
         const QModelIndex source_idx = sourceModel()->index(source_row, 0, source_parent);
         const qint64 colId = sourceModel()->data(source_idx, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
@@ -90,7 +90,7 @@ protected:
     }
 
 private:
-    Q_REQUIRED_RESULT qint64 collectionIdForIndex(const QModelIndex &index) const
+    [[nodiscard]] qint64 collectionIdForIndex(const QModelIndex &index) const
     {
         return data(index, Akonadi::EntityTreeModel::CollectionIdRole).toLongLong();
     }

@@ -13,8 +13,8 @@ class KMAILTESTS_TESTS_EXPORT PluginInfoSource : public KUserFeedback::AbstractD
 public:
     PluginInfoSource();
 
-    Q_REQUIRED_RESULT QString name() const override;
-    Q_REQUIRED_RESULT QString description() const override;
+    [[nodiscard]] QString name() const override;
+    [[nodiscard]] QString description() const override;
 
-    Q_REQUIRED_RESULT QVariant data() override;
+    [[nodiscard]] QVariant data() override;
 };

@@ -16,7 +16,7 @@ public:
     ~HourComboBox() override;
 
     void setHour(int hour);
-    Q_REQUIRED_RESULT int hour() const;
+    [[nodiscard]] int hour() const;
 
 private:
     void initializeList();

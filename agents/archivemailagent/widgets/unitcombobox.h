@@ -16,6 +16,6 @@ public:
     explicit UnitComboBox(QWidget *parent = nullptr);
     ~UnitComboBox() override;
 
-    Q_REQUIRED_RESULT ArchiveMailInfo::ArchiveUnit unit() const;
+    [[nodiscard]] ArchiveMailInfo::ArchiveUnit unit() const;
     void setUnit(ArchiveMailInfo::ArchiveUnit unit);
 };

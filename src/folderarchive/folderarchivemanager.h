@@ -32,7 +32,7 @@ public:
     void moveFailed(const QString &msg);
     void moveDone();
 
-    Q_REQUIRED_RESULT FolderArchiveCache *folderArchiveCache() const;
+    [[nodiscard]] FolderArchiveCache *folderArchiveCache() const;
     void reloadConfig();
 
 public Q_SLOTS:
@@ -43,7 +43,7 @@ private:
     void slotFetchParentCollection(KJob *job);
     void slotFetchCollection(KJob *job);
 
-    Q_REQUIRED_RESULT FolderArchiveAccountInfo *infoFromInstanceName(const QString &instanceName) const;
+    [[nodiscard]] FolderArchiveAccountInfo *infoFromInstanceName(const QString &instanceName) const;
     void nextJob();
     void removeInfo(const QString &instanceName);
     QQueue<FolderArchiveAgentJob *> mJobQueue;

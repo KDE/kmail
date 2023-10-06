@@ -16,7 +16,7 @@ public:
     explicit CollectionSwitcherTreeView(QWidget *parent = nullptr);
     ~CollectionSwitcherTreeView() override;
 
-    Q_REQUIRED_RESULT int sizeHintWidth() const;
+    [[nodiscard]] int sizeHintWidth() const;
     void resizeColumnsToContents();
 
 Q_SIGNALS:

@@ -16,16 +16,16 @@ class KMAILTESTS_TESTS_EXPORT UndoSendCreateJob : public QObject
 public:
     explicit UndoSendCreateJob(QObject *parent = nullptr);
     ~UndoSendCreateJob() override;
-    Q_REQUIRED_RESULT bool canStart() const;
-    Q_REQUIRED_RESULT bool start();
+    [[nodiscard]] bool canStart() const;
+    [[nodiscard]] bool start();
 
-    Q_REQUIRED_RESULT QString subject() const;
+    [[nodiscard]] QString subject() const;
     void setMessageInfoText(const QString &subject);
 
-    Q_REQUIRED_RESULT int delay() const;
+    [[nodiscard]] int delay() const;
     void setDelay(int delay);
 
-    Q_REQUIRED_RESULT qint64 akonadiIndex() const;
+    [[nodiscard]] qint64 akonadiIndex() const;
     void setAkonadiIndex(qint64 akonadiIndex);
 
 private:

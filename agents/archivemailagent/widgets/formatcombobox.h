@@ -16,6 +16,6 @@ public:
     explicit FormatComboBox(QWidget *parent = nullptr);
     ~FormatComboBox() override;
 
-    Q_REQUIRED_RESULT MailCommon::BackupJob::ArchiveType format() const;
+    [[nodiscard]] MailCommon::BackupJob::ArchiveType format() const;
     void setFormat(MailCommon::BackupJob::ArchiveType type);
 };

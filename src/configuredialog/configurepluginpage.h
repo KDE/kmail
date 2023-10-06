@@ -20,7 +20,7 @@ public:
     explicit ConfigurePluginPage(QObject *parent, const KPluginMetaData &data);
     ~ConfigurePluginPage() override;
 
-    Q_REQUIRED_RESULT QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
     void load() override;
     void save() override;
     void defaults() override;

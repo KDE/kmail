@@ -35,19 +35,19 @@ KMAILTESTS_TESTS_EXPORT Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::
  * Handles a clicked URL, but only in case the viewer didn't handle it.
  * Currently only support mailto.
  */
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool
 handleClickedURL(const QUrl &url,
                  const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(),
                  const Akonadi::Collection &collection = Akonadi::Collection());
 
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool
 mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection);
 
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
-Q_REQUIRED_RESULT KMAILTESTS_TESTS_EXPORT bool mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListPost(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListSubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListUnsubscribe(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
 
 KMAILTESTS_TESTS_EXPORT void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg);
 

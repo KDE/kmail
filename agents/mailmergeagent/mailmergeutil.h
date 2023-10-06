@@ -9,7 +9,7 @@
 /** Send later utilities. */
 namespace MailMergeUtil
 {
-Q_REQUIRED_RESULT QString mailMergePattern();
-Q_REQUIRED_RESULT bool mailMergeAgentEnabled();
+[[nodiscard]] QString mailMergePattern();
+[[nodiscard]] bool mailMergeAgentEnabled();
 void forceReparseConfiguration();
 }

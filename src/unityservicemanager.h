@@ -22,20 +22,20 @@ public:
     ~UnityServiceManager() override;
 
     void updateSystemTray();
-    Q_REQUIRED_RESULT bool haveSystemTrayApplet() const;
+    [[nodiscard]] bool haveSystemTrayApplet() const;
 
-    Q_REQUIRED_RESULT bool canQueryClose();
+    [[nodiscard]] bool canQueryClose();
     void toggleSystemTray(QWidget *parent);
     void initListOfCollection();
-    Q_REQUIRED_RESULT bool excludeFolder(const Akonadi::Collection &collection) const;
-    Q_REQUIRED_RESULT bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
+    [[nodiscard]] bool excludeFolder(const Akonadi::Collection &collection) const;
+    [[nodiscard]] bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
     void updateCount();
 
 private:
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     void initUnity();
-    Q_REQUIRED_RESULT bool hasUnreadMail() const;
+    [[nodiscard]] bool hasUnreadMail() const;
     QDBusServiceWatcher *const mUnityServiceWatcher;
     KMail::KMSystemTray *mSystemTray = nullptr;
     int mCount = 0;

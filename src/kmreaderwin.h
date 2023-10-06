@@ -58,7 +58,7 @@ public:
     /** Get selected override character encoding.
       @return The encoding selected by the user or an empty string if auto-detection
       is selected. */
-    Q_REQUIRED_RESULT QString overrideEncoding() const;
+    [[nodiscard]] QString overrideEncoding() const;
     /** Set the override character encoding. */
     void setOverrideEncoding(const QString &encoding);
     void setPrinting(bool enable);
@@ -77,25 +77,25 @@ public:
     void update(bool force = false);
 
     /** Return selected text */
-    Q_REQUIRED_RESULT QString copyText() const;
+    [[nodiscard]] QString copyText() const;
 
     /** Override default html mail setting */
-    Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
+    [[nodiscard]] MessageViewer::Viewer::DisplayFormatMessage displayFormatMessageOverwrite() const;
     void setDisplayFormatMessageOverwrite(MessageViewer::Viewer::DisplayFormatMessage format);
 
     /** Override default load external references setting */
-    Q_REQUIRED_RESULT bool htmlLoadExtOverride() const;
+    [[nodiscard]] bool htmlLoadExtOverride() const;
     void setHtmlLoadExtDefault(bool loadExtDefault);
     void setHtmlLoadExtOverride(bool loadExtOverride);
 
     /** Is html mail to be supported? Takes into account override */
-    Q_REQUIRED_RESULT bool htmlMail() const;
+    [[nodiscard]] bool htmlMail() const;
 
     /** Is loading ext. references to be supported? Takes into account override */
-    Q_REQUIRED_RESULT bool htmlLoadExternal();
+    [[nodiscard]] bool htmlLoadExternal();
 
     /** Returns the MD5 hash for the list of new features */
-    Q_REQUIRED_RESULT static QString newFeaturesMD5();
+    [[nodiscard]] static QString newFeaturesMD5();
 
     /** Display a generic HTML splash page instead of a message */
     void displaySplashPage(const QString &templateName, const QVariantHash &data);
@@ -110,60 +110,60 @@ public:
 
     void displayResourceOfflinePage();
 
-    Q_REQUIRED_RESULT bool isFixedFont() const;
+    [[nodiscard]] bool isFixedFont() const;
     void setUseFixedFont(bool useFixedFont);
-    Q_REQUIRED_RESULT MessageViewer::Viewer *viewer() const;
-    Q_REQUIRED_RESULT KToggleAction *toggleFixFontAction() const;
-    Q_REQUIRED_RESULT QAction *mailToComposeAction() const;
-    Q_REQUIRED_RESULT QAction *mailToReplyAction() const;
-    Q_REQUIRED_RESULT QAction *mailToForwardAction() const;
-    Q_REQUIRED_RESULT QAction *addAddrBookAction() const;
-    Q_REQUIRED_RESULT QAction *openAddrBookAction() const;
-    Q_REQUIRED_RESULT QAction *copyAction() const;
-    Q_REQUIRED_RESULT QAction *selectAllAction() const;
-    Q_REQUIRED_RESULT QAction *copyURLAction() const;
-    Q_REQUIRED_RESULT QAction *copyImageLocation() const;
-    Q_REQUIRED_RESULT QAction *urlOpenAction() const;
-    Q_REQUIRED_RESULT QAction *urlSaveAsAction() const;
-    Q_REQUIRED_RESULT QAction *addUrlToBookmarkAction() const;
-    Q_REQUIRED_RESULT QAction *toggleMimePartTreeAction() const;
-    Q_REQUIRED_RESULT QAction *speakTextAction() const;
-    Q_REQUIRED_RESULT QAction *downloadImageToDiskAction() const;
-    Q_REQUIRED_RESULT QAction *viewSourceAction() const;
-    Q_REQUIRED_RESULT QAction *findInMessageAction() const;
-    Q_REQUIRED_RESULT QAction *saveAsAction() const;
-    Q_REQUIRED_RESULT QAction *saveMessageDisplayFormatAction() const;
-    Q_REQUIRED_RESULT QAction *resetMessageDisplayFormatAction() const;
-    Q_REQUIRED_RESULT QAction *editContactAction() const;
-    Q_REQUIRED_RESULT QAction *developmentToolsAction() const;
-    Q_REQUIRED_RESULT QAction *shareTextAction() const;
+    [[nodiscard]] MessageViewer::Viewer *viewer() const;
+    [[nodiscard]] KToggleAction *toggleFixFontAction() const;
+    [[nodiscard]] QAction *mailToComposeAction() const;
+    [[nodiscard]] QAction *mailToReplyAction() const;
+    [[nodiscard]] QAction *mailToForwardAction() const;
+    [[nodiscard]] QAction *addAddrBookAction() const;
+    [[nodiscard]] QAction *openAddrBookAction() const;
+    [[nodiscard]] QAction *copyAction() const;
+    [[nodiscard]] QAction *selectAllAction() const;
+    [[nodiscard]] QAction *copyURLAction() const;
+    [[nodiscard]] QAction *copyImageLocation() const;
+    [[nodiscard]] QAction *urlOpenAction() const;
+    [[nodiscard]] QAction *urlSaveAsAction() const;
+    [[nodiscard]] QAction *addUrlToBookmarkAction() const;
+    [[nodiscard]] QAction *toggleMimePartTreeAction() const;
+    [[nodiscard]] QAction *speakTextAction() const;
+    [[nodiscard]] QAction *downloadImageToDiskAction() const;
+    [[nodiscard]] QAction *viewSourceAction() const;
+    [[nodiscard]] QAction *findInMessageAction() const;
+    [[nodiscard]] QAction *saveAsAction() const;
+    [[nodiscard]] QAction *saveMessageDisplayFormatAction() const;
+    [[nodiscard]] QAction *resetMessageDisplayFormatAction() const;
+    [[nodiscard]] QAction *editContactAction() const;
+    [[nodiscard]] QAction *developmentToolsAction() const;
+    [[nodiscard]] QAction *shareTextAction() const;
 
-    Q_REQUIRED_RESULT QMenu *viewHtmlOption() const;
-    Q_REQUIRED_RESULT QAction *shareImage() const;
+    [[nodiscard]] QMenu *viewHtmlOption() const;
+    [[nodiscard]] QAction *shareImage() const;
 
-    Q_REQUIRED_RESULT QAction *addToExistingContactAction() const;
+    [[nodiscard]] QAction *addToExistingContactAction() const;
 
-    Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
+    [[nodiscard]] Akonadi::Item messageItem() const;
 
-    Q_REQUIRED_RESULT QWidget *mainWindow() const;
-    Q_REQUIRED_RESULT QAction *openImageAction() const;
+    [[nodiscard]] QWidget *mainWindow() const;
+    [[nodiscard]] QAction *openImageAction() const;
 
     /** Enforce message decryption. */
     void setDecryptMessageOverwrite(bool overwrite = true);
 
-    Q_REQUIRED_RESULT MessageViewer::CSSHelper *cssHelper() const;
+    [[nodiscard]] MessageViewer::CSSHelper *cssHelper() const;
 
-    Q_REQUIRED_RESULT bool printSelectedText(bool preview);
+    [[nodiscard]] bool printSelectedText(bool preview);
 
     void setContactItem(const Akonadi::Item &contact, const KContacts::Addressee &address);
     void clearContactItem();
 
-    Q_REQUIRED_RESULT bool mimePartTreeIsEmpty() const;
-    Q_REQUIRED_RESULT KActionMenu *shareServiceUrlMenu() const;
-    Q_REQUIRED_RESULT MessageViewer::DKIMViewerMenu *dkimViewerMenu() const;
-    Q_REQUIRED_RESULT QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
+    [[nodiscard]] bool mimePartTreeIsEmpty() const;
+    [[nodiscard]] KActionMenu *shareServiceUrlMenu() const;
+    [[nodiscard]] MessageViewer::DKIMViewerMenu *dkimViewerMenu() const;
+    [[nodiscard]] QList<QAction *> viewerPluginActionList(MessageViewer::ViewerPluginInterface::SpecificFeatureTypes features);
 
-    Q_REQUIRED_RESULT QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
+    [[nodiscard]] QList<QAction *> interceptorUrlActions(const WebEngineViewer::WebHitTestResult &result) const;
 
     void setPrintElementBackground(bool printElementBackground);
     /** Force update even if message is the same */
@@ -212,8 +212,8 @@ public Q_SLOTS:
     void slotPrintingFinished();
 
 protected:
-    Q_REQUIRED_RESULT QUrl urlClicked() const;
-    Q_REQUIRED_RESULT QUrl imageUrlClicked() const;
+    [[nodiscard]] QUrl urlClicked() const;
+    [[nodiscard]] QUrl imageUrlClicked() const;
 
 private:
     void createActions();

@@ -18,7 +18,7 @@ public:
     explicit MailfilterPurposeMenuWidget(QWidget *parentWidget, QObject *parent = nullptr);
     ~MailfilterPurposeMenuWidget() override;
 
-    Q_REQUIRED_RESULT QByteArray text() override;
+    [[nodiscard]] QByteArray text() override;
     void setEditorWidget(TextCustomEditor::PlainTextEditor *editor);
 
 private:

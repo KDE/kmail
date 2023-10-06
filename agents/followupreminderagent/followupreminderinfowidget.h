@@ -41,10 +41,10 @@ public:
 
     void setInfo(const QList<FollowUpReminder::FollowUpReminderInfo *> &infoList);
 
-    Q_REQUIRED_RESULT bool save() const;
+    [[nodiscard]] bool save() const;
     void load();
 
-    Q_REQUIRED_RESULT QList<qint32> listRemoveId() const;
+    [[nodiscard]] QList<qint32> listRemoveId() const;
 
 protected:
     bool eventFilter(QObject *object, QEvent *event) override;

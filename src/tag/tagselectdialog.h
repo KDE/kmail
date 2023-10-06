@@ -21,7 +21,7 @@ class KMAILTESTS_TESTS_EXPORT TagSelectDialog : public QDialog
 public:
     explicit TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem);
     ~TagSelectDialog() override;
-    Q_REQUIRED_RESULT Akonadi::Tag::List selectedTag() const;
+    [[nodiscard]] Akonadi::Tag::List selectedTag() const;
 
     void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
 

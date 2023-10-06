@@ -15,20 +15,20 @@ class FollowUpReminderInfo;
 /** Follow up reminder utilities. */
 namespace FollowUpReminderUtil
 {
-Q_REQUIRED_RESULT bool followupReminderAgentWasRegistered();
+[[nodiscard]] bool followupReminderAgentWasRegistered();
 
-Q_REQUIRED_RESULT bool followupReminderAgentEnabled();
+[[nodiscard]] bool followupReminderAgentEnabled();
 
 void reload();
 
 void forceReparseConfiguration();
 
-Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
+[[nodiscard]] KSharedConfig::Ptr defaultConfig();
 
 void writeFollowupReminderInfo(const KSharedConfig::Ptr &config, FollowUpReminder::FollowUpReminderInfo *info, bool forceReload);
 
-Q_REQUIRED_RESULT bool removeFollowupReminderInfo(const KSharedConfig::Ptr &config, const QList<qint32> &listRemove, bool forceReload = false);
+[[nodiscard]] bool removeFollowupReminderInfo(const KSharedConfig::Ptr &config, const QList<qint32> &listRemove, bool forceReload = false);
 
-Q_REQUIRED_RESULT QString followUpReminderPattern();
+[[nodiscard]] QString followUpReminderPattern();
 }
 }

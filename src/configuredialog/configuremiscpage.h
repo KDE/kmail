@@ -27,7 +27,7 @@ public:
     explicit MiscPageFolderTab(QWidget *parent = nullptr);
 
     void save() override;
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
 private:
     void doLoadFromGlobalSettings() override;
@@ -58,7 +58,7 @@ class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
     Q_OBJECT
 public:
     explicit MiscPage(QObject *parent, const KPluginMetaData &data);
-    Q_REQUIRED_RESULT QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
 };
 
 class MiscPagePrintingTab : public ConfigModuleTab

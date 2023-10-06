@@ -33,12 +33,12 @@ public:
         setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
     }
 
-    Q_REQUIRED_RESULT KPluginMetaData pluginInfo() const
+    [[nodiscard]] KPluginMetaData pluginInfo() const
     {
         return mInfo;
     }
 
-    Q_REQUIRED_RESULT virtual QString text(int column) const
+    [[nodiscard]] virtual QString text(int column) const
     {
         if (column == 0) {
             return mInfo.name();

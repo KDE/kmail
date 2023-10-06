@@ -97,7 +97,7 @@ public:
     QAction *archiveMessageAction() const;
 
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
-    Q_REQUIRED_RESULT Akonadi::Item currentItem() const;
+    [[nodiscard]] Akonadi::Item currentItem() const;
 
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the

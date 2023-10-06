@@ -43,7 +43,7 @@ private:
     void slotContextMenuAboutToShow();
     void slotSelectCollection(QAction *act);
 
-    Q_REQUIRED_RESULT bool buildPopupMenu();
+    [[nodiscard]] bool buildPopupMenu();
     void fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model, const QString &parentName = QString(), const QModelIndex &parentIndex = QModelIndex());
     int mDesktopOfMainWin = 0;
     bool mBuiltContextMenu = false;

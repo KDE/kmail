@@ -55,8 +55,8 @@ public:
     bool isMatching(const Akonadi::Item &item, const MailCommon::MailFilter *filter);
     void beginFiltering(const Akonadi::Item &item) const;
     void endFiltering(const Akonadi::Item &item) const;
-    Q_REQUIRED_RESULT bool atLeastOneFilterAppliesTo(const QString &accountId) const;
-    Q_REQUIRED_RESULT bool atLeastOneIncomingFilterAppliesTo(const QString &accountId) const;
+    [[nodiscard]] bool atLeastOneFilterAppliesTo(const QString &accountId) const;
+    [[nodiscard]] bool atLeastOneIncomingFilterAppliesTo(const QString &accountId) const;
     FilterManager *const q;
     QList<MailCommon::MailFilter *> mFilters;
     QMap<QString, SearchRule::RequiredPart> mRequiredParts;

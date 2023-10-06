@@ -17,17 +17,17 @@ class SearchDescriptionAttribute : public Akonadi::Attribute
 {
 public:
     SearchDescriptionAttribute();
-    Q_REQUIRED_RESULT QByteArray description() const;
+    [[nodiscard]] QByteArray description() const;
     void setDescription(const QByteArray &desc);
-    Q_REQUIRED_RESULT Akonadi::Collection baseCollection() const;
+    [[nodiscard]] Akonadi::Collection baseCollection() const;
     void setBaseCollection(const Akonadi::Collection &);
-    Q_REQUIRED_RESULT bool recursive() const;
+    [[nodiscard]] bool recursive() const;
     void setRecursive(bool);
 
     void setListCollection(const QList<Akonadi::Collection::Id> &col);
     QList<Akonadi::Collection::Id> listCollection() const;
 
-    Q_REQUIRED_RESULT QByteArray type() const override;
+    [[nodiscard]] QByteArray type() const override;
     Attribute *clone() const override;
     QByteArray serialized() const override;
     void deserialize(const QByteArray &data) override;

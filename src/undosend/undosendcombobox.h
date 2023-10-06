@@ -16,7 +16,7 @@ public:
     explicit UndoSendCombobox(QWidget *parent = nullptr);
     ~UndoSendCombobox() override;
 
-    Q_REQUIRED_RESULT int delay() const;
+    [[nodiscard]] int delay() const;
     void setDelay(int val);
 
 private:

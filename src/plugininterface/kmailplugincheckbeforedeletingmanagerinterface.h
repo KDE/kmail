@@ -23,10 +23,10 @@ public:
     ~KMailPluginCheckBeforeDeletingManagerInterface() override;
     void initializePlugins();
 
-    Q_REQUIRED_RESULT QWidget *parentWidget() const;
+    [[nodiscard]] QWidget *parentWidget() const;
     void setParentWidget(QWidget *newParentWidget);
 
-    Q_REQUIRED_RESULT Akonadi::Item::List confirmBeforeDeleting(const Akonadi::Item::List &list);
+    [[nodiscard]] Akonadi::Item::List confirmBeforeDeleting(const Akonadi::Item::List &list);
 
     void setActionCollection(KActionCollection *ac);
 

@@ -52,7 +52,7 @@ public:
 
     void updateIndicator();
 
-    Q_REQUIRED_RESULT bool hasVacationScriptActive() const;
+    [[nodiscard]] bool hasVacationScriptActive() const;
 
 Q_SIGNALS:
     void clicked(const QString &serverName);

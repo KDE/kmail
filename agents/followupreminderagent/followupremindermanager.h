@@ -26,7 +26,7 @@ public:
     void addReminder(FollowUpReminder::FollowUpReminderInfo *reminder); // takes ownership
     void checkFollowUp(const Akonadi::Item &item, const Akonadi::Collection &col);
 
-    Q_REQUIRED_RESULT QString printDebugInfo() const;
+    [[nodiscard]] QString printDebugInfo() const;
 
 private:
     void slotCheckFollowUpFinished(const QString &messageId, Akonadi::Item::Id id);
@@ -35,7 +35,7 @@ private:
     void slotFinishTaskFailed();
     void slotReparseConfiguration();
     void answerReceived(const QString &from);
-    Q_REQUIRED_RESULT QString infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const;
+    [[nodiscard]] QString infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const;
 
     KSharedConfig::Ptr mConfig;
     QList<FollowUpReminder::FollowUpReminderInfo *> mFollowUpReminderInfoList;

@@ -32,7 +32,7 @@ public:
     explicit MailFilterAgent(const QString &id);
     ~MailFilterAgent() override;
 
-    Q_REQUIRED_RESULT QString createUniqueName(const QString &nameTemplate);
+    [[nodiscard]] QString createUniqueName(const QString &nameTemplate);
     void filterItems(const QList<qint64> &itemIds, int filterSet);
 
     void filterItem(qint64 item, int filterSet, const QString &resourceId);
@@ -44,7 +44,7 @@ public:
     void reload();
 
     void showFilterLogDialog(qlonglong windowId = 0);
-    Q_REQUIRED_RESULT QString printCollectionMonitored() const;
+    [[nodiscard]] QString printCollectionMonitored() const;
 
     void expunge(qint64 collectionId);
 

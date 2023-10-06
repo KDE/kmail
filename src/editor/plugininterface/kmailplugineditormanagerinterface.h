@@ -26,25 +26,25 @@ public:
     explicit KMailPluginEditorManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorManagerInterface() override;
 
-    Q_REQUIRED_RESULT TextCustomEditor::RichTextEditor *richTextEditor() const;
+    [[nodiscard]] TextCustomEditor::RichTextEditor *richTextEditor() const;
     void setRichTextEditor(TextCustomEditor::RichTextEditor *richTextEditor);
 
-    Q_REQUIRED_RESULT QWidget *parentWidget() const;
+    [[nodiscard]] QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     void initializePlugins();
 
-    Q_REQUIRED_RESULT KActionCollection *actionCollection() const;
+    [[nodiscard]] KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
-    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
-    Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
-    Q_REQUIRED_RESULT QList<QWidget *> statusBarWidgetList();
+    [[nodiscard]] QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
+    [[nodiscard]] QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
+    [[nodiscard]] QList<QWidget *> statusBarWidgetList();
 
     MessageComposer::ComposerViewBase *composerInterface() const;
     void setComposerInterface(MessageComposer::ComposerViewBase *composerInterface);
 
-    Q_REQUIRED_RESULT bool processProcessKeyEvent(QKeyEvent *event);
+    [[nodiscard]] bool processProcessKeyEvent(QKeyEvent *event);
 
     void setStatusBarWidgetEnabled(MessageComposer::PluginEditorInterface::ApplyOnFieldType type);
 Q_SIGNALS:

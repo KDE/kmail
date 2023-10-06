@@ -39,7 +39,7 @@ public:
         StorageDirectory,
     };
 
-    Q_REQUIRED_RESULT bool save() const override;
+    [[nodiscard]] bool save() const override;
     void load() override;
 
     void needReloadConfig();
@@ -49,7 +49,7 @@ public:
 
 private:
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
-    Q_REQUIRED_RESULT bool verifyExistingArchive(ArchiveMailInfo *info) const;
+    [[nodiscard]] bool verifyExistingArchive(ArchiveMailInfo *info) const;
     void updateDiffDate(ArchiveMailItem *item, ArchiveMailInfo *info);
 
     void slotDeleteItem();

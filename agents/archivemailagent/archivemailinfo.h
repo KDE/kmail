@@ -29,52 +29,52 @@ public:
         ArchiveYears,
     };
 
-    Q_REQUIRED_RESULT QUrl realUrl(const QString &folderName, bool &dirExist) const;
+    [[nodiscard]] QUrl realUrl(const QString &folderName, bool &dirExist) const;
 
-    Q_REQUIRED_RESULT bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
-    Q_REQUIRED_RESULT Akonadi::Collection::Id saveCollectionId() const;
+    [[nodiscard]] Akonadi::Collection::Id saveCollectionId() const;
     void setSaveCollectionId(Akonadi::Collection::Id collectionId);
 
     void setSaveSubCollection(bool b);
-    Q_REQUIRED_RESULT bool saveSubCollection() const;
+    [[nodiscard]] bool saveSubCollection() const;
 
     void setUrl(const QUrl &url);
-    Q_REQUIRED_RESULT QUrl url() const;
+    [[nodiscard]] QUrl url() const;
 
     void readConfig(const KConfigGroup &config);
     void writeConfig(KConfigGroup &config);
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
-    Q_REQUIRED_RESULT MailCommon::BackupJob::ArchiveType archiveType() const;
+    [[nodiscard]] MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setArchiveUnit(ArchiveMailInfo::ArchiveUnit unit);
-    Q_REQUIRED_RESULT ArchiveMailInfo::ArchiveUnit archiveUnit() const;
+    [[nodiscard]] ArchiveMailInfo::ArchiveUnit archiveUnit() const;
 
     void setArchiveAge(int age);
-    Q_REQUIRED_RESULT int archiveAge() const;
+    [[nodiscard]] int archiveAge() const;
 
     void setLastDateSaved(QDate date);
-    Q_REQUIRED_RESULT QDate lastDateSaved() const;
+    [[nodiscard]] QDate lastDateSaved() const;
 
-    Q_REQUIRED_RESULT int maximumArchiveCount() const;
+    [[nodiscard]] int maximumArchiveCount() const;
     void setMaximumArchiveCount(int max);
 
-    Q_REQUIRED_RESULT QStringList listOfArchive(const QString &foldername, bool &dirExist) const;
+    [[nodiscard]] QStringList listOfArchive(const QString &foldername, bool &dirExist) const;
 
-    Q_REQUIRED_RESULT bool isEnabled() const;
+    [[nodiscard]] bool isEnabled() const;
     void setEnabled(bool b);
 
-    Q_REQUIRED_RESULT bool operator==(const ArchiveMailInfo &other) const;
+    [[nodiscard]] bool operator==(const ArchiveMailInfo &other) const;
 
-    Q_REQUIRED_RESULT bool useRange() const;
+    [[nodiscard]] bool useRange() const;
     void setUseRange(bool newUseRange);
 
-    Q_REQUIRED_RESULT QList<int> range() const;
+    [[nodiscard]] QList<int> range() const;
     void setRange(const QList<int> &newRanges);
 
 private:
-    Q_REQUIRED_RESULT QString dirArchive(bool &dirExit) const;
+    [[nodiscard]] QString dirArchive(bool &dirExit) const;
     QDate mLastDateSaved;
     int mArchiveAge = 1;
     MailCommon::BackupJob::ArchiveType mArchiveType = MailCommon::BackupJob::Zip;

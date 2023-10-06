@@ -28,32 +28,32 @@ public:
     /**
      * @return the user set the encryption state no matter what
      */
-    Q_REQUIRED_RESULT bool override() const;
+    [[nodiscard]] bool override() const;
 
     /**
      * @return true when set an override
      */
-    Q_REQUIRED_RESULT bool hasOverride() const;
+    [[nodiscard]] bool hasOverride() const;
 
     /**
      * @return we have encryption keys for the user so in principal it is possible to encrypt
      */
-    Q_REQUIRED_RESULT bool possibleEncrypt() const;
+    [[nodiscard]] bool possibleEncrypt() const;
 
     /**
      * @return the user wants auto encryption
      */
-    Q_REQUIRED_RESULT bool autoEncrypt() const;
+    [[nodiscard]] bool autoEncrypt() const;
 
     /**
      * @return we found a set of keys to encrypt to everyone
      */
-    Q_REQUIRED_RESULT bool acceptedSolution() const;
+    [[nodiscard]] bool acceptedSolution() const;
 
     /**
      * @return the encrypt
      */
-    Q_REQUIRED_RESULT bool encrypt() const;
+    [[nodiscard]] bool encrypt() const;
 
 public Q_SLOTS:
     /**

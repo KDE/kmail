@@ -19,13 +19,13 @@ public:
     explicit KMComposerEditorNg(KMComposerWin *win, QWidget *parent);
     ~KMComposerEditorNg() override;
 
-    Q_REQUIRED_RESULT QString smartQuote(const QString &msg) override;
+    [[nodiscard]] QString smartQuote(const QString &msg) override;
 
     void setHighlighterColors(KPIMTextEdit::RichTextComposerEmailQuoteHighlighter *highlighter) override;
 
     void showSpellConfigDialog(const QString &configFileName);
 
-    Q_REQUIRED_RESULT MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart) override;
+    [[nodiscard]] MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart) override;
 Q_SIGNALS:
     void insertSnippet();
 

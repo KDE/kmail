@@ -24,7 +24,7 @@ public:
 
     static TagMonitorManager *self();
 
-    Q_REQUIRED_RESULT QList<MailCommon::Tag::Ptr> tags() const;
+    [[nodiscard]] QList<MailCommon::Tag::Ptr> tags() const;
 
 Q_SIGNALS:
     void tagAdded();

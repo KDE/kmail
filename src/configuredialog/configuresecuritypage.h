@@ -25,7 +25,7 @@ class SecurityPageGeneralTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageGeneralTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -43,7 +43,7 @@ class SecurityPageMDNTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit SecurityPageMDNTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -64,7 +64,7 @@ public:
     explicit SecurityPageEncryptionTab(QWidget *parent = nullptr);
     ~SecurityPageEncryptionTab() override;
 
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -85,7 +85,7 @@ public:
     explicit SecurityPageSMimeTab(QWidget *parent = nullptr);
     ~SecurityPageSMimeTab() override;
 
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -115,5 +115,5 @@ class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs
     Q_OBJECT
 public:
     explicit SecurityPage(QObject *parent, const KPluginMetaData &data);
-    Q_REQUIRED_RESULT QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
 };

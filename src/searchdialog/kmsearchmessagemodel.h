@@ -30,7 +30,7 @@ protected:
     QVariant entityHeaderData(int section, Qt::Orientation orientation, int role, HeaderGroup headerGroup) const override;
 
 private:
-    Q_REQUIRED_RESULT QString fullCollectionPath(Akonadi::Collection::Id id) const;
+    [[nodiscard]] QString fullCollectionPath(Akonadi::Collection::Id id) const;
 
     mutable QHash<Akonadi::Collection::Id, QString> m_collectionFullPathCache;
 };

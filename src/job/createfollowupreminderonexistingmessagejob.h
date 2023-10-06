@@ -21,16 +21,16 @@ public:
 
     void start();
 
-    Q_REQUIRED_RESULT Akonadi::Collection collection() const;
+    [[nodiscard]] Akonadi::Collection collection() const;
     void setCollection(const Akonadi::Collection &collection);
 
-    Q_REQUIRED_RESULT QDate date() const;
+    [[nodiscard]] QDate date() const;
     void setDate(QDate date);
 
-    Q_REQUIRED_RESULT Akonadi::Item messageItem() const;
+    [[nodiscard]] Akonadi::Item messageItem() const;
     void setMessageItem(const Akonadi::Item &messageItem);
 
-    Q_REQUIRED_RESULT bool canStart() const;
+    [[nodiscard]] bool canStart() const;
 
 private:
     void itemFetchJobDone(KJob *job);

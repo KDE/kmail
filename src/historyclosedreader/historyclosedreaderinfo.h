@@ -15,13 +15,13 @@ public:
     HistoryClosedReaderInfo();
     ~HistoryClosedReaderInfo();
 
-    Q_REQUIRED_RESULT QString subject() const;
+    [[nodiscard]] QString subject() const;
     void setSubject(const QString &newSubject);
 
-    Q_REQUIRED_RESULT Akonadi::Item::Id item() const;
+    [[nodiscard]] Akonadi::Item::Id item() const;
     void setItem(Akonadi::Item::Id newItem);
 
-    Q_REQUIRED_RESULT bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
 private:
     QString mSubject;

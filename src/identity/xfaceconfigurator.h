@@ -36,21 +36,21 @@ public:
     explicit XFaceConfigurator(QWidget *parent = nullptr);
     ~XFaceConfigurator() override;
 
-    Q_REQUIRED_RESULT bool isXFaceEnabled() const;
+    [[nodiscard]] bool isXFaceEnabled() const;
     void setXFaceEnabled(bool enable);
 
-    Q_REQUIRED_RESULT QString xface() const;
+    [[nodiscard]] QString xface() const;
     void setXFace(const QString &text);
 
-    Q_REQUIRED_RESULT bool isFaceEnabled() const;
+    [[nodiscard]] bool isFaceEnabled() const;
     void setFaceEnabled(bool enable);
 
-    Q_REQUIRED_RESULT QString face() const;
+    [[nodiscard]] QString face() const;
     void setFace(const QString &text);
 
 private:
     void crunch(const QImage &image);
-    Q_REQUIRED_RESULT bool pngquant(const QImage &image);
+    [[nodiscard]] bool pngquant(const QImage &image);
 
 private:
     void modeChanged(int);

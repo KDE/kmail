@@ -26,7 +26,7 @@ public:
         {
         }
 
-        Q_REQUIRED_RESULT bool operator==(const CollectionInfo &other) const;
+        [[nodiscard]] bool operator==(const CollectionInfo &other) const;
 
         Akonadi::Collection mNewCollection;
         QString mFullPath;
@@ -35,12 +35,12 @@ public:
     explicit CollectionSwitcherModel(QObject *parent = nullptr);
     ~CollectionSwitcherModel() override;
 
-    Q_REQUIRED_RESULT int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    Q_REQUIRED_RESULT QVariant data(const QModelIndex &index, int role) const override;
+    [[nodiscard]] int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
     void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath = {});
 
-    Q_REQUIRED_RESULT const Akonadi::Collection collection(int index);
+    [[nodiscard]] const Akonadi::Collection collection(int index);
 
 private:
     QList<CollectionInfo> mCollectionsInfo;

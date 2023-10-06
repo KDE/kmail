@@ -376,14 +376,14 @@ public:
      * Returns a model of all folders in KMail. This is basically the same as entityTreeModel(),
      * but with items filtered out, the model contains only collections.
      */
-    Q_REQUIRED_RESULT Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
+    [[nodiscard]] Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
 
     void recoverDeadLetters();
     void closeAllKMailWindows();
     void cleanup();
     void quit();
     void doSessionManagement();
-    Q_REQUIRED_RESULT bool firstInstance() const;
+    [[nodiscard]] bool firstInstance() const;
     void setFirstInstance(bool value);
     void action(bool mailto,
                 bool check,
@@ -403,10 +403,10 @@ public:
     // sets online status for akonadi accounts. true for online, false for offline
     void setAccountStatus(bool);
 
-    Q_REQUIRED_RESULT const QString xmlGuiInstanceName() const;
+    [[nodiscard]] const QString xmlGuiInstanceName() const;
     void setXmlGuiInstanceName(const QString &instance);
 
-    Q_REQUIRED_RESULT KMail::UndoStack *undoStack() const;
+    [[nodiscard]] KMail::UndoStack *undoStack() const;
     MessageComposer::MessageSender *msgSender() override;
 
     void openFilterDialog(bool createDummyFilter = true) override;
@@ -420,17 +420,17 @@ public:
     /** Expire all folders, used for the gui action */
     void expireAllFoldersNow();
 
-    Q_REQUIRED_RESULT bool firstStart() const;
-    Q_REQUIRED_RESULT bool shuttingDown() const;
+    [[nodiscard]] bool firstStart() const;
+    [[nodiscard]] bool shuttingDown() const;
     void setShuttingDown(bool flag);
 
     /** Returns true if we have a system tray applet. This is needed in order
      *  to know whether the application should be allowed to exit in case the
      *  last visible composer or separate message window is closed.
      */
-    Q_REQUIRED_RESULT bool haveSystemTrayApplet() const;
+    [[nodiscard]] bool haveSystemTrayApplet() const;
 
-    Q_REQUIRED_RESULT QTextCodec *networkCodec() const;
+    [[nodiscard]] QTextCodec *networkCodec() const;
 
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
@@ -442,12 +442,12 @@ public:
      * Returns a list of all currently loaded folders. Since folders are loaded async, this
      * is empty at startup.
      */
-    Q_REQUIRED_RESULT Akonadi::Collection::List allFolders() const;
+    [[nodiscard]] Akonadi::Collection::List allFolders() const;
 
     /**
      * Includes all subfolders of @p col, including the @p col itself.
      */
-    Q_REQUIRED_RESULT Akonadi::Collection::List subfolders(const Akonadi::Collection &col) const;
+    [[nodiscard]] Akonadi::Collection::List subfolders(const Akonadi::Collection &col) const;
 
     //
     void selectCollectionFromId(Akonadi::Collection::Id id);
@@ -457,35 +457,35 @@ public:
     void stopAgentInstance();
 
     // ISettings
-    Q_REQUIRED_RESULT bool showPopupAfterDnD() override;
+    [[nodiscard]] bool showPopupAfterDnD() override;
 
     bool excludeImportantMailFromExpiry() override;
 
     qreal closeToQuotaThreshold() override;
 
-    Q_REQUIRED_RESULT Akonadi::Collection::Id lastSelectedFolder() override;
+    [[nodiscard]] Akonadi::Collection::Id lastSelectedFolder() override;
     void setLastSelectedFolder(Akonadi::Collection::Id col) override;
 
     QStringList customTemplates() override;
 
     void checkFolderFromResources(const Akonadi::Collection::List &collectionList);
 
-    Q_REQUIRED_RESULT const QAbstractItemModel *treeviewModelSelection();
+    [[nodiscard]] const QAbstractItemModel *treeviewModelSelection();
 
     void savePaneSelection();
 
     void updatePaneTagComboBox();
-    Q_REQUIRED_RESULT TextAutoCorrectionCore::AutoCorrection *composerAutoCorrection();
+    [[nodiscard]] TextAutoCorrectionCore::AutoCorrection *composerAutoCorrection();
 
     void toggleSystemTray();
     FolderArchiveManager *folderArchiveManager() const;
 
-    Q_REQUIRED_RESULT bool allowToDebug() const;
+    [[nodiscard]] bool allowToDebug() const;
 
-    Q_REQUIRED_RESULT Akonadi::Search::PIM::IndexedItems *indexedItems() const;
+    [[nodiscard]] Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 
     void cleanupTemporaryFiles();
-    Q_REQUIRED_RESULT MailCommon::MailCommonSettings *mailCommonSettings() const;
+    [[nodiscard]] MailCommon::MailCommonSettings *mailCommonSettings() const;
 #ifdef WITH_KUSERFEEDBACK
     KUserFeedback::Provider *userFeedbackProvider() const;
 #endif
@@ -551,7 +551,7 @@ private Q_SLOTS:
 
 private:
     void viewMessage(const QUrl &url);
-    Q_REQUIRED_RESULT Akonadi::Collection currentCollection() const;
+    [[nodiscard]] Akonadi::Collection currentCollection() const;
 
     /*
      * Fills a composer cWin

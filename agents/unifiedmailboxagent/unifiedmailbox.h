@@ -31,24 +31,24 @@ public:
     void save(KConfigGroup &group) const;
     void load(const KConfigGroup &group);
 
-    Q_REQUIRED_RESULT bool isSpecial() const;
+    [[nodiscard]] bool isSpecial() const;
 
-    Q_REQUIRED_RESULT qint64 collectionId() const;
+    [[nodiscard]] qint64 collectionId() const;
     void setCollectionId(qint64 id);
 
-    Q_REQUIRED_RESULT QString id() const;
+    [[nodiscard]] QString id() const;
     void setId(const QString &id);
 
-    Q_REQUIRED_RESULT QString name() const;
+    [[nodiscard]] QString name() const;
     void setName(const QString &name);
 
-    Q_REQUIRED_RESULT QString icon() const;
+    [[nodiscard]] QString icon() const;
     void setIcon(const QString &icon);
 
     void addSourceCollection(qint64 source);
     void removeSourceCollection(qint64 source);
     void setSourceCollections(const QSet<qint64> &sources);
-    Q_REQUIRED_RESULT QSet<qint64> sourceCollections() const;
+    [[nodiscard]] QSet<qint64> sourceCollections() const;
 
 private:
     void attachManager(UnifiedMailboxManager *manager);

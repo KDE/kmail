@@ -20,7 +20,7 @@ public:
     explicit AddEmailToExistingContactDialog(QWidget *parent);
     ~AddEmailToExistingContactDialog() override;
 
-    Q_REQUIRED_RESULT Akonadi::Item selectedContact() const;
+    [[nodiscard]] Akonadi::Item selectedContact() const;
 
 private:
     void slotSelectionChanged();

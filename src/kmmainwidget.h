@@ -126,12 +126,12 @@ public:
     void writeReaderConfig();
 
     /** Easy access to main components of the window. */
-    Q_REQUIRED_RESULT KMReaderWin *messageView() const;
+    [[nodiscard]] KMReaderWin *messageView() const;
     /** Access to the header list pane. */
     CollectionPane *messageListPane() const;
 
-    Q_REQUIRED_RESULT Akonadi::Collection currentCollection() const;
-    Q_REQUIRED_RESULT QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
+    [[nodiscard]] Akonadi::Collection currentCollection() const;
+    [[nodiscard]] QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
     static void cleanup();
     QAction *action(const QString &name);
@@ -147,7 +147,7 @@ public:
     static const KMMainWidget *mainWidgetList();
 
     QWidget *vacationScriptIndicator() const;
-    Q_REQUIRED_RESULT QWidget *dkimWidgetInfo() const;
+    [[nodiscard]] QWidget *dkimWidgetInfo() const;
     MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
@@ -166,9 +166,9 @@ public:
     void populateMessageListStatusFilterCombo();
     void initializePluginActions();
 
-    Q_REQUIRED_RESULT Akonadi::Item::List currentSelection() const;
+    [[nodiscard]] Akonadi::Item::List currentSelection() const;
 
-    Q_REQUIRED_RESULT QString fullCollectionPath() const;
+    [[nodiscard]] QString fullCollectionPath() const;
 
     void initializeFilterActions(bool clearFilter);
     /** Clear and create actions for marked filters */
@@ -180,12 +180,12 @@ public:
      *         that is the action collection of this main widget as returned
      *         by actionCollection().
      */
-    Q_REQUIRED_RESULT QList<KActionCollection *> actionCollections() const;
+    [[nodiscard]] QList<KActionCollection *> actionCollections() const;
     void refreshMessageListSelection();
     Akonadi::StandardMailActionManager *standardMailActionManager() const;
     QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
     QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
-    Q_REQUIRED_RESULT QWidget *zoomLabelIndicator() const;
+    [[nodiscard]] QWidget *zoomLabelIndicator() const;
 
     void clearPluginActions();
 
@@ -283,7 +283,7 @@ private:
       the mainWidget is a KPart or a KMMainWindow.
       When dealing with geometries, use this pointer
     */
-    Q_REQUIRED_RESULT KSharedConfig::Ptr config();
+    [[nodiscard]] KSharedConfig::Ptr config();
 
     void checkAkonadiServerManagerState();
     void updateHtmlMenuEntry();
@@ -294,7 +294,7 @@ private:
     void updateAllToTrashAction(qint64 statistics);
 
     /** Get override character encoding. */
-    Q_REQUIRED_RESULT QString overrideEncoding() const;
+    [[nodiscard]] QString overrideEncoding() const;
 
     void moveMessageSelected(MessageList::Core::MessageItemSetReference ref, const Akonadi::Collection &dest, bool confirmOnDeletion = true);
 
@@ -521,14 +521,14 @@ private Q_SLOTS:
 private:
     void slotSetFocusToViewer();
     void deleteSelectedMessages(bool confirmDelete); // completely delete message
-    Q_REQUIRED_RESULT bool showSearchDialog();
+    [[nodiscard]] bool showSearchDialog();
     void clearCurrentFolder();
     void setCurrentCollection(const Akonadi::Collection &col);
     void showMessageActivities(const QString &str);
     void slotPageIsScrolledToBottom(bool isAtBottom);
     void setupUnifiedMailboxChecker();
     QAction *filterToAction(MailCommon::MailFilter *filter);
-    Q_REQUIRED_RESULT Akonadi::Collection::List applyFilterOnCollection(bool recursive);
+    [[nodiscard]] Akonadi::Collection::List applyFilterOnCollection(bool recursive);
     void setShowStatusBarMessage(const QString &msg);
     void slotRestartAccount();
     void slotAccountSettings();

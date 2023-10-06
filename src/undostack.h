@@ -41,16 +41,16 @@ public:
     ~UndoStack() override;
 
     void clear();
-    Q_REQUIRED_RESULT int size() const;
-    Q_REQUIRED_RESULT int newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
+    [[nodiscard]] int size() const;
+    [[nodiscard]] int newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
     void addMsgToAction(int undoId, const Akonadi::Item &item);
-    Q_REQUIRED_RESULT bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
     void undo();
 
     void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &, const Akonadi::Collection &destFolder);
     void folderDestroyed(const Akonadi::Collection &folder);
 
-    Q_REQUIRED_RESULT QString undoInfo() const;
+    [[nodiscard]] QString undoInfo() const;
 
 Q_SIGNALS:
     void undoStackChanged();

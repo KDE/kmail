@@ -15,10 +15,10 @@ class MailMergeManager : public QObject
 public:
     explicit MailMergeManager(QObject *parent = nullptr);
     ~MailMergeManager() override;
-    Q_REQUIRED_RESULT QString printDebugInfo() const;
+    [[nodiscard]] QString printDebugInfo() const;
     void load(bool state = false);
     void stopAll();
-    Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
+    [[nodiscard]] bool itemRemoved(Akonadi::Item::Id id);
 
 Q_SIGNALS:
     void needUpdateConfigDialogBox();

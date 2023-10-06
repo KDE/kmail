@@ -21,12 +21,12 @@ public:
     explicit ArchiveMailAgent(const QString &id);
     ~ArchiveMailAgent() override;
 
-    Q_REQUIRED_RESULT QString printArchiveListInfo() const;
+    [[nodiscard]] QString printArchiveListInfo() const;
 
     void setEnableAgent(bool b);
-    Q_REQUIRED_RESULT bool enabledAgent() const;
+    [[nodiscard]] bool enabledAgent() const;
 
-    Q_REQUIRED_RESULT QString printCurrentListInfo() const;
+    [[nodiscard]] QString printCurrentListInfo() const;
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 Q_SIGNALS:
     void needUpdateConfigDialogBox();

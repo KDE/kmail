@@ -87,8 +87,8 @@ private:
     void slotVCardRemoved();
     void slotHelp();
 
-    Q_REQUIRED_RESULT bool keyMatchesEmailAddress(const GpgME::Key &key, const QString &email);
-    Q_REQUIRED_RESULT bool checkFolderExists(const QString &folder);
+    [[nodiscard]] bool keyMatchesEmailAddress(const GpgME::Key &key, const QString &email);
+    [[nodiscard]] bool checkFolderExists(const QString &folder);
     void updateVcardButton();
     void editVcard(const QString &filename);
     void unregisterSpecialCollection(qint64 id);

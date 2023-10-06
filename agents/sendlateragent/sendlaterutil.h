@@ -16,17 +16,17 @@ class SendLaterInfo;
 /** Send later utilities. */
 namespace SendLaterUtil
 {
-Q_REQUIRED_RESULT bool compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right);
+[[nodiscard]] bool compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right);
 
-Q_REQUIRED_RESULT KSharedConfig::Ptr defaultConfig();
+[[nodiscard]] KSharedConfig::Ptr defaultConfig();
 
 void writeSendLaterInfo(KSharedConfig::Ptr config, MessageComposer::SendLaterInfo *info);
-Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *readSendLaterInfo(KConfigGroup &config);
+[[nodiscard]] MessageComposer::SendLaterInfo *readSendLaterInfo(KConfigGroup &config);
 
-Q_REQUIRED_RESULT bool sentLaterAgentEnabled();
+[[nodiscard]] bool sentLaterAgentEnabled();
 
 void changeRecurrentDate(MessageComposer::SendLaterInfo *info);
 void forceReparseConfiguration();
 
-Q_REQUIRED_RESULT QString sendLaterPattern();
+[[nodiscard]] QString sendLaterPattern();
 }

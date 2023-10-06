@@ -25,9 +25,9 @@ public:
     explicit IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent = nullptr);
     ~IdentityAddVcardDialog() override;
 
-    Q_REQUIRED_RESULT DuplicateMode duplicateMode() const;
-    Q_REQUIRED_RESULT QString duplicateVcardFromIdentity() const;
-    Q_REQUIRED_RESULT QUrl existingVCard() const;
+    [[nodiscard]] DuplicateMode duplicateMode() const;
+    [[nodiscard]] QString duplicateVcardFromIdentity() const;
+    [[nodiscard]] QUrl existingVCard() const;
 
 private:
     QButtonGroup *const mButtonGroup;

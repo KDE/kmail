@@ -56,7 +56,7 @@ public:
     /**
      * @return true if the metafile is placeable.
      */
-    Q_REQUIRED_RESULT bool isPlaceable() const
+    [[nodiscard]] bool isPlaceable() const
     {
         return mIsPlaceable;
     }
@@ -64,7 +64,7 @@ public:
     /**
      * @return true if the metafile is enhanced.
      */
-    Q_REQUIRED_RESULT bool isEnhanced() const
+    [[nodiscard]] bool isEnhanced() const
     {
         return mIsEnhanced;
     }
@@ -72,7 +72,7 @@ public:
     /**
      * @return bounding rectangle
      */
-    Q_REQUIRED_RESULT QRect bbox() const
+    [[nodiscard]] QRect bbox() const
     {
         return mBBox;
     }

@@ -151,8 +151,8 @@ public:
                             const QString &textSelection = QString(),
                             const QString &customTemplate = QString());
 
-    Q_REQUIRED_RESULT QString dbusObjectPath() const override;
-    Q_REQUIRED_RESULT QString smartQuote(const QString &msg);
+    [[nodiscard]] QString dbusObjectPath() const override;
+    [[nodiscard]] QString smartQuote(const QString &msg);
 
     /**
      * Start of D-Bus callable stuff. The D-Bus methods need to be public slots,
@@ -218,7 +218,7 @@ public: // kmkernel, kmcommands, callback
     /**
      * Returns @c true while the message composing is in progress.
      */
-    Q_REQUIRED_RESULT bool isComposing() const override;
+    [[nodiscard]] bool isComposing() const override;
 
     /** Disabled signing and encryption completely for this composer window. */
     void setSigningAndEncryptionDisabled(bool v) override;
@@ -244,8 +244,8 @@ public: // kmkernel, kmcommands, callback
 
     void addExtraCustomHeaders(const QMap<QByteArray, QString> &header) override;
 
-    Q_REQUIRED_RESULT MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
-    Q_REQUIRED_RESULT bool processModifyText(QKeyEvent *event);
+    [[nodiscard]] MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertPlainText(MessageComposer::TextPart *textPart);
+    [[nodiscard]] bool processModifyText(QKeyEvent *event);
 
 private:
     /**
@@ -256,8 +256,8 @@ private:
     /**
      * Returns true if the message was modified by the user.
      */
-    Q_REQUIRED_RESULT bool isModified() const;
-    Q_REQUIRED_RESULT bool isComposerModified() const;
+    [[nodiscard]] bool isModified() const;
+    [[nodiscard]] bool isComposerModified() const;
     void changeModifiedState(bool modified);
 
 public Q_SLOTS: // kmkernel, callback
@@ -434,17 +434,17 @@ public: // kmcommand
     void addAttach(KMime::Content *msgPart) override;
 
     const KIdentityManagementCore::Identity &identity() const;
-    Q_REQUIRED_RESULT bool pgpAutoSign() const;
-    Q_REQUIRED_RESULT bool pgpAutoEncrypt() const;
+    [[nodiscard]] bool pgpAutoSign() const;
+    [[nodiscard]] bool pgpAutoEncrypt() const;
 
     /** Don't check for forgotten attachments for a mail, eg. when sending out invitations. */
     void disableForgottenAttachmentsCheck() override;
 
-    Q_REQUIRED_RESULT uint currentIdentity() const;
+    [[nodiscard]] uint currentIdentity() const;
     QList<KToggleAction *> customToolsList() const;
     QList<QAction *> pluginToolsActionListForPopupMenu() const;
 
-    Q_REQUIRED_RESULT ModeType modeType() const;
+    [[nodiscard]] ModeType modeType() const;
     void setModeType(KMComposerWin::ModeType modeType);
 
 protected:
@@ -457,7 +457,7 @@ private:
      */
     void readConfig(bool reload = false);
 
-    Q_REQUIRED_RESULT QUrl insertFile();
+    [[nodiscard]] QUrl insertFile();
     /**
      * Updates the visibility and text of the signature and encryption state indicators.
      */
@@ -467,7 +467,7 @@ private:
     void sendNow(bool shortcutUsed);
 
     void updateSignature(uint uoid, uint uOldId);
-    Q_REQUIRED_RESULT Kleo::CryptoMessageFormat cryptoMessageFormat() const;
+    [[nodiscard]] Kleo::CryptoMessageFormat cryptoMessageFormat() const;
     void printComposeResult(KJob *job, bool preview);
     void printComposer(bool preview);
     /**
@@ -501,7 +501,7 @@ private:
      * Checks how many recipients are and warns if there are too many.
      * @return true, if the user accepted the warning and the message should be sent
      */
-    Q_REQUIRED_RESULT bool checkRecipientNumber() const;
+    [[nodiscard]] bool checkRecipientNumber() const;
 
     /**
      * Initialization methods
@@ -513,13 +513,13 @@ private:
     /**
      * Header fields.
      */
-    Q_REQUIRED_RESULT QString subject() const;
-    Q_REQUIRED_RESULT QString from() const;
+    [[nodiscard]] QString subject() const;
+    [[nodiscard]] QString from() const;
 
     /**
      * Ask for confirmation if the message was changed before close.
      */
-    Q_REQUIRED_RESULT bool queryClose() override;
+    [[nodiscard]] bool queryClose() override;
 
     /**
      * Turn encryption on/off. If setByUser is true then a message box is shown
@@ -533,7 +533,7 @@ private:
      */
     void setSigning(bool sign, bool setByUser = false);
 
-    Q_REQUIRED_RESULT MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
+    [[nodiscard]] MessageComposer::ComposerViewBase::MissingAttachment userForgotAttachment();
     /**
      * Send the message.
      */
@@ -552,12 +552,12 @@ private:
      *
      * The caller takes ownership of the composer.
      */
-    Q_REQUIRED_RESULT MessageComposer::Composer *createSimpleComposer();
+    [[nodiscard]] MessageComposer::Composer *createSimpleComposer();
 
-    Q_REQUIRED_RESULT bool canSignEncryptAttachments() const;
+    [[nodiscard]] bool canSignEncryptAttachments() const;
 
     // helper method for rethinkFields
-    Q_REQUIRED_RESULT int calcColumnWidth(int which, long allShowing, int width) const;
+    [[nodiscard]] int calcColumnWidth(int which, long allShowing, int width) const;
 
 private:
     enum CryptoKeyState {
@@ -580,18 +580,18 @@ private:
     void insertUrls(const QMimeData *source, const QList<QUrl> &urlList);
     void initializePluginActions();
     bool showErrorMessage(KJob *job);
-    Q_REQUIRED_RESULT int validateLineWrapWidth() const;
+    [[nodiscard]] int validateLineWrapWidth() const;
     void slotSelectionChanged();
     void slotMessage(const QString &str);
     void slotEditorPluginInsertText(const QString &str);
     void insertSnippetInfo(const MailCommon::SnippetInfo &info);
-    Q_REQUIRED_RESULT bool sendLaterRegistered() const;
+    [[nodiscard]] bool sendLaterRegistered() const;
     void slotRecipientEditorLineFocused();
     void updateHamburgerMenu();
     void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
 
-    Q_REQUIRED_RESULT bool sign() const;
+    [[nodiscard]] bool sign() const;
 
     std::unique_ptr<Kleo::KeyResolverCore> fillKeyResolver();
     void runKeyResolver();

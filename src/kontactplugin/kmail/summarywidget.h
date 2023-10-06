@@ -40,7 +40,7 @@ class SummaryWidget : public KontactInterface::Summary
 public:
     SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent);
 
-    Q_REQUIRED_RESULT int summaryHeight() const override;
+    [[nodiscard]] int summaryHeight() const override;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *e) override;

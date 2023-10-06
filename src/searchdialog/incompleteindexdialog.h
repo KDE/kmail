@@ -31,7 +31,7 @@ private:
     void slotStopIndexing();
     void readConfig();
     void writeConfig();
-    Q_REQUIRED_RESULT QList<qlonglong> collectionsToReindex() const;
+    [[nodiscard]] QList<qlonglong> collectionsToReindex() const;
     void waitForIndexer();
     void updateAllSelection(bool select);
 

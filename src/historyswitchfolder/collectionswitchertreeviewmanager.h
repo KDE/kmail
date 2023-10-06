@@ -23,7 +23,7 @@ public:
 
     void addActions(const QList<QAction *> &lst);
 
-    Q_REQUIRED_RESULT QWidget *parentWidget() const;
+    [[nodiscard]] QWidget *parentWidget() const;
     void setParentWidget(QWidget *newParentWidget);
 
     void selectForward();
@@ -32,7 +32,7 @@ public:
 
     void addHistory(const Akonadi::Collection &currentCol, const QString &fullPath);
 
-    Q_REQUIRED_RESULT CollectionSwitcherTreeView *collectionSwitcherTreeView() const;
+    [[nodiscard]] CollectionSwitcherTreeView *collectionSwitcherTreeView() const;
 
 Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);

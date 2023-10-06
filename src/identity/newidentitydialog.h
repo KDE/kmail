@@ -36,9 +36,9 @@ public:
     };
     explicit NewIdentityDialog(KIdentityManagementCore::IdentityManager *manager, QWidget *parent = nullptr);
 
-    Q_REQUIRED_RESULT QString identityName() const;
-    Q_REQUIRED_RESULT QString duplicateIdentity() const;
-    Q_REQUIRED_RESULT DuplicateMode duplicateMode() const;
+    [[nodiscard]] QString identityName() const;
+    [[nodiscard]] QString duplicateIdentity() const;
+    [[nodiscard]] DuplicateMode duplicateMode() const;
 
 private:
     void slotHelp();

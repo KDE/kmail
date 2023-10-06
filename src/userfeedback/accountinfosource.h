@@ -13,10 +13,10 @@ class KMAILTESTS_TESTS_EXPORT AccountInfoSource : public KUserFeedback::Abstract
 public:
     AccountInfoSource();
 
-    Q_REQUIRED_RESULT QString name() const override;
-    Q_REQUIRED_RESULT QString description() const override;
+    [[nodiscard]] QString name() const override;
+    [[nodiscard]] QString description() const override;
 
-    Q_REQUIRED_RESULT QVariant data() override;
+    [[nodiscard]] QVariant data() override;
 
 private:
     void updateAccountInfo(const QString &resourceName, int numberOfResource, QVariantList &l);

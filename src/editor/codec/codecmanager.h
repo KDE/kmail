@@ -20,7 +20,7 @@ public:
     /**
       A list of preferred charsets to use when composing messages.
     */
-    Q_REQUIRED_RESULT QList<QByteArray> preferredCharsets() const;
+    [[nodiscard]] QList<QByteArray> preferredCharsets() const;
 
     /**
       Re-read the preferred charsets from settings.

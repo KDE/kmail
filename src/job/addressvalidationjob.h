@@ -22,7 +22,7 @@ public:
 
     void start() override;
 
-    Q_REQUIRED_RESULT bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
     void setDefaultDomain(const QString &domainName);
 

@@ -31,7 +31,7 @@ public:
     Attachment(QTreeWidget *parent, KTNEFAttach *attach);
     ~Attachment() override;
 
-    Q_REQUIRED_RESULT KTNEFAttach *getAttachment() const
+    [[nodiscard]] KTNEFAttach *getAttachment() const
     {
         return mAttach;
     }

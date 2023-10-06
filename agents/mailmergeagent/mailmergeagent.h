@@ -16,10 +16,10 @@ public:
     explicit MailMergeAgent(const QString &id);
     ~MailMergeAgent() override;
 
-    Q_REQUIRED_RESULT QString printDebugInfo() const;
+    [[nodiscard]] QString printDebugInfo() const;
 
     void setEnableAgent(bool b);
-    Q_REQUIRED_RESULT bool enabledAgent() const;
+    [[nodiscard]] bool enabledAgent() const;
 
     void removeItem(qint64 item);
 Q_SIGNALS:

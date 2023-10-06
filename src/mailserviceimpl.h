@@ -21,20 +21,20 @@ class MailServiceImpl : public QObject
     Q_OBJECT
 public:
     explicit MailServiceImpl(QObject *parent = nullptr);
-    Q_REQUIRED_RESULT bool sendMessage(const QString &from,
-                                       const QString &to,
-                                       const QString &cc,
-                                       const QString &bcc,
-                                       const QString &subject,
-                                       const QString &body,
-                                       const QStringList &attachments);
+    [[nodiscard]] bool sendMessage(const QString &from,
+                                   const QString &to,
+                                   const QString &cc,
+                                   const QString &bcc,
+                                   const QString &subject,
+                                   const QString &body,
+                                   const QStringList &attachments);
 
-    Q_REQUIRED_RESULT bool sendMessage(const QString &from,
-                                       const QString &to,
-                                       const QString &cc,
-                                       const QString &bcc,
-                                       const QString &subject,
-                                       const QString &body,
-                                       const QByteArray &attachment);
+    [[nodiscard]] bool sendMessage(const QString &from,
+                                   const QString &to,
+                                   const QString &cc,
+                                   const QString &bcc,
+                                   const QString &subject,
+                                   const QString &body,
+                                   const QByteArray &attachment);
 };
 }

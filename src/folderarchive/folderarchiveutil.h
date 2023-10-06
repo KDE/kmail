@@ -10,8 +10,8 @@ namespace FolderArchive
 {
 namespace FolderArchiveUtil
 {
-Q_REQUIRED_RESULT QString groupConfigPattern();
-Q_REQUIRED_RESULT bool resourceSupportArchiving(const QString &resource);
-Q_REQUIRED_RESULT QString configFileName();
+[[nodiscard]] QString groupConfigPattern();
+[[nodiscard]] bool resourceSupportArchiving(const QString &resource);
+[[nodiscard]] QString configFileName();
 }
 }

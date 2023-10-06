@@ -39,12 +39,12 @@ public:
 
     void sendDone(MessageComposer::SendLaterInfo *info);
     void sendError(MessageComposer::SendLaterInfo *info, ErrorType type);
-    Q_REQUIRED_RESULT QString printDebugInfo() const;
+    [[nodiscard]] QString printDebugInfo() const;
 
     void stopAll();
-    Q_REQUIRED_RESULT bool itemRemoved(Akonadi::Item::Id id);
+    [[nodiscard]] bool itemRemoved(Akonadi::Item::Id id);
 
-    Q_REQUIRED_RESULT MessageComposer::AkonadiSender *sender() const;
+    [[nodiscard]] MessageComposer::AkonadiSender *sender() const;
 
     void sendNow(Akonadi::Item::Id id);
 
@@ -57,9 +57,9 @@ public Q_SLOTS:
 private:
     void slotCreateJob();
     void createSendInfoList();
-    Q_REQUIRED_RESULT QString infoToStr(MessageComposer::SendLaterInfo *info) const;
+    [[nodiscard]] QString infoToStr(MessageComposer::SendLaterInfo *info) const;
     void removeLaterInfo(MessageComposer::SendLaterInfo *info);
-    Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
+    [[nodiscard]] MessageComposer::SendLaterInfo *searchInfo(Akonadi::Item::Id id);
     void recreateSendList();
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);

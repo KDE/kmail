@@ -95,7 +95,7 @@ private:
     void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
     void createTagActions(const QList<MailCommon::Tag::Ptr> &);
     void checkTags(const QList<qint64> &tags);
-    Q_REQUIRED_RESULT QList<qint64> checkedTags() const;
+    [[nodiscard]] QList<qint64> checkedTags() const;
 
     KActionCollection *const mActionCollection;
     MessageActions *const mMessageActions;

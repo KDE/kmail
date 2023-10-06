@@ -25,8 +25,8 @@ public:
 private:
     void slotConfigureClicked(const QString &configureGroupName, const QString &identifier);
     void initializeAgentPlugins();
-    Q_REQUIRED_RESULT PimCommon::PluginUtilData createAgentPluginData(const QString &agentIdentifier, const QString &path);
-    Q_REQUIRED_RESULT bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
+    [[nodiscard]] PimCommon::PluginUtilData createAgentPluginData(const QString &agentIdentifier, const QString &path);
+    [[nodiscard]] bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
     void changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable);
     void saveAkonadiAgent();
     QList<PluginItem *> mPluginEditorItems;

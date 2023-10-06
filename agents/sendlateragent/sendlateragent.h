@@ -19,10 +19,10 @@ public:
     explicit SendLaterAgent(const QString &id);
     ~SendLaterAgent() override;
 
-    Q_REQUIRED_RESULT QString printDebugInfo() const;
+    [[nodiscard]] QString printDebugInfo() const;
 
     void setEnableAgent(bool b);
-    Q_REQUIRED_RESULT bool enabledAgent() const;
+    [[nodiscard]] bool enabledAgent() const;
 
 Q_SIGNALS:
     void needUpdateConfigDialogBox();

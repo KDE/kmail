@@ -38,8 +38,8 @@ public:
     void insertBox(std::unique_ptr<UnifiedMailbox> box);
     void removeBox(const QString &id);
 
-    Q_REQUIRED_RESULT UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
-    Q_REQUIRED_RESULT UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
+    [[nodiscard]] UnifiedMailbox *unifiedMailboxForSource(qint64 source) const;
+    [[nodiscard]] UnifiedMailbox *unifiedMailboxFromCollection(const Akonadi::Collection &col) const;
 
     inline auto begin() const
     {
@@ -51,7 +51,7 @@ public:
         return mMailboxes.end();
     }
 
-    Q_REQUIRED_RESULT static bool isUnifiedMailbox(const Akonadi::Collection &col);
+    [[nodiscard]] static bool isUnifiedMailbox(const Akonadi::Collection &col);
 
     // Internal change recorder, for unittests
     Akonadi::ChangeRecorder &changeRecorder();

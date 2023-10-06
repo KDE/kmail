@@ -41,7 +41,7 @@ class ComposerPageGeneralTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageGeneralTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -79,7 +79,7 @@ class ComposerPageTemplatesTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageTemplatesTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -96,7 +96,7 @@ class ComposerPageCustomTemplatesTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageCustomTemplatesTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -112,7 +112,7 @@ class ComposerPageSubjectTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageSubjectTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -132,7 +132,7 @@ class ComposerPageCharsetTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageCharsetTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -151,7 +151,7 @@ class ComposerPageHeadersTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageHeadersTab(QWidget *parent = nullptr);
-    Q_REQUIRED_RESULT QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 

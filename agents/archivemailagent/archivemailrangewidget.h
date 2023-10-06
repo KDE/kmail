@@ -15,10 +15,10 @@ public:
     explicit ArchiveMailRangeWidget(QWidget *parent = nullptr);
     ~ArchiveMailRangeWidget() override;
 
-    Q_REQUIRED_RESULT bool isRangeEnabled() const;
+    [[nodiscard]] bool isRangeEnabled() const;
     void setRangeEnabled(bool isEnabled);
 
-    Q_REQUIRED_RESULT QList<int> range() const;
+    [[nodiscard]] QList<int> range() const;
     void setRange(const QList<int> &hours);
 
 private:

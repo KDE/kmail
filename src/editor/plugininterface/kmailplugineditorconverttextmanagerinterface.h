@@ -21,19 +21,19 @@ class KMailPluginEditorConvertTextManagerInterface : public QObject
 public:
     explicit KMailPluginEditorConvertTextManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorConvertTextManagerInterface() override;
-    Q_REQUIRED_RESULT QWidget *parentWidget() const;
+    [[nodiscard]] QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
-    Q_REQUIRED_RESULT KActionCollection *actionCollection() const;
+    [[nodiscard]] KActionCollection *actionCollection() const;
     void setActionCollection(KActionCollection *actionCollection);
 
     void initializePlugins();
 
-    Q_REQUIRED_RESULT KPIMTextEdit::RichTextComposer *richTextEditor() const;
+    [[nodiscard]] KPIMTextEdit::RichTextComposer *richTextEditor() const;
     void setRichTextEditor(KPIMTextEdit::RichTextComposer *richTextEditor);
 
-    Q_REQUIRED_RESULT QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
-    Q_REQUIRED_RESULT QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
+    [[nodiscard]] QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> actionsType();
+    [[nodiscard]] QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
     MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
@@ -42,7 +42,7 @@ public:
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
     void enableDisablePluginActions(bool richText);
 
-    Q_REQUIRED_RESULT QList<QWidget *> statusBarWidgetList();
+    [[nodiscard]] QList<QWidget *> statusBarWidgetList();
 Q_SIGNALS:
     void reformatingTextDone();
 

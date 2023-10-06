@@ -32,22 +32,22 @@ public:
     ~AddArchiveMailDialog() override;
 
     void setArchiveType(MailCommon::BackupJob::ArchiveType type);
-    Q_REQUIRED_RESULT MailCommon::BackupJob::ArchiveType archiveType() const;
+    [[nodiscard]] MailCommon::BackupJob::ArchiveType archiveType() const;
 
     void setRecursive(bool b);
-    Q_REQUIRED_RESULT bool recursive() const;
+    [[nodiscard]] bool recursive() const;
 
     void setSelectedFolder(const Akonadi::Collection &collection);
-    Q_REQUIRED_RESULT Akonadi::Collection selectedFolder() const;
+    [[nodiscard]] Akonadi::Collection selectedFolder() const;
 
-    Q_REQUIRED_RESULT QUrl path() const;
+    [[nodiscard]] QUrl path() const;
     void setPath(const QUrl &);
 
     ArchiveMailInfo *info();
 
     void setMaximumArchiveCount(int);
 
-    Q_REQUIRED_RESULT int maximumArchiveCount() const;
+    [[nodiscard]] int maximumArchiveCount() const;
 
 private:
     void slotFolderChanged(const Akonadi::Collection &);

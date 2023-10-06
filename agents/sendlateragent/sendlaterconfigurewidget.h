@@ -24,7 +24,7 @@ public:
     ~SendLaterItem() override;
 
     void setInfo(MessageComposer::SendLaterInfo *info);
-    Q_REQUIRED_RESULT MessageComposer::SendLaterInfo *info() const;
+    [[nodiscard]] MessageComposer::SendLaterInfo *info() const;
 
 private:
     MessageComposer::SendLaterInfo *mInfo = nullptr;
@@ -49,7 +49,7 @@ public:
     void saveTreeWidgetHeader(KConfigGroup &group);
     void restoreTreeWidgetHeader(const QByteArray &group);
     void needToReload();
-    Q_REQUIRED_RESULT QList<Akonadi::Item::Id> messagesToRemove() const;
+    [[nodiscard]] QList<Akonadi::Item::Id> messagesToRemove() const;
 
 Q_SIGNALS:
     void sendNow(Akonadi::Item::Id);

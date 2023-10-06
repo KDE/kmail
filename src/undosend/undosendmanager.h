@@ -18,8 +18,8 @@ public:
         QString to;
         qint64 index = -1;
         int delay = -1;
-        Q_REQUIRED_RESULT QString generateMessageInfoText() const;
-        Q_REQUIRED_RESULT bool isValid() const;
+        [[nodiscard]] QString generateMessageInfoText() const;
+        [[nodiscard]] bool isValid() const;
     };
     explicit UndoSendManager(QObject *parent = nullptr);
     ~UndoSendManager() override;

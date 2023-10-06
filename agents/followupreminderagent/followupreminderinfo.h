@@ -21,37 +21,37 @@ public:
     explicit FollowUpReminderInfo(const FollowUpReminderInfo &info);
 
     // Can be invalid.
-    Q_REQUIRED_RESULT Akonadi::Item::Id originalMessageItemId() const;
+    [[nodiscard]] Akonadi::Item::Id originalMessageItemId() const;
     void setOriginalMessageItemId(Akonadi::Item::Id value);
 
-    Q_REQUIRED_RESULT Akonadi::Item::Id todoId() const;
+    [[nodiscard]] Akonadi::Item::Id todoId() const;
     void setTodoId(Akonadi::Item::Id value);
 
-    Q_REQUIRED_RESULT bool isValid() const;
+    [[nodiscard]] bool isValid() const;
 
-    Q_REQUIRED_RESULT QString messageId() const;
+    [[nodiscard]] QString messageId() const;
     void setMessageId(const QString &messageId);
 
     void setTo(const QString &to);
-    Q_REQUIRED_RESULT QString to() const;
+    [[nodiscard]] QString to() const;
 
-    Q_REQUIRED_RESULT QDate followUpReminderDate() const;
+    [[nodiscard]] QDate followUpReminderDate() const;
     void setFollowUpReminderDate(QDate followUpReminderDate);
 
     void writeConfig(KConfigGroup &config, qint32 identifier);
 
-    Q_REQUIRED_RESULT QString subject() const;
+    [[nodiscard]] QString subject() const;
     void setSubject(const QString &subject);
 
-    Q_REQUIRED_RESULT bool operator==(const FollowUpReminderInfo &other) const;
+    [[nodiscard]] bool operator==(const FollowUpReminderInfo &other) const;
 
-    Q_REQUIRED_RESULT bool answerWasReceived() const;
+    [[nodiscard]] bool answerWasReceived() const;
     void setAnswerWasReceived(bool answerWasReceived);
 
-    Q_REQUIRED_RESULT Akonadi::Item::Id answerMessageItemId() const;
+    [[nodiscard]] Akonadi::Item::Id answerMessageItemId() const;
     void setAnswerMessageItemId(Akonadi::Item::Id answerMessageItemId);
 
-    Q_REQUIRED_RESULT qint32 uniqueIdentifier() const;
+    [[nodiscard]] qint32 uniqueIdentifier() const;
     void setUniqueIdentifier(qint32 uniqueIdentifier);
 
 private:

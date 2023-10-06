@@ -14,7 +14,7 @@ public:
     explicit ValidateSendMailShortcut(KActionCollection *actionCollection, QWidget *parent = nullptr);
     ~ValidateSendMailShortcut();
 
-    Q_REQUIRED_RESULT bool validate();
+    [[nodiscard]] bool validate();
 
 private:
     QWidget *const mParent;

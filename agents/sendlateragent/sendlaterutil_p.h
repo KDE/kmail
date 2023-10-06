@@ -14,6 +14,6 @@ class SendLaterInfo;
 
 namespace SendLaterUtil
 {
-Q_REQUIRED_RESULT QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
+[[nodiscard]] QDateTime updateRecurence(SendLater::SendLaterInfo *info, QDateTime dateTime);
 }
 }

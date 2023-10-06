@@ -28,7 +28,7 @@ public:
      * @brief saveVcard
      * @return The file path for current vcard.
      */
-    Q_REQUIRED_RESULT QString saveVcard() const;
+    [[nodiscard]] QString saveVcard() const;
 
     void reject() override;
 Q_SIGNALS:

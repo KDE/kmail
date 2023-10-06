@@ -16,7 +16,7 @@ public:
     explicit SendLaterConfigureDialog(QWidget *parent = nullptr);
     ~SendLaterConfigureDialog() override;
 
-    Q_REQUIRED_RESULT QList<Akonadi::Item::Id> messagesToRemove() const;
+    [[nodiscard]] QList<Akonadi::Item::Id> messagesToRemove() const;
 
 public Q_SLOTS:
     void slotNeedToReloadConfig();

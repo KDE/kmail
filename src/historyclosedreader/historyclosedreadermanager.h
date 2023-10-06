@@ -17,7 +17,7 @@ public:
 
     void addInfo(const HistoryClosedReaderInfo &info);
 
-    Q_REQUIRED_RESULT HistoryClosedReaderInfo lastInfo() const;
+    [[nodiscard]] HistoryClosedReaderInfo lastInfo() const;
 
     void clear();
 

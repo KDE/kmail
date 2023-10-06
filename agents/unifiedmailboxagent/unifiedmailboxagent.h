@@ -31,12 +31,12 @@ public:
     void configure(WId windowId) override;
 
     void setEnableAgent(bool enable);
-    Q_REQUIRED_RESULT bool enabledAgent() const;
+    [[nodiscard]] bool enabledAgent() const;
 
     void retrieveCollections() override;
     void retrieveItems(const Akonadi::Collection &collection) override;
-    Q_REQUIRED_RESULT bool retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts) override;
-    Q_REQUIRED_RESULT bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
+    [[nodiscard]] bool retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts) override;
+    [[nodiscard]] bool retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts) override;
 
 private:
     void delayedInit();

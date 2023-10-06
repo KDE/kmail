@@ -17,7 +17,7 @@ public:
     explicit DisplayMessageFormatActionMenu(QObject *parent = nullptr);
     ~DisplayMessageFormatActionMenu() override;
 
-    Q_REQUIRED_RESULT MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
+    [[nodiscard]] MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat() const;
     void setDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage displayMessageFormat);
 
 Q_SIGNALS:

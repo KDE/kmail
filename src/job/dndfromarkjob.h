@@ -16,7 +16,7 @@ class DndFromArkJob : public QObject
 public:
     explicit DndFromArkJob(QObject *parent = nullptr);
     static bool dndFromArk(const QMimeData *source);
-    Q_REQUIRED_RESULT bool extract(const QMimeData *source);
+    [[nodiscard]] bool extract(const QMimeData *source);
     void setComposerWin(KMComposerWin *composerWin);
 
 private:
