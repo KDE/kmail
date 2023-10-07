@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"POT-Creation-Date: 2023-10-07 01:41+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -4310,7 +4310,7 @@ msgstr ""
 msgid "Opening Autosave File Failed"
 msgstr "Acesso ao Ficheiro de Auto-Gravação sem Sucesso"
 
-#: kmkernel.cpp:1616
+#: kmkernel.cpp:1621
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4319,7 +4319,7 @@ msgstr[0] "Esta identidade foi alterada para usar o transporte predefinido:"
 msgstr[1] ""
 "Estas %1 identidades foram alteradas para usar o transporte predefinido:"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1645
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4328,17 +4328,17 @@ msgstr[0] "Esta identidade foi alterada para usar o transporte modificado:"
 msgstr[1] ""
 "Estas %1 identidades foram alteradas para usar o transporte modificado:"
 
-#: kmkernel.cpp:1655
+#: kmkernel.cpp:1660
 #, kde-format
 msgid "Sending messages"
 msgstr "A enviar as mensagens"
 
-#: kmkernel.cpp:1656
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "A iniciar o processo de envio..."
 
-#: kmkernel.cpp:1735
+#: kmkernel.cpp:1740
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4347,7 +4347,7 @@ msgstr ""
 "O recurso %1 está com problemas.\n"
 "%2"
 
-#: kmkernel.cpp:1911 kmkernel.cpp:1917
+#: kmkernel.cpp:1916 kmkernel.cpp:1922
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

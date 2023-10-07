@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"POT-Creation-Date: 2023-10-07 01:41+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -4303,7 +4303,7 @@ msgstr ""
 msgid "Opening Autosave File Failed"
 msgstr "Nepavyko atidaryti automatinio saugojimo failo"
 
-#: kmkernel.cpp:1616
+#: kmkernel.cpp:1621
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4313,7 +4313,7 @@ msgstr[1] "Šios %1 tapatybės buvo pakeistos ir naudos numatytą transportą:"
 msgstr[2] "Šios %1 tapatybių buvo pakeistos ir naudos numatytą transportą:"
 msgstr[3] "%1 tapatybė buvo pakeista ir naudos numatytą transportą:"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1645
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4325,17 +4325,17 @@ msgstr[2] ""
 "Šios %1 tapatybių buvo pakeistos ir turi naudoti modifikuotą transportą:"
 msgstr[3] "%1 tapatybė buvo pakeista ir turi naudoti modifikuotą transportą:"
 
-#: kmkernel.cpp:1655
+#: kmkernel.cpp:1660
 #, kde-format
 msgid "Sending messages"
 msgstr "Siunčiami laiškai"
 
-#: kmkernel.cpp:1656
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Ruošiamasi siųsti..."
 
-#: kmkernel.cpp:1735
+#: kmkernel.cpp:1740
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4343,7 +4343,7 @@ msgid ""
 "%2"
 msgstr "Resursas %1 yra sugadintas."
 
-#: kmkernel.cpp:1911 kmkernel.cpp:1917
+#: kmkernel.cpp:1916 kmkernel.cpp:1922
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

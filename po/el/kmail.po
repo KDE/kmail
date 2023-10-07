@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"POT-Creation-Date: 2023-10-07 01:41+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4495,7 +4495,7 @@ msgstr ""
 msgid "Opening Autosave File Failed"
 msgstr "Το άνοιγμα του αρχείου αυτόματης αποθήκευσης απέτυχε"
 
-#: kmkernel.cpp:1616
+#: kmkernel.cpp:1621
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4507,7 +4507,7 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "προκαθορισμένο μεταφορέα:"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1645
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4519,17 +4519,17 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "τροποποιημένο μεταφορέα:"
 
-#: kmkernel.cpp:1655
+#: kmkernel.cpp:1660
 #, kde-format
 msgid "Sending messages"
 msgstr "Αποστολή μηνυμάτων"
 
-#: kmkernel.cpp:1656
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Αρχικοποίηση διαδικασίας αποστολής..."
 
-#: kmkernel.cpp:1735
+#: kmkernel.cpp:1740
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4537,7 +4537,7 @@ msgid ""
 "%2"
 msgstr "Ο πόρος %1 είναι σπασμένος."
 
-#: kmkernel.cpp:1911 kmkernel.cpp:1917
+#: kmkernel.cpp:1916 kmkernel.cpp:1922
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"POT-Creation-Date: 2023-10-07 01:41+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -4608,7 +4608,7 @@ msgstr ""
 msgid "Opening Autosave File Failed"
 msgstr "It automatysk bewarjen is mislearre"
 
-#: kmkernel.cpp:1616
+#: kmkernel.cpp:1621
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the default transport:"
 #| msgid_plural ""
@@ -4620,7 +4620,7 @@ msgstr[0] "Dizze identiteit is feroare om it standert transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it standert transport te brûken:"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1645
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the modified transport:"
 #| msgid_plural ""
@@ -4632,25 +4632,25 @@ msgstr[0] " Dizze identiteit is feroare om it oanpaste transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it oanpaste transport te brûken:"
 
-#: kmkernel.cpp:1655
+#: kmkernel.cpp:1660
 #, kde-format
 msgid "Sending messages"
 msgstr "Berjjochten wurde ferstjoerd"
 
-#: kmkernel.cpp:1656
+#: kmkernel.cpp:1661
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "Ferstjoerdproses wurdt ïnitsjonalisearre..."
 
-#: kmkernel.cpp:1735
+#: kmkernel.cpp:1740
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1911 kmkernel.cpp:1917
+#: kmkernel.cpp:1916 kmkernel.cpp:1922
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

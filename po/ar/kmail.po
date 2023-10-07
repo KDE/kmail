@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-26 01:46+0000\n"
+"POT-Creation-Date: 2023-10-07 01:41+0000\n"
 "PO-Revision-Date: 2023-08-19 22:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4224,7 +4224,7 @@ msgstr ""
 msgid "Opening Autosave File Failed"
 msgstr "فشل فتح الملفّ المحفوظ آليًّا"
 
-#: kmkernel.cpp:1616
+#: kmkernel.cpp:1621
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4236,7 +4236,7 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل الافتر
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 
-#: kmkernel.cpp:1640
+#: kmkernel.cpp:1645
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4248,17 +4248,17 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل المعدّ
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 
-#: kmkernel.cpp:1655
+#: kmkernel.cpp:1660
 #, kde-format
 msgid "Sending messages"
 msgstr "يرسل الرّسائل"
 
-#: kmkernel.cpp:1656
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "يمهّد عمليّة الإرسال..."
 
-#: kmkernel.cpp:1735
+#: kmkernel.cpp:1740
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4267,7 +4267,7 @@ msgstr ""
 "المورد %1 معطوب.\n"
 "%2"
 
-#: kmkernel.cpp:1911 kmkernel.cpp:1917
+#: kmkernel.cpp:1916 kmkernel.cpp:1922
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
