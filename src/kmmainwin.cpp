@@ -27,6 +27,7 @@
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
+#include <QWindow>
 
 #include <QLabel>
 #include <chrono>
@@ -97,6 +98,7 @@ KMMainWin::KMMainWin(QWidget *)
     mShowFullScreenAction = KStandardAction::fullScreen(nullptr, nullptr, this, actionCollection());
     actionCollection()->setDefaultShortcut(mShowFullScreenAction, Qt::Key_F11);
     connect(mShowFullScreenAction, &QAction::toggled, this, &KMMainWin::slotFullScreen);
+    KMKernel::self()->setSystemTryAssociatedWindow(windowHandle());
 }
 
 KMMainWin::~KMMainWin()
