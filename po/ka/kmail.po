@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-10-04 18:55+0200\n"
+"PO-Revision-Date: 2023-10-08 06:45+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -924,6 +924,25 @@ msgid ""
 "- time zone in numeric form (-0500)</li></ul><p><strong>All other input "
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
+"<qt><p><strong>თარიღისთვის, შეგიძლიათ, ეს გამოსახულებები გამოიყენოთ:</"
+"strong></p><ul><li>d - დღის ნომერი 0-ის გარეშე (1-31)</li><li>dd - დღის "
+"ნომერი წინ ნულით, თუ საჭიროა (01-31)</li><li>ddd - დღის შემოკლებული სახელი "
+"(ორშ-კვი)</li><li>dddd - დღის გრძელი სახელი (ორშაბათი - კვირა)</li><li>M - "
+"თვის ნომერი 0-ის გარეშე (1-12)</li><li>MM - თვის ნომერი წინ ნულით, თუ "
+"საჭიროა (01-12)</li><li>MMM - თვის შემოკლებული სახელი (იან - დეკ)</"
+"li><li>MMMM - the თვის გრძელი სახელი (იანვარი - დეკემბერი)</li><li>yy - წელი "
+"ორი ციფრით (00-99)</li><li>yyyy - წელი ოთხი ციფრით (0000-9999)</li></"
+"ul><p><strong>დროისთვის, შეგიძლიათ, ეს გამოსახულებები გამოიყენოთ:</strong></"
+"p> <ul><li>h - საათი ნულის გარეშე (0-23 or 1-12 if AM/PM display)</li><li>hh "
+"- საათი წინ ნულით, თუ საჭიროა (00-23 ან 01-12 თუ AM/PM ნაჩვენებია)</li><li>m "
+"- წუთები ნულის გარეშე (0-59)</li><li>mm - წუთები ნულით, თუ საჭიროა (00-59)</"
+"li><li>s - წამები ნულის გარეშე (0-59)</li><li>ss - წამები წინ ნულით, თუ "
+"საჭიროა (00-59)</li><li>z - მილიწამები წინ ნულის გარეშე (0-999)</li><li>zzz "
+"- მილიწამები წინ ნულით, თუ საჭიროა (000-999)</li><li>AP - AM/PM-ის ჩვენების "
+"გადართვა. AP ჩანაცვლდება \"AM\"-ით ან \"PM\"-ით.</li><li>ap - AM/PM "
+"ჩვენებაზე გადართვა. ap ჩანაცვლდება ან \"am\"-ით, ან \"pm\".</li><li>Z - "
+"დროის სარტყელი რიცხვით ფორმატში (-0500)</li></ul><p><strong>ყველა სხვა "
+"შეყვანილი სიმბოლო გამოტოვებული იქნება.</strong></p></qt>"
 
 #: configuredialog/configureappearancepage.cpp:692
 #, kde-format
@@ -2842,6 +2861,9 @@ msgid ""
 "like it to appear in the email header that is sent out;</p><p>if you leave "
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
+"<qt><h3>თქვენი სახელ</h3><p>ეს ველი თქვენს სახელს ისეთ ფორმაში უნდა "
+"შეიცავდეს, როგორც გნებავთ, ის, გაგზავნილი ელფოსტის თავსართში გამოჩნდეს.</"
+"p><p>თუ ამას ცარიელს დატოვებთ, სახელი არ გამოჩნდება, მხოლოდ ელფოსტა.</p></qt>"
 
 #: identity/identitydialog.cpp:292
 #, kde-format
@@ -2855,6 +2877,9 @@ msgid ""
 "organization if you would like it to be shown in the email header that is "
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
+"<qt><h3>ორგანიზაცია</h3><p>ეს ველი თქვენი ორგანიზაციის სახელს უნდა "
+"შეიცავდეს, თუ გნებავთ, ის გაგზავნილი ელფოსტის თავსართებში გამოჩნდეს.</"
+"p><p>ამ ველის ცარიელად დატოვება უსაფრთხო (და მიღებული) რამაა.</p></qt>"
 
 #: identity/identitydialog.cpp:309
 #, kde-format
@@ -2870,6 +2895,12 @@ msgid ""
 "alias addresses in the field below.</p><p>If you leave this blank, or get it "
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
+"<qt><h3>ელფოსტის მისამართი</h3><p>ეს ველი თქვენს სრულ ელფოსტის მისამართს "
+"უნდა შეიცავდეს.</p><p>ეს მისამართი ძირითადია, გამოიყენება ყველა გამავალი "
+"ელფოსტისთვის. თუ ერთზე მეტი ელფოსტა გაქვთ, ან ახალი იდენტიფიკატორი შექმენით, "
+"ან ქვემოთ ველში შეიყვანეთ დამატებითი ელფოსტის მისამართები.</p><p>თუ ამ ველს "
+"ცარიელს დატოვებთ ან არასწორად შეავსებთ, ხალხს თქვენთვის პასუხის პრობლემები "
+"ექნება.</p></qt>"
 
 #: identity/identitydialog.cpp:333
 #, kde-format
@@ -2886,6 +2917,12 @@ msgid ""
 "th><td>first@example.org<br>last@example.org</td></tr></table><p>Type one "
 "alias address per line.</p></qt>"
 msgstr ""
+"<qt><h3>ელფოსტის ფსევდონიმები</h3><p>ეს ველი შეიცავს ფსევდონიმის "
+"მისამართებს, რომლებიც ამ იდენტიფიკატორის საკუთრებად უნდა განვიხილოთ (იმის "
+"საპირისპიროდ, რაც, საკუთარი იდენტიფიკატორი რომ ჰქონდეს).</p><p>მაგ:</"
+"p><table><tr><th>ძირითადი მისამართი:</th><td>saxeli.gvari@magaliti.ge</td></"
+"tr><tr><th>ფსევდონიმები:</th><td>saxeli@magaliti.ge<br>gvari@magaliti.ge</"
+"td></tr></table><p>ერთი ფსევდონიმი ერთ ხაზზე.</p><qt>"
 
 #: identity/identitydialog.cpp:355
 #, kde-format
@@ -2901,6 +2938,12 @@ msgid ""
 "functions will not be affected.</p><p>You can find out more about keys at "
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
+"<qt><p>OpenPGP-ის გასაღები, რომელსაც აქ აირჩევთ, შეტყობინებების ციფრული "
+"ხელმოწერისთვის იქნება გამოყენებული. ასევე, შეგიძლიათ, გამოიყენოთ GnuPG-ის "
+"გასაღებებიც.</p><p>შეგიძლიათ, ეს ველი ცარიელი დატოვოთ, მაგრამ, ამ "
+"შემთხვევაში KMail თქვენს ელფოსტას OpenPGP-ით ხელს ვერ მოაწერს.. ჩვეულებრივი "
+"ელფოსტის ფუნქციონალს ეს არ შეეხება.</p><p>გასაღებების შესახებ მეტი "
+"ინფორმაცია მიიღეთ ბმულზე <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:367 identity/identitydialog.cpp:391
 #, kde-format
@@ -2927,6 +2970,13 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
+"<qt><p>OpenPGP-ის გასაღები, რომელსაც აქ აირჩევთ, გამოყენებული იქნება "
+"შეტყობინებების დასაშიფრად თქვენთვის და კომპოზიტორში \"ჩემი საჯარო გასაღების "
+"მიმაგრების\" ფუნქციისთვის. ასევე, შეგიძლიათ, GnuPG-ის გასაღებებიც გამოიყენოთ."
+"</p><p>შეგიძლიათ, ეს ველი ცარიელი დატოვოთ, მაგრამ KMail გამავალ "
+"შეტყობინებებს თქვენთვის OpenPGP-ით ვერ დაშიფრავს. ნორმალურ ელფოსტის "
+"ფუნქციონალს ეს არ შეეხება.</p><p>გასაღებების შესახებ მეტი ინფორმაციის მიღება "
+"შეგიძლიათ ბმულზე <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:415
 #, kde-format
@@ -2941,6 +2991,10 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
+"<qt><p>S/MIME (X.509) სერტიფიკატი, რომელსაც აქ აირჩევთ, შეტყობინებებზე "
+"ციფრული ხელმოწერისთვის გამოიყენება.</p><p>შეგიძლიათ, ეს ველი ცარიელი "
+"დატოვოთ, მაგრამ მაშინ KMail-ს არ შეეძლება, ელფოსტებზე S/MIME-ით ციფრული "
+"ხელმოწერა დაასვას. ნორმალურ ელფოსტის ფუნქციონალს ეს არ შეეხება.</p></qt>"
 
 #: identity/identitydialog.cpp:430
 #, kde-format
@@ -2956,6 +3010,11 @@ msgid ""
 "encrypt copies of outgoing messages to you using S/MIME; normal mail "
 "functions will not be affected.</p></qt>"
 msgstr ""
+"<qt><p>S/MIME სერტიფიკატი, რომელსაც აქ აირჩევთ, გამოყენებული იქნება "
+"შეტყობინებების დასაშიფრად თქვენთვის და კომპოზიტორის \"ჩემი სერტიფიკატის "
+"მიმაგრების\" ფუნქციისთვის.</p><p>შეგიძლიათ, ეს ველი ცარიელი დატოვოთ, მაგრამ "
+"KMail-ს არ შეეძლება, გამავალი შეტყობინებები, თქვენამდე, S/MIME-ით დაშიფროს. "
+"ნორმალურ ელფოსტის ფუნქციონალს ეს არ შეეხება.</p></qt>"
 
 #: identity/identitydialog.cpp:450
 #, kde-format
@@ -3036,6 +3095,13 @@ msgid ""
 "email in the <tt>From:</tt> field, but any responses to go to a group "
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
+"<qt><h3>საპასუხო (Reply-To) მისამართები</h3><p>ეს აყენებს <tt>Reply-to:</"
+"tt>თავსართს, რომელიც შეიცავს სხვადასხვა ელფოსტის მისამართებს ნორმალური "
+"<tt>ვისგან:</tt> მისამართს.</p><p>ეს, შეიძლება, იყოს გამოსადეგი, როცა გყავთ "
+"ჯგუფი, რომელიც ერთად, მსგავს როლებზე მუშაობენ. მაგალითად, თუ გსურთ, ყველა "
+"გაგზავნილ ელფოსტას <tt>ვისგან:</tt> ველში თქვენი ელფოსტა ეწეროს, მაგრამ "
+"პასუხი ჯგუფის ელფოსტის მისამართზე მივიდეს.</p><p>თუ პრობლემებს შეეჩეხეთ, ეს "
+"ველი ცარიელი დატოვეთ.</p></qt>"
 
 #: identity/identitydialog.cpp:540
 #, kde-format
@@ -3140,6 +3206,8 @@ msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr ""
+"<qt><p>ნაგულისხმევი დომენი გამოიყენება იმ ელფოსტების დასასრულებლად, "
+"რომლებიც, მხოლოდ, მომხმარებლის სახელისგან შედგებიან.</p></qt>"
 
 #: identity/identitydialog.cpp:661
 #, kde-format
@@ -3190,6 +3258,11 @@ msgid ""
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
+"მორგებული OpenPGP-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
+"მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის "
+"(%1).\n"
+"ამან შეიძლება გამოიწვიოს გაფრთხილების შეტყობინებები მიმღების მხარეს, როცა ის "
+"ამ კონფიგურაციით შექმნილი ხელმოწერების გადამოწმებას შეეცდება."
 
 #: identity/identitydialog.cpp:828
 #, kde-format
@@ -3197,6 +3270,8 @@ msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
+"მორგებული OpenPGP-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
+"მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის (%1)."
 
 #: identity/identitydialog.cpp:835
 #, kde-format
@@ -3206,6 +3281,11 @@ msgid ""
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
+"მორგებული S/MIME-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
+"მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის "
+"(%1).\n"
+"ამან შეიძლება გამოიწვიოს გაფრთხილების შეტყობინებები მიმღების მხარეს, როცა ის "
+"ამ კონფიგურაციით შექმნილი ხელმოწერების გადამოწმებას შეეცდება."
 
 #: identity/identitydialog.cpp:844
 #, kde-format
@@ -3213,6 +3293,8 @@ msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
+"მორგებული S/MIME-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
+"მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის (%1)."
 
 #: identity/identitydialog.cpp:854
 #, kde-format
@@ -3548,6 +3630,11 @@ msgid ""
 "contents will be discarded as well. <p><b>Beware</b> that discarded messages "
 "are not saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ ცარიელი საქაღალდე "
+"<resource>%1</resource> და ყველა მისი ქვესაქაღალდე? ქვესაქაღალდეები, "
+"შეიძლება, ცარიელი არ იყოს და მათი შემცველობაც წაიშლება. <p><b>ფრთხილად</b>, "
+"რადგან მოცილებული შეტყობინებები თქვენს ნაგვის ყუთში არ შეინახება და "
+"სამუდამოდ წაიშლება.</p></qt>"
 
 #: job/removecollectionjob.cpp:83
 #, kde-format
@@ -3556,6 +3643,10 @@ msgid ""
 "discarding its contents? <p><b>Beware</b> that discarded messages are not "
 "saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ საქაღალდე <resource>%1</"
+"resource>, მისი შემცველობის ჩათვლით? <p><b>ფრთხილად იყავით</b>, რადგან "
+"მოცილებული შეტყობინებები თქვენ ნაგვის ყუთში არ შეინახება და სამუდამოდ "
+"წაიშლება.</p></qt>"
 
 #: job/removecollectionjob.cpp:90
 #, kde-format
@@ -3565,6 +3656,10 @@ msgid ""
 "discarded messages are not saved into your Trash folder and are permanently "
 "deleted.</p></qt>"
 msgstr ""
+"<qt>დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ საქაღალდე <resource>%1</"
+"resource> და მისი ყველა ქვესაქაღალდე, მათი შემცველობის ჩათვლით? "
+"<p><b>ფრთხილად იყავით</b>, რადგან მოცილებული შეტყობინებები თქვენ ნაგვის "
+"ყუთში არ შეინახება და სამუდამოდ წაიშლება.</p></qt>"
 
 #: job/removecollectionjob.cpp:97
 #, kde-format
@@ -3812,6 +3907,8 @@ msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
+"გნებავთ, მონიშნული შეტყობინებები, ერთ შეტყობინებაზე, მიმაგრებული (MIME "
+"დაიჯესტის სახით) ფაილების სახით გადააგზავნოთ, თუ ცალ-ცალკე შეტყობინებებად?"
 
 #: kmcommands.cpp:911
 #, kde-format
@@ -4176,6 +4273,9 @@ msgid ""
 "\"spam\" and may increase the likelihood that your system will be "
 "compromised by other present and anticipated security exploits."
 msgstr ""
+"გარე მიმართვების html-ში ჩატვირთვამ შეიძლება უფრო მოწყვლადი გაგხადოთ "
+"\"სპამისთვის\" და, შეიძლება, გაზარდოს შანსი, რომ თქვენი სისტემა გატყდება "
+"არსებული და უცნობი უსაფრთხოების შეცდომების გამოყენებით."
 
 #: kmmainwidget.cpp:1565 kmmainwidget.cpp:4665
 #, kde-format
@@ -4185,7 +4285,7 @@ msgstr "უსაფრთხოების შეტყობინება"
 #: kmmainwidget.cpp:1566
 #, kde-format
 msgid "Load External References"
-msgstr ""
+msgstr "გარე მიმართვების ჩატვირთვა"
 
 #: kmmainwidget.cpp:1638
 #, kde-format
@@ -5000,6 +5100,9 @@ msgid ""
 "increase the likelihood that your system will be compromised by other "
 "present and anticipated security exploits."
 msgstr ""
+"ელფოსტაში HTML-ის გამოყენებამ, შეიძლება, უფრო მოწყვლადი გაგხადოთ \"სპამისთვის"
+"\" და, შეიძლება, გაზარდოს შანსი, რომ თქვენი სისტემა გატყდება არსებული და "
+"უცნობი უსაფრთხოების შეცდომების გამოყენებით."
 
 #: kmmainwidget.cpp:4666
 #, kde-format
@@ -5015,6 +5118,11 @@ msgid ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
+"გაქვთ მორგებული ერთზე მეტი ელფოსტის ანგარიში.\n"
+"გნებავთ ჩართოთ გაერთიანებული ელფოსტის ყუთის ფუნქცია თქვენი შემომავალი, "
+"გაგზავნილი და მონახაზის საქაღალდეების გაერთიანებულად ჩვენებით?\n"
+"შეგიძლიათ, მოირგოთ გაერთიანებული ელფოსტის ყუთები, შექმნათ საკუთარი ან\n"
+"საერთოდ გამორთოთ ეს ფუნქცია KMail-ის დამატების პარამეტრებში."
 
 #: kmmainwidget.cpp:4815
 #, kde-format
@@ -5163,6 +5271,8 @@ msgid ""
 "KMail is now based on the Akonadi Personal Information Management framework, "
 "which brings many changes all around."
 msgstr ""
+"KMail ახლა პირადი ინფორმაციის მართვის პროგრამას, Akonadi-ის იყენებს, რომელიც "
+"ბევრ რამეს ცვლის."
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
@@ -5870,6 +5980,9 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>აირჩიეთ, გნებავთ, თუ არა KMail-მა გააგზავნოს გამავალ საქაღალდეში "
+"არსებული შეტყობინებები ელფოსტის ხელით შემოწმებისას, თუ საერთოდ არ გნებავთ "
+"შეტყობინებების ავტომატური გაგზავნა. </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg.cmake:77
@@ -5902,6 +6015,8 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
+"მიუთითებს შეტყობინებაში ჩასასმელ მომხმარებლის MIME თავსართების რაოდენობას "
+"(მხოლოდ შიდა გამოყენებისთვის)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.cmake:111
@@ -5964,6 +6079,8 @@ msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
 msgstr ""
+"ვკითხო თუ არა მომხმარებლებს, გაერთიანებული ელფოსტის ყუთი ჩართოს, თუ "
+"აღმოჩენილია ერთზე მეტი ელფოსტის ანგარიში. კითხვას მხოლოდ ერთხელ დაგისვამთ."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
 #: settings/kmail.kcfg.cmake:171
@@ -6002,6 +6119,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"თუ მიმღებების რაოდენობა ამ მნიშვნელობაზე დიდია, KMail გაგაფრთხილებთ ამის "
+"შესახებ და გაგზავნისთვის უფლებას გკითხავთ. გაფრთხილება, შეგიძლიათ, გამორთოთ."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.cmake:212
@@ -6046,6 +6165,9 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
+"შეგიძლიათ, კომპოზიტორის ფანჯარაში არსებული ტექსტის ავტომატური მარქაფი "
+"შექმნათ. ინტერვალი, რომელში ერთხელაც მარქაფი იქმნება, აქ შეგიძლიათ, "
+"დააყენოთ. ავტომატური შენახვის გამორთვა მნიშვნელობის 0-ზე დაყენებით შეგიძლიათ."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.cmake:254
@@ -6390,6 +6512,10 @@ msgid ""
 "for priority reindexing. If you uncheck a folder it may still be indexed "
 "later, unless it was manually excluded from indexing."
 msgstr ""
+"ზოგიერთი საქაღალდე, რომელში ძებნაც გნებავთ, ჯერ სრულად არ დაინდექსებულა, ან "
+"ამოღებულია დაინდექსებიდან. ქვემოთ ჩამოთვლილი საქაღალდეების რეინდექსი კი "
+"პრიორიტეტულად მოხდება. თუ საქაღალდეს გამორთავთ, ის შეიძლება, ჯერ კიდევ "
+"დაინდექსდეს მოგვიანებით, თუ ის დაინდექსებიდან ხელით არ ამოიღეთ."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
@@ -6725,6 +6851,13 @@ msgid ""
 "The recommended SPHINX setting is 14 days.\n"
 "</p></qt>"
 msgstr ""
+"<qt>\n"
+"<h1>გაფრთხილება, თუ ჯაჭვში სერტიფიკატს ვადა გასდის</h1>\n"
+"დააყენეთ დღეების მინიმალური რაოდენობა, რომლის განმავლობაშიც ჯაჭვის ყველა "
+"სერტიფიკატი ვარგისი უნდა იყოს, გაფრთხილების გარეშე.\n"
+"<p>\n"
+"რეკომენდებული SPHINX პარამეტრია 14 დღე.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:205
@@ -6738,6 +6871,13 @@ msgid ""
 "The recommended SPHINX setting is 14 days.\n"
 "</p></qt>"
 msgstr ""
+"<qt>\n"
+"<h1>გაფრთხილება, თუ დაშიფვრის სერტიფიკატს ვადა გასდის</h1>\n"
+"დააყენეთ დღეების მინიმალური რაოდენობა, რომლის განმავლობაშიც დაშიფვრის "
+"სერტიფიკატი ვარგისი უნდა იყოს, გაფრთხილების გარეშე.\n"
+"<p>\n"
+"რეკომენდებული SPHINX პარამეტრია 14 დღე.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
@@ -6757,6 +6897,13 @@ msgid ""
 "The recommended SPHINX setting is 30 days.\n"
 "</p></qt>"
 msgstr ""
+"<qt>\n"
+"<h1>გაფრთხილება, თუ საკუთარ სერტიფიკატს ვადა გასდის</h1>\n"
+"დააყენეთ დღეების მინიმალური რაოდენობა, რომლის განმავლობაშიც საკუთარი "
+"სერტიფიკატი ვარგისი უნდა იყოს, გაფრთხილების გარეშე.\n"
+"<p>\n"
+"რეკომენდებული SPHINX პარამეტრია 30 დღე.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -6776,6 +6923,13 @@ msgid ""
 "The recommended SPHINX setting is 14 days.\n"
 "</p></qt>"
 msgstr ""
+"<qt>\n"
+"<h1>გაფრთხილება, თუ ძირითად სერტიფიკატს ვადა გასდის</h1>\n"
+"დააყენეთ დღეების მინიმალური რაოდენობა, რომლის განმავლობაშიც ძირითადი "
+"სერტიფიკატი ვარგისი უნდა იყოს, გაფრთხილების გარეშე.\n"
+"<p>\n"
+"რეკომენდებული SPHINX პარამეტრია 14 დღე.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: ui/securitypageencryptiontab.ui:323
@@ -7108,6 +7262,8 @@ msgid ""
 "certificate policy is allowed. If this option is selected, policies are not "
 "checked."
 msgstr ""
+"ნაგულისხმევად GnuPG სერტიფიკატის პოლიტიკის დაშვებულობის შესამოწმებლად ფაილს "
+"~/.gnupg/policies.txt-ს ყენებს. თუ ეს თოლია დასმულია, პოლიტიკა არ შემოწმდება."
 
 #. i18n: ectx: property (text), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:104
@@ -7138,6 +7294,8 @@ msgid ""
 "If this option is checked, missing issuer certificates are fetched when "
 "necessary (this applies to both validation methods, CRLs and OCSP)"
 msgstr ""
+"თუ ეს პარამეტრი ჩართულია, ნაკლული გამომცემლის სერტიფიკატები გამოითხოვება, "
+"როცა ეს საჭიროა (ეხება ორივე CRL და OCSP გადამოწმების მეთოდებს)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:124
@@ -7188,6 +7346,8 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
+"თუ ეს პარამეტრი ჩართულია, HTTP მოთხოვნებისთვის მარჯვენა მხარეს მითითებულ "
+"HTTP პროქსის გამოვიყენებ (მნიშვნელობა მიიღება გარემოს ცვლადიდან http_proxy)."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
@@ -7209,6 +7369,9 @@ msgid ""
 "requests relating to S/MIME. The syntax is host:port, for instance myproxy."
 "nowhere.com:3128."
 msgstr ""
+"აქ შეიყვანეთ თქვენი HTTP პროქსის მდებარეობა, რომელიც S/MIME-სთან "
+"დაკავშირებულ ყველა HTTP მოთხოვნისთვის იქნება გამოყენებული. სინტაქსია ჰოსტი."
+"პორტი. მაგ: myproxy.mycompany.ge:3128."
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabLDAP)
 #: ui/smimeconfiguration.ui:216
@@ -7308,6 +7471,9 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
+"KMail-ს ყველა შეტყობინებასთან ერთად პატარა (48x48 პიქსელი) დაბალი ხარისხის "
+"სურათის გაგზავნა შეუძლია. ეს, მაგალითად, შეიძლება იყოს თქვენი სურათი ან "
+"გლიფი. ის მიმღების ელფოსტის კლიენტში გამოჩნდება (თუ მხარდაჭერილია)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78
