@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-07 01:41+0000\n"
+"POT-Creation-Date: 2023-10-10 01:47+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1889,7 +1889,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Ionchódú"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:60
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:61
 #: kmreadermainwin.cpp:462 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2216,14 +2216,14 @@ msgstr "&Aimsigh Teachtaireachtaí..."
 msgid "Configure KMail..."
 msgstr "Cumraigh KMail..."
 
-#: editor/kmcomposerwin.cpp:1565 kmmainwin.cpp:183 kmreadermainwin.cpp:521
+#: editor/kmcomposerwin.cpp:1565 kmmainwin.cpp:185 kmreadermainwin.cpp:521
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:186
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:188
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -5436,7 +5436,7 @@ msgstr "Atosaigh"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:38
+#: kmmainwin.cpp:39
 #, kde-format
 msgid "Starting..."
 msgstr "Á Thosú..."
