@@ -332,6 +332,7 @@
       <li xml:lang="ia">Compatibile con Standard - Supporta protocollos de posta standard, push email, filtrar de latere servitor e insertate (inline) OpenPGP,PGP/MIME e S/MIME.</li>
       <li xml:lang="id">Kepatuhan Standar - Mendukung protokol mail standar, push email, pemfilteran sisi server dan OpenPGP inline, PGP/MIME dan S/MIME.</li>
       <li xml:lang="it">Aderente agli standard - supporta i protocolli di posta elettronica standard, la modalità push per i messaggi di posta, filtri lato server e OpenPGP in linea, PGP/MIME e S/MIME.</li>
+      <li xml:lang="ka">სტანდარტებთან თავსებადი - აქვს სტანდარტული ელფოსტის პროტოკოლების, პუშ-ელფოსტის, სერვერის მხარეს გაფილტვრის და ხაზშივე მხარდაჭერა OpenPGP, PGP/MIME და S/MIME-სთვის.</li>
       <li xml:lang="ko">표준 준수 - 표준 이메일 프로토콜, 푸시 이메일, 서버 측 필터링, 인라인 OpenPGP, PGP/MIME, S/MIME을 지원합니다.</li>
       <li xml:lang="nl">Voldoet aan standaarden - ondersteuning van standaard e-mailprotocollen, push e-mail, filtering aan de kant van de server en inline OpenPGP, PGP/MIME en S/MIME.</li>
       <li xml:lang="pl">Zgodny ze standardami  - Obsługuje wiele protokołów pocztowych, popychanie poczty, filtrowanie po stronie serwera oraz OpenPGP, PGP/MIME i S/MIME w wierszu.</li>
