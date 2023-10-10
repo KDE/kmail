@@ -7781,21 +7781,3 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
-
-#~ msgid "kcmkmailsummary"
-#~ msgstr "kcmkmailsummary"
-
-#~ msgid "Mail Summary Configuration Dialog"
-#~ msgstr "Диалогов прозорец за конфигуриране на обобщена поща"
-
-#~ msgid "Copyright © 2004–2010 Tobias Koenig"
-#~ msgstr "Copyright © 2004–2010 Tobias Koenig"
-
-#~ msgid "kontactsummary"
-#~ msgstr "kontactsummary"
-
-#~ msgid "KDE Kontact Summary"
-#~ msgstr "Резюме на KDE Kontact"
-
-#~ msgid "(c), 2004 Tobias Koenig"
-#~ msgstr "(c), 2004 Tobias Koenig"
