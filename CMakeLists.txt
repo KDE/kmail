@@ -161,10 +161,10 @@ if (Qt6Keychain_VERSION VERSION_LESS 0.14.99)
      MESSAGE(STATUS "Qt6KeyChain version is less 0.14.99. It will not support KWallet 6... It will not able to load password. Please update it.")
 endif()
 
-configure_file(config-enterprise.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
+configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
 
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
-configure_file(kmail-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
+configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
 if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()

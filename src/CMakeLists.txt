@@ -394,7 +394,7 @@ else()
     set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
 endif()
 
-configure_file(settings/kmail.kcfg.cmake ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
+configure_file(settings/kmail.kcfg.in ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 
 kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     settings/globalsettings_kmail.kcfgc
