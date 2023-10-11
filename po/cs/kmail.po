@@ -837,11 +837,10 @@ msgid "Never"
 msgstr "Nikdy"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Zobrazit pohled na oblíbené složky"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -859,11 +858,10 @@ msgid "Always"
 msgstr "Vždy"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Nástrojové tipy složek"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -6392,10 +6390,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Rám s náhledem zprávy"
+msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.cmake:346
@@ -6417,10 +6414,9 @@ msgstr "Zobrazovat rám s náhledem zprávy vedle seznamu zpráv"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Seznam složek"
+msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.cmake:362

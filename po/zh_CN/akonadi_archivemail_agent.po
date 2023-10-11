@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2023-09-16 10:08\n"
+"PO-Revision-Date: 2023-10-10 14:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf5-trunk/messages/kmail/akonadi_archivemail_agent.pot\n"
-"X-Crowdin-File-ID: 3818\n"
+"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_archivemail_agent.pot\n"
+"X-Crowdin-File-ID: 45791\n"
 
 #: addarchivemaildialog.cpp:33
 #, kde-format
@@ -237,6 +237,3 @@ msgstr "月"
 #, kde-format
 msgid "Years"
 msgstr "年"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "添加存档邮件"
