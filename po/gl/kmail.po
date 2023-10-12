@@ -3352,7 +3352,7 @@ msgid ""
 "consist of the user's name.</p></qt>"
 msgstr ""
 "<qt><p>O dominio predeterminado úsase para completar os enderezos de correo "
-"que só consisten no nome de usuario.</p></qt>"
+"que só consisten no nome de usuaria.</p></qt>"
 
 #: identity/identitydialog.cpp:661
 #, kde-format
