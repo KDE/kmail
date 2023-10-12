@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-09-26 18:44+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -980,15 +980,12 @@ msgstr ""
 msgid "System Tray"
 msgstr "Системний лоток"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Ввімкнути піктограму у системному лотку"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Запускати згорнутим до лотка"
@@ -6352,454 +6349,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"Це оберігає листи позначені як «Важливий» або «Дія» від автоматичного "
-"вилучення (або переміщення до архівної теки) у разі збігання терміну давності"
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "Дозволити локальні позначки у теках тільки для читання"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Надсилати пошту з черги при перевірці пошти"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>Виберіть, чи бажано, щоб програма KMail автоматично надсилала всі "
-"повідомлення з теки «вихідні» за перевірки пошти вручну або будь-якій "
-"перевірці пошти, чи бажано, щоб повідомлення не надсилалися автоматично.</"
-"p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "Остання вибрана тека у діалоговому вікні вибирання тек."
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Показувати кількість непрочитаних повідомлень на панелі задач"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "В&кажіть редактор:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "Використов&увати зовнішній редактор"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Визначає кількість нетипових полів заголовків MIME, які буде вставлено до "
-"повідомлень (лише для внутрішнього використання)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-"Поріг, коли слід видати попередження користувачеві про те, що розмір теки "
-"наближається до обмеження квоти."
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Спорожняти локальну теку-смітник при виході з програми"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "Вилучати повідомлення без підтвердження"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "Дозволити запуск з відкриттям вказаної теки"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "Вкажіть теку, яку слід відкрити після запуску програми"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-"Визначає, чи вилучатимуться застарілі повідомлення з тек у фоновому режимі "
-"(лише для внутрішнього використання)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Визначає, чи є першим цей запуск програми (лише для внутрішнього "
-"використання)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"Визначає, чи слід питати користувача щодо вмикання уніфікованих поштових "
-"скриньок, якщо виявлено декілька облікових записів електронної пошти. "
-"Питання ставитиметься лише один раз."
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr ""
-"Це значення використовується для того, щоб вирішити, чи слід програмі "
-"показувати сторінку вступу до KMail."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Показувати рядок швидкого пошуку у теці"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "Типово, пересилати вбудованим."
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "Попереджати, якщо кількість адресатів перевищує:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"Якщо кількість адресатів перевищує це значення, KMail попередить вас і "
-"попросить вас підтвердити дію, перш ніж надсилати пошту. Це попередження "
-"можна вимкнути."
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "&Підтверджувати перед надсиланням"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "Перевірити правопис до надсилання"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "&Автоматично запитувати щодо сповіщення про долю листа"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>Позначте, якщо ви бажаєте, щоб програма KMail надсилала запит на "
-"сповіщення про долю повідомлення для кожного надісланого листа.</"
-"p><p>Вказане тут значення впливає тільки на типову поведінку програми, ви "
-"завжди матимете можливість ввімкнути чи вимкнути запит сповіщення для "
-"кожного окремого повідомлення у редакторі за допомогою пункту меню "
-"<em>Налаштування</em>->&gt;<em>Запитати сповіщення про долю листа</em>.</p></"
-"qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "Інтервал автозбереження:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Редактор може автоматично створювати резервну копію тексту, який редагується "
-"в ньому. Інтервал часу між створеннями резервних копій вказується тут. "
-"Заборонити створення резервних копій можна встановивши значення, що дорівнює "
-"нулю."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
-"Показувати керування фрагментами тексту і панель вставки у редакторі листів."
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
-"Якщо буде позначено, надіслані повідомлення зберігатимуться у зашифрованому "
-"форматі"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "Список всіх нещодавно використаних адрес"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "Список всіх нещодавно використаних кодувань"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "Показувати індикатор мітки шифрування"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Показувати піктограми довіри до власника ключа"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "Підтверджувати типове скорочення надсилання"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Розмір діалогового вікна профілів (лише для внутрішнього використання)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Ширина вікна пошуку (лише для внутрішнього використання)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Висота вікна пошуку (лише для внутрішнього використання)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"Ширина діалогового вікна налаштування KMail (лише для внутрішнього "
-"використання)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"Висота діалогового вікна налаштування KMail (лише для внутрішнього "
-"використання)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message preview pane:"
-msgstr "Панель перегляду повідомлення:"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "Не відображати перегляд повідомлення"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "Відображати перегляд повідомлення під списком повідомлень"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "Відображати перегляд повідомлення збоку від списку повідомлень"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder list:"
-msgstr "Список тек:"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "Великий список тек"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "Малий список тек"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "Шаблон повідомлення для нового повідомлення"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "Шаблон повідомлення відповіді"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "Шаблон повідомлення відповіді всім"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "Шаблон повідомлення пересилання"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "Символи цитування"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "Визначає правила, які буде показано у вікні правил"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля збірки у діалоговому вікні пошуку (лише для "
-"внутрішнього використання)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля теми у діалоговому вікні пошуку (лише для внутрішнього "
-"використання)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля відправника у діалоговому вікні пошуку (лише для "
-"внутрішнього використання)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля отримувача у діалоговому вікні пошуку (лише для "
-"внутрішнього використання)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля дати у діалоговому вікні пошуку (лише для внутрішнього "
-"використання)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Визначає ширину поля теки у діалоговому вікні пошуку (лише для внутрішнього "
-"використання)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -8136,6 +7685,280 @@ msgstr[3] "На сервері задіяно відповідь щодо від
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Масштаб: %1%"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "Це оберігає листи позначені як «Важливий» або «Дія» від автоматичного "
+#~ "вилучення (або переміщення до архівної теки) у разі збігання терміну "
+#~ "давності"
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "Дозволити локальні позначки у теках тільки для читання"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Надсилати пошту з черги при перевірці пошти"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Виберіть, чи бажано, щоб програма KMail автоматично надсилала всі "
+#~ "повідомлення з теки «вихідні» за перевірки пошти вручну або будь-якій "
+#~ "перевірці пошти, чи бажано, щоб повідомлення не надсилалися автоматично.</"
+#~ "p></qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "Остання вибрана тека у діалоговому вікні вибирання тек."
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Показувати кількість непрочитаних повідомлень на панелі задач"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "В&кажіть редактор:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "Використов&увати зовнішній редактор"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Визначає кількість нетипових полів заголовків MIME, які буде вставлено до "
+#~ "повідомлень (лише для внутрішнього використання)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr ""
+#~ "Поріг, коли слід видати попередження користувачеві про те, що розмір теки "
+#~ "наближається до обмеження квоти."
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Спорожняти локальну теку-смітник при виході з програми"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "Вилучати повідомлення без підтвердження"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "Дозволити запуск з відкриттям вказаної теки"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "Вкажіть теку, яку слід відкрити після запуску програми"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Визначає, чи вилучатимуться застарілі повідомлення з тек у фоновому "
+#~ "режимі (лише для внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Визначає, чи є першим цей запуск програми (лише для внутрішнього "
+#~ "використання)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "Визначає, чи слід питати користувача щодо вмикання уніфікованих поштових "
+#~ "скриньок, якщо виявлено декілька облікових записів електронної пошти. "
+#~ "Питання ставитиметься лише один раз."
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr ""
+#~ "Це значення використовується для того, щоб вирішити, чи слід програмі "
+#~ "показувати сторінку вступу до KMail."
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Показувати рядок швидкого пошуку у теці"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "Типово, пересилати вбудованим."
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "Попереджати, якщо кількість адресатів перевищує:"
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "Якщо кількість адресатів перевищує це значення, KMail попередить вас і "
+#~ "попросить вас підтвердити дію, перш ніж надсилати пошту. Це попередження "
+#~ "можна вимкнути."
+
+#~ msgid "Confirm &before send"
+#~ msgstr "&Підтверджувати перед надсиланням"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "Перевірити правопис до надсилання"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "&Автоматично запитувати щодо сповіщення про долю листа"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Позначте, якщо ви бажаєте, щоб програма KMail надсилала запит на "
+#~ "сповіщення про долю повідомлення для кожного надісланого листа.</"
+#~ "p><p>Вказане тут значення впливає тільки на типову поведінку програми, ви "
+#~ "завжди матимете можливість ввімкнути чи вимкнути запит сповіщення для "
+#~ "кожного окремого повідомлення у редакторі за допомогою пункту меню "
+#~ "<em>Налаштування</em>->&gt;<em>Запитати сповіщення про долю листа</em>.</"
+#~ "p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "Інтервал автозбереження:"
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Редактор може автоматично створювати резервну копію тексту, який "
+#~ "редагується в ньому. Інтервал часу між створеннями резервних копій "
+#~ "вказується тут. Заборонити створення резервних копій можна встановивши "
+#~ "значення, що дорівнює нулю."
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr ""
+#~ "Показувати керування фрагментами тексту і панель вставки у редакторі "
+#~ "листів."
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr ""
+#~ "Якщо буде позначено, надіслані повідомлення зберігатимуться у "
+#~ "зашифрованому форматі"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "Список всіх нещодавно використаних адрес"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "Список всіх нещодавно використаних кодувань"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Показувати індикатор мітки шифрування"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Показувати піктограми довіри до власника ключа"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "Підтверджувати типове скорочення надсилання"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr ""
+#~ "Розмір діалогового вікна профілів (лише для внутрішнього використання)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Ширина вікна пошуку (лише для внутрішнього використання)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Висота вікна пошуку (лише для внутрішнього використання)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "Ширина діалогового вікна налаштування KMail (лише для внутрішнього "
+#~ "використання)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "Висота діалогового вікна налаштування KMail (лише для внутрішнього "
+#~ "використання)"
+
+#~ msgid "Message preview pane:"
+#~ msgstr "Панель перегляду повідомлення:"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "Не відображати перегляд повідомлення"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "Відображати перегляд повідомлення під списком повідомлень"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "Відображати перегляд повідомлення збоку від списку повідомлень"
+
+#~ msgid "Folder list:"
+#~ msgstr "Список тек:"
+
+#~ msgid "Long folder list"
+#~ msgstr "Великий список тек"
+
+#~ msgid "Short folder list"
+#~ msgstr "Малий список тек"
+
+#~ msgid "Message template for new message"
+#~ msgstr "Шаблон повідомлення для нового повідомлення"
+
+#~ msgid "Message template for reply"
+#~ msgstr "Шаблон повідомлення відповіді"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "Шаблон повідомлення відповіді всім"
+
+#~ msgid "Message template for forward"
+#~ msgstr "Шаблон повідомлення пересилання"
+
+#~ msgid "Quote characters"
+#~ msgstr "Символи цитування"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "Визначає правила, які буде показано у вікні правил"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля збірки у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля теми у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля відправника у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля отримувача у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля дати у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Визначає ширину поля теки у діалоговому вікні пошуку (лише для "
+#~ "внутрішнього використання)"
 
 #~ msgid ""
 #~ "Medium security encryption will be used for this recipient (the "

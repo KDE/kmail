@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-09-30 18:11+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -987,15 +987,12 @@ msgstr ""
 msgid "System Tray"
 msgstr "Safata del sistema"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Activa la icona en la safata del sistema"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Inicia minimitzat a la safata"
@@ -6298,450 +6295,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"Evita la caducitat automàtica dels missatges antics d'una carpeta de la "
-"supressió (o de moure'ls a una carpeta d'arxiu) que estan marcats amb "
-"«Important» o «Element d'acció»"
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "Permet les etiquetes locals en les carpetes de només lectura"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Envia el correu de la cua en comprovar el correu"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>Seleccioneu si voleu que KMail envie tots els missatges de la carpeta "
-"Eixida en comprovar el correu de forma manual o automàtica, o si voleu que "
-"no s'envien mai els missatges automàticament.</p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
-"La carpeta seleccionada més recentment en el diàleg de selecció de carpetes."
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Mostra els correus sense llegir en la barra de tasques"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "Especifica &l'editor:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "&Utilitza l'editor extern en comptes de l'editor predeterminat"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Especifica el nombre de camps de capçalera MIME personalitzats que s'han "
-"d'inserir en els missatges (només per a ús intern)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-"El llindar d'avís a l'usuari que una carpeta està arribant al seu límit de "
-"quota."
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Buida la paperera local en eixir del programa"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "Supressió els missatges sense confirmació"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "Permet iniciar una carpeta específica"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "Especifica la carpeta que s'ha d'obrir en iniciar el programa"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-"Especifica si les carpetes expiraran en segon pla (només per a ús intern)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Especifica si esta és la primera vegada que s'executa l'aplicació (només per "
-"a ús intern)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"Si s'ha de preguntar als usuaris si volen activar les bústies unificades en "
-"detectar més d'un compte de correu electrònic. Només es farà una vegada."
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr ""
-"Este valor s'utilitza per a decidir si s'ha de mostrar la introducció de "
-"KMail."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Mostra la línia d'edició de busca ràpida de carpeta"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "Reenvia inclòs de manera predeterminada."
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "Avisa si el nombre de destinataris és més gran que:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"Si el nombre de destinataris és més gran que este valor, KMail avisarà i "
-"demanarà la confirmació abans d'enviar el correu. L'avís es pot desactivar."
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "Confirma abans d'&enviar"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "Verifica l'ortografia abans d'enviar"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "Petició automàtica de les notificacions de processament del &missatge"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>Activeu esta opció si voleu que KMail demane notificacions de "
-"processament del missatge (Message Disposition Notifications - MDN) per a "
-"cadascun dels missatges que envieu.</p><p>Esta opció tan sols tindrà efecte "
-"en el mode predeterminat. Encara podreu activar o desactivar les "
-"sol·licituds MDN individualment en cada missatge des del mateix editor, "
-"element del menú «<em>Opcions</em> -> <em>Notificació de processament del "
-"missatge (MDN)</em>».</p></qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "Guarda automàticament cada:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Es pot crear una còpia de seguretat del text de la finestra de l'editor. "
-"L'interval utilitzat per a crear les còpies de seguretat s'establix ací. "
-"Podeu desactivar la guardada automàtica establint el valor a 0."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
-"Mostra el quadro de gestió de fragments de text i inserció en l'editor."
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
-"En comprovar, els missatges enviats s'emmagatzemaran en el format encriptat"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "Una llista de tots els URL utilitzats recentment"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "Una llista de totes les codificacions utilitzades recentment"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "Mostra l'indicador de l'etiqueta de criptografia"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Mostra icones de confiança del propietari de criptografia"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "Valida la drecera predeterminada d'enviament"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "La mida del diàleg d'identitat (només per a ús intern)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "L'amplària de la finestra de busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "L'alçària de la finestra de busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "L'amplària del diàleg de configuració de KMail (només per a ús intern)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "L'alçària del diàleg de configuració de KMail (només per a ús intern)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message preview pane:"
-msgstr "Subfinestra de vista prèvia del missatge:"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "No mostres la subfinestra de vista prèvia de missatges"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr ""
-"Mostra la subfinestra de vista prèvia del missatge davall de la llista de "
-"missatges"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr ""
-"Mostra la subfinestra de vista prèvia del missatge a continuació de la "
-"llista de missatges"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder list:"
-msgstr "Llista de carpetes:"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "Llista de carpetes llarga"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "Llista de carpetes curta"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "Plantilla de missatges per als missatges nous"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "Plantilla de missatges per a les respostes"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "Plantilla de missatges per a les respostes a tots"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "Plantilla de missatges per als reenviaments"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "Caràcters de citació"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "Especifica la política utilitzada en mostrar la política"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp de col·lecció en el diàleg de la finestra de "
-"busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp d'assumpte en el diàleg de la finestra de "
-"busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp del remitent en el diàleg de la finestra de "
-"busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp del destinatari en el diàleg de la finestra "
-"de busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp de la data en el diàleg de la finestra de "
-"busca (només per a ús intern)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Especifica l'amplària del camp de la carpeta en el diàleg de la finestra de "
-"busca (només per a ús intern)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -8069,3 +7622,277 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "Evita la caducitat automàtica dels missatges antics d'una carpeta de la "
+#~ "supressió (o de moure'ls a una carpeta d'arxiu) que estan marcats amb "
+#~ "«Important» o «Element d'acció»"
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "Permet les etiquetes locals en les carpetes de només lectura"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Envia el correu de la cua en comprovar el correu"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Seleccioneu si voleu que KMail envie tots els missatges de la "
+#~ "carpeta Eixida en comprovar el correu de forma manual o automàtica, o si "
+#~ "voleu que no s'envien mai els missatges automàticament.</p></qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr ""
+#~ "La carpeta seleccionada més recentment en el diàleg de selecció de "
+#~ "carpetes."
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Mostra els correus sense llegir en la barra de tasques"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "Especifica &l'editor:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "&Utilitza l'editor extern en comptes de l'editor predeterminat"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Especifica el nombre de camps de capçalera MIME personalitzats que s'han "
+#~ "d'inserir en els missatges (només per a ús intern)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr ""
+#~ "El llindar d'avís a l'usuari que una carpeta està arribant al seu límit "
+#~ "de quota."
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Buida la paperera local en eixir del programa"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "Supressió els missatges sense confirmació"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "Permet iniciar una carpeta específica"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "Especifica la carpeta que s'ha d'obrir en iniciar el programa"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Especifica si les carpetes expiraran en segon pla (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Especifica si esta és la primera vegada que s'executa l'aplicació (només "
+#~ "per a ús intern)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "Si s'ha de preguntar als usuaris si volen activar les bústies unificades "
+#~ "en detectar més d'un compte de correu electrònic. Només es farà una "
+#~ "vegada."
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr ""
+#~ "Este valor s'utilitza per a decidir si s'ha de mostrar la introducció de "
+#~ "KMail."
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Mostra la línia d'edició de busca ràpida de carpeta"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "Reenvia inclòs de manera predeterminada."
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "Avisa si el nombre de destinataris és més gran que:"
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "Si el nombre de destinataris és més gran que este valor, KMail avisarà i "
+#~ "demanarà la confirmació abans d'enviar el correu. L'avís es pot "
+#~ "desactivar."
+
+#~ msgid "Confirm &before send"
+#~ msgstr "Confirma abans d'&enviar"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "Verifica l'ortografia abans d'enviar"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr ""
+#~ "Petició automàtica de les notificacions de processament del &missatge"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Activeu esta opció si voleu que KMail demane notificacions de "
+#~ "processament del missatge (Message Disposition Notifications - MDN) per a "
+#~ "cadascun dels missatges que envieu.</p><p>Esta opció tan sols tindrà "
+#~ "efecte en el mode predeterminat. Encara podreu activar o desactivar les "
+#~ "sol·licituds MDN individualment en cada missatge des del mateix editor, "
+#~ "element del menú «<em>Opcions</em> -> <em>Notificació de processament del "
+#~ "missatge (MDN)</em>».</p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "Guarda automàticament cada:"
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Es pot crear una còpia de seguretat del text de la finestra de l'editor. "
+#~ "L'interval utilitzat per a crear les còpies de seguretat s'establix ací. "
+#~ "Podeu desactivar la guardada automàtica establint el valor a 0."
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr ""
+#~ "Mostra el quadro de gestió de fragments de text i inserció en l'editor."
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr ""
+#~ "En comprovar, els missatges enviats s'emmagatzemaran en el format "
+#~ "encriptat"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "Una llista de tots els URL utilitzats recentment"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "Una llista de totes les codificacions utilitzades recentment"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Mostra l'indicador de l'etiqueta de criptografia"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Mostra icones de confiança del propietari de criptografia"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "Valida la drecera predeterminada d'enviament"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "La mida del diàleg d'identitat (només per a ús intern)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "L'amplària de la finestra de busca (només per a ús intern)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "L'alçària de la finestra de busca (només per a ús intern)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "L'amplària del diàleg de configuració de KMail (només per a ús intern)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "L'alçària del diàleg de configuració de KMail (només per a ús intern)"
+
+#~ msgid "Message preview pane:"
+#~ msgstr "Subfinestra de vista prèvia del missatge:"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "No mostres la subfinestra de vista prèvia de missatges"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr ""
+#~ "Mostra la subfinestra de vista prèvia del missatge davall de la llista de "
+#~ "missatges"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr ""
+#~ "Mostra la subfinestra de vista prèvia del missatge a continuació de la "
+#~ "llista de missatges"
+
+#~ msgid "Folder list:"
+#~ msgstr "Llista de carpetes:"
+
+#~ msgid "Long folder list"
+#~ msgstr "Llista de carpetes llarga"
+
+#~ msgid "Short folder list"
+#~ msgstr "Llista de carpetes curta"
+
+#~ msgid "Message template for new message"
+#~ msgstr "Plantilla de missatges per als missatges nous"
+
+#~ msgid "Message template for reply"
+#~ msgstr "Plantilla de missatges per a les respostes"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "Plantilla de missatges per a les respostes a tots"
+
+#~ msgid "Message template for forward"
+#~ msgstr "Plantilla de missatges per als reenviaments"
+
+#~ msgid "Quote characters"
+#~ msgstr "Caràcters de citació"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "Especifica la política utilitzada en mostrar la política"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp de col·lecció en el diàleg de la finestra "
+#~ "de busca (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp d'assumpte en el diàleg de la finestra de "
+#~ "busca (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp del remitent en el diàleg de la finestra "
+#~ "de busca (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp del destinatari en el diàleg de la "
+#~ "finestra de busca (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp de la data en el diàleg de la finestra de "
+#~ "busca (només per a ús intern)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Especifica l'amplària del camp de la carpeta en el diàleg de la finestra "
+#~ "de busca (només per a ús intern)"

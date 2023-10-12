@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-09-26 20:18+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -975,15 +975,12 @@ msgstr ""
 msgid "System Tray"
 msgstr "Sistema Pleto"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Ebligi taskopletan piktogramon"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Komenci minimumigita al pleto"
@@ -6231,441 +6228,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"Ĉi tio malhelpas, ke la aŭtomata eksvalidiĝo de malnovaj mesaĝoj en "
-"dosierujo forigu (aŭ moviĝu al arkiva dosierujo) la mesaĝojn kiuj estas "
-"markitaj kiel 'Gravaj' aŭ 'Agenderoj'."
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "Permesi lokajn flagojn en nurlegeblaj dosierujoj"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Sendi atendantajn leterojn al la leterkontrolo"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt> <p>Elektu, ĉu vi volas, ke Poŝtilo mane sendas ĉiujn mesaĝojn en la "
-"sendotujo aŭ ĉiujn leterkontrolojn, aŭ ĉu vi ne volas, ke la mesaĝoj "
-"aŭtomate estas sendataj. </p> </qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "La laste elektita dosierujo en la dosieruja elektdialogo."
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Montri nelegitan retpoŝton en TaskBreto"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "Specifi re&daktilon:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "Uzi e&ksternan redaktilon anstataŭ komponilon"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Specifas la nombron da propraj MIME-kapokampoj por esti enmetitaj en "
-"mesaĝojn (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-"La sojlo por kiam averti la uzanton, ke dosierujo alproksimiĝas al sia "
-"kvotlimo."
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Malplenigi la lokan rubujon ĉe program-eliro"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "Forigi mesaĝojn sen konfirmo"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "Permesi komenci per specifa leterujo"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "Specifi la leterujon malfermendan kiam la programo estas komencita"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "Specifas ĉu la leterujoj eksvalidiĝos en la fono (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Specifas ĉu ĉi tiu estas la unua fojo kiam la aplikaĵo estas rulita (nur por "
-"interna uzo)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"Ĉu demandi ĉu uzantoj volas ebligi Unuigitajn Leterkestojn se pli ol unu "
-"retpoŝtaj kontoj estas detektitaj. Ni demandas nur unufoje."
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr ""
-"La valoro estas uzata por decidi, ĉu la Poŝtila enkonduko estos vidigita."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Montri rapidserĉan linioredaktilon por leterujoj"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "Plusendi enlinie kiel defaŭlto."
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "Averti se la nombro da ricevantoj estas pli ol:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"Se la nombro da ricevantoj estas pli granda ol ĉi tiu valoro, KMail avertos "
-"kaj petos konfirmon antaŭ sendi la retpoŝton. La averto povas esti "
-"malŝaltita."
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "Konfirmi &antaŭ sendo"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "Kontroli literumadon antaŭ sendi"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "Aŭto&mate postuli ricevkonfirmojn"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>Ebligu ĉi tiun opcion, se vi volas, ke KMail petu Mesaĝajn "
-"Dispoziciojn (MDN) por ĉiu el viaj elirantaj mesaĝoj.</p><p>Ĉi tiu opcio "
-"influas nur la defaŭltan; vi ankoraŭ povas ebligi aŭ malŝalti MDN-peton laŭ "
-"pomesaĝo en la komponisto, menuero <em>Opcioj</em>-><em>Peti Dispozician "
-"Sciigon</em>.</p></qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "Aŭtomate konservi ĉiun:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Kopio de la teksto, kiu estas en la skribifenestro, regule estas kredebla. "
-"La uzata intervalo estas agordebla ĉi tie. Vi povas neebligi ĝin per nulo."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
-"Montri la Tekstofragmentan Administradon kaj Enmetan Panelon en la "
-"komponisto."
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr "Kiam markita, senditaj mesaĝoj estos konservitaj en la ĉifrita formo"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "Listo de ĉiuj lastatempe uzataj URL-oj"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "Listo de ĉiuj lastatempe uzataj kodigoj"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "Montri kriptetikedan indikilon"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Montri piktogramojn pri konfido de kripto-posedanto"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "Validigi defaŭltan ŝparvojon por sendado"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "La grandeco de la identecdialogo (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "La larĝo de la serĉfenestro (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "La alteco de la serĉfenestro (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "La larĝo de la dialogo Agordi KMail (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "La alteco de la dialogo Agordi KMail (nur por interna uzo)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message preview pane:"
-msgstr "Mesaĝa-antaŭrigarda fenestro:"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "Ne montri mesaĝan antaŭrigardan panelon"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "Montri la mesaĝan antaŭrigardan panelon sub la mesaĝlisto"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "Montri la mesaĝan antaŭrigardan panelon apud la mesaĝlisto"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder list:"
-msgstr "Dosierujolisto:"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "Longa dosierlisto"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "Mallonga listo de dosierujoj"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "Mesaĝolisto - Dato"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "Mesaĝa ŝablono por respondo"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "Mesaĝa ŝablono por respondi al ĉiuj"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "Mesaĝoŝablono por plusendado"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "Citsignoj"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "Specifas la politikon uzatan dum montrado de politiko"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la kolektokampo en la dialogo Serĉfenestro (nur por "
-"interna uzo)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la temo en la dialogo Serĉfenestro (nur por interna "
-"uzo)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la sendinto-kampo en la dialogo Serĉfenestro (nur por "
-"interna uzo)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la ricevila kampo en la dialogo Serĉfenestro (nur por "
-"interna uzo)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la datkampo en la dialogo Serĉfenestro (nur por "
-"interna uzo)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Specifas la larĝon de la dosierujo en la dialogo Serĉfenestro (nur por "
-"interna uzo)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -7980,3 +7542,264 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "Ĉi tio malhelpas, ke la aŭtomata eksvalidiĝo de malnovaj mesaĝoj en "
+#~ "dosierujo forigu (aŭ moviĝu al arkiva dosierujo) la mesaĝojn kiuj estas "
+#~ "markitaj kiel 'Gravaj' aŭ 'Agenderoj'."
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "Permesi lokajn flagojn en nurlegeblaj dosierujoj"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Sendi atendantajn leterojn al la leterkontrolo"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt> <p>Elektu, ĉu vi volas, ke Poŝtilo mane sendas ĉiujn mesaĝojn en la "
+#~ "sendotujo aŭ ĉiujn leterkontrolojn, aŭ ĉu vi ne volas, ke la mesaĝoj "
+#~ "aŭtomate estas sendataj. </p> </qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "La laste elektita dosierujo en la dosieruja elektdialogo."
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Montri nelegitan retpoŝton en TaskBreto"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "Specifi re&daktilon:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "Uzi e&ksternan redaktilon anstataŭ komponilon"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Specifas la nombron da propraj MIME-kapokampoj por esti enmetitaj en "
+#~ "mesaĝojn (nur por interna uzo)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr ""
+#~ "La sojlo por kiam averti la uzanton, ke dosierujo alproksimiĝas al sia "
+#~ "kvotlimo."
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Malplenigi la lokan rubujon ĉe program-eliro"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "Forigi mesaĝojn sen konfirmo"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "Permesi komenci per specifa leterujo"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "Specifi la leterujon malfermendan kiam la programo estas komencita"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Specifas ĉu la leterujoj eksvalidiĝos en la fono (nur por interna uzo)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Specifas ĉu ĉi tiu estas la unua fojo kiam la aplikaĵo estas rulita (nur "
+#~ "por interna uzo)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "Ĉu demandi ĉu uzantoj volas ebligi Unuigitajn Leterkestojn se pli ol unu "
+#~ "retpoŝtaj kontoj estas detektitaj. Ni demandas nur unufoje."
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr ""
+#~ "La valoro estas uzata por decidi, ĉu la Poŝtila enkonduko estos vidigita."
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Montri rapidserĉan linioredaktilon por leterujoj"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "Plusendi enlinie kiel defaŭlto."
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "Averti se la nombro da ricevantoj estas pli ol:"
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "Se la nombro da ricevantoj estas pli granda ol ĉi tiu valoro, KMail "
+#~ "avertos kaj petos konfirmon antaŭ sendi la retpoŝton. La averto povas "
+#~ "esti malŝaltita."
+
+#~ msgid "Confirm &before send"
+#~ msgstr "Konfirmi &antaŭ sendo"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "Kontroli literumadon antaŭ sendi"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "Aŭto&mate postuli ricevkonfirmojn"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Ebligu ĉi tiun opcion, se vi volas, ke KMail petu Mesaĝajn "
+#~ "Dispoziciojn (MDN) por ĉiu el viaj elirantaj mesaĝoj.</p><p>Ĉi tiu opcio "
+#~ "influas nur la defaŭltan; vi ankoraŭ povas ebligi aŭ malŝalti MDN-peton "
+#~ "laŭ pomesaĝo en la komponisto, menuero <em>Opcioj</em>-><em>Peti "
+#~ "Dispozician Sciigon</em>.</p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "Aŭtomate konservi ĉiun:"
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Kopio de la teksto, kiu estas en la skribifenestro, regule estas "
+#~ "kredebla. La uzata intervalo estas agordebla ĉi tie. Vi povas neebligi "
+#~ "ĝin per nulo."
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr ""
+#~ "Montri la Tekstofragmentan Administradon kaj Enmetan Panelon en la "
+#~ "komponisto."
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr ""
+#~ "Kiam markita, senditaj mesaĝoj estos konservitaj en la ĉifrita formo"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "Listo de ĉiuj lastatempe uzataj URL-oj"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "Listo de ĉiuj lastatempe uzataj kodigoj"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Montri kriptetikedan indikilon"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Montri piktogramojn pri konfido de kripto-posedanto"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "Validigi defaŭltan ŝparvojon por sendado"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "La grandeco de la identecdialogo (nur por interna uzo)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "La larĝo de la serĉfenestro (nur por interna uzo)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "La alteco de la serĉfenestro (nur por interna uzo)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "La larĝo de la dialogo Agordi KMail (nur por interna uzo)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "La alteco de la dialogo Agordi KMail (nur por interna uzo)"
+
+#~ msgid "Message preview pane:"
+#~ msgstr "Mesaĝa-antaŭrigarda fenestro:"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "Ne montri mesaĝan antaŭrigardan panelon"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "Montri la mesaĝan antaŭrigardan panelon sub la mesaĝlisto"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "Montri la mesaĝan antaŭrigardan panelon apud la mesaĝlisto"
+
+#~ msgid "Folder list:"
+#~ msgstr "Dosierujolisto:"
+
+#~ msgid "Long folder list"
+#~ msgstr "Longa dosierlisto"
+
+#~ msgid "Short folder list"
+#~ msgstr "Mallonga listo de dosierujoj"
+
+#~ msgid "Message template for new message"
+#~ msgstr "Mesaĝolisto - Dato"
+
+#~ msgid "Message template for reply"
+#~ msgstr "Mesaĝa ŝablono por respondo"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "Mesaĝa ŝablono por respondi al ĉiuj"
+
+#~ msgid "Message template for forward"
+#~ msgstr "Mesaĝoŝablono por plusendado"
+
+#~ msgid "Quote characters"
+#~ msgstr "Citsignoj"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "Specifas la politikon uzatan dum montrado de politiko"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la kolektokampo en la dialogo Serĉfenestro (nur por "
+#~ "interna uzo)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la temo en la dialogo Serĉfenestro (nur por interna "
+#~ "uzo)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la sendinto-kampo en la dialogo Serĉfenestro (nur "
+#~ "por interna uzo)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la ricevila kampo en la dialogo Serĉfenestro (nur "
+#~ "por interna uzo)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la datkampo en la dialogo Serĉfenestro (nur por "
+#~ "interna uzo)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Specifas la larĝon de la dosierujo en la dialogo Serĉfenestro (nur por "
+#~ "interna uzo)"

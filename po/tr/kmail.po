@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-10-05 13:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -980,15 +980,12 @@ msgstr "İletiyi yanıtlarken veya yönlendirirken ileti penceresini kapat"
 msgid "System Tray"
 msgstr "Sistem Tepsisi"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Sistem tepsisi simgesini etkinleştir"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Tepsiye küçültülmüş olarak başlat"
@@ -6238,447 +6235,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"Bu seçenek, 'önemli' veya 'Hareket Unsuru' olarak işaretlenmiş iletilerin "
-"silinmesini (veya arşiv klasörüne taşınmasını) ve eski iletilerin otomatik "
-"olarak devre dışı kalmasını önler"
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "Salt-okunur klasörlerde yerel bayraklara izin ver"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Kuyruktaki e-postayı, e-posta denetiminde gönder"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>K Posta'nın giden kutusundaki bütün iletileri elle veya tüm posta "
-"denetiminde göndermesini ya da iletilerin hiçbir şekilde otomatik olarak "
-"gönderilmemesini ayarlayabilirsiniz.</p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "Klasör seçim iletişim kutusunda en son seçilmiş klasör"
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Sistem Tepsisinde Okunmayan E-postayı Göster"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "Bir düzenleyici &belirtin:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "&Harici düzenleyici kullan"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"İletilere eklenilecek özel MIME üstbilgi alanlarının numarasını belirler "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-"Bir klasörün kota sınırına yaklaştığını kullanıcıya bildirme eşik değeri."
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Uygulamadan çıkarken yerel çöp klasörünü boşalt"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "İletileri onay olmadan sil"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "Özel klasörü başlatmaya izin ver"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "Uygulama başlatıldığında açılacak klasörü belirtin"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-"Klasörlerin süresinin arka planda dolacağını belirtir (yalnızca dahili "
-"kullanımda)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"Birden çok e-posta hesabı algılanırsa Birleştirilmiş Posta Kutuları "
-"özelliğinin etkinleştirilip etkinleştirilmeyeceğinin sorulması. Yalnızca bir "
-"kez sorulur."
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr ""
-"Bu değer K Posta Karşılaması'nın gösterilip gösterilmeyeceğine karar vermek "
-"için kullanılır."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Hızlı klasör arama satırını göster"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "İleti içi metni Öntanımlı Olarak Yönlendir."
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "Alıcı sayısı bunu aşarsa uyar:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"Alıcı sayısı bu değerden daha büyük ise, K Posta, postayı göndermeden önce "
-"uyarı verecek ve bir onay isteyecektir. Uyarı iletisi kapatılabilir."
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "&Göndermeden önce onayla"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "Göndermeden önce yazım denetimi yap"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "İleti okundu uyarılarını oto&matik gönder"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>K Posta'nın giden her iletiniz için İleti Durum Bildirimleri "
-"(MDN'ler) göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu "
-"seçenek yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti için "
-"MDN isteğini etkin veya devre dışı yapabilirsiniz, bunun için "
-"<em>Seçenekler</em>-><em>Durum Bildirimi İste</em> menü ögesini seçin.</p></"
-"qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "Otomatik kaydetme aralığı:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Oluşturucu penceresindeki metnin yedek kopyası düzenli olarak "
-"oluşturulabilir. Burada yedek oluşturma sıklığını ayarlayabilirsiniz. Değeri "
-"0 yaparak otomatik kaydetmeyi devre dışı bırakabilirsiniz."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr "Oluşturucuda Metin Parçası Yönetimi ve Ekleme Panelini göster."
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
-"İşaretlendiğinde, gönderilen iletiler şifrelenmiş biçimde kaydedilecektir"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "En son kullanılan URL'lerin listesi"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "En son kullanılan kodlamaların listesi"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "Şifreleme etiketi göstergesini göster"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Şifreleme sahip güveni simgelerini göster"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "Gönderilen Öntanımlı Kısayolun Geçerliliğini Denetle"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Hesap penceresinin boyutu (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Arama penceresinin genişliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Arama penceresinin yüksekliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"K Posta Uygulamasını Yapılandır penceresinin genişliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"K Posta Uygulamasını Yapılandır penceresinin yüksekliği (dahili kullanım "
-"için)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message preview pane:"
-msgstr "İleti önizleme paneli:"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "İleti önizleme bölümünü gösterme"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "İleti listesinin altında ileti önizleme bölümünü göster"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "İleti listesinin yanında ileti önizleme bölümünü göster"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder list:"
-msgstr "Klasör listesi:"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "Uzun klasör listesi"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "Kısa klasör listesi"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "Yeni iletiler için şablonlar"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "Yanıtlamak için ileti şablonu"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "Tümünü yanıtlamak için ileti şablonu"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "Yönlendirmek için ileti şablonu"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "Alıntı karakterleri"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "İlke görüntülenirken kullanılan kullanılan ilkeyi belirler"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki koleksiyon alanının genişliğini "
-"belirtir (yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki konu alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki gönderici alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki alıcı alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki tarih alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki klasör alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -7997,3 +7553,268 @@ msgstr[1] "Ofis dışında yanıtlaması sunucularda etkin"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Yakınlaştır: %​%1"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "Bu seçenek, 'önemli' veya 'Hareket Unsuru' olarak işaretlenmiş iletilerin "
+#~ "silinmesini (veya arşiv klasörüne taşınmasını) ve eski iletilerin "
+#~ "otomatik olarak devre dışı kalmasını önler"
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "Salt-okunur klasörlerde yerel bayraklara izin ver"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Kuyruktaki e-postayı, e-posta denetiminde gönder"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>K Posta'nın giden kutusundaki bütün iletileri elle veya tüm posta "
+#~ "denetiminde göndermesini ya da iletilerin hiçbir şekilde otomatik olarak "
+#~ "gönderilmemesini ayarlayabilirsiniz.</p></qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "Klasör seçim iletişim kutusunda en son seçilmiş klasör"
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Sistem Tepsisinde Okunmayan E-postayı Göster"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "Bir düzenleyici &belirtin:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "&Harici düzenleyici kullan"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "İletilere eklenilecek özel MIME üstbilgi alanlarının numarasını belirler "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr ""
+#~ "Bir klasörün kota sınırına yaklaştığını kullanıcıya bildirme eşik değeri."
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Uygulamadan çıkarken yerel çöp klasörünü boşalt"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "İletileri onay olmadan sil"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "Özel klasörü başlatmaya izin ver"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "Uygulama başlatıldığında açılacak klasörü belirtin"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Klasörlerin süresinin arka planda dolacağını belirtir (yalnızca dahili "
+#~ "kullanımda)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "Birden çok e-posta hesabı algılanırsa Birleştirilmiş Posta Kutuları "
+#~ "özelliğinin etkinleştirilip etkinleştirilmeyeceğinin sorulması. Yalnızca "
+#~ "bir kez sorulur."
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr ""
+#~ "Bu değer K Posta Karşılaması'nın gösterilip gösterilmeyeceğine karar "
+#~ "vermek için kullanılır."
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Hızlı klasör arama satırını göster"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "İleti içi metni Öntanımlı Olarak Yönlendir."
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "Alıcı sayısı bunu aşarsa uyar:"
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "Alıcı sayısı bu değerden daha büyük ise, K Posta, postayı göndermeden "
+#~ "önce uyarı verecek ve bir onay isteyecektir. Uyarı iletisi kapatılabilir."
+
+#~ msgid "Confirm &before send"
+#~ msgstr "&Göndermeden önce onayla"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "Göndermeden önce yazım denetimi yap"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "İleti okundu uyarılarını oto&matik gönder"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>K Posta'nın giden her iletiniz için İleti Durum Bildirimleri "
+#~ "(MDN'ler) göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu "
+#~ "seçenek yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti "
+#~ "için MDN isteğini etkin veya devre dışı yapabilirsiniz, bunun için "
+#~ "<em>Seçenekler</em>-><em>Durum Bildirimi İste</em> menü ögesini seçin.</"
+#~ "p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "Otomatik kaydetme aralığı:"
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Oluşturucu penceresindeki metnin yedek kopyası düzenli olarak "
+#~ "oluşturulabilir. Burada yedek oluşturma sıklığını ayarlayabilirsiniz. "
+#~ "Değeri 0 yaparak otomatik kaydetmeyi devre dışı bırakabilirsiniz."
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr "Oluşturucuda Metin Parçası Yönetimi ve Ekleme Panelini göster."
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr ""
+#~ "İşaretlendiğinde, gönderilen iletiler şifrelenmiş biçimde kaydedilecektir"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "En son kullanılan URL'lerin listesi"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "En son kullanılan kodlamaların listesi"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Şifreleme etiketi göstergesini göster"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Şifreleme sahip güveni simgelerini göster"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "Gönderilen Öntanımlı Kısayolun Geçerliliğini Denetle"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Hesap penceresinin boyutu (dahili kullanım için)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Arama penceresinin genişliği (dahili kullanım için)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Arama penceresinin yüksekliği (dahili kullanım için)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "K Posta Uygulamasını Yapılandır penceresinin genişliği (dahili kullanım "
+#~ "için)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "K Posta Uygulamasını Yapılandır penceresinin yüksekliği (dahili kullanım "
+#~ "için)"
+
+#~ msgid "Message preview pane:"
+#~ msgstr "İleti önizleme paneli:"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "İleti önizleme bölümünü gösterme"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "İleti listesinin altında ileti önizleme bölümünü göster"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "İleti listesinin yanında ileti önizleme bölümünü göster"
+
+#~ msgid "Folder list:"
+#~ msgstr "Klasör listesi:"
+
+#~ msgid "Long folder list"
+#~ msgstr "Uzun klasör listesi"
+
+#~ msgid "Short folder list"
+#~ msgstr "Kısa klasör listesi"
+
+#~ msgid "Message template for new message"
+#~ msgstr "Yeni iletiler için şablonlar"
+
+#~ msgid "Message template for reply"
+#~ msgstr "Yanıtlamak için ileti şablonu"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "Tümünü yanıtlamak için ileti şablonu"
+
+#~ msgid "Message template for forward"
+#~ msgstr "Yönlendirmek için ileti şablonu"
+
+#~ msgid "Quote characters"
+#~ msgstr "Alıntı karakterleri"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "İlke görüntülenirken kullanılan kullanılan ilkeyi belirler"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki koleksiyon alanının genişliğini "
+#~ "belirtir (yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki konu alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki gönderici alanının genişliğini "
+#~ "belirtir (yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki alıcı alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki tarih alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki klasör alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"

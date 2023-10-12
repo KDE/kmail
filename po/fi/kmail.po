@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-08-26 18:16+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -995,15 +995,12 @@ msgstr ""
 msgid "System Tray"
 msgstr "Ilmoitusalue"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Näytä kuvake ilmoitusalueella"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Käynnistä pienennettynä ilmoitusalueelle"
@@ -6271,436 +6268,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"Tämä estää viestien automaattista vanhenemista tuhoamasta (tai siirtämästä "
-"arkistokansioon) viestejä, jotka on merkitty ”tärkeiksi” tai ”tehtäviksi”."
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "Salli paikalliset merkinnät vain luku -kansioissa"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Lähetä lähtevät viestit tarkistettaessa postia"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>Valitse haluatko KMailin lähettävän kaikki viestit lähtevät-kansiossa "
-"manuaalisilla vai kaikilla sähköpostitarkastuksilla, vai haluatko, että "
-"viestejä ei lähetetä ollenkaan automaattisesti. </p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "Viimeisimmäksi valittu hakemisto hakemistovalintaikkunassa."
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Näytä lukematon posti ilmoitusaluekuvakkeessa"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "&Määritä muokkain:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "&Käytä ulkoista muokkainta"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Määrittää viesteihin lisättävien mukautettujen MIME-otsakekenttien määrän "
-"(vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-"Raja, jolloin käyttäjää varoitetaan kansion lähestyvän enimmäiskokoaan."
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Tyhjennä paikallinen roskakori ohjelman sulkeutuessa"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "Poista viestit pyytämättä vahvistusta"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "Avaa tietty kansio ohjelman käynnistyksessä"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "Määritä ohjelmaa käynnistettäessä avattava kansio"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "Määrittää, vanhenevatko kansiot taustalla (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Määrittää, onko tämä ohjelman ensimmäinen käynnistyskerta (vain sisäiseen "
-"käyttöön)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"Havaittaessa useampi sähköpostitili kysytäänkö, haluaako käyttäjä käyttää "
-"yhdistettyä postilaatikkoa. Kysymys esitetään vain kerran."
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr "Tämä arvo määrittää, näytetäänkö KMailin esittely."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Näytä pikahakukenttä"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "Välitä viestit oletusarvoisesti sisällytettyinä."
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "Varoita, jos vastaanottajia on enemmän kuin:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"Jos vastaanottajia on enemmän kuin tässä määritetyn arvon verran, KMail "
-"varoittaa ja pyytää vahvistusta ennen viestin lähetystä. Varoituksen voi "
-"ottaa pois käytöstä."
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "&Pyydä vahvistus ennen lähettämistä"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "Tarkista oikeinkirjoitus ennen lähettämistä"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "&Pyydä viestin vastaanottokuittaukset automaattisesti"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>Käytä tätä asetusta, jos haluat KMailin pyytävän viestin "
-"vastaanottokuittauksen (MDN) jokaiselta lähtevältä viestiltä.</p><p>Tämä "
-"asetus vaikuttaa vain oletustoimintaan; voit yhä ottaa MDN:n käyttöön tai "
-"poistaa sen käytöstä viestikohtaisesti kirjoitusikkunassa, valikkokohdasta "
-"<em>Asetukset</em>-><em>Pyydä viestin toimituskuittaus</em>.</p></qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "&Automaattitallennusväli:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Kirjoitettavan viestin voi tallentaa määräajoin. Tässä voi määrittää "
-"tallennusvälin. Varmuuskopioinnin voi poistaa käytöstä asettamalla "
-"tallennusväliksi 0."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
-"Näytä tekstileikkeiden hallinta ja liittämispaneeli viestin "
-"kirjoitusikkunassa."
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr "Kun käytössä, lähetetyt viestit tallennetaan salattuina"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "Vastikään käytettyjen osoitteiden luettelo"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "Vastikään käytettyjen koodausten luettelo"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "Näytä salauksen teksti-ilmaisin"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Näytä salauksen luottamuskuvakkeet"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "Tarkista lähettämisen oletuspikanäppäin"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Henkilöysikkunan koko (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Hakuikkunan leveys (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Hakuikkunan korkeus (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "KMailin asetusdialogin leveys (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "KMailin asetusdialogin korkeus (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
-msgid "Message preview pane:"
-msgstr "Esikatseluruutu"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "Älä näytä viestin esikatseluruutua"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "Näytä esikatseluruutu viestiluettelon alla"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "Näytä esikatseluruutu v&iestiluettelon vieressä"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
-msgid "Folder list:"
-msgstr "Kansioluettelo"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "Pitkä kansioluettelo"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "Lyhyt kansioluettelo"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "Uuden viestin viestipohja"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "Vastausviestin viestipohja"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "Vastaa kaikille -viestin viestipohja"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "Välitysviestin viestipohja"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "Lainausmerkit"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "Määrittää käytännettä esitettäessä käytettävän käytänteen"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää kokoelma-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää otsikko-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää lähettäjä-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää vastaanottaja-kentän leveyden hakudialogissa (vain sisäiseen "
-"käyttöön)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää päiväys-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Määrittää kansio-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -8018,6 +7585,265 @@ msgstr[1] "Poissaolovastaus on aktiivinen palvelimilla"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Lähennys: %1 %"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "Tämä estää viestien automaattista vanhenemista tuhoamasta (tai "
+#~ "siirtämästä arkistokansioon) viestejä, jotka on merkitty ”tärkeiksi” tai "
+#~ "”tehtäviksi”."
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "Salli paikalliset merkinnät vain luku -kansioissa"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Lähetä lähtevät viestit tarkistettaessa postia"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Valitse haluatko KMailin lähettävän kaikki viestit lähtevät-"
+#~ "kansiossa manuaalisilla vai kaikilla sähköpostitarkastuksilla, vai "
+#~ "haluatko, että viestejä ei lähetetä ollenkaan automaattisesti. </p></qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "Viimeisimmäksi valittu hakemisto hakemistovalintaikkunassa."
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Näytä lukematon posti ilmoitusaluekuvakkeessa"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "&Määritä muokkain:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "&Käytä ulkoista muokkainta"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Määrittää viesteihin lisättävien mukautettujen MIME-otsakekenttien määrän "
+#~ "(vain sisäiseen käyttöön)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr ""
+#~ "Raja, jolloin käyttäjää varoitetaan kansion lähestyvän enimmäiskokoaan."
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Tyhjennä paikallinen roskakori ohjelman sulkeutuessa"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "Poista viestit pyytämättä vahvistusta"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "Avaa tietty kansio ohjelman käynnistyksessä"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "Määritä ohjelmaa käynnistettäessä avattava kansio"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr "Määrittää, vanhenevatko kansiot taustalla (vain sisäiseen käyttöön)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Määrittää, onko tämä ohjelman ensimmäinen käynnistyskerta (vain sisäiseen "
+#~ "käyttöön)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "Havaittaessa useampi sähköpostitili kysytäänkö, haluaako käyttäjä käyttää "
+#~ "yhdistettyä postilaatikkoa. Kysymys esitetään vain kerran."
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr "Tämä arvo määrittää, näytetäänkö KMailin esittely."
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Näytä pikahakukenttä"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "Välitä viestit oletusarvoisesti sisällytettyinä."
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "Varoita, jos vastaanottajia on enemmän kuin:"
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "Jos vastaanottajia on enemmän kuin tässä määritetyn arvon verran, KMail "
+#~ "varoittaa ja pyytää vahvistusta ennen viestin lähetystä. Varoituksen voi "
+#~ "ottaa pois käytöstä."
+
+#~ msgid "Confirm &before send"
+#~ msgstr "&Pyydä vahvistus ennen lähettämistä"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "Tarkista oikeinkirjoitus ennen lähettämistä"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "&Pyydä viestin vastaanottokuittaukset automaattisesti"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Käytä tätä asetusta, jos haluat KMailin pyytävän viestin "
+#~ "vastaanottokuittauksen (MDN) jokaiselta lähtevältä viestiltä.</p><p>Tämä "
+#~ "asetus vaikuttaa vain oletustoimintaan; voit yhä ottaa MDN:n käyttöön tai "
+#~ "poistaa sen käytöstä viestikohtaisesti kirjoitusikkunassa, "
+#~ "valikkokohdasta <em>Asetukset</em>-><em>Pyydä viestin toimituskuittaus</"
+#~ "em>.</p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "&Automaattitallennusväli:"
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Kirjoitettavan viestin voi tallentaa määräajoin. Tässä voi määrittää "
+#~ "tallennusvälin. Varmuuskopioinnin voi poistaa käytöstä asettamalla "
+#~ "tallennusväliksi 0."
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr ""
+#~ "Näytä tekstileikkeiden hallinta ja liittämispaneeli viestin "
+#~ "kirjoitusikkunassa."
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr "Kun käytössä, lähetetyt viestit tallennetaan salattuina"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "Vastikään käytettyjen osoitteiden luettelo"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "Vastikään käytettyjen koodausten luettelo"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Näytä salauksen teksti-ilmaisin"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Näytä salauksen luottamuskuvakkeet"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "Tarkista lähettämisen oletuspikanäppäin"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Henkilöysikkunan koko (vain sisäiseen käyttöön)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Hakuikkunan leveys (vain sisäiseen käyttöön)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Hakuikkunan korkeus (vain sisäiseen käyttöön)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "KMailin asetusdialogin leveys (vain sisäiseen käyttöön)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "KMailin asetusdialogin korkeus (vain sisäiseen käyttöön)"
+
+#, fuzzy
+#~| msgid "Message Preview Pane"
+#~ msgid "Message preview pane:"
+#~ msgstr "Esikatseluruutu"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "Älä näytä viestin esikatseluruutua"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "Näytä esikatseluruutu viestiluettelon alla"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "Näytä esikatseluruutu v&iestiluettelon vieressä"
+
+#, fuzzy
+#~| msgid "Folder List"
+#~ msgid "Folder list:"
+#~ msgstr "Kansioluettelo"
+
+#~ msgid "Long folder list"
+#~ msgstr "Pitkä kansioluettelo"
+
+#~ msgid "Short folder list"
+#~ msgstr "Lyhyt kansioluettelo"
+
+#~ msgid "Message template for new message"
+#~ msgstr "Uuden viestin viestipohja"
+
+#~ msgid "Message template for reply"
+#~ msgstr "Vastausviestin viestipohja"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "Vastaa kaikille -viestin viestipohja"
+
+#~ msgid "Message template for forward"
+#~ msgstr "Välitysviestin viestipohja"
+
+#~ msgid "Quote characters"
+#~ msgstr "Lainausmerkit"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "Määrittää käytännettä esitettäessä käytettävän käytänteen"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Määrittää kokoelma-kentän leveyden hakudialogissa (vain sisäiseen "
+#~ "käyttöön)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Määrittää otsikko-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Määrittää lähettäjä-kentän leveyden hakudialogissa (vain sisäiseen "
+#~ "käyttöön)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Määrittää vastaanottaja-kentän leveyden hakudialogissa (vain sisäiseen "
+#~ "käyttöön)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Määrittää päiväys-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Määrittää kansio-kentän leveyden hakudialogissa (vain sisäiseen käyttöön)"
 
 #~ msgid ""
 #~ "Medium security encryption will be used for this recipient (the "

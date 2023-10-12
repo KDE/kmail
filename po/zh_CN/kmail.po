@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2023-10-10 14:25\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -956,15 +956,12 @@ msgstr "回复或转发消息后关闭单独的消息窗口"
 msgid "System Tray"
 msgstr "系统托盘"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "启用系统托盘图标"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "启动时最小化到托盘"
@@ -6016,415 +6013,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-"这可以防止文件夹中被标为“重要”或“活动”的旧消息被自动标为过期并删除 (或被移动"
-"到存档文件夹)。"
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr "允许只读文件夹中的只读标记"
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, kde-format
-msgid "Send queued mail on mail check"
-msgstr "检查邮件时发送队列中的邮件"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>如果您不希望 KMail 自动发出发件箱中的消息，或是在检查邮件时才自动发"
-"出，请选择此项。</p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "文件夹选择对话框中最近选择的文件夹。"
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "在任务栏显示未读邮件"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "指定编辑器(&D)："
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "使用外部编辑器(&X)"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr "指定要插入信息的自定义 MIME 头部字段个数 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr "决定何时警告用户文件夹配额即将超出限度。"
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "程序退出时清空本地废件夹"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, kde-format
-msgid "Delete messages without confirmation"
-msgstr "删除邮件而无需确认"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr "允许打开指定文件夹"
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr "指定程序启动时打开的文件夹"
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "指定文件夹是否在后台过期 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr "指定此次是否为应用程序首次运行 (仅供内部使用)"
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-"当发现一个以上的电子邮件账户时，是否询问用户是否希望启用聚合邮箱。程序仅询问"
-"一次。"
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr "此值用于决定是否显示 KMail 介绍界面。"
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, kde-format
-msgid "Show folder quick search line edit"
-msgstr "显示文件夹快速搜索条"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr "默认在消息内转发。"
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr "收件人大于此数量时警告："
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-"如果收件人数量大于此数值，KMail 会在发送邮件前发出警告并请求确认，此警告可被"
-"关闭。"
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, kde-format
-msgid "Confirm &before send"
-msgstr "发送前确认(&B)"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, kde-format
-msgid "Check spelling before send"
-msgstr "发送前检查拼写"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "自动请求消息处理通知(&M)"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>如果您想要 KMail 为您每条发出的消息请求消息处理通知 (MDN)，则应启用此"
-"选项。</p><p>此选项只会影响默认值；您仍然可以在每封信的撰写器中启用或禁用 "
-"MDN 请求，只需选择菜单项<em>选项</em>->&gt;<em>请求投递通知</em>。</p></qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, kde-format
-msgid "Autosave interval:"
-msgstr "自动保存间隔："
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"KMail 会定时创建撰写器窗口中文本的备份。您可以在此处设置创建备份的间隔。您将"
-"此处得值设置为 0 可禁用自动保存。"
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr "在撰写器中显示文本片断管理工具和插入面板。"
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr "选中时以加密格式存储已发送消息"
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr "所有最近使用过的 URL 列表"
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr "所有最近使用过的编码列表"
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, kde-format
-msgid "Show crypto label indicator"
-msgstr "显示加密标签指示"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr ""
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr "验证发送默认快捷方式"
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "身份对话框大小 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "搜索窗口宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "搜索窗口高度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "KMail 配置对话框宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "KMail 配置对话框高度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, kde-format
-msgid "Message preview pane:"
-msgstr ""
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, kde-format
-msgid "Do not show a message preview pane"
-msgstr "不显示消息预览面板"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "在消息列表下显示消息预览面板"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "在消息列表旁显示消息预览面板"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, kde-format
-msgid "Folder list:"
-msgstr ""
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, kde-format
-msgid "Long folder list"
-msgstr "长文件夹列表"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, kde-format
-msgid "Short folder list"
-msgstr "短文件夹列表"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, kde-format
-msgid "Message template for new message"
-msgstr "新消息模板"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, kde-format
-msgid "Message template for reply"
-msgstr "回复消息模板"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, kde-format
-msgid "Message template for reply to all"
-msgstr "回复全部消息模板"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, kde-format
-msgid "Message template for forward"
-msgstr "转发消息模板"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, kde-format
-msgid "Quote characters"
-msgstr "引用字符"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr "指定显示策略时使用的策略"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中收藏字段的宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中主题字段宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中发件人字段宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中收件人字段宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中日期字段宽度 (仅供内部使用)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr "指定搜索窗口对话框中文件夹字段的宽度 (仅供内部使用)"
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -7694,3 +7282,227 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
+
+#~ msgid ""
+#~ "This prevents the automatic expiry of old messages in a folder from "
+#~ "deleting (or moving to an archive folder) the messages that are marked "
+#~ "'Important' or 'Action Item'"
+#~ msgstr ""
+#~ "这可以防止文件夹中被标为“重要”或“活动”的旧消息被自动标为过期并删除 (或被移"
+#~ "动到存档文件夹)。"
+
+#~ msgid "Allow local flags in read-only folders"
+#~ msgstr "允许只读文件夹中的只读标记"
+
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "检查邮件时发送队列中的邮件"
+
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>如果您不希望 KMail 自动发出发件箱中的消息，或是在检查邮件时才自动发"
+#~ "出，请选择此项。</p></qt>"
+
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "文件夹选择对话框中最近选择的文件夹。"
+
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "在任务栏显示未读邮件"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "指定编辑器(&D)："
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "使用外部编辑器(&X)"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr "指定要插入信息的自定义 MIME 头部字段个数 (仅供内部使用)"
+
+#~ msgid ""
+#~ "The threshold for when to warn the user that a folder is nearing its "
+#~ "quota limit."
+#~ msgstr "决定何时警告用户文件夹配额即将超出限度。"
+
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "程序退出时清空本地废件夹"
+
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "删除邮件而无需确认"
+
+#~ msgid "Allow to start specific folder"
+#~ msgstr "允许打开指定文件夹"
+
+#~ msgid "Specify the folder to open when the program is started"
+#~ msgstr "指定程序启动时打开的文件夹"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr "指定文件夹是否在后台过期 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr "指定此次是否为应用程序首次运行 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
+#~ "one email accounts are detected. We only ever ask once."
+#~ msgstr ""
+#~ "当发现一个以上的电子邮件账户时，是否询问用户是否希望启用聚合邮箱。程序仅询"
+#~ "问一次。"
+
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr "此值用于决定是否显示 KMail 介绍界面。"
+
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "显示文件夹快速搜索条"
+
+#~ msgid "Forward Inline As Default."
+#~ msgstr "默认在消息内转发。"
+
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr "收件人大于此数量时警告："
+
+#~ msgid ""
+#~ "If the number of recipients is larger than this value, KMail will warn "
+#~ "and ask for a confirmation before sending the mail. The warning can be "
+#~ "turned off."
+#~ msgstr ""
+#~ "如果收件人数量大于此数值，KMail 会在发送邮件前发出警告并请求确认，此警告可"
+#~ "被关闭。"
+
+#~ msgid "Confirm &before send"
+#~ msgstr "发送前确认(&B)"
+
+#~ msgid "Check spelling before send"
+#~ msgstr "发送前检查拼写"
+
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "自动请求消息处理通知(&M)"
+
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>如果您想要 KMail 为您每条发出的消息请求消息处理通知 (MDN)，则应启用"
+#~ "此选项。</p><p>此选项只会影响默认值；您仍然可以在每封信的撰写器中启用或禁"
+#~ "用 MDN 请求，只需选择菜单项<em>选项</em>->&gt;<em>请求投递通知</em>。</"
+#~ "p></qt>"
+
+#~ msgid "Autosave interval:"
+#~ msgstr "自动保存间隔："
+
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "KMail 会定时创建撰写器窗口中文本的备份。您可以在此处设置创建备份的间隔。您"
+#~ "将此处得值设置为 0 可禁用自动保存。"
+
+#~ msgid ""
+#~ "Show the Text Snippet Management and Insertion Panel in the composer."
+#~ msgstr "在撰写器中显示文本片断管理工具和插入面板。"
+
+#~ msgid "When check, sent messages will be stored in the encrypted form"
+#~ msgstr "选中时以加密格式存储已发送消息"
+
+#~ msgid "A list of all the recently used URLs"
+#~ msgstr "所有最近使用过的 URL 列表"
+
+#~ msgid "A list of all the recently used encodings"
+#~ msgstr "所有最近使用过的编码列表"
+
+#~ msgid "Show crypto label indicator"
+#~ msgstr "显示加密标签指示"
+
+#~ msgid "Validate Send Default Shortcut"
+#~ msgstr "验证发送默认快捷方式"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "身份对话框大小 (仅供内部使用)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "搜索窗口宽度 (仅供内部使用)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "搜索窗口高度 (仅供内部使用)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "KMail 配置对话框宽度 (仅供内部使用)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "KMail 配置对话框高度 (仅供内部使用)"
+
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "不显示消息预览面板"
+
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "在消息列表下显示消息预览面板"
+
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "在消息列表旁显示消息预览面板"
+
+#~ msgid "Long folder list"
+#~ msgstr "长文件夹列表"
+
+#~ msgid "Short folder list"
+#~ msgstr "短文件夹列表"
+
+#~ msgid "Message template for new message"
+#~ msgstr "新消息模板"
+
+#~ msgid "Message template for reply"
+#~ msgstr "回复消息模板"
+
+#~ msgid "Message template for reply to all"
+#~ msgstr "回复全部消息模板"
+
+#~ msgid "Message template for forward"
+#~ msgstr "转发消息模板"
+
+#~ msgid "Quote characters"
+#~ msgstr "引用字符"
+
+#~ msgid "Specifies the policy used when displaying policy"
+#~ msgstr "指定显示策略时使用的策略"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr "指定搜索窗口对话框中收藏字段的宽度 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr "指定搜索窗口对话框中主题字段宽度 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr "指定搜索窗口对话框中发件人字段宽度 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr "指定搜索窗口对话框中收件人字段宽度 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr "指定搜索窗口对话框中日期字段宽度 (仅供内部使用)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr "指定搜索窗口对话框中文件夹字段的宽度 (仅供内部使用)"

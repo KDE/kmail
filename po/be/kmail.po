@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-10 01:47+0000\n"
+"POT-Creation-Date: 2023-10-12 01:42+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -1068,15 +1068,12 @@ msgstr ""
 msgid "System Tray"
 msgstr "Сістэмны трэй"
 
-#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.cmake:88
+#: configuredialog/configureappearancepage.cpp:834
 #, fuzzy, kde-format
 msgid "Enable system tray icon"
 msgstr "Значок у сістэмным латку"
 
-#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
-#: settings/kmail.kcfg.cmake:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6648,422 +6645,6 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr ""
 
-#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.cmake:54
-#, kde-format
-msgid ""
-"This prevents the automatic expiry of old messages in a folder from deleting "
-"(or moving to an archive folder) the messages that are marked 'Important' or "
-"'Action Item'"
-msgstr ""
-
-#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.cmake:58
-#, kde-format
-msgid "Allow local flags in read-only folders"
-msgstr ""
-
-#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:64
-#, fuzzy, kde-format
-msgid "Send queued mail on mail check"
-msgstr "Адпраўляць паведамленні з чаргі пры праверцы пошты"
-
-#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.cmake:65
-#, fuzzy, kde-format
-msgid ""
-"<qt><p>Select whether you want KMail to send all messages in the outbox on "
-"manual or all mail checks, or whether you do not want messages to be sent "
-"automatically at all. </p></qt>"
-msgstr ""
-"<qt><p>Адпраўляць паведамленні з чаргі ўручную, пры праверцы пошты ва ўсіх "
-"скрынях або адпраўляць неадкладна. </p></qt>"
-
-#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.cmake:77
-#, fuzzy, kde-format
-msgid "The most recently selected folder in the folder selection dialog."
-msgstr "Паказваць часта выкарыстоўваныя тэчкі ў спісе выбару."
-
-#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.cmake:96
-#, fuzzy, kde-format
-msgid "Show Unread Email in TaskBar"
-msgstr "Паказваць заўсёды"
-
-#. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:100
-#, kde-format
-msgid "Specify e&ditor:"
-msgstr "Указаць р&эдактар:"
-
-#. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.cmake:104
-#, kde-format
-msgid "Use e&xternal editor instead of composer"
-msgstr "Выкарыстоўваць з&нешні рэдактар замест унутранага"
-
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.cmake:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.cmake:111
-#, kde-format
-msgid ""
-"The threshold for when to warn the user that a folder is nearing its quota "
-"limit."
-msgstr ""
-
-#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.cmake:115
-#, fuzzy, kde-format
-msgid "Empty the local trash folder on program exit"
-msgstr "Чысціць кошык пры выхадзе з праграмы"
-
-#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.cmake:119
-#, fuzzy, kde-format
-msgid "Delete messages without confirmation"
-msgstr "Даслаць пацьверджанне"
-
-#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.cmake:123
-#, kde-format
-msgid "Allow to start specific folder"
-msgstr ""
-
-#. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.cmake:127
-#, kde-format
-msgid "Specify the folder to open when the program is started"
-msgstr ""
-
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.cmake:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.cmake:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.cmake:163
-#, kde-format
-msgid ""
-"Whether to ask if users wants to enable Unified Mailboxes if more than one "
-"email accounts are detected. We only ever ask once."
-msgstr ""
-
-#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.cmake:171
-#, fuzzy, kde-format
-msgid ""
-"This value is used to decide whether the KMail Introduction should be "
-"displayed."
-msgstr "Паказ пачатковай старонкі KMail."
-
-#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.cmake:178
-#, fuzzy, kde-format
-msgid "Show folder quick search line edit"
-msgstr "Паказаць поле хуткага пошуку"
-
-#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.cmake:186
-#, kde-format
-msgid "Forward Inline As Default."
-msgstr ""
-
-#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.cmake:189
-#, fuzzy, kde-format
-msgid "Warn if the number of recipients is more than:"
-msgstr ""
-"Папярэджваць, калі тэрмін дзеяння каранёвага сертыфіката мінае менш за за:"
-
-#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
-#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.cmake:191 settings/kmail.kcfg.cmake:198
-#, kde-format
-msgid ""
-"If the number of recipients is larger than this value, KMail will warn and "
-"ask for a confirmation before sending the mail. The warning can be turned "
-"off."
-msgstr ""
-
-#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:212
-#, fuzzy, kde-format
-msgid "Confirm &before send"
-msgstr "Пацверджанне перад адпраўкай"
-
-#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.cmake:219
-#, fuzzy, kde-format
-msgid "Check spelling before send"
-msgstr "Пацверджанне перад адпраўкай"
-
-#. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:223
-#, fuzzy, kde-format
-msgid "Automatically request &message disposition notifications"
-msgstr "Запытваць абвяшчэнні аб апрацоўцы паведамленняў"
-
-#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.cmake:224
-#, fuzzy, kde-format
-msgid ""
-"<qt><p>Enable this option if you want KMail to request Message Disposition "
-"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
-"only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
-"Disposition Notification</em>.</p></qt>"
-msgstr ""
-"<qt><p>Запытваць абвяшчэнне аб апрацоўцы паведамлення (Message Disposition "
-"Notification, MDN) з кожным якое адпраўляецца паведамленнем.</p><p>Каб "
-"змяніць гэтае значэнне па змаўчанні, вылучыце пункт меню <em>Параметры</em>-"
-"><em>Запытаць абвяшчэнне аб апрацоўцы</em>.</p></qt>"
-
-#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:246
-#, fuzzy, kde-format
-msgid "Autosave interval:"
-msgstr "Інтэрвал аўтазахавання:"
-
-#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.cmake:247
-#, fuzzy, kde-format
-msgid ""
-"A backup copy of the text in the composer window can be created regularly. "
-"The interval used to create the backups is set here. You can disable "
-"autosaving by setting it to the value 0."
-msgstr ""
-"Пры напісанні паведамлення будзе аўтаматычна стварацца рэзервовая копія. "
-"Пакажыце інтэрвал, з якім будуць стварацца рэзервовыя копіі. Значэнне 0 "
-"адключае стварэнне дзід."
-
-#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.cmake:254
-#, kde-format
-msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
-
-#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.cmake:260
-#, kde-format
-msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
-
-#. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.cmake:264
-#, kde-format
-msgid "A list of all the recently used URLs"
-msgstr ""
-
-#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.cmake:270
-#, kde-format
-msgid "A list of all the recently used encodings"
-msgstr ""
-
-#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.cmake:276
-#, fuzzy, kde-format
-#| msgid "Show crypto &icons"
-msgid "Show crypto label indicator"
-msgstr "Паказваць &значкі крыптаграфіі"
-
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.cmake:280
-#, fuzzy, kde-format
-#| msgid "Show crypto &icons"
-msgid "Show crypto ownertrust icons"
-msgstr "Паказваць &значкі крыптаграфіі"
-
-#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.cmake:284
-#, kde-format
-msgid "Validate Send Default Shortcut"
-msgstr ""
-
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.cmake:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.cmake:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.cmake:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:343
-#, fuzzy, kde-format
-msgid "Message preview pane:"
-msgstr "Прагляд паведамлення"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:346
-#, fuzzy, kde-format
-msgid "Do not show a message preview pane"
-msgstr "Адключыць"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:349
-#, fuzzy, kde-format
-msgid "Show the message preview pane below the message list"
-msgstr "Паказваць ніжэй спісу паведамленняў"
-
-#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.cmake:352
-#, fuzzy, kde-format
-msgid "Show the message preview pane next to the message list"
-msgstr "Паказваць справа ад спісу паведамленняў"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
-msgid "Folder list:"
-msgstr "Спіс тэчак"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:362
-#, fuzzy, kde-format
-#| msgid "Lon&g folder list"
-msgid "Long folder list"
-msgstr "Доў&гі спіс тэчак"
-
-#. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.cmake:365
-#, fuzzy, kde-format
-#| msgid "Shor&t folder list"
-msgid "Short folder list"
-msgstr "Каро&ткі спіс тэчак"
-
-#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:374
-#, fuzzy, kde-format
-#| msgid "Message List - New Messages"
-msgid "Message template for new message"
-msgstr "Спіс паведамленняў - новыя паведамленні"
-
-#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:379
-#, fuzzy, kde-format
-#| msgid "Message List - New Messages"
-msgid "Message template for reply"
-msgstr "Спіс паведамленняў - новыя паведамленні"
-
-#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:384
-#, fuzzy, kde-format
-#| msgid "Message List - New Messages"
-msgid "Message template for reply to all"
-msgstr "Спіс паведамленняў - новыя паведамленні"
-
-#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:389
-#, fuzzy, kde-format
-#| msgid "Message List - New Messages"
-msgid "Message template for forward"
-msgstr "Спіс паведамленняў - новыя паведамленні"
-
-#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.cmake:394
-#, fuzzy, kde-format
-#| msgid "Add &Quote Characters"
-msgid "Quote characters"
-msgstr "Дадаць сымбалі &цытавання"
-
-#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.cmake:409
-#, kde-format
-msgid "Specifies the policy used when displaying policy"
-msgstr ""
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.cmake:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 #| msgid "Message List"
@@ -8422,6 +8003,161 @@ msgstr[2] "Змяніць адказы \"па-за офісам\"..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Send queued mail on mail check"
+#~ msgstr "Адпраўляць паведамленні з чаргі пры праверцы пошты"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
+#~ "on manual or all mail checks, or whether you do not want messages to be "
+#~ "sent automatically at all. </p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Адпраўляць паведамленні з чаргі ўручную, пры праверцы пошты ва "
+#~ "ўсіх скрынях або адпраўляць неадкладна. </p></qt>"
+
+#, fuzzy
+#~ msgid "The most recently selected folder in the folder selection dialog."
+#~ msgstr "Паказваць часта выкарыстоўваныя тэчкі ў спісе выбару."
+
+#, fuzzy
+#~ msgid "Show Unread Email in TaskBar"
+#~ msgstr "Паказваць заўсёды"
+
+#~ msgid "Specify e&ditor:"
+#~ msgstr "Указаць р&эдактар:"
+
+#~ msgid "Use e&xternal editor instead of composer"
+#~ msgstr "Выкарыстоўваць з&нешні рэдактар замест унутранага"
+
+#, fuzzy
+#~ msgid "Empty the local trash folder on program exit"
+#~ msgstr "Чысціць кошык пры выхадзе з праграмы"
+
+#, fuzzy
+#~ msgid "Delete messages without confirmation"
+#~ msgstr "Даслаць пацьверджанне"
+
+#, fuzzy
+#~ msgid ""
+#~ "This value is used to decide whether the KMail Introduction should be "
+#~ "displayed."
+#~ msgstr "Паказ пачатковай старонкі KMail."
+
+#, fuzzy
+#~ msgid "Show folder quick search line edit"
+#~ msgstr "Паказаць поле хуткага пошуку"
+
+#, fuzzy
+#~ msgid "Warn if the number of recipients is more than:"
+#~ msgstr ""
+#~ "Папярэджваць, калі тэрмін дзеяння каранёвага сертыфіката мінае менш за за:"
+
+#, fuzzy
+#~ msgid "Confirm &before send"
+#~ msgstr "Пацверджанне перад адпраўкай"
+
+#, fuzzy
+#~ msgid "Check spelling before send"
+#~ msgstr "Пацверджанне перад адпраўкай"
+
+#, fuzzy
+#~ msgid "Automatically request &message disposition notifications"
+#~ msgstr "Запытваць абвяшчэнні аб апрацоўцы паведамленняў"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt><p>Enable this option if you want KMail to request Message "
+#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#~ "p><p>This option only affects the default; you can still enable or "
+#~ "disable MDN requesting on a per-message basis in the composer, menu item "
+#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Запытваць абвяшчэнне аб апрацоўцы паведамлення (Message "
+#~ "Disposition Notification, MDN) з кожным якое адпраўляецца паведамленнем.</"
+#~ "p><p>Каб змяніць гэтае значэнне па змаўчанні, вылучыце пункт меню "
+#~ "<em>Параметры</em>-><em>Запытаць абвяшчэнне аб апрацоўцы</em>.</p></qt>"
+
+#, fuzzy
+#~ msgid "Autosave interval:"
+#~ msgstr "Інтэрвал аўтазахавання:"
+
+#, fuzzy
+#~ msgid ""
+#~ "A backup copy of the text in the composer window can be created "
+#~ "regularly. The interval used to create the backups is set here. You can "
+#~ "disable autosaving by setting it to the value 0."
+#~ msgstr ""
+#~ "Пры напісанні паведамлення будзе аўтаматычна стварацца рэзервовая копія. "
+#~ "Пакажыце інтэрвал, з якім будуць стварацца рэзервовыя копіі. Значэнне 0 "
+#~ "адключае стварэнне дзід."
+
+#, fuzzy
+#~| msgid "Show crypto &icons"
+#~ msgid "Show crypto label indicator"
+#~ msgstr "Паказваць &значкі крыптаграфіі"
+
+#, fuzzy
+#~| msgid "Show crypto &icons"
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Паказваць &значкі крыптаграфіі"
+
+#, fuzzy
+#~ msgid "Message preview pane:"
+#~ msgstr "Прагляд паведамлення"
+
+#, fuzzy
+#~ msgid "Do not show a message preview pane"
+#~ msgstr "Адключыць"
+
+#, fuzzy
+#~ msgid "Show the message preview pane below the message list"
+#~ msgstr "Паказваць ніжэй спісу паведамленняў"
+
+#, fuzzy
+#~ msgid "Show the message preview pane next to the message list"
+#~ msgstr "Паказваць справа ад спісу паведамленняў"
+
+#, fuzzy
+#~| msgid "Folder List"
+#~ msgid "Folder list:"
+#~ msgstr "Спіс тэчак"
+
+#, fuzzy
+#~| msgid "Lon&g folder list"
+#~ msgid "Long folder list"
+#~ msgstr "Доў&гі спіс тэчак"
+
+#, fuzzy
+#~| msgid "Shor&t folder list"
+#~ msgid "Short folder list"
+#~ msgstr "Каро&ткі спіс тэчак"
+
+#, fuzzy
+#~| msgid "Message List - New Messages"
+#~ msgid "Message template for new message"
+#~ msgstr "Спіс паведамленняў - новыя паведамленні"
+
+#, fuzzy
+#~| msgid "Message List - New Messages"
+#~ msgid "Message template for reply"
+#~ msgstr "Спіс паведамленняў - новыя паведамленні"
+
+#, fuzzy
+#~| msgid "Message List - New Messages"
+#~ msgid "Message template for reply to all"
+#~ msgstr "Спіс паведамленняў - новыя паведамленні"
+
+#, fuzzy
+#~| msgid "Message List - New Messages"
+#~ msgid "Message template for forward"
+#~ msgstr "Спіс паведамленняў - новыя паведамленні"
+
+#, fuzzy
+#~| msgid "Add &Quote Characters"
+#~ msgid "Quote characters"
+#~ msgstr "Дадаць сымбалі &цытавання"
 
 #, fuzzy
 #~| msgid "Contacts"
