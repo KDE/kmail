@@ -4229,7 +4229,7 @@ msgstr "O ficheiro non contén ningunha mensaxe."
 #: kmcommands.cpp:796
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
-msgstr "O ficheiro contén varias mensaxes. Só se mostra a primeira."
+msgstr "O ficheiro contén varias mensaxes. Só se amosa a primeira."
 
 #: kmcommands.cpp:907
 #, kde-format
@@ -5851,7 +5851,7 @@ msgid ""
 "path will be shown."
 msgstr ""
 "Active esta opción se quere ver a ruta completa a cada un dos cartafoles que "
-"se lista no resumo. Se está desactivada só se mostra o cartafol base."
+"se lista no resumo. Se está desactivada só se amosa o cartafol base."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
@@ -7528,7 +7528,7 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Se escolle esta opción, usarase o valor do mandatario HTTP que se mostra á "
+"Se escolle esta opción, usarase o valor do mandatario HTTP que se amosa á "
 "dereita (que ven da variábel de contorno http_proxy) para todas as "
 "solicitudes HTTP."
 
