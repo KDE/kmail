@@ -4296,7 +4296,7 @@ msgstr "Buida la paperera"
 #: kmmainwidget.cpp:1455 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
-msgstr "Mou a la paperera"
+msgstr "Mou cap a dins de la paperera"
 
 #: kmmainwidget.cpp:1456
 #, kde-format
@@ -4596,12 +4596,12 @@ msgstr "Sup&rimix"
 #: kmmainwidget.cpp:2953 kmmainwidget.cpp:4004
 #, kde-format
 msgid "M&ove Thread to Trash"
-msgstr "Mou la c&onversa a la paperera"
+msgstr "Mou la c&onversa cap a la paperera"
 
 #: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Move thread to trashcan"
-msgstr "Mou la conversa a la paperera"
+msgstr "Mou la conversa cap a la paperera"
 
 #: kmmainwidget.cpp:2960 kmmainwidget.cpp:4004
 #, kde-format
@@ -4839,7 +4839,7 @@ msgstr "Missatge se&güent"
 #: kmmainwidget.cpp:3232
 #, kde-format
 msgid "Go to the next message"
-msgstr "Ves al missatge següent"
+msgstr "Ves fins al missatge següent"
 
 #: kmmainwidget.cpp:3236
 #, kde-format
@@ -4855,7 +4855,7 @@ msgstr "Següent"
 #: kmmainwidget.cpp:3245
 #, kde-format
 msgid "Go to the next unread message"
-msgstr "Ves al missatge següent sense llegir"
+msgstr "Ves fins al missatge següent sense llegir"
 
 #: kmmainwidget.cpp:3249
 #, kde-format
@@ -4865,7 +4865,7 @@ msgstr "Missatge &anterior"
 #: kmmainwidget.cpp:3251
 #, kde-format
 msgid "Go to the previous message"
-msgstr "Ves al missatge anterior"
+msgstr "Ves fins al missatge anterior"
 
 #: kmmainwidget.cpp:3256
 #, kde-format
@@ -4881,7 +4881,7 @@ msgstr "Anterior"
 #: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Go to the previous unread message"
-msgstr "Ves al missatge anterior sense llegir"
+msgstr "Ves fins al missatge anterior sense llegir"
 
 #: kmmainwidget.cpp:3269
 #, kde-format
@@ -4891,7 +4891,7 @@ msgstr "Ca&rpeta següent sense llegir"
 #: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Go to the next folder with unread messages"
-msgstr "Ves a la carpeta següent que tinga missatges sense llegir"
+msgstr "Ves fins a la carpeta següent que tinga missatges sense llegir"
 
 #: kmmainwidget.cpp:3278
 #, kde-format
@@ -4901,7 +4901,7 @@ msgstr "&Carpeta anterior sense llegir"
 #: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Go to the previous folder with unread messages"
-msgstr "Ves a la carpeta anterior que tinga missatges sense llegir"
+msgstr "Ves fins a la carpeta anterior que tinga missatges sense llegir"
 
 #: kmmainwidget.cpp:3287
 #, kde-format
@@ -4912,7 +4912,7 @@ msgstr "&Text següent sense llegir"
 #: kmmainwidget.cpp:3290
 #, kde-format
 msgid "Go to the next unread text"
-msgstr "Ves al text següent sense llegir"
+msgstr "Ves fins al text següent sense llegir"
 
 #: kmmainwidget.cpp:3292
 #, kde-format
@@ -5021,12 +5021,12 @@ msgstr "Interromp l'operació actual"
 #: kmmainwidget.cpp:3435
 #, kde-format
 msgid "Focus on Next Folder"
-msgstr "Apunta a la carpeta següent"
+msgstr "Apunta cap a la carpeta següent"
 
 #: kmmainwidget.cpp:3441
 #, kde-format
 msgid "Focus on Previous Folder"
-msgstr "Apunta a la carpeta anterior"
+msgstr "Apunta cap a la carpeta anterior"
 
 #: kmmainwidget.cpp:3447
 #, kde-format
@@ -5036,22 +5036,22 @@ msgstr "Selecciona la carpeta on apuntar"
 #: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Focus on First Folder"
-msgstr "Apunta a la primera carpeta"
+msgstr "Apunta cap a la primera carpeta"
 
 #: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Focus on Last Folder"
-msgstr "Focus en l'última carpeta"
+msgstr "Apunta cap a l'última carpeta"
 
 #: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Focus on Next Message"
-msgstr "Apunta al missatge següent"
+msgstr "Apunta cap al missatge següent"
 
 #: kmmainwidget.cpp:3472
 #, kde-format
 msgid "Focus on Previous Message"
-msgstr "Apunta al missatge anterior"
+msgstr "Apunta cap al missatge anterior"
 
 #: kmmainwidget.cpp:3478
 #, kde-format
@@ -5237,13 +5237,13 @@ msgstr "S'està iniciant..."
 #: kmreadermainwin.cpp:476 util.cpp:148
 #, kde-format
 msgid "&Move to Trash"
-msgstr "&Mou a la paperera"
+msgstr "&Mou cap a dins de la paperera"
 
 #: kmreadermainwin.cpp:477
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
-msgstr "Mou a la paperera"
+msgstr "Mou cap a dins de la paperera"
 
 #: kmreadermainwin.cpp:478
 #, kde-format
@@ -5778,7 +5778,7 @@ msgstr "Envia un missatge nou"
 #: messageactions.cpp:457
 #, kde-format
 msgid "Go to Archive"
-msgstr "Ves a l'arxiu"
+msgstr "Ves fins a l'arxiu"
 
 #: messageactions.cpp:460
 #, kde-format
@@ -6040,7 +6040,7 @@ msgid ""
 "'Action Item'"
 msgstr ""
 "Evita la caducitat automàtica dels missatges antics d'una carpeta de la "
-"supressió (o de moure'ls a una carpeta d'arxiu) que estan marcats amb "
+"supressió (o de moure'ls cap a una carpeta d'arxiu) que estan marcats amb "
 "«Important» o «Element d'acció»"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
@@ -6667,25 +6667,25 @@ msgstr "Impedi&x que caduquen els missatges importants"
 #: ui/miscpagemaintab.ui:76
 #, kde-format
 msgid "Jump to First Unread Message"
-msgstr "Ves al primer missatge sense llegir"
+msgstr "Ves fins al primer missatge sense llegir"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
 #, kde-format
 msgid "Jump to Last Selected Message"
-msgstr "Ves a l'últim missatge seleccionat"
+msgstr "Ves fins a l'últim missatge seleccionat"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, kde-format
 msgid "Jump to Newest Message"
-msgstr "Ves al missatge més nou"
+msgstr "Ves fins al missatge més nou"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, kde-format
 msgid "Jump to Oldest Message"
-msgstr "Ves al missatge més antic"
+msgstr "Ves fins al missatge més antic"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDelayedMarkAsRead)
 #: ui/miscpagemaintab.ui:105
@@ -6742,7 +6742,7 @@ msgstr ""
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
 "weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\">En saltar al següent "
+"right:0px; -qt-block-indent:0; text-indent:0px;\">En saltar fins al següent "
 "missatge sense llegir, pot passar que no hi haja més missatges sense llegir "
 "davall del missatge actual.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
@@ -7726,7 +7726,7 @@ msgstr "<b>Assumpte:</b> %1"
 #: undostack.cpp:47
 #, kde-format
 msgid "Move To Trash"
-msgstr "Mou a la paperera"
+msgstr "Mou cap a dins de la paperera"
 
 #: undostack.cpp:47
 #, kde-format
