@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-12 01:42+0000\n"
-"PO-Revision-Date: 2023-09-26 22:17+0200\n"
+"PO-Revision-Date: 2023-10-14 21:18+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -7275,7 +7275,7 @@ msgstr "HTTP eskaerak"
 #: ui/smimeconfiguration.ui:141
 #, kde-format
 msgid "Entirely disables the use of HTTP for S/MIME."
-msgstr "Guztiz desgaitzen du HTTPren erabilera S/MIME-n."
+msgstr "Entirely disables the use of HTTP for S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableHTTPCB)
 #: ui/smimeconfiguration.ui:144
@@ -7293,17 +7293,17 @@ msgid ""
 "used.  With this option all entries using the HTTP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"CRL baten kokalekua bilatzean, egiaztatzeko ziurtagiriak normalean \"CRL "
-"banaketa-puntuak\" sarrerak bezala ezagutzen direnak ditu. Hauek URLra "
-"iristeko sarbidea azaltzen dituzten URLak dira. Aurkitutako lehen puntua "
-"erabiltzen da. Aukera honekin HTTP eskema erabiltzen duten sarrera guztiei "
-"ez ikusia egingo zaie banaketa-puntu egokia bilatzean."
+"When looking for the location of a CRL, the to-be-tested certificate usually "
+"contains what are known as \"CRL Distribution Point\" (DP) entries, which "
+"are URLs describing the way to access the CRL. The first-found DP entry is "
+"used.  With this option, all entries using the HTTP scheme are ignored when "
+"looking for a suitable DP."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
 #, kde-format
 msgid "Ignore HTTP CRL distribution point of certificates"
-msgstr "Ez ikusia egin HTTP bidezko CRL ziurtagirien banaketa-puntuei"
+msgstr "Ezikusi ziurtagirien HTTP CRL banaketa-puntua"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:176
@@ -7313,20 +7313,21 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Aukera hau hautatzen bada, eskuinean erakusten den HTTP proxy-aren balioa "
-"(http_proxy inguruneko aldagaietik datorrena) erabiliko da HTTP eskaeretan."
+"Aukera hori hautatuta badago, eskuinean erakusten den HTTP ordezkariaren "
+"balioa (http_proxy inguruneko aldagaitik datorrena) erabiliko da HTTP "
+"eskaera guztietarako."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
 #, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "Erabili s&istemako HTTP ordezkaria:"
+msgstr "Erabili s&istemaren HTTP ordezkaria:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
 #, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "Erabili ordezkari &hori HTTP eskaerekin: "
+msgstr "Erabili ordezkari &hori HTTP eskarietarako:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
@@ -7350,13 +7351,13 @@ msgstr "LDAP eskaerak"
 #: ui/smimeconfiguration.ui:224
 #, kde-format
 msgid "Entirely disables the use of LDAP for S/MIME."
-msgstr "Guztiz desgaitzen du LDAP-en erabilera S/MIME-rentzat."
+msgstr "S/MIMErako LDAPen erabilera erabat ezgaitzen du."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableLDAPCB)
 #: ui/smimeconfiguration.ui:227
 #, kde-format
 msgid "Do not perform any LDAP requests"
-msgstr "Ez egin LDAP eskaerarik"
+msgstr "Ez burutu LDAP eskaerarik"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:234
@@ -7368,17 +7369,17 @@ msgid ""
 "used.  With this option all entries using the LDAP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"CRL baten kokalekua bilatzean, egiaztatzeko ziurtagiriak normalean \"CRL "
-"banaketa-puntuak\" sarrerak bezala ezagutzen direnak ditu. Hauek URLra "
-"iristeko sarbidea deskribatzen dituzten URLak dira. Aurkitutako lehen puntua "
-"erabiltzen da. Aukera honekin LDAP eskema erabiltzen duten sarrera guztiei "
-"ez ikusia egingo zaie banaketa-puntu egokia bilatzean."
+"When looking for the location of a CRL, the to-be-tested certificate usually "
+"contains what are known as \"CRL Distribution Point\" (DP) entries, which "
+"are URLs describing the way to access the CRL. The first-found DP entry is "
+"used.  With this option, all entries using the LDAP scheme are ignored when "
+"looking for a suitable DP."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237
 #, kde-format
 msgid "Ignore LDAP CRL distribution point of certificates"
-msgstr "Ez ikusia egin LDAP bidezko CRL ziurtagirien banaketa-puntuei"
+msgstr "Ezikusi LDAP CRL ziurtagirien banaketa-puntuak"
 
 #. i18n: ectx: property (text), widget (QLabel, customLDAPLabel)
 #: ui/smimeconfiguration.ui:246
@@ -7500,7 +7501,7 @@ msgstr[1] "Eraman mezuak"
 #: undostack.cpp:101
 #, kde-format
 msgid "There is nothing to undo."
-msgstr "Ez dago ezer desegiteko."
+msgstr "Ez dago desegiteko ezer."
 
 #: undostack.cpp:108
 #, kde-format
