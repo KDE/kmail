@@ -185,7 +185,6 @@ target_sources(kmailprivate PRIVATE
     foldershortcutactionmanager.cpp
     kmlaunchexternalcomponent.cpp
     manageshowcollectionproperties.cpp
-    kmmigrateapplication.cpp
     kmail.qrc
 
     attributes/taskattribute.h
@@ -318,7 +317,6 @@ target_sources(kmailprivate PRIVATE
     foldershortcutactionmanager.h
     kmlaunchexternalcomponent.h
     manageshowcollectionproperties.h
-    kmmigrateapplication.h
     historyswitchfolder/collectionswitchertreeview.cpp
     historyswitchfolder/collectionswitchertreeview.h
     historyswitchfolder/collectionswitchertreeviewmanager.h
