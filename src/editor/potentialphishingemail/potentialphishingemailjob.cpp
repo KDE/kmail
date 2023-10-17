@@ -63,11 +63,11 @@ bool PotentialPhishingEmailJob::start()
                 if (temail.toLower() != tname.toLower()) {
                     const QString str = QStringLiteral("(%1)").arg(temail);
                     if (!tname.contains(str, Qt::CaseInsensitive)) {
-                        const QStringList lst = tname.trimmed().split(QLatin1Char(' '));
+                        const QList<QStringView> lst = QStringView(tname.trimmed()).split(QLatin1Char(' '));
                         if (lst.count() > 1) {
-                            const QString firstName = lst.at(0);
+                            const QStringView firstName = lst.at(0);
 
-                            for (const QString &n : lst) {
+                            for (const QStringView n : lst) {
                                 if (n != firstName) {
                                     mPotentialPhisingEmails.append(addr);
                                     break;
