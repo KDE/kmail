@@ -168,6 +168,7 @@ configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @O
 if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
+add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
 ecm_set_disabled_deprecation_versions(QT 6.5
      KF 5.240.0
     )
