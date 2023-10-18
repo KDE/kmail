@@ -46,6 +46,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     setToolTipIconByName(QStringLiteral("kmail"));
     setIconByName(QStringLiteral("kmail-symbolic"));
 
+#if HAVE_X11
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (mainWidget) {
         QWidget *mainWin = mainWidget->window();
@@ -53,6 +54,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
             mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         }
     }
+#endif
 
     connect(this, &KMSystemTray::activateRequested, this, &KMSystemTray::slotActivated);
     connect(contextMenu(), &QMenu::aboutToShow, this, &KMSystemTray::slotContextMenuAboutToShow);
@@ -158,10 +160,10 @@ void KMSystemTray::slotActivated()
         return;
     }
 
+#ifdef HAVE_X11
     KWindowInfo cur = KWindowInfo(mainWin->winId(), NET::WMDesktop);
 
     const bool wasMinimized = cur.isMinimized();
-#ifdef HAVE_X11
     const int currentDesktop = KX11Extras::currentDesktop();
 
     if (cur.valid()) {
@@ -175,12 +177,15 @@ void KMSystemTray::slotActivated()
     if (mDesktopOfMainWin == NET::OnAllDesktops) {
         KX11Extras::setOnAllDesktops(mainWin->winId(), true);
     }
-#endif
+
     KWindowSystem::activateWindow(mainWin->windowHandle());
 
     if (wasMinimized) {
         kmkernel->raise();
     }
+#else
+    KWindowSystem::activateWindow(mainWin->windowHandle());
+#endif
 }
 
 void KMSystemTray::slotContextMenuAboutToShow()
@@ -246,9 +251,9 @@ void KMSystemTray::hideKMail()
     QWidget *mainWin = mainWidget->window();
     Q_ASSERT(mainWin);
     if (mainWin) {
+#ifdef HAVE_X11
         mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         // iconifying is unnecessary, but it looks cooler
-#ifdef HAVE_X11
         KX11Extras::minimizeWindow(mainWin->winId());
 #endif
         mainWin->hide();
