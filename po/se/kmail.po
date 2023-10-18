@@ -7144,28 +7144,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "Mearrit čállin&prográmma:"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "G&eavat eará čállinprográmma go KMail:a iežas"
-
-#~ msgid "Confirm &before send"
-#~ msgstr "N&anne ovdal sáddema"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "Autovurkengaskkadat:"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "Reiveovdačájeheapmi"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "Máhppalistu"
-
-#~ msgid "Message template for new message"
-#~ msgstr "Reivemálle ođđa reivve várás"
