@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-12 01:42+0000\n"
+"POT-Creation-Date: 2023-10-19 01:41+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -434,7 +434,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:74
+#: kmsystemtray.cpp:76
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -6029,18 +6029,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Tókst að færa bréf"
 
-#: kmsystemtray.cpp:88
+#: kmsystemtray.cpp:90
 #, kde-format
 msgid "New Messages In"
 msgstr "Nýr póstur í"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, fuzzy, kde-format
 #| msgid "There are no unread messages"
 msgid "There are no unread messages"
 msgstr "Það eru engin ólesin bréf"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

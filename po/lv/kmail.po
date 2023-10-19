@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-12 01:42+0000\n"
+"POT-Creation-Date: 2023-10-19 01:41+0000\n"
 "PO-Revision-Date: 2010-01-13 18:47+0200\n"
 "Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -425,7 +425,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:74
+#: kmsystemtray.cpp:76
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -5948,18 +5948,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Vēstules veiksmīgi pārvietotas."
 
-#: kmsystemtray.cpp:88
+#: kmsystemtray.cpp:90
 #, kde-format
 msgid "New Messages In"
 msgstr "Jaunas vēstules mapēs"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, fuzzy, kde-format
 #| msgid "KMail - There are no unread messages"
 msgid "There are no unread messages"
 msgstr "KMail - Nav neizlasītu vēstuļu"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, fuzzy, kde-format
 #| msgid "Unread messages:"
 msgid "1 unread message"

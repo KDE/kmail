@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-12 01:42+0000\n"
+"POT-Creation-Date: 2023-10-19 01:41+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -388,7 +388,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:74
+#: kmsystemtray.cpp:76
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -5656,17 +5656,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "D'éirigh le bogadh na dteachtaireachtaí."
 
-#: kmsystemtray.cpp:88
+#: kmsystemtray.cpp:90
 #, kde-format
 msgid "New Messages In"
 msgstr "Teachtaireachtaí Nua I"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Níl aon teachtaireachtaí gan léamh ann"
 
-#: kmsystemtray.cpp:260
+#: kmsystemtray.cpp:265
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
