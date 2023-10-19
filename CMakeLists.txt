@@ -169,7 +169,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
-ecm_set_disabled_deprecation_versions(QT 6.5
+ecm_set_disabled_deprecation_versions(QT 6.6
      KF 5.240.0
     )
 find_package(KUserFeedbackQt6 1.2.1 CONFIG)
