@@ -21,6 +21,7 @@
 
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
 #define HAVE_X11 1
+#include <KWindowInfo>
 #include <KX11Extras>
 #endif
 
