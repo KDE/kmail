@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-19 01:41+0000\n"
+"POT-Creation-Date: 2023-10-21 01:39+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -412,8 +412,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:76
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
 msgstr "КПошта"
@@ -6070,18 +6070,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Пораките се успешно преместени."
 
-#: kmsystemtray.cpp:90
+#: kmsystemtray.cpp:91
 #, kde-format
 msgid "New Messages In"
 msgstr "Нови пораки во"
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, fuzzy, kde-format
 #| msgid "There are no unread messages"
 msgid "There are no unread messages"
 msgstr "Нема непрочитани пораки"
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-19 01:41+0000\n"
+"POT-Creation-Date: 2023-10-21 01:39+0000\n"
 "PO-Revision-Date: 2017-05-16 06:41-0400\n"
 "Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
@@ -28,7 +28,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Zanata 3.9.6\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -396,8 +397,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:76
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -1295,6 +1296,8 @@ msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " דקות"
 msgstr[1] " דקות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: configuredialog/configurecomposerpage.cpp:431
 #, fuzzy, kde-format
@@ -1690,6 +1693,8 @@ msgid " day"
 msgid_plural " days"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: configuredialog/configuresecuritypage.cpp:334
 #, fuzzy, kde-format
@@ -1827,6 +1832,8 @@ msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
 msgstr[0] "מצורף:  %1"
 msgstr[1] "מצורף:  %1"
+msgstr[2] ""
+msgstr[3] ""
 
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
@@ -2304,6 +2311,8 @@ msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "הודעה מוצפנת"
 msgstr[1] "הודעה מוצפנת"
+msgstr[2] ""
+msgstr[3] ""
 
 #: editor/kmcomposerwin.cpp:2468
 #, fuzzy, kde-format
@@ -2311,6 +2320,8 @@ msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "הוסף בתור מצורף"
 msgstr[1] "הוסף בתור מצורף"
+msgstr[2] ""
+msgstr[3] ""
 
 #: editor/kmcomposerwin.cpp:2514
 #, fuzzy, kde-format
@@ -3470,6 +3481,8 @@ msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
 msgstr[1] "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
+msgstr[2] ""
+msgstr[3] ""
 
 #: identity/identitypage.cpp:219
 #, fuzzy, kde-format
@@ -3478,6 +3491,8 @@ msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "הסר זהות"
 msgstr[1] "הסר זהות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: identity/identitypage.cpp:220
 #, fuzzy, kde-format
@@ -3595,6 +3610,8 @@ msgid "Distribution list %2 is empty, it cannot be used."
 msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
@@ -3940,6 +3957,8 @@ msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "נא המתן בעת שההודעה מועברת"
 msgstr[1] "נא המתן בעת ש%1- ההודעות מועברות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmcommands.cpp:509
 #, fuzzy, kde-format
@@ -4119,6 +4138,8 @@ msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmkernel.cpp:1645
 #, kde-format
@@ -4127,6 +4148,8 @@ msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmkernel.cpp:1660
 #, kde-format
@@ -4360,6 +4383,8 @@ msgstr[0] ""
 msgstr[1] ""
 "<qt>האם אתה בטוח שברצונך למחוק את %1 ההודעות הנבחרות?<br>מרגע שהן יימחקו, לא "
 "ניתן יהיה לשחזר אותן.</qt>"
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmmainwidget.cpp:1640
 #, kde-format
@@ -4505,6 +4530,8 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmmainwidget.cpp:2366
 #, kde-format
@@ -4513,6 +4540,8 @@ msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmmainwidget.cpp:2371
 #, fuzzy, kde-format
@@ -4528,6 +4557,8 @@ msgstr[0] ""
 msgstr[1] ""
 "<qt>האם אתה בטוח שברצונך למחוק את %1 ההודעות הנבחרות?<br>מרגע שהן יימחקו, לא "
 "ניתן יהיה לשחזר אותן.</qt>"
+msgstr[2] ""
+msgstr[3] ""
 
 #: kmmainwidget.cpp:2378
 #, kde-format
@@ -5498,22 +5529,24 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "ההודעות הועברו בהצלחה"
 
-#: kmsystemtray.cpp:90
+#: kmsystemtray.cpp:91
 #, kde-format
 msgid "New Messages In"
 msgstr "הודעות חדשות ב"
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "אין הודעות שלא נקראו"
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "הודעה שלא נקראה"
 msgstr[1] "הודעה שלא נקראה"
+msgstr[2] ""
+msgstr[3] ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, fuzzy, kde-format
@@ -5981,11 +6014,13 @@ msgid "Jump to original folder"
 msgstr "העתק לתיקייה"
 
 #: searchdialog/searchwindow.cpp:292
-#, kde-format
+#, fuzzy, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 התאמה"
 msgstr[1] "%1 התאמות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: searchdialog/searchwindow.cpp:362 searchdialog/searchwindow.cpp:404
 #, kde-format
@@ -6062,6 +6097,8 @@ msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "הודעת מטלה"
 msgstr[1] "הודעת מטלה"
+msgstr[2] ""
+msgstr[3] ""
 
 #: searchdialog/searchwindow.cpp:780
 #, fuzzy, kde-format
@@ -6069,6 +6106,8 @@ msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "מחיקת הודעות"
 msgstr[1] "מחיקת הודעות"
+msgstr[2] ""
+msgstr[3] ""
 
 #: searchdialog/searchwindow.cpp:909
 #, fuzzy, kde-format
@@ -7241,6 +7280,8 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "הודעה חדשה אל..."
 msgstr[1] "הודעה חדשה אל..."
+msgstr[2] ""
+msgstr[3] ""
 
 #: undostack.cpp:101
 #, fuzzy, kde-format
@@ -7305,6 +7346,8 @@ msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "ערוך הודעות \"מחוץ למשרד\"..."
 msgstr[1] "ערוך הודעות \"מחוץ למשרד\"..."
+msgstr[2] ""
+msgstr[3] ""
 
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-19 01:41+0000\n"
+"POT-Creation-Date: 2023-10-21 01:39+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -412,8 +412,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:76
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -5901,17 +5901,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Kontakt mit Spood ännert"
 
-#: kmsystemtray.cpp:90
+#: kmsystemtray.cpp:91
 #, kde-format
 msgid "New Messages In"
 msgstr "Nieg Narichten in"
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Dat gifft keen nich leeste Narichten."
 
-#: kmsystemtray.cpp:265
+#: kmsystemtray.cpp:266
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
