@@ -516,7 +516,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     const auto readerWindowModeLayout = new QVBoxLayout;
     mReaderWindowModeGroup = new QButtonGroup(this);
     {
-        const int numberChoices(folderListItem->choices().size());
+        const int numberChoices(readerWindowModeItem->choices().size());
         for (int i = 0; i < numberChoices; ++i) {
             auto button = new QRadioButton(readerWindowModeItem->choices().at(i).label, this);
             mReaderWindowModeGroup->addButton(button, i);
