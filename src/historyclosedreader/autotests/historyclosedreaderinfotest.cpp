@@ -19,3 +19,5 @@ void HistoryClosedReaderInfoTest::shouldHaveDefaultValues()
     QVERIFY(w.subject().isEmpty());
     QCOMPARE(w.item(), -1);
 }
+
+#include "moc_historyclosedreaderinfotest.cpp"
