@@ -552,6 +552,7 @@ if(BUILD_TESTING)
     add_subdirectory(undosend/autotests/)
     add_subdirectory(job/autotests/)
     add_subdirectory(historyswitchfolder/autotests/)
+    add_subdirectory(historyclosedreader/autotests/)
 endif()
 ########### install files ###############
 install(TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRARY NAMELINK_SKIP)

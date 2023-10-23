@@ -11,4 +11,4 @@ macro( historyclosedreader_kmail _source )
   target_link_libraries( ${_name} Qt::Test Qt::Core  KPim6::AkonadiCore KF6::ConfigCore kmailprivate)
 endmacro()
 
-#historyclosedreade(folderarchiveaccountinfotest.cpp)
+historyclosedreader_kmail(historyclosedreaderinfotest.cpp)
