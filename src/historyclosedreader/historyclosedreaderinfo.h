@@ -4,12 +4,12 @@
 */
 
 #pragma once
-
+#include "kmail_private_export.h"
 #include <Akonadi/Item>
 #include <QDebug>
 #include <QString>
 
-class HistoryClosedReaderInfo
+class KMAILTESTS_TESTS_EXPORT HistoryClosedReaderInfo
 {
 public:
     HistoryClosedReaderInfo();
