@@ -11,6 +11,11 @@ HistoryClosedReaderManager::HistoryClosedReaderManager(QObject *parent)
 
 HistoryClosedReaderManager::~HistoryClosedReaderManager() = default;
 
+bool HistoryClosedReaderManager::isEmpty() const
+{
+    return mClosedReaderInfos.isEmpty();
+}
+
 void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
 {
     if (info.isValid()) {

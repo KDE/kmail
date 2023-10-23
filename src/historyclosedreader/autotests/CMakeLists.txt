@@ -12,3 +12,4 @@ macro( historyclosedreader_kmail _source )
 endmacro()
 
 historyclosedreader_kmail(historyclosedreaderinfotest.cpp)
+historyclosedreader_kmail(historyclosedreadermanagertest.cpp)

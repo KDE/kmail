@@ -3,12 +3,12 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 #pragma once
-
 #include "historyclosedreaderinfo.h"
+#include "kmail_private_export.h"
 
 #include <QObject>
 
-class HistoryClosedReaderManager : public QObject
+class KMAILTESTS_TESTS_EXPORT HistoryClosedReaderManager : public QObject
 {
     Q_OBJECT
 public:
@@ -20,6 +20,8 @@ public:
     [[nodiscard]] HistoryClosedReaderInfo lastInfo() const;
 
     void clear();
+
+    [[nodiscard]] bool isEmpty() const;
 
 private:
     QList<HistoryClosedReaderInfo> mClosedReaderInfos;
