@@ -63,6 +63,7 @@ class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
 class ZoomLabelWidget;
+class HistoryClosedReaderManager;
 
 namespace KIO
 {
@@ -666,4 +667,5 @@ private:
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
     QAction *mClearFolderCacheAction = nullptr;
+    HistoryClosedReaderManager *const mHistoryClosedReaderManager;
 };
