@@ -17,3 +17,5 @@ void HistoryClosedReaderManagerTest::shouldHaveDefaultValues()
     HistoryClosedReaderManager w;
     QVERIFY(w.isEmpty());
 }
+
+#include "moc_historyclosedreadermanagertest.cpp"
