@@ -4,6 +4,12 @@
 */
 #include "historyclosedreadermanager.h"
 
+HistoryClosedReaderManager *HistoryClosedReaderManager::self()
+{
+    static HistoryClosedReaderManager s_self;
+    return &s_self;
+}
+
 HistoryClosedReaderManager::HistoryClosedReaderManager(QObject *parent)
     : QObject{parent}
 {

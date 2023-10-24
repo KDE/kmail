@@ -12,6 +12,8 @@ class KMAILTESTS_TESTS_EXPORT HistoryClosedReaderManager : public QObject
 {
     Q_OBJECT
 public:
+    static HistoryClosedReaderManager *self();
+
     explicit HistoryClosedReaderManager(QObject *parent = nullptr);
     ~HistoryClosedReaderManager() override;
 
