@@ -2635,6 +2635,13 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
             win->viewer()->setDisplayFormatMessageOverwrite(viewer->displayFormatMessageOverwrite());
         }
     }
+    HistoryClosedReaderInfo info;
+    info.setItem(msg.id());
+    KMime::Message::Ptr message = MessageComposer::Util::message(msg);
+    if (message) {
+        info.setSubject(message->subject(false)->asUnicodeString());
+    }
+    HistoryClosedReaderManager::self()->addInfo(info);
     win->show();
 }
 
