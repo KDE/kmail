@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-21 01:39+0000\n"
+"POT-Creation-Date: 2023-10-24 01:41+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1883,7 +1883,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Архив қапшығы"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3591
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3594
 #, fuzzy, kde-format
 #| msgid "Archive"
 msgctxt "@action"
@@ -2126,7 +2126,7 @@ msgstr "Мәтін файлын &енгізу..."
 msgid "&Insert Recent Text File"
 msgstr "Жуырдағы мәтін файлын &енгізу"
 
-#: editor/kmcomposerwin.cpp:1316 kmmainwidget.cpp:2930
+#: editor/kmcomposerwin.cpp:1316 kmmainwidget.cpp:2933
 #, kde-format
 msgid "&Address Book"
 msgstr "&Адрес кітапшасы"
@@ -4162,7 +4162,7 @@ msgid "F&older"
 msgstr "Қ&апшық"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3440 kmmainwin.rc:134
+#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3443 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
@@ -4195,7 +4195,7 @@ msgid "&Forward"
 msgstr "&Басқаға жолдау"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3256 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3259 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Сүзгіні қо&лдану"
@@ -4347,13 +4347,13 @@ msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail желіден тыс режімге ауысты. Барлық желілік тапсырмалар аялдатылды"
 
-#: kmkernel.cpp:834 kmmainwidget.cpp:2431 kmmainwidget.cpp:2446
+#: kmkernel.cpp:834 kmmainwidget.cpp:2434 kmmainwidget.cpp:2449
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2432 kmmainwidget.cpp:2447
+#: kmkernel.cpp:835 kmmainwidget.cpp:2435 kmmainwidget.cpp:2450
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4385,12 +4385,12 @@ msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Желіде/Желіден тыс"
 
-#: kmkernel.cpp:944 kmmainwidget.cpp:2420
+#: kmkernel.cpp:944 kmmainwidget.cpp:2423
 #, kde-format
 msgid "Work Online"
 msgstr "Желіде істеу"
 
-#: kmkernel.cpp:945 kmmainwidget.cpp:2417
+#: kmkernel.cpp:945 kmmainwidget.cpp:2420
 #, kde-format
 msgid "Work Offline"
 msgstr "Желіден тыс істеу"
@@ -4543,82 +4543,82 @@ msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Импорттау шебері жегілмеді."
 
-#: kmmainwidget.cpp:299
+#: kmmainwidget.cpp:302
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Жүйеңізде басқа пошта бағдарламасы табылды. Одан деректі импортамақсыз ба?"
 
-#: kmmainwidget.cpp:302
+#: kmmainwidget.cpp:305
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@action:button"
 msgid "Import"
 msgstr "&Импорттау"
 
-#: kmmainwidget.cpp:303
+#: kmmainwidget.cpp:306
 #, fuzzy, kde-format
 #| msgid "Do Not Keep"
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "Шифрлауды сақтамау"
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:311
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "Импорттау шебері жегілмеді. Орнатылғанын тексеріңіз."
 
-#: kmmainwidget.cpp:310
+#: kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Импорттау шебері жегілмеді."
 
-#: kmmainwidget.cpp:1364
+#: kmmainwidget.cpp:1367
 #, kde-format
 msgid "No Subject"
 msgstr "Тақырыбы жоқ"
 
-#: kmmainwidget.cpp:1377
+#: kmmainwidget.cpp:1380
 #, kde-format
 msgid "(no templates)"
 msgstr "(үлгілер жоқ)"
 
-#: kmmainwidget.cpp:1429
+#: kmmainwidget.cpp:1432
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Бұл қапшықтың ескіру мерзімі орнатылмаған"
 
-#: kmmainwidget.cpp:1435
+#: kmmainwidget.cpp:1438
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt><b>%1</b> қапшығын ескі хаттардан тазаламақсыз ба?</qt>"
 
-#: kmmainwidget.cpp:1436
+#: kmmainwidget.cpp:1439
 #, kde-format
 msgid "Expire Folder"
 msgstr "Қапшықты ескіргендерден тазалау"
 
-#: kmmainwidget.cpp:1436
+#: kmmainwidget.cpp:1439
 #, kde-format
 msgid "&Expire"
 msgstr "&Ескілерден тазалау"
 
-#: kmmainwidget.cpp:1452
+#: kmmainwidget.cpp:1455
 #, kde-format
 msgid "Empty Trash"
 msgstr "Өшірілгендерді тазалау"
 
-#: kmmainwidget.cpp:1452 util.cpp:151
+#: kmmainwidget.cpp:1455 util.cpp:151
 #, kde-format
 msgid "Move to Trash"
 msgstr "Өшірілгендерге жылжыту"
 
-#: kmmainwidget.cpp:1453
+#: kmmainwidget.cpp:1456
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Өшірілгендер қапшығын тазаламақсыз ба?"
 
-#: kmmainwidget.cpp:1455
+#: kmmainwidget.cpp:1458
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4627,27 +4627,27 @@ msgstr ""
 "<qt><b>%1</b> қапшығынан барлық хаттарды өшірілгендер қапшығына жылжытпақсыз "
 "ба?</qt>"
 
-#: kmmainwidget.cpp:1478
+#: kmmainwidget.cpp:1481
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Барлық хаттар өшірілгендер қапшығына жылжытылды"
 
-#: kmmainwidget.cpp:1532
+#: kmmainwidget.cpp:1535
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Барлық ескі хаттарды өшірмексіз бе?"
 
-#: kmmainwidget.cpp:1533
+#: kmmainwidget.cpp:1536
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "Ескі хаттардан тазалау керек пе?"
 
-#: kmmainwidget.cpp:1534
+#: kmmainwidget.cpp:1537
 #, kde-format
 msgid "Expire"
 msgstr "Ескілерден тазалау"
 
-#: kmmainwidget.cpp:1559
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4658,17 +4658,17 @@ msgstr ""
 "қарсылығыңызды осалдатады да, жүйеңізді қазір мәлім немесе болашақтағы "
 "шабулдау әдістермен бұзу ықтималдығын ұлғайтады."
 
-#: kmmainwidget.cpp:1562
+#: kmmainwidget.cpp:1565
 #, kde-format
 msgid "Security Warning"
 msgstr "Қауіпсіздік ескерту"
 
-#: kmmainwidget.cpp:1563
+#: kmmainwidget.cpp:1566
 #, kde-format
 msgid "Load External References"
 msgstr "Сыртқы сілтемелерді жүктеу"
 
-#: kmmainwidget.cpp:1635
+#: kmmainwidget.cpp:1638
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4680,142 +4680,142 @@ msgstr[0] ""
 "<qt>Таңдалған %1 хатты жоюды қалайсыз ба?<br />Жойылған хатты қайтаруға "
 "болмайды.</qt>"
 
-#: kmmainwidget.cpp:1640
+#: kmmainwidget.cpp:1643
 #, kde-format
 msgid "Delete Messages"
 msgstr "Хаттарды жою"
 
-#: kmmainwidget.cpp:1640
+#: kmmainwidget.cpp:1643
 #, kde-format
 msgid "Delete Message"
 msgstr "Хатты жою"
 
-#: kmmainwidget.cpp:1655
+#: kmmainwidget.cpp:1658
 #, kde-format
 msgid "Moving messages..."
 msgstr "Хаттарды жылжыту"
 
-#: kmmainwidget.cpp:1657 kmmainwidget.cpp:1851
+#: kmmainwidget.cpp:1660 kmmainwidget.cpp:1854
 #, kde-format
 msgid "Deleting messages..."
 msgstr "Хаттарды өшіру"
 
-#: kmmainwidget.cpp:1672 kmmainwidget.cpp:1871
+#: kmmainwidget.cpp:1675 kmmainwidget.cpp:1874
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "Хаттарды жою сәтті орындалды."
 
-#: kmmainwidget.cpp:1674
+#: kmmainwidget.cpp:1677
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "Хаттарды жылжыту сәтті орындалды"
 
-#: kmmainwidget.cpp:1679 kmmainwidget.cpp:1884
+#: kmmainwidget.cpp:1682 kmmainwidget.cpp:1887
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "Хаттар жою жаңылысы."
 
-#: kmmainwidget.cpp:1681 kmmainwidget.cpp:1897
+#: kmmainwidget.cpp:1684 kmmainwidget.cpp:1900
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "Хаттарды жою тоқтатылды."
 
-#: kmmainwidget.cpp:1685
+#: kmmainwidget.cpp:1688
 #, kde-format
 msgid "Moving messages failed."
 msgstr "Хаттарды жылжыту жаңылды."
 
-#: kmmainwidget.cpp:1687
+#: kmmainwidget.cpp:1690
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "Хаттарды жылжыту тоқтатылды."
 
-#: kmmainwidget.cpp:1753
+#: kmmainwidget.cpp:1756
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Қапшыққа жылжыту"
 
-#: kmmainwidget.cpp:1780
+#: kmmainwidget.cpp:1783
 #, kde-format
 msgid "Copying messages..."
 msgstr "Хаттарды көшірмелеу..."
 
-#: kmmainwidget.cpp:1788
+#: kmmainwidget.cpp:1791
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "Хаттарды көшірмелеу сәтті орындалды."
 
-#: kmmainwidget.cpp:1791
+#: kmmainwidget.cpp:1794
 #, kde-format
 msgid "Copying messages failed."
 msgstr "Хаттарды көшірмелеу жаңылды."
 
-#: kmmainwidget.cpp:1793
+#: kmmainwidget.cpp:1796
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "Хаттарды көшірмелеу тоқтатылды."
 
-#: kmmainwidget.cpp:1803
+#: kmmainwidget.cpp:1806
 #, fuzzy, kde-format
 #| msgid "Copy Messages to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Хатты қапшыққа көшірмелеу"
 
-#: kmmainwidget.cpp:1848
+#: kmmainwidget.cpp:1851
 #, kde-format
 msgid "Moving messages to trash..."
 msgstr "Хатты өшірілгендерге тастау"
 
-#: kmmainwidget.cpp:1855
+#: kmmainwidget.cpp:1858
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
 msgid "Deleting and moving messages to trash..."
 msgstr "Хатты өшірілгендерге тастау"
 
-#: kmmainwidget.cpp:1868
+#: kmmainwidget.cpp:1871
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Хаттарды өшірілгендерге жылжыту сәтті орындалды"
 
-#: kmmainwidget.cpp:1875
+#: kmmainwidget.cpp:1878
 #, fuzzy, kde-format
 #| msgid "Messages moved to trash successfully."
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Хаттарды өшірілгендерге жылжыту сәтті орындалды"
 
-#: kmmainwidget.cpp:1881
+#: kmmainwidget.cpp:1884
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Хаттарды өшірілгендерге жылжыту жаңылды."
 
-#: kmmainwidget.cpp:1888
+#: kmmainwidget.cpp:1891
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash failed."
 msgid "Deleting or moving messages to trash failed."
 msgstr "Хаттарды өшірілгендерге жылжыту жаңылды."
 
-#: kmmainwidget.cpp:1894
+#: kmmainwidget.cpp:1897
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Хаттарды Шелекке тастау тоқтатылды."
 
-#: kmmainwidget.cpp:1901
+#: kmmainwidget.cpp:1904
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash canceled."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Хаттарды Шелекке тастау тоқтатылды."
 
-#: kmmainwidget.cpp:2171
+#: kmmainwidget.cpp:2174
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Қапшыққа ауысу"
 
-#: kmmainwidget.cpp:2363
+#: kmmainwidget.cpp:2366
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4825,14 +4825,14 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2366
+#: kmmainwidget.cpp:2369
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2371
+#: kmmainwidget.cpp:2374
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
@@ -4850,454 +4850,454 @@ msgstr[0] ""
 "<qt>Таңдалған %1 хатты жоюды қалайсыз ба?<br />Жойылған хатты қайтаруға "
 "болмайды.</qt>"
 
-#: kmmainwidget.cpp:2378
+#: kmmainwidget.cpp:2381
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2383
+#: kmmainwidget.cpp:2386
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2388
+#: kmmainwidget.cpp:2391
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Тіркемесін ө&шіру"
 
-#: kmmainwidget.cpp:2879
+#: kmmainwidget.cpp:2882
 #, kde-format
 msgid "Save &As..."
 msgstr "&Былай сақтау..."
 
-#: kmmainwidget.cpp:2890
+#: kmmainwidget.cpp:2893
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "Бүкіл қапшықтарды ескілерден тазалау"
 
-#: kmmainwidget.cpp:2895
+#: kmmainwidget.cpp:2898
 #, kde-format
 msgid "Check &Mail"
 msgstr "&Поштаны тексеру"
 
-#: kmmainwidget.cpp:2903
+#: kmmainwidget.cpp:2906
 #, kde-format
 msgid "Check Mail In"
 msgstr "Келесідегі поштаны тексеру"
 
-#: kmmainwidget.cpp:2905 kmmainwidget.cpp:2906
+#: kmmainwidget.cpp:2908 kmmainwidget.cpp:2909
 #, kde-format
 msgid "Check Mail"
 msgstr "Поштаны тексеру"
 
-#: kmmainwidget.cpp:2910
+#: kmmainwidget.cpp:2913
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&Кезектегі хаттарды жіберу"
 
-#: kmmainwidget.cpp:2918
+#: kmmainwidget.cpp:2921
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Желідегі күй-жайы (беймәлім)"
 
-#: kmmainwidget.cpp:2923
+#: kmmainwidget.cpp:2926
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Кезектегі хаттарды жіберу жолы"
 
-#: kmmainwidget.cpp:2939
+#: kmmainwidget.cpp:2942
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Куәлік менеджері..."
 
-#: kmmainwidget.cpp:2949
+#: kmmainwidget.cpp:2952
 #, kde-format
 msgid "&Import Messages..."
 msgstr "Хаттарды &импорттау..."
 
-#: kmmainwidget.cpp:2959
+#: kmmainwidget.cpp:2962
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr "Sieve жө&ндеуі..."
 
-#: kmmainwidget.cpp:2966
+#: kmmainwidget.cpp:2969
 #, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "Сүзгі ж&урналы..."
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:2974
 #, fuzzy, kde-format
 #| msgid "Notification"
 msgid "Notification History..."
 msgstr "Құлақтандыру"
 
-#: kmmainwidget.cpp:2976
+#: kmmainwidget.cpp:2979
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:2981
+#: kmmainwidget.cpp:2984
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "\"Кеңседе жоқ\" жауаптарын өңдеу..."
 
-#: kmmainwidget.cpp:2987
+#: kmmainwidget.cpp:2990
 #, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "Автоматы архивтеуді &баптау..."
 
-#: kmmainwidget.cpp:2993
+#: kmmainwidget.cpp:2996
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgid "Delayed Messages..."
 msgstr "Хаттарды өшіру"
 
-#: kmmainwidget.cpp:2999
+#: kmmainwidget.cpp:3002
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Followup Reminder Messages..."
 msgstr "&Хаттарды іздеу..."
 
-#: kmmainwidget.cpp:3010 util.cpp:148
+#: kmmainwidget.cpp:3013 util.cpp:148
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Өшіру"
 
-#: kmmainwidget.cpp:3015 kmmainwidget.cpp:4072
+#: kmmainwidget.cpp:3018 kmmainwidget.cpp:4075
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Ілеспе хаттарды өшірілгендерге та&стау"
 
-#: kmmainwidget.cpp:3019
+#: kmmainwidget.cpp:3022
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Ілеспе хаттарды өшірілгендерге тастау"
 
-#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4072
+#: kmmainwidget.cpp:3025 kmmainwidget.cpp:4075
 #, kde-format
 msgid "Delete T&hread"
 msgstr "І&леспеледі өшіру"
 
-#: kmmainwidget.cpp:3028 kmmainwidget.cpp:4074
+#: kmmainwidget.cpp:3031 kmmainwidget.cpp:4077
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Хаттарды іздеу..."
 
-#: kmmainwidget.cpp:3033
+#: kmmainwidget.cpp:3036
 #, kde-format
 msgid "Select &All Messages"
 msgstr "&Барлық хаттарды таңдау"
 
-#: kmmainwidget.cpp:3040
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgid "&Mailing List Management..."
 msgstr "&Хабарлау тізімін басқару..."
 
-#: kmmainwidget.cpp:3048
+#: kmmainwidget.cpp:3051
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:3053
+#: kmmainwidget.cpp:3056
 #, fuzzy, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "&Ресурс қапшықтар келесі қапшықтың ішінде:"
 
-#: kmmainwidget.cpp:3058
+#: kmmainwidget.cpp:3061
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "&Тіркесімді орнату..."
 
-#: kmmainwidget.cpp:3076
+#: kmmainwidget.cpp:3079
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "&Ескіру параметрлері"
 
-#: kmmainwidget.cpp:3101
+#: kmmainwidget.cpp:3104
 #, kde-format
 msgid "&Archive Folder..."
 msgstr "Қапшықты &архивтеу..."
 
-#: kmmainwidget.cpp:3109
+#: kmmainwidget.cpp:3112
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "С&ыртқы сілтемелерді жүктеу"
 
-#: kmmainwidget.cpp:3132
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgid "Copy Message To..."
 msgstr "Хатты мынаған көшірмелеу..."
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3137
 #, kde-format
 msgid "Move Message To..."
 msgstr "Хатты мынаған жылжыту..."
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3142
 #, kde-format
 msgid "&New Message..."
 msgstr "&Жаңа хат..."
 
-#: kmmainwidget.cpp:3141
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Жаңа"
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3152
 #, kde-format
 msgid "Message From &Template"
 msgstr "&Үлгіден хатқа"
 
-#: kmmainwidget.cpp:3155
+#: kmmainwidget.cpp:3158
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "Тарату тізімін&е жаңа хат..."
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3164
 #, kde-format
 msgid "&Create Filter"
 msgstr "Сүзгіні құ&ру"
 
-#: kmmainwidget.cpp:3165
+#: kmmainwidget.cpp:3168
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "Тақ&ырыбы бойынша сүзгі..."
 
-#: kmmainwidget.cpp:3172
+#: kmmainwidget.cpp:3175
 #, kde-format
 msgid "Filter on &From..."
 msgstr "&Кімден өрісі бойынша сүзгі..."
 
-#: kmmainwidget.cpp:3178
+#: kmmainwidget.cpp:3181
 #, kde-format
 msgid "Filter on &To..."
 msgstr "Кімг&е өрісі бойынша сүзгі..."
 
-#: kmmainwidget.cpp:3184
+#: kmmainwidget.cpp:3187
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgid "Filter on &Cc..."
 msgstr "Кімг&е өрісі бойынша сүзгі..."
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3195
 #, kde-format
 msgid "Mark &Thread"
 msgstr "&Ілеспе деп белгілеу"
 
-#: kmmainwidget.cpp:3195
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Ілеспелерді оқы&лған деп белгілеу"
 
-#: kmmainwidget.cpp:3198
+#: kmmainwidget.cpp:3201
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Таңдалған ілеспе топтағы барлық хаттарды оқылған деп белгілеу"
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3204
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Ілеспелерді оқыл&маған деп белгілеу"
 
-#: kmmainwidget.cpp:3204
+#: kmmainwidget.cpp:3207
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Таңдалған ілеспе топтағы барлық хабарды оқылмаған деп белгілеу"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3213
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Ілеспелерді &маңызды деп белгілеу"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Ілеспелердің &маңызды белгісін өшіру"
 
-#: kmmainwidget.cpp:3216
+#: kmmainwidget.cpp:3219
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Ілеспелерді &амал күтетін деп белгілеу"
 
-#: kmmainwidget.cpp:3219
+#: kmmainwidget.cpp:3222
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "&Амал күтетін деген белгісін өшіру"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Ілеспелерді қа&дағалау"
 
-#: kmmainwidget.cpp:3227
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "Ілеспелерді &елемеу"
 
-#: kmmainwidget.cpp:3235 kmreadermainwin.cpp:473
+#: kmmainwidget.cpp:3238 kmreadermainwin.cpp:473
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "Ті&ркемелерді сақтау..."
 
-#: kmmainwidget.cpp:3239
+#: kmmainwidget.cpp:3242
 #, fuzzy, kde-format
 #| msgid "Save All Attachments..."
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Барлық тіркемелерді сақтау..."
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3250
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To..."
 msgstr "Аталымды мынаған көшірмелеу..."
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3254
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Барлық сүзгілерді қ&олдану"
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Ілеспелерді/Топты та&рқату"
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3266
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Назардағы ілеспелерді не топты тарқату"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3270
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Ілеспелерді/Топты &бүктеу"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3273
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Назардағы ілеспелерді не топты бүктеу"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Бүкіл ілеспелерін &тарқату"
 
-#: kmmainwidget.cpp:3277
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Назардағы қапшықтағы барлық ілеспе топтарды жаю"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3284
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Барлық ілеспелерін &бүктеу"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3287
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Назардағы қапшықтағы барлық ілеспе топтарды бүктеу"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3291
 #, kde-format
 msgid "&Display Message"
 msgstr "Хатты &көрсету"
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "&Next Message"
 msgstr "&Келесі хат"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3301
 #, kde-format
 msgid "Go to the next message"
 msgstr "Келесі хатқа өту"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3305
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Келесі оқыл&маған хат"
 
-#: kmmainwidget.cpp:3310
+#: kmmainwidget.cpp:3313
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Келесі"
 
-#: kmmainwidget.cpp:3311
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Келесі оқылмаған хатқа өту"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3318
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Алдыңғы хат"
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Алдыңғы хатқа өту"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3325
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Алдыңғы оқылмаған &хат"
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Алдыңғы"
 
-#: kmmainwidget.cpp:3331
+#: kmmainwidget.cpp:3334
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Алдыңғы оқылмаған хатқа өту"
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3338
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Келесі оқылмаған қа&пшық"
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3344
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Оқылмаған хаты бар келесі қапшыққа өту"
 
-#: kmmainwidget.cpp:3344
+#: kmmainwidget.cpp:3347
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Алдыңғы оқылмаған қ&апшық"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Оқылмаған хаты бар алдыңғы қапшыққа өту"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3357
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Келесі оқылмаған &мәтін"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3360
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Келесі оқылмаған мәтінге өту"
 
-#: kmmainwidget.cpp:3359
+#: kmmainwidget.cpp:3362
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5306,255 +5306,255 @@ msgstr ""
 "Назардағы хатты төменге жүгірту. Хаттың соңына жеткен соң келесі оқылмаған "
 "хатқа өту."
 
-#: kmmainwidget.cpp:3367
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "&Сүзгілерді баптау..."
 
-#: kmmainwidget.cpp:3373
+#: kmmainwidget.cpp:3376
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "&Sieve скрипттерін басқару..."
 
-#: kmmainwidget.cpp:3378
+#: kmmainwidget.cpp:3381
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "Тіркелгіні қосу"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail &кіріспесі"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3388
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "KMail кіріспе бетін көрсету"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "Құ&лақтандыруларды баптау..."
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3402
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "KMail &баптаулары..."
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgid "Expire..."
 msgstr "Ескіргеннен тазалау..."
 
-#: kmmainwidget.cpp:3412
+#: kmmainwidget.cpp:3415
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "Таңдаулыларға қапшықты қосу..."
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3421
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "Сервер жақ жазылуы..."
 
-#: kmmainwidget.cpp:3424 kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3427 kmmainwidget.cpp:3435
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "Барлық сүзгілерді қ&олдану"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3448
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "&Ресурс қапшықтар келесі қапшықтың ішінде:"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3453
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data..."
 msgstr "KMail дерегін &импорттау..."
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3459
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "Жаңа Адрестік кітапша контакты..."
 
-#: kmmainwidget.cpp:3464 kmmainwidget.cpp:4113
+#: kmmainwidget.cpp:3467 kmmainwidget.cpp:4116
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&Баптау"
 
-#: kmmainwidget.cpp:3468
+#: kmmainwidget.cpp:3471
 #, fuzzy, kde-format
 #| msgid "Identity account"
 msgid "Restart Account"
 msgstr "Іс-әлпетінің тіркелгісі"
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3487
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Хатты көшірмелейтін қапшық"
 
-#: kmmainwidget.cpp:3490
+#: kmmainwidget.cpp:3493
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "Ауысатын қапшық..."
 
-#: kmmainwidget.cpp:3496
+#: kmmainwidget.cpp:3499
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Орындалып жатқан әрекетті доғару"
 
-#: kmmainwidget.cpp:3502
+#: kmmainwidget.cpp:3505
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Келесі қапшыққа ауысу"
 
-#: kmmainwidget.cpp:3508
+#: kmmainwidget.cpp:3511
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Алдыңғы қапшыққа ауысу"
 
-#: kmmainwidget.cpp:3514
+#: kmmainwidget.cpp:3517
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Назардағы қапшықты таңдау"
 
-#: kmmainwidget.cpp:3521
+#: kmmainwidget.cpp:3524
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "Бірінші қапшыққа ауысу"
 
-#: kmmainwidget.cpp:3527
+#: kmmainwidget.cpp:3530
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "Соңғы қапшыққа ауысу"
 
-#: kmmainwidget.cpp:3533
+#: kmmainwidget.cpp:3536
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Келесі хатқа ауысу"
 
-#: kmmainwidget.cpp:3539
+#: kmmainwidget.cpp:3542
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Алдыңғы хатқа ауысу"
 
-#: kmmainwidget.cpp:3545
+#: kmmainwidget.cpp:3548
 #, kde-format
 msgid "Select First Message"
 msgstr "Бірінші хатты таңдау"
 
-#: kmmainwidget.cpp:3551
+#: kmmainwidget.cpp:3554
 #, kde-format
 msgid "Select Last Message"
 msgstr "Соңғы хатты таңдау"
 
-#: kmmainwidget.cpp:3557
+#: kmmainwidget.cpp:3560
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Назардағы хатты таңдау"
 
-#: kmmainwidget.cpp:3564
+#: kmmainwidget.cpp:3567
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "Жедел іздеуге ауысу"
 
-#: kmmainwidget.cpp:3572
+#: kmmainwidget.cpp:3575
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Алдыңғы хатқа таңдауды кеңейту"
 
-#: kmmainwidget.cpp:3578
+#: kmmainwidget.cpp:3581
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Келесі хатқа таңдауды кеңейту"
 
-#: kmmainwidget.cpp:3585
+#: kmmainwidget.cpp:3588
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Хатты жылжытатын қапшық"
 
-#: kmmainwidget.cpp:3595
+#: kmmainwidget.cpp:3598
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3600
+#: kmmainwidget.cpp:3603
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3606
+#: kmmainwidget.cpp:3609
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "Алдыңғы оқылмаған қ&апшық"
 
-#: kmmainwidget.cpp:3613
+#: kmmainwidget.cpp:3616
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Қапшықты өшіру"
 
-#: kmmainwidget.cpp:3642
+#: kmmainwidget.cpp:3645
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Таңдаулыларға қапшықты қосу"
 
-#: kmmainwidget.cpp:4060
+#: kmmainwidget.cpp:4063
 #, kde-format
 msgid "&Delete Search"
 msgstr "Іздеуді ө&шіру"
 
-#: kmmainwidget.cpp:4074
+#: kmmainwidget.cpp:4077
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search..."
 msgstr "Cкриптті өңдеу..."
 
-#: kmmainwidget.cpp:4111
+#: kmmainwidget.cpp:4114
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "KMail-ді &баптау"
 
-#: kmmainwidget.cpp:4122
+#: kmmainwidget.cpp:4125
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Шелегін б&осату"
 
-#: kmmainwidget.cpp:4122
+#: kmmainwidget.cpp:4125
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Барлық хаттарды Шелекке тастау"
 
-#: kmmainwidget.cpp:4196
+#: kmmainwidget.cpp:4199
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4198
+#: kmmainwidget.cpp:4201
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4255
+#: kmmainwidget.cpp:4258
 #, kde-format
 msgid "Filter %1"
 msgstr "%1 сүзгісі"
 
-#: kmmainwidget.cpp:4723
+#: kmmainwidget.cpp:4726
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Іздеп жатыр..."
 
-#: kmmainwidget.cpp:4731
+#: kmmainwidget.cpp:4734
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5565,19 +5565,19 @@ msgstr ""
 "қазір мәлім немесе болашақтағы шабуылдау әдістермен бұзу ықтималдығын "
 "ұлғайтады."
 
-#: kmmainwidget.cpp:4734
+#: kmmainwidget.cpp:4737
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Қауіпсіздік ескерту"
 
-#: kmmainwidget.cpp:4735
+#: kmmainwidget.cpp:4738
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML-ды қолдану"
 
-#: kmmainwidget.cpp:4881
+#: kmmainwidget.cpp:4884
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5587,40 +5587,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:4887
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4885
+#: kmmainwidget.cpp:4888
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4886
+#: kmmainwidget.cpp:4889
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "Қ&айту"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4924
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: kmmainwidget.cpp:4922
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "Identity account"
 msgid "Restart Akonadi"
 msgstr "Іс-әлпетінің тіркелгісі"
 
-#: kmmainwidget.cpp:4923
+#: kmmainwidget.cpp:4926
 #, kde-format
 msgid "Restart"
 msgstr "Қайта бастау"
 
-#: kmmainwidget.cpp:4930
+#: kmmainwidget.cpp:4933
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
