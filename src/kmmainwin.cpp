@@ -131,9 +131,9 @@ void KMMainWin::slotFullScreen(bool t)
 void KMMainWin::updateHamburgerMenu()
 {
     auto menu = new QMenu(this);
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Open))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::SaveAs))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Open)));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::SaveAs)));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Print)));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QStringLiteral("check_mail")));
     menu->addAction(actionCollection()->action(QStringLiteral("check_mail_in")));
@@ -145,7 +145,7 @@ void KMMainWin::updateHamburgerMenu()
     menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_notifications")));
     menu->addSeparator();
 
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Quit))));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Quit)));
     mHamburgerMenu->setMenu(menu);
 }
 

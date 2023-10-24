@@ -1541,15 +1541,15 @@ void KMComposerWin::updateHamburgerMenu()
     auto menu = new QMenu(this);
     menu->addAction(actionCollection()->action(QStringLiteral("new_composer")));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Undo))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Redo))));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Undo)));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Redo)));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Print))));
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::PrintPreview))));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Print)));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::PrintPreview)));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QStringLiteral("attach_menu")));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(QLatin1String(KStandardAction::name(KStandardAction::Close))));
+    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Close)));
     mHamburgerMenu->setMenu(menu);
 }
 
