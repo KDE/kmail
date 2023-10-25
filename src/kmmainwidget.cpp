@@ -2641,7 +2641,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
     if (message) {
         info.setSubject(message->subject(false)->asUnicodeString());
     }
-    HistoryClosedReaderManager::self()->addInfo(info);
+    HistoryClosedReaderManager::self()->addInfo(std::move(info));
     win->show();
 }
 
