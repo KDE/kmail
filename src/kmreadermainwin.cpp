@@ -14,6 +14,7 @@
 // widgets like a toolbar.
 
 #include "kmreadermainwin.h"
+#include "historyclosedreader/historyclosedreadermanager.h"
 #include "job/composenewmessagejob.h"
 #include "kmmainwidget.h"
 #include "kmreaderwin.h"
@@ -114,6 +115,15 @@ KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group("Separate Reader Window"));
     saveMainWindowSettings(grp);
+    if (!mMsg.isValid()) {
+        HistoryClosedReaderInfo info;
+        info.setItem(mMsg.id());
+        KMime::Message::Ptr message = MessageComposer::Util::message(mMsg);
+        if (message) {
+            info.setSubject(message->subject(false)->asUnicodeString());
+        }
+        HistoryClosedReaderManager::self()->addInfo(std::move(info));
+    }
 }
 
 void KMReaderMainWin::setZoomChanged(qreal zoomFactor)

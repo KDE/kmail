@@ -174,8 +174,6 @@
 #include "historyswitchfolder/collectionswitchertreeviewmanager.h"
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
-#include "historyclosedreader/historyclosedreadermanager.h"
-
 #ifdef WITH_KUSERFEEDBACK
 #include <KUserFeedbackQt6/NotificationPopup>
 #include <KUserFeedbackQt6/Provider>
@@ -201,7 +199,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
     , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
-    , mHistoryClosedReaderManager(new HistoryClosedReaderManager(this))
 {
     // must be the first line of the constructor:
     mActionCollection = actionCollection;
@@ -2635,13 +2632,6 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
             win->viewer()->setDisplayFormatMessageOverwrite(viewer->displayFormatMessageOverwrite());
         }
     }
-    HistoryClosedReaderInfo info;
-    info.setItem(msg.id());
-    KMime::Message::Ptr message = MessageComposer::Util::message(msg);
-    if (message) {
-        info.setSubject(message->subject(false)->asUnicodeString());
-    }
-    HistoryClosedReaderManager::self()->addInfo(std::move(info));
     win->show();
 }
 
