@@ -46,7 +46,7 @@ public:
 
     void setUseFixedFont(bool useFixedFont);
 
-    MessageViewer::Viewer *viewer() const;
+    [[nodiscard]] MessageViewer::Viewer *viewer() const;
     /**
      * take ownership of and show @p msg
      *
