@@ -376,7 +376,7 @@ msgstr "S'ha millorat el processament de les icones/imatges"
 
 #: aboutdata.cpp:190
 msgid "Fixed many IMAP bugs"
-msgstr "S'han esmenat molts errors en l'IMAP"
+msgstr "S'han esmenat molts errors en IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2335 kmreaderwin.cpp:306 kmsystemtray.cpp:46
@@ -3062,7 +3062,7 @@ msgstr ""
 "<qt><p>El certificat S/MIME que trieu ací s'utilitzarà per a encriptar "
 "missatges a vós mateix i per a la característica «Adjunta el meu certificat» "
 "en l'editor.</p><p>Podeu deixar-ho en blanc, però KMail no podrà encriptar "
-"les còpies dels missatges d'eixida a vós mateix utilitzant S/MIME. Les "
+"les còpies dels missatges d'eixida cap a vós mateix utilitzant S/MIME. Les "
 "funcions normals del correu no es veuran afectades.</p></qt>"
 
 #: identity/identitydialog.cpp:450
@@ -3079,7 +3079,7 @@ msgstr "Format preferit:"
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr "Activa l'Autocrypt"
+msgstr "Activa Autocrypt"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
@@ -3322,7 +3322,7 @@ msgid ""
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
-"Una de les claus de signatura configurades a OpenPGP no conté cap ID de "
+"Una de les claus de signatura configurades en OpenPGP no conté cap ID de "
 "l'usuari amb l'adreça de correu configurada per a esta identitat (%1).\n"
 "Açò pot provocar missatges d'avís en la banda receptora en provar de "
 "verificar signatures fetes amb esta configuració."
@@ -3333,7 +3333,7 @@ msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
-"Una de les claus d'encriptació configurades a OpenPGP no conté cap ID de "
+"Una de les claus d'encriptació configurades en OpenPGP no conté cap ID de "
 "l'usuari amb l'adreça de correu configurada per a esta identitat (%1)."
 
 #: identity/identitydialog.cpp:835
@@ -4463,12 +4463,12 @@ msgstr "S'estan suprimint i movent els missatges a la paperera..."
 #: kmmainwidget.cpp:1871
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "Els missatges s'han mogut a la paperera correctament."
+msgstr "Els missatges s'han mogut cap a la paperera correctament."
 
 #: kmmainwidget.cpp:1878
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr "Els missatges s'han mogut a la paperera o suprimit correctament"
+msgstr "Els missatges s'han mogut cap a la paperera o suprimit correctament"
 
 #: kmmainwidget.cpp:1884
 #, kde-format
@@ -4920,8 +4920,8 @@ msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr ""
-"Descendix en el missatge actual. Si s'arriba al final del missatge, anirà "
-"cap al missatge següent sense llegir."
+"Descendix en el missatge actual. Si s'arriba fins al final del missatge, "
+"anirà cap al missatge següent sense llegir."
 
 #: kmmainwidget.cpp:3300
 #, kde-format
@@ -6109,8 +6109,8 @@ msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
 msgstr ""
-"El llindar d'avís a l'usuari que una carpeta està arribant al seu límit de "
-"quota."
+"El llindar d'avís a l'usuari que una carpeta està arribant fins al seu límit "
+"de quota."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.cmake:115
@@ -6999,7 +6999,7 @@ msgstr ""
 "Seleccioneu el nombre mínim de dies que haurien de ser vàlids tots els "
 "certificats de la cadena sense emetre un avís.\n"
 "<p>\n"
-"El valor recomanat d'SPHINX és de 14 dies.\n"
+"El valor recomanat de SPHINX és de 14 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
@@ -7019,7 +7019,7 @@ msgstr ""
 "Seleccioneu el nombre mínim de dies que el certificat d'encriptació ha de "
 "ser vàlid sense emetre un avís.\n"
 "<p>\n"
-"L'opció recomanada d'SPHINX és de 14 dies.\n"
+"L'opció recomanada de SPHINX és de 14 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
@@ -7045,7 +7045,7 @@ msgstr ""
 "Seleccioneu el nombre mínim de dies que el certificat propi hauria de ser "
 "vàlid sense emetre un avís.\n"
 "<p>\n"
-"L'opció recomanada d'SPHINX és de 30 dies.\n"
+"L'opció recomanada de SPHINX és de 30 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7071,7 +7071,7 @@ msgstr ""
 "Seleccioneu el nombre mínim de dies que el certificat arrel hauria de ser "
 "vàlid sense emetre un avís.\n"
 "<p>\n"
-"L'opció recomanada d'SPHINX és de 14 dies.\n"
+"L'opció recomanada de SPHINX és de 14 dies.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
