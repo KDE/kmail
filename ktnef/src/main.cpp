@@ -24,7 +24,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    KLocalizedString::setApplicationDomain("ktnef");
+    KLocalizedString::setApplicationDomain(QByteArrayLiteral("ktnef"));
     KCrash::initialize();
 
     KAboutData aboutData(QStringLiteral("ktnef"),

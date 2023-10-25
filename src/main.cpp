@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     QWebEngineUrlScheme::registerScheme(cidScheme);
 
     KMailApplication app(argc, &argv);
-    KLocalizedString::setApplicationDomain("kmail");
+    KLocalizedString::setApplicationDomain(QByteArrayLiteral("kmail"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
     KCrash::initialize();
