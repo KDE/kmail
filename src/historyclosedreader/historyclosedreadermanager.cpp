@@ -26,6 +26,7 @@ void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
 {
     if (info.isValid()) {
         mClosedReaderInfos.append(info);
+        Q_EMIT historyClosedReaderChanged();
     }
 }
 
@@ -40,6 +41,7 @@ HistoryClosedReaderInfo HistoryClosedReaderManager::lastInfo() const
 void HistoryClosedReaderManager::clear()
 {
     mClosedReaderInfos.clear();
+    Q_EMIT historyClosedReaderChanged();
 }
 
 #include "moc_historyclosedreadermanager.cpp"

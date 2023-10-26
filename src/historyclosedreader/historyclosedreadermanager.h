@@ -25,6 +25,9 @@ public:
 
     [[nodiscard]] bool isEmpty() const;
 
+Q_SIGNALS:
+    void historyClosedReaderChanged();
+
 private:
     QList<HistoryClosedReaderInfo> mClosedReaderInfos;
 };
