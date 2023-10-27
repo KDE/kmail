@@ -79,24 +79,18 @@
 
 <screenshot>
 <screeninfo
->El diàleg <quote
->Afegeix un arxiu de correu</quote
-></screeninfo>
+>El diàleg «Afegeix un arxiu de correu»</screeninfo>
   <mediaobject>
     <imageobject>
       <imagedata fileref="add-archive-mail.png" format="PNG"/>
     </imageobject>
     <textobject>
       <phrase
->El diàleg <quote
->Afegeix un arxiu de correu</quote
-></phrase>
+>El diàleg «Afegeix un arxiu de correu»</phrase>
     </textobject>
     <caption>
       <para
->El diàleg <quote
->Afegeix un arxiu de correu</quote
-></para>
+>El diàleg «Afegeix un arxiu de correu»</para>
     </caption>
   </mediaobject>
 </screenshot>
