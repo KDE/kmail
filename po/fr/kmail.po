@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-10-26 01:45+0000\n"
-"PO-Revision-Date: 2023-10-24 22:12+0200\n"
+"PO-Revision-Date: 2023-10-28 19:39+0200\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -697,8 +697,8 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"Impossible de lancer l'assistant de comptes. Veuillez vérifier que "
-"AccountWizard est correctement installé."
+"Impossible de lancer l'assistant de comptes. Veuillez vérifier que le module "
+"« AccountWizard » est correctement installé."
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
@@ -2424,7 +2424,7 @@ msgid ""
 "your email address for all identities, so that you do not have to enter it "
 "for each message."
 msgstr ""
-"Vous devez saisir votre adresse électronique dans le champ « From : ». "
+"Vous devez saisir votre adresse électronique dans le champ « De : ». "
 "Définissez également votre adresse de courrier électronique pour pour les "
 "identités, de façon à ne plus avoir à le faire pour chaque message."
 
@@ -4792,7 +4792,7 @@ msgid ""
 "message will invalidate its signature.</p></html>"
 msgstr ""
 "<html><p>Veuillez noter que la suppression des pièces jointes d'un message "
-"signé cryptographiquement invalidera sa signature.</p></html>"
+"signé de façon chiffrée invalidera sa signature.</p></html>"
 
 #: kmmainwidget.cpp:2383
 #, kde-format
@@ -7128,7 +7128,7 @@ msgstr "Vérifier l'URL avec le système de Google contre le hameçonnage"
 #: ui/securitypagegeneraltab.ui:143
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr "Détecter des URL de pistage dans les emails"
+msgstr "Détecter des URL de pistage dans les courriels"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:159
