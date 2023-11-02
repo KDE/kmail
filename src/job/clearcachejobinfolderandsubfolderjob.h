@@ -9,7 +9,6 @@
 
 #include <Akonadi/Collection>
 #include <QObject>
-class KJob;
 namespace KPIM
 {
 class ProgressItem;

@@ -113,9 +113,7 @@ class PurposeMenuMessageWidget;
 
 namespace GpgME
 {
-class KeyListResult;
 class Key;
-class UserID;
 }
 
 //-----------------------------------------------------------------------------
