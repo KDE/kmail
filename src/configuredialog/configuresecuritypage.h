@@ -75,7 +75,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::SecurityPageEncryptionTab *mWidget = nullptr;
+    Ui::SecurityPageEncryptionTab *const mWidget;
 };
 
 class SecurityPageSMimeTab : public ConfigModuleTab

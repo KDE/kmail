@@ -39,13 +39,6 @@ void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
     });
 }
 
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-void ConfigModuleWithTabs::showEvent(QShowEvent *event)
-{
-    ConfigModule::showEvent(event);
-}
-#endif
-
 void ConfigModuleWithTabs::load()
 {
     const int numberOfTab = mTabWidget->count();

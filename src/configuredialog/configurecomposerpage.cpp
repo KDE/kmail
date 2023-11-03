@@ -273,7 +273,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     auto forwardTypeWrapper = new QWidget;
     auto forwardTypeWrapperLayout = new QHBoxLayout(forwardTypeWrapper);
-    forwardTypeWrapperLayout->setContentsMargins(0, 0, 0, 0);
+    forwardTypeWrapperLayout->setContentsMargins({});
     forwardTypeWrapperLayout->addWidget(label);
     forwardTypeWrapperLayout->addWidget(mForwardTypeCombo);
     forwardTypeWrapperLayout->addStretch();
@@ -574,10 +574,10 @@ QString ComposerPageTemplatesTab::helpAnchor() const
 
 ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mWidget(new TemplateParser::TemplatesConfiguration(this))
 {
     auto vlay = new QVBoxLayout(this);
 
-    mWidget = new TemplateParser::TemplatesConfiguration(this);
     vlay->addWidget(mWidget);
 
     connect(mWidget, &TemplateParser::TemplatesConfiguration::changed, this, &ConfigModuleTab::slotEmitChanged);

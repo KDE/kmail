@@ -120,8 +120,8 @@ void MiscPageFolderTab::save()
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mInvitationUi(new MessageViewer::InvitationSettings(this))
 {
-    mInvitationUi = new MessageViewer::InvitationSettings(this);
     auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mInvitationUi);
@@ -145,8 +145,8 @@ void MiscPageInviteTab::doResetToDefaultsOther()
 
 MiscPagePrintingTab::MiscPagePrintingTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mPrintingUi(new MessageViewer::PrintingSettings(this))
 {
-    mPrintingUi = new MessageViewer::PrintingSettings(this);
     auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mPrintingUi);
@@ -171,8 +171,8 @@ void MiscPagePrintingTab::save()
 #ifdef WITH_KUSERFEEDBACK
 KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mUserFeedbackWidget(new KUserFeedback::FeedbackConfigWidget(this))
 {
-    mUserFeedbackWidget = new KUserFeedback::FeedbackConfigWidget(this);
     auto l = new QHBoxLayout(this);
     l->setContentsMargins({});
     l->addWidget(mUserFeedbackWidget);

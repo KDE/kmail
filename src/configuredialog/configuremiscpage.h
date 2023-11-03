@@ -50,7 +50,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::InvitationSettings *mInvitationUi = nullptr;
+    MessageViewer::InvitationSettings *const mInvitationUi;
 };
 
 class KMAIL_EXPORT MiscPage : public ConfigModuleWithTabs
@@ -73,7 +73,7 @@ private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    MessageViewer::PrintingSettings *mPrintingUi = nullptr;
+    MessageViewer::PrintingSettings *const mPrintingUi;
 };
 
 #ifdef WITH_KUSERFEEDBACK
@@ -91,6 +91,6 @@ public:
 
 private:
     void doLoadFromGlobalSettings() override;
-    KUserFeedback::FeedbackConfigWidget *mUserFeedbackWidget = nullptr;
+    KUserFeedback::FeedbackConfigWidget *const mUserFeedbackWidget;
 };
 #endif

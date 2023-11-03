@@ -88,7 +88,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    TemplateParser::TemplatesConfiguration *mWidget = nullptr;
+    TemplateParser::TemplatesConfiguration *const mWidget;
 };
 
 class ComposerPageCustomTemplatesTab : public ConfigModuleTab

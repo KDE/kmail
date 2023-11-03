@@ -219,8 +219,8 @@ QString SecurityPageEncryptionTab::helpAnchor() const
 
 SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mWidget(new Ui::SecurityPageEncryptionTab)
 {
-    mWidget = new Ui::SecurityPageEncryptionTab;
     mWidget->setupUi(this);
     connect(mWidget->mAlwaysEncryptWhenSavingInDrafts, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);

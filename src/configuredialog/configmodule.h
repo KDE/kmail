@@ -11,7 +11,6 @@
 
 #pragma once
 
-#include "kmail_export.h"
 #include <KCModule>
 #include <KPluginMetaData>
 #include <QObject>

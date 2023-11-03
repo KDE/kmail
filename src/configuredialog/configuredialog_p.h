@@ -76,11 +76,6 @@ public:
     void defaults() override;
 
 protected:
-#if KCMUTILS_VERSION < QT_VERSION_CHECK(5, 240, 0)
-    void showEvent(QShowEvent *event) override;
-#else
-#pragma "NEED TO PORT TO QT6";
-#endif
     void addTab(ConfigModuleTab *tab, const QString &title);
 
 private:
