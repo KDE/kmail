@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-26 01:45+0000\n"
+"POT-Creation-Date: 2023-11-04 16:52+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -7930,7 +7930,7 @@ msgstr ""
 msgid "5 minutes"
 msgstr " λεπτό"
 
-#: undosend/undosendcreatejob.cpp:46
+#: undosend/undosendcreatejob.cpp:47
 #, kde-format
 msgid "Undo send"
 msgstr ""

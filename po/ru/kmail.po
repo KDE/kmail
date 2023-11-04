@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-10-26 01:45+0000\n"
+"POT-Creation-Date: 2023-11-04 16:52+0000\n"
 "PO-Revision-Date: 2023-07-22 14:48+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -7591,7 +7591,7 @@ msgstr "%1 секунд"
 msgid "5 minutes"
 msgstr "5 минут"
 
-#: undosend/undosendcreatejob.cpp:46
+#: undosend/undosendcreatejob.cpp:47
 #, kde-format
 msgid "Undo send"
 msgstr "Отменить отправку"
