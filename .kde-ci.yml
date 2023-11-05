@@ -49,6 +49,6 @@ Dependencies:
     'frameworks/kxmlgui': '@latest-kf6'
     'frameworks/kiconthemes': '@latest-kf6'
     'frameworks/kstatusnotifieritem': '@latest-kf6'
+    'frameworks/kuserfeedback': '@latest-kf6'
     'third-party/qtkeychain': '@latest-kf6'
     'libraries/ktextaddons': '@latest-kf6'
-    'libraries/kuserfeedback': '@latest-kf6'
