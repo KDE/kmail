@@ -5,6 +5,7 @@
   <project_license>GPL-2.0+</project_license>
   <developer_name>The KDE Community</developer_name>
   <developer_name xml:lang="ar">مجتمع كِيدِي</developer_name>
+  <developer_name xml:lang="ast">La comunidá KDE</developer_name>
   <developer_name xml:lang="az">KDE Cəmiyyəti</developer_name>
   <developer_name xml:lang="bg">KDE Общност</developer_name>
   <developer_name xml:lang="ca">La comunitat KDE</developer_name>
@@ -41,6 +42,7 @@
   <developer_name xml:lang="zh-TW">KDE 社群</developer_name>
   <name>KMail</name>
   <name xml:lang="ar">بريدك</name>
+  <name xml:lang="ast">KMail</name>
   <name xml:lang="az">KMail</name>
   <name xml:lang="bg">KMail</name>
   <name xml:lang="bs">KMail</name>
@@ -162,6 +164,7 @@
     <p xml:lang="zh-CN">KMail 是一款功能先进的电子邮件客户端，能与 GMail 等常用电子邮件服务提供商进行整合。它提供了多种工具，能让您方便快捷地管理包含大量邮件的账户，提高工作效率。KMail 支持各种电子邮件协议，包括 POP3、IMAP、Microsoft Exchange (EWS) 等。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
+    <p xml:lang="ast">Funciones:</p>
     <p xml:lang="az">İmkanlar:</p>
     <p xml:lang="bg">Функции:</p>
     <p xml:lang="bs">Svojstva:</p>
