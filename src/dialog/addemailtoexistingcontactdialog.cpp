@@ -93,14 +93,14 @@ void AddEmailToExistingContactDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myAddEmailToExistingContactDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myAddEmailToExistingContactDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AddEmailToExistingContactDialog::writeConfig()
 {
-    KConfigGroup group(KMKernel::self()->config(), myAddEmailToExistingContactDialogGroupName);
+    KConfigGroup group(KMKernel::self()->config(), QLatin1String(myAddEmailToExistingContactDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

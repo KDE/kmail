@@ -135,7 +135,7 @@ void FolderArchiveManager::removeInfo(const QString &instanceName)
 {
     KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     KConfigGroup group = config.group(FolderArchive::FolderArchiveUtil::groupConfigPattern() + instanceName);
-    group.deleteGroup();
+    group.deleteGroup(QLatin1String());
     config.sync();
 }
 

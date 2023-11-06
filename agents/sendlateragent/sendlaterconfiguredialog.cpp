@@ -89,7 +89,7 @@ void SendLaterConfigureDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(800, 600));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myConfigureSendLaterConfigureDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 
@@ -98,7 +98,7 @@ void SendLaterConfigureDialog::readConfig()
 
 void SendLaterConfigureDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), myConfigureSendLaterConfigureDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myConfigureSendLaterConfigureDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     mWidget->saveTreeWidgetHeader(group);
 }

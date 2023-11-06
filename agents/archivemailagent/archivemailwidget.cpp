@@ -141,7 +141,7 @@ void ArchiveMailWidget::needReloadConfig()
 
 void ArchiveMailWidget::load()
 {
-    const auto group = config()->group(myConfigGroupName);
+    const auto group = config()->group(QLatin1String(myConfigGroupName));
     mWidget.treeWidget->header()->restoreState(group.readEntry("HeaderState", QByteArray()));
 
     const QStringList collectionList = config()->groupList().filter(QRegularExpression(archiveMailCollectionPattern()));
@@ -219,7 +219,7 @@ bool ArchiveMailWidget::save() const
         }
     }
 
-    auto group = config()->group(myConfigGroupName);
+    auto group = config()->group(QLatin1String(myConfigGroupName));
     group.writeEntry("HeaderState", mWidget.treeWidget->header()->saveState());
 
     return true;
@@ -334,14 +334,14 @@ void ArchiveMailWidget::slotItemChanged(QTreeWidgetItem *item, int col)
 
 QSize ArchiveMailWidget::restoreDialogSize() const
 {
-    auto group = config()->group(myConfigGroupName);
+    auto group = config()->group(QLatin1String(myConfigGroupName));
     const QSize size = group.readEntry("Size", QSize(500, 300));
     return size;
 }
 
 void ArchiveMailWidget::saveDialogSize(const QSize &size)
 {
-    auto group = config()->group(myConfigGroupName);
+    auto group = config()->group(QLatin1String(myConfigGroupName));
     group.writeEntry("Size", size);
 }
 

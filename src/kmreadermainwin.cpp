@@ -93,7 +93,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupAccel();
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
-    applyMainWindowSettings(KMKernel::self()->config()->group("Separate Reader Window"));
+    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Separate Reader Window")));
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
@@ -113,7 +113,7 @@ void KMReaderMainWin::initKMReaderMainWin()
 
 KMReaderMainWin::~KMReaderMainWin()
 {
-    KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group("Separate Reader Window"));
+    KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group(QStringLiteral("Separate Reader Window")));
     saveMainWindowSettings(grp);
     if (!mMsg.isValid()) {
         HistoryClosedReaderInfo info;
@@ -853,7 +853,7 @@ void KMReaderMainWin::showAndActivateWindow()
 
 void KMReaderMainWin::slotEditToolbars()
 {
-    KConfigGroup grp(KMKernel::self()->config(), "ReaderWindow");
+    KConfigGroup grp(KMKernel::self()->config(), QLatin1String("ReaderWindow"));
     saveMainWindowSettings(grp);
     QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
     connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMReaderMainWin::slotUpdateToolbars);
@@ -864,7 +864,7 @@ void KMReaderMainWin::slotEditToolbars()
 void KMReaderMainWin::slotUpdateToolbars()
 {
     createGUI(QStringLiteral("kmreadermainwin.rc"));
-    applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), "ReaderWindow"));
+    applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), QStringLiteral("ReaderWindow")));
 }
 
 #include "moc_kmreadermainwin.cpp"

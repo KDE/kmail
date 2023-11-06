@@ -534,7 +534,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     updateSignatureAndEncryptionStateIndicators();
 
-    applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
+    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Composer")));
 
     mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityChanged, this, [this](uint val) {
@@ -582,7 +582,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mDummyComposer = new MessageComposer::Composer(this);
     mDummyComposer->globalPart()->setParentWidgetForGui(this);
 
-    KConfigGroup grp(KMKernel::self()->config()->group("Composer"));
+    KConfigGroup grp(KMKernel::self()->config()->group(QStringLiteral("Composer")));
     setAutoSaveSettings(grp, true);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, this, &KMComposerWin::slotTooManyRecipients);
 }
@@ -2248,7 +2248,7 @@ void KMComposerWin::slotInsertFile()
 void KMComposerWin::slotRecentListFileClear()
 {
     KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, "Composer");
+    KConfigGroup group(config, QLatin1String("Composer"));
     group.deleteEntry("recent-urls");
     group.deleteEntry("recent-encoding");
     KMailSettings::self()->save();
@@ -3179,7 +3179,7 @@ void KMComposerWin::slotCheckSendNow()
         slotCheckSendNowStep2();
     } else {
         auto job = new PotentialPhishingEmailJob(this);
-        KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
+        KConfigGroup group(KSharedConfig::openConfig(), QLatin1String("PotentialPhishing"));
         const QStringList whiteList = group.readEntry("whiteList", QStringList());
         job->setEmailWhiteList(whiteList);
         job->setPotentialPhishingEmails(lst);
@@ -3985,7 +3985,7 @@ void KMComposerWin::slotEditToolbars()
 void KMComposerWin::slotUpdateToolbars()
 {
     createGUI(QStringLiteral("kmcomposerui.rc"));
-    applyMainWindowSettings(KMKernel::self()->config()->group("Composer"));
+    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Composer")));
 }
 
 void KMComposerWin::slotEditKeys()

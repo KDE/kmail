@@ -70,7 +70,7 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 
     KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
 
-    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group("CheckState"), this);
+    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group(QLatin1String("CheckState")), this);
     mModelState->setSelectionModel(mSelectionModel);
 
     connect(mChangeRecorder, qOverload<const Akonadi::Collection &>(&Akonadi::ChangeRecorder::collectionChanged), this, &SummaryWidget::slotCollectionChanged);
@@ -188,7 +188,7 @@ void SummaryWidget::slotUpdateFolderList()
     int counter = 0;
     qCDebug(KMAILPLUGIN_LOG) << QStringLiteral("Iterating over") << mModel->rowCount() << QStringLiteral("collections.");
     KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
-    KConfigGroup config(&_config, "General");
+    KConfigGroup config(&_config, QLatin1String("General"));
     const bool showFolderPaths = config.readEntry("showFolderPaths", false);
     displayModel(QModelIndex(), counter, showFolderPaths, QStringList());
 

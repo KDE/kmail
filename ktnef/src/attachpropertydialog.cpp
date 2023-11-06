@@ -75,14 +75,14 @@ void AttachPropertyDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 700));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myAttachPropertyDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AttachPropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), myAttachPropertyDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myAttachPropertyDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

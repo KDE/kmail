@@ -45,7 +45,7 @@ void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailWidget::save()
 {
-    KConfigGroup group(KSharedConfig::openConfig(), "PotentialPhishing");
+    KConfigGroup group(KSharedConfig::openConfig(), QLatin1String("PotentialPhishing"));
     QStringList potentialPhishing = group.readEntry("whiteList", QStringList());
     bool emailsAdded = false;
     const int numberOfItem(mListWidget->count());

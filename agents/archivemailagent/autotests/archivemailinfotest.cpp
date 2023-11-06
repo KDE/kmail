@@ -50,7 +50,7 @@ void ArchiveMailInfoTest::shouldRestoreFromSettings()
     info.setUseRange(true);
     info.setRange({8, 7});
 
-    KConfigGroup grp(KSharedConfig::openConfig(), "testsettings");
+    KConfigGroup grp(KSharedConfig::openConfig(), QLatin1String("testsettings"));
     info.writeConfig(grp);
 
     const ArchiveMailInfo restoreInfo(grp);

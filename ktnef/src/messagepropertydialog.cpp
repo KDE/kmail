@@ -78,7 +78,7 @@ void MessagePropertyDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myMessagePropertyDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
     const QByteArray headerState = group.readEntry("HeaderState", QByteArray());
@@ -89,7 +89,7 @@ void MessagePropertyDialog::readConfig()
 
 void MessagePropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), myMessagePropertyDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myMessagePropertyDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();

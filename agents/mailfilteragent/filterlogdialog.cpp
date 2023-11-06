@@ -176,7 +176,7 @@ void FilterLogDialog::slotTextChanged()
 void FilterLogDialog::readConfig()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    KConfigGroup group(config, "FilterLog");
+    KConfigGroup group(config, QLatin1String("FilterLog"));
     const bool isEnabled = group.readEntry("Enabled", false);
     const bool isLogPatternDescription = group.readEntry("LogPatternDescription", false);
     const bool isLogRuleResult = group.readEntry("LogRuleResult", false);
@@ -203,7 +203,7 @@ void FilterLogDialog::readConfig()
         FilterLog::instance()->setMaxLogSize(maxLogSize);
     }
 
-    KConfigGroup geometryGroup(config, "Geometry");
+    KConfigGroup geometryGroup(config, QLatin1String("Geometry"));
     const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -215,7 +215,7 @@ void FilterLogDialog::readConfig()
 FilterLogDialog::~FilterLogDialog()
 {
     disconnect(mTextEdit->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
-    KConfigGroup myGroup(KSharedConfig::openConfig(), "Geometry");
+    KConfigGroup myGroup(KSharedConfig::openConfig(), QLatin1String("Geometry"));
     myGroup.writeEntry("filterLogSize", size());
     myGroup.sync();
 }
@@ -227,7 +227,7 @@ void FilterLogDialog::writeConfig()
     }
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    KConfigGroup group(config, "FilterLog");
+    KConfigGroup group(config, QLatin1String("FilterLog"));
     group.writeEntry("Enabled", FilterLog::instance()->isLogging());
     group.writeEntry("LogPatternDescription", FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription));
     group.writeEntry("LogRuleResult", FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult));

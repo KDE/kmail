@@ -489,7 +489,7 @@ void SearchWindow::doSearch()
     }
 
     auto config = KConfig(QStringLiteral("akonadi_indexing_agent"));
-    KConfigGroup cfg = config.group("General");
+    KConfigGroup cfg = config.group(QLatin1String("General"));
     const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
 
     if (mFolder.isValid()) {

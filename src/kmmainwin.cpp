@@ -84,7 +84,7 @@ KMMainWin::KMMainWin(QWidget *)
     createGUI(QStringLiteral("kmmainwin.rc"));
 
     // must be after createGUI, otherwise e.g toolbar settings are not loaded
-    setAutoSaveSettings(KMKernel::self()->config()->group("Main Window"));
+    setAutoSaveSettings(KMKernel::self()->config()->group(QStringLiteral("Main Window")));
 
     connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, &KMMainWin::displayStatusMessage);
 
@@ -196,7 +196,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
 
 void KMMainWin::slotEditToolbars()
 {
-    KConfigGroup grp = KMKernel::self()->config()->group("Main Window");
+    KConfigGroup grp = KMKernel::self()->config()->group(QStringLiteral("Main Window"));
     saveMainWindowSettings(grp);
     QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
     connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
@@ -213,7 +213,7 @@ void KMMainWin::slotUpdateGui()
     mKMMainWidget->clearPluginActions();
 
     createGUI(QStringLiteral("kmmainwin.rc"));
-    applyMainWindowSettings(KMKernel::self()->config()->group("Main Window"));
+    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Main Window")));
 
     // plug dynamically created actions again
     mKMMainWidget->initializeFilterActions(false);

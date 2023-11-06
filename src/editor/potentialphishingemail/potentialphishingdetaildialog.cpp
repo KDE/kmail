@@ -57,14 +57,14 @@ void PotentialPhishingDetailDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(800, 600));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myPotentialPhishingDetailDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void PotentialPhishingDetailDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), myPotentialPhishingDetailDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myPotentialPhishingDetailDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
 }
 

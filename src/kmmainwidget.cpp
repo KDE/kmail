@@ -340,7 +340,7 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
 {
     auto saver = new ETMViewStateSaver;
     saver->setView(mFolderTreeWidget->folderTreeView());
-    const KConfigGroup cfg(KMKernel::self()->config(), "CollectionFolderView");
+    const KConfigGroup cfg(KMKernel::self()->config(), QStringLiteral("CollectionFolderView"));
     mFolderTreeWidget->restoreHeaderState(cfg.readEntry("HeaderState", QByteArray()));
     saver->restoreState(cfg);
     // Restore startup folder
@@ -918,7 +918,7 @@ void KMMainWidget::writeConfig(bool force)
         if (mFolderTreeWidget) {
             KMailSettings::self()->setFolderViewWidth(mFolderTreeWidget->width());
             KSharedConfig::Ptr config = KMKernel::self()->config();
-            KConfigGroup group(config, "CollectionFolderView");
+            KConfigGroup group(config, QLatin1String("CollectionFolderView"));
 
             ETMViewStateSaver saver;
             saver.setView(mFolderTreeWidget->folderTreeView());
@@ -1077,11 +1077,11 @@ void KMMainWidget::createWidgets()
         connect(mFavoriteCollectionsView, qOverload<const Akonadi::Collection &>(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(mFolderTreeWidget->folderTreeWidgetProxyModel(),
-                                                                KMKernel::self()->config()->group("FavoriteCollections"),
+                                                                KMKernel::self()->config()->group(QLatin1String("FavoriteCollections")),
                                                                 mFavoriteCollectionsView);
 
         auto orderProxy = new MailCommon::FavoriteCollectionOrderProxyModel(this);
-        orderProxy->setOrderConfig(KMKernel::self()->config()->group("FavoriteCollectionsOrder"));
+        orderProxy->setOrderConfig(KMKernel::self()->config()->group(QLatin1String("FavoriteCollectionsOrder")));
         orderProxy->setSourceModel(mFavoritesModel);
         orderProxy->sort(0, Qt::AscendingOrder);
 

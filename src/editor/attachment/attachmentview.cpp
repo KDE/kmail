@@ -41,7 +41,7 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     , mToolButton(new QToolButton(this))
     , mInfoAttachment(new QLabel(this))
     , mWidget(new QWidget())
-    , grp(KMKernel::self()->config()->group("AttachmentView"))
+    , grp(KMKernel::self()->config()->group(QLatin1String("AttachmentView")))
 {
     auto lay = new QHBoxLayout(mWidget);
     lay->setContentsMargins({});

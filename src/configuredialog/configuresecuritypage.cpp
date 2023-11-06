@@ -694,14 +694,14 @@ void GpgSettingsDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myGpgSettingsDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void GpgSettingsDialog::saveConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), myGpgSettingsDialogGroupName);
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myGpgSettingsDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
