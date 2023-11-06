@@ -92,7 +92,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     // Enabled or not filterlogdialog
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     if (config->hasGroup(QLatin1String("FilterLog"))) {
-        KConfigGroup group(config, QLatin1String("FilterLog"));
+        KConfigGroup group(config, QStringLiteral("FilterLog"));
         if (group.readEntry("Enabled", false)) {
             auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
             notify->setComponentName(QApplication::applicationDisplayName());

@@ -74,7 +74,7 @@ void FollowUpReminderInfoTest::shouldRestoreFromSettings()
     info.setUniqueIdentifier(42);
     info.setTodoId(52);
 
-    KConfigGroup grp(KSharedConfig::openConfig(), QLatin1String("testsettings"));
+    KConfigGroup grp(KSharedConfig::openConfig(), QStringLiteral("testsettings"));
     info.writeConfig(grp, info.uniqueIdentifier());
 
     FollowUpReminder::FollowUpReminderInfo restoreInfo(grp);

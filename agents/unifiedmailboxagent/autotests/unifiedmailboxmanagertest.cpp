@@ -151,7 +151,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        const auto boxesGroup = kcfg->group(QLatin1String("UnifiedMailboxes"));
+        const auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
         UnifiedMailboxManager manager(kcfg);
 
         // Make sure the config is empty
@@ -202,7 +202,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        const auto boxesGroup = kcfg->group(QLatin1String("UnifiedMailboxes"));
+        const auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
         UnifiedMailboxManager manager(kcfg);
         Akonadi::ChangeRecorder &recorder = manager.changeRecorder();
 
@@ -235,7 +235,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        auto boxesGroup = kcfg->group(QLatin1String("UnifiedMailboxes"));
+        auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
         auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"), {QStringLiteral("res1_foo"), QStringLiteral("res2_foo")});
         QVERIFY(mailbox);
         auto group = boxesGroup.group(mailbox->id());
@@ -283,7 +283,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        auto boxesGroup = kcfg->group(QLatin1String("UnifiedMailboxes"));
+        auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
         UnifiedMailboxManager manager(kcfg);
         EntityDeleter deleter;
         const auto inbox = createUnifiedMailbox(Common::InboxBoxId, QStringLiteral("Inbox"), {QStringLiteral("res1_inbox"), QStringLiteral("res2_inbox")});

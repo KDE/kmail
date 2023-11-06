@@ -918,7 +918,7 @@ void KMMainWidget::writeConfig(bool force)
         if (mFolderTreeWidget) {
             KMailSettings::self()->setFolderViewWidth(mFolderTreeWidget->width());
             KSharedConfig::Ptr config = KMKernel::self()->config();
-            KConfigGroup group(config, QLatin1String("CollectionFolderView"));
+            KConfigGroup group(config, QStringLiteral("CollectionFolderView"));
 
             ETMViewStateSaver saver;
             saver.setView(mFolderTreeWidget->folderTreeView());
@@ -1077,11 +1077,11 @@ void KMMainWidget::createWidgets()
         connect(mFavoriteCollectionsView, qOverload<const Akonadi::Collection &>(&EntityListView::currentChanged), this, &KMMainWidget::slotFolderChanged);
         connect(mFavoriteCollectionsView, &FavoriteCollectionWidget::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
         mFavoritesModel = new Akonadi::FavoriteCollectionsModel(mFolderTreeWidget->folderTreeWidgetProxyModel(),
-                                                                KMKernel::self()->config()->group(QLatin1String("FavoriteCollections")),
+                                                                KMKernel::self()->config()->group(QStringLiteral("FavoriteCollections")),
                                                                 mFavoriteCollectionsView);
 
         auto orderProxy = new MailCommon::FavoriteCollectionOrderProxyModel(this);
-        orderProxy->setOrderConfig(KMKernel::self()->config()->group(QLatin1String("FavoriteCollectionsOrder")));
+        orderProxy->setOrderConfig(KMKernel::self()->config()->group(QStringLiteral("FavoriteCollectionsOrder")));
         orderProxy->setSourceModel(mFavoritesModel);
         orderProxy->sort(0, Qt::AscendingOrder);
 

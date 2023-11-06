@@ -60,7 +60,7 @@ KTNEFMain::KTNEFMain(QWidget *parent)
 
     setupTNEF();
 
-    KConfigGroup config(KSharedConfig::openConfig(), QLatin1String("Settings"));
+    KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("Settings"));
     mDefaultDir = config.readPathEntry("defaultdir", QStringLiteral("/tmp/"));
 
     mLastDir = mDefaultDir;
@@ -322,7 +322,7 @@ void KTNEFMain::optionDefaultDir()
     if (!dirname.isEmpty()) {
         mDefaultDir = dirname;
 
-        KConfigGroup config(KSharedConfig::openConfig(), QLatin1String("Settings"));
+        KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("Settings"));
         config.writePathEntry("defaultdir", mDefaultDir);
     }
 }
@@ -441,7 +441,7 @@ void KTNEFMain::viewDragRequested(const QList<KTnef::KTNEFAttach *> &list)
 
 void KTNEFMain::slotEditToolbars()
 {
-    KConfigGroup grp = KSharedConfig::openConfig()->group(QLatin1String("MainWindow"));
+    KConfigGroup grp = KSharedConfig::openConfig()->group(QStringLiteral("MainWindow"));
     saveMainWindowSettings(grp);
 
     QPointer<KEditToolBar> dlg = new KEditToolBar(factory());
@@ -453,7 +453,7 @@ void KTNEFMain::slotEditToolbars()
 void KTNEFMain::slotNewToolbarConfig()
 {
     createGUI(QStringLiteral("ktnefui.rc"));
-    applyMainWindowSettings(KSharedConfig::openConfig()->group(QLatin1String("MainWindow")));
+    applyMainWindowSettings(KSharedConfig::openConfig()->group(QStringLiteral("MainWindow")));
 }
 
 void KTNEFMain::slotShowMessageProperties()

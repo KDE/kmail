@@ -1261,7 +1261,7 @@ void KMSetTagCommand::setTags()
     connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetTagCommand::slotModifyItemDone);
 
     if (!mCreatedTags.isEmpty()) {
-        KConfigGroup tag(KMKernel::self()->config(), QLatin1String("MessageListView"));
+        KConfigGroup tag(KMKernel::self()->config(), QStringLiteral("MessageListView"));
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
         for (const Akonadi::Tag &createdTag : std::as_const(mCreatedTags)) {

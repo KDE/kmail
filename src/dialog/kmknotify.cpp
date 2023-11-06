@@ -125,14 +125,14 @@ void KMKnotify::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String("KMKnotifyDialog"));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QStringLiteral("KMKnotifyDialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void KMKnotify::writeConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), QLatin1String("KMKnotifyDialog"));
+    KConfigGroup notifyDialog(KMKernel::self()->config(), QStringLiteral("KMKnotifyDialog"));
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }

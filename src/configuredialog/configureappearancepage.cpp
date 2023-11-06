@@ -224,7 +224,7 @@ void AppearancePageFontsTab::slotFontSelectorChanged(int index)
 void AppearancePageFontsTab::doLoadOther()
 {
     if (KMKernel::self()) {
-        KConfigGroup fonts(KMKernel::self()->config(), QLatin1String("Fonts"));
+        KConfigGroup fonts(KMKernel::self()->config(), QStringLiteral("Fonts"));
 
         mFont[0] = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
@@ -254,7 +254,7 @@ void AppearancePageFontsTab::doLoadOther()
 void AppearancePageFontsTab::save()
 {
     if (KMKernel::self()) {
-        KConfigGroup fonts(KMKernel::self()->config(), QLatin1String("Fonts"));
+        KConfigGroup fonts(KMKernel::self()->config(), QStringLiteral("Fonts"));
 
         // read the current font (might have been modified)
         if (mActiveFontIndex >= 0) {
@@ -372,7 +372,7 @@ void AppearancePageColorsTab::doLoadOther()
 void AppearancePageColorsTab::loadColor(bool loadFromConfig)
 {
     if (KMKernel::self()) {
-        KConfigGroup reader(KMKernel::self()->config(), QLatin1String("Reader"));
+        KConfigGroup reader(KMKernel::self()->config(), QStringLiteral("Reader"));
 
         static const QColor defaultColor[numColorNames] = {
             MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor(),
@@ -423,7 +423,7 @@ void AppearancePageColorsTab::save()
     if (!KMKernel::self()) {
         return;
     }
-    KConfigGroup reader(KMKernel::self()->config(), QLatin1String("Reader"));
+    KConfigGroup reader(KMKernel::self()->config(), QStringLiteral("Reader"));
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
     MessageCore::MessageCoreSettings::self()->setUseRealHtmlMailColor(mUseInlineStyle->isChecked());

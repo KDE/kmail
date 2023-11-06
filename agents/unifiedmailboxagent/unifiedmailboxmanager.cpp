@@ -196,7 +196,7 @@ Akonadi::ChangeRecorder &UnifiedMailboxManager::changeRecorder()
 void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 {
     qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "loading boxes";
-    const auto group = mConfig->group(QLatin1String("UnifiedMailboxes"));
+    const auto group = mConfig->group(QStringLiteral("UnifiedMailboxes"));
     const auto boxGroups = group.groupList();
     for (const auto &boxGroupName : boxGroups) {
         const auto boxGroup = group.group(boxGroupName);
@@ -228,7 +228,7 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 
 void UnifiedMailboxManager::saveBoxes()
 {
-    auto group = mConfig->group(QLatin1String("UnifiedMailboxes"));
+    auto group = mConfig->group(QStringLiteral("UnifiedMailboxes"));
     const auto currentGroups = group.groupList();
     for (const auto &groupName : currentGroups) {
         group.deleteGroup(groupName);

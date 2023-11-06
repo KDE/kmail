@@ -553,7 +553,7 @@ void ComposerPageGeneralTab::slotConfigureAddressCompletion()
     dlg->setRecentAddresses(PimCommon::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     dlg->setLdapClientSearch(&search);
     KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kpimbalooblacklist"));
-    KConfigGroup group(config, QLatin1String("AddressLineEdit"));
+    KConfigGroup group(config, QStringLiteral("AddressLineEdit"));
     const QStringList balooBlackList = group.readEntry("BalooBackList", QStringList());
 
     dlg->setEmailBlackList(balooBlackList);

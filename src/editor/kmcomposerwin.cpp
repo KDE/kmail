@@ -2248,7 +2248,7 @@ void KMComposerWin::slotInsertFile()
 void KMComposerWin::slotRecentListFileClear()
 {
     KSharedConfig::Ptr config = KMKernel::self()->config();
-    KConfigGroup group(config, QLatin1String("Composer"));
+    KConfigGroup group(config, QStringLiteral("Composer"));
     group.deleteEntry("recent-urls");
     group.deleteEntry("recent-encoding");
     KMailSettings::self()->save();
@@ -3179,7 +3179,7 @@ void KMComposerWin::slotCheckSendNow()
         slotCheckSendNowStep2();
     } else {
         auto job = new PotentialPhishingEmailJob(this);
-        KConfigGroup group(KSharedConfig::openConfig(), QLatin1String("PotentialPhishing"));
+        KConfigGroup group(KSharedConfig::openConfig(), QStringLiteral("PotentialPhishing"));
         const QStringList whiteList = group.readEntry("whiteList", QStringList());
         job->setEmailWhiteList(whiteList);
         job->setPotentialPhishingEmails(lst);
