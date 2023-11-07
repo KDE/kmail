@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-08-26 18:16+0300\n"
+"PO-Revision-Date: 2023-09-26 13:28+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -680,7 +680,7 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"Opastettua tilin luontia ei voitu käynnistää. Varmista, että se on asennettu "
+"Opastettua tilin luontia ei voi käynnistää. Varmista, että se on asennettu "
 "oikein."
 
 #: configuredialog/configureaccountpage.cpp:226
@@ -4146,7 +4146,7 @@ msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr ""
-"Varmenteiden hallintaa ei voitu käynnistää. Varmista, että Kleopatra on "
+"Varmenteiden hallintaa ei voi käynnistää. Varmista, että Kleopatra on "
 "asennettu oikein."
 
 #: kmlaunchexternalcomponent.cpp:89
@@ -4160,25 +4160,24 @@ msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Opastettua tuontia ei voitu käynnistää. Varmista, että se on asennettu "
-"oikein."
+"Opastettua tuontia ei voi käynnistää. Varmista, että se on asennettu oikein."
 
 #: kmlaunchexternalcomponent.cpp:104 kmmainwidget.cpp:313
 #, kde-format
 msgid "Unable to start import wizard"
-msgstr "Opastettua tuontia ei voitu käynnistää."
+msgstr "Opastettua tuontia ei voi käynnistää."
 
 #: kmlaunchexternalcomponent.cpp:117
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
-msgstr "Opastettua PIM-tietojen tuontia ei voitu käynnistää. Tarkista asennus."
+msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää. Tarkista asennus."
 
 #: kmlaunchexternalcomponent.cpp:119
 #, kde-format
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "Opastettua PIM-tietojen tuontia ei voitu käynnistää"
+msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -4186,13 +4185,12 @@ msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Opastettua tuontia ei voitu käynnistää. Varmista, että se on asennettu "
-"oikein."
+"Opastettua tuontia ei voi käynnistää. Varmista, että se on asennettu oikein."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, kde-format
 msgid "Unable to start ImportWizard"
-msgstr "ImportWizardia ei voitu käynnistää"
+msgstr "Opastettua tuontia ei voi käynnistää"
 
 #: kmmainwidget.cpp:302
 #, kde-format
@@ -4215,7 +4213,7 @@ msgstr "Älä tuo"
 #: kmmainwidget.cpp:311
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
-msgstr "Opastettua tuontia ei voitu käynnistää. Tarkista asennuksesi."
+msgstr "Opastettua tuontia ei voi käynnistää. Tarkista asennuksesi."
 
 #: kmmainwidget.cpp:1367
 #, kde-format
@@ -5576,7 +5574,7 @@ msgstr "Noudetaan kansion ominaisuuksia"
 #: manageshowcollectionproperties.cpp:102
 #, kde-format
 msgid "Network is unconnected. Folder information cannot be updated."
-msgstr "Ei yhteyttä verkkoon. Kansion tietoja ei voitu päivittää."
+msgstr "Ei yhteyttä verkkoon. Kansion tietoja ei voi päivittää."
 
 #: manageshowcollectionproperties.cpp:183
 #, kde-format
