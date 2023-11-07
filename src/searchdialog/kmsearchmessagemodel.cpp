@@ -43,6 +43,10 @@ static QString toolTip(const Akonadi::Item &item)
     const QString textDirection = textIsLeftToRight ? QStringLiteral("left") : QStringLiteral("right");
 
     QString tip = QStringLiteral("<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">");
+    QString subject;
+    if (auto msgSubject = msg->subject(false)) {
+        subject = msgSubject->asUnicodeString();
+    }
     tip += QStringLiteral(
                "<tr>"
                "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"
@@ -51,7 +55,7 @@ static QString toolTip(const Akonadi::Item &item)
                "</div>"
                "</td>"
                "</tr>")
-               .arg(txtColorName, bckColorName, msg->subject()->asUnicodeString().toHtmlEscaped(), textDirection);
+               .arg(txtColorName, bckColorName, subject.toHtmlEscaped(), textDirection);
 
     tip += QStringLiteral(
         "<tr>"

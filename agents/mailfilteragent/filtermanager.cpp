@@ -239,9 +239,18 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
         FilterLog::instance()->addSeparator();
         if (item.hasPayload<KMime::Message::Ptr>()) {
             auto msg = item.payload<KMime::Message::Ptr>();
-            const QString subject = msg->subject()->asUnicodeString();
-            const QString from = msg->from()->asUnicodeString();
-            const QDateTime dateTime = msg->date()->dateTime();
+            QString subject;
+            if (auto msgSubject = msg->subject(false)) {
+                subject = msgSubject->asUnicodeString();
+            }
+            QString from;
+            if (auto msgFrom = msg->from(false)) {
+                from = msgFrom->asUnicodeString();
+            }
+            QDateTime dateTime;
+            if (auto msgDate = msg->date(false)) {
+                dateTime = msgDate->dateTime();
+            }
             const QString date = QLocale().toString(dateTime, QLocale::LongFormat);
             const QString logText(i18n("<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>", subject, from, date));
             FilterLog::instance()->add(logText, FilterLog::PatternDescription);

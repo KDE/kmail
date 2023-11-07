@@ -1860,8 +1860,12 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setInitialData(data);
 
-    mEdtFrom->setText(mMsg->from()->asUnicodeString());
-    mEdtSubject->setText(mMsg->subject()->asUnicodeString());
+    if (auto msgFrom = mMsg->from(false)) {
+        mEdtFrom->setText(msgFrom->asUnicodeString());
+    }
+    if (auto msgSubject = mMsg->subject(false)) {
+        mEdtSubject->setText(msgSubject->asUnicodeString());
+    }
 
     // Restore the quote prefix. We can't just use the global quote prefix here,
     // since the prefix is different for each message, it might for example depend

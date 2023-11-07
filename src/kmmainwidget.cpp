@@ -1359,7 +1359,11 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
     for (int idx = 0; idx < numberOfItems; ++idx) {
         KMime::Message::Ptr msg = MessageComposer::Util::message(items.at(idx));
         if (msg) {
-            QString subj = msg->subject()->asUnicodeString();
+            QString subj;
+            if (auto subject = msg->subject(false)) {
+                subj = subject->asUnicodeString();
+            }
+
             if (subj.isEmpty()) {
                 subj = i18n("No Subject");
             }
@@ -2117,8 +2121,11 @@ void KMMainWidget::slotSubjectFilter()
     if (!msg) {
         return;
     }
-
-    openFilterDialog("Subject", msg->subject()->asUnicodeString());
+    QString str;
+    if (auto subject = msg->subject(false)) {
+        str = subject->asUnicodeString();
+    }
+    openFilterDialog("Subject", str);
 }
 
 //-----------------------------------------------------------------------------

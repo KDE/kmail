@@ -158,7 +158,9 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     KMime::Message::Ptr message = MessageComposer::Util::message(msg);
     QString caption;
     if (message) {
-        caption = message->subject()->asUnicodeString();
+        if (auto subject = message->subject(false)) {
+            caption = subject->asUnicodeString();
+        }
     }
     if (mParentCollection.isValid()) {
         caption += QLatin1String(" - ");
@@ -238,8 +240,9 @@ void KMReaderMainWin::initializeMessage(const KMime::Message::Ptr &message)
     mMsgActions->setCurrentMessage(item);
 
     mReaderWin->setMessage(message);
-    setCaption(message->subject()->asUnicodeString());
-
+    if (auto subject = message->subject(false)) {
+        setCaption(subject->asUnicodeString());
+    }
     mTrashAction->setEnabled(false);
     mAkonadiStandardActionManager->setItems({mMsg});
     updateActions();

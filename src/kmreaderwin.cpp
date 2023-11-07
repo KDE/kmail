@@ -777,7 +777,9 @@ bool KMReaderWin::printSelectedText(bool preview)
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     composer->infoPart()->setTo(QStringList() << messagePtr->to()->asUnicodeString());
     composer->infoPart()->setCc(QStringList() << messagePtr->cc()->asUnicodeString());
-    composer->infoPart()->setSubject(messagePtr->subject()->asUnicodeString());
+    if (auto subject = messagePtr->subject(false)) {
+        composer->infoPart()->setSubject(subject->asUnicodeString());
+    }
     composer->setProperty("preview", preview);
     connect(composer, &::MessageComposer::Composer::result, this, &KMReaderWin::slotPrintComposeResult);
     composer->start();
