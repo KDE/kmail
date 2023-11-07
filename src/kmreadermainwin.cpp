@@ -115,12 +115,14 @@ KMReaderMainWin::~KMReaderMainWin()
 {
     KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group(QStringLiteral("Separate Reader Window")));
     saveMainWindowSettings(grp);
-    if (!mMsg.isValid()) {
+    if (mMsg.isValid()) {
         HistoryClosedReaderInfo info;
         info.setItem(mMsg.id());
         KMime::Message::Ptr message = MessageComposer::Util::message(mMsg);
         if (message) {
-            info.setSubject(message->subject(false)->asUnicodeString());
+            if (auto subject = message->subject(false)) {
+                info.setSubject(subject->asUnicodeString());
+            }
         }
         HistoryClosedReaderManager::self()->addInfo(std::move(info));
     }
