@@ -26,6 +26,5 @@ public:
     void defaults() override;
 
 private:
-    void slotConfigureChanged();
     PimCommon::ConfigurePluginsWidget *const mConfigurePlugins;
 };

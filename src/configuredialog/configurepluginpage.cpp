@@ -17,7 +17,7 @@ ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData 
     auto l = new QHBoxLayout(widget());
     l->addWidget(mConfigurePlugins);
 
-    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::slotConfigureChanged);
+    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::markAsChanged);
 }
 
 ConfigurePluginPage::~ConfigurePluginPage() = default;
@@ -40,11 +40,6 @@ QString ConfigurePluginPage::helpAnchor() const
 void ConfigurePluginPage::load()
 {
     mConfigurePlugins->doLoadFromGlobalSettings();
-}
-
-void ConfigurePluginPage::slotConfigureChanged()
-{
-    markAsChanged();
 }
 
 #include "moc_configurepluginpage.cpp"
