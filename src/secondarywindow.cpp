@@ -20,12 +20,6 @@ SecondaryWindow::SecondaryWindow(const QString &name)
     : KXmlGuiWindow(nullptr)
 {
     setObjectName(name);
-    // Set this to be the group leader for all subdialogs - this means
-    // modal subdialogs will only affect this window, not the other windows
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    // TODO verify in qt6
-    setAttribute(Qt::WA_GroupLeader);
-#endif
 }
 
 //---------------------------------------------------------------------------
