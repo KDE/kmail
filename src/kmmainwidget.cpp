@@ -3195,6 +3195,10 @@ void KMMainWidget::setupActions()
     }
     mFilterMenu->addAction(mMsgActions->listFilterAction());
 
+    mRestoreClosedMessageAction = new QAction(i18n("Restore Closed Message"), this);
+    actionCollection()->addAction(QStringLiteral("restore_closed_messageviewer"), mRestoreClosedMessageAction);
+    connect(mRestoreClosedMessageAction, &QAction::triggered, this, &KMMainWidget::slotRestoreClosedMessage);
+
     //----- "Mark Thread" submenu
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
     actionCollection()->addAction(QStringLiteral("thread_status"), mThreadStatusMenu);
@@ -4940,6 +4944,10 @@ void KMMainWidget::slotClearCacheDone()
             process->start();
         }
     }
+}
+
+void KMMainWidget::slotRestoreClosedMessage()
+{
 }
 
 #include "moc_kmmainwidget.cpp"

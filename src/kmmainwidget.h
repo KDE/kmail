@@ -540,6 +540,7 @@ private:
     void slotClearFolder();
     void slotClearCacheDone();
     void slotClearFolderAndSubFolders();
+    void slotRestoreClosedMessage();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -666,4 +667,5 @@ private:
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
     QAction *mClearFolderCacheAction = nullptr;
+    QAction *mRestoreClosedMessageAction = nullptr;
 };
