@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-28 01:40+0000\n"
+"POT-Creation-Date: 2023-11-08 08:47+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -156,12 +156,12 @@ msgstr "<b>Vyhodnocujem pravidlá filtra:</b> "
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Pravidlá filtra sa zhodujú.</b>"
 
-#: filtermanager.cpp:246
+#: filtermanager.cpp:255
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Začať filtrovanie na správe \"%1\" z \"%2\" na \"%3\" :</b>"
 
-#: filtermanager.cpp:580 filtermanager.cpp:608
+#: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrujú sa správy"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-28 01:40+0000\n"
+"POT-Creation-Date: 2023-11-08 08:47+0000\n"
 "PO-Revision-Date: 2014-03-13 16:34+0100\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -161,12 +161,12 @@ msgstr "<b>Filterregeln warrt pröövt:</b> "
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filterregeln hebbt passt.</b>"
 
-#: filtermanager.cpp:246
+#: filtermanager.cpp:255
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Filtern vun Naricht \"%1\" vun \"%2\" op \"%3\" fangt an:</b>"
 
-#: filtermanager.cpp:580 filtermanager.cpp:608
+#: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
 msgstr "Narichten warrt filtert"

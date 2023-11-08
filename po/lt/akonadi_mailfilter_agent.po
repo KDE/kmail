@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-28 01:40+0000\n"
+"POT-Creation-Date: 2023-11-08 08:47+0000\n"
 "PO-Revision-Date: 2014-03-17 20:32+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -149,12 +149,12 @@ msgstr "<b>Vertinamos filtro taisyklės:</b> "
 msgid "<b>Filter rules have matched.</b>"
 msgstr ""
 
-#: filtermanager.cpp:246
+#: filtermanager.cpp:255
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 
-#: filtermanager.cpp:580 filtermanager.cpp:608
+#: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
 msgstr "Laiškai filtruojami"

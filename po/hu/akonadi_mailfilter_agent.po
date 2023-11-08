@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-28 01:40+0000\n"
+"POT-Creation-Date: 2023-11-08 08:47+0000\n"
 "PO-Revision-Date: 2013-07-07 11:24+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -159,12 +159,12 @@ msgstr "<b>Szűrési szabályok kiértékelése:</b> "
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Szűrési szabályok illeszkedtek.</b>"
 
-#: filtermanager.cpp:246
+#: filtermanager.cpp:255
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Szűrés kezdése a(z) „%1” üzeneten ettől: „%2” eddig: „%3” :</b>"
 
-#: filtermanager.cpp:580 filtermanager.cpp:608
+#: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"

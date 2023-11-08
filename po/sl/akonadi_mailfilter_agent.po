@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-28 01:40+0000\n"
+"POT-Creation-Date: 2023-11-08 08:47+0000\n"
 "PO-Revision-Date: 2023-09-25 11:01+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -160,12 +160,12 @@ msgstr "<b>Vrednotenje filtrirnih pravil:</b> "
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filtrirna pravila se ujemajo.</b>"
 
-#: filtermanager.cpp:246
+#: filtermanager.cpp:255
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Začni filtrirati pri sporočilu »%1« od »%2« z dne »%3«:</b>"
 
-#: filtermanager.cpp:580 filtermanager.cpp:608
+#: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtriranje sporočil"
