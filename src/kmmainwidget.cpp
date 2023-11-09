@@ -163,9 +163,10 @@
 #include <QDBusReply>
 #include <QStandardPaths>
 
+#include "historyclosedreader/historyclosedreadermanager.h"
+#include "job/removecollectionjob.h"
+#include "job/removeduplicatemailjob.h"
 #include <PimCommonAkonadi/ManageServerSideSubscriptionJob>
-#include <job/removecollectionjob.h>
-#include <job/removeduplicatemailjob.h>
 
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
@@ -4948,6 +4949,11 @@ void KMMainWidget::slotClearCacheDone()
 
 void KMMainWidget::slotRestoreClosedMessage()
 {
+    if (!HistoryClosedReaderManager::self()->isEmpty()) {
+        const HistoryClosedReaderInfo info = HistoryClosedReaderManager::self()->lastInfo();
+        qDebug() << " info " << info;
+        // TODO open it.
+    }
 }
 
 #include "moc_kmmainwidget.cpp"
