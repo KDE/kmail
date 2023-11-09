@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-1.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:47+0000\n"
+"POT-Creation-Date: 2023-11-09 01:38+0000\n"
 "PO-Revision-Date: 2005-01-23 05:51+0100\n"
 "Last-Translator: Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>\n"
 "Language-Team: Brezhoneg <Suav.Icb@wanadoo.fr>\n"
@@ -1805,7 +1805,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Renkell nevez"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3598
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3602
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4002,15 +4002,15 @@ msgid "F&older"
 msgstr "&Teuliad"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3447 kmmainwin.rc:134
-#: kmmainwin.rc:289
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3451 kmmainwin.rc:134
+#: kmmainwin.rc:291
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "Arlo&añ an holl siloù"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
+#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr ""
@@ -4035,32 +4035,32 @@ msgid "&Forward"
 msgstr "&War-raok"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3263 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3267 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "A&rloañ ar sil"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:205 kmmainwin.rc:205
+#: kmail_part.rc:207 kmmainwin.rc:207
 #, kde-format
 msgid "&Tools"
 msgstr "&Ostilhoù"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
+#: kmail_part.rc:227 kmcomposerui.rc:107 kmmainwin.rc:228 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "&Kefluniadur"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:242 kmmainwin.rc:246
+#: kmail_part.rc:245 kmmainwin.rc:248
 #, kde-format
 msgid "&Help"
 msgstr "&Skoazell"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
+#: kmail_part.rc:345 kmcomposerui.rc:112 kmmainwin.rc:348 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Barrenn kentañ an ostilhoù"
@@ -4800,7 +4800,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Distruj"
 
-#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4079
+#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4083
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Fiñval an neudenn er pod-lastez"
@@ -4810,12 +4810,12 @@ msgstr "&Fiñval an neudenn er pod-lastez"
 msgid "Move thread to trashcan"
 msgstr "Fiñval an neudenn er pod-lastez"
 
-#: kmmainwidget.cpp:3029 kmmainwidget.cpp:4079
+#: kmmainwidget.cpp:3029 kmmainwidget.cpp:4083
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Dilemel an n&eudenn"
 
-#: kmmainwidget.cpp:3035 kmmainwidget.cpp:4081
+#: kmmainwidget.cpp:3035 kmmainwidget.cpp:4085
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Klask ar c'hemennadoù ..."
@@ -4920,87 +4920,93 @@ msgstr "S&ilañ ..."
 msgid "Filter on &Cc..."
 msgstr "S&ilañ ..."
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3198
+#, fuzzy, kde-format
+#| msgid "New Message"
+msgid "Restore Closed Message"
+msgstr "Kemennad nevez"
+
+#: kmmainwidget.cpp:3203
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Merkañ an &neudenn"
 
-#: kmmainwidget.cpp:3202
+#: kmmainwidget.cpp:3206
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Ouzhpennañ ar merk &lennet d'an neudenn"
 
-#: kmmainwidget.cpp:3205
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Ouzhpennañ ar merk &lennet da bep kemennad en neudenn dibabet"
 
-#: kmmainwidget.cpp:3208
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Ouzhpennañ ar merk &anlennet d'an neudenn"
 
-#: kmmainwidget.cpp:3211
+#: kmmainwidget.cpp:3215
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Ouzhpennañ ar merk &anlennet da bep kemennad en neudenn dibabet"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3221
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Ouzhpennañ ar merk &pouezus d'an neudenn"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3224
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Lemel ar merk &pouezus eus an neudenn"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3227
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &New"
 msgid "Mark Thread as &Action Item"
 msgstr "Ouzhpennañ ar merk &nevez d'an neudenn"
 
-#: kmmainwidget.cpp:3226
+#: kmmainwidget.cpp:3230
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Lemel ar merk &pouezus eus ar c'hemennad"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3234
 #, fuzzy, kde-format
 msgid "&Watch Thread"
 msgstr "<ne vern pe reollin>"
 
-#: kmmainwidget.cpp:3234
+#: kmmainwidget.cpp:3238
 #, fuzzy, kde-format
 msgid "&Ignore Thread"
 msgstr "&Tremen e-biou"
 
-#: kmmainwidget.cpp:3242 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3246 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "Enroll&añ ar stagadennoù ..."
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3250
 #, fuzzy, kde-format
 #| msgid "Save All Attachments..."
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Enrollañ an holl stagadennoù ..."
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3258
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Decrypted To..."
 msgstr "Kemennad nevez da ..."
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3262
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Arlo&añ an holl siloù"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3271
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -5008,13 +5014,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Digeriñ an neudenn"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3274
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "Digeriñ an neudenn red"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3278
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -5022,389 +5028,389 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Serriñ an neudenn"
 
-#: kmmainwidget.cpp:3277
+#: kmmainwidget.cpp:3281
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "Serriñ an neudenn red"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3285
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Di&geriñ an holl neudoù"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr ""
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "S&eriñ an holl neudoù"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Serriñ an holl neudoù e-barzh ar renkell red"
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3299
 #, kde-format
 msgid "&Display Message"
 msgstr "&Diskouez ar c'hemennad"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3306
 #, kde-format
 msgid "&Next Message"
 msgstr "Kemennad a &heul"
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3309
 #, kde-format
 msgid "Go to the next message"
 msgstr "Mont d'ar c'hemennad a-heul"
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3313
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Kemennad &anlennet a-heul"
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr ""
 
-#: kmmainwidget.cpp:3318
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Mont d'ar c'hemennad anlennet a-heul"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "&Previous Message"
 msgstr "&Kemennad kent"
 
-#: kmmainwidget.cpp:3324
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Mont d'ar c'hemennad diaraok"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "&Kemennad anlennet diaraok"
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3341
 #, fuzzy, kde-format
 #| msgid "&Previous Card"
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Kartenn a-&raok"
 
-#: kmmainwidget.cpp:3338
+#: kmmainwidget.cpp:3342
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Mont d'ar c'hemennad anlennet diaraok"
 
-#: kmmainwidget.cpp:3342
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "&Renkell anlennet a-heul"
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3352
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Mont d'ar renkell a-heul gant kemennadoù anlennet"
 
-#: kmmainwidget.cpp:3351
+#: kmmainwidget.cpp:3355
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "R&enkell anlennet diaraok"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3361
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Mont d'ar renkell diaraok gant kemennadoù anlennet"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Skrid anlennet a-heul"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3368
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Mont d'ar skrid anlennet a-heul"
 
-#: kmmainwidget.cpp:3366
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr ""
 
-#: kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "Kefluniañ ar &siloù ..."
 
-#: kmmainwidget.cpp:3380
+#: kmmainwidget.cpp:3384
 #, fuzzy, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Siloù da gaout"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3389
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account..."
 msgstr "Ouzhpennañ ur gont"
 
-#: kmmainwidget.cpp:3390
+#: kmmainwidget.cpp:3394
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "Digoradur da gKMail"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Diskouez pajenn degemer KMail"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "Kefluniañ ar &c'hemennadenn ..."
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3410
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "&Kefluniañ KMail ..."
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Expire..."
 msgstr "Kabac'hat ..."
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3423
 #, fuzzy, kde-format
 #| msgid "&New Folder..."
 msgid "Add Favorite Folder..."
 msgstr "Renkell &nevez ..."
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3429
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgid "Serverside Subscription..."
 msgstr "Koumanatadur ..."
 
-#: kmmainwidget.cpp:3431 kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3435 kmmainwidget.cpp:3443
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "Arlo&añ an holl siloù"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3456
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Arlo&añ an holl siloù"
 
-#: kmmainwidget.cpp:3457
+#: kmmainwidget.cpp:3461
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data..."
 msgstr "&Kefluniañ KMail ..."
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3467
 #, fuzzy, kde-format
 #| msgid "&Address Book..."
 msgid "New AddressBook Contact..."
 msgstr "&Karned chomlec'hioù ..."
 
-#: kmmainwidget.cpp:3471 kmmainwidget.cpp:4120
+#: kmmainwidget.cpp:3475 kmmainwidget.cpp:4124
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&Kefluniadur"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3479
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "Anv an anvelezh"
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3495
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Eilañ ar c'hemennad er renkell"
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3501
 #, fuzzy, kde-format
 msgid "Jump to Folder..."
 msgstr "Eilañ er renkell"
 
-#: kmmainwidget.cpp:3503
+#: kmmainwidget.cpp:3507
 #, kde-format
 msgid "Abort Current Operation"
 msgstr ""
 
-#: kmmainwidget.cpp:3509
+#: kmmainwidget.cpp:3513
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Fokus war ar renkell a heul"
 
-#: kmmainwidget.cpp:3515
+#: kmmainwidget.cpp:3519
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Fokus war ar renkell diaraok"
 
-#: kmmainwidget.cpp:3521
+#: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Dibabit ur renkell gant fokus"
 
-#: kmmainwidget.cpp:3528
+#: kmmainwidget.cpp:3532
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on First Folder"
 msgstr "Fokus war ar renkell a heul"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3538
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgid "Focus on Last Folder"
 msgstr "Fokus war ar renkell a heul"
 
-#: kmmainwidget.cpp:3540
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Fokus war ar c'hemennad a heul"
 
-#: kmmainwidget.cpp:3546
+#: kmmainwidget.cpp:3550
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Fokus war ar c'hemennad diaraok"
 
-#: kmmainwidget.cpp:3552
+#: kmmainwidget.cpp:3556
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select First Message"
 msgstr "Dibabit an &holl gemennadoù"
 
-#: kmmainwidget.cpp:3558
+#: kmmainwidget.cpp:3562
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgid "Select Last Message"
 msgstr "Dibabit an &holl gemennadoù"
 
-#: kmmainwidget.cpp:3564
+#: kmmainwidget.cpp:3568
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Diluzit ur c'hemennad gant fokus"
 
-#: kmmainwidget.cpp:3571
+#: kmmainwidget.cpp:3575
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr ""
 
-#: kmmainwidget.cpp:3579
+#: kmmainwidget.cpp:3583
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgid "Extend Selection to Previous Message"
 msgstr "Fokus war ar c'hemennad diaraok"
 
-#: kmmainwidget.cpp:3585
+#: kmmainwidget.cpp:3589
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgid "Extend Selection to Next Message"
 msgstr "Fokus war ar c'hemennad a heul"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3596
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Fiñval ar c'hemennad er renkell"
 
-#: kmmainwidget.cpp:3602
+#: kmmainwidget.cpp:3606
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3607
+#: kmmainwidget.cpp:3611
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3613
+#: kmmainwidget.cpp:3617
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "R&enkell anlennet diaraok"
 
-#: kmmainwidget.cpp:3620
+#: kmmainwidget.cpp:3624
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Distruj ar renkell"
 
-#: kmmainwidget.cpp:3649
+#: kmmainwidget.cpp:3653
 #, fuzzy, kde-format
 #| msgid "Paste Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Pegañ ar renkell"
 
-#: kmmainwidget.cpp:4067
+#: kmmainwidget.cpp:4071
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Dilemel ar glask"
 
-#: kmmainwidget.cpp:4081
+#: kmmainwidget.cpp:4085
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search..."
 msgstr "Aozañ an uzhiaoueg ..."
 
-#: kmmainwidget.cpp:4118
+#: kmmainwidget.cpp:4122
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Kefluniañ KMail ..."
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4133
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Gou&llonderiñ ar pod-lastez"
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4133
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Fiñval an holl gemennadoù er pod-lastez"
 
-#: kmmainwidget.cpp:4203
+#: kmmainwidget.cpp:4207
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4205
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4262
+#: kmmainwidget.cpp:4266
 #, kde-format
 msgid "Filter %1"
 msgstr "Sil %1"
 
-#: kmmainwidget.cpp:4730
+#: kmmainwidget.cpp:4734
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Koumanatadur ..."
 
-#: kmmainwidget.cpp:4738
+#: kmmainwidget.cpp:4742
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5412,18 +5418,18 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4741
+#: kmmainwidget.cpp:4745
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Kefluniadur"
 
-#: kmmainwidget.cpp:4742
+#: kmmainwidget.cpp:4746
 #, kde-format
 msgid "Use HTML"
 msgstr "Implijit HTML"
 
-#: kmmainwidget.cpp:4888
+#: kmmainwidget.cpp:4892
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5433,41 +5439,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4895
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4892
+#: kmmainwidget.cpp:4896
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4893
+#: kmmainwidget.cpp:4897
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Nullañ"
 
-#: kmmainwidget.cpp:4928
+#: kmmainwidget.cpp:4932
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to execute <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Ha fellout a ra deoc'h da seveniñ <b>%1</b> ?</qt>"
 
-#: kmmainwidget.cpp:4929
+#: kmmainwidget.cpp:4933
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Anv an anvelezh"
 
-#: kmmainwidget.cpp:4930
+#: kmmainwidget.cpp:4934
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Anv an anvelezh"
 
-#: kmmainwidget.cpp:4937
+#: kmmainwidget.cpp:4941
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

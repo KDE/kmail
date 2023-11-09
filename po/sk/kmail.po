@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:47+0000\n"
+"POT-Creation-Date: 2023-11-09 01:38+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -1835,7 +1835,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Archivovať priečinok"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3598
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3602
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4085,14 +4085,14 @@ msgid "F&older"
 msgstr "P&riečinok"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:131 kmail_part.rc:285 kmmainwidget.cpp:3447 kmmainwin.rc:134
-#: kmmainwin.rc:289
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3451 kmmainwin.rc:134
+#: kmmainwin.rc:291
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Použiť filtre na priečinok"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:136 kmail_part.rc:290 kmmainwin.rc:139 kmmainwin.rc:294
+#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Použiť filtre na priečinok a všetky jeho podpriečinky"
@@ -4117,32 +4117,32 @@ msgid "&Forward"
 msgstr "P&oslať ďalej"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3263 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3267 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&Použiť filter"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:205 kmmainwin.rc:205
+#: kmail_part.rc:207 kmmainwin.rc:207
 #, kde-format
 msgid "&Tools"
 msgstr "&Nástroje"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:225 kmcomposerui.rc:107 kmmainwin.rc:226 kmreadermainwin.rc:78
+#: kmail_part.rc:227 kmcomposerui.rc:107 kmmainwin.rc:228 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "Na&stavenie"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:242 kmmainwin.rc:246
+#: kmail_part.rc:245 kmmainwin.rc:248
 #, kde-format
 msgid "&Help"
 msgstr "&Pomocník"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:342 kmcomposerui.rc:112 kmmainwin.rc:346 kmreadermainwin.rc:89
+#: kmail_part.rc:345 kmcomposerui.rc:112 kmmainwin.rc:348 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Hlavný panel nástrojov"
@@ -4897,7 +4897,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Odstrá&niť"
 
-#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4079
+#: kmmainwidget.cpp:3022 kmmainwidget.cpp:4083
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Presunúť vlákno do k&oša"
@@ -4907,12 +4907,12 @@ msgstr "Presunúť vlákno do k&oša"
 msgid "Move thread to trashcan"
 msgstr "Presunúť vlákno do koša"
 
-#: kmmainwidget.cpp:3029 kmmainwidget.cpp:4079
+#: kmmainwidget.cpp:3029 kmmainwidget.cpp:4083
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Zmazať vlá&kno"
 
-#: kmmainwidget.cpp:3035 kmmainwidget.cpp:4081
+#: kmmainwidget.cpp:3035 kmmainwidget.cpp:4085
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Nájsť správy..."
@@ -5014,216 +5014,222 @@ msgstr "Filter na &Komu..."
 msgid "Filter on &Cc..."
 msgstr "Filter na &Cc..."
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3198
+#, fuzzy, kde-format
+#| msgid "Post New Message"
+msgid "Restore Closed Message"
+msgstr "Poslať novú správu"
+
+#: kmmainwidget.cpp:3203
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Označiť &vlákno"
 
-#: kmmainwidget.cpp:3202
+#: kmmainwidget.cpp:3206
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Označiť vlákno ako P&rečítané"
 
-#: kmmainwidget.cpp:3205
+#: kmmainwidget.cpp:3209
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Označiť všetky správy vo vybranom vlákne ako prečítané"
 
-#: kmmainwidget.cpp:3208
+#: kmmainwidget.cpp:3212
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Označiť vlákno ako N&eprečítané"
 
-#: kmmainwidget.cpp:3211
+#: kmmainwidget.cpp:3215
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Označiť všetky správy vo vybranom vlákne ako neprečítané"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3221
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Označiť vlákno ako &Dôležité"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3224
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "Odstániť označenie vlákna ako &dôležité"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3227
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Označiť vlákno ako &Akčná položka"
 
-#: kmmainwidget.cpp:3226
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "Odstrániť označenie vlákno akčnej položky"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3234
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Sledovať &vlákno"
 
-#: kmmainwidget.cpp:3234
+#: kmmainwidget.cpp:3238
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "Ignorovať &vlákno"
 
-#: kmmainwidget.cpp:3242 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3246 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "&Uložiť prílohy..."
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3250
 #, fuzzy, kde-format
 #| msgid "Select attachment:"
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Vybrať prílohu:"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3258
 #, kde-format
 msgid "Copy Decrypted To..."
 msgstr "Kopírovať rozšifrované do..."
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3262
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "&Použiť všetky filtre"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Rozbaliť vlákno / skupinu"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Rozbaliť aktuálne vlákno alebo skupinu"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3278
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Zbaliť vlákno / skupinu"
 
-#: kmmainwidget.cpp:3277
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Zbaliť aktuálne vlákno alebo skupinu"
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3285
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "R&ozbaliť všetky vlákna"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Rozbaliť všetky vlákna v aktuálnom priečinku"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Z&abaliť všetky vlákna"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Zabaliť všetky vlákna v aktuálnom priečinku"
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3299
 #, kde-format
 msgid "&Display Message"
 msgstr "&Zobraziť správy"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3306
 #, kde-format
 msgid "&Next Message"
 msgstr "Ďa&lšia správa"
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3309
 #, kde-format
 msgid "Go to the next message"
 msgstr "Prejsť na nasledujúcu správu"
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3313
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "Nasled&ujúca neprečítaná správa"
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Nasledujúca"
 
-#: kmmainwidget.cpp:3318
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Prejsť na nasledujúcu neprečítanú správu"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgid "&Previous Message"
 msgstr "Pre&dchádzajúca správa"
 
-#: kmmainwidget.cpp:3324
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Prejsť na predchádzajúcu správu"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3333
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "Predchádzajúca &neprečítaná správa"
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Predchádzajúca"
 
-#: kmmainwidget.cpp:3338
+#: kmmainwidget.cpp:3342
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Prejsť na predchádzajúcu neprečítanú správu"
 
-#: kmmainwidget.cpp:3342
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "Na&sledujúci neprečítaný priečinok"
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3352
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Nasledujúci priečinok s neprečítanými správami"
 
-#: kmmainwidget.cpp:3351
+#: kmmainwidget.cpp:3355
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "Pre&dchádzajúci neprečítaný priečinok"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3361
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Predchádzajúci priečinok s neprečítanými správami"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Nasledujúci neprečítaný &text"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3368
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Prejsť na nasledujúci neprečítaný text"
 
-#: kmmainwidget.cpp:3366
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5232,249 +5238,249 @@ msgstr ""
 "Posúvať sa dole v aktuálnej správe. Po dosiahnutí konca správy, presunúť sa "
 "na ďalšiu neprečítanú správu."
 
-#: kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "Nastavenie &filtrov..."
 
-#: kmmainwidget.cpp:3380
+#: kmmainwidget.cpp:3384
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "Správa &Sieve skriptov..."
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3389
 #, kde-format
 msgid "&Add Account..."
 msgstr "Pridať účet..."
 
-#: kmmainwidget.cpp:3390
+#: kmmainwidget.cpp:3394
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail Ú&vod"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Zobraziť uvítaciu stránku KMailu"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "Nastaviť &upozornenia..."
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3410
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "&Nastavenie KMail..."
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Expire..."
 msgstr "Zrušiť platnosť..."
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3423
 #, kde-format
 msgid "Add Favorite Folder..."
 msgstr "Pridať obľúbený priečinok..."
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Serverside Subscription..."
 msgstr "Prihlásenie na strane servera..."
 
-#: kmmainwidget.cpp:3431 kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3435 kmmainwidget.cpp:3443
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Použiť všetky filtre"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3456
 #, fuzzy, kde-format
 #| msgid "Apply Filters on Folder and all its Subfolders"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Použiť filtre na priečinok a všetky jeho podpriečinky"
 
-#: kmmainwidget.cpp:3457
+#: kmmainwidget.cpp:3461
 #, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "Importovať/Exportovať KMail dáta..."
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3467
 #, kde-format
 msgid "New AddressBook Contact..."
 msgstr "Nový kontakt adresára..."
 
-#: kmmainwidget.cpp:3471 kmmainwidget.cpp:4120
+#: kmmainwidget.cpp:3475 kmmainwidget.cpp:4124
 #, kde-format
 msgid "Account &Settings"
 msgstr "Nastavenia účtu"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3479
 #, kde-format
 msgid "Restart Account"
 msgstr "Reštartovať účet"
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3495
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "Kopírovať správu do priečinka"
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3501
 #, kde-format
 msgid "Jump to Folder..."
 msgstr "Preskočiť na priečinok..."
 
-#: kmmainwidget.cpp:3503
+#: kmmainwidget.cpp:3507
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "Prerušiť aktuálnu operáciu"
 
-#: kmmainwidget.cpp:3509
+#: kmmainwidget.cpp:3513
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "Fokus na nasledujúci priečinok"
 
-#: kmmainwidget.cpp:3515
+#: kmmainwidget.cpp:3519
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "Fokus na predchádzajúci priečinok"
 
-#: kmmainwidget.cpp:3521
+#: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "Vybrať priečinok s fokusom"
 
-#: kmmainwidget.cpp:3528
+#: kmmainwidget.cpp:3532
 #, kde-format
 msgid "Focus on First Folder"
 msgstr "Zamerať na prvý priečinok"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3538
 #, kde-format
 msgid "Focus on Last Folder"
 msgstr "Zamerať na posledný priečinok"
 
-#: kmmainwidget.cpp:3540
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "Fokus na nasledujúcu správu"
 
-#: kmmainwidget.cpp:3546
+#: kmmainwidget.cpp:3550
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "Fokus na predchádzajúcu správu"
 
-#: kmmainwidget.cpp:3552
+#: kmmainwidget.cpp:3556
 #, kde-format
 msgid "Select First Message"
 msgstr "Vybrať prvú správu"
 
-#: kmmainwidget.cpp:3558
+#: kmmainwidget.cpp:3562
 #, kde-format
 msgid "Select Last Message"
 msgstr "Vybrať poslednú správu"
 
-#: kmmainwidget.cpp:3564
+#: kmmainwidget.cpp:3568
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "Vybrať správu s fokusom"
 
-#: kmmainwidget.cpp:3571
+#: kmmainwidget.cpp:3575
 #, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "Nastaviť výber na rýchle hľadanie"
 
-#: kmmainwidget.cpp:3579
+#: kmmainwidget.cpp:3583
 #, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "Rozšíriť výber na predošlú správu"
 
-#: kmmainwidget.cpp:3585
+#: kmmainwidget.cpp:3589
 #, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "Rozšíriť výber na ďalšiu správu"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3596
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "Presunúť správu do priečinka"
 
-#: kmmainwidget.cpp:3602
+#: kmmainwidget.cpp:3606
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 "Označiť všetky správy ako prečítané v tomto priečinku a vo všetkých "
 "podpriečinkoch"
 
-#: kmmainwidget.cpp:3607
+#: kmmainwidget.cpp:3611
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Označiť duplicity v tomto priečinku a vo všetkých podpriečinkoch"
 
-#: kmmainwidget.cpp:3613
+#: kmmainwidget.cpp:3617
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "Pre&dchádzajúci neprečítaný priečinok"
 
-#: kmmainwidget.cpp:3620
+#: kmmainwidget.cpp:3624
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "Zmazať priečinok"
 
-#: kmmainwidget.cpp:3649
+#: kmmainwidget.cpp:3653
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Pridať obľúbený priečinok"
 
-#: kmmainwidget.cpp:4067
+#: kmmainwidget.cpp:4071
 #, kde-format
 msgid "&Delete Search"
 msgstr "Zmazať hľa&danie"
 
-#: kmmainwidget.cpp:4081
+#: kmmainwidget.cpp:4085
 #, kde-format
 msgid "Edit Search..."
 msgstr "Upraviť hľadanie..."
 
-#: kmmainwidget.cpp:4118
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Nastaviť zlúčené mailboxy"
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4133
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Vyprázdniť &kôš"
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4133
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Vš&etky správy presunúť do koša"
 
-#: kmmainwidget.cpp:4203
+#: kmmainwidget.cpp:4207
 #, kde-format
 msgid "&Undo"
 msgstr "&Späť"
 
-#: kmmainwidget.cpp:4205
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Späť: \"%1\""
 
-#: kmmainwidget.cpp:4262
+#: kmmainwidget.cpp:4266
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4730
+#: kmmainwidget.cpp:4734
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Hľadať... <%1>"
 
-#: kmmainwidget.cpp:4738
+#: kmmainwidget.cpp:4742
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5484,19 +5490,19 @@ msgstr ""
 "Použitie HTML v pošte Vás robí zraniteľnejším voči \"spamu\" a zvyšuje "
 "pravdepodobnosť, že Váš systém bude napadnutý z hľadiska bezpečnosti."
 
-#: kmmainwidget.cpp:4741
+#: kmmainwidget.cpp:4745
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Bezpečnostné varovanie"
 
-#: kmmainwidget.cpp:4742
+#: kmmainwidget.cpp:4746
 #, kde-format
 msgid "Use HTML"
 msgstr "Použiť HTML"
 
-#: kmmainwidget.cpp:4888
+#: kmmainwidget.cpp:4892
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5511,40 +5517,40 @@ msgstr ""
 "Môžete nakonfigurovať zjednotené poštové schránky, vytvoriť vlastné alebo\n"
 "túto funkciu úplne vypnite v nastaveniach doplnku KMail's Plugin."
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4895
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Povoliť zlúčené poštové schránky?"
 
-#: kmmainwidget.cpp:4892
+#: kmmainwidget.cpp:4896
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Povoliť zlúčené poštové schránky"
 
-#: kmmainwidget.cpp:4893
+#: kmmainwidget.cpp:4897
 #, kde-format
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: kmmainwidget.cpp:4928
+#: kmmainwidget.cpp:4932
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Chcete odstrániť značku '%1'?"
 
-#: kmmainwidget.cpp:4929
+#: kmmainwidget.cpp:4933
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart Akonadi"
 msgstr "Reštartovať účet"
 
-#: kmmainwidget.cpp:4930
+#: kmmainwidget.cpp:4934
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart"
 msgstr "Reštartovať účet"
 
-#: kmmainwidget.cpp:4937
+#: kmmainwidget.cpp:4941
 #, fuzzy, kde-format
 #| msgid "Akonadi Agents"
 msgid "Akonadi restarted."
