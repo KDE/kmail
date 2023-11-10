@@ -256,6 +256,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     connect(mTagActionManager, &KMail::TagActionManager::tagMoreActionClicked, this, &KMMainWidget::slotSelectMoreMessageTagList);
 
     kmkernel->toggleSystemTray();
+    connect(HistoryClosedReaderManager::self(), &HistoryClosedReaderManager::historyClosedReaderChanged, this, &KMMainWidget::slotHistoryClosedReaderChanged);
+    slotHistoryClosedReaderChanged();
 
     {
         // make sure the pages are registered only once, since there can be multiple instances of KMMainWidget
@@ -4956,6 +4958,11 @@ void KMMainWidget::slotRestoreClosedMessage()
         slotMessageActivated(Akonadi::Item(info.item()));
         // TODO open it.
     }
+}
+
+void KMMainWidget::slotHistoryClosedReaderChanged()
+{
+    mRestoreClosedMessageAction->setEnabled(!HistoryClosedReaderManager::self()->isEmpty());
 }
 
 #include "moc_kmmainwidget.cpp"

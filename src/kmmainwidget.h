@@ -541,6 +541,7 @@ private:
     void slotClearCacheDone();
     void slotClearFolderAndSubFolders();
     void slotRestoreClosedMessage();
+    void slotHistoryClosedReaderChanged();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
