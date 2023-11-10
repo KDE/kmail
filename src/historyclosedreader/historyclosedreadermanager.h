@@ -25,6 +25,8 @@ public:
 
     [[nodiscard]] bool isEmpty() const;
 
+    void removeItem(Akonadi::Item::Id id);
+
 Q_SIGNALS:
     void historyClosedReaderChanged();
 

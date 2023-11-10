@@ -34,6 +34,11 @@ bool HistoryClosedReaderInfo::isValid() const
     return mItem != -1;
 }
 
+bool HistoryClosedReaderInfo::operator==(const HistoryClosedReaderInfo &other) const
+{
+    return other.item() == mItem && other.subject() == mSubject;
+}
+
 QDebug operator<<(QDebug d, const HistoryClosedReaderInfo &t)
 {
     d << " mSubject " << t.subject();

@@ -23,6 +23,8 @@ public:
 
     [[nodiscard]] bool isValid() const;
 
+    [[nodiscard]] bool operator==(const HistoryClosedReaderInfo &other) const;
+
 private:
     QString mSubject;
     Akonadi::Item::Id mItem;
