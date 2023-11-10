@@ -4952,6 +4952,8 @@ void KMMainWidget::slotRestoreClosedMessage()
     if (!HistoryClosedReaderManager::self()->isEmpty()) {
         const HistoryClosedReaderInfo info = HistoryClosedReaderManager::self()->lastInfo();
         qDebug() << " info " << info;
+        // TODO fetch it ?
+        slotMessageActivated(Akonadi::Item(info.item()));
         // TODO open it.
     }
 }
