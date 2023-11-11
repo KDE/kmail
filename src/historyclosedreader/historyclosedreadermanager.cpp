@@ -46,6 +46,9 @@ void HistoryClosedReaderManager::clear()
 
 void HistoryClosedReaderManager::removeItem(Akonadi::Item::Id id)
 {
+    if (mClosedReaderInfos.isEmpty()) {
+        return;
+    }
     auto infoIt = std::find_if(mClosedReaderInfos.cbegin(), mClosedReaderInfos.cend(), [&id](const HistoryClosedReaderInfo &info) {
         return info.item() == id;
     });
