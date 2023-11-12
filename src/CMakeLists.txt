@@ -174,6 +174,8 @@ target_sources(kmailprivate PRIVATE
     unityservicemanager.cpp
     undostack.cpp
     kmkernel.cpp
+    commandlineinfo.h
+    commandlineinfo.cpp
     kmcommands.cpp
     kmreadermainwin.cpp
     kmmainwidget.cpp
