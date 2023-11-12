@@ -8,7 +8,6 @@
 #include "kmail_debug.h"
 #include "kmail_options.h"
 #include "messagecore/stringutil.h"
-#include "settings/kmailsettings.h"
 #include <QCommandLineParser>
 
 CommandLineInfo::CommandLineInfo() = default;
@@ -17,22 +16,22 @@ CommandLineInfo::~CommandLineInfo() = default;
 
 QDebug operator<<(QDebug d, const CommandLineInfo &t)
 {
-    d << "mmCustomHeaders " << t.customHeaders();
-    d << "mmAttachURLs " << t.attachURLs();
+    d << "mCustomHeaders " << t.customHeaders();
+    d << "mAttachURLs " << t.attachURLs();
     d << "mTo " << t.to();
     d << "mCc " << t.cc();
     d << "mBcc " << t.bcc();
     d << "mSubject " << t.subject();
-    d << "mmBody " << t.body();
+    d << "mBody " << t.body();
     d << "mInReplyTo " << t.inReplyTo();
     d << "mReplyTo " << t.replyTo();
-    d << "mmIdentity " << t.identity();
-    d << "mmMessageFile " << t.messageFile();
+    d << "mIdentity " << t.identity();
+    d << "mMessageFile " << t.messageFile();
     d << "mStartInTray " << t.startInTray();
     d << "mMailto " << t.mailto();
-    d << "mmCheckMail " << t.checkMail();
+    d << "mCheckMail " << t.checkMail();
     d << "mViewOnly " << t.viewOnly();
-    d << "mmCalledWithSession " << t.calledWithSession();
+    d << "mCalledWithSession " << t.calledWithSession();
     return d;
 }
 
@@ -134,7 +133,6 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
     }
 
     if (parser.isSet(QStringLiteral("startintray"))) {
-        KMailSettings::self()->setSystemTrayEnabled(true);
         mStartInTray = true;
     }
 
