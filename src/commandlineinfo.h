@@ -5,11 +5,11 @@
 */
 
 #pragma once
-
+#include "kmail_private_export.h"
 #include <QDebug>
 #include <QUrl>
 
-class CommandLineInfo
+class KMAILTESTS_TESTS_EXPORT CommandLineInfo
 {
 public:
     CommandLineInfo();
