@@ -271,6 +271,7 @@ static QUrl makeAbsoluteUrl(const QString &str, const QString &cwd)
 
 bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
+    qDebug() << " args " << args;
     QString to;
     QString cc;
     QString bcc;

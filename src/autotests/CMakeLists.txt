@@ -48,3 +48,9 @@ add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtes
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
     "Qt::Test;Qt::Widgets;KPim6::AkonadiCore;KF6::XmlGui;KF6::Bookmarks;KF6::ConfigWidgets;KF6::Contacts;KF6::I18n;KPim6::IdentityManagementCore;KF6::KIOCore;KF6::KIOFileWidgets;KPim6::MessageCore;KPim6::MessageComposer;KPim6::MessageList;KPim6::MessageViewer;KPim6::MailCommon;KPim6::AkonadiMime;KPim6::Libkdepim;KPim6::TemplateParser;kmailprivate")
+
+
+add_executable( commandlineinfotest commandlineinfotest.cpp commandlineinfotest.h)
+add_test(NAME commandlineinfotest COMMAND commandlineinfotest)
+ecm_mark_as_test(commandlineinfotest)
+target_link_libraries( commandlineinfotest Qt::Test  KPim6::AkonadiMime KF6::WidgetsAddons KF6::I18n KF6::ConfigGui kmailprivate)
