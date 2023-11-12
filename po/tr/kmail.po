@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-11 01:43+0000\n"
-"PO-Revision-Date: 2023-11-09 11:49+0300\n"
+"PO-Revision-Date: 2023-11-11 23:31+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1108,7 +1108,7 @@ msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
-"Bir ileti oluşturmaya başlarken yapılandırılmış imzayı otomatik olarak ekle"
+"Bir ileti oluşturmaya başlarken yapılandırılmış imzayı kendiliğinden ekle"
 
 #: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
@@ -1297,7 +1297,7 @@ msgstr[1] " dakika"
 #: configuredialog/configurecomposerpage.cpp:431
 #, kde-format
 msgid "Automatically save the message at this specified interval"
-msgstr "İletiyi belirtilen aralıklarda otomatik olarak kaydet"
+msgstr "İletiyi belirtilen aralıklarda kendiliğinden kaydet"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
@@ -7066,7 +7066,7 @@ msgstr ""
 "<b>gönderildi</b> (yani iletildi) yer almaktadır.</p><p>K Posta'nın  "
 "gönderme işlevini denetlemek için aşağıdaki seçenekler bulunmaktadır:</"
 "p><ul><li><em>Yok Say</em>: İşleme uyarıları ile ilgili herhangi bir isteği "
-"yok sayar. Otomatik olarak hiçbir İDU gönderilmeyecektir (tavsiye edilir).</"
+"yok sayar. Kendiliğinden hiçbir İDU gönderilmeyecektir (tavsiye edilir).</"
 "li><li><em>Sor</em>: Kullanıcıdan izin istedikten sonra isteğe yanıt verir. "
 "Bu yolla, seçilmiş iletiler için  gönderirken başkaları için reddetmek veya "
 "yok saymak olanaklıdır.</li><li><em>Reddet</em>: Her zaman <b>reddedildi</b> "

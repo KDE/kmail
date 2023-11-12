@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-11 01:43+0000\n"
-"PO-Revision-Date: 2023-10-28 19:39+0200\n"
+"PO-Revision-Date: 2023-11-10 12:14+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -39,7 +39,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -5022,10 +5022,9 @@ msgid "Filter on &Cc..."
 msgstr "Filtrer sur les &Cc…"
 
 #: kmmainwidget.cpp:3201
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgid "Restore Closed Message"
-msgstr "Envoyer un nouveau message"
+msgstr "Restaurer un message fermé"
 
 #: kmmainwidget.cpp:3206
 #, kde-format
