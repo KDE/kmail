@@ -123,7 +123,7 @@ void OpenComposerJob::slotOpenComposer()
         }
         KMail::Composer::AttachmentInfo info;
         info.url = (*it);
-        infoList.append(info);
+        infoList.append(std::move(info));
     }
     if (!infoList.isEmpty()) {
         cWin->addAttachment(infoList, true);
