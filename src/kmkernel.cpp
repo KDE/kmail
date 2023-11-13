@@ -263,11 +263,6 @@ void KMKernel::setupDBus()
     mMailService = new MailServiceImpl();
 }
 
-static QUrl makeAbsoluteUrl(const QString &str, const QString &cwd)
-{
-    return QUrl::fromUserInput(str, cwd, QUrl::AssumeLocalFile);
-}
-
 bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
     qDebug() << " args " << args;
