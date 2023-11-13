@@ -40,9 +40,21 @@ void CommandLineInfoTest::parseCommandLineInfo_data()
     QTest::addColumn<QStringList>("args");
     QTest::addColumn<QString>("workingDir");
     QTest::addColumn<CommandLineInfo>("output");
-    QStringList args;
-    args << QStringLiteral("kmail");
-    QTest::newRow("empty") << args << QString() << CommandLineInfo();
+    {
+        QStringList args;
+        args << QStringLiteral("kmail");
+        QTest::newRow("empty") << args << QString() << CommandLineInfo();
+    }
+    {
+        QStringList args;
+        args << QStringLiteral("kmail");
+        args << QStringLiteral(
+            "mailto:rostedt@goodmis.org?In-Reply-To=%3C20231105160139.660634360@goodmis.org%3E&Cc=akaher%40vmware.com%2Cakpm%40linux-foundation.org%2Cgregkh%"
+            "40linuxfoundation.org%2Clinux-kernel%40vger.kernel.org%2Cmark.rutland%40arm.com%2Cmhiramat%40kernel.org%2Cstable%40vger.kernel.org&Subject=Re%3A%"
+            "20%5Bv6.6%5D%5BPATCH%203%2F5%5D%20eventfs%3A%20Save%20ownership%20and%20mode");
+        CommandLineInfo info;
+        QTest::newRow("test1") << args << QString() << CommandLineInfo();
+    }
 }
 
 void CommandLineInfoTest::parseCommandLineInfo()

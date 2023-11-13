@@ -50,6 +50,38 @@ public:
 
     [[nodiscard]] bool operator==(const CommandLineInfo &other) const;
 
+    void setCustomHeaders(const QStringList &newCustomHeaders);
+
+    void setAttachURLs(const QList<QUrl> &newAttachURLs);
+
+    void setTo(const QString &newTo);
+
+    void setCc(const QString &newCc);
+
+    void setBcc(const QString &newBcc);
+
+    void setSubject(const QString &newSubject);
+
+    void setBody(const QString &newBody);
+
+    void setInReplyTo(const QString &newInReplyTo);
+
+    void setReplyTo(const QString &newReplyTo);
+
+    void setIdentity(const QString &newIdentity);
+
+    void setMessageFile(const QUrl &newMessageFile);
+
+    void setStartInTray(bool newStartInTray);
+
+    void setMailto(bool newMailto);
+
+    void setCheckMail(bool newCheckMail);
+
+    void setViewOnly(bool newViewOnly);
+
+    void setCalledWithSession(bool newCalledWithSession);
+
 private:
     QStringList mCustomHeaders;
     QList<QUrl> mAttachURLs;

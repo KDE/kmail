@@ -302,3 +302,83 @@ bool CommandLineInfo::operator==(const CommandLineInfo &other) const
         && mMessageFile == other.mMessageFile && mStartInTray == other.mStartInTray && mMailto == other.mMailto && mCheckMail == other.mCheckMail
         && mViewOnly == other.mViewOnly && mCalledWithSession == other.mCalledWithSession;
 }
+
+void CommandLineInfo::setCustomHeaders(const QStringList &newCustomHeaders)
+{
+    mCustomHeaders = newCustomHeaders;
+}
+
+void CommandLineInfo::setAttachURLs(const QList<QUrl> &newAttachURLs)
+{
+    mAttachURLs = newAttachURLs;
+}
+
+void CommandLineInfo::setTo(const QString &newTo)
+{
+    mTo = newTo;
+}
+
+void CommandLineInfo::setCc(const QString &newCc)
+{
+    mCc = newCc;
+}
+
+void CommandLineInfo::setBcc(const QString &newBcc)
+{
+    mBcc = newBcc;
+}
+
+void CommandLineInfo::setSubject(const QString &newSubject)
+{
+    mSubject = newSubject;
+}
+
+void CommandLineInfo::setBody(const QString &newBody)
+{
+    mBody = newBody;
+}
+
+void CommandLineInfo::setInReplyTo(const QString &newInReplyTo)
+{
+    mInReplyTo = newInReplyTo;
+}
+
+void CommandLineInfo::setReplyTo(const QString &newReplyTo)
+{
+    mReplyTo = newReplyTo;
+}
+
+void CommandLineInfo::setIdentity(const QString &newIdentity)
+{
+    mIdentity = newIdentity;
+}
+
+void CommandLineInfo::setMessageFile(const QUrl &newMessageFile)
+{
+    mMessageFile = newMessageFile;
+}
+
+void CommandLineInfo::setStartInTray(bool newStartInTray)
+{
+    mStartInTray = newStartInTray;
+}
+
+void CommandLineInfo::setMailto(bool newMailto)
+{
+    mMailto = newMailto;
+}
+
+void CommandLineInfo::setCheckMail(bool newCheckMail)
+{
+    mCheckMail = newCheckMail;
+}
+
+void CommandLineInfo::setViewOnly(bool newViewOnly)
+{
+    mViewOnly = newViewOnly;
+}
+
+void CommandLineInfo::setCalledWithSession(bool newCalledWithSession)
+{
+    mCalledWithSession = newCalledWithSession;
+}
