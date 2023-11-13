@@ -56,7 +56,7 @@ void NewMessageJob::slotOpenComposer()
         QList<KMail::Composer::AttachmentInfo> infoList;
         KMail::Composer::AttachmentInfo info;
         info.url = mAttachURL;
-        infoList.append(info);
+        infoList.append(std::move(info));
         win->addAttachment(infoList, false);
     }
 
