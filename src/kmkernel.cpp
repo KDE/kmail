@@ -10,6 +10,7 @@
 #include <PimCommon/BroadcastStatus>
 #include <PimCommonAkonadi/ProgressManagerAkonadi>
 using PimCommon::BroadcastStatus;
+#include "commandlineinfo.h"
 #include "editor/composer.h"
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
@@ -270,204 +271,34 @@ static QUrl makeAbsoluteUrl(const QString &str, const QString &cwd)
 bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
     qDebug() << " args " << args;
-    QString to;
-    QString cc;
-    QString bcc;
-    QString subj;
-    QString body;
-    QString inReplyTo;
-    QString replyTo;
-    QStringList customHeaders;
-    QUrl messageFile;
-    QList<QUrl> attachURLs;
-    QString identity;
-    bool startInTray = false;
-    bool mailto = false;
-    bool checkMail = false;
-    bool viewOnly = false;
-    bool calledWithSession = false; // for ignoring '-session foo'
+    CommandLineInfo commandLineInfo;
+    commandLineInfo.parseCommandLine(args, workingDir);
 
-    // process args:
-    QCommandLineParser parser;
-    kmail_options(&parser);
-    QStringList newargs;
-    bool addAttachmentAttribute = false;
-    for (const QString &argument : std::as_const(args)) {
-        if (argument == QLatin1String("--attach")) {
-            addAttachmentAttribute = true;
-        } else {
-            if (argument.startsWith(QLatin1String("--"))) {
-                addAttachmentAttribute = false;
-            }
-            if (argument.contains(QLatin1Char('@')) || argument.startsWith(QLatin1String("mailto:"))) { // address mustn't be trade as a attachment
-                addAttachmentAttribute = false;
-            }
-            if (addAttachmentAttribute) {
-                newargs.append(QStringLiteral("--attach"));
-                newargs.append(argument);
-            } else {
-                newargs.append(argument);
-            }
-        }
-    }
-
-    parser.process(newargs);
-    if (parser.isSet(QStringLiteral("subject"))) {
-        subj = parser.value(QStringLiteral("subject"));
-        // if kmail is called with 'kmail -session abc' then this doesn't mean
-        // that the user wants to send a message with subject "ession" but
-        // (most likely) that the user clicked on KMail's system tray applet
-        // which results in KMKernel::raise() calling "kmail kmail newInstance"
-        // via D-Bus which apparently executes the application with the original
-        // command line arguments and those include "-session ..." if
-        // kmail/kontact was restored by session management
-        if (subj == QLatin1String("ession")) {
-            subj.clear();
-            calledWithSession = true;
-        } else {
-            mailto = true;
-        }
-    }
-
-    const QStringList ccList = parser.values(QStringLiteral("cc"));
-    if (!ccList.isEmpty()) {
-        mailto = true;
-        cc = ccList.join(QStringLiteral(", "));
-    }
-
-    const QStringList bccList = parser.values(QStringLiteral("bcc"));
-    if (!bccList.isEmpty()) {
-        mailto = true;
-        bcc = bccList.join(QStringLiteral(", "));
-    }
-
-    if (parser.isSet(QStringLiteral("replyTo"))) {
-        mailto = true;
-        replyTo = parser.value(QStringLiteral("replyTo"));
-    }
-
-    if (parser.isSet(QStringLiteral("msg"))) {
-        mailto = true;
-        const QString file = parser.value(QStringLiteral("msg"));
-        messageFile = makeAbsoluteUrl(file, workingDir);
-    }
-
-    if (parser.isSet(QStringLiteral("body"))) {
-        mailto = true;
-        body = parser.value(QStringLiteral("body"));
-    }
-
-    const QStringList attachList = parser.values(QStringLiteral("attach"));
-    if (!attachList.isEmpty()) {
-        mailto = true;
-        for (const QString &attach : attachList) {
-            if (!attach.isEmpty()) {
-                attachURLs.append(makeAbsoluteUrl(attach, workingDir));
-            }
-        }
-    }
-
-    customHeaders = parser.values(QStringLiteral("header"));
-
-    if (parser.isSet(QStringLiteral("composer"))) {
-        mailto = true;
-    }
-
-    if (parser.isSet(QStringLiteral("check"))) {
-        checkMail = true;
-    }
-
-    if (parser.isSet(QStringLiteral("startintray"))) {
+    if (commandLineInfo.startInTray()) {
         KMailSettings::self()->setSystemTrayEnabled(true);
-        startInTray = true;
     }
 
-    if (parser.isSet(QStringLiteral("identity"))) {
-        identity = parser.value(QStringLiteral("identity"));
-    }
-
-    if (parser.isSet(QStringLiteral("view"))) {
-        viewOnly = true;
-        const QString filename = parser.value(QStringLiteral("view"));
-        messageFile = QUrl::fromUserInput(filename, workingDir);
-    }
-
-    if (!calledWithSession) {
-        // only read additional command line arguments if kmail/kontact is
-        // not called with "-session foo"
-        const QStringList lstPositionalArguments = parser.positionalArguments();
-        for (const QString &arg : lstPositionalArguments) {
-            if (arg.startsWith(QLatin1String("mailto:"), Qt::CaseInsensitive)) {
-                const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
-                const QList<QPair<QString, QString>> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
-                QString previousKey;
-                for (int i = 0; i < values.count(); ++i) {
-                    const QPair<QString, QString> element = values.at(i);
-                    const QString key = element.first.toLower();
-                    if (key == QLatin1String("to")) {
-                        if (!element.second.isEmpty()) {
-                            to += element.second + QStringLiteral(", ");
-                        }
-                        previousKey.clear();
-                    } else if (key == QLatin1String("cc")) {
-                        if (!element.second.isEmpty()) {
-                            cc += element.second + QStringLiteral(", ");
-                        }
-                        previousKey.clear();
-                    } else if (key == QLatin1String("bcc")) {
-                        if (!element.second.isEmpty()) {
-                            bcc += element.second + QStringLiteral(", ");
-                        }
-                        previousKey.clear();
-                    } else if (key == QLatin1String("subject")) {
-                        subj = element.second;
-                        previousKey.clear();
-                    } else if (key == QLatin1String("body")) {
-                        body = element.second;
-                        previousKey = key;
-                    } else if (key == QLatin1String("in-reply-to")) {
-                        inReplyTo = element.second;
-                        previousKey.clear();
-                    } else if (key == QLatin1String("attachment") || key == QLatin1String("attach")) {
-                        if (!element.second.isEmpty()) {
-                            attachURLs << makeAbsoluteUrl(element.second, workingDir);
-                        }
-                        previousKey.clear();
-                    } else {
-                        qCWarning(KMAIL_LOG) << "unknown key" << key;
-                        // Workaround: https://bugs.kde.org/show_bug.cgi?id=390939
-                        // QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
-                        // But if we have a "&" unknown key we lost it.
-                        if (previousKey == QLatin1String("body")) {
-                            body += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
-                        }
-                        // Don't clear previous key.
-                    }
-                }
-            } else {
-                QUrl url(arg);
-                if (url.isValid() && !url.scheme().isEmpty()) {
-                    attachURLs += url;
-                } else {
-                    to += arg + QStringLiteral(", ");
-                }
-            }
-            mailto = true;
-        }
-        if (!to.isEmpty()) {
-            // cut off the superfluous trailing ", "
-            to.chop(2);
-        }
-    }
-
-    if (!noArgsOpensReader && !mailto && !checkMail && !viewOnly) {
+    if (!noArgsOpensReader && !commandLineInfo.mailto() && !commandLineInfo.checkMail() && !commandLineInfo.viewOnly()) {
         return false;
     }
 
-    if (viewOnly) {
-        viewMessage(messageFile);
+    if (commandLineInfo.viewOnly()) {
+        viewMessage(commandLineInfo.messageFile());
     } else {
-        action(mailto, checkMail, startInTray, to, cc, bcc, subj, body, messageFile, attachURLs, customHeaders, replyTo, inReplyTo, identity);
+        action(commandLineInfo.mailto(),
+               commandLineInfo.checkMail(),
+               commandLineInfo.startInTray(),
+               commandLineInfo.to(),
+               commandLineInfo.cc(),
+               commandLineInfo.bcc(),
+               commandLineInfo.subject(),
+               commandLineInfo.body(),
+               commandLineInfo.messageFile(),
+               commandLineInfo.attachURLs(),
+               commandLineInfo.customHeaders(),
+               commandLineInfo.replyTo(),
+               commandLineInfo.inReplyTo(),
+               commandLineInfo.identity());
     }
     return true;
 }
