@@ -108,7 +108,7 @@ using KMail::MailServiceImpl;
 #include "searchdialog/searchdescriptionattribute.h"
 #ifdef WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
-#include <KF6/KUserFeedback/Provider>
+#include <KUserFeedbackQt6/Provider>
 #endif
 #include <chrono>
 
