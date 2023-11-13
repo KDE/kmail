@@ -91,3 +91,5 @@ void ArchiveMailAgentUtilTest::shouldTestTimeIsInRange_data()
         QTest::newRow("test9") << interval << t << false;
     }
 }
+
+#include "moc_archivemailagentutiltest.cpp"

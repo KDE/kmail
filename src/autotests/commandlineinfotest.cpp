@@ -73,3 +73,5 @@ void CommandLineInfoTest::parseCommandLineInfo()
     input.parseCommandLine(args, workingDir);
     QCOMPARE(input, output);
 }
+
+#include "moc_commandlineinfotest.cpp"
