@@ -176,7 +176,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                     } else if (key == QLatin1String("subject")) {
                         mSubject = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1String("mBody")) {
+                    } else if (key == QLatin1String("body")) {
                         mBody = element.second;
                         previousKey = key;
                     } else if (key == QLatin1String("in-reply-to")) {
