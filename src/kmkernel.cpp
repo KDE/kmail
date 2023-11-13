@@ -32,8 +32,6 @@ using PimCommon::RecentAddresses;
 #include <PimCommon/PimUtil>
 #include <mailcommon/mailcommonsettings_base.h>
 #include <mailcommon/pop3settings.h>
-// kdepim includes
-#include "kmail-version.h"
 
 #include <Akonadi/DispatcherInterface>
 #include <KIdentityManagementCore/Identity>
