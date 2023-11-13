@@ -27,6 +27,8 @@ public:
 
     void removeItem(Akonadi::Item::Id id);
 
+    [[nodiscard]] int count() const;
+
 Q_SIGNALS:
     void historyClosedReaderChanged();
 

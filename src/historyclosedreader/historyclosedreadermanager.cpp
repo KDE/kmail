@@ -62,4 +62,9 @@ void HistoryClosedReaderManager::removeItem(Akonadi::Item::Id id)
     }
 }
 
+int HistoryClosedReaderManager::count() const
+{
+    return mClosedReaderInfos.count();
+}
+
 #include "moc_historyclosedreadermanager.cpp"
