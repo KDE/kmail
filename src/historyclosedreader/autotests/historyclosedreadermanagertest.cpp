@@ -5,6 +5,7 @@
 
 #include "historyclosedreadermanagertest.h"
 #include "historyclosedreader/historyclosedreadermanager.h"
+#include <QSignalSpy>
 #include <QTest>
 QTEST_GUILESS_MAIN(HistoryClosedReaderManagerTest)
 HistoryClosedReaderManagerTest::HistoryClosedReaderManagerTest(QObject *parent)
@@ -82,6 +83,47 @@ void HistoryClosedReaderManagerTest::shouldRemoveValue()
     (void)w.lastInfo();
     QCOMPARE(w.count(), 0);
     QVERIFY(w.isEmpty());
+}
+
+void HistoryClosedReaderManagerTest::shouldEmitSignal()
+{
+    HistoryClosedReaderManager w;
+    QSignalSpy spyHistoryClosedReaderChanged(&w, &HistoryClosedReaderManager::historyClosedReaderChanged);
+    // List is empty => clearing will not emit signal.
+    w.clear();
+    QCOMPARE(spyHistoryClosedReaderChanged.count(), 0);
+
+    {
+        HistoryClosedReaderInfo info;
+        info.setItem(2);
+        info.setSubject(QStringLiteral("sub"));
+        w.addInfo(std::move(info));
+        QCOMPARE(spyHistoryClosedReaderChanged.count(), 1);
+        w.clear();
+        QCOMPARE(spyHistoryClosedReaderChanged.count(), 2);
+    }
+    w.clear();
+    spyHistoryClosedReaderChanged.clear();
+
+    {
+        HistoryClosedReaderInfo info;
+        info.setItem(2);
+        info.setSubject(QStringLiteral("sub"));
+        w.addInfo(std::move(info));
+
+        HistoryClosedReaderInfo info2;
+        info2.setItem(3);
+        info2.setSubject(QStringLiteral("sub2"));
+        w.addInfo(std::move(info2));
+        spyHistoryClosedReaderChanged.clear();
+
+        (void)w.lastInfo();
+        QCOMPARE(spyHistoryClosedReaderChanged.count(), 0);
+
+        (void)w.lastInfo();
+        QCOMPARE(spyHistoryClosedReaderChanged.count(), 1);
+    }
+    // TODO
 }
 
 #include "moc_historyclosedreadermanagertest.cpp"

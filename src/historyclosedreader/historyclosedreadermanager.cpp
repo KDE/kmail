@@ -35,11 +35,18 @@ HistoryClosedReaderInfo HistoryClosedReaderManager::lastInfo()
     if (mClosedReaderInfos.isEmpty()) {
         return {};
     }
-    return mClosedReaderInfos.takeLast();
+    const auto lastElement = mClosedReaderInfos.takeLast();
+    if (mClosedReaderInfos.isEmpty()) {
+        Q_EMIT historyClosedReaderChanged();
+    }
+    return lastElement;
 }
 
 void HistoryClosedReaderManager::clear()
 {
+    if (mClosedReaderInfos.isEmpty()) {
+        return;
+    }
     mClosedReaderInfos.clear();
     Q_EMIT historyClosedReaderChanged();
 }

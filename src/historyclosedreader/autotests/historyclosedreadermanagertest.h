@@ -19,4 +19,5 @@ private Q_SLOTS:
     void shouldAddValues();
     void shouldClear();
     void shouldRemoveValue();
+    void shouldEmitSignal();
 };
