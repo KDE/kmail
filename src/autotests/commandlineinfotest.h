@@ -16,4 +16,6 @@ public:
     ~CommandLineInfoTest() override = default;
 private Q_SLOTS:
     void shouldHaveDefaultValues();
+    void parseCommandLineInfo_data();
+    void parseCommandLineInfo();
 };

@@ -48,6 +48,8 @@ public:
 
     [[nodiscard]] bool calledWithSession() const;
 
+    [[nodiscard]] bool operator==(const CommandLineInfo &other) const;
+
 private:
     QStringList mCustomHeaders;
     QList<QUrl> mAttachURLs;
@@ -68,4 +70,4 @@ private:
 };
 
 Q_DECLARE_TYPEINFO(CommandLineInfo, Q_MOVABLE_TYPE);
-QDebug operator<<(QDebug d, const CommandLineInfo &t);
+KMAILTESTS_TESTS_EXPORT QDebug operator<<(QDebug d, const CommandLineInfo &t);

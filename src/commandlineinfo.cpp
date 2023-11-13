@@ -107,9 +107,9 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         mMessageFile = makeAbsoluteUrl(file, workingDir);
     }
 
-    if (parser.isSet(QStringLiteral("mBody"))) {
+    if (parser.isSet(QStringLiteral("body"))) {
         mMailto = true;
-        mBody = parser.value(QStringLiteral("mBody"));
+        mBody = parser.value(QStringLiteral("body"));
     }
 
     const QStringList attachList = parser.values(QStringLiteral("attach"));
@@ -293,4 +293,12 @@ bool CommandLineInfo::viewOnly() const
 bool CommandLineInfo::calledWithSession() const
 {
     return mCalledWithSession;
+}
+
+bool CommandLineInfo::operator==(const CommandLineInfo &other) const
+{
+    return mCustomHeaders == other.mCustomHeaders && mAttachURLs == other.mAttachURLs && mTo == other.mTo && mCc == other.mCc && mBcc == other.mBcc
+        && mSubject == other.mSubject && mBody == other.mBody && mInReplyTo == other.mInReplyTo && mReplyTo == other.mReplyTo && mIdentity == other.mIdentity
+        && mMessageFile == other.mMessageFile && mStartInTray == other.mStartInTray && mMailto == other.mMailto && mCheckMail == other.mCheckMail
+        && mViewOnly == other.mViewOnly && mCalledWithSession == other.mCalledWithSession;
 }

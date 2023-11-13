@@ -34,3 +34,23 @@ void CommandLineInfoTest::shouldHaveDefaultValues()
     QVERIFY(!w.viewOnly());
     QVERIFY(!w.calledWithSession());
 }
+
+void CommandLineInfoTest::parseCommandLineInfo_data()
+{
+    QTest::addColumn<QStringList>("args");
+    QTest::addColumn<QString>("workingDir");
+    QTest::addColumn<CommandLineInfo>("output");
+    QStringList args;
+    args << QStringLiteral("kmail");
+    QTest::newRow("empty") << args << QString() << CommandLineInfo();
+}
+
+void CommandLineInfoTest::parseCommandLineInfo()
+{
+    QFETCH(QStringList, args);
+    QFETCH(QString, workingDir);
+    QFETCH(CommandLineInfo, output);
+    CommandLineInfo input;
+    input.parseCommandLine(args, workingDir);
+    QCOMPARE(input, output);
+}
