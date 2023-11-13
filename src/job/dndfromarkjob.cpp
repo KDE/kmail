@@ -33,11 +33,12 @@ bool DndFromArkJob::dndFromArk(const QMimeData *source)
 
 bool DndFromArkJob::extract(const QMimeData *source)
 {
+    bool result = false;
     if (dndFromArk(source)) {
         if (!mComposerWin) {
             qCWarning(KMAIL_LOG) << "mComposerWin is null, it's a bug";
             deleteLater();
-            return false;
+            return result;
         }
         const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
         const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
@@ -64,11 +65,10 @@ bool DndFromArkJob::extract(const QMimeData *source)
         }
         mComposerWin->addAttachment(infoList, false);
         delete linkDir;
-        deleteLater();
-        return true;
+        result = true;
     }
     deleteLater();
-    return false;
+    return result;
 }
 
 void DndFromArkJob::setComposerWin(KMComposerWin *composerWin)
