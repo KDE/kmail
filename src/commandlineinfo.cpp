@@ -199,7 +199,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                     }
                 }
             } else {
-                QUrl url(arg);
+                const QUrl url(arg);
                 if (url.isValid() && !url.scheme().isEmpty()) {
                     mAttachURLs += url;
                 } else {
