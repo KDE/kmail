@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-11 01:43+0000\n"
+"POT-Creation-Date: 2023-11-13 01:38+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -4356,32 +4356,32 @@ msgstr "HTML-Warktüüchbalken"
 msgid "Text Direction Toolbar"
 msgstr "Textricht-Warktüüchbalken"
 
-#: kmkernel.cpp:814
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail is op Afkoppelbedrief sett, all Nettwarkakschonen sünd torüchstellt."
 
-#: kmkernel.cpp:834 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
+#: kmkernel.cpp:835 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:836 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Naricht warrt nößen loosstüert..."
 
-#: kmkernel.cpp:866
+#: kmkernel.cpp:867
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail is op Tokoppelbedrief sett, all Nettwarkakschonen warrt wedder "
 "opnahmen."
 
-#: kmkernel.cpp:868
+#: kmkernel.cpp:869
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4390,41 +4390,41 @@ msgstr ""
 "KMail is op Tokoppelbedrief sett, all Nettwarkakschonen warrt wedder "
 "opnahmen, sodraad en Nettwarkverbinnen opdeckt warrt."
 
-#: kmkernel.cpp:941
+#: kmkernel.cpp:942
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail is opstunns in Afkoppelbedrief. Wodennig wullt Du wiedermaken?"
 
-#: kmkernel.cpp:943
+#: kmkernel.cpp:944
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "To-/Afkoppelt"
 
-#: kmkernel.cpp:944 kmmainwidget.cpp:2430
+#: kmkernel.cpp:945 kmmainwidget.cpp:2430
 #, kde-format
 msgid "Work Online"
 msgstr "Tokoppeln"
 
-#: kmkernel.cpp:945 kmmainwidget.cpp:2427
+#: kmkernel.cpp:946 kmmainwidget.cpp:2427
 #, kde-format
 msgid "Work Offline"
 msgstr "Afkoppeln"
 
-#: kmkernel.cpp:969
+#: kmkernel.cpp:970
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Nettwarkverbinnen opdeckt, all Nettwarkakschonen warrt wedder opnahmen."
 
-#: kmkernel.cpp:972
+#: kmkernel.cpp:973
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Keen Nettwarkverbinnen opdeckt, all Nettwarkakschonen sünd torüchstellt."
 
-#: kmkernel.cpp:1067
+#: kmkernel.cpp:1068
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4433,12 +4433,12 @@ msgstr ""
 "Autom. sekert Datei bi %1 lett sik nich opmaken.\n"
 "Oorsaak: %2"
 
-#: kmkernel.cpp:1068
+#: kmkernel.cpp:1069
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Autom. sekert Datei lett sik nich opmaken."
 
-#: kmkernel.cpp:1621
+#: kmkernel.cpp:1622
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4448,7 +4448,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Disse %1 Identiteten wöörn ännert, se bruukt nu de Standard-Överdreegmetood:"
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1646
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4458,17 +4458,17 @@ msgstr[0] ""
 msgstr[1] ""
 "Disse %1 Identiteten wöörn ännert, se bruukt nu de ännerte Överdreegmetood:"
 
-#: kmkernel.cpp:1660
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Sending messages"
 msgstr "Narichten warrt loosstüert"
 
-#: kmkernel.cpp:1661
+#: kmkernel.cpp:1662
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Loosstüerperzess warrt torechtmaakt..."
 
-#: kmkernel.cpp:1740
+#: kmkernel.cpp:1741
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4476,7 +4476,7 @@ msgid ""
 "%2"
 msgstr "Ressource \"%1\" is schaadhaftig."
 
-#: kmkernel.cpp:1916 kmkernel.cpp:1922
+#: kmkernel.cpp:1917 kmkernel.cpp:1923
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-11 01:43+0000\n"
-"PO-Revision-Date: 2023-11-09 20:08+0100\n"
+"POT-Creation-Date: 2023-11-13 01:38+0000\n"
+"PO-Revision-Date: 2023-11-12 16:39+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -208,7 +208,7 @@ msgstr "Bugzilla prizorgado"
 
 #: aboutdata.cpp:99
 msgid "Improved execution speed"
-msgstr "Plibonigita ekzekutrapideco"
+msgstr "Plibonigita plenumrapideco"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
@@ -4162,29 +4162,29 @@ msgstr "HTMLa ilobreto"
 msgid "Text Direction Toolbar"
 msgstr "Ilobreto de Teksta Direkto"
 
-#: kmkernel.cpp:814
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail estas agordita por esti eksterrete; ĉiuj retlaboroj estas suspenditaj"
 
-#: kmkernel.cpp:834 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
+#: kmkernel.cpp:835 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
 #, kde-format
 msgid "Send Email"
 msgstr "Sendi Retpoŝton"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:836 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Neeble sendi retpoŝton"
 
-#: kmkernel.cpp:866
+#: kmkernel.cpp:867
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail estas agordita por esti interreta; ĉiuj retaj taskoj rekomenciĝis"
 
-#: kmkernel.cpp:868
+#: kmkernel.cpp:869
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4193,38 +4193,38 @@ msgstr ""
 "KMail estas agordita por esti interreta; ĉiuj retaj laboroj rekomencos kiam "
 "reta konekto estos detektita"
 
-#: kmkernel.cpp:941
+#: kmkernel.cpp:942
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail estas nuntempe en eksterreta reĝimo. Kiel vi volas procedi?"
 
-#: kmkernel.cpp:943
+#: kmkernel.cpp:944
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Enreta/Senreta"
 
-#: kmkernel.cpp:944 kmmainwidget.cpp:2430
+#: kmkernel.cpp:945 kmmainwidget.cpp:2430
 #, kde-format
 msgid "Work Online"
 msgstr "Labori konektite"
 
-#: kmkernel.cpp:945 kmmainwidget.cpp:2427
+#: kmkernel.cpp:946 kmmainwidget.cpp:2427
 #, kde-format
 msgid "Work Offline"
 msgstr "Labori malkonektite"
 
-#: kmkernel.cpp:969
+#: kmkernel.cpp:970
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Retkonekto detektita, ĉiuj retaj laboroj rekomencis"
 
-#: kmkernel.cpp:972
+#: kmkernel.cpp:973
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Neniu retkonekto detektita, ĉiuj retlaboroj estas suspenditaj"
 
-#: kmkernel.cpp:1067
+#: kmkernel.cpp:1068
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4233,12 +4233,12 @@ msgstr ""
 "Malsukcesis malfermi aŭtomatan konservadon ĉe %1.\n"
 "Kialo: %2"
 
-#: kmkernel.cpp:1068
+#: kmkernel.cpp:1069
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Malfermo de Aŭtomata Konservado de Dosiero Malsukcesis"
 
-#: kmkernel.cpp:1621
+#: kmkernel.cpp:1622
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4246,7 +4246,7 @@ msgid_plural ""
 msgstr[0] "Ĉi tiu identeco estis ŝanĝita por uzi la defaŭltan transporton:"
 msgstr[1] "Ĉi %1 identecoj estis ŝanĝitaj por uzi la defaŭltan transporton:"
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1646
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4254,17 +4254,17 @@ msgid_plural ""
 msgstr[0] "Ĉi tiu identeco estis ŝanĝita por uzi la modifitan transporton:"
 msgstr[1] "Ĉi %1 identecoj estis ŝanĝitaj por uzi la modifitan transporton:"
 
-#: kmkernel.cpp:1660
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Sending messages"
 msgstr "Sendante mesaĝojn"
 
-#: kmkernel.cpp:1661
+#: kmkernel.cpp:1662
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Komencante sendan procezon..."
 
-#: kmkernel.cpp:1740
+#: kmkernel.cpp:1741
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4273,7 +4273,7 @@ msgstr ""
 "Rimedo %1 estas rompita.\n"
 "%2"
 
-#: kmkernel.cpp:1916 kmkernel.cpp:1922
+#: kmkernel.cpp:1917 kmkernel.cpp:1923
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7387,7 +7387,7 @@ msgstr ""
 "preterlasitaj de la URL. Aliaj LDAP-serviloj estos uzataj nur se la konekto "
 "al la \"proxy\" malsukcesis.\n"
 "La sintakso estas \"HOST\" aŭ \"HOST:PORT\". Se PORT estas preterlasita, la "
-"konektejo 389 (norma LDAP-haveno) estas uzata."
+"konektejo 389 (norma LDAP-pordo) estas uzata."
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14

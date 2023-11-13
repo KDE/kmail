@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-11 01:43+0000\n"
+"POT-Creation-Date: 2023-11-13 01:38+0000\n"
 "PO-Revision-Date: 2023-11-10 05:26+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -4167,31 +4167,31 @@ msgstr "HTML -ის პანელი"
 msgid "Text Direction Toolbar"
 msgstr "ტექსტის მიმართულების პანელი"
 
-#: kmkernel.cpp:814
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail დაყენებულია სტატუსზე - ხაზგარეშე. ყველა ქსელური დავალების შესრულება "
 "შეჩერდა"
 
-#: kmkernel.cpp:834 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
+#: kmkernel.cpp:835 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
 #, kde-format
 msgid "Send Email"
 msgstr "ელ-ფოსტის გაგზავნა"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:836 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Impossible to send email"
 msgstr "ელფოსტის გაგზავნის შეცდომა"
 
-#: kmkernel.cpp:866
+#: kmkernel.cpp:867
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail დაყენებულია სტატუსზე - ხაზზეა. ყველა ქსელური დავალების შესრულება "
 "გაგრძელდა"
 
-#: kmkernel.cpp:868
+#: kmkernel.cpp:869
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4200,39 +4200,39 @@ msgstr ""
 "KMail დაყენებულია სტატუსზე - ხაზზეა. როცა ქსელთან მიერთებას აღმოვაჩენ, ყველა "
 "ქსელური დავალების შესრულება გაგრძელება"
 
-#: kmkernel.cpp:941
+#: kmkernel.cpp:942
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 "KMail ამჟამად დაყენებულია ხაზგარეშე რეჟიმზე. როგორ გნებავთ, გავაგრძელო?"
 
-#: kmkernel.cpp:943
+#: kmkernel.cpp:944
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "გათიშული"
 
-#: kmkernel.cpp:944 kmmainwidget.cpp:2430
+#: kmkernel.cpp:945 kmmainwidget.cpp:2430
 #, kde-format
 msgid "Work Online"
 msgstr "ონლაინ-მუშაობა"
 
-#: kmkernel.cpp:945 kmmainwidget.cpp:2427
+#: kmkernel.cpp:946 kmmainwidget.cpp:2427
 #, kde-format
 msgid "Work Offline"
 msgstr "ოფლაინ მუშაობა"
 
-#: kmkernel.cpp:969
+#: kmkernel.cpp:970
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "ქსელთან მიერთება აღდგა. ყველა ქსელური დავალება გაგრძელდება"
 
-#: kmkernel.cpp:972
+#: kmkernel.cpp:973
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "ქსელთან მიერთება არ არსებობს. ყველა ქსელური დავალება შეჩერებულია"
 
-#: kmkernel.cpp:1067
+#: kmkernel.cpp:1068
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4241,12 +4241,12 @@ msgstr ""
 "ავტომატურად შენახვის ფაილის (მისამართზე %1) გახსნა ჩავარდა.\n"
 "მიზეზი: %2"
 
-#: kmkernel.cpp:1068
+#: kmkernel.cpp:1069
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "ავტომატური შენახვის ფაილის გახსნა ჩავარდა"
 
-#: kmkernel.cpp:1621
+#: kmkernel.cpp:1622
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4255,7 +4255,7 @@ msgstr[0] "ეს იდენტიფიკატორი შეიცვა�
 msgstr[1] ""
 "ეს %1 იდენტიფიკატორი შეიცვალა, რომ ნაგულისხმევი ტრანსპორტი გამოიყენოს:"
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1646
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4263,17 +4263,17 @@ msgid_plural ""
 msgstr[0] "ეს იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
 msgstr[1] "ეს %1 იდენტიფიკატორი შეიცვალა, რომ შეცვლილი ტრანსპორტი გამოიყენოს:"
 
-#: kmkernel.cpp:1660
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Sending messages"
 msgstr "შეტყობინებების გაგზავნა"
 
-#: kmkernel.cpp:1661
+#: kmkernel.cpp:1662
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "გაგზავნის პროცესის დაწყება..."
 
-#: kmkernel.cpp:1740
+#: kmkernel.cpp:1741
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4282,7 +4282,7 @@ msgstr ""
 "რესურსი %1 გაფუჭებულია.\n"
 "%2"
 
-#: kmkernel.cpp:1916 kmkernel.cpp:1922
+#: kmkernel.cpp:1917 kmkernel.cpp:1923
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-11 01:43+0000\n"
+"POT-Creation-Date: 2023-11-13 01:38+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -4243,29 +4243,29 @@ msgstr "एचटीएमएल औज़ार-पट्टी"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:814
+#: kmkernel.cpp:815
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "केमेल को ऑफ़लाइन के रूप में सेट किया गया है, सभी नेटवर्क कार्य निलंबित हैं"
 
-#: kmkernel.cpp:834 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
+#: kmkernel.cpp:835 kmmainwidget.cpp:2441 kmmainwidget.cpp:2456
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "सेंडमेल"
 
-#: kmkernel.cpp:835 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:836 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ई-मेल भेजने में..."
 
-#: kmkernel.cpp:866
+#: kmkernel.cpp:867
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "केमेल को ऑनलाइन के रूप में सेट किया गया है, सभी नेटवर्क कार्य फिर से चालू हैं"
 
-#: kmkernel.cpp:868
+#: kmkernel.cpp:869
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4273,54 +4273,54 @@ msgid ""
 "connection is detected"
 msgstr "केमेल को ऑनलाइन के रूप में सेट किया गया है, सभी नेटवर्क कार्य फिर से चालू हैं"
 
-#: kmkernel.cpp:941
+#: kmkernel.cpp:942
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "केमेल अभी ऑफ़लाइन मोड में है. आप किस तरह आगे बढ़ना चाहते हैं?"
 
-#: kmkernel.cpp:943
+#: kmkernel.cpp:944
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "ऑनलाइन/ऑफ़लाइन"
 
-#: kmkernel.cpp:944 kmmainwidget.cpp:2430
+#: kmkernel.cpp:945 kmmainwidget.cpp:2430
 #, kde-format
 msgid "Work Online"
 msgstr "आनलाइन कार्य करें"
 
-#: kmkernel.cpp:945 kmmainwidget.cpp:2427
+#: kmkernel.cpp:946 kmmainwidget.cpp:2427
 #, kde-format
 msgid "Work Offline"
 msgstr "ऑफ़लाइन कार्य करें"
 
-#: kmkernel.cpp:969
+#: kmkernel.cpp:970
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "केमेल को ऑनलाइन के रूप में सेट किया गया है, सभी नेटवर्क कार्य फिर से चालू हैं"
 
-#: kmkernel.cpp:972
+#: kmkernel.cpp:973
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "केमेल को ऑफ़लाइन के रूप में सेट किया गया है, सभी नेटवर्क कार्य निलंबित हैं"
 
-#: kmkernel.cpp:1067
+#: kmkernel.cpp:1068
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:1068
+#: kmkernel.cpp:1069
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Opening Autosave File Failed"
 msgstr "स्वचालित सहेजना असफल"
 
-#: kmkernel.cpp:1621
+#: kmkernel.cpp:1622
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4328,7 +4328,7 @@ msgid_plural ""
 msgstr[0] "डिफ़ॉल्ट ट्रांसपोर्ट का प्रयोग करने के लिए इस पहचान को बदल दिया गया है:"
 msgstr[1] "डिफ़ॉल्ट ट्रांसपोर्ट का प्रयोग करने के लिए इन %1 पहचानों को बदल दिया गया है:"
 
-#: kmkernel.cpp:1645
+#: kmkernel.cpp:1646
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4337,25 +4337,25 @@ msgstr[0] "परिवर्धित ट्रांसपोर्ट का 
 msgstr[1] ""
 "परिवर्धित ट्रांसपोर्ट का प्रयोग करने के लिए इन %1 पहचानों को बदल दिया गया है:"
 
-#: kmkernel.cpp:1660
+#: kmkernel.cpp:1661
 #, kde-format
 msgid "Sending messages"
 msgstr "संदेशों को भेजा जा रहा है"
 
-#: kmkernel.cpp:1661
+#: kmkernel.cpp:1662
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "भेजने की प्रक्रिया प्रारंभ किया जा रहा है..."
 
-#: kmkernel.cpp:1740
+#: kmkernel.cpp:1741
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1916 kmkernel.cpp:1922
+#: kmkernel.cpp:1917 kmkernel.cpp:1923
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
