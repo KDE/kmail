@@ -59,4 +59,29 @@ void HistoryClosedReaderManagerTest::shouldClear()
     QVERIFY(w.isEmpty());
 }
 
+void HistoryClosedReaderManagerTest::shouldRemoveValue()
+{
+    HistoryClosedReaderManager w;
+    {
+        HistoryClosedReaderInfo info;
+        info.setItem(2);
+        info.setSubject(QStringLiteral("sub"));
+        w.addInfo(std::move(info));
+    }
+    QVERIFY(!w.isEmpty());
+    {
+        HistoryClosedReaderInfo info;
+        info.setItem(5);
+        info.setSubject(QStringLiteral("sub2"));
+        w.addInfo(std::move(info));
+    }
+    QCOMPARE(w.count(), 2);
+    // Don't compare value
+    (void)w.lastInfo();
+    QCOMPARE(w.count(), 1);
+    (void)w.lastInfo();
+    QCOMPARE(w.count(), 0);
+    QVERIFY(w.isEmpty());
+}
+
 #include "moc_historyclosedreadermanagertest.cpp"

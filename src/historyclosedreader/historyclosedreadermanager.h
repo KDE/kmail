@@ -19,7 +19,7 @@ public:
 
     void addInfo(const HistoryClosedReaderInfo &info);
 
-    [[nodiscard]] HistoryClosedReaderInfo lastInfo() const;
+    [[nodiscard]] HistoryClosedReaderInfo lastInfo();
 
     void clear();
 

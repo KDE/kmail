@@ -30,12 +30,12 @@ void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
     }
 }
 
-HistoryClosedReaderInfo HistoryClosedReaderManager::lastInfo() const
+HistoryClosedReaderInfo HistoryClosedReaderManager::lastInfo()
 {
     if (mClosedReaderInfos.isEmpty()) {
         return {};
     }
-    return mClosedReaderInfos.last();
+    return mClosedReaderInfos.takeLast();
 }
 
 void HistoryClosedReaderManager::clear()
