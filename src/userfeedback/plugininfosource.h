@@ -6,7 +6,7 @@
 
 #pragma once
 #include "kmail_private_export.h"
-#include <KUserFeedbackQt6/AbstractDataSource>
+#include <KUserFeedback/AbstractDataSource>
 
 class KMAILTESTS_TESTS_EXPORT PluginInfoSource : public KUserFeedback::AbstractDataSource
 {

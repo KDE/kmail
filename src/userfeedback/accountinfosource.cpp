@@ -7,7 +7,7 @@
 #include "accountinfosource.h"
 #include <Akonadi/AgentInstance>
 #include <KLocalizedString>
-#include <KUserFeedbackQt6/Provider>
+#include <KUserFeedback/Provider>
 #include <MailCommon/MailUtil>
 #include <MailTransport/TransportManager>
 #include <QVariant>

@@ -7,7 +7,7 @@
 #pragma once
 
 #include "kmail_export.h"
-#include <KUserFeedbackQt6/Provider>
+#include <KUserFeedback/Provider>
 
 class KMAIL_EXPORT KMailUserFeedbackProvider : public KUserFeedback::Provider
 {
