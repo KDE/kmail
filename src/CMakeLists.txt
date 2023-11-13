@@ -11,7 +11,7 @@ add_custom_target(kmail_xml ALL
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
     )
 
-if (TARGET KUserFeedbackWidgetsQt6)
+if (TARGET KF6::UserFeedbackWidgets)
     add_definitions(-DWITH_KUSERFEEDBACK)
 endif()
 
@@ -38,7 +38,7 @@ ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_undo_send_
     )
 
 add_library(kmailprivate)
-if (TARGET KUserFeedbackWidgetsQt6)
+if (TARGET KF6::UserFeedbackWidgets)
     target_sources(kmailprivate PRIVATE
         userfeedback/accountinfosource.cpp
         userfeedback/plugininfosource.cpp
@@ -402,8 +402,8 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     )
 
 set(kmail_userfeedback_LIB)
-if (TARGET KUserFeedbackWidgetsQt6)
-    set(kmail_userfeedback_LIB KUserFeedbackWidgetsQt6)
+if (TARGET KF6::UserFeedbackWidgets)
+    set(kmail_userfeedback_LIB KF6::UserFeedbackWidgets)
 endif()
 
 target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})

@@ -7,13 +7,13 @@
 #include "kmailuserfeedbackprovider.h"
 #include "userfeedback/accountinfosource.h"
 
-#include <KUserFeedbackQt6/ApplicationVersionSource>
-#include <KUserFeedbackQt6/LocaleInfoSource>
-#include <KUserFeedbackQt6/PlatformInfoSource>
-#include <KUserFeedbackQt6/QtVersionSource>
-#include <KUserFeedbackQt6/ScreenInfoSource>
-#include <KUserFeedbackQt6/StartCountSource>
-#include <KUserFeedbackQt6/UsageTimeSource>
+#include <KF6/KUserFeedback/ApplicationVersionSource>
+#include <KF6/KUserFeedback/LocaleInfoSource>
+#include <KF6/KUserFeedback/PlatformInfoSource>
+#include <KF6/KUserFeedback/QtVersionSource>
+#include <KF6/KUserFeedback/ScreenInfoSource>
+#include <KF6/KUserFeedback/StartCountSource>
+#include <KF6/KUserFeedback/UsageTimeSource>
 
 KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
     : KUserFeedback::Provider(parent)
