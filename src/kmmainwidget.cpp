@@ -1255,6 +1255,7 @@ void KMMainWidget::slotItemRemoved(const Akonadi::Item &item)
 {
     if (item.isValid() && item.parentCollection().isValid() && (item.parentCollection() == CommonKernel->outboxCollectionFolder())) {
         startUpdateMessageActionsTimer();
+        HistoryClosedReaderManager::self()->removeItem(item.id());
     }
 }
 
