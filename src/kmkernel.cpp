@@ -265,7 +265,7 @@ void KMKernel::setupDBus()
 
 bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args, const QString &workingDir)
 {
-    qDebug() << " args " << args;
+    // qDebug() << " args " << args;
     CommandLineInfo commandLineInfo;
     commandLineInfo.parseCommandLine(args, workingDir);
 
