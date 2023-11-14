@@ -71,7 +71,7 @@ void OpenComposerJob::start()
         QFile f(mOpenComposerSettings.mMessageFile);
         QByteArray str;
         if (!f.open(QIODevice::ReadOnly)) {
-            qCWarning(KMAIL_LOG) << "Failed to load message: " << f.errorString();
+            qCWarning(KMAIL_LOG) << "Failed to load message: " << mOpenComposerSettings.mMessageFile << " Error : " << f.errorString();
         } else {
             str = f.readAll();
             f.close();

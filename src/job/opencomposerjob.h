@@ -7,9 +7,10 @@
 #pragma once
 
 #include "editor/kmcomposerwin.h"
+#include "kmail_private_export.h"
 #include <KMime/Message>
 #include <QObject>
-struct OpenComposerSettings {
+struct KMAILTESTS_TESTS_EXPORT OpenComposerSettings {
     OpenComposerSettings() = default;
 
     OpenComposerSettings(const QString &to,
@@ -53,7 +54,7 @@ struct OpenComposerSettings {
     bool mHidden = false;
 };
 
-class OpenComposerJob : public QObject
+class KMAILTESTS_TESTS_EXPORT OpenComposerJob : public QObject
 {
     Q_OBJECT
 public:
