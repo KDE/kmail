@@ -170,7 +170,7 @@ if(BUILD_TESTING)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
 ecm_set_disabled_deprecation_versions(QT 6.6
-     KF 5.240.0
+     KF 5.245.0
     )
 find_package(KUserFeedbackQt6 1.3.0 CONFIG)
 set_package_properties(KUserFeedbackQt6 PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
