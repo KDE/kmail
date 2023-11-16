@@ -1180,7 +1180,7 @@ msgid ""
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 "En respondre o reenviar, se citarà el missatge en el format original en el "
-"qual es va rebre. Si no està marcada, de manera predeterminada es respondrà "
+"qual es va rebre. Si no se selecciona, de manera predeterminada es respondrà "
 "com a text net."
 
 #: configuredialog/configurecomposerpage.cpp:261
@@ -1509,8 +1509,8 @@ msgid ""
 "Turn this option on to make Outlook(tm) understand attachment names "
 "containing non-English characters"
 msgstr ""
-"Activeu esta opció per a fer que Outlook(tm) comprenga els noms dels adjunts "
-"que continguen caràcters no anglesos"
+"Seleccioneu esta opció per a fer que Outlook(tm) comprenga els noms dels "
+"adjunts que continguen caràcters no anglesos"
 
 #: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
@@ -1572,7 +1572,8 @@ msgstr ""
 "Cal tindre present que KMail pot crear missatges que no complisquen els "
 "estàndards, i com a conseqüència, és possible que els vostres missatges no "
 "els entengen els clients de correu conformes amb els estàndards. Per tant, a "
-"menys que no es tinga altra alternativa, no hauríeu d'activar esta opció."
+"menys que no es tinga altra alternativa, no hauríeu de seleccionar esta "
+"opció."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4309,13 +4310,13 @@ msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr ""
-"<qt>Segur que voleu moure tots els missatges de la carpeta <b>%1</b> a la "
-"paperera?</qt>"
+"<qt>Segur que voleu moure tots els missatges de la carpeta <b>%1</b> cap a "
+"dins de la paperera?</qt>"
 
 #: kmmainwidget.cpp:1481
 #, kde-format
 msgid "Moved all messages to the trash"
-msgstr "S'han mogut tots els missatges a la paperera"
+msgstr "S'han mogut tots els missatges cap a dins de la paperera"
 
 #: kmmainwidget.cpp:1535
 #, kde-format
@@ -4453,43 +4454,47 @@ msgstr "Copia els missatges a una carpeta"
 #: kmmainwidget.cpp:1851
 #, kde-format
 msgid "Moving messages to trash..."
-msgstr "S'estan movent els missatges a la paperera..."
+msgstr "S'estan movent els missatges cap a dins de la paperera..."
 
 #: kmmainwidget.cpp:1858
 #, kde-format
 msgid "Deleting and moving messages to trash..."
-msgstr "S'estan suprimint i movent els missatges a la paperera..."
+msgstr "S'estan suprimint i movent els missatges cap a dins de la paperera..."
 
 #: kmmainwidget.cpp:1871
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "Els missatges s'han mogut cap a la paperera correctament."
+msgstr "Els missatges s'han mogut cap a dins de la paperera correctament."
 
 #: kmmainwidget.cpp:1878
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr "Els missatges s'han mogut cap a la paperera o suprimit correctament"
+msgstr ""
+"Els missatges s'han mogut cap a dins de la paperera o suprimit correctament"
 
 #: kmmainwidget.cpp:1884
 #, kde-format
 msgid "Moving messages to trash failed."
-msgstr "L'acció de moure els missatges a la paperera ha fallat."
+msgstr "L'acció de moure els missatges cap a dins de la paperera ha fallat."
 
 #: kmmainwidget.cpp:1891
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
-msgstr "No s'han pogut suprimir o moure els missatges a la paperera."
+msgstr ""
+"No s'han pogut suprimir o moure els missatges cap a dins de la paperera."
 
 #: kmmainwidget.cpp:1897
 #, kde-format
 msgid "Moving messages to trash canceled."
-msgstr "S'ha cancel·lat l'acció de moure els missatges a la paperera."
+msgstr ""
+"S'ha cancel·lat l'acció de moure els missatges cap a dins de la paperera."
 
 #: kmmainwidget.cpp:1904
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr ""
-"S'ha cancel·lat l'acció de suprimir o moure els missatges a la paperera."
+"S'ha cancel·lat l'acció de suprimir o moure els missatges cap a dins de la "
+"paperera."
 
 #: kmmainwidget.cpp:2174
 #, kde-format
@@ -4596,12 +4601,12 @@ msgstr "Sup&rimix"
 #: kmmainwidget.cpp:2953 kmmainwidget.cpp:4004
 #, kde-format
 msgid "M&ove Thread to Trash"
-msgstr "Mou la c&onversa cap a la paperera"
+msgstr "Mou la c&onversa cap a dins de la paperera"
 
 #: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Move thread to trashcan"
-msgstr "Mou la conversa cap a la paperera"
+msgstr "Mou la conversa cap a dins de la paperera"
 
 #: kmmainwidget.cpp:2960 kmmainwidget.cpp:4004
 #, kde-format
@@ -5139,7 +5144,7 @@ msgstr "Buida la &paperera"
 #: kmmainwidget.cpp:4054
 #, kde-format
 msgid "&Move All Messages to Trash"
-msgstr "&Mou tots els missatges a la paperera"
+msgstr "&Mou tots els missatges cap a dins de la paperera"
 
 #: kmmainwidget.cpp:4128
 #, kde-format
@@ -5248,7 +5253,7 @@ msgstr "Mou cap a dins de la paperera"
 #: kmreadermainwin.cpp:478
 #, kde-format
 msgid "Move message to trashcan"
-msgstr "Mou el missatge a la paperera"
+msgstr "Mou el missatge cap a dins de la paperera"
 
 #: kmreadermainwin.cpp:607
 #, kde-format
@@ -5475,9 +5480,9 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
-"Activeu esta opció si voleu veure el camí complet de cada carpeta llistada "
-"en el resum. Si esta opció no està activada, només es mostrarà la carpeta "
-"base."
+"Seleccioneu esta opció si voleu veure el camí complet de cada carpeta "
+"llistada en el resum. Si no se selecciona esta opció, només es mostrarà la "
+"carpeta base."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
@@ -6233,7 +6238,7 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt><p>Activeu esta opció si voleu que KMail demane notificacions de "
+"<qt><p>Seleccioneu esta opció si voleu que KMail demane notificacions de "
 "processament del missatge (Message Disposition Notifications - MDN) per a "
 "cadascun dels missatges que envieu.</p><p>Esta opció tan sols tindrà efecte "
 "en el mode predeterminat. Encara podreu activar o desactivar les "
@@ -6882,7 +6887,7 @@ msgstr "Encripta els esborranys dels missatges"
 #: ui/securitypageencryptiontab.ui:33
 #, kde-format
 msgid "Check to store messages encrypted "
-msgstr "Marqueu-la per a emmagatzemar els missatges encriptats "
+msgstr "Seleccioneu-la per a emmagatzemar els missatges encriptats "
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
@@ -6900,13 +6905,13 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Emmagatzema els missatges encriptats</h1>\n"
-"Quan està marcada esta casella, els missatges que s'envien, s'emmagatzemaran "
-"encriptats en el mateix format en el qual s'han enviat. Açò no és el més "
-"recomanable, atés que després d'un temps no els podreu llegir perquè el "
-"certificat segurament haurà caducat.\n"
+"Quan se selecciona, els missatges que s'envien, s'emmagatzemaran encriptats "
+"en el mateix format en el qual s'han enviat. Açò no és el més recomanable, "
+"atés que després d'un temps no els podreu llegir perquè el certificat "
+"segurament haurà caducat.\n"
 "<p>\n"
 "De tota manera, podria ser que hi haguera regles locals que requerisquen "
-"tindre esta opció activada. Si teniu cap dubte, comproveu-ho amb "
+"tindre esta opció seleccionada. Si teniu cap dubte, comproveu-ho amb "
 "l'administrador local.\n"
 "</p></qt>"
 
@@ -7119,7 +7124,7 @@ msgstr ""
 "missatge.</p><p>Per a protegir-vos d'este mal ús de l'HTML, de manera "
 "predeterminada esta opció està <em>desactivada</em>.</p><p>Tanmateix, si "
 "voleu veure les imatges que no estiguen adjuntes en els missatges HTML, "
-"podreu activar esta opció, però haureu de ser conscients d'este possible "
+"podreu seleccionar esta opció, però haureu de ser conscients d'este possible "
 "problema.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
@@ -7459,8 +7464,8 @@ msgid ""
 "checked."
 msgstr ""
 "De manera predeterminada, GnuPG utilitza el fitxer ~/.gnupg/policies.txt per "
-"a comprovar si s'admet la política d'un certificat. Si esta opció està "
-"seleccionada, no es comprovaran les polítiques."
+"a comprovar si s'admet la política d'un certificat. Si se selecciona esta "
+"opció, no es comprovaran les polítiques."
 
 #. i18n: ectx: property (text), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:104
@@ -7475,8 +7480,8 @@ msgid ""
 "If this option is checked, Certificate Revocation Lists are never used to "
 "validate S/MIME certificates."
 msgstr ""
-"Si esta opció està marcada, no s'empraran mai les llistes de revocació de "
-"certificats per a validar els certificats S/MIME."
+"Si se selecciona, no s'empraran mai les llistes de revocació de certificats "
+"per a validar els certificats S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, neverConsultCB)
 #: ui/smimeconfiguration.ui:114
@@ -7491,8 +7496,9 @@ msgid ""
 "If this option is checked, missing issuer certificates are fetched when "
 "necessary (this applies to both validation methods, CRLs and OCSP)"
 msgstr ""
-"Si es marca esta opció, els certificats d'emissor que falten s'obtenen quan "
-"és necessari (açò s'aplica als dos mètodes de validació, CRL i OCSP)"
+"Si se selecciona esta opció, els certificats d'emissor que falten "
+"s'obtindran quan siga necessari (açò s'aplica als dos mètodes de validació, "
+"CRL i OCSP)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:124
@@ -7549,9 +7555,9 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Si esta opció està seleccionada, el valor de l'intermediari HTTP que es "
-"mostra a la dreta (i que prové de la variable d'entorn http_proxy) serà "
-"l'emprada per a qualsevol sol·licitud HTTP."
+"Si se selecciona esta opció, el valor de l'intermediari HTTP que es mostra a "
+"la dreta (i que prové de la variable d'entorn http_proxy) serà l'emprada per "
+"a qualsevol sol·licitud HTTP."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
