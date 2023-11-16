@@ -4491,13 +4491,13 @@ msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr ""
-"<qt>Segur que voleu moure tots els missatges de la carpeta <b>%1</b> a la "
-"paperera?</qt>"
+"<qt>Segur que voleu moure tots els missatges de la carpeta <b>%1</b> cap a "
+"dins de la paperera?</qt>"
 
 #: kmmainwidget.cpp:1486
 #, kde-format
 msgid "Moved all messages to the trash"
-msgstr "S'han mogut tots els missatges a la paperera"
+msgstr "S'han mogut tots els missatges cap a dins de la paperera"
 
 #: kmmainwidget.cpp:1540
 #, kde-format
@@ -4635,43 +4635,47 @@ msgstr "Copia els missatges a una carpeta"
 #: kmmainwidget.cpp:1856
 #, kde-format
 msgid "Moving messages to trash..."
-msgstr "S'estan movent els missatges a la paperera..."
+msgstr "S'estan movent els missatges cap a dins de la paperera..."
 
 #: kmmainwidget.cpp:1863
 #, kde-format
 msgid "Deleting and moving messages to trash..."
-msgstr "S'estan suprimint i movent els missatges a la paperera..."
+msgstr "S'estan suprimint i movent els missatges cap a dins de la paperera..."
 
 #: kmmainwidget.cpp:1876
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "Els missatges s'han mogut cap a la paperera correctament."
+msgstr "Els missatges s'han mogut cap a dins de la paperera correctament."
 
 #: kmmainwidget.cpp:1883
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr "Els missatges s'han mogut cap a la paperera o suprimit correctament"
+msgstr ""
+"Els missatges s'han mogut cap a dins de la paperera o suprimit correctament"
 
 #: kmmainwidget.cpp:1889
 #, kde-format
 msgid "Moving messages to trash failed."
-msgstr "L'acció de moure els missatges a la paperera ha fallat."
+msgstr "L'acció de moure els missatges cap a dins de la paperera ha fallat."
 
 #: kmmainwidget.cpp:1896
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
-msgstr "No s'han pogut suprimir o moure els missatges a la paperera."
+msgstr ""
+"No s'han pogut suprimir o moure els missatges cap a dins de la paperera."
 
 #: kmmainwidget.cpp:1902
 #, kde-format
 msgid "Moving messages to trash canceled."
-msgstr "S'ha cancel·lat l'acció de moure els missatges a la paperera."
+msgstr ""
+"S'ha cancel·lat l'acció de moure els missatges cap a dins de la paperera."
 
 #: kmmainwidget.cpp:1909
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr ""
-"S'ha cancel·lat l'acció de suprimir o moure els missatges a la paperera."
+"S'ha cancel·lat l'acció de suprimir o moure els missatges cap a dins de la "
+"paperera."
 
 #: kmmainwidget.cpp:2182
 #, kde-format
@@ -4840,12 +4844,12 @@ msgstr "Sup&rimix"
 #: kmmainwidget.cpp:3026 kmmainwidget.cpp:4087
 #, kde-format
 msgid "M&ove Thread to Trash"
-msgstr "Mou la c&onversa cap a la paperera"
+msgstr "Mou la c&onversa cap a dins de la paperera"
 
 #: kmmainwidget.cpp:3030
 #, kde-format
 msgid "Move thread to trashcan"
-msgstr "Mou la conversa cap a la paperera"
+msgstr "Mou la conversa cap a dins de la paperera"
 
 #: kmmainwidget.cpp:3033 kmmainwidget.cpp:4087
 #, kde-format
@@ -5394,7 +5398,7 @@ msgstr "Buida la &paperera"
 #: kmmainwidget.cpp:4137
 #, kde-format
 msgid "&Move All Messages to Trash"
-msgstr "&Mou tots els missatges a la paperera"
+msgstr "&Mou tots els missatges cap a dins de la paperera"
 
 #: kmmainwidget.cpp:4211
 #, kde-format
@@ -5509,7 +5513,7 @@ msgstr "Mou cap a dins de la paperera"
 #: kmreadermainwin.cpp:493
 #, kde-format
 msgid "Move message to trashcan"
-msgstr "Mou el missatge a la paperera"
+msgstr "Mou el missatge cap a dins de la paperera"
 
 #: kmreadermainwin.cpp:539
 #, kde-format
