@@ -2401,7 +2401,7 @@ void KMMainWidget::slotDeleteAttachments()
         return; // user canceled the action
     }
 
-    auto deleteCommand = new KMDeleteAttachmentsCommand(this, selectedMessages, mMsgView->viewer());
+    auto deleteCommand = new KMDeleteAttachmentsCommand(this, selectedMessages);
     deleteCommand->start();
 }
 

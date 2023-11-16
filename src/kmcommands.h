@@ -338,7 +338,7 @@ class KMAILTESTS_TESTS_EXPORT KMDeleteAttachmentsCommand : public KMCommand
 {
     Q_OBJECT
 public:
-    KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
+    KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs);
 
 private Q_SLOTS:
     void slotUpdateResult(KJob *job);
@@ -349,7 +349,6 @@ private:
     void complete(KMCommand::Result result);
 
     KPIM::ProgressItem *mProgressItem = nullptr;
-    MessageViewer::Viewer *mViewer = nullptr;
     QList<KJob *> mRunningJobs;
 };
 

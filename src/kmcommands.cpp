@@ -1755,9 +1755,8 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     return Failed;
 }
 
-KMDeleteAttachmentsCommand::KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer)
+KMDeleteAttachmentsCommand::KMDeleteAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs)
     : KMCommand(parent, msgs)
-    , mViewer(viewer)
 {
     fetchScope().fetchFullPayload(true);
 }

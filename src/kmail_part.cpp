@@ -35,7 +35,6 @@ using namespace KMail;
 
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaData &data, const QVariantList &)
     : KParts::ReadOnlyPart(parent, data)
-    , mParentWidget(parentWidget)
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
     // local, do the init
