@@ -28,6 +28,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
     auto vlay = new QVBoxLayout(widget());
     vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
+    mTabWidget->setDocumentMode(true);
     mWasInitialized = true;
 }
 

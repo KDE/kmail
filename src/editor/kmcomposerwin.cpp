@@ -423,6 +423,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
 
     auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
+    vbox->setSpacing(0);
     vbox->setContentsMargins({});
 
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
@@ -433,6 +434,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     vbox->addWidget(mAttachmentMissing);
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
+    composerEditorNg->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
     mRichTextEditorwidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
     composerEditorNg->installEventFilter(this);
 
@@ -4028,6 +4030,13 @@ void KMComposerWin::setMaximumHeaderSize()
 void KMComposerWin::updateSignatureAndEncryptionStateIndicators()
 {
     mCryptoStateIndicatorWidget->updateSignatureAndEncrypionStateIndicators(sign(), mEncryptionState.encrypt());
+    if (sign() || mEncryptionState.encrypt()) {
+        mComposerBase->editor()->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
+        mComposerBase->editor()->setProperty("_breeze_force_frame", true);
+    } else {
+        mComposerBase->editor()->setProperty("_breeze_borders_sides", QVariant{});
+        mComposerBase->editor()->setProperty("_breeze_force_frame", false);
+    }
 }
 
 void KMComposerWin::slotDictionaryLanguageChanged(const QString &language)

@@ -81,7 +81,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
 {
     createActions();
     auto vlay = new QVBoxLayout(this);
-    vlay->setContentsMargins(0, 4, 0, 0);
+    vlay->setContentsMargins(0, 0, 0, 0);
     mViewer = new Viewer(this, mainWindow, mActionCollection);
     mViewer->setIdentityManager(kmkernel->identityManager());
     connect(mViewer, qOverload<const Akonadi::Item &, const QUrl &>(&Viewer::urlClicked), this, &KMReaderWin::slotUrlClicked);
