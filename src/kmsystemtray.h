@@ -49,7 +49,6 @@ private:
     bool mBuiltContextMenu = false;
 
     bool mHasUnreadMessage = false;
-    bool mIconNotificationsEnabled = true;
 
     QMenu *mNewMessagesPopup = nullptr;
     QAction *mSendQueued = nullptr;

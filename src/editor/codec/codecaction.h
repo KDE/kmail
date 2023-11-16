@@ -40,7 +40,4 @@ public:
 
     void setAutoCharset();
     void setCharset(const QByteArray &charset);
-
-private:
-    const CodecAction::Mode mMode;
 };

@@ -24,7 +24,6 @@
 
 CodecAction::CodecAction(Mode mode, QObject *parent)
     : KCodecAction(parent, mode == ReaderMode)
-    , mMode(mode)
 {
     if (mode == ComposerMode) {
         // Add 'us-ascii' entry.  We want it at the top, so remove then re-add everything.
