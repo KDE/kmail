@@ -184,14 +184,10 @@ public:
 
     void save() override;
 
-private Q_SLOTS:
-    void slotOutlookCompatibleClicked();
-
 private:
     void doLoadFromGlobalSettings() override;
 
 private:
-    QCheckBox *mOutlookCompatibleCheck = nullptr;
     QCheckBox *mMissingAttachmentDetectionCheck = nullptr;
     PimCommon::SimpleStringListEditor *mAttachWordsListEditor = nullptr;
     QSpinBox *mMaximumAttachmentSize = nullptr;

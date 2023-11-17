@@ -150,7 +150,6 @@ KMKernel::KMKernel(QObject *parent)
     // would be unexpected
     KMailSettings::self();
     mAutoCorrection = new TextAutoCorrectionCore::AutoCorrection();
-    KMime::setUseOutlookAttachmentEncoding(MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachments());
 
     // cberzan: this crap moved to CodecManager ======================
     mNetCodec = QTextCodec::codecForLocale();

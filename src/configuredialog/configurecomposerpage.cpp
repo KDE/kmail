@@ -1084,17 +1084,6 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 {
     auto vlay = new QVBoxLayout(this);
 
-    // "Outlook compatible attachment naming" check box
-    mOutlookCompatibleCheck = new QCheckBox(i18n("Outlook-compatible attachment naming"), this);
-    mOutlookCompatibleCheck->setChecked(false);
-    mOutlookCompatibleCheck->setToolTip(
-        i18n("Turn this option on to make Outlook(tm) understand attachment names "
-             "containing non-English characters"));
-    connect(mOutlookCompatibleCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    connect(mOutlookCompatibleCheck, &QAbstractButton::clicked, this, &ComposerPageAttachmentsTab::slotOutlookCompatibleClicked);
-    vlay->addWidget(mOutlookCompatibleCheck);
-    vlay->addSpacing(5);
-
     // "Enable detection of missing attachments" check box
     mMissingAttachmentDetectionCheck = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setChecked(true);
@@ -1139,7 +1128,6 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 
 void ComposerPageAttachmentsTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     loadWidget(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
     loadWidget(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
     const int maximumAttachmentSize(MessageCore::MessageCoreSettings::self()->maximumAttachmentSize());
@@ -1148,28 +1136,11 @@ void ComposerPageAttachmentsTab::doLoadFromGlobalSettings()
 
 void ComposerPageAttachmentsTab::save()
 {
-    saveCheckBox(mOutlookCompatibleCheck, MessageComposer::MessageComposerSettings::self()->outlookCompatibleAttachmentsItem());
     saveCheckBox(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
     saveSimpleStringListEditor(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
 
-    KMime::setUseOutlookAttachmentEncoding(mOutlookCompatibleCheck->isChecked());
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
     MessageCore::MessageCoreSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize * 1024);
-}
-
-void ComposerPageAttachmentsTab::slotOutlookCompatibleClicked()
-{
-    if (mOutlookCompatibleCheck->isChecked()) {
-        KMessageBox::information(nullptr,
-                                 i18n("You have chosen to "
-                                      "encode attachment names containing non-English characters in a way that "
-                                      "is understood by Outlook(tm) and other mail clients that do not "
-                                      "support standard-compliant encoded attachment names.\n"
-                                      "Note that KMail may create non-standard compliant messages, "
-                                      "and consequently it is possible that your messages will not be "
-                                      "understood by standard-compliant mail clients; so, unless you have no "
-                                      "other choice, you should not enable this option."));
-    }
 }
 
 ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
