@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-14 01:39+0000\n"
+"POT-Creation-Date: 2023-11-17 01:38+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1924,19 +1924,19 @@ msgstr "अटॅचमेंट यादी लपवा"
 msgid "Show attachment list"
 msgstr "अटॅचमेंट यादी दर्शवा"
 
-#: editor/codec/codecaction.cpp:35
+#: editor/codec/codecaction.cpp:34
 #, kde-format
 msgctxt "Encodings menu"
 msgid "us-ascii"
 msgstr "us-ascii"
 
-#: editor/codec/codecaction.cpp:45
+#: editor/codec/codecaction.cpp:44
 #, kde-format
 msgctxt "Menu item"
 msgid "Encoding"
 msgstr "एन्कोडिंग"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2985,7 +2985,7 @@ msgid "Folder Shortcut %1"
 msgstr "संचयीका शॉर्टकट %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4247,7 +4247,7 @@ msgstr "संदेश हलवत आहे"
 msgid "Deleting messages"
 msgstr "संदेश काढून टाकत आहे"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1801
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@info:progress"

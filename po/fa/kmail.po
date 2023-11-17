@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-14 01:39+0000\n"
+"POT-Creation-Date: 2023-11-17 01:38+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1996,20 +1996,20 @@ msgstr "ذخیره پیوست به عنوان"
 msgid "Show attachment list"
 msgstr "ذخیره پیوست به عنوان"
 
-#: editor/codec/codecaction.cpp:35
+#: editor/codec/codecaction.cpp:34
 #, kde-format
 msgctxt "Encodings menu"
 msgid "us-ascii"
 msgstr "اَسکی-آمریکا"
 
-#: editor/codec/codecaction.cpp:45
+#: editor/codec/codecaction.cpp:44
 #, fuzzy, kde-format
 #| msgid "Encoding"
 msgctxt "Menu item"
 msgid "Encoding"
 msgstr "&کدبندی‌:"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -3099,7 +3099,7 @@ msgid "Folder Shortcut %1"
 msgstr "میانبر پوشه %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4405,7 +4405,7 @@ msgstr "حرکت دادن پیامها"
 msgid "Deleting messages"
 msgstr "حذف پیامها"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1801
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-14 01:39+0000\n"
+"POT-Creation-Date: 2023-11-17 01:38+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1916,19 +1916,19 @@ msgstr "លាក់​បញ្ជី​ឯកសារភ្ជាប់"
 msgid "Show attachment list"
 msgstr "បង្ហាញ​បញ្ជី​ឯកសារ​​ភ្ជាប់"
 
-#: editor/codec/codecaction.cpp:35
+#: editor/codec/codecaction.cpp:34
 #, kde-format
 msgctxt "Encodings menu"
 msgid "us-ascii"
 msgstr "us-ascii"
 
-#: editor/codec/codecaction.cpp:45
+#: editor/codec/codecaction.cpp:44
 #, kde-format
 msgctxt "Menu item"
 msgid "Encoding"
 msgstr "ការ​អ៊ិនកូដ"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2967,7 +2967,7 @@ msgid "Folder Shortcut %1"
 msgstr "ផ្លូវកាត់​ថត %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4218,7 +4218,7 @@ msgstr "កំពុង​ផ្លាស់ទី​សារ"
 msgid "Deleting messages"
 msgstr "កំពុង​លុបសារ"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1801
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@info:progress"

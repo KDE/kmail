@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-14 01:39+0000\n"
+"POT-Creation-Date: 2023-11-17 01:38+0000\n"
 "PO-Revision-Date: 2023-09-26 13:28+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1859,19 +1859,19 @@ msgstr "Piilota liitteiden luettelo"
 msgid "Show attachment list"
 msgstr "Näytä liitteiden luettelo"
 
-#: editor/codec/codecaction.cpp:35
+#: editor/codec/codecaction.cpp:34
 #, kde-format
 msgctxt "Encodings menu"
 msgid "us-ascii"
 msgstr "us-ascii"
 
-#: editor/codec/codecaction.cpp:45
+#: editor/codec/codecaction.cpp:44
 #, kde-format
 msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Koodaus"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:40 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2940,7 +2940,7 @@ msgid "Folder Shortcut %1"
 msgstr "Kansion pikanäppäin %1"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4138,7 +4138,7 @@ msgstr "Siirretään viestejä"
 msgid "Deleting messages"
 msgstr "Poistetaan viestejä"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1801
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
