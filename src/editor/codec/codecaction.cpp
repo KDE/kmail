@@ -20,7 +20,7 @@
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QIcon>
-#include <QTextCodec>
+#include <QStringEncoder>
 
 CodecAction::CodecAction(Mode mode, QObject *parent)
     : KCodecAction(parent, mode == ReaderMode)
@@ -84,7 +84,8 @@ static QString selectCharset(KSelectAction *root, const QString &encoding)
             }
         } else {
             const QString fixedActionText = MimeTreeParser::NodeHelper::fixEncoding(action->text());
-            if (QTextCodec::codecForName(KCharsets::charsets()->encodingForName(fixedActionText).toLatin1()) == QTextCodec::codecForName(encoding.toLatin1())) {
+            if (QStringEncoder(KCharsets::charsets()->encodingForName(fixedActionText).toLatin1().constData()).name()
+                == QStringEncoder(encoding.toLatin1().constData()).name()) {
                 return action->text();
             }
         }

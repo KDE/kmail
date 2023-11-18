@@ -44,7 +44,6 @@ using PimCommon::RecentAddresses;
 #include <QRegularExpressionValidator>
 #include <QScrollArea>
 #include <QStringEncoder>
-#include <QTextCodec>
 #include <QVBoxLayout>
 
 #include <PimCommonAkonadi/CompletionConfigureDialog>
@@ -768,7 +767,7 @@ void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
         charset = QStringLiteral("us-ascii");
         return;
     } else if (charsetLower == QLatin1String("locale")) {
-        charset = QStringLiteral("%1 (locale)").arg(QString::fromLatin1(kmkernel->networkCodec()->name()).toLower());
+        charset = QString::fromUtf8(QStringEncoder(QStringEncoder::Utf8).name());
         return;
     }
 
@@ -791,7 +790,7 @@ void ComposerPageCharsetTab::doLoadOther()
     QStringList::Iterator end(charsets.end());
     for (QStringList::Iterator it = charsets.begin(); it != end; ++it) {
         if ((*it) == QLatin1String("locale")) {
-            QByteArray cset = kmkernel->networkCodec()->name();
+            QByteArray cset = QStringEncoder(QStringEncoder::Utf8).name();
             cset = cset.toLower();
             (*it) = QStringLiteral("%1 (locale)").arg(QString::fromLatin1(cset));
         }

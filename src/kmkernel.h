@@ -100,7 +100,6 @@ class KeyCache;
 }
 
 class QTimer;
-class QTextCodec;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
@@ -432,8 +431,6 @@ public:
 
     void setSystemTryAssociatedWindow(QWindow *window);
 
-    [[nodiscard]] QTextCodec *networkCodec() const;
-
     /** returns a reference to the first Mainwin or a temporary Mainwin */
     KMainWindow *mainWin();
 
@@ -593,7 +590,6 @@ private:
     bool the_firstInstance = false;
 
     KSharedConfig::Ptr mConfig;
-    QTextCodec *mNetCodec = nullptr;
     QString mXmlGuiInstance;
     ConfigureDialog *mConfigureDialog = nullptr;
 

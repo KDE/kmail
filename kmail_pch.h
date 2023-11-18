@@ -125,7 +125,6 @@
 #include <QTabWidget>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
-#include <QTextCodec>
 #include <QTextDocument>
 #include <QTextDocumentWriter>
 #include <QTimer>

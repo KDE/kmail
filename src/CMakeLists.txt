@@ -468,8 +468,6 @@ if (TARGET KF6::TextEditTextToSpeech)
         PRIVATE KF6::TextEditTextToSpeech)
 endif()
 
-target_link_libraries(kmailprivate PRIVATE Qt6::Core5Compat) # QTextCodec
-
 target_link_libraries(kmailprivate PRIVATE qt6keychain)
 
 target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)

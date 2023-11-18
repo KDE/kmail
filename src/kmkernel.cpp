@@ -92,7 +92,6 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
-#include <QTextCodec>
 #include <QWidget>
 
 #include <MailCommon/ResourceReadConfigFile>
@@ -150,27 +149,6 @@ KMKernel::KMKernel(QObject *parent)
     // would be unexpected
     KMailSettings::self();
     mAutoCorrection = new TextAutoCorrectionCore::AutoCorrection();
-
-    // cberzan: this crap moved to CodecManager ======================
-    mNetCodec = QTextCodec::codecForLocale();
-
-    // In the case of Japan. Japanese locale name is "eucjp" but
-    // The Japanese mail systems normally used "iso-2022-jp" of locale name.
-    // We want to change locale name from eucjp to iso-2022-jp at KMail only.
-
-    // (Introduction to i18n, 6.6 Limit of Locale technology):
-    // EUC-JP is the de-facto standard for UNIX systems, ISO 2022-JP
-    // is the standard for Internet, and Shift-JIS is the encoding
-    // for Windows and Macintosh.
-    const QByteArray netCodecLower = mNetCodec->name().toLower();
-    if (netCodecLower == "eucjp"
-#if defined Q_OS_WIN || defined Q_OS_MACX
-        || netCodecLower == "shift-jis" // OK?
-#endif
-    ) {
-        mNetCodec = QTextCodec::codecForName("jis7");
-    }
-    // until here ================================================
 
     auto session = new Akonadi::Session("KMail Kernel ETM", this);
 
@@ -1184,11 +1162,6 @@ bool KMKernel::haveSystemTrayApplet() const
 void KMKernel::setSystemTryAssociatedWindow(QWindow *window)
 {
     mUnityServiceManager->setSystemTryAssociatedWindow(window);
-}
-
-QTextCodec *KMKernel::networkCodec() const
-{
-    return mNetCodec;
 }
 
 void KMKernel::updateSystemTray()
