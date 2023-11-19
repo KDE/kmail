@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2023-08-19 22:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1304,20 +1304,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "أ&ضف..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "أ&زل"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "ع&دّل..."
@@ -1471,75 +1471,44 @@ msgstr "ترويسة غير صالحة"
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "تسمية المرفقات لتتوافق مع «آوتلوك»"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"فعّل هذا ليستطيع «آوتلوك»™ فهم أسماء المرفقات التي تحوي محارف غير إنجليزيّة."
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "ف&عّل اكتشاف المرفقات المفقودة"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "تعرّف على أيّ كلمة من الآتي كإشارة إلى إرفاق ملفّ:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "أدخل كلمة مفتاحيّة جديدة:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "هل تريد إزالة كلمة المرفق هذه؟"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
 msgid "Attachment Word:"
 msgstr "كلمة الملحق:"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "أقصى حجم للملحق:"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ك.بتّ"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "لا حدّ"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"لقد اخترت ترميز أسماء المرفقات التي تحتوي على أحرف غير إنجليزية بطريقة "
-"يفهمها آوتلوك وعملاء البريد الآخرين الذين لا يدعمون أسماء المرفقات المشفرة "
-"المتوافقة مع المعايير. \n"
-"لاحظ أن بريدك قد ينشئ رسائل غير متوافقة مع المعايير، وبذلك من الممكن ألا يتم "
-"فهم رسائلك من قبل عملاء البريد المتوافق مع المعايير؛ لذلك ما لم يكن لديك "
-"خِيار آخر، يجب ألا تمكن هذا الخِيار."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4148,66 +4117,66 @@ msgstr "شريط أدوات HTML"
 msgid "Text Direction Toolbar"
 msgstr "شريط أدوات اتّجاه النّصّ"
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "«بريدك» في وضع عدم الاتّصال، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Send Email"
 msgstr "أرسل بريدًا"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, kde-format
 msgid "Impossible to send email"
 msgstr "تعذَّر إرسال البريد"
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "«بريدك» متّصل بالإنترنت، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "«بريدك» متّصل بالإنترنت، ستُستكمل كلّ مهامّ الشّبكة عند اكتشاف شبكة"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "«بريدك» في وضع عدم الاتّصال حاليًّا. أتريد المتابعة؟"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "متّصل/غير متّصل"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "اعمل متّصلًا"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "اعمل بلا اتّصال"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "اكتُشف اتّصال بالشّبكة، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "لم يُكتشف أيّ اتّصال بالشّبكة، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4216,12 +4185,12 @@ msgstr ""
 "فشل فتح الملفّ المحفوظ آليًّا في %1.\n"
 "السّبب: %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "فشل فتح الملفّ المحفوظ آليًّا"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4233,7 +4202,7 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل الافتر
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4245,17 +4214,17 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل المعدّ
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "يرسل الرّسائل"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "يمهّد عمليّة الإرسال..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4264,7 +4233,7 @@ msgstr ""
 "المورد %1 معطوب.\n"
 "%2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7562,6 +7531,31 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "تسمية المرفقات لتتوافق مع «آوتلوك»"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "فعّل هذا ليستطيع «آوتلوك»™ فهم أسماء المرفقات التي تحوي محارف غير إنجليزيّة."
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "لقد اخترت ترميز أسماء المرفقات التي تحتوي على أحرف غير إنجليزية بطريقة "
+#~ "يفهمها آوتلوك وعملاء البريد الآخرين الذين لا يدعمون أسماء المرفقات "
+#~ "المشفرة المتوافقة مع المعايير. \n"
+#~ "لاحظ أن بريدك قد ينشئ رسائل غير متوافقة مع المعايير، وبذلك من الممكن ألا "
+#~ "يتم فهم رسائلك من قبل عملاء البريد المتوافق مع المعايير؛ لذلك ما لم يكن "
+#~ "لديك خِيار آخر، يجب ألا تمكن هذا الخِيار."
 
 #~ msgid ""
 #~ "This prevents the automatic expiry of old messages in a folder from "

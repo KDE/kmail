@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2019-05-14 22:35+0800\n"
 "Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
@@ -1379,20 +1379,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "新增(&D)..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "移除(&M)"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "修改(&I)..."
@@ -1551,75 +1551,48 @@ msgstr "不合法的日期"
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "與 Outlook 相容的附檔命名方式"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr "這個選項是確保 Outlook 在非英語字元集的信件中認得附檔。"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "判斷是否忘記附加檔案"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "檢查信件中是否有下列關鍵字，以顯示此封信是否應該有附檔而忘了加上去："
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "輸入新的關鍵字："
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "您確定要移除標籤 %1 嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "附加檔"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgid "Maximum Attachment Size:"
 msgstr "含附件"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "不限制"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"您已經選擇使用 Outlook(tm) 可認得的附加檔名稱，要注意其他的收發信軟體可能會不"
-"認得附加檔。\n"
-"所以，除非是不得已，否則不建議您開啟這個選項。"
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4224,68 +4197,68 @@ msgstr "HTML 工具列"
 msgid "Text Direction Toolbar"
 msgstr "文字方向工具列"
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 目前設定為離線工作，所有網路相關的工作都將暫停。"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "即將傳送信件..."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將繼續。"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將在偵測到網路連線後繼續"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前在離線模式。您要怎麼處理？"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "上線／離線"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "回到線上"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "離線工作"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "偵測到網路連線，所有網路工作都將回復"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "沒有偵測到網路連線，所有網路工作都將暫停"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4294,36 +4267,36 @@ msgstr ""
 "開啟於 %1 的自動儲存檔失敗。\n"
 "理由：%2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "開啟自動儲存檔失敗"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "以下 %1 個身份已經被設定為使用預設的送信帳號："
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "以下 %1 個身份使用的送信帳號已被變更："
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "送出信件中"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "正在起始寄件程序..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4331,7 +4304,7 @@ msgid ""
 "%2"
 msgstr "資源 %1 已損毀。"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7686,6 +7659,27 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "縮放"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "與 Outlook 相容的附檔命名方式"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr "這個選項是確保 Outlook 在非英語字元集的信件中認得附檔。"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "您已經選擇使用 Outlook(tm) 可認得的附加檔名稱，要注意其他的收發信軟體可能"
+#~ "會不認得附加檔。\n"
+#~ "所以，除非是不得已，否則不建議您開啟這個選項。"
 
 #~ msgid ""
 #~ "This prevents the automatic expiry of old messages in a folder from "

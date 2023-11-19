@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2022-06-17 18:06+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -1281,20 +1281,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "&Legg til …"
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "&Fjern"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&Endra …"
@@ -1448,77 +1448,44 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "B&ruk vedleggsnamngjeving som er kompatibel med Outlook"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"Slå på dette valet for å få Outlook™ til å forstå namn på vedlegg med ikkje-"
-"engelske teikn"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&Varsla ved sending av meldingar som manglar vedlegg"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "&Kjenn att desse nøkkelorda som kommandoar for å leggja ved ei fil:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Skriv inn nytt nøkkelord:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
 msgid "Attachment Word:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "Inga grense"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"Du har valt å bruka ein metode for koding av ikkje-engelske teikn i "
-"vedleggsnamn som vert forstått av Outlook™ og andre e-postklienter som ikkje "
-"støttar rett koding av namn på vedlegg.\n"
-"\n"
-"Merk at KMail då kan laga ikkje-standard meldingar, og det er mogleg at "
-"meldinga ikkje vert forstått av e-postklientar som faktisk følgjer "
-"standarden. Du bør derfor berre slå på dette viss du er heilt nøydd."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4053,70 +4020,70 @@ msgstr "HTML-verktøylinje"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail er sett i fråkoplamodus. Alle jobbar som krev nettverk er sette på "
 "vent."
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Send Email"
 msgstr ""
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail er sett i tilkoplamodus. Alle jobbar som krev nettverk er tekne opp "
 "att."
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail er i fråkoplamodus. Korleis vil du halda fram?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Tilkopla/fråkopla"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "Arbeid tilkopla"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "Arbeid fråkopla"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4125,12 +4092,12 @@ msgstr ""
 "Klarte ikkje autolagra fila i «%1».\n"
 "Grunn: %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Klarte ikkje opna autolagra fil"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4139,7 +4106,7 @@ msgstr[0] "Denne identiteten er endra til å bruka standard overføringsmetode:"
 msgstr[1] ""
 "Desse %1 identitetane er endra til å bruka standard overføringsmetode:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4148,24 +4115,24 @@ msgstr[0] "Denne identiteten er endra til å bruka ein annan overføringsmetode:
 msgstr[1] ""
 "Desse %1 identitetane er endra til å bruka ein annan overføringsmetode:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Sender meldingar"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Startar sendeprosessen …"
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7316,3 +7283,30 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "B&ruk vedleggsnamngjeving som er kompatibel med Outlook"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "Slå på dette valet for å få Outlook™ til å forstå namn på vedlegg med "
+#~ "ikkje-engelske teikn"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "Du har valt å bruka ein metode for koding av ikkje-engelske teikn i "
+#~ "vedleggsnamn som vert forstått av Outlook™ og andre e-postklienter som "
+#~ "ikkje støttar rett koding av namn på vedlegg.\n"
+#~ "\n"
+#~ "Merk at KMail då kan laga ikkje-standard meldingar, og det er mogleg at "
+#~ "meldinga ikkje vert forstått av e-postklientar som faktisk følgjer "
+#~ "standarden. Du bør derfor berre slå på dette viss du er heilt nøydd."

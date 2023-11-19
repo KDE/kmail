@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1363,20 +1363,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "​បន្ថែម..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "​យកចេញ"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "កែប្រែ..."
@@ -1537,81 +1537,49 @@ msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹ
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "ការ​ដាក់ឈ្មោះ​ឯកសារ​ភ្ជាប់​ Outlook ដែល​ឆបគ្នា"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"បើក​ជម្រើស​នេះ​ដើម្បី​​ធ្វើ​ឲ្យ Outlook(tm) ស្គាល់​ឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែល​មាន​តួអក្សរ​មិន​មែន​ជា​ភាសា​"
-"អង់គ្លេស"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "បើក​ការ​រក​​នៃ​ឯកសារ​ភ្ជាប់​ដែល​បាត់"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "ទទួល​ស្គាល់​​​ពាក្យ​គន្លឹះ​មួយ​ចំនួន​ខាងក្រោម​ នៅពេល​មាន​បំណង​ភ្ជាប់​ឯកសារ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Maximum Attachment Size:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "គីឡូបៃ"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "គ្មាន​ព្រំដែន"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"អ្នក​បាន​ជ្រើស​ដើម្បី​អ៊ិនកូដឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែល​មាន​តួអក្សរ​មិនមែន​ជា​ភាសាអង់គ្លេស តាម​វិធី​ដែល​បាន​ស្វែងយល់​"
-"ដោយ Outlook(tm) និង កម្មវិធី​ផ្ញើ​អ៊ីមែល​ផ្សេង​ទៀត ​ដែល​មិនគាំទ្រឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែលបាន​អ៊ិនកូដ​​តាម​"
-"ខ្នាតគំរូ ។\n"
-"ចងចាំថា KMail អាច​បង្កើត​សារ​ដែល​​មិនធ្វើ​តាម​ខ្នាត​គំរូ ហើយ​ ដោយហេតុ​នេះ វា​គឺ​អាចធ្វើ​បាន​ដែល​សារ​របស់​"
-"អ្នក​នឹង​មិនត្រូវបាន​យល់ដោយ​ម៉ាស៊ីន​ភ្ញៀវ​សំបុត្រ​ដែល​ធ្វើតាម​ខ្នាតគំរូ ។ ដូច្នេះ លើកលែងតែអ្នក​​គ្មាន​ជម្រើស​"
-"ផ្សេង អ្នក​មិនគួរ​​បើក​ជម្រើស​នេះ​ឡើយ ។"
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
@@ -4255,29 +4223,29 @@ msgstr "របា​ឧបករណ៍​ HTML"
 msgid "Text Direction Toolbar"
 msgstr "របារ​ឧបករណ៍​ទិស​អត្ថបទ"
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ត្រូវបាន​កំណត់​ឲ្យនៅ​ក្រៅ​បណ្ដាញ ។ រាល់ការងារ​នៅលើបណ្ដាញ​ទាំងអស់​ត្រូវបាន​ផ្អាក"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ប្រុង​នឹង​ផ្ញើ​សំបុត្រ​ហើយ..."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​បណ្ដាញ ។ រាល់​ការងារ​នៅ​លើ​បណ្ដាញ​ទាំងអស់​បាន​បន្ត"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4286,39 +4254,39 @@ msgstr ""
 "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​​បណ្ដាញ រាល់​ការងារ​ដែល​នៅ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បន្ត នៅ​ពេល​ដែល​ការ​តភ្ជាប់​"
 "បណ្ដាញ​ត្រូវ​បាន​រកឃើញ"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "បច្ចុប្បន្ន KMail នៅក្នុង​របៀប​ក្រៅបណ្ដាញ ។ តើអ្នក​ចង់​បន្ត​ដោយ​របៀបណា ?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "លើបណ្ដាញ/ក្រៅបណ្ដាញ"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "ធ្វើការ​នៅលើ​បណ្ដាញ"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "ធ្វើការ​នៅក្រៅ​បណ្ដាញ"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ រាល់​ការងារ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បាន​បន្ត"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "គ្មាន​ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ​ទេ រាល់​ការងារ​លើ​បណ្ដាញ​ទាំងអស់​នឹង​ត្រូវ​បាន​ផ្អាក"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4327,36 +4295,36 @@ msgstr ""
 "បាន​បរាជ័យ​ក្នុងការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ %1 ។\n"
 "មូលហេតុ​ ៖ %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ ដើម្បី​ប្រើ​កា​រដឹកជញ្ជូន​លំនាំដើម ៖"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ត្រូវ​បាន​ផ្លាស់ប្ដូរ​​ដើម្បី​ប្រើ​កា​របញ្ជូនអ្វី​​ដែល​បាន​កែប្រែ ៖"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "កំពុង​ផ្ញើ​សារ"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "កំពុង​ចាប់ផ្ដើម​ដំណើរការ​ផ្ញើ..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4364,7 +4332,7 @@ msgid ""
 "%2"
 msgstr "ធនធាន %1 ខូច ។ ធនធាន​នេះ​ឥឡូវ​គឺជា %2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7804,6 +7772,32 @@ msgstr[0] "កា​រឆ្លើយតប​នៅ​ក្រៅ​ការ
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "ពង្រីក"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "ការ​ដាក់ឈ្មោះ​ឯកសារ​ភ្ជាប់​ Outlook ដែល​ឆបគ្នា"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "បើក​ជម្រើស​នេះ​ដើម្បី​​ធ្វើ​ឲ្យ Outlook(tm) ស្គាល់​ឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែល​មាន​តួអក្សរ​មិន​មែន​ជា​ភាសា​"
+#~ "អង់គ្លេស"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "អ្នក​បាន​ជ្រើស​ដើម្បី​អ៊ិនកូដឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែល​មាន​តួអក្សរ​មិនមែន​ជា​ភាសាអង់គ្លេស តាម​វិធី​ដែល​បាន​"
+#~ "ស្វែងយល់​ដោយ Outlook(tm) និង កម្មវិធី​ផ្ញើ​អ៊ីមែល​ផ្សេង​ទៀត ​ដែល​មិនគាំទ្រឈ្មោះ​ឯកសារ​ភ្ជាប់​ដែលបាន​"
+#~ "អ៊ិនកូដ​​តាម​ខ្នាតគំរូ ។\n"
+#~ "ចងចាំថា KMail អាច​បង្កើត​សារ​ដែល​​មិនធ្វើ​តាម​ខ្នាត​គំរូ ហើយ​ ដោយហេតុ​នេះ វា​គឺ​អាចធ្វើ​បាន​ដែល​សារ​"
+#~ "របស់​អ្នក​នឹង​មិនត្រូវបាន​យល់ដោយ​ម៉ាស៊ីន​ភ្ញៀវ​សំបុត្រ​ដែល​ធ្វើតាម​ខ្នាតគំរូ ។ ដូច្នេះ លើកលែងតែអ្នក​​គ្មាន​"
+#~ "ជម្រើស​ផ្សេង អ្នក​មិនគួរ​​បើក​ជម្រើស​នេះ​ឡើយ ។"
 
 #~ msgid ""
 #~ "This prevents the automatic expiry of old messages in a folder from "

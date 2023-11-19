@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1429,20 +1429,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "&افزودن...‌"
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "&حذف‌"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&تغییر...‌"
@@ -1603,83 +1603,50 @@ msgstr "&فعال‌سازی امضا‌"
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "نام‌گذاری پیوست همساز Outlook"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"برای این که Outlook(tm) را مجبور کنید که نامهای پیوستی را که حاوی نویسه‌های "
-"غیر انگلیسی می‌باشد، بفهمد، این گزینه را فعال کنید"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&فعال‌سازی آشکارسازی پیوستهای از دست‌ رفته‌"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "شناخت هر کدام از واژه‌های کلیدی زیر به عنوان هدف برای پیوست پرونده:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "وارد کردن واژه کلیدی جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "&پیوستها‌"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgid "Maximum Attachment Size:"
 msgstr " پیوست دارد"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " مگابایت"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
 msgstr "ثبت حد اندازه:"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"کد‌بندی نامهای پیوست حاوی نویسه‌های غیر انگلیسی را به روشی انتخاب کرده‌اید، که "
-"توسط Outlook(tm) و دیگر کارخواهان نامه که از نامهای کد‌بندی‌شده پیوست "
-"Outlook(tm)  پیرو استاندارد پشتیبانی نمی‌کنند، فهمیده شوند.\n"
-"توجه داشته باشید که، ممکن است KMail پیامهای پیرو غیر استاندارد را ایجاد کند؛ "
-"و در نتیجه، این امکان وجود دارد که کارخواهان نامه پیرو استاندارد، پیامهایتان "
-"را بفهمند، مگر این که انتخاب دیگری نداشته باشید، بنابراین، نباید این گزینه "
-"را فعال کنید."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
@@ -4443,29 +4410,29 @@ msgstr "میله ابزار زنگام"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail، برای برون‌خط شدن تنظیم می‌شود؛ تمام کارهای شبکه معلق می‌شوند"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&ارسال نامه‌"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "در مورد ارسال رایانامه..."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4473,54 +4440,54 @@ msgid ""
 "connection is detected"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "در حال حاضر KMail در حالت برون‌خط است. چقدر می‌خواهید پیش بروید؟"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "بر‌خط/برون‌خط"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "کار کردن برخط"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "کار کردن برون‌‌خط"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail، برای برون‌خط شدن تنظیم می‌شود؛ تمام کارهای شبکه معلق می‌شوند"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Opening Autosave File Failed"
 msgstr "خرابی در ذخیره خودکار"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4528,7 +4495,7 @@ msgid_plural ""
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
 msgstr[1] ""
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4536,25 +4503,25 @@ msgid_plural ""
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
 msgstr[1] ""
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "ارسال پیامها"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "آغاز فرایند فرستنده..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -8081,6 +8048,33 @@ msgstr[1] ""
 #, fuzzy, kde-format
 msgid "Zoom: %1%"
 msgstr "بزرگ‌نمایی"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "نام‌گذاری پیوست همساز Outlook"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "برای این که Outlook(tm) را مجبور کنید که نامهای پیوستی را که حاوی "
+#~ "نویسه‌های غیر انگلیسی می‌باشد، بفهمد، این گزینه را فعال کنید"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "کد‌بندی نامهای پیوست حاوی نویسه‌های غیر انگلیسی را به روشی انتخاب کرده‌اید، "
+#~ "که توسط Outlook(tm) و دیگر کارخواهان نامه که از نامهای کد‌بندی‌شده پیوست "
+#~ "Outlook(tm)  پیرو استاندارد پشتیبانی نمی‌کنند، فهمیده شوند.\n"
+#~ "توجه داشته باشید که، ممکن است KMail پیامهای پیرو غیر استاندارد را ایجاد "
+#~ "کند؛ و در نتیجه، این امکان وجود دارد که کارخواهان نامه پیرو استاندارد، "
+#~ "پیامهایتان را بفهمند، مگر این که انتخاب دیگری نداشته باشید، بنابراین، "
+#~ "نباید این گزینه را فعال کنید."
 
 #~ msgid "Send queued mail on mail check"
 #~ msgstr "ارسال نامه صف‌شده در بررسی نامه"

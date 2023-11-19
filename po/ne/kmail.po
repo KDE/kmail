@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1448,20 +1448,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "थप्नुहोस्..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "हटाउनुहोस्"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "परिमार्जन गर्नुहोस्..."
@@ -1626,82 +1626,50 @@ msgstr "हस्ताक्षर सक्षम पार्नुहोस�
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "आउटलुक मिल्दो सङ्लग्नता नामकरण"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"अङ्ग्रेजी बाहेकका क्यारेक्टर समावेश गर्ने सङ्लग्नता नाम आउटलुक(tm) बुझ्ने बनाउन यो विकल्प "
-"खोल्नुहोस् ।"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "छुटेका सङ्लग्नता पत्ता लगाउन सक्षम पार्नुहोस्"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "फाइल सङ्लग्न गर्न इच्छा अनुसार तलका कुनै पनि शब्दकुञ्जी पहिचान गर्नुहोस्:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "नयाँ शब्दकुञ्जी प्रविष्ट गर्नुहोस्:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "सङ्लग्नता"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgid "Maximum Attachment Size:"
 msgstr "सङ्लग्नता छ"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " मेगा बाइट"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
 msgstr "लग साइज सीमा:"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"तपाइँले अङ्ग्रेजी नभएका क्यारेक्टर सम्मिलित सङ्लग्नता नाम आउटलुक(tm) ले बुझ्ने तरिकाले सङ्केतन "
-"गर्न र मानक मिल्दो सङ्केतन गरिएका सङ्केतन नाम समर्थन नगर्ने अन्य मेल क्लाइन्ट रोज्नुभएको छ "
-"।\n"
-"याद गर्नुहोस् केडीई मेलले मानकसँग नमिल्ने सन्देश सिर्जना गर्न सक्छ, र साथसाथै तपाईँको सन्देश "
-"मानक मिल्दो मेल क्लाइन्टले नबुझ्ने सम्भावना हुन्छ; त्यसैले, तपाईँसँग अन्य विकल्प नभएसम्म, यो "
-"विकल्प सक्षम पार्नु हुदैन ।"
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
@@ -4463,29 +4431,29 @@ msgstr "HTML उपकरणपट्टी"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "केडीई मेल अफलाइनाम सेट हुनेछ; सबै सञ्जाल कार्य निलम्बन हुन्छन्"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "सेन्डमेल"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "इमेल पठाउने बारेमा..."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "केडीई मेल अनलाइनमा सेट हुनेछ; सबै सञ्जाल कार्य पुन: निरन्तर हुनेछन्"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4493,54 +4461,54 @@ msgid ""
 "connection is detected"
 msgstr "केडीई मेल अनलाइनमा सेट हुनेछ; सबै सञ्जाल कार्य पुन: निरन्तर हुनेछन्"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "के मेल हाल अफलाइन मोडमा छ । कसरी तपाईँ अगाडि बढ्न चाहनुहुन्छ?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "अनलाइन/अफलाइन"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "अनलाइनमा कार्य कार्य गर्नुहोस्"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "अफलाइनमा कार्य गर्नुहोस्"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "केडीई मेल अनलाइनमा सेट हुनेछ; सबै सञ्जाल कार्य पुन: निरन्तर हुनेछन्"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "केडीई मेल अफलाइनाम सेट हुनेछ; सबै सञ्जाल कार्य निलम्बन हुन्छन्"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgid "Opening Autosave File Failed"
 msgstr "स्वत: बचत असफल"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4548,7 +4516,7 @@ msgid_plural ""
 msgstr[0] "पूर्वनिर्धारित पारवाहन प्रयोग गर्न यो पहिचान परिवर्तन गरिएको छ:"
 msgstr[1] "पूर्वनिर्धारित पारवाहन प्रयोग गर्नि %1पहिचान परिवर्तन गरिएको छ:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4556,25 +4524,25 @@ msgid_plural ""
 msgstr[0] "यो पहिचानलाई परिमार्जित पारवाहन प्रयोग गर्न परिवर्तन गरिएको छ:"
 msgstr[1] "ति %1 पहिचानहरूलाई परिमार्जित पारवाहन प्रयोग गर्न परिवर्तन गरिएको छ:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "सन्देश पठाउदैछ"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process..."
 msgstr "प्रेषक प्रक्रिया सुरुआत गर्दैछ..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -8082,6 +8050,32 @@ msgstr[1] "\"अफिस बाहिरको\" जवाफ सम्पा�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "आउटलुक मिल्दो सङ्लग्नता नामकरण"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "अङ्ग्रेजी बाहेकका क्यारेक्टर समावेश गर्ने सङ्लग्नता नाम आउटलुक(tm) बुझ्ने बनाउन यो विकल्प "
+#~ "खोल्नुहोस् ।"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "तपाइँले अङ्ग्रेजी नभएका क्यारेक्टर सम्मिलित सङ्लग्नता नाम आउटलुक(tm) ले बुझ्ने तरिकाले "
+#~ "सङ्केतन गर्न र मानक मिल्दो सङ्केतन गरिएका सङ्केतन नाम समर्थन नगर्ने अन्य मेल क्लाइन्ट "
+#~ "रोज्नुभएको छ ।\n"
+#~ "याद गर्नुहोस् केडीई मेलले मानकसँग नमिल्ने सन्देश सिर्जना गर्न सक्छ, र साथसाथै तपाईँको "
+#~ "सन्देश मानक मिल्दो मेल क्लाइन्टले नबुझ्ने सम्भावना हुन्छ; त्यसैले, तपाईँसँग अन्य विकल्प "
+#~ "नभएसम्म, यो विकल्प सक्षम पार्नु हुदैन ।"
 
 #, fuzzy
 #~ msgid ""

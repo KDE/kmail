@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2023-09-10 18:09+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1372,20 +1372,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "&சேர்..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "&நீக்கு..."
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&மாற்று..."
@@ -1541,75 +1541,44 @@ msgstr "செல்லுபடியாகாத தலைப்புப்�
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "அவுட்லுக்கில் வேலை செய்யும் வித‍த்தில் உடனிணைப்புகளுக்கு பெயரிடு"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"உடனிணைப்புகளின் பெயர்களில் ஆங்கிலத்தில் பயன்படாத எழுத்துகள் இருந்தால், அவற்றை அவுட்லுக் "
-"புரிந்துகொள்ளுமாறு மாற்ற இந்த விருப்பத்தை இயக்குங்கள்"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "இ&ணைக்க மறந்துவிட்ட உடனிணைப்புகளை கண்டறிவதை இயக்கு"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "கோப்பை உடனிணைக்கும் நோக்கத்தை பின்வரும் சொற்கள் குறிப்பதாக கருது:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "புதிய சொல்லை உள்ளிடுங்கள்:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "உடனிணைப்பை குறிக்கும் இந்த சொல்லை நீக்க விரும்புகிறீர்களா?"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
 msgid "Attachment Word:"
 msgstr "உடனிணைப்பு சொல்:"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "உடனிணைப்பின் அதிகபட்ச அளவு:"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "வரம்பில்லை"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"ஆங்கிலம் அல்லாத எழுத்துகளைக் கொண்ட உடனிணைப்புப் பெயர்களை அவுட்லுக் புரிந்துகொள்ளும் வகையில் "
-"(அதாவது செந்தர முறையில் இல்லாமல்) குறியாக்குமாறு அமைத்துள்ளீர்.\n"
-"அவ்வாறு உருவாக்கும் அஞ்சல்கள் செந்தரமல்லாதவையாதலால் தரநிலைகளைப் பின்பற்றும் அஞ்சல் "
-"செயலிகளால் புரிந்துகொள்ள முடியாத வகையில் இருக்கலாம்; ஆதலால், முடிந்தவரையில் இத்தேர்வின் "
-"பயன்பாட்டைத் தவிர்க்கவும்."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4176,31 +4145,31 @@ msgstr "HTML கருவிப்பட்டை"
 msgid "Text Direction Toolbar"
 msgstr "உரையின் திசைக்கான கருவிப்பட்டை"
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; இணையத்தை பயன்படுத்தும் அனைத்து அம்சங்களும் "
 "முடக்கப்பட்டுள்ளன"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Send Email"
 msgstr "மின்னஞ்சலை அனுப்பு"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, kde-format
 msgid "Impossible to send email"
 msgstr "மின்னஞ்சலை அனுப்ப இயலாது"
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "கேமெயில் தொடர்புள்ள நிலைக்கு மாற்றப்பட்டுள்ளது; இணையத்தை பயன்படுத்தும் அனைத்து அம்சங்களும் "
 "இயங்குகின்றன"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4209,39 +4178,39 @@ msgstr ""
 "கேமெயில் தொடர்புள்ள நிலைக்கு மாற்றப்பட்டுள்ளது; இணைய இணைப்பு கண்டறியப்படும்போது அதை "
 "பயன்படுத்தும் அனைத்து அம்சங்களும் இயங்கும்"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; என்ன செய்ய விரும்புகிறீர்கள்?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "தொடர்புள்ள/தொடர்பற்ற நிலை"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "தொடர்புள்ள நிலையில் இயங்கு"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "தொடர்பற்ற நிலையில் இயங்கு"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "பிணைய இணைப்பு கண்டறியப்பட்டது, இணைய பணிகள் தொடரும்"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "பிணைய இணைப்பு இல்லை, இணைய பணிகள் முடங்கியுள்ளன"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4250,12 +4219,12 @@ msgstr ""
 "%1 என்ற தானியக்க சேமிப்பு கோப்பை திறக்க முடியவில்லை.\n"
 "காரணம்: %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "தானியக்க சேமிப்பு கோப்பை திறத்தல் தோல்வியடைந்தது"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4263,7 +4232,7 @@ msgid_plural ""
 msgstr[0] "இந்த அடையாளம், இயல்பிருப்பு கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளது:"
 msgstr[1] "இந்த %1 அடையாளங்கள், இயல்பிருப்பு கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளன:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4271,17 +4240,17 @@ msgid_plural ""
 msgstr[0] "இந்த அடையாளம், திருத்தப்பட்ட கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளது:"
 msgstr[1] "இந்த %1 அடையாளங்கள், திருத்தப்பட்ட கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளன:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "அஞ்சல்கள் அனுப்பப்படுகின்றன"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "அனுப்பும் பணி துவக்கப்படுகிறது…"
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4290,7 +4259,7 @@ msgstr ""
 "%1 என்பது முடங்கியுள்ளது.\n"
 "%2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7565,6 +7534,31 @@ msgstr[1] "Edit \"Out of Office\" Replies..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "உருப்பெருக்கம்: %1%"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "அவுட்லுக்கில் வேலை செய்யும் வித‍த்தில் உடனிணைப்புகளுக்கு பெயரிடு"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "உடனிணைப்புகளின் பெயர்களில் ஆங்கிலத்தில் பயன்படாத எழுத்துகள் இருந்தால், அவற்றை அவுட்லுக் "
+#~ "புரிந்துகொள்ளுமாறு மாற்ற இந்த விருப்பத்தை இயக்குங்கள்"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "ஆங்கிலம் அல்லாத எழுத்துகளைக் கொண்ட உடனிணைப்புப் பெயர்களை அவுட்லுக் புரிந்துகொள்ளும் "
+#~ "வகையில் (அதாவது செந்தர முறையில் இல்லாமல்) குறியாக்குமாறு அமைத்துள்ளீர்.\n"
+#~ "அவ்வாறு உருவாக்கும் அஞ்சல்கள் செந்தரமல்லாதவையாதலால் தரநிலைகளைப் பின்பற்றும் அஞ்சல் "
+#~ "செயலிகளால் புரிந்துகொள்ள முடியாத வகையில் இருக்கலாம்; ஆதலால், முடிந்தவரையில் "
+#~ "இத்தேர்வின் பயன்பாட்டைத் தவிர்க்கவும்."
 
 #~ msgid ""
 #~ "This prevents the automatic expiry of old messages in a folder from "
