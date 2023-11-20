@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-17 01:38+0000\n"
+"POT-Creation-Date: 2023-11-19 01:52+0000\n"
 "PO-Revision-Date: 2023-11-10 00:03+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -1316,20 +1316,20 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "&Añadir..."
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "Eli&minar"
 
 #: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "Modif&icar..."
@@ -1487,80 +1487,46 @@ msgstr "Encabezado inválido"
 
 #: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
-msgid "Outlook-compatible attachment naming"
-msgstr "Nombrado de adjuntos compatible con Outlook"
-
-#: configuredialog/configurecomposerpage.cpp:1091
-#, kde-format
-msgid ""
-"Turn this option on to make Outlook(tm) understand attachment names "
-"containing non-English characters"
-msgstr ""
-"Active esta opción para hacer que Outlook(tm) entienda los nombres de "
-"adjuntos que tengan caracteres no ingleses"
-
-#: configuredialog/configurecomposerpage.cpp:1099
-#, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Activar la detecció&n de adjuntos perdidos"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Reconocer cualquiera de las siguientes palabras como la intención de "
 "adjuntar un archivo:"
 
-#: configuredialog/configurecomposerpage.cpp:1116
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Introduzca nueva palabra clave:"
 
-#: configuredialog/configurecomposerpage.cpp:1117
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "¿Desea eliminar esta palabra del adjunto?"
 
-#: configuredialog/configurecomposerpage.cpp:1118
+#: configuredialog/configurecomposerpage.cpp:1107
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Palabra de adjunto:"
 
-#: configuredialog/configurecomposerpage.cpp:1126
+#: configuredialog/configurecomposerpage.cpp:1115
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "Máximo tamaño del adjunto:"
 
-#: configuredialog/configurecomposerpage.cpp:1133
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1135
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "Sin límite"
-
-#: configuredialog/configurecomposerpage.cpp:1164
-#, kde-format
-msgid ""
-"You have chosen to encode attachment names containing non-English characters "
-"in a way that is understood by Outlook(tm) and other mail clients that do "
-"not support standard-compliant encoded attachment names.\n"
-"Note that KMail may create non-standard compliant messages, and consequently "
-"it is possible that your messages will not be understood by standard-"
-"compliant mail clients; so, unless you have no other choice, you should not "
-"enable this option."
-msgstr ""
-"Ha elegido codificar los nombres de los adjuntos que tengan caracteres no "
-"ingleses de forma que Outlook(tm) y otros clientes de correo que no admitan "
-"nombres de adjuntos codificados de forma compatible con los estándares "
-"puedan entenderlos.\n"
-"Tenga en cuenta que KMail puede crear mensajes que no sean conformes con los "
-"estándares y, por consiguiente, es posible que sus mensajes no los entiendan "
-"los clientes de correo que cumplen los estándares. Por tanto, a no ser que "
-"no tenga otra opción, no debería activar esta opción."
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
@@ -4197,31 +4163,31 @@ msgstr "Barra de herramientas HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra de herramientas de dirección de texto"
 
-#: kmkernel.cpp:639
+#: kmkernel.cpp:638
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail está en modo desconectado. Todas las tareas relacionadas con la red se "
 "han suspendido"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Send Email"
 msgstr "Enviar correo"
 
-#: kmkernel.cpp:660 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Imposible enviar correo"
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail está en modo conectado. Todas las tareas relacionadas con la red se "
 "han reanudado"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4230,42 +4196,42 @@ msgstr ""
 "KMail está en modo conectado. Todas las tareas de red se reanudarán cuando "
 "se detecte una conexión de red"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail está ahora en modo desconectado. ¿Quiere seguir adelante?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:767
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Conectado/desconectado"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2431
+#: kmkernel.cpp:768 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "Trabajar conectado"
 
-#: kmkernel.cpp:770 kmmainwidget.cpp:2428
+#: kmkernel.cpp:769 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "Trabajar desconectado"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Conexión de red detectada, todas las tareas relacionadas con la red se han "
 "reanudado"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:796
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "No se ha detectado conexión de red, todas las tareas relacionadas con la red "
 "se han suspendido"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:891
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4274,12 +4240,12 @@ msgstr ""
 "Ha fallado al abrir el archivo de autoguardado en %1.\n"
 "Motivo: %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "La apertura del archivo de autoguardado ha fallado"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4289,7 +4255,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Estas %1 identidades se han cambiado para usar el transporte predefinido:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4298,17 +4264,17 @@ msgstr[0] "Esta identidad se ha cambiado para usar el transporte modificado:"
 msgstr[1] ""
 "Estas %1 identidades se han cambiado para usar el transporte modificado:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Enviando mensajes"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Iniciando el proceso de envío..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4317,7 +4283,7 @@ msgstr ""
 "El recurso %1 está dañado.\n"
 "%2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7615,6 +7581,34 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zum: %1%"
+
+#~ msgid "Outlook-compatible attachment naming"
+#~ msgstr "Nombrado de adjuntos compatible con Outlook"
+
+#~ msgid ""
+#~ "Turn this option on to make Outlook(tm) understand attachment names "
+#~ "containing non-English characters"
+#~ msgstr ""
+#~ "Active esta opción para hacer que Outlook(tm) entienda los nombres de "
+#~ "adjuntos que tengan caracteres no ingleses"
+
+#~ msgid ""
+#~ "You have chosen to encode attachment names containing non-English "
+#~ "characters in a way that is understood by Outlook(tm) and other mail "
+#~ "clients that do not support standard-compliant encoded attachment names.\n"
+#~ "Note that KMail may create non-standard compliant messages, and "
+#~ "consequently it is possible that your messages will not be understood by "
+#~ "standard-compliant mail clients; so, unless you have no other choice, you "
+#~ "should not enable this option."
+#~ msgstr ""
+#~ "Ha elegido codificar los nombres de los adjuntos que tengan caracteres no "
+#~ "ingleses de forma que Outlook(tm) y otros clientes de correo que no "
+#~ "admitan nombres de adjuntos codificados de forma compatible con los "
+#~ "estándares puedan entenderlos.\n"
+#~ "Tenga en cuenta que KMail puede crear mensajes que no sean conformes con "
+#~ "los estándares y, por consiguiente, es posible que sus mensajes no los "
+#~ "entiendan los clientes de correo que cumplen los estándares. Por tanto, a "
+#~ "no ser que no tenga otra opción, no debería activar esta opción."
 
 #~ msgid ""
 #~ "This prevents the automatic expiry of old messages in a folder from "
