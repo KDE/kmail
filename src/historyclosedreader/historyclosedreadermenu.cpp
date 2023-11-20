@@ -4,10 +4,21 @@
 */
 
 #include "historyclosedreadermenu.h"
+#include "historyclosedreadermanager.h"
+#include <KLocalizedString>
+#include <QMenu>
 
 HistoryClosedReaderMenu::HistoryClosedReaderMenu(QObject *parent)
-    : QObject{parent}
+    : KActionMenu{parent}
 {
+    setText(i18n("Closed Reader"));
+    delete menu();
+    auto subMenu = new QMenu;
+    setMenu(subMenu);
+    // TODO add clear
+    // TODO add all menu entries
 }
 
 HistoryClosedReaderMenu::~HistoryClosedReaderMenu() = default;
+
+#include "moc_historyclosedreadermenu.cpp"

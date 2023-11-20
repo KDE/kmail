@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include <QObject>
+#include <KActionMenu>
 
-class HistoryClosedReaderMenu : public QObject
+class HistoryClosedReaderMenu : public KActionMenu
 {
     Q_OBJECT
 public:
