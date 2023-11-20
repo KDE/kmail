@@ -520,12 +520,6 @@ private:
     [[nodiscard]] bool queryClose() override;
 
     /**
-     * Turn encryption on/off. If setByUser is true then a message box is shown
-     * in case encryption isn't possible.
-     */
-    void setEncryption(bool encrypt, bool setByUser = false);
-
-    /**
      * Turn signing on/off. If setByUser is true then a message box is shown
      * in case signing isn't possible.
      */

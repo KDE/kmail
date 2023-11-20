@@ -2618,63 +2618,6 @@ void KMComposerWin::slotUpdateWindowTitle()
     }
 }
 
-void KMComposerWin::setEncryption(bool encrypt, bool setByUser)
-{
-    const bool wasModified = isModified();
-    if (setByUser) {
-        setModified(true);
-    }
-    if (!mEncryptionState.encrypt()) {
-        encrypt = false;
-    }
-    // check if the user wants to encrypt messages to himself and if he defined
-    // an encryption key for the current identity
-    else if (encrypt && !mLastIdentityHasEncryptionKey) {
-        if (setByUser) {
-            KMessageBox::error(this,
-                               i18n("<qt><p>You have requested that messages be "
-                                    "encrypted to yourself, but the currently selected "
-                                    "identity does not define an (OpenPGP or S/MIME) "
-                                    "encryption key to use for this.</p>"
-                                    "<p>Please select the key(s) to use "
-                                    "in the identity configuration.</p>"
-                                    "</qt>"),
-                               i18nc("@title:window", "Undefined Encryption Key"));
-            setModified(wasModified);
-        }
-        encrypt = false;
-    }
-
-    if (setByUser) {
-        mEncryptionState.setOverride(setByUser);
-    } else {
-        mEncryptionState.unsetOverride();
-    }
-
-    if (setByUser) {
-        if (encrypt) {
-            if (mKeyCache->initialized()) {
-                runKeyResolver();
-            }
-        } else {
-            // Encryption was disabled, remove the encryption indicator
-            const auto lst = mComposerBase->recipientsEditor()->lines();
-            for (auto line : lst) {
-                auto edit = qobject_cast<MessageComposer::RecipientLineNG *>(line);
-                edit->setIcon(QIcon());
-                auto recipient = edit->data().dynamicCast<MessageComposer::Recipient>();
-                recipient->setEncryptionAction(Kleo::Impossible);
-                recipient->setKey(GpgME::Key());
-            }
-        }
-    }
-
-    // mark the attachments for (no) encryption
-    if (canSignEncryptAttachments()) {
-        mComposerBase->attachmentModel()->setEncryptSelected(encrypt);
-    }
-}
-
 void KMComposerWin::slotSignToggled(bool on)
 {
     setSigning(on, true);
