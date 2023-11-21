@@ -11,7 +11,7 @@
 HistoryClosedReaderMenu::HistoryClosedReaderMenu(QObject *parent)
     : KActionMenu{parent}
 {
-    setText(i18n("Closed Reader"));
+    setText(i18nc("List of message viewer closed", "Closed Reader"));
     delete menu();
     auto subMenu = new QMenu;
     setMenu(subMenu);
