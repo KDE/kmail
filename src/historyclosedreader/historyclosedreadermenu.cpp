@@ -21,4 +21,14 @@ HistoryClosedReaderMenu::HistoryClosedReaderMenu(QObject *parent)
 
 HistoryClosedReaderMenu::~HistoryClosedReaderMenu() = default;
 
+void HistoryClosedReaderMenu::slotClear()
+{
+    HistoryClosedReaderManager::self()->clear();
+}
+
+void HistoryClosedReaderMenu::updateMenu()
+{
+    // TODO
+}
+
 #include "moc_historyclosedreadermenu.cpp"

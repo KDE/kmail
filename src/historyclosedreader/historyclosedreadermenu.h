@@ -13,4 +13,8 @@ class HistoryClosedReaderMenu : public KActionMenu
 public:
     explicit HistoryClosedReaderMenu(QObject *parent = nullptr);
     ~HistoryClosedReaderMenu() override;
+
+private:
+    void slotClear();
+    void updateMenu();
 };
