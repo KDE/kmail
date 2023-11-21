@@ -74,4 +74,9 @@ int HistoryClosedReaderManager::count() const
     return mClosedReaderInfos.count();
 }
 
+QList<HistoryClosedReaderInfo> HistoryClosedReaderManager::closedReaderInfos() const
+{
+    return mClosedReaderInfos;
+}
+
 #include "moc_historyclosedreadermanager.cpp"

@@ -17,6 +17,7 @@ void HistoryClosedReaderManagerTest::shouldHaveDefaultValues()
 {
     HistoryClosedReaderManager w;
     QVERIFY(w.isEmpty());
+    QVERIFY(w.closedReaderInfos().isEmpty());
 }
 
 void HistoryClosedReaderManagerTest::shouldAddValues()

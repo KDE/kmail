@@ -29,6 +29,8 @@ public:
 
     [[nodiscard]] int count() const;
 
+    [[nodiscard]] QList<HistoryClosedReaderInfo> closedReaderInfos() const;
+
 Q_SIGNALS:
     void historyClosedReaderChanged();
 
