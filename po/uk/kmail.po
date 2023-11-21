@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-19 01:52+0000\n"
+"POT-Creation-Date: 2023-11-21 01:34+0000\n"
 "PO-Revision-Date: 2023-11-09 08:31+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -1047,61 +1047,61 @@ msgstr "Вилучення мітки"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Створити мітку неможливо: мітка з такою назвою вже існує."
 
-#: configuredialog/configurecomposerpage.cpp:65
+#: configuredialog/configurecomposerpage.cpp:64
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "Загальні"
 
-#: configuredialog/configurecomposerpage.cpp:72
+#: configuredialog/configurecomposerpage.cpp:71
 #, kde-format
 msgid "Standard Templates"
 msgstr "Стандартні шаблони"
 
-#: configuredialog/configurecomposerpage.cpp:78
+#: configuredialog/configurecomposerpage.cpp:77
 #, kde-format
 msgid "Custom Templates"
 msgstr "Власні шаблони"
 
-#: configuredialog/configurecomposerpage.cpp:84
+#: configuredialog/configurecomposerpage.cpp:83
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Тема"
 
-#: configuredialog/configurecomposerpage.cpp:91
+#: configuredialog/configurecomposerpage.cpp:90
 #, kde-format
 msgid "Charset"
 msgstr "Набір символів"
 
-#: configuredialog/configurecomposerpage.cpp:97
+#: configuredialog/configurecomposerpage.cpp:96
 #, kde-format
 msgid "Headers"
 msgstr "Заголовки"
 
-#: configuredialog/configurecomposerpage.cpp:103
+#: configuredialog/configurecomposerpage.cpp:102
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "Долучення"
 
-#: configuredialog/configurecomposerpage.cpp:109
+#: configuredialog/configurecomposerpage.cpp:108
 #, kde-format
 msgid "Autocorrection"
 msgstr "Автовиправлення"
 
-#: configuredialog/configurecomposerpage.cpp:115
+#: configuredialog/configurecomposerpage.cpp:114
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "Автозміна розмірів зображень"
 
-#: configuredialog/configurecomposerpage.cpp:132
+#: configuredialog/configurecomposerpage.cpp:131
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Підпис"
 
-#: configuredialog/configurecomposerpage.cpp:138
+#: configuredialog/configurecomposerpage.cpp:137
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
@@ -1109,12 +1109,12 @@ msgid ""
 msgstr ""
 "Автоматично вставляти вказаний підпис під час створення нового повідомлення"
 
-#: configuredialog/configurecomposerpage.cpp:149
+#: configuredialog/configurecomposerpage.cpp:148
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Вставити підпис над цитованим текстом"
 
-#: configuredialog/configurecomposerpage.cpp:161
+#: configuredialog/configurecomposerpage.cpp:160
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1123,18 +1123,18 @@ msgstr ""
 "Вставляти сумісний з RFC відокремлювач підпису (два дефіси та пробіл у "
 "окремому рядку) перед підписом"
 
-#: configuredialog/configurecomposerpage.cpp:172
+#: configuredialog/configurecomposerpage.cpp:171
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Не цитувати у відповідях будь-які наявні підписи"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:183
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Формат"
 
-#: configuredialog/configurecomposerpage.cpp:189
+#: configuredialog/configurecomposerpage.cpp:188
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1143,7 +1143,7 @@ msgstr ""
 "Під час створення відповіді цитувати лише позначений фрагмент тексту замість "
 "цілого повідомлення, якщо у вікні повідомлення позначено фрагмент тексту."
 
-#: configuredialog/configurecomposerpage.cpp:199
+#: configuredialog/configurecomposerpage.cpp:198
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1154,17 +1154,17 @@ msgstr ""
 "цитованого тексту, навіть якщо рядок було створено додаванням розриву рядка "
 "під час розбиття на рядки для зручності читання."
 
-#: configuredialog/configurecomposerpage.cpp:210
+#: configuredialog/configurecomposerpage.cpp:209
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Увімкнути автоматичне перенесення слів на вказаній позиції у рядку"
 
-#: configuredialog/configurecomposerpage.cpp:221
+#: configuredialog/configurecomposerpage.cpp:220
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Встановити позицію автоматичного перенесення слів у рядку"
 
-#: configuredialog/configurecomposerpage.cpp:241
+#: configuredialog/configurecomposerpage.cpp:240
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1174,7 +1174,7 @@ msgstr ""
 "початковому форматі. Якщо зняти позначку з цього пункту, типово, текст "
 "повідомлення буде перетворено у звичайний текстовий формат."
 
-#: configuredialog/configurecomposerpage.cpp:253
+#: configuredialog/configurecomposerpage.cpp:252
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1184,34 +1184,34 @@ msgstr ""
 "розмітки HTML. Передбачено підтримку напівжирного, курсивного та "
 "підкресленого шрифту, списків та зовнішніх посилань."
 
-#: configuredialog/configurecomposerpage.cpp:263
+#: configuredialog/configurecomposerpage.cpp:262
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "Вбудувати"
 
-#: configuredialog/configurecomposerpage.cpp:263
+#: configuredialog/configurecomposerpage.cpp:262
 #, kde-format
 msgid "As Attachment"
 msgstr "Як долучення"
 
-#: configuredialog/configurecomposerpage.cpp:265
+#: configuredialog/configurecomposerpage.cpp:264
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "Встановити типовий формат переспрямовування повідомлень"
 
-#: configuredialog/configurecomposerpage.cpp:269
+#: configuredialog/configurecomposerpage.cpp:268
 #, kde-format
 msgid "Default forwarding type:"
 msgstr "Типовий тип переспрямовування:"
 
-#: configuredialog/configurecomposerpage.cpp:287
+#: configuredialog/configurecomposerpage.cpp:286
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Адресати"
 
-#: configuredialog/configurecomposerpage.cpp:300
+#: configuredialog/configurecomposerpage.cpp:299
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1222,19 +1222,19 @@ msgstr ""
 "Надіслати подібний запит для окремого повідомлення можна за допомогою пункту "
 "«Параметри → Запитати сповіщення про долю листа»."
 
-#: configuredialog/configurecomposerpage.cpp:325
+#: configuredialog/configurecomposerpage.cpp:324
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr "Попереджати, якщо кількість адресатів завелика"
 
-#: configuredialog/configurecomposerpage.cpp:336
+#: configuredialog/configurecomposerpage.cpp:335
 #, kde-format
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 "Встановити максимальну кількість отримувачів. Якщо цю кількість буде "
 "перевищено, програма показуватиме попередження."
 
-#: configuredialog/configurecomposerpage.cpp:356
+#: configuredialog/configurecomposerpage.cpp:355
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1250,7 +1250,7 @@ msgstr ""
 "кількості отримувачів. Втім, слід зауважити, що це не стосується надсилання "
 "повідомлень за списками розповсюдження або за допомогою списків листування."
 
-#: configuredialog/configurecomposerpage.cpp:377
+#: configuredialog/configurecomposerpage.cpp:376
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
@@ -1258,18 +1258,18 @@ msgstr ""
 "Пам’ятати останні введені адреси і пропонувати їх для доповнення рядка "
 "отримувача"
 
-#: configuredialog/configurecomposerpage.cpp:389
+#: configuredialog/configurecomposerpage.cpp:388
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Без збереження"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:391
 #, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr "Максимальна кількість недавніх адрес:"
 
-#: configuredialog/configurecomposerpage.cpp:396
+#: configuredialog/configurecomposerpage.cpp:395
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
@@ -1278,23 +1278,23 @@ msgstr ""
 "Максимальна кількість нещодавно введених адрес, які зберігатимуться для "
 "потреб автодоповнення"
 
-#: configuredialog/configurecomposerpage.cpp:409
+#: configuredialog/configurecomposerpage.cpp:408
 #, kde-format
 msgid "Configure Completion..."
 msgstr "Налаштувати автодоповнення…"
 
-#: configuredialog/configurecomposerpage.cpp:418
+#: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Автозбереження"
 
-#: configuredialog/configurecomposerpage.cpp:428
+#: configuredialog/configurecomposerpage.cpp:427
 #, kde-format
 msgid "No autosave"
 msgstr "Без автозбереження"
 
-#: configuredialog/configurecomposerpage.cpp:429
+#: configuredialog/configurecomposerpage.cpp:428
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
@@ -1304,20 +1304,20 @@ msgstr[1] " хвилини"
 msgstr[2] " хвилин"
 msgstr[3] " хвилина"
 
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr ""
 "Автоматично зберігати повідомлення з вказаним інтервалом між діями зі "
 "зберігання"
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "П&рефікси теми відповіді"
 
-#: configuredialog/configurecomposerpage.cpp:645
-#: configuredialog/configurecomposerpage.cpp:671
+#: configuredialog/configurecomposerpage.cpp:644
+#: configuredialog/configurecomposerpage.cpp:670
 #, kde-format
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
@@ -1326,79 +1326,79 @@ msgstr ""
 "Розпізнавати будь-яку послідовність наступних префіксів (без урахування "
 "регістру):"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:736
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:652
+#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:1104
 #, kde-format
 msgid "A&dd..."
 msgstr "Дод&ати…"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:889
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:652
+#: configuredialog/configurecomposerpage.cpp:888
+#: configuredialog/configurecomposerpage.cpp:1104
 #, kde-format
 msgid "Re&move"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:652
+#: configuredialog/configurecomposerpage.cpp:1104
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:652
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Введіть новий префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Хочете вилучити префікс відповіді?"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:655
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:667
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "П&рефікси теми пересилання"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:677
-#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:736 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:676 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "Додати…"
 
-#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:676 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:676
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Введіть новий префікс пересилки:"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Хочете вилучити префікс переспрямовування?"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Префікс переспрямовування:"
 
-#: configuredialog/configurecomposerpage.cpp:727
+#: configuredialog/configurecomposerpage.cpp:726
 #, kde-format
 msgid ""
 "This list is checked for every outgoing message from the top to the bottom "
@@ -1409,131 +1409,131 @@ msgstr ""
 "цьому листі."
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: configuredialog/configurecomposerpage.cpp:738 ui/identitypage.ui:40
+#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:40
 #, kde-format
 msgid "&Modify..."
 msgstr "&Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:738
 #, kde-format
 msgid "Enter charset:"
 msgstr "Введіть назву кодування:"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgid "Do you want to remove this selected charset?"
 msgstr "Хочете вилучити це позначене кодування?"
 
-#: configuredialog/configurecomposerpage.cpp:741
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgid "Add Charset:"
 msgstr "Додати набір символів:"
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:746
 #, kde-format
 msgid "&Keep original charset when replying or forwarding (if possible)"
 msgstr ""
 "&Зберігати початковий набір символів при відповіді або пересиланні (якщо "
 "можливо)"
 
-#: configuredialog/configurecomposerpage.cpp:781
+#: configuredialog/configurecomposerpage.cpp:780
 #, kde-format
 msgid "This charset is not supported."
 msgstr "Цей набір символів ще не підтримується."
 
-#: configuredialog/configurecomposerpage.cpp:844
+#: configuredialog/configurecomposerpage.cpp:843
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Використовувати власний суфікс ідентифікації повідомлення"
 
-#: configuredialog/configurecomposerpage.cpp:856
+#: configuredialog/configurecomposerpage.cpp:855
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "В&ласний суфікс ідентифікації повідомлення:"
 
-#: configuredialog/configurecomposerpage.cpp:868
+#: configuredialog/configurecomposerpage.cpp:867
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "Власні нетипові заголовки для листів:"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:875
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Назва"
 
-#: configuredialog/configurecomposerpage.cpp:877
+#: configuredialog/configurecomposerpage.cpp:876
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Значення"
 
-#: configuredialog/configurecomposerpage.cpp:885
+#: configuredialog/configurecomposerpage.cpp:884
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Створити"
 
-#: configuredialog/configurecomposerpage.cpp:898
+#: configuredialog/configurecomposerpage.cpp:897
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Назва:"
 
-#: configuredialog/configurecomposerpage.cpp:908
+#: configuredialog/configurecomposerpage.cpp:907
 #, kde-format
 msgid "&Value:"
 msgstr "&Значення:"
 
-#: configuredialog/configurecomposerpage.cpp:1047
+#: configuredialog/configurecomposerpage.cpp:1046
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "«Content-Type» не є дозволеним рядком. Цей заголовок не буде збережено."
 
-#: configuredialog/configurecomposerpage.cpp:1047
+#: configuredialog/configurecomposerpage.cpp:1046
 #, kde-format
 msgid "Invalid header"
 msgstr "Некоректний заголовок"
 
-#: configuredialog/configurecomposerpage.cpp:1088
+#: configuredialog/configurecomposerpage.cpp:1087
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Уві&мкнути визначення відсутніх долучень"
 
-#: configuredialog/configurecomposerpage.cpp:1094
+#: configuredialog/configurecomposerpage.cpp:1093
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Вважати будь-яке з наступних слів наміром долучити файл:"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1104
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Введіть нове слово:"
 
-#: configuredialog/configurecomposerpage.cpp:1106
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Хочете вилучити цей слово долучення?"
 
-#: configuredialog/configurecomposerpage.cpp:1107
+#: configuredialog/configurecomposerpage.cpp:1106
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Слово долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:1115
+#: configuredialog/configurecomposerpage.cpp:1114
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "Максимальний розмір долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:1122
+#: configuredialog/configurecomposerpage.cpp:1121
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " кБ"
 
-#: configuredialog/configurecomposerpage.cpp:1124
+#: configuredialog/configurecomposerpage.cpp:1123
 #, kde-format
 msgid "No limit"
 msgstr "Не обмежувати"
@@ -2943,6 +2943,11 @@ msgstr "Повідомлення архівовано"
 msgid "Folder Shortcut %1"
 msgstr "Скорочення для теки %1"
 
+#: historyclosedreader/historyclosedreadermenu.cpp:14
+#, kde-format
+msgid "Closed Reader"
+msgstr ""
+
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
 #: ui/encodedimagepicker.ui:37
@@ -4198,27 +4203,27 @@ msgstr "Пенал HTML"
 msgid "Text Direction Toolbar"
 msgstr "Панель напрямку тексту"
 
-#: kmkernel.cpp:638
+#: kmkernel.cpp:616
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail працює в автономному режимі; всі мережні дії не доступні"
 
-#: kmkernel.cpp:658 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
+#: kmkernel.cpp:636 kmmainwidget.cpp:2442 kmmainwidget.cpp:2457
 #, kde-format
 msgid "Send Email"
 msgstr "Надіслати пошту"
 
-#: kmkernel.cpp:659 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
+#: kmkernel.cpp:637 kmmainwidget.cpp:2443 kmmainwidget.cpp:2458
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Неможливо надіслати пошту"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:668
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail працює в мережі; всі мережні дії доступні"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:670
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4227,39 +4232,39 @@ msgstr ""
 "KMail налаштовано на роботу у мережі. Щойно буде виявлено з’єднання, "
 "програма поновити виконання завдань з роботи у мережі."
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:743
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail працює в автономному режимі. Що робити далі?"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:745
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "В мережі/Поза мережею"
 
-#: kmkernel.cpp:768 kmmainwidget.cpp:2431
+#: kmkernel.cpp:746 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Online"
 msgstr "Працювати в мережі"
 
-#: kmkernel.cpp:769 kmmainwidget.cpp:2428
+#: kmkernel.cpp:747 kmmainwidget.cpp:2428
 #, kde-format
 msgid "Work Offline"
 msgstr "Працювати автономно"
 
-#: kmkernel.cpp:793
+#: kmkernel.cpp:771
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Виявлено з’єднання з мережею; поновлено виконання всіх дій у мережі"
 
-#: kmkernel.cpp:796
+#: kmkernel.cpp:774
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Не виявлено з’єднання з мережею; всі завдання з роботи у мережі відкладено"
 
-#: kmkernel.cpp:891
+#: kmkernel.cpp:869
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4268,12 +4273,12 @@ msgstr ""
 "Не вдалося відкрити файл автоматичного збереження у %1.\n"
 "Причина: %2"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:870
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Невдала спроба відкриття файла автозбереження"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1418
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4283,7 +4288,7 @@ msgstr[1] "%1 профілі було змінено, щоб використо�
 msgstr[2] "%1 профілів було змінено, щоб використовувати типовий транспорт:"
 msgstr[3] "%1 профіль було змінено, щоб використовувати типовий транспорт:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1442
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4296,17 +4301,17 @@ msgstr[2] ""
 msgstr[3] ""
 "Цей %1 профіль було змінено, щоб використовувати змінений транспорт:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1457
 #, kde-format
 msgid "Sending messages"
 msgstr "Надсилання повідомлень"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1458
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Запуск процесу надсилання…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1537
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4315,7 +4320,7 @@ msgstr ""
 "Ресурс %1 пошкоджено.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1713 kmkernel.cpp:1719
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
