@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <Akonadi/Item>
 #include <KActionMenu>
 
 class HistoryClosedReaderMenu : public KActionMenu
@@ -13,6 +14,9 @@ class HistoryClosedReaderMenu : public KActionMenu
 public:
     explicit HistoryClosedReaderMenu(QObject *parent = nullptr);
     ~HistoryClosedReaderMenu() override;
+
+Q_SIGNALS:
+    void openMessage(Akonadi::Item::Id id);
 
 private:
     void slotClear();

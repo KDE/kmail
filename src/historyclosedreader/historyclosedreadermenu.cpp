@@ -14,11 +14,6 @@ HistoryClosedReaderMenu::HistoryClosedReaderMenu(QObject *parent)
     setText(i18nc("List of message viewer closed", "Closed Reader"));
     delete menu();
     auto subMenu = new QMenu;
-
-    subMenu->addSeparator();
-    auto clearAction = new QAction(i18n("Clear History"), this);
-    connect(clearAction, &QAction::toggled, this, &HistoryClosedReaderMenu::slotClear);
-    subMenu->addAction(clearAction);
     setMenu(subMenu);
     connect(HistoryClosedReaderManager::self(), &HistoryClosedReaderManager::historyClosedReaderChanged, this, &HistoryClosedReaderMenu::updateMenu);
 }
@@ -32,7 +27,19 @@ void HistoryClosedReaderMenu::slotClear()
 
 void HistoryClosedReaderMenu::updateMenu()
 {
-    // TODO
+    menu()->clear();
+    const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
+    for (const auto &info : list) {
+        auto action = new QAction(info.subject(), menu());
+        connect(action, &QAction::toggled, this, [this, info]() {
+            Q_EMIT openMessage(info.item());
+        });
+        menu()->addAction(action);
+    }
+    menu()->addSeparator();
+    auto clearAction = new QAction(i18n("Clear History"), menu());
+    connect(clearAction, &QAction::toggled, this, &HistoryClosedReaderMenu::slotClear);
+    menu()->addAction(clearAction);
 }
 
 #include "moc_historyclosedreadermenu.cpp"
