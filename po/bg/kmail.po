@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-21 01:34+0000\n"
+"POT-Creation-Date: 2023-11-22 01:35+0000\n"
 "PO-Revision-Date: 2023-11-11 15:57+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: \n"
@@ -1920,7 +1920,7 @@ msgid "Send"
 msgstr "Изпращане"
 
 #: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3079
 #, kde-format
 msgid "Send &Later"
 msgstr "Изпращане &по-късно"
@@ -2178,13 +2178,13 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Скриване на лентата с менюто"
 
-#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4059
+#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4002
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Ред: %1"
 
-#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4061
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4004
 #, kde-format
 msgid " Column: %1 "
 msgstr " Колона: %1 "
@@ -2316,25 +2316,7 @@ msgstr "Вмъкване на текст в клипборда като прик
 msgid "unnamed"
 msgstr "неозаглавен"
 
-#: editor/kmcomposerwin.cpp:2635
-#, kde-format
-msgid ""
-"<qt><p>You have requested that messages be encrypted to yourself, but the "
-"currently selected identity does not define an (OpenPGP or S/MIME) "
-"encryption key to use for this.</p><p>Please select the key(s) to use in the "
-"identity configuration.</p></qt>"
-msgstr ""
-"<qt><p>Поискахте съобщението да бъде шифровано до вас самите, но текущата "
-"самоличност не е определила (OpenPGP или S/MIME) ключ.</p><p>Моля, направете "
-"от настройките на самоличността.</p></qt>"
-
-#: editor/kmcomposerwin.cpp:2642
-#, kde-format
-msgctxt "@title:window"
-msgid "Undefined Encryption Key"
-msgstr "Неопределен шифроващ ключ"
-
-#: editor/kmcomposerwin.cpp:2698
+#: editor/kmcomposerwin.cpp:2641
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2345,13 +2327,13 @@ msgstr ""
 "(OpenPGP or S/MIME) ключ, който да бъде използван.</p><p>Моля, направете от "
 "настройките на самоличността.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2705
+#: editor/kmcomposerwin.cpp:2648
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Неопределен подписващ ключ"
 
-#: editor/kmcomposerwin.cpp:2864
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2361,7 +2343,7 @@ msgstr ""
 "Трябва да въведете вашата е-поща в полето \"От:\". Задайте е-пощата си за "
 "всички самоличности, за да не я въвеждате ръчно при всяко съобщение."
 
-#: editor/kmcomposerwin.cpp:2873
+#: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2370,44 +2352,44 @@ msgstr ""
 "Трябва да посочите поне един получател, или в полето До: или като Копие до: "
 "или като Скрито копие до:."
 
-#: editor/kmcomposerwin.cpp:2879
+#: editor/kmcomposerwin.cpp:2822
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Полето \"До\" е празно. Изпращане на съобщението въпреки това?"
 
-#: editor/kmcomposerwin.cpp:2881
+#: editor/kmcomposerwin.cpp:2824
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Полето \"До\" не е попълнено"
 
-#: editor/kmcomposerwin.cpp:2882 editor/kmcomposerwin.cpp:2896
+#: editor/kmcomposerwin.cpp:2825 editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "S&end as Is"
 msgstr "Изпращане &както си е"
 
-#: editor/kmcomposerwin.cpp:2883
+#: editor/kmcomposerwin.cpp:2826
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&Задаване на поле Изпращане до"
 
-#: editor/kmcomposerwin.cpp:2893
+#: editor/kmcomposerwin.cpp:2836
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Не сте написали тема. Изпращане на съобщението въпреки това?"
 
-#: editor/kmcomposerwin.cpp:2895
+#: editor/kmcomposerwin.cpp:2838
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Няма тема"
 
-#: editor/kmcomposerwin.cpp:2897
+#: editor/kmcomposerwin.cpp:2840
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Задаване на тема"
 
-#: editor/kmcomposerwin.cpp:2942
+#: editor/kmcomposerwin.cpp:2885
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2415,23 +2397,23 @@ msgid ""
 msgstr ""
 "Трябва да посочите поне един получател, за да можете да шифровате чернови."
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3076
 #, kde-format
 msgid "About to send email..."
 msgstr "Подготовка за изпращане..."
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3077
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Изпращане на потвърждение"
 
-#: editor/kmcomposerwin.cpp:3135
+#: editor/kmcomposerwin.cpp:3078
 #, kde-format
 msgid "&Send Now"
 msgstr "Изпра&щане сега"
 
-#: editor/kmcomposerwin.cpp:3211
+#: editor/kmcomposerwin.cpp:3154
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2440,22 +2422,22 @@ msgstr ""
 "Опитвате се да изпратите пощата до повече от %1 получатели. Все пак да "
 "изпратите съобщение?"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3155
 #, kde-format
 msgid "Too many recipients"
 msgstr "Твърде много получатели"
 
-#: editor/kmcomposerwin.cpp:3213
+#: editor/kmcomposerwin.cpp:3156
 #, kde-format
 msgid "&Send as Is"
 msgstr "Изпращане &както си е"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3157
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&Редактиране на получатели"
 
-#: editor/kmcomposerwin.cpp:3251
+#: editor/kmcomposerwin.cpp:3194
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2464,22 +2446,22 @@ msgstr ""
 "Изключването на HTML режим ще доведе до загуба на форматиране на текста. "
 "Сигурни ли сте?"
 
-#: editor/kmcomposerwin.cpp:3253
+#: editor/kmcomposerwin.cpp:3196
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Загубите форматирането?"
 
-#: editor/kmcomposerwin.cpp:3254
+#: editor/kmcomposerwin.cpp:3197
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Загуби форматиране"
 
-#: editor/kmcomposerwin.cpp:3255
+#: editor/kmcomposerwin.cpp:3198
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Добавяне на обикновен текст за маркиране"
 
-#: editor/kmcomposerwin.cpp:3467
+#: editor/kmcomposerwin.cpp:3410
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2489,7 +2471,7 @@ msgstr ""
 "Избраният от вас ключ за подписване на PGP (%1) не съществува във вашия "
 "ключодържател или не е е подходящ за криптиране."
 
-#: editor/kmcomposerwin.cpp:3480
+#: editor/kmcomposerwin.cpp:3423
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2499,7 +2481,7 @@ msgstr ""
 "Избраният от вас ключ за подписване на PGP (%1) не съществува във вашия "
 "ключодържател или не е е подходящ за подписване."
 
-#: editor/kmcomposerwin.cpp:3496
+#: editor/kmcomposerwin.cpp:3439
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2509,7 +2491,7 @@ msgstr ""
 "Избраният от вас ключ за подписване на SMIME (%1) не съществува във вашия "
 "ключодържател или не е е подходящ за криптиране."
 
-#: editor/kmcomposerwin.cpp:3509
+#: editor/kmcomposerwin.cpp:3452
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2519,25 +2501,25 @@ msgstr ""
 "Избраният от вас ключ за подписване на SMIME (%1) не съществува във вашия "
 "ключодържател или не е е подходящ за подписване."
 
-#: editor/kmcomposerwin.cpp:3682
+#: editor/kmcomposerwin.cpp:3625
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Криптирани"
 
-#: editor/kmcomposerwin.cpp:3684
+#: editor/kmcomposerwin.cpp:3627
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Некриптирани"
 
-#: editor/kmcomposerwin.cpp:3824
+#: editor/kmcomposerwin.cpp:3767
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Не е намерен ключ за този получател."
 
-#: editor/kmcomposerwin.cpp:3846
+#: editor/kmcomposerwin.cpp:3789
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2547,7 +2529,7 @@ msgstr ""
 "За този получател се използва ключ Autocrypt gossip. Получихме този ключ от "
 "3-ти получатели от други страни. Този ключ не е проверен."
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3793
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2557,7 +2539,7 @@ msgstr ""
 "Ключ за автоматично криптиране се използва за този получател. Този ключ не е "
 "проверен. Получателят предпочита криптирани отговори."
 
-#: editor/kmcomposerwin.cpp:3854
+#: editor/kmcomposerwin.cpp:3797
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2567,7 +2549,7 @@ msgstr ""
 "Ключ за автоматично криптиране се използва за този получател. Този ключ не е "
 "проверен. Получателят не предпочита криптирани отговори."
 
-#: editor/kmcomposerwin.cpp:3881
+#: editor/kmcomposerwin.cpp:3824
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2579,7 +2561,7 @@ msgstr ""
 "подпишете ключа, ако сте обменили пръстовия отпечатък по друг канал. "
 "Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3889
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2593,7 +2575,7 @@ msgstr ""
 "получи по-голямо доверие. Можете да подпишете ключа, ако сте обменили "
 "пръстовия отпечатък по друг канал. Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3897
+#: editor/kmcomposerwin.cpp:3840
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2603,7 +2585,7 @@ msgstr ""
 "Ключът за криптиране не е надежден. Той има противоречиви данни за TOFU. "
 "Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3903
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2613,7 +2595,7 @@ msgstr ""
 "Ключът за криптиране не е доверен. Той е с неизвестна валидност в данните на "
 "TOFU. Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3909
+#: editor/kmcomposerwin.cpp:3852
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2623,7 +2605,7 @@ msgstr ""
 "Ключът за криптиране не е надежден. Ключът е маркиран като лош. Щракнете "
 "върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3917
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2638,7 +2620,7 @@ msgstr ""
 "ключа, ако сте обменили отпечатъка по друг канал. Щракнете върху иконата за "
 "подробности."
 
-#: editor/kmcomposerwin.cpp:3925
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2649,7 +2631,7 @@ msgstr ""
 "ключа, ако сте обменили отпечатъка по друг канал. Щракнете върху иконата за "
 "подробности."
 
-#: editor/kmcomposerwin.cpp:3931
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2664,7 +2646,7 @@ msgstr ""
 "ако сте обменили отпечатъка  по друг канал. Щракнете върху иконата за "
 "подробности."
 
-#: editor/kmcomposerwin.cpp:3939
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2674,7 +2656,7 @@ msgstr ""
 "Ключът за криптиране е напълно надежден. Можете да повишите нивото на "
 "сигурност, като подпишете ключа. Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:3944
+#: editor/kmcomposerwin.cpp:3887
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2684,7 +2666,7 @@ msgstr ""
 "Ключът за криптиране има ултимативно ниво на надеждност или е подписан с "
 "друг ключ с ултимативна надеждност. Щракнете върху иконата за подробности."
 
-#: editor/kmcomposerwin.cpp:4332
+#: editor/kmcomposerwin.cpp:4275
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Информация за редактора на приставки"
@@ -2923,7 +2905,13 @@ msgstr "Пряк път %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
 #, kde-format
+msgctxt "List of message viewer closed"
 msgid "Closed Reader"
+msgstr ""
+
+#: historyclosedreader/historyclosedreadermenu.cpp:19
+#, kde-format
+msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
@@ -7581,6 +7569,20 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
+
+#~ msgid ""
+#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
+#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
+#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
+#~ "the identity configuration.</p></qt>"
+#~ msgstr ""
+#~ "<qt><p>Поискахте съобщението да бъде шифровано до вас самите, но текущата "
+#~ "самоличност не е определила (OpenPGP или S/MIME) ключ.</p><p>Моля, "
+#~ "направете от настройките на самоличността.</p></qt>"
+
+#~ msgctxt "@title:window"
+#~ msgid "Undefined Encryption Key"
+#~ msgstr "Неопределен шифроващ ключ"
 
 #~ msgid "Outlook-compatible attachment naming"
 #~ msgstr "Съвместимо с Outlook именуване на прикрепените файлове"
