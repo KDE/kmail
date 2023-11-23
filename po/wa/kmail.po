@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -2977,7 +2977,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Messaedje ecripté"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
 msgstr ""

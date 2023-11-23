@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
-"PO-Revision-Date: 2023-11-21 08:08+0200\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
+"PO-Revision-Date: 2023-11-23 00:02+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -2925,16 +2925,15 @@ msgid "Folder Shortcut %1"
 msgstr "Скорочення для теки %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
-#| msgid "Closed Reader"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Закрите вікно читання"
+msgstr "Закрита панель читання"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Спорожнити журнал"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904

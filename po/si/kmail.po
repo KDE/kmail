@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -2870,7 +2870,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
 msgstr ""

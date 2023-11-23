@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -2780,7 +2780,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
 msgstr ""
@@ -7119,19 +7119,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Undefined Encryption Key"
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "Ii meroštuvvon krypterenčoavdda"
-
-#~ msgid "Outlook-compatible attachment naming"
-#~ msgstr "Outlook-heivvolaš mielddusnammadeapmi"
-
-#~ msgid ""
-#~ "Turn this option on to make Outlook(tm) understand attachment names "
-#~ "containing non-English characters"
-#~ msgstr ""
-#~ "Vállje dán molssaeavttu vai Outlook™ ipmirda mielddusnamaid main leat "
-#~ "mearkkat mat eai leat eŋgelasgielas"

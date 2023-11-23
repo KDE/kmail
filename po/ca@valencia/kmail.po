@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
-"PO-Revision-Date: 2023-11-21 12:00+0100\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
+"PO-Revision-Date: 2023-11-22 11:39+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2905,16 +2905,15 @@ msgid "Folder Shortcut %1"
 msgstr "Drecera de carpeta %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
-#| msgid "Closed Reader"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Lector tancat"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Neteja l'historial"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
@@ -7592,18 +7591,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid ""
-#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
-#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
-#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
-#~ "the identity configuration.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Heu demanat que el missatge s'encripte a vós mateix, però la "
-#~ "identitat seleccionada no definix una clau d'encriptació (OpenPGP o S/"
-#~ "MIME) per a utilitzar-la amb este objectiu.</p><p>Seleccioneu la clau o "
-#~ "claus que s'utilitzaran en la configuració de la identitat.</p></qt>"
-
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "Clau d'encriptació no definida"

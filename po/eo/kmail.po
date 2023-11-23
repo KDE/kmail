@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-22 01:35+0000\n"
-"PO-Revision-Date: 2023-11-12 16:39+0100\n"
+"POT-Creation-Date: 2023-11-23 01:38+0000\n"
+"PO-Revision-Date: 2023-11-22 06:38+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2883,12 +2883,12 @@ msgstr "Dosierujo Ŝparvojo %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr ""
+msgstr "Fermis Legilon"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:19
+#: historyclosedreader/historyclosedreadermenu.cpp:40
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Forviŝi Historion"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
@@ -7508,43 +7508,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid ""
-#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
-#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
-#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
-#~ "the identity configuration.</p></qt>"
-#~ msgstr ""
-#~ "<qt> <p>Vi postulis ĉifrigi tiujn mesaĝojn por vi mem, sed la nun "
-#~ "elektita identeco ne difinas iajn ĉifroŝlosilojn por tiu uzo.</p> "
-#~ "<p>Elektu la uzota(j)n ŝlosilo(j)n per la identeca agorda.</p></qt>"
-
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "Nedifinita Ĉifrad-Ŝlosilo"
-
-#~ msgid "Outlook-compatible attachment naming"
-#~ msgstr "Nomigi kunsendaĵojn kompreneble por MS-Outlook"
-
-#~ msgid ""
-#~ "Turn this option on to make Outlook(tm) understand attachment names "
-#~ "containing non-English characters"
-#~ msgstr ""
-#~ "Marku tiun opcion por certigi, ke MS-Outlook povas kompreni "
-#~ "kunsendaĵnomoj kun neanglaj literoj"
-
-#~ msgid ""
-#~ "You have chosen to encode attachment names containing non-English "
-#~ "characters in a way that is understood by Outlook(tm) and other mail "
-#~ "clients that do not support standard-compliant encoded attachment names.\n"
-#~ "Note that KMail may create non-standard compliant messages, and "
-#~ "consequently it is possible that your messages will not be understood by "
-#~ "standard-compliant mail clients; so, unless you have no other choice, you "
-#~ "should not enable this option."
-#~ msgstr ""
-#~ "Vi decidis kodigi kunsendaĵnomojn, kiuj havas neanglajn literojn per "
-#~ "maniero, kio estas komprenebla de MS-Outlook kaj aliaj poŝtiloj, kiuj ne "
-#~ "subtenas la norman kodigecon de kunsendaĵnomoj.\n"
-#~ "Notu, ke Poŝtilo povas krei nenormajn mesaĝojn, kaj sekve estas eble, ke "
-#~ "viaj mesaĝoj ne estas kompreneblaj de poŝtiloj, kiuj uzas la normon. Tial "
-#~ "vi nur ebligu tiun opcion, se vi havas bonan kaŭzon."
