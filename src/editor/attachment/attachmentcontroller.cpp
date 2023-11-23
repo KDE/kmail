@@ -18,6 +18,7 @@
 #include <Akonadi/ItemFetchScope>
 #include <KContacts/Addressee>
 #include <KIdentityManagementCore/Identity>
+#include <Libkleo/KeyCache>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailUtil>
 
@@ -73,7 +74,8 @@ void AttachmentController::attachMyPublicKey()
 {
     const KIdentityManagementCore::Identity &identity = mComposer->identity();
     qCDebug(KMAIL_LOG) << identity.identityName();
-    exportPublicKey(QString::fromLatin1(identity.pgpEncryptionKey()));
+    const auto key = Kleo::KeyCache::instance()->findByFingerprint(identity.pgpEncryptionKey().toStdString());
+    exportPublicKey(key);
 }
 
 void AttachmentController::slotActionsCreated()
