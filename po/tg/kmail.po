@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-23 01:38+0000\n"
+"POT-Creation-Date: 2023-11-24 01:35+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -422,7 +422,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2414 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: editor/kmcomposerwin.cpp:2417 kmreaderwin.cpp:305 kmsystemtray.cpp:46
 #: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
@@ -1985,491 +1985,491 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Рамзгузорӣ"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:358
+#: editor/kmcomposerwin.cpp:359
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:365
+#: editor/kmcomposerwin.cpp:366
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:370
+#: editor/kmcomposerwin.cpp:371
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:378
+#: editor/kmcomposerwin.cpp:379
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:406
+#: editor/kmcomposerwin.cpp:407
 #, kde-format
 msgid "&Identity:"
 msgstr "&Ихтисос:"
 
-#: editor/kmcomposerwin.cpp:407
+#: editor/kmcomposerwin.cpp:408
 #, kde-format
 msgid "&Dictionary:"
 msgstr "&Луғат:"
 
-#: editor/kmcomposerwin.cpp:408
+#: editor/kmcomposerwin.cpp:409
 #, fuzzy, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "Папкаи почтаи фи&ристодашуда:"
 
-#: editor/kmcomposerwin.cpp:409
+#: editor/kmcomposerwin.cpp:410
 #, fuzzy, kde-format
 msgid "&Mail transport:"
 msgstr "&Тарзи фиристод:"
 
-#: editor/kmcomposerwin.cpp:410
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:412
 #, fuzzy, kde-format
 #| msgid "S&ubject:"
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Мавзӯъ:"
 
-#: editor/kmcomposerwin.cpp:483
+#: editor/kmcomposerwin.cpp:486
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Муҳаррир"
 
-#: editor/kmcomposerwin.cpp:1237 editor/kmcomposerwin.cpp:1271
+#: editor/kmcomposerwin.cpp:1240 editor/kmcomposerwin.cpp:1274
 #, fuzzy, kde-format
 msgid "&Send Mail"
 msgstr "&Sendmail"
 
-#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1277
+#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1280
 #, fuzzy, kde-format
 msgid "&Send Mail Via"
 msgstr "&Sendmail"
 
-#: editor/kmcomposerwin.cpp:1246
+#: editor/kmcomposerwin.cpp:1249
 #, fuzzy, kde-format
 msgid "Send"
 msgstr "&Фиристодан"
 
-#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
-#: editor/kmcomposerwin.cpp:3079
+#: editor/kmcomposerwin.cpp:1252 editor/kmcomposerwin.cpp:1264
+#: editor/kmcomposerwin.cpp:3082
 #, kde-format
 msgid "Send &Later"
 msgstr "Баъдтар &фиристодан"
 
-#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1268
+#: editor/kmcomposerwin.cpp:1258 editor/kmcomposerwin.cpp:1271
 #, fuzzy, kde-format
 msgid "Send &Later Via"
 msgstr "Баъдтар &фиристодан"
 
-#: editor/kmcomposerwin.cpp:1257
+#: editor/kmcomposerwin.cpp:1260
 #, fuzzy, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "&Навбат"
 
-#: editor/kmcomposerwin.cpp:1286
+#: editor/kmcomposerwin.cpp:1289
 #, fuzzy, kde-format
 msgid "Save as &Draft"
 msgstr "&Захира кардан ҳамчун сиёҳнавис"
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1291
 #, fuzzy, kde-format
 #| msgid "Search in &all local folders"
 msgid "Save email in Draft folder"
 msgstr "&Дар тамоми папкаҳои локалӣ ҷустуҷӯ кардан"
 
-#: editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1295
 #, fuzzy, kde-format
 msgid "Save as &Template"
 msgstr "&Ивваз кардан"
 
-#: editor/kmcomposerwin.cpp:1293
+#: editor/kmcomposerwin.cpp:1296
 #, fuzzy, kde-format
 msgid "Save email in Template folder"
 msgstr "&Ивваз кардан"
 
-#: editor/kmcomposerwin.cpp:1297
+#: editor/kmcomposerwin.cpp:1300
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save as &File"
 msgstr "Ба файл захира кардан"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1301
 #, kde-format
 msgid "Save email as text or html file"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1302
+#: editor/kmcomposerwin.cpp:1305
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
 msgid "&Insert Text File..."
 msgstr "&Гузоштани файл..."
 
-#: editor/kmcomposerwin.cpp:1306
+#: editor/kmcomposerwin.cpp:1309
 #, fuzzy, kde-format
 msgid "&Insert Recent Text File"
 msgstr "Гузоштани файл"
 
-#: editor/kmcomposerwin.cpp:1316 kmmainwidget.cpp:2941
+#: editor/kmcomposerwin.cpp:1319 kmmainwidget.cpp:2941
 #, kde-format
 msgid "&Address Book"
 msgstr "&Китоби адресӣ"
 
-#: editor/kmcomposerwin.cpp:1317
+#: editor/kmcomposerwin.cpp:1320
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
 msgid "Open Address Book"
 msgstr "Дар китоби адресӣ боз кардан"
 
-#: editor/kmcomposerwin.cpp:1324
+#: editor/kmcomposerwin.cpp:1327
 #, kde-format
 msgid "&New Composer"
 msgstr "&Тирезаи нави муҳаррир"
 
-#: editor/kmcomposerwin.cpp:1330
+#: editor/kmcomposerwin.cpp:1333
 #, fuzzy, kde-format
 msgid "Select &Recipients..."
 msgstr "Қабулкунандаҳои пинҳонӣ"
 
-#: editor/kmcomposerwin.cpp:1333
+#: editor/kmcomposerwin.cpp:1336
 #, fuzzy, kde-format
 msgid "Save &Distribution List..."
 msgstr "Имзоиш"
 
-#: editor/kmcomposerwin.cpp:1354
+#: editor/kmcomposerwin.cpp:1357
 #, fuzzy, kde-format
 msgid "Paste as Attac&hment"
 msgstr "бо замимот"
 
-#: editor/kmcomposerwin.cpp:1358
+#: editor/kmcomposerwin.cpp:1361
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "&Пок кардани фосилот"
 
-#: editor/kmcomposerwin.cpp:1362
+#: editor/kmcomposerwin.cpp:1365
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "Истифода аз &ҳуруфи қалбакӣ"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1371
 #, fuzzy, kde-format
 #| msgid "&Urgent"
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Иттилооти фаврӣ"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1373
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "Дархост кардани &маълумот оиди коркард"
 
-#: editor/kmcomposerwin.cpp:1374
+#: editor/kmcomposerwin.cpp:1377
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgid "&Request Delivery Confirmation"
 msgstr "Дархост кардани &маълумот оиди коркард"
 
-#: editor/kmcomposerwin.cpp:1381
+#: editor/kmcomposerwin.cpp:1384
 #, kde-format
 msgid "&Wordwrap"
 msgstr "&Гузаронидани калима"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1389
 #, kde-format
 msgid "&Snippets"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1394
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "&Тафтиши имлои худкор"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1410
 #, fuzzy, kde-format
 msgid "Rich Text Editing"
 msgstr "Тасдиқоти фиристониш"
 
-#: editor/kmcomposerwin.cpp:1409
+#: editor/kmcomposerwin.cpp:1412
 #, kde-format
 msgid "Rich Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1410
+#: editor/kmcomposerwin.cpp:1413
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1414
+#: editor/kmcomposerwin.cpp:1417
 #, kde-format
 msgid "&All Fields"
 msgstr "&Тамоми заминаҳо"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1420
 #, kde-format
 msgid "&Identity"
 msgstr "&Ихтисос"
 
-#: editor/kmcomposerwin.cpp:1420
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgid "&Dictionary"
 msgstr "&Луғат"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1426
 #, fuzzy, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "Папкаи &фиристодашуда"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1429
 #, kde-format
 msgid "&Mail Transport"
 msgstr "&Тарзи фиристод"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgid "&From"
 msgstr "&Фиристанда"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1435
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Мавзӯъ:"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1440
 #, kde-format
 msgid "Append S&ignature"
 msgstr "&Афзудани имзо"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1444
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgid "Pr&epend Signature"
 msgstr "&Афзудани имзо"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1448
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1460
+#: editor/kmcomposerwin.cpp:1463
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "&Тафтиши имло..."
 
-#: editor/kmcomposerwin.cpp:1461
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "Spellchecker"
 msgstr "Барномаи тафтиши имло"
 
-#: editor/kmcomposerwin.cpp:1465
+#: editor/kmcomposerwin.cpp:1468
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&Рамзгузории иттилоот"
 
-#: editor/kmcomposerwin.cpp:1466
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "Encrypt"
 msgstr "Рамзгузорӣ"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1471
 #, kde-format
 msgid "&Sign Message"
 msgstr "&Имзо гузоштани иттилоот"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "Sign"
 msgstr "Имзо"
 
-#: editor/kmcomposerwin.cpp:1493
+#: editor/kmcomposerwin.cpp:1496
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "&Формати рамзгузорӣ/имзо"
 
-#: editor/kmcomposerwin.cpp:1496
+#: editor/kmcomposerwin.cpp:1499
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1501
+#: editor/kmcomposerwin.cpp:1504
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder..."
 msgstr "&Ҷустуҷӯи иттилоот..."
 
-#: editor/kmcomposerwin.cpp:1535
+#: editor/kmcomposerwin.cpp:1538
 #, fuzzy, kde-format
 msgid "Configure KMail..."
 msgstr "&Танзими KMail..."
 
-#: editor/kmcomposerwin.cpp:1565 kmmainwin.cpp:179 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:179 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:182
+#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:182
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4002
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4005
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Сатр: %1 "
 
-#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4004
+#: editor/kmcomposerwin.cpp:1674 editor/kmcomposerwin.cpp:4007
 #, kde-format
 msgid " Column: %1 "
 msgstr " Сутун: %1 "
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1679
 #, kde-format
 msgid "OVR"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1679
 #, kde-format
 msgid "INS"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1687
 #, fuzzy, kde-format
 msgid "Spellcheck: on"
 msgstr "Барномаи тафтиши имло"
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1687
 #, fuzzy, kde-format
 msgid "Spellcheck: off"
 msgstr "Барномаи тафтиши имло"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2073
 #, fuzzy, kde-format
 msgid "Re&save as Template"
 msgstr "&Ивваз кардан"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Захира кардан ҳамчун сиёҳнавис"
 
-#: editor/kmcomposerwin.cpp:2071
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2073
+#: editor/kmcomposerwin.cpp:2076
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2077
+#: editor/kmcomposerwin.cpp:2080
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Иттилоотро ҳамчун сиёнавис нигоҳ дорам ё онро ҳузф кунам?"
 
-#: editor/kmcomposerwin.cpp:2078
+#: editor/kmcomposerwin.cpp:2081
 #, fuzzy, kde-format
 #| msgid "Close Composer"
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Пӯшидани тирезаи муҳаррир"
 
-#: editor/kmcomposerwin.cpp:2146
+#: editor/kmcomposerwin.cpp:2149
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Қодир ба иҷрои гузаронидани иттилоот набудам."
 
-#: editor/kmcomposerwin.cpp:2147
+#: editor/kmcomposerwin.cpp:2150
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Қодир ба иҷрои гузаронидани иттилоот набудам."
 
-#: editor/kmcomposerwin.cpp:2333
+#: editor/kmcomposerwin.cpp:2336
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Гузоштани файл"
 
-#: editor/kmcomposerwin.cpp:2398
+#: editor/kmcomposerwin.cpp:2401
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2399
+#: editor/kmcomposerwin.cpp:2402
 #, fuzzy, kde-format
 msgid "Add as &Attachment"
 msgstr "Афзудани замимот..."
 
-#: editor/kmcomposerwin.cpp:2414 editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2417 editor/kmcomposerwin.cpp:2521
 #, fuzzy, kde-format
 msgid "Name of the attachment:"
 msgstr "ғайри замимот"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2423
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2423
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "&Афзудани имзо"
 
-#: editor/kmcomposerwin.cpp:2471
+#: editor/kmcomposerwin.cpp:2474
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Иттилооти рамзгузошташуда"
 msgstr[1] "Иттилооти рамзгузошташуда"
 
-#: editor/kmcomposerwin.cpp:2472
+#: editor/kmcomposerwin.cpp:2475
 #, fuzzy, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Афзудани замимот..."
 msgstr[1] "Афзудани замимот..."
 
-#: editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2521
 #, fuzzy, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "бо замимот"
 
-#: editor/kmcomposerwin.cpp:2615
+#: editor/kmcomposerwin.cpp:2618
 #, kde-format
 msgid "unnamed"
 msgstr "беном"
 
-#: editor/kmcomposerwin.cpp:2641
+#: editor/kmcomposerwin.cpp:2644
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2480,14 +2480,14 @@ msgstr ""
 "имзо кардани иттилоотҳои худ, ишора кунед.</p><p>Шумо метавонед калиди "
 "истифодашавандаро дар танзимоти ихтисос ишора кунед.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2648
+#: editor/kmcomposerwin.cpp:2651
 #, fuzzy, kde-format
 #| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Калиди имзоӣ ишора нашудааст"
 
-#: editor/kmcomposerwin.cpp:2807
+#: editor/kmcomposerwin.cpp:2810
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2498,7 +2498,7 @@ msgstr ""
 "эмейлатонро барои ҳамаи шабоҳатҳо муайян кунед, ҳамин тариқ ба шумо лозим "
 "намеояд, ки вайро барои ҳар як мактубча ворид кунед."
 
-#: editor/kmcomposerwin.cpp:2816
+#: editor/kmcomposerwin.cpp:2819
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2508,50 +2508,50 @@ msgid ""
 "as BCC."
 msgstr "Бояд ақалан як муштариро ишора намудан лозим аст."
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2825
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr ""
 "Шумо мавзӯъотро ишора накардаед. Оё мехоҳед иттилооро ғайри мавзӯъ "
 "бифиристед?"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2827
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Мавзӯъ ишора нашудааст"
 
-#: editor/kmcomposerwin.cpp:2825 editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2828 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "Фиристо&дан чӣ тавре, ки ҳаст"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2829
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "&Ишора намудани мавзӯъ"
 
-#: editor/kmcomposerwin.cpp:2836
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr ""
 "Шумо мавзӯъотро ишора накардаед. Оё мехоҳед иттилооро ғайри мавзӯъ "
 "бифиристед?"
 
-#: editor/kmcomposerwin.cpp:2838
+#: editor/kmcomposerwin.cpp:2841
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Мавзӯъ ишора нашудааст"
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Ишора намудани мавзӯъ"
 
-#: editor/kmcomposerwin.cpp:2885
+#: editor/kmcomposerwin.cpp:2888
 #, fuzzy, kde-format
 #| msgid ""
 #| "You must specify at least one receiver,either in the To: field or as CC "
@@ -2561,69 +2561,69 @@ msgid ""
 "draft."
 msgstr "Бояд ақалан як муштариро ишора намудан лозим аст."
 
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3079
 #, kde-format
 msgid "About to send email..."
 msgstr "Иттилоот ба фиристодан тайёр аст..."
 
-#: editor/kmcomposerwin.cpp:3077
+#: editor/kmcomposerwin.cpp:3080
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Тасдиқоти фиристониш"
 
-#: editor/kmcomposerwin.cpp:3078
+#: editor/kmcomposerwin.cpp:3081
 #, kde-format
 msgid "&Send Now"
 msgstr "Дарҳол &фиристодан"
 
-#: editor/kmcomposerwin.cpp:3154
+#: editor/kmcomposerwin.cpp:3157
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3155
+#: editor/kmcomposerwin.cpp:3158
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "<recipients>"
 
-#: editor/kmcomposerwin.cpp:3156
+#: editor/kmcomposerwin.cpp:3159
 #, kde-format
 msgid "&Send as Is"
 msgstr "Фиристодан &чуноне, ки ҳаст"
 
-#: editor/kmcomposerwin.cpp:3157
+#: editor/kmcomposerwin.cpp:3160
 #, fuzzy, kde-format
 #| msgid "Additional Recipients"
 msgid "&Edit Recipients"
 msgstr "Қабулкунандаҳои иловагӣ"
 
-#: editor/kmcomposerwin.cpp:3194
+#: editor/kmcomposerwin.cpp:3197
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3196
+#: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3197
+#: editor/kmcomposerwin.cpp:3200
 #, fuzzy, kde-format
 msgid "Lose Formatting"
 msgstr "Тасдиқоти фиристониш"
 
-#: editor/kmcomposerwin.cpp:3198
+#: editor/kmcomposerwin.cpp:3201
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgid "Add Markup Plain Text"
 msgstr "Иттилоот ба намуди матни оддӣ"
 
-#: editor/kmcomposerwin.cpp:3410
+#: editor/kmcomposerwin.cpp:3413
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2631,7 +2631,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3423
+#: editor/kmcomposerwin.cpp:3426
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2639,7 +2639,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3439
+#: editor/kmcomposerwin.cpp:3442
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2647,7 +2647,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3452
+#: editor/kmcomposerwin.cpp:3455
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2655,27 +2655,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3625
+#: editor/kmcomposerwin.cpp:3628
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Рамзгузорӣ"
 
-#: editor/kmcomposerwin.cpp:3627
+#: editor/kmcomposerwin.cpp:3630
 #, fuzzy, kde-format
 #| msgid "Do &Not Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "&Рамзгузорӣ накардан"
 
-#: editor/kmcomposerwin.cpp:3767
+#: editor/kmcomposerwin.cpp:3770
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3789
+#: editor/kmcomposerwin.cpp:3792
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2683,7 +2683,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3793
+#: editor/kmcomposerwin.cpp:3796
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2691,7 +2691,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3797
+#: editor/kmcomposerwin.cpp:3800
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2699,7 +2699,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3824
+#: editor/kmcomposerwin.cpp:3827
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2708,7 +2708,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3832
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2718,7 +2718,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3840
+#: editor/kmcomposerwin.cpp:3843
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2726,7 +2726,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3846
+#: editor/kmcomposerwin.cpp:3849
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2734,7 +2734,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3852
+#: editor/kmcomposerwin.cpp:3855
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2742,7 +2742,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3860
+#: editor/kmcomposerwin.cpp:3863
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2752,7 +2752,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3868
+#: editor/kmcomposerwin.cpp:3871
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2760,7 +2760,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3874
+#: editor/kmcomposerwin.cpp:3877
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2770,7 +2770,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3882
+#: editor/kmcomposerwin.cpp:3885
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2778,7 +2778,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3887
+#: editor/kmcomposerwin.cpp:3890
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2786,7 +2786,36 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4275
+#: editor/kmcomposerwin.cpp:4222
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "if in your language something like 'key(s)' isn't possible please use the "
+#| "plural in the translation"
+#| msgid ""
+#| "No valid and trusted encryption key was found for \"%1\".\n"
+#| "\n"
+#| "Select the key(s) which should be used for this recipient."
+msgctxt ""
+"if in your language something like 'certificate(s)' is not possible please "
+"use the plural in the translation"
+msgid ""
+"<qt>No valid and trusted encryption certificate was found for \"%1\".<br/"
+"><br/>Select the certificate(s) which should be used for this recipient. If "
+"there is no suitable certificate in the list you can also search for "
+"external certificates by clicking the button: search for external "
+"certificates.</qt>"
+msgstr ""
+"Калиди рамзгузории иҷозавӣ ва озмоидашуда барои \"%1\" ёфт нашуд.\n"
+"\n"
+"Калид(ҳо)-ро, ки барои ин қабулкунанда истифода бурдан лозим аст, интихоб "
+"кунед."
+
+#: editor/kmcomposerwin.cpp:4234
+#, kde-format
+msgid "Encryption Key Selection"
+msgstr "Интихоби калиди рамзгузорӣ"
+
+#: editor/kmcomposerwin.cpp:4319
 #, fuzzy, kde-format
 msgid "Plugin Editor Information"
 msgstr "Тасдиқоти фиристониш"
@@ -2924,25 +2953,25 @@ msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
 msgstr ""
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:76
+#: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, fuzzy, kde-format
 #| msgid "Message was signed by %1."
 msgid "Message will be signed"
 msgstr "Иттилоот бо %1 имзо шудааст."
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:76
+#: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, fuzzy, kde-format
 #| msgid "Message List - Date Field"
 msgid "Message will not be signed"
 msgstr "Рӯйхати иттилоот - заминаи сана"
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:77
+#: editor/widgets/cryptostateindicatorwidget.cpp:79
 #, fuzzy, kde-format
 #| msgid "Store sent messages encry&pted"
 msgid "Message will be encrypted"
 msgstr "Иттилоотҳои фиристодашударо ба тарзи &рамзгузошташуда захира кардан"
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:77
+#: editor/widgets/cryptostateindicatorwidget.cpp:79
 #, fuzzy, kde-format
 #| msgid "Store sent messages encry&pted"
 msgid "Message will not be encrypted"
@@ -12381,9 +12410,6 @@ msgstr ""
 #~ "Шумо калидҳои рамзгузориро барои якчанд қабулкунандаҳо интихоб накардаед. "
 #~ "Агар шумо иттилоотро рамзгузорӣ кунед, онҳо иттилоотро натавонанд хонд."
 
-#~ msgid "Encryption Key Selection"
-#~ msgstr "Интихоби калиди рамзгузорӣ"
-
 #, fuzzy
 #~| msgctxt ""
 #~| "if in your language something like 'key(s)' isn't possible please use "
@@ -12403,28 +12429,6 @@ msgstr ""
 #~ "Хатогӣ ҳангоми интихоби калид барои \"%1\".\n"
 #~ "\n"
 #~ "Боз як бори дигар сайъ кунед, ки калид(ҳо)-ро барои ин муштарӣ интихоб "
-#~ "кунед."
-
-#, fuzzy
-#~| msgctxt ""
-#~| "if in your language something like 'key(s)' isn't possible please use "
-#~| "the plural in the translation"
-#~| msgid ""
-#~| "No valid and trusted encryption key was found for \"%1\".\n"
-#~| "\n"
-#~| "Select the key(s) which should be used for this recipient."
-#~ msgctxt ""
-#~ "if in your language something like 'key(s)' is not possible please use "
-#~ "the plural in the translation"
-#~ msgid ""
-#~ "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#~ ">Select the key(s) which should be used for this recipient. If there is "
-#~ "no suitable key in the list you can also <a href=\"%2\">search for "
-#~ "external keys</a>.</qt>"
-#~ msgstr ""
-#~ "Калиди рамзгузории иҷозавӣ ва озмоидашуда барои \"%1\" ёфт нашуд.\n"
-#~ "\n"
-#~ "Калид(ҳо)-ро, ки барои ин қабулкунанда истифода бурдан лозим аст, интихоб "
 #~ "кунед."
 
 #, fuzzy

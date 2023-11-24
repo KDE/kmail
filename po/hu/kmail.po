@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-23 01:38+0000\n"
+"POT-Creation-Date: 2023-11-24 01:35+0000\n"
 "PO-Revision-Date: 2014-10-18 12:13+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -412,7 +412,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2414 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: editor/kmcomposerwin.cpp:2417 kmreaderwin.cpp:305 kmsystemtray.cpp:46
 #: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
@@ -1954,334 +1954,334 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: editor/kmcomposerwin.cpp:331 kmail_part.cpp:39 kmmainwin.cpp:55
+#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:55
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:358
+#: editor/kmcomposerwin.cpp:359
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Válassza ki az üzenet helyesírás-ellenőrzéséhez használandó szótárat"
 
-#: editor/kmcomposerwin.cpp:365
+#: editor/kmcomposerwin.cpp:366
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Válassza ki az elküldött üzenet mappát, ahova az üzenet másolata kerül"
 
-#: editor/kmcomposerwin.cpp:370
+#: editor/kmcomposerwin.cpp:371
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Válassza ki az üzenet küldéséhez használandó kimenő azonosítót"
 
-#: editor/kmcomposerwin.cpp:378
+#: editor/kmcomposerwin.cpp:379
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "Az üzenet „Feladó:” mezőjének beállítása"
 
-#: editor/kmcomposerwin.cpp:406
+#: editor/kmcomposerwin.cpp:407
 #, kde-format
 msgid "&Identity:"
 msgstr "Azonos&ító:"
 
-#: editor/kmcomposerwin.cpp:407
+#: editor/kmcomposerwin.cpp:408
 #, kde-format
 msgid "&Dictionary:"
 msgstr "&Szótár:"
 
-#: editor/kmcomposerwin.cpp:408
+#: editor/kmcomposerwin.cpp:409
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "Az elkül&dött üzenetek mappája:"
 
-#: editor/kmcomposerwin.cpp:409
+#: editor/kmcomposerwin.cpp:410
 #, kde-format
 msgid "&Mail transport:"
 msgstr "Üze&nettovábbítási mód:"
 
-#: editor/kmcomposerwin.cpp:410
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&Feladó:"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Tárgy:"
 
-#: editor/kmcomposerwin.cpp:483
+#: editor/kmcomposerwin.cpp:486
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Üzenetszerkesztő"
 
-#: editor/kmcomposerwin.cpp:1237 editor/kmcomposerwin.cpp:1271
+#: editor/kmcomposerwin.cpp:1240 editor/kmcomposerwin.cpp:1274
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Levél küldése"
 
-#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1277
+#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1280
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "&Levél küldése ezzel"
 
-#: editor/kmcomposerwin.cpp:1246
+#: editor/kmcomposerwin.cpp:1249
 #, kde-format
 msgid "Send"
 msgstr "Elküldés"
 
-#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1261
-#: editor/kmcomposerwin.cpp:3079
+#: editor/kmcomposerwin.cpp:1252 editor/kmcomposerwin.cpp:1264
+#: editor/kmcomposerwin.cpp:3082
 #, kde-format
 msgid "Send &Later"
 msgstr "Kül&dés később"
 
-#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1268
+#: editor/kmcomposerwin.cpp:1258 editor/kmcomposerwin.cpp:1271
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Kül&dés később ezzel"
 
-#: editor/kmcomposerwin.cpp:1257
+#: editor/kmcomposerwin.cpp:1260
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Sor"
 
-#: editor/kmcomposerwin.cpp:1286
+#: editor/kmcomposerwin.cpp:1289
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Mentés &piszkozatként"
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1291
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "E-mail mentése a piszkozatok mappába"
 
-#: editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1295
 #, kde-format
 msgid "Save as &Template"
 msgstr "Mentés sabl&onként"
 
-#: editor/kmcomposerwin.cpp:1293
+#: editor/kmcomposerwin.cpp:1296
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "E-mail mentése a sablonok mappába"
 
-#: editor/kmcomposerwin.cpp:1297
+#: editor/kmcomposerwin.cpp:1300
 #, kde-format
 msgid "Save as &File"
 msgstr "Mentés &fájlba"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1301
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "E-mail mentése szövegként vagy HTML-fájlként"
 
-#: editor/kmcomposerwin.cpp:1302
+#: editor/kmcomposerwin.cpp:1305
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "Szövegfájl &beszúrása…"
 
-#: editor/kmcomposerwin.cpp:1306
+#: editor/kmcomposerwin.cpp:1309
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "A legutó&bbi szövegfájl beszúrása"
 
-#: editor/kmcomposerwin.cpp:1316 kmmainwidget.cpp:2941
+#: editor/kmcomposerwin.cpp:1319 kmmainwidget.cpp:2941
 #, kde-format
 msgid "&Address Book"
 msgstr "&Címjegyzék"
 
-#: editor/kmcomposerwin.cpp:1317
+#: editor/kmcomposerwin.cpp:1320
 #, kde-format
 msgid "Open Address Book"
 msgstr "Címjegyzék megnyitása"
 
-#: editor/kmcomposerwin.cpp:1324
+#: editor/kmcomposerwin.cpp:1327
 #, kde-format
 msgid "&New Composer"
 msgstr "Ú&j üzenet"
 
-#: editor/kmcomposerwin.cpp:1330
+#: editor/kmcomposerwin.cpp:1333
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "Címze&ttek kiválasztása..."
 
-#: editor/kmcomposerwin.cpp:1333
+#: editor/kmcomposerwin.cpp:1336
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "A címlista m&entése..."
 
-#: editor/kmcomposerwin.cpp:1354
+#: editor/kmcomposerwin.cpp:1357
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "Be&illesztés mellékletként"
 
-#: editor/kmcomposerwin.cpp:1358
+#: editor/kmcomposerwin.cpp:1361
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "A s&zóközök normalizálása"
 
-#: editor/kmcomposerwin.cpp:1362
+#: editor/kmcomposerwin.cpp:1365
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "Állandó szé&lességű betűtípus"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1371
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Sürgős"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1373
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "&Feldolgozási visszajelzés kérése"
 
-#: editor/kmcomposerwin.cpp:1374
+#: editor/kmcomposerwin.cpp:1377
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgid "&Request Delivery Confirmation"
 msgstr "&Feldolgozási visszajelzés kérése"
 
-#: editor/kmcomposerwin.cpp:1381
+#: editor/kmcomposerwin.cpp:1384
 #, kde-format
 msgid "&Wordwrap"
 msgstr "Szó&tördelés"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1389
 #, kde-format
 msgid "&Snippets"
 msgstr "&Kódrészletek"
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1394
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "Automatikus &helyesírás-ellenőrzés"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1410
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "Rich Text szerkesztés"
 
-#: editor/kmcomposerwin.cpp:1409
+#: editor/kmcomposerwin.cpp:1412
 #, kde-format
 msgid "Rich Text"
 msgstr "Rich Text"
 
-#: editor/kmcomposerwin.cpp:1410
+#: editor/kmcomposerwin.cpp:1413
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr "Rich text szerkesztési mód váltása"
 
-#: editor/kmcomposerwin.cpp:1414
+#: editor/kmcomposerwin.cpp:1417
 #, kde-format
 msgid "&All Fields"
 msgstr "&Minden mező"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1420
 #, kde-format
 msgid "&Identity"
 msgstr "Azonos&ító"
 
-#: editor/kmcomposerwin.cpp:1420
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgid "&Dictionary"
 msgstr "Szó&tár"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1426
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "Az &elküldött üzenetek mappája"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1429
 #, kde-format
 msgid "&Mail Transport"
 msgstr "Üze&nettovábbítási mód"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgid "&From"
 msgstr "&Feladó"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1435
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Tárgy"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1440
 #, kde-format
 msgid "Append S&ignature"
 msgstr "Alá&írás hozzáadása"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1444
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "Alá&írás hozzáaddása az üzenet elején"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1448
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "Aláírás beszúrása a &kurzornál"
 
-#: editor/kmcomposerwin.cpp:1460
+#: editor/kmcomposerwin.cpp:1463
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "&Helyesírás-ellenőrző…"
 
-#: editor/kmcomposerwin.cpp:1461
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "Spellchecker"
 msgstr "Helyesírás-ellenőrző"
 
-#: editor/kmcomposerwin.cpp:1465
+#: editor/kmcomposerwin.cpp:1468
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "Az üzenet &titkosítása"
 
-#: editor/kmcomposerwin.cpp:1466
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "Encrypt"
 msgstr "Titkosítás"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1471
 #, kde-format
 msgid "&Sign Message"
 msgstr "Az üzenet elektronikus a&láírása"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "Sign"
 msgstr "Elektronikus aláírás"
 
-#: editor/kmcomposerwin.cpp:1493
+#: editor/kmcomposerwin.cpp:1496
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "Tit&kosítási üzenetformátum"
 
-#: editor/kmcomposerwin.cpp:1496
+#: editor/kmcomposerwin.cpp:1499
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "Válasszon titkosítási formátumot az üzenethez"
 
-#: editor/kmcomposerwin.cpp:1501
+#: editor/kmcomposerwin.cpp:1504
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder..."
 msgstr "Ker&esés az üzenetek között..."
 
-#: editor/kmcomposerwin.cpp:1535
+#: editor/kmcomposerwin.cpp:1538
 #, kde-format
 msgid "Configure KMail..."
 msgstr "Beállítások - KMail..."
 
-#: editor/kmcomposerwin.cpp:1565 kmmainwin.cpp:179 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:179 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2290,62 +2290,62 @@ msgstr ""
 "<qt>Teljesen elrejti a menüsávot. Ezzel a paranccsal állítható vissza: %1.</"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:182
+#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:182
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menüsáv elrejtése"
 
-#: editor/kmcomposerwin.cpp:1668 editor/kmcomposerwin.cpp:4002
+#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4005
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Sor: %1 "
 
-#: editor/kmcomposerwin.cpp:1671 editor/kmcomposerwin.cpp:4004
+#: editor/kmcomposerwin.cpp:1674 editor/kmcomposerwin.cpp:4007
 #, kde-format
 msgid " Column: %1 "
 msgstr " Oszlop: %1 "
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1679
 #, kde-format
 msgid "OVR"
 msgstr "FELÜL"
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1679
 #, kde-format
 msgid "INS"
 msgstr "BESZ"
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1687
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Helyesírás-ellenőrzés: bekapcsolva"
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1687
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Helyesírás-ellenőrzés: kikapcsolva"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Elmen&tés újból sablonként"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Mentés &piszkozatként"
 
-#: editor/kmcomposerwin.cpp:2071
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr "Az üzenet elmentése a Sablonok mappába későbbi felhasználásra."
 
-#: editor/kmcomposerwin.cpp:2073
+#: editor/kmcomposerwin.cpp:2076
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2354,91 +2354,91 @@ msgstr ""
 "Az üzenet elmentése a Piszkozatok mappába. Az üzenet ott szerkeszthető és "
 "később elküldhető."
 
-#: editor/kmcomposerwin.cpp:2077
+#: editor/kmcomposerwin.cpp:2080
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "El szeretné dobni az üzenetet vagy inkább megőrzi piszkozatként?"
 
-#: editor/kmcomposerwin.cpp:2078
+#: editor/kmcomposerwin.cpp:2081
 #, fuzzy, kde-format
 #| msgid "Close Composer"
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "A szerkesztő bezárása"
 
-#: editor/kmcomposerwin.cpp:2146
+#: editor/kmcomposerwin.cpp:2149
 #, fuzzy, kde-format
 #| msgid "Autosave Message Failed"
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Az üzenet automatikus mentése nem sikerült"
 
-#: editor/kmcomposerwin.cpp:2147
+#: editor/kmcomposerwin.cpp:2150
 #, fuzzy, kde-format
 #| msgid "Sending Message Failed"
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Az üzenet küldése sikertelen"
 
-#: editor/kmcomposerwin.cpp:2333
+#: editor/kmcomposerwin.cpp:2336
 #, fuzzy, kde-format
 #| msgid "Insert File Content"
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Fájltartalom beszúrása"
 
-#: editor/kmcomposerwin.cpp:2398
+#: editor/kmcomposerwin.cpp:2401
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "Hozzáadás beágyazott &képként"
 
-#: editor/kmcomposerwin.cpp:2399
+#: editor/kmcomposerwin.cpp:2402
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Hozzá&adás mellékletként"
 
-#: editor/kmcomposerwin.cpp:2414 editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2417 editor/kmcomposerwin.cpp:2521
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "A melléklet neve:"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2423
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2423
 #, fuzzy, kde-format
 #| msgid "Invalid date"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Érvénytelen dátum"
 
-#: editor/kmcomposerwin.cpp:2471
+#: editor/kmcomposerwin.cpp:2474
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "URL hozzáadása az üzenethez"
 msgstr[1] "URL-ek hozzáadása az üzenethez"
 
-#: editor/kmcomposerwin.cpp:2472
+#: editor/kmcomposerwin.cpp:2475
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Fájl hozzáadás&a mellékletként"
 msgstr[1] "Fájlok hozzáadás&a mellékletként"
 
-#: editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2521
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "A vágólapon levő szöveg beillesztése mellékletként"
 
-#: editor/kmcomposerwin.cpp:2615
+#: editor/kmcomposerwin.cpp:2618
 #, kde-format
 msgid "unnamed"
 msgstr "névtelen"
 
-#: editor/kmcomposerwin.cpp:2641
+#: editor/kmcomposerwin.cpp:2644
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2450,14 +2450,14 @@ msgstr ""
 "p><p>Az azonosító beállításainál lehet kiválasztani a kívánt kulcsot.</p></"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:2648
+#: editor/kmcomposerwin.cpp:2651
 #, fuzzy, kde-format
 #| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Nem definiált aláírási kulcs"
 
-#: editor/kmcomposerwin.cpp:2807
+#: editor/kmcomposerwin.cpp:2810
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2468,7 +2468,7 @@ msgstr ""
 "minden azonosítónál beírni a saját e-mail címet, hogy ne kelljen minden "
 "üzenetnél egyesével beírni."
 
-#: editor/kmcomposerwin.cpp:2816
+#: editor/kmcomposerwin.cpp:2819
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2477,71 +2477,71 @@ msgstr ""
 "Legalább egy címzettet meg kell adnia a Címzett mezőben vagy másolatként, "
 "vagy titkos másolatként."
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2825
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "A címzett mező üres. El szeretné így küldeni az üzenetet?"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2827
 #, fuzzy, kde-format
 #| msgid "No To: specified"
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Nincs megadva címzett"
 
-#: editor/kmcomposerwin.cpp:2825 editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2828 editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "S&end as Is"
 msgstr "Elküldés í&gy"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2829
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgid "&Specify the To field"
 msgstr "I&nkább megadom a tárgyat"
 
-#: editor/kmcomposerwin.cpp:2836
+#: editor/kmcomposerwin.cpp:2839
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Nem adott meg tárgyat. El szeretné így küldeni az üzenetet?"
 
-#: editor/kmcomposerwin.cpp:2838
+#: editor/kmcomposerwin.cpp:2841
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Nincs megadva tárgy"
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "I&nkább megadom a tárgyat"
 
-#: editor/kmcomposerwin.cpp:2885
+#: editor/kmcomposerwin.cpp:2888
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Legalább egy címzettet meg kell adnia a piszkozat titkosításához."
 
-#: editor/kmcomposerwin.cpp:3076
+#: editor/kmcomposerwin.cpp:3079
 #, kde-format
 msgid "About to send email..."
 msgstr "Üzenet küldése..."
 
-#: editor/kmcomposerwin.cpp:3077
+#: editor/kmcomposerwin.cpp:3080
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Megerősítés küldése"
 
-#: editor/kmcomposerwin.cpp:3078
+#: editor/kmcomposerwin.cpp:3081
 #, kde-format
 msgid "&Send Now"
 msgstr "Kül&dés most"
 
-#: editor/kmcomposerwin.cpp:3154
+#: editor/kmcomposerwin.cpp:3157
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2550,44 +2550,44 @@ msgstr ""
 "Olyan üzenetet készül kiküldeni, amelynek több mint %1 címzettje van. "
 "Biztosan el szeretné küldeni az üzenetet?"
 
-#: editor/kmcomposerwin.cpp:3155
+#: editor/kmcomposerwin.cpp:3158
 #, kde-format
 msgid "Too many recipients"
 msgstr "Túl sok címzett"
 
-#: editor/kmcomposerwin.cpp:3156
+#: editor/kmcomposerwin.cpp:3159
 #, kde-format
 msgid "&Send as Is"
 msgstr "Elküldés a m&ostani állapotban"
 
-#: editor/kmcomposerwin.cpp:3157
+#: editor/kmcomposerwin.cpp:3160
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "A címzettek mó&dosítása"
 
-#: editor/kmcomposerwin.cpp:3194
+#: editor/kmcomposerwin.cpp:3197
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "A HTML mód kikapcsolása megszünteti a szöveg formázását. Biztos benne?"
 
-#: editor/kmcomposerwin.cpp:3196
+#: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Megszünteti a formázást?"
 
-#: editor/kmcomposerwin.cpp:3197
+#: editor/kmcomposerwin.cpp:3200
 #, kde-format
 msgid "Lose Formatting"
 msgstr "A formázás eldobása"
 
-#: editor/kmcomposerwin.cpp:3198
+#: editor/kmcomposerwin.cpp:3201
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Jelölő egyszerű szöveg hozzáadása"
 
-#: editor/kmcomposerwin.cpp:3410
+#: editor/kmcomposerwin.cpp:3413
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2595,7 +2595,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3423
+#: editor/kmcomposerwin.cpp:3426
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2603,7 +2603,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3439
+#: editor/kmcomposerwin.cpp:3442
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2611,7 +2611,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3452
+#: editor/kmcomposerwin.cpp:3455
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2619,27 +2619,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3625
+#: editor/kmcomposerwin.cpp:3628
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Titkosítás"
 
-#: editor/kmcomposerwin.cpp:3627
+#: editor/kmcomposerwin.cpp:3630
 #, fuzzy, kde-format
 #| msgid "Do &Not Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "T&itkosítás nélkül"
 
-#: editor/kmcomposerwin.cpp:3767
+#: editor/kmcomposerwin.cpp:3770
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3789
+#: editor/kmcomposerwin.cpp:3792
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2647,7 +2647,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3793
+#: editor/kmcomposerwin.cpp:3796
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2655,7 +2655,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3797
+#: editor/kmcomposerwin.cpp:3800
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2663,7 +2663,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3824
+#: editor/kmcomposerwin.cpp:3827
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2672,7 +2672,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3832
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2682,7 +2682,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3840
+#: editor/kmcomposerwin.cpp:3843
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2690,7 +2690,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3846
+#: editor/kmcomposerwin.cpp:3849
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2698,7 +2698,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3852
+#: editor/kmcomposerwin.cpp:3855
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2706,7 +2706,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3860
+#: editor/kmcomposerwin.cpp:3863
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2716,7 +2716,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3868
+#: editor/kmcomposerwin.cpp:3871
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2724,7 +2724,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3874
+#: editor/kmcomposerwin.cpp:3877
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2734,7 +2734,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3882
+#: editor/kmcomposerwin.cpp:3885
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2742,7 +2742,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3887
+#: editor/kmcomposerwin.cpp:3890
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2750,7 +2750,36 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4275
+#: editor/kmcomposerwin.cpp:4222
+#, fuzzy, kde-format
+#| msgctxt ""
+#| "if in your language something like 'key(s)' is not possible please use "
+#| "the plural in the translation"
+#| msgid ""
+#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
+#| ">Select the key(s) which should be used for this recipient. If there is "
+#| "no suitable key in the list you can also <a href=\"%2\">search for "
+#| "external keys</a>.</qt>"
+msgctxt ""
+"if in your language something like 'certificate(s)' is not possible please "
+"use the plural in the translation"
+msgid ""
+"<qt>No valid and trusted encryption certificate was found for \"%1\".<br/"
+"><br/>Select the certificate(s) which should be used for this recipient. If "
+"there is no suitable certificate in the list you can also search for "
+"external certificates by clicking the button: search for external "
+"certificates.</qt>"
+msgstr ""
+"<qt>Nem található érvényes és megbízható kulcs ehhez: \"%1\".<br/><br/"
+">Válassza ki a címzetthez rendelni kívánt kulcso(ka)t. Ha nincs megfelelő "
+"kulcs a listában, <a href=\"%2\">keressen külső kulcsok között</a>.</qt>"
+
+#: editor/kmcomposerwin.cpp:4234
+#, kde-format
+msgid "Encryption Key Selection"
+msgstr "Titkosítási kulcs kiválasztása"
+
+#: editor/kmcomposerwin.cpp:4319
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -2891,22 +2920,22 @@ msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
 msgstr ""
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:76
+#: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, kde-format
 msgid "Message will be signed"
 msgstr "Az üzenet alá lesz írva"
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:76
+#: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, kde-format
 msgid "Message will not be signed"
 msgstr "Az üzenet nem lesz aláírva"
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:77
+#: editor/widgets/cryptostateindicatorwidget.cpp:79
 #, kde-format
 msgid "Message will be encrypted"
 msgstr "Az üzenet titkosítva lesz"
 
-#: editor/widgets/cryptostateindicatorwidget.cpp:77
+#: editor/widgets/cryptostateindicatorwidget.cpp:79
 #, kde-format
 msgid "Message will not be encrypted"
 msgstr "Az üzenetek nem lesz titkosítva"
@@ -12992,9 +13021,6 @@ msgstr "Nagyítás"
 #~ "Nem választott ki titkosítási kulcsot néhány címzetthez: ezek a személyek "
 #~ "nem fogják tudni elolvasni az üzenetet, ha azt titkosítva küldi el."
 
-#~ msgid "Encryption Key Selection"
-#~ msgstr "Titkosítási kulcs kiválasztása"
-
 #~ msgctxt ""
 #~ "if in your language something like 'key(s)' is not possible please use "
 #~ "the plural in the translation"
@@ -13006,19 +13032,6 @@ msgstr "Nagyítás"
 #~ "Hiba történt a(z) \"%1\" címzetthez rendelt titkosítási kulcsokkal.\n"
 #~ "\n"
 #~ "Válassza ki újból a címzettnél használni kívánt kulcso(ka)t."
-
-#~ msgctxt ""
-#~ "if in your language something like 'key(s)' is not possible please use "
-#~ "the plural in the translation"
-#~ msgid ""
-#~ "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#~ ">Select the key(s) which should be used for this recipient. If there is "
-#~ "no suitable key in the list you can also <a href=\"%2\">search for "
-#~ "external keys</a>.</qt>"
-#~ msgstr ""
-#~ "<qt>Nem található érvényes és megbízható kulcs ehhez: \"%1\".<br/><br/"
-#~ ">Válassza ki a címzetthez rendelni kívánt kulcso(ka)t. Ha nincs megfelelő "
-#~ "kulcs a listában, <a href=\"%2\">keressen külső kulcsok között</a>.</qt>"
 
 #~ msgctxt ""
 #~ "if in your language something like 'key(s)' is not possible please use "
