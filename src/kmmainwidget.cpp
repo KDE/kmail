@@ -164,6 +164,7 @@
 #include <QStandardPaths>
 
 #include "historyclosedreader/historyclosedreadermanager.h"
+#include "historyclosedreader/historyclosedreadermenu.h"
 #include "job/removecollectionjob.h"
 #include "job/removeduplicatemailjob.h"
 #include <PimCommonAkonadi/ManageServerSideSubscriptionJob>
@@ -3199,9 +3200,9 @@ void KMMainWidget::setupActions()
     }
     mFilterMenu->addAction(mMsgActions->listFilterAction());
 
-    mRestoreClosedMessageAction = new QAction(i18n("Restore Closed Message"), this);
-    actionCollection()->addAction(QStringLiteral("restore_closed_messageviewer"), mRestoreClosedMessageAction);
-    connect(mRestoreClosedMessageAction, &QAction::triggered, this, &KMMainWidget::slotRestoreClosedMessage);
+    mRestoreClosedMessageMenu = new HistoryClosedReaderMenu(this);
+    actionCollection()->addAction(QStringLiteral("restore_closed_messageviewer"), mRestoreClosedMessageMenu);
+    connect(mRestoreClosedMessageMenu, &HistoryClosedReaderMenu::openMessage, this, &KMMainWidget::slotRestoreClosedMessage);
 
     //----- "Mark Thread" submenu
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
@@ -4950,18 +4951,15 @@ void KMMainWidget::slotClearCacheDone()
     }
 }
 
-void KMMainWidget::slotRestoreClosedMessage()
+void KMMainWidget::slotRestoreClosedMessage(Akonadi::Item::Id id)
 {
-    if (!HistoryClosedReaderManager::self()->isEmpty()) {
-        const HistoryClosedReaderInfo info = HistoryClosedReaderManager::self()->lastInfo();
-        // qDebug() << " info " << info;
-        slotMessageActivated(Akonadi::Item(info.item()));
-    }
+    qDebug() << " ID " << id;
+    slotMessageActivated(Akonadi::Item(id));
 }
 
 void KMMainWidget::slotHistoryClosedReaderChanged()
 {
-    mRestoreClosedMessageAction->setEnabled(!HistoryClosedReaderManager::self()->isEmpty());
+    mRestoreClosedMessageMenu->setEnabled(!HistoryClosedReaderManager::self()->isEmpty());
 }
 
 #include "moc_kmmainwidget.cpp"

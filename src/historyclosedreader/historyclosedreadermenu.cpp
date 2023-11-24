@@ -32,14 +32,14 @@ void HistoryClosedReaderMenu::updateMenu()
     if (!list.isEmpty()) {
         for (const auto &info : list) {
             auto action = new QAction(info.subject(), menu());
-            connect(action, &QAction::toggled, this, [this, info]() {
+            connect(action, &QAction::triggered, this, [this, info]() {
                 Q_EMIT openMessage(info.item());
             });
             menu()->addAction(action);
         }
         menu()->addSeparator();
         auto clearAction = new QAction(i18n("Clear History"), menu());
-        connect(clearAction, &QAction::toggled, this, &HistoryClosedReaderMenu::slotClear);
+        connect(clearAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotClear);
         menu()->addAction(clearAction);
     }
 }

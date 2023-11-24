@@ -63,6 +63,7 @@ class ManageShowCollectionProperties;
 class KActionMenuTransport;
 class KActionMenuAccount;
 class ZoomLabelWidget;
+class HistoryClosedReaderMenu;
 
 namespace KIO
 {
@@ -540,7 +541,7 @@ private:
     void slotClearFolder();
     void slotClearCacheDone();
     void slotClearFolderAndSubFolders();
-    void slotRestoreClosedMessage();
+    void slotRestoreClosedMessage(Akonadi::Item::Id id);
     void slotHistoryClosedReaderChanged();
 
     // Message actions
@@ -668,5 +669,5 @@ private:
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
     QAction *mClearFolderCacheAction = nullptr;
-    QAction *mRestoreClosedMessageAction = nullptr;
+    HistoryClosedReaderMenu *mRestoreClosedMessageMenu = nullptr;
 };
