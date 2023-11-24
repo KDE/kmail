@@ -24,8 +24,10 @@ bool HistoryClosedReaderManager::isEmpty() const
 
 void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
 {
-    // TODO add maximum element!
     if (info.isValid()) {
+        if (mClosedReaderInfos.count() >= 10) {
+            mClosedReaderInfos.takeFirst();
+        }
         mClosedReaderInfos.append(info);
         Q_EMIT historyClosedReaderChanged();
     }

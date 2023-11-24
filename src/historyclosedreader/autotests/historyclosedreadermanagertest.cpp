@@ -127,4 +127,16 @@ void HistoryClosedReaderManagerTest::shouldEmitSignal()
     // TODO
 }
 
+void HistoryClosedReaderManagerTest::shouldAssignMaxValues()
+{
+    HistoryClosedReaderManager w;
+    for (int i = 0; i < 15; i++) {
+        HistoryClosedReaderInfo info;
+        info.setItem(2);
+        info.setSubject(QStringLiteral("sub"));
+        w.addInfo(std::move(info));
+    }
+    QCOMPARE(w.count(), 10);
+}
+
 #include "moc_historyclosedreadermanagertest.cpp"
