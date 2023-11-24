@@ -121,7 +121,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     connect(box, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
     l->addWidget(box);
     view->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(view, &QListView::customContextMenuRequested, this, [=](const QPoint &pos) {
+    connect(view, &QListView::customContextMenuRequested, this, [this, view, addMailBox, removeMailBox, modifyMailBox](const QPoint &pos) {
         Q_UNUSED(pos);
         const auto mboxSelected = view->selectionModel()->selectedIndexes();
         QMenu menu(this);

@@ -370,7 +370,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     vbox->addWidget(mPGPSameKey);
     formLayout->addRow(label, vbox);
 
-    connect(mPGPSameKey, &QCheckBox::toggled, this, [=](bool checked) {
+    connect(mPGPSameKey, &QCheckBox::toggled, this, [this, formLayout, vbox](bool checked) {
         mPGPEncryptionKeyRequester->setVisible(!checked);
         formLayout->labelForField(mPGPEncryptionKeyRequester)->setVisible(!checked);
         const auto label = qobject_cast<QLabel *>(formLayout->labelForField(vbox));
