@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-11-22 14:15+0300\n"
+"PO-Revision-Date: 2023-11-24 13:12+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1893,7 +1893,7 @@ msgstr "&Gönderilen klasörü:"
 #: editor/kmcomposerwin.cpp:341
 #, kde-format
 msgid "&Mail transport:"
-msgstr "&Posta taşıyıcı:"
+msgstr "&Posta taşıyıcısı:"
 
 #: editor/kmcomposerwin.cpp:342
 #, kde-format
@@ -2125,7 +2125,7 @@ msgstr "İ&mzayı İmleç Konumuna Ekle"
 #: editor/kmcomposerwin.cpp:1391
 #, kde-format
 msgid "&Spellchecker..."
-msgstr "Yazım &Denetleyici..."
+msgstr "Yazım &Denetleyicisi..."
 
 #: editor/kmcomposerwin.cpp:1392
 #, kde-format
@@ -2897,7 +2897,7 @@ msgstr ""
 #: identity/identitydialog.cpp:309
 #, kde-format
 msgid "&Email address:"
-msgstr "&E-posta Adresi:"
+msgstr "&E-posta adresi:"
 
 #: identity/identitydialog.cpp:314
 #, kde-format
@@ -3750,7 +3750,7 @@ msgstr "İletinin gövdesini belirleyin"
 #: kmail_options.h:28
 #, kde-format
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr "Postaya bir ek koy. Bu işlemi yineleyebilirsiniz"
+msgstr "Postaya bir ek iliştirin. Bu işlemi yineleyebilirsiniz"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4499,7 +4499,7 @@ msgstr "Sertifika Yöneticisi"
 #: kmmainwidget.cpp:2887
 #, kde-format
 msgid "&Import Messages..."
-msgstr "İ&letileri İçe Aktar..."
+msgstr "İ&letiler İçe Aktar..."
 
 #: kmmainwidget.cpp:2897
 #, kde-format
