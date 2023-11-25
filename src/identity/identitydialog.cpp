@@ -257,7 +257,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto vlay = new QVBoxLayout(page);
     vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(page);
-    mTabWidget->setObjectName(QStringLiteral("config-identity-tab"));
+    mTabWidget->setObjectName(QLatin1StringView("config-identity-tab"));
     vlay->addWidget(mTabWidget);
 
     auto tab = new QWidget(mTabWidget);
@@ -510,7 +510,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Reply-To Address" line edit and label:
     mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonEnabled(true);
-    mReplyToEdit->setObjectName(QStringLiteral("mReplyToEdit"));
+    mReplyToEdit->setObjectName(QLatin1StringView("mReplyToEdit"));
     label = new QLabel(i18n("&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
     formLayout->addRow(label, mReplyToEdit);
@@ -532,7 +532,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "CC addresses" line edit and label:
     mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonEnabled(true);
-    mCcEdit->setObjectName(QStringLiteral("mCcEdit"));
+    mCcEdit->setObjectName(QLatin1StringView("mCcEdit"));
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
     formLayout->addRow(label, mCcEdit);
@@ -553,7 +553,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "BCC addresses" line edit and label:
     mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonEnabled(true);
-    mBccEdit->setObjectName(QStringLiteral("mBccEdit"));
+    mBccEdit->setObjectName(QLatin1StringView("mBccEdit"));
     KLineEditEventHandler::catchReturnKey(mBccEdit);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);

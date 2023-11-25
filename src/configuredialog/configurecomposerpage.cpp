@@ -318,7 +318,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 #if KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
     mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
-    mRecipientCheck->setObjectName(QStringLiteral("kcfg_TooManyRecipients"));
+    mRecipientCheck->setObjectName(QLatin1StringView("kcfg_TooManyRecipients"));
     helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
@@ -328,7 +328,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setMinimum(1 /*min*/);
     mRecipientSpin->setSingleStep(1 /*step*/);
     mRecipientSpin->setValue(5 /*init*/);
-    mRecipientSpin->setObjectName(QStringLiteral("kcfg_RecipientThreshold"));
+    mRecipientSpin->setObjectName(QLatin1StringView("kcfg_RecipientThreshold"));
     mRecipientSpin->setEnabled(false);
     helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8().constData());
     mRecipientSpin->setWhatsThis(helpText);
@@ -423,7 +423,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoSave->setMinimum(0);
     mAutoSave->setSingleStep(1);
     mAutoSave->setValue(1);
-    mAutoSave->setObjectName(QStringLiteral("kcfg_AutosaveInterval"));
+    mAutoSave->setObjectName(QLatin1StringView("kcfg_AutosaveInterval"));
     mAutoSave->setSpecialValueText(i18n("No autosave"));
     mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
 

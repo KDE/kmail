@@ -39,7 +39,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MailMergeConfigureDialog::reject);
 
-    mWidget->setObjectName(QStringLiteral("mailmergewidget"));
+    mWidget->setObjectName(QLatin1StringView("mailmergewidget"));
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
     connect(okButton, &QPushButton::clicked, this, &MailMergeConfigureDialog::slotSave);

@@ -22,7 +22,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 
     connect(this, &KMessageWidget::linkActivated, this, &PotentialPhishingEmailWarning::slotShowDetails);
     auto action = new QAction(i18n("Send Now"), this);
-    action->setObjectName(QStringLiteral("sendnow"));
+    action->setObjectName(QLatin1StringView("sendnow"));
     connect(action, &QAction::triggered, this, &PotentialPhishingEmailWarning::sendNow);
     addAction(action);
 }

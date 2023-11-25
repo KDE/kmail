@@ -39,7 +39,7 @@ KMMainWin::KMMainWin(QWidget *)
     , mMessageLabel(new QLabel(i18n("Starting...")))
 
 {
-    setObjectName(QStringLiteral("kmail-mainwindow#"));
+    setObjectName(QLatin1StringView("kmail-mainwindow#"));
 
     resize(700, 500); // The default size
 

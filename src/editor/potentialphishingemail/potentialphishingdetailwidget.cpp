@@ -20,10 +20,10 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins({});
     auto lab = new QLabel(i18n("Select email to put in whitelist:"), this);
-    lab->setObjectName(QStringLiteral("label"));
+    lab->setObjectName(QLatin1StringView("label"));
     mainLayout->addWidget(lab);
 
-    mListWidget->setObjectName(QStringLiteral("list_widget"));
+    mListWidget->setObjectName(QLatin1StringView("list_widget"));
     mainLayout->addWidget(mListWidget);
 }
 

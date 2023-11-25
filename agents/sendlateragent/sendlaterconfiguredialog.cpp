@@ -37,7 +37,7 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &SendLaterConfigureDialog::reject);
 
-    mWidget->setObjectName(QStringLiteral("sendlaterwidget"));
+    mWidget->setObjectName(QLatin1StringView("sendlaterwidget"));
     connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);

@@ -13,10 +13,10 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     , mTextEdit(new QPlainTextEdit(this))
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
     mainLayout->setContentsMargins({});
 
-    mTextEdit->setObjectName(QStringLiteral("textedit"));
+    mTextEdit->setObjectName(QLatin1StringView("textedit"));
     mTextEdit->setReadOnly(true);
     mainLayout->addWidget(mTextEdit);
     connect(this, &RefreshSettringsFinishPage::cleanDoneInfo, this, &RefreshSettringsFinishPage::slotCleanDoneInfo);

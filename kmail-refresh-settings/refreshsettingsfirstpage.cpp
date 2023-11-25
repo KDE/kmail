@@ -13,14 +13,14 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     : QWidget(parent)
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
     mainLayout->setContentsMargins({});
     auto label = new QLabel(i18n("Please close KMail/Kontact before using it."));
     QFont f = label->font();
     f.setBold(true);
     f.setPointSize(22);
     label->setFont(f);
-    label->setObjectName(QStringLiteral("label"));
+    label->setObjectName(QLatin1StringView("label"));
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
 }
 

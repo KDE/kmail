@@ -707,9 +707,9 @@ void KMMainWidget::layoutSplitters()
     //
     // Set splitter properties
     //
-    mSplitter1->setObjectName(QStringLiteral("splitter1"));
+    mSplitter1->setObjectName(QLatin1StringView("splitter1"));
     mSplitter1->setChildrenCollapsible(false);
-    mSplitter2->setObjectName(QStringLiteral("splitter2"));
+    mSplitter2->setObjectName(QLatin1StringView("splitter2"));
     mSplitter2->setChildrenCollapsible(false);
 
     //
@@ -1280,7 +1280,7 @@ bool KMMainWidget::showSearchDialog()
     if (!mSearchWin) {
         mSearchWin = new SearchWindow(this, mCurrentCollection);
         mSearchWin->setModal(false);
-        mSearchWin->setObjectName(QStringLiteral("Search"));
+        mSearchWin->setObjectName(QLatin1StringView("Search"));
     } else {
         mSearchWin->activateFolder(mCurrentCollection);
     }
@@ -3486,7 +3486,7 @@ void KMMainWidget::setupActions()
     connect(mRestartAccountSettings, &QAction::triggered, this, &KMMainWidget::slotRestartAccount);
 
     menutimer = new QTimer(this);
-    menutimer->setObjectName(QStringLiteral("menutimer"));
+    menutimer->setObjectName(QLatin1StringView("menutimer"));
     menutimer->setSingleShot(true);
     connect(menutimer, &QTimer::timeout, this, &KMMainWidget::updateMessageActionsDelayed);
     connect(kmkernel->undoStack(), &KMail::UndoStack::undoStackChanged, this, &KMMainWidget::slotUpdateUndo);

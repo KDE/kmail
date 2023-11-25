@@ -90,7 +90,7 @@ void SummaryView::doSync()
 KParts::Part *SummaryView::createPart()
 {
     mPart = new SummaryViewPart(core(), aboutData(), this);
-    mPart->setObjectName(QStringLiteral("summaryPart"));
+    mPart->setObjectName(QLatin1StringView("summaryPart"));
     return mPart;
 }
 

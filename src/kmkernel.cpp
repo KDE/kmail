@@ -1130,7 +1130,7 @@ void KMKernel::slotShowConfigurationDialog()
 
     if (!mConfigureDialog) {
         mConfigureDialog = new ConfigureDialog(nullptr, false);
-        mConfigureDialog->setObjectName(QStringLiteral("configure"));
+        mConfigureDialog->setObjectName(QLatin1StringView("configure"));
         connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
     }
 
@@ -1646,7 +1646,7 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
 {
     if (!mFilterEditDialog) {
         mFilterEditDialog = new MailCommon::KMFilterDialog(getKMMainWidget()->actionCollections(), nullptr, createDummyFilter);
-        mFilterEditDialog->setObjectName(QStringLiteral("filterdialog"));
+        mFilterEditDialog->setObjectName(QLatin1StringView("filterdialog"));
     }
     mFilterEditDialog->show();
     mFilterEditDialog->raise();

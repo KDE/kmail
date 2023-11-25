@@ -23,19 +23,19 @@ DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     auto actionGroup = new QActionGroup(this);
 
     auto act = new KToggleAction(i18n("Prefer &HTML to Plain Text"), this);
-    act->setObjectName(QStringLiteral("prefer-html-action"));
+    act->setObjectName(QLatin1StringView("prefer-html-action"));
     act->setData(MessageViewer::Viewer::Html);
     actionGroup->addAction(act);
     subMenu->addAction(act);
 
     act = new KToggleAction(i18n("Prefer &Plain Text to HTML"), this);
     act->setData(MessageViewer::Viewer::Text);
-    act->setObjectName(QStringLiteral("prefer-text-action"));
+    act->setObjectName(QLatin1StringView("prefer-text-action"));
     actionGroup->addAction(act);
     subMenu->addAction(act);
 
     act = new KToggleAction(i18n("Use Global Setting"), this);
-    act->setObjectName(QStringLiteral("use-global-setting-action"));
+    act->setObjectName(QLatin1StringView("use-global-setting-action"));
     act->setData(MessageViewer::Viewer::UseGlobalSetting);
     actionGroup->addAction(act);
     subMenu->addAction(act);

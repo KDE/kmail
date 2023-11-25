@@ -20,15 +20,15 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     , mRangeEnabled(new QCheckBox(i18n("Use Range"), this))
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QStringLiteral("mainLayout"));
+    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
     mainLayout->setContentsMargins({});
 
-    mRangeEnabled->setObjectName(QStringLiteral("mRangeEnabled"));
+    mRangeEnabled->setObjectName(QLatin1StringView("mRangeEnabled"));
     mainLayout->addWidget(mRangeEnabled);
 
-    mStartRange->setObjectName(QStringLiteral("mStartRange"));
+    mStartRange->setObjectName(QLatin1StringView("mStartRange"));
 
-    mEndRange->setObjectName(QStringLiteral("mEndRange"));
+    mEndRange->setObjectName(QLatin1StringView("mEndRange"));
 
     mainLayout->addWidget(mStartRange);
     mainLayout->addWidget(mEndRange);

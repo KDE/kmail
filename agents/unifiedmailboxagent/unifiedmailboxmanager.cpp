@@ -63,7 +63,7 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
     : QObject(parent)
     , mConfig(config)
 {
-    mMonitor.setObjectName(QStringLiteral("UnifiedMailboxChangeRecorder"));
+    mMonitor.setObjectName(QLatin1StringView("UnifiedMailboxChangeRecorder"));
     mMonitor.setConfig(&mMonitorSettings);
     mMonitor.setChangeRecordingEnabled(true);
     mMonitor.setTypeMonitored(Akonadi::Monitor::Items);

@@ -68,7 +68,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
 
     const QStringList headers = QStringList{i18n("Name"), i18n("Last archive"), i18n("Next archive in"), i18n("Storage directory")};
     mWidget.treeWidget->setHeaderLabels(headers);
-    mWidget.treeWidget->setObjectName(QStringLiteral("treewidget"));
+    mWidget.treeWidget->setObjectName(QLatin1StringView("treewidget"));
     mWidget.treeWidget->setSortingEnabled(true);
     mWidget.treeWidget->setRootIsDecorated(false);
     mWidget.treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);

@@ -59,7 +59,7 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
         ;
 #endif
 
-    mWidget->treeWidget->setObjectName(QStringLiteral("treewidget"));
+    mWidget->treeWidget->setObjectName(QLatin1StringView("treewidget"));
     mWidget->treeWidget->setHeaderLabels(headers);
     mWidget->treeWidget->setSortingEnabled(true);
     mWidget->treeWidget->setRootIsDecorated(false);

@@ -401,7 +401,7 @@ void SummaryViewPart::setDate(QDate newDate)
 void SummaryViewPart::slotConfigure()
 {
     QPointer<KCMultiDialog> dlg = new KCMultiDialog(mMainWidget);
-    dlg->setObjectName(QStringLiteral("ConfigDialog"));
+    dlg->setObjectName(QLatin1StringView("ConfigDialog"));
     dlg->setModal(true);
     connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
     const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/summary/"));
@@ -422,7 +422,7 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     sa->setWidgetResizable(true);
 
     mMainWidget = new QFrame;
-    mMainWidget->setObjectName(QStringLiteral("mMainWidget"));
+    mMainWidget->setObjectName(QLatin1StringView("mMainWidget"));
     sa->setWidget(mMainWidget);
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);

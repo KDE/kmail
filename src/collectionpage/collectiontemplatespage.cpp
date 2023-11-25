@@ -22,7 +22,7 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mCollectionTemplateWidget(new MailCommon::CollectionTemplatesWidget(this))
 {
-    setObjectName(QStringLiteral("KMail::CollectionTemplatesPage"));
+    setObjectName(QLatin1StringView("KMail::CollectionTemplatesPage"));
     setPageTitle(i18n("Templates"));
     init();
 }

@@ -55,10 +55,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaDa
     // create a canvas to insert our widget
     auto canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
-    canvas->setObjectName(QStringLiteral("canvas"));
+    canvas->setObjectName(QLatin1StringView("canvas"));
     setWidget(canvas);
     mainWidget = new KMMainWidget(canvas, this, actionCollection(), KSharedConfig::openConfig());
-    mainWidget->setObjectName(QStringLiteral("partmainwidget"));
+    mainWidget->setObjectName(QLatin1StringView("partmainwidget"));
     auto topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
     topLayout->setContentsMargins({});

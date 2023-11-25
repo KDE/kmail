@@ -28,7 +28,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mPotentialPhishingDetailWidget->setObjectName(QStringLiteral("potentialphising_widget"));
+    mPotentialPhishingDetailWidget->setObjectName(QLatin1StringView("potentialphising_widget"));
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);

@@ -17,7 +17,7 @@ CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mQuotaWidget(new CollectionQuotaWidget(this))
 {
-    setObjectName(QStringLiteral("KMail::CollectionQuotaPage"));
+    setObjectName(QLatin1StringView("KMail::CollectionQuotaPage"));
     setPageTitle(i18n("Quota"));
     init();
 }

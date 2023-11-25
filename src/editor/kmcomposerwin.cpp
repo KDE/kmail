@@ -334,7 +334,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mMainWidget = new QWidget(this);
     // splitter between the headers area and the actual editor
     mHeadersToEditorSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mHeadersToEditorSplitter->setObjectName(QStringLiteral("mHeadersToEditorSplitter"));
+    mHeadersToEditorSplitter->setObjectName(QLatin1StringView("mHeadersToEditorSplitter"));
     mHeadersToEditorSplitter->setChildrenCollapsible(false);
     mHeadersArea = new QWidget(mHeadersToEditorSplitter);
     mHeadersArea->setSizePolicy(mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(), QSizePolicy::Expanding);
@@ -347,7 +347,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     v->addWidget(mHeadersToEditorSplitter);
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
-    identity->setObjectName(QStringLiteral("identitycombo"));
+    identity->setObjectName(QLatin1StringView("identitycombo"));
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
@@ -374,7 +374,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->installEventFilter(this);
-    mEdtFrom->setObjectName(QStringLiteral("fromLine"));
+    mEdtFrom->setObjectName(QLatin1StringView("fromLine"));
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
 
@@ -414,10 +414,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mDone = false;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mSplitter->setObjectName(QStringLiteral("mSplitter"));
+    mSplitter->setObjectName(QLatin1StringView("mSplitter"));
     mSplitter->setChildrenCollapsible(false);
     mSnippetSplitter = new QSplitter(Qt::Horizontal, mSplitter);
-    mSnippetSplitter->setObjectName(QStringLiteral("mSnippetSplitter"));
+    mSnippetSplitter->setObjectName(QLatin1StringView("mSnippetSplitter"));
     mSplitter->addWidget(mSnippetSplitter);
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);

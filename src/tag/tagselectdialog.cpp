@@ -59,9 +59,9 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     auto vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
     vbox->setContentsMargins({});
-    mListTag->setObjectName(QStringLiteral("listtag"));
+    mListTag->setObjectName(QLatin1StringView("listtag"));
     auto listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
-    listWidgetSearchLine->setObjectName(QStringLiteral("searchline"));
+    listWidgetSearchLine->setObjectName(QLatin1StringView("searchline"));
 
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag..."));
     listWidgetSearchLine->setClearButtonEnabled(true);

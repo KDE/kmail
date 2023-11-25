@@ -53,10 +53,10 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     : QWidget(parent)
     , mTreeWidget(new QTreeWidget(this))
 {
-    setObjectName(QStringLiteral("FollowUpReminderInfoWidget"));
+    setObjectName(QLatin1StringView("FollowUpReminderInfoWidget"));
     auto hbox = new QHBoxLayout(this);
     hbox->setContentsMargins({});
-    mTreeWidget->setObjectName(QStringLiteral("treewidget"));
+    mTreeWidget->setObjectName(QLatin1StringView("treewidget"));
     QStringList headers;
     headers << i18n("To") << i18n("Subject") << i18n("Deadline") << i18n("Answer")
 #ifdef DEBUG_MESSAGE_ID

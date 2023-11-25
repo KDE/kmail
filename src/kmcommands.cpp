@@ -1013,7 +1013,7 @@ KMCommand::Result KMRedirectCommand::execute()
         MessageComposer::MessageComposerSettings::self()->sendImmediate() ? MailCommon::RedirectDialog::SendNow : MailCommon::RedirectDialog::SendLater;
 
     QScopedPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
-    dlg->setObjectName(QStringLiteral("redirect"));
+    dlg->setObjectName(QLatin1StringView("redirect"));
     if (dlg->exec() == QDialog::Rejected || !dlg) {
         return Failed;
     }
