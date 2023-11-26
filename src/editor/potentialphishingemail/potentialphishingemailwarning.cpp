@@ -17,6 +17,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     setCloseButtonVisible(true);
     setMessageType(Warning);
     setWordWrap(true);
+    setPosition(KMessageWidget::Header);
 
     setText(i18n("Found potential phishing email addresses <a href=\"phishingdetails\">(details...)</a>"));
 
