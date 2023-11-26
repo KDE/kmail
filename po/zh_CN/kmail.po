@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-11-19 03:44\n"
+"PO-Revision-Date: 2023-11-25 02:33\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tysontan@tysontan.com, "
+"kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tds00@qq.com, "
 "wordless@echo.moe, integral@murena.io"
 
 #: about/introduction_kmail.html:5
@@ -4344,7 +4344,7 @@ msgstr "导入消息(&I)..."
 #: kmmainwidget.cpp:2897
 #, kde-format
 msgid "&Debug Sieve..."
-msgstr "调试筛选(&D)..."
+msgstr "调试过滤(&D)..."
 
 #: kmmainwidget.cpp:2904
 #, kde-format
@@ -4720,7 +4720,7 @@ msgstr "配置过滤器(&F)..."
 #: kmmainwidget.cpp:3306
 #, kde-format
 msgid "Manage &Sieve Scripts..."
-msgstr "管理筛选脚本(&S)..."
+msgstr "管理过滤脚本(&S)..."
 
 #: kmmainwidget.cpp:3311
 #, kde-format
@@ -6895,7 +6895,7 @@ msgstr "钓鱼邮件"
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
-msgstr "KMail 可以使用一些常见技术为您筛选钓鱼邮件。"
+msgstr "KMail 可以使用一些常见技术为您过滤钓鱼邮件。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
 #: ui/securitypagegeneraltab.ui:110
