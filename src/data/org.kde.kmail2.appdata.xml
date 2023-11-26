@@ -279,7 +279,7 @@
       <li xml:lang="tr">Güçlü - Çevrimiçi çalışma desteği, çoklu gönderici kimlikleri, çoklu dil desteği, güçlü süzme ve etiketleme yetenekleri, posta listesi yönetimi ve esnek yapılandırma özellikleri sunar.</li>
       <li xml:lang="uk">Потужність — серед можливостей програми можливість роботи у автономному режимі (без з'єднання із інтернетом), робота із декількома профілями надсилання повідомлень, підтримка багатомовності, потужні можливості з фільтрування, пошуку та встановлення міток, керування повідомленнями зі списків листування та надзвичайна гнучкість у налаштовуванні.</li>
       <li xml:lang="x-test">xxPowerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.xx</li>
-      <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的筛选、搜索和标记功能、邮件列表管理和灵活的配置。</li>
+      <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的过滤、搜索和标记功能、邮件列表管理和灵活的配置。</li>
       <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
       <li xml:lang="ar">متكامل - يمكن إضافة دعوات الاجتماعات بسهولة حيث تحمل الأحداث في "منظمك "والإكمال التلقائي للعناوين والصور الرمزية وتفضيلات التشفير من "دفتر عناوينك".</li>
       <li xml:lang="az">İnteqrasiya olunmuş - Toplantı dəvətlərini KOrganizer tədbirləri kimi, ünvanların avtomatik doldurulmasını, avatarlar və kripto ayarlarını KAdressBook-dan yükləyərək asanlıqla əlavə etmək olar.</li>
@@ -348,7 +348,7 @@
       <li xml:lang="tr">Standartlara Uygun - Standart posta protokollerini, itmeli e-postaları, sunucu yanı süzmeyi ve satır içi OpenPGP, PGP/MIME ve S/MIME protokollerini destekler.</li>
       <li xml:lang="uk">Сумісність зі стандартами — передбачено підтримку стандартних протоколів електронної пошти, надсилання повідомлень, фільтрування на боці сервера та вбудовування OpenPGP, PGP/MIME і S/MIME.</li>
       <li xml:lang="x-test">xxStandard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.xx</li>
-      <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端筛选和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
+      <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端过滤和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
     </ul>
   </description>
   <content_rating type="oars-1.1"/>
