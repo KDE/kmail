@@ -11,6 +11,7 @@
 ExternalEditorWarning::ExternalEditorWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setPosition(KMessageWidget::Header);
     setVisible(false);
     setCloseButtonVisible(false);
     setMessageType(Information);

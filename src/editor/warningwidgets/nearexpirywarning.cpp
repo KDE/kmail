@@ -11,6 +11,7 @@
 NearExpiryWarning::NearExpiryWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setPosition(KMessageWidget::Header);
     setVisible(false);
     setCloseButtonVisible(true);
     setWordWrap(true);

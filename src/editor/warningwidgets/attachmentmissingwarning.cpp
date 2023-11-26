@@ -15,6 +15,7 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     setVisible(false);
     setCloseButtonVisible(false);
     setMessageType(Information);
+    setPosition(KMessageWidget::Header);
     setText(i18n(
         "The message you have composed seems to refer to an attached file but you have not attached anything. Do you want to attach a file to your message?"));
     setWordWrap(true);

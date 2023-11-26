@@ -10,6 +10,7 @@
 IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setPosition(KMessageWidget::Header);
     setVisible(false);
     setCloseButtonVisible(true);
     setMessageType(Warning);
