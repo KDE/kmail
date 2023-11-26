@@ -2708,7 +2708,8 @@ msgstr ""
 "\"%2\">externen Schlüsseln suchen</a>.</qt>"
 
 #: editor/kmcomposerwin.cpp:4234
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Encryption Key Selection"
 msgid "Encryption Key Selection"
 msgstr "Auswahl der Schlüssel für die Verschlüsselung"
 

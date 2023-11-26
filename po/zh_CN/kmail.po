@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-25 01:34+0000\n"
-"PO-Revision-Date: 2023-11-19 03:37\n"
+"PO-Revision-Date: 2023-11-25 02:26\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr "KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tysontan@tysontan.com, "
+"kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tds00@qq.com, "
 "wordless@echo.moe, integral@murena.io"
 
 #: about/introduction_kmail.html:5
@@ -2559,10 +2559,9 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:4234
-#, fuzzy, kde-format
-#| msgid "Encryption indicators"
+#, kde-format
 msgid "Encryption Key Selection"
-msgstr "加密指示器"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:4319
 #, kde-format
@@ -4530,7 +4529,7 @@ msgstr "导入消息(&I)..."
 #: kmmainwidget.cpp:2971
 #, kde-format
 msgid "&Debug Sieve..."
-msgstr "调试筛选(&D)..."
+msgstr "调试过滤(&D)..."
 
 #: kmmainwidget.cpp:2978
 #, kde-format
@@ -4912,7 +4911,7 @@ msgstr "配置过滤器(&F)..."
 #: kmmainwidget.cpp:3389
 #, kde-format
 msgid "Manage &Sieve Scripts..."
-msgstr "管理筛选脚本(&S)..."
+msgstr "管理过滤脚本(&S)..."
 
 #: kmmainwidget.cpp:3394
 #, kde-format
@@ -6693,7 +6692,7 @@ msgstr "钓鱼邮件"
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
-msgstr "KMail 可以使用一些常见技术为您筛选钓鱼邮件。"
+msgstr "KMail 可以使用一些常见技术为您过滤钓鱼邮件。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
 #: ui/securitypagegeneraltab.ui:110
@@ -7267,38 +7266,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid ""
-#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
-#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
-#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
-#~ "the identity configuration.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>您请求了消息对您自己加密，但目前所选的身份尚未定义此用途的加密密钥"
-#~ "(OpenPGP 或 S/MIME)。</p><p>请在身份配置中选择要使用的密钥。</p></qt>"
-
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "未定义的加密密钥"
-
-#~ msgid "Outlook-compatible attachment naming"
-#~ msgstr "Outlook 兼容的附件命名"
-
-#~ msgid ""
-#~ "Turn this option on to make Outlook(tm) understand attachment names "
-#~ "containing non-English characters"
-#~ msgstr "启用此选项，才能让 Outlook(tm) 理解包含非英语字符的附件名"
-
-#~ msgid ""
-#~ "You have chosen to encode attachment names containing non-English "
-#~ "characters in a way that is understood by Outlook(tm) and other mail "
-#~ "clients that do not support standard-compliant encoded attachment names.\n"
-#~ "Note that KMail may create non-standard compliant messages, and "
-#~ "consequently it is possible that your messages will not be understood by "
-#~ "standard-compliant mail clients; so, unless you have no other choice, you "
-#~ "should not enable this option."
-#~ msgstr ""
-#~ "您选择了将包含非英语字符的附件名按照 Outlook(tm) 和其他不符合标准编码附件"
-#~ "名的邮件客户端可理解的方式进行编码。\n"
-#~ "请注意，KMail 可以创建不符合标准的邮件，但这将造成符合标准的邮件客户端无法"
-#~ "读出这些邮件；所以，除非您没有其他选择，您不应该启用此选项。"
