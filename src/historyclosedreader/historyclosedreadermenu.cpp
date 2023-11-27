@@ -31,7 +31,13 @@ void HistoryClosedReaderMenu::updateMenu()
     const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
     if (!list.isEmpty()) {
         for (const auto &info : list) {
-            auto action = new QAction(info.subject(), menu());
+            QString subject = info.subject();
+            const QString originalSubject{subject};
+            if (subject.length() > 61) {
+                subject = subject.first(60) + QStringLiteral("...");
+            }
+            auto action = new QAction(subject, menu());
+            action->setToolTip(originalSubject);
             connect(action, &QAction::triggered, this, [this, info]() {
                 Q_EMIT openMessage(info.item());
             });
