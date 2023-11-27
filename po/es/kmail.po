@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2023-11-24 04:33+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -625,7 +625,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "Enviar &mensajes de la carpeta de la bandeja de salida:"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Enviar ahora"
@@ -2697,7 +2697,7 @@ msgstr "Detalles"
 msgid "Select email to put in whitelist:"
 msgstr "Seleccionar correo para ponerlo en la lista blanca:"
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2742,7 +2742,7 @@ msgstr "Preguntar antes de enviar"
 msgid "Sending Without Confirmation"
 msgstr "Enviar sin confirmación"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2751,7 +2751,7 @@ msgstr ""
 "El siguiente adjunto: <ul><li>%1</li></ul> se añadió externamente. Elimínelo "
 "si se trata de un error."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2760,7 +2760,7 @@ msgstr ""
 "Los siguientes adjuntos: <ul><li>%1</li></ul> se han añadido externamente. "
 "Elimínelos si se trata de un error."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2769,22 +2769,22 @@ msgstr ""
 "El mensaje que ha creado parece hacer referencia a un archivo adjunto, "
 "aunque no ha adjuntado ninguno. ¿Quiere adjuntar un archivo al mensaje?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "&Adjuntar archivo"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "&Recordármelo después"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "Se inició el editor externo."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2793,12 +2793,12 @@ msgstr ""
 "No se ha encontrado el transporte. Compruebe que va a usar un transporte de "
 "correo correcto."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr "Carpeta de enviados no definida. Defínala antes de enviar el correo."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
@@ -2806,7 +2806,7 @@ msgstr ""
 "No se ha encontrado la identidad. Compruebe que va a usar una identidad "
 "correcta."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
@@ -2815,7 +2815,7 @@ msgstr ""
 "No se ha encontrado el diccionario. Compruebe que va a usar un diccionario "
 "correcto."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

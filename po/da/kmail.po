@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -662,7 +662,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "Send &breve i udbakken:"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Send nu"
@@ -2785,7 +2785,7 @@ msgstr "Detaljer"
 msgid "Select email to put in whitelist:"
 msgstr "Vælg en e-mail der skal på hvidlisten:"
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2832,7 +2832,7 @@ msgstr "Spørg før afsendelse"
 msgid "Sending Without Confirmation"
 msgstr "Send uden bekræftelse"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2841,7 +2841,7 @@ msgstr ""
 "Dette bilag: <ul><li>%1</li></ul> blev tilføjet udefra. Fjern det hvis det "
 "var en fejl."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2850,7 +2850,7 @@ msgstr ""
 "Disse bilag: <ul><li>%1</li></ul> blev tilføjet udefra. Fjern dem hvis det "
 "er en fejl."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2859,22 +2859,22 @@ msgstr ""
 "Brevet du har skrevet synes at referere til en vedlagt fil, men du har ikke "
 "vedlagt noget. Vil du lægge en fil ved dit brev?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "&Vedlæg fil"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "&Påmind mig senere"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "Ekstern editor blev startet."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2883,13 +2883,13 @@ msgstr ""
 "Transporten blev ikke fundet. Bekræft venligst at du vil bruge en korrekt "
 "mail-transport."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
 "Sendt-mappen er ikke defineret. Angiv den venligst før e-mailen sendes."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
@@ -2897,7 +2897,7 @@ msgstr ""
 "Identiteten blev ikke fundet. Bekræft venligst at du bruge en korrekt "
 "identitet."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
@@ -2906,7 +2906,7 @@ msgstr ""
 "Ordbogen blev ikke fundet. Bekræft venligst at du vil bruge en korrekt "
 "ordbog."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

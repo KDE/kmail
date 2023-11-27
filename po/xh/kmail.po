@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -674,7 +674,7 @@ msgstr ""
 "Thumela umyalezo akwi bhokisi engaphandle &iincwadi eneenkcukacha ezimakiweyo"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Thumela Ngoku"
@@ -2748,7 +2748,7 @@ msgstr "[Iinkcukacha]"
 msgid "Select email to put in whitelist:"
 msgstr ""
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2789,71 +2789,71 @@ msgstr "&Ithumela"
 msgid "Sending Without Confirmation"
 msgstr "Thumela Uqinisekiso"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
 "have not attached anything. Do you want to attach a file to your message?"
 msgstr ""
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, fuzzy, kde-format
 #| msgid "Attach File"
 msgid "&Attach file"
 msgstr "Ncamathisela Ifayile"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, fuzzy, kde-format
 #| msgid "Send Later"
 msgid "&Remind me later"
 msgstr "Thumela Kamva"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, fuzzy, kde-format
 #| msgid "External Editor"
 msgid "External editor was started."
 msgstr "Umhleli Wangaphandle"
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr ""
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr ""
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

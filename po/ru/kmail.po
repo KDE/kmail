@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2023-07-22 14:48+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -641,7 +641,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "От&правлять почту из папки «Исходящие»:"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Отправить немедленно"
@@ -2748,7 +2748,7 @@ msgstr "Подробные сведения"
 msgid "Select email to put in whitelist:"
 msgstr "Выберете адреса для внесения в белый список:"
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2793,7 +2793,7 @@ msgstr "Спрашивать перед отправкой"
 msgid "Sending Without Confirmation"
 msgstr "Отправлять без подтверждения"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2802,7 +2802,7 @@ msgstr ""
 "Вложение <ul><li>%1</li></ul> было добавлено извне. Удалите его, если это "
 "действие выполнено по ошибке."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2811,7 +2811,7 @@ msgstr ""
 "Вложения <ul><li>%1</li></ul> были добавлены извне. Удалите их, если это "
 "действие выполнено по ошибке."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2821,22 +2821,22 @@ msgstr ""
 "в письме.\n"
 "Приложить какой-либо файл к письму?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "Вложить файл"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "&Напомнить позже"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "Был запущен внешний редактор."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2844,27 +2844,27 @@ msgid ""
 msgstr ""
 "Не найден метод отправки. Убедитесь, что метод отправки указан правильно."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
 "Не указана папка для отправленной почты. Необходимо указать её перед "
 "отправкой почты."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr "Не найден профиль. Убедитесь, что профиль указан правильно."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr "Не найден словарь. Убедитесь, что словарь указан правильно."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

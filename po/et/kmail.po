@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -658,7 +658,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "Kirjad kaustast 'väljuvad' &saadetakse:"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Saada kohe"
@@ -2774,7 +2774,7 @@ msgstr "Üksikasjad"
 msgid "Select email to put in whitelist:"
 msgstr "Valgesse nimekirja lisatav aadress:"
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2821,7 +2821,7 @@ msgstr "Küsima enne saatmist"
 msgid "Sending Without Confirmation"
 msgstr "Saatma ilma kinnitust küsimata"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2829,7 +2829,7 @@ msgid ""
 msgstr ""
 "Manus: <ul><li>%1</li></ul> lisati väliselt. Eemalda see, kui tegu on veaga."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2838,7 +2838,7 @@ msgstr ""
 "Manused <ul><li>%1</li></ul> lisati väliselt. Eemalda need, kui tegu on "
 "veaga."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2847,22 +2847,22 @@ msgstr ""
 "Loodud kiri paistab viitavat kaasatud failile, aga sa ei ole kirjale midagi "
 "lisanud. Kas soovid nüüd kirjale faili lisada?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "Kaasa &fail"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "&Tuleta mulle hiljem meelde"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "Käivitati väline redaktor."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2871,13 +2871,13 @@ msgstr ""
 "Edastamisviisi ei leitud. Palun kontrolli, kas kasutad ikka korrektset "
 "kirjade edastamisviisi."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
 "Saadetud kirjade kausta ei ole määratud. Palun määra see enne kirja saatmist."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
@@ -2885,7 +2885,7 @@ msgstr ""
 "Identiteeti ei ole leitud. Palun kontrolli, kas kasutad ikka korrektset "
 "identiteeti."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
@@ -2894,7 +2894,7 @@ msgstr ""
 "Sõnaraamatut ei leitud. Palun kontrolli, kas kasutad ikka korrektset "
 "sõnaraamatut."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

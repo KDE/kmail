@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
-"PO-Revision-Date: 2023-11-23 11:17+0100\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
+"PO-Revision-Date: 2023-11-25 16:50+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -660,7 +660,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "Envo&yer les messages de la boîte d'envoi :"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Envoyer maintenant"
@@ -2707,17 +2707,8 @@ msgstr ""
 "signée par une autre clé avec un niveau de fiabilité très élevée. Veuillez "
 "cliquer sur l'icône pour plus de détails."
 
-# unreviewed-context
 #: editor/kmcomposerwin.cpp:4222
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' is not possible please use "
-#| "the plural in the translation"
-#| msgid ""
-#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#| ">Select the key(s) which should be used for this recipient. If there is "
-#| "no suitable key in the list you can also <a href=\"%2\">search for "
-#| "external keys</a>.</qt>"
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2728,14 +2719,14 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Aucune clé de chiffrement valable et sûre n'a été trouvée pour « %1 »."
-"<br /><br />Sélectionnez la ou les clés à utiliser pour ce destinataire. Si "
-"cette liste est vide, vous pouvez également <a href=\"%2\">rechercher ue clé "
-"externe</a>.</qt>"
+"<qt>Aucun certificat de chiffrement valide et fiable n’a été trouvé pour "
+"« %1 ». <br/><br/>Sélectionnez le ou les certificats devant être utilisés "
+"pour ce destinataire. S’il n’y a aucun certificat approprié dans la liste, "
+"vous pouvez également rechercher des certificats externes en cliquant sur le "
+"bouton « Rechercher des certificats externes ». </qt>"
 
 #: editor/kmcomposerwin.cpp:4234
-#, fuzzy, kde-format
-#| msgid "Encryption Key Selection"
+#, kde-format
 msgid "Encryption Key Selection"
 msgstr "Sélection de la clé de chiffrement"
 
@@ -2755,7 +2746,7 @@ msgstr "Détails"
 msgid "Select email to put in whitelist:"
 msgstr "Sélectionnez le courriel à mettre en liste blanche : "
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2800,7 +2791,7 @@ msgstr "Demander avant l'envoi"
 msgid "Sending Without Confirmation"
 msgstr "Envoi sans confirmation"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2809,7 +2800,7 @@ msgstr ""
 "Cette pièce jointe : <ul><li>%1</li></ul> a été ajoutée de façon externe. "
 "Supprimez la si c'est une erreur."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2818,7 +2809,7 @@ msgstr ""
 "Ces pièces jointes : <ul><li>%1</li></ul> ont été ajoutée de façon externe. "
 "Supprimez les si c'est une erreur."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2827,22 +2818,22 @@ msgstr ""
 "Le message que vous avez composé fait référence à un fichier joint, mais "
 "vous n'avez rien joint. Voulez-vous joindre un fichier à votre message ?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "&Joindre un fichier"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "&Me prévenir ultérieurement"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "L'éditeur externe est démarré."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2851,14 +2842,14 @@ msgstr ""
 "Impossible de trouver le transport. Veuillez vérifier que vous utilisez un "
 "transport de courriel valable."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
 "Le dossier des messages envoyés n'est pas défini. Veuillez le définir avant "
 "d'envoyer le message."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
@@ -2866,7 +2857,7 @@ msgstr ""
 "Impossible de trouver l'identité. Veuillez vérifier que vous utilisez une "
 "identité valable."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
@@ -2875,7 +2866,7 @@ msgstr ""
 "Impossible de trouver le dictionnaire. Veuillez vérifier que vous utilisez "
 "un dictionnaire valable."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

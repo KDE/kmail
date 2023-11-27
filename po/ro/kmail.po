@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -672,7 +672,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "&Trimite mesajele din dosarul \"trimitere\":"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Trimite acum"
@@ -2784,7 +2784,7 @@ msgstr "[Detalii]"
 msgid "Select email to put in whitelist:"
 msgstr ""
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2829,21 +2829,21 @@ msgstr "&Abandonează expedierea"
 msgid "Sending Without Confirmation"
 msgstr "Confirmare de trimitere"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2852,44 +2852,44 @@ msgstr ""
 "Mesajul pe care l-ați compus pare să facă referire la un fișier atașat, dar "
 "nu ați atașat nimic. Atașați un fișier la mesajul dumneavoastră?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "&Atașare fișier"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, fuzzy, kde-format
 #| msgid "Send Later"
 msgid "&Remind me later"
 msgstr "Trimite mai târziu"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, fuzzy, kde-format
 #| msgid "External Editor"
 msgid "External editor was started."
 msgstr "Editor extern"
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, fuzzy, kde-format
 #| msgid "Archive folder not defined. Please verify settings for account"
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr "Dosarul arhivă nu este definit. Verificați configurările contului"
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, fuzzy, kde-format
 #| msgid "Archive folder not defined. Please verify settings for account"
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr "Dosarul arhivă nu este definit. Verificați configurările contului"
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, fuzzy, kde-format
 #| msgid "Archive folder not defined. Please verify settings for account"
 msgid ""
@@ -2897,7 +2897,7 @@ msgid ""
 "dictionary."
 msgstr "Dosarul arhivă nu este definit. Verificați configurările contului"
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-25 01:34+0000\n"
+"POT-Creation-Date: 2023-11-27 01:37+0000\n"
 "PO-Revision-Date: 2023-09-10 18:09+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -664,7 +664,7 @@ msgid "Send &messages in outbox folder:"
 msgstr "வெளிப்பெட்டி அடைவிலுள்ள &அஞ்சல்களை அனுப்புதல்:"
 
 #: configuredialog/configureaccountpage.cpp:111
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "உடனே அனுப்பு"
@@ -2727,7 +2727,7 @@ msgstr "விவரங்கள்"
 msgid "Select email to put in whitelist:"
 msgstr "அனுமதிப்பட்டியலில் சேர்க்க வேண்டிய மின்னஞ்சல் முகவரியை தேர்ந்தெடுக்கவும்:"
 
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:21
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
@@ -2772,7 +2772,7 @@ msgstr "அனுப்புமுன் உறுதிகோரு"
 msgid "Sending Without Confirmation"
 msgstr "உறுதிப்படுத்தாமல் அனுப்புதல்"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2781,7 +2781,7 @@ msgstr ""
 "பின்வரும் உடனிணைப்பு வெளி செயலியால் இணைக்கப்பட்டது: <ul><li>%1</li></ul>. தவறுதலாக "
 "இணைக்கப்பட்டிருந்தால், அதனை நீக்குங்கள்."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2790,7 +2790,7 @@ msgstr ""
 "பின்வரும் உடனிணைப்புகள் வெளி செயலியால் இணைக்கப்பட்டன: <ul><li>%1</li></ul>. தவறுதலாக "
 "இணைக்கப்பட்டிருந்தால், அவற்றை நீக்குங்கள்."
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:19
+#: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
 msgid ""
 "The message you have composed seems to refer to an attached file but you "
@@ -2799,22 +2799,22 @@ msgstr ""
 "நீங்கள் இவ்வஞ்சலில் ஓர் உடனிணைப்பை குறிப்பிட்டது போல் தெரிகிறது, ஆனால் எதுவும் "
 "இணைக்கப்படவில்லை. ஏதாவதொரு கோப்பை இணைக்க விரும்புகிறீர்களா?"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:22
+#: editor/warningwidgets/attachmentmissingwarning.cpp:23
 #, kde-format
 msgid "&Attach file"
 msgstr "&கோப்பை இணை"
 
-#: editor/warningwidgets/attachmentmissingwarning.cpp:27
+#: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, kde-format
 msgid "&Remind me later"
 msgstr "பின்னர் &நினைவுப்படுத்து"
 
-#: editor/warningwidgets/externaleditorwarning.cpp:17
+#: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
 msgid "External editor was started."
 msgstr "வெளி உரைத்திருத்தி துவக்கப்பட்டது."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:65
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
@@ -2823,25 +2823,25 @@ msgstr ""
 "அஞ்சலனுப்புவதற்கான கணக்கு கண்டுபிடிக்கப்படவில்லை. சரியான கணக்கை தேர்ந்தெடுத்துள்ளீர்களா "
 "என்று சரிபாருங்கள்."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:69
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr "அனுப்பிய அஞ்சல்களுக்கான அடைவு அமைக்கப்படவில்லை. அஞ்சல் அனுப்புமுன் அதை அமையங்கள்."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:73
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr "அடையாளம் கண்டுபிடிக்கப்படவில்லை. சரியான அடையாளத்தை தேர்ந்தெடுங்கள்."
 
-#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:77
+#: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr "அகரமுதலி கண்டுபிடிக்கப்படவில்லை. சரியான அகரமுதலியை தேர்ந்தெடுங்கள்."
 
-#: editor/warningwidgets/toomanyrecipientswarning.cpp:18
+#: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
