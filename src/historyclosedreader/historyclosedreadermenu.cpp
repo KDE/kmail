@@ -44,7 +44,7 @@ void HistoryClosedReaderMenu::updateMenu()
             menu()->addAction(action);
         }
         menu()->addSeparator();
-        auto clearAction = new QAction(i18n("Clear History"), menu());
+        auto clearAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-clear-history")), i18n("Clear History"), menu());
         connect(clearAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotClear);
         menu()->addAction(clearAction);
     }
