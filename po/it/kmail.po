@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 01:37+0000\n"
+"POT-Creation-Date: 2023-11-28 01:36+0000\n"
 "PO-Revision-Date: 2023-11-23 14:21+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -2944,7 +2944,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Chiuso lettore"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:41
+#: historyclosedreader/historyclosedreadermenu.cpp:47
 #, kde-format
 msgid "Clear History"
 msgstr "Cancella cronologia"

@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 01:37+0000\n"
+"POT-Creation-Date: 2023-11-28 01:36+0000\n"
 "PO-Revision-Date: 2023-08-14 21:29+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -2962,7 +2962,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Nachrichtenvorspann (als Zitat)"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:41
+#: historyclosedreader/historyclosedreadermenu.cpp:47
 #, fuzzy, kde-format
 #| msgid "Clear Past"
 msgid "Clear History"

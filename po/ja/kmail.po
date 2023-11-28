@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-27 01:37+0000\n"
+"POT-Creation-Date: 2023-11-28 01:36+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2722,10 +2722,9 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:4234
-#, fuzzy, kde-format
-#| msgid "S/MIME encryption certificate:"
+#, kde-format
 msgid "Encryption Key Selection"
-msgstr "S/MIME 暗号化用証明書:"
+msgstr "暗号化鍵の選択"
 
 #: editor/kmcomposerwin.cpp:4319
 #, fuzzy, kde-format
@@ -2961,7 +2960,7 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:41
+#: historyclosedreader/historyclosedreadermenu.cpp:47
 #, kde-format
 msgid "Clear History"
 msgstr ""
@@ -7886,205 +7885,3 @@ msgstr[0] "不在返信がアクティブです"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Post New Message"
-#~ msgid "Restore Closed Message"
-#~ msgstr "新しいメッセージを投稿"
-
-#~ msgid ""
-#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
-#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
-#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
-#~ "the identity configuration.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>メッセージを自分自身に対して暗号化することを要求しましたが、現在選"
-#~ "択中の個人情報には、それに使用する (OpenPGP または S/MIME) 暗号化鍵が設定"
-#~ "されていません。</p><p>個人情報の設定で使用する鍵を選択してください。</"
-#~ "p></qt>"
-
-#, fuzzy
-#~| msgid "Undefined Encryption Key"
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "暗号化鍵が設定されていません"
-
-# ACCELERATOR added by translator
-#~ msgid "Outlook-compatible attachment naming"
-#~ msgstr "Outlook 互換の添付ファイル名(&K)"
-
-#~ msgid ""
-#~ "Turn this option on to make Outlook(tm) understand attachment names "
-#~ "containing non-English characters"
-#~ msgstr ""
-#~ "このオプションを有効にすると Outlook(TM) が英語以外の文字を含む添付ファイ"
-#~ "ル名を理解できるようになります。"
-
-#~ msgid ""
-#~ "You have chosen to encode attachment names containing non-English "
-#~ "characters in a way that is understood by Outlook(tm) and other mail "
-#~ "clients that do not support standard-compliant encoded attachment names.\n"
-#~ "Note that KMail may create non-standard compliant messages, and "
-#~ "consequently it is possible that your messages will not be understood by "
-#~ "standard-compliant mail clients; so, unless you have no other choice, you "
-#~ "should not enable this option."
-#~ msgstr ""
-#~ "<html><p>標準に準拠したエンコードされた添付ファイル名をサポートしていない "
-#~ "Outlook(TM) その他のメールクライアントが理解できる方法で、英語以外の文字を"
-#~ "含む添付ファイル名をエンコードすることを選択しました。</p><p>これを有効に"
-#~ "すると、KMail が標準に準拠しないメッセージを作成し、その結果、あなたのメッ"
-#~ "セージが標準に準拠したメールクライアントに理解されなくなる可能性がありま"
-#~ "す。したがって、他に方法がない場合を除いて、このオプションは有効にしないで"
-#~ "ください。</p></html>"
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "このオプションを有効にすると、「重要」または「要アクション」としてマークさ"
-#~ "れたメッセージは、フォルダの古いメッセージを自動的に整理するときに削除され"
-#~ "たりアーカイブフォルダへ移動されたりしません。"
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "読み取り専用のフォルダでローカルフラグを許可する"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "受信メールチェック時に送信待ちメッセージを送信"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>手動またはすべてのアカウントの受信メールチェック時に、送信待ちメッ"
-#~ "セージを自動的に送信するかどうかを選択します。</p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "フォルダ選択ダイアログで最後に選択されたフォルダ。"
-
-# ACCELERATOR changed by translator
-#~ msgid "Specify e&ditor:"
-#~ msgstr "エディタを指定(&N):"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "メール作成に外部エディタを使う(&X)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr "フォルダがクォータ制限に近づいたことをユーザに通知するしきい値"
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "プログラム終了時にローカルのごみ箱フォルダを空にする"
-
-#, fuzzy
-#~| msgid "Send Confirmation"
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "送信の確認"
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr "この値は「KMail はじめに」を表示するかどうかを決定します。"
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "フォルダのクイック検索フィールドを表示する"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "デフォルトで本文に引用して転送する"
-
-#, fuzzy
-#~| msgid "Warn if the number of recipients is larger than"
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "受信者の数がこれより多い場合に警告する"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "受信者の数がこの値より大きい場合、メールを送信する前に確認を求めます。この"
-#~ "警告メッセージは無効にすることができます。"
-
-#~ msgid "Confirm &before send"
-#~ msgstr "送信する前に確認する(&B)"
-
-#, fuzzy
-#~| msgid "Confirm &before send"
-#~ msgid "Check spelling before send"
-#~ msgstr "送信する前に確認する(&B)"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "自動的に開封通知を要求する(&M)"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>すべての送信メッセージで、自動的に開封通知要求を送る場合は、このオ"
-#~ "プションを有効してください。</p><p>このオプションはデフォルトの動作を変更"
-#~ "するだけで、開封通知要求を送るかどうかは、それぞれのメッセージについて個別"
-#~ "に選択できます。メール作成の「オプション|開封通知を要求」メニューを使用し"
-#~ "てください。</p></qt>"
-
-# ACCELERATOR added by translator
-#~ msgid "Autosave interval:"
-#~ msgstr "自動保存の間隔(&I):"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "メール作成ウィンドウ内のテキストのバックアップを定期的に作成することができ"
-#~ "ます。バックアップ作成の間隔をここで設定します。間隔を 0 にセットすると、"
-#~ "自動保存を無効にできます。"
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr ""
-#~ "メール作成ウィンドウに定型表現の管理と挿入を行うためのパネルを表示します。"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "メッセージプレビュー"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "プレビューを表示しない"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "メッセージ一覧の下に表示"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "メッセージ一覧の横に表示"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "フォルダ一覧"
-
-#~ msgid "Long folder list"
-#~ msgstr "長いフォルダ一覧"
-
-#~ msgid "Short folder list"
-#~ msgstr "短いフォルダ一覧"
-
-#~ msgid "Message template for new message"
-#~ msgstr "新しいメッセージ用のメッセージテンプレート"
-
-#~ msgid "Message template for reply"
-#~ msgstr "返信用のメッセージテンプレート"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "全員に返信用のメッセージテンプレート"
-
-#~ msgid "Message template for forward"
-#~ msgstr "転送用のメッセージテンプレート"
-
-#~ msgid "Quote characters"
-#~ msgstr "引用記号"
