@@ -99,7 +99,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, qOverload<const Akonadi::Item &>(&Viewer::deleteMessage), this, &KMReaderWin::slotDeleteMessage);
     connect(mViewer, &MessageViewer::Viewer::showNextMessage, this, &KMReaderWin::showNextMessage);
     connect(mViewer, &MessageViewer::Viewer::showPreviousMessage, this, &KMReaderWin::showPreviousMessage);
-    connect(mViewer->mdnWarning(), &MessageViewer::MDNWarningWidget::sendResponse, this, &KMReaderWin::slotSendMdnResponse);
+    connect(mViewer, &MessageViewer::Viewer::sendResponse, this, &KMReaderWin::slotSendMdnResponse);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemChanged, this, &KMReaderWin::slotItemModified);
 
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
@@ -704,7 +704,7 @@ void KMReaderWin::setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMo
             && item.attribute<Akonadi::MDNStateAttribute>()->mdnState() == Akonadi::MDNStateAttribute::MDNStateUnknown)) {
         sendMdnInfo(item);
     } else {
-        mViewer->mdnWarning()->animatedHide();
+        mViewer->mdnWarningAnimatedHide();
     }
 }
 
@@ -974,12 +974,7 @@ void KMReaderWin::sendMdnInfo(const Akonadi::Item &item)
 
 void KMReaderWin::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
 {
-    if (!mdnInfo.first.isEmpty()) {
-        mViewer->mdnWarning()->setCanDeny(mdnInfo.second);
-        mViewer->mdnWarning()->setInformation(mdnInfo.first);
-    } else {
-        mViewer->mdnWarning()->animatedHide();
-    }
+    mViewer->showMdnInformations(mdnInfo);
 }
 
 void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
@@ -1003,7 +998,7 @@ void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseT
     job->setSendingMode(sendingMode);
     job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
-        mViewer->mdnWarning()->animatedHide();
+        mViewer->mdnWarningAnimatedHide();
     });
 }
 
@@ -1011,7 +1006,7 @@ void KMReaderWin::slotItemModified(const Akonadi::Item &item, const QSet<QByteAr
 {
     if (mViewer->messageItem().id() == item.id()) {
         if (partIdentifiers.contains("MDNStateAttribute")) {
-            mViewer->mdnWarning()->animatedHide();
+            mViewer->mdnWarningAnimatedHide();
         }
     }
 }
