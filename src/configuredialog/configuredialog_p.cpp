@@ -29,7 +29,6 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
     vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
     mTabWidget->setDocumentMode(true);
-    mWasInitialized = true;
 }
 
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
@@ -50,6 +49,7 @@ void ConfigModuleWithTabs::load()
         }
     }
     KCModule::load();
+    mWasInitialized = true;
 }
 
 void ConfigModuleWithTabs::save()
