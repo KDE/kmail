@@ -126,6 +126,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     auto mainLayout = new QVBoxLayout(this);
     auto wrapper = new QWidget;
     auto layout = new QVBoxLayout(wrapper);
+    layout->setContentsMargins({});
 
     // "Signature" group
     auto groupBox = new QGroupBox(i18nc("@title:group", "Signature"));
