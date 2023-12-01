@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-28 01:36+0000\n"
+"POT-Creation-Date: 2023-12-01 01:38+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1134,45 +1134,45 @@ msgstr "ការ​កែ​​ដោយ​ស្វ័យប្រវត្ត
 msgid "Auto Resize Image"
 msgstr "ប្ដូរ​ទំហំ​រូបភាព​ស្វ័យ​ប្រវត្តិ"
 
-#: configuredialog/configurecomposerpage.cpp:131
+#: configuredialog/configurecomposerpage.cpp:132
 #, fuzzy, kde-format
 #| msgid "Signature"
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "​ហត្ថលេខា"
 
-#: configuredialog/configurecomposerpage.cpp:137
+#: configuredialog/configurecomposerpage.cpp:138
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:148
+#: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:160
+#: configuredialog/configurecomposerpage.cpp:161
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:171
+#: configuredialog/configurecomposerpage.cpp:172
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:183
+#: configuredialog/configurecomposerpage.cpp:184
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgctxt "@title:group"
 msgid "Format"
 msgstr "ទ្រង់ទ្រាយ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:188
+#: configuredialog/configurecomposerpage.cpp:189
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, only quote the selected text instead of the complete "
@@ -1184,7 +1184,7 @@ msgstr ""
 "នៅពេល​ឆ្លើយ​តប ស្រង់​តែ​អត្ថបទ​ដែលបានជ្រើស ​ជំនួស​ឲ្យ​សារ​ពេញលេញ នៅពេល​មាន​​អត្ថបទ​បាន​ជ្រើស​នៅ​ក្នុង​បង្អួច​"
 "សារ ។"
 
-#: configuredialog/configurecomposerpage.cpp:198
+#: configuredialog/configurecomposerpage.cpp:199
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, add quote signs in front of all lines of the quoted text,\n"
@@ -1199,17 +1199,17 @@ msgstr ""
 "សូម្បី​តែ​នៅពេល​​បន្ទាត់​ត្រូវ​បាន​បង្កើត​ដោយ​បន្ថែម​ការ​បំបែក​បន្ទាត់​​បន្ថែម​ខណៈពេល​ដែល\n"
 "រុំពាក្យ​ក្នុង​អត្ថបទ​ក៏​ដោយ ។"
 
-#: configuredialog/configurecomposerpage.cpp:209
+#: configuredialog/configurecomposerpage.cpp:210
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:220
+#: configuredialog/configurecomposerpage.cpp:221
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:240
+#: configuredialog/configurecomposerpage.cpp:241
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, only quote the message in the original format it was "
@@ -1221,43 +1221,43 @@ msgstr ""
 "នៅ​ពេល​ឆ្លើយតប ដកស្រង់​តែ​សារ​ដែល​មាន​ទ្រង់ទ្រាយ​ដើម​តែ​ប៉ុណ្ណោះ​ វា​ត្រូវ​បាន​ទទួល ឬ​មិន​បាន​ទទួល ប្រសិនបើ​បាន​"
 "ដោះ​ធីក វា​នឹង​ឆ្លើយ​តប​ជា​អត្ថបទ​ធម្មតា​តាម​លំនាំដើម"
 
-#: configuredialog/configurecomposerpage.cpp:252
+#: configuredialog/configurecomposerpage.cpp:253
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:262
+#: configuredialog/configurecomposerpage.cpp:263
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "ក្នុង​តួ"
 
-#: configuredialog/configurecomposerpage.cpp:262
+#: configuredialog/configurecomposerpage.cpp:263
 #, kde-format
 msgid "As Attachment"
 msgstr "ជា​ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:268
+#: configuredialog/configurecomposerpage.cpp:269
 #, fuzzy, kde-format
 #| msgid "Default Forwarding Type:"
 msgid "Default forwarding type:"
 msgstr "ប្រភេទ​បញ្ជូល​បន្ត​លំនាំដើម ៖"
 
-#: configuredialog/configurecomposerpage.cpp:286
+#: configuredialog/configurecomposerpage.cpp:287
 #, fuzzy, kde-format
 #| msgid "&Edit Recipients"
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "កែសម្រួល​អ្នក​ទទួល"
 
-#: configuredialog/configurecomposerpage.cpp:299
+#: configuredialog/configurecomposerpage.cpp:300
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1265,18 +1265,18 @@ msgid ""
 "Notification\""
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:324
+#: configuredialog/configurecomposerpage.cpp:325
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr "ព្រមាន ប្រសិនបើ​មាន​អ្នក​ទទួល​ច្រើន​ត្រូវ​បាន​បញ្ជាក់"
 
-#: configuredialog/configurecomposerpage.cpp:335
+#: configuredialog/configurecomposerpage.cpp:336
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្នក​ទទួល​​ច្រើន​ជាង"
 
-#: configuredialog/configurecomposerpage.cpp:355
+#: configuredialog/configurecomposerpage.cpp:356
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1286,50 +1286,50 @@ msgid ""
 "does not take account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:376
+#: configuredialog/configurecomposerpage.cpp:377
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:388
+#: configuredialog/configurecomposerpage.cpp:389
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "គ្មានការ​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​ទេ"
 
-#: configuredialog/configurecomposerpage.cpp:391
+#: configuredialog/configurecomposerpage.cpp:392
 #, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:395
+#: configuredialog/configurecomposerpage.cpp:396
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:408
+#: configuredialog/configurecomposerpage.cpp:409
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Configure Completion..."
 msgstr "កំណត់​រចនាសម្ព័ន្ធ​លំដាប់​បំពេញ..."
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:418
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "គ្មានការ​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​ទេ"
 
-#: configuredialog/configurecomposerpage.cpp:427
+#: configuredialog/configurecomposerpage.cpp:428
 #, kde-format
 msgid "No autosave"
 msgstr "គ្មានការ​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​ទេ"
 
-#: configuredialog/configurecomposerpage.cpp:428
+#: configuredialog/configurecomposerpage.cpp:429
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1337,19 +1337,19 @@ msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "​ នាទី"
 
-#: configuredialog/configurecomposerpage.cpp:430
+#: configuredialog/configurecomposerpage.cpp:431
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
 
-#: configuredialog/configurecomposerpage.cpp:640
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:644
-#: configuredialog/configurecomposerpage.cpp:670
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1361,83 +1361,83 @@ msgstr ""
 "ទទួល​ស្គាល់​លំដាប់​នៃ​បុព្វបទ​នានា​ខាងក្រោម\n"
 "(ធាតុ​គឺ​ជា​កន្សោម​ធម្មតា​ដែល​មិន​ប្រកាន់​តួអក្សរ​តូច​ធំ) ៖"
 
-#: configuredialog/configurecomposerpage.cpp:652
-#: configuredialog/configurecomposerpage.cpp:735
-#: configuredialog/configurecomposerpage.cpp:1104
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:736
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "A&dd..."
 msgstr "​បន្ថែម..."
 
-#: configuredialog/configurecomposerpage.cpp:652
-#: configuredialog/configurecomposerpage.cpp:888
-#: configuredialog/configurecomposerpage.cpp:1104
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Re&move"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:652
-#: configuredialog/configurecomposerpage.cpp:1104
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Mod&ify..."
 msgstr "កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:652
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​ឆ្លើយតប​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:654
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:656
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:666
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:676
-#: configuredialog/configurecomposerpage.cpp:736 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:676 identity/identitypage.cpp:271
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
 msgstr "បន្ថែម..."
 
-#: configuredialog/configurecomposerpage.cpp:676 identity/identitypage.cpp:273
+#: configuredialog/configurecomposerpage.cpp:677 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​​បញ្ជូន​បន្ត​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
-#: configuredialog/configurecomposerpage.cpp:726
+#: configuredialog/configurecomposerpage.cpp:727
 #, kde-format
 msgid ""
 "This list is checked for every outgoing message from the top to the bottom "
@@ -1447,136 +1447,136 @@ msgstr ""
 "បាន​ទាមទារ​ទាំងអស់ ។"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: configuredialog/configurecomposerpage.cpp:737 ui/identitypage.ui:40
+#: configuredialog/configurecomposerpage.cpp:738 ui/identitypage.ui:40
 #, kde-format
 msgid "&Modify..."
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:738
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgid "Enter charset:"
 msgstr "បញ្ចូល​​សំណុំ​តួអក្សរ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:740
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this selected charset?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:741
 #, fuzzy, kde-format
 #| msgid "Charset"
 msgid "Add Charset:"
 msgstr "សំណុំ​តួអក្សរ"
 
-#: configuredialog/configurecomposerpage.cpp:746
+#: configuredialog/configurecomposerpage.cpp:747
 #, kde-format
 msgid "&Keep original charset when replying or forwarding (if possible)"
 msgstr "រក្សា​​សំណុំតួអក្សរដើម ពេល​​ឆ្លើយតប ឬ ​បញ្ជូន​បន្ត (បើ​អាច​ធ្វើ​បាន)"
 
-#: configuredialog/configurecomposerpage.cpp:780
+#: configuredialog/configurecomposerpage.cpp:781
 #, kde-format
 msgid "This charset is not supported."
 msgstr "មិនបាន​គាំទ្រ​សំណុំ​តួអក្សរ​នេះឡើយ ។"
 
-#: configuredialog/configurecomposerpage.cpp:843
+#: configuredialog/configurecomposerpage.cpp:844
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "ប្រើ​បច្ច័យ​​លេខសម្គាល់​សារ​ផ្ទាល់​ខ្លួន"
 
-#: configuredialog/configurecomposerpage.cpp:855
+#: configuredialog/configurecomposerpage.cpp:856
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "បច្ច័យ​លេខសម្គាល់​សារ​ផ្ទាល់​ខ្លួន ៖"
 
-#: configuredialog/configurecomposerpage.cpp:867
+#: configuredialog/configurecomposerpage.cpp:868
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "កំណត់​វាល​បឋមកថា​ mime ផ្ទាល់ខ្លួន ៖"
 
-#: configuredialog/configurecomposerpage.cpp:875
+#: configuredialog/configurecomposerpage.cpp:876
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "ឈ្មោះ"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "តម្លៃ"
 
-#: configuredialog/configurecomposerpage.cpp:884
+#: configuredialog/configurecomposerpage.cpp:885
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "​ថ្មី"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:898
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "ឈ្មោះ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:907
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "&Value:"
 msgstr "តម្លៃ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:1046
+#: configuredialog/configurecomposerpage.cpp:1047
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1046
+#: configuredialog/configurecomposerpage.cpp:1047
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid header"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: configuredialog/configurecomposerpage.cpp:1087
+#: configuredialog/configurecomposerpage.cpp:1088
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "បើក​ការ​រក​​នៃ​ឯកសារ​ភ្ជាប់​ដែល​បាត់"
 
-#: configuredialog/configurecomposerpage.cpp:1093
+#: configuredialog/configurecomposerpage.cpp:1094
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "ទទួល​ស្គាល់​​​ពាក្យ​គន្លឹះ​មួយ​ចំនួន​ខាងក្រោម​ នៅពេល​មាន​បំណង​ភ្ជាប់​ឯកសារ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:1104
+#: configuredialog/configurecomposerpage.cpp:1105
 #, kde-format
 msgid "Enter new key word:"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:1105
+#: configuredialog/configurecomposerpage.cpp:1106
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:1106
+#: configuredialog/configurecomposerpage.cpp:1107
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:1114
+#: configuredialog/configurecomposerpage.cpp:1115
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Maximum Attachment Size:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:1121
+#: configuredialog/configurecomposerpage.cpp:1122
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "គីឡូបៃ"
 
-#: configuredialog/configurecomposerpage.cpp:1123
+#: configuredialog/configurecomposerpage.cpp:1124
 #, kde-format
 msgid "No limit"
 msgstr "គ្មាន​ព្រំដែន"
