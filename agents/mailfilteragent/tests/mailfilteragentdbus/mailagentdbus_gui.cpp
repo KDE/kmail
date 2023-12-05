@@ -4,6 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+#include "mailagentdbuswidget.h"
 #include <MailCommon/FilterLog>
 #include <QApplication>
 #include <QCommandLineParser>
@@ -18,14 +19,7 @@ int main(int argc, char **argv)
     parser.addHelpOption();
     parser.process(app);
 
-    // auto log = MailCommon::FilterLog::instance();
-    // log->setLogging(true);
-    // for (int i = 0; i < 50; ++i) {
-    //     log->add(QStringLiteral("Test %1").arg(i), MailCommon::FilterLog::AppliedAction);
-    // }
-
-    // auto dialog = new FilterLogDialog(nullptr);
-    // dialog->exec();
-    // delete dialog;
-    return 0;
+    auto mailagentdbuswidget = new MailAgentDbusWidget(nullptr);
+    mailagentdbuswidget->show();
+    return app.exec();
 }

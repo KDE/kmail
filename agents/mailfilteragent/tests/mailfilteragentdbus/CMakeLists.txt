@@ -2,7 +2,11 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 
-add_executable(mailagentdbus_gui mailagentdbus_gui.cpp)
+add_executable(mailagentdbus_gui mailagentdbus_gui.cpp
+    mailagentdbuswidget.h
+    mailagentdbuswidget.cpp
+)
+
 target_link_libraries(mailagentdbus_gui
     mailfilteragentprivate
     KPim6::MailCommon
