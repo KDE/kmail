@@ -54,6 +54,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     : Akonadi::AgentBase(id)
     , mProgressTimer(new QTimer(this))
 {
+    qRegisterMetaType<QList<qint64>>("QList<qint64>");
     Akonadi::AttributeFactory::registerAttribute<Akonadi::Pop3ResourceAttribute>();
     mMailFilterKernel = new DummyKernel(this);
     CommonKernel->registerKernelIf(mMailFilterKernel); // register KernelIf early, it is used by the Filter classes
