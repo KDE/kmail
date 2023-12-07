@@ -18,6 +18,7 @@ int main(int argc, char **argv)
     parser.addHelpOption();
     parser.process(app);
 
+    qRegisterMetaType<QList<qint64>>("QList<qint64>");
     auto serverDbusWidget = new ServerDbusWidget(nullptr);
     serverDbusWidget->show();
     return app.exec();

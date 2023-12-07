@@ -22,6 +22,7 @@ ServerDbusWidget::ServerDbusWidget(QWidget *parent)
     auto mainLayout = new QHBoxLayout(this);
 
     mainLayout->addWidget(mEdit);
+    mEdit->setReadOnly(true);
 
     new DbusAdaptor(this);
 
@@ -43,7 +44,13 @@ QString ServerDbusWidget::debug()
 void ServerDbusWidget::sendElements(const QList<qint64> &items, int index)
 {
     qDebug() << " sendElements " << items << " index " << index;
-    // mEdit->append(QStringLiteral("items: %1    index: %2").arg(QString::items).arg(index));
+    QString str = QStringLiteral("index: %1").arg(QString::number(index));
+    str += QStringLiteral("items: ");
+    for (qint64 i : items) {
+        str += QString::number(i) + QLatin1Char(' ');
+    }
+    str += QLatin1Char('\n');
+    mEdit->append(str);
 }
 
 void ServerDbusWidget::showDialog(qlonglong windowId)

@@ -30,8 +30,8 @@ ClientDbusWidget::ClientDbusWidget(QWidget *parent)
     auto testSendElements = new QPushButton(QStringLiteral("Send Elements"), this);
     connect(testSendElements, &QPushButton::clicked, this, [this]() {
         qDebug() << " Test Send Elements";
-        QList<qint64> itemIds;
-        int set = 0;
+        QList<qint64> itemIds{10, 20, 50};
+        int set = 5;
         mDbusInterface->sendElements(itemIds, static_cast<int>(set));
     });
     mainLayout->addWidget(testSendElements);
