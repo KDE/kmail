@@ -282,6 +282,7 @@ QString MailFilterAgent::createUniqueName(const QString &nameTemplate)
 
 void MailFilterAgent::filterItems(const QList<qint64> &itemIds, int filterSet)
 {
+    qDebug() << " MailFilterAgent::filterItems ";
     Akonadi::Item::List items;
     items.reserve(itemIds.count());
     for (qint64 id : itemIds) {
@@ -329,6 +330,7 @@ void MailFilterAgent::applySpecificFiltersOnCollections(const QList<qint64> &col
 
 void MailFilterAgent::filterItem(qint64 item, int filterSet, const QString &resourceId)
 {
+    qDebug() << " MailFilterAgent::filterItem ";
     mFilterManager->filter(Akonadi::Item(item), static_cast<FilterManager::FilterSet>(filterSet), resourceId);
 }
 
@@ -376,7 +378,8 @@ void MailFilterAgent::emitProgressMessage(const QString &message)
 
 QString MailFilterAgent::printCollectionMonitored() const
 {
-    QString printDebugCollection;
+    QString printDebugCollection = QStringLiteral("Start print collection monitored\n");
+
     const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
     if (collections.isEmpty()) {
         printDebugCollection = QStringLiteral("No collection is monitored!");
@@ -389,6 +392,7 @@ QString MailFilterAgent::printCollectionMonitored() const
             printDebugCollection += QStringLiteral("Collection id: %1\n").arg(collection.id());
         }
     }
+    printDebugCollection += QStringLiteral("End print collection monitored\n");
     return printDebugCollection;
 }
 
