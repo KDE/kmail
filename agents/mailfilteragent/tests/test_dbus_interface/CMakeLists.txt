@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2023 Laurent Montel <montel@kde.org>
+# SPDX-License-Identifier: BSD-3-Clause
+
+#Main application
+
+
+
+
+#client
+set(dbusobjectmanager_xml org.freedesktop.test.dbus.xml)
+qt_add_dbus_interfaces(clientdbus_gui_SRCS ${dbusobjectmanager_xml})
+
+add_executable(clientdbus_gui clientdbus_gui.cpp
+    clientdbuswidget.h
+    clientdbuswidget.cpp
+    ${clientdbus_gui_SRCS}
+)
+
+target_link_libraries(clientdbus_gui
+    Qt::Gui
+    Qt::Widgets
+    Qt::DBus
+    )
