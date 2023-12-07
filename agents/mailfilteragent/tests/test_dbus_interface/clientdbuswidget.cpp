@@ -13,8 +13,9 @@
 ClientDbusWidget::ClientDbusWidget(QWidget *parent)
     : QWidget{parent}
 {
-    const QString service = QStringLiteral("....");
-    const QString path = QStringLiteral("....");
+    const QString path = QStringLiteral("/ServerDbusTest");
+    const QString service = QStringLiteral("org.kde.server_dbus_test");
+
     mDbusInterface = new OrgFreedesktopTestDbusInterface(service, path, QDBusConnection::sessionBus(), this);
 
     auto mainLayout = new QVBoxLayout(this);
