@@ -35,8 +35,10 @@ install(TARGETS mailfilteragentprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} LIBRA
 
 
 add_executable(akonadi_mailfilter_agent)
+set(dbusobjectmanager_xml org.freedesktop.Akonadi.MailFilterAgent.xml)
+set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "dbusoperators.h")
+qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS ${dbusobjectmanager_xml} mailfilteragent.h MailFilterAgent)
 
-qt_add_dbus_adaptor(akonadi_mailfilter_agent_SRCS org.freedesktop.Akonadi.MailFilterAgent.xml mailfilteragent.h MailFilterAgent)
 target_sources(akonadi_mailfilter_agent PRIVATE
     dummykernel.cpp
     filtermanager.cpp

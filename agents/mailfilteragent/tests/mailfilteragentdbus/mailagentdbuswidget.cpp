@@ -20,26 +20,38 @@ MailAgentDbusWidget::MailAgentDbusWidget(QWidget *parent)
         new org::freedesktop::Akonadi::MailFilterAgent(service, QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
 
     auto mainLayout = new QVBoxLayout(this);
-    auto openFilterDialog = new QPushButton(QStringLiteral("Open Filter Dialog"), this);
-    connect(openFilterDialog, &QPushButton::clicked, this, [this]() {
-        qDebug() << " open filter dialog";
-        // TODO
-    });
-    mainLayout->addWidget(openFilterDialog);
 
     auto openfilterLogViewer = new QPushButton(QStringLiteral("Open Filter Log Viewer"), this);
     connect(openfilterLogViewer, &QPushButton::clicked, this, [this]() {
         qDebug() << " open filter log viewer";
-        // TODO
+        mMailFilterAgentInterface->showFilterLogDialog(0);
     });
     mainLayout->addWidget(openfilterLogViewer);
 
     auto printCollectionMonitored = new QPushButton(QStringLiteral("Print Collection Monitored"), this);
     connect(printCollectionMonitored, &QPushButton::clicked, this, [this]() {
         qDebug() << " print collection monitored";
-        // TODO
+        const QString str = mMailFilterAgentInterface->printCollectionMonitored();
+        qDebug() << " result " << str;
     });
     mainLayout->addWidget(printCollectionMonitored);
+    auto testFilterItems = new QPushButton(QStringLiteral("Test Filter Items"), this);
+    connect(testFilterItems, &QPushButton::clicked, this, [this]() {
+        qDebug() << " Test Filter Items";
+        QList<qint64> itemIds;
+        int set = 0;
+        mMailFilterAgentInterface->filterItems(itemIds, static_cast<int>(set));
+    });
+    mainLayout->addWidget(testFilterItems);
+
+    auto testFilterItem = new QPushButton(QStringLiteral("Test Filter Item"), this);
+    connect(testFilterItem, &QPushButton::clicked, this, [this]() {
+        qDebug() << " Test Filter Item";
+        int set = 0;
+        qlonglong item = 3;
+        mMailFilterAgentInterface->filterItem(item, set, QStringLiteral("foo"));
+    });
+    mainLayout->addWidget(testFilterItem);
 }
 
 MailAgentDbusWidget::~MailAgentDbusWidget() = default;

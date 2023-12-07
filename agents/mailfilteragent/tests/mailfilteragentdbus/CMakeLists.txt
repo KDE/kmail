@@ -2,11 +2,9 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 
-#set_source_files_properties(../../org.freedesktop.Akonadi.MailFilterAgent.xml PROPERTIES INCLUDE "dbusoperators.h")
-
-qt_add_dbus_interfaces(mailagentdbus_gui_SRCS
-  ../../org.freedesktop.Akonadi.MailFilterAgent.xml
-)
+set(dbusobjectmanager_xml ../../org.freedesktop.Akonadi.MailFilterAgent.xml)
+set_source_files_properties(${dbusobjectmanager_xml} PROPERTIES INCLUDE "../../dbusoperators.h")
+qt_add_dbus_interfaces(mailagentdbus_gui_SRCS ${dbusobjectmanager_xml})
 
 
 add_executable(mailagentdbus_gui mailagentdbus_gui.cpp
