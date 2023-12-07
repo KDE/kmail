@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "mailfilteragentinterface.h"
 #include <QWidget>
 
 class MailAgentDbusWidget : public QWidget
@@ -14,4 +15,7 @@ class MailAgentDbusWidget : public QWidget
 public:
     explicit MailAgentDbusWidget(QWidget *parent = nullptr);
     ~MailAgentDbusWidget() override;
+
+private:
+    OrgFreedesktopAkonadiMailFilterAgentInterface *mMailFilterAgentInterface = nullptr;
 };

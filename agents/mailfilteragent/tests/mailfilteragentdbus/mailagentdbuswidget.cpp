@@ -5,6 +5,9 @@
 */
 
 #include "mailagentdbuswidget.h"
+
+#include <Akonadi/Monitor>
+#include <Akonadi/ServerManager>
 #include <QDebug>
 #include <QPushButton>
 #include <QVBoxLayout>
@@ -12,6 +15,10 @@
 MailAgentDbusWidget::MailAgentDbusWidget(QWidget *parent)
     : QWidget{parent}
 {
+    const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+    mMailFilterAgentInterface =
+        new org::freedesktop::Akonadi::MailFilterAgent(service, QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
+
     auto mainLayout = new QVBoxLayout(this);
     auto openFilterDialog = new QPushButton(QStringLiteral("Open Filter Dialog"), this);
     connect(openFilterDialog, &QPushButton::clicked, this, [this]() {
