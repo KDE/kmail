@@ -1,19 +1,19 @@
 # translation of akonadi_archivemail_agent.po to Slovak
-# Roman Paholik <wizzardsk@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017.
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2015, 2016, 2017, 2023 Roman Paholik <wizzardsk@gmail.com>
 # Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2022-11-16 00:47+0000\n"
-"PO-Revision-Date: 2023-01-10 11:46+0100\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
-"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-07 17:31+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: addarchivemaildialog.cpp:31
@@ -100,10 +100,9 @@ msgid "Archive emails automatically."
 msgstr "Archivovať e-maily automaticky."
 
 #: archivemailwidget.cpp:92
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-2021 Laurent Montel"
+#, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Copyright (C) 2014-2021 Laurent Montel"
+msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:93
 #, kde-format
@@ -168,11 +167,10 @@ msgid "Do you want to delete the selected items?"
 msgstr "Chcete vymazať vybrané položky?"
 
 #: archivemailwidget.cpp:233
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Odstrániť"
+msgstr "Odstrániť položky"
 
 #: archivemailwidget.cpp:272
 #, kde-format

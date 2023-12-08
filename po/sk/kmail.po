@@ -3,21 +3,21 @@
 # Stanislav Visnovsky <visnovsky@kde.org>, 2003, 2004.
 # Richard Fric <Richard.Fric@kdemail.net>, 2006, 2007, 2009.
 # Jozef Riha <jose1711@gmail.com>, 2006, 2007.
-# Roman Paholík <wizzardsk@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017.
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2015, 2016, 2017, 2023 Roman Paholík <wizzardsk@gmail.com>
 # Matej Mrenica <matejm98mthw@gmail.com>, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2021-07-20 17:52+0200\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
-"Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-07 17:32+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.07.80\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
@@ -262,11 +262,11 @@ msgstr "Písmo s pevnou šírkou"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
-msgstr ""
+msgstr "Opravy chýb"
 
 #: aboutdata.cpp:125
 msgid "Several patches"
-msgstr ""
+msgstr "Niekoľko záplat"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
@@ -622,10 +622,9 @@ msgid "Before sending:"
 msgstr "Spýtať sa pred poslaním"
 
 #: configuredialog/configureaccountpage.cpp:101
-#, fuzzy, kde-format
-#| msgid "Check spelling before send"
+#, kde-format
 msgid "Check spelling"
-msgstr "Skontroluje pravopis pred odoslaním"
+msgstr "Kontrola pravopisu"
 
 #: configuredialog/configureaccountpage.cpp:108
 #, kde-format
@@ -1043,9 +1042,7 @@ msgid "Ta&g Settings"
 msgstr "Nastavenia tagu"
 
 #: configuredialog/configureappearancepage.cpp:1018
-#, fuzzy, kde-format
-#| msgctxt "@action Hard delete, bypassing trash"
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Vymazať"
 
@@ -1055,11 +1052,10 @@ msgid "Do you want to remove tag '%1'?"
 msgstr "Chcete odstrániť značku '%1'?"
 
 #: configuredialog/configureappearancepage.cpp:1149
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
-msgstr "Odstrániť"
+msgstr "Odstrániť značku"
 
 #: configuredialog/configureappearancepage.cpp:1194
 #: configuredialog/configureappearancepage.cpp:1229
@@ -1734,8 +1730,7 @@ msgid "Message Disposition Notifications"
 msgstr "Upozornenia pri odstraňovaní správ"
 
 #: configuredialog/configuresecuritypage.cpp:60
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
 msgstr "Šifrovanie"
 
@@ -1773,11 +1768,10 @@ msgstr[1] " dni"
 msgstr[2] " dní"
 
 #: configuredialog/configuresecuritypage.cpp:339
-#, fuzzy, kde-format
-#| msgid "GnuPG Settings..."
+#, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
-msgstr "Nastavenie GnuPG..."
+msgstr "Nastavenie GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
@@ -3050,10 +3044,9 @@ msgid "Use same key for encryption and signing"
 msgstr ""
 
 #: identity/identitydialog.cpp:383
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP kľúč pre podpis:"
+msgstr "OpenPGP kľúč:"
 
 #: identity/identitydialog.cpp:408
 #, kde-format
@@ -3147,10 +3140,9 @@ msgid "Overwrite defaults:"
 msgstr ""
 
 #: identity/identitydialog.cpp:492
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&Podpísať správu"
+msgstr "Podpísať správy"
 
 #: identity/identitydialog.cpp:495
 #, fuzzy, kde-format
@@ -3474,18 +3466,16 @@ msgid "Confirmation"
 msgstr "Potvrdenie"
 
 #: identity/identityeditvcarddialog.cpp:128
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
-msgstr "Editovanie s formátovaním"
+msgstr "Zrušiť editovanie"
 
 #: identity/identityeditvcarddialog.cpp:129
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
-msgstr "Zrušiť"
+msgstr "Nerušiť"
 
 #: identity/identitylistview.cpp:76
 #, kde-format
@@ -3565,7 +3555,7 @@ msgstr "&Duplikovať existujúcu identitu"
 #: identity/xfaceconfigurator.cpp:38
 #, kde-format
 msgid "Face"
-msgstr ""
+msgstr "Tvár"
 
 #: identity/xfaceconfigurator.cpp:39
 #, kde-format
@@ -3645,10 +3635,9 @@ msgstr[1] "Distribučný zoznamy %2 sú prázdne, nedajú sa použiť."
 msgstr[2] "Distribučný zoznamy %2 sú prázdne, nedajú sa použiť."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Reštartovať účet"
+msgstr "Vymazať vyrovnávaciu pamäť Akonadi"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -3690,11 +3679,10 @@ msgid "Attach Folder"
 msgstr "Pripojiť priečinok"
 
 #: job/opencomposerjob.cpp:118
-#, fuzzy, kde-format
-#| msgid "&Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Attach"
-msgstr "&Priložiť"
+msgstr "Pripojiť"
 
 #: job/opencomposerjob.cpp:119
 #, fuzzy, kde-format
@@ -4283,13 +4271,13 @@ msgstr "V systéme bol nájdený iný mailer. Chcete z neho importovať údaje?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr ""
+msgstr "Importovať"
 
 #: kmmainwidget.cpp:306
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
-msgstr ""
+msgstr "Neimportovať"
 
 #: kmmainwidget.cpp:311
 #, kde-format
@@ -4667,7 +4655,7 @@ msgstr "Správca distribučného zozna&mu..."
 #: kmmainwidget.cpp:2986
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr ""
+msgstr "Vymazať vyrovnávaciu pamäť Akonadi..."
 
 #: kmmainwidget.cpp:2991
 #, fuzzy, kde-format
@@ -5018,8 +5006,7 @@ msgid "Apply All Filters"
 msgstr "Použiť všetky filtre"
 
 #: kmmainwidget.cpp:3378
-#, fuzzy, kde-format
-#| msgid "Apply Filters on Folder and all its Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Použiť filtre na priečinok a všetky jeho podpriečinky"
 
@@ -5262,10 +5249,9 @@ msgid "Restart Akonadi"
 msgstr "Reštartovať účet"
 
 #: kmmainwidget.cpp:4854
-#, fuzzy, kde-format
-#| msgid "Restart Account"
+#, kde-format
 msgid "Restart"
-msgstr "Reštartovať účet"
+msgstr "Reštart"
 
 #: kmmainwidget.cpp:4861
 #, fuzzy, kde-format
@@ -5356,10 +5342,9 @@ msgstr "Uložiť obrázok na disk..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
-#, fuzzy, kde-format
-#| msgid "Share image..."
+#, kde-format
 msgid "Open Image..."
-msgstr "Zdieľať obrázok..."
+msgstr "Otvoriť obrázok..."
 
 #: kmreaderwin.cpp:191
 #, kde-format
@@ -6982,7 +6967,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Výstrahy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
@@ -7764,12 +7749,9 @@ msgid "%1 seconds"
 msgstr "%1 sekúnd"
 
 #: undosend/undosendcombobox.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgid "5 minutes"
-msgstr " minúta"
+msgstr "5 minút"
 
 #: undosend/undosendcreatejob.cpp:46
 #, kde-format
@@ -7779,12 +7761,12 @@ msgstr "Vrátiť odoslanie"
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Pre:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Predmet:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
