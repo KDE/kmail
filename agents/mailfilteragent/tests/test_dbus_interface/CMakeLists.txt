@@ -4,7 +4,6 @@
 #Main application
 
 set(dbusservermanager_xml org.freedesktop.test.dbus.xml)
-#set_source_files_properties(${dbusservermanager_xml} PROPERTIES INCLUDE "dbusoperators.h")
 qt_add_dbus_adaptor(serverdbuswidget_SRCS ${dbusservermanager_xml} serverdbuswidget.h ServerDbusWidget)
 
 add_executable(serverdbus_gui serverdbus_gui.cpp
