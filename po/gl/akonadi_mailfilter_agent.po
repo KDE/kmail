@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:47+0000\n"
+"POT-Creation-Date: 2023-12-08 01:35+0000\n"
 "PO-Revision-Date: 2023-09-30 12:13+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -168,18 +168,18 @@ msgstr "<b>Comezar a filtrar na mensaxe «%1» desde «%2» en «%3»:</b>"
 msgid "Filtering messages"
 msgstr "Estanse a filtrar as mensaxes"
 
-#: mailfilteragent.cpp:100
+#: mailfilteragent.cpp:101
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Activouse o rexistro de filtrado do correo"
 
-#: mailfilteragent.cpp:164
+#: mailfilteragent.cpp:165
 #, kde-format
 msgid "Ready"
 msgstr "Listo"
 
-#: mailfilteragent.cpp:250
+#: mailfilteragent.cpp:251
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrando en %1"

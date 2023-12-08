@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:47+0000\n"
+"POT-Creation-Date: 2023-12-08 01:35+0000\n"
 "PO-Revision-Date: 2013-07-07 11:24+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -169,18 +169,18 @@ msgstr "<b>Szűrés kezdése a(z) „%1” üzeneten ettől: „%2” eddig: „
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"
 
-#: mailfilteragent.cpp:100
+#: mailfilteragent.cpp:101
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Levélszűrőnapló engedélyezve"
 
-#: mailfilteragent.cpp:164
+#: mailfilteragent.cpp:165
 #, kde-format
 msgid "Ready"
 msgstr "Kész"
 
-#: mailfilteragent.cpp:250
+#: mailfilteragent.cpp:251
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Szűrés ebben: %1"

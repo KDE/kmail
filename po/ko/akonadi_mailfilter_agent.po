@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-11-08 08:47+0000\n"
+"POT-Creation-Date: 2023-12-08 01:35+0000\n"
 "PO-Revision-Date: 2023-10-08 23:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -163,18 +163,18 @@ msgstr "<b>\"%3\"에서 \"%2\"부터 메시지 \"%1\"에 필터 적용 중</b>"
 msgid "Filtering messages"
 msgstr "메시지 거르는 중"
 
-#: mailfilteragent.cpp:100
+#: mailfilteragent.cpp:101
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "메일 필터 기록 사용함"
 
-#: mailfilteragent.cpp:164
+#: mailfilteragent.cpp:165
 #, kde-format
 msgid "Ready"
 msgstr "준비"
 
-#: mailfilteragent.cpp:250
+#: mailfilteragent.cpp:251
 #, kde-format
 msgid "Filtering in %1"
 msgstr "%1 거르는 중"
