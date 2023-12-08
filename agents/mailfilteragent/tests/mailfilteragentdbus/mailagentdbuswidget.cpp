@@ -55,3 +55,5 @@ MailAgentDbusWidget::MailAgentDbusWidget(QWidget *parent)
 }
 
 MailAgentDbusWidget::~MailAgentDbusWidget() = default;
+
+#include "moc_mailagentdbuswidget.cpp"

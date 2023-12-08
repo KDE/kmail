@@ -59,3 +59,5 @@ void ServerDbusWidget::showDialog(qlonglong windowId)
     qDebug() << " show dialog";
     QMessageBox::warning(this, QStringLiteral("TITLE"), QStringLiteral("MESSAGE"));
 }
+
+#include "moc_serverdbuswidget.cpp"

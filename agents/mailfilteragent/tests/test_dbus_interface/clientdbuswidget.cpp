@@ -45,3 +45,5 @@ ClientDbusWidget::ClientDbusWidget(QWidget *parent)
 }
 
 ClientDbusWidget::~ClientDbusWidget() = default;
+
+#include "moc_clientdbuswidget.cpp"
