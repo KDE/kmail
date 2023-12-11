@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-01 01:38+0000\n"
-"PO-Revision-Date: 2023-09-10 18:09+0530\n"
+"PO-Revision-Date: 2023-12-10 13:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.0\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -705,8 +705,7 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "கணக்கு உதவிநிரலை துவக்க முடியவில்லை"
@@ -886,11 +885,10 @@ msgid "Never"
 msgstr "காட்டாதே"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "பிடித்த அடைவுகளை காட்டுதல்"
+msgstr "பிடித்த அடைவுகளை காட்டுவது:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -908,11 +906,10 @@ msgid "Always"
 msgstr "எப்போதும்"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "அடைவுகளுக்கான கருவித்துப்புகளை காட்டுதல்"
+msgstr "அடைவுகளுக்கான கருவித்துப்புகள்: "
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -1819,7 +1816,7 @@ msgstr "&காப்பக கோப்பு:"
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "காப்பக‍க் கோப்பு (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -1837,8 +1834,7 @@ msgid "Please select the folder that should be archived."
 msgstr "காப்பகப்படுத்த வேண்டிய அடைவை தேர்ந்தெடுங்கள்."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "எந்த அடைவும் தேர்ந்தெடுக்கப்படவில்லை"
@@ -2213,8 +2209,7 @@ msgstr ""
 "காட்டலாம்.</qt>"
 
 #: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:182
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "பட்டிப் பட்டையை மறை"
@@ -2284,25 +2279,22 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "அஞ்சலை கைவிட வேண்டுமா, அல்லது பின்னர் திருத்துவதற்காக சேமிக்க வேண்டுமா?"
 
 #: editor/kmcomposerwin.cpp:2081
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
-msgstr "அஞ்சலெழுதும் இடத்தை மூடுதல்"
+msgstr "அஞ்சலெழுதும் இடத்தை மூடுவது"
 
 #: editor/kmcomposerwin.cpp:2149
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
-msgstr "தானாக சேமித்தல் தோல்வியடைந்தது"
+msgstr "தானாக சேமிப்பது தோல்வியடைந்தது"
 
 #: editor/kmcomposerwin.cpp:2150
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
-msgstr "அஞ்சலை அனுப்புதல் தோல்வியடைந்தது"
+msgstr "அஞ்சலை அனுப்புவது தோல்வியடைந்தது"
 
 #: editor/kmcomposerwin.cpp:2336
 #, kde-format
@@ -2331,8 +2323,7 @@ msgid "Attachment name can't be empty"
 msgstr "உடனிணைப்பின் பெயர் காலியாக இருக்கக்கூடாது"
 
 #: editor/kmcomposerwin.cpp:2423
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "உடனிணைப்பின் பெயர் செல்லுபடியாகாதது"
@@ -2373,8 +2364,7 @@ msgstr ""
 "பயன்படுத்த வேண்டிய சாவியை தேர்வு செய்யுங்கள்.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2651
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "குறிப்பிடப்படாத கையொப்ப சாவி"
@@ -2404,8 +2394,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "பெறுநர் புலம் காலியாக உள்ளது. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
 #: editor/kmcomposerwin.cpp:2827
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "பெறுநர் குறிப்பிடப்படவில்லை"
@@ -2426,8 +2415,7 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "நீங்கள் அஞ்சலுக்கான தலைப்பை குறிப்பிடவில்லை. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
 #: editor/kmcomposerwin.cpp:2841
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "தலைப்பு குறிப்பிடப்படவில்லை"
@@ -2450,8 +2438,7 @@ msgid "About to send email..."
 msgstr "அஞ்சல் அனுப்பப்படவிருக்கிறது…"
 
 #: editor/kmcomposerwin.cpp:3080
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "அஞ்சலனுப்புவதன் உறுதிப்பாடு"
@@ -2941,16 +2928,15 @@ msgid "Folder Shortcut %1"
 msgstr "அடைவிற்கான சுருக்குவழி %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "&மேற்கோள் எழுத்துக்களை சேர்"
+msgstr "பட்டியல் மூடப்பட்டது"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:47
-#, fuzzy, kde-format
-#| msgid "Clear Past"
+#, kde-format
 msgid "Clear History"
-msgstr "கடந்ததை துடை"
+msgstr "வரலாற்றை காலியாக்கு"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
@@ -2966,8 +2952,7 @@ msgstr "முகவரிப்புத்தகத்தல் நீங்�
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "படம் இல்லை"
@@ -3429,8 +3414,7 @@ msgid "You must provide an email for this identity."
 msgstr "இந்த அடையாளத்திற்கான மின்னஞ்சல் முகவரியை உள்ளிட வேண்டும்."
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "காலியான மின்னஞ்சல் முகவரி"
@@ -3481,8 +3465,7 @@ msgstr ""
 "அடையாளத்திற்காக இருக்காது (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "சாவி/சான்றிதழ்களில் மின்னஞ்சல் முகவரி கண்டுபிடிக்கப்படவில்லை"
@@ -3530,11 +3513,10 @@ msgstr "இந்த vCard-ஐ உறுதியாக நீக்க வி�
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
-msgstr "vCard-ஐ நீக்கு"
+msgstr "vCard-ஐ நீக்குவது"
 
 #: identity/identityeditvcarddialog.cpp:79
 #, kde-format
@@ -3724,8 +3706,7 @@ msgstr[0] "%2 என்ற பெறுநர் பட்டியல் கா
 msgstr[1] "%2 என்ற பெறுநர் பட்டியல்கள் காலியாக உள்ளதால், அவற்றை பயன்படுத்த முடியாது."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "செல்லுபடியாகாத மின்னஞ்சல் முகவரி"
@@ -3760,8 +3741,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "தொடர்பை சேமிக்க முடியவில்லை: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "தொடர்பை சேமித்தல் தோல்வியடைந்தது"
@@ -3772,11 +3752,10 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "\"%1\" என்ற அடைவை உறுதியாக இணைக்க விரும்புகிறீர்களா?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
-msgstr "அடைவை இணை"
+msgstr "அடைவை இணைப்பது"
 
 #: job/opencomposerjob.cpp:118
 #, kde-format
@@ -3818,40 +3797,41 @@ msgstr "அடைவை நீக்குதல்"
 #: job/removecollectionjob.cpp:68
 #, kde-format
 msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
-msgstr ""
-"<qt>எதையும் கொண்டிராத <b>%1</b> என்ற அடைவை உறுதியாக நீக்க விரும்புகிறீர்களா?</qt>"
+msgstr "<qt><b>%1</b> எனும் காலி அடைவை நீக்க வேண்டுமா?</qt>"
 
 #: job/removecollectionjob.cpp:73
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the empty folder <resource>%1</resource> "
 "and all its subfolders? Those subfolders might not be empty and their "
 "contents will be discarded as well. <p><b>Beware</b> that discarded messages "
 "are not saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
-"<qt><b>%1</b> வெற்று ஆவணம் மற்றும் அதன் எல்லா உப ஆவணங்களை அழிப்பதில் உறுதியாக "
-"இருக்கிறீர்களா? அந் த உப ஆவணங்கள் வெற்றாக இல்லாமல் இருக்கலாம், அவையும் அழியலாம்.</qt>"
+"<qt><resource>%1</resource> எனும் காலி அடைவையும் அதன் சார் அடைவுகளையும் நீக்க "
+"வேண்டுமா? அச்சாரடைவுகள் காலியாக இல்லாத பட்சத்தில் அவற்றிலுள்ளவையும் நீக்கப்படும்.<p>இப்படி "
+"நீக்கும் அஞ்சல்கள், அகற்றிடத்தில் சேமிக்கப்படாமல் நிரந்தரமாக நீக்கப்படும்.</p></qt>"
 
 #: job/removecollectionjob.cpp:83
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource>, "
 "discarding its contents? <p><b>Beware</b> that discarded messages are not "
 "saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
-"<qt>Are you sure you want to delete the folder <b>%1</b>, discarding its "
-"contents?</qt>"
+"<qt><resource>%1</resource> எனும் அடைவை அதன் உள்ளடக்கத்துடன் சேர்த்து நீக்க வேண்டுமா? "
+"<p>இப்படி நீக்கும் அஞ்சல்கள், அகற்றிடத்தில் சேமிக்கப்படாமல் நிரந்தரமாக நீக்கப்படும்.</p></qt>"
 
 #: job/removecollectionjob.cpp:90
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource> and "
 "all its subfolders, discarding their contents? <p><b>Beware</b> that "
 "discarded messages are not saved into your Trash folder and are permanently "
 "deleted.</p></qt>"
 msgstr ""
-"<qt><b>%1</b> ஆவணம் மற்றும் அதன் எல்லா உப ஆவணங்களை அழித்து, இவற்றின் அடக்கங்களையும் "
-"அழிப்பதில் உறுதியாக இருக்கிறீர்களா? </qt>"
+"<qt><resource>%1</resource> எனும் அடைவையும் அதன் சார் அடைவுகளையும், அவற்றின் "
+"உள்ளடக்கத்துடன் சேர்த்து நீக்க வேண்டுமா? <p>இப்படி நீக்கும் அஞ்சல்கள், அகற்றிடத்தில் "
+"சேமிக்கப்படாமல் நிரந்தரமாக நீக்கப்படும்.</p></qt>"
 
 #: job/removecollectionjob.cpp:97
 #, kde-format
@@ -3873,8 +3853,7 @@ msgstr "நகல் அஞ்சல்களை நீக்கும்போ�
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
 msgstr "நகல்களை நீக்கும்போது சிக்கல்"
@@ -4207,8 +4186,7 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; என்ன செய்ய விரும்புகிறீர்கள்?"
 
 #: kmkernel.cpp:745
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "தொடர்புள்ள/தொடர்பற்ற நிலை"
@@ -4318,8 +4296,7 @@ msgstr ""
 "சரிபாருங்கள்."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "கேமெயில் சிக்கல்"
@@ -4334,8 +4311,7 @@ msgstr ""
 "சரிபாருங்கள்."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "இறக்குமதி உதவிநிரலை துவக்க முடியவில்லை."
@@ -4348,8 +4324,7 @@ msgid ""
 msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை. நீங்கள் நிறுவியதை சரிபாருங்கள்"
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை"
@@ -4364,8 +4339,7 @@ msgstr ""
 "சரிபாருங்கள்."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "இறக்குமதி உதவிநிரலை துவக்க முடியவில்லை."
@@ -5377,8 +5351,7 @@ msgstr ""
 "எதிர்பார்க்கக்கூடிய தாக்குதல்களால் உங்கள் கணினி பாதிக்கப்படுவதற்கான வாய்ப்பை அதிகரிக்கும்."
 
 #: kmmainwidget.cpp:4750
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "பாதுகாப்பு எச்சரிக்கை"
@@ -7392,10 +7365,9 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgid "Form"
-msgstr "&அனுப்புநர்"
+msgstr "படிவம்"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/xfaceconfigurator.ui:22
@@ -7540,12 +7512,11 @@ msgid "Use Global Setting"
 msgstr "பொதுவான விருப்பத்தை பயன்படுத்து"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, fuzzy, kde-format
-#| msgid "Edit \"Out of Office\" Replies..."
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
-msgstr[0] "Edit \"Out of Office\" Replies..."
-msgstr[1] "Edit \"Out of Office\" Replies..."
+msgstr[0] ""
+msgstr[1] ""
 
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format
