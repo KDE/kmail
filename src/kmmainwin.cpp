@@ -12,6 +12,8 @@
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
+#include <PimCommon/NeedUpdateVersionUtils>
+#include <PimCommon/NeedUpdateVersionWidget>
 
 #include <KConfigGroup>
 #include <KToolBar>
@@ -19,6 +21,7 @@
 #include <QStatusBar>
 #include <QTimer>
 
+#include <KAboutData>
 #include <KConfig>
 #include <KConfigGui>
 #include <KEditToolBar>
@@ -30,6 +33,7 @@
 #include <QWindow>
 
 #include <QLabel>
+#include <QVBoxLayout>
 #include <chrono>
 
 using namespace std::chrono_literals;
@@ -43,13 +47,25 @@ KMMainWin::KMMainWin(QWidget *)
 
     resize(700, 500); // The default size
 
+    auto mainWidget = new QWidget(this);
+    auto mainWidgetLayout = new QVBoxLayout(mainWidget);
+    mainWidgetLayout->setContentsMargins({});
+    if (PimCommon::NeedUpdateVersionUtils::checkVersion()) {
+        auto needUpdateVersionWidget = new PimCommon::NeedUpdateVersionWidget(this);
+        mainWidgetLayout->addWidget(needUpdateVersionWidget);
+        qDebug() << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
+        needUpdateVersionWidget->setObsoleteVersion(
+            PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(KAboutData::applicationData().version(), QDate::currentDate()));
+    }
+
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
+    mainWidgetLayout->addWidget(mKMMainWidget);
 
     // Don't initialize in constructor. We need this statusbar created
     // Bug 460289
     mProgressBar = new KPIM::ProgressStatusBarWidget(statusBar(), this);
     connect(mKMMainWidget, &KMMainWidget::recreateGui, this, &KMMainWin::slotUpdateGui);
-    setCentralWidget(mKMMainWidget);
+    setCentralWidget(mainWidget);
     setupStatusBar();
     if (!kmkernel->xmlGuiInstanceName().isEmpty()) {
         setComponentName(kmkernel->xmlGuiInstanceName(), i18n("KMail2"));

@@ -20,6 +20,7 @@ namespace KPIM
 {
 class ProgressStatusBarWidget;
 }
+
 class KMAIL_EXPORT KMMainWin : public KXmlGuiWindow
 {
     Q_OBJECT
