@@ -51,11 +51,13 @@ KMMainWin::KMMainWin(QWidget *)
     auto mainWidgetLayout = new QVBoxLayout(mainWidget);
     mainWidgetLayout->setContentsMargins({});
     if (PimCommon::NeedUpdateVersionUtils::checkVersion()) {
-        auto needUpdateVersionWidget = new PimCommon::NeedUpdateVersionWidget(this);
-        mainWidgetLayout->addWidget(needUpdateVersionWidget);
-        qDebug() << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
-        needUpdateVersionWidget->setObsoleteVersion(
-            PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(KAboutData::applicationData().version(), QDate::currentDate()));
+        const auto status = PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(KAboutData::applicationData().version(), QDate::currentDate());
+        if (status != PimCommon::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
+            auto needUpdateVersionWidget = new PimCommon::NeedUpdateVersionWidget(this);
+            mainWidgetLayout->addWidget(needUpdateVersionWidget);
+            qDebug() << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
+            needUpdateVersionWidget->setObsoleteVersion(status);
+        }
     }
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
