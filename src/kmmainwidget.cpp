@@ -4299,7 +4299,7 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
     bool addedSeparator = false;
 
     const QList<MailFilter *> lstFilters = MailCommon::FilterManager::instance()->filters();
-    qDebug() << " lstFilters " << lstFilters.count();
+    // qDebug() << " lstFilters " << lstFilters.count();
     for (MailFilter *filter : lstFilters) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
             QString filterName = QStringLiteral("Filter %1").arg(filter->name());
