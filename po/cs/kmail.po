@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-11-09 16:31+0100\n"
+"PO-Revision-Date: 2023-12-07 11:24+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -555,7 +555,7 @@ msgstr "Možnosti stahování"
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
-msgstr "Identit"
+msgstr "Identity"
 
 #: configuredialog/configureaccountpage.cpp:62
 #, kde-format
