@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-12-09 09:29\n"
+"PO-Revision-Date: 2023-12-17 11:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -6677,7 +6677,7 @@ msgstr "始终在发送前核准加密密钥"
 #: ui/securitypageencryptiontab.ui:127
 #, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "如果证书/密钥即将过期则警告 (配置下面的阈值)(&Y)"
+msgstr "如果证书/密钥即将过期则警告 (配置下面的阈值) (&Y)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/securitypageencryptiontab.ui:139
