@@ -700,7 +700,7 @@ private:
     PotentialPhishingEmailWarning *const mPotentialPhishingEmailWarning;
     IncorrectIdentityFolderWarning *const mIncorrectIdentityFolderWarning;
     KMComposerGlobalAction *mGlobalAction = nullptr;
-    TextCustomEditor::RichTextEditorWidget *mRichTextEditorwidget = nullptr;
+    TextCustomEditor::RichTextEditorWidget *mRichTextEditorWidget = nullptr;
 
     KMailPluginEditorManagerInterface *const mPluginEditorManagerInterface;
     KMailPluginEditorCheckBeforeSendManagerInterface *mPluginEditorCheckBeforeSendManagerInterface = nullptr;

@@ -435,7 +435,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     composerEditorNg->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
-    mRichTextEditorwidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
+    mRichTextEditorWidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
     composerEditorNg->installEventFilter(this);
 
     connect(composerEditorNg, &KMComposerEditorNg::insertEmoticon, mGlobalAction, &KMComposerGlobalAction::slotInsertEmoticon);
@@ -453,7 +453,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     vbox->addWidget(mNearExpiryWarning);
 
     vbox->addWidget(mCryptoStateIndicatorWidget);
-    vbox->addWidget(mRichTextEditorwidget);
+    vbox->addWidget(mRichTextEditorWidget);
 
     mSnippetSplitter->insertWidget(0, editorAndCryptoStateIndicators);
     mSnippetSplitter->setOpaqueResize(true);
@@ -511,7 +511,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     v->addWidget(mExternalEditorWarning);
 
     mPluginEditorManagerInterface->setParentWidget(this);
-    mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorwidget->editor());
+    mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorWidget->editor());
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
     mPluginEditorManagerInterface->setComposerInterface(mComposerBase);
 
@@ -1348,10 +1348,10 @@ void KMComposerWin::setupActions()
     KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
     mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
-    mFindText = KStandardAction::find(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotFind, actionCollection());
-    mFindNextText = KStandardAction::findNext(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotFindNext, actionCollection());
+    mFindText = KStandardAction::find(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFind, actionCollection());
+    mFindNextText = KStandardAction::findNext(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFindNext, actionCollection());
 
-    mReplaceText = KStandardAction::replace(mRichTextEditorwidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
+    mReplaceText = KStandardAction::replace(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"), mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
     action = new QAction(i18n("Paste as Attac&hment"), this);
@@ -4311,7 +4311,7 @@ void KMComposerWin::slotTransportRemoved(int id, const QString &name)
 
 void KMComposerWin::slotSelectionChanged()
 {
-    Q_EMIT mPluginEditorManagerInterface->textSelectionChanged(mRichTextEditorwidget->editor()->textCursor().hasSelection());
+    Q_EMIT mPluginEditorManagerInterface->textSelectionChanged(mRichTextEditorWidget->editor()->textCursor().hasSelection());
 }
 
 void KMComposerWin::slotMessage(const QString &str)
