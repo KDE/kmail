@@ -34,6 +34,14 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
+
+// signal handler for SIGINT & SIGTERM
+#ifdef Q_OS_UNIX
+#include <KSignalHandler>
+#include <signal.h>
+#include <unistd.h>
+#endif
+
 #include <chrono>
 
 using namespace std::chrono_literals;
@@ -43,6 +51,20 @@ KMMainWin::KMMainWin(QWidget *)
     , mMessageLabel(new QLabel(i18n("Starting...")))
 
 {
+#ifdef Q_OS_UNIX
+    /**
+     * Set up signal handler for SIGINT and SIGTERM
+     */
+    KSignalHandler::self()->watchSignal(SIGINT);
+    KSignalHandler::self()->watchSignal(SIGTERM);
+    connect(KSignalHandler::self(), &KSignalHandler::signalReceived, this, [this](int signal) {
+        if (signal == SIGINT || signal == SIGTERM) {
+            // Intercept console.
+            printf("Shutting down...\n");
+            slotQuit();
+        }
+    });
+#endif
     setObjectName(QLatin1StringView("kmail-mainwindow#"));
 
     resize(700, 500); // The default size
