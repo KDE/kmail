@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 01:38+0000\n"
+"POT-Creation-Date: 2023-12-20 01:34+0000\n"
 "PO-Revision-Date: 2023-11-24 07:30+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -1819,7 +1819,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kodprezento"
 
-#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:73
+#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:95
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2143,7 +2143,7 @@ msgstr "Krei Sekvu-Rememorigilon..."
 msgid "Configure KMail..."
 msgstr "Agordi KMail..."
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:197 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:219 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2152,7 +2152,7 @@ msgstr ""
 "<qt>Ĉi tio tute kaŝos la menubreton. Vi povas montri ĝin denove tajpante %1."
 "</qt>"
 
-#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:200
+#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:222
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -5411,7 +5411,7 @@ msgstr "Rekomenci"
 msgid "Akonadi restarted."
 msgstr "Akonadi rekomenciĝis."
 
-#: kmmainwin.cpp:43
+#: kmmainwin.cpp:51
 #, kde-format
 msgid "Starting..."
 msgstr "Komencante..."

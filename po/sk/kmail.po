@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-16 01:38+0000\n"
+"POT-Creation-Date: 2023-12-20 01:34+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -1903,7 +1903,7 @@ msgctxt "Menu item"
 msgid "Encoding"
 msgstr "Kódovanie"
 
-#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:73
+#: editor/kmcomposerwin.cpp:332 kmail_part.cpp:39 kmmainwin.cpp:95
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
 #, kde-format
 msgid "KMail2"
@@ -2226,7 +2226,7 @@ msgstr "Pridať pripomienku Followup..."
 msgid "Configure KMail..."
 msgstr "Nastaviť KMail..."
 
-#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:197 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1568 kmmainwin.cpp:219 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2235,7 +2235,7 @@ msgstr ""
 "<qt>Toto skryje panel ponuky úplne. Môžete ho zase zobraziť napísaním %1.</"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:200
+#: editor/kmcomposerwin.cpp:1571 kmmainwin.cpp:222
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
@@ -5503,7 +5503,7 @@ msgstr "Reštart"
 msgid "Akonadi restarted."
 msgstr "Agenti Akonadi"
 
-#: kmmainwin.cpp:43
+#: kmmainwin.cpp:51
 #, kde-format
 msgid "Starting..."
 msgstr "Štartovanie..."
