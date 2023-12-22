@@ -24,13 +24,14 @@
 # Vincent Pinon <vpinon@kde.org>, 2017, 2018.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
 # Xavier BESNARD <xavier.besnard@neuf.fr>, 2023.
+# SPDX-FileCopyrightText: 2023 Xavier Besnard <xavier.besnard@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-20 01:34+0000\n"
-"PO-Revision-Date: 2023-11-25 16:50+0100\n"
-"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"PO-Revision-Date: 2023-12-20 09:45+0100\n"
+"Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -57,7 +58,7 @@ msgstr ""
 "vpinon@kde.org, kde@macolu.org, caulier.gilles@free.fr, jcornavi@kde-france."
 "org, cousin@kde.org, gerard@delafond.org, duranceau@kde.org, "
 "shadowcatcher@free.fr, nicolas.ternisien@gmail.com, renard@kde.org,"
-"sdepiets@gmail.com, xavier.besnard@neuf.fr"
+"sdepiets@gmail.com, xavier.besnard@xavier.besnard@kde.org"
 
 #: about/introduction_kmail.html:5
 #, kde-format

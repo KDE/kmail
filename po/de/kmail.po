@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -678,8 +678,7 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Der Postfach-Assistent lässt sich nicht starten"
@@ -859,8 +858,7 @@ msgid "Never"
 msgstr "Niemals"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "Bevorzugte Ordner anzeigen"
@@ -881,11 +879,10 @@ msgid "Always"
 msgstr "Immer"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Ordner-Kurzinfos"
+msgstr "Ordner-Kurzinfos:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -1788,7 +1785,7 @@ msgstr "&Archivdatei:"
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "Archivdateien (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -1806,8 +1803,7 @@ msgid "Please select the folder that should be archived."
 msgstr "Bitte wählen Sie den Ordner, den Sie archivieren möchten."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Kein Ordner ausgewählt"
@@ -2257,22 +2253,19 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Möchten Sie die Nachricht verwerfen oder für später speichern?"
 
 #: editor/kmcomposerwin.cpp:2081
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Editor schließen"
 
 #: editor/kmcomposerwin.cpp:2149
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Automatisches Speichern der Nachricht ist fehlgeschlagen"
 
 #: editor/kmcomposerwin.cpp:2150
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Das Senden der Nachricht ist fehlgeschlagen"
@@ -2304,8 +2297,7 @@ msgid "Attachment name can't be empty"
 msgstr "Der Name des Anhangs darf nicht leer sein"
 
 #: editor/kmcomposerwin.cpp:2423
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Ungültiger Name des Anhangs"
@@ -2346,8 +2338,7 @@ msgstr ""
 "verwendenden Schlüssel in den Identitätseinstellungen fest.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2651
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Signaturschlüssel nicht definiert"
@@ -2378,8 +2369,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "Das Feld „An:“ ist leer. Soll die Nachricht trotzdem versendet werden?"
 
 #: editor/kmcomposerwin.cpp:2827
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Kein Hauptempfänger angegeben"
@@ -2494,6 +2484,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Der ausgewählte PGP-Schlüssel (%1) befindet sich nicht in Ihrem "
+"Schlüsselbund oder passt nicht für die Entschlüsselung."
 
 #: editor/kmcomposerwin.cpp:3426
 #, kde-format
@@ -2502,6 +2494,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Der ausgewählte PGP-Signierschlüssel (%1) befindet sich nicht in Ihrem "
+"Schlüsselbund oder passt nicht für das Signieren."
 
 #: editor/kmcomposerwin.cpp:3442
 #, kde-format
@@ -2510,6 +2504,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Der ausgewählte SMIME-Schlüssel (%1) befindet sich nicht in Ihrem "
+"Schlüsselbund oder passt nicht für die Entschlüsselung."
 
 #: editor/kmcomposerwin.cpp:3455
 #, kde-format
@@ -2518,6 +2514,8 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Der ausgewählte SMIME-Signierschlüssel (%1) befindet sich nicht in Ihrem "
+"Schlüsselbund oder passt nicht für das Signieren."
 
 #: editor/kmcomposerwin.cpp:3628
 #, kde-format
@@ -2963,8 +2961,7 @@ msgid "Closed Reader"
 msgstr "Nachrichtenvorspann (als Zitat)"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:47
-#, fuzzy, kde-format
-#| msgid "Clear Past"
+#, kde-format
 msgid "Clear History"
 msgstr "Verlauf löschen"
 
@@ -2983,8 +2980,7 @@ msgstr ""
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Kein Bild"
@@ -3475,8 +3471,7 @@ msgid "You must provide an email for this identity."
 msgstr "Eigene Nachrichten&vorlagen benutzen"
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Leere E-Mail-Adresse"
@@ -3534,8 +3529,7 @@ msgstr ""
 "übereinstimmt (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Die E-Mail-Adresse wurde nicht im Schlüssel/Zertifikat gefunden"
@@ -3583,8 +3577,7 @@ msgstr "Sind Sie sicher, dass Sie diese vCard löschen möchten?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "vCard löschen"
@@ -3782,8 +3775,7 @@ msgstr[1] ""
 "Die Verteilerlisten %2 sind leer, sie können nicht verwendet werden."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ungültige E-Mail-Adresse"
@@ -3818,8 +3810,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "Der Kontakt kann nicht gespeichert werden: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Speichern des Kontakts ist fehlgeschlagen"
@@ -3830,8 +3821,7 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Möchten Sie diesen Ordner „%1“ wirklich anhängen?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Ordner anhängen"
@@ -3939,11 +3929,10 @@ msgstr "Fehler beim Löschen von doppelten Nachrichten: %1"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "Fehler beim Löschen von doppelten Nachrichten"
+msgstr "Fehler beim Löschen doppelter Nachrichten"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -4278,8 +4267,7 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail ist momentan im Offline-Modus. Wie möchten Sie fortfahren?"
 
 #: kmkernel.cpp:745
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
@@ -4397,8 +4385,7 @@ msgstr ""
 "sicher, dass Kleopatra richtig installiert ist."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-Fehler"
@@ -4413,8 +4400,7 @@ msgstr ""
 "dass ImportWizard richtig installiert ist."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Der Import-Assistent lässt sich nicht starten"
@@ -4429,8 +4415,7 @@ msgstr ""
 "Sie die korrekte Installation."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "„PIM-Daten-Export“ lässt sich nicht starten"
@@ -4445,8 +4430,7 @@ msgstr ""
 "dass ImportWizard richtig installiert ist."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Der Import-Assistent lässt sich nicht starten"
@@ -4753,13 +4737,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: kmmainwidget.cpp:2385
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4767,11 +4745,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Soll die ausgewählte Nachricht wirklich gelöscht werden?<br />Sie kann "
-"nicht wiederhergestellt werden.</qt>"
+"<html><p>Sollen die Anhänge der ausgewählten Nachricht wirklich gelöscht "
+"werden?<br />Sie können nicht wiederhergestellt werden.</p></html>"
 msgstr[1] ""
-"<qt>Sollen die %1 ausgewählten Nachrichten wirklich gelöscht werden?<br /"
-">Sie können nicht wiederhergestellt werden.</qt>"
+"<html>Sollen die Anhänge der ausgewählten %1 Nachrichten wirklich gelöscht "
+"werden?<br />Sie können nicht wiederhergestellt werden.</html>"
 
 #: kmmainwidget.cpp:2392
 #, kde-format
@@ -5473,8 +5451,7 @@ msgstr ""
 "oder künftige Sicherheitslücken geschädigt wird."
 
 #: kmmainwidget.cpp:4752
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Sicherheitswarnung"
@@ -6054,12 +6031,10 @@ msgid "Export to PDF..."
 msgstr "Als PDF exportieren ..."
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Nachricht verschieben"
+msgstr "Nachricht archivieren"
 
 #: messageactions.cpp:373
 #, kde-format
@@ -6831,10 +6806,9 @@ msgstr "Warnungen"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Verschlüsselungsschlüssel immer &zur Bestätigung anzeigen"
+msgstr "Verschlüsselungsschlüssel immer zur Bestätigung anzeigen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
