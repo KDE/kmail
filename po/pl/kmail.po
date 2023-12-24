@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-20 01:34+0000\n"
-"PO-Revision-Date: 2023-11-11 14:05+0100\n"
+"PO-Revision-Date: 2023-12-23 11:41+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmai.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 23.08.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -2660,15 +2660,7 @@ msgstr ""
 "inny klucz o takim poziomie zaufania. Naciśnij na ikonę po szczegóły."
 
 #: editor/kmcomposerwin.cpp:4222
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' is not possible please use "
-#| "the plural in the translation"
-#| msgid ""
-#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#| ">Select the key(s) which should be used for this recipient. If there is "
-#| "no suitable key in the list you can also <a href=\"%2\">search for "
-#| "external keys</a>.</qt>"
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2679,9 +2671,11 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Brak poprawnych zaufanych kluczy szyfrujących dla \"%1\".<br/> <br/> "
-"Wybierz klucz(e) dla tego adresata. Jeśli na liście brak odpowiedniego "
-"klucza, można także <a href=\"%2\">poszukać zewnętrznych kluczy</a>.</qt>"
+"<qt>Nie znaleziono ważnych i zaufanych certyfikatów szyfrowania dla \"%1\"."
+"<br/><br/>Wybierz certyfikat(y) używane dla tego adresata. Jeżeli nie ma "
+"odpowiedniego certyfikatu na liście, możesz także wyszukać zewnętrzne "
+"certyfikaty przez kliknięcie na przycisku: znajdź zewnętrzne certyfikaty.</"
+"qt>"
 
 #: editor/kmcomposerwin.cpp:4234
 #, kde-format
@@ -2922,16 +2916,15 @@ msgid "Folder Shortcut %1"
 msgstr "Skrót katalogu %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
-#| msgid "Quoted Headers"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Cytowane nagłówki"
+msgstr "Zamknięto czytnik"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:47
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Wyczyść historię"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
