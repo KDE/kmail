@@ -114,7 +114,7 @@ bool MailServiceImpl::sendMessage(const QString &from,
     auto part = new KMime::Content;
     part->contentTransferEncoding()->setEncoding(KMime::Headers::CEbase64);
     part->setBody(attachment); // TODO: check it!
-    msg->addContent(part);
+    msg->appendContent(part);
 
     KMail::makeComposer(msg, false, false);
     return true;
