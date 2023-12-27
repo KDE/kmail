@@ -127,25 +127,6 @@ private:
     QCheckBox *mReplaceForwardPrefixCheck = nullptr;
 };
 
-class ComposerPageCharsetTab : public ConfigModuleTab
-{
-    Q_OBJECT
-public:
-    explicit ComposerPageCharsetTab(QWidget *parent = nullptr);
-    [[nodiscard]] QString helpAnchor() const;
-
-    void save() override;
-
-private:
-    void slotVerifyCharset(QString &);
-    void doLoadOther() override;
-    void doResetToDefaultsOther() override;
-
-private:
-    PimCommon::SimpleStringListEditor *mCharsetListEditor = nullptr;
-    QCheckBox *mKeepReplyCharsetCheck = nullptr;
-};
-
 class ComposerPageHeadersTab : public ConfigModuleTab
 {
     Q_OBJECT

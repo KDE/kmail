@@ -84,12 +84,6 @@ ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data)
     addConfig(KMailSettings::self(), subjectTab);
 
     //
-    // "Charset" tab:
-    //
-    auto charsetTab = new ComposerPageCharsetTab();
-    addTab(charsetTab, i18n("Charset"));
-
-    //
     // "Headers" tab:
     //
     auto headersTab = new ComposerPageHeadersTab();
@@ -712,122 +706,6 @@ void ComposerPageSubjectTab::doResetToDefaultsOther()
     loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
     loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
-}
-
-QString ComposerPageCharsetTab::helpAnchor() const
-{
-    return QStringLiteral("configure-composer-charset");
-}
-
-ComposerPageCharsetTab::ComposerPageCharsetTab(QWidget *parent)
-    : ConfigModuleTab(parent)
-{
-    auto vlay = new QVBoxLayout(this);
-
-    auto label = new QLabel(i18n("This list is checked for every outgoing message "
-                                 "from the top to the bottom for a charset that "
-                                 "contains all required characters."),
-                            this);
-    label->setWordWrap(true);
-    vlay->addWidget(label);
-
-    mCharsetListEditor = new PimCommon::SimpleStringListEditor(this,
-                                                               PimCommon::SimpleStringListEditor::All,
-                                                               i18n("A&dd..."),
-                                                               i18n("Remo&ve"),
-                                                               i18n("&Modify..."),
-                                                               i18n("Enter charset:"));
-    mCharsetListEditor->setRemoveDialogLabel(i18n("Do you want to remove this selected charset?"));
-    mCharsetListEditor->setAddDialogLabel(i18n("Add Charset:"));
-    mCharsetListEditor->setUpDownAutoRepeat(true);
-    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
-
-    vlay->addWidget(mCharsetListEditor, 1);
-
-    mKeepReplyCharsetCheck = new QCheckBox(i18n("&Keep original charset when "
-                                                "replying or forwarding (if "
-                                                "possible)"),
-                                           this);
-    connect(mKeepReplyCharsetCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    vlay->addWidget(mKeepReplyCharsetCheck);
-
-    connect(mCharsetListEditor, &PimCommon::SimpleStringListEditor::aboutToAdd, this, &ComposerPageCharsetTab::slotVerifyCharset);
-    setEnabled(kmkernel);
-}
-
-void ComposerPageCharsetTab::slotVerifyCharset(QString &charset)
-{
-    if (charset.isEmpty()) {
-        return;
-    }
-
-    // KCharsets::codecForName("us-ascii") returns "iso-8859-1" (cf. Bug #49812)
-    // therefore we have to treat this case specially
-    const QString charsetLower = charset.toLower();
-    if (charsetLower == QLatin1String("us-ascii")) {
-        charset = QStringLiteral("us-ascii");
-        return;
-    } else if (charsetLower == QLatin1String("locale")) {
-        charset = QString::fromUtf8(QStringEncoder(QStringEncoder::Utf8).name());
-        return;
-    }
-
-    QStringEncoder codec(charset.toLatin1().constData());
-    if (codec.isValid()) {
-        charset = QString::fromLatin1(codec.name()).toLower();
-        return;
-    }
-
-    KMessageBox::error(this, i18n("This charset is not supported."));
-    charset.clear();
-}
-
-void ComposerPageCharsetTab::doLoadOther()
-{
-    if (!kmkernel) {
-        return;
-    }
-    QStringList charsets = MessageComposer::MessageComposerSettings::preferredCharsets();
-    QStringList::Iterator end(charsets.end());
-    for (QStringList::Iterator it = charsets.begin(); it != end; ++it) {
-        if ((*it) == QLatin1String("locale")) {
-            QByteArray cset = QStringEncoder(QStringEncoder::Utf8).name();
-            cset = cset.toLower();
-            (*it) = QStringLiteral("%1 (locale)").arg(QString::fromLatin1(cset));
-        }
-    }
-
-    mCharsetListEditor->setStringList(charsets);
-    loadWidget(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
-}
-
-void ComposerPageCharsetTab::doResetToDefaultsOther()
-{
-    const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
-    mCharsetListEditor->setStringList(MessageComposer::MessageComposerSettings::preferredCharsets());
-    mKeepReplyCharsetCheck->setChecked(MessageComposer::MessageComposerSettings::forceReplyCharset());
-    saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
-
-    MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
-    slotEmitChanged();
-}
-
-void ComposerPageCharsetTab::save()
-{
-    if (!kmkernel) {
-        return;
-    }
-    QStringList charsetList = mCharsetListEditor->stringList();
-    QStringList::Iterator it = charsetList.begin();
-    QStringList::Iterator end = charsetList.end();
-
-    for (; it != end; ++it) {
-        if ((*it).endsWith(QLatin1String("(locale)"))) {
-            (*it) = QStringLiteral("locale");
-        }
-    }
-    MessageComposer::MessageComposerSettings::setPreferredCharsets(charsetList);
-    saveCheckBox(mKeepReplyCharsetCheck, MessageComposer::MessageComposerSettings::self()->forceReplyCharsetItem());
 }
 
 QString ComposerPageHeadersTab::helpAnchor() const

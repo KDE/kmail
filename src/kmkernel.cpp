@@ -60,7 +60,6 @@ using KMail::MailServiceImpl;
 #include <TemplateParser/TemplatesUtil>
 #include <templateparser/globalsettings_templateparser.h>
 
-#include "editor/codec/codecmanager.h"
 #include <MailCommon/FolderSettings>
 
 #include <KMessageBox>
@@ -1148,7 +1147,6 @@ void KMKernel::slotShowConfigurationDialog()
 
 void KMKernel::slotConfigChanged()
 {
-    CodecManager::self()->updatePreferredCharsets();
     Q_EMIT configChanged();
 }
 

@@ -14,7 +14,6 @@
 // KMail includes
 #include "attachment/attachmentcontroller.h"
 #include "attachment/attachmentview.h"
-#include "codec/codecaction.h"
 #include "custommimeheader.h"
 #include "editor/encryptionstate.h"
 #include "editor/kmcomposereditorng.h"
@@ -872,13 +871,8 @@ void KMComposerWin::writeConfig()
 
 MessageComposer::Composer *KMComposerWin::createSimpleComposer()
 {
-    QList<QByteArray> charsets = mCodecAction->mimeCharsets();
-    if (!mOriginalPreferredCharset.isEmpty()) {
-        charsets.insert(0, mOriginalPreferredCharset);
-    }
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
-    mComposerBase->setCharsets(charsets);
     auto composer = new MessageComposer::Composer();
     mComposerBase->fillComposer(composer);
     return composer;
@@ -1379,8 +1373,6 @@ void KMComposerWin::setupActions()
     // TOOD mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
 
     //----- Message-Encoding Submenu
-    mCodecAction = new CodecAction(CodecAction::ComposerMode, this);
-    actionCollection()->addAction(QStringLiteral("charsets"), mCodecAction);
     mWordWrapAction = new KToggleAction(i18n("&Wordwrap"), this);
     actionCollection()->addAction(QStringLiteral("wordwrap"), mWordWrapAction);
     mWordWrapAction->setChecked(MessageComposer::MessageComposerSettings::self()->wordWrap());
@@ -1958,16 +1950,6 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     MimeTreeParser::ObjectTreeParser otp(&emptySource); // All default are ok
     emptySource.setDecryptMessage(allowDecryption);
     otp.parseObjectTree(msgContent);
-
-    bool shouldSetCharset = false;
-    if ((mContext == Reply || mContext == ReplyToAll || mContext == Forward) && MessageComposer::MessageComposerSettings::forceReplyCharset()) {
-        shouldSetCharset = true;
-    }
-    if (shouldSetCharset && !otp.plainTextContentCharset().isEmpty()) {
-        mOriginalPreferredCharset = otp.plainTextContentCharset();
-    }
-    // always set auto charset, but prefer original when composing if force reply is set.
-    mCodecAction->setAutoCharset();
 
     delete msgContent;
 
@@ -2918,13 +2900,8 @@ void KMComposerWin::slotDoDelayedSend(KJob *job)
 
 void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mComposerBase)
 {
-    QList<QByteArray> charsets = mCodecAction->mimeCharsets();
-    if (!mOriginalPreferredCharset.isEmpty()) {
-        charsets.insert(0, mOriginalPreferredCharset);
-    }
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
-    mComposerBase->setCharsets(charsets);
     mComposerBase->setUrgent(mUrgentAction->isChecked());
     mComposerBase->setMDNRequested(mRequestMDNAction->isChecked());
     mComposerBase->setRequestDeleveryConfirmation(mRequestDeliveryConfirmation->isChecked());

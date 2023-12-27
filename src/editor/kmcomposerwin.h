@@ -39,7 +39,6 @@ class QGridLayout;
 class QLabel;
 class QSplitter;
 class KSplitterCollapserButton;
-class CodecAction;
 class KMComposerWin;
 class KMComposerEditor;
 class KSelectAction;
@@ -652,7 +651,6 @@ private:
 
     KToggleAction *mMarkupAction = nullptr;
 
-    CodecAction *mCodecAction = nullptr;
     KSelectAction *mCryptoModuleAction = nullptr;
 
     QAction *mFindText = nullptr;
@@ -664,7 +662,6 @@ private:
     QWidget *mHeadersArea = nullptr;
     QSplitter *mSplitter = nullptr;
     QSplitter *mSnippetSplitter = nullptr;
-    QByteArray mOriginalPreferredCharset = nullptr;
 
     MessageComposer::Composer *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase

@@ -97,8 +97,6 @@ target_sources(kmailprivate PRIVATE
     editor/subjectlineeditwithautocorrection.cpp
     editor/subjectlineeditwithautocorrection.h
     editor/composer.cpp
-    editor/codec/codecaction.cpp
-    editor/codec/codecmanager.cpp
     editor/kmcomposerwin.cpp
     editor/attachment/attachmentcontroller.cpp
     editor/attachment/attachmentview.cpp
@@ -232,8 +230,6 @@ target_sources(kmailprivate PRIVATE
     identity/identityfolderrequester.h
     editor/kmcomposereditorng.h
     editor/composer.h
-    editor/codec/codecaction.h
-    editor/codec/codecmanager.h
     editor/encryptionstate.h
     editor/kmcomposerwin.h
     editor/attachment/attachmentcontroller.h
