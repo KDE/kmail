@@ -19,13 +19,10 @@ public:
 
     void updateSignatureAndEncrypionStateIndicators(bool isSign, bool isEncrypted);
 
-    void setShowAlwaysIndicator(bool status);
-
 private:
     void updateShowAlwaysIndicator();
     QLabel *const mSignatureStateIndicator;
     QLabel *const mEncryptionStateIndicator;
-    bool mShowAlwaysIndicator = true;
     bool mIsSign = false;
     bool mIsEncrypted = false;
 };

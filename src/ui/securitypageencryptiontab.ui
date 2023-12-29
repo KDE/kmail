@@ -69,32 +69,6 @@ However, there may be local rules that require you to turn this option on. When 
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="optionsGroup2">
-     <property name="title">
-      <string>Encryption indicators</string>
-     </property>
-     <layout class="QVBoxLayout">
-      <item>
-       <widget class="QCheckBox" name="mShowEncSignIndicator">
-        <property name="text">
-         <string>Show sign/encrypt indicator</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="mShowCryptoOwnertrust">
-        <property name="text">
-         <string>Show encryption key ownertrust level</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QGroupBox" name="optionsGroup3">
      <property name="title">
       <string>Alerts</string>

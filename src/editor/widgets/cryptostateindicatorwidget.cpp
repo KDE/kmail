@@ -45,27 +45,13 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
 
 CryptoStateIndicatorWidget::~CryptoStateIndicatorWidget() = default;
 
-void CryptoStateIndicatorWidget::setShowAlwaysIndicator(bool status)
-{
-    if (mShowAlwaysIndicator != status) {
-        mShowAlwaysIndicator = status;
-        updateShowAlwaysIndicator();
-    }
-}
-
 void CryptoStateIndicatorWidget::updateShowAlwaysIndicator()
 {
-    if (mShowAlwaysIndicator) {
-        mSignatureStateIndicator->setVisible(mIsSign);
-        mEncryptionStateIndicator->setVisible(mIsEncrypted);
-        if (mIsSign || mIsEncrypted) {
-            show();
-        } else {
-            hide();
-        }
+    mSignatureStateIndicator->setVisible(mIsSign);
+    mEncryptionStateIndicator->setVisible(mIsEncrypted);
+    if (mIsSign || mIsEncrypted) {
+        show();
     } else {
-        mSignatureStateIndicator->setVisible(false);
-        mEncryptionStateIndicator->setVisible(false);
         hide();
     }
 }

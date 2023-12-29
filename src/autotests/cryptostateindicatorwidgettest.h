@@ -16,6 +16,5 @@ public:
     ~CryptoStateIndicatorWidgetTest() override;
 private Q_SLOTS:
     void shouldHaveDefaultValue();
-    void shouldBeNotVisibleWhenShowAlwaysIsFalse();
     void shouldVisibleWhenChangeStatus();
 };

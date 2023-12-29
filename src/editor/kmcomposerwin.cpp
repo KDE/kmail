@@ -304,11 +304,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
                         if (info == Kleo::ExpiryChecker::OtherKeyExpired) {
                             mEncryptionState.setAcceptedSolution(false);
                             iconname = QStringLiteral("emblem-error");
-                            const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
                             const auto hasOverride = mEncryptionState.hasOverride();
                             const auto encrypt = mEncryptionState.encrypt();
 
-                            const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+                            const bool showAllIcons = hasOverride && encrypt;
                             if (!showAllIcons) {
                                 recipientLine->setIcon(QIcon(), msg);
                                 return;
@@ -803,7 +802,6 @@ void KMComposerWin::readConfig(bool reload)
 {
     mEdtFrom->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
     mComposerBase->recipientsEditor()->setCompletionMode(static_cast<KCompletion::CompletionMode>(KMailSettings::self()->completionMode()));
-    mCryptoStateIndicatorWidget->setShowAlwaysIndicator(KMailSettings::self()->showCryptoLabelIndicator());
 
     if (MessageCore::MessageCoreSettings::self()->useDefaultFonts()) {
         mBodyFont = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
@@ -3748,12 +3746,11 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
     auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
     const auto key = recipient->key();
 
-    const auto showCryptoIndicator = KMailSettings::self()->showCryptoLabelIndicator();
     const auto hasOverride = mEncryptionState.hasOverride();
     const auto encrypt = mEncryptionState.encrypt();
 
-    const bool showPositiveIcons = showCryptoIndicator && encrypt;
-    const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
+    const bool showPositiveIcons = encrypt;
+    const bool showAllIcons = hasOverride && encrypt;
 
     QString dummy;
     QString addrSpec;
