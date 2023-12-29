@@ -14,7 +14,7 @@ DummyKernel::DummyKernel(QObject *parent)
 {
     mMessageSender = new MessageComposer::AkonadiSender(this);
     mIdentityManager = new KIdentityManagementCore::IdentityManager(true, this);
-    auto session = new Akonadi::Session("MailFilter Kernel ETM", this);
+    auto session = new Akonadi::Session(QByteArrayLiteral("MailFilter Kernel ETM"), this);
 
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
