@@ -12,3 +12,5 @@ AddArchiveMailWidget::AddArchiveMailWidget(QWidget *parent)
 }
 
 AddArchiveMailWidget::~AddArchiveMailWidget() = default;
+
+#include "moc_addarchivemailwidget.cpp"
