@@ -39,7 +39,9 @@ void HistoryClosedReaderMenu::updateMenu()
             auto action = new QAction(subject, menu());
             action->setToolTip(originalSubject);
             connect(action, &QAction::triggered, this, [this, info]() {
-                Q_EMIT openMessage(info.item());
+                const auto identifier = info.item();
+                Q_EMIT openMessage(identifier);
+                HistoryClosedReaderManager::self()->removeItem(identifier);
             });
             menu()->addAction(action);
         }
