@@ -10,6 +10,7 @@ macro( archivemail_agent _source)
         ../archivemailagentutil.cpp
         ../archivemailwidget.cpp
         ../addarchivemaildialog.cpp
+        ../addarchivemailwidget.cpp
         ../widgets/formatcombobox.cpp
         ../widgets/unitcombobox.cpp ${autotest_categories_SRCS})
     ki18n_wrap_ui(_test ../ui/archivemailwidget.ui )
