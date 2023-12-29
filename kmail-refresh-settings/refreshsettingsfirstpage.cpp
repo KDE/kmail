@@ -18,7 +18,7 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     auto label = new QLabel(i18n("Please close KMail/Kontact before using it."));
     QFont f = label->font();
     f.setBold(true);
-    f.setPointSize(22);
+    f.setPixelSize(22);
     label->setFont(f);
     label->setObjectName(QLatin1StringView("label"));
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
