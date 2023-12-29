@@ -14,7 +14,7 @@
 #include <KUrlRequester>
 #include <MailCommon/FolderRequester>
 #include <QCheckBox>
-#include <QGridLayout>
+#include <QFormLayout>
 #include <QLabel>
 #include <QSpinBox>
 
@@ -30,48 +30,36 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     , mArchiveMailRangeWidget(new ArchiveMailRangeWidget(this))
     , mInfo(info)
 {
-    auto mainLayout = new QGridLayout;
+    auto mainLayout = new QFormLayout(this);
     mainLayout->setContentsMargins({});
 
-    int row = 0;
-
-    auto folderLabel = new QLabel(i18n("&Folder:"), this);
-    mainLayout->addWidget(folderLabel, row, 0);
+    auto folderLabel = new QLabel(i18n("Folder:"), this);
     mFolderRequester->setObjectName(QLatin1StringView("folder_requester"));
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
+    mainLayout->addRow(folderLabel, mFolderRequester);
     connect(mFolderRequester, &MailCommon::FolderRequester::folderChanged, this, &AddArchiveMailWidget::slotFolderChanged);
     if (info) { // Don't autorize to modify folder when we just modify item.
         mFolderRequester->setEnabled(false);
     }
-    folderLabel->setBuddy(mFolderRequester);
-    mainLayout->addWidget(mFolderRequester, row, 1);
-    ++row;
 
     auto formatLabel = new QLabel(i18n("Format:"), this);
     formatLabel->setObjectName(QLatin1StringView("label_format"));
-    mainLayout->addWidget(formatLabel, row, 0);
-
-    mainLayout->addWidget(mFormatComboBox, row, 1);
-    ++row;
+    mainLayout->addRow(formatLabel, mFormatComboBox);
 
     mRecursiveCheckBox->setObjectName(QLatin1StringView("recursive_checkbox"));
-    mainLayout->addWidget(mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft);
     mRecursiveCheckBox->setChecked(true);
-    ++row;
+    mainLayout->addWidget(mRecursiveCheckBox);
 
     auto pathLabel = new QLabel(i18n("Path:"), this);
-    mainLayout->addWidget(pathLabel, row, 0);
     pathLabel->setObjectName(QLatin1StringView("path_label"));
     mPath->lineEdit()->setTrapReturnKey(true);
     connect(mPath, &KUrlRequester::textChanged, this, &AddArchiveMailWidget::slotUpdateOkButton);
     mPath->setMode(KFile::Directory);
-    mainLayout->addWidget(mPath);
-    ++row;
+    mainLayout->addRow(pathLabel, mPath);
 
     auto dateLabel = new QLabel(i18n("Backup each:"), this);
     dateLabel->setObjectName(QLatin1StringView("date_label"));
-    mainLayout->addWidget(dateLabel, row, 0);
 
     auto hlayout = new QHBoxLayout;
     mDays->setMinimum(1);
@@ -80,25 +68,20 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
 
     hlayout->addWidget(mUnits);
 
-    mainLayout->addLayout(hlayout, row, 1);
-    ++row;
+    mainLayout->addRow(dateLabel, hlayout);
 
     auto maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
-    mainLayout->addWidget(maxCountlabel, row, 0);
     mMaximumArchive->setMinimum(0);
     mMaximumArchive->setMaximum(9999);
     mMaximumArchive->setSpecialValueText(i18n("unlimited"));
     maxCountlabel->setBuddy(mMaximumArchive);
-    mainLayout->addWidget(mMaximumArchive, row, 1);
-    ++row;
+    mainLayout->addRow(maxCountlabel, mMaximumArchive);
 
     mArchiveMailRangeWidget->setObjectName(QLatin1StringView("mArchiveMailRangeWidget"));
-    mainLayout->addWidget(mArchiveMailRangeWidget, row, 0, 1, 2);
-    ++row;
 
-    mainLayout->addWidget(new KSeparator, row, 0, 1, 2);
-    mainLayout->setColumnStretch(1, 1);
-    mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);
+    mainLayout->addWidget(mArchiveMailRangeWidget);
+
+    mainLayout->addWidget(new KSeparator);
 }
 
 AddArchiveMailWidget::~AddArchiveMailWidget() = default;
