@@ -15,7 +15,6 @@
 #include "attachment/attachmentcontroller.h"
 #include "attachment/attachmentview.h"
 #include "custommimeheader.h"
-#include "editor/encryptionstate.h"
 #include "editor/kmcomposereditorng.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
 #include "editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h"
@@ -76,10 +75,8 @@
 
 #include <KCursorSaver>
 
-#include <Libkleo/Enum>
 #include <Libkleo/ExpiryChecker>
 #include <Libkleo/KeyCache>
-#include <Libkleo/KeyResolverCore>
 #include <Libkleo/KeySelectionDialog>
 
 #include <MailCommon/FolderCollectionMonitor>
