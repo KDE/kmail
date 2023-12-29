@@ -26,6 +26,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 
     auto topLayout = new QVBoxLayout(this);
+    topLayout->setObjectName(QStringLiteral("topLayout"));
 
     mAddArchiveMailWidget->setObjectName(QStringLiteral("mAddArchiveMailWidget"));
     topLayout->addWidget(mAddArchiveMailWidget);
@@ -43,6 +44,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     if (!info) {
         mOkButton->setEnabled(false);
     }
+    topLayout->addWidget(new KSeparator);
     topLayout->addWidget(buttonBox);
 
     // Make it a bit bigger, else the folder requester cuts off the text too early

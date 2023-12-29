@@ -79,9 +79,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
 
     mArchiveMailRangeWidget->setObjectName(QLatin1StringView("mArchiveMailRangeWidget"));
 
-    mainLayout->addWidget(mArchiveMailRangeWidget);
-
-    mainLayout->addWidget(new KSeparator);
+    mainLayout->addRow(mArchiveMailRangeWidget);
 }
 
 AddArchiveMailWidget::~AddArchiveMailWidget() = default;
