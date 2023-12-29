@@ -88,17 +88,25 @@ kcoreaddons_add_plugin(archivemailagentconfig
 )
 target_sources(archivemailagentconfig PRIVATE
     addarchivemaildialog.cpp
-    archivemailwidget.cpp
-    widgets/formatcombobox.cpp
-    widgets/unitcombobox.cpp
     addarchivemaildialog.h
-    archivemailwidget.h
-    widgets/formatcombobox.h
-    widgets/unitcombobox.h
+
+    addarchivemailwidget.h
+    addarchivemailwidget.cpp
+
     archivemailrangewidget.h
     archivemailrangewidget.cpp
+
     widgets/hourcombobox.h
     widgets/hourcombobox.cpp
+
+    archivemailwidget.cpp
+    archivemailwidget.h
+
+    widgets/formatcombobox.cpp
+    widgets/formatcombobox.h
+
+    widgets/unitcombobox.cpp
+    widgets/unitcombobox.h
 )
 target_link_libraries(archivemailagentconfig
     archivemailagent
