@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2023 Johannes Obermayr <johannesobermayr@gmx.de>
 # Frank Schütte <F.Schuette@t-online.de>, 2002, 2003, 2004, 2005.
 # Thomas Diehl <thd@kde.org>, 2002, 2003, 2004, 2005.
 # Stephan Johach <hunsum@gmx.de>, 2003, 2004, 2005, 2006, 2007.
@@ -20,15 +21,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-01 02:24+0000\n"
-"PO-Revision-Date: 2023-08-14 21:29+0200\n"
-"Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
+"PO-Revision-Date: 2023-12-21 17:16+0100\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.11.70\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2409,7 +2410,7 @@ msgstr "Das Feld „An:“ ist leer. Soll die Nachricht trotzdem versendet werde
 #: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "No To: specified"
-msgstr "Kein Hauptempfänger angegeben"
+msgstr "Kein Hauptempfänger („An:“) angegeben"
 
 #: editor/kmcomposerwin.cpp:2817 editor/kmcomposerwin.cpp:2831
 #, kde-format
@@ -3320,10 +3321,9 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Ungültiger E-Mail-Alias „%1“"
 
 #: identity/identitydialog.cpp:756
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "Eigene Nachrichten&vorlagen benutzen"
+msgstr "Für diese Identität muss eine E-Mail angegeben werden."
 
 #: identity/identitydialog.cpp:756
 #, kde-format
@@ -6999,10 +6999,9 @@ msgstr "Warnungen"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Verschlüsselungsschlüssel immer &zur Bestätigung anzeigen"
+msgstr "Verschlüsselungsschlüssel immer zur Bestätigung anzeigen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
