@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-12-30 01:38+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,13 +18,8 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: addarchivemaildialog.cpp:33
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "Arhiviraj sve potfascikle"
-
 # >> @title:window
-#: addarchivemaildialog.cpp:41
+#: addarchivemaildialog.cpp:21
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
@@ -32,39 +27,45 @@ msgid "Modify Archive Mail"
 msgstr "Izmena arhive pošte"
 
 # >> @title:window
-#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Dodavanje arhive pošte"
 
-#: addarchivemaildialog.cpp:55
+#: addarchivemailwidget.cpp:26
 #, kde-format
-msgid "&Folder:"
+msgid "Archive all subfolders"
+msgstr "Arhiviraj sve potfascikle"
+
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgid "Folder:"
 msgstr "&Fascikla:"
 
-#: addarchivemaildialog.cpp:68
+#: addarchivemailwidget.cpp:46
 #, kde-format
 msgid "Format:"
 msgstr "Format:"
 
-#: addarchivemaildialog.cpp:80
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "Putanja:"
 
-#: addarchivemaildialog.cpp:89
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "Pravi rezervu svakih:"
 
-#: addarchivemaildialog.cpp:103
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Najveći broj arhiva:"
 
-#: addarchivemaildialog.cpp:107
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "neograničeno"

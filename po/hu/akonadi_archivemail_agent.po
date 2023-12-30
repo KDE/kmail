@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-12-30 01:38+0000\n"
 "PO-Revision-Date: 2014-09-04 16:34+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -18,52 +18,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: addarchivemaildialog.cpp:33
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "Minden almappa archiválása"
-
-#: addarchivemaildialog.cpp:41
+#: addarchivemaildialog.cpp:21
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Archivált levél módosítása"
 
-#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Archivált levél hozzáadása"
 
-#: addarchivemaildialog.cpp:55
+#: addarchivemailwidget.cpp:26
 #, kde-format
-msgid "&Folder:"
+msgid "Archive all subfolders"
+msgstr "Minden almappa archiválása"
+
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgid "Folder:"
 msgstr "&Mappa:"
 
-#: addarchivemaildialog.cpp:68
+#: addarchivemailwidget.cpp:46
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "&Formátum:"
 
-#: addarchivemaildialog.cpp:80
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "Elérési út:"
 
-#: addarchivemaildialog.cpp:89
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "Biztonsági mentés minden:"
 
-#: addarchivemaildialog.cpp:103
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "Az archívumok maximális száma:"
 
-#: addarchivemaildialog.cpp:107
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "korlátlan"

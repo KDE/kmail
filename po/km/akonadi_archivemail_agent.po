@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-12-30 01:38+0000\n"
 "PO-Revision-Date: 2012-12-25 10:57+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -20,52 +20,53 @@ msgstr ""
 "X-Generator: WordForge 0.8 RC1\n"
 "X-Language: km-KH\n"
 
-#: addarchivemaildialog.cpp:33
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "ទុក​ថត​រង​ទាំងអស់​ក្នុង​ប័ណ្ណសារ"
-
-#: addarchivemaildialog.cpp:41
+#: addarchivemaildialog.cpp:21
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "កែសម្រួល​សំបុត្រ​ប័ណ្ណសារ"
 
-#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "បន្ថែម​សំបុត្រ​ប័ណ្ណសារ"
 
-#: addarchivemaildialog.cpp:55
+#: addarchivemailwidget.cpp:26
 #, kde-format
-msgid "&Folder:"
+msgid "Archive all subfolders"
+msgstr "ទុក​ថត​រង​ទាំងអស់​ក្នុង​ប័ណ្ណសារ"
+
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgid "Folder:"
 msgstr "ថត ៖"
 
-#: addarchivemaildialog.cpp:68
+#: addarchivemailwidget.cpp:46
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "ទ្រង់ទ្រាយ ៖"
 
-#: addarchivemaildialog.cpp:80
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "ផ្លូវ ៖"
 
-#: addarchivemaildialog.cpp:89
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "បម្រុងទុក​នីមួយៗ ៖"
 
-#: addarchivemaildialog.cpp:103
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "ចំនួន​អតិបរមា​នៃ​ប័ណ្ណសារ ៖"
 
-#: addarchivemaildialog.cpp:107
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "មិន​បាន​កំណត់"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2023-12-30 01:38+0000\n"
 "PO-Revision-Date: 2023-08-25 22:38+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -17,49 +17,50 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: addarchivemaildialog.cpp:33
-#, kde-format
-msgid "Archive all subfolders"
-msgstr "모든 하위 폴더 압축"
-
-#: addarchivemaildialog.cpp:41
+#: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "보관된 메일 수정"
 
-#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "보관된 메일 추가"
 
-#: addarchivemaildialog.cpp:55
+#: addarchivemailwidget.cpp:26
 #, kde-format
-msgid "&Folder:"
+msgid "Archive all subfolders"
+msgstr "모든 하위 폴더 압축"
+
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgid "Folder:"
 msgstr "폴더(&F):"
 
-#: addarchivemaildialog.cpp:68
+#: addarchivemailwidget.cpp:46
 #, kde-format
 msgid "Format:"
 msgstr "형식:"
 
-#: addarchivemaildialog.cpp:80
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "경로:"
 
-#: addarchivemaildialog.cpp:89
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "백업 주기:"
 
-#: addarchivemaildialog.cpp:103
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "최대 백업 수:"
 
-#: addarchivemaildialog.cpp:107
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "무제한"

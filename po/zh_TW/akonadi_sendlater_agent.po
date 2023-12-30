@@ -3,24 +3,24 @@
 #
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2013, 2014, 2015.
 # pan93412 <pan93412@gmail.com>, 2018, 2019.
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-03 00:48+0000\n"
-"PO-Revision-Date: 2019-01-19 19:36+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"PO-Revision-Date: 2023-12-29 21:59+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 18.12.1\n"
+"X-Generator: Lokalize 24.01.85\n"
 
 #: sendlaterconfiguredialog.cpp:31
-#, fuzzy, kde-format
-#| msgid "Configure"
+#, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "設定"
@@ -36,10 +36,9 @@ msgid "Send emails later agent."
 msgstr "讓您可以稍後傳送電子郵件。"
 
 #: sendlaterconfiguredialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-2019 Laurent Montel"
+#, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Copyright (C) 2013-2019 Laurent Montel"
+msgstr "Copyright (C) 2013-%1 Laurent Montel"
 
 #: sendlaterconfiguredialog.cpp:55
 #, kde-format
@@ -121,32 +120,28 @@ msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "您確定要刪除選取的項目嗎？"
 
 #: sendlaterconfigurewidget.cpp:208
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "刪除"
+msgstr "刪除項目"
 
 #: sendlaterconfigurewidget.cpp:216
-#, fuzzy, kde-format
-#| msgid "Do you want to remove the messages as well?"
+#, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
-msgstr[0] "您要順便移除信件嗎？"
+msgstr[0] "您要順便刪除信件嗎？"
 
 #: sendlaterconfigurewidget.cpp:217
-#, fuzzy, kde-format
-#| msgid "Remove messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr "移除信件"
+msgstr "刪除信件"
 
 #: sendlaterconfigurewidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
-msgstr "刪除"
+msgstr "不要刪除"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -202,7 +197,7 @@ msgstr "發現錯誤"
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"
-msgstr ""
+msgstr "重新傳送"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31

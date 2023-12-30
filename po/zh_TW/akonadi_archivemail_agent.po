@@ -3,66 +3,66 @@
 #
 # Franklin Weng <franklin@goodhorse.idv.tw>, 2012, 2013, 2014, 2015.
 # pan93412 <pan93412@gmail.com>, 2018, 2019.
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: 2019-01-19 19:35+0800\n"
-"Last-Translator: pan93412 <pan93412@gmail.com>\n"
-"Language-Team: Chinese <zh-l10n@lists.linux.org.tw>\n"
+"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"PO-Revision-Date: 2023-12-29 21:59+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 18.12.1\n"
+"X-Generator: Lokalize 24.01.85\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: addarchivemaildialog.cpp:33
+#: addarchivemaildialog.cpp:21
 #, kde-format
-msgid "Archive all subfolders"
-msgstr "歸檔所有的子資料夾"
-
-#: addarchivemaildialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "變更郵件歸檔"
 
-#: addarchivemaildialog.cpp:43 archivemailwidget.cpp:274
-#, fuzzy, kde-format
-#| msgid "Add Archive Mail"
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "新增郵件歸檔"
 
-#: addarchivemaildialog.cpp:55
+#: addarchivemailwidget.cpp:26
 #, kde-format
-msgid "&Folder:"
+msgid "Archive all subfolders"
+msgstr "歸檔所有的子資料夾"
+
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgid "Folder:"
 msgstr "資料夾(&F)："
 
-#: addarchivemaildialog.cpp:68
+#: addarchivemailwidget.cpp:46
 #, kde-format
 msgid "Format:"
 msgstr "格式："
 
-#: addarchivemaildialog.cpp:80
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "路徑："
 
-#: addarchivemaildialog.cpp:89
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "備份間隔："
 
-#: addarchivemaildialog.cpp:103
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "歸檔最大數量："
 
-#: addarchivemaildialog.cpp:107
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "不限制"
@@ -76,7 +76,7 @@ msgstr "歸檔"
 #: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr ""
+msgstr "使用範圍"
 
 #: archivemailwidget.cpp:69
 #, kde-format
@@ -109,10 +109,9 @@ msgid "Archive emails automatically."
 msgstr "自動歸檔電子郵件。"
 
 #: archivemailwidget.cpp:92
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-2019 Laurent Montel"
+#, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Copyright (C) 2014-2019 Laurent Montel"
+msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:93
 #, kde-format
@@ -175,11 +174,10 @@ msgid "Do you want to delete the selected items?"
 msgstr "您確定要刪除選取的項目嗎？"
 
 #: archivemailwidget.cpp:233
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "刪除"
+msgstr "刪除項目"
 
 #: archivemailwidget.cpp:273
 #, kde-format

@@ -1,7 +1,6 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2011, 2012, 2013, 2014, 2018, 2020.
 # Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
 # Frederik Schwarzer <schwarzer@kde.org>, 2011, 2012, 2023.
-# SPDX-FileCopyrightText: 2023 Johannes Obermayr <johannesobermayr@gmx.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
