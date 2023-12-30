@@ -10,7 +10,7 @@
 #include <MessageViewer/Viewer>
 
 #include <Akonadi/MessageStatus>
-#include <KIO/Job>
+#include <KIO/TransferJob>
 #include <KMime/KMimeMessage>
 
 #include <Akonadi/Collection>

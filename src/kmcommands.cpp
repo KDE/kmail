@@ -109,6 +109,7 @@
 #include <KRecentDirs>
 
 // KIO headers
+#include <KIO/FileCopyJob>
 #include <KIO/JobUiDelegate>
 #include <KIO/StatJob>
 
