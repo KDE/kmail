@@ -32,6 +32,7 @@
         "Description[uk]": "Налаштування зовнішнього вигляду",
         "Description[x-test]": "xxCustomize Visual Appearancexx",
         "Description[zh_CN]": "自定义视觉外观",
+        "Description[zh_TW]": "調整視覺外觀",
         "Icon": "preferences-desktop-theme",
         "Name": "Appearance",
         "Name[af]": "Appearance",

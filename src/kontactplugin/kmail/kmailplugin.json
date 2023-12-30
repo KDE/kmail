@@ -32,6 +32,7 @@
         "Description[uk]": "Додаток електронної пошти Kontact",
         "Description[x-test]": "xxKontact KMail Pluginxx",
         "Description[zh_CN]": "Kontact KMail 插件",
+        "Description[zh_TW]": "Kontact KMail 外掛程式",
         "EnabledByDefault": true,
         "Icon": "view-pim-mail",
         "License": "GPL",

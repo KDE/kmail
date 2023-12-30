@@ -32,6 +32,7 @@
         "Description[uk]": "Додатки параметрів",
         "Description[x-test]": "xxSettings Pluginsxx",
         "Description[zh_CN]": "设置插件",
+        "Description[zh_TW]": "設定外掛程式",
         "Icon": "preferences-plugin",
         "Name": "Plugins",
         "Name[af]": "Inprop modules",

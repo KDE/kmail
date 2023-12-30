@@ -32,6 +32,7 @@
         "Description[uk]": "Параметри засобу створення повідомлень",
         "Description[x-test]": "xxMessage Composer Settingsxx",
         "Description[zh_CN]": "消息撰写器设置",
+        "Description[zh_TW]": "訊息編寫器設定",
         "Icon": "accessories-text-editor",
         "Name": "Composer",
         "Name[af]": "Composer",

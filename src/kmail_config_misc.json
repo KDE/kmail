@@ -32,6 +32,7 @@
         "Description[uk]": "Інші параметри",
         "Description[x-test]": "xxSettings that don't fit elsewherexx",
         "Description[zh_CN]": "其它设置",
+        "Description[zh_TW]": "不屬於任何其他地方的設定",
         "Icon": "preferences-other",
         "Name": "Misc",
         "Name[af]": "Allerlei",

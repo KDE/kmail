@@ -32,6 +32,7 @@
         "Description[uk]": "Додаток Kontact для перегляду резюме",
         "Description[x-test]": "xxKontact SummaryView Pluginxx",
         "Description[zh_CN]": "Kontact 摘要视图插件",
+        "Description[zh_TW]": "Kontact 摘要檢視外掛程式",
         "EnabledByDefault": true,
         "Icon": "view-calendar-agenda",
         "InitialPreference": 0,

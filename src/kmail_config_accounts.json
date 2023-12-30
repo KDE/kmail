@@ -32,6 +32,7 @@
         "Description[uk]": "Налаштування для надсилання і отримання повідомлень",
         "Description[x-test]": "xxSetup for Sending and Receiving Messagesxx",
         "Description[zh_CN]": "收发邮件设置",
+        "Description[zh_TW]": "發送與接收信件的設定",
         "Icon": "network-workgroup",
         "Name": "Accounts",
         "Name[af]": "Rekeninge",
