@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
 "PO-Revision-Date: 2023-11-24 06:35+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -2844,7 +2844,7 @@ msgid "Clear History"
 msgstr "ისტორიის გასუფთავება"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3973,45 +3973,45 @@ msgstr "&დახმარება"
 msgid "Main Toolbar"
 msgstr "ხელსაწყოთა მთავარი ზოლი"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "გთხოვთ, მოითმინოთ"
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "დაელოდეთ. მიმდინარეობს შეტყობინების გადაცემა"
 msgstr[1] "დაელოდეთ. მიმდინარეობს %1 შეტყობინების გადაცემა"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, kde-format
 msgid "Save To File"
 msgstr "ფაილში შენახვა"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "შეტყობინების გახსნა"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Message"
 msgstr "შეტყობინება"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "ფაილი შეტყობინებას არ შეიცავს."
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "ფაილი ერთზე მეტ შეტყობინებას შეიცავს. ნაჩვენებია, მხოლოდ, პირველი."
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4020,37 +4020,37 @@ msgstr ""
 "გნებავთ, მონიშნული შეტყობინებები, ერთ შეტყობინებაზე, მიმაგრებული (MIME "
 "დაიჯესტის სახით) ფაილების სახით გადააგზავნოთ, თუ ცალ-ცალკე შეტყობინებებად?"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "დაიჯესტის სახით გაგზავნა"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "სათითაოდ გაგზავნა"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "შეტყობინებების გაფილტვრა"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "იფილტრება შეტყობინება %1/%2"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "შეტყობინებების გადატანა"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "შეტყობინებების წაშლა"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

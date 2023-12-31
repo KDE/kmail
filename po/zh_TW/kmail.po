@@ -17,15 +17,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2023-12-29 22:50+0900\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"PO-Revision-Date: 2023-12-30 17:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -2754,7 +2754,7 @@ msgid "Clear History"
 msgstr "清除歷史"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3845,44 +3845,44 @@ msgstr "說明(&H)"
 msgid "Main Toolbar"
 msgstr "主工具列"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "請稍候"
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 封信件傳送中，請稍候..."
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, kde-format
 msgid "Save To File"
 msgstr "儲存到檔案"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "開啟訊息"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Message"
 msgstr "信件"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "檔案中未含有任何信件。"
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "檔案中有一封以上的信件。將只顯示第一封。"
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -3890,37 +3890,37 @@ msgid ""
 msgstr ""
 "您要在一封信件中以附加檔方式（MIME 摘要）轉寄選取的信件，還是要個別轉寄？"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "傳送摘要"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "個別傳送"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "過濾信件中"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "過濾 %1 封信件（共 %2 封）"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "移動信件中"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "刪除信件中"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5080,7 +5080,7 @@ msgstr "編輯搜尋字串..."
 #: kmmainwidget.cpp:4129
 #, kde-format
 msgid "Configure Unified Mailbox"
-msgstr "設定合併信箱"
+msgstr "設定整合信箱"
 
 #: kmmainwidget.cpp:4140
 #, kde-format
@@ -5144,7 +5144,7 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 "您設定了不只一個郵件帳號。\n"
-"您是否要啟用「合併信箱」功能，來顯示您的收件匣、寄件備份與草稿資料夾合併的內"
+"您是否要啟用「整合信箱」功能，來顯示您的收件匣、寄件備份與草稿資料夾合併的內"
 "容？\n"
 "您可以在 KMail 的外掛程式設定當中設定合併信箱、建立自訂的合併信箱或是完全停用"
 "本功能。"
@@ -5152,12 +5152,12 @@ msgstr ""
 #: kmmainwidget.cpp:4902
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr "啟用合併信箱？"
+msgstr "啟用整合信箱？"
 
 #: kmmainwidget.cpp:4903
 #, kde-format
 msgid "Enable Unified Mailboxes"
-msgstr "啟用合併信箱"
+msgstr "啟用整合信箱"
 
 #: kmmainwidget.cpp:4904
 #, kde-format

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2023-08-10 09:45+0300\n"
+"PO-Revision-Date: 2023-12-30 09:19+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -38,10 +38,9 @@ msgid "Archive all subfolders"
 msgstr "Архівувати всі підтеки"
 
 #: addarchivemailwidget.cpp:36
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgid "Folder:"
-msgstr "&Тека:"
+msgstr "Тека:"
 
 #: addarchivemailwidget.cpp:46
 #, kde-format

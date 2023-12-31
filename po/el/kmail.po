@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3007,7 +3007,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4217,48 +4217,48 @@ msgstr "&Βοήθεια"
 msgid "Main Toolbar"
 msgstr "Κύρια γραμμή εργαλείων"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Παρακαλώ περιμένετε"
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Παρακαλώ περιμένετε καθώς το μήνυμα μεταφέρεται"
 msgstr[1] "Παρακαλώ περιμένετε καθώς τα %1 μηνύματα μεταφέρονται"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Αποθήκευση σε αρχείο"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "Άνοιγμα μηνύματος"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Μήνυμα"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Αυτό το αρχείο δεν περιέχει μήνυμα."
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Αυτό το αρχείο περιέχει πολλαπλά μηνύματα. Μόνο το πρώτο εμφανίζεται."
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4267,37 +4267,37 @@ msgstr ""
 "Επιθυμείτε την προώθηση των επιλεγμένων μηνυμάτων ως συνημμένα σε ένα μήνυμα "
 "(ως σύνοψη MIME) ή ως ανεξάρτητα μηνύματα;"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "Αποστολή σύνοψης"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "Αποστολή ανεξάρτητα"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "Φιλτράρισμα μηνυμάτων"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Φιλτράρισμα μηνύματος %1 από %2"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "Μετακίνηση μηνυμάτων"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "Διαγραφή μηνυμάτων"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, fuzzy, kde-format
 #| msgid "Select attachment:"
 msgctxt "@info:progress"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -3045,7 +3045,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4274,85 +4274,85 @@ msgstr "&Hljóðmerki"
 msgid "Main Toolbar"
 msgstr "HTML tækjaslá"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Augnablik..."
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Vinsamlega bíðið meðan bréfið eru flutt"
 msgstr[1] "Vinsamlega bíðið meðan %1 bréf eru flutt"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Vista í skrá"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "Opna bréf"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Bréf"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Skráin inniheldur ekki bréf."
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Skráin inniheldur mörg bréf. Aðeins það fyrsta er sýnt."
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "Senda óundirritað?"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Eyði bréfum"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Færi bréf %3 af %2 frá %1."
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "Færi bréf"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "Eyði bréfum"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

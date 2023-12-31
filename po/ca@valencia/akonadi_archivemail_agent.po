@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2023-08-10 19:07+0200\n"
+"PO-Revision-Date: 2023-12-30 08:23+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -39,10 +39,9 @@ msgid "Archive all subfolders"
 msgstr "Arxiva totes les subcarpetes"
 
 #: addarchivemailwidget.cpp:36
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgid "Folder:"
-msgstr "&Carpeta:"
+msgstr "Carpeta:"
 
 #: addarchivemailwidget.cpp:46
 #, kde-format
@@ -246,6 +245,3 @@ msgstr "Mesos"
 #, kde-format
 msgid "Years"
 msgstr "Anys"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Afig un arxiu de correu"

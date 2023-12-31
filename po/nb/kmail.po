@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -2767,7 +2767,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3873,45 +3873,45 @@ msgstr "&Hjelp"
 msgid "Main Toolbar"
 msgstr "Hovedverktøylinje"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr ""
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Vent mens meldinga overføres"
 msgstr[1] "Vent mens %1 meldinger overføres"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, kde-format
 msgid "Save To File"
 msgstr "Lagre til fil"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "Åpne melding"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Message"
 msgstr "Melding"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Fila inneholder ikke en melding."
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Fila inneholder flere meldinger. Bare den første meldinga blir vist."
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -3920,37 +3920,37 @@ msgstr ""
 "Skal de valgte meldingene videresendes som vedlegg i én melding (som MIME-"
 "samling) eller som enkeltmeldinger?"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "Send som samling"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "Send enkeltvis"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrerer meldinger"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrerer melding %1 av %2"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "Flytter meldinger"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "Sletter meldinger"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

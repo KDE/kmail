@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2023-12-23 08:00\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"PO-Revision-Date: 2023-12-30 13:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -2738,7 +2738,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3820,44 +3820,44 @@ msgstr "帮助(&H)"
 msgid "Main Toolbar"
 msgstr "主工具栏"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "请等待"
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "请稍等，正在传送 %1 条消息"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, kde-format
 msgid "Save To File"
 msgstr "保存到文件"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "打开消息"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Message"
 msgstr "消息"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "文件不包含消息。"
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "文件包含多封信。仅会显示第一封信。"
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -3866,37 +3866,37 @@ msgstr ""
 "您想要将所选消息作为单封消息的附件 (即 MIME 摘要) 来转发，还是分别作为独立消"
 "息来转发？"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "作为摘要发送"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "各自独立发送"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "过滤消息"
 
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "正在过滤 %2 条消息中的第 %1 封"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "移动消息中"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "删除消息中"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -7215,34 +7215,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Charset"
-#~ msgstr "字符集"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr "这个列表将会由上而下的检查哪个字符集包括发送消息需要的所有字符。"
-
-#~ msgid "Enter charset:"
-#~ msgstr "输入字符集："
-
-#~ msgid "Do you want to remove this selected charset?"
-#~ msgstr "您是否要移除选中的字符集？"
-
-#~ msgid "Add Charset:"
-#~ msgstr "添加字符集："
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr "在回复或转发时尽可能保持原有字符集(&K)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "不支持这个字符集。"
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "编码"

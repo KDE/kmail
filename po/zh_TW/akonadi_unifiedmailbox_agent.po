@@ -1,90 +1,90 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-25 01:40+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-30 17:54+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: settingsdialog.cpp:68 settingsdialog.cpp:132
 #, kde-format
 msgid "Modify"
-msgstr ""
+msgstr "修改"
 
 #: settingsdialog.cpp:90 settingsdialog.cpp:134
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
-msgstr ""
+msgstr "您確定要移除整合信箱 <b>%1</b> 嗎？"
 
 #: settingsdialog.cpp:101
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
-msgstr ""
+msgstr "確定移除？"
 
 #: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
 #, kde-format
 msgid "Unified Mailboxes"
-msgstr ""
+msgstr "整合信箱"
 
 #: unifiedmailboxagent.cpp:168
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
-msgstr ""
+msgstr "同步整合信箱 %1 中"
 
 #: unifiedmailboxeditor.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr ""
+msgstr "設定整合信箱"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "名稱："
 
 #: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Pick icon..."
-msgstr ""
+msgstr "選取圖示..."
 
 #: unifiedmailboxeditor.cpp:103
 #, kde-format
 msgid "Icon:"
-msgstr ""
+msgstr "圖示："
 
 #: unifiedmailboxmanager.cpp:294
 #, kde-format
 msgid "Inbox"
-msgstr ""
+msgstr "收件匣"
 
 #: unifiedmailboxmanager.cpp:301
 #, kde-format
 msgid "Sent"
-msgstr ""
+msgstr "寄件備份"
 
 #: unifiedmailboxmanager.cpp:308
 #, kde-format
 msgid "Drafts"
-msgstr ""
+msgstr "草稿匣"

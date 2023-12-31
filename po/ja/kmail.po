@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2023-12-31 01:54+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2905,7 +2905,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1904
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4094,48 +4094,48 @@ msgstr "ヘルプ(&H)"
 msgid "Main Toolbar"
 msgstr "メインツールバー"
 
-#: kmcommands.cpp:295
+#: kmcommands.cpp:296
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "お待ちください"
 
-#: kmcommands.cpp:298 kmcommands.cpp:362
+#: kmcommands.cpp:299 kmcommands.cpp:363
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 件のメッセージを転送します。お待ちください。"
 
-#: kmcommands.cpp:509
+#: kmcommands.cpp:510
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "ファイルに保存"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, kde-format
 msgid "Open Message"
 msgstr "メッセージを開く"
 
-#: kmcommands.cpp:694
+#: kmcommands.cpp:695
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "メッセージ(&M)"
 
-#: kmcommands.cpp:723
+#: kmcommands.cpp:724
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "ファイルはメッセージを含んでいません。"
 
-#: kmcommands.cpp:796
+#: kmcommands.cpp:797
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "ファイルは複数のメッセージを含んでいます。最初のメッセージのみ表示します。"
 
-#: kmcommands.cpp:907
+#: kmcommands.cpp:908
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4144,38 +4144,38 @@ msgstr ""
 "選択したメッセージを一つにまとめて添付ファイルとして (MIME ダイジェストとし"
 "て) 転送しますか？それとも個別のメッセージとして転送しますか？"
 
-#: kmcommands.cpp:911
+#: kmcommands.cpp:912
 #, kde-format
 msgid "Send As Digest"
 msgstr "ダイジェストとして送信"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:913
 #, kde-format
 msgid "Send Individually"
 msgstr "個別に送信"
 
-#: kmcommands.cpp:1299
+#: kmcommands.cpp:1300
 #, kde-format
 msgid "Filtering messages"
 msgstr "メッセージをフィルタ中"
 
 # @info:status
-#: kmcommands.cpp:1309
+#: kmcommands.cpp:1310
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "メッセージをフィルタ中 (%1/%2)"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1649
+#: kmcommands.cpp:1518 kmcommands.cpp:1650
 #, kde-format
 msgid "Moving messages"
 msgstr "メッセージを移動中"
 
-#: kmcommands.cpp:1517 kmcommands.cpp:1659
+#: kmcommands.cpp:1518 kmcommands.cpp:1660
 #, kde-format
 msgid "Deleting messages"
 msgstr "メッセージを削除中"
 
-#: kmcommands.cpp:1801
+#: kmcommands.cpp:1802
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
@@ -7830,40 +7830,3 @@ msgstr[0] "不在返信がアクティブです"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Charset"
-#~ msgstr "文字セット"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "すべての送信メッセージについて、メッセージに使用されているすべての文字を含"
-#~ "む文字セットをこのリストの上から順に検索します。"
-
-#~ msgid "Enter charset:"
-#~ msgstr "文字セットを入力:"
-
-#, fuzzy
-#~| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-#~ msgid "Do you want to remove this selected charset?"
-#~ msgstr "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
-
-#, fuzzy
-#~| msgid "Charset"
-#~ msgid "Add Charset:"
-#~ msgstr "文字セット"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr "可能なら返信および転送時に元のメッセージの文字セットを使う(&K)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "この文字セットはサポートされていません。"
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "エンコーディング"
