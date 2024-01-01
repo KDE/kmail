@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2019 Laurent Montel <montel@kde.org>
+# SPDX-FileCopyrightText: 2019-2024 Laurent Montel <montel.org>
 # SPDX-License-Identifier: BSD-3-Clause
 add_executable(kmail-refresh-settings)
 target_sources(kmail-refresh-settings PRIVATE

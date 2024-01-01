@@ -1,6 +1,6 @@
 /*
  * This file is part of KMail.
- * SPDX-FileCopyrightText: 2011-2023 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2024 Laurent Montel <montel@kde.org>
  *
  * SPDX-FileCopyrightText: 2009 Constantin Berzan <exit3219@gmail.com>
  *

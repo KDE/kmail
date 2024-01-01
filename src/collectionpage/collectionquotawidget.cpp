@@ -1,7 +1,7 @@
 /*
  *
  * SPDX-FileCopyrightText: 2006 Till Adam <adam@kde.org>
- * SPDX-FileCopyrightText: 2012-2023 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2012-2024 Laurent Montel <montel@kde.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
  */

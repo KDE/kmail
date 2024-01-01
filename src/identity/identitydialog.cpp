@@ -3,7 +3,7 @@
 
     This file is part of KMail, the KDE mail client.
     SPDX-FileCopyrightText: 2002 Marc Mutz <mutz@kde.org>
-    SPDX-FileCopyrightText: 2014-2023 Laurent Montel <montel@kde.org>
+    SPDX-FileCopyrightText: 2014-2024 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */

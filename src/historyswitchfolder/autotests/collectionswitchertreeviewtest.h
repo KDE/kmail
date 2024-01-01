@@ -1,6 +1,6 @@
 /*
   This file is part of KMail, the KDE mail client.
-  SPDX-FileCopyrightText: 2021-2023 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2021-2024 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: GPL-2.0-only
 */
