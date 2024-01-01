@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2023-08-17 23:42+0200\n"
+"PO-Revision-Date: 2023-12-30 14:39+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -35,10 +35,9 @@ msgid "Archive all subfolders"
 msgstr "Archivia tutte le sottocartelle"
 
 #: addarchivemailwidget.cpp:36
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgid "Folder:"
-msgstr "&Cartella:"
+msgstr "Cartella:"
 
 #: addarchivemailwidget.cpp:46
 #, kde-format
