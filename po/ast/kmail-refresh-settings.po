@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2024-01-02 01:32+0000\n"
 "PO-Revision-Date: 2023-11-06 00:49+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: main.cpp:32
 #, kde-format
-msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 msgstr ""
 
 #: main.cpp:33

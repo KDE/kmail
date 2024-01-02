@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2024-01-02 01:32+0000\n"
 "PO-Revision-Date: 2022-09-15 19:40+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -34,7 +34,7 @@ msgstr "கேமெயில் அமைப்புகளை புதுப�
 
 #: main.cpp:32
 #, kde-format
-msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 msgstr ""
 
 #: main.cpp:33
