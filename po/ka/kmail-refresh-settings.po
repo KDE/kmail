@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-02 01:32+0000\n"
-"PO-Revision-Date: 2023-01-02 05:19+0100\n"
+"PO-Revision-Date: 2024-01-02 05:24+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,10 +34,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "KMail -ის დამხმარე პარამეტრების განახლებისთვის"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format

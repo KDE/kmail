@@ -7078,17 +7078,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Charset"
-#~ msgstr "Mearkaráidu"
-
-#~ msgid "Enter charset:"
-#~ msgstr "Atte mearkaráiddu:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr ""
-#~ "&Doalat álgovuolggalaš mearkaráiddu vástidettiin dahje viidáset "
-#~ "sáddedettiin (jos lea vejolaš)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Dát mearkarádju ii dorjojuvvo."

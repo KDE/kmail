@@ -7289,31 +7289,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Charset"
-#~ msgstr "Tegnsett"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "For hvert brev som sendes sjekkes denne lista ovenfra og ned etter et "
-#~ "tegnsett som inneholder alle de nødvendige tegnene."
-
-#~ msgid "Enter charset:"
-#~ msgstr "Oppgi tegnkoding:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr ""
-#~ "&Bruk den samme tegnkodinga ved svar eller videresending (hvis mulig)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Denne tegnkodingen er ikke støttet."
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "Koding"

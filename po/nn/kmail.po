@@ -7233,32 +7233,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Charset"
-#~ msgstr "Teiknkoding"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "For kvar e-post som vert send, vert denne lista gått gjennom, frå øvst "
-#~ "til nedst, på jakt etter ei teiknkoding som inneheld alle teikna som er "
-#~ "brukte."
-
-#~ msgid "Enter charset:"
-#~ msgstr "Vel teiknkoding:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr ""
-#~ "B&ruk opphavleg teiknkoding ved svar og vidaresending (dersom det går)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Teiknkodinga er ikkje støtta."
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "US-ASCII"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "Teiknkoding"
