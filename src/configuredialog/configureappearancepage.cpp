@@ -632,10 +632,10 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDateDisplay->setExclusive(true);
 
     for (int i = 0; i < numDateDisplayConfig; ++i) {
-        const char *label = KLocalizedString(dateDisplayConfig[i].displayName).untranslatedText().constData();
+        const auto label = KLocalizedString(dateDisplayConfig[i].displayName).untranslatedText();
 
         QString buttonLabel;
-        if (QString::fromLatin1(label).contains(QLatin1String("%1"))) {
+        if (label.contains(QLatin1String("%1"))) {
             buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName)
                               .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
                               .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
