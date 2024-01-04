@@ -13,6 +13,7 @@
 #include <Sonnet/DictionaryComboBox>
 
 #include <KConfigGroup>
+#include <KSharedConfig>
 #include <KWindowConfig>
 #include <QWindow>
 
@@ -58,7 +59,7 @@ void SpellCheckerConfigDialog::readConfig()
 
 void SpellCheckerConfigDialog::writeConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), QStringLiteral("SpellCheckerConfigDialog"));
+    KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), QStringLiteral("SpellCheckerConfigDialog"));
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }
