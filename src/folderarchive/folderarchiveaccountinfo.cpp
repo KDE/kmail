@@ -1,8 +1,9 @@
 /*
    SPDX-FileCopyrightText: 2013-2024 Laurent Montel <montel@kde.org>
 
-   SPDX-License-Identifier: GPL-2.0-or-later
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
+
 #include "folderarchiveaccountinfo.h"
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo() = default;
@@ -73,9 +74,10 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
     mInstanceName = config.readEntry(QStringLiteral("instanceName"));
     mArchiveTopLevelCollectionId = config.readEntry(QStringLiteral("topLevelCollectionId"), -1);
-    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", static_cast<int>(UniqueFolder)));
+    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)UniqueFolder));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
+    mUseDateFromMessage = config.readEntry("useDateFromMessage", false);
 }
 
 void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
@@ -87,13 +89,24 @@ void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
         config.deleteEntry(QStringLiteral("topLevelCollectionId"));
     }
 
-    config.writeEntry(QStringLiteral("folderArchiveType"), static_cast<int>(mArchiveType));
+    config.writeEntry(QStringLiteral("folderArchiveType"), (int)mArchiveType);
     config.writeEntry(QStringLiteral("enabled"), mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
+    config.writeEntry("useDateFromMessage", mUseDateFromMessage);
 }
 
 bool FolderArchiveAccountInfo::operator==(const FolderArchiveAccountInfo &other) const
 {
     return (mInstanceName == other.instanceName()) && (mArchiveTopLevelCollectionId == other.archiveTopLevel()) && (mArchiveType == other.folderArchiveType())
-        && (mEnabled == other.enabled()) && (mKeepExistingStructure == other.keepExistingStructure());
+        && (mEnabled == other.enabled()) && (mKeepExistingStructure == other.keepExistingStructure()) && (mUseDateFromMessage == other.useDateFromMessage());
+}
+
+bool FolderArchiveAccountInfo::useDateFromMessage() const
+{
+    return mUseDateFromMessage;
+}
+
+void FolderArchiveAccountInfo::setUseDateFromMessage(bool newUseDateFromMessage)
+{
+    mUseDateFromMessage = newUseDateFromMessage;
 }

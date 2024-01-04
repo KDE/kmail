@@ -1,14 +1,16 @@
 /*
    SPDX-FileCopyrightText: 2014-2024 Laurent Montel <montel@kde.org>
 
-   SPDX-License-Identifier: GPL-2.0-or-later
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
+
 #include "folderarchiveaccountinfotest.h"
 #include "../folderarchiveaccountinfo.h"
 #include <Akonadi/Collection>
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QTest>
+QTEST_MAIN(FolderArchiveAccountInfoTest)
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
     : QObject(parent)
@@ -24,9 +26,10 @@ void FolderArchiveAccountInfoTest::shouldHaveDefaultValue()
     QVERIFY(info.instanceName().isEmpty());
     QCOMPARE(info.archiveTopLevel(), Akonadi::Collection(-1).id());
     QCOMPARE(info.folderArchiveType(), FolderArchiveAccountInfo::UniqueFolder);
-    QCOMPARE(info.enabled(), false);
-    QCOMPARE(info.keepExistingStructure(), false);
-    QCOMPARE(info.isValid(), false);
+    QVERIFY(!info.enabled());
+    QVERIFY(!info.keepExistingStructure());
+    QVERIFY(!info.isValid());
+    QVERIFY(!info.useDateFromMessage());
 }
 
 void FolderArchiveAccountInfoTest::shouldBeValid()
@@ -54,7 +57,5 @@ void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
     FolderArchiveAccountInfo restoreInfo(grp);
     QCOMPARE(info, restoreInfo);
 }
-
-QTEST_MAIN(FolderArchiveAccountInfoTest)
 
 #include "moc_folderarchiveaccountinfotest.cpp"

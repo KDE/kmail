@@ -1,8 +1,9 @@
 /*
    SPDX-FileCopyrightText: 2013-2024 Laurent Montel <montel@kde.org>
 
-   SPDX-License-Identifier: GPL-2.0-or-later
+   SPDX-License-Identifier: LGPL-2.0-or-later
 */
+
 #pragma once
 
 #include "kmail_private_export.h"
@@ -13,7 +14,7 @@ class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo
 {
 public:
     FolderArchiveAccountInfo();
-    FolderArchiveAccountInfo(const KConfigGroup &config);
+    explicit FolderArchiveAccountInfo(const KConfigGroup &config);
     ~FolderArchiveAccountInfo();
 
     enum FolderArchiveType {
@@ -44,10 +45,14 @@ public:
 
     [[nodiscard]] bool operator==(const FolderArchiveAccountInfo &other) const;
 
+    [[nodiscard]] bool useDateFromMessage() const;
+    void setUseDateFromMessage(bool newUseDateFromMessage);
+
 private:
+    FolderArchiveAccountInfo::FolderArchiveType mArchiveType = UniqueFolder;
     Akonadi::Collection::Id mArchiveTopLevelCollectionId = -1;
     QString mInstanceName;
-    FolderArchiveAccountInfo::FolderArchiveType mArchiveType = UniqueFolder;
+    bool mUseDateFromMessage = false;
     bool mEnabled = false;
     bool mKeepExistingStructure = false;
 };
