@@ -132,7 +132,7 @@ void KMKnotify::readConfig()
 
 void KMKnotify::writeConfig()
 {
-    KConfigGroup notifyDialog(KMKernel::self()->config(), QStringLiteral("KMKnotifyDialog"));
+    KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), QStringLiteral("KMKnotifyDialog"));
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }

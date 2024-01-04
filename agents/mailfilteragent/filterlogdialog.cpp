@@ -203,7 +203,7 @@ void FilterLogDialog::readConfig()
         FilterLog::instance()->setMaxLogSize(maxLogSize);
     }
 
-    KConfigGroup geometryGroup(config, QStringLiteral("Geometry"));
+    KConfigGroup geometryGroup(KSharedConfig::openConfig(), QStringLiteral("Geometry"));
     const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
