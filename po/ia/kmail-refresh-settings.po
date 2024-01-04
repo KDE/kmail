@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# giovanni <g.sora@tiscali.it>, 2020, 2021, 2022, 2023.
+# giovanni <g.sora@tiscali.it>, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-02 01:32+0000\n"
-"PO-Revision-Date: 2023-01-10 16:24+0100\n"
+"PO-Revision-Date: 2024-01-03 12:29+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -33,10 +33,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "KMail Assistant (Assistente de KMail)  per refrescar preferentias"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
-msgstr "(c), 2021-2023 Laurent Montel <montel@kde.org>"
+msgstr "(c), 2021-2024 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
