@@ -12,20 +12,20 @@
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2007, 2008, 2009, 2010.
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
 # pan93412 <pan93412@gmail.com>, 2019.
-# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-31 01:54+0000\n"
-"PO-Revision-Date: 2023-12-30 17:53+0900\n"
+"PO-Revision-Date: 2024-01-08 19:30+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.01.85\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -149,7 +149,7 @@ msgstr "改善內部程式說明文件"
 
 #: aboutdata.cpp:52 aboutdata.cpp:122 aboutdata.cpp:187
 msgid "Major contributor, still active"
-msgstr ""
+msgstr "目前仍然活躍的重要貢獻者"
 
 #: aboutdata.cpp:54
 msgid "Added maildir support"
@@ -169,7 +169,7 @@ msgstr "GnuPG 支援"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
-msgstr ""
+msgstr "重要貢獻者"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
@@ -189,7 +189,7 @@ msgstr "筆記/行事曆整合"
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
-msgstr ""
+msgstr "改善程式碼效率與一致性"
 
 #: aboutdata.cpp:78
 msgid "New message list and new folder tree"
@@ -197,7 +197,7 @@ msgstr "新信件列表與新的樹狀資料夾"
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "很多很有幫助的貢獻"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
@@ -241,15 +241,15 @@ msgstr "LDAP 支援、維護"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Akonadi 的重要貢獻者"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
-msgstr ""
+msgstr "說明文件，目前仍然活躍"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
-msgstr ""
+msgstr "大規模貢獻者，目前仍然活躍"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
@@ -297,7 +297,7 @@ msgstr "修正從通訊錄到撰寫工具的拖放"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
-msgstr ""
+msgstr "大規模貢獻者"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
@@ -1401,7 +1401,7 @@ msgstr "數值(&V)："
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
-msgstr ""
+msgstr "'Content-Type' 是不被允許的字串。這個標頭不會被儲存。"
 
 #: configuredialog/configurecomposerpage.cpp:925
 #, kde-format
@@ -2621,7 +2621,7 @@ msgstr "外部編輯器已開啟。"
 msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
-msgstr ""
+msgstr "找不到傳輸。請確認您會使用正確的郵件傳輸。"
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
@@ -2647,7 +2647,7 @@ msgstr "封存資料夾未定義。請檢查帳號 %1 的設定"
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
-msgstr ""
+msgstr "已經到達收件者數量限制了。將截短收件者清單至 %1 人。"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, kde-format
@@ -3032,7 +3032,7 @@ msgstr "讓其他人知道您希望使用加密"
 #: identity/identitydialog.cpp:479
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "覆寫安全性預設值的全域設定"
 
 #: identity/identitydialog.cpp:482
 #, kde-format
