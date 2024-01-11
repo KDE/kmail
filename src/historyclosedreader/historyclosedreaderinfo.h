@@ -27,7 +27,7 @@ public:
 
 private:
     QString mSubject;
-    Akonadi::Item::Id mItem;
+    Akonadi::Item::Id mItem = Akonadi::Item::Id(-1);
     // TODO add Item::Collection ?
 };
 Q_DECLARE_TYPEINFO(HistoryClosedReaderInfo, Q_MOVABLE_TYPE);
