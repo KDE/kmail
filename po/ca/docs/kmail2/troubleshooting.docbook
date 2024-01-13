@@ -869,7 +869,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
   <para
 >De vegades, l'<guilabel
 >Agent distribuïdor de correu</guilabel
-> no funciona perquè el dimoni de &DBus; (una instal·lació a nivell del sistema per a les comunicacions entre processos) no funciona correctament. La vostra millor aposta en aquesta circumstància és senzillament reiniciar el sistema. El dimoni de &DBus; és un dels primers processos iniciats quan inicieu una sessió a l'escriptori &kde;, de manera que no es pot aturar i reiniciar amb facilitat. Tot l'entorn &plasma; depèn d'això.</para>
+> no funciona perquè el dimoni de &DBus; (una instal·lació en l'àmbit del sistema per a les comunicacions entre processos) no funciona correctament. La vostra millor aposta en aquesta circumstància és senzillament reiniciar el sistema. El dimoni de &DBus; és un dels primers processos iniciats quan inicieu una sessió a l'escriptori &kde;, de manera que no es pot aturar i reiniciar amb facilitat. Tot l'entorn &plasma; depèn d'això.</para>
     
 </sect1>
 
