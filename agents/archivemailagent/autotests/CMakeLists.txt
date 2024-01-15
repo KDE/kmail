@@ -23,7 +23,16 @@ endmacro()
 
 archivemail_agent(archivemailinfotest.cpp )
 
-archivemail_agent(archivemailwidgettest.cpp)
+set( _test2 ${_source} ../widgets/hourcombobox.cpp
+    ../archivemailrangewidget.cpp
+    ../archivemailagentutil.cpp
+    ../archivemailwidget.cpp
+    ../addarchivemaildialog.cpp
+    ../addarchivemailwidget.cpp
+    ../widgets/formatcombobox.cpp
+    ../widgets/unitcombobox.cpp ${autotest_categories_SRCS})
+ki18n_wrap_ui(_test2 ../ui/archivemailwidget.ui )
+add_akonadi_isolated_test_advanced(archivemailwidgettest.cpp "${_test2}" "archivemailagent;Qt::Test;Qt::Core;KPim6::MailCommon;KPim6::AkonadiCore;KF6::XmlGui;KF6::KIOWidgets;KF6::I18n")
 archivemail_agent(formatcomboboxtest.cpp)
 archivemail_agent(unitcomboboxtest.cpp)
 archivemail_agent(archivemailrangewidgettest.cpp)
