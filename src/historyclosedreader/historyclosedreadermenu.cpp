@@ -5,6 +5,7 @@
 
 #include "historyclosedreadermenu.h"
 #include "historyclosedreadermanager.h"
+#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <QMenu>
 
@@ -36,7 +37,7 @@ void HistoryClosedReaderMenu::updateMenu()
     menu()->clear();
     const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
     if (!list.isEmpty()) {
-        createReOpenClosed();
+        addReOpenClosedAction();
         for (const auto &info : list) {
             QString subject = info.subject();
             const QString originalSubject{subject};
@@ -59,26 +60,41 @@ void HistoryClosedReaderMenu::updateMenu()
     }
 }
 
-void HistoryClosedReaderMenu::createReOpenClosed()
+void HistoryClosedReaderMenu::slotReopenLastClosedViewer()
+{
+    const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
+    if (!list.isEmpty()) {
+        const auto identifier = list.constFirst().item();
+        Q_EMIT openMessage(identifier);
+        HistoryClosedReaderManager::self()->removeItem(identifier);
+    }
+}
+
+void HistoryClosedReaderMenu::createReOpenClosedAction()
 {
     if (!mReopenAction) {
         mReopenAction = new QAction(i18n("Reopen Closed Viewer"), this);
         menu()->addAction(mReopenAction);
-        connect(mReopenAction, &QAction::triggered, this, [this]() {
-            const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
-            if (!list.isEmpty()) {
-                const auto identifier = list.constFirst().item();
-                Q_EMIT openMessage(identifier);
-                HistoryClosedReaderManager::self()->removeItem(identifier);
-            }
-        });
+        connect(mReopenAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotReopenLastClosedViewer);
 
         mSeparatorAction = new QAction(this);
         mSeparatorAction->setSeparator(true);
     }
+}
 
+void HistoryClosedReaderMenu::addReOpenClosedAction()
+{
+    if (!mReopenAction) {
+        qCWarning(KMAIL_LOG) << "mReopenAction was not created ! It's a bug";
+        return;
+    }
     menu()->addAction(mReopenAction);
     menu()->addAction(mSeparatorAction);
+}
+
+QAction *HistoryClosedReaderMenu::reopenAction() const
+{
+    return mReopenAction;
 }
 
 #include "moc_historyclosedreadermenu.cpp"

@@ -15,13 +15,17 @@ public:
     explicit HistoryClosedReaderMenu(QObject *parent = nullptr);
     ~HistoryClosedReaderMenu() override;
 
+    [[nodiscard]] QAction *reopenAction() const;
+
+    void createReOpenClosedAction();
 Q_SIGNALS:
     void openMessage(Akonadi::Item::Id id);
 
 private:
     void slotClear();
     void updateMenu();
-    void createReOpenClosed();
+    void addReOpenClosedAction();
+    void slotReopenLastClosedViewer();
     QAction *mReopenAction = nullptr;
     QAction *mSeparatorAction = nullptr;
 };

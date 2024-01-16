@@ -3205,6 +3205,8 @@ void KMMainWidget::setupActions()
     mRestoreClosedMessageMenu = new HistoryClosedReaderMenu(this);
     actionCollection()->addAction(QStringLiteral("restore_closed_messageviewer"), mRestoreClosedMessageMenu);
     connect(mRestoreClosedMessageMenu, &HistoryClosedReaderMenu::openMessage, this, &KMMainWidget::slotRestoreClosedMessage);
+    mRestoreClosedMessageMenu->createReOpenClosedAction();
+    actionCollection()->addAction(QStringLiteral("restore_reopen_closed_messageviewer"), mRestoreClosedMessageMenu->reopenAction());
 
     //----- "Mark Thread" submenu
     mThreadStatusMenu = new KActionMenu(i18n("Mark &Thread"), this);
