@@ -21,4 +21,7 @@ Q_SIGNALS:
 private:
     void slotClear();
     void updateMenu();
+    void createReOpenClosed();
+    QAction *mReopenAction = nullptr;
+    QAction *mSeparatorAction = nullptr;
 };

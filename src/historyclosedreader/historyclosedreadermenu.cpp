@@ -27,9 +27,16 @@ void HistoryClosedReaderMenu::slotClear()
 
 void HistoryClosedReaderMenu::updateMenu()
 {
+    if (mReopenAction) {
+        menu()->removeAction(mReopenAction);
+    }
+    if (mSeparatorAction) {
+        menu()->removeAction(mSeparatorAction);
+    }
     menu()->clear();
     const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
     if (!list.isEmpty()) {
+        createReOpenClosed();
         for (const auto &info : list) {
             QString subject = info.subject();
             const QString originalSubject{subject};
@@ -50,6 +57,28 @@ void HistoryClosedReaderMenu::updateMenu()
         connect(clearAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotClear);
         menu()->addAction(clearAction);
     }
+}
+
+void HistoryClosedReaderMenu::createReOpenClosed()
+{
+    if (!mReopenAction) {
+        mReopenAction = new QAction(i18n("Reopen Closed Viewer"), this);
+        menu()->addAction(mReopenAction);
+        connect(mReopenAction, &QAction::triggered, this, [this]() {
+            const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
+            if (!list.isEmpty()) {
+                const auto identifier = list.constFirst().item();
+                Q_EMIT openMessage(identifier);
+                HistoryClosedReaderManager::self()->removeItem(identifier);
+            }
+        });
+
+        mSeparatorAction = new QAction(this);
+        mSeparatorAction->setSeparator(true);
+    }
+
+    menu()->addAction(mReopenAction);
+    menu()->addAction(mSeparatorAction);
 }
 
 #include "moc_historyclosedreadermenu.cpp"
