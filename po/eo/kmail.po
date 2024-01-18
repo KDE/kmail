@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-17 00:38+0000\n"
-"PO-Revision-Date: 2024-01-07 21:26+0100\n"
+"PO-Revision-Date: 2024-01-17 20:52+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2854,10 +2854,9 @@ msgid "Clear History"
 msgstr "Forviŝi Historion"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Restore Closed Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "Restaŭri Fermitan Mesaĝon"
+msgstr "Remalfermi Fermitan Vidilon"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
@@ -7478,36 +7477,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid "Charset"
-#~ msgstr "Signaro"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "Tiu listo estas kontrolata ĉe ĉiu sendata retletero de supre malsupren "
-#~ "pri signaro, kiuj enhvas ĉiujn necesajn signojn."
-
-#~ msgid "Enter charset:"
-#~ msgstr "Doni aldonendan signaron:"
-
-#~ msgid "Do you want to remove this selected charset?"
-#~ msgstr "Ĉu vi volas forigi ĉi tiun elektitan signaron?"
-
-#~ msgid "Add Charset:"
-#~ msgstr "Aldoni signaron:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr "Lasi la originan signaron ĉe respondoj &kaj plusendoj (se eblas)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Tiu signaro ne estas subtenata."
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "Kodprezento"

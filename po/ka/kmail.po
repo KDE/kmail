@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-17 00:38+0000\n"
-"PO-Revision-Date: 2023-11-24 06:35+0100\n"
+"PO-Revision-Date: 2024-01-17 05:35+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2844,10 +2844,9 @@ msgid "Clear History"
 msgstr "ისტორიის გასუფთავება"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Restore Closed Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "დახურული შეტყობინების აღდგენა"
+msgstr "დახურული დამთვალიერებლის თავიდან გახსნა"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
