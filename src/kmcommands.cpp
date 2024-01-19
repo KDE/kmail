@@ -304,12 +304,38 @@ void KMCommand::transferSelectedMsgs()
     // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
     if (!mFetchScope.isEmpty()) {
         complete = false;
+#if 0
         ++KMCommand::mCountJobs;
         Akonadi::ItemFetchJob *fetch = createFetchJob(mMsgList);
         mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
         fetch->setFetchScope(mFetchScope);
         connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
         connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+#else
+        Akonadi::Item::List ids;
+        ids.reserve(100);
+        for (const Akonadi::Item &item : mMsgList) {
+            ids.append(item);
+            if (ids.count() >= 100) {
+                ++KMCommand::mCountJobs;
+                Akonadi::ItemFetchJob *fetch = createFetchJob(ids);
+                mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
+                fetch->setFetchScope(mFetchScope);
+                connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
+                connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+                ids.clear();
+                ids.reserve(100);
+            }
+        }
+        if (!ids.isEmpty()) {
+            ++KMCommand::mCountJobs;
+            Akonadi::ItemFetchJob *fetch = createFetchJob(ids);
+            mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
+            fetch->setFetchScope(mFetchScope);
+            connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
+            connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+        }
+#endif
     } else {
         // no need to fetch anything
         if (!mMsgList.isEmpty()) {
@@ -349,7 +375,7 @@ void KMCommand::slotJobFinished()
         return;
     }
 
-    if (mCountMsgs > mRetrievedMsgs.count()) {
+    if (KMCommand::mCountJobs == 0 && (mCountMsgs > mRetrievedMsgs.count())) {
         // the message wasn't retrieved before => error
         if (mProgressDialog.data()) {
             mProgressDialog.data()->hide();
@@ -360,7 +386,7 @@ void KMCommand::slotJobFinished()
     // update the progressbar
     if (mProgressDialog.data()) {
         mProgressDialog.data()->setLabelText(
-            i18np("Please wait while the message is transferred", "Please wait while the %1 messages are transferred", KMCommand::mCountJobs));
+            i18np("Please wait while the message is transferred", "Please wait while the %1 messages are transferred", mCountMsgs));
     }
     if (KMCommand::mCountJobs == 0) {
         // all done
