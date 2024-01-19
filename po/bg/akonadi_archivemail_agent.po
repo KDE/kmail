@@ -241,6 +241,3 @@ msgstr "Месеци"
 #, kde-format
 msgid "Years"
 msgstr "Години"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Добавяне на архивна поща"
