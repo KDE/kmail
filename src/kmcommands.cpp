@@ -273,6 +273,16 @@ Akonadi::ItemFetchJob *KMCommand::createFetchJob(const Akonadi::Item::List &item
     return new Akonadi::ItemFetchJob(items, this);
 }
 
+void KMCommand::fetchMessages(const Akonadi::Item::List &ids)
+{
+    ++KMCommand::mCountJobs;
+    Akonadi::ItemFetchJob *fetch = createFetchJob(ids);
+    mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
+    fetch->setFetchScope(mFetchScope);
+    connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
+    connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+}
+
 void KMCommand::transferSelectedMsgs()
 {
     // make sure no other transfer is active
@@ -304,38 +314,19 @@ void KMCommand::transferSelectedMsgs()
     // TODO once the message list is based on ETM and we get the more advanced caching we need to make that check a bit more clever
     if (!mFetchScope.isEmpty()) {
         complete = false;
-#if 0
-        ++KMCommand::mCountJobs;
-        Akonadi::ItemFetchJob *fetch = createFetchJob(mMsgList);
-        mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
-        fetch->setFetchScope(mFetchScope);
-        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
-        connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
-#else
         Akonadi::Item::List ids;
         ids.reserve(100);
         for (const Akonadi::Item &item : mMsgList) {
             ids.append(item);
             if (ids.count() >= 100) {
-                ++KMCommand::mCountJobs;
-                Akonadi::ItemFetchJob *fetch = createFetchJob(ids);
-                mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
-                fetch->setFetchScope(mFetchScope);
-                connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
-                connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+                fetchMessages(ids);
                 ids.clear();
                 ids.reserve(100);
             }
         }
         if (!ids.isEmpty()) {
-            ++KMCommand::mCountJobs;
-            Akonadi::ItemFetchJob *fetch = createFetchJob(ids);
-            mFetchScope.fetchAttribute<Akonadi::MDNStateAttribute>();
-            fetch->setFetchScope(mFetchScope);
-            connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, &KMCommand::slotMsgTransfered);
-            connect(fetch, &Akonadi::ItemFetchJob::result, this, &KMCommand::slotJobFinished);
+            fetchMessages(ids);
         }
-#endif
     } else {
         // no need to fetch anything
         if (!mMsgList.isEmpty()) {

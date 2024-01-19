@@ -150,6 +150,7 @@ protected:
     Akonadi::Item::List mRetrievedMsgs;
 
 private:
+    void fetchMessages(const Akonadi::Item::List &ids);
     // ProgressDialog for transferring messages
     QPointer<QProgressDialog> mProgressDialog;
     // Currently only one async command allowed at a time
