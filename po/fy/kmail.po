@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"POT-Creation-Date: 2024-01-20 02:23+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -3071,7 +3071,7 @@ msgid "Clear History"
 msgstr "Ferleden leegje"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4330,14 +4330,14 @@ msgstr "&Lûdssinjaal"
 msgid "Main Toolbar"
 msgstr "HTML arkbalke"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:306
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "In amerijke"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:309 kmcommands.cpp:380
 #, fuzzy, kde-format
 #| msgid "Please wait while the message is transferred"
 #| msgid_plural "Please wait while the %1 messages are transferred"
@@ -4346,73 +4346,73 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "In amerijke wylst it berjocht oerstjoerd wurdt"
 msgstr[1] "In amerijke wylst de %1 berjochten oerstjoerd wurde"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:527
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Nei triem bewarje"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, kde-format
 msgid "Open Message"
 msgstr "Bericht iepenje"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "Berjo&cht"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:741
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "De triem befettet gjin berjocht."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "Dizze triem befettet meardere berjochten. It earste berjocht wurdt werjûn."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 #| msgid "Send Unsigned?"
 msgid "Send As Digest"
 msgstr "Net-ûndertekend ferstjoere?"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:930
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Berjochten wurde filtere"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Berjochte %1 oant %2 wurde filtere"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1535 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Berjochten wurde ferpleatst"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1535 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Berjochten wurde wiske"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

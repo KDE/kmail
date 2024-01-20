@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"POT-Creation-Date: 2024-01-20 02:23+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -2852,7 +2852,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3962,14 +3962,14 @@ msgstr "Cab&hair"
 msgid "Main Toolbar"
 msgstr "Príomhbharra Uirlisí"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:306
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Fan go fóill, le do thoil"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:309 kmcommands.cpp:380
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -3979,71 +3979,71 @@ msgstr[2] "Fan go fóill; %1 theachtaireacht á n-aistriú"
 msgstr[3] "Fan go fóill; %1 dteachtaireacht á n-aistriú"
 msgstr[4] "Fan go fóill; %1 teachtaireacht á n-aistriú"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:527
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Sábháil go Comhad"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, kde-format
 msgid "Open Message"
 msgstr "Oscail Teachtaireacht"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Teachtaireacht"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:741
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Níl aon teachtaireacht sa chomhad."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:929
 #, kde-format
 msgid "Send As Digest"
 msgstr "Seol Mar Dhíolaim"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:930
 #, kde-format
 msgid "Send Individually"
 msgstr "Seol Ceann ar Cheann"
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr ""
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr ""
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1535 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Teachtaireachtaí á mbogadh"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1535 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Teachtaireachtaí á scriosadh"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"

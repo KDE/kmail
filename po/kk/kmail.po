@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"POT-Creation-Date: 2024-01-20 02:23+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -2968,7 +2968,7 @@ msgid "Clear History"
 msgstr "Ескілерін тазалау"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4153,47 +4153,47 @@ msgstr "&Анықтама"
 msgid "Main Toolbar"
 msgstr "Негізгі құралдары"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:306
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Күте тұрыңыз"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:309 kmcommands.cpp:380
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 хат тасымалдауы біткенше күте тұрыңыз"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:527
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Файлға сақтау"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, kde-format
 msgid "Open Message"
 msgstr "Хатты ашу"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Хат"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:741
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Файлдың құрамында хат жоқ."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Бұл файлдың құрамында бірнеше хат бар. Тек бірінші хат көрсетілген."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4202,37 +4202,37 @@ msgstr ""
 "Таңдалған хаттарды бір хаттың тіркемесі (MIME жинағы) ретінде, әлде бөлек "
 "хаттар ретінде басқаға жолдамақсыз ба?"
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:929
 #, kde-format
 msgid "Send As Digest"
 msgstr "Жинағын жіберу"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:930
 #, kde-format
 msgid "Send Individually"
 msgstr "Бөлек жіберу"
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Хаттарды сүзгілеу"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 / %2 хатты сүзгілеу"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1535 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Хаттарды жылжыту"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1535 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Хаттарды өшіру"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

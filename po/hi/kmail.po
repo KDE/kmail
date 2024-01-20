@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"POT-Creation-Date: 2024-01-20 02:23+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -2943,7 +2943,7 @@ msgid "Clear History"
 msgstr "पिछला साफ करें"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4057,86 +4057,86 @@ msgstr "मदद (&H)"
 msgid "Main Toolbar"
 msgstr "मुख्य औज़ार पट्टी"
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:306
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "कृपया इंतजार करें"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:309 kmcommands.cpp:380
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "कृपया इंतजार करें जब तक कि संदेश हस्तांतरित नहीं हो जाता"
 msgstr[1] "कृपया इंतजार करें जब तक कि %1 संदेश हस्तांतरित नहीं हो जाते"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:527
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "फ़ाइल में सहेजें"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, kde-format
 msgid "Open Message"
 msgstr "संदेश खोलें"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "संदेश (&M)"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:741
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "फ़ाइल में संदेश नहीं है."
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "फ़ाइल में बहुत से संदेश हैं. सिर्फ पहला संदेश ही दिखाया जाएगा."
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 #| msgid "Send Digest"
 msgid "Send As Digest"
 msgstr "डाइजेस्ट भेजें"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:930
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "संदेश फ़िल्टर किया जा रहा है"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%2 में से %1 संदेश फिल्टर किया जा रहा है"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1535 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "संदेश खिसकाया जा रहा है"
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1535 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "संदेश मिटाया जा रहा है"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"

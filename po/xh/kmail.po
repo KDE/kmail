@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-31 01:54+0000\n"
+"POT-Creation-Date: 2024-01-20 02:23+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -2904,7 +2904,7 @@ msgid "Clear History"
 msgstr "Cima ok&ubhaliweyo"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1905
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3995,85 +3995,85 @@ msgstr "&Isandi esiphezulu"
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:296
+#: kmcommands.cpp:306
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Nceda linda"
 
-#: kmcommands.cpp:299 kmcommands.cpp:363
+#: kmcommands.cpp:309 kmcommands.cpp:380
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Nceda linda ngelixa umyalezo uthunyelwe"
 msgstr[1] "Nceda linda ngelixa imiyalezo %1 ithunyelwe"
 
-#: kmcommands.cpp:510
+#: kmcommands.cpp:527
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Gcina Kwifayile"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 msgid "Open Message"
 msgstr "Umyalezo"
 
-#: kmcommands.cpp:695
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Umyalezo"
 
-#: kmcommands.cpp:724
+#: kmcommands.cpp:741
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "&Phelisa imiyalezo emidala"
 
-#: kmcommands.cpp:797
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:908
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:912
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "Thumela ifolisiwe"
 
-#: kmcommands.cpp:913
+#: kmcommands.cpp:930
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1300
+#: kmcommands.cpp:1317
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Cima Imiyalezo"
 
-#: kmcommands.cpp:1310
+#: kmcommands.cpp:1327
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1650
+#: kmcommands.cpp:1535 kmcommands.cpp:1667
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1518 kmcommands.cpp:1660
+#: kmcommands.cpp:1535 kmcommands.cpp:1677
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Cima Imiyalezo"
 
-#: kmcommands.cpp:1802
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"
