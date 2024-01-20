@@ -152,9 +152,7 @@ KMCommand::KMCommand(QWidget *parent)
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
-    : mDeletesItself(false)
-    , mEmitsCompletedItself(false)
-    , mParent(parent)
+    : KMCommand(parent)
 {
     if (msg.isValid() || msg.hasPayload<KMime::Message::Ptr>()) {
         mMsgList.append(msg);
@@ -162,11 +160,9 @@ KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
 }
 
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item::List &msgList)
-    : mDeletesItself(false)
-    , mEmitsCompletedItself(false)
-    , mParent(parent)
-    , mMsgList(msgList)
+    : KMCommand(parent)
 {
+    mMsgList = msgList;
 }
 
 KMCommand::~KMCommand() = default;
