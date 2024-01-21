@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2023-09-09 13:04+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2875,7 +2875,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4003,45 +4003,45 @@ msgstr "&Hjälp"
 msgid "Main Toolbar"
 msgstr "Huvudverktygsrad"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Vänta"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Vänta medan brevet överförs"
 msgstr[1] "Vänta medan %1 brev överförs"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, kde-format
 msgid "Save To File"
 msgstr "Spara i fil"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "Öppna brev"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Message"
 msgstr "Brev"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Filen innehåller inte ett brev."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Filen innehåller flera brev. Bara det första brevet visas."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4050,37 +4050,37 @@ msgstr ""
 "Vill du vidarebefordra markerade brev som bilagor i ett brev (som ett MIME-"
 "sammandrag) eller som individuella brev?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Skicka som sammandrag"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Skicka individuellt"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrerar brev"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrerar brev %1 av %2"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "Flyttar brev"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "Tar bort brev"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

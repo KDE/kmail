@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2023-09-26 13:28+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -2869,7 +2869,7 @@ msgid "Clear History"
 msgstr "Tyhjennä vanhat"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3989,46 +3989,46 @@ msgstr "&Ohje"
 msgid "Main Toolbar"
 msgstr "Päätyökalurivi"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Odota"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Ole hyvä ja odota, kunnes %1 viesti on siirretty"
 msgstr[1] "Ole hyvä ja odota, kunnes %1 viestiä on siirretty"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, kde-format
 msgid "Save To File"
 msgstr "Tallenna tiedostoon"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "Avaa viesti"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Message"
 msgstr "Viesti"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Tiedosto ei sisällä viestiä."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "Tiedosto sisältää useita viestejä, mutta vain ensimmäinen viesti näytetään."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4037,37 +4037,37 @@ msgstr ""
 "Haluatko välittää valitut viestit liitteinä yhdessä viestissä (MIME-"
 "koosteena) vai yksittäisinä viesteinä?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Lähetä koosteena"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Lähetä yksittäin"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "Suodatetaan viestejä"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Suodatetaan %2:n viestiä %1"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "Siirretään viestejä"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "Poistetaan viestejä"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

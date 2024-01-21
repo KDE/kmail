@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -2938,7 +2938,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4050,50 +4050,50 @@ msgstr "&Aidance"
 msgid "Main Toolbar"
 msgstr "Mwaisse båre ås usteyes"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Tårdjîz s' i vs plait"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Tårdjîz s' i vs plait tins kel messaedje est berweté"
 msgstr[1] "Tårdjîz s' i vs plait tins k' les %1 messaedjes sont berwetés"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Schaper en on fitchî"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "Drovi messaedje"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Messaedje"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "I gn a pont d' messaedje e fitchî."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "I gn a sacwants messaedjes e fitchî. I gn a kel prumî messaedje ki srè "
 "mostré."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4102,37 +4102,37 @@ msgstr ""
 "Voloz vs ricassî les messaedjes tchoezis come des ataetchmints dins on seu "
 "messaedje (come on MIME groupé) ou come de messaedjes diferins ?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Evoyî come groupé"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Evoyî come diferins"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "Dji passe les messaedjes al passete"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Dji passe li messaedje %1 di %2 al passete"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "Dji bodje les messaedjes"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "Dji disface les messaedjes"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"

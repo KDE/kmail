@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2017-05-16 06:41-0400\n"
 "Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
@@ -2798,7 +2798,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3873,14 +3873,14 @@ msgstr "&צפצף"
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "נא המתן"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -3889,70 +3889,70 @@ msgstr[1] "נא המתן בעת ש%1- ההודעות מועברות"
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, fuzzy, kde-format
 msgid "Save To File"
 msgstr "שמור לקובץ"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "פתח הודעה"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "הו&דעה"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "הקובץ הזה לא מכיל הודעה."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, fuzzy, kde-format
 msgid "Send As Digest"
 msgstr "לשלוח ללא חתימה?"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "מוחק הודעות"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "מעביר את הודעה %3 מתוך %2 מ-%1."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "מעביר הודעות"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "מוחק הודעות"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, fuzzy, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

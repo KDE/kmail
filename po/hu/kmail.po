@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2014-10-18 12:13+0200\n"
 "Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -2968,7 +2968,7 @@ msgid "Clear History"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4156,48 +4156,48 @@ msgstr "&Súgó"
 msgid "Main Toolbar"
 msgstr "Alap eszköztár"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Egy kis türelmet kérek"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Egy kis türelmet kérek - 1 üzenet letöltése van folyamatban"
 msgstr[1] "Egy kis türelmet kérek - %1 üzenet letöltése van folyamatban"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save To File"
 msgstr "Mentés fájlba"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "Üzenet megnyitása"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "Üzene&t"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "A fájl nem tartalmaz üzenetet."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "A fájl több üzenetet tartalmaz. Csak az első lesz megjelenítve."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4206,37 +4206,37 @@ msgstr ""
 "A kijelölt üzeneteket egy üzenetben, mellékletként szeretné továbbítani vagy "
 "egyesével?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Elküldés egyben"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Elküldés külön-külön"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Üzenetszűrés - %2 / %1"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "Üzenetek áthelyezése"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "Üzenetek törlése"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, fuzzy, kde-format
 #| msgid "Select attachment:"
 msgctxt "@info:progress"

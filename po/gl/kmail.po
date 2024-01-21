@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2023-12-03 10:02+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
@@ -2868,7 +2868,7 @@ msgid "Clear History"
 msgstr "Borrar o historial"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4000,45 +4000,45 @@ msgstr "A&xuda"
 msgid "Main Toolbar"
 msgstr "Barra de ferramentas principal"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Agarde"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Agarde, por favor, mentres se transfire a mensaxe"
 msgstr[1] "Agarde, por favor, mentres se transfiren as %1 mensaxes"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, kde-format
 msgid "Save To File"
 msgstr "Gardar nun ficheiro"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "Abrir a mensaxe"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Message"
 msgstr "Mensaxe"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "O ficheiro non contén ningunha mensaxe."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "O ficheiro contén varias mensaxes. Só se amosa a primeira."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4047,37 +4047,37 @@ msgstr ""
 "Quere reenviar as mensaxes seleccionadas como anexos nunha mensaxe (como "
 "resumo MIME) ou como mensaxes individuais?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Enviar como resumo"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Enviar individualmente"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "Estanse a filtrar as mensaxes"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Estanse a filtrar a mensaxe %1 de %2"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "Estanse a mover as mensaxes"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "Estanse a eliminar as mensaxes"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

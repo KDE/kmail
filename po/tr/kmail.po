@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-20 02:23+0000\n"
+"POT-Creation-Date: 2024-01-21 02:22+0000\n"
 "PO-Revision-Date: 2024-01-03 22:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2852,7 +2852,7 @@ msgid "Clear History"
 msgstr "Geçmişi Temizle"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3975,45 +3975,45 @@ msgstr "&Yardım"
 msgid "Main Toolbar"
 msgstr "Ana Araç Çubuğu"
 
-#: kmcommands.cpp:306
+#: kmcommands.cpp:302
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Lütfen bekleyin"
 
-#: kmcommands.cpp:309 kmcommands.cpp:380
+#: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Lütfen ileti aktarılırken bekleyin"
 msgstr[1] "Lütfen %1 ileti aktarılırken bekleyin"
 
-#: kmcommands.cpp:527
+#: kmcommands.cpp:523
 #, kde-format
 msgid "Save To File"
 msgstr "Dosyaya Kaydet"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Open Message"
 msgstr "İletiyi Aç"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:708
 #, kde-format
 msgid "Message"
 msgstr "İleti"
 
-#: kmcommands.cpp:741
+#: kmcommands.cpp:737
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Dosya bir ileti içermiyor."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:810
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Dosya birden fazla ileti içeriyor. Yalnızca ilk ileti gösteriliyor."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:921
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4022,37 +4022,37 @@ msgstr ""
 "Seçilmiş iletileri tek bir ileti içinde (MIME özeti şeklinde) ek dosyalar "
 "olarak mı, yoksa her birini ayrı ileti olarak mı yönlendirmek istersiniz?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:925
 #, kde-format
 msgid "Send As Digest"
 msgstr "Özet Olarak Gönder"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
 msgstr "Ayrı Gönder"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1313
 #, kde-format
 msgid "Filtering messages"
 msgstr "İletiler süzülüyor"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1/%2 ileti süzülüyor"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1667
+#: kmcommands.cpp:1531 kmcommands.cpp:1663
 #, kde-format
 msgid "Moving messages"
 msgstr "İletiler taşınıyor"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1677
+#: kmcommands.cpp:1531 kmcommands.cpp:1673
 #, kde-format
 msgid "Deleting messages"
 msgstr "İletiler siliniyor"
 
-#: kmcommands.cpp:1819
+#: kmcommands.cpp:1815
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
