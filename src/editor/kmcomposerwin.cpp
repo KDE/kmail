@@ -700,7 +700,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
             connect(job, &MessageComposer::ConvertSnippetVariablesJob::textConverted, this, [this](const QString &str) {
                 if (!str.isEmpty()) {
                     if (mComposerBase->subject().isEmpty()) { // Add subject only if we don't have subject
-                        mEdtSubject->setText(str);
+                        mEdtSubject->setPlainText(str);
                     }
                 }
             });
@@ -1856,7 +1856,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         mEdtFrom->setText(msgFrom->asUnicodeString());
     }
     if (auto msgSubject = mMsg->subject(false)) {
-        mEdtSubject->setText(msgSubject->asUnicodeString());
+        mEdtSubject->setPlainText(msgSubject->asUnicodeString());
     }
 
     // Restore the quote prefix. We can't just use the global quote prefix here,
