@@ -3,31 +3,30 @@
 #
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2014.
+# SPDX-FileCopyrightText: 2024 Kristof Kiszel <ulysses@fsf.hu>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-12-30 01:38+0000\n"
-"PO-Revision-Date: 2014-09-04 16:34+0200\n"
-"Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
+"PO-Revision-Date: 2024-01-22 11:33+0100\n"
+"Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 24.01.90\n"
 
 #: addarchivemaildialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Modify Archive Mail"
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Archivált levél módosítása"
 
 #: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
-#, fuzzy, kde-format
-#| msgid "Add Archive Mail"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Archivált levél hozzáadása"
@@ -38,16 +37,14 @@ msgid "Archive all subfolders"
 msgstr "Minden almappa archiválása"
 
 #: addarchivemailwidget.cpp:36
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgid "Folder:"
-msgstr "&Mappa:"
+msgstr "Mappa:"
 
 #: addarchivemailwidget.cpp:46
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgid "Format:"
-msgstr "&Formátum:"
+msgstr "Formátum:"
 
 #: addarchivemailwidget.cpp:54
 #, kde-format
@@ -78,7 +75,7 @@ msgstr "Archívum"
 #: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr ""
+msgstr "Tartomány használata"
 
 #: archivemailwidget.cpp:69
 #, kde-format
@@ -111,10 +108,9 @@ msgid "Archive emails automatically."
 msgstr "E-mailek automatikus archiválása."
 
 #: archivemailwidget.cpp:92
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2012, 2013, 2014 Laurent Montel"
+#, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Copyright © Laurent Montel, 2012, 2013, 2014."
+msgstr "Copyright © Laurent Montel, 2014-%1."
 
 #: archivemailwidget.cpp:93
 #, kde-format
@@ -136,7 +132,7 @@ msgstr "Kiszel Kristóf,Úr Balázs"
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "ulysses@kubuntu.org,urbalazs@gmail.com"
+msgstr "ulysses@fsf.hu,urbalazs@fsf.hu"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
@@ -173,17 +169,15 @@ msgid "Archive will be done %1"
 msgstr "Az archívum elkészül: %1"
 
 #: archivemailwidget.cpp:232
-#, fuzzy, kde-format
-#| msgid "Do you want to delete selected items? Do you want to continue?"
+#, kde-format
 msgid "Do you want to delete the selected items?"
-msgstr "Szeretné törölni a kijelölt elemeket? Szeretné folytatni?"
+msgstr "Szeretné törölni a kijelölt elemeket?"
 
 #: archivemailwidget.cpp:233
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Törlés"
+msgstr "Elemek törlése"
 
 #: archivemailwidget.cpp:273
 #, kde-format
