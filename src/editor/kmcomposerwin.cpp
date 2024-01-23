@@ -2444,7 +2444,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 for (const QUrl &url : urlList) {
                     AttachmentInfo info;
                     info.url = url;
-                    infoList.append(info);
+                    infoList.append(std::move(info));
                 }
                 addAttachment(infoList, false);
             } else {
@@ -2462,7 +2462,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                         if (url.isValid()) {
                             AttachmentInfo info;
                             info.url = url;
-                            infoList.append(info);
+                            infoList.append(std::move(info));
                         }
                     }
                     addAttachment(infoList, false);

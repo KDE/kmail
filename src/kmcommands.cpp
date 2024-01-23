@@ -1916,7 +1916,7 @@ KMCommand::Result KMShareImageCommand::execute()
     KMail::Composer::AttachmentInfo info;
     info.url = mUrl;
     info.comment = i18n("Image");
-    infoList.append(info);
+    infoList.append(std::move(info));
     win->addAttachment(infoList, false);
     win->show();
     return OK;

@@ -146,3 +146,4 @@ KMAIL_EXPORT Composer *makeComposer(const KMime::Message::Ptr &msg = KMime::Mess
                                     const QString &textSelection = QString(),
                                     const QString &customTemplate = QString());
 }
+Q_DECLARE_TYPEINFO(KMail::Composer::AttachmentInfo, Q_RELOCATABLE_TYPE);
