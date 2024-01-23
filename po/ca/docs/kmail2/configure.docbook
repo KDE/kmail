@@ -808,7 +808,7 @@ format="PNG"/></imageobject
 >&nbsp;</para
 ><!-- add whitespace -->
 <para
->Aquí podreu crear i gestionar plantilles personalitzades perquè aquesta identitat les utilitzi en redactar missatges nous, respondre a algú o reenviar els missatges inclosos. Les plantilles de missatge admeten ordres de substitució. Podeu escriure-les o seleccionar-les des del menú <guimenu
+>Aquí podreu crear i gestionar plantilles personalitzades perquè aquesta identitat les utilitzi en redactar missatges nous, respondre a algú o reenviar els missatges inclosos. Les plantilles de missatges admeten ordres de substitució. Podeu escriure-les o seleccionar-les des del menú <guimenu
 >Insereix una ordre <inlinemediaobject
 > <imageobject
 ><imagedata fileref="go-down.png" format="PNG"/></imageobject
@@ -859,7 +859,7 @@ format="PNG"/></imageobject
 > permet superposar el caràcter predeterminat «&gt;» de l'indicador de citació. El botó <guibutton
 >Copia les plantilles globals</guibutton
 > restablirà totes les plantilles personalitzades definides aquí als valors predeterminats del &kmail;. (Aconseguireu el mateix resultat final si desseleccioneu la casella de selecció <guilabel
->Usa plantilles de missatge personalitzades per a aquesta identitat</guilabel
+>Usa plantilles de missatges personalitzades per a aquesta identitat</guilabel
 > a la part superior esquerra d'aquest diàleg).</para>
 
 <para
@@ -2329,7 +2329,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 ><!-- add whitespace -->
 
     <para
->Aquí podreu editar les plantilles predeterminades de missatge que s'utilitzaran quan redacteu un missatge nou, escriu una resposta o reenvieu un missatge. Les plantilles de missatge admeten ordres de substitució, senzillament escrivint-la o seleccionant-la al menú <guimenu
+>Aquí podreu editar les plantilles predeterminades de missatge que s'utilitzaran quan redacteu un missatge nou, escriu una resposta o reenvieu un missatge. Les plantilles de missatges admeten ordres de substitució, senzillament escrivint-la o seleccionant-la al menú <guimenu
 >Insereix una ordre</guimenu
 >. Aquestes són plantilles globals (predeterminades). Poden substituir-se per plantilles per identitat o plantilles per carpeta si se n'especifica alguna. La majoria de la gent està contenta amb les plantilles predeterminades estàndard. Però si voleu modificar els valors predeterminats, aquest és el lloc per a fer-ho. </para>
 
@@ -2373,7 +2373,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
     
     <para
->Les plantilles de missatge permeten ordres de substitució, escrivint-les o seleccionant-les des del menú <guimenu
+>Les plantilles de missatges permeten ordres de substitució, escrivint-les o seleccionant-les des del menú <guimenu
 >Insereix una ordre</guimenu
 >. </para>
     
