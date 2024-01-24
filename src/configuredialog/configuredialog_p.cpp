@@ -13,6 +13,7 @@
 #include "settings/kmailsettings.h"
 
 // other KDE headers:
+#include <QTabBar>
 #include <QTabWidget>
 
 // Qt headers:
@@ -29,6 +30,7 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
     vlay->setContentsMargins({});
     vlay->addWidget(mTabWidget);
     mTabWidget->setDocumentMode(true);
+    mTabWidget->tabBar()->setExpanding(true);
 }
 
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
