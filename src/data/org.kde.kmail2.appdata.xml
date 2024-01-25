@@ -364,7 +364,12 @@
   <url type="homepage">https://kontact.kde.org/components/kmail/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://kontact.org/assets/img/appstream/kontact-kmail.png</image>
+      <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
+      <caption>KMail main window with a list of email folders and emails.</caption>
+    </screenshot>
+    <screenshot type="default">
+      <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
+      <caption>Email Composer with an embedded translator</caption>
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
