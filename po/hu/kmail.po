@@ -2,96 +2,86 @@
 # Marcell Lengyel <miketkf@yahoo.com>, 1999.
 # Kristóf Kiszel <ulysses@kubuntu.org>, 2011, 2012, 2014.
 # Balázs Úr <urbalazs@gmail.com>, 2012, 2013, 2014.
+# SPDX-FileCopyrightText: 2024 Kristof Kiszel <ulysses@fsf.hu>
 msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-21 00:37+0000\n"
-"PO-Revision-Date: 2014-10-18 12:13+0200\n"
-"Last-Translator: Kristóf Kiszel <ulysses@kubuntu.org>\n"
+"PO-Revision-Date: 2024-01-26 13:02+0100\n"
+"Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 24.01.90\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Griechisch Erika,Kelemen Gábor,Kiszel Kristóf,Szántó Tamás,Úr Balázs"
+msgstr "Kiszel Kristóf,Griechisch Erika,Kelemen Gábor,Szántó Tamás,Úr Balázs"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"griechisch.erika@gmail.com,kelemeng@gnome.hu,ulysses@kubuntu.org,"
+"ulysses@fsf.hu,griechisch.erika@gmail.com,kelemeng@gnome.hu,"
 "tszanto@interware.hu,urbalazs@gmail.com"
 
 #: about/introduction_kmail.html:5
-#, fuzzy, kde-format
-#| msgid "Welcome to KMail's account wizard"
+#, kde-format
 msgctxt "%1 is version"
 msgid "Welcome to KMail %1"
-msgstr "Üdvözöljük a KMail postafiókbeállító varázslójában!"
+msgstr "Üdvözli a KMail %1"
 
 #: about/introduction_kmail.html:7
 msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
+"A KMail egy e-mail kliens a KDE-től. Úgy tervezték, hogy teljes mértékben "
+"kompatibilis legyen internetes levelezési szabványokkal, beleértve az IMAP-"
+"et, a POP3-at és az SMTP-t."
 
 #: about/introduction_kmail.html:10
 msgid ""
 "KMail has many powerful features that are described in the <a href='help:/"
 "kmail2/index.html'>documentation</a>."
 msgstr ""
+"A KMail számos hatékony funkcióval rendelkezik, amelyeket a <a href='help:/"
+"kmail2/index.html'>dokumentáció</a> ismertet."
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
-msgstr ""
+msgstr "Fontos változások a legutóbbi verzió óta:"
 
 #: about/introduction_kmail.html:25
-#, fuzzy
-#| msgid ""
-#| "<p>Some of the new features in this release of KMail include (compared to "
-#| "KMail %1, which is part of KDE Software Compilation %2):</p>\n"
 msgid "Some of the new features in this release of KMail include:"
-msgstr ""
-"<p>A KMail ezen kiadásának néhány új szolgáltatása, a KDE Software "
-"Compilation %2 részét képező KMail %1 kiadáshoz képest:</p>\n"
+msgstr "Néhány új funkció, amelyet a KMail ezen kiadása tartalmaz:"
 
 #: about/introduction_kmail.html:34
-#, fuzzy
-#| msgid ""
-#| "<p>Please take a moment to fill in the KMail configuration panel at "
-#| "Settings-&gt;Configure KMail.\n"
-#| "You need to create at least a default identity and an incoming as well as "
-#| "outgoing mail account.</p>\n"
 msgid ""
 "Please take a moment to fill in the KMail configuration panel at Settings-"
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
-"<p>Mindenképpen ajánlott a beállítópanel pontos kitöltése a Beállítások-&gt;"
-"Beállítás menüpontban.\n"
-"Legalább egy azonosítót létre kell hozni, megadva a bejövő és a kimenő "
-"üzenetek kiszolgálóinak kért jellemzőit.</p>\n"
+"Kérjük, szánjon egy percet a KMail beállítópanelének kitöltésére a "
+"Beállítások -> Beállítások… ablakban. Legalább egy alapértelmezett "
+"azonosítót és a bejövő illetve a kimenő levelezési fiókot létre kell hoznia."
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
-msgstr ""
+msgstr "Reméljük, hogy élvezni fogja a KMail használatát."
 
 #: about/introduction_kmail.html:39
 msgid "Thank you,"
-msgstr ""
+msgstr "Köszönjük,"
 
 #: about/introduction_kmail.html:40
-#, fuzzy
-#| msgid "KDE Email Client"
 msgid "The KMail Team"
-msgstr "KDE-alapú levelezőprogram"
+msgstr "A KMail fejlesztői"
 
 #: aboutdata.cpp:33
 msgid "Maintainer"
@@ -123,11 +113,11 @@ msgstr "Dokumentáció"
 
 #: aboutdata.cpp:45
 msgid "Japanese language support"
-msgstr ""
+msgstr "Japán nyelvi támogatás"
 
 #: aboutdata.cpp:46
 msgid "Numerous technical corrections"
-msgstr ""
+msgstr "Számos technikai jellegű javítás"
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
@@ -135,35 +125,31 @@ msgstr "Figyelmeztetés a paneltálcán"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
-msgstr ""
+msgstr "Javítás a PGP-hez"
 
 #: aboutdata.cpp:49
 msgid "Crypto support"
-msgstr ""
+msgstr "Titkosítási támogatás"
 
 #: aboutdata.cpp:50
 msgid "Improved internal program documentation"
-msgstr ""
+msgstr "Javított belső programdokumentáció"
 
 #: aboutdata.cpp:52 aboutdata.cpp:122 aboutdata.cpp:187
 msgid "Major contributor, still active"
-msgstr ""
+msgstr "Fő közreműködő, még mindig aktív"
 
 #: aboutdata.cpp:54
-#, fuzzy
-#| msgid "GnuPG support"
 msgid "Added maildir support"
-msgstr "GnuPG-támogatás"
+msgstr "Maildir-támogatás"
 
 #: aboutdata.cpp:56
 msgid "PGP 6 support and further enhancements of the encryption support"
 msgstr "PGP 6-támogatás és a titkosítási lehetőségek továbbfejlesztése"
 
 #: aboutdata.cpp:63
-#, fuzzy
-#| msgid "Original encryption support<br/>PGP 2 and PGP 5 support"
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr "Kezdeti titkosítási támogatás<br/>A PGP 2 és 5 támogatása"
+msgstr "Kezdeti titkosítási támogatás, PGP 2 és 5 támogatás"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
@@ -171,27 +157,27 @@ msgstr "GnuPG-támogatás"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
-msgstr ""
+msgstr "Fő közreműködő"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
-msgstr ""
+msgstr "Különféle hibajavítások"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
-msgstr ""
+msgstr "Javított aszinkron folyamatok"
 
 #: aboutdata.cpp:75
 msgid "Enhanced configuration dialogs"
-msgstr ""
+msgstr "Továbbfejlesztett beállító párbeszédablakok"
 
 #: aboutdata.cpp:76
 msgid "Notes/calendar integration"
-msgstr ""
+msgstr "Jegyzet/naptárintegráció"
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
-msgstr ""
+msgstr "A kód hatékonyságának és konzisztensségének fejlesztése"
 
 #: aboutdata.cpp:78
 msgid "New message list and new folder tree"
@@ -199,99 +185,83 @@ msgstr "Új üzenetlista és mappa-fastruktúra"
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "Számos értékes hozzájárulás"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
-msgstr ""
+msgstr "Sok-sok hibajavítás"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
-msgstr ""
+msgstr "Hangulatjel --> ikon feldolgozás"
 
 #: aboutdata.cpp:94
-#, fuzzy
-#| msgid "Mark Message as &Important"
 msgid "Improve 'Mark Message as' popup menu"
-msgstr "Az üzenet megjelölése &fontosnak"
+msgstr "A „Megjelölés” felugró menü fejlesztése"
 
 #: aboutdata.cpp:97
-#, fuzzy
-#| msgid "Maintenance"
 msgid "Bugzilla maintenance"
-msgstr "Karbantartás"
+msgstr "Bugzilla karbantartás"
 
 #: aboutdata.cpp:99
 msgid "Improved execution speed"
-msgstr ""
+msgstr "Továbbfejlesztett végrehajtási sebesség"
 
 #: aboutdata.cpp:103
-#, fuzzy
-#| msgid "Unable to edit attachment"
 msgid "Optionally compress attachments"
-msgstr "A csatolás nem szerkeszthető"
+msgstr "Mellékletek opcionális tömörítése"
 
 #: aboutdata.cpp:107
-#, fuzzy
-#| msgid "Show spam status in fancy headers"
 msgid "Added spam status to fancy headers"
-msgstr "A részletes fejlécben jelenjen meg a kéretlenségi érték is"
+msgstr "Kéretlenségi érték hozzáadása a részletes fejléchez"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
-msgstr ""
+msgstr "Tennivalók állapotkezelésének megvalósítása"
 
 #: aboutdata.cpp:109
 msgid "Bug fixes, code cleanup"
-msgstr ""
+msgstr "Hibajavítások, kódtisztítás"
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
-msgstr ""
+msgstr "LDAP-támogatás, karbantartás"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Az Akonadi fő közreműködője"
 
 #: aboutdata.cpp:116
-#, fuzzy
-#| msgid "Documentation"
 msgid "Documentation, still active"
-msgstr "Dokumentáció"
+msgstr "Dokumentáció, még mindig aktív"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
-msgstr ""
+msgstr "Jelentős hozzájáruló, még mindig aktív"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
 msgstr "Vírusirtó-támogatás"
 
 #: aboutdata.cpp:123
-#, fuzzy
-#| msgid "Fixed Width Font"
 msgid "Fixed widget styles"
-msgstr "Állandó szélességű betűtípus"
+msgstr "Elemstílusok javítása"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
-msgstr ""
+msgstr "Hibajavítások"
 
 #: aboutdata.cpp:125
-#, fuzzy
-#| msgid "Searches"
 msgid "Several patches"
-msgstr "Keresések"
+msgstr "Számos javítás"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr ""
+msgstr "Külső hivatkozás betöltésének engedélyezése egy teljes mappának"
 
 #: aboutdata.cpp:131
-#, fuzzy
-#| msgid "Delete T&hread"
 msgid "Delete an entire thread"
-msgstr "A szál tö&rlése"
+msgstr "Teljes szál törlése"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -299,61 +269,51 @@ msgstr "POP-szűrés"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr ""
+msgstr "Solarison történt összeomlás javítása"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
+msgstr "Új/olvasatlan/fontos üzenetek betűtípusainak kiválasztása"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
-msgstr ""
+msgstr "A Gyorskeresés billentyűnavigációjának javítása"
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
-msgstr ""
+msgstr "A fogd és vidd javítása a címjegyzékből a szerkesztőbe"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
-msgstr ""
+msgstr "Jelentős hozzájáruló"
 
 #: aboutdata.cpp:149
-#, fuzzy
-#| msgctxt "@title:window"
-#| msgid "Template Configuration"
 msgid "Improve configuration dialog"
-msgstr "Sablonbeállítások"
+msgstr "Beállító párbeszédablak fejlesztése"
 
 #: aboutdata.cpp:150
-#, fuzzy
-#| msgid "No message found."
 msgid "Improved message importing"
-msgstr "Nem található üzenet."
+msgstr "Üzenetimportálás fejlesztése"
 
 #: aboutdata.cpp:151
-#, fuzzy
-#| msgid "Important Message"
 msgid "Improve status bar messages"
-msgstr "Fontos üzenet"
+msgstr "Állapotsáv üzeneteinek fejlesztése"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr ""
+msgstr "Javítás az ablakátméretezési problémára"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
-msgstr ""
+msgstr "A qt-cast optimalizálása; a QUrl() javítása"
 
 #: aboutdata.cpp:161
 msgid "Usability tests and improvements"
 msgstr "Használhatósági tesztek és javítások"
 
 #: aboutdata.cpp:165
-#, fuzzy
-#| msgctxt "@title:window"
-#| msgid "Template Configuration"
 msgid "Patch composer configuration"
-msgstr "Sablonbeállítások"
+msgstr "A szerkesztőbeállítás javítása"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -365,11 +325,11 @@ msgstr "Jobb HTML-támogatás"
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
-msgstr ""
+msgstr "X-Face támogatás"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
-msgstr ""
+msgstr "Automatikus címzettkiválasztás"
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
@@ -377,23 +337,19 @@ msgstr "Béta tesztelés és PGP 6 támogatás"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "Hibajavítások, helyi menük tisztítása"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
-msgstr ""
+msgstr "Microsoft Windows® port"
 
 #: aboutdata.cpp:181
-#, fuzzy
-#| msgid "&Use message indicator"
 msgid "IM status indicator"
-msgstr "&Üzenetjelző használata"
+msgstr "Állapotjelző azonnali üzenetekhez"
 
 #: aboutdata.cpp:182
-#, fuzzy
-#| msgid "Test Recipient Editor"
 msgid "Improve layout of recipients editor"
-msgstr "Címzettszerkesztő teszthez"
+msgstr "Javított elrendezés a címzettszerkesztőhöz"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
@@ -405,11 +361,11 @@ msgstr "Több titkosítási kulcs címenként"
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
-msgstr ""
+msgstr "Javított ikon- és képfeldolgozás"
 
 #: aboutdata.cpp:190
 msgid "Fixed many IMAP bugs"
-msgstr ""
+msgstr "Számos IMAP hiba javítása"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
 #: editor/kmcomposerwin.cpp:2396 kmreaderwin.cpp:305 kmsystemtray.cpp:46
@@ -424,10 +380,9 @@ msgid "KDE Email Client"
 msgstr "KDE-alapú levelezőprogram"
 
 #: aboutdata.cpp:198
-#, fuzzy, kde-format
-#| msgid "Copyright © 1997–2014, KMail authors"
+#, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr "Copyright © a KMail szerzői, 1997–2014."
+msgstr "Copyright © A KMail szerzői, %1."
 
 #: collectionpage/collectionmailinglistpage.cpp:39
 #, kde-format
@@ -471,15 +426,14 @@ msgid "Address type:"
 msgstr "Címtípus:"
 
 #: collectionpage/collectionmailinglistpage.cpp:102
-#, fuzzy, kde-format
-#| msgid "Mailing list description:"
+#, kde-format
 msgid "URL for mailing list posting:"
-msgstr "A levelezőlista leírása:"
+msgstr "URL a listára íráshoz:"
 
 #: collectionpage/collectionmailinglistpage.cpp:111 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
-msgstr "A lista előfizetése"
+msgstr "Feliratkozás a listára"
 
 #: collectionpage/collectionmailinglistpage.cpp:111
 #, kde-format
@@ -602,11 +556,10 @@ msgid "Retrieval Options"
 msgstr "Letöltés beállításai"
 
 #: configuredialog/configureaccountpage.cpp:51
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
-msgstr "Azonos&ító"
+msgstr "Azonosítók"
 
 #: configuredialog/configureaccountpage.cpp:57
 #, kde-format
@@ -625,7 +578,7 @@ msgstr "Küldés"
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
-msgstr ""
+msgstr "LDAP kiszolgáló"
 
 #: configuredialog/configureaccountpage.cpp:85
 #, kde-format
@@ -633,22 +586,19 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Üzenetküldési azonosítók (legalább egyet hozzon létre):"
 
 #: configuredialog/configureaccountpage.cpp:92
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "&Confirm action"
-msgstr "Megerősítés küldése"
+msgstr "Művelet &megerősítése"
 
 #: configuredialog/configureaccountpage.cpp:93
-#, fuzzy, kde-format
-#| msgid "Ask Before Sending"
+#, kde-format
 msgid "Before sending:"
-msgstr "Rákérdezés küldés előtt"
+msgstr "Küldés előtt:"
 
 #: configuredialog/configureaccountpage.cpp:96
-#, fuzzy, kde-format
-#| msgid "Check spelling before send"
+#, kde-format
 msgid "Check spelling"
-msgstr "Helyesírás-ellenőrzés küldés előtt"
+msgstr "Helyesírás-ellenőrzés"
 
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
@@ -689,35 +639,31 @@ msgstr "Az ala&pértelmezett küldési mód:"
 #: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Enable Undo Send"
-msgstr ""
+msgstr "Küldésvisszavonás engedélyezése"
 
 #: configuredialog/configureaccountpage.cpp:196
-#, fuzzy, kde-format
-#| msgid "Add Account"
+#, kde-format
 msgid "Add Mail Account..."
-msgstr "Postafiók hozzáadása"
+msgstr "Levelezési fiók hozzáadása…"
 
 #: configuredialog/configureaccountpage.cpp:197
-#, fuzzy, kde-format
-#| msgid "Customize accounts order..."
+#, kde-format
 msgid "Custom Account..."
-msgstr "Fióksorrend testreszabása…"
+msgstr "Saját fiók…"
 
 #: configuredialog/configureaccountpage.cpp:217
 #: kmlaunchexternalcomponent.cpp:148
-#, fuzzy, kde-format
-#| msgid "Could not start the account wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"Nem lehet elindítani az azonosítóbeállító varázslót. Ellenőrizze a "
-"telepítését."
+"Nem lehet elindítani az azonosítóbeállító varázslót. Ellenőrizze, hogy "
+"megfelelően telepítve van-e."
 
 #: configuredialog/configureaccountpage.cpp:219
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Nem lehet elindítani az azonosítóbeállító varázslót"
@@ -5981,10 +5927,9 @@ msgid "Kontact Summary View"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 1997-2009, The KMail developers"
+#, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
-msgstr "(c) A KMail fejlesztői, 1997-2009."
+msgstr "(c) A Kontactfejlesztői, 2003-2021."
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
@@ -7877,10 +7822,9 @@ msgstr[0] "Távolléti üzenet bekapcsolva a kiszolgálón"
 msgstr[1] "Távolléti üzenet bekapcsolva a kiszolgálókon"
 
 #: widgets/zoomlabelwidget.cpp:20
-#, fuzzy, kde-format
-#| msgid "Zoom"
+#, kde-format
 msgid "Zoom: %1%"
-msgstr "Nagyítás"
+msgstr "Nagyítás: %1%"
 
 #~ msgid "Charset"
 #~ msgstr "Karakterkészlet"
