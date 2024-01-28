@@ -366,10 +366,22 @@
     <screenshot type="default">
       <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
       <caption>KMail main window with a list of email folders and emails.</caption>
+      <caption xml:lang="ca">Finestra principal del KMail amb una llista de carpetes de correu i correus electrònics.</caption>
+      <caption xml:lang="es">Ventana principal de KMail con una lista de carpetas de correo y mensajes.</caption>
+      <caption xml:lang="eu">«KMail»en leiho nagusia e-posta karpeta zerrenda batekin eta e-posta zerrenda batekin.</caption>
+      <caption xml:lang="hu">A KMail főablaka e-mailmappák és e-mailek listájával.</caption>
+      <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
+      <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://cdn.kde.org/screenshots/kmail/kmail-composer.png</image>
       <caption>Email Composer with an embedded translator</caption>
+      <caption xml:lang="ca">Editor de correu electrònic amb un traductor incrustat</caption>
+      <caption xml:lang="es">Compositor de mensajes con un traductor integrado</caption>
+      <caption xml:lang="eu">E-posta Konposatzailea txertatutako itzultzaile batekin</caption>
+      <caption xml:lang="hu">E-mailszerkesztő beágyazott fordítóval</caption>
+      <caption xml:lang="sl">Sestavljalnik e-pošte z vdelanim prevajalnikom</caption>
+      <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
     </screenshot>
   </screenshots>
   <project_group>KDE</project_group>
