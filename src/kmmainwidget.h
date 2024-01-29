@@ -401,7 +401,7 @@ private Q_SLOTS:
     void slotSendQueuedVia(MailTransport::Transport *transport);
     void slotOnlineStatus();
     void slotUpdateOnlineStatus(KMailSettings::EnumNetworkState::type);
-    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
+    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, QPoint aPoint);
     void slotContactSearchJobForMessagePopupDone(KJob *job);
     void slotSelectAllMessages();
     void slotFocusQuickSearch();

@@ -82,7 +82,7 @@ SendLaterWidget::~SendLaterWidget()
     delete mWidget;
 }
 
-void SendLaterWidget::slotCustomContextMenuRequested(const QPoint &)
+void SendLaterWidget::slotCustomContextMenuRequested(QPoint)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
     if (!listItems.isEmpty()) {

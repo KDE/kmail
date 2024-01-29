@@ -51,7 +51,7 @@ protected:
 
 private:
     void slotItemDoubleClicked(QTreeWidgetItem *item);
-    void slotCustomContextMenuRequested(const QPoint &pos);
+    void slotCustomContextMenuRequested(QPoint pos);
     void createOrUpdateItem(FollowUpReminder::FollowUpReminderInfo *info, FollowUpReminderInfoItem *item = nullptr);
     void deleteItems(const QList<QTreeWidgetItem *> &mailItemLst);
     void openShowMessage(Akonadi::Item::Id id);

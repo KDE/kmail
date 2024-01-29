@@ -201,7 +201,7 @@ void FollowUpReminderInfoWidget::slotItemDoubleClicked(QTreeWidgetItem *item)
     }
 }
 
-void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(const QPoint &pos)
+void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(QPoint pos)
 {
     Q_UNUSED(pos)
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();

@@ -49,7 +49,7 @@ void ListView::resizeColums()
     setColumnWidth(c - 1, w3);
 }
 
-void ListView::slotContextMenu(const QPoint &pos)
+void ListView::slotContextMenu(QPoint pos)
 {
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add"), this, &ListView::addHeader);

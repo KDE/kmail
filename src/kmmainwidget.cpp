@@ -2673,7 +2673,7 @@ void KMMainWidget::slotSelectAllMessages()
     updateMessageActions();
 }
 
-void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint)
+void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineViewer::WebHitTestResult &result, QPoint aPoint)
 {
     QUrl aUrl = result.linkUrl();
     QUrl imageUrl = result.imageUrl();

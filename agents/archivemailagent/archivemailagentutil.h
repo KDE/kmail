@@ -14,5 +14,5 @@ namespace ArchiveMailAgentUtil
 static QString archivePattern = QStringLiteral("ArchiveMailCollection %1");
 [[nodiscard]] QDate diffDate(ArchiveMailInfo *info);
 [[nodiscard]] bool needToArchive(ArchiveMailInfo *info);
-[[nodiscard]] bool timeIsInRange(const QList<int> &range, const QTime &time);
+[[nodiscard]] bool timeIsInRange(const QList<int> &range, QTime time);
 }

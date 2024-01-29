@@ -22,6 +22,6 @@ protected:
     void showEvent(QShowEvent *e) override;
 
 private:
-    void slotContextMenu(const QPoint &pos);
+    void slotContextMenu(QPoint pos);
     void resizeColums();
 };

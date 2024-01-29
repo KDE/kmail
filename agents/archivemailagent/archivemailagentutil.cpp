@@ -26,7 +26,7 @@ QDate ArchiveMailAgentUtil::diffDate(ArchiveMailInfo *info)
     return diffDate;
 }
 
-bool ArchiveMailAgentUtil::timeIsInRange(const QList<int> &range, const QTime &time)
+bool ArchiveMailAgentUtil::timeIsInRange(const QList<int> &range, QTime time)
 {
     const int hour = time.hour();
     const int startRange = range.at(0);

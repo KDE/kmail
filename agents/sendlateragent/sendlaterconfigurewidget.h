@@ -58,7 +58,7 @@ private:
     void slotDeleteItem();
     void slotModifyItem();
     void updateButtons();
-    void slotCustomContextMenuRequested(const QPoint &);
+    void slotCustomContextMenuRequested(QPoint);
     void slotSendNow();
     void createOrUpdateItem(MessageComposer::SendLaterInfo *info, SendLaterItem *item = nullptr);
     void load();
