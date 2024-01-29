@@ -22,7 +22,7 @@ SearchPatternWarning::~SearchPatternWarning() = default;
 
 void SearchPatternWarning::setError(const QStringList &lstError)
 {
-    setText(i18n("Search failed some errors were found: <ul><li>%1</li></ul>", lstError.join(QLatin1String("</li><li>"))));
+    setText(i18n("Search failed some errors were found: <ul><li>%1</li></ul>", lstError.join(QLatin1StringView("</li><li>"))));
 }
 
 void SearchPatternWarning::showWarningPattern(const QStringList &lstError)

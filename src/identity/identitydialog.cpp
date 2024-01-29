@@ -176,7 +176,7 @@ void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
     }
 
     auto combo = qobject_cast<KeySelectionCombo *>(parent());
-    combo->setDefaultKey(QLatin1String(result.fingerprint()));
+    combo->setDefaultKey(QLatin1StringView(result.fingerprint()));
     connect(combo, &KeySelectionCombo::keyListingFinished, this, &KeyGenerationJob::done);
     combo->refreshKeys();
 }
@@ -220,9 +220,9 @@ void KeySelectionCombo::init()
 
 void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 {
-    if (type == QLatin1String("no-key")) {
+    if (type == QLatin1StringView("no-key")) {
         return;
-    } else if (type == QLatin1String("generate-new-key")) {
+    } else if (type == QLatin1StringView("generate-new-key")) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
         auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
         dlg->setModal(true);
@@ -379,7 +379,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
             const auto key = mPGPSigningKeyRequester->currentKey();
             if (!key.isBad()) {
                 mPGPEncryptionKeyRequester->setCurrentKey(key);
-            } else if (mPGPSigningKeyRequester->currentData() == QLatin1String("no-key")) {
+            } else if (mPGPSigningKeyRequester->currentData() == QLatin1StringView("no-key")) {
                 mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
             }
         } else {
@@ -392,7 +392,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         }
     });
     connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant &type) {
-        if (mPGPSameKey->isChecked() && type == QLatin1String("no-key")) {
+        if (mPGPSameKey->isChecked() && type == QLatin1StringView("no-key")) {
             mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
         }
     });
@@ -758,7 +758,7 @@ void IdentityDialog::slotAccepted()
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
     const QString recipients =
-        mReplyToEdit->text().trimmed() + QLatin1String(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
+        mReplyToEdit->text().trimmed() + QLatin1StringView(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
     auto job = new AddressValidationJob(recipients, this, this);
     // Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
@@ -882,13 +882,13 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mAliasEdit->insertStringList(ident.emailAliases());
 
     // "Cryptography" tab:
-    mPGPSigningKeyRequester->setDefaultKey(QLatin1String(ident.pgpSigningKey()));
-    mPGPEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.pgpEncryptionKey()));
+    mPGPSigningKeyRequester->setDefaultKey(QLatin1StringView(ident.pgpSigningKey()));
+    mPGPEncryptionKeyRequester->setDefaultKey(QLatin1StringView(ident.pgpEncryptionKey()));
 
     mPGPSameKey->setChecked(ident.pgpSigningKey() == ident.pgpEncryptionKey());
 
-    mSMIMESigningKeyRequester->setDefaultKey(QLatin1String(ident.smimeSigningKey()));
-    mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1String(ident.smimeEncryptionKey()));
+    mSMIMESigningKeyRequester->setDefaultKey(QLatin1StringView(ident.smimeSigningKey()));
+    mSMIMEEncryptionKeyRequester->setDefaultKey(QLatin1StringView(ident.smimeEncryptionKey()));
 
     mPreferredCryptoMessageFormat->setCurrentIndex(format2cb(Kleo::stringToCryptoMessageFormat(ident.preferredCryptoMessageFormat())));
     mAutocrypt->setChecked(ident.autocryptEnabled());
@@ -950,13 +950,13 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
         mVcardFilename =
-            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1StringView(".vcf");
         QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         // Convert path.
         const QString path =
-            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1String(".vcf");
+            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1StringView(".vcf");
         if (QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }
@@ -1022,7 +1022,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     ident.setPGPEncryptionKey(mPGPEncryptionKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMESigningKey(mSMIMESigningKeyRequester->currentKey().primaryFingerprint());
     ident.setSMIMEEncryptionKey(mSMIMEEncryptionKeyRequester->currentKey().primaryFingerprint());
-    ident.setPreferredCryptoMessageFormat(QLatin1String(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
+    ident.setPreferredCryptoMessageFormat(QLatin1StringView(Kleo::cryptoMessageFormatToString(cb2format(mPreferredCryptoMessageFormat->currentIndex()))));
     ident.setAutocryptEnabled(mAutocrypt->isChecked());
     ident.setAutocryptPrefer(mAutocryptPrefer->isChecked());
     ident.setEncryptionOverride(mOverrideDefault->isChecked());

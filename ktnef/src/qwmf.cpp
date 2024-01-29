@@ -362,13 +362,13 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
             QString str;
             QString param;
             if (metaFuncTab[idx].name == nullptr) {
-                str += QLatin1String("UNKNOWN ");
+                str += QLatin1StringView("UNKNOWN ");
             }
             if (metaFuncTab[idx].method == &QWinMetaFile::noop) {
-                str += QLatin1String("UNIMPLEMENTED ");
+                str += QLatin1StringView("UNIMPLEMENTED ");
             }
-            str += QLatin1String(metaFuncTab[idx].name);
-            str += QLatin1String(" : ");
+            str += QLatin1StringView(metaFuncTab[idx].name);
+            str += QLatin1StringView(" : ");
 
             for (i = 0; i < cmd->numParm; ++i) {
                 param.setNum(cmd->parm[i]);
@@ -735,7 +735,7 @@ void QWinMetaFile::extTextOut(long num, short *parm)
     QByteArray text(ptStr, parm[2] + 1);
 
     QFontMetrics fm(mPainter.font());
-    width = fm.boundingRect(QLatin1String(text)).width() + fm.descent(); // because fm.width(text) isn't rigth with Italic text
+    width = fm.boundingRect(QLatin1StringView(text)).width() + fm.descent(); // because fm.width(text) isn't rigth with Italic text
     height = fm.height();
 
     mPainter.save();
@@ -767,13 +767,13 @@ void QWinMetaFile::extTextOut(long num, short *parm)
     if ((parm[2] > 1) && (num >= (idxOffset + parm[2])) && (parm[3] == 0)) {
         // offset for each char
         int left = x;
-        mPainter.drawText(left, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1String(text.mid(0, 1)));
+        mPainter.drawText(left, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1StringView(text.mid(0, 1)));
         for (int i = 1; i < parm[2]; ++i) {
             left += parm[idxOffset + i - 1];
-            mPainter.drawText(left, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1String(text.mid(i, 1)));
+            mPainter.drawText(left, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1StringView(text.mid(i, 1)));
         }
     } else {
-        mPainter.drawText(x, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1String(text));
+        mPainter.drawText(x, y, width, height, Qt::AlignLeft | Qt::AlignTop, QLatin1StringView(text));
     }
 
     mPainter.restore();
@@ -984,7 +984,7 @@ void QWinMetaFile::createFontIndirect(long, short *parm)
     auto handle = new WinObjFontHandle;
     addHandle(handle);
 
-    QString family(QLatin1String((const char *)&parm[9]));
+    QString family(QLatin1StringView((const char *)&parm[9]));
 
     mRotation = -parm[2] / 10; // text rotation (in 1/10 degree)
     // TODO: memorisation of rotation in object Font

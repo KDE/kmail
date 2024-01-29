@@ -111,7 +111,7 @@ void OpenComposerJob::slotOpenComposer()
     QList<KMail::Composer::AttachmentInfo> infoList;
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
-        if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1String("inode/directory")) {
+        if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1StringView("inode/directory")) {
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
                                                                i18nc("@title:window", "Attach Folder"),

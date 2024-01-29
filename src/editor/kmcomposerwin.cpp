@@ -317,7 +317,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
                 }
             });
 
-    mdbusObjectPath = QLatin1String("/Composer_") + QString::number(++s_composerNumber);
+    mdbusObjectPath = QLatin1StringView("/Composer_") + QString::number(++s_composerNumber);
     QDBusConnection::sessionBus().registerObject(mdbusObjectPath, this);
 
     auto sigController = new MessageComposer::SignatureController(this);
@@ -1576,7 +1576,7 @@ void KMComposerWin::initializePluginActions()
             QList<QAction *> lst = localEditorManagerActionsType.value();
             if (!lst.isEmpty()) {
                 const QString actionlistname =
-                    QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
+                    QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
                 hashActions.insert(actionlistname, lst);
             }
         }
@@ -1587,7 +1587,7 @@ void KMComposerWin::initializePluginActions()
             QList<QAction *> lst = localEditorConvertTextManagerActionsType.value();
             if (!lst.isEmpty()) {
                 const QString actionlistname =
-                    QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
+                    QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
                 if (hashActions.contains(actionlistname)) {
                     lst = hashActions.value(actionlistname) + lst;
                     hashActions.remove(actionlistname);
@@ -1598,7 +1598,7 @@ void KMComposerWin::initializePluginActions()
 
         const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
         const QString actionlistname =
-            QLatin1String("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
+            QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
         for (KToggleAction *act : customToolsWidgetActionList) {
             QList<QAction *> lst{act};
             if (hashActions.contains(actionlistname)) {
@@ -1880,7 +1880,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
         const QString xpriority = newMsg->headerByType("X-PRIORITY")->asUnicodeString();
         const QString priority = newMsg->headerByType("Priority")->asUnicodeString();
-        if (xpriority == QLatin1String("2 (High)") && priority == QLatin1String("urgent")) {
+        if (xpriority == QLatin1StringView("2 (High)") && priority == QLatin1String("urgent")) {
             mUrgentAction->setChecked(true);
         }
     }
@@ -1950,7 +1950,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
 
     delete msgContent;
 
-    if ((MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto")) && mayAutoSign) {
+    if ((MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto")) && mayAutoSign) {
         //
         // Espen 2000-05-16
         // Delay the signature appending. It may start a fileseletor.
@@ -2336,7 +2336,7 @@ void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlLi
     QStringList urlAdded;
     for (const QUrl &url : urlList) {
         QString urlStr;
-        if (url.scheme() == QLatin1String("mailto")) {
+        if (url.scheme() == QLatin1StringView("mailto")) {
             urlStr = KEmailAddress::decodeMailtoUrl(url);
         } else {
             urlStr = url.toDisplayString();
@@ -2541,14 +2541,14 @@ void KMComposerWin::slotFetchJob(KJob *job)
             QString attachmentName = QStringLiteral("attachment");
             if (item.hasPayload<KContacts::Addressee>()) {
                 const auto contact = item.payload<KContacts::Addressee>();
-                attachmentName = contact.realName() + QLatin1String(".vcf");
+                attachmentName = contact.realName() + QLatin1StringView(".vcf");
                 // Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
                 KContacts::adaptIMAttributes(data);
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard");
             } else if (item.hasPayload<KContacts::ContactGroup>()) {
                 const auto group = item.payload<KContacts::ContactGroup>();
-                attachmentName = group.name() + QLatin1String(".vcf");
+                attachmentName = group.name() + QLatin1StringView(".vcf");
                 auto expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);
                 connect(expandJob, &KJob::result, this, &KMComposerWin::slotExpandGroupResult);
@@ -2804,8 +2804,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                                i18n("To: field is empty. "
                                                                     "Send message anyway?"),
                                                                i18nc("@title:window", "No To: specified"),
-                                                               KGuiItem(i18n("S&end as Is"), QLatin1String("mail-send")),
-                                                               KGuiItem(i18n("&Specify the To field"), QLatin1String("edit-rename")));
+                                                               KGuiItem(i18n("S&end as Is"), QLatin1StringView("mail-send")),
+                                                               KGuiItem(i18n("&Specify the To field"), QLatin1StringView("edit-rename")));
                 if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                     return;
                 }
@@ -2852,7 +2852,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         setEnabled(false);
 
         // Validate the To:, CC: and BCC fields
-        auto job = new AddressValidationJob(recipients.join(QLatin1String(", ")), this, this);
+        auto job = new AddressValidationJob(recipients.join(QLatin1StringView(", ")), this, this);
         job->setDefaultDomain(defaultDomainName);
         job->setProperty("method", static_cast<int>(method));
         job->setProperty("saveIn", static_cast<int>(saveIn));
@@ -3052,8 +3052,8 @@ void KMComposerWin::confirmBeforeSend()
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
                                                         i18n("About to send email..."),
                                                         i18nc("@title:window", "Send Confirmation"),
-                                                        KGuiItem(i18n("&Send Now"), QLatin1String("mail-send")),
-                                                        KGuiItem(i18n("Send &Later"), QLatin1String("mail-queue")));
+                                                        KGuiItem(i18n("&Send Now"), QLatin1StringView("mail-send")),
+                                                        KGuiItem(i18n("Send &Later"), QLatin1StringView("mail-queue")));
 
     if (rc == KMessageBox::ButtonCode::PrimaryAction) {
         doSend(MessageComposer::MessageSender::SendImmediate);
@@ -3559,19 +3559,19 @@ std::unique_ptr<Kleo::KeyResolverCore> KMComposerWin::fillKeyResolver()
 
     if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
         if (!ident.pgpSigningKey().isEmpty()) {
-            signingKeys.push_back(QLatin1String(ident.pgpSigningKey()));
+            signingKeys.push_back(QLatin1StringView(ident.pgpSigningKey()));
         }
         if (!ident.pgpEncryptionKey().isEmpty()) {
-            encryptionKeys.push_back(QLatin1String(ident.pgpEncryptionKey()));
+            encryptionKeys.push_back(QLatin1StringView(ident.pgpEncryptionKey()));
         }
     }
 
     if (cryptoMessageFormat() & Kleo::AnySMIME) {
         if (!ident.smimeSigningKey().isEmpty()) {
-            signingKeys.push_back(QLatin1String(ident.smimeSigningKey()));
+            signingKeys.push_back(QLatin1StringView(ident.smimeSigningKey()));
         }
         if (!ident.smimeEncryptionKey().isEmpty()) {
-            encryptionKeys.push_back(QLatin1String(ident.smimeEncryptionKey()));
+            encryptionKeys.push_back(QLatin1StringView(ident.smimeEncryptionKey()));
         }
     }
 
@@ -3983,7 +3983,7 @@ void KMComposerWin::slotCursorPositionChanged()
 
     // Show link target in status bar
     if (mComposerBase->editor()->textCursor().charFormat().isAnchor()) {
-        const QString text = mComposerBase->editor()->composerControler()->currentLinkText() + QLatin1String(" -> ")
+        const QString text = mComposerBase->editor()->composerControler()->currentLinkText() + QLatin1StringView(" -> ")
             + mComposerBase->editor()->composerControler()->currentLinkUrl();
         mStatusbarLabel->setText(text);
     } else {

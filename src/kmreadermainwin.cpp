@@ -163,7 +163,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
         }
     }
     if (mParentCollection.isValid()) {
-        caption += QLatin1String(" - ");
+        caption += QLatin1StringView(" - ");
         caption += MailCommon::Util::fullCollectionPath(mParentCollection);
     }
     if (!caption.isEmpty()) {
@@ -630,7 +630,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
     mMsg = aMsg;
 
     const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
-    if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
+    if (aUrl.scheme() == QLatin1StringView("mailto") && !email.isEmpty()) {
         auto job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
         job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
@@ -681,7 +681,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
     bool copyAdded = false;
     const bool messageHasPayload = msg.hasPayload<KMime::Message::Ptr>();
     if (!url.isEmpty()) {
-        if (url.scheme() == QLatin1String("mailto")) {
+        if (url.scheme() == QLatin1StringView("mailto")) {
             // popup on a mailto URL
             menu = new QMenu(this);
             menu->addAction(mReaderWin->mailToComposeAction());
@@ -707,7 +707,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addAction(mReaderWin->copyURLAction());
             copyAdded = true;
             urlMenuAdded = true;
-        } else if (url.scheme() != QLatin1String("attachment")) {
+        } else if (url.scheme() != QLatin1StringView("attachment")) {
             // popup on a not-mailto URL
             menu = new QMenu(this);
             menu->addAction(mReaderWin->urlOpenAction());

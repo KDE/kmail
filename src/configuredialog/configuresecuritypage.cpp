@@ -97,9 +97,9 @@ void SecurityPageGeneralTab::slotOpenExternalReferenceExceptions()
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
 {
-    if (link == QLatin1String("whatsthis1")) {
+    if (link == QLatin1StringView("whatsthis1")) {
         QWhatsThis::showText(QCursor::pos(), mSGTab.mHtmlMailCheck->whatsThis());
-    } else if (link == QLatin1String("whatsthis2")) {
+    } else if (link == QLatin1StringView("whatsthis2")) {
         QWhatsThis::showText(QCursor::pos(), mSGTab.mExternalReferences->whatsThis());
     }
 }
@@ -185,7 +185,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
 void SecurityPageMDNTab::slotLinkClicked(const QString &link)
 {
-    if (link == QLatin1String("whatsthis-mdn")) {
+    if (link == QLatin1StringView("whatsthis-mdn")) {
         QWhatsThis::showText(QCursor::pos(), mUi.radioIgnore->whatsThis());
     }
 }
@@ -694,14 +694,14 @@ void GpgSettingsDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myGpgSettingsDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myGpgSettingsDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void GpgSettingsDialog::saveConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myGpgSettingsDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myGpgSettingsDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

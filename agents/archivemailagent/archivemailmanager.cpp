@@ -153,12 +153,12 @@ QString ArchiveMailManager::printCurrentListInfo() const
 
 QString ArchiveMailManager::infoToStr(ArchiveMailInfo *info) const
 {
-    QString infoStr = QLatin1String("collectionId: ") + QString::number(info->saveCollectionId()) + QLatin1Char('\n');
-    infoStr += QLatin1String("save sub collection: ") + (info->saveSubCollection() ? QStringLiteral("true") : QStringLiteral("false")) + QLatin1Char('\n');
-    infoStr += QLatin1String("last Date Saved: ") + info->lastDateSaved().toString() + QLatin1Char('\n');
-    infoStr += QLatin1String("maximum archive number: ") + QString::number(info->maximumArchiveCount()) + QLatin1Char('\n');
-    infoStr += QLatin1String("directory: ") + info->url().toDisplayString() + QLatin1Char('\n');
-    infoStr += QLatin1String("Enabled: ") + (info->isEnabled() ? QStringLiteral("true") : QStringLiteral("false"));
+    QString infoStr = QLatin1StringView("collectionId: ") + QString::number(info->saveCollectionId()) + QLatin1Char('\n');
+    infoStr += QLatin1StringView("save sub collection: ") + (info->saveSubCollection() ? QStringLiteral("true") : QStringLiteral("false")) + QLatin1Char('\n');
+    infoStr += QLatin1StringView("last Date Saved: ") + info->lastDateSaved().toString() + QLatin1Char('\n');
+    infoStr += QLatin1StringView("maximum archive number: ") + QString::number(info->maximumArchiveCount()) + QLatin1Char('\n');
+    infoStr += QLatin1StringView("directory: ") + info->url().toDisplayString() + QLatin1Char('\n');
+    infoStr += QLatin1StringView("Enabled: ") + (info->isEnabled() ? QStringLiteral("true") : QStringLiteral("false"));
     return infoStr;
 }
 

@@ -40,7 +40,7 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
         currentPath = QDir::homePath();
     }
     return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
-        + QDate::currentDate().toString(Qt::ISODate) + QLatin1String(".tar.bz2");
+        + QDate::currentDate().toString(Qt::ISODate) + QLatin1StringView(".tar.bz2");
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
@@ -199,7 +199,7 @@ void ArchiveFolderDialog::slotFixFileExtension()
     }
 
     // Now, we've got a filename without an extension, simply append the correct one
-    fileName += QLatin1String(extensions[mFormatComboBox->currentIndex()]);
+    fileName += QLatin1StringView(extensions[mFormatComboBox->currentIndex()]);
     mUrlRequester->setUrl(QUrl::fromLocalFile(fileName));
 }
 

@@ -49,14 +49,14 @@ bool FollowUpReminderInfoConfigWidget::save() const
 
 QSize FollowUpReminderInfoConfigWidget::restoreDialogSize() const
 {
-    auto group = config()->group(QLatin1String(myConfigGroupName));
+    auto group = config()->group(QLatin1StringView(myConfigGroupName));
     const QSize size = group.readEntry("Size", QSize(800, 600));
     return size;
 }
 
 void FollowUpReminderInfoConfigWidget::saveDialogSize(const QSize &size)
 {
-    auto group = config()->group(QLatin1String(myConfigGroupName));
+    auto group = config()->group(QLatin1StringView(myConfigGroupName));
     group.writeEntry("Size", size);
 }
 

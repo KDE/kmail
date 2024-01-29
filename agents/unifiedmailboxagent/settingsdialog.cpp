@@ -158,14 +158,14 @@ void SettingsDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(500, 500));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(DialogGroup));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void SettingsDialog::writeConfig()
 {
-    auto dlgGroup = mConfig->group(QLatin1String(DialogGroup));
+    auto dlgGroup = mConfig->group(QLatin1StringView(DialogGroup));
     KWindowConfig::saveWindowSize(windowHandle(), dlgGroup);
     dlgGroup.sync();
 }

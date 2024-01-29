@@ -66,7 +66,7 @@ KTNEFMain::KTNEFMain(QWidget *parent)
     mLastDir = mDefaultDir;
 
     // create personal temp extract dir
-    QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/"));
+    QDir().mkpath(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1StringView("/ktnef/"));
 
     resize(430, 350);
 
@@ -228,7 +228,7 @@ void KTNEFMain::viewFile()
         QUrl url = QUrl::fromLocalFile(extractTemp(attach));
         QString mimename(attach->mimeTag());
 
-        if (mimename.isEmpty() || mimename == QLatin1String("application/octet-stream")) {
+        if (mimename.isEmpty() || mimename == QLatin1StringView("application/octet-stream")) {
             qCDebug(KTNEFAPPS_LOG) << "No mime type found in attachment object, trying to guess...";
             QMimeDatabase db;
             mimename = db.mimeTypeForFile(url.path(), QMimeDatabase::MatchExtension).name();
@@ -247,7 +247,7 @@ void KTNEFMain::viewFile()
 
 QString KTNEFMain::extractTemp(KTNEFAttach *att)
 {
-    QString dir = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/");
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1StringView("/ktnef/");
     mParser->extractFileTo(att->name(), dir);
     QString filename = att->fileName();
     // falling back to internal TNEF attachement name if no filename is given for the attached file
@@ -362,7 +362,7 @@ void KTNEFMain::enableSingleAction(bool on)
 
 void KTNEFMain::cleanup()
 {
-    QDir d(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/"));
+    QDir d(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1StringView("/ktnef/"));
     d.removeRecursively();
 }
 
@@ -470,8 +470,8 @@ void KTNEFMain::slotShowMessageText()
 
     const QString rtf = mParser->message()->rtfString();
     if (!rtf.isEmpty()) {
-        auto tmpFile =
-            new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/ktnef/") + QLatin1String("ktnef_XXXXXX.rtf"));
+        auto tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1StringView("/ktnef/")
+                                          + QLatin1String("ktnef_XXXXXX.rtf"));
         tmpFile->setAutoRemove(false);
         tmpFile->open();
         tmpFile->setPermissions(QFile::ReadUser);

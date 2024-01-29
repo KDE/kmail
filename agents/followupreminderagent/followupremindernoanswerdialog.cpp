@@ -111,7 +111,7 @@ void FollowUpReminderNoAnswerDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(800, 600));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(DialogGroup));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
     mWidget->restoreTreeWidgetHeader(group.readEntry("HeaderState", QByteArray()));
@@ -119,7 +119,7 @@ void FollowUpReminderNoAnswerDialog::readConfig()
 
 void FollowUpReminderNoAnswerDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(DialogGroup));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     mWidget->saveTreeWidgetHeader(group);
 }

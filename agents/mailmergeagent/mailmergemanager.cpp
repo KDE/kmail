@@ -33,7 +33,7 @@ bool MailMergeManager::itemRemoved(Akonadi::Item::Id id)
 {
     // TODO remove id.
     // TODO
-    //    if (mConfig->hasGroup(QLatin1String(SendLaterUtil::sendLaterPattern().arg(id)))) {
+    //    if (mConfig->hasGroup(QLatin1StringView(SendLaterUtil::sendLaterPattern().arg(id)))) {
     //        removeInfo(id);
     //        mConfig->reparseConfiguration();
     //        Q_EMIT needUpdateConfigDialogBox();

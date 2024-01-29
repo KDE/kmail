@@ -91,7 +91,7 @@ void KMKnotify::initCombobox()
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
                                                 << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
     for (const QString &notify : lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1String("knotifications6/") + notify);
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1StringView("knotifications6/") + notify);
 
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));

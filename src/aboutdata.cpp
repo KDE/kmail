@@ -205,16 +205,16 @@ AboutData::AboutData()
     for (unsigned int i = 0; i < numberAuthors; ++i) {
         addAuthor(i18n(authors[i].name),
                   authors[i].desc.untranslatedText() ? authors[i].desc.toString() : QString(),
-                  QLatin1String(authors[i].email),
-                  QLatin1String(authors[i].web));
+                  QLatin1StringView(authors[i].email),
+                  QLatin1StringView(authors[i].web));
     }
 
     const unsigned int numberCredits(sizeof credits / sizeof *credits);
     for (unsigned int i = 0; i < numberCredits; ++i) {
         addAuthor(i18n(credits[i].name),
                   credits[i].desc.untranslatedText() ? credits[i].desc.toString() : QString(),
-                  QLatin1String(credits[i].email),
-                  QLatin1String(credits[i].web));
+                  QLatin1StringView(credits[i].email),
+                  QLatin1StringView(credits[i].web));
     }
 }
 

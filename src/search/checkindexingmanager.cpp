@@ -140,7 +140,7 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
         if (collection.hasAttribute<Akonadi::EntityHiddenAttribute>()) {
             continue;
         }
-        if (PimCommon::Util::isImapResource(collection.resource()) && !collection.cachePolicy().localParts().contains(QLatin1String("RFC822"))) {
+        if (PimCommon::Util::isImapResource(collection.resource()) && !collection.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
             continue;
         }
         if (!mCollectionsIndexed.contains(collection.id())) {

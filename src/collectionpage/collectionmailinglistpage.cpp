@@ -250,7 +250,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
     QStringList newList; // the correct string list
     QStringList::ConstIterator end = oldList.constEnd();
     for (QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it) {
-        if (!(*it).startsWith(QLatin1String("http:")) && !(*it).startsWith(QLatin1String("https:")) && !(*it).startsWith(QLatin1String("mailto:"))
+        if (!(*it).startsWith(QLatin1StringView("http:")) && !(*it).startsWith(QLatin1String("https:")) && !(*it).startsWith(QLatin1String("mailto:"))
             && ((*it).contains(QLatin1Char('@')))) {
             listChanged = true;
             newList << QStringLiteral("mailto:") + *it;

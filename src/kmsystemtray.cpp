@@ -229,7 +229,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
                 }
             }
         }
-        QString label = parentName.isEmpty() ? QString() : QString(parentName + QLatin1String("->"));
+        QString label = parentName.isEmpty() ? QString() : QString(parentName + QLatin1StringView("->"));
         label += model->data(index).toString();
         label.replace(QLatin1Char('&'), QStringLiteral("&&"));
         if (count > 0) {

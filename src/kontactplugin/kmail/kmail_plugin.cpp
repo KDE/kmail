@@ -99,7 +99,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
         for (const auto &s : std::as_const(list)) {
             to.append(s.fullEmail());
         }
-        openComposer(to.join(QLatin1String(", ")));
+        openComposer(to.join(QLatin1StringView(", ")));
     }
 
     qCWarning(KMAILPLUGIN_LOG) << QStringLiteral("Cannot handle drop events of type '%1'.").arg(de->mimeData()->formats().join(QLatin1Char(';')));

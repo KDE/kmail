@@ -448,7 +448,7 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
 
-    const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto");
+    const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto");
     const bool topQuoteCheck = MessageComposer::MessageComposerSettings::self()->prependSignature();
     const bool dashDashSignature = MessageComposer::MessageComposerSettings::self()->dashDashSignature();
     const bool smartQuoteCheck = MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly();
@@ -478,7 +478,7 @@ void ComposerPageGeneralTab::doLoadFromGlobalSettings()
 {
     // various check boxes:
 
-    mAutoAppSignFileCheck->setChecked(MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1String("auto"));
+    mAutoAppSignFileCheck->setChecked(MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto"));
     loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
     loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
@@ -882,7 +882,7 @@ void ComposerPageHeadersTab::doLoadOther()
 
     const int count = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < count; ++i) {
-        KConfigGroup config(KMKernel::self()->config(), QLatin1String("Mime #") + QString::number(i));
+        KConfigGroup config(KMKernel::self()->config(), QLatin1StringView("Mime #") + QString::number(i));
         const QString name = config.readEntry("name");
         const QString value = config.readEntry("value");
         if (!name.isEmpty()) {
@@ -921,7 +921,7 @@ void ComposerPageHeadersTab::save()
         item = mHeaderList->topLevelItem(i);
         const QString str = item->text(0).trimmed();
         if (!str.isEmpty()) {
-            if (str == QLatin1String("Content-Type")) {
+            if (str == QLatin1StringView("Content-Type")) {
                 KMessageBox::error(this, i18n("\'Content-Type\' is not an authorized string. This header will be not saved."), i18n("Invalid header"));
                 continue;
             }

@@ -91,7 +91,7 @@ static QString toolTip(const Akonadi::Item &item)
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")), i18n("Preview"));
         }
     }
-    tip += QLatin1String(
+    tip += QLatin1StringView(
         "</table"
         "</td>"
         "</tr>");

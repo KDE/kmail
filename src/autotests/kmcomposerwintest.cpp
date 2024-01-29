@@ -141,10 +141,10 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     : QObject(parent)
 {
     QStandardPaths::setTestModeEnabled(true);
-    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + QLatin1String("/.qttest")).constData());
+    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + QLatin1StringView("/.qttest")).constData());
 
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
-    QDir gnupgHomeData(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/gnupg"));
+    QDir gnupgHomeData(QLatin1StringView(TEST_DATA_DIR) + QStringLiteral("/gnupg"));
     for (const auto &fileInfo : gnupgHomeData.entryInfoList(QDir::Files)) {
         QVERIFY(QFile(fileInfo.filePath()).copy(gnupgDir.path() + QStringLiteral("/") + fileInfo.fileName()));
     }
@@ -422,7 +422,7 @@ void KMComposerWinTest::testEncryption()
         addrSpec = recipient;
     }
 
-    QFile file1(QLatin1String(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
+    QFile file1(QLatin1StringView(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
     QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(QStringLiteral("@"), QStringLiteral("%40")) + QStringLiteral(".json"))));
 
     const auto ident = mKernel->identityManager()->identityForUoid(uoid);

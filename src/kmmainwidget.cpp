@@ -2680,7 +2680,7 @@ void KMMainWidget::slotMessagePopup(const Akonadi::Item &msg, const WebEngineVie
     updateMessageMenu();
 
     const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
-    if (aUrl.scheme() == QLatin1String("mailto") && !email.isEmpty()) {
+    if (aUrl.scheme() == QLatin1StringView("mailto") && !email.isEmpty()) {
         auto job = new Akonadi::ContactSearchJob(this);
         job->setLimit(1);
         job->setQuery(Akonadi::ContactSearchJob::Email, email, Akonadi::ContactSearchJob::ExactMatch);
@@ -2728,7 +2728,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
     bool urlMenuAdded = false;
 
     if (!url.isEmpty()) {
-        if (url.scheme() == QLatin1String("mailto")) {
+        if (url.scheme() == QLatin1StringView("mailto")) {
             // popup on a mailto URL
             menu.addAction(mMsgView->mailToComposeAction());
             menu.addAction(mMsgView->mailToReplyAction());
@@ -2751,7 +2751,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
             menu.addSeparator();
             menu.addAction(mMsgView->copyURLAction());
             urlMenuAdded = true;
-        } else if (url.scheme() != QLatin1String("attachment")) {
+        } else if (url.scheme() != QLatin1StringView("attachment")) {
             // popup on a not-mailto URL
             menu.addAction(mMsgView->urlOpenAction());
             menu.addAction(mMsgView->addUrlToBookmarkAction());
@@ -4075,7 +4075,7 @@ void KMMainWidget::updateFolderMenu()
     mGUIClient->plugActionList(QStringLiteral("outbox_folder_actionlist"), actionlist);
     actionlist.clear();
 
-    const bool isASearchFolder = mCurrentCollection.resource() == QLatin1String("akonadi_search_resource");
+    const bool isASearchFolder = mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource");
     if (isASearchFolder) {
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setText(i18n("&Delete Search"));
     }
@@ -4091,7 +4091,8 @@ void KMMainWidget::updateFolderMenu()
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
 
-    mSearchMessages->setText((mCurrentCollection.resource() == QLatin1String("akonadi_search_resource")) ? i18n("Edit Search...") : i18n("&Find Messages..."));
+    mSearchMessages->setText((mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource")) ? i18n("Edit Search...")
+                                                                                                             : i18n("&Find Messages..."));
 
     mExpireConfigAction->setEnabled(mCurrentFolderSettings && !mCurrentFolderSettings->isStructural() && mCurrentFolderSettings->canDeleteMessages()
                                     && folderWithContent && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
@@ -4127,7 +4128,7 @@ void KMMainWidget::updateFolderMenu()
     for (auto a : std::as_const(mFilterFolderMenuRecursiveActions)) {
         a->setEnabled(folderIsValid);
     }
-    if (mCurrentCollection.resource() == QLatin1String("akonadi_unifiedmailbox_agent")) {
+    if (mCurrentCollection.resource() == QLatin1StringView("akonadi_unifiedmailbox_agent")) {
         mAccountSettings->setText(i18n("Configure Unified Mailbox"));
     } else {
         mAccountSettings->setText(i18n("Account &Settings"));

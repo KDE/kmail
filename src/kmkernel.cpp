@@ -622,7 +622,7 @@ void KMKernel::setAccountStatus(bool goOnline)
     for (Akonadi::AgentInstance type : lst) {
         const QString identifier(type.identifier());
         if (PimCommon::Util::isImapResource(identifier) || identifier.contains(POP3_RESOURCE_IDENTIFIER)
-            || identifier.contains(QLatin1String("akonadi_maildispatcher_agent")) || type.type().capabilities().contains(QLatin1String("NeedsNetwork"))) {
+            || identifier.contains(QLatin1StringView("akonadi_maildispatcher_agent")) || type.type().capabilities().contains(QLatin1String("NeedsNetwork"))) {
             type.setIsOnline(goOnline);
         }
     }
@@ -835,18 +835,18 @@ void KMKernel::slotSenderFinished()
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
-    const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/kmail2/");
+    const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kmail2/");
     QDir dir(pathName);
     if (!dir.exists(QStringLiteral("autosave"))) {
         return;
     }
 
-    dir.cd(pathName + QLatin1String("autosave"));
+    dir.cd(pathName + QLatin1StringView("autosave"));
     const QFileInfoList autoSaveFiles = dir.entryInfoList();
     for (const QFileInfo &file : autoSaveFiles) {
         // Disregard the '.' and '..' folders
         const QString filename = file.fileName();
-        if (filename == QLatin1Char('.') || filename == QLatin1String("..") || file.isDir()) {
+        if (filename == QLatin1Char('.') || filename == QLatin1StringView("..") || file.isDir()) {
             continue;
         }
         qCDebug(KMAIL_LOG) << "Opening autosave file:" << file.absoluteFilePath();
@@ -951,7 +951,7 @@ void KMKernel::doSessionManagement()
         int n = 1;
         while (KMMainWin::canBeRestored(n)) {
             // only restore main windows! (Matthias);
-            if (KMMainWin::classNameOfToplevel(n) == QLatin1String("KMMainWin")) {
+            if (KMMainWin::classNameOfToplevel(n) == QLatin1StringView("KMMainWin")) {
                 (new KMMainWin)->restoreDockedState(n);
             }
             ++n;
@@ -1460,7 +1460,7 @@ void KMKernel::itemDispatchStarted()
 
 void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 {
-    if (instance.identifier() == QLatin1String("akonadi_mailfilter_agent")) {
+    if (instance.identifier() == QLatin1StringView("akonadi_mailfilter_agent")) {
         // Creating a progress item twice is ok, it will simply return the already existing
         // item
         KPIM::ProgressItem *progress = PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
@@ -1494,7 +1494,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
-                        if (imapSafety == QLatin1String("None")) {
+                        if (imapSafety == QLatin1StringView("None")) {
                             cryptoStatus = KPIM::ProgressItem::Unencrypted;
                         } else {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
@@ -1589,7 +1589,7 @@ void KMKernel::stopAgentInstance()
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
         // Keep sync in ConfigureDialog, don't forget to change there.
-        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QLatin1String("akonadi_pop3_resource")) ? true : false)) {
+        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QLatin1StringView("akonadi_pop3_resource")) ? true : false)) {
             type.setIsOnline(false);
         }
     }

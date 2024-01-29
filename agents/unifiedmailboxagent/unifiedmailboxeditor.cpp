@@ -168,14 +168,14 @@ void UnifiedMailboxEditor::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 700));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(EditorGroup));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(EditorGroup));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void UnifiedMailboxEditor::writeConfig()
 {
-    auto editorGrp = mConfig->group(QLatin1String(EditorGroup));
+    auto editorGrp = mConfig->group(QLatin1StringView(EditorGroup));
     KWindowConfig::saveWindowSize(windowHandle(), editorGrp);
     editorGrp.sync();
 }

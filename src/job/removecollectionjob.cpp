@@ -52,7 +52,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     QString title;
     QString buttonLabel;
     const QString colNameHtmlEscaped{col.name().toHtmlEscaped()};
-    if (col.resource() == QLatin1String("akonadi_search_resource")) {
+    if (col.resource() == QLatin1StringView("akonadi_search_resource")) {
         title = i18n("Delete Search");
         str = i18n(
             "<qt>Are you sure you want to delete the search <b>%1</b>?<br />"

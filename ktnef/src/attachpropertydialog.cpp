@@ -75,14 +75,14 @@ void AttachPropertyDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 700));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myAttachPropertyDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myAttachPropertyDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void AttachPropertyDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myAttachPropertyDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myAttachPropertyDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }
@@ -90,7 +90,7 @@ void AttachPropertyDialog::writeConfig()
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
     QString s = attach->fileName().isEmpty() ? attach->name() : attach->fileName();
-    mUI.mFilename->setText(QLatin1String("<b>") + s + QLatin1String("</b>"));
+    mUI.mFilename->setText(QLatin1StringView("<b>") + s + QLatin1String("</b>"));
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
     mUI.mMime->setText(attach->mimeTag());
@@ -137,7 +137,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         QVariant value = (*it)->value();
         if (value.userType() == QMetaType::QVariantList) {
             newItem->setExpanded(true);
-            newItem->setText(0, newItem->text(0) + QLatin1String(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
+            newItem->setText(0, newItem->text(0) + QLatin1StringView(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
             for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
@@ -175,7 +175,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
     } else {
         QString tag = item->text(2);
         const int key = QStringView(tag).mid(5).toInt();
-        const QVariant prop = (tag.startsWith(QLatin1String("attr_")) ? pSet->attribute(key) : pSet->property(key));
+        const QVariant prop = (tag.startsWith(QLatin1StringView("attr_")) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);

@@ -60,7 +60,7 @@ void FillComposerJob::slotOpenComposer()
     bool noWordWrap = false;
     bool isICalInvitation = false;
     if (!mSettings.mAttachData.isEmpty()) {
-        isICalInvitation = (mSettings.mAttachName == QLatin1String("cal.ics")) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
+        isICalInvitation = (mSettings.mAttachName == QLatin1StringView("cal.ics")) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
             && mSettings.mAttachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && mSettings.mBcc.isEmpty()) {
@@ -79,14 +79,14 @@ void FillComposerJob::slotOpenComposer()
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;
-            msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1String(mSettings.mAttachCte), "utf-8");
+            msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1StringView(mSettings.mAttachCte), "utf-8");
             msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
             auto ct = msgPart->contentType(); // Create
             ct->setMimeType(mSettings.mAttachType + '/' + mSettings.mAttachSubType);
-            ct->setParameter(QLatin1String(mSettings.mAttachParamAttr),
+            ct->setParameter(QLatin1StringView(mSettings.mAttachParamAttr),
                              mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
             if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
-                msgPart->contentDisposition()->fromUnicodeString(QLatin1String(mSettings.mAttachContDisp), "utf-8");
+                msgPart->contentDisposition()->fromUnicodeString(QLatin1StringView(mSettings.mAttachContDisp), "utf-8");
             }
             if (!mSettings.mAttachCharset.isEmpty()) {
                 // qCDebug(KMAIL_LOG) << "Set attachCharset to" << attachCharset;

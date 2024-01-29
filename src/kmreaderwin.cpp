@@ -292,7 +292,7 @@ QString KMReaderWin::newFeaturesMD5()
     }
     QCryptographicHash md5(QCryptographicHash::Md5);
     md5.addData(str);
-    return QLatin1String(md5.result().toBase64());
+    return QLatin1StringView(md5.result().toBase64());
 }
 
 void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
@@ -846,12 +846,12 @@ void KMReaderWin::updateHtmlActions()
     } else {
         const QStringList customs = mSearchedAddress.customs();
         for (const QString &custom : customs) {
-            if (custom.contains(QLatin1String("MailPreferedFormatting"))) {
+            if (custom.contains(QLatin1StringView("MailPreferedFormatting"))) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
-                mViewAsHtml->setChecked(value == QLatin1String("HTML"));
-            } else if (custom.contains(QLatin1String("MailAllowToRemoteContent"))) {
+                mViewAsHtml->setChecked(value == QLatin1StringView("HTML"));
+            } else if (custom.contains(QLatin1StringView("MailAllowToRemoteContent"))) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
-                mLoadExternalReference->setChecked((value == QLatin1String("TRUE")));
+                mLoadExternalReference->setChecked((value == QLatin1StringView("TRUE")));
             }
         }
     }

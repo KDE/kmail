@@ -114,7 +114,7 @@ QStringList ArchiveMailInfo::listOfArchive(const QString &folderName, bool &dirE
 
     QStringList nameFilters;
     nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
-            + QLatin1String("*") + QString::fromLatin1(extensions[mArchiveType]);
+            + QLatin1StringView("*") + QString::fromLatin1(extensions[mArchiveType]);
     const QStringList lst = dir.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
     return lst;
 }

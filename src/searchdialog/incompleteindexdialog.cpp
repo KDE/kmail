@@ -149,14 +149,14 @@ void IncompleteIndexDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(500, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myIncompleteIndexDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myIncompleteIndexDialogGroupName));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
 
 void IncompleteIndexDialog::writeConfig()
 {
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1String(myIncompleteIndexDialogGroupName));
+    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myIncompleteIndexDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 }

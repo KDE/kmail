@@ -32,7 +32,7 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning() = default;
 
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
-    if (link == QLatin1String("phishingdetails")) {
+    if (link == QLatin1StringView("phishingdetails")) {
         PotentialPhishingDetailDialog dlg(this);
         dlg.fillList(mPotentialPhishingEmails);
         dlg.exec();

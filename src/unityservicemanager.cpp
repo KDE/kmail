@@ -136,7 +136,7 @@ void UnityServiceManager::updateCount()
     }
 
     if (mUnityServiceAvailable) {
-        const QString launcherId = qApp->desktopFileName() + QLatin1String(".desktop");
+        const QString launcherId = qApp->desktopFileName() + QLatin1StringView(".desktop");
         const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
         const QVariantMap properties{{QStringLiteral("count-visible"), unreadEmail > 0}, {QStringLiteral("count"), unreadEmail}};
 
@@ -186,7 +186,7 @@ void UnityServiceManager::initUnity()
 
         const QStringList &services = reply.value();
 
-        mUnityServiceAvailable = services.contains(QLatin1String("com.canonical.Unity"));
+        mUnityServiceAvailable = services.contains(QLatin1StringView("com.canonical.Unity"));
         if (mUnityServiceAvailable) {
             updateCount();
         }

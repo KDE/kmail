@@ -46,17 +46,17 @@ QVariant AccountInfoSource::data()
     int numberOfMbox = 0;
     for (const Akonadi::AgentInstance &type : lst) {
         const QString identifier = type.identifier();
-        if (identifier.startsWith(QLatin1String("akonadi_pop3_resource"))) {
+        if (identifier.startsWith(QLatin1StringView("akonadi_pop3_resource"))) {
             numberOfPop3++;
-        } else if (identifier.startsWith(QLatin1String("akonadi_imap_resource"))) {
+        } else if (identifier.startsWith(QLatin1StringView("akonadi_imap_resource"))) {
             numberOfImap++;
-        } else if (identifier.startsWith(QLatin1String("akonadi_kolab_resource"))) {
+        } else if (identifier.startsWith(QLatin1StringView("akonadi_kolab_resource"))) {
             numberOfKolab++;
-        } else if (identifier.startsWith(QLatin1String("akonadi_ews_resource"))) {
+        } else if (identifier.startsWith(QLatin1StringView("akonadi_ews_resource"))) {
             numberOfEws++;
-        } else if (identifier.startsWith(QLatin1String("akonadi_maildir_resource"))) {
+        } else if (identifier.startsWith(QLatin1StringView("akonadi_maildir_resource"))) {
             numberOfMaildir++;
-        } else if (identifier.startsWith(QLatin1String("akonadi_mbox_resource"))) {
+        } else if (identifier.startsWith(QLatin1StringView("akonadi_mbox_resource"))) {
             numberOfMbox++;
         }
     }

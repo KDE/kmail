@@ -69,7 +69,7 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         QString listOfDistributionList;
         for (int i = 0; i < numberOfDistributionList; ++i) {
             if (i != 0) {
-                listOfDistributionList.append(QLatin1String(", "));
+                listOfDistributionList.append(QLatin1StringView(", "));
             }
             listOfDistributionList.append(QStringLiteral("\"%1\"").arg(emptyDistributionLists.at(i)));
         }
@@ -81,8 +81,8 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         mIsValid = false;
     } else {
         if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
-            const QString errorMsg(QLatin1String("<qt><p><b>") + brokenAddress + QLatin1String("</b></p><p>")
-                                   + KEmailAddress::emailParseResultToString(errorCode) + QLatin1String("</p></qt>"));
+            const QString errorMsg(QLatin1StringView("<qt><p><b>") + brokenAddress + QLatin1String("</b></p><p>")
+                                   + KEmailAddress::emailParseResultToString(errorCode) + QLatin1StringView("</p></qt>"));
             KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
             mIsValid = false;
         }

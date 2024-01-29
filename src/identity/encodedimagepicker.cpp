@@ -78,7 +78,7 @@ void EncodedImagePicker::selectFile()
         if (!filter.isEmpty()) {
             filter += QLatin1Char(' ');
         }
-        filter += QLatin1String("*.") + QString::fromLatin1(ba);
+        filter += QLatin1StringView("*.") + QString::fromLatin1(ba);
     }
 
     filter = QStringLiteral("%1 (%2)").arg(i18n("Image"), filter);
