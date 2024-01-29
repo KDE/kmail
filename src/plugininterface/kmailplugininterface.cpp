@@ -6,7 +6,7 @@
 
 #include "kmailplugininterface.h"
 #include "kmail_debug.h"
-#include <kmmainwidget.h>
+#include "kmmainwidget.h"
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)

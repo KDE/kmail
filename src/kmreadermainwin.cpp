@@ -42,13 +42,13 @@
 #include <QStatusBar>
 #include <TemplateParser/CustomTemplatesMenu>
 
+#include "tag/tagactionmanager.h"
+#include "tag/tagselectdialog.h"
 #include <Akonadi/ContactSearchJob>
 #include <KActionCollection>
 #include <KEmailAddress>
 #include <KMime/KMimeMessage>
 #include <WebEngineViewer/WebHitTestResult>
-#include <tag/tagactionmanager.h>
-#include <tag/tagselectdialog.h>
 
 #include <Akonadi/ItemCopyJob>
 #include <Akonadi/ItemCreateJob>

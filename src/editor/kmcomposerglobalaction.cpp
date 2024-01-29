@@ -11,7 +11,7 @@
 
 #include <KLineEdit>
 
-#include <editor/kmcomposereditorng.h>
+#include "editor/kmcomposereditorng.h"
 
 KMComposerGlobalAction::KMComposerGlobalAction(KMComposerWin *composerWin, QObject *parent)
     : QObject(parent)

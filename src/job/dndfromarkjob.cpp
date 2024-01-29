@@ -15,7 +15,7 @@
 #include <QTemporaryDir>
 #include <QUrl>
 
-#include <editor/composer.h>
+#include "editor/composer.h"
 
 DndFromArkJob::DndFromArkJob(QObject *parent)
     : QObject(parent)
