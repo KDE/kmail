@@ -6,13 +6,13 @@
 # Alessandro Pasotti <ale.pas@tiscalinet.it>, 2006.
 # Vincenzo Reale <smart2128vr@gmail.com>, 2007, 2008, 2010, 2022.
 # Nicola Ruggero <nicola@nxnt.org>, 2007.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
-"PO-Revision-Date: 2023-11-24 13:31+0100\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
+"PO-Revision-Date: 2024-01-17 14:37+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2701,7 +2701,7 @@ msgstr ""
 "Questo allegato: <ul><li>%1</li></ul> è stato aggiunto esternamente. "
 "Rimuovilo se è un errore."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2882,10 +2882,9 @@ msgid "Clear History"
 msgstr "Cancella cronologia"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Restore Closed Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "Ripristina messaggio chiuso"
+msgstr "Ripristina visualizzatore chiuso"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
@@ -4792,7 +4791,7 @@ msgstr "Cestina conversazione"
 msgid "Delete T&hread"
 msgstr "Elimina &conversazione"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Trova &messaggi..."
@@ -5182,7 +5181,7 @@ msgstr "Importa/esporta dati di KMail..."
 msgid "New AddressBook Contact..."
 msgstr "Nuovo contatto nella rubrica..."
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Account &Settings"
 msgstr "Impo&stazioni account"
@@ -5314,43 +5313,43 @@ msgstr "&Elimina ricerca"
 msgid "Edit Search..."
 msgstr "Modifica ricerca..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Configura la casella di posta unificata"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "S&vuota il cestino"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Cestina tutti i messaggi"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr "&Annulla"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Annulla: «%1»"
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtro %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Cerca... <%1>"
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5361,18 +5360,18 @@ msgstr ""
 "vulnerabile allo \"spam\" e può aumentare la probabilità che il tuo sistema "
 "venga compromesso da attacchi presenti o futuri."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Avviso di sicurezza"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Utilizza HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5389,37 +5388,37 @@ msgstr ""
 " disabilitare totalmente questa funzione nelle impostazioni delle estensioni "
 "di KMail."
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Abilita caselle di posta unificate?"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Abilita caselle di posta unificate"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, kde-format
 msgid "Cancel"
 msgstr "Annulla"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Vuoi riavviare Akonadi?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Riavvia Akonadi"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, kde-format
 msgid "Restart"
 msgstr "Riavvia"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi riavviato."

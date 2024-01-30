@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2010-01-13 18:47+0200\n"
 "Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -2789,7 +2789,7 @@ msgid ""
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4986,7 +4986,7 @@ msgstr "Pārvietot pavedienu uz miskasti"
 msgid "Delete T&hread"
 msgstr "Dzēst pa&vedienu"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Meklēt vēstules..."
@@ -5391,7 +5391,7 @@ msgstr "&Konfigurēt KMail..."
 msgid "New AddressBook Contact..."
 msgstr "Atvērt adrešu grāmatu"
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5532,45 +5532,45 @@ msgstr "&Dzēst meklēšanu"
 msgid "Edit Search..."
 msgstr "Rediģēt skriptu..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Konfigurēt KMail..."
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Iztukšot &miskasti"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Pārvietot visas vēstules uz &miskasti"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtrs %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Startē..."
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5581,19 +5581,19 @@ msgstr ""
 "palielina iespēju ka jūsu sistēma tiks uzlausta izmantojot kādu esošu vai "
 "nākotnes drošības ievainojamību."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Drošības brīdinājums"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Izmantot HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5603,41 +5603,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Atcelt"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, fuzzy, kde-format
 #| msgid "Do you really want to remove this group and all its snippets?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Vai tiešām vēlaties noņemt šo grupu un visus fragmentus tajā?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Identitātes nosaukums"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Identitātes nosaukums"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

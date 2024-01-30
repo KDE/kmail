@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2023-12-07 11:24+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -2584,7 +2584,7 @@ msgid ""
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4606,7 +4606,7 @@ msgstr "Přesunout vlákno do koše"
 msgid "Delete T&hread"
 msgstr "Smazat v&lákno"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Hle&dat zprávy..."
@@ -4994,7 +4994,7 @@ msgstr "Importovat/Exportovat data KMailu..."
 msgid "New AddressBook Contact..."
 msgstr "Nový kontakt knihy adres..."
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Account &Settings"
 msgstr "Na&stavení účtu"
@@ -5125,43 +5125,43 @@ msgstr "Smazat hle&dání"
 msgid "Edit Search..."
 msgstr "Upravit vyhledávání..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Nastavit sjednocené schránky"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "V&yprázdnit koš"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Všechny zp&rávy přesunout do koše"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr "&Zpět"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Zpět: \"%1\""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtr %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Hledat... <%1>"
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5172,18 +5172,18 @@ msgstr ""
 "zvýšit pravděpodobnost, že bude systém napaden zneužitím nějaké, dosud "
 "neznámé, bezpečnostní chyby."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Bezpečnostní varování"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Použít HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5193,37 +5193,37 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Povolit sjednocené schránky?"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Povolit sjednocené schránky"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, kde-format
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Přejete si restartovat Akonadi?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Restartovat Akonadi"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, kde-format
 msgid "Restart"
 msgstr "Restartovat"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi bylo restartováno."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -2816,7 +2816,7 @@ msgid ""
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4985,7 +4985,7 @@ msgstr "Alihkan rantaian ke tong sampah"
 msgid "Delete T&hread"
 msgstr "Hapuskan &Rantaian"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Cari Mesej"
@@ -5394,7 +5394,7 @@ msgstr "&Konfigur KMail..."
 msgid "New AddressBook Contact..."
 msgstr "Buka dalam Buku Alamat"
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&Menghantar"
@@ -5535,44 +5535,44 @@ msgstr "&Hapuskan Folder"
 msgid "Edit Search..."
 msgstr "Edit..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "&Konfigur KMail..."
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "K&osongkan Tong Sampah"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Alihkan Semua Mesej ke Tong Sampah"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Tapis %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Langganan..."
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5583,19 +5583,19 @@ msgstr ""
 "\" dan mungkin meningkatkan kemungkinan sistem dieksploit dari segi "
 "keselamatan."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Amaran Keselamatan"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Gunakan HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5605,40 +5605,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, fuzzy, kde-format
 msgid "Cancel"
 msgstr "B&atalkan"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Anda pasti ingin mengeluarkan identiti bernama <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Nama Identiti"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Nama Identiti"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

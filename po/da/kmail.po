@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -2779,7 +2779,7 @@ msgstr ""
 "Dette bilag: <ul><li>%1</li></ul> blev tilføjet udefra. Fjern det hvis det "
 "var en fejl."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4865,7 +4865,7 @@ msgstr "Flyt tråd til papirkurv"
 msgid "Delete T&hread"
 msgstr "Slet t&råd"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Find breve..."
@@ -5256,7 +5256,7 @@ msgstr "Importér/eksportér KMail-data..."
 msgid "New AddressBook Contact..."
 msgstr "Ny adressebogskontakt..."
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Account &Settings"
 msgstr "Konto&indstillinger"
@@ -5389,44 +5389,44 @@ msgstr "&Slet søgning"
 msgid "Edit Search..."
 msgstr "Redigér søgning..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgid "Configure Unified Mailbox"
 msgstr "Aktivér forenede postkasser"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&Tøm papirkurv"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Flyt alle breve til papirkurv"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr "Fo&rtryd"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Fo&rtryd: \"%1\""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Søg...<%1>"
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5437,19 +5437,19 @@ msgstr ""
 "sandsynligheden for, at dit system vil blive kompromitteret af andre "
 "nuværende og fremtidige sikkerhedsudnyttelser."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Sikkerhedsadvarsel"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Brug HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5464,39 +5464,39 @@ msgstr ""
 "Du kan konfigurere forenede postkasser, oprette tilpassede postkasser eller\n"
 "deaktivere funktionen helt i KMails plugin-indstillinger."
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Aktivér forenede postkasser?"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Aktivér forenede postkasser"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, kde-format
 msgid "Cancel"
 msgstr "Annullér"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Vil du fjerne mærket \"%1\"?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart Akonadi"
 msgstr "Genstart konto"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, kde-format
 msgid "Restart"
 msgstr "Genstart"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, fuzzy, kde-format
 #| msgid "Akonadi Agents"
 msgid "Akonadi restarted."

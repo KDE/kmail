@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2023-05-06 15:44+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -2691,7 +2691,7 @@ msgstr ""
 "The attachment <ul><li>%1</li></ul> was added externally. Remove it if this "
 "was not intended."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4754,7 +4754,7 @@ msgstr "Move thread to wastebin"
 msgid "Delete T&hread"
 msgstr "Delete T&hread"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Find Messages..."
@@ -5143,7 +5143,7 @@ msgstr "Import/Export KMail Data..."
 msgid "New AddressBook Contact..."
 msgstr "New AddressBook Contact..."
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Account &Settings"
 msgstr "Account &Settings"
@@ -5274,43 +5274,43 @@ msgstr "&Delete Search"
 msgid "Edit Search..."
 msgstr "Edit Search..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Configure Unified Mailbox"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "E&mpty Wastebin"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Move All Messages to the Wastebin"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr "&Undo"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Undo: \"%1\""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Search... <%1>"
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5321,19 +5321,19 @@ msgstr ""
 "increase the likelihood that your system will be compromised by other "
 "present and anticipated security exploits."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Security Warning"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Use HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5348,37 +5348,37 @@ msgstr ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Enable Unified Mailboxes?"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Enable Unified Mailboxes"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, kde-format
 msgid "Cancel"
 msgstr "Cancel"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Do you want to restart Akonadi?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Restart Akonadi"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, kde-format
 msgid "Restart"
 msgstr "Restart"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi restarted."

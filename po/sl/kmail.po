@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-21 00:37+0000\n"
+"POT-Creation-Date: 2024-01-30 00:37+0000\n"
 "PO-Revision-Date: 2024-01-27 18:39+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -2682,7 +2682,7 @@ msgstr ""
 "Ta priloga: <ul><li>%1</li></ul> je bila dodana od zunaj. Odstranite jo, če "
 "je napaka."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -4777,7 +4777,7 @@ msgstr "Premakni nit v smeti"
 msgid "Delete T&hread"
 msgstr "Izbriši nit"
 
-#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4094
+#: kmmainwidget.cpp:3042 kmmainwidget.cpp:4095
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Najdi sporočila..."
@@ -5165,7 +5165,7 @@ msgstr "Uvozi/izvozi podatke programa KMail ..."
 msgid "New AddressBook Contact..."
 msgstr "Nov stik imenika ..."
 
-#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4133
+#: kmmainwidget.cpp:3484 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Account &Settings"
 msgstr "Na&stavitve računa"
@@ -5296,43 +5296,43 @@ msgstr "Izbriši iskanje"
 msgid "Edit Search..."
 msgstr "Uredi iskanje ..."
 
-#: kmmainwidget.cpp:4131
+#: kmmainwidget.cpp:4132
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Nastavi poenoten poštni nabiralnik"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Izprazni smeti"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Premakni vsa sporočila v smeti"
 
-#: kmmainwidget.cpp:4216
+#: kmmainwidget.cpp:4217
 #, kde-format
 msgid "&Undo"
 msgstr "Razveljavi"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4219
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Razveljavi: \"%1\""
 
-#: kmmainwidget.cpp:4275
+#: kmmainwidget.cpp:4276
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4743
+#: kmmainwidget.cpp:4744
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Poišči... <%1>"
 
-#: kmmainwidget.cpp:4751
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5343,18 +5343,18 @@ msgstr ""
 "pošte. Poveča se lahko tudi verjetnost, da bo vaš sistem izkoriščen z "
 "obstoječimi in prihodnjimi varnostnimi zlorabami."
 
-#: kmmainwidget.cpp:4754
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Varnostno opozorilo"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4756
 #, kde-format
 msgid "Use HTML"
 msgstr "Uporabi HTML"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4902
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5369,37 +5369,37 @@ msgstr ""
 "Nastavite lahko poenotene nabiralnike, ali jih ustvarite po meri ali\n"
 "to funkcijo v celoti onemogočite v nastavitvah vtičnika KMail."
 
-#: kmmainwidget.cpp:4904
+#: kmmainwidget.cpp:4905
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Ali želite omogočiti poenotene poštne nabiralnike?"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Omogoči poenotene poštne nabiralnike"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4907
 #, kde-format
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: kmmainwidget.cpp:4941
+#: kmmainwidget.cpp:4942
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Ali želite ponovno zagnati Akonadi?"
 
-#: kmmainwidget.cpp:4942
+#: kmmainwidget.cpp:4943
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Ponovno zaženi Akonadi"
 
-#: kmmainwidget.cpp:4943
+#: kmmainwidget.cpp:4944
 #, kde-format
 msgid "Restart"
 msgstr "Znova zaženi"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi ponovno zagnan."
