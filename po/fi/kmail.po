@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-01-21 02:22+0000\n"
-"PO-Revision-Date: 2023-09-26 13:28+0300\n"
+"PO-Revision-Date: 2023-12-11 15:30+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -865,11 +865,10 @@ msgid "Never"
 msgstr "Ei koskaan"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Näytä suosikkikansionäkymä"
+msgstr "Näytä suosikkikansionäkymä:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -887,11 +886,10 @@ msgid "Always"
 msgstr "Aina"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Kansion työkaluvihjeet"
+msgstr "Kansion työkaluvihjeet:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -2596,15 +2594,7 @@ msgstr ""
 "näin luotettava avain. Lisätietoa saa napsauttamalla kuvaketta."
 
 #: editor/kmcomposerwin.cpp:4196
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' is not possible please use "
-#| "the plural in the translation"
-#| msgid ""
-#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#| ">Select the key(s) which should be used for this recipient. If there is "
-#| "no suitable key in the list you can also <a href=\"%2\">search for "
-#| "external keys</a>.</qt>"
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2615,10 +2605,10 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Kelvollista luotettua salausavainta vastaanottajalle ”%1” ei löytynyt. "
-"<br/><br/>Valitse avain tai avaimet, joita tulisi käyttää. Ellei luettelossa "
-"ole sopivaa avainta, voit myös <a href=\"%2\">etsiä ulkoista avainta</a>.</"
-"qt>"
+"<qt>Vastaanottajalle ”%1” ei löytynyt kelvollisia ja luotettuja "
+"salausvarmenteita.<br/><br/>Valitse varmenteet, joita hänelle tulisi "
+"käyttää. Ellei luettelossa ole sopivaa varmennetta, ulkoisia varmenteita voi "
+"etsiä napsauttamalla painiketta ”Etsi ulkoisia varmenteita”.</qt>"
 
 #: editor/kmcomposerwin.cpp:4208
 #, kde-format
@@ -2856,17 +2846,15 @@ msgid "Folder Shortcut %1"
 msgstr "Kansion pikanäppäin %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
-#| msgid "Quoted Headers"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Lainatut otsikot"
+msgstr "Lukuikkuna suljettu"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:49
-#, fuzzy, kde-format
-#| msgid "Clear Past"
+#, kde-format
 msgid "Clear History"
-msgstr "Tyhjennä vanhat"
+msgstr "Tyhjennä historia"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
