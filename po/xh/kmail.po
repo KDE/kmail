@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-30 00:37+0000\n"
+"POT-Creation-Date: 2024-02-01 00:38+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1949,7 +1949,7 @@ msgid "Send"
 msgstr "&Thumela"
 
 #: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1255
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "Send &Later"
 msgstr "Thumela &Kamva"
@@ -2212,14 +2212,14 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3979
+#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3981
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Ilayini: %1"
 
-#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3981
+#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3983
 #, kde-format
 msgid " Column: %1 "
 msgstr " Umhlathi: %1"
@@ -2366,7 +2366,7 @@ msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Isitshixo Sotyikityo Esingachazwanga"
 
-#: editor/kmcomposerwin.cpp:2789
+#: editor/kmcomposerwin.cpp:2791
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2374,120 +2374,120 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2798
+#: editor/kmcomposerwin.cpp:2800
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2806
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2808
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2807 editor/kmcomposerwin.cpp:2821
+#: editor/kmcomposerwin.cpp:2809 editor/kmcomposerwin.cpp:2823
 #, fuzzy, kde-format
 msgid "S&end as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:2808
+#: editor/kmcomposerwin.cpp:2810
 #, fuzzy, kde-format
 msgid "&Specify the To field"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2818
+#: editor/kmcomposerwin.cpp:2820
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Khange ukhankanye umxholo. Thumela umyalezo nokokunjalo?"
 
-#: editor/kmcomposerwin.cpp:2820
+#: editor/kmcomposerwin.cpp:2822
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Akukho Mxholo Okhankanyiweyo"
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2824
 #, fuzzy, kde-format
 msgid "&Specify the Subject"
 msgstr "&Hayi, Ndivumele Ndikhankanye Umxholo"
 
-#: editor/kmcomposerwin.cpp:2867
+#: editor/kmcomposerwin.cpp:2869
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Kufuneka ukhankanye nokuba ngumamkeli omnye Ku: mhlaba."
 
-#: editor/kmcomposerwin.cpp:3053
+#: editor/kmcomposerwin.cpp:3055
 #, kde-format
 msgid "About to send email..."
 msgstr "Ilungisele ukuthumela i email..."
 
-#: editor/kmcomposerwin.cpp:3054
+#: editor/kmcomposerwin.cpp:3056
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Thumela Uqinisekiso"
 
-#: editor/kmcomposerwin.cpp:3055
+#: editor/kmcomposerwin.cpp:3057
 #, kde-format
 msgid "&Send Now"
 msgstr "&Thumela Ngoku"
 
-#: editor/kmcomposerwin.cpp:3131
+#: editor/kmcomposerwin.cpp:3133
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3132
+#: editor/kmcomposerwin.cpp:3134
 #, fuzzy, kde-format
 msgid "Too many recipients"
 msgstr "Abekho abamkeli."
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3135
 #, fuzzy, kde-format
 msgid "&Send as Is"
 msgstr "Thumela &njengokuba injalo"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3136
 #, fuzzy, kde-format
 msgid "&Edit Recipients"
 msgstr "Abamkeli abangasebenziyo."
 
-#: editor/kmcomposerwin.cpp:3171
+#: editor/kmcomposerwin.cpp:3173
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3175
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3176
 #, fuzzy, kde-format
 msgid "Lose Formatting"
 msgstr "Ulwazi lobuntu bakho"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3177
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgid "Add Markup Plain Text"
 msgstr "Umyalezo njengo Mbhalo Ocacileyo"
 
-#: editor/kmcomposerwin.cpp:3387
+#: editor/kmcomposerwin.cpp:3389
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2495,7 +2495,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3400
+#: editor/kmcomposerwin.cpp:3402
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2503,7 +2503,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3416
+#: editor/kmcomposerwin.cpp:3418
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2511,7 +2511,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3429
+#: editor/kmcomposerwin.cpp:3431
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2519,26 +2519,26 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3602
+#: editor/kmcomposerwin.cpp:3604
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Fihla"
 
-#: editor/kmcomposerwin.cpp:3604
+#: editor/kmcomposerwin.cpp:3606
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "&Sukufihla"
 
-#: editor/kmcomposerwin.cpp:3744
+#: editor/kmcomposerwin.cpp:3746
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3766
+#: editor/kmcomposerwin.cpp:3768
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2546,7 +2546,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3770
+#: editor/kmcomposerwin.cpp:3772
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2554,7 +2554,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3774
+#: editor/kmcomposerwin.cpp:3776
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2562,7 +2562,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3801
+#: editor/kmcomposerwin.cpp:3803
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2571,7 +2571,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3809
+#: editor/kmcomposerwin.cpp:3811
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2581,7 +2581,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3817
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,7 +2589,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3823
+#: editor/kmcomposerwin.cpp:3825
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2597,7 +2597,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3829
+#: editor/kmcomposerwin.cpp:3831
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2605,7 +2605,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3837
+#: editor/kmcomposerwin.cpp:3839
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2615,7 +2615,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3845
+#: editor/kmcomposerwin.cpp:3847
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2623,7 +2623,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3851
+#: editor/kmcomposerwin.cpp:3853
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2633,7 +2633,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3859
+#: editor/kmcomposerwin.cpp:3861
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2641,7 +2641,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3866
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2649,7 +2649,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4196
+#: editor/kmcomposerwin.cpp:4198
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2662,12 +2662,12 @@ msgid ""
 "certificates.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4208
+#: editor/kmcomposerwin.cpp:4210
 #, fuzzy, kde-format
 msgid "Encryption Key Selection"
 msgstr "Uqwalaselo Lofihlo"
 
-#: editor/kmcomposerwin.cpp:4293
+#: editor/kmcomposerwin.cpp:4295
 #, fuzzy, kde-format
 msgid "Plugin Editor Information"
 msgstr "Ulwazi lobuntu bakho"

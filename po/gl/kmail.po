@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-30 00:37+0000\n"
+"POT-Creation-Date: 2024-02-01 00:38+0000\n"
 "PO-Revision-Date: 2024-01-22 18:44+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -1859,7 +1859,7 @@ msgid "Send"
 msgstr "Enviar"
 
 #: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1255
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "Send &Later"
 msgstr "Enviar &máis tarde"
@@ -2117,13 +2117,13 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Agochar a barra de menú"
 
-#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3979
+#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3981
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Liña: %1 "
 
-#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3981
+#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3983
 #, kde-format
 msgid " Column: %1 "
 msgstr " Columna %1 "
@@ -2272,7 +2272,7 @@ msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "A chave de sinatura non está definida"
 
-#: editor/kmcomposerwin.cpp:2789
+#: editor/kmcomposerwin.cpp:2791
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2283,7 +2283,7 @@ msgstr ""
 "definir o seu enderezo de correo electrónico para todas as identidades, de "
 "xeito que non teña que inserilo para cada mensaxe."
 
-#: editor/kmcomposerwin.cpp:2798
+#: editor/kmcomposerwin.cpp:2800
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2292,44 +2292,44 @@ msgstr ""
 "Debe especificar como mínimo un destinatario, xa sexa no campo de "
 "destinatario, no de copia ou no de copia agochada."
 
-#: editor/kmcomposerwin.cpp:2804
+#: editor/kmcomposerwin.cpp:2806
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "O campo «Para:» está baleiro. Enviar a mensaxe de todos os xeitos?"
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2808
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Non se especificou ninguén en Para:"
 
-#: editor/kmcomposerwin.cpp:2807 editor/kmcomposerwin.cpp:2821
+#: editor/kmcomposerwin.cpp:2809 editor/kmcomposerwin.cpp:2823
 #, kde-format
 msgid "S&end as Is"
 msgstr "&Enviar deste xeito"
 
-#: editor/kmcomposerwin.cpp:2808
+#: editor/kmcomposerwin.cpp:2810
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&Indicar o campo «Para»"
 
-#: editor/kmcomposerwin.cpp:2818
+#: editor/kmcomposerwin.cpp:2820
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Non especificou o asunto. Enviar a mensaxe de todos os xeitos?"
 
-#: editor/kmcomposerwin.cpp:2820
+#: editor/kmcomposerwin.cpp:2822
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Non se especificou ningún asunto"
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2824
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "E&specificar o asunto"
 
-#: editor/kmcomposerwin.cpp:2867
+#: editor/kmcomposerwin.cpp:2869
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2337,23 +2337,23 @@ msgid ""
 msgstr ""
 "Debe especificar como mínimo un destinatario para poder cifrar o borrador."
 
-#: editor/kmcomposerwin.cpp:3053
+#: editor/kmcomposerwin.cpp:3055
 #, kde-format
 msgid "About to send email..."
 msgstr "A piques de enviar o correo…"
 
-#: editor/kmcomposerwin.cpp:3054
+#: editor/kmcomposerwin.cpp:3056
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Confirmación de envío"
 
-#: editor/kmcomposerwin.cpp:3055
+#: editor/kmcomposerwin.cpp:3057
 #, kde-format
 msgid "&Send Now"
 msgstr "Env&iar agora"
 
-#: editor/kmcomposerwin.cpp:3131
+#: editor/kmcomposerwin.cpp:3133
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2361,44 +2361,44 @@ msgid ""
 msgstr ""
 "Pretende enviar unha mensaxe a máis de %1 destinatarios. Envíase igual?"
 
-#: editor/kmcomposerwin.cpp:3132
+#: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid "Too many recipients"
 msgstr "Demasiados destinatarios"
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3135
 #, kde-format
 msgid "&Send as Is"
 msgstr "Envi&ar como está"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3136
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&Editar os destinatarios"
 
-#: editor/kmcomposerwin.cpp:3171
+#: editor/kmcomposerwin.cpp:3173
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "Desactivar o modo HTML fai que o texto perda o formato. Ten certeza?"
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3175
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Perder o formato?"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Perder o formato"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Engadir texto simple de etiquetas"
 
-#: editor/kmcomposerwin.cpp:3387
+#: editor/kmcomposerwin.cpp:3389
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2408,7 +2408,7 @@ msgstr ""
 "A chave PGP que seleccionou (%1) non existe no chaveiro ou non é axeitada "
 "para cifrar."
 
-#: editor/kmcomposerwin.cpp:3400
+#: editor/kmcomposerwin.cpp:3402
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2418,7 +2418,7 @@ msgstr ""
 "A chave PGP de sinatura que seleccionou (%1) non existe no chaveiro ou non é "
 "axeitada para asinar."
 
-#: editor/kmcomposerwin.cpp:3416
+#: editor/kmcomposerwin.cpp:3418
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2428,7 +2428,7 @@ msgstr ""
 "A chave SMIME que seleccionou (%1) non existe no chaveiro ou non é axeitada "
 "para cifrar."
 
-#: editor/kmcomposerwin.cpp:3429
+#: editor/kmcomposerwin.cpp:3431
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2438,25 +2438,25 @@ msgstr ""
 "A chave SMIME de sinatura que seleccionou (%1) non existe no chaveiro ou non "
 "é axeitada para asinar."
 
-#: editor/kmcomposerwin.cpp:3602
+#: editor/kmcomposerwin.cpp:3604
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Cifrar"
 
-#: editor/kmcomposerwin.cpp:3604
+#: editor/kmcomposerwin.cpp:3606
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Non cifrar"
 
-#: editor/kmcomposerwin.cpp:3744
+#: editor/kmcomposerwin.cpp:3746
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Non se atopou ningunha chave para a persoa destinataria."
 
-#: editor/kmcomposerwin.cpp:3766
+#: editor/kmcomposerwin.cpp:3768
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2466,7 +2466,7 @@ msgstr ""
 "A chave de chisme de Autocrypt úsase para esta persoa destinataria. A chave "
 "obtívose dunha terceira persoa destinataria. Non se verificou a chave."
 
-#: editor/kmcomposerwin.cpp:3770
+#: editor/kmcomposerwin.cpp:3772
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2476,7 +2476,7 @@ msgstr ""
 "A chave de Autocrypt úsase para esta persoa destinataria Non se verificou a "
 "chave. A persoa destinataria prefire respostas cifradas."
 
-#: editor/kmcomposerwin.cpp:3774
+#: editor/kmcomposerwin.cpp:3776
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2486,7 +2486,7 @@ msgstr ""
 "A chave de Autocrypt úsase para esta persoa destinataria Non se verificou a "
 "chave. A persoa destinataria non prefire respostas cifradas."
 
-#: editor/kmcomposerwin.cpp:3801
+#: editor/kmcomposerwin.cpp:3803
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2498,7 +2498,7 @@ msgstr ""
 "chave se comunicou a pegada dixital por outra canle. Prema a icona para máis "
 "información."
 
-#: editor/kmcomposerwin.cpp:3809
+#: editor/kmcomposerwin.cpp:3811
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2512,7 +2512,7 @@ msgstr ""
 "confianza nela. Ou pode asinar a chave se comunicou a pegada dixital por "
 "outra canle. Prema a icona para máis información."
 
-#: editor/kmcomposerwin.cpp:3817
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2522,7 +2522,7 @@ msgstr ""
 "Non se confía na chave de cifrado. Ten datos TOFU conflitivos. Prema a icona "
 "para máis información."
 
-#: editor/kmcomposerwin.cpp:3823
+#: editor/kmcomposerwin.cpp:3825
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2532,7 +2532,7 @@ msgstr ""
 "Non se confía na chave de cifrado. Ten unha validez descoñecida nos datos "
 "TOFU. Prema a icona para máis información."
 
-#: editor/kmcomposerwin.cpp:3829
+#: editor/kmcomposerwin.cpp:3831
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2542,7 +2542,7 @@ msgstr ""
 "Non se confía na chave de cifrado. A chave está marcada como mala. Prema a "
 "icona para máis información."
 
-#: editor/kmcomposerwin.cpp:3837
+#: editor/kmcomposerwin.cpp:3839
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2556,7 +2556,7 @@ msgstr ""
 "usar a chave aumentará a confianza nela. Ou pode asinar a chave se comunicou "
 "a pegada dixital por outra canle. Prema a icona para máis información."
 
-#: editor/kmcomposerwin.cpp:3845
+#: editor/kmcomposerwin.cpp:3847
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2567,7 +2567,7 @@ msgstr ""
 "comunicou a pegada dixital por outra canle. Prema a icona para máis "
 "información."
 
-#: editor/kmcomposerwin.cpp:3851
+#: editor/kmcomposerwin.cpp:3853
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2582,7 +2582,7 @@ msgstr ""
 "se comunicou a pegada dixital por outra canle. Prema a icona para máis "
 "información."
 
-#: editor/kmcomposerwin.cpp:3859
+#: editor/kmcomposerwin.cpp:3861
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2592,7 +2592,7 @@ msgstr ""
 "Hai confianza plena na chave de cifrado. Para aumentar o nivel de "
 "seguridade, asine a chave. Prema a icona para máis información."
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3866
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2602,7 +2602,7 @@ msgstr ""
 "Hai confianza total na chave de cifrado ou está asinada por outra chave con "
 "confianza total. Prema a icona para máis información."
 
-#: editor/kmcomposerwin.cpp:4196
+#: editor/kmcomposerwin.cpp:4198
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2620,12 +2620,12 @@ msgstr ""
 "poden buscar certificados externos premendo o botón: buscar certificados "
 "externos.</qt>"
 
-#: editor/kmcomposerwin.cpp:4208
+#: editor/kmcomposerwin.cpp:4210
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Selección da chave de cifrado"
 
-#: editor/kmcomposerwin.cpp:4293
+#: editor/kmcomposerwin.cpp:4295
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Información do editor de complementos"
