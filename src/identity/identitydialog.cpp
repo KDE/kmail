@@ -758,7 +758,7 @@ void IdentityDialog::slotAccepted()
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
     const QString recipients =
-        mReplyToEdit->text().trimmed() + QLatin1StringView(", ") + mBccEdit->text().trimmed() + QLatin1String(", ") + mCcEdit->text().trimmed();
+        mReplyToEdit->text().trimmed() + QLatin1StringView(", ") + mBccEdit->text().trimmed() + QLatin1StringView(", ") + mCcEdit->text().trimmed();
     auto job = new AddressValidationJob(recipients, this, this);
     // Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());

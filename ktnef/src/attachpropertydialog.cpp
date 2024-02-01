@@ -90,7 +90,7 @@ void AttachPropertyDialog::writeConfig()
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
     QString s = attach->fileName().isEmpty() ? attach->name() : attach->fileName();
-    mUI.mFilename->setText(QLatin1StringView("<b>") + s + QLatin1String("</b>"));
+    mUI.mFilename->setText(QLatin1StringView("<b>") + s + QLatin1StringView("</b>"));
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
     mUI.mMime->setText(attach->mimeTag());

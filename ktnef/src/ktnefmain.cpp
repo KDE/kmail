@@ -471,7 +471,7 @@ void KTNEFMain::slotShowMessageText()
     const QString rtf = mParser->message()->rtfString();
     if (!rtf.isEmpty()) {
         auto tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1StringView("/ktnef/")
-                                          + QLatin1String("ktnef_XXXXXX.rtf"));
+                                          + QLatin1StringView("ktnef_XXXXXX.rtf"));
         tmpFile->setAutoRemove(false);
         tmpFile->open();
         tmpFile->setPermissions(QFile::ReadUser);

@@ -1880,7 +1880,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
         const QString xpriority = newMsg->headerByType("X-PRIORITY")->asUnicodeString();
         const QString priority = newMsg->headerByType("Priority")->asUnicodeString();
-        if (xpriority == QLatin1StringView("2 (High)") && priority == QLatin1String("urgent")) {
+        if (xpriority == QLatin1StringView("2 (High)") && priority == QLatin1StringView("urgent")) {
             mUrgentAction->setChecked(true);
         }
     }

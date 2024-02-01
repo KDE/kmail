@@ -81,7 +81,7 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         mIsValid = false;
     } else {
         if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
-            const QString errorMsg(QLatin1StringView("<qt><p><b>") + brokenAddress + QLatin1String("</b></p><p>")
+            const QString errorMsg(QLatin1StringView("<qt><p><b>") + brokenAddress + QLatin1StringView("</b></p><p>")
                                    + KEmailAddress::emailParseResultToString(errorCode) + QLatin1StringView("</p></qt>"));
             KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
             mIsValid = false;

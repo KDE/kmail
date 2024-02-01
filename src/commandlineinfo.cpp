@@ -182,7 +182,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                     } else if (key == QLatin1StringView("in-reply-to")) {
                         mInReplyTo = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("attachment") || key == QLatin1String("attach")) {
+                    } else if (key == QLatin1StringView("attachment") || key == QLatin1StringView("attach")) {
                         if (!element.second.isEmpty()) {
                             mAttachURLs << makeAbsoluteUrl(element.second, workingDir);
                         }
