@@ -26,17 +26,22 @@ void FollowUpReminderShowMessageJob::start()
         return;
     }
     const QString kmailInterface = QStringLiteral("org.kde.kmail");
-    if (!QDBusConnection::sessionBus().interface()->isServiceRegistered(kmailInterface)) {
+    QDBusReply<bool> reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(kmailInterface);
+    if (!reply.isValid() || !reply.value()) {
         // Program is not already running, so start it
         QString errmsg;
-        if (!QDBusConnection::sessionBus().interface()->startService(QStringLiteral("org.kde.kmail2")).isValid()) {
-            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Can not start kmail" << errmsg;
+        if (!QDBusConnection::sessionBus().interface()->startService(QStringLiteral("org.kde.kmail")).isValid()) {
+            qCDebug(FOLLOWUPREMINDERAGENT_LOG) << " Can not start kmail";
             deleteLater();
             return;
         }
     }
     QDBusInterface kmail(kmailInterface, QStringLiteral("/KMail"), QStringLiteral("org.kde.kmail.kmail"));
-    kmail.call(QStringLiteral("showMail"), mId);
+    if (kmail.isValid()) {
+        kmail.call(QStringLiteral("showMail"), mId);
+    } else {
+        qCWarning(FOLLOWUPREMINDERAGENT_LOG) << "Impossible to access to DBus interface";
+    }
     deleteLater();
 }
 
