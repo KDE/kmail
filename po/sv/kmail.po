@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-01 00:38+0000\n"
+"POT-Creation-Date: 2024-02-02 00:38+0000\n"
 "PO-Revision-Date: 2023-09-09 13:04+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -4127,22 +4127,22 @@ msgstr "Textriktningsverktygsrad"
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "Kmail är inställt att vara nerkopplad. Alla nätverksjobb är vilande."
 
-#: kmkernel.cpp:635 kmmainwidget.cpp:2445 kmmainwidget.cpp:2460
+#: kmkernel.cpp:636 kmmainwidget.cpp:2445 kmmainwidget.cpp:2460
 #, kde-format
 msgid "Send Email"
 msgstr "Skicka e-post"
 
-#: kmkernel.cpp:636 kmmainwidget.cpp:2446 kmmainwidget.cpp:2461
+#: kmkernel.cpp:637 kmmainwidget.cpp:2446 kmmainwidget.cpp:2461
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Omöjligt att skicka e-post"
 
-#: kmkernel.cpp:667
+#: kmkernel.cpp:668
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "Kmail är inställt att vara uppkopplad. Alla nätverksjobb återupptas."
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:670
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4151,39 +4151,39 @@ msgstr ""
 "Kmail är inställt att vara uppkopplad. Alla nätverksjobb återupptas när en "
 "nätverksanslutning detekteras"
 
-#: kmkernel.cpp:742
+#: kmkernel.cpp:743
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Kmail är för närvarande i nerkopplat läge. Hur vill du fortsätta?"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:745
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Uppkopplad/nerkopplad"
 
-#: kmkernel.cpp:745 kmmainwidget.cpp:2434
+#: kmkernel.cpp:746 kmmainwidget.cpp:2434
 #, kde-format
 msgid "Work Online"
 msgstr "Arbeta uppkopplad"
 
-#: kmkernel.cpp:746 kmmainwidget.cpp:2431
+#: kmkernel.cpp:747 kmmainwidget.cpp:2431
 #, kde-format
 msgid "Work Offline"
 msgstr "Arbeta nerkopplad"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:771
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Nätverksanslutning detekterades, alla nätverksjobb återupptagna"
 
-#: kmkernel.cpp:773
+#: kmkernel.cpp:774
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ingen nätverksanslutning detekterades, alla nätverksjobb är vilande"
 
-#: kmkernel.cpp:868
+#: kmkernel.cpp:869
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4192,12 +4192,12 @@ msgstr ""
 "Misslyckades öppna automatiskt sparad fil på %1.\n"
 "Orsak: %2"
 
-#: kmkernel.cpp:869
+#: kmkernel.cpp:870
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Misslyckades öppna automatiskt sparad fil"
 
-#: kmkernel.cpp:1416
+#: kmkernel.cpp:1417
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4205,7 +4205,7 @@ msgid_plural ""
 msgstr[0] "Den här identiteten har ändrats att använda förvald överföring:"
 msgstr[1] "De här %1 identiteterna har ändrats att använda förvald överföring:"
 
-#: kmkernel.cpp:1440
+#: kmkernel.cpp:1441
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4215,17 +4215,17 @@ msgstr[0] ""
 msgstr[1] ""
 "De här %1 identiteterna har ändrats att använda den ändrade överföringen:"
 
-#: kmkernel.cpp:1455
+#: kmkernel.cpp:1456
 #, kde-format
 msgid "Sending messages"
 msgstr "Skickar brev"
 
-#: kmkernel.cpp:1456
+#: kmkernel.cpp:1457
 #, kde-format
 msgid "Initiating sending process..."
 msgstr "Initierar sändningsprocess..."
 
-#: kmkernel.cpp:1535
+#: kmkernel.cpp:1536
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4234,7 +4234,7 @@ msgstr ""
 "Resursen %1 är felaktig.\n"
 "%2"
 
-#: kmkernel.cpp:1711 kmkernel.cpp:1717
+#: kmkernel.cpp:1712 kmkernel.cpp:1718
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
