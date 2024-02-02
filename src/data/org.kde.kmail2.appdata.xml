@@ -371,6 +371,7 @@
       <caption xml:lang="eo">Ĉefa fenestro de KMail kun listo de retpoŝtaj dosierujoj kaj retpoŝtoj.</caption>
       <caption xml:lang="es">Ventana principal de KMail con una lista de carpetas de correo y mensajes.</caption>
       <caption xml:lang="eu">«KMail»en leiho nagusia e-posta karpeta zerrenda batekin eta e-posta zerrenda batekin.</caption>
+      <caption xml:lang="fr">Fenêtre principale de KMail avec une liste de dossiers de courriels et de courriels.</caption>
       <caption xml:lang="hu">A KMail főablaka e-mailmappák és e-mailek listájával.</caption>
       <caption xml:lang="ia">Fenestra principal de KMail con un lista de dossieres de e-posta e messages de posta.</caption>
       <caption xml:lang="it">La finestra principale di KMail con un elenco di cartelle e messaggi di posta elettronica.</caption>
@@ -390,6 +391,7 @@
       <caption xml:lang="eo">Email Composer kun enigita tradukilo</caption>
       <caption xml:lang="es">Compositor de mensajes con un traductor integrado</caption>
       <caption xml:lang="eu">E-posta Konposatzailea txertatutako itzultzaile batekin</caption>
+      <caption xml:lang="fr">Compositeur de courriels avec traducteur intégré</caption>
       <caption xml:lang="hu">E-mailszerkesztő beágyazott fordítóval</caption>
       <caption xml:lang="ia">Email Composer (Compositor de e-posta) con un tradictor incorporate</caption>
       <caption xml:lang="it">Compositore di messaggi di posta con traduttore integrato</caption>
