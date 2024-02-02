@@ -342,6 +342,9 @@ QWidget *KMMainWidget::dkimWidgetInfo() const
 
 void KMMainWidget::restoreCollectionFolderViewConfig()
 {
+    if (!myMainWidget) // We are in the destructor
+        return;
+
     auto saver = new ETMViewStateSaver;
     saver->setView(mFolderTreeWidget->folderTreeView());
     const KConfigGroup cfg(KMKernel::self()->config(), QStringLiteral("CollectionFolderView"));
@@ -982,14 +985,19 @@ void KMMainWidget::deleteWidgets()
     //  so not autocleaned up.
     delete mAkonadiStandardActionManager;
     mAkonadiStandardActionManager = nullptr;
-    delete mSplitter1;
+    auto splitter = mSplitter1;
     mMsgView = nullptr;
     mFolderViewSplitter = nullptr;
-    mFavoriteCollectionsView = nullptr;
+    if (mFavoriteCollectionsView) {
+        static_cast<MailCommon::FavoriteCollectionOrderProxyModel*>(mFavoriteCollectionsView->model())->setSourceModel(nullptr);
+        mFavoriteCollectionsView->setModel(nullptr);
+        mFavoriteCollectionsView = nullptr;
+    }
     mFolderTreeWidget = nullptr;
     mSplitter1 = nullptr;
     mSplitter2 = nullptr;
     mFavoritesModel = nullptr;
+    delete splitter;
 }
 
 //-----------------------------------------------------------------------------
