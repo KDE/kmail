@@ -1,0 +1,210 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
+# Māris Nartišs <maris.kde@gmail.com>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"PO-Revision-Date: 2024-02-02 12:15+0200\n"
+"Last-Translator: Māris Nartišs <maris.kde@gmail.com>\n"
+"Language-Team: \n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 22.12.3\n"
+
+#: sendlaterconfiguredialog.cpp:31
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr "Konfigurēt"
+
+#: sendlaterconfiguredialog.cpp:49
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Atliktas nosūtīšanas aģents"
+
+#: sendlaterconfiguredialog.cpp:51
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Atliktas e-pastu nosūtīšanas aģents."
+
+#: sendlaterconfiguredialog.cpp:53
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Autortiesības (C) 2013–%1 Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:55
+#, kde-format
+msgid "Maintainer"
+msgstr "Uzturētājs"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Toms Trasūns"
+
+#: sendlaterconfiguredialog.cpp:58
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "tomst.trasuns@posteo.net"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "To"
+msgstr "Kam"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Subject"
+msgstr "Temats"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Send around"
+msgstr "Nosūtīt ap"
+
+#: sendlaterconfigurewidget.cpp:55
+#, kde-format
+msgid "Recurrent"
+msgstr "Atkārtota sūtīšana"
+
+#: sendlaterconfigurewidget.cpp:57
+#, kde-format
+msgid "Message Id"
+msgstr "Vēstules ID"
+
+#: sendlaterconfigurewidget.cpp:68
+#, kde-format
+msgid "No messages waiting..."
+msgstr "Rindā nav vēstuļu..."
+
+#: sendlaterconfigurewidget.cpp:93
+#, kde-format
+msgid "Send now"
+msgstr "Nosūtīt tagad"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Dzēst"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "Yes"
+msgstr "Jā"
+
+#: sendlaterconfigurewidget.cpp:157
+#, kde-format
+msgid "No"
+msgstr "Nē"
+
+#: sendlaterconfigurewidget.cpp:207
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] "Vai vēlaties dzēst šo vienumu?"
+msgstr[1] "Vai vēlaties dzēst šos vienumus?"
+msgstr[2] "Vai vēlaties dzēst šos vienumus?"
+
+#: sendlaterconfigurewidget.cpp:208
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Dzēst vienumus"
+
+#: sendlaterconfigurewidget.cpp:216
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Vai vēlaties dzēst arī šo vēstuli?"
+msgstr[1] "Vai vēlaties dzēst arī šīs vēstules?"
+msgstr[2] "Vai vēlaties dzēst arī šīs vēstules?"
+
+#: sendlaterconfigurewidget.cpp:217
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Dzēst vēstules"
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Nedzēst"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "Vēstules nav atrastas."
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "Neviena vēstule nav atrasta."
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "Kļūda, saņemot vēstuli."
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Neizdodas saņemt vēstuli. %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "Nevar izveidot pasta transportu"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "Vēstule nav īsta vēstule"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "Neizdodas nosūtīt vēstuli."
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "Vēstule ir nosūtīta"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "Atrasta kļūda. Vai vēlaties sūtīt no jauna?"
+
+#: sendlatermanager.cpp:194
+#, kde-format
+msgid "Error found"
+msgstr "Atrasta kļūda"
+
+#: sendlatermanager.cpp:195
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Sūtīt no jauna"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify..."
+msgstr "Rediģēt..."

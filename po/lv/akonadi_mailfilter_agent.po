@@ -1,0 +1,185 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"PO-Revision-Date: 2024-02-01 10:11+0200\n"
+"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#: filterlogdialog.cpp:45
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Filtrēšanas žurnāla skatītājs"
+
+#: filterlogdialog.cpp:79
+#, kde-format
+msgid "Share..."
+msgstr "Kopīgot..."
+
+#: filterlogdialog.cpp:85
+#, kde-format
+msgid "&Log filter activities"
+msgstr "&Reģistrēt filtra darbības"
+
+#: filterlogdialog.cpp:90
+#, kde-format
+msgid ""
+"You can turn logging of filter activities on and off here. Of course, log "
+"data is collected and shown only when logging is turned on. "
+msgstr ""
+"Varat ieslēgt vai izslēgt filtra darbību reģistrēšanu. Pašsaprotami, ka "
+"žurnāla dati tiek iegūti un parādīti tikai tad, ja ir ieslēgta to "
+"reģistrēšana. "
+
+#: filterlogdialog.cpp:94
+#, kde-format
+msgid "Logging Details"
+msgstr "Žurnāla ierakstu informācija"
+
+#: filterlogdialog.cpp:101
+#, kde-format
+msgid "Log pattern description"
+msgstr "Žurnāla modeļu apraksts"
+
+#: filterlogdialog.cpp:106
+#, kde-format
+msgid "Log filter &rule evaluation"
+msgstr "Ž&urnāla filtra noteikumu izvērtējums"
+
+#: filterlogdialog.cpp:111
+#, kde-format
+msgid ""
+"You can control the feedback in the log concerning the evaluation of the "
+"filter rules of applied filters: having this option checked will give "
+"detailed feedback for each single filter rule; alternatively, only feedback "
+"about the result of the evaluation of all rules of a single filter will be "
+"given."
+msgstr ""
+"Varat kontrolēt žurnāla atgriezenisko saiti attiecībā uz filtrēšanas "
+"noteikumu vai pielietoto filtru izvērtējumu. Šī iespēja sniegs detalizētu "
+"atgriezenisko saiti par katru atsevišķo noteikumu. Pretējā gadījumā "
+"saņemsiet tikai atgriezenisko saiti par viena filtra visu noteikumu "
+"rezultātu."
+
+#: filterlogdialog.cpp:118
+#, kde-format
+msgid "Log filter pattern evaluation"
+msgstr "Žurnāla filtra modeļa izvērtējuma"
+
+#: filterlogdialog.cpp:123
+#, kde-format
+msgid "Log filter actions"
+msgstr "Žurnāla filtra darbības"
+
+#: filterlogdialog.cpp:133
+#, kde-format
+msgid "Log size limit:"
+msgstr "Žurnāla izmēra ierobežojums:"
+
+#: filterlogdialog.cpp:141
+#, kde-format
+msgid " KB"
+msgstr " KB"
+
+#: filterlogdialog.cpp:142
+#, kde-format
+msgctxt "@label:spinbox Set the size of the logfile to unlimited."
+msgid "unlimited"
+msgstr "neierobežots"
+
+#: filterlogdialog.cpp:145
+#, kde-format
+msgid ""
+"Collecting log data uses memory to temporarily store the log data; here you "
+"can limit the maximum amount of memory to be used: if the size of the "
+"collected log data exceeds this limit then the oldest data will be discarded "
+"until the limit is no longer exceeded. "
+msgstr ""
+"Žurnāla datu ievākšana izmanto atmiņu pagaidu datu glabāšanai. Šis "
+"iestatījums ļauj noteikt maksimālo atļauto izmantotās atmiņas daudzumu. Ja "
+"ievākto žurnāla datu apmērs pārsniedz norādīto limitu, programma dzēsīs "
+"vecākos datus tik daudz, lai netiktu pārsniegts norādītais limits. "
+
+#: filterlogdialog.cpp:326
+#, kde-format
+msgid ""
+"Could not write the file %1:\n"
+"\"%2\" is the detailed error description."
+msgstr ""
+"Neizdevās rakstīt datnē „%1“:\n"
+"„%2“ ir sīkāks kļūdas apraksts."
+
+#: filterlogdialog.cpp:330
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Error"
+msgstr "„KMail“ kļūda"
+
+#: filtermanager.cpp:100
+#, kde-format
+msgid "Filtering message %1 of %2"
+msgstr "Filtrē %1. vēstuli no %2"
+
+#: filtermanager.cpp:187
+#, kde-format
+msgid "Error applying mail filter move"
+msgstr "Kļūda, pielietojot pasta filtru pārvietošanai"
+
+#: filtermanager.cpp:195
+#, kde-format
+msgid "Error applying mail filter delete"
+msgstr "Kļūda, pielietojot pasta filtru dzēšanai"
+
+#: filtermanager.cpp:203
+#, kde-format
+msgid "Error applying mail filter modifications"
+msgstr "Kļūda, pielietojot pasta filtru rediģēšanai"
+
+#: filtermanager.cpp:220
+#, kde-format
+msgid "<b>Evaluating filter rules:</b> "
+msgstr "<b>Izvērtē filtra noteikumus:</b> "
+
+#: filtermanager.cpp:227
+#, kde-format
+msgid "<b>Filter rules have matched.</b>"
+msgstr "<b>Filtra noteikumi atbilst.</b>"
+
+#: filtermanager.cpp:255
+#, kde-format
+msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
+msgstr "<b>Sāk filtrēt ziņojumu „%1“ no „%2“, %3:</b>"
+
+#: filtermanager.cpp:589 filtermanager.cpp:617
+#, kde-format
+msgid "Filtering messages"
+msgstr "Filtrē vēstules"
+
+#: mailfilteragent.cpp:101
+#, kde-format
+msgctxt "Notification when the filter log was enabled"
+msgid "Mail Filter Log Enabled"
+msgstr "Pasta filtra žurnāls ir ieslēgts"
+
+#: mailfilteragent.cpp:165
+#, kde-format
+msgid "Ready"
+msgstr "Gatavs"
+
+#: mailfilteragent.cpp:251
+#, kde-format
+msgid "Filtering in %1"
+msgstr "Filtrē „%1“"
