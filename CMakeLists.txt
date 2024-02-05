@@ -153,12 +153,12 @@ find_package(KF6TextUtils ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextCustomEditor ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(Qt6Keychain CONFIG)
 set_package_properties(Qt6Keychain PROPERTIES
-                                   DESCRIPTION "Provides support for secure credentials storage"
-                                   URL "https://github.com/frankosterfeld/qtkeychain"
-				   TYPE REQUIRED)
+    DESCRIPTION "Provides support for secure credentials storage"
+    URL "https://github.com/frankosterfeld/qtkeychain"
+    TYPE REQUIRED)
 
 if (Qt6Keychain_VERSION VERSION_LESS 0.14.2)
-     MESSAGE(STATUS "Qt6KeyChain version is less 0.14.2. It will not support KWallet 6... It will not able to load password. Please update it.")
+    MESSAGE(STATUS "Qt6KeyChain version is less 0.14.2. It will not support KWallet 6... It will not able to load password. Please update it.")
 endif()
 
 configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
@@ -166,12 +166,12 @@ configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterpr
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
 if(BUILD_TESTING)
-   add_definitions(-DBUILD_TESTING)
+    add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
 ecm_set_disabled_deprecation_versions(QT 6.6
-     KF 5.249.0
-    )
+    KF 5.249.0
+)
 find_package(KF6UserFeedback ${KF_MIN_VERSION} CONFIG)
 set_package_properties(KF6UserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
 
@@ -188,7 +188,6 @@ set(COMPILE_WITH_CMAKE_PCH_SUPPORT OFF)
 macro(pim_target_precompile_headers)
     if (USE_PRECOMPILED_HEADERS)
         set(COMPILE_WITH_CMAKE_PCH_SUPPORT ON)
-
         if (COMPILE_WITH_CMAKE_PCH_SUPPORT)
             target_precompile_headers(${ARGV})
         endif()
@@ -201,10 +200,10 @@ add_subdirectory(agents)
 add_subdirectory(ktnef)
 add_subdirectory(kmail-refresh-settings)
 ecm_qt_install_logging_categories(
-        EXPORT KMAIL
-        FILE kmail.categories
-        DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
-        )
+    EXPORT KMAIL
+    FILE kmail.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+)
 
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 ki18n_install(po)
