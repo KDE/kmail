@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-03 02:28+0000\n"
-"PO-Revision-Date: 2024-01-26 13:02+0100\n"
+"PO-Revision-Date: 2024-02-06 23:06+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.01.90\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -814,7 +814,7 @@ msgstr "A színek &testreszabása"
 #: configuredialog/configureappearancepage.cpp:324
 #, kde-format
 msgid "&Do not change color from original HTML mail"
-msgstr ""
+msgstr "Ne mó&dosítsa az eredeti HTML levél színét"
 
 #: configuredialog/configureappearancepage.cpp:337
 #, kde-format
@@ -843,11 +843,10 @@ msgid "Never"
 msgstr "Soha"
 
 #: configuredialog/configureappearancepage.cpp:489
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Kedvenc mappák nézet megjelenítése"
+msgstr "Kedvenc mappák nézet megjelenítése:"
 
 #: configuredialog/configureappearancepage.cpp:491
 #, kde-format
@@ -865,11 +864,10 @@ msgid "Always"
 msgstr "Mindig"
 
 #: configuredialog/configureappearancepage.cpp:507
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Mappatippek"
+msgstr "Mappatippek:"
 
 #: configuredialog/configureappearancepage.cpp:581
 #, kde-format
@@ -952,10 +950,9 @@ msgstr ""
 "qt>"
 
 #: configuredialog/configureappearancepage.cpp:705
-#, fuzzy, kde-format
-#| msgid "Date Display"
+#, kde-format
 msgid "Date Display:"
-msgstr "Dátumkijelzés"
+msgstr "Dátumkijelzés:"
 
 #: configuredialog/configureappearancepage.cpp:813
 #, kde-format
@@ -981,13 +978,12 @@ msgstr "Ikon megjelenítése a paneltálcán"
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
 #, kde-format
 msgid "Start minimized to tray"
-msgstr ""
+msgstr "Indítás a tálcára minimalizálva"
 
 #: configuredialog/configureappearancepage.cpp:856
-#, fuzzy, kde-format
-#| msgid "Show unread mail in system tray"
+#, kde-format
 msgid "Show unread email in Taskbar"
-msgstr "Olvasatlan levél megjelenítése a rendszertálcán"
+msgstr "Olvasatlan levél megjelenítése a feladatsávon"
 
 #: configuredialog/configureappearancepage.cpp:924
 #, kde-format
@@ -1020,8 +1016,7 @@ msgid "Ta&g Settings"
 msgstr "Címkebeá&llítások"
 
 #: configuredialog/configureappearancepage.cpp:1031
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "Törlés"
 
@@ -1031,11 +1026,10 @@ msgid "Do you want to remove tag '%1'?"
 msgstr "El szeretné távolítani a(z) „%1” címkét?"
 
 #: configuredialog/configureappearancepage.cpp:1162
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
-msgstr "Eltávolítás"
+msgstr "Címke törlése"
 
 #: configuredialog/configureappearancepage.cpp:1207
 #: configuredialog/configureappearancepage.cpp:1242
@@ -1093,16 +1087,12 @@ msgid "Signature"
 msgstr "Aláírás"
 
 #: configuredialog/configurecomposerpage.cpp:132
-#, fuzzy, kde-format
-#| msgid ""
-#| "Automatically insert the configured signature\n"
-#| "when starting to compose a message"
+#, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
-"A beállított aláírás automatikus beszúrása\n"
-"egy új levél írásának kezdetekor"
+"A beállított aláírás automatikus beszúrása egy új levél írásának kezdetekor"
 
 #: configuredialog/configurecomposerpage.cpp:143
 #, kde-format
@@ -1110,16 +1100,13 @@ msgid "Insert the signature above any quoted text"
 msgstr "Aláírás beszúrása az idézett szöveg fölé"
 
 #: configuredialog/configurecomposerpage.cpp:155
-#, fuzzy, kde-format
-#| msgid ""
-#| "Insert the RFC-compliant signature separator\n"
-#| "(two dashes and a space on a line) before the signature"
+#, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
-"Az RFC-kompatibilis aláírás elválasztó beszúrása\n"
-"(két kötőjel és egy szóköz egy sorban) az aláírás előtt"
+"Az RFC-kompatibilis aláírás elválasztó beszúrása (két kötőjel és egy szóköz "
+"egy sorban) az aláírás előtt"
 
 #: configuredialog/configurecomposerpage.cpp:166
 #, kde-format
@@ -1133,33 +1120,24 @@ msgid "Format"
 msgstr "Formátum"
 
 #: configuredialog/configurecomposerpage.cpp:183
-#, fuzzy, kde-format
-#| msgid ""
-#| "When replying, only quote the selected text\n"
-#| "(instead of the complete message), if\n"
-#| "there is text selected in the message window."
+#, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
-"Válasz küldésekor csak a kijelölt szöveg idézése\n"
-"(a teljes üzenet helyett), ha\n"
-"a szöveg az üzenetablakban van kijelölve."
+"Válasz küldésekor csak a kijelölt szöveg idézése (a teljes üzenet helyett), "
+"ha a szöveg az üzenetablakban van kijelölve."
 
 #: configuredialog/configurecomposerpage.cpp:193
-#, fuzzy, kde-format
-#| msgid ""
-#| "When replying, add quote signs in front of all lines of the quoted text,\n"
-#| "even when the line was created by adding an additional line break while\n"
-#| "word-wrapping the text."
+#, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
-"Válaszkor adjon hozzá idézésjelzőket az idézett szöveg minden sora elé\n"
-"még akkor is, ha a sor egy további sortörés hozzáadásával jött létre\n"
-"a szöveg szótördelése közben."
+"Válaszkor adjon hozzá idézésjelzőket az idézett szöveg minden sora elé még "
+"akkor is, ha a sor egy további sortörés hozzáadásával jött létre a szöveg "
+"szótördelése közben."
 
 #: configuredialog/configurecomposerpage.cpp:204
 #, kde-format
@@ -1172,32 +1150,23 @@ msgid "Set the text width for automatic word wrapping"
 msgstr "A szövegszélesség beállítása az automatikus szótördeléshez"
 
 #: configuredialog/configurecomposerpage.cpp:235
-#, fuzzy, kde-format
-#| msgid ""
-#| "When replying or forwarding, quote the message\n"
-#| "in the original format it was received.\n"
-#| "If unchecked, the reply will be as plain text by default."
+#, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
-"Válasz küldésekor vagy továbbításkor az üzenetet az\n"
-"eredeti formátumban idézze, ahogy az érkezett.\n"
-"Ha nincs bejelölve, a válasz sima szöveg lesz alapértelmezetten."
+"Válasz küldésekor vagy továbbításkor az üzenetet az eredeti formátumban "
+"idézze, ahogy az érkezett. Ha nincs bejelölve, a válasz sima szöveg lesz "
+"alapértelmezetten."
 
 #: configuredialog/configurecomposerpage.cpp:247
-#, fuzzy, kde-format
-#| msgid ""
-#| "Format the plain text part of a message from the HTML markup.\n"
-#| "Bold, italic and underlined text, lists, and external references\n"
-#| "are supported."
+#, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
-"Az üzenet egyszerű szöveges részének formázása a HTML jelölésből.\n"
-"Félkövér, dőlt és aláhúzott szöveg, listák és külső hivatkozások a\n"
-"támogatottak."
+"Az üzenet egyszerű szöveges részének formázása a HTML jelölésből. Félkövér, "
+"dőlt és aláhúzott szöveg, listák és külső hivatkozások a támogatottak."
 
 #: configuredialog/configurecomposerpage.cpp:257
 #, kde-format
@@ -1227,20 +1196,15 @@ msgid "Recipients"
 msgstr "Címzettek"
 
 #: configuredialog/configurecomposerpage.cpp:294
-#, fuzzy, kde-format
-#| msgid ""
-#| "By default, request an MDN when starting to compose a message.\n"
-#| "You can select this on a per-message basis using \"Options - Request "
-#| "Disposition Notification\""
+#, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
 "select this on a per-message basis using \"Options - Request Disposition "
 "Notification\""
 msgstr ""
 "Üzenetfeldolgozási visszajelzés kérése alapértelmezetten a levél írásának "
-"kezdetekor.\n"
-"Ezt választhatja üzenetenkénti alapon a „Beállítások - Feldolgozási "
-"visszajelzés kérése” használatával."
+"kezdetekor. Ezt választhatja üzenetenkénti alapon a „Beállítások - "
+"Feldolgozási visszajelzés kérése” használatával."
 
 #: configuredialog/configurecomposerpage.cpp:319
 #, kde-format
@@ -1253,14 +1217,7 @@ msgid "Set the maximum number of recipients for the warning"
 msgstr "A címzettek maximális számának beállítása a figyelmeztetéshez"
 
 #: configuredialog/configurecomposerpage.cpp:350
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only allow this many recipients to be specified for the message.\n"
-#| "This applies to doing a \"Reply to All\", entering recipients manually\n"
-#| "or using the \"Select...\" picker.  Setting this limit helps you to\n"
-#| "avoid accidentally sending a message to too many people.  Note,\n"
-#| "however, that it does not take account of distribution lists or\n"
-#| "mailing lists."
+#, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
@@ -1268,24 +1225,19 @@ msgid ""
 "accidentally sending a message to too many people.  Note, however, that it "
 "does not take account of distribution lists or mailing lists."
 msgstr ""
-"Csak annyi címzettet engedélyez, amennyi az üzenethez meg van adva.\n"
-"Ez vonatkozik a „Válasz mindenkinek” műveletre, a címzettek kézi\n"
-"megadására vagy a „Kijelölés…” választó használatára. A korlát beállítása\n"
-"segít elkerülni, hogy túl sok embernek küldjön el véletlenül egy üzenetet.\n"
-"Habár ne feledje, ez nem vonatkozik disztribúciós listák vagy "
-"levelezőlisták\n"
+"Csak annyi címzettet engedélyez, amennyi az üzenethez meg van adva. Ez "
+"vonatkozik a „Válasz mindenkinek” műveletre, a címzettek kézi megadására "
+"vagy a „Kijelölés…” választó használatára. A korlát beállítása segít "
+"elkerülni, hogy túl sok embernek küldjön el véletlenül egy üzenetet. Habár "
+"ne feledje, ez nem vonatkozik disztribúciós listák vagy levelezőlisták "
 "fiókjaira."
 
 #: configuredialog/configurecomposerpage.cpp:371
-#, fuzzy, kde-format
-#| msgid ""
-#| "Remember recent addresses entered,\n"
-#| "and offer them for recipient completion"
+#, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
-"Emlékezzen a legutóbb beírt címekre,\n"
-"és ajánlja fel a címzett kiegészítéséhez"
+"Emlékezzen a legutóbb beírt címekre, és ajánlja fel a címzett kiegészítéséhez"
 
 #: configuredialog/configurecomposerpage.cpp:383
 #, kde-format
@@ -1299,29 +1251,24 @@ msgid "Maximum recent addresses retained:"
 msgstr "Megőrzött legutóbbi címek maximális értéke:"
 
 #: configuredialog/configurecomposerpage.cpp:390
-#, fuzzy, kde-format
-#| msgid ""
-#| "The maximum number of recently entered addresses that will\n"
-#| "be remembered for completion"
+#, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
-"A legutóbb beírt címek maximális száma, amelyeket meg fog\n"
-"jegyezni a kiegészítéshez"
+"A legutóbb beírt címek maximális száma, amelyeket meg fog jegyezni a "
+"kiegészítéshez"
 
 #: configuredialog/configurecomposerpage.cpp:403
-#, fuzzy, kde-format
-#| msgid "Configure Completion Order..."
+#, kde-format
 msgid "Configure Completion..."
-msgstr "A kiegészítési sorrend beállítása..."
+msgstr "Kiegészítés beállítása…"
 
 #: configuredialog/configurecomposerpage.cpp:412
-#, fuzzy, kde-format
-#| msgid "No autosave"
+#, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
-msgstr "Ne legyen automatikus mentés"
+msgstr "Automatikus mentés"
 
 #: configuredialog/configurecomposerpage.cpp:422
 #, kde-format
@@ -1348,22 +1295,19 @@ msgstr "A tárgysor &előtagja válaszüzenetben"
 
 #: configuredialog/configurecomposerpage.cpp:639
 #: configuredialog/configurecomposerpage.cpp:665
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any sequence of the following prefixes\n"
-#| "(entries are case-insensitive regular expressions):"
+#, kde-format
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
-"A következő előtagok felismerése\n"
-"(nem nagybetűérzékeny reguláris kifejezések):"
+"A következő előtagok felismerése (nem nagybetűérzékeny reguláris "
+"kifejezések):"
 
 #: configuredialog/configurecomposerpage.cpp:647
 #: configuredialog/configurecomposerpage.cpp:983
 #, kde-format
 msgid "A&dd..."
-msgstr "&Hozzáadás..."
+msgstr "&Hozzáadás…"
 
 #: configuredialog/configurecomposerpage.cpp:647
 #: configuredialog/configurecomposerpage.cpp:767
@@ -1384,16 +1328,14 @@ msgid "Enter new reply prefix:"
 msgstr "Adjon meg egy új válasz-előtagot:"
 
 #: configuredialog/configurecomposerpage.cpp:648
-#, fuzzy, kde-format
-#| msgid "Do you want to remove tag '%1'?"
+#, kde-format
 msgid "Do you want to remove reply prefix?"
-msgstr "El szeretné távolítani a(z) „%1” címkét?"
+msgstr "El szeretné távolítani a válasz-előtagot?"
 
 #: configuredialog/configurecomposerpage.cpp:650
-#, fuzzy, kde-format
-#| msgid "Repl&y Subject Prefixes"
+#, kde-format
 msgid "Reply Prefix:"
-msgstr "A tárgysor &előtagja válaszüzenetben"
+msgstr "Válasz-előtag:"
 
 #: configuredialog/configurecomposerpage.cpp:661
 #, kde-format
@@ -1409,12 +1351,12 @@ msgstr "Eltá&volítás"
 #: configuredialog/configurecomposerpage.cpp:671 identity/identitypage.cpp:271
 #, kde-format
 msgid "Add..."
-msgstr "Hozzáadás..."
+msgstr "Hozzáadás…"
 
 #: configuredialog/configurecomposerpage.cpp:671 identity/identitypage.cpp:273
 #, kde-format
 msgid "Modify..."
-msgstr "Módosítás..."
+msgstr "Módosítás…"
 
 #: configuredialog/configurecomposerpage.cpp:671
 #, kde-format
@@ -1422,16 +1364,14 @@ msgid "Enter new forward prefix:"
 msgstr "Adja meg az új továbbítási előtagot:"
 
 #: configuredialog/configurecomposerpage.cpp:672
-#, fuzzy, kde-format
-#| msgid "Do you want to remove tag '%1'?"
+#, kde-format
 msgid "Do you want to remove forward prefix?"
-msgstr "El szeretné távolítani a(z) „%1” címkét?"
+msgstr "El szeretné távolítani a továbbítási előtagot?"
 
 #: configuredialog/configurecomposerpage.cpp:673
-#, fuzzy, kde-format
-#| msgid "For&ward Subject Prefixes"
+#, kde-format
 msgid "Forward Prefix:"
-msgstr "A tárgysor-előtagok t&ovábbítása"
+msgstr "Továbbítási előtag:"
 
 #: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
@@ -1482,12 +1422,12 @@ msgstr "É&rték:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
+"A „Content-Type” nem hitelesített karakterlánc. A fejléc nem lesz mentve."
 
 #: configuredialog/configurecomposerpage.cpp:925
-#, fuzzy, kde-format
-#| msgid "Invalid date"
+#, kde-format
 msgid "Invalid header"
-msgstr "Érvénytelen dátum"
+msgstr "Érvénytelen fejléc"
 
 #: configuredialog/configurecomposerpage.cpp:966
 #, kde-format
@@ -1505,23 +1445,19 @@ msgid "Enter new key word:"
 msgstr "Adjon meg egy új kulcsszót:"
 
 #: configuredialog/configurecomposerpage.cpp:984
-#, fuzzy, kde-format
-#| msgid "Do you want to remove account '%1'?"
+#, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "Törölni szeretné a(z) „%1” fiókot?"
+msgstr "Szeretné eltávolítani ezt a mellékletszót?"
 
 #: configuredialog/configurecomposerpage.cpp:985
-#, fuzzy, kde-format
-#| msgid "Attachment:"
+#, kde-format
 msgid "Attachment Word:"
-msgstr "Melléklet:"
+msgstr "Mellékletszó:"
 
 #: configuredialog/configurecomposerpage.cpp:993
-#, fuzzy, kde-format
-#| msgctxt "message status"
-#| msgid "Has Attachment"
+#, kde-format
 msgid "Maximum Attachment Size:"
-msgstr "Van csatolása"
+msgstr "Maximális mellékletméret"
 
 #: configuredialog/configurecomposerpage.cpp:1000
 #, kde-format
@@ -1560,79 +1496,69 @@ msgid "Printing"
 msgstr "Nyomtatás"
 
 #: configuredialog/configuremiscpage.cpp:43
-#, fuzzy, kde-format
-#| msgid "User Id"
+#, kde-format
 msgid "User Feedback"
-msgstr "Felhasználóazonosító"
+msgstr "Felhasználói visszajelzés"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
-#, fuzzy, kde-format
-#| msgid "Ask Before Sending"
+#, kde-format
 msgid "Check Before Send Plugins"
-msgstr "Rákérdezés küldés előtt"
+msgstr "Ellenőrzés küldés előtt bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Composer Plugins"
-msgstr "Üzenetszerkesztő"
+msgstr "Üzenetszerkesztő bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
-#, fuzzy, kde-format
-#| msgid "Ask Before Sending"
+#, kde-format
 msgid "Grammar Checker Plugins"
-msgstr "Rákérdezés küldés előtt"
+msgstr "Helyesírás-ellenőrző bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Tools Plugins"
-msgstr "Üzenetszerkesztő"
+msgstr "Eszközök bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Editor Plugins"
-msgstr "Üzenetszerkesztő"
+msgstr "Szerkesztő bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
-#, fuzzy, kde-format
-#| msgid "Message Structure Viewer"
+#, kde-format
 msgid "Message Viewer"
-msgstr "Üzenetstruktúra-megjelenítő"
+msgstr "Üzenetmegjelenítő"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
-msgstr ""
+msgstr "Webengine bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
-#, fuzzy, kde-format
-#| msgid "Ask Before Sending"
+#, kde-format
 msgid "Header Style Plugins"
-msgstr "Rákérdezés küldés előtt"
+msgstr "Fejlécstílus bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Text Conversion Plugins"
-msgstr "Üzenetszerkesztő"
+msgstr "Szövegkonverziós bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Misc"
-msgstr ""
+msgstr "Egyéb"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
-msgstr ""
+msgstr "E-mail törlések megerősítése bővítmények"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
-#, fuzzy, kde-format
-#| msgid "Akonadi Id:"
+#, kde-format
 msgid "Akonadi Agents"
-msgstr "Akonadi azonosító:"
+msgstr "Akonadi ügynökök"
 
 #: configuredialog/configuresecuritypage.cpp:47
 #, kde-format
@@ -1655,21 +1581,17 @@ msgid "S/MIME Validation"
 msgstr "S/MIME-ellenőrzés"
 
 #: configuredialog/configuresecuritypage.cpp:88
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Email Address:"
-msgstr "E-mail cím"
+msgstr "E-mail címek:"
 
 #: configuredialog/configuresecuritypage.cpp:89
-#, fuzzy, kde-format
-#| msgid "Do you want to remove tag '%1'?"
+#, kde-format
 msgid "Do you want to remove this email address?"
-msgstr "El szeretné távolítani a(z) „%1” címkét?"
+msgstr "Szeretné eltávolítani ezt az e-mail címet?"
 
 #: configuredialog/configuresecuritypage.cpp:124
-#, fuzzy, kde-format
-#| msgid ""
-#| "Changing the global HTML setting will override all folder specific values."
+#, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
@@ -1687,11 +1609,10 @@ msgstr[0] " nap"
 msgstr[1] " nap"
 
 #: configuredialog/configuresecuritypage.cpp:334
-#, fuzzy, kde-format
-#| msgid "GnuPG Settings..."
+#, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
-msgstr "GnuPG beállítások…"
+msgstr "GnuPG beállítások"
 
 #: configuredialog/configuresecuritypage.cpp:341
 #, kde-format
@@ -1699,11 +1620,13 @@ msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
+"A modul hiányzik. Ellenőrizze, hogy telepítve van-e. A modult a Kleopatra "
+"tartalmazza."
 
 #: configuredialog/configuresecuritypage.cpp:346
 #, kde-format
 msgid "GnuPG Configure Module Error"
-msgstr ""
+msgstr "GnuPG beállítómodul hiba"
 
 #: configuredialog/configuresecuritypage.cpp:413
 #, kde-format
@@ -1722,8 +1645,7 @@ msgid "(Current system setting: %1)"
 msgstr "(A mostani rendszerbeállítás: %1)"
 
 #: dialog/addemailtoexistingcontactdialog.cpp:35
-#, fuzzy, kde-format
-#| msgid "Select Contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Partner kiválasztása"
@@ -1789,7 +1711,7 @@ msgstr "Ar&chívum:"
 #: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "Archívumfájl (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:108
 #, kde-format
@@ -1807,15 +1729,13 @@ msgid "Please select the folder that should be archived."
 msgstr "Válassza ki az archiválni kívánt mappát."
 
 #: dialog/archivefolderdialog.cpp:170
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Nincs kiválasztva mappa"
 
 #: dialog/kmknotify.cpp:30
-#, fuzzy, kde-format
-#| msgid "Notification"
+#, kde-format
 msgctxt "@title:window"
 msgid "Notification"
 msgstr "Értesítés"
@@ -1839,10 +1759,9 @@ msgstr "A csatoláslista elrejtése"
 
 #: editor/kmcomposerwin.cpp:328 kmail_part.cpp:39 kmmainwin.cpp:95
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:39
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgid "KMail2"
-msgstr "KMail"
+msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:355
 #, kde-format
@@ -1897,8 +1816,7 @@ msgid "S&ubject:"
 msgstr "&Tárgy:"
 
 #: editor/kmcomposerwin.cpp:482
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Üzenetszerkesztő"
@@ -2027,10 +1945,9 @@ msgid "&Request Disposition Notification"
 msgstr "&Feldolgozási visszajelzés kérése"
 
 #: editor/kmcomposerwin.cpp:1368
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgid "&Request Delivery Confirmation"
-msgstr "&Feldolgozási visszajelzés kérése"
+msgstr "Kézbesítési visszaigazolás ké&rése"
 
 #: editor/kmcomposerwin.cpp:1373
 #, kde-format
@@ -2154,10 +2071,9 @@ msgid "Select a cryptographic format for this message"
 msgstr "Válasszon titkosítási formátumot az üzenethez"
 
 #: editor/kmcomposerwin.cpp:1493
-#, fuzzy, kde-format
-#| msgid "&Find Messages..."
+#, kde-format
 msgid "Create Follow Up Reminder..."
-msgstr "Ker&esés az üzenetek között..."
+msgstr "Nyomkövető emlékeztető létrehozása…"
 
 #: editor/kmcomposerwin.cpp:1527
 #, kde-format
@@ -2174,8 +2090,7 @@ msgstr ""
 "qt>"
 
 #: editor/kmcomposerwin.cpp:1560 kmmainwin.cpp:222
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menüsáv elrejtése"
@@ -2243,32 +2158,28 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "El szeretné dobni az üzenetet vagy inkább megőrzi piszkozatként?"
 
 #: editor/kmcomposerwin.cpp:2060
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "A szerkesztő bezárása"
 
 #: editor/kmcomposerwin.cpp:2128
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
-msgstr "Az üzenet automatikus mentése nem sikerült"
+msgstr "Az üzenet automatikus mentése sikertelen"
 
 #: editor/kmcomposerwin.cpp:2129
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Az üzenet küldése sikertelen"
 
 #: editor/kmcomposerwin.cpp:2315
-#, fuzzy, kde-format
-#| msgid "Insert File Content"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
-msgstr "Fájltartalom beszúrása"
+msgstr "Fájl beszúrása"
 
 #: editor/kmcomposerwin.cpp:2380
 #, kde-format
@@ -2288,14 +2199,13 @@ msgstr "A melléklet neve:"
 #: editor/kmcomposerwin.cpp:2402
 #, kde-format
 msgid "Attachment name can't be empty"
-msgstr ""
+msgstr "A melléklet neve nem lehet üres"
 
 #: editor/kmcomposerwin.cpp:2402
-#, fuzzy, kde-format
-#| msgid "Invalid date"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
-msgstr "Érvénytelen dátum"
+msgstr "Érvénytelen mellékletnév"
 
 #: editor/kmcomposerwin.cpp:2453
 #, kde-format
@@ -2334,8 +2244,7 @@ msgstr ""
 "qt>"
 
 #: editor/kmcomposerwin.cpp:2630
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Nem definiált aláírási kulcs"
@@ -2366,8 +2275,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "A címzett mező üres. El szeretné így küldeni az üzenetet?"
 
 #: editor/kmcomposerwin.cpp:2806
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Nincs megadva címzett"
@@ -2378,10 +2286,9 @@ msgid "S&end as Is"
 msgstr "Elküldés í&gy"
 
 #: editor/kmcomposerwin.cpp:2808
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgid "&Specify the To field"
-msgstr "I&nkább megadom a tárgyat"
+msgstr "I&nkább megadom a címzettet"
 
 #: editor/kmcomposerwin.cpp:2818
 #, kde-format
@@ -2389,8 +2296,7 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "Nem adott meg tárgyat. El szeretné így küldeni az üzenetet?"
 
 #: editor/kmcomposerwin.cpp:2820
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Nincs megadva tárgy"
@@ -2413,11 +2319,10 @@ msgid "About to send email..."
 msgstr "Üzenet küldése..."
 
 #: editor/kmcomposerwin.cpp:3054
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "Megerősítés küldése"
+msgstr "Küldés megerősítése"
 
 #: editor/kmcomposerwin.cpp:3055
 #, kde-format
@@ -2477,6 +2382,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"A kiválasztott PGP-kulcs (%1) nem létezik a kulcstartóban, vagy nem "
+"megfelelő titkosításhoz."
 
 #: editor/kmcomposerwin.cpp:3400
 #, kde-format
@@ -2485,6 +2392,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"A kiválasztott PGP aláírókulcs (%1) nem létezik a kulcstartóban, vagy nem "
+"megfelelő aláíráshoz."
 
 #: editor/kmcomposerwin.cpp:3416
 #, kde-format
@@ -2493,6 +2402,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"A kiválasztott SMIME-kulcs (%1) nem létezik a kulcstartóban, vagy nem "
+"megfelelő titkosításhoz."
 
 #: editor/kmcomposerwin.cpp:3429
 #, kde-format
@@ -2501,26 +2412,26 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"A kiválasztott SMIME aláírókulcs (%1) nem létezik a kulcstartóban, vagy nem "
+"megfelelő aláíráshoz."
 
 #: editor/kmcomposerwin.cpp:3602
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Titkosítás"
 
 #: editor/kmcomposerwin.cpp:3604
-#, fuzzy, kde-format
-#| msgid "Do &Not Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "T&itkosítás nélkül"
+msgstr "Titkosítás nélkül"
 
 #: editor/kmcomposerwin.cpp:3744
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nem található kulcs a címzetthez."
 
 #: editor/kmcomposerwin.cpp:3766
 #, kde-format
@@ -2529,6 +2440,8 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
+"Autocrypt gossip kulcs van használva ehhez a címzetthez. Ez a kulcs egy "
+"harmadik féltől származik. A kulcs nem ellenőrzött."
 
 #: editor/kmcomposerwin.cpp:3770
 #, kde-format
@@ -2537,6 +2450,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"Autocrypt kulcs van használva ehhez a címzetthez. A kulcs nem ellenőrzött. A "
+"címzett a titkosított válaszokat részesíti előnyben."
 
 #: editor/kmcomposerwin.cpp:3774
 #, kde-format
@@ -2545,6 +2460,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"Autocrypt kulcs van használva ehhez a címzetthez. A kulcs nem ellenőrzött. A "
+"címzett nem részesíti előnyben a titkosított válaszokat."
 
 #: editor/kmcomposerwin.cpp:3801
 #, kde-format
@@ -2554,6 +2471,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"A titkosítási kulcs nem megbízható. Nincs elég érvényessége. Aláírhatja a "
+"kulcsot, ha az ujjlenyomatot más csatornán közli. Kattintson az ikonra "
+"részletekért."
 
 #: editor/kmcomposerwin.cpp:3809
 #, kde-format
@@ -2564,6 +2484,10 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs nem megbízható. Sehol sem használták fel annak "
+"garantálására, hogy a megadott személyhez tartozik. A használatával növeli a "
+"kulcs megbízhatóságát. Alá is írhatja a kulcsot, ha az ujjlenyomatot más "
+"csatornán közölte. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3817
 #, kde-format
@@ -2572,6 +2496,8 @@ msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
+"A titkosítási kulcs nem megbízható. A TOFU adatai ellentmondásosak. "
+"Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3823
 #, kde-format
@@ -2580,6 +2506,8 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"A titkosítási kulcs nem megbízható. Az érvényessége ismeretlen a TOFU "
+"adatokban. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3829
 #, kde-format
@@ -2588,6 +2516,8 @@ msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
+"A titkosítási kulcs nem megbízható. A kulcsot rossznak jelölték. Kattintson "
+"az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3837
 #, kde-format
@@ -2598,6 +2528,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs csak kis mértékben megbízható, és nem használták eleget "
+"annak garantálására, hogy a megadott személyhez tartozik. A használatával "
+"növeli a kulcs megbízhatóságát. Alá is írhatja a kulcsot, ha az "
+"ujjlenyomatot más csatornán közölte. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3845
 #, kde-format
@@ -2606,6 +2540,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs csak kis mértékben megbízható. Aláírhatja a kulcsot, ha "
+"az ujjlenyomatot más csatornán közölte. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3851
 #, kde-format
@@ -2616,6 +2552,10 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs csak kis mértékben megbízható, de eleget használták, "
+"hogy nagy valószínűséggel a megadott személyhez tartozzon. A használatával "
+"növeli a kulcs megbízhatóságát. Alá is írhatja a kulcsot, ha az "
+"ujjlenyomatot más csatornán közölte. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3859
 #, kde-format
@@ -2624,6 +2564,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs teljesen megbízható. A kulcs aláírásával emelheti a "
+"biztonsági szintet. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:3864
 #, kde-format
@@ -2632,17 +2574,11 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
+"A titkosítási kulcs végképp megbízható vagy egy másik végképp megbízható "
+"kulccsal írták alá. Kattintson az ikonra részletekért."
 
 #: editor/kmcomposerwin.cpp:4196
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' is not possible please use "
-#| "the plural in the translation"
-#| msgid ""
-#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#| ">Select the key(s) which should be used for this recipient. If there is "
-#| "no suitable key in the list you can also <a href=\"%2\">search for "
-#| "external keys</a>.</qt>"
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2653,9 +2589,10 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Nem található érvényes és megbízható kulcs ehhez: \"%1\".<br/><br/"
-">Válassza ki a címzetthez rendelni kívánt kulcso(ka)t. Ha nincs megfelelő "
-"kulcs a listában, <a href=\"%2\">keressen külső kulcsok között</a>.</qt>"
+"<qt>Nem található érvényes és megbízható tanúsítvány ehhez: „%1”.<br/><br/"
+">Válassza ki a címzetthez rendelni kívánt tanúsítványokat. Ha nincs "
+"megfelelő tanúsítvány a listában, a „Keresés a külső tanúsítványok között” "
+"gombra kattintva is kereshet a külső tanúsítványok között.</qt>"
 
 #: editor/kmcomposerwin.cpp:4208
 #, kde-format
@@ -2663,14 +2600,12 @@ msgid "Encryption Key Selection"
 msgstr "Titkosítási kulcs kiválasztása"
 
 #: editor/kmcomposerwin.cpp:4293
-#, fuzzy, kde-format
-#| msgid "Login Information"
+#, kde-format
 msgid "Plugin Editor Information"
-msgstr "Bejelentkezési adatok"
+msgstr "Bővítményszerkesztő adatai"
 
 #: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:27
-#, fuzzy, kde-format
-#| msgid "Show Details"
+#, kde-format
 msgctxt "@title:window"
 msgid "Details"
 msgstr "Részletek"
@@ -2678,7 +2613,7 @@ msgstr "Részletek"
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:22
 #, kde-format
 msgid "Select email to put in whitelist:"
-msgstr ""
+msgstr "Válassza ki a fehérlistára kerülő e-mailt:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:22
 #, kde-format
@@ -2686,6 +2621,8 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details...)</a>"
 msgstr ""
+"Potenciális adathalász e-mail cím észlelve <a href=\"phishingdetails"
+"\">(részletek…)</a>"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
@@ -2693,16 +2630,14 @@ msgid "Set a subject for this message"
 msgstr "Tárgy beállítása az üzenethez"
 
 #: editor/validatesendmailshortcut.cpp:30
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shortcut allows to send mail directly. Mail can be sent "
-#| "accidentally. What do you want to do?"
+#, kde-format
 msgid ""
 "This shortcut allows to send mail directly.\n"
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
-"Ezzel a gyorsbillentyűvel közvetlenül küldhet e-mailt, akár véletlenül is. "
+"Ezzel a gyorsbillentyűvel közvetlenül küldhet e-mailt.\n"
+"Akár véletlenül is küldhető e-mail.\n"
 "Mit szeretne tenni?"
 
 #: editor/validatesendmailshortcut.cpp:31
@@ -2731,6 +2666,8 @@ msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
+"A(z) <ul><li>%1</li></ul> melléklet kívülről lett hozzáadva. Távolítsa el "
+"ezt, ha ez egy hiba."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
@@ -2738,6 +2675,8 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
+"A(z) <ul><li>%1</li></ul> mellékletek kívülről lettek hozzáadva. Távolítsa "
+"el ezeket, ha ez egy hiba."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:20
 #, kde-format
@@ -2769,39 +2708,36 @@ msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
+"Nem található továbbító. Ellenőrizze, hogy a helyes levéltovábbítót "
+"használja."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
-"Az archívummappa nincs meghatározva. Kérjük ellenőrizze a(z) %1 fiók "
-"beállításait"
+"Az Elküldött mappa nincs megadva. Kérjük adja meg e-mail küldése előtt."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr ""
-"Az archívummappa nincs meghatározva. Kérjük ellenőrizze a(z) %1 fiók "
-"beállításait"
+"Az azonosító nem található. Ellenőrizze, hogy a helyes azonosítót használja-"
+"e."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr ""
-"Az archívummappa nincs meghatározva. Kérjük ellenőrizze a(z) %1 fiók "
-"beállításait"
+"A szótár nem található. Ellenőrizze, hogy a helyes szótárat használja-e."
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
-msgstr ""
+msgstr "Címzettek maximális száma elérve. A címzettlista %1 eleműre rövidül."
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:78
 #, kde-format
@@ -2858,13 +2794,11 @@ msgid "List of collections is empty. %1"
 msgstr "A gyűjtemények listája üres. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:90
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
-"Az archívummappa nincs meghatározva. Kérjük ellenőrizze a(z) %1 fiók "
-"beállításait"
+"A(z) %1 mappa csak olvasható. Kérjük ellenőrizze a(z) %2 fiók beállításait"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -2902,16 +2836,15 @@ msgid "Folder Shortcut %1"
 msgstr "Gyorsbillentyű mappához (%1)"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:14
-#, fuzzy, kde-format
-#| msgid "Quoted Headers"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Idézett fejlécmezők"
+msgstr "Bezárt olvasó"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:49
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Előzmények törlése"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
@@ -2927,8 +2860,7 @@ msgstr "A saját névjegy nincs benne a címjegyzékben."
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Nincs kép"
@@ -2940,8 +2872,7 @@ msgstr "Nincs beállítva kép a címbejegyzésben."
 
 #: identity/identityaddvcarddialog.cpp:27
 #: identity/identityeditvcarddialog.cpp:42
-#, fuzzy, kde-format
-#| msgid "Create own vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
 msgstr "Saját vCard létrehozása"
@@ -2972,38 +2903,35 @@ msgid "&Existing identities:"
 msgstr "A már &létező azonosítók:"
 
 #: identity/identitydialog.cpp:172
-#, fuzzy, kde-format
-#| msgid "Error while trying to rename folder %1"
+#, kde-format
 msgid "Error while generating new key pair: %1"
-msgstr "Hiba történt a(z) %1 mappa átnevezése közben a kiszolgálón"
+msgstr "Hiba történt az új kulcspár előállításakor: %1"
 
 #: identity/identitydialog.cpp:173
 #, kde-format
 msgid "Key Generation Error"
-msgstr ""
+msgstr "Kulcselőállítási hiba"
 
 #: identity/identitydialog.cpp:213
 #, kde-format
 msgid "No key"
-msgstr ""
+msgstr "Nincs kulcs"
 
 #: identity/identitydialog.cpp:215
-#, fuzzy, kde-format
-#| msgid "Enter new key word:"
+#, kde-format
 msgid "Generate a new key pair"
-msgstr "Adjon meg egy új kulcsszót:"
+msgstr "Új kulcspár előállítása"
 
 #: identity/identitydialog.cpp:227
 #, kde-format
 msgid "Generating new key pair..."
-msgstr ""
+msgstr "Új kulcspár előállítása…"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Edit Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
-msgstr "Az azonosító módosítása"
+msgstr "Azonosító szerkesztése"
 
 #: identity/identitydialog.cpp:264
 #, kde-format
@@ -3092,13 +3020,7 @@ msgid "Cryptography"
 msgstr "Titkosítás"
 
 #: identity/identitydialog.cpp:356
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
-#| "messages. You can also use GnuPG keys.</p><p>You can leave this blank, "
-#| "but KMail will not be able to digitally sign emails using OpenPGP; normal "
-#| "mail functions will not be affected.</p><p>You can find out more about "
-#| "keys at <a>http://www.gnupg.org</a></p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
 "messages. You can also use GnuPG keys.</p><p>You can leave this blank, but "
@@ -3110,7 +3032,7 @@ msgstr ""
 "üzenetek elektronikus aláírásához. GnuPG-kulcsok is használhatók.</p><p>A "
 "mező üresen hagyható, de akkor nem lehet elektronikusan aláírt üzeneteket "
 "küldeni. A normál levélküldési funkciót ez nem érinti.</p><p>A kulcsokról "
-"részletes leírás található itt: <a>http://www.gnupg.org</a></p></qt>"
+"részletes leírás található itt: <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:362 identity/identitydialog.cpp:386
 #, kde-format
@@ -3120,23 +3042,15 @@ msgstr "OpenPGP-s aláírási kulcs:"
 #: identity/identitydialog.cpp:368
 #, kde-format
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Ugyanazon kulcs használata titkosításhoz és aláíráshoz"
 
 #: identity/identitydialog.cpp:378
-#, fuzzy, kde-format
-#| msgid "OpenPGP key 0x%1"
+#, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP-kulcs - 0x%1"
+msgstr "OpenPGP kulcs:"
 
 #: identity/identitydialog.cpp:403
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
-#| "to yourself and for the \"Attach My Public Key\" feature in the composer. "
-#| "You can also use GnuPG keys.</p><p>You can leave this blank, but KMail "
-#| "will not be able to encrypt copies of outgoing messages to you using "
-#| "OpenPGP; normal mail functions will not be affected.</p><p>You can find "
-#| "out more about keys at <a>http://www.gnupg.org</a></p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
 "yourself and for the \"Attach My Public Key\" feature in the composer. You "
@@ -3150,7 +3064,7 @@ msgstr ""
 "használatakor. GnuPG-kulcsok is használhatók.</p><p>A mező üresen hagyható, "
 "de akkor az elküldött üzenetek saját másolatát nem lehet OpenPGP-vel "
 "titkosítani. A normál levélküldési funkciót ez nem érinti.</p><p>A "
-"kulcsokról részletes leírás található itt: <a>http://www.gnupg.org</a></p></"
+"kulcsokról részletes leírás található itt: <a>https://www.gnupg.org</a></p></"
 "qt>"
 
 #: identity/identitydialog.cpp:410
@@ -3203,57 +3117,51 @@ msgid "Preferred format:"
 msgstr "Javasolt formátum:"
 
 #: identity/identitydialog.cpp:467
-#, fuzzy, kde-format
-#| msgid "Enable Subscriptions?"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "Engedélyezi az előfizetéseket?"
+msgstr "Autocrypt bekapcsolása"
 
 #: identity/identitydialog.cpp:471
 #, kde-format
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:476
 #, kde-format
 msgid "Let others know you prefer encryption"
-msgstr ""
+msgstr "Tudassa másokkal, hogy a titkosítást részesíti előnyben"
 
 #: identity/identitydialog.cpp:479
 #, kde-format
 msgid "Overwrite global settings for security defaults"
-msgstr ""
+msgstr "A biztonsági alapértelmezések globális beállításainak felülírása"
 
 #: identity/identitydialog.cpp:482
-#, fuzzy, kde-format
-#| msgid "Overwrite &All"
+#, kde-format
 msgid "Overwrite defaults:"
-msgstr "Írja felül m&indet"
+msgstr "Alapértelmezések felülírása:"
 
 #: identity/identitydialog.cpp:487
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "Az üzenet elektronikus a&láírása"
+msgstr "Üzenetek aláírása"
 
 #: identity/identitydialog.cpp:490
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt &messages whenever possible"
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "Az üzenetek titkosítása min&dig, amikor csak lehetséges"
+msgstr "Üzenetek titkosítása, ha lehetséges"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:493 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "Figyelmeztetés aláírás &nélküli üzenetek elküldése előtt"
+msgstr "Figyelmeztetés aláírás nélküli üzenetek elküldése előtt"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:496 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "&Figyelmeztetés, ha titkosítás nélkül készül üzenetet küldeni"
+msgstr "Figyelmeztetés, ha titkosítás nélkül készül üzenetet küldeni"
 
 #: identity/identitydialog.cpp:506
 #, kde-format
@@ -3333,21 +3241,19 @@ msgid "D&ictionary:"
 msgstr "Szótá&r:"
 
 #: identity/identitydialog.cpp:582
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgid "Select Send-mail Folder"
-msgstr "Az &elküldött üzenetek mappája"
+msgstr "Elküldött levelek mappa kiválasztása"
 
 #: identity/identitydialog.cpp:584
 #, kde-format
 msgid "Sent-mail &folder:"
-msgstr "Az elkül&dött üzenetek mappája:"
+msgstr "Az elkül&dött levelek mappája:"
 
 #: identity/identitydialog.cpp:590
-#, fuzzy, kde-format
-#| msgid "Select Date"
+#, kde-format
 msgid "Select Draft Folder"
-msgstr "Dátum kiválasztása"
+msgstr "Piszkozatok mappa kiválasztása"
 
 #: identity/identitydialog.cpp:592
 #, kde-format
@@ -3355,10 +3261,9 @@ msgid "&Drafts folder:"
 msgstr "A &piszkozatok mappája:"
 
 #: identity/identitydialog.cpp:598
-#, fuzzy, kde-format
-#| msgid "Multiple Folders"
+#, kde-format
 msgid "Select Templates Folder"
-msgstr "Több mappa"
+msgstr "Sablonok mappa kiválasztása"
 
 #: identity/identitydialog.cpp:600
 #, kde-format
@@ -3430,17 +3335,15 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Érvénytelen e-mail álnév: „%1”"
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "E&gyedi üzenetsablonok használata ennél az identitásnál"
+msgstr "Meg kell adnia egy e-mail címet ehhez az azonosítóhoz."
 
 #: identity/identitydialog.cpp:750
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "E-mail cím"
+msgstr "Üres e-mail cím"
 
 #: identity/identitydialog.cpp:755
 #, kde-format
@@ -3492,8 +3395,7 @@ msgstr ""
 "azonosítóhoz (%1) beállított e-mail címet."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "A kulcsban vagy tanúsítványban nem található e-mail cím"
@@ -3504,23 +3406,19 @@ msgid "The signature file is not valid"
 msgstr "Az aláírásfájl érvénytelen"
 
 #: identity/identitydialog.cpp:876
-#, fuzzy, kde-format
-#| msgid "Edit Identity \"%1\""
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "A(z) „%1” azonosító módosítása"
+msgstr "A(z) „%1” azonosító szerkesztése"
 
 #: identity/identitydialog.cpp:945
-#, fuzzy, kde-format
-#| msgid ""
-#| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
-#| "therefore, the default drafts folder will be used."
+#, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
-"A(z) „%1” azonosítóhoz megadott Piszkozatok mappa nem érhető el, ezért "
-"helyette az alapértelmezett Piszkozatok mappát használja a program."
+"Az azonosító néhány saját mappája nem létezik (többé), ezért helyette az "
+"alapértelmezett mappákat használja a program."
 
 #: identity/identitydialog.cpp:1167
 #, kde-format
@@ -3528,8 +3426,7 @@ msgid "Edit..."
 msgstr "Szerkesztés…"
 
 #: identity/identityeditvcarddialog.cpp:36
-#, fuzzy, kde-format
-#| msgid "Edit own vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Saját vCard szerkesztése"
@@ -3540,15 +3437,13 @@ msgid "Delete current vCard"
 msgstr "Jelenlegi vCard törlése"
 
 #: identity/identityeditvcarddialog.cpp:58
-#, fuzzy, kde-format
-#| msgid "Are you sure to want to delete this vCard?"
+#, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Biztosan törölni szeretné ezt a vCard bejegyzést?"
 
 #: identity/identityeditvcarddialog.cpp:59
 #: identity/identityeditvcarddialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "vCard törlése"
@@ -3559,33 +3454,28 @@ msgid "We cannot delete vCard file."
 msgstr "Nem sikerült törölni a vCard fájlt."
 
 #: identity/identityeditvcarddialog.cpp:125
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid "Do you really want to execute <filename>%1</filename>?"
+#, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
-msgstr "Biztosan futtatni szeretné ezt: <filename>%1</filename>?"
+msgstr "Biztosan megszakítja?"
 
 #: identity/identityeditvcarddialog.cpp:126
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
-msgstr "Megerősítés küldése"
+msgstr "Megerősítés"
 
 #: identity/identityeditvcarddialog.cpp:127
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
-msgstr "Rich Text szerkesztés"
+msgstr "Szerkesztés megszakítása"
 
 #: identity/identityeditvcarddialog.cpp:128
-#, fuzzy, kde-format
-#| msgid "Do Not Enable"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
-msgstr "Nem engedélyezem"
+msgstr "Ne szakítsa meg"
 
 #: identity/identitylistview.cpp:76
 #, kde-format
@@ -3606,26 +3496,23 @@ msgid "Email Address"
 msgstr "E-mail cím"
 
 #: identity/identitypage.cpp:213
-#, fuzzy, kde-format
-#| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+#, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?</qt>"
 
 #: identity/identitypage.cpp:216
-#, fuzzy, kde-format
-#| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+#, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "<qt>Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?</qt>"
-msgstr[1] "<qt>Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?</qt>"
+msgstr[0] "Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?"
+msgstr[1] "Biztosan törölni szeretné ezt a(z) %1 azonosítót?"
 
 #: identity/identitypage.cpp:219
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Azonosító eltávolítása"
-msgstr[1] "Azonosító eltávolítása"
+msgstr[1] "Azonosítók eltávolítása"
 
 #: identity/identitypage.cpp:220
 #, kde-format
@@ -3643,8 +3530,7 @@ msgid "Set as Default"
 msgstr "Beállítás alapértelmezésként"
 
 #: identity/newidentitydialog.cpp:38
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "New Identity"
 msgstr "Új azonosító"
@@ -3667,12 +3553,12 @@ msgstr "egy létező azonosító adatainak átmás&olásával"
 #: identity/xfaceconfigurator.cpp:38
 #, kde-format
 msgid "Face"
-msgstr ""
+msgstr "Arckép"
 
 #: identity/xfaceconfigurator.cpp:39
 #, kde-format
 msgid "X-Face"
-msgstr ""
+msgstr "X-Face"
 
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
@@ -3680,24 +3566,22 @@ msgid ""
 "More information under <a href=\"https://quimby.gnus.org/circus/face/"
 "\">https://quimby.gnus.org/circus/face/</a>."
 msgstr ""
+"További információk: <a href=\"https://quimby.gnus.org/circus/face/"
+"\">https://quimby.gnus.org/circus/face/</a>."
 
 #: identity/xfaceconfigurator.cpp:41
-#, fuzzy, kde-format
-#| msgid ""
-#| "Examples are available at <a href=\"http://ace.home.xs4all.nl/X-Faces/"
-#| "\">http://ace.home.xs4all.nl/X-Faces/</a>."
+#, kde-format
 msgid ""
 "Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/"
 "\">https://ace.home.xs4all.nl/X-Faces/</a>."
 msgstr ""
-"Néhány példa található itt: <a href=\"http://ace.home.xs4all.nl/X-Faces/"
-"\">http://ace.home.xs4all.nl/X-Faces/</a>."
+"Néhány példa található itt: <a href=\"https://ace.home.xs4all.nl/X-Faces/"
+"\">https://ace.home.xs4all.nl/X-Faces/</a>."
 
 #: identity/xfaceconfigurator.cpp:123
-#, fuzzy, kde-format
-#| msgid "Message will be encrypted"
+#, kde-format
 msgid "No image will be sent."
-msgstr "Az üzenet titkosítva lesz"
+msgstr "Nem lesz küldve kép."
 
 #: identity/xfaceconfigurator.cpp:126
 #, kde-format
@@ -3733,14 +3617,9 @@ msgid "Install pngquant to obtain better image quality."
 msgstr ""
 
 #: identity/xfaceconfigurator.cpp:267
-#, fuzzy, kde-format
-#| msgid ""
-#| "The precommand exited with code %1:\n"
-#| "%2"
+#, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr ""
-"Az előtétparancs futása befejeződött, a kilépési kód %1:\n"
-"%2"
+msgstr "A pngquant futása befejeződött, a kilépési kód: %1 : %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
@@ -3755,17 +3634,15 @@ msgstr[0] "A(z) „%2” terjesztési lista üres, nem használható."
 msgstr[1] "A(z) „%2” terjesztési listák üresek, nem használhatók."
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Érvénytelen e-mail cím"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "Identity Name"
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Azonosító"
+msgstr "Akonadi gyorsítótár törlése"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -3776,8 +3653,7 @@ msgid "Done"
 msgstr "Kész"
 
 #: job/createnewcontactjob.cpp:63
-#, fuzzy, kde-format
-#| msgid "Add to Address Book"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Felvétel a címjegyzékbe"
@@ -3793,8 +3669,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "A partner nem tárolható: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Nem sikerült eltárolni a partnert"
@@ -3805,25 +3680,22 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Biztosan szeretné csatolni ezt a mappát: „%1”?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Mappa csatolása"
 
 #: job/opencomposerjob.cpp:118
-#, fuzzy, kde-format
-#| msgid "Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Attach"
 msgstr "Csatolás"
 
 #: job/opencomposerjob.cpp:119
-#, fuzzy, kde-format
-#| msgid "Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr "Csatolás"
+msgstr "Ne csatolja"
 
 #: job/removecollectionjob.cpp:56
 #, kde-format
@@ -4117,8 +3989,7 @@ msgstr[0] "Egy kis türelmet kérek - 1 üzenet letöltése van folyamatban"
 msgstr[1] "Egy kis türelmet kérek - %1 üzenet letöltése van folyamatban"
 
 #: kmcommands.cpp:523
-#, fuzzy, kde-format
-#| msgid "Save to File"
+#, kde-format
 msgid "Save To File"
 msgstr "Mentés fájlba"
 
@@ -4128,10 +3999,9 @@ msgid "Open Message"
 msgstr "Üzenet megnyitása"
 
 #: kmcommands.cpp:708
-#, fuzzy, kde-format
-#| msgid "&Message"
+#, kde-format
 msgid "Message"
-msgstr "Üzene&t"
+msgstr "Üzenet"
 
 #: kmcommands.cpp:737
 #, kde-format
@@ -4183,11 +4053,10 @@ msgid "Deleting messages"
 msgstr "Üzenetek törlése"
 
 #: kmcommands.cpp:1815
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Melléklet kijelölése:"
+msgstr "Mellékletek törlése"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4226,10 +4095,9 @@ msgstr ""
 "A KMail offline módba vált, minden hálózati adatátvitel fel lesz függesztve"
 
 #: kmkernel.cpp:635 kmmainwidget.cpp:2453 kmmainwidget.cpp:2468
-#, fuzzy, kde-format
-#| msgid "Sendmail"
+#, kde-format
 msgid "Send Email"
-msgstr "Sendmail"
+msgstr "E-mail küldése"
 
 #: kmkernel.cpp:636 kmmainwidget.cpp:2454 kmmainwidget.cpp:2469
 #, fuzzy, kde-format
@@ -4355,10 +4223,9 @@ msgid "Mail Merge Agent was not registered."
 msgstr "A levélarchiváló ügynök nincs regisztrálva."
 
 #: kmlaunchexternalcomponent.cpp:74
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Followup Reminder Agent was not registered."
-msgstr "A küldés később ügynök nincs regisztrálva."
+msgstr "A nyomkövető emlékeztető ügynök nincs regisztrálva."
 
 #: kmlaunchexternalcomponent.cpp:87
 #, fuzzy, kde-format
@@ -4371,11 +4238,10 @@ msgstr ""
 "szükséges rész telepítve van-e."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "Hiba - KMail"
+msgstr "KMail hiba"
 
 #: kmlaunchexternalcomponent.cpp:102
 #, fuzzy, kde-format
@@ -4387,30 +4253,25 @@ msgstr ""
 "Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Nem lehet elindítani az importálás varázslót"
 
 #: kmlaunchexternalcomponent.cpp:117
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Setting Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
-"Nem lehet elindítani a „PIM beállítás exportáló” programot. Ellenőrizze a "
+"Nem lehet elindítani a „PIM adatexportáló” programot. Ellenőrizze a "
 "telepítését."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Setting Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "Nem lehet elindítani a „PIM beállítás exportáló” programot"
+msgstr "Nem lehet elindítani a „PIM adatexportáló” programot"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, fuzzy, kde-format
@@ -4422,11 +4283,10 @@ msgstr ""
 "Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Nem lehet elindítani az importálás varázslót"
+msgstr "Nem lehet elindítani az Importvarázslót"
 
 #: kmmainwidget.cpp:303
 #, kde-format
@@ -4436,18 +4296,16 @@ msgstr ""
 "belőle?"
 
 #: kmmainwidget.cpp:306
-#, fuzzy, kde-format
-#| msgid "&Import"
+#, kde-format
 msgctxt "@action:button"
 msgid "Import"
-msgstr "&Importálás"
+msgstr "Importálás"
 
 #: kmmainwidget.cpp:307
-#, fuzzy, kde-format
-#| msgid "Do Not Keep"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
-msgstr "Nem kell megőrizni"
+msgstr "Nem kell importálni"
 
 #: kmmainwidget.cpp:312
 #, kde-format
@@ -4624,11 +4482,10 @@ msgid "Moving messages canceled."
 msgstr "Az üzenetek áthelyezése félbe lett szakítva."
 
 #: kmmainwidget.cpp:1772
-#, fuzzy, kde-format
-#| msgid "Move Messages to Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
-msgstr "Üzenetek átmozgatása egy mappába"
+msgstr "Üzenetek áthelyezése ide"
 
 #: kmmainwidget.cpp:1799
 #, kde-format
@@ -4651,8 +4508,7 @@ msgid "Copying messages canceled."
 msgstr "Az üzenetek átmásolása megszakadt."
 
 #: kmmainwidget.cpp:1822
-#, fuzzy, kde-format
-#| msgid "Copy Messages to Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Üzenetek átmásolása ide"
@@ -4663,47 +4519,42 @@ msgid "Moving messages to trash..."
 msgstr "Üzenetek áthelyezése a törölt üzenetek közé..."
 
 #: kmmainwidget.cpp:1874
-#, fuzzy, kde-format
-#| msgid "Moving messages to trash..."
+#, kde-format
 msgid "Deleting and moving messages to trash..."
-msgstr "Üzenetek áthelyezése a törölt üzenetek közé..."
+msgstr "Üzenetek törlése és áthelyezése a kukába…"
 
 #: kmmainwidget.cpp:1887
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "Az üzeneteket sikerült áthelyezni a töröltek közé."
+msgstr "Az üzeneteket sikerült áthelyezni a kukába."
 
 #: kmmainwidget.cpp:1894
-#, fuzzy, kde-format
-#| msgid "Messages moved to trash successfully."
+#, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr "Az üzeneteket sikerült áthelyezni a töröltek közé."
+msgstr "Az üzeneteket sikerült áthelyezni a kukába vagy törölni"
 
 #: kmmainwidget.cpp:1900
 #, kde-format
 msgid "Moving messages to trash failed."
-msgstr "Az üzeneteket nem sikerült áthelyezni a töröltek közé."
+msgstr "Az üzeneteket nem sikerült áthelyezni a kukába."
 
 #: kmmainwidget.cpp:1907
-#, fuzzy, kde-format
-#| msgid "Moving messages to trash failed."
+#, kde-format
 msgid "Deleting or moving messages to trash failed."
-msgstr "Az üzeneteket nem sikerült áthelyezni a töröltek közé."
+msgstr "Az üzeneteket nem sikerült törölni vagy áthelyezni a kukába."
 
 #: kmmainwidget.cpp:1913
 #, kde-format
 msgid "Moving messages to trash canceled."
-msgstr "Az üzenetek áthelyezése megszakadt."
+msgstr "Az üzenetek áthelyezése a kukába megszakadt."
 
 #: kmmainwidget.cpp:1920
-#, fuzzy, kde-format
-#| msgid "Moving messages to trash canceled."
+#, kde-format
 msgid "Deleting or moving messages to trash canceled."
-msgstr "Az üzenetek áthelyezése megszakadt."
+msgstr "Az üzenetek törlése vagy áthelyezése kukába megszakadt."
 
 #: kmmainwidget.cpp:2193
-#, fuzzy, kde-format
-#| msgid "Jump to Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Ugrás a mappára"
@@ -4763,11 +4614,10 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:2410
-#, fuzzy, kde-format
-#| msgid "Select attachment:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Melléklet kijelölése:"
+msgstr "Mellékletek törlése"
 
 #: kmmainwidget.cpp:2901
 #, kde-format
@@ -4856,10 +4706,9 @@ msgid "Delayed Messages..."
 msgstr "Késleltetett üzenetek…"
 
 #: kmmainwidget.cpp:3021
-#, fuzzy, kde-format
-#| msgid "&Find Messages..."
+#, kde-format
 msgid "Followup Reminder Messages..."
-msgstr "Ker&esés az üzenetek között..."
+msgstr "Nyomkövető emlékeztető üzenetek…"
 
 #: kmmainwidget.cpp:3032 util.cpp:148
 #, kde-format
@@ -5268,10 +5117,9 @@ msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Az aktuális mappa (almappákkal együtt)"
 
 #: kmmainwidget.cpp:3476
-#, fuzzy, kde-format
-#| msgid "&Export KMail Data..."
+#, kde-format
 msgid "Import/Export KMail Data..."
-msgstr "KMail adat &exportálása…"
+msgstr "KMail adatok importálása/exportálása…"
 
 #: kmmainwidget.cpp:3482
 #, kde-format
@@ -5279,16 +5127,14 @@ msgid "New AddressBook Contact..."
 msgstr "Új címjegyzék partner…"
 
 #: kmmainwidget.cpp:3490 kmmainwidget.cpp:4139
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgid "Account &Settings"
-msgstr "&Beállítások"
+msgstr "Fiók&beállítások"
 
 #: kmmainwidget.cpp:3494
-#, fuzzy, kde-format
-#| msgid "Identity Name"
+#, kde-format
 msgid "Restart Account"
-msgstr "Azonosító"
+msgstr "Fiók újraindítása"
 
 #: kmmainwidget.cpp:3510
 #, kde-format
@@ -5386,20 +5232,17 @@ msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
 #: kmmainwidget.cpp:3632
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgid "Previous Selected Folder"
-msgstr "Az előző, o&lvasatlan üzenetet tartalmazó mappa"
+msgstr "Előző kiválasztott mappa"
 
 #: kmmainwidget.cpp:3639
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Next Selected Folder"
-msgstr "A mappa törlése"
+msgstr "Következő kiválasztott mappa"
 
 #: kmmainwidget.cpp:3668
-#, fuzzy, kde-format
-#| msgid "Add Favorite Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Kedvenc mappa hozzáadása"
@@ -5415,10 +5258,9 @@ msgid "Edit Search..."
 msgstr "A keresés szerkesztése…"
 
 #: kmmainwidget.cpp:4137
-#, fuzzy, kde-format
-#| msgid "Configure KMail..."
+#, kde-format
 msgid "Configure Unified Mailbox"
-msgstr "Beállítások - KMail..."
+msgstr "Egyesített postafiók beállítása"
 
 #: kmmainwidget.cpp:4148
 #, kde-format
@@ -5446,9 +5288,7 @@ msgid "Filter %1"
 msgstr "%1. szűrő"
 
 #: kmmainwidget.cpp:4749
-#, fuzzy, kde-format
-#| msgctxt "Show shortcut for focus quick search. Don't change it"
-#| msgid "Search...<%1>"
+#, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Keresés…<%1>"
@@ -5466,8 +5306,7 @@ msgstr ""
 "rések kihasználása révén."
 
 #: kmmainwidget.cpp:4760
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Biztonsági figyelmeztetés"
@@ -5498,22 +5337,19 @@ msgid "Enable Unified Mailboxes"
 msgstr ""
 
 #: kmmainwidget.cpp:4912
-#, fuzzy, kde-format
-#| msgid "&Cancel"
+#, kde-format
 msgid "Cancel"
-msgstr "&Mégsem"
+msgstr "Mégse"
 
 #: kmmainwidget.cpp:4947
-#, fuzzy, kde-format
-#| msgid "Do you want to remove tag '%1'?"
+#, kde-format
 msgid "Do you want to restart Akonadi?"
-msgstr "El szeretné távolítani a(z) „%1” címkét?"
+msgstr "Szeretné újraindítani az Akonadit?"
 
 #: kmmainwidget.cpp:4948
-#, fuzzy, kde-format
-#| msgid "Identity Name"
+#, kde-format
 msgid "Restart Akonadi"
-msgstr "Azonosító"
+msgstr "Akonadi újraindítása"
 
 #: kmmainwidget.cpp:4949
 #, kde-format
@@ -6042,18 +5878,17 @@ msgstr "Az üzenet s&zerkesztése"
 #: messageactions.cpp:78
 #, kde-format
 msgid "Filter on Mailing-&List..."
-msgstr "&Levelezőlistára..."
+msgstr "&Levelezőlistára…"
 
 #: messageactions.cpp:79
-#, fuzzy, kde-format
-#| msgid "&Find Messages..."
+#, kde-format
 msgid "Add Followup Reminder..."
-msgstr "Ker&esés az üzenetek között..."
+msgstr "Nyomkövető emlékeztető hozzáadása…"
 
 #: messageactions.cpp:81
 #, kde-format
 msgid "Send A&gain..."
-msgstr "Elküldés új&ból..."
+msgstr "Elküldés új&ból…"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -6061,18 +5896,15 @@ msgid "New Message From &Template"
 msgstr "Új üzenet mega&dott sablonnal"
 
 #: messageactions.cpp:84
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export to PDF..."
-msgstr "Exportálás..."
+msgstr "Exportálás PDF-be…"
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Üzenet áthelyezése"
+msgstr "Üzenet archiválása"
 
 #: messageactions.cpp:373
 #, kde-format
@@ -6082,14 +5914,12 @@ msgstr "Jegyzet szerkesztése…"
 #: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List..."
-msgstr "Szűrés levelezőlistára..."
+msgstr "Szűrés levelezőlistára…"
 
 #: messageactions.cpp:454
-#, fuzzy, kde-format
-#| msgctxt "name used for a virgin filter"
-#| msgid "unknown"
+#, kde-format
 msgid "<unknown>"
-msgstr "új szűrő"
+msgstr "<ismeretlen>"
 
 #: messageactions.cpp:454
 #, fuzzy, kde-format
@@ -6153,10 +5983,9 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:778
-#, fuzzy, kde-format
-#| msgid "Export..."
+#, kde-format
 msgid "Export to PDF"
-msgstr "Exportálás..."
+msgstr "Exportálás PDF-be"
 
 #: messageactions.cpp:778
 #, kde-format
@@ -6164,29 +5993,25 @@ msgid "PDF document (*.pdf)"
 msgstr ""
 
 #: searchdialog/incompleteindexdialog.cpp:136
-#, fuzzy, kde-format
-#| msgid "Rebuild &index"
+#, kde-format
 msgid "Reindex"
-msgstr "Az index újraé&pítése"
+msgstr "Újraindexelés"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Send Anyway"
+#, kde-format
 msgid "Search Anyway"
-msgstr "Elküldés"
+msgstr "Keresés mindenképp"
 
 #: searchdialog/incompleteindexdialog.cpp:218
-#, fuzzy, kde-format
-#| msgid "Indexing"
+#, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Indexelés"
 
 #: searchdialog/incompleteindexdialog.cpp:221
-#, fuzzy, kde-format
-#| msgid "Configure Completion Order..."
+#, kde-format
 msgid "Indexing Collections..."
-msgstr "A kiegészítési sorrend beállítása..."
+msgstr "Gyűjtemények indexelése…"
 
 #: searchdialog/kmsearchmessagemodel.cpp:80
 #: searchdialog/kmsearchmessagemodel.cpp:87
@@ -6226,8 +6051,7 @@ msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "A keresés nem sikerült. A talált hibák: <ul><li>%1</li></ul>"
 
 #: searchdialog/searchwindow.cpp:73
-#, fuzzy, kde-format
-#| msgid "Find Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Üzenet keresése"
@@ -6242,13 +6066,13 @@ msgstr "&Keresés"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline..."
-msgstr "Beszúr&va..."
+msgstr "Beszúr&va…"
 
 #: searchdialog/searchwindow.cpp:175
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment..."
-msgstr "&Mellékletként..."
+msgstr "&Mellékletként…"
 
 #: searchdialog/searchwindow.cpp:190
 #, kde-format
@@ -6350,14 +6174,14 @@ msgstr ""
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Üzenet másolása"
-msgstr[1] "%1 üzenetek másolása"
+msgstr[1] "%1 üzenet másolása"
 
 #: searchdialog/searchwindow.cpp:780
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Üzenet kivágása"
-msgstr[1] "%1 üzenetek kivágása"
+msgstr[1] "%1 üzenet kivágása"
 
 #: searchdialog/searchwindow.cpp:909
 #, fuzzy, kde-format
@@ -6409,10 +6233,9 @@ msgid "Add New Tag..."
 msgstr "Új címke hozzáadása…"
 
 #: tag/tagselectdialog.cpp:66
-#, fuzzy, kde-format
-#| msgid "Search tag"
+#, kde-format
 msgid "Search tag..."
-msgstr "Címke keresése"
+msgstr "Címke keresése…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -6787,8 +6610,7 @@ msgstr "Az adott mappák kiválasztása:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
-#, fuzzy, kde-format
-#| msgid "Select folders..."
+#, kde-format
 msgid "Select Folders..."
 msgstr "Mappák kijelölése…"
 
