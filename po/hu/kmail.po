@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-03 00:38+0000\n"
-"PO-Revision-Date: 2024-02-06 23:06+0100\n"
+"PO-Revision-Date: 2024-02-07 23:09+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -3559,7 +3559,7 @@ msgstr "egy létező azonosító adatainak átmás&olásával"
 #: identity/xfaceconfigurator.cpp:38
 #, kde-format
 msgid "Face"
-msgstr "Arckép"
+msgstr "Face"
 
 #: identity/xfaceconfigurator.cpp:39
 #, kde-format
@@ -3592,23 +3592,22 @@ msgstr "Nem lesz küldve kép."
 #: identity/xfaceconfigurator.cpp:126
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr ""
+msgstr "A KMail színes képet küld a Face fejlécben."
 
 #: identity/xfaceconfigurator.cpp:129
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
+msgstr "A KMail fekete-fehér képet küld az X-Face fejlécben."
 
 #: identity/xfaceconfigurator.cpp:132
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
-msgstr ""
+msgstr "A KMail elküldi a színes és a fekete-fehér képet is."
 
 #: identity/xfaceconfigurator.cpp:170
-#, fuzzy, kde-format
-#| msgid "Failed to add a message to the folder '%1'."
+#, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr "Nem sikerült üzenetet hozzáadni a következő mappához: \"%1\"."
+msgstr "Nem sikerült csökkenteni a képméretet a fejlécbe illesztéshez."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
@@ -3616,11 +3615,13 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
+"Nem sikerült csökkenteni a képméretet a fejlécbe illesztéshez. Telepítse a "
+"pngquantot a jobb tömörítési eredmény eléréséhez."
 
 #: identity/xfaceconfigurator.cpp:180
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
-msgstr ""
+msgstr "Telepítse a pngquantot a jobb képminőség eléréséhez."
 
 #: identity/xfaceconfigurator.cpp:267
 #, kde-format
@@ -3784,25 +3785,22 @@ msgstr "Duplikátumok eltávolítása"
 
 #: job/removeduplicatemailjob.cpp:63
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Hiba történt a duplikátumok eltávolítása közben"
+msgstr "Hiba történt a duplikált e-mailek eltávolítása közben: „%1”"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
 msgstr "Hiba történt a duplikátumok eltávolítása közben"
 
 #: job/saveasfilejob.cpp:26
-#, fuzzy, kde-format
-#| msgid "Save to File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save File as"
-msgstr "Mentés fájlba"
+msgstr "Fájl mentése másként"
 
 #: kmail_options.h:15
 #, kde-format
@@ -3810,16 +3808,14 @@ msgid "Set subject of message"
 msgstr "Az üzenet tárgyának beállítása"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "„Fejléc” hozzáadása az üzenethez. Ez megismételhető"
+msgstr "Másolat küldése a címre. Ez megismételhető"
 
 #: kmail_options.h:20
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "„Fejléc” hozzáadása az üzenethez. Ez megismételhető"
+msgstr "Titkos másolat küldése a címre. Ez megismételhető"
 
 #: kmail_options.h:23
 #, kde-format
@@ -3857,10 +3853,9 @@ msgid "Only open composer window"
 msgstr "Csak az üzenetszerkesztő ablak megnyitása"
 
 #: kmail_options.h:32
-#, fuzzy, kde-format
-#| msgid "Set Identity To"
+#, kde-format
 msgid "Set identity name"
-msgstr "Az azonosító beállítása"
+msgstr "Az azonosító nevének beállítása"
 
 #: kmail_options.h:33
 #, kde-format
@@ -3870,7 +3865,7 @@ msgstr "A megadott üzenetfájl megtekintése"
 #: kmail_options.h:35
 #, kde-format
 msgid "Lists the available options for user feedback"
-msgstr ""
+msgstr "Listázza a felhasználói visszajelzés lehetséges opcióit"
 
 #: kmail_options.h:40
 #, kde-format
@@ -3918,17 +3913,15 @@ msgstr "&Mappa"
 #. i18n: ectx: Menu (apply_filters_folder_actions)
 #: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3468 kmmainwin.rc:134
 #: kmmainwin.rc:291
-#, fuzzy, kde-format
-#| msgid "Appl&y All Filters On Folder"
+#, kde-format
 msgid "Apply Filters on Folder"
-msgstr "Az összes szűrő al&kalmazása a mappán"
+msgstr "Szűrők alkalmazása a mappára"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
 #: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
-#, fuzzy, kde-format
-#| msgid "Current Folder & All Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
-msgstr "Az aktuális mappa (almappákkal együtt)"
+msgstr "Szűrők alkalmazása a mappára és összes almappájára"
 
 #. i18n: ectx: Menu (file)
 #. i18n: ectx: Menu (message)
@@ -3981,11 +3974,10 @@ msgid "Main Toolbar"
 msgstr "Alap eszköztár"
 
 #: kmcommands.cpp:302
-#, fuzzy, kde-format
-#| msgid "Please wait"
+#, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
-msgstr "Egy kis türelmet kérek"
+msgstr "Kis türelmet"
 
 #: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
@@ -4106,10 +4098,9 @@ msgid "Send Email"
 msgstr "E-mail küldése"
 
 #: kmkernel.cpp:637 kmmainwidget.cpp:2454 kmmainwidget.cpp:2469
-#, fuzzy, kde-format
-#| msgid "About to send email..."
+#, kde-format
 msgid "Impossible to send email"
-msgstr "Üzenet küldése..."
+msgstr "Lehetetlen e-mailt küldeni"
 
 #: kmkernel.cpp:668
 #, kde-format
@@ -4131,11 +4122,10 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "A KMail jelenleg offline módban van, mit szeretne tenni?"
 
 #: kmkernel.cpp:745
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "Van/nincs kapcsolat"
+msgstr "Online/Offline"
 
 #: kmkernel.cpp:746 kmmainwidget.cpp:2442
 #, kde-format
@@ -4199,12 +4189,13 @@ msgid "Initiating sending process..."
 msgstr "Küldés előkészítése…"
 
 #: kmkernel.cpp:1536
-#, fuzzy, kde-format
-#| msgid "Resource %1 is broken."
+#, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
-msgstr "A(z) %1 erőforrás sérült."
+msgstr ""
+"A(z) %1 erőforrás sérült.\n"
+"%2"
 
 #: kmkernel.cpp:1712 kmkernel.cpp:1718
 #, kde-format
@@ -4766,7 +4757,7 @@ msgstr "Az aktuális mappa (almappákkal együtt)"
 #: kmmainwidget.cpp:3080
 #, kde-format
 msgid "&Assign Shortcut..."
-msgstr "Billentyűparan&cs hozzárendelése..."
+msgstr "Billentyűparan&cs hozzárendelése…"
 
 #: kmmainwidget.cpp:3098
 #, kde-format
@@ -4901,11 +4892,10 @@ msgid "Save A&ttachments..."
 msgstr "Mellékle&tek mentése…"
 
 #: kmmainwidget.cpp:3267
-#, fuzzy, kde-format
-#| msgid "Save All Attachments..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Az összes csatolás mentése..."
+msgstr "Összes melléklet törlése"
 
 #: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
@@ -5070,10 +5060,9 @@ msgid "Manage &Sieve Scripts..."
 msgstr "A Sieve-szkriptek &kezelése..."
 
 #: kmmainwidget.cpp:3406
-#, fuzzy, kde-format
-#| msgid "Add Account"
+#, kde-format
 msgid "&Add Account..."
-msgstr "Postafiók hozzáadása"
+msgstr "Fiók hozzá&adása…"
 
 #: kmmainwidget.cpp:3411
 #, kde-format
@@ -5111,10 +5100,9 @@ msgid "Serverside Subscription..."
 msgstr "Kiszolgálóoldali előfizetés..."
 
 #: kmmainwidget.cpp:3452 kmmainwidget.cpp:3460
-#, fuzzy, kde-format
-#| msgid "Appl&y All Filters"
+#, kde-format
 msgid "Apply All Filters"
-msgstr "Az összes szűrő al&kalmazása"
+msgstr "Az összes szűrő alkalmazása"
 
 #: kmmainwidget.cpp:3473
 #, fuzzy, kde-format
@@ -5363,10 +5351,9 @@ msgid "Restart"
 msgstr "Újraindítás"
 
 #: kmmainwidget.cpp:4959
-#, fuzzy, kde-format
-#| msgid "Akonadi Id:"
+#, kde-format
 msgid "Akonadi restarted."
-msgstr "Akonadi azonosító:"
+msgstr "Akonadi újraindítva."
 
 #: kmmainwin.cpp:51
 #, kde-format
@@ -5456,10 +5443,9 @@ msgstr "A kép mentése lemezre…"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:184 ui/encodedimagepicker.ui:78
-#, fuzzy, kde-format
-#| msgid "Share image..."
+#, kde-format
 msgid "Open Image..."
-msgstr "Kép megosztása…"
+msgstr "Kép megnyitása…"
 
 #: kmreaderwin.cpp:190
 #, kde-format
@@ -5544,10 +5530,9 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr ""
 
 #: kmreaderwin.cpp:308
-#, fuzzy, kde-format
-#| msgid "KDE Email Client"
+#, kde-format
 msgid "The KDE Mail Client"
-msgstr "KDE-alapú levelezőprogram"
+msgstr "A KDE levelezőkliense"
 
 #: kmreaderwin.cpp:317
 #, fuzzy, kde-format
@@ -5556,16 +5541,14 @@ msgid "Retrieving Folder Contents"
 msgstr "Mappatulajdonságok lekérése"
 
 #: kmreaderwin.cpp:317
-#, fuzzy, kde-format
-#| msgid "Please wait"
+#, kde-format
 msgid "Please wait . . ."
-msgstr "Egy kis türelmet kérek"
+msgstr "Kis türelmet…"
 
 #: kmreaderwin.cpp:323 kmreaderwin.cpp:332
-#, fuzzy, kde-format
-#| msgid "offline"
+#, kde-format
 msgid "Offline"
-msgstr "nem elérhető"
+msgstr "Offline"
 
 #: kmreaderwin.cpp:325
 #, fuzzy, kde-format
@@ -5639,11 +5622,10 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message..."
-msgstr "Ú&j üzenet..."
+msgstr "Új üzenet…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:47
 #, kde-format
@@ -5668,10 +5650,9 @@ msgid "Choose this option to synchronize your groupware email."
 msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgid "New Messages"
-msgstr "Új üzenet"
+msgstr "Új üzenetek"
 
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
@@ -5682,7 +5663,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
-msgstr ""
+msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, fuzzy, kde-format
@@ -5691,10 +5672,9 @@ msgid "No unread messages in your monitored folders"
 msgstr "A ki&menő üzenetek mappájában levő üzenetek elküldése:"
 
 #: kontactplugin/kmail/summarywidget.cpp:214
-#, fuzzy, kde-format
-#| msgid "Destination folder: %1"
+#, kde-format
 msgid "Open Folder: \"%1\""
-msgstr "Célmappa: %1"
+msgstr "Mappa megnyitása: „%1”"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:61
 #, kde-format
@@ -5770,17 +5750,17 @@ msgstr "(c) A Kontactfejlesztői, 2003-2021."
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "Sven Lueppken"
-msgstr ""
+msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:107
 #, kde-format
 msgid "Cornelius Schumacher"
-msgstr ""
+msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgid "Tobias Koenig"
-msgstr ""
+msgstr "Tobias Koenig"
 
 #: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:136
 #, kde-format
@@ -5996,7 +5976,7 @@ msgstr "Exportálás PDF-be"
 #: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
-msgstr ""
+msgstr "PDF dokumentum (*.pdf)"
 
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
@@ -7475,95 +7455,83 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Format"
+#, kde-format
 msgid "Form"
 msgstr "Formátum"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/xfaceconfigurator.ui:22
-#, fuzzy, kde-format
-#| msgid "&Send picture with every message"
+#, kde-format
 msgid "Send picture with every message:"
-msgstr "Kép kül&dése minden üzenettel"
+msgstr "Kép küldése minden üzenettel:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:30
 #, kde-format
 msgid "Don't send"
-msgstr ""
+msgstr "Ne küldje"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:35
 #, kde-format
 msgid "Send color (Face)"
-msgstr ""
+msgstr "Színes küldése (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:40
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr ""
+msgstr "Fekete-fehér küldése (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgid "Send both"
-msgstr "Küldés most"
+msgstr "Mindkettő küldése"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/xfaceconfigurator.ui:68
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>KMail can send a small (48x48 pixels), low-quality, monochrome "
-#| "picture with every message. For example, this could be a picture of you "
-#| "or a glyph. It is shown in the recipient's mail client (if supported).</"
-#| "qt>"
+#, kde-format
 msgid ""
 "KMail can send a small (48x48 pixels) low-quality picture with every "
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"<qt>A KMail automatikusan mellékelni tud minden üzenethez egy kis méretű "
-"(48x48 képpontos) fekete-fehér képet. Például ez lehet az Ön fényképe vagy "
-"valamilyen embléma. A kép megjelenik a címzett kliensében (ha az ő "
-"levelezőprogramja támogatja ezt a lehetőséget).</qt>"
+"A KMail automatikusan mellékelni tud minden üzenethez egy kis méretű (48x48 "
+"képpontos) képet. Például ez lehet az Ön fényképe vagy valamilyen embléma. A "
+"kép megjelenik a címzett kliensében (ha az ő levelezőprogramja támogatja ezt "
+"a lehetőséget)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78
 #, kde-format
 msgid "An informative text about the current mode!"
-msgstr ""
+msgstr "Informatív szöveg a jelenlegi módról."
 
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
 msgid "%1 seconds"
-msgstr ""
+msgstr "%1 másodperc"
 
 #: undosend/undosendcombobox.cpp:24
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgid "5 minutes"
-msgstr " perc"
+msgstr "5 perc"
 
 #: undosend/undosendcreatejob.cpp:47
 #, kde-format
 msgid "Undo send"
-msgstr ""
+msgstr "Küldés visszavonása"
 
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>Címzett:</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>Tárgy:</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
@@ -7588,30 +7556,27 @@ msgid "Cannot move message. %1"
 msgstr "Nem lehet áthelyezni az üzenetet. %1"
 
 #: userfeedback/accountinfosource.cpp:22
-#, fuzzy, kde-format
-#| msgid "Account Information"
+#, kde-format
 msgid "Account information"
-msgstr "A postafiók jellemzői"
+msgstr "Fiókinformációk"
 
 #: userfeedback/accountinfosource.cpp:27
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
-msgstr ""
+msgstr "A KMailben beállított fiókok száma és típusa (fogadó és küldő)."
 
 #: userfeedback/plugininfosource.cpp:19
-#, fuzzy, kde-format
-#| msgid "Login Information"
+#, kde-format
 msgid "Plugins Information"
-msgstr "Bejelentkezési adatok"
+msgstr "Bővítményinformációk"
 
 #: userfeedback/plugininfosource.cpp:24
 #, kde-format
 msgid "Plugins used in KMail."
-msgstr ""
+msgstr "A KMailben használt bővítmények."
 
 #: util.cpp:151
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Törlés"
