@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-03 02:28+0000\n"
-"PO-Revision-Date: 2024-02-07 23:09+0100\n"
+"PO-Revision-Date: 2024-02-08 23:08+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -4208,10 +4208,9 @@ msgid "Send Later Agent was not registered."
 msgstr "A küldés később ügynök nincs regisztrálva."
 
 #: kmlaunchexternalcomponent.cpp:62
-#, fuzzy, kde-format
-#| msgid "Archive Mail Agent was not registered."
+#, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr "A levélarchiváló ügynök nincs regisztrálva."
+msgstr "A levélegyesítő ügynök nincs regisztrálva."
 
 #: kmlaunchexternalcomponent.cpp:74
 #, kde-format
@@ -4219,14 +4218,13 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "A nyomkövető emlékeztető ügynök nincs regisztrálva."
 
 #: kmlaunchexternalcomponent.cpp:87
-#, fuzzy, kde-format
-#| msgid "Could not start certificate manager; please check your installation."
+#, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr ""
-"A tanúsítványkezelőt nem sikerült elindítani. Ellenőrizze, hogy minden "
-"szükséges rész telepítve van-e."
+"A tanúsítványkezelőt nem sikerült elindítani. Ellenőrizze, hogy a Kleopatra "
+"megfelelően telepítve van-e."
 
 #: kmlaunchexternalcomponent.cpp:89
 #, kde-format
@@ -4235,13 +4233,13 @@ msgid "KMail Error"
 msgstr "KMail hiba"
 
 #: kmlaunchexternalcomponent.cpp:102
-#, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
+"Az importálás varázslót nem sikerült elindítani. Ellenőrizze, hogy az "
+"Importvarázsló megfelelően telepítve van-e."
 
 #: kmlaunchexternalcomponent.cpp:104
 #, kde-format
@@ -4265,13 +4263,13 @@ msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Nem lehet elindítani a „PIM adatexportáló” programot"
 
 #: kmlaunchexternalcomponent.cpp:137
-#, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
+"Az Importvarázslót nem sikerült elindítani Ellenőrizze, hogy az "
+"Importvarázsló megfelelően telepítve van-e."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, kde-format
@@ -4559,24 +4557,22 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"A kiválasztott üzenet titkosított. Jelenleg nem lehetséges mellékletet "
+"törölni titkosított üzenetekből."
 msgstr[1] ""
+"A kiválasztás csak titkosított üzeneteket tartalmaz, amikből jelenleg nem "
+"lehetséges mellékleteket törölni."
 
 #: kmmainwidget.cpp:2388
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mellékletek törlése titkosított üzenetből"
+msgstr[1] "Mellékletek törlése titkosított üzenetekből"
 
 #: kmmainwidget.cpp:2393
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4584,11 +4580,11 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Biztosan törölni szeretné a kijelölt üzenetet?<br />A törölt üzeneteket "
-"nem lehet később visszanyerni!</qt>"
+"<html><p>Biztosan törölni szeretné a kiválasztott üzenet összes mellékletét?"
+"<br />A törlés után nem lehet azokat visszaállítani.</p></html>"
 msgstr[1] ""
-"<qt>Biztosan törölni szeretné a kijelölt %1 üzenetet?<br />A törölt "
-"üzeneteket nem lehet később visszanyerni!</qt>"
+"<html><p>Biztosan törölni szeretné a(z) %1 kiválasztott üzenet összes "
+"mellékletét?<br />A törlés után nem lehet azokat visszaállítani.</p></html>"
 
 #: kmmainwidget.cpp:2400
 #, kde-format
@@ -4596,6 +4592,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Vegye figyelembe, hogy a mellékletek törlése egy kriptográfiailag "
+"aláírt üzenetből érvényteleníti annak aláírását.</p></html>"
 
 #: kmmainwidget.cpp:2405
 #, kde-format
@@ -4603,6 +4601,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Jelenleg nem lehetséges törölni a titkosított üzenetek mellékleteit."
+"<br />A titkosított üzenetek figyelmen kívül lesznek hagyva.</p></html>"
 
 #: kmmainwidget.cpp:2410
 #, kde-format
@@ -4613,7 +4613,7 @@ msgstr "Mellékletek törlése"
 #: kmmainwidget.cpp:2901
 #, kde-format
 msgid "Save &As..."
-msgstr "Mentés m&int..."
+msgstr "Mentés máské&nt…"
 
 #: kmmainwidget.cpp:2912
 #, kde-format
@@ -4671,15 +4671,14 @@ msgid "Filter &Log Viewer..."
 msgstr "A szű&rési napló megtekintése…"
 
 #: kmmainwidget.cpp:2993
-#, fuzzy, kde-format
-#| msgid "Notification"
+#, kde-format
 msgid "Notification History..."
-msgstr "Értesítés"
+msgstr "Értesítések előzményei…"
 
 #: kmmainwidget.cpp:2998
 #, kde-format
 msgid "&Import from another Email Client..."
-msgstr ""
+msgstr "&Importálás másik levelezőprogramból…"
 
 #: kmmainwidget.cpp:3003
 #, kde-format
@@ -4725,7 +4724,7 @@ msgstr "A szál tö&rlése"
 #: kmmainwidget.cpp:3050 kmmainwidget.cpp:4100
 #, kde-format
 msgid "&Find Messages..."
-msgstr "Ker&esés az üzenetek között..."
+msgstr "Ker&esés az üzenetek között…"
 
 #: kmmainwidget.cpp:3055
 #, kde-format
@@ -4740,13 +4739,13 @@ msgstr "Le&velezőlista-kezelés..."
 #: kmmainwidget.cpp:3070
 #, kde-format
 msgid "&Clear Akonadi Cache..."
-msgstr ""
+msgstr "Akonadi gyorsítótár &törlése…"
 
 #: kmmainwidget.cpp:3075
-#, fuzzy, kde-format
-#| msgid "Current Folder & All Subfolders"
+#, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Az aktuális mappa (almappákkal együtt)"
+msgstr ""
+"Akonadi gyorsítótár &törlése ebben a mappában és az összes almappájában"
 
 #: kmmainwidget.cpp:3080
 #, kde-format
@@ -4761,7 +4760,7 @@ msgstr "&Lejárási beállítások"
 #: kmmainwidget.cpp:3123
 #, kde-format
 msgid "&Archive Folder..."
-msgstr "Mappa &archiválása..."
+msgstr "Mappa &archiválása…"
 
 #: kmmainwidget.cpp:3131
 #, kde-format
@@ -4807,23 +4806,22 @@ msgstr "Szűrő lét&rehozása"
 #: kmmainwidget.cpp:3187
 #, kde-format
 msgid "Filter on &Subject..."
-msgstr "A &tárgyra..."
+msgstr "A &tárgyra…"
 
 #: kmmainwidget.cpp:3194
 #, kde-format
 msgid "Filter on &From..."
-msgstr "A &feladóra..."
+msgstr "A &feladóra…"
 
 #: kmmainwidget.cpp:3200
 #, kde-format
 msgid "Filter on &To..."
-msgstr "A &címzettre..."
+msgstr "A &címzettre…"
 
 #: kmmainwidget.cpp:3206
-#, fuzzy, kde-format
-#| msgid "Filter on &To..."
+#, kde-format
 msgid "Filter on &Cc..."
-msgstr "A &címzettre..."
+msgstr "A &másolatra…"
 
 #: kmmainwidget.cpp:3218
 #, kde-format
@@ -4892,10 +4890,9 @@ msgid "Delete All Attachments"
 msgstr "Összes melléklet törlése"
 
 #: kmmainwidget.cpp:3273
-#, fuzzy, kde-format
-#| msgid "Copy Item To..."
+#, kde-format
 msgid "Copy Decrypted To..."
-msgstr "Elem másolása ide…"
+msgstr "Visszafejtett másolása ide…"
 
 #: kmmainwidget.cpp:3277
 #, kde-format
@@ -5099,10 +5096,9 @@ msgid "Apply All Filters"
 msgstr "Az összes szűrő alkalmazása"
 
 #: kmmainwidget.cpp:3471
-#, fuzzy, kde-format
-#| msgid "Current Folder & All Subfolders"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Az aktuális mappa (almappákkal együtt)"
+msgstr "Szűrők alkalmazása a mappára és összes almappájára"
 
 #: kmmainwidget.cpp:3476
 #, kde-format
@@ -5212,12 +5208,12 @@ msgstr "Az üzenet átmozgatása ide"
 #: kmmainwidget.cpp:3621
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
+msgstr "Összes üzenet megjelölése olvasottként ebben a mappában és almappáiban"
 
 #: kmmainwidget.cpp:3626
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
+msgstr "Duplikátumok eltávolítása ebből a mappából és almappáiból"
 
 #: kmmainwidget.cpp:3632
 #, kde-format
@@ -5313,16 +5309,22 @@ msgid ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
+"Több, mint egy postafiók van beállítva.\n"
+"Szeretné bekapcsolni az Egyesített postafiók funkciót a bejövő, elküldött és "
+"piszkozatok mappák egyesített tartalmának megjelenítéséhez?\n"
+"A KMail bővítménybeállításaiban konfigurálhatja az egyesített\n"
+"postafiókokat, létrehozhat sajátokat vagy teljesen ki is kapcsolhatja a "
+"funkciót."
 
 #: kmmainwidget.cpp:4910
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr ""
+msgstr "Bekapcsolja az egyesített postafiókokat?"
 
 #: kmmainwidget.cpp:4911
 #, kde-format
 msgid "Enable Unified Mailboxes"
-msgstr ""
+msgstr "Egyesített postafiókok bekapcsolása"
 
 #: kmmainwidget.cpp:4912
 #, kde-format
@@ -5428,7 +5430,7 @@ msgstr "A link mentése mint…"
 #: kmreaderwin.cpp:172
 #, kde-format
 msgid "&Find in Message..."
-msgstr "Ker&esés az üzenet szövegében..."
+msgstr "Ker&esés az üzenet szövegében…"
 
 #: kmreaderwin.cpp:178
 #, kde-format
@@ -5486,42 +5488,36 @@ msgid "Less GUI freezes, mail checks happen in the background"
 msgstr "Kevesebb lefagyás, a levelek ellenőrzése a háttérben történik"
 
 #: kmreaderwin.cpp:272
-#, fuzzy
-#| msgid "GnuPG support"
 msgid "Plugins support"
-msgstr "GnuPG-támogatás"
+msgstr "Bővítménytámogatás"
 
 #: kmreaderwin.cpp:273
 msgid "New HTML renderer (QtWebEngine)"
-msgstr ""
+msgstr "Új HTML-megjelenítő (QtWebengine)"
 
 #: kmreaderwin.cpp:274
-#, fuzzy
-#| msgid "Check spelling before send"
 msgid "Added Check for Phishing URL"
-msgstr "Helyesírás-ellenőrzés küldés előtt"
+msgstr "Adathalász URL-címek ellenőrzése"
 
 #: kmreaderwin.cpp:275
 msgid "Added Check DKIM"
-msgstr ""
+msgstr "DKIM ellenőrzése"
 
 #: kmreaderwin.cpp:276
 msgid "Added Markdown Editing Support"
-msgstr ""
+msgstr "Markdown szerkesztés támogatása"
 
 #: kmreaderwin.cpp:277
-#, fuzzy
-#| msgid "GnuPG support"
 msgid "Added Grammar Plugin Support"
-msgstr "GnuPG-támogatás"
+msgstr "Nyelvtani bővítmény támogatása"
 
 #: kmreaderwin.cpp:278
 msgid "Added etesync resource support"
-msgstr ""
+msgstr "Etesync erőforrás támogatása"
 
 #: kmreaderwin.cpp:279
 msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
+msgstr "Microsoft Exchange Web Services erőforrás támogatása"
 
 #: kmreaderwin.cpp:308
 #, kde-format
@@ -5529,10 +5525,9 @@ msgid "The KDE Mail Client"
 msgstr "A KDE levelezőkliense"
 
 #: kmreaderwin.cpp:317
-#, fuzzy, kde-format
-#| msgid "Retrieving folder properties"
+#, kde-format
 msgid "Retrieving Folder Contents"
-msgstr "Mappatulajdonságok lekérése"
+msgstr "Mappatartalmak lekérése"
 
 #: kmreaderwin.cpp:317
 #, kde-format
@@ -5545,32 +5540,22 @@ msgid "Offline"
 msgstr "Offline"
 
 #: kmreaderwin.cpp:325
-#, fuzzy, kde-format
-#| msgid ""
-#| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
-#| "mode. Click <a href=\"kmail:goOnline\">here</a> to go online . . .</"
-#| "p>&nbsp;"
+#, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
-"<h2 style='margin-top: 0px;'>Offline</h2><p>A KMail jelenleg offline módban "
-"van. <a href=\"kmail:goOnline\">Kattintson ide</a>, ha online módba szeretne "
-"váltani . . .</p>&nbsp;"
+"A KMail jelenleg offline módban van. <a href=\"kmail:goOnline\">Kattintson "
+"ide</a>, ha online módba szeretne váltani…</p>"
 
 #: kmreaderwin.cpp:334
-#, fuzzy, kde-format
-#| msgid ""
-#| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
-#| "offline mode. Click <a href=\"kmail:goResourceOnline\">here</a> to go "
-#| "online . . .</p>&nbsp;"
+#, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
-"<h2 style='margin-top: 0px;'>Offline</h2><p>A fiók jelenleg offline módban "
-"van. Kattintson <a href=\"kmail:goResourceOnline\">ide</a>, hogy elérhető "
-"legyen…</p>&nbsp;"
+"A fiók jelenleg offline módban van. Kattintson <a href=\"kmail:"
+"goResourceOnline\">ide</a>, hogy elérhető legyen…</p>"
 
 #: kmreaderwin.cpp:909
 #, kde-format
@@ -5595,16 +5580,15 @@ msgstr[0] "1 olvasatlan üzenet"
 msgstr[1] "%1 olvasatlan üzenet"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
-#, fuzzy, kde-format
-#| msgid "Shortcut for Folder %1"
+#, kde-format
 msgid "Show full path for folders"
-msgstr "A(z) %1 mappa billentyűparancsa"
+msgstr "Mappák teljes elérési útjainak megjelenítése"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:54
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show full path for each folder"
-msgstr ""
+msgstr "Minden egyes mappa teljes elérési útjának megjelenítése"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:56
 #, kde-format
@@ -5614,6 +5598,9 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
+"Kapcsolja be ezt a beállítást, ha látni szeretné az áttekintésben listázott "
+"összes mappa teljes elérési útját. Ha nincs bekapcsolva, csak az alapmappa "
+"elérési útja jelenik meg."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
@@ -5628,20 +5615,21 @@ msgid ""
 "You will be presented with a dialog where you can create and send a new "
 "email message."
 msgstr ""
+"Megjelenik egy párbeszédablak, ahol új e-mail üzenetet hozhat létre és "
+"küldhet el."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:52
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
-msgstr "&Levél küldése"
+msgstr "Levél szinkronizálása"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
 #: kontactplugin/kmail/kmail_plugin.cpp:55
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
-msgstr ""
+msgstr "Válassza ezt az opciót a csoportmunka-levelének szinkronizálásához."
 
 #: kontactplugin/kmail/summarywidget.cpp:48
 #, kde-format
@@ -5651,7 +5639,7 @@ msgstr "Új üzenetek"
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr ""
+msgstr "<qt><b>%1</b><br/>Összesen: %2<br/>Olvasatlan: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:155
 #, kde-format
@@ -5660,10 +5648,9 @@ msgid "%1 / %2"
 msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "No unread messages in your monitored folders"
-msgstr "A ki&menő üzenetek mappájában levő üzenetek elküldése:"
+msgstr "Nincsenek olvasatlan üzenetek a figyelt mappákban"
 
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
@@ -5674,29 +5661,29 @@ msgstr "Mappa megnyitása: „%1”"
 #, kde-format
 msgctxt "@title:column plugin name"
 msgid "Summary Plugin Name"
-msgstr ""
+msgstr "Áttekintő bővítmény neve"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
 #, kde-format
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
+"Válassza ki az áttekintő oldalon megjelenítendő bővítményáttekintéseket."
 
 #: kontactplugin/summary/summaryview_part.cpp:47
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
-msgstr ""
+msgstr "Kontact áttekintő"
 
 #: kontactplugin/summary/summaryview_part.cpp:56
-#, fuzzy, kde-format
-#| msgid "&Configure KMail..."
+#, kde-format
 msgid "&Configure Summary View..."
-msgstr "&Beállítások..."
+msgstr "Áttekintő nézet &beállítása…"
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
 msgid "Configure the summary view"
-msgstr ""
+msgstr "Az áttekintő nézet beállítása"
 
 #: kontactplugin/summary/summaryview_part.cpp:63
 #, kde-format
@@ -5705,41 +5692,39 @@ msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
+"Ezt választva megjelenik egy párbeszédablak, ahol kiválaszthatja a látni "
+"kívánt áttekintéseket és a saját tetszése szerint beállíthatja azokat."
 
 #: kontactplugin/summary/summaryview_part.cpp:105
-#, fuzzy, kde-format
-#| msgid "Smart for&mat (%1)"
+#, kde-format
 msgid "Summary for %1"
-msgstr "Intelligens for&mátum (%1)"
+msgstr "%1 áttekintése"
 
 #: kontactplugin/summary/summaryview_part.cpp:363
 #, kde-format
 msgid "What's next?"
-msgstr ""
+msgstr "Mi következik?"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:29
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgid "Sync All"
-msgstr "&Levél küldése"
+msgstr "Mind szinkronizálása"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:42
-#, fuzzy, kde-format
-#| msgctxt "Permissions"
-#| msgid "All"
+#, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
-msgstr "Teljes"
+msgstr "Mind"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:102
 #, kde-format
 msgid "Kontact Summary View"
-msgstr ""
+msgstr "Kontact áttekintő nézet"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "(c) 2003-2021 The Kontact developers"
-msgstr "(c) A Kontactfejlesztői, 2003-2021."
+msgstr "(c) A Kontact fejlesztői, 2003-2021."
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
@@ -5822,10 +5807,9 @@ msgid "&Redirect..."
 msgstr "Át&irányítva..."
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message t&o Mailing-List..."
+#, kde-format
 msgid "New Message to Recipients..."
-msgstr "Új üzenet a le&velezőlistára..."
+msgstr "Új üzenet a címzetteknek…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -5850,10 +5834,9 @@ msgid "Add Note..."
 msgstr "Jegyzet hozzáadása…"
 
 #: messageactions.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Edit Message"
+#, kde-format
 msgid "&Edit As New"
-msgstr "Az üzenet s&zerkesztése"
+msgstr "Sz&erkesztés újként"
 
 #: messageactions.cpp:78
 #, kde-format
@@ -5902,11 +5885,9 @@ msgid "<unknown>"
 msgstr "<ismeretlen>"
 
 #: messageactions.cpp:454
-#, fuzzy, kde-format
-#| msgctxt "@title:tab Mailing list settings for a folder."
-#| msgid "Mailing List"
+#, kde-format
 msgid "Mailing List Name: %1"
-msgstr "Levelezőlista"
+msgstr "Levelezőlista neve: %1"
 
 #: messageactions.cpp:457
 #, kde-format
@@ -6025,8 +6006,7 @@ msgid "Folder"
 msgstr "Mappa"
 
 #: searchdialog/searchpatternwarning.cpp:25
-#, fuzzy, kde-format
-#| msgid "Search failed. Errors found: <ul><li>%1</li></ul>"
+#, kde-format
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "A keresés nem sikerült. A talált hibák: <ul><li>%1</li></ul>"
 
@@ -6164,10 +6144,9 @@ msgstr[0] "Üzenet kivágása"
 msgstr[1] "%1 üzenet kivágása"
 
 #: searchdialog/searchwindow.cpp:909
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgid "Checking index status..."
-msgstr "Levelek keresése indításkor"
+msgstr "Index állapotának ellenőrzése…"
 
 #: secondarywindow.cpp:57
 #, kde-format
@@ -6193,7 +6172,7 @@ msgstr "Több…"
 #: tag/tagactionmanager.cpp:188
 #, kde-format
 msgid "Tag not Found"
-msgstr ""
+msgstr "A címke nem található"
 
 #: tag/tagactionmanager.cpp:204
 #, kde-format
@@ -6201,8 +6180,7 @@ msgid "Toggle Message Tag: %1"
 msgstr "Üzenetjelző átbillentése: %1"
 
 #: tag/tagselectdialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Select Tags"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Címkék kiválasztása"
@@ -6249,8 +6227,7 @@ msgstr "Egyéb mű&veletek..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
-#, fuzzy, kde-format
-#| msgid "Set From Address Book"
+#, kde-format
 msgid "Set from Address Book"
 msgstr "Beállítás címjegyzékből"
 
@@ -6317,20 +6294,23 @@ msgid ""
 "for priority reindexing. If you uncheck a folder it may still be indexed "
 "later, unless it was manually excluded from indexing."
 msgstr ""
+"Néhány mappa, amiben keresni kívánt, még nincs teljesen indexelve, vagy ki "
+"lett zárva az indexelésből. Az alább bejelölt mappák mindegyikére be lesz "
+"ütemezve az újraindexelés prioritással. Ha megszünteti egy mappa "
+"kijelölését, később még indexelődhet, hacsak kézzel ki nem zárja az "
+"indexelésből."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
-#, fuzzy, kde-format
-#| msgid "Select All Text"
+#, kde-format
 msgid "&Select All"
-msgstr "Az összes szöveg kijelölése"
+msgstr "Ö&sszes kijelölése"
 
 #. i18n: ectx: property (text), widget (QPushButton, unselectAllBtn)
 #: ui/incompleteindexdialog.ui:59
-#, fuzzy, kde-format
-#| msgid "Select All Text"
+#, kde-format
 msgid "Unselect All"
-msgstr "Az összes szöveg kijelölése"
+msgstr "Kijelölés megszüntetése"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
@@ -6346,16 +6326,12 @@ msgstr "A helyi törölt üz&enetek mappa kiürítése kilépéskor"
 
 #. i18n: ectx: property (text), widget (QLabel, mLoopLabel)
 #: ui/miscpagemaintab.ui:39
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "to be continued with \"do not loop\", \"loop in current folder\", and "
-#| "\"loop in all folders\""
-#| msgid "&When trying to find unread messages:"
+#, kde-format
 msgctxt ""
 "to be continued with \"do not loop\", \"loop in current folder\", and \"loop "
 "in all folders\""
 msgid "When &trying to find unread messages:"
-msgstr "Még nem olvasott ü&zenetek keresésekor:"
+msgstr "Olvasatlan ü&zenetek keresésekor:"
 
 #. i18n: ectx: property (text), widget (QLabel, mEnterFolderLabel)
 #: ui/miscpagemaintab.ui:58
@@ -6404,44 +6380,7 @@ msgstr "Az akt&uális üzenet megjelölése olvasottnak"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
-#, fuzzy, kde-format
-#| msgctxt "what's this help"
-#| msgid ""
-#| "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
-#| "REC-html40/strict.dtd\">\n"
-#| "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/"
-#| "css\">\n"
-#| "p, li { white-space: pre-wrap; }\n"
-#| "</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; "
-#| "font-weight:400; font-style:normal;\">\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">When jumping to the "
-#| "next unread message, it may occur that no more unread messages are below "
-#| "the current message.</p>\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Do not loop:</span> The search will stop at the last "
-#| "message in the current folder.</p>\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Loop in current folder:</span> The search will continue at "
-#| "the top of the message list, but not go to another folder.</p>\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Loop in all folders:</span> The search will continue at the "
-#| "top of the message list. If no unread messages are found it will then "
-#| "continue to the next folder.</p>\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\">Similarly, when "
-#| "searching for the previous unread message, the search will start from the "
-#| "bottom of the message list and continue to the previous folder depending "
-#| "on which option is selected.</p>\n"
-#| "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "weight:600;\">Loop in all marked folders: </span>This is the same as "
-#| "\"Loop in all folders\" except that only folders are taken into account "
-#| "which have been marked with the folder property \"Act on new/unread mail "
-#| "in this folder\".</p></body></html>"
+#, kde-format
 msgctxt "what's this help"
 msgid ""
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"https://www.w3.org/TR/"
@@ -6480,7 +6419,7 @@ msgid ""
 "been marked with the folder property \"Act on new/unread mail in this folder"
 "\".</p></body></html>"
 msgstr ""
-"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"https://www.w3.org/TR/"
 "REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
 "\">\n"
@@ -6553,16 +6492,15 @@ msgstr "&Induláskor megnyitandó mappa:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
-#, fuzzy, kde-format
-#| msgid "Sending Without Confirmation"
+#, kde-format
 msgid "Allow deleting messages without confirmation"
-msgstr "Küldés megerősítés nélkül"
+msgstr "Megerősítés nélküli üzenettörlés engedélyezése"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
-msgstr ""
+msgstr "Mappák fogásának és húzásának engedélyezése"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -6614,17 +6552,15 @@ msgstr "Ü&zenet megnyitása"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "Beállítás alapértelmezésként"
+msgstr "Biztonsági alapértelmezések"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "Titkosított üzenet"
+msgstr "Piszkozatok titkosítása"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6658,62 +6594,56 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Encrypted message"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Titkosított üzenet"
+msgstr "Elküldött üzenetek titko&sítása"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "Az üzenet elektronikus a&láírása"
+msgstr "Minden üzenet aláírása"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
-#| msgid "Automatically encrypt &messages whenever possible"
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "Az üzenetek titkosítása min&dig, amikor csak lehetséges"
+msgstr "Minden üzenet titkosítása, ha lehetséges"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Encryption indicators"
-msgstr "Titkossági szint jelző megjelenítése"
+msgstr "Titkosítási jelzők"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator in editor"
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "Az aláírt/titkosított jelző megjelenítése a szerkesztőben"
+msgstr "Az aláírt/titkosított jelző megjelenítése"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
 msgstr ""
+"A titkosítási kulcs tulajdonosi megbízhatósági szintjének megjelenítése"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "Figyelmeztetések"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Always show the encryption keys &for approval"
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "Mindig jelenjenek meg a titk&osítási kulcsok (megerősítés)"
+msgstr "Küldés előtt mindig hagyja jóvá a titkosítási kulcsokat"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
-#, fuzzy, kde-format
-#| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
+#, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr ""
 "Figyelmeztetés, ha egy tanúsítvány vagy kulcs rövidesen lejár (az időérték "
@@ -6721,10 +6651,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/securitypageencryptiontab.ui:139
-#, fuzzy, kde-format
-#| msgid "For end-user certificates/keys:"
+#, kde-format
 msgid "For end-user certificates/&keys:"
-msgstr "Végfelhasználói tanúsítványokhoz és kulcsokhoz:"
+msgstr "Végfelhasználói tanúsítványokhoz és &kulcsokhoz:"
 
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
@@ -6778,22 +6707,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
-#, fuzzy, kde-format
-#| msgid "For root certificates:"
+#, kde-format
 msgid "For own certificates:"
-msgstr "Gyökértanúsítványokhoz:"
+msgstr "Saját tanúsítványokhoz:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:245
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</p></qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -6804,19 +6724,18 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Figyelmeztetés, ha a gyökértanúsítvány lejár</h1>\n"
+"<h1>Figyelmeztetés, ha a saját tanúsítvány lejár</h1>\n"
 "Válassza ki, hogy legalább hány napig legyenek figyelmeztetés nélkül  "
-"érvényesek a gyökértanúsítványok.\n"
+"érvényesek a saját tanúsítványok.\n"
 "<p>\n"
-"Az ajánlott SPHINX beállítás 14 nap.\n"
+"Az ajánlott SPHINX beállítás 30 nap.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
-#, fuzzy, kde-format
-#| msgid "For root certificates:"
+#, kde-format
 msgid "For &root certificates:"
-msgstr "Gyökértanúsítványokhoz:"
+msgstr "Gyöké&rtanúsítványokhoz:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:307
@@ -6865,17 +6784,7 @@ msgstr "HTML-üzenetek"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:29
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Some mail advertisements are in HTML and contain references to, "
-#| "for example, images that the advertisers employ to find out that you have "
-#| "read their message (\"web bugs\").</p><p>There is no valid reason to load "
-#| "images off the Internet like this, since the sender can always attach the "
-#| "required images directly to the message.</p><p>To guard from such a "
-#| "misuse of the HTML displaying feature of KMail, this option is "
-#| "<em>disabled</em> by default.</p><p>However, if you wish to, for example, "
-#| "view images in HTML messages that were not attached to it, you can enable "
-#| "this option, but you should be aware of the possible problem.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Some mail advertisements are in HTML and contain references to, for "
 "example, images that the advertisers employ to find out that you have read "
@@ -6905,19 +6814,13 @@ msgstr "Külső internetes hivatkozások engedélyezése az üzenetekben"
 
 #. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
 #: ui/securitypagegeneraltab.ui:52
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "Exceptions"
-msgstr "Beállítások"
+msgstr "Kivételek"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
 #: ui/securitypagegeneraltab.ui:62
-#, fuzzy, kde-format
-#| msgid ""
-#| "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
-#| "system will be compromised by present and anticipated security exploits. "
-#| "<a href=\"whatsthis1\">More about HTML mails...</a> <a href="
-#| "\"whatsthis2\">More about external references...</a>"
+#, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
@@ -6926,26 +6829,13 @@ msgid ""
 msgstr ""
 "<b>Figyelmeztetés:</b> a HTML üzenetformátum engedélyezése bizonyos "
 "kockázattal jár, mert a sokféle megjelenítési lehetőség miatt megnő a "
-"biztonsági rések előfordulási esélye. <a href=\"whatsthis:%1\">További "
-"információ a HTML-es üzenetekről...</a> <a href=\"whatsthis2\">További "
-"információ a külső hivatkozásokról...</a>"
+"biztonsági rések előfordulási esélye. <a href=\"whatsthis1\">További "
+"információ a HTML-es üzenetekről…</a> <a href=\"whatsthis2\">További "
+"információ a külső hivatkozásokról…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:75
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Messages sometimes come in both formats. This option controls "
-#| "whether you want the HTML part or the plain text part to be displayed.</"
-#| "p><p>Displaying the HTML part makes the message look better, but at the "
-#| "same time increases the risk of security holes being exploited.</"
-#| "p><p>Displaying the plain text part loses much of the message's "
-#| "formatting, but makes it almost <em>impossible</em> to exploit security "
-#| "holes in the HTML renderer (Konqueror).</p><p>The option below guards "
-#| "against one common misuse of HTML messages, but it cannot guard against "
-#| "security issues that were not known at the time this version of KMail was "
-#| "written.</p><p>It is therefore advisable to <em>not</em> prefer HTML to "
-#| "plain text.</p><p><b>Note:</b> You can set this option on a per-folder "
-#| "basis from the <i>Folder</i> menu of KMail's main window.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
 "you want the HTML part or the plain text part to be displayed.</"
@@ -6966,13 +6856,14 @@ msgstr ""
 "gazdagabb megjelenítési lehetőséget biztosít, de nagyobb támadási felületet "
 "nyújt a levélben terjedő vírusoknak.</p><p>Az egyszerű szöveges megjelenítés "
 "választása esetén a formázás egy része elveszhet, de szinte "
-"<em>lehetetlenné</em> teszi, hogy a HTML-megjelenítő komponens esetleges "
-"hibáit vírusok kihasználhassák.</p><p>Az alatta levő opcióval a HTML-"
-"formátum egyik gyakran zavaró felhasználási lehetőségét szünteti meg. Ennek "
-"kikapcsolása azonban nem nyújt automatikusan védettséget a hibák ellen.</"
-"p><p>Ha az adatbiztonság elsődleges szempont, akkor <em>ne</em> engedélyezze "
-"a HTML-formátumú megjelenítést.</p><p><b>Megjegyzés:</b> ez az opció minden "
-"mappánál külön beállítható a program <i>Mappa</i> menüjében.</p></qt>"
+"<em>lehetetlenné</em> teszi, hogy a HTML-megjelenítő komponens )QtWebengine) "
+"esetleges hibáit vírusok kihasználhassák.</p><p>Az alatta levő opcióval a "
+"HTML-formátum egyik gyakran zavaró felhasználási lehetőségét szünteti meg. "
+"Ennek kikapcsolása azonban nem nyújt automatikusan védettséget a hibák ellen."
+"</p><p>Ha az adatbiztonság elsődleges szempont, akkor <em>ne</em> "
+"engedélyezze a HTML-formátumú megjelenítést.</p><p><b>Megjegyzés:</b> ez az "
+"opció minden mappánál külön beállítható a program <i>Mappa</i> menüjében.</"
+"p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:78
@@ -7012,19 +6903,19 @@ msgstr "Engedélyezési lista:"
 #: ui/securitypagegeneraltab.ui:130
 #, kde-format
 msgid "Safe Browsing"
-msgstr ""
+msgstr "Biztonságos böngészés"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
 #: ui/securitypagegeneraltab.ui:136
 #, kde-format
 msgid "Check URL With Phishing Google System"
-msgstr ""
+msgstr "Adathalász URL-ek ellenőrzése a Google rendszerével"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
 #: ui/securitypagegeneraltab.ui:143
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr ""
+msgstr "Követő URL-címek keresése az e-mailekben"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:159
@@ -7193,10 +7084,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
-#, fuzzy, kde-format
-#| msgid "Validate certificates using CRLs"
+#, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr "A tanúsítványok ellenőrzése CRL-ekkel"
+msgstr "A tanúsít&ványok ellenőrzése CRL-ekkel"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
@@ -7356,17 +7246,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
-#, fuzzy, kde-format
-#| msgid "Use system HTTP proxy:"
+#, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "A rendszer HTTP proxy-jának használata:"
+msgstr "A rendszer HTTP prox&yjának használata:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
-#, fuzzy, kde-format
-#| msgid "Use this proxy for HTTP requests: "
+#, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "A HTTP-kérésekhez használandó proxy: "
+msgstr "Egyedi HTTP-proxy használa&ta:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
