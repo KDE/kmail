@@ -415,9 +415,9 @@
     <binary>kmail</binary>
   </provides>
   <releases>
+    <release version="5.24.5" date="2024-02-15"/>
     <release version="5.24.4" date="2023-12-07"/>
     <release version="5.24.3" date="2023-11-09"/>
     <release version="5.24.2" date="2023-10-12"/>
-    <release version="5.24.1" date="2023-09-14"/>
   </releases>
 </component>
