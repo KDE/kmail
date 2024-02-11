@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-03 00:38+0000\n"
-"PO-Revision-Date: 2024-02-09 22:40+0300\n"
+"PO-Revision-Date: 2024-02-10 14:51+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -2532,6 +2532,10 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Ключ шифрования не является доверенным, у него недостаточно подтверждений "
+"действительности. Ключ может быть подписан, если его отпечаток был передан "
+"по другому каналу связи. Нажмите на значок для просмотра более подробных "
+"сведений."
 
 #: editor/kmcomposerwin.cpp:3811
 #, kde-format
@@ -2542,20 +2546,22 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Ключ шифрования не является доверенным. Он не использовался нигде, что не "
+"гарантирует его принадлежность указанному лицу. Использование этого ключа "
+"позволит ему стать более доверенным. Ключ может быть подписан, если его "
+"отпечаток был передан по другому каналу связи. Нажмите на значок для "
+"просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3819
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Для этого получателя будет использовано шифрование с низким уровнем "
-"безопасности (нет доверия к ключу шифрования). Нажмите на значок для "
-"просмотра подробных сведений."
+"Ключ шифрования не является доверенным. Ключ содержит противоречивые данные "
+"TOFU (доверие при первом использовании). Нажмите на значок для просмотра "
+"более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3825
 #, kde-format
@@ -2564,20 +2570,19 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Ключ шифрования не является доверенным. Невозможно проверить "
+"действительность данных TOFU (доверие при первом использовании). Нажмите на "
+"значок для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3831
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Для этого получателя будет использовано шифрование с низким уровнем "
-"безопасности (нет доверия к ключу шифрования). Нажмите на значок для "
-"просмотра подробных сведений."
+"Ключ шифрования не является доверенным. Ключ отмечен как ненадёжный. Нажмите "
+"на значок для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3839
 #, kde-format
@@ -2588,6 +2593,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Ключ шифрования является ограниченно доверенным и не использовался "
+"достаточно долго, чтобы гарантировать его принадлежность указанному лицу. "
+"Использование этого ключа позволит ему стать более доверенным. Ключ может "
+"быть подписан, если его отпечаток был передан по другому каналу связи. "
+"Нажмите на значок для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3847
 #, kde-format
@@ -2596,6 +2606,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+" шифрования является ограниченно доверенным . Ключ может быть подписан, если "
+"его отпечаток был передан по другому каналу связи. Нажмите на значок для "
+"просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3853
 #, kde-format
@@ -2606,6 +2619,11 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Ключ шифрования является ограниченно доверенным и не использовался "
+"достаточно долго, чтобы гарантировать его принадлежность указанному лицу. "
+"Использование этого ключа позволит ему стать более доверенным. Ключ может "
+"быть подписан, если его отпечаток был передан по другому каналу связи. "
+"Нажмите на значок для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3861
 #, kde-format
@@ -2619,18 +2637,15 @@ msgstr ""
 "значок для просмотра подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3866
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Для этого получателя будет использовано шифрование с высоким уровнем "
-"безопасности (полное доверие к ключу шифрования). Нажмите на значок для "
-"просмотра подробных сведений."
+"Ключ шифрования является абсолютно доверенным или подписан другим полностью "
+"абсолютно доверенным ключом. Нажмите на значок для просмотра более подробных "
+"сведений."
 
 #: editor/kmcomposerwin.cpp:4198
 #, kde-format
@@ -4647,9 +4662,17 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Выделение содержит только зашифрованные письма, из которых в данный момент "
+"невозможно удалить вложения."
 msgstr[1] ""
+"Выделение содержит только зашифрованные письма, из которых в данный момент "
+"невозможно удалить вложения."
 msgstr[2] ""
+"Выделение содержит только зашифрованные письма, из которых в данный момент "
+"невозможно удалить вложения."
 msgstr[3] ""
+"Выделение содержит зашифрованное письмо, из которого в данный момент "
+"невозможно удалить вложения."
 
 #: kmmainwidget.cpp:2388
 #, kde-format
