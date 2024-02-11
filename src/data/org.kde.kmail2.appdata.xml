@@ -381,6 +381,7 @@
       <caption xml:lang="hu">A KMail főablaka e-mailmappák és e-mailek listájával.</caption>
       <caption xml:lang="ia">Fenestra principal de KMail con un lista de dossieres de e-posta e messages de posta.</caption>
       <caption xml:lang="it">La finestra principale di KMail con un elenco di cartelle e messaggi di posta elettronica.</caption>
+      <caption xml:lang="ko">이메일 폴더와 이메일이 표시된 KMail 주 창입니다.</caption>
       <caption xml:lang="pl">Główne okno KMaila ze spisem katalogów wiadomości i samymi wiadomościami.</caption>
       <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
@@ -400,6 +401,7 @@
       <caption xml:lang="hu">E-mailszerkesztő beágyazott fordítóval</caption>
       <caption xml:lang="ia">Email Composer (Compositor de e-posta) con un tradictor incorporate</caption>
       <caption xml:lang="it">Compositore di messaggi di posta con traduttore integrato</caption>
+      <caption xml:lang="ko">번역 도구가 내장된 이메일 작성기</caption>
       <caption xml:lang="pl">Program do wysyłania poczty wyposażony w tłumacza</caption>
       <caption xml:lang="sl">Sestavljalnik e-pošte z vdelanim prevajalnikom</caption>
       <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
