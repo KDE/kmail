@@ -12,6 +12,7 @@ using namespace KMail;
 SearchPatternWarning::SearchPatternWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setPosition(KMessageWidget::Header);
     setVisible(false);
     setCloseButtonVisible(true);
     setMessageType(Information);

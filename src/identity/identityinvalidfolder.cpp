@@ -11,6 +11,7 @@ using namespace KMail;
 IdentityInvalidFolder::IdentityInvalidFolder(QWidget *parent)
     : KMessageWidget(parent)
 {
+    setPosition(KMessageWidget::Header);
     setMessageType(KMessageWidget::Warning);
     setCloseButtonVisible(false);
     hide();
