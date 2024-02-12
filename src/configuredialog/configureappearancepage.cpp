@@ -41,7 +41,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <Akonadi/TagFetchScope>
 #include <Akonadi/TagModifyJob>
 
-#include "kmail_debug.h"
 #include <KFontChooser>
 #include <KIconButton>
 #include <KKeySequenceWidget>
