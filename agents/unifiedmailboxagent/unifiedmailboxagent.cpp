@@ -34,7 +34,6 @@
 #include <QPointer>
 #include <QTimer>
 
-#include <chrono>
 #include <memory>
 #include <unordered_set>
 
