@@ -63,7 +63,7 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &SendLaterAgent::reload);
-    reloadListTimer->start(1h); // 1 hour
+    reloadListTimer->start(1h);
 }
 
 SendLaterAgent::~SendLaterAgent() = default;

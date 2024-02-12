@@ -62,7 +62,7 @@ MailMergeAgent::MailMergeAgent(const QString &id)
     // notified about the network going up or down.
     auto reloadListTimer = new QTimer(this);
     connect(reloadListTimer, &QTimer::timeout, this, &MailMergeAgent::reload);
-    reloadListTimer->start(1h); // 1 hour
+    reloadListTimer->start(1h);
 }
 
 MailMergeAgent::~MailMergeAgent() = default;

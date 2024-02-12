@@ -930,9 +930,9 @@ void KMKernel::init()
     mBackgroundTasksTimer->setSingleShot(true);
     connect(mBackgroundTasksTimer, &QTimer::timeout, this, &KMKernel::slotRunBackgroundTasks);
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-    mBackgroundTasksTimer->start(10s); // 10s, singleshot
+    mBackgroundTasksTimer->start(10s);
 #else
-    mBackgroundTasksTimer->start(5min); // 5 minutes, singleshot
+    mBackgroundTasksTimer->start(5min);
 #endif
 
     KCrash::setEmergencySaveFunction(kmCrashHandler);
@@ -1303,9 +1303,9 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
         mCheckIndexingManager->start(entityTreeModel());
     }
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
-    mBackgroundTasksTimer->start(1m); // check again in 1 minute
+    mBackgroundTasksTimer->start(1m);
 #else
-    mBackgroundTasksTimer->start(4h); // check again in 4 hours
+    mBackgroundTasksTimer->start(4h);
 #endif
 }
 
