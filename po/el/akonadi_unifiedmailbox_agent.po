@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2024-02-13 00:38+0000\n"
 "PO-Revision-Date: 2020-09-20 09:44+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -45,12 +45,12 @@ msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Στ' αλήθεια να αφαιρεθεί;"
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "Ενοποιημένα γραμματοκιβώτια"
 
-#: unifiedmailboxagent.cpp:168
+#: unifiedmailboxagent.cpp:167
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "Συγχρονισμός ενοποιημένου γραμματοκιβωτίου %1"

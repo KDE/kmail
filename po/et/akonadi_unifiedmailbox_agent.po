@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-25 01:40+0000\n"
+"POT-Creation-Date: 2024-02-13 00:38+0000\n"
 "PO-Revision-Date: 2019-12-18 18:37+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -44,12 +44,12 @@ msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Kas tõesti eemaldada?"
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "Ühendpostkastid"
 
-#: unifiedmailboxagent.cpp:168
+#: unifiedmailboxagent.cpp:167
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "Ühendpostkasti %1 sünkroonimine"
