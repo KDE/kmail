@@ -41,10 +41,10 @@ add_library(kmailprivate)
 if (TARGET KF6::UserFeedbackWidgets)
     target_sources(kmailprivate PRIVATE
         userfeedback/accountinfosource.cpp
-        userfeedback/plugininfosource.cpp
-        userfeedback/kmailuserfeedbackprovider.cpp
         userfeedback/accountinfosource.h
+        userfeedback/plugininfosource.cpp
         userfeedback/plugininfosource.h
+        userfeedback/kmailuserfeedbackprovider.cpp
         userfeedback/kmailuserfeedbackprovider.h
         )
 endif()
