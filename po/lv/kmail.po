@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-13 00:38+0000\n"
-"PO-Revision-Date: 2024-02-01 14:17+0200\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-02-12 08:28+0200\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -590,7 +590,7 @@ msgstr "Nosūtīšanas konti (pievienojiet vismaz vienu):"
 #: configuredialog/configureaccountpage.cpp:92
 #, kde-format
 msgid "&Confirm action"
-msgstr "&Apliecināt darbību"
+msgstr "&Apstiprināt darbību"
 
 #: configuredialog/configureaccountpage.cpp:93
 #, kde-format
@@ -6213,7 +6213,7 @@ msgstr "Meklēt birku..."
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order..."
-msgstr "Pielāgot kontu pasūtījumu..."
+msgstr "Pielāgot kontu kārtību..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -7379,7 +7379,7 @@ msgid ""
 msgstr ""
 "„KMail“ var katrai vēstulei pievienot mazu (48✕48 pikseļi) melnbaltu attēlu. "
 "Tas var saturēt, piemēram, attēlu ar jums vai kādu logotipu. Tas tiek "
-"parādīts saņēmēja pasta programmā, ja saņēmēja programma to atbalsta."
+"parādīts saņēmēja pasta programmā, ja saņēmēja programma to atbalsta.</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78
