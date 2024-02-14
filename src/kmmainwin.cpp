@@ -164,6 +164,7 @@ void KMMainWin::slotFullScreen(bool t)
 
 void KMMainWin::updateHamburgerMenu()
 {
+    delete mHamburgerMenu->menu();
     auto menu = new QMenu(this);
     menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Open)));
     menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::SaveAs)));
