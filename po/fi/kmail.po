@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"POT-Creation-Date: 2024-02-15 00:38+0000\n"
 "PO-Revision-Date: 2023-12-11 15:30+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -390,7 +390,7 @@ msgstr "Korjasi monia IMAP-ohjelmavirheitä"
 # pmap: =/gen=KMailin/
 # pmap: =/elat=KMailista/
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2396 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: editor/kmcomposerwin.cpp:2397 kmreaderwin.cpp:305 kmsystemtray.cpp:46
 #: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
@@ -1853,7 +1853,7 @@ msgid "Send"
 msgstr "Lähetä"
 
 #: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1255
-#: editor/kmcomposerwin.cpp:3058
+#: editor/kmcomposerwin.cpp:3059
 #, kde-format
 msgid "Send &Later"
 msgstr "Lähetä &myöhemmin"
@@ -2096,7 +2096,7 @@ msgstr "Lisää vastaamisen seurannasta muistuttaja…"
 msgid "Configure KMail..."
 msgstr "KMailin asetukset…"
 
-#: editor/kmcomposerwin.cpp:1557 kmmainwin.cpp:219 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1558 kmmainwin.cpp:220 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2105,54 +2105,54 @@ msgstr ""
 "<qt>Tämä piilottaa valikkorivin kokonaan. Saat sen uudelleen näkyviin "
 "painamalla %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1560 kmmainwin.cpp:222
+#: editor/kmcomposerwin.cpp:1561 kmmainwin.cpp:223
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Piilota valikkorivi"
 
-#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3981
+#: editor/kmcomposerwin.cpp:1661 editor/kmcomposerwin.cpp:3982
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Rivi: %1 "
 
-#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3983
+#: editor/kmcomposerwin.cpp:1664 editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid " Column: %1 "
 msgstr " Sarake: %1 "
 
-#: editor/kmcomposerwin.cpp:1668
+#: editor/kmcomposerwin.cpp:1669
 #, kde-format
 msgid "OVR"
 msgstr "KOR"
 
-#: editor/kmcomposerwin.cpp:1668
+#: editor/kmcomposerwin.cpp:1669
 #, kde-format
 msgid "INS"
 msgstr "LIS"
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1677
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Oikoluku: käytössä"
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1677
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Oikoluku: ei käytössä"
 
-#: editor/kmcomposerwin.cpp:2052
+#: editor/kmcomposerwin.cpp:2053
 #, kde-format
 msgid "Re&save as Template"
 msgstr "&Tallenna uudestaan viestipohjana"
 
-#: editor/kmcomposerwin.cpp:2052
+#: editor/kmcomposerwin.cpp:2053
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Tallenna luonnoksena"
 
-#: editor/kmcomposerwin.cpp:2053
+#: editor/kmcomposerwin.cpp:2054
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2161,7 +2161,7 @@ msgstr ""
 "Tallenna tämä viesti taas viestipohjakansioon, mistä sen saa "
 "käyttöönmyöhemmin."
 
-#: editor/kmcomposerwin.cpp:2055
+#: editor/kmcomposerwin.cpp:2056
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2170,86 +2170,86 @@ msgstr ""
 "Tallenna viesti luonnoskansioon, missä sitä voi muokata ja sen voi lähettää "
 "myöhemmin."
 
-#: editor/kmcomposerwin.cpp:2059
+#: editor/kmcomposerwin.cpp:2060
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Haluatko tallentaa viestin, vai hylätä muutokset?"
 
-#: editor/kmcomposerwin.cpp:2060
+#: editor/kmcomposerwin.cpp:2061
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Sulje kirjoitusikkuna"
 
-#: editor/kmcomposerwin.cpp:2128
+#: editor/kmcomposerwin.cpp:2129
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Viestin automaattitallennus epäonnistui"
 
-#: editor/kmcomposerwin.cpp:2129
+#: editor/kmcomposerwin.cpp:2130
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Viestin lähettäminen epäonnistui"
 
-#: editor/kmcomposerwin.cpp:2315
+#: editor/kmcomposerwin.cpp:2316
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Lisää tiedosto"
 
-#: editor/kmcomposerwin.cpp:2380
+#: editor/kmcomposerwin.cpp:2381
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "Lisää &sisällytettynä kuvana"
 
-#: editor/kmcomposerwin.cpp:2381
+#: editor/kmcomposerwin.cpp:2382
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Lisää liitteenä"
 
-#: editor/kmcomposerwin.cpp:2396 editor/kmcomposerwin.cpp:2500
+#: editor/kmcomposerwin.cpp:2397 editor/kmcomposerwin.cpp:2501
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Liitteen nimi:"
 
-#: editor/kmcomposerwin.cpp:2402
+#: editor/kmcomposerwin.cpp:2403
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Liitteen nimi ei voi olla tyhjä"
 
-#: editor/kmcomposerwin.cpp:2402
+#: editor/kmcomposerwin.cpp:2403
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Virheellinen liitteen nimi"
 
-#: editor/kmcomposerwin.cpp:2453
+#: editor/kmcomposerwin.cpp:2454
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Lisää osoite viestiin"
 msgstr[1] "Lisää osoitteet viestiin"
 
-#: editor/kmcomposerwin.cpp:2454
+#: editor/kmcomposerwin.cpp:2455
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Lisää tiedosto &liitteeksi"
 msgstr[1] "Lisää tiedostot &liitteeksi"
 
-#: editor/kmcomposerwin.cpp:2500
+#: editor/kmcomposerwin.cpp:2501
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Liitä teksti leikepöydältä liitteeksi"
 
-#: editor/kmcomposerwin.cpp:2597
+#: editor/kmcomposerwin.cpp:2598
 #, kde-format
 msgid "unnamed"
 msgstr "nimetön"
 
-#: editor/kmcomposerwin.cpp:2623
+#: editor/kmcomposerwin.cpp:2624
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2260,13 +2260,13 @@ msgstr ""
 "käytettävä salausavain (OpenPGP tai S/MIME).</p><p>Valitse käytettävä avain "
 "henkilöysasetuksissa.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2630
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Määrittämätön allekirjoitusavain"
 
-#: editor/kmcomposerwin.cpp:2791
+#: editor/kmcomposerwin.cpp:2792
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2277,7 +2277,7 @@ msgstr ""
 "henkilöydellesi olisi hyvä määrittää sähköpostiosoite, jottei sitä tarvitse "
 "lisätä kuhunkin viestiin erikseen."
 
-#: editor/kmcomposerwin.cpp:2800
+#: editor/kmcomposerwin.cpp:2801
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2286,44 +2286,44 @@ msgstr ""
 "Ainakin yksi vastaanottaja on kirjoitettava Vastaanottaja-, Kopio- tai "
 "Piilokopio-kenttään."
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Et määrittänyt vastaanottaja-kenttää. Lähetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:2808
+#: editor/kmcomposerwin.cpp:2809
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Vastaanottajaa ei ole annettu"
 
-#: editor/kmcomposerwin.cpp:2809 editor/kmcomposerwin.cpp:2823
+#: editor/kmcomposerwin.cpp:2810 editor/kmcomposerwin.cpp:2824
 #, kde-format
 msgid "S&end as Is"
 msgstr "&Lähetä sellaisenaan"
 
-#: editor/kmcomposerwin.cpp:2810
+#: editor/kmcomposerwin.cpp:2811
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&Määritä vastaanottajakenttä"
 
-#: editor/kmcomposerwin.cpp:2820
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Et antanut viestin otsikkoa. Lähetetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2823
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Aihetta ei ole annettu"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2825
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Määritä aihe"
 
-#: editor/kmcomposerwin.cpp:2869
+#: editor/kmcomposerwin.cpp:2870
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2331,23 +2331,23 @@ msgid ""
 msgstr ""
 "Vähintään yksi vastaanottaja on annettava, jotta luonnoksen voi salata."
 
-#: editor/kmcomposerwin.cpp:3055
+#: editor/kmcomposerwin.cpp:3056
 #, kde-format
 msgid "About to send email..."
 msgstr "Lähetetään sähköpostia…"
 
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3057
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Vahvista lähettäminen"
 
-#: editor/kmcomposerwin.cpp:3057
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "&Send Now"
 msgstr "&Lähetä heti"
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2355,22 +2355,22 @@ msgid ""
 msgstr ""
 "Yrität lähettää viestin yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3135
 #, kde-format
 msgid "Too many recipients"
 msgstr "Liikaa vastaanottajia"
 
-#: editor/kmcomposerwin.cpp:3135
+#: editor/kmcomposerwin.cpp:3136
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Lähetä sellaisenaan"
 
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3137
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&Muokkaa vastaanottajia"
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3174
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2378,22 +2378,22 @@ msgid ""
 msgstr ""
 "HTML-tilan poistaminen käytöstä hylkää tekstin muotoilun. Oletko varma?"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Hylätäänkö muotoilu?"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Hylkää muotoilu"
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Lisää tunniste raakatekstiin"
 
-#: editor/kmcomposerwin.cpp:3389
+#: editor/kmcomposerwin.cpp:3390
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2402,7 +2402,7 @@ msgid ""
 msgstr ""
 "Valittua PGP-avainta (%1) ei ole avainrenkaassasi tai se ei sovi salaukseen."
 
-#: editor/kmcomposerwin.cpp:3402
+#: editor/kmcomposerwin.cpp:3403
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2412,7 +2412,7 @@ msgstr ""
 "Valittua PGP-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei sovi "
 "allekirjoittamiseen."
 
-#: editor/kmcomposerwin.cpp:3418
+#: editor/kmcomposerwin.cpp:3419
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2421,7 +2421,7 @@ msgid ""
 msgstr ""
 "Valittua S/MIME-avainta (%1) ei ole avainrenkaassa tai se ei sovi salaukseen."
 
-#: editor/kmcomposerwin.cpp:3431
+#: editor/kmcomposerwin.cpp:3432
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2431,25 +2431,25 @@ msgstr ""
 "Valittua S/MIME-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei "
 "sovi allekirjoittamiseen."
 
-#: editor/kmcomposerwin.cpp:3604
+#: editor/kmcomposerwin.cpp:3605
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Salaa"
 
-#: editor/kmcomposerwin.cpp:3606
+#: editor/kmcomposerwin.cpp:3607
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Ei salata"
 
-#: editor/kmcomposerwin.cpp:3746
+#: editor/kmcomposerwin.cpp:3747
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Vastaanottajalle ei löytynyt avainta."
 
-#: editor/kmcomposerwin.cpp:3768
+#: editor/kmcomposerwin.cpp:3769
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2459,7 +2459,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettään automaattisalauksen juoruavainta. Avain "
 "saatiin kolmannen osapuolen vastaanottajilta. Avainta ei ole varmennettu."
 
-#: editor/kmcomposerwin.cpp:3772
+#: editor/kmcomposerwin.cpp:3773
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2469,7 +2469,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettävä automaattisalausavain. Avainta ei "
 "todenneta. Vastaanottaja suosii salattuja viestejä."
 
-#: editor/kmcomposerwin.cpp:3776
+#: editor/kmcomposerwin.cpp:3777
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2479,7 +2479,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettävä automaattisalausavain. Avainta ei "
 "todenneta. Vastaanottaja ei suosi salattuja viestejä."
 
-#: editor/kmcomposerwin.cpp:3803
+#: editor/kmcomposerwin.cpp:3804
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2491,7 +2491,7 @@ msgstr ""
 "avaimen, jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla "
 "kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3811
+#: editor/kmcomposerwin.cpp:3812
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2505,7 +2505,7 @@ msgstr ""
 "allekirjoittaa, jos sormenjälki on saatu toista kautta. Lisätietoa saa "
 "napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3820
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2515,7 +2515,7 @@ msgstr ""
 "Salausavain ei ole luotettava: sen TOFU-tiedot ovat ristiriitaiset. "
 "Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3825
+#: editor/kmcomposerwin.cpp:3826
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2525,7 +2525,7 @@ msgstr ""
 "Salausavain ei ole luotettava: TOFU-tiedoissa sen kelpoisuus on tuntematon. "
 "Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3831
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2535,7 +2535,7 @@ msgstr ""
 "Salausavain ei ole luotettava: avain on merkitty huonoksi. Lisätietoa saa "
 "napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3839
+#: editor/kmcomposerwin.cpp:3840
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2549,7 +2549,7 @@ msgstr ""
 "käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
 "sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3847
+#: editor/kmcomposerwin.cpp:3848
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2559,7 +2559,7 @@ msgstr ""
 "Salausavain on vain ehdollisesti luotettava. Voit allekirjoittaa avaimen, "
 "jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3853
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2573,7 +2573,7 @@ msgstr ""
 "käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
 "sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3861
+#: editor/kmcomposerwin.cpp:3862
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2583,7 +2583,7 @@ msgstr ""
 "Salausavaimen luottamus on täysi. Turvatasoa voi kohottaa allekirjoittamalla "
 "avaimen. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3867
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2593,7 +2593,7 @@ msgstr ""
 "Salausavaimen luottamus on äärimmäinen tai sen on allekirjoittanut toinen "
 "näin luotettava avain. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:4198
+#: editor/kmcomposerwin.cpp:4199
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2610,13 +2610,13 @@ msgstr ""
 "käyttää. Ellei luettelossa ole sopivaa varmennetta, ulkoisia varmenteita voi "
 "etsiä napsauttamalla painiketta ”Etsi ulkoisia varmenteita”.</qt>"
 
-#: editor/kmcomposerwin.cpp:4210
+#: editor/kmcomposerwin.cpp:4211
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Salausavaimen valinta"
 
 # *** TARKISTA: ID merkitykseltään epäselvä
-#: editor/kmcomposerwin.cpp:4295
+#: editor/kmcomposerwin.cpp:4296
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Liitännäismuokkaimen tiedot"

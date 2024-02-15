@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"POT-Creation-Date: 2024-02-15 00:38+0000\n"
 "PO-Revision-Date: 2024-02-09 19:42+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -382,7 +382,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Çok sayıda IMAP hatası düzeltme"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:77
-#: editor/kmcomposerwin.cpp:2396 kmreaderwin.cpp:305 kmsystemtray.cpp:46
+#: editor/kmcomposerwin.cpp:2397 kmreaderwin.cpp:305 kmsystemtray.cpp:46
 #: kmsystemtray.cpp:77
 #, kde-format
 msgid "KMail"
@@ -1844,7 +1844,7 @@ msgid "Send"
 msgstr "Gönder"
 
 #: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1255
-#: editor/kmcomposerwin.cpp:3058
+#: editor/kmcomposerwin.cpp:3059
 #, kde-format
 msgid "Send &Later"
 msgstr "Son&ra Gönder"
@@ -2087,7 +2087,7 @@ msgstr "Takip Anımsatıcısı Oluştur..."
 msgid "Configure KMail..."
 msgstr "K Posta Uygulamasını Yapılandır..."
 
-#: editor/kmcomposerwin.cpp:1557 kmmainwin.cpp:219 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1558 kmmainwin.cpp:220 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2096,54 +2096,54 @@ msgstr ""
 "<qt>Bu, menü çubuğunu tümüyle gizleyecektir. %1 ile yeniden "
 "gösterebilirsiniz.</qt>"
 
-#: editor/kmcomposerwin.cpp:1560 kmmainwin.cpp:222
+#: editor/kmcomposerwin.cpp:1561 kmmainwin.cpp:223
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menü Çubuğunu Gizle"
 
-#: editor/kmcomposerwin.cpp:1660 editor/kmcomposerwin.cpp:3981
+#: editor/kmcomposerwin.cpp:1661 editor/kmcomposerwin.cpp:3982
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Satır: %1 "
 
-#: editor/kmcomposerwin.cpp:1663 editor/kmcomposerwin.cpp:3983
+#: editor/kmcomposerwin.cpp:1664 editor/kmcomposerwin.cpp:3984
 #, kde-format
 msgid " Column: %1 "
 msgstr " Sütun: %1 "
 
-#: editor/kmcomposerwin.cpp:1668
+#: editor/kmcomposerwin.cpp:1669
 #, kde-format
 msgid "OVR"
 msgstr "ÜZRYZ"
 
-#: editor/kmcomposerwin.cpp:1668
+#: editor/kmcomposerwin.cpp:1669
 #, kde-format
 msgid "INS"
 msgstr "EKL"
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1677
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Yazım denetimi: Açık"
 
-#: editor/kmcomposerwin.cpp:1676
+#: editor/kmcomposerwin.cpp:1677
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Yazım denetimi: Kapalı"
 
-#: editor/kmcomposerwin.cpp:2052
+#: editor/kmcomposerwin.cpp:2053
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Şablon Olarak Yeniden Kay&det"
 
-#: editor/kmcomposerwin.cpp:2052
+#: editor/kmcomposerwin.cpp:2053
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Ta&slak Olarak Kaydet"
 
-#: editor/kmcomposerwin.cpp:2053
+#: editor/kmcomposerwin.cpp:2054
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2151,7 +2151,7 @@ msgid ""
 msgstr ""
 "Bu iletiyi Şablonlar klasörüne yeniden kaydet. Daha sonra kullanılabilir."
 
-#: editor/kmcomposerwin.cpp:2055
+#: editor/kmcomposerwin.cpp:2056
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2160,87 +2160,87 @@ msgstr ""
 "Bu iletiyi Taslaklar klasörüne kaydet. Daha sonra düzenlenerek "
 "gönderilebilir."
 
-#: editor/kmcomposerwin.cpp:2059
+#: editor/kmcomposerwin.cpp:2060
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
 "Bu iletiyi daha sonra düzenlemek üzere kaydetmek mi, silmek mi istiyorsunuz?"
 
-#: editor/kmcomposerwin.cpp:2060
+#: editor/kmcomposerwin.cpp:2061
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Oluşturucuyu Kapat"
 
-#: editor/kmcomposerwin.cpp:2128
+#: editor/kmcomposerwin.cpp:2129
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "İletiyi Kendiliğinden Kaydedilemedi"
 
-#: editor/kmcomposerwin.cpp:2129
+#: editor/kmcomposerwin.cpp:2130
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "İleti Gönderilemedi"
 
-#: editor/kmcomposerwin.cpp:2315
+#: editor/kmcomposerwin.cpp:2316
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Dosya Ekle"
 
-#: editor/kmcomposerwin.cpp:2380
+#: editor/kmcomposerwin.cpp:2381
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "&İleti İçi Görsel Olarak Ekle"
 
-#: editor/kmcomposerwin.cpp:2381
+#: editor/kmcomposerwin.cpp:2382
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "&Ek Olarak Ekle"
 
-#: editor/kmcomposerwin.cpp:2396 editor/kmcomposerwin.cpp:2500
+#: editor/kmcomposerwin.cpp:2397 editor/kmcomposerwin.cpp:2501
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Ek adı:"
 
-#: editor/kmcomposerwin.cpp:2402
+#: editor/kmcomposerwin.cpp:2403
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Ek adı boş olamaz"
 
-#: editor/kmcomposerwin.cpp:2402
+#: editor/kmcomposerwin.cpp:2403
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Geçersiz Ek Adı"
 
-#: editor/kmcomposerwin.cpp:2453
+#: editor/kmcomposerwin.cpp:2454
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "URL'yi İletiye Ekle"
 msgstr[1] "URL'leri İletiye Ekle"
 
-#: editor/kmcomposerwin.cpp:2454
+#: editor/kmcomposerwin.cpp:2455
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Dosyayı &Ek Olarak Ekle"
 msgstr[1] "Dosyaları &Ek Olarak Ekle"
 
-#: editor/kmcomposerwin.cpp:2500
+#: editor/kmcomposerwin.cpp:2501
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Pano Metnini Ek Olarak Ekle"
 
-#: editor/kmcomposerwin.cpp:2597
+#: editor/kmcomposerwin.cpp:2598
 #, kde-format
 msgid "unnamed"
 msgstr "adsız"
 
-#: editor/kmcomposerwin.cpp:2623
+#: editor/kmcomposerwin.cpp:2624
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2251,13 +2251,13 @@ msgstr ""
 "anahtarını (OpenPGP veya S/MIME) tanımlamanız gerekir.</p><p>Lütfen kimlik "
 "yapılandırmasında kullanmak istediğiniz anahtarı seçin.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2630
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Tanımlanmamış İmzalama Anahtarı"
 
-#: editor/kmcomposerwin.cpp:2791
+#: editor/kmcomposerwin.cpp:2792
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2268,74 +2268,74 @@ msgstr ""
 "kimlikleriniz için e-posta adresinizi belirlemelisiniz. Bu işlemden sonra "
 "her ileti için e-posta adresi girmek zorunda kalmayacaksınız."
 
-#: editor/kmcomposerwin.cpp:2800
+#: editor/kmcomposerwin.cpp:2801
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Kime: veya Kopya/Gizli Kopya alanına en az bir alıcı belirtmelisiniz."
 
-#: editor/kmcomposerwin.cpp:2806
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Kime göndereceğinizi belirtmediniz. İleti yine de gönderilsin mi?"
 
-#: editor/kmcomposerwin.cpp:2808
+#: editor/kmcomposerwin.cpp:2809
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Kime: Alanı Belirtilmedi"
 
-#: editor/kmcomposerwin.cpp:2809 editor/kmcomposerwin.cpp:2823
+#: editor/kmcomposerwin.cpp:2810 editor/kmcomposerwin.cpp:2824
 #, kde-format
 msgid "S&end as Is"
 msgstr "&Bu şekliyle gönder"
 
-#: editor/kmcomposerwin.cpp:2810
+#: editor/kmcomposerwin.cpp:2811
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&Kime Alanını Belirt"
 
-#: editor/kmcomposerwin.cpp:2820
+#: editor/kmcomposerwin.cpp:2821
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Bir konu belirtmediniz. İleti yine de gönderilsin mi?"
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2823
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Bir Konu Belirtilmedi"
 
-#: editor/kmcomposerwin.cpp:2824
+#: editor/kmcomposerwin.cpp:2825
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "&Konuyu Belirt"
 
-#: editor/kmcomposerwin.cpp:2869
+#: editor/kmcomposerwin.cpp:2870
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Bir taslağı şifreleyebilmek için en az bir alıcı belirtmelisiniz."
 
-#: editor/kmcomposerwin.cpp:3055
+#: editor/kmcomposerwin.cpp:3056
 #, kde-format
 msgid "About to send email..."
 msgstr "E-posta gönderilmek üzere..."
 
-#: editor/kmcomposerwin.cpp:3056
+#: editor/kmcomposerwin.cpp:3057
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Onay Gönder"
 
-#: editor/kmcomposerwin.cpp:3057
+#: editor/kmcomposerwin.cpp:3058
 #, kde-format
 msgid "&Send Now"
 msgstr "Şimdi Gö&nder"
 
-#: editor/kmcomposerwin.cpp:3133
+#: editor/kmcomposerwin.cpp:3134
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2344,22 +2344,22 @@ msgstr ""
 "%1 adet alıcıdan fazla kişiye posta yollamaya çalışıyorsunuz. Yine de ileti "
 "yollansın mı?"
 
-#: editor/kmcomposerwin.cpp:3134
+#: editor/kmcomposerwin.cpp:3135
 #, kde-format
 msgid "Too many recipients"
 msgstr "Çok fazla alıcı"
 
-#: editor/kmcomposerwin.cpp:3135
+#: editor/kmcomposerwin.cpp:3136
 #, kde-format
 msgid "&Send as Is"
 msgstr "&Böyle Gönder"
 
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3137
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "Alıcıları Dü&zenle"
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3174
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2368,22 +2368,22 @@ msgstr ""
 "HTML kipinin kapatılması, metin biçimlendirmesinin kaybolmasına yol açacak. "
 "Emin misiniz?"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Biçimlendirme kaldırılsın mı?"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Lose Formatting"
 msgstr "Biçimlendirmeyi Kapat"
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "Düz Metin Biçimlendirmesi Ekle"
 
-#: editor/kmcomposerwin.cpp:3389
+#: editor/kmcomposerwin.cpp:3390
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2393,7 +2393,7 @@ msgstr ""
 "Seçili PGP anahtarınız (%1) anahtar zincirinizde bulunmuyor veya şifreleme "
 "için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3402
+#: editor/kmcomposerwin.cpp:3403
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2403,7 +2403,7 @@ msgstr ""
 "Seçili PGP imzalama anahtarınız (%1) anahtar zincirinizde bulunmuyor veya "
 "imzalama için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3418
+#: editor/kmcomposerwin.cpp:3419
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2413,7 +2413,7 @@ msgstr ""
 "Seçili SMIME anahtarınız (%1) anahtar zincirinizde bulunmuyor veya şifreleme "
 "için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3431
+#: editor/kmcomposerwin.cpp:3432
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2423,25 +2423,25 @@ msgstr ""
 "Seçili SMIME imzalama anahtarınız (%1) anahtar zincirinizde bulunmuyor veya "
 "imzalama için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3604
+#: editor/kmcomposerwin.cpp:3605
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Şifrele"
 
-#: editor/kmcomposerwin.cpp:3606
+#: editor/kmcomposerwin.cpp:3607
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Şifreleme"
 
-#: editor/kmcomposerwin.cpp:3746
+#: editor/kmcomposerwin.cpp:3747
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Alıcı için bir anahtar bulunamadı."
 
-#: editor/kmcomposerwin.cpp:3768
+#: editor/kmcomposerwin.cpp:3769
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2451,7 +2451,7 @@ msgstr ""
 "Bu alıcı için otomatik şifreleme dedikodu anahtarı kullanıldı. Bu anahtarı "
 "üçüncü kişilerden aldık. Anahtar doğrulanmadı."
 
-#: editor/kmcomposerwin.cpp:3772
+#: editor/kmcomposerwin.cpp:3773
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2461,7 +2461,7 @@ msgstr ""
 "Bu alıcı için otomatik şifreleme anahtarı kullanıldı. Anahtar doğrulanmadı. "
 "Alıcı, şifrelenmiş yanıtlar yeğliyor."
 
-#: editor/kmcomposerwin.cpp:3776
+#: editor/kmcomposerwin.cpp:3777
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2471,7 +2471,7 @@ msgstr ""
 "Bu alıcı için otomatik şifreleme anahtarı kullanıldı. Anahtar doğrulanmadı. "
 "Alıcı, şifrelenmiş yanıtlar yeğlemiyor."
 
-#: editor/kmcomposerwin.cpp:3803
+#: editor/kmcomposerwin.cpp:3804
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2483,7 +2483,7 @@ msgstr ""
 "başka bir kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için "
 "simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3811
+#: editor/kmcomposerwin.cpp:3812
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2497,7 +2497,7 @@ msgstr ""
 "anahtar o kadar güvenilir olur. Veya parmak izini başka bir kanaldan "
 "ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3820
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2507,7 +2507,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. Çelişkili TOFU verisine sahip. Ayrıntılar "
 "için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3825
+#: editor/kmcomposerwin.cpp:3826
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2517,7 +2517,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. TOFU verisindeki geçerliliği bilinmiyor. "
 "Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3831
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2527,7 +2527,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. Anahtar bozuk olarak imlendi. Ayrıntılar "
 "için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3839
+#: editor/kmcomposerwin.cpp:3840
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2542,7 +2542,7 @@ msgstr ""
 "kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:3847
+#: editor/kmcomposerwin.cpp:3848
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2553,7 +2553,7 @@ msgstr ""
 "kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:3853
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2568,7 +2568,7 @@ msgstr ""
 "parmak izini başka bir kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. "
 "Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3861
+#: editor/kmcomposerwin.cpp:3862
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2578,7 +2578,7 @@ msgstr ""
 "Şifreleme anahtarı güvenilir. Anahtarı imzalayarak güvenlik düzeyini "
 "yükseltebilirsiniz. Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3867
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,7 +2589,7 @@ msgstr ""
 "güvenilen başka bir anahtar tarafından imzalandı. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:4198
+#: editor/kmcomposerwin.cpp:4199
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2606,12 +2606,12 @@ msgstr ""
 "bir sertifika yoksa dış sertifikalar aramak için arama düğmesini "
 "kullanabilirsiniz.</qt>"
 
-#: editor/kmcomposerwin.cpp:4210
+#: editor/kmcomposerwin.cpp:4211
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Şifreleme Anahtarı Seçimi"
 
-#: editor/kmcomposerwin.cpp:4295
+#: editor/kmcomposerwin.cpp:4296
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "Eklenti Düzenleyicisi Bilgisi"
