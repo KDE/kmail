@@ -81,41 +81,41 @@ public Q_SLOTS:
     void slotCustomForwardMsg(const QString &tmpl);
 
 private:
-    void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
-    void slotContactSearchJobForMessagePopupDone(KJob *);
-    void slotTrashMessage();
+    KMAIL_NO_EXPORT void slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint);
+    KMAIL_NO_EXPORT void slotContactSearchJobForMessagePopupDone(KJob *);
+    KMAIL_NO_EXPORT void slotTrashMessage();
 
-    void slotEditToolbars();
-    void slotConfigChanged();
-    void slotUpdateToolbars();
+    KMAIL_NO_EXPORT void slotEditToolbars();
+    KMAIL_NO_EXPORT void slotConfigChanged();
+    KMAIL_NO_EXPORT void slotUpdateToolbars();
 
     /// This closes the window if the setting to close the window after replying or
     /// forwarding is set.
-    void slotReplyOrForwardFinished();
-    void slotCopyItem(QAction *);
-    void slotCopyMoveResult(KJob *job);
-    void slotMoveItem(QAction *action);
+    KMAIL_NO_EXPORT void slotReplyOrForwardFinished();
+    KMAIL_NO_EXPORT void slotCopyItem(QAction *);
+    KMAIL_NO_EXPORT void slotCopyMoveResult(KJob *job);
+    KMAIL_NO_EXPORT void slotMoveItem(QAction *action);
 
-    void slotShowMessageStatusBar(const QString &msg);
+    KMAIL_NO_EXPORT void slotShowMessageStatusBar(const QString &msg);
 
-    void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
-    [[nodiscard]] Akonadi::Collection parentCollection() const;
-    void initKMReaderMainWin();
-    void setupAccel();
-    QAction *copyActionMenu(QMenu *menu);
-    QAction *moveActionMenu(QMenu *menu);
-    void setZoomChanged(qreal zoomFactor);
-    void updateActions();
-    void slotSelectMoreMessageTagList();
-    void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
-    void slotUpdateMessageTagList(const Akonadi::Tag &tag);
-    void initializeMessage(const KMime::Message::Ptr &message);
-    void showNextMessage();
-    void showPreviousMessage();
-    void updateButtons();
-    void slotToggleMenubar(bool dontShowWarning);
-    void initializeAkonadiStandardAction();
-    void slotMarkMailAs();
+    KMAIL_NO_EXPORT void copyOrMoveItem(const Akonadi::Collection &collection, bool move);
+    [[nodiscard]] KMAIL_NO_EXPORT Akonadi::Collection parentCollection() const;
+    KMAIL_NO_EXPORT void initKMReaderMainWin();
+    KMAIL_NO_EXPORT void setupAccel();
+    KMAIL_NO_EXPORT QAction *copyActionMenu(QMenu *menu);
+    KMAIL_NO_EXPORT QAction *moveActionMenu(QMenu *menu);
+    KMAIL_NO_EXPORT void setZoomChanged(qreal zoomFactor);
+    KMAIL_NO_EXPORT void updateActions();
+    KMAIL_NO_EXPORT void slotSelectMoreMessageTagList();
+    KMAIL_NO_EXPORT void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
+    KMAIL_NO_EXPORT void slotUpdateMessageTagList(const Akonadi::Tag &tag);
+    KMAIL_NO_EXPORT void initializeMessage(const KMime::Message::Ptr &message);
+    KMAIL_NO_EXPORT void showNextMessage();
+    KMAIL_NO_EXPORT void showPreviousMessage();
+    KMAIL_NO_EXPORT void updateButtons();
+    KMAIL_NO_EXPORT void slotToggleMenubar(bool dontShowWarning);
+    KMAIL_NO_EXPORT void initializeAkonadiStandardAction();
+    KMAIL_NO_EXPORT void slotMarkMailAs();
 
     QList<KMime::Message::Ptr> mListMessage;
     int mCurrentMessageIndex = 0;

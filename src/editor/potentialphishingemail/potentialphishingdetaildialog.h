@@ -20,8 +20,8 @@ public:
     void fillList(const QStringList &lst);
 
 private:
-    void slotSave();
-    void readConfig();
-    void writeConfig();
+    KMAIL_NO_EXPORT void slotSave();
+    KMAIL_NO_EXPORT void readConfig();
+    KMAIL_NO_EXPORT void writeConfig();
     PotentialPhishingDetailWidget *const mPotentialPhishingDetailWidget;
 };

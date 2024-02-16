@@ -29,9 +29,9 @@ public:
     void setAkonadiIndex(qint64 akonadiIndex);
 
 private:
-    void slotNotificationClosed();
-    void undoSendEmail();
-    void slotTimeOut();
+    KMAIL_NO_EXPORT void slotNotificationClosed();
+    KMAIL_NO_EXPORT void undoSendEmail();
+    KMAIL_NO_EXPORT void slotTimeOut();
     QString mSubject;
     KNotification *mNotification = nullptr;
     QTimer *mTimer = nullptr;

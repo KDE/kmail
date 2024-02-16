@@ -18,8 +18,8 @@ public:
     void passwords(const QString &identifier) override;
 
 private:
-    void readSieveServerPasswordFinished(QKeychain::Job *baseJob);
-    void readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob);
+    KMAIL_NO_EXPORT void readSieveServerPasswordFinished(QKeychain::Job *baseJob);
+    KMAIL_NO_EXPORT void readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob);
     QString mIdentifier;
     QString mSievePassword;
     QString mSieveCustomPassword;

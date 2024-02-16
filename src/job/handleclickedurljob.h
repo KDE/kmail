@@ -25,7 +25,7 @@ public:
     void setCurrentCollection(const Akonadi::Collection &currentCollection);
 
 private:
-    void slotOpenComposer();
+    KMAIL_NO_EXPORT void slotOpenComposer();
     QUrl mUrl;
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderSettings> mFolder;

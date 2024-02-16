@@ -53,11 +53,11 @@ protected Q_SLOTS:
     void slotQuit();
 
 private:
-    void slotConfigureShortcuts();
-    void slotToggleMenubar(bool dontShowWarning);
-    void updateHamburgerMenu();
-    void slotShortcutSaved();
-    void slotFullScreen(bool t);
+    KMAIL_NO_EXPORT void slotConfigureShortcuts();
+    KMAIL_NO_EXPORT void slotToggleMenubar(bool dontShowWarning);
+    KMAIL_NO_EXPORT void updateHamburgerMenu();
+    KMAIL_NO_EXPORT void slotShortcutSaved();
+    KMAIL_NO_EXPORT void slotFullScreen(bool t);
     KPIM::ProgressStatusBarWidget *mProgressBar = nullptr;
     KMMainWidget *mKMMainWidget = nullptr;
     KToggleAction *mShowMenuBarAction = nullptr;

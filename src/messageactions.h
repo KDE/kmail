@@ -63,38 +63,38 @@ public:
 
     void setCurrentMessage(const Akonadi::Item &item, const Akonadi::Item::List &items = Akonadi::Item::List());
 
-    KActionMenu *replyMenu() const;
-    QAction *replyListAction() const;
-    QAction *forwardInlineAction() const;
-    QAction *forwardAttachedAction() const;
-    QAction *redirectAction() const;
-    QAction *newToRecipientsAction() const;
+    [[nodiscard]] KActionMenu *replyMenu() const;
+    [[nodiscard]] QAction *replyListAction() const;
+    [[nodiscard]] QAction *forwardInlineAction() const;
+    [[nodiscard]] QAction *forwardAttachedAction() const;
+    [[nodiscard]] QAction *redirectAction() const;
+    [[nodiscard]] QAction *newToRecipientsAction() const;
 
-    KActionMenu *messageStatusMenu() const;
-    KActionMenu *forwardMenu() const;
+    [[nodiscard]] KActionMenu *messageStatusMenu() const;
+    [[nodiscard]] KActionMenu *forwardMenu() const;
 
-    QAction *annotateAction() const;
-    QAction *printAction() const;
-    QAction *printPreviewAction() const;
-    QAction *listFilterAction() const;
+    [[nodiscard]] QAction *annotateAction() const;
+    [[nodiscard]] QAction *printAction() const;
+    [[nodiscard]] QAction *printPreviewAction() const;
+    [[nodiscard]] QAction *listFilterAction() const;
 
-    KActionMenu *mailingListActionMenu() const;
-    TemplateParser::CustomTemplatesMenu *customTemplatesMenu() const;
+    [[nodiscard]] KActionMenu *mailingListActionMenu() const;
+    [[nodiscard]] TemplateParser::CustomTemplatesMenu *customTemplatesMenu() const;
 
     void addWebShortcutsMenu(QMenu *menu, const QString &text);
 
-    QAction *debugAkonadiSearchAction() const;
-    QAction *addFollowupReminderAction() const;
+    [[nodiscard]] QAction *debugAkonadiSearchAction() const;
+    [[nodiscard]] QAction *addFollowupReminderAction() const;
 
-    QAction *sendAgainAction() const;
+    [[nodiscard]] QAction *sendAgainAction() const;
 
-    QAction *newMessageFromTemplateAction() const;
+    [[nodiscard]] QAction *newMessageFromTemplateAction() const;
 
-    QAction *editAsNewAction() const;
+    [[nodiscard]] QAction *editAsNewAction() const;
 
-    QAction *exportToPdfAction() const;
+    [[nodiscard]] QAction *exportToPdfAction() const;
 
-    QAction *archiveMessageAction() const;
+    [[nodiscard]] QAction *archiveMessageAction() const;
 
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
     [[nodiscard]] Akonadi::Item currentItem() const;

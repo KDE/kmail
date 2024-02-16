@@ -26,11 +26,11 @@ public:
     void setActionCollection(const QList<KActionCollection *> &actionCollectionList);
 
 private:
-    void slotAddNewTag();
-    void slotTagsFetched(KJob *);
-    void writeConfig();
-    void readConfig();
-    void createTagList(bool updateList);
+    KMAIL_NO_EXPORT void slotAddNewTag();
+    KMAIL_NO_EXPORT void slotTagsFetched(KJob *);
+    KMAIL_NO_EXPORT void writeConfig();
+    KMAIL_NO_EXPORT void readConfig();
+    KMAIL_NO_EXPORT void createTagList(bool updateList);
     enum ItemType { UrlTag = Qt::UserRole + 1 };
     const int mNumberOfSelectedMessages = -1;
     const Akonadi::Item mSelectedItem;

@@ -65,7 +65,7 @@ public:
     void setOpenComposerSettings(const OpenComposerSettings &openComposerSettings);
 
 private:
-    void slotOpenComposer();
+    KMAIL_NO_EXPORT void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg = nullptr;
     KMail::Composer::TemplateContext mContext = KMail::Composer::New;

@@ -24,7 +24,7 @@ Q_SIGNALS:
     void changeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
 
 private:
-    void slotChangeDisplayMessageFormat(QAction *act);
-    void updateMenu();
+    KMAIL_NO_EXPORT void slotChangeDisplayMessageFormat(QAction *act);
+    KMAIL_NO_EXPORT void updateMenu();
     MessageViewer::Viewer::DisplayFormatMessage mDisplayMessageFormat = MessageViewer::Viewer::UseGlobalSetting;
 };

@@ -22,7 +22,7 @@ public:
     void setShowAlwaysIndicator(bool status);
 
 private:
-    void updateShowAlwaysIndicator();
+    KMAIL_NO_EXPORT void updateShowAlwaysIndicator();
     QLabel *const mSignatureStateIndicator;
     QLabel *const mEncryptionStateIndicator;
     bool mShowAlwaysIndicator = true;

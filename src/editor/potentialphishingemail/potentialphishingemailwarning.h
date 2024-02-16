@@ -22,6 +22,6 @@ Q_SIGNALS:
     void sendNow();
 
 private:
-    void slotShowDetails(const QString &link);
+    KMAIL_NO_EXPORT void slotShowDetails(const QString &link);
     QStringList mPotentialPhishingEmails;
 };

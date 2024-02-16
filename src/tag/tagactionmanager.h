@@ -88,14 +88,14 @@ Q_SIGNALS:
 
 private:
     Q_DISABLE_COPY(TagActionManager)
-    void newTagActionClicked();
-    void onSignalMapped(const QString &tag);
+    KMAIL_NO_EXPORT void newTagActionClicked();
+    KMAIL_NO_EXPORT void onSignalMapped(const QString &tag);
 
-    void fillTagList();
-    void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
-    void createTagActions(const QList<MailCommon::Tag::Ptr> &);
-    void checkTags(const QList<qint64> &tags);
-    [[nodiscard]] QList<qint64> checkedTags() const;
+    KMAIL_NO_EXPORT void fillTagList();
+    KMAIL_NO_EXPORT void createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu);
+    KMAIL_NO_EXPORT void createTagActions(const QList<MailCommon::Tag::Ptr> &);
+    KMAIL_NO_EXPORT void checkTags(const QList<qint64> &tags);
+    [[nodiscard]] KMAIL_NO_EXPORT QList<qint64> checkedTags() const;
 
     KActionCollection *const mActionCollection;
     MessageActions *const mMessageActions;

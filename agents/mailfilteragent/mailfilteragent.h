@@ -68,7 +68,7 @@ public Q_SLOTS:
     void configure(WId windowId) override;
 
 private:
-    bool isFilterableCollection(const Akonadi::Collection &collection) const;
+    [[nodiscard]] bool isFilterableCollection(const Akonadi::Collection &collection) const;
 
     FilterManager *mFilterManager = nullptr;
 

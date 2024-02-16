@@ -144,7 +144,7 @@ class AppearancePageGeneralTab : public ConfigModuleTab
 public:
     explicit AppearancePageGeneralTab(QWidget *parent = nullptr);
 
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -183,7 +183,7 @@ public:
     explicit AppearancePageMessageTagTab(QWidget *parent = nullptr);
     ~AppearancePageMessageTagTab() override;
 
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -263,5 +263,5 @@ class KMAIL_EXPORT AppearancePage : public ConfigModuleWithTabs
 public:
     explicit AppearancePage(QObject *parent, const KPluginMetaData &data);
 
-    QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
 };

@@ -33,7 +33,7 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
+    KMAIL_NO_EXPORT void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
-    void slotCreateForwardDone(const KMime::Message::Ptr &msg);
     CreateForwardMessageJobSettings mSettings;
 };

@@ -64,7 +64,7 @@ class AccountsPageReceivingTab : public ConfigModuleTab
 public:
     explicit AccountsPageReceivingTab(QWidget *parent = nullptr);
     ~AccountsPageReceivingTab() override;
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
     void save() override;
 
 Q_SIGNALS:
@@ -106,7 +106,7 @@ class KMAIL_EXPORT AccountsPage : public ConfigModuleWithTabs
     Q_OBJECT
 public:
     explicit AccountsPage(QObject *parent, const KPluginMetaData &data);
-    QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
 
 Q_SIGNALS:
     void accountListChanged(const QStringList &);

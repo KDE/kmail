@@ -33,10 +33,10 @@ public:
     [[nodiscard]] bool canStart() const;
 
 private:
-    void itemFetchJobDone(KJob *job);
-    void slotReminderDone(KJob *job);
+    KMAIL_NO_EXPORT void itemFetchJobDone(KJob *job);
+    KMAIL_NO_EXPORT void slotReminderDone(KJob *job);
 
-    void doStart();
+    KMAIL_NO_EXPORT void doStart();
     Akonadi::Collection mCollection;
     Akonadi::Item mMessageItem;
     QDate mDate;

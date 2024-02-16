@@ -38,7 +38,7 @@ public:
     void setSettings(const CreateReplyMessageJobSettings &settings);
 
 private:
-    void slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply);
+    KMAIL_NO_EXPORT void slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply);
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     CreateReplyMessageJobSettings mSettings;
 };

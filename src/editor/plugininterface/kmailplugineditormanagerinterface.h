@@ -41,7 +41,7 @@ public:
     [[nodiscard]] QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
     [[nodiscard]] QList<QWidget *> statusBarWidgetList();
 
-    MessageComposer::ComposerViewBase *composerInterface() const;
+    [[nodiscard]] MessageComposer::ComposerViewBase *composerInterface() const;
     void setComposerInterface(MessageComposer::ComposerViewBase *composerInterface);
 
     [[nodiscard]] bool processProcessKeyEvent(QKeyEvent *event);

@@ -20,5 +20,5 @@ public:
     void setDelay(int val);
 
 private:
-    void initialize();
+    KMAIL_NO_EXPORT void initialize();
 };

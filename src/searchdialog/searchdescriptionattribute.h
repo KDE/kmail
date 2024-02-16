@@ -25,7 +25,7 @@ public:
     void setRecursive(bool);
 
     void setListCollection(const QList<Akonadi::Collection::Id> &col);
-    QList<Akonadi::Collection::Id> listCollection() const;
+    [[nodiscard]] QList<Akonadi::Collection::Id> listCollection() const;
 
     [[nodiscard]] QByteArray type() const override;
     Attribute *clone() const override;

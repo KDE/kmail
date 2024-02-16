@@ -216,14 +216,14 @@ protected:
     [[nodiscard]] QUrl imageUrlClicked() const;
 
 private:
-    void createActions();
-    void updateHtmlActions();
-    void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
-    void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
-    void sendMdnInfo(const Akonadi::Item &item);
-    void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
-    void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
-    void slotOpenImage();
+    KMAIL_NO_EXPORT void createActions();
+    KMAIL_NO_EXPORT void updateHtmlActions();
+    KMAIL_NO_EXPORT void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
+    KMAIL_NO_EXPORT void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
+    KMAIL_NO_EXPORT void sendMdnInfo(const Akonadi::Item &item);
+    KMAIL_NO_EXPORT void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
+    KMAIL_NO_EXPORT void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
+    KMAIL_NO_EXPORT void slotOpenImage();
 
 private:
     KContacts::Addressee mSearchedAddress;

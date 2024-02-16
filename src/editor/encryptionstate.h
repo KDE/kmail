@@ -107,8 +107,8 @@ Q_SIGNALS:
     void encryptChanged(bool encrypt);
 
 private:
-    void setEncrypt(bool encrypt);
-    void updateEncrypt();
+    KMAIL_NO_EXPORT void setEncrypt(bool encrypt);
+    KMAIL_NO_EXPORT void updateEncrypt();
 
 private:
     bool m_override = false;

@@ -135,22 +135,22 @@ private:
 
     /** transfers the list of (imap)-messages
      *  this is a necessary preparation for e.g. forwarding */
-    void transferSelectedMsgs();
+    KMAIL_NO_EXPORT void transferSelectedMsgs();
 
 private Q_SLOTS:
-    void slotPostTransfer(KMCommand::Result result);
+    KMAIL_NO_EXPORT void slotPostTransfer(KMCommand::Result result);
     /** the msg has been transferred */
-    void slotMsgTransfered(const Akonadi::Item::List &msgs);
+    KMAIL_NO_EXPORT void slotMsgTransfered(const Akonadi::Item::List &msgs);
     /** the KMImapJob is finished */
-    void slotJobFinished();
+    KMAIL_NO_EXPORT void slotJobFinished();
     /** the transfer was canceled */
-    void slotTransferCancelled();
+    KMAIL_NO_EXPORT void slotTransferCancelled();
 
 protected:
     Akonadi::Item::List mRetrievedMsgs;
 
 private:
-    void fetchMessages(const Akonadi::Item::List &ids);
+    KMAIL_NO_EXPORT void fetchMessages(const Akonadi::Item::List &ids);
     // ProgressDialog for transferring messages
     QPointer<QProgressDialog> mProgressDialog;
     // Currently only one async command allowed at a time

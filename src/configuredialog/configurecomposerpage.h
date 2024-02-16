@@ -161,7 +161,7 @@ class ComposerPageAttachmentsTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageAttachmentsTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -179,7 +179,7 @@ class ComposerPageAutoCorrectionTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageAutoCorrectionTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -196,7 +196,7 @@ class ComposerPageAutoImageResizeTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit ComposerPageAutoImageResizeTab(QWidget *parent = nullptr);
-    QString helpAnchor() const;
+    [[nodiscard]] QString helpAnchor() const;
 
     void save() override;
 
@@ -214,5 +214,5 @@ class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
 public:
     explicit ComposerPage(QObject *parent, const KPluginMetaData &data);
 
-    QString helpAnchor() const override;
+    [[nodiscard]] QString helpAnchor() const override;
 };

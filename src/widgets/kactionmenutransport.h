@@ -24,9 +24,9 @@ Q_SIGNALS:
     void transportSelected(MailTransport::Transport *transport);
 
 private:
-    void updateTransportMenu();
-    void slotCheckTransportMenu();
-    void slotSelectTransport(QAction *act);
+    KMAIL_NO_EXPORT void updateTransportMenu();
+    KMAIL_NO_EXPORT void slotCheckTransportMenu();
+    KMAIL_NO_EXPORT void slotSelectTransport(QAction *act);
 
     bool mInitialized = false;
 };

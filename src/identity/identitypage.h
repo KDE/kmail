@@ -39,21 +39,21 @@ public:
     void save() override;
 
 private:
-    void slotNewIdentity();
-    void slotModifyIdentity();
-    void slotRemoveIdentity();
+    KMAIL_NO_EXPORT void slotNewIdentity();
+    KMAIL_NO_EXPORT void slotModifyIdentity();
+    KMAIL_NO_EXPORT void slotRemoveIdentity();
     /** Connected to @p mRenameButton's clicked() signal. Just does a
       QTreeWidget::editItem on the selected item */
-    void slotRenameIdentity();
+    KMAIL_NO_EXPORT void slotRenameIdentity();
     /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KIdentityManagementCore::IdentityManager */
-    void slotRenameIdentityFromItem(KMail::IdentityListViewItem *, const QString &);
-    void slotContextMenu(KMail::IdentityListViewItem *, const QPoint &);
-    void slotSetAsDefault();
-    void slotIdentitySelectionChanged();
+    KMAIL_NO_EXPORT void slotRenameIdentityFromItem(KMail::IdentityListViewItem *, const QString &);
+    KMAIL_NO_EXPORT void slotContextMenu(KMail::IdentityListViewItem *, const QPoint &);
+    KMAIL_NO_EXPORT void slotSetAsDefault();
+    KMAIL_NO_EXPORT void slotIdentitySelectionChanged();
 
-    void refreshList();
-    void updateButtons();
+    KMAIL_NO_EXPORT void refreshList();
+    KMAIL_NO_EXPORT void updateButtons();
 
 private: // data members
     Ui_IdentityPage mIPage;

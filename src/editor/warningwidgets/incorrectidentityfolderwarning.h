@@ -23,9 +23,9 @@ public:
     void clearFccInvalid();
 
 private:
-    void addNewLine(QString &str);
-    void updateText();
-    void slotHideAnnimationFinished();
+    KMAIL_NO_EXPORT void addNewLine(QString &str);
+    KMAIL_NO_EXPORT void updateText();
+    KMAIL_NO_EXPORT void slotHideAnnimationFinished();
     bool mMailTransportIsInvalid = false;
     bool mFccIsInvalid = false;
     bool mIdentityIsInvalid = false;

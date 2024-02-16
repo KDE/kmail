@@ -62,12 +62,12 @@ private:
     /**
      * Removes the shortcut actions associated with a folder.
      */
-    void slotCollectionRemoved(const Akonadi::Collection &collection);
+    KMAIL_NO_EXPORT void slotCollectionRemoved(const Akonadi::Collection &collection);
 
-    void slotRowsInserted(const QModelIndex &parent, int start, int end);
+    KMAIL_NO_EXPORT void slotRowsInserted(const QModelIndex &parent, int start, int end);
 
 private:
-    void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
+    KMAIL_NO_EXPORT void updateShortcutsForIndex(const QModelIndex &parent, int start, int end);
     QHash<Akonadi::Collection::Id, FolderShortcutCommand *> mFolderShortcutCommands;
     KActionCollection *mActionCollection = nullptr;
     QWidget *mParent = nullptr;

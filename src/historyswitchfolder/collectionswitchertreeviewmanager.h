@@ -38,9 +38,9 @@ Q_SIGNALS:
     void switchToFolder(const Akonadi::Collection &col);
 
 private:
-    void activateCollection(const QModelIndex &index);
-    void switchToCollectionClicked(const QModelIndex &index);
-    void selectCollection(const int from, const int to);
+    KMAIL_NO_EXPORT void activateCollection(const QModelIndex &index);
+    KMAIL_NO_EXPORT void switchToCollectionClicked(const QModelIndex &index);
+    KMAIL_NO_EXPORT void selectCollection(const int from, const int to);
     QWidget *mParentWidget = nullptr;
     CollectionSwitcherTreeView *const mCollectionSwitcherTreeView;
     CollectionSwitcherModel *const mCollectionSwitcherModel;

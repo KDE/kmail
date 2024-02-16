@@ -56,7 +56,7 @@ Q_SIGNALS:
     void undoStackChanged();
 
 private:
-    void slotMoveResult(KJob *);
+    KMAIL_NO_EXPORT void slotMoveResult(KJob *);
     QList<UndoInfo *> mStack;
     const int mSize = 0;
     int mLastId = 0;
