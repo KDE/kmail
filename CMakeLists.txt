@@ -74,6 +74,7 @@ set(PIMCOMMON_LIB_VERSION "6.0.40")
 set(LIBKDEPIM_LIB_VERSION "6.0.40")
 set(LIBKSIEVE_LIB_VERSION "6.0.40")
 set(AKONADI_SEARCH_VERSION "6.0.40")
+set(QT6KEYCHAIN_LIB_VERSION "0.14.1")
 
 find_package(KPim6WebEngineViewer ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 
@@ -151,7 +152,7 @@ endif()
 find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextUtils ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextCustomEditor ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
-find_package(Qt6Keychain CONFIG)
+find_package(Qt6Keychain ${QT6KEYCHAIN_LIB_VERSION} CONFIG)
 set_package_properties(Qt6Keychain PROPERTIES
     DESCRIPTION "Provides support for secure credentials storage"
     URL "https://github.com/frankosterfeld/qtkeychain"
