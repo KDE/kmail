@@ -2698,7 +2698,8 @@ msgstr ""
 "Selectați cheile care să fie utilizate pentru acest destinatar."
 
 #: editor/kmcomposerwin.cpp:4211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Encryption Key Selection"
 msgid "Encryption Key Selection"
 msgstr "Selectare cheie de criptare"
 
