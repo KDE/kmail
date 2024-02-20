@@ -176,7 +176,7 @@ public:
     explicit KMMailtoComposeCommand(const QUrl &url, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
     Akonadi::Item mMessage;
@@ -193,7 +193,7 @@ public:
     void setReplyAsHtml(bool replyAsHtml);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
     QString mSelection;
@@ -208,7 +208,7 @@ public:
     KMMailtoForwardCommand(QWidget *parent, const QUrl &url, const Akonadi::Item &msg);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     QUrl mUrl;
 };
 
@@ -220,7 +220,7 @@ public:
     KMAddBookmarksCommand(const QUrl &url, QWidget *parent);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
 };
@@ -236,7 +236,7 @@ private Q_SLOTS:
     void slotUrlSaveResult(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
 };
@@ -252,7 +252,7 @@ private Q_SLOTS:
     void slotDeleteItem(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     bool mDeleteFromSource = false;
 };
 
@@ -264,7 +264,7 @@ public:
     explicit KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     KMime::Message::Ptr mMessage;
 };
 
@@ -276,7 +276,7 @@ public:
     KMUseTemplateCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMSaveMsgCommand : public KMCommand
@@ -287,7 +287,7 @@ public:
     KMSaveMsgCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMOpenMsgCommand : public KMCommand
@@ -305,7 +305,7 @@ private Q_SLOTS:
     void slotResult(KJob *job);
 
 private:
-    void doesNotContainMessage();
+    KMAIL_NO_EXPORT void doesNotContainMessage();
     static const int MAX_CHUNK_SIZE = 64 * 1024;
     QUrl mUrl;
     QByteArray mMsgString;
@@ -331,7 +331,7 @@ public:
     KMSaveAttachmentsCommand(QWidget *parent, const Akonadi::Item::List &msgs, MessageViewer::Viewer *viewer);
 
 private:
-    Result execute() override;
+    KMAIL_NO_EXPORT Result execute() override;
     MessageViewer::Viewer *mViewer = nullptr;
 };
 
@@ -346,8 +346,8 @@ private Q_SLOTS:
     void slotCanceled();
 
 private:
-    [[nodiscard]] Result execute() override;
-    void complete(KMCommand::Result result);
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
+    KMAIL_NO_EXPORT void complete(KMCommand::Result result);
 
     KPIM::ProgressItem *mProgressItem = nullptr;
     QList<KJob *> mRunningJobs;
@@ -367,7 +367,7 @@ public:
     void setReplyAsHtml(bool replyAsHtml);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
 private:
     QString mSelection;
@@ -394,8 +394,8 @@ public:
                      const QString &selection = QString());
 
 private:
-    [[nodiscard]] KMCommand::Result createComposer(const Akonadi::Item &item);
-    Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT KMCommand::Result createComposer(const Akonadi::Item &item);
+    KMAIL_NO_EXPORT Result execute() override;
 
 private:
     uint mIdentity;
@@ -412,7 +412,7 @@ public:
     KMForwardAttachedCommand(QWidget *parent, const Akonadi::Item &msg, uint identity = 0, KMail::Composer *win = nullptr);
 
 private:
-    Result execute() override;
+    KMAIL_NO_EXPORT Result execute() override;
 
     uint mIdentity;
     QPointer<KMail::Composer> mWin;
@@ -427,7 +427,7 @@ public:
     KMRedirectCommand(QWidget *parent, const Akonadi::Item::List &msgList);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 };
 
 struct KMAILTESTS_TESTS_EXPORT KMPrintCommandInfo {
@@ -454,7 +454,7 @@ public:
     KMPrintCommand(QWidget *parent, const KMPrintCommandInfo &commandInfo);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     KMPrintCommandInfo mPrintCommandInfo;
 };
@@ -471,7 +471,7 @@ protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     MessageStatus mStatus;
     bool mInvertMark = false;
 };
@@ -496,8 +496,8 @@ protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
-    void setTags();
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
+    KMAIL_NO_EXPORT void setTags();
 
     Akonadi::Tag::List mTags;
     Akonadi::Tag::List mCreatedTags;
@@ -515,7 +515,7 @@ public:
     KMFilterActionCommand(QWidget *parent, const QList<qlonglong> &msgListId, const QString &filterId);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     QList<qlonglong> mMsgListId;
     QString mFilterId;
 };
@@ -543,7 +543,7 @@ public:
     KMMailingListFilterCommand(QWidget *parent, const Akonadi::Item &msg);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMCopyCommand : public KMCommand
@@ -558,7 +558,7 @@ protected Q_SLOTS:
     void slotCopyResult(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     Akonadi::Collection mDestFolder;
 };
@@ -574,7 +574,7 @@ protected Q_SLOTS:
     void slotAppendResult(KJob *job);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     Akonadi::Collection mDestFolder;
     QList<KJob *> mPendingJobs;
@@ -613,8 +613,8 @@ Q_SIGNALS:
     void moveDone(KMMoveCommand *);
 
 private:
-    [[nodiscard]] Result execute() override;
-    void completeMove(Result result);
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
+    KMAIL_NO_EXPORT void completeMove(Result result);
 
     Akonadi::Collection mDestFolder;
     KPIM::ProgressItem *mProgressItem = nullptr;
@@ -646,16 +646,16 @@ public Q_SLOTS:
     void slotMoveCanceled();
 
 private Q_SLOTS:
-    void slotMoveResult(KJob *job);
-    void slotDeleteResult(KJob *job);
+    KMAIL_NO_EXPORT void slotMoveResult(KJob *job);
+    KMAIL_NO_EXPORT void slotDeleteResult(KJob *job);
 Q_SIGNALS:
     void moveDone(KMTrashMsgCommand *);
 
 private:
-    [[nodiscard]] Result execute() override;
-    void completeMove(Result result);
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
+    KMAIL_NO_EXPORT void completeMove(Result result);
 
-    [[nodiscard]] static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
+    [[nodiscard]] KMAIL_NO_EXPORT static Akonadi::Collection findTrashFolder(const Akonadi::Collection &srcFolder);
 
     QMap<Akonadi::Collection, Akonadi::Item::List> mTrashFolders;
     KPIM::ProgressItem *mMoveProgress = nullptr;
@@ -673,7 +673,7 @@ public:
     explicit KMResendMessageCommand(QWidget *parent, const Akonadi::Item &msg = Akonadi::Item());
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMShareImageCommand : public KMCommand
@@ -684,7 +684,7 @@ public:
     explicit KMShareImageCommand(const QUrl &url, QWidget *parent);
 
 private:
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     QUrl mUrl;
 };
 
@@ -700,7 +700,7 @@ public:
 
 private:
     Akonadi::ItemFetchJob *createFetchJob(const Akonadi::Item::List &items) override;
-    [[nodiscard]] Result execute() override;
+    [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     Akonadi::Item mItem;
     MessageViewer::Viewer *mViewer = nullptr;

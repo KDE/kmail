@@ -549,36 +549,36 @@ private Q_SLOTS:
     void slotCheckAccount(Akonadi::ServerManager::State state);
 
 private:
-    void viewMessage(const QUrl &url);
-    [[nodiscard]] Akonadi::Collection currentCollection() const;
+    KMAIL_NO_EXPORT void viewMessage(const QUrl &url);
+    [[nodiscard]] KMAIL_NO_EXPORT Akonadi::Collection currentCollection() const;
 
     /*
      * Fills a composer cWin
      *
      */
-    void fillComposer(bool hidden,
-                      const QString &to,
-                      const QString &cc,
-                      const QString &bcc,
-                      const QString &subject,
-                      const QString &body,
-                      const QString &attachName,
-                      const QByteArray &attachCte,
-                      const QByteArray &attachData,
-                      const QByteArray &attachType,
-                      const QByteArray &attachSubType,
-                      const QByteArray &attachParamAttr,
-                      const QString &attachParamValue,
-                      const QByteArray &attachContDisp,
-                      const QByteArray &attachCharset,
-                      unsigned int identity,
-                      bool forceShowWindow);
+    KMAIL_NO_EXPORT void fillComposer(bool hidden,
+                                      const QString &to,
+                                      const QString &cc,
+                                      const QString &bcc,
+                                      const QString &subject,
+                                      const QString &body,
+                                      const QString &attachName,
+                                      const QByteArray &attachCte,
+                                      const QByteArray &attachData,
+                                      const QByteArray &attachType,
+                                      const QByteArray &attachSubType,
+                                      const QByteArray &attachParamAttr,
+                                      const QString &attachParamValue,
+                                      const QByteArray &attachContDisp,
+                                      const QByteArray &attachCharset,
+                                      unsigned int identity,
+                                      bool forceShowWindow);
 
-    void verifyAccount();
-    void resourceGoOnLine();
-    void openReader(bool onlyCheck, bool startInTray);
-    QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
-    void saveConfig();
+    KMAIL_NO_EXPORT void verifyAccount();
+    KMAIL_NO_EXPORT void resourceGoOnLine();
+    KMAIL_NO_EXPORT void openReader(bool onlyCheck, bool startInTray);
+    KMAIL_NO_EXPORT QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
+    KMAIL_NO_EXPORT void saveConfig();
 
     KMail::UndoStack *the_undoStack = nullptr;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
