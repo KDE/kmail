@@ -172,7 +172,7 @@ public:
     void hasMultiMessages(bool multi);
 
     void updateShowMultiMessagesButton(bool enablePreviousButton, bool enableNextButton);
-    MessageViewer::RemoteContentMenu *remoteContentMenu() const;
+    [[nodiscard]] MessageViewer::RemoteContentMenu *remoteContentMenu() const;
     void addImageMenuActions(QMenu *menu);
 Q_SIGNALS:
     void showStatusBarMessage(const QString &message);
@@ -225,7 +225,6 @@ private:
     KMAIL_NO_EXPORT void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
     KMAIL_NO_EXPORT void slotOpenImage();
 
-private:
     KContacts::Addressee mSearchedAddress;
     Akonadi::Item mSearchedContact;
     QWidget *const mMainWindow;
