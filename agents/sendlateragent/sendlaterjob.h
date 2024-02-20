@@ -23,7 +23,7 @@ class SendLaterJob : public QObject
 {
     Q_OBJECT
 public:
-    SendLaterJob(SendLaterManager *manager, MessageComposer::SendLaterInfo *info, QObject *parent = nullptr);
+    explicit SendLaterJob(SendLaterManager *manager, MessageComposer::SendLaterInfo *info, QObject *parent = nullptr);
     ~SendLaterJob() override;
 
     void start();
