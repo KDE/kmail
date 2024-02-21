@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     // kmkernel->setSystemTryAssociatedWindow(app.focusWindow());
 
     // Go!
-    int ret = qApp->exec();
+    const int ret = qApp->exec();
     // clean up
     kmailKernel.cleanup();
     return ret;
