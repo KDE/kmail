@@ -338,7 +338,7 @@ msgstr "PGP 6 지원 베타 테스팅"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr "버그 수정, 콘텍스트 메뉴 개선"
+msgstr "버그 수정, 상황에 맞는 메뉴 개선"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
