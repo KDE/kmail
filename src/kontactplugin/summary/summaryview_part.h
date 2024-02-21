@@ -59,7 +59,7 @@ private:
     void initGUI(KontactInterface::Core *core);
     void loadLayout();
     void saveLayout();
-    QString widgetName(QWidget *) const;
+    [[nodiscard]] QString widgetName(QWidget *) const;
 
     void drawLtoR(QWidget *target, QWidget *widget, int alignment);
     void drawRtoL(QWidget *target, QWidget *widget, int alignment);
@@ -75,5 +75,5 @@ private:
     QVBoxLayout *mRightColumn = nullptr;
     QLabel *mUsernameLabel = nullptr;
     QLabel *mDateLabel = nullptr;
-    QAction *mConfigAction = nullptr;
+    QAction *const mConfigAction;
 };

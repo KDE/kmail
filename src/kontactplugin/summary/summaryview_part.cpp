@@ -42,6 +42,7 @@ using PimCommon::BroadcastStatus;
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
     , mCore(core)
+    , mConfigAction(new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View..."), this))
 {
     Q_UNUSED(aboutData)
     setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
@@ -53,7 +54,6 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData 
     setDate(QDate::currentDate());
     connect(mCore, &KontactInterface::Core::dayChanged, this, &SummaryViewPart::setDate);
 
-    mConfigAction = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View..."), this);
     actionCollection()->addAction(QStringLiteral("summaryview_configure"), mConfigAction);
     connect(mConfigAction, &QAction::triggered, this, &SummaryViewPart::slotConfigure);
     const QString str = i18n("Configure the summary view");
@@ -178,7 +178,7 @@ void SummaryViewPart::updateWidgets()
 
     auto layout = new QHBoxLayout(mFrame);
 
-    int margin = 20; // margin width: insert margins so there is space to dnd a
+    const int margin = 20; // margin width: insert margins so there is space to dnd a
     // summary when either column is empty. looks nicer too.
 
     layout->insertSpacing(0, margin);

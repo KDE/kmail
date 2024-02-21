@@ -108,7 +108,7 @@ void KCMKontactSummary::load()
     mPluginView->clear();
 
     for (const auto &plugin : std::as_const(pluginMetaDatas)) {
-        QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false);
+        const QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false);
         if (var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);
 

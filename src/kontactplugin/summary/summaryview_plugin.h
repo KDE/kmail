@@ -36,6 +36,6 @@ private:
     void syncAccount(QAction *act);
     void fillSyncActionSubEntries();
     SummaryViewPart *mPart = nullptr;
-    KSelectAction *mSyncAction = nullptr;
+    KSelectAction *const mSyncAction;
     QAction *mAllSync = nullptr;
 };

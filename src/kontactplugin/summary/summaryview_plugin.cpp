@@ -25,8 +25,8 @@ EXPORT_KONTACT_PLUGIN_WITH_JSON(SummaryView, "summaryplugin.json")
 
 SummaryView::SummaryView(KontactInterface::Core *core, const KPluginMetaData &data, const QVariantList &)
     : KontactInterface::Plugin(core, core, data, nullptr)
+    , mSyncAction(new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this))
 {
-    mSyncAction = new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this);
     actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
     connect(mSyncAction, &KSelectAction::actionTriggered, this, &SummaryView::syncAccount);
     connect(mSyncAction->menu(), &QMenu::aboutToShow, this, &SummaryView::fillSyncActionSubEntries);
