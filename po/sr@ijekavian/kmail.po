@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -3049,7 +3049,7 @@ msgstr "Слика није постављена за ваш унос у адр�
 
 # >> @title:window
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Create own vCard"
 msgctxt "@title:window"
@@ -3638,58 +3638,58 @@ msgid "Edit..."
 msgstr "Уреди..."
 
 # >> @title:window
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
 #| msgid "Edit own vCard"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Уређивање сопственог в‑карда"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
 msgstr "Обриши текући в‑кард"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Желите ли заиста да обришете овај в‑кард?"
 
 # >> @title:window
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Delete vCard"
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Брисање в‑карда"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "Овај в‑кард не може да се обрише."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr ""
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Пошаљи потврду"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Уређивање богатог текста"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5995,16 +5995,16 @@ msgstr "има прикључка сажетка"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Изаберите прикључак за давање сажетака на страници сажетака."
 
-#: kontactplugin/summary/summaryview_part.cpp:47
+#: kontactplugin/summary/summaryview_part.cpp:45
+#, kde-format
+msgid "&Configure Summary View..."
+msgstr "&Подеси приказ сажетака..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Контактови сажеци"
-
-#: kontactplugin/summary/summaryview_part.cpp:56
-#, kde-format
-msgid "&Configure Summary View..."
-msgstr "&Подеси приказ сажетака..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -6031,7 +6031,7 @@ msgstr "Сажетак за: %1"
 msgid "What's next?"
 msgstr "Шта је следеће?"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, kde-format
 msgid "Sync All"
 msgstr "Синхронизуј све"
@@ -6050,7 +6050,7 @@ msgstr "Приказ сажетака у Контакту"
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, fuzzy, kde-format
 #| msgid "(c) 2003-2017 The Kontact developers"
-msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "© 2003–2017, програмери Контакта"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

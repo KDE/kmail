@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2017-05-16 06:41-0400\n"
 "Last-Translator: Copied by Zanata <copied-by-zanata@zanata.org>\n"
 "Language-Team: Hebrew <kde-i18n-doc@kde.org>\n"
@@ -2828,7 +2828,7 @@ msgid "No picture set for your address book entry."
 msgstr "לא נקבה תמונה עבור הכניסה שלך בפנקס הכותבות."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -3331,54 +3331,54 @@ msgstr ""
 msgid "Edit..."
 msgstr "ערוך..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "שינוי חשבון"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, fuzzy, kde-format
 msgid "Delete current vCard"
 msgstr "צמצום האשכול הנוכחי"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, fuzzy, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "האם אתה בטוח שברצונך לרוקן את תיקיית האשפה?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "נמחק"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 msgid "We cannot delete vCard file."
 msgstr "אין אפשרות לסנכרן את תיקיית ספריית הדואר."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr ""
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "וידוא שליחה"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "מידע אודות החיבור"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5566,16 +5566,16 @@ msgstr ""
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:47
+#: kontactplugin/summary/summaryview_part.cpp:45
+#, fuzzy, kde-format
+msgid "&Configure Summary View..."
+msgstr "ה&גדרת KMail..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr ""
-
-#: kontactplugin/summary/summaryview_part.cpp:56
-#, fuzzy, kde-format
-msgid "&Configure Summary View..."
-msgstr "ה&גדרת KMail..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5600,7 +5600,7 @@ msgstr "תבנית מהו&דרת (%1)"
 msgid "What's next?"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, fuzzy, kde-format
 msgid "Sync All"
 msgstr "&שלח דואר"
@@ -5618,7 +5618,7 @@ msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, fuzzy, kde-format
-msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 1997-2005, KMail המפתחים של"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

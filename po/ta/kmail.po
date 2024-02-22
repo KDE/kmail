@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2023-12-10 13:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -2909,7 +2909,7 @@ msgid "No picture set for your address book entry."
 msgstr "உங்கள் முகவரிப்புத்தக பதிவில் எந்த படமும் அமைக்கப்படவில்லை."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -3441,53 +3441,53 @@ msgstr ""
 msgid "Edit..."
 msgstr "திருத்து…"
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "சொந்த  vCard-ஐ திருத்து"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
 msgstr "தற்போதைய சொந்த vCard-ஐ நீக்கு"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "இந்த vCard-ஐ உறுதியாக நீக்க விரும்புகிறீர்களா?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "vCard-ஐ நீக்குவது"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "vCard கோப்பை நீக்க முடியவில்லை."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "உறுதியாக ரத்து செய்ய விரும்புகிறீர்களா?"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "உறுதிப்படுத்துக"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "திருத்துவதை ரத்து செய்"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5671,16 +5671,16 @@ msgstr "தொகுப்பு செருகுநிரலின் பெ�
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "தொகுப்புப்பக்கத்தில் காட்ட வேண்டிய செருகுநிரல்களை தேர்ந்தெடுங்கள்."
 
-#: kontactplugin/summary/summaryview_part.cpp:47
+#: kontactplugin/summary/summaryview_part.cpp:45
+#, kde-format
+msgid "&Configure Summary View..."
+msgstr "&தொகுப்புப்பார்வையை அமை..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "காண்டாக்ட் தொகுப்பு"
-
-#: kontactplugin/summary/summaryview_part.cpp:56
-#, kde-format
-msgid "&Configure Summary View..."
-msgstr "&தொகுப்புப்பார்வையை அமை..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5705,7 +5705,7 @@ msgstr "%1 என்பதற்கான தொகுப்பு"
 msgid "What's next?"
 msgstr "அடுத்த‍து என்ன?"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, kde-format
 msgid "Sync All"
 msgstr "அனைத்தையும் ஒத்திசைய செய்"
@@ -5722,8 +5722,9 @@ msgid "Kontact Summary View"
 msgstr "கான்டாக்டு தொகுப்புப்பார்வை"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, kde-format
-msgid "(c) 2003-2021 The Kontact developers"
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 2003-2021 கான்டாக்டு நிரலாளர்கள்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

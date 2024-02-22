@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -2916,7 +2916,7 @@ msgid "No picture set for your address book entry."
 msgstr "ਤੁਹਾਡੀ ਐਡਰੈੱਸ ਬੁੱਕ ਵਿੱਚ ਕੋਈ ਤਸਵੀਰ ਨਹੀਂ ਦਿੱਤੀ।"
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
@@ -3436,28 +3436,28 @@ msgstr ""
 msgid "Edit..."
 msgstr "ਸੋਧ..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
 #| msgid "Modify Account"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "ਅਕਾਊਂਟ ਸੋਧੋ"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, fuzzy, kde-format
 #| msgctxt "@info:tooltip"
 #| msgid "Close the current tab"
 msgid "Delete current vCard"
 msgstr "ਮੌਜੂਦਾ ਟੈਬ ਬੰਦ ਕਰੋ"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, fuzzy, kde-format
 #| msgid "Are you sure you want to empty the trash folder?"
 msgid "Are you sure you want to delete this vCard?"
 msgstr "ਕੀ ਤੁਸੀਂ ਇਹ ਫੋਲਡਰ ਨੂੰ ਰੱਦੀ ਵਿੱਚ ਭੇਜਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Deleted"
@@ -3465,13 +3465,13 @@ msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "ਹਟਾਏ"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Could not sync maildir folder."
 msgid "We cannot delete vCard file."
 msgstr "maildir ਫੋਲਡਰ ਸਮਕਾਲੀ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਹੈ।"
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid "Do you really want to execute <filename>%1</filename>?"
@@ -3479,21 +3479,21 @@ msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "ਕੀ ਤੁਸੀਂ <filename>%1</filename> ਨੂੰ ਚਲਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ? "
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "ਭੇਜਣ ਬਾਰੇ ਪੁਸ਼ਟੀ"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "ਫਾਰਮੈਟ ਖਤਮ ਕਰੋ"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, fuzzy, kde-format
 #| msgid "Do Not Enable"
 msgctxt "@action:button"
@@ -5774,17 +5774,17 @@ msgstr ""
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
-#, kde-format
-msgid "Kontact Summary"
-msgstr ""
-
-#: kontactplugin/summary/summaryview_part.cpp:56
+#: kontactplugin/summary/summaryview_part.cpp:45
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure Summary View..."
 msgstr "ਕੇਮੇਲ ਸੰਰਚਨਾ(&C)..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
+#: kontactplugin/summary/summaryview_plugin.cpp:100
+#, kde-format
+msgid "Kontact Summary"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5810,7 +5810,7 @@ msgstr "ਫੈਂਸੀ ਫਾਰਮੈਟ(&m) (%1)"
 msgid "What's next?"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Sync All"
@@ -5832,7 +5832,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2009, The KMail developers"
-msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) ੧੯੯੭-੨੦੦੯, ਕੇਮੇਲ ਡਿਵੈਲਪਰ"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2024-02-11 11:40+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -2946,7 +2946,7 @@ msgid "No picture set for your address book entry."
 msgstr "Не установлено изображение для контакта."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -3499,53 +3499,53 @@ msgstr ""
 msgid "Edit..."
 msgstr "Изменить..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Редактирование электронной визитки"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
 msgstr "Удалить эту визитку"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Удалить эту визитку в формате vCard?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Удаление визитки"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "Не получилось удалить файл vCard."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "Действительно отменить?"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Подтверждение"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Отменить редактирование"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5791,16 +5791,16 @@ msgstr "Название модуля дайджеста"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Выберите модули для показа на странице дайджеста."
 
-#: kontactplugin/summary/summaryview_part.cpp:47
+#: kontactplugin/summary/summaryview_part.cpp:45
+#, kde-format
+msgid "&Configure Summary View..."
+msgstr "На&строить дайджесты..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Дайджест Kontact"
-
-#: kontactplugin/summary/summaryview_part.cpp:56
-#, kde-format
-msgid "&Configure Summary View..."
-msgstr "На&строить дайджесты..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5827,7 +5827,7 @@ msgstr "Дайджест для %1"
 msgid "What's next?"
 msgstr "Что дальше?"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, kde-format
 msgid "Sync All"
 msgstr "Синхронизировать всё"
@@ -5844,8 +5844,9 @@ msgid "Kontact Summary View"
 msgstr "Страница дайджеста Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, kde-format
-msgid "(c) 2003-2021 The Kontact developers"
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "© Разработчики Kontact, 2003-2021"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

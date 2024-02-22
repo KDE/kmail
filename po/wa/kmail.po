@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -2969,7 +2969,7 @@ msgid "No picture set for your address book entry."
 msgstr "Nole imådje defineye por vos e calpin d' adresses."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Create own vCard"
 msgctxt "@title:window"
@@ -3490,27 +3490,27 @@ msgstr ""
 msgid "Edit..."
 msgstr "Aspougnî..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
 #| msgid "Edit own vCard"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Candjî vCard da sinne"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Delete current vCard"
 msgstr "Disfacer li f&yis di messaedjes"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, fuzzy, kde-format
 #| msgid "Are you sure you want to empty the trash folder?"
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Voloz vs vudî l' ridant do batch po do bon ?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Deleted"
@@ -3518,32 +3518,32 @@ msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Disfacé"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr ""
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, fuzzy, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "<qt>Voloz po do bon disfacer l' idintité lomêye <b>%1</b>?</qt>"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Evoyî racertinaedje"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Aspougnaedje e tecse eritchî"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5833,17 +5833,17 @@ msgstr ""
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
-#, kde-format
-msgid "Kontact Summary"
-msgstr ""
-
-#: kontactplugin/summary/summaryview_part.cpp:56
+#: kontactplugin/summary/summaryview_part.cpp:45
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure Summary View..."
 msgstr "Apont&yî KMail..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
+#: kontactplugin/summary/summaryview_plugin.cpp:100
+#, kde-format
+msgid "Kontact Summary"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5869,7 +5869,7 @@ msgstr "&Clapante cogne (%1)"
 msgid "What's next?"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Sync All"
@@ -5891,7 +5891,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2008, The KMail developers"
-msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "© 1997-2008, les programeus di KMail"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

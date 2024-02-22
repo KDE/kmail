@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2024-01-17 23:50+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -2894,7 +2894,7 @@ msgid "No picture set for your address book entry."
 msgstr "Ez dago argazkirik helbide-liburuaren sarreran."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -3447,53 +3447,53 @@ msgstr ""
 msgid "Edit..."
 msgstr "Editatu..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Editatu vCard propioa"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
 msgstr "Ezabatu uneko vCard"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Ziur zaude vCard hau ezabatu nahi duzula?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Ezabatuta vCard"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "Ezin dugu vCard fitxategia ezabatu."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "Benetan utzi nahi duzu bertan behera?"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Berrespena"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Utzi edizioa"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
@@ -5686,16 +5686,16 @@ msgstr "Laburpen pluginaren izena"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Aukeratu laburpen orrian erakusteko laburpen pluginak."
 
-#: kontactplugin/summary/summaryview_part.cpp:47
+#: kontactplugin/summary/summaryview_part.cpp:45
+#, kde-format
+msgid "&Configure Summary View..."
+msgstr "&Konfiguratu laburpen ikuspegia..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
 #: kontactplugin/summary/summaryview_plugin.cpp:100
 #, kde-format
 msgid "Kontact Summary"
 msgstr "Kontaktu laburpena"
-
-#: kontactplugin/summary/summaryview_part.cpp:56
-#, kde-format
-msgid "&Configure Summary View..."
-msgstr "&Konfiguratu laburpen ikuspegia..."
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -5722,7 +5722,7 @@ msgstr "%1(e)rako laburpena"
 msgid "What's next?"
 msgstr "Ondoren zer?"
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, kde-format
 msgid "Sync All"
 msgstr "Sinkronizatu dena"
@@ -5739,8 +5739,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact laburpen ikuspegia"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, kde-format
-msgid "(c) 2003-2021 The Kontact developers"
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 2003-2021 Kontact-en garatzaileak"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106

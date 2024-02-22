@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 00:38+0000\n"
+"POT-Creation-Date: 2024-02-22 00:38+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3039,7 +3039,7 @@ msgstr ""
 "Δεν έχει καθοριστεί εικόνα για την καταχώρησή σας στο βιβλίο διευθύνσεων."
 
 #: identity/identityaddvcarddialog.cpp:27
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:41
 #, fuzzy, kde-format
 #| msgid "Create own vCard"
 msgctxt "@title:window"
@@ -3641,38 +3641,38 @@ msgstr ""
 msgid "Edit..."
 msgstr "Επεξεργασία..."
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
 #| msgid "Edit own vCard"
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Επεξεργασία προσωπικής κάρτας vCard"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
 msgstr "Διαγραφή της τρέχουσας vCard"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:57
 #, fuzzy, kde-format
 #| msgid "Are you sure to want to delete this vCard?"
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Επιθυμείτε πραγματικά τη διαγραφή αυτής της vCard;"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Delete vCard"
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Διαγραφή της vCard"
 
-#: identity/identityeditvcarddialog.cpp:79
+#: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "Δεν μπορούμε να διαγράψουμε το αρχείο vCard."
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:124
 #, fuzzy, kde-format
 #| msgid "Do you really want to remove this group and all its snippets?"
 msgctxt "@info"
@@ -3680,21 +3680,21 @@ msgid "Do you really want to cancel?"
 msgstr ""
 "Θέλετε πραγματικά να αφαιρέσετε αυτή την ομάδα και όλα τα δείγματά της;"
 
-#: identity/identityeditvcarddialog.cpp:126
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Αποστολή επιβεβαίωσης"
 
-#: identity/identityeditvcarddialog.cpp:127
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Επεξεργασία εμπλουτισμένου κείμενου"
 
-#: identity/identityeditvcarddialog.cpp:128
+#: identity/identityeditvcarddialog.cpp:127
 #, fuzzy, kde-format
 #| msgid "Do Not Enable"
 msgctxt "@action:button"
@@ -6006,17 +6006,17 @@ msgstr ""
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
-#: kontactplugin/summary/summaryview_part.cpp:47
-#: kontactplugin/summary/summaryview_plugin.cpp:100
-#, kde-format
-msgid "Kontact Summary"
-msgstr ""
-
-#: kontactplugin/summary/summaryview_part.cpp:56
+#: kontactplugin/summary/summaryview_part.cpp:45
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure Summary View..."
 msgstr "&Διαμόρφωση του KMail..."
+
+#: kontactplugin/summary/summaryview_part.cpp:48
+#: kontactplugin/summary/summaryview_plugin.cpp:100
+#, kde-format
+msgid "Kontact Summary"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:59
 #, kde-format
@@ -6042,7 +6042,7 @@ msgstr "Έ&ξυπνη μορφή (%1)"
 msgid "What's next?"
 msgstr ""
 
-#: kontactplugin/summary/summaryview_plugin.cpp:29
+#: kontactplugin/summary/summaryview_plugin.cpp:28
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Sync All"
@@ -6064,7 +6064,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2009, The KMail developers"
-msgid "(c) 2003-2021 The Kontact developers"
+msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 1997-2009, Οι προγραμματιστές του KMail"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
