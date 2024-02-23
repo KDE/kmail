@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 00:38+0000\n"
-"PO-Revision-Date: 2024-01-17 09:12+0100\n"
+"PO-Revision-Date: 2024-02-22 15:12+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -5765,10 +5765,9 @@ msgid "Kontact Summary View"
 msgstr "Vista de Summario de Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 Le disveloppatores de Kontact"
+msgstr "(c) 2003-2024 Le disveloppatores de Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format

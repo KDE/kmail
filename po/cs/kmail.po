@@ -5591,10 +5591,9 @@ msgid "Kontact Summary View"
 msgstr "Pohled na shrnutí kontaktu"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 Vývojáři aplikace Kontact"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format

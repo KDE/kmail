@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 00:38+0000\n"
-"PO-Revision-Date: 2024-01-17 05:35+0100\n"
+"PO-Revision-Date: 2024-02-22 02:48+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5735,10 +5735,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact-ის შეჯამების ხედი"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 Kontact-ის პროგრამისტები"
+msgstr "(c) 2003-2024 Kontact-ის პროგრამისტები"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format

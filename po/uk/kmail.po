@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 00:38+0000\n"
-"PO-Revision-Date: 2024-01-17 22:11+0200\n"
+"PO-Revision-Date: 2024-02-22 13:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -5831,10 +5831,9 @@ msgid "Kontact Summary View"
 msgstr "Перегляд зведення Контакту"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "© Розробники Kontact, 2003–2021"
+msgstr "© Розробники Kontact, 2003–2024"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
