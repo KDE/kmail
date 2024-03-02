@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 00:38+0000\n"
-"PO-Revision-Date: 2024-02-22 19:30+0300\n"
+"PO-Revision-Date: 2024-03-01 16:19+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -686,7 +686,7 @@ msgstr "Hesap Sihirbazı Başlatılamadı"
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
-msgstr "Elle Posta Denetimine Dahil Et"
+msgstr "Elle posta denetimini etkinleştir"
 
 #: configuredialog/configureaccountpage.cpp:275
 #, kde-format
@@ -6304,10 +6304,10 @@ msgid ""
 "for priority reindexing. If you uncheck a folder it may still be indexed "
 "later, unless it was manually excluded from indexing."
 msgstr ""
-"Aramak istediğiniz klasörlerin bazıları tümüyle indekslenmemiş veya indeksin "
-"dışında tutulmuş. Aşağıda denetlenen klasörler öncelikli yeniden indeksleme "
-"için zamanlanacak. Bir klasörün işaretini kaldırırsanız el ile indeksten "
-"dışarıda tutmadığınız sürece daha sonra yine indekslenebilir."
+"Aramak istediğiniz klasörlerin bazıları tümüyle indekslenmemiş veya "
+"indeksten dışlanmış. Aşağıda denetlenen klasörler öncelikli yeniden "
+"indeksleme için zamanlanacak. Bir klasörün işaretini kaldırırsanız el ile "
+"indeksten dışlamadığınız sürece daha sonra yine indekslenebilir."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
