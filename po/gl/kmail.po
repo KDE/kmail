@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-15 02:21+0000\n"
-"PO-Revision-Date: 2023-12-03 10:02+0100\n"
+"PO-Revision-Date: 2024-03-02 21:05+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -4275,7 +4275,7 @@ msgid ""
 "properly installed."
 msgstr ""
 "Non foi posíbel iniciar o asistente de importación. Asegúrese de que "
-"instalou axeitadamente o asistente de importanción (ImportWizard)."
+"instalou axeitadamente o asistente de importación (ImportWizard)."
 
 #: kmlaunchexternalcomponent.cpp:104
 #, kde-format
@@ -4305,7 +4305,7 @@ msgid ""
 "properly installed."
 msgstr ""
 "Non foi posíbel iniciar o asistente de importación. Asegúrese de que "
-"instalou axeitadamente o asistente de importanción (ImportWizard)."
+"instalou axeitadamente o asistente de importación (ImportWizard)."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, kde-format
