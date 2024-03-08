@@ -18,14 +18,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-22 00:38+0000\n"
-"PO-Revision-Date: 2024-01-08 19:30+0900\n"
+"PO-Revision-Date: 2024-03-08 03:33+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.01.85\n"
+"X-Generator: Lokalize 24.04.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -221,7 +221,7 @@ msgstr "改善執行速度"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
-msgstr ""
+msgstr "選擇性的壓縮附件"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
@@ -325,7 +325,7 @@ msgstr "可用性測試與加強"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
-msgstr ""
+msgstr "補丁撰寫工具設定"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -2754,10 +2754,9 @@ msgid "Clear History"
 msgstr "清除歷史"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "發布新信件"
+msgstr "重新開啟已關閉的檢視器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
@@ -2816,10 +2815,9 @@ msgid "&Existing identities:"
 msgstr "現有身份(&E)："
 
 #: identity/identitydialog.cpp:172
-#, fuzzy, kde-format
-#| msgid "Error while trying to rename folder %1"
+#, kde-format
 msgid "Error while generating new key pair: %1"
-msgstr "更改資料夾 %1 的名稱時發生錯誤"
+msgstr "產生新金鑰對時發生錯誤：%1"
 
 #: identity/identitydialog.cpp:173
 #, kde-format
@@ -2928,13 +2926,7 @@ msgid "Cryptography"
 msgstr "加密"
 
 #: identity/identitydialog.cpp:356
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
-#| "messages. You can also use GnuPG keys.</p><p>You can leave this blank, "
-#| "but KMail will not be able to digitally sign emails using OpenPGP; normal "
-#| "mail functions will not be affected.</p><p>You can find out more about "
-#| "keys at <a>http://www.gnupg.org</a></p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
 "messages. You can also use GnuPG keys.</p><p>You can leave this blank, but "
@@ -2944,7 +2936,7 @@ msgid ""
 msgstr ""
 "<qt><p>OpenPGP 金鑰會用來做數位簽章。您也可以使用 GnuPG 金鑰。</p> <p>這個欄"
 "位您可以留白，但 KMail 就無法簽署數位簽章。</p> <p>更多詳細資料請參閱"
-"<a>http://www.gnupg.org</a></p></qt>"
+"<a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:362 identity/identitydialog.cpp:386
 #, kde-format
