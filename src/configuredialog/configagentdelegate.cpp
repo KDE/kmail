@@ -101,7 +101,7 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
               "<tr>"
               "<td><img src=\"status_icon\"/> %1 %2</td>"
               "</tr>")
-              .arg(statusMessage, status == 1 ? QStringLiteral("(%1%)").arg(progress) : QLatin1StringView(""))
+              .arg(statusMessage, status == 1 ? i18n("(%1%)", progress) : QLatin1StringView(""))
         + QLatin1StringView("</table></body></html>");
 
     document->setHtml(content);
