@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:38+0000\n"
+"POT-Creation-Date: 2024-03-09 00:38+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -632,6 +632,11 @@ msgstr "&Normaal:"
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "&Net-lêzen:"
+
+#: configuredialog/configagentdelegate.cpp:104
+#, kde-format
+msgid "(%1%)"
+msgstr ""
 
 #: configuredialog/configagentdelegate.cpp:213
 #, fuzzy, kde-format

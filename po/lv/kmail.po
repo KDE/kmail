@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-22 00:38+0000\n"
+"POT-Creation-Date: 2024-03-09 00:38+0000\n"
 "PO-Revision-Date: 2024-02-12 08:28+0200\n"
 "Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -551,6 +551,11 @@ msgstr "&Normāla:"
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "&Nelasīta:"
+
+#: configuredialog/configagentdelegate.cpp:104
+#, kde-format
+msgid "(%1%)"
+msgstr ""
 
 #: configuredialog/configagentdelegate.cpp:213
 #, kde-format
@@ -7380,7 +7385,7 @@ msgid ""
 msgstr ""
 "„KMail“ var katrai vēstulei pievienot mazu (48✕48 pikseļi) melnbaltu attēlu. "
 "Tas var saturēt, piemēram, attēlu ar jums vai kādu logotipu. Tas tiek "
-"parādīts saņēmēja pasta programmā, ja saņēmēja programma to atbalsta.</qt>"
+"parādīts saņēmēja pasta programmā, ja saņēmēja programma to atbalsta."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78

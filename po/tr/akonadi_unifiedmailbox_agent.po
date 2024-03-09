@@ -1,13 +1,13 @@
 # Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# SPDX-FileCopyrightText: 2022, 2023 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-13 00:38+0000\n"
-"PO-Revision-Date: 2023-09-26 06:34+0300\n"
+"PO-Revision-Date: 2024-03-08 18:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
@@ -35,8 +35,7 @@ msgstr "Kaldır"
 #: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
-msgstr ""
-"<b>%1</b> birleştirilmiş posta kutusunu gerçekten kaldırmak istiyor musunuz?"
+msgstr "<b>%1</b> birleşik posta kutusunu gerçekten kaldırmak istiyor musunuz?"
 
 #: settingsdialog.cpp:101
 #, kde-format
@@ -47,18 +46,18 @@ msgstr "Gerçekten Kaldır?"
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
-msgstr "Birleştirilmiş Posta Kutuları"
+msgstr "Birleşik Posta Kutuları"
 
 #: unifiedmailboxagent.cpp:167
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
-msgstr "%1 birleştirilmiş posta kutusu eşitleniyor"
+msgstr "%1 birleşik posta kutusu eşitleniyor"
 
 #: unifiedmailboxeditor.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr "Birleştirilmiş Posta Kutusunu Yapılandır"
+msgstr "Birleşik Posta Kutusunu Yapılandır"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format
