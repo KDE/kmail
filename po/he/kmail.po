@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-03-03 15:48+0200\n"
+"PO-Revision-Date: 2024-03-09 23:28+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -46,7 +46,7 @@ msgstr "kde-l10n-he@kde.org"
 #, kde-format
 msgctxt "%1 is version"
 msgid "Welcome to KMail %1"
-msgstr "ברוך בואך אל  KMail %1"
+msgstr "ברוך בואך ל־KMail %1"
 
 #: about/introduction_kmail.html:7
 msgid ""
@@ -289,7 +289,7 @@ msgstr "&מחק אשכול"
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
-msgstr "כללי סינון של POP"
+msgstr "מסנני POP"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
@@ -345,7 +345,7 @@ msgstr ""
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
-msgstr "ניהול פרויקט Ägypten  ו־Kroupware "
+msgstr "ניהול מיזמי Ägypten ו־Kroupware"
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
@@ -407,7 +407,7 @@ msgstr "KMail"
 #: aboutdata.cpp:196
 #, kde-format
 msgid "KDE Email Client"
-msgstr "תוכנית הדוא\"ל של KDE"
+msgstr "לקוח הדוא״ל של KDE"
 
 #: aboutdata.cpp:198
 #, kde-format
@@ -646,28 +646,28 @@ msgstr "לעולם לא אוטומטית"
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On Manual Mail Checks"
-msgstr "בבדיקת דוא\"ל ידנית"
+msgstr "בבדיקות דוא״ל ידניות"
 
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "On All Mail Checks"
-msgstr "בכל בדיקת דוא\"ל"
+msgstr "בכל בדיקת דוא״ל"
 
 #: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr "שלח את ההו&דעות שבתיבת הדואר היוצא:"
+msgstr "לשלוח את ההו&דעות שבתיבת הדואר היוצא:"
 
 #: configuredialog/configureaccountpage.cpp:111
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
-msgstr "שלח עכשיו"
+msgstr "לשלוח עכשיו"
 
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Send Later"
-msgstr "שלח אחר כך"
+msgstr "לשלוח אחר כך"
 
 #: configuredialog/configureaccountpage.cpp:112
 #, kde-format
@@ -7136,16 +7136,15 @@ msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Form"
-msgstr "&רגיל:"
+msgstr "טופס"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/xfaceconfigurator.ui:22
-#, fuzzy, kde-format
-#| msgid "&Send picture with every message"
+#, kde-format
 msgid "Send picture with every message:"
-msgstr "&שלח תמונה עם כל הודעה"
+msgstr "לשלוח תמונה עם כל הודעה:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:30
@@ -7167,10 +7166,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgid "Send both"
-msgstr "שלח עכשיו"
+msgstr "לשלוח את שניהם"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/xfaceconfigurator.ui:68
@@ -7193,9 +7191,9 @@ msgid "%1 seconds"
 msgstr ""
 
 #: undosend/undosendcombobox.cpp:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "5 minutes"
-msgstr " דקות"
+msgstr "5 דקות"
 
 #: undosend/undosendcreatejob.cpp:47
 #, kde-format
@@ -7213,9 +7211,9 @@ msgid "<b>Subject:</b> %1"
 msgstr ""
 
 #: undostack.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Move To Trash"
-msgstr "העבר לאשפה"
+msgstr "העברה לאשפה"
 
 #: undostack.cpp:47
 #, fuzzy, kde-format
@@ -7227,20 +7225,19 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: undostack.cpp:101
-#, fuzzy, kde-format
+#, kde-format
 msgid "There is nothing to undo."
 msgstr "אין מה לבטל."
 
 #: undostack.cpp:108
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot move message. %1"
-msgstr "העברת הודעות לתיקייה"
+msgstr "לא ניתן להעביר הודעה. %1"
 
 #: userfeedback/accountinfosource.cpp:22
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Account information"
-msgstr "וידוא שליחה"
+msgstr "פרטי חשבון"
 
 #: userfeedback/accountinfosource.cpp:27
 #, kde-format
@@ -7248,9 +7245,9 @@ msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""
 
 #: userfeedback/plugininfosource.cpp:19
-#, fuzzy, kde-format
+#, kde-format
 msgid "Plugins Information"
-msgstr "וידוא שליחה"
+msgstr "פרטי תוספים"
 
 #: userfeedback/plugininfosource.cpp:24
 #, kde-format
@@ -7258,15 +7255,15 @@ msgid "Plugins used in KMail."
 msgstr ""
 
 #: util.cpp:151
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
-msgstr "נמחק"
+msgstr "מחיקה"
 
 #: widgets/displaymessageformatactionmenu.cpp:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message Default Format"
-msgstr "מאפייני חלק של ההודעה"
+msgstr "תצורת ההודעות כברירת מחדל"
 
 #: widgets/displaymessageformatactionmenu.cpp:25
 #, kde-format
@@ -7274,14 +7271,14 @@ msgid "Prefer &HTML to Plain Text"
 msgstr "ה&עדף HTML על פני טקסט רגיל"
 
 #: widgets/displaymessageformatactionmenu.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "Prefer &Plain Text to HTML"
-msgstr "ה&עדף HTML על פני טקסט רגיל"
+msgstr "להעדיף טקסט &פשוט על פני HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:37
-#, fuzzy, kde-format
+#, kde-format
 msgid "Use Global Setting"
-msgstr "אפס הגדרות גופנים"
+msgstr "להשתמש בהגדרות כלליות"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
 #, fuzzy, kde-format

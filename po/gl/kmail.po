@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-03-02 21:05+0100\n"
+"PO-Revision-Date: 2024-03-09 09:52+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -564,7 +564,7 @@ msgstr "&Sen ler:"
 #: configuredialog/configagentdelegate.cpp:104
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:213
 #, kde-format

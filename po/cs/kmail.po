@@ -549,7 +549,7 @@ msgstr "N&epřečteno:"
 #: configuredialog/configagentdelegate.cpp:104
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:213
 #, kde-format

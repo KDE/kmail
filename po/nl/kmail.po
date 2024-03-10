@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2024-02-22 11:55+0100\n"
+"PO-Revision-Date: 2024-03-09 11:59+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -571,7 +571,7 @@ msgstr "&Ongelezen:"
 #: configuredialog/configagentdelegate.cpp:104
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:213
 #, kde-format
