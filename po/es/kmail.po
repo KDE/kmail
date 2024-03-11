@@ -3,13 +3,13 @@
 #
 # Javier Viñal <fjvinal@gmail.com>, 2012, 2013, 2014.
 # Javier Vinal <fjvinalgmail.com>, 2012, 2014, 2015, 2016, 2017, 2018, 2019.
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-02-15 02:21+0000\n"
-"PO-Revision-Date: 2023-11-24 04:33+0100\n"
+"PO-Revision-Date: 2024-03-10 17:49+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -501,7 +501,7 @@ msgstr "Estado:"
 #: collectionpage/collectionquotawidget.cpp:33
 #, no-c-format, kde-format
 msgid "%p% full"
-msgstr "%p% lleno"
+msgstr "%p % lleno"
 
 #: collectionpage/collectionquotawidget.cpp:42
 #, kde-format
@@ -7535,7 +7535,7 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format
 msgid "Zoom: %1%"
-msgstr "Zum: %1%"
+msgstr "Ampliación: %1 %"
 
 #~ msgid "Charset"
 #~ msgstr "Juego de caracteres"
