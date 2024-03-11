@@ -18,13 +18,13 @@
 # Vasee Vaseeharan <vasee@ieee.org>, 2004.
 # Ambalam <tamilpc@ambalam.com>, 2004.
 # root <root@localhost.localdomain>, 2004.
-# SPDX-FileCopyrightText: 2021, 2022, 2023 Kishore G <kishore96@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Kishore G <kishore96@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-09 00:38+0000\n"
-"PO-Revision-Date: 2023-12-10 13:01+0530\n"
+"PO-Revision-Date: 2024-03-10 11:15+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -596,7 +596,7 @@ msgstr "&படிக்காதவை:"
 #: configuredialog/configagentdelegate.cpp:104
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:213
 #, kde-format
@@ -951,30 +951,7 @@ msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">விருப்ப படிவத்தை பற்றிய விவரங்கள்…</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:667
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p><strong>These expressions may be used for the date:</strong></"
-#| "p><ul><li>d - the day as a number without a leading zero (1-31)</"
-#| "li><li>dd - the day as a number with a leading zero (01-31)</li><li>ddd - "
-#| "the abbreviated day name (Mon - Sun)</li><li>dddd - the long day name "
-#| "(Monday - Sunday)</li><li>M - the month as a number without a leading "
-#| "zero (1-12)</li><li>MM - the month as a number with a leading zero "
-#| "(01-12)</li><li>MMM - the abbreviated month name (Jan - Dec)</li><li>MMMM "
-#| "- the long month name (January - December)</li><li>yy - the year as a two "
-#| "digit number (00-99)</li><li>yyyy - the year as a four digit number "
-#| "(0000-9999)</li></ul><p><strong>These expressions may be used for the "
-#| "time:</string></p> <ul><li>h - the hour without a leading zero (0-23 or "
-#| "1-12 if AM/PM display)</li><li>hh - the hour with a leading zero (00-23 "
-#| "or 01-12 if AM/PM display)</li><li>m - the minutes without a leading zero "
-#| "(0-59)</li><li>mm - the minutes with a leading zero (00-59)</li><li>s - "
-#| "the seconds without a leading zero (0-59)</li><li>ss - the seconds with a "
-#| "leading zero (00-59)</li><li>z - the milliseconds without leading zeroes "
-#| "(0-999)</li><li>zzz - the milliseconds with leading zeroes (000-999)</"
-#| "li><li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" "
-#| "or \"PM\".</li><li>ap - switch to AM/PM display. ap will be replaced by "
-#| "either \"am\" or \"pm\".</li><li>Z - time zone in numeric form (-0500)</"
-#| "li></ul><p><strong>All other input characters will be ignored.</strong></"
-#| "p></qt>"
+#, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
 "p><ul><li>d - the day as a number without a leading zero (1-31)</li><li>dd - "
@@ -2884,10 +2861,9 @@ msgid "Clear History"
 msgstr "வரலாற்றை காலியாக்கு"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "புதிய அஞ்சலை அனுப்பு"
+msgstr "முடிய காட்டியைத் திற"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
