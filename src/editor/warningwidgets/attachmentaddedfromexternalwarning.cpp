@@ -10,17 +10,6 @@
 
 #include <KLocalizedString>
 
-namespace
-{
-QString sanitizedString(const QString &string)
-{
-    auto result = string;
-    result.replace(QLatin1Char('<'), QStringLiteral("&lt;"));
-    result.replace(QLatin1Char('>'), QStringLiteral("&gt;"));
-    return result;
-}
-}
-
 AttachmentAddedFromExternalWarning::AttachmentAddedFromExternalWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
@@ -41,9 +30,9 @@ void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &l
         const QUrl url(item);
 
         if (url.isLocalFile()) {
-            attachments << sanitizedString(url.toLocalFile());
+            attachments << url.toLocalFile().toHtmlEscaped();
         } else {
-            attachments << sanitizedString(item);
+            attachments << QString(item).toHtmlEscaped();
         }
     }
 
