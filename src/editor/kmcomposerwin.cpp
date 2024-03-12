@@ -1516,6 +1516,7 @@ void KMComposerWin::setupActions()
         disconnect(mHamburgerMenu, &KHamburgerMenu::aboutToShowMenu, this, nullptr);
     });
 
+    createStandardStatusBarAction();
     createGUI(QStringLiteral("kmcomposerui.rc"));
     initializePluginActions();
     connect(toolBar(QStringLiteral("htmlToolBar"))->toggleViewAction(), &QAction::toggled, this, &KMComposerWin::htmlToolBarVisibilityChanged);
