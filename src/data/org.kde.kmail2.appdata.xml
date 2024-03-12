@@ -438,7 +438,13 @@
   </provides>
   <launchable type="desktop-id">org.kde.kmail2.desktop</launchable>
   <releases>
-    <release version="6.0.0" date="2024-02-28"/>
+    <release version="6.0.0" date="2024-02-28">
+      <description>
+        <p>The KMail email viewer removes ads and tracking code from your emails using a more powerful ad blocker written in Rust. The email composer now directly shows the validity and the trust level of the OpenPGP keys of your recipients and warns you when one of their keys is almost expired or expired.</p>
+        <p>In addition of a variety of pre-existing online services, KMail now supports a few offline and open source AI features. Translations can be configured to use the Bergamot translation model, also used by Firefox. It can also use the vosk-api engine to convert speech to text.</p>
+        <p>Note that by default, all these AI features are disabled and you need to explicitly enable them in the KMail settings.</p>
+      </description>
+    </release>
     <release version="5.24.5" date="2024-02-15"/>
     <release version="5.24.4" date="2023-12-07"/>
     <release version="5.24.3" date="2023-11-09"/>
