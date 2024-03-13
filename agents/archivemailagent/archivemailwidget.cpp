@@ -6,6 +6,7 @@
 
 #include "archivemailwidget.h"
 #include "addarchivemaildialog.h"
+#include "archivemailagent_debug.h"
 #include "archivemailagentutil.h"
 #include "archivemailkernel.h"
 
@@ -152,6 +153,7 @@ void ArchiveMailWidget::load()
         if (info->isValid()) {
             createOrUpdateItem(info);
         } else {
+            qCWarning(ARCHIVEMAILAGENT_LOG) << " Invalid info " << info << "collectionGroup" << collectionGroup.name();
             delete info;
         }
     }
@@ -254,6 +256,7 @@ void ArchiveMailWidget::slotModifyItem()
         }
         auto archiveItem = static_cast<ArchiveMailItem *>(item);
         QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(archiveItem->info(), parentWidget());
+        qCDebug(ARCHIVEMAILAGENT_LOG) << " archiveItem->info() " << *archiveItem->info();
         if (dialog->exec()) {
             ArchiveMailInfo *info = dialog->info();
             createOrUpdateItem(info, archiveItem);

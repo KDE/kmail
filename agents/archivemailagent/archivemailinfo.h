@@ -9,6 +9,7 @@
 #include <KConfigGroup>
 #include <MailCommon/BackupJob>
 #include <QDate>
+#include <QDebug>
 #include <QUrl>
 
 class ArchiveMailInfo
@@ -87,3 +88,4 @@ private:
     bool mIsEnabled = true;
     bool mUseRange = false;
 };
+QDebug operator<<(QDebug d, const ArchiveMailInfo &t);
