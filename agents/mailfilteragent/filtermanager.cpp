@@ -52,7 +52,7 @@ public:
     void slotItemsFetchedForFilter(const Akonadi::Item::List &items);
     void showNotification(const QString &errorMsg, const QString &jobErrorString);
 
-    bool isMatching(const Akonadi::Item &item, const MailCommon::MailFilter *filter);
+    [[nodiscard]] bool isMatching(const Akonadi::Item &item, const MailCommon::MailFilter *filter);
     void beginFiltering(const Akonadi::Item &item) const;
     void endFiltering(const Akonadi::Item &item) const;
     [[nodiscard]] bool atLeastOneFilterAppliesTo(const QString &accountId) const;
