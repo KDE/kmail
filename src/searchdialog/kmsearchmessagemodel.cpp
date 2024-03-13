@@ -77,16 +77,28 @@ static QString toolTip(const Akonadi::Item &item)
     QString content = MessageList::Util::contentSummary(item);
 
     if (textIsLeftToRight) {
-        tip += htmlCodeForStandardRow.arg(i18n("From"), msg->from()->displayString());
-        tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), msg->to()->displayString());
-        tip += htmlCodeForStandardRow.arg(i18n("Date"), QLocale().toString(msg->date()->dateTime()));
+        if (auto from = msg->from(false)) {
+            tip += htmlCodeForStandardRow.arg(i18n("From"), from->displayString());
+        }
+        if (auto to = msg->to(false)) {
+            tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), to->displayString());
+        }
+        if (auto date = msg->date(false)) {
+            tip += htmlCodeForStandardRow.arg(i18n("Date"), QLocale().toString(date->dateTime()));
+        }
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(i18n("Preview"), content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
         }
     } else {
-        tip += htmlCodeForStandardRow.arg(msg->from()->displayString(), i18n("From"));
-        tip += htmlCodeForStandardRow.arg(msg->to()->displayString(), i18nc("Receiver of the email", "To"));
-        tip += htmlCodeForStandardRow.arg(QLocale().toString(msg->date()->dateTime()), i18n("Date"));
+        if (auto from = msg->from(false)) {
+            tip += htmlCodeForStandardRow.arg(from->displayString(), i18n("From"));
+        }
+        if (auto to = msg->to(false)) {
+            tip += htmlCodeForStandardRow.arg(to->displayString(), i18nc("Receiver of the email", "To"));
+        }
+        if (auto date = msg->date(false)) {
+            tip += htmlCodeForStandardRow.arg(QLocale().toString(date->dateTime()), i18n("Date"));
+        }
         if (!content.isEmpty()) {
             tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")), i18n("Preview"));
         }
