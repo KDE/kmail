@@ -48,19 +48,19 @@ public:
     ~FilterLogDialog() override;
 
 private:
-    void slotTextChanged();
-    void slotLogEntryAdded(const QString &logEntry);
-    void slotLogShrinked();
-    void slotLogStateChanged();
-    void slotChangeLogDetail();
-    void slotSwitchLogState();
-    void slotChangeLogMemLimit(int value);
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotTextChanged();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotLogEntryAdded(const QString &logEntry);
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotLogShrinked();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotLogStateChanged();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotChangeLogDetail();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotSwitchLogState();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotChangeLogMemLimit(int value);
 
-    void slotUser1();
-    void slotUser2();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotUser1();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void slotUser2();
 
-    void readConfig();
-    void writeConfig();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void readConfig();
+    MAILFILTERAGENTPRIVATE_NO_EXPORT void writeConfig();
 
     TextCustomEditor::PlainTextEditorWidget *mTextEdit = nullptr;
     QCheckBox *mLogActiveBox = nullptr;
