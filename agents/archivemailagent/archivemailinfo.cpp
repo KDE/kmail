@@ -265,3 +265,19 @@ bool ArchiveMailInfo::operator==(const ArchiveMailInfo &other) const
         && lastDateSaved() == other.lastDateSaved() && maximumArchiveCount() == other.maximumArchiveCount() && isEnabled() == other.isEnabled()
         && useRange() == other.useRange() && range() == other.range();
 }
+
+QDebug operator<<(QDebug d, const ArchiveMailInfo &t)
+{
+    d.space() << "mLastDateSaved" << t.lastDateSaved();
+    d.space() << "mArchiveAge" << t.archiveAge();
+    d.space() << "mArchiveType" << t.archiveType();
+    d.space() << "mArchiveUnit" << t.archiveUnit();
+    d.space() << "mSaveCollectionId" << t.saveCollectionId();
+    d.space() << "mPath" << t.url();
+    d.space() << "mRanges" << t.range();
+    d.space() << "mMaximumArchiveCount" << t.maximumArchiveCount();
+    d.space() << "mSaveSubCollection" << t.saveSubCollection();
+    d.space() << "mIsEnabled" << t.isEnabled();
+    d.space() << "mUseRange" << t.useRange();
+    return d;
+}
