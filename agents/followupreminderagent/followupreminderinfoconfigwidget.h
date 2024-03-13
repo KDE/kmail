@@ -18,9 +18,9 @@ public:
     explicit FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parentWidget, const QVariantList &args);
     ~FollowUpReminderInfoConfigWidget() override;
 
-    bool save() const override;
+    [[nodiscard]] bool save() const override;
     void load() override;
-    QSize restoreDialogSize() const override;
+    [[nodiscard]] QSize restoreDialogSize() const override;
     void saveDialogSize(const QSize &size) override;
 
 private:
