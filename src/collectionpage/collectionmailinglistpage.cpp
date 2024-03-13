@@ -60,7 +60,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     auto topLayout = new QFormLayout(this);
 
     mHoldsMailingList = new QCheckBox(i18n("Folder holds a mailing list"), this);
-    connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsML);
+    connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotHoldsMailingList);
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotConfigChanged);
     topLayout->addRow(QString(), mHoldsMailingList);
 
@@ -133,7 +133,7 @@ void CollectionMailingListPage::load(const Akonadi::Collection &col)
 
     mAddressCombo->setCurrentIndex(mLastItem);
     mHoldsMailingList->setChecked(mFolder && mFolder->isMailingListEnabled());
-    slotHoldsML(mHoldsMailingList->isChecked());
+    slotHoldsMailingList(mHoldsMailingList->isChecked());
     changed = false;
 }
 
@@ -151,7 +151,7 @@ void CollectionMailingListPage::save(Akonadi::Collection &col)
 }
 
 //----------------------------------------------------------------------------
-void CollectionMailingListPage::slotHoldsML(bool holdsML)
+void CollectionMailingListPage::slotHoldsMailingList(bool holdsML)
 {
     mMLId->setEnabled(holdsML);
     mMLHandlerCombo->setEnabled(holdsML);

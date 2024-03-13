@@ -48,7 +48,7 @@ private:
     void slotDetectMailingList();
     void slotInvokeHandler();
     void slotMLHandling(int element);
-    void slotHoldsML(bool holdsML);
+    void slotHoldsMailingList(bool holdsML);
     void slotAddressChanged(int addr);
     void slotConfigChanged();
     void fillMLFromWidgets();
