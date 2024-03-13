@@ -19,7 +19,6 @@ using MailTransport::TransportManagementWidget;
 #include <MailCommon/MailUtil>
 
 #include "identity/identitypage.h"
-#include "kmail_debug.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
 #include <Akonadi/AgentType>

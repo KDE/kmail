@@ -20,7 +20,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QGpgME/CryptoConfig>
 #include <QGpgME/Protocol>
 
-#include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginMetaData>
