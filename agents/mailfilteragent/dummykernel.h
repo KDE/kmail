@@ -39,9 +39,9 @@ public:
 
 private:
     Q_DISABLE_COPY(DummyKernel)
-    KIdentityManagementCore::IdentityManager *mIdentityManager = nullptr;
-    MessageComposer::MessageSender *mMessageSender = nullptr;
+    MessageComposer::MessageSender *const mMessageSender;
+    KIdentityManagementCore::IdentityManager *const mIdentityManager;
     MailCommon::FolderCollectionMonitor *mFolderCollectionMonitor = nullptr;
     Akonadi::EntityTreeModel *mEntityTreeModel = nullptr;
-    Akonadi::EntityMimeTypeFilterModel *mCollectionModel = nullptr;
+    Akonadi::EntityMimeTypeFilterModel *const mCollectionModel;
 };

@@ -11,9 +11,10 @@
 
 DummyKernel::DummyKernel(QObject *parent)
     : QObject(parent)
+    , mMessageSender(new MessageComposer::AkonadiSender(this))
+    , mIdentityManager(new KIdentityManagementCore::IdentityManager(true, this))
+    , mCollectionModel(new Akonadi::EntityMimeTypeFilterModel(this))
 {
-    mMessageSender = new MessageComposer::AkonadiSender(this);
-    mIdentityManager = new KIdentityManagementCore::IdentityManager(true, this);
     auto session = new Akonadi::Session(QByteArrayLiteral("MailFilter Kernel ETM"), this);
 
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
@@ -22,7 +23,6 @@ DummyKernel::DummyKernel(QObject *parent)
     mEntityTreeModel->setListFilter(Akonadi::CollectionFetchScope::Enabled);
     mEntityTreeModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::LazyPopulation);
 
-    mCollectionModel = new Akonadi::EntityMimeTypeFilterModel(this);
     mCollectionModel->setSourceModel(mEntityTreeModel);
     mCollectionModel->addMimeTypeInclusionFilter(Akonadi::Collection::mimeType());
     mCollectionModel->setHeaderGroup(Akonadi::EntityTreeModel::CollectionTreeHeaders);
