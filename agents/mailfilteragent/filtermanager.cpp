@@ -142,7 +142,7 @@ void FilterManager::Private::itemFetchJobForFilterDone(KJob *job)
     }
 
     const QString resourceId = fetchJob->property("resourceId").toString();
-    bool needsFullPayload = q->requiredPart(resourceId) != SearchRule::Envelope;
+    const bool needsFullPayload = q->requiredPart(resourceId) != SearchRule::Envelope;
 
     if (job->property("filterId").isValid()) {
         const QString filterId = job->property("filterId").toString();
