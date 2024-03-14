@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
+"POT-Creation-Date: 2024-03-14 00:38+0000\n"
 "PO-Revision-Date: 2024-03-08 03:33+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -568,103 +568,103 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "收取選項"
 
-#: configuredialog/configureaccountpage.cpp:51
+#: configuredialog/configureaccountpage.cpp:50
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "身份"
 
-#: configuredialog/configureaccountpage.cpp:57
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "收信"
 
-#: configuredialog/configureaccountpage.cpp:64
+#: configuredialog/configureaccountpage.cpp:63
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "送信"
 
-#: configuredialog/configureaccountpage.cpp:70
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP 伺服器"
 
-#: configuredialog/configureaccountpage.cpp:85
+#: configuredialog/configureaccountpage.cpp:84
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
 msgstr "發信帳號（至少新增一個帳號）："
 
-#: configuredialog/configureaccountpage.cpp:92
+#: configuredialog/configureaccountpage.cpp:91
 #, kde-format
 msgid "&Confirm action"
 msgstr "確認動作(&C)"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:92
 #, kde-format
 msgid "Before sending:"
 msgstr "傳送前："
 
-#: configuredialog/configureaccountpage.cpp:96
+#: configuredialog/configureaccountpage.cpp:95
 #, kde-format
 msgid "Check spelling"
 msgstr "檢查拼字"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Never Automatically"
 msgstr "不自動執行"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "手動檢查信件時"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "檢查所有帳號信件時"
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "檢查時傳送寄件匣內的信件(&F)"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "立即傳送"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send Later"
 msgstr "稍後傳送"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "預設傳送方式(&U)："
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:115
 #, kde-format
 msgid "Enable Undo Send"
 msgstr "啟用傳送復原"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:195
 #, kde-format
 msgid "Add Mail Account..."
 msgstr "新增郵件帳號"
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Custom Account..."
 msgstr "自訂帳號..."
 
-#: configuredialog/configureaccountpage.cpp:217
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -672,31 +672,31 @@ msgid ""
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查您是否正確安裝 AccountWizard。"
 
-#: configuredialog/configureaccountpage.cpp:219
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "無法啟動帳號精靈"
 
-#: configuredialog/configureaccountpage.cpp:267
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手動檢查信件時檢查這個帳號"
 
-#: configuredialog/configureaccountpage.cpp:275
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "KMail 關閉時切換到離線模式"
 
-#: configuredialog/configureaccountpage.cpp:282
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgid "Check mail on startup"
 msgstr "啟動時檢查信件"
 
-#: configuredialog/configureaccountpage.cpp:329
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1544,81 +1544,81 @@ msgstr "確認刪除郵件外掛程式"
 msgid "Akonadi Agents"
 msgstr "Akonadi 代理程式"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:46
 #, kde-format
 msgid "Reading"
 msgstr "讀取中"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:48
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "信件處理通知"
 
-#: configuredialog/configuresecuritypage.cpp:55
+#: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
 msgid "Encryption"
 msgstr "加密"
 
-#: configuredialog/configuresecuritypage.cpp:61
+#: configuredialog/configuresecuritypage.cpp:60
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME 確認"
 
-#: configuredialog/configuresecuritypage.cpp:88
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "電子郵件地址："
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "您確定要移除這個電子郵件地址嗎？"
 
-#: configuredialog/configuresecuritypage.cpp:124
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改變全域的 HTML 設定，將會覆蓋個別資料夾原先的 HTML 設定。"
 
-#: configuredialog/configuresecuritypage.cpp:292
-#: configuredialog/configuresecuritypage.cpp:294
-#: configuredialog/configuresecuritypage.cpp:296
-#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:291
+#: configuredialog/configuresecuritypage.cpp:293
+#: configuredialog/configuresecuritypage.cpp:295
+#: configuredialog/configuresecuritypage.cpp:297
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " 天"
 
-#: configuredialog/configuresecuritypage.cpp:334
+#: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
-#: configuredialog/configuresecuritypage.cpp:341
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "缺乏該模組。請確認您的安裝。該模組由 Kleopatra 所提供。"
 
-#: configuredialog/configuresecuritypage.cpp:346
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 設定模組錯誤"
 
-#: configuredialog/configuresecuritypage.cpp:413
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "這個選項需要 dirmngr 版本 >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "沒有代理伺服器"
 
-#: configuredialog/configuresecuritypage.cpp:554
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(目前的系統設定: %1)"
@@ -5802,32 +5802,32 @@ msgstr "索引"
 msgid "Indexing Collections..."
 msgstr "正在索引收藏..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:80
-#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:81
+#: searchdialog/kmsearchmessagemodel.cpp:94
 #, kde-format
 msgid "From"
 msgstr "寄件者"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:97
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "收件者"
 
-#: searchdialog/kmsearchmessagemodel.cpp:82
-#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:100
 #, kde-format
 msgid "Date"
 msgstr "日期"
 
-#: searchdialog/kmsearchmessagemodel.cpp:84
-#: searchdialog/kmsearchmessagemodel.cpp:91
+#: searchdialog/kmsearchmessagemodel.cpp:90
+#: searchdialog/kmsearchmessagemodel.cpp:103
 #, kde-format
 msgid "Preview"
 msgstr "預覽"
 
-#: searchdialog/kmsearchmessagemodel.cpp:148
+#: searchdialog/kmsearchmessagemodel.cpp:160
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"

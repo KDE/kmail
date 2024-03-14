@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2024-03-14 00:38+0000\n"
 "PO-Revision-Date: 2023-12-30 09:19+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -26,7 +26,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Внесення змін до архівування пошти"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -78,86 +78,86 @@ msgstr "Архів"
 msgid "Use Range"
 msgstr "Використати діапазон"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "Назва"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "Останнє архівування"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "Наступне архівування за"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "Каталог сховища даних"
 
-#: archivemailwidget.cpp:88
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "Агент архівування пошти"
 
-#: archivemailwidget.cpp:90
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "Автоматичне архівування повідомлень електронної пошти."
 
-#: archivemailwidget.cpp:92
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "© Laurent Montel, 2014–%1"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "Супровідник"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Юрій Чорноіван"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "yurchor@ukr.net"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Додати…"
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "Відкрити теку, яка містить дані…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Вилучити"
 
-#: archivemailwidget.cpp:165
+#: archivemailwidget.cpp:167
 #, kde-format
 msgid "Folder: %1"
 msgstr "Тека: %1"
 
-#: archivemailwidget.cpp:187
+#: archivemailwidget.cpp:189
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -166,23 +166,23 @@ msgstr[1] "За %1 дні"
 msgstr[2] "За %1 днів"
 msgstr[3] "Взавтра"
 
-#: archivemailwidget.cpp:196
+#: archivemailwidget.cpp:198
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Архівування буде виконано %1"
 
-#: archivemailwidget.cpp:232
+#: archivemailwidget.cpp:234
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Ви хочете вилучити позначені записи?"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:235
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Вилучення записів"
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:276
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

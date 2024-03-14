@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
+"POT-Creation-Date: 2024-03-14 00:38+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -619,108 +619,108 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Tchuzes d' abagaedje"
 
-#: configuredialog/configureaccountpage.cpp:51
+#: configuredialog/configureaccountpage.cpp:50
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&Idintité"
 
-#: configuredialog/configureaccountpage.cpp:57
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Dji rçû"
 
-#: configuredialog/configureaccountpage.cpp:64
+#: configuredialog/configureaccountpage.cpp:63
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Dj' evoye"
 
-#: configuredialog/configureaccountpage.cpp:70
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:85
+#: configuredialog/configureaccountpage.cpp:84
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
 msgstr "Contes rexhants (radjoutez è onk pol moens!):"
 
-#: configuredialog/configureaccountpage.cpp:92
+#: configuredialog/configureaccountpage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "&Confirm action"
 msgstr "Evoyî racertinaedje"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:92
 #, fuzzy, kde-format
 msgid "Before sending:"
 msgstr "E&voyî"
 
-#: configuredialog/configureaccountpage.cpp:96
+#: configuredialog/configureaccountpage.cpp:95
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgid "Check spelling"
 msgstr "Verifyî l' ortografeye divant d' evoyî"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Never Automatically"
 msgstr "Måy otomaticmint"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Ås waitaedjes des emiles al mwin"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "A tos les waitaedjes des emiles"
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Evoyî &messaedjes e ridant d' rexhowe:"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "Evoyî sol côp"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send Later"
 msgstr "Evoyî pus tård"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Prémet&owe metôde d' evoyaedje"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:115
 #, kde-format
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:195
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account..."
 msgstr "Radjouter on conte"
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:196
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Custom Account..."
 msgstr "Mete l' ôre des contes a vosse môde..."
 
-#: configuredialog/configureaccountpage.cpp:217
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
@@ -731,7 +731,7 @@ msgstr ""
 "Dji n' a savou abaguer l' macrea des contes. Verifyîz vost astalaedje, s' i "
 "vs plait."
 
-#: configuredialog/configureaccountpage.cpp:219
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -739,24 +739,24 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Dji n' sai enonder l' macrea des contes"
 
-#: configuredialog/configureaccountpage.cpp:267
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Mete divins l' waitaedje al mwin s' i gn a des emiles"
 
-#: configuredialog/configureaccountpage.cpp:275
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Si disraloyî a l' aresse di KMail"
 
-#: configuredialog/configureaccountpage.cpp:282
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgid "Check mail on startup"
 msgstr "Waitî s' i gn a des emiles a l' enondaedje"
 
-#: configuredialog/configureaccountpage.cpp:329
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1670,40 +1670,40 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr "Poirtaedje d' Akonadi"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:46
 #, kde-format
 msgid "Reading"
 msgstr "Lijhaedje"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:48
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Notifiaedjes di riçuvaedje des messaedjes"
 
-#: configuredialog/configuresecuritypage.cpp:55
+#: configuredialog/configuresecuritypage.cpp:54
 #, fuzzy, kde-format
 #| msgid "Encrypting"
 msgid "Encryption"
 msgstr "Ecriptaedje"
 
-#: configuredialog/configuresecuritypage.cpp:61
+#: configuredialog/configuresecuritypage.cpp:60
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "Validåcion S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:88
+#: configuredialog/configuresecuritypage.cpp:87
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "Adresse emile"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "Voloz vs oister l' conte « %1 » ?"
 
-#: configuredialog/configuresecuritypage.cpp:124
+#: configuredialog/configuresecuritypage.cpp:123
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global HTML setting will override all folder specific values."
@@ -1713,47 +1713,47 @@ msgstr ""
 "Candjî les globålès tchuzes HTML sipotchrè totes les valixhances sipecifikes "
 "ås ridants."
 
-#: configuredialog/configuresecuritypage.cpp:292
-#: configuredialog/configuresecuritypage.cpp:294
-#: configuredialog/configuresecuritypage.cpp:296
-#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:291
+#: configuredialog/configuresecuritypage.cpp:293
+#: configuredialog/configuresecuritypage.cpp:295
+#: configuredialog/configuresecuritypage.cpp:297
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " djoû"
 msgstr[1] " djoûs"
 
-#: configuredialog/configuresecuritypage.cpp:334
+#: configuredialog/configuresecuritypage.cpp:333
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Apontiaedjes GnuPG..."
 
-#: configuredialog/configuresecuritypage.cpp:341
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:346
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:413
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Cisse tchuze a dandjî di dirmngr ≽ 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "nou procsi"
 
-#: configuredialog/configuresecuritypage.cpp:554
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Apontiaedje do sistinme do moumint: %1)"
@@ -6160,32 +6160,32 @@ msgstr "Indecsaedje"
 msgid "Indexing Collections..."
 msgstr "Apontyî ôre di completaedje..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:80
-#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:81
+#: searchdialog/kmsearchmessagemodel.cpp:94
 #, kde-format
 msgid "From"
 msgstr "Di"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:97
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "Po"
 
-#: searchdialog/kmsearchmessagemodel.cpp:82
-#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:100
 #, kde-format
 msgid "Date"
 msgstr "Date"
 
-#: searchdialog/kmsearchmessagemodel.cpp:84
-#: searchdialog/kmsearchmessagemodel.cpp:91
+#: searchdialog/kmsearchmessagemodel.cpp:90
+#: searchdialog/kmsearchmessagemodel.cpp:103
 #, kde-format
 msgid "Preview"
 msgstr "Prévoeyaedje"
 
-#: searchdialog/kmsearchmessagemodel.cpp:148
+#: searchdialog/kmsearchmessagemodel.cpp:160
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"

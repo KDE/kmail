@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-09 00:38+0000\n"
+"POT-Creation-Date: 2024-03-14 00:38+0000\n"
 "PO-Revision-Date: 2024-03-10 11:15+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -603,103 +603,103 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "மீட்பு விருப்பங்கள்"
 
-#: configuredialog/configureaccountpage.cpp:51
+#: configuredialog/configureaccountpage.cpp:50
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&அடையாளங்கள்"
 
-#: configuredialog/configureaccountpage.cpp:57
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "பெறுதல்"
 
-#: configuredialog/configureaccountpage.cpp:64
+#: configuredialog/configureaccountpage.cpp:63
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "அனுப்புதல்"
 
-#: configuredialog/configureaccountpage.cpp:70
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP சேவையகம்"
 
-#: configuredialog/configureaccountpage.cpp:85
+#: configuredialog/configureaccountpage.cpp:84
 #, kde-format
 msgid "Outgoing accounts (add at least one):"
 msgstr "அஞ்சலனுப்ப பயன்படும் கணக்குகள்: (ஒன்றையாவது சேர்க்கவும்);"
 
-#: configuredialog/configureaccountpage.cpp:92
+#: configuredialog/configureaccountpage.cpp:91
 #, kde-format
 msgid "&Confirm action"
 msgstr "செயலை &உறுதிப்படுத்து"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:92
 #, kde-format
 msgid "Before sending:"
 msgstr "அனுப்புவதற்கு முன்:"
 
-#: configuredialog/configureaccountpage.cpp:96
+#: configuredialog/configureaccountpage.cpp:95
 #, kde-format
 msgid "Check spelling"
 msgstr "எழுத்தாக்கத்தை சரிபார்"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Never Automatically"
 msgstr "ஒருபோதும் தானாக வேண்டாம்"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "கைமுறையாக அஞ்சலுள்ளதா என பார்க்கும்போது"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "அஞ்சலுள்ளதா என்று எப்போது பார்த்தாலும்"
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "வெளிப்பெட்டி அடைவிலுள்ள &அஞ்சல்களை அனுப்புதல்:"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
 #, kde-format
 msgid "Send Now"
 msgstr "உடனே அனுப்பு"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send Later"
 msgstr "பின்னர் அனுப்பு"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "&இயல்பாக அனுப்பும் முறை:"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:115
 #, kde-format
 msgid "Enable Undo Send"
 msgstr "அனுப்பியவற்றை திரும்பப்பெற விடு"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:195
 #, kde-format
 msgid "Add Mail Account..."
 msgstr "அஞ்சல் கணக்கை சேர்…"
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Custom Account..."
 msgstr "வேறுபட்ட கணக்கு…"
 
-#: configuredialog/configureaccountpage.cpp:217
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -708,31 +708,31 @@ msgid ""
 msgstr ""
 "கணக்கு உதவிநிரலை துவக்க முடியவில்லை. அது சரியாக நிறுவப்பட்டுள்ளதா என பாருங்கள்."
 
-#: configuredialog/configureaccountpage.cpp:219
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "கணக்கு உதவிநிரலை துவக்க முடியவில்லை"
 
-#: configuredialog/configureaccountpage.cpp:267
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "அஞ்சலுள்ளதா என கைமுறையாக பார்க்கும்போது இதற்கும் பார்"
 
-#: configuredialog/configureaccountpage.cpp:275
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "கேமெயில் நிறுத்தப்படும்போது தொடர்பற்ற நிலைக்கு மாற்று"
 
-#: configuredialog/configureaccountpage.cpp:282
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgid "Check mail on startup"
 msgstr "துவக்கும்போது அஞ்சலுள்ளதா என பார்"
 
-#: configuredialog/configureaccountpage.cpp:329
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1601,37 +1601,37 @@ msgstr "அஞ்சல்களை நீக்கும்போது உற�
 msgid "Akonadi Agents"
 msgstr "Akonadi பின்னணி சேவைகள்"
 
-#: configuredialog/configuresecuritypage.cpp:47
+#: configuredialog/configuresecuritypage.cpp:46
 #, kde-format
 msgid "Reading"
 msgstr "படித்தல்"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:48
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "அஞ்சல் பெற்றதன் உறுதிப்பாட்டு"
 
-#: configuredialog/configuresecuritypage.cpp:55
+#: configuredialog/configuresecuritypage.cpp:54
 #, kde-format
 msgid "Encryption"
 msgstr "மறையாக்கம்"
 
-#: configuredialog/configuresecuritypage.cpp:61
+#: configuredialog/configuresecuritypage.cpp:60
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME உறுதிப்பாடு"
 
-#: configuredialog/configuresecuritypage.cpp:88
+#: configuredialog/configuresecuritypage.cpp:87
 #, kde-format
 msgid "Email Address:"
 msgstr "மின்னஞ்சல் முகவரி:"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:88
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "நீங்கள் இந்த மின்னஞ்சல் முகவரியை நீக்க விரும்புகிறீர்களா?"
 
-#: configuredialog/configuresecuritypage.cpp:124
+#: configuredialog/configuresecuritypage.cpp:123
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1639,46 +1639,46 @@ msgstr ""
 "பொதுவான HTML விருப்பத்தை மாற்றல், தனிப்பட்ட அடைவுகளுக்கான இவ்வமைப்பை பொருட்படுத்தாதவாறு "
 "செய்யும்."
 
-#: configuredialog/configuresecuritypage.cpp:292
-#: configuredialog/configuresecuritypage.cpp:294
-#: configuredialog/configuresecuritypage.cpp:296
-#: configuredialog/configuresecuritypage.cpp:298
+#: configuredialog/configuresecuritypage.cpp:291
+#: configuredialog/configuresecuritypage.cpp:293
+#: configuredialog/configuresecuritypage.cpp:295
+#: configuredialog/configuresecuritypage.cpp:297
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " நாள்"
 msgstr[1] " நாட்கள்"
 
-#: configuredialog/configuresecuritypage.cpp:334
+#: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG அமைப்புகள்"
 
-#: configuredialog/configuresecuritypage.cpp:341
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "இந்த கூறை காணவில்லை. இதனை நிறுவியதை சரிபாருங்கள். இக்கூறை Kleopatra வழங்கும்."
 
-#: configuredialog/configuresecuritypage.cpp:346
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG அமைப்பு கூறில் சிக்கல்"
 
-#: configuredialog/configuresecuritypage.cpp:413
+#: configuredialog/configuresecuritypage.cpp:412
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "இவ்விருப்பத்திற்கு dirmngr >= 0.9.0 தேவை"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:551 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "பதிலி இல்லை"
 
-#: configuredialog/configuresecuritypage.cpp:554
+#: configuredialog/configuresecuritypage.cpp:553
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(தற்போதைய கணினி அமைப்பு: %1)"
@@ -5956,32 +5956,32 @@ msgstr "அட்டவணையாக்கம்"
 msgid "Indexing Collections..."
 msgstr "தொகுப்புகள் அட்டவணையாக்கபடுகின்றன..."
 
-#: searchdialog/kmsearchmessagemodel.cpp:80
-#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:81
+#: searchdialog/kmsearchmessagemodel.cpp:94
 #, kde-format
 msgid "From"
 msgstr "அனுப்புநர்"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:88
+#: searchdialog/kmsearchmessagemodel.cpp:84
+#: searchdialog/kmsearchmessagemodel.cpp:97
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "பெறுநர்"
 
-#: searchdialog/kmsearchmessagemodel.cpp:82
-#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:87
+#: searchdialog/kmsearchmessagemodel.cpp:100
 #, kde-format
 msgid "Date"
 msgstr "தேதி"
 
-#: searchdialog/kmsearchmessagemodel.cpp:84
-#: searchdialog/kmsearchmessagemodel.cpp:91
+#: searchdialog/kmsearchmessagemodel.cpp:90
+#: searchdialog/kmsearchmessagemodel.cpp:103
 #, kde-format
 msgid "Preview"
 msgstr "முன்னோட்டம்"
 
-#: searchdialog/kmsearchmessagemodel.cpp:148
+#: searchdialog/kmsearchmessagemodel.cpp:160
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"

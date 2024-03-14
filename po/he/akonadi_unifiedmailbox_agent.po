@@ -1,0 +1,90 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"PO-Revision-Date: 2024-03-13 12:16+0200\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 23.08.4\n"
+
+#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "הוספה"
+
+#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "שינוי"
+
+#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#, kde-format
+msgid "Remove"
+msgstr "הסרה"
+
+#: settingsdialog.cpp:100
+#, kde-format
+msgid "Do you really want to remove unified mailbox <b>%1</b>?"
+msgstr "להסיר את התיבה המאוחדת <b>%1</b>?"
+
+#: settingsdialog.cpp:101
+#, kde-format
+msgctxt "@title:window"
+msgid "Really Remove?"
+msgstr "להסיר?"
+
+#: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
+#, kde-format
+msgid "Unified Mailboxes"
+msgstr "תיבות דוא״ל מאוחדות"
+
+#: unifiedmailboxagent.cpp:167
+#, kde-format
+msgid "Synchronizing unified mailbox %1"
+msgstr "תיבת הדוא״ל המאוחדת מסונכרנת %1"
+
+#: unifiedmailboxeditor.cpp:85
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure Unified Mailbox"
+msgstr "הגדרת תיבת דוא״ל מאוחדת"
+
+#: unifiedmailboxeditor.cpp:97
+#, kde-format
+msgid "Name:"
+msgstr "שם:"
+
+#: unifiedmailboxeditor.cpp:102
+#, kde-format
+msgid "Pick icon..."
+msgstr "בחירת סמל…"
+
+#: unifiedmailboxeditor.cpp:103
+#, kde-format
+msgid "Icon:"
+msgstr "סמל:"
+
+#: unifiedmailboxmanager.cpp:294
+#, kde-format
+msgid "Inbox"
+msgstr "דואר נכנס"
+
+#: unifiedmailboxmanager.cpp:301
+#, kde-format
+msgid "Sent"
+msgstr "נשלחו"
+
+#: unifiedmailboxmanager.cpp:308
+#, kde-format
+msgid "Drafts"
+msgstr "טיוטות"
