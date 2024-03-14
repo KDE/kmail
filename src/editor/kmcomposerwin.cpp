@@ -2350,18 +2350,38 @@ QUrl KMComposerWin::insertFile()
     QString recentDirClass;
     QUrl startUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///InsertFile")), recentDirClass);
 
-    const KEncodingFileDialog::Result result =
-        KEncodingFileDialog::getOpenUrlAndEncoding(QString(), startUrl, QString(), this, i18nc("@title:window", "Insert File"));
-    QUrl url;
-    if (!result.URLs.isEmpty()) {
-        url = result.URLs.constFirst();
-        if (url.isValid()) {
-            MessageCore::StringUtil::setEncodingFile(url, MimeTreeParser::NodeHelper::fixEncoding(result.encoding));
-            if (!recentDirClass.isEmpty()) {
-                KRecentDirs::add(recentDirClass, url.path());
+    const auto url = QFileDialog::getOpenFileUrl(this, i18nc("@title:window", "Insert File"), startUrl);
+    if (url.isValid()) {
+        std::optional<QStringConverter::Encoding> encoding;
+
+        QFile file(url.toLocalFile());
+        if (file.open(QIODeviceBase::ReadOnly)) {
+            auto content = file.read(1024 * 1024); // only read the first 1MB
+            if (content.isEmpty()) {
+                encoding = QStringConverter::System;
+            } else if (url.toLocalFile().endsWith(QStringLiteral("html"))) {
+                encoding = QStringConverter::encodingForHtml(content);
+            } else {
+                encoding = QStringConverter::encodingForData(content);
             }
         }
+
+        auto encodingName = QStringConverter::nameForEncoding(encoding.value_or(QStringConverter::System));
+        if (!encodingName) {
+            encodingName = "UTF-8";
+        }
+
+        if (strcmp(encodingName, "Locale") == 0) {
+            encodingName = "UTF-8";
+        }
+
+        QUrl urlWithEncoding = url;
+        MessageCore::StringUtil::setEncodingFile(urlWithEncoding, QLatin1StringView(encodingName));
+        if (!recentDirClass.isEmpty()) {
+            KRecentDirs::add(recentDirClass, urlWithEncoding.path());
+        }
     }
+
     return url;
 }
 
