@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-30 01:38+0000\n"
+"POT-Creation-Date: 2024-03-14 03:05+0000\n"
 "PO-Revision-Date: 2023-08-19 22:10+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -25,7 +25,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "عدّل أرشيف البريد"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:274
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -79,86 +79,86 @@ msgstr "أرشيف"
 msgid "Use Range"
 msgstr "استخدم المدى"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "الاسم"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "آخر أرشفة"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "الأرشفة التّالية ستكون"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "دليل التّخزين"
 
-#: archivemailwidget.cpp:88
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "وكيل أرشفة البريد"
 
-#: archivemailwidget.cpp:90
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "أرشف البُرد الإلكترونيّة آليًّا."
 
-#: archivemailwidget.cpp:92
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "الحقوق محفوظة (C) 2014-%1 ‏Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "المصين"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "صفا الفليج"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "safa1996alfulaij@gmail.com"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:106 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "أضف..."
 
-#: archivemailwidget.cpp:112
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "افتح المجلّد المحتوي..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:115 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "احذف"
 
-#: archivemailwidget.cpp:165
+#: archivemailwidget.cpp:167
 #, kde-format
 msgid "Folder: %1"
 msgstr "المجلّد: %1"
 
-#: archivemailwidget.cpp:187
+#: archivemailwidget.cpp:189
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -169,23 +169,23 @@ msgstr[3] "بعد %1 أيّام"
 msgstr[4] "بعد %1 يومًا"
 msgstr[5] "بعد %1 يوم"
 
-#: archivemailwidget.cpp:196
+#: archivemailwidget.cpp:198
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "ستجري الأرشفة في %1"
 
-#: archivemailwidget.cpp:232
+#: archivemailwidget.cpp:234
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "أتريد حذف العناصر المحدّدة؟"
 
-#: archivemailwidget.cpp:233
+#: archivemailwidget.cpp:235
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "حذف العناصر"
 
-#: archivemailwidget.cpp:273
+#: archivemailwidget.cpp:276
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
