@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Volkan Gezer <volkangezer@gmail.com>, 2015, 2017.
-# Emir SARI <emir_sari@icloud.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-09-21 00:45+0000\n"
-"PO-Revision-Date: 2023-05-15 21:31+0300\n"
+"PO-Revision-Date: 2024-03-15 00:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.03.70\n"
+"X-Generator: Lokalize 24.02.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +31,7 @@ msgstr "necdetyucel@gmail.com"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save..."
-msgstr "Kaydet..."
+msgstr "Kaydet…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -88,7 +88,7 @@ msgstr "Görünüm"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With..."
-msgstr "Birlikte Görüntüle..."
+msgstr "Birlikte Görüntüle…"
 
 #: ktnefmain.cpp:117 ktnefmain.cpp:399
 #, kde-format
@@ -100,13 +100,13 @@ msgstr "Çıkar"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
-msgstr "Şuraya Çıkar..."
+msgstr "Şuraya Çıkar…"
 
 #: ktnefmain.cpp:126
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
-msgstr "Tümünü Şuraya Çıkar..."
+msgstr "Tümünü Şuraya Çıkar…"
 
 #: ktnefmain.cpp:131 ktnefmain.cpp:403
 #, kde-format
@@ -130,13 +130,13 @@ msgstr "İleti Metnini Göster"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
-msgstr "İleti Metnini Farklı Kaydet..."
+msgstr "İleti Metnini Farklı Kaydet…"
 
 #: ktnefmain.cpp:158
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder..."
-msgstr "Öntanımlı Klasör..."
+msgstr "Öntanımlı Klasör…"
 
 #: ktnefmain.cpp:170
 #, kde-format
@@ -148,7 +148,7 @@ msgstr "Yüklü dosya yok"
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
-msgstr "\"%1\" dosyası açılamadı."
+msgstr "“%1” dosyası açılamadı."
 
 #: ktnefmain.cpp:198
 #, kde-format
@@ -174,7 +174,7 @@ msgstr "Dosya seçilmedi. Lütfen bir dosya seçip yeniden deneyin."
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
-msgstr "\"%1\" dosyası çıkarılamadı."
+msgstr "“%1” dosyası çıkarılamadı."
 
 #: ktnefmain.cpp:486
 #, kde-format
@@ -186,7 +186,7 @@ msgstr "İleti hiç Zengin Metin verisi içermiyor."
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
-msgstr "\"%1\"  dosyası yazmak için açılamadı, dosya izinlerini denetleyin."
+msgstr "“%1” dosyası yazmak için açılamadı, dosya izinlerini denetleyin."
 
 #: ktnefmain.cpp:526
 #, kde-format
@@ -209,13 +209,13 @@ msgstr "&Birlikte Aç"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
-msgstr "Diğ&er..."
+msgstr "Diğ&er…"
 
 #: ktnefmain.cpp:571 ktnefmain.cpp:579
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With..."
-msgstr "&Birlikte Aç..."
+msgstr "&Birlikte Aç…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -296,12 +296,12 @@ msgstr "Allen Winter"
 #: main.cpp:39
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
-msgstr "Yazar, Qt4/KDE4'e geçişi"
+msgstr "Yazar, Qt4/KDE4’e geçiş"
 
 #: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
-msgstr "İsteğe bağlı değişken 'file' "
+msgstr "‘file’ isteğe bağlı değişkeni"
 
 #: messagepropertydialog.cpp:42
 #, kde-format
