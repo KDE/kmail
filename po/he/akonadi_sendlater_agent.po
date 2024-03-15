@@ -14,7 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 23.08.4\n"
 
 #: sendlaterconfiguredialog.cpp:31
@@ -112,20 +113,20 @@ msgid "No"
 msgstr "לא"
 
 #: sendlaterconfigurewidget.cpp:207
-#, kde-format
+#, fuzzy, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "למחוק את הפריט הנבחר?"
 msgstr[1] "למחוק את הפריטים הנבחרים?"
 
 #: sendlaterconfigurewidget.cpp:208
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "למחוק פריטים"
 
 #: sendlaterconfigurewidget.cpp:216
-#, kde-format
+#, fuzzy, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "למחוק גם את ההודעה?"

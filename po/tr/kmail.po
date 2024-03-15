@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-14 00:38+0000\n"
-"PO-Revision-Date: 2024-03-09 10:23+0300\n"
+"PO-Revision-Date: 2024-03-15 01:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -54,8 +54,8 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
-"K Posta, KDE'nin e-posta istemcisidir. IMAP, POP3 ve SMTP gibi İnternet "
-"posta standartlarıyla tamamen uyumlu olması için tasarlanmıştır."
+"K Posta, KDE’nin e-posta istemcisidir. IMAP, POP3 ve SMTP gibi İnternet "
+"posta standartlarıyla tümüyle uyumlu olması için tasarlanmıştır."
 
 #: about/introduction_kmail.html:10
 msgid ""
@@ -71,7 +71,7 @@ msgstr "Son sürümden bu yana önemli değişiklikler:"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
-msgstr "K Posta'nın bu sürümündeki yeni özelliklerin bazıları:"
+msgstr "K Posta’nın bu sürümündeki yeni özelliklerin bazıları:"
 
 #: about/introduction_kmail.html:34
 msgid ""
@@ -85,7 +85,7 @@ msgstr ""
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
-msgstr "Umarız K Posta'dan memnun kalırsınız."
+msgstr "Umarız K Posta’dan memnun kalırsınız."
 
 #: about/introduction_kmail.html:39
 msgid "Thank you,"
@@ -209,7 +209,7 @@ msgstr "Gülenyüz → Emoji işleme"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
-msgstr "'İletiyi Farklı İmle' açılır menüsünü iyileştir"
+msgstr "‘İletiyi Farklı İmle’ açılır menüsünü iyileştir"
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
@@ -281,7 +281,7 @@ msgstr "POP süzgeçleri"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr "Solaris'teki çökmeleri düzeltme"
+msgstr "Solaris üzerindeki çökmeleri düzelt"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
@@ -339,7 +339,7 @@ msgstr "Geliştirilmiş HTML desteği"
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
-msgstr "X-Face desteği"
+msgstr "X–Face desteği"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
@@ -367,7 +367,7 @@ msgstr "İyileştirilmiş alıcılar düzenleyicisi yerleşimi"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr "'İletişim tamamlandı' durum iletisi için zaman damgası"
+msgstr "‘İletişim tamamlandı’ durum iletisi için zaman damgası"
 
 #: aboutdata.cpp:186
 msgid "Multiple encryption keys per address"
@@ -637,7 +637,7 @@ msgstr "Tüm ileti denetimlerinde"
 #: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr "Giden Kutusu'ndaki iletileri:"
+msgstr "Giden Kutusu’ndaki iletileri gönder:"
 
 #: configuredialog/configureaccountpage.cpp:110
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:25
@@ -658,7 +658,7 @@ msgstr "Ö&ntanımlı gönderme yöntemi:"
 #: configuredialog/configureaccountpage.cpp:115
 #, kde-format
 msgid "Enable Undo Send"
-msgstr "Göndermeyi Geri Al'ı etkinleştir"
+msgstr "Göndermeyi Geri Al’ı etkinleştir"
 
 #: configuredialog/configureaccountpage.cpp:195
 #, kde-format
@@ -677,7 +677,7 @@ msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
-"Hesap sihirbazı başlatılamıyor. AccountWizard'ın doğru şekilde kurulu "
+"Hesap sihirbazı başlatılamıyor. AccountWizard’ın doğru bir biçimde kurulu "
 "olduğundan emin olun."
 
 #: configuredialog/configureaccountpage.cpp:218
@@ -959,8 +959,8 @@ msgstr ""
 "sıfır yok (0–59)</li><li>mm — dakika, sıfır var (00–59)</li><li>s — saniye, "
 "sıfır yok (0–59)</li><li>ss — saniye, sıfır var (00–59)</li><li>z — "
 "milisaniye, sıfır yok (0–999)</li><li>zzz — milisaniye, sıfır var (000–999)</"
-"li><li>AP — ÖÖ/ÖS gösterimine geç. AP, \"ÖÖ\" veya \"ÖS\" ile değiştirilir.</"
-"li><li>ap — ÖÖ/ÖS gösterimine geç. ap \"öö\" veya \"ös\" ile değiştirilir.</"
+"li><li>AP — ÖÖ/ÖS gösterimine geç. AP, “ÖÖ” veya “ÖS” ile değiştirilir.</"
+"li><li>ap — ÖÖ/ÖS gösterimine geç. ap “öö” veya “ös” ile değiştirilir.</"
 "li><li>Z — saat aralığını sayısal biçimde gösterir (-0500)</li></"
 "ul><p><strong>Diğer bütün girdi karakterleri yok sayılacaktır.</strong></p></"
 "qt>"
@@ -1039,7 +1039,7 @@ msgstr "Sil"
 #: configuredialog/configureappearancepage.cpp:1160
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
-msgstr "'%1' etiketini kaldırmak istiyor musunuz?"
+msgstr "“%1” etiketini kaldırmak istiyor musunuz?"
 
 #: configuredialog/configureappearancepage.cpp:1161
 #, kde-format
@@ -1216,8 +1216,8 @@ msgid ""
 "select this on a per-message basis using \"Options - Request Disposition "
 "Notification\""
 msgstr ""
-"Öntanımlı olarak bir ileti yazmaya başlarken bir MDN iste; bunu \"Seçenekler "
-"→ İleti Okundu Bildirimi İste\" kullanarak her iletiye özel seçebilirsiniz"
+"Öntanımlı olarak bir ileti yazmaya başlarken bir MDN iste; bunu ‘Seçenekler "
+"→ İleti Okundu Bildirimi İste’ kullanarak her iletiye özel seçebilirsiniz"
 
 #: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
@@ -1238,8 +1238,8 @@ msgid ""
 "accidentally sending a message to too many people.  Note, however, that it "
 "does not take account of distribution lists or mailing lists."
 msgstr ""
-"İleti için yalnızca bu kadar alıcı belirtilmesine izin ver. Bu; \"Tümünü "
-"Yanıtla\", alıcıları elle belirtme veya \"Seç…\" seçicisi kullanımında "
+"İleti için yalnızca bu kadar alıcı belirtilmesine izin ver. Bu; ‘Tümünü "
+"Yanıtla’, alıcıları elle belirtme veya ‘Seç…’ seçicisi kullanımında "
 "geçerlidir. Bu sınırı belirlemek bir iletiyi yanlışlıkla çok sayıda kişiye "
 "göndermenizi engeller. Ancak bunun dağıtım veya posta listelerini hesaba "
 "katmadığını unutmayın."
@@ -1433,7 +1433,7 @@ msgstr "&Kaynak:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
-"'Content-Type', izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
+"‘Content-Type’, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
 
 #: configuredialog/configurecomposerpage.cpp:924
 #, kde-format
@@ -1744,7 +1744,7 @@ msgstr "Lütfen arşivlenecek klasöri seçin."
 #, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
-msgstr "Seçili klasör yok"
+msgstr "Seçili Klasör Yok"
 
 #: dialog/kmknotify.cpp:30
 #, kde-format
@@ -1793,7 +1793,7 @@ msgstr "Bu iletiyi gönderirken kullanılacak olan hesabı seçin"
 #: editor/kmcomposerwin.cpp:375
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
-msgstr "Bu ileti için \"Kimden:\" e-posta adresini ayarla"
+msgstr "Bu ileti için ‘Kimden:’ e-posta adresini ayarla"
 
 #: editor/kmcomposerwin.cpp:403
 #, kde-format
@@ -2225,8 +2225,8 @@ msgstr "Geçersiz Ek Adı"
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
-msgstr[0] "URL'yi İletiye Ekle"
-msgstr[1] "URL'leri İletiye Ekle"
+msgstr[0] "URL’yi İletiye Ekle"
+msgstr[1] "URL’leri İletiye Ekle"
 
 #: editor/kmcomposerwin.cpp:2455
 #, kde-format
@@ -2606,9 +2606,9 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>\"%1\" için geçerli ve güvenilen şifreleme sertifikası bulunamadı.<br/"
-"><br/>Bu alıcı için kullanılması gereken sertifikayı seçin. Listenizde uygun "
-"bir sertifika yoksa dış sertifikalar aramak için arama düğmesini "
+"<qt>“%1” için geçerli ve güvenilen şifreleme sertifikası bulunamadı.<br/><br/"
+">Bu alıcı için kullanılması gereken sertifikayı seçin. Listenizde uygun bir "
+"sertifika yoksa dış sertifikalar aramak için arama düğmesini "
 "kullanabilirsiniz.</qt>"
 
 #: editor/kmcomposerwin.cpp:4211
@@ -2638,7 +2638,7 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details...)</a>"
 msgstr ""
-"Bazı eposta adresleri muhtemel bir kimlik avcılığı olarak görünüyor <a href="
+"Kimlik avcılığı yapması olası bazı e-posta adresleri bulundu <a href="
 "\"phishingdetails\">(ayrıntılar…)</a>"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -2890,7 +2890,7 @@ msgstr "Adres defteri girdisi için resim seçilmedi."
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
-msgstr "Kendi vCard'ınızı oluşturun"
+msgstr "Kendi vCard’ını Oluştur"
 
 #: identity/identityaddvcarddialog.cpp:47 identity/newidentitydialog.cpp:70
 #, kde-format
@@ -2900,7 +2900,7 @@ msgstr "&Boş alanlarla birlikte"
 #: identity/identityaddvcarddialog.cpp:53
 #, kde-format
 msgid "&From existing vCard"
-msgstr "&Var olan vCard'tan"
+msgstr "&Var Olan vCard’dan"
 
 #: identity/identityaddvcarddialog.cpp:65
 #, kde-format
@@ -2910,7 +2910,7 @@ msgstr "&vCard yolu:"
 #: identity/identityaddvcarddialog.cpp:76
 #, kde-format
 msgid "&Duplicate existing vCard"
-msgstr "&Var olan vCard'ı çoğalt"
+msgstr "&Var Olan vCard’ı Çoğalt"
 
 #: identity/identityaddvcarddialog.cpp:88 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -3074,7 +3074,7 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Kendinizi şifrelemek ve oluşturucuda \"Genel Anahtarımı İliştir\" "
+"<qt><p>Kendinizi şifrelemek ve oluşturucuda ‘Genel Anahtarımı İliştir’ "
 "özelliğini kullanmak için OpenPGP anahtarını seçin. Ayrıca GnuPG "
 "anahtarlarını da kullanabilirsiniz.</p><p>Bu alanı boş bırakabilirsiniz; "
 "ancak K Posta giden iletilerinizi şifreleyemeyecektir. Bu durumdan normal "
@@ -3114,7 +3114,7 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 "<qt><p>Burada seçtiğiniz S/MIME sertifikası, iletileri kendinize şifrelemek "
-"ve oluşturucudaki \"Sertifikamı İliştir\" özelliği için kullanılacaktır.</"
+"ve oluşturucudaki ‘Sertifikamı İliştir’ özelliği için kullanılacaktır.</"
 "p><p>Bunu boş bırakabilirsiniz; ancak K Posta, S/MIME kullanarak size giden "
 "iletilerin kopyalarını şifreleyemez; normal posta işlevleri "
 "etkilenmeyecektir.</p></qt>"
@@ -3294,7 +3294,7 @@ msgstr "Giden e-posta hesabı:"
 #: identity/identitydialog.cpp:612
 #, kde-format
 msgid "Attach my vCard to message"
-msgstr "İletiye vCard'ımı iliştir"
+msgstr "İletiye vCard’ımı iliştir"
 
 #: identity/identitydialog.cpp:613 identity/identitydialog.cpp:1165
 #, kde-format
@@ -3348,7 +3348,7 @@ msgstr "Resim"
 #: identity/identitydialog.cpp:742
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
-msgstr "Geçersiz E-posta Arması \"%1\""
+msgstr "Geçersiz E-posta Arması “%1”"
 
 #: identity/identitydialog.cpp:750
 #, kde-format
@@ -3425,7 +3425,7 @@ msgstr "İmza dosyası geçerli değil."
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "\"%1\" Kimliğini Düzenle"
+msgstr "“%1” Kimliğini Düzenle"
 
 #: identity/identitydialog.cpp:945
 #, kde-format
@@ -3445,24 +3445,24 @@ msgstr "Düzenle…"
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
-msgstr "Kendi vCard'ınızı düzenleyin"
+msgstr "Kendi vCard’ını Düzenle"
 
 #: identity/identityeditvcarddialog.cpp:38
 #, kde-format
 msgid "Delete current vCard"
-msgstr "Geçerli vCard'ı sil"
+msgstr "Geçerli vCard’ı Sil"
 
 #: identity/identityeditvcarddialog.cpp:57
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
-msgstr "Bu vCard'ı gerçekten silmek istiyor musunuz?"
+msgstr "Bu vCard’ı silmeyi gerçekten istiyor musunuz?"
 
 #: identity/identityeditvcarddialog.cpp:58
 #: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
-msgstr "vCard'ı Sil"
+msgstr "vCard’ı Sil"
 
 #: identity/identityeditvcarddialog.cpp:78
 #, kde-format
@@ -3574,7 +3574,7 @@ msgstr "Yüz"
 #: identity/xfaceconfigurator.cpp:39
 #, kde-format
 msgid "X-Face"
-msgstr "X-Face"
+msgstr "X–Face"
 
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
@@ -3695,7 +3695,7 @@ msgstr "Kişi Depolanamadı"
 #: job/opencomposerjob.cpp:116
 #, kde-format
 msgid "Do you want to attach this folder \"%1\"?"
-msgstr "\"%1\" klasörünü iliştirmek istiyor musunuz?"
+msgstr "“%1” klasörünü iliştirmek istiyor musunuz?"
 
 #: job/opencomposerjob.cpp:117
 #, kde-format
@@ -3800,7 +3800,7 @@ msgstr "Yinelenmişler kaldırılıyor"
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "Yinelenmiş e-postalar kaldırılırken bir hata oluştu: '%1'"
+msgstr "Yinelenmiş e-postalar kaldırılırken bir hata oluştu: “%1”"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
@@ -3823,27 +3823,27 @@ msgstr "İletinin konusunu belirleyin"
 #: kmail_options.h:17
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "Kopya:'yı 'adres'e gönder. Bu yinelenebilir"
+msgstr "Kopya:’yı “adres”e gönder. Bu, yinelenebilir"
 
 #: kmail_options.h:20
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "Gizli kopya:'yı 'adres'e gönder. Bu yinelenebilirdir"
+msgstr "Gizli kopya:’yı “adres”e gönder. Bu, yinelenebilir"
 
 #: kmail_options.h:23
 #, kde-format
 msgid "Set replyTo to 'address'"
-msgstr "Yanıtlama adresini 'adres' olarak ayarla"
+msgstr "Yanıt adresini “adres” olarak ayarla"
 
 #: kmail_options.h:25
 #, kde-format
 msgid "Add 'header' to message. This can be repeated"
-msgstr "İletiye bir 'üstbilgi' ekle. Bu işlemi yineleyebilirsiniz"
+msgstr "İletiye bir “üstbilgi” ekle. Bu, yinelenebilir"
 
 #: kmail_options.h:26
 #, kde-format
 msgid "Read message body from 'file'"
-msgstr "'Dosya'dan ileti gövdesini oku"
+msgstr "“dosya”dan ileti gövdesini oku"
 
 #: kmail_options.h:27
 #, kde-format
@@ -3883,7 +3883,7 @@ msgstr "Kullanıcı geri bildirimi için kullanılabilir seçenekleri listeler"
 #: kmail_options.h:40
 #, kde-format
 msgid "Send message to 'address' or attach the file the 'URL' points to"
-msgstr "İletiyi 'URL'ye gönder veya 'URL'nin gösterdiği dosyayı iliştir"
+msgstr "İletiyi “URL”ye gönder veya “URL”nin gösterdiği dosyayı iliştir"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
@@ -3989,7 +3989,7 @@ msgstr "Ana Araç Çubuğu"
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
-msgstr "Lütfen bekleyin"
+msgstr "Lütfen Bekleyin"
 
 #: kmcommands.cpp:305 kmcommands.cpp:376
 #, kde-format
@@ -4247,7 +4247,7 @@ msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr ""
-"Sertifika yöneticisi başlatılamıyor; Kleopatra'nın doğru şekilde kurulu "
+"Sertifika yöneticisi başlatılamıyor; Kleopatra’nın doğru bir biçimde kurulu "
 "olduğundan emin olun."
 
 #: kmlaunchexternalcomponent.cpp:89
@@ -4262,8 +4262,8 @@ msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Aktarma sihirbazı başlatılamıyor. ImportWizard'ın doğru şekilde kurulu "
-"olduğundan emin olun."
+"İçe aktarma sihirbazı başlatılamadı. İçe aktarma sihirbazının doğru bir "
+"biçimde kurulu olduğundan emin olun."
 
 #: kmlaunchexternalcomponent.cpp:104
 #, kde-format
@@ -4277,14 +4277,14 @@ msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
-"\"PIM (Kişisel Bilgi Yöneticisi) Veri Dışa Aktarıcısı\" programı "
+"‘PIM (Kişisel Bilgi Yöneticisi) Verisi Dışa Aktarıcısı’ programı "
 "başlatılamadı. Lütfen kurulumunuzu denetleyin."
 
 #: kmlaunchexternalcomponent.cpp:119
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "\"PIM Veri Dışa Aktarıcısı\" Başlatılamıyor"
+msgstr "‘PIM Verisi Dışa Aktarıcısı’ Başlatılamıyor"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -4292,8 +4292,8 @@ msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"ImportWizard başlatılamıyor. ImportWizard'ın doğru şekilde kurulu olduğundan "
-"emin olun."
+"İçe aktarma sihirbazı başlatılamadı. İçe aktarma sihirbazının doğru bir "
+"biçimde kurulu olduğundan emin olun."
 
 #: kmlaunchexternalcomponent.cpp:139
 #, kde-format
@@ -4411,9 +4411,9 @@ msgid ""
 "\"spam\" and may increase the likelihood that your system will be "
 "compromised by other present and anticipated security exploits."
 msgstr ""
-"HTML iletilerde dış başvurular kullanmak sizi \"istenmeyen\" postaya karşı "
+"HTML iletilerde dış başvurular kullanmak sizi “istenmeyen” postaya karşı "
 "daha savunmasız yapar ve sisteminizin güvenlik açıklarını sezen programlarla "
-"saldırıya uğramasına sebep olabilir."
+"saldırıya uğramasına neden olabilir."
 
 #: kmmainwidget.cpp:1581
 #, kde-format
@@ -4703,7 +4703,7 @@ msgstr "&Başka E-posta İstemcisinden İçe Aktar…"
 #: kmmainwidget.cpp:3003
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
-msgstr "\"Ofis Dışında\" Yanıtlarını Düzenle…"
+msgstr "“Ofis Dışında” Yanıtlarını Düzenle…"
 
 #: kmmainwidget.cpp:3009
 #, kde-format
@@ -5082,7 +5082,7 @@ msgstr "K Posta Uygulamasına &Giriş"
 #: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Display KMail's Welcome Page"
-msgstr "K Posta'nın karşılama sayfasını göster"
+msgstr "K Posta’nın karşılama sayfasını göster"
 
 #: kmmainwidget.cpp:3420
 #, kde-format
@@ -5283,7 +5283,7 @@ msgstr "&Geri Al"
 #: kmmainwidget.cpp:4227
 #, kde-format
 msgid "&Undo: \"%1\""
-msgstr "&Geri Al: \"%1\""
+msgstr "&Geri Al: ‘%1’"
 
 #: kmmainwidget.cpp:4284
 #, kde-format
@@ -5303,7 +5303,7 @@ msgid ""
 "increase the likelihood that your system will be compromised by other "
 "present and anticipated security exploits."
 msgstr ""
-"İletilerde HTML kullanımı sizi \"istenmeyen\" postaya karşı daha savunmasız "
+"İletilerde HTML kullanmak sizi “istenmeyen” postaya karşı daha savunmasız "
 "yapar ve sisteminizin güvenlik açıklarını sezen programlarla saldırıya "
 "uğramasına neden olabilir."
 
@@ -5328,10 +5328,10 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 "Birden çok e-posta hesabınız var.\n"
-"Gelen Kutunuz, Gönderilen ve Taslaklar klasörlerinin birleşik bir görünümünü "
-"sunmak için Birleşik Posta Kutusu seçeneğini etkinleştirmek ister misiniz?\n"
+"Gelen, Gönderilen ve Taslaklar klasörlerinin birleşik bir görünümünü sunmak "
+"için Birleşik Posta Kutusu seçeneğini etkinleştirmek ister misiniz?\n"
 "Birleşik posta kutuları oluşturabilir, özel kutular yaratabilir\n"
-"veya özelliği K Posta'nın Eklentiler ayarlarından tümüyle kapatabilirsiniz."
+"veya özelliği K Posta’nın Eklentiler ayarlarından tümüyle kapatabilirsiniz."
 
 #: kmmainwidget.cpp:4913
 #, kde-format
@@ -5351,12 +5351,12 @@ msgstr "İ&ptal"
 #: kmmainwidget.cpp:4950
 #, kde-format
 msgid "Do you want to restart Akonadi?"
-msgstr "Akonadi'yi yeniden başlatmak istiyor musunuz?"
+msgstr "Akonadi’yi yeniden başlatmak istiyor musunuz?"
 
 #: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Restart Akonadi"
-msgstr "Akonadi'yi Yeniden Başlat"
+msgstr "Akonadi’yi Yeniden Başlat"
 
 #: kmmainwidget.cpp:4952
 #, kde-format
@@ -5563,7 +5563,7 @@ msgid ""
 "a> to go online . . .</p>"
 msgstr ""
 "K Posta şu anda çevrimdışı kipte çalışıyor. Çevrimiçi kipe geçmek için <a "
-"href=\"kmail:goOnline\">buraya tıklayın…</a></p>"
+"href=\"kmail:goOnline\">buraya</a> tıklayın…</p>"
 
 #: kmreaderwin.cpp:334
 #, kde-format
@@ -5572,7 +5572,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 "Hesap şu anda çevrimdışı kipte çalışıyor. Çevrimiçi kipe geçmek için <a href="
-"\"kmail:goResourceOnline\">tıklayın…</a></p>"
+"\"kmail:goResourceOnline\">buraya</a> tıklayın…</p>"
 
 #: kmreaderwin.cpp:909
 #, kde-format
@@ -5672,7 +5672,7 @@ msgstr "İzlenen klasörlerde okunmamış ileti yok"
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
 msgid "Open Folder: \"%1\""
-msgstr "Klasörü aç: \"%1\""
+msgstr "Klasörü aç: “%1”"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:61
 #, kde-format
@@ -5740,7 +5740,7 @@ msgstr "Kontak Özet Görünümü"
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2024 Kontak geliştiricileri"
+msgstr "(c) 2003–2024 Kontak geliştiricileri"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
@@ -6106,7 +6106,7 @@ msgstr "Koşul belirtmeyi unuttunuz."
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
-msgstr "Koşul, 4'ten az karakter ile kullanılamaz."
+msgstr "İçerir koşulu, 4’ten az karakter ile kullanılamaz."
 
 #: searchdialog/searchwindow.cpp:520
 #, kde-format
@@ -6141,7 +6141,7 @@ msgid ""
 "\"%1\"."
 msgstr ""
 "Arama klasörünüzü yeniden adlandırırken bir sorun oluştu. Bu sorun genelde "
-"aynı adda başka bir arama klasörü olduğunda oluşur. Alınan hata \"%1\"."
+"aynı adda başka bir arama klasörü olduğunda oluşur. Alınan hata “%1”."
 
 #: searchdialog/searchwindow.cpp:777
 #, kde-format
@@ -6166,7 +6166,7 @@ msgstr "İndeks durumu denetleniyor…"
 #, kde-format
 msgctxt "Document/application separator in titlebar"
 msgid " – "
-msgstr " – "
+msgstr " — "
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -6197,7 +6197,7 @@ msgstr "İleti etiketini aç/kapat: %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
-msgstr "Etiketleri Seç"
+msgstr "Etiketler Seç"
 
 #: tag/tagselectdialog.cpp:52
 #, kde-format
@@ -6462,10 +6462,10 @@ msgstr ""
 "seçilen yönteme bağlı olarak önceki klasörde sürdürülecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Tüm imlenen klasörlerde döngüye gir: </span>Yalnızca \"Bu "
-"klasöre yeni/okunmamış posta geldiğinde uyar\" özelliği işaretli olan "
-"klasörlerin dikkate alınması dışında \"Tüm klasörlerde döngüye gir\" "
-"seçeneği ile aynıdır.</p></body></html>"
+"weight:600;\">Tüm imlenen klasörlerde döngüye gir: </span>Yalnızca ‘Bu "
+"klasöre yeni/okunmamış posta geldiğinde uyar’ özelliği işaretli olan "
+"klasörlerin dikkate alınması dışında ‘Tüm klasörlerde döngüye gir’ seçeneği "
+"ile aynıdır.</p></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
@@ -6513,7 +6513,7 @@ msgstr "İletilerin onay olmadan silinmesine izin ver"
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
-msgstr "Klasör sürükle-bırak'ı etkinleştir"
+msgstr "Klasör sürükle–bırak’ı etkinleştir"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -6567,7 +6567,7 @@ msgstr "&İletiyi Aç"
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr "Güvenlik öntanımlıları"
+msgstr "Güvenlik Öntanımlıları"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
@@ -6784,7 +6784,7 @@ msgstr "GnuPG Ayarları…"
 #: ui/securitypageencryptiontab.ui:393
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr "Tüm \"Bir Daha Sorma\" Uyarılarını Yeniden Etkinleştir"
+msgstr "Tüm “Bir Daha Sorma” Uyarılarını Yeniden Etkinleştir"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -6806,14 +6806,14 @@ msgid ""
 "messages that were not attached to it, you can enable this option, but you "
 "should be aware of the possible problem.</p></qt>"
 msgstr ""
-"<qt><p>Bazı posta reklâmları HTML şeklinde olup örneğin, iletilerini "
+"<qt><p>Bazı posta reklâmları HTML şeklinde olup; örneğin, iletilerini "
 "okuduğunuzu öğrenmek için reklâm verenler tarafından yerleştirilmiş "
-"başvurular içerebilir (\"ağ böcekleri\"). </p><p>Bunun gibi görselleri "
-"İnternet'ten yüklemek için geçerli hiçbir neden yoktur, çünkü gönderen kişi "
-"her zaman ilgili görselleri iletiye doğrudan ekleyebilir.</p><p>K Posta'nın "
+"başvurular (“ağ böcekleri”) içerebilir. </p><p>Bunun gibi görselleri "
+"İnternet’ten yüklemek için geçerli hiçbir neden yoktur; çünkü gönderen kişi "
+"her zaman ilgili görselleri iletiye doğrudan ekleyebilir.</p><p>K Posta’nın "
 "HTML görüntüleme özelliğinin bu şekilde yanlış kullanılmasına karşı önlem "
-"olarak, bu özellik öntanımlı olarak <em>pasif</em> kılınmıştır.</p><p>Ancak, "
-"isterseniz HTML iletilerine eklenmemiş görsellerin görüntülenmesini "
+"olarak, bu özellik öntanımlı olarak <em>devre dışı</em> kılınmıştır.</"
+"p><p>İsterseniz HTML iletilerine eklenmemiş görsellerin görüntülenmesini "
 "etkinleştirebilirsiniz; ancak yukarıda bahsedilen sorunlara karşı dikkatli "
 "olmalısınız.</p></qt>"
 
@@ -6821,7 +6821,7 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:32
 #, kde-format
 msgid "Allow messages to load external references from the Internet"
-msgstr "Dış kaynakların Internet'ten yüklenmesine izin ver"
+msgstr "Dış kaynakların İnternet’ten yüklenmesine izin ver"
 
 #. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
 #: ui/securitypagegeneraltab.ui:52
@@ -6838,7 +6838,7 @@ msgid ""
 "href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
-"<b>UYARI:</b> E-posta içinde HTML'ye izin vermek, güvenlik açıklarını "
+"<b>UYARI:</b> E-posta içinde HTML’ye izin vermek, güvenlik açıklarını "
 "tarayan ve kullanan programlar tarafından sisteminizin açıklarının tespit "
 "edilmesi riskini artırır. Her bir seçenek üzerinde ayrıntılı bilgi için <a "
 "href=\"whatsthis1\">HTML iletiler hakkında…</a> ve <a href="
@@ -6862,17 +6862,17 @@ msgid ""
 "KMail's main window.</p></qt>"
 msgstr ""
 "<qt><p>İletiler bazen iki biçimde gelir. Bu ayarı ile HTML parçası veya düz "
-"yazı olarak gösterilmesini denetleyebilirsiniz.</p><p>HTML parçasının "
-"görüntülenmesi iletiyi daha iyi gösterilmesini sağlar, fakat aynı zamanda "
-"güvenlik açıklarına sebep olabilir.</p><p>İletileri düz metin olarak "
+"metin olarak gösterilmesini ayarlayabilirsiniz.</p><p>HTML parçasının "
+"görüntülenmesi iletiyi daha iyi gösterilmesini sağlar; ancak aynı zamanda "
+"güvenlik açıklarına neden olabilir.</p><p>İletileri düz metin olarak "
 "görüntülemek, ileti içindeki bazı biçim özelliklerinin kaybolmasına neden "
 "olurken güvenlik açısından neredeyse tam <em>güvenilir</em> bir ortam sunar."
 "</p><p>Aşağıdaki seçenek HTML iletilerinin bilinen kötüye kullanımlarına "
-"karşı savunma sağlayacaktır; ancak K Posta yazıldığında bilinmeyen güvenlik "
-"sorunlarına karşı savunmasızdır.</p><p>Bu nedenle e-postaları düz metin "
-"yerine HTML olarak <em>görüntülememeyi</em> öneriyoruz.</p><p><b>Not:</b> Bu "
-"seçeneği klasör bazında K Posta'nın ana penceresindeki <i>Klasör</i> "
-"menüsünden ayarlayabilirsiniz. </p></qt>"
+"karşı savunma sağlayacaktır; ancak K Posta yazıldığında var olduğu "
+"bilinmeyen güvenlik sorunlarına karşı savunmasızdır.</p><p>Bu nedenle e-"
+"postaları düz metin yerine HTML olarak <em>görüntülememeyi</em> öneriyoruz.</"
+"p><p><b>Not:</b> Bu seçeneği klasör bazında K Posta’nın ana penceresindeki "
+"<i>Klasör</i> menüsünden ayarlayabilirsiniz.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:78
@@ -6918,13 +6918,13 @@ msgstr "Güvenli Gezinme"
 #: ui/securitypagegeneraltab.ui:136
 #, kde-format
 msgid "Check URL With Phishing Google System"
-msgstr "Google Sahtecilik Sistemi ile URL'yi Denetle"
+msgstr "Google Sahtecilik Sistemi’yle URL’yi denetle"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
 #: ui/securitypagegeneraltab.ui:143
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr "İzleyen URL'ler için e-postaları tara"
+msgstr "İzleyen URL’ler için e-postaları tara"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:159
@@ -6991,26 +6991,26 @@ msgid ""
 "sense e.g. for customer relationship management, it has been made available."
 "</li></ul></qt>"
 msgstr ""
-"<qt><h3>İleti Durum Uyarı Politikası</h3><p>İDU'lar, yaygın olarak <b>okuma "
-"bildirimi</b> şeklinde bildiğimiz şeyin genelleşmiş halidir. İletinin yazarı "
-"bir ileti işleme uyarısının gönderilmesini ister ve alıcının posta programı "
-"bir yanıt oluşturarak gönderen kişinin iletisine ne olduğunu söyler. Yaygın "
-"işleme türleri arasında <b>görüntülendi</b> (yani okundu), <b>silindi</b> ve "
-"<b>gönderildi</b> (yani iletildi) yer almaktadır.</p><p>K Posta'nın  "
-"gönderme işlevini denetlemek için aşağıdaki seçenekler bulunmaktadır:</"
-"p><ul><li><em>Yok Say</em>: İşleme uyarıları ile ilgili herhangi bir isteği "
-"yok sayar. Kendiliğinden hiçbir İDU gönderilmeyecektir (tavsiye edilir).</"
-"li><li><em>Sor</em>: Kullanıcıdan izin istedikten sonra isteğe yanıt verir. "
-"Bu yolla, seçilmiş iletiler için  gönderirken başkaları için reddetmek veya "
-"yok saymak olanaklıdır.</li><li><em>Reddet</em>: Her zaman <b>reddedildi</b> "
-"uyarısını yollar. Bu  her zaman göndermekten yalnızca <em>biraz</em> daha "
-"iyidir. Gönderen kişi iletisi üzerinde işlem yapıldığını bilecektir; ancak "
-"silindiğine veya okunduğuna, vs emin olamayacaktır.</li><li><em>Her zaman "
-"gönder</em>Her zaman istenen durum uyarısını gönderir. Bunun anlamı, "
-"iletinin yazarına iletinin işlendiği ve buna ilaveten ne yapıldığı "
-"(görüntülendi, silindi, vs) bildirilir. Bu seçenek sakıncalıdır; ancak "
-"müşteri ilişkileri yönetimi gibi durumlarda çok anlamlı olduğu için buraya "
-"konulmuştur.</li></ul></qt>"
+"<qt><h3>İleti Durumu Uyarısı Politikası</h3><p>İDU’lar, yaygın olarak "
+"<b>okuma bildirimi</b> şeklinde bildiğimiz şeyin genelleşmiş halidir. "
+"İletinin yazarı bir ileti işleme uyarısının gönderilmesini ister ve alıcının "
+"posta programı bir yanıt oluşturarak gönderen kişinin iletisine ne olduğunu "
+"söyler. Yaygın işleme türleri arasında <b>görüntülendi</b> (yani okundu), "
+"<b>silindi</b> ve <b>gönderildi</b> (yani iletildi) yer almaktadır.</p><p>K "
+"Posta’nın gönderme işlevini denetlemek için aşağıdaki seçenekler "
+"bulunmaktadır:</p><ul><li><em>Yok say</em>: İşleme uyarıları ile ilgili "
+"herhangi bir isteği yok sayar. Kendiliğinden hiçbir İDU gönderilmeyecektir "
+"(tavsiye edilir).</li><li><em>Sor</em>: Kullanıcıdan izin istedikten sonra "
+"isteğe yanıt verir. Bu yolla, seçili iletiler için gönderirken başkaları "
+"için reddetmek veya yok saymak olanaklıdır.</li><li><em>Reddet</em>: Her "
+"zaman <b>reddedildi</b> uyarısını yollar. Bu, her zaman göndermekten "
+"yalnızca <em>biraz</em> daha iyidir. Gönderen kişi iletisi üzerinde işlem "
+"yapıldığını bilecektir; ancak silindiğine veya okunduğuna vs. emin "
+"olamayacaktır.</li><li><em>Her zaman gönder</em>Her zaman istenen durum "
+"uyarısını gönderir. Bunun anlamı, iletinin yazarına iletinin işlendiği ve "
+"buna ilaveten ne yapıldığı (görüntülendi, silindi, vs) bildirilir. Bu "
+"seçenek sakıncalıdır; ancak müşteri ilişkileri yönetimi gibi durumlarda çok "
+"anlamlı olduğu için buraya konulmuştur.</li></ul></qt>"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioIgnore)
 #: ui/securitypagemdntab.ui:33
@@ -7074,7 +7074,7 @@ msgid ""
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
 msgstr ""
 "<b>UYARI:</b> Bu onayın kendiliğinden gönderilmesi kişisel gizliliğinize "
-"zarar verebilir. <a href=\"whatsthis-mdn\">MDN'ler hakkında daha fazla bilgi…"
+"zarar verebilir. <a href=\"whatsthis-mdn\">MDN’ler hakkında daha fazla bilgi…"
 "</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
@@ -7084,14 +7084,14 @@ msgid ""
 "If this option is selected, S/MIME certificates are validated using "
 "Certificate Revocation Lists (CRLs)."
 msgstr ""
-"Bu seçenek seçilirse, S/MIME sertifikaları Sertifika İptal Listeleri "
-"(SİL'ler) kullanılarak doğrulanır."
+"Bu seçenek seçilirse S/MIME sertifikaları Sertifika İptal Listeleri "
+"(SİL’ler) kullanılarak doğrulanır."
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
 #, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr "Sertifikaları CRL'ler kullanarak &doğrula"
+msgstr "Sertifikaları CRL’ler kullanarak &doğrula"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
@@ -7101,9 +7101,9 @@ msgid ""
 "the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP "
 "responder below."
 msgstr ""
-"Bu seçenek seçilirse, S/MIME sertifikaları Çevrimiçi Sertifika Durum "
-"Protokolü (OÇSP) kullanılarak çevrimiçi şekilde doğrulanır. Aşağıya, OCSP'ye "
-"yanıtlayacak yere ait URL'yi girin."
+"Bu seçenek seçilirse S/MIME sertifikaları Çevrimiçi Sertifika Durum "
+"Protokolü (OCSP) kullanılarak çevrimiçi şekilde doğrulanır. Aşağıda OCSP "
+"yanıtlayıcısına ait yere URL’yi girin."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
@@ -7121,7 +7121,7 @@ msgstr "Çevrimiçi Sertifika Doğrulama"
 #: ui/smimeconfiguration.ui:50
 #, kde-format
 msgid "OCSP responder URL:"
-msgstr "OCSP yanıtlayıcı URL'si:"
+msgstr "OCSP yanıtlayıcısı URL’si:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ui/smimeconfiguration.ui:60
@@ -7136,14 +7136,14 @@ msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
-"Sertifikaların çevrimiçi olarak doğrulanması için sunucunun URL'sini buraya "
-"girin (OCSP yanıtlayıcısı). URL genellikle http:// ile başlar."
+"Sertifikaların çevrimiçi olarak doğrulanması için sunucunun URL’sini buraya "
+"girin (OCSP yanıtlayıcısı). URL’ler genellikle http:// ile başlar."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
 #, kde-format
 msgid "Ignore service URL of certificates"
-msgstr "Sertifikaların hizmet URL'lerini yok say"
+msgstr "Sertifikaların hizmet URL’lerini yok say"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:101
@@ -7155,7 +7155,7 @@ msgid ""
 msgstr ""
 "Öntanımlı ayar olarak, GnuPG ~/.gnupg/policies.txt dosyasını kullanarak bir "
 "sertifika politikasına izin verilip verilmediğini denetler. Bu seçenek "
-"seçilirse, politikalar denetlenmez."
+"seçilirse politikalar denetlenmez."
 
 #. i18n: ectx: property (text), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:104
@@ -7177,7 +7177,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:114
 #, kde-format
 msgid "Never consult a CRL"
-msgstr "Hiç bir zaman bir CRL'e danışma"
+msgstr "Hiçbir zaman bir CRL’ye danışma"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:121
@@ -7186,8 +7186,8 @@ msgid ""
 "If this option is checked, missing issuer certificates are fetched when "
 "necessary (this applies to both validation methods, CRLs and OCSP)"
 msgstr ""
-"Bu seçenek seçilirse kayıp işleyici sertifikaları gerekli olduğu zaman "
-"getirilir (bu CRLlere ve OCSP'ye uyar)"
+"Bu seçenek seçilirse kayıp işleyicisi sertifikaları gerekli olduğu zaman "
+"getirilir (bu CRL’lere ve OCSP’ye uyar)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:124
@@ -7223,10 +7223,10 @@ msgid ""
 "used.  With this option all entries using the HTTP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"Bir CRL'nin yerine bakıldığında, sınanacak sertifikada genellikle \"CRL "
-"Dağıtım Noktası\" (DP) girdileri bulunur, bunlar URL'ye erişme yolunu "
-"bildiren URL'lerdir. İlk bulunan DP girdisi kullanılır. Bu seçenek ile, HTTP "
-"şemasını kullanan bütün girdiler, uygun bir DP'ye bakılırken ihmal edilir."
+"Bir CRL’nin konumuna bakıldığında, sınanacak sertifikada genellikle “CRL "
+"Dağıtım Noktası” (DP) girdileri bulunur, bunlar URL’ye erişme yolunu "
+"bildiren URL’lerdir. İlk bulunan DP girdisi kullanılır. Bu seçenek ile, HTTP "
+"şemasını kullanan bütün girdiler, uygun bir DP’ye bakılırken yok sayılır."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
@@ -7242,8 +7242,8 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
-"Bu seçenek seçilirse, sağda gösterilen HTTP vekilinin değeri (çevresel "
-"değişken http_proxy'den gelir) herhangi bir HTTP isteği için kullanılacaktır."
+"Bu seçenek seçilirse sağda gösterilen HTTP vekilinin değeri (çevre değişkeni "
+"http_proxy’den gelir) herhangi bir HTTP isteği için kullanılacaktır."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
@@ -7297,10 +7297,10 @@ msgid ""
 "used.  With this option all entries using the LDAP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
-"Bir CRL'nin yerine bakıldığında, sınanacak sertifikada genellikle \"CRL "
-"Dağıtım Noktası\" (DP) girdileri bulunur, bunlar URL'ye erişme yolunu "
-"bildiren URL'lerdir. İlk bulunan DP girdisi kullanılır. Bu seçenek ile, LDAP "
-"şemasını kullanan bütün girdiler, uygun bir DP'ye bakılırken ihmal edilir."
+"Bir CRL’nin konumuna bakıldığında, sınanacak sertifikada genellikle “CRL "
+"Dağıtım Noktası” (DP) girdileri bulunur, bunlar URL’ye erişme yolunu "
+"bildiren URL’lerdir. İlk bulunan DP girdisi kullanılır. Bu seçenek ile, LDAP "
+"şemasını kullanan bütün girdiler, uygun bir DP’ye bakılırken yok sayılır."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237
@@ -7327,11 +7327,11 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 "Buraya bir LDAP sunucusu girilirse bütün LDAP istekleri öncelikle bu "
-"sunucuya gider. Daha doğru olarak, bu ayar LDAP URL'deki belirlenmiş "
-"herhangi bir sahip ve port kısmını değiştirir. Diğer LDAP sunucuları, \"proxy"
-"\" bağlantısı başarısız olduğunda kullanılacaktır.\n"
-"Söz dizimi \"HOST\" veya \"HOST.PORT\" şeklindedir. PORT kısmı yazılmazsa, "
-"standart LDAP portu olan 389 kullanılır."
+"sunucuya gider. Daha doğru olarak, bu ayar LDAP URL’sindeki belirlenmiş "
+"herhangi bir sahip ve kapı alanlarını değiştirir. Diğer LDAP sunucuları, "
+"“vekil” bağlantısı başarısız olduğunda kullanılacaktır.\n"
+"Sözdizimi “MAKİNE” veya “MAKİNE.KAPI” şeklindedir. KAPI kısmı yazılmazsa "
+"standart LDAP kapısı olan 389 kullanılır."
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
@@ -7361,7 +7361,7 @@ msgstr "Renkli gönder (Yüz)"
 #: ui/xfaceconfigurator.ui:40
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr "Siyah–beyaz gönder (X-Face)"
+msgstr "Siyah–beyaz gönder (X–Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45
@@ -7377,8 +7377,8 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"K Posta, her bir ileti ile küçük (48x48 piksel) ve düşük kalitede bir resim "
-"gönderebilir. Örneğin, bu sizin veya bir sembolün resmi olabilir. "
+"K Posta, her bir ileti ile küçük (48 × 48 piksel) ve düşük kalitede bir "
+"resim gönderebilir. Örneğin, bu sizin veya bir sembolün resmi olabilir. "
 "Destekleniyorsa alıcının e-posta istemcisinde görüntülenir."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
@@ -7454,7 +7454,7 @@ msgstr "Eklentiler Bilgisi"
 #: userfeedback/plugininfosource.cpp:24
 #, kde-format
 msgid "Plugins used in KMail."
-msgstr "K Posta'da kullanılan eklentiler."
+msgstr "K Posta’da kullanılan eklentiler."
 
 #: util.cpp:151
 #, kde-format

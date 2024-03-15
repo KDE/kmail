@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-14 00:38+0000\n"
-"PO-Revision-Date: 2024-03-13 10:51+0200\n"
+"PO-Revision-Date: 2024-03-14 12:06+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3379,10 +3379,10 @@ msgid "Confirmation"
 msgstr "וידוא שליחה"
 
 #: identity/identityeditvcarddialog.cpp:126
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel Editing"
-msgstr "מידע אודות החיבור"
+msgstr "ביטול עריכה"
 
 #: identity/identityeditvcarddialog.cpp:127
 #, kde-format
@@ -3435,9 +3435,9 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: identity/identitypage.cpp:220
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Remove"
-msgstr "ה&סר"
+msgstr "ה&סרה"
 
 #: identity/identitypage.cpp:274
 #, fuzzy, kde-format
@@ -3554,11 +3554,10 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: job/addressvalidationjob.cpp:80 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
-msgstr "כתובת דוא\"ל לא תקפה"
+msgstr "כתובת דוא״ל שגויה"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, fuzzy, kde-format
@@ -3574,11 +3573,10 @@ msgid "Done"
 msgstr "הושלם"
 
 #: job/createnewcontactjob.cpp:63
-#, fuzzy, kde-format
-#| msgid "Add to Address Book"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
-msgstr "הוסף לפנקס הכתובות"
+msgstr "הוספה לפנקס הכתובות"
 
 #: job/createnewcontactjob.cpp:117
 #, fuzzy, kde-format
