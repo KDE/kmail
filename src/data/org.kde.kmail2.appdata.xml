@@ -449,6 +449,7 @@
   </provides>
   <launchable type="desktop-id">org.kde.kmail2.desktop</launchable>
   <releases>
+    <release version="6.0.1" date="2024-03-21"/>
     <release version="6.0.0" date="2024-02-28">
       <description>
         <p>The KMail email viewer removes ads and tracking code from your emails using a more powerful ad blocker written in Rust. The email composer now directly shows the validity and the trust level of the OpenPGP keys of your recipients and warns you when one of their keys is almost expired or expired.</p>
@@ -458,6 +459,5 @@
     </release>
     <release version="5.24.5" date="2024-02-15"/>
     <release version="5.24.4" date="2023-12-07"/>
-    <release version="5.24.3" date="2023-11-09"/>
   </releases>
 </component>
