@@ -2760,9 +2760,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
 
     // TODO integrate with MDA online status
     if (method == MessageComposer::MessageSender::SendImmediate) {
-        qDebug() << " VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
         if (!MessageComposer::Util::sendMailDispatcherIsOnline()) {
-            qDebug() << " CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC";
             method = MessageComposer::MessageSender::SendLater;
         }
         if (KMailSettings::self()->enabledUndoSend()) {
