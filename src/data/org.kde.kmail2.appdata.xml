@@ -412,6 +412,7 @@
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
       <caption xml:lang="uk">Головне вікно KMail зі списком тек та повідомлень електронної пошти.</caption>
       <caption xml:lang="x-test">xxKMail main window with a list of email folders and emails.xx</caption>
+      <caption xml:lang="zh-CN">列出电子邮件文件夹和电子邮件的 KMail 主窗口。</caption>
       <caption xml:lang="zh-TW">KMail 主視窗，包含郵件資料夾清單以及電子郵件。</caption>
     </screenshot>
     <screenshot type="default">
