@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-03-15 01:09+0300\n"
+"PO-Revision-Date: 2024-03-17 02:47+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3514,14 +3514,14 @@ msgstr "E-posta Adresi"
 #: identity/identitypage.cpp:213
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgstr "<qt><b>%1</b> adlı kimliği silmeyi gerçekten istiyor musunuz?</qt>"
+msgstr "<qt><b>%1</b> adlı kimliği kaldırmayı gerçekten istiyor musunuz?</qt>"
 
 #: identity/identitypage.cpp:216
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "Bu %1 kimliği silmeyi gerçekten istiyor musunuz?"
-msgstr[1] "Bu %1 kimliği silmeyi gerçekten istiyor musunuz?"
+msgstr[0] "Bu %1 kimliği kaldırmayı gerçekten istiyor musunuz?"
+msgstr[1] "Bu %1 kimliği kaldırmayı gerçekten istiyor musunuz?"
 
 #: identity/identitypage.cpp:219
 #, kde-format
