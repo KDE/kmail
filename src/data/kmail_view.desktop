@@ -62,5 +62,3 @@ MimeType=message/rfc822;application/mbox;application/x-mimearchive;
 
 X-KDE-Protocols=akonadi
 StartupNotify=true
-X-DBUS-StartupType=Unique
-X-DBUS-ServiceName=org.kde.kmail

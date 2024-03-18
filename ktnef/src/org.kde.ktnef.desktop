@@ -176,5 +176,4 @@ Comment[zh_CN]=TNEF 文件的查看/提取器
 Comment[zh_TW]=TNEF 檔案檢視器
 MimeType=application/ms-tnef;
 Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Network;Email;
-X-DBUS-ServiceName=org.kde.ktnef
 
