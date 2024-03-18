@@ -407,6 +407,7 @@
       <caption xml:lang="lv">„KMail“ galvenais logs ar e-pasta mapju un vēstuļu sarakstu</caption>
       <caption xml:lang="nl">Hoofdvenster van KMail met een lijst met e-mailmappen en e-mails.</caption>
       <caption xml:lang="pl">Główne okno KMaila ze spisem katalogów wiadomości i samymi wiadomościami.</caption>
+      <caption xml:lang="pt-BR">Janela principal do KMail com uma lista de pastas de e-mail e e-mails.</caption>
       <caption xml:lang="ru">Главное окно приложения KMail со списком папок и письмами.</caption>
       <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
@@ -436,6 +437,7 @@
       <caption xml:lang="lv">E-pasta redaktors ar iegultu tulkotāju</caption>
       <caption xml:lang="nl">Opsteller van e-mail met een ingebedde vertaler</caption>
       <caption xml:lang="pl">Program do wysyłania poczty wyposażony w tłumacza</caption>
+      <caption xml:lang="pt-BR">Compositor de e-mail com um tradutor incorporado</caption>
       <caption xml:lang="ru">Окно создания электронного письма со встроенным переводчиком</caption>
       <caption xml:lang="sl">Sestavljalnik e-pošte z vdelanim prevajalnikom</caption>
       <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
