@@ -4060,6 +4060,9 @@ void KMMainWidget::updateHtmlMenuEntry()
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
+    if (!mFolderMailingListPropertiesAction) {
+        return;
+    }
     if (!CommonKernel->outboxCollectionFolder().isValid()) {
         QTimer::singleShot(1s, this, &KMMainWidget::updateFolderMenu);
         return;
