@@ -775,8 +775,12 @@ bool KMReaderWin::printSelectedText(bool preview)
     composer->textPart()->setWrappedPlainText(str);
     auto messagePtr = messageItem().payload<KMime::Message::Ptr>();
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
-    composer->infoPart()->setTo(QStringList() << messagePtr->to()->asUnicodeString());
-    composer->infoPart()->setCc(QStringList() << messagePtr->cc()->asUnicodeString());
+    if (auto to = messagePtr->to(false)) {
+        composer->infoPart()->setTo(QStringList() << to->asUnicodeString());
+    }
+    if (auto cc = messagePtr->cc(false)) {
+        composer->infoPart()->setCc(QStringList() << cc->asUnicodeString());
+    }
     if (auto subject = messagePtr->subject(false)) {
         composer->infoPart()->setSubject(subject->asUnicodeString());
     }
