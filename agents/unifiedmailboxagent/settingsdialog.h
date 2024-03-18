@@ -25,8 +25,6 @@ public:
 private:
     void loadBoxes();
     void addBox(UnifiedMailbox *box);
-
-private:
     void readConfig();
     void writeConfig();
     QStandardItemModel *const mBoxModel;
