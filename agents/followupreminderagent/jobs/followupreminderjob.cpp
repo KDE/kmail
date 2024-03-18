@@ -56,7 +56,7 @@ void FollowUpReminderJob::slotItemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    const Akonadi::Item item = items.at(0);
+    const Akonadi::Item item = items.constFirst();
     if (!item.hasPayload<KMime::Message::Ptr>()) {
         qCCritical(FOLLOWUPREMINDERAGENT_LOG) << "Item has not payload";
         deleteLater();
