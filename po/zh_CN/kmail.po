@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-15 02:21+0000\n"
+"POT-Creation-Date: 2024-03-19 02:30+0000\n"
 "PO-Revision-Date: 2024-01-06 03:32\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -4515,7 +4515,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "删除(&D)"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4098
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4101
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "将线索移至废件夹(&O)"
@@ -4525,12 +4525,12 @@ msgstr "将线索移至废件夹(&O)"
 msgid "Move thread to trashcan"
 msgstr "将线索放入废件夹"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4098
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4101
 #, kde-format
 msgid "Delete T&hread"
 msgstr "删除线索(&H)"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
 #, kde-format
 msgid "&Find Messages..."
 msgstr "查找消息(&F)..."
@@ -4916,7 +4916,7 @@ msgstr "导入/导出 KMail 数据..."
 msgid "New AddressBook Contact..."
 msgstr "新建地址簿联系人..."
 
-#: kmmainwidget.cpp:3490 kmmainwidget.cpp:4139
+#: kmmainwidget.cpp:3490 kmmainwidget.cpp:4142
 #, kde-format
 msgid "Account &Settings"
 msgstr "账户设置(&S)"
@@ -5037,53 +5037,53 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "新建收藏夹目录"
 
-#: kmmainwidget.cpp:4086
+#: kmmainwidget.cpp:4089
 #, kde-format
 msgid "&Delete Search"
 msgstr "删除搜索(&D)"
 
-#: kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:4103
 #, kde-format
 msgid "Edit Search..."
 msgstr "编辑搜索..."
 
-#: kmmainwidget.cpp:4137
+#: kmmainwidget.cpp:4140
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "配置聚合邮箱"
 
-#: kmmainwidget.cpp:4148
+#: kmmainwidget.cpp:4151
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "清空废件夹(&M)"
 
-#: kmmainwidget.cpp:4148
+#: kmmainwidget.cpp:4151
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "将所有消息放入废件夹(&M)"
 
-#: kmmainwidget.cpp:4222
+#: kmmainwidget.cpp:4225
 #, kde-format
 msgid "&Undo"
 msgstr "撤销(&U)"
 
-#: kmmainwidget.cpp:4224
+#: kmmainwidget.cpp:4227
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "撤销(&U): “%1”"
 
-#: kmmainwidget.cpp:4281
+#: kmmainwidget.cpp:4284
 #, kde-format
 msgid "Filter %1"
 msgstr "过滤器 %1"
 
-#: kmmainwidget.cpp:4749
+#: kmmainwidget.cpp:4752
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "搜索...<%1>"
 
-#: kmmainwidget.cpp:4757
+#: kmmainwidget.cpp:4760
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5093,18 +5093,18 @@ msgstr ""
 "在邮件中使用 HTML 将使您更容易受到“垃圾邮件”的攻击，还会增大被其他已有的和将"
 "有的安全漏洞危及的可能性。"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "安全警告"
 
-#: kmmainwidget.cpp:4761
+#: kmmainwidget.cpp:4764
 #, kde-format
 msgid "Use HTML"
 msgstr "使用 HTML"
 
-#: kmmainwidget.cpp:4907
+#: kmmainwidget.cpp:4910
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5118,37 +5118,37 @@ msgstr ""
 "您可以于 KMail 插件设置中\n"
 "配置、创建自定义聚合邮箱或完全禁用此功能。"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "启动聚合邮箱？"
 
-#: kmmainwidget.cpp:4911
+#: kmmainwidget.cpp:4914
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "启用聚合邮箱"
 
-#: kmmainwidget.cpp:4912
+#: kmmainwidget.cpp:4915
 #, kde-format
 msgid "Cancel"
 msgstr "取消"
 
-#: kmmainwidget.cpp:4947
+#: kmmainwidget.cpp:4950
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "您想重启 Akonadi 吗？"
 
-#: kmmainwidget.cpp:4948
+#: kmmainwidget.cpp:4951
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "重启 Akonadi"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4952
 #, kde-format
 msgid "Restart"
 msgstr "重启"
 
-#: kmmainwidget.cpp:4956
+#: kmmainwidget.cpp:4959
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi 已重启。"
