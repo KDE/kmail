@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -3762,12 +3762,12 @@ msgstr "เพิ่มไว้ในสมุดที่อยู่"
 msgid "Contact created successfully"
 msgstr "ลบจดหมายเรียบร้อยแล้ว"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, fuzzy, kde-format
 #| msgid "Failed to compress attachment"
 msgctxt "@title:window"
@@ -4809,7 +4809,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&ลบ"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ทิ้งทั้งเธรดลงถังขยะ"
@@ -4819,12 +4819,12 @@ msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 msgid "Move thread to trashcan"
 msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "ลบทั้งเธรด"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "ค้นหาจดหมาย..."
@@ -5229,7 +5229,7 @@ msgstr "ปรับแต่งจัดการจดหมาย-K..."
 msgid "New AddressBook Contact..."
 msgstr "สมุดที่อยู่..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5359,56 +5359,56 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "เพิ่มโฟลเดอร์โปรด"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "ลบการค้นหา"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search..."
 msgstr "แก้ไขสคริปต์..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "ปรับแต่งจัดการจดหมาย-K..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "เ&ทถังขยะทิ้ง"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ทิ้งจดหมายทั้งหมดลงถังขยะ"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "ตัวกรอง %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "กำลังเริ่ม..."
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5418,19 +5418,19 @@ msgstr ""
 "การใช้ HTML ในจดหมาย อาจจะทำให้คุณได้รับ จดหมาย\n"
 "\"ขยะ\" และอาจทำให้ระบบของคุณ มีปัญหาเรื่องความปลอดภัยได้"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "เตือนความปลอดภัย"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr "ใช้ HTML"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5440,41 +5440,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "ยกเลิก"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "ชื่อการแสดงตัว"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "ชื่อการแสดงตัว"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5709,7 +5709,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>ออฟไลน์</h2><p>KMail กำลังทำงานอยู่ในโหมดออฟไลน์ <a "
 "href=\"kmail:goOnline\">คลิกที่นี่</a> เพื่อเปลี่ยนเป็นโหมดออนไลน์ . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"

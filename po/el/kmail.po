@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3908,12 +3908,12 @@ msgstr "Προσθήκη στο βιβλίο διευθύνσεων"
 msgid "Contact created successfully"
 msgstr "Η επαφή δημιουργήθηκε επιτυχώς"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Αδυναμία αποθήκευσης της επαφής: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -5008,7 +5008,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Διαγραφή"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Μετακίνηση νήματος στα απορρίμμα&τα"
@@ -5018,12 +5018,12 @@ msgstr "Μετακίνηση νήματος στα απορρίμμα&τα"
 msgid "Move thread to trashcan"
 msgstr "Μετακίνηση νήματος στα απορρίμματα"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Δια&γραφή νήματος"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "Αναζήτηση μ&ηνυμάτων..."
@@ -5419,7 +5419,7 @@ msgstr "&Εξαγωγή δεδομένων του KMail..."
 msgid "New AddressBook Contact..."
 msgstr "Νέα επαφή βιβλίου διευθύνσεων..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5545,48 +5545,48 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Προσθήκη αγαπημένου φακέλου"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Διαγραφή αναζήτησης"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, kde-format
 msgid "Edit Search..."
 msgstr "Επεξεργασία αναζήτησης..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Διαμόρφωση του KMail..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Ά&δειασμα απορριμμάτων"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Μετακίνηση όλων των μηνυμάτων στα απορρίμματα"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr "Α&ναίρεση"
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Α&ναίρεση: «%1»"
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "Φίλτρο %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
@@ -5594,7 +5594,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Αναζήτηση...<%1>"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5605,19 +5605,19 @@ msgstr ""
 "\"spam\" (διαφημιστικά κλπ) και ίσως αυξήσει την πιθανότητα άλωσης του "
 "συστήματός σας μέσω των τωρινών και μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Προειδοποίηση ασφαλείας"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr "Χρήση HTML"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5627,40 +5627,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Ακύρωση"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Όνομα ταυτότητας"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, kde-format
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
@@ -5897,7 +5897,7 @@ msgstr ""
 "τώρα σε λειτουργία χωρίς σύνδεση. Κάντε κλικ <a href=\"kmail:goResourceOnline"
 "\">εδώ</a> για να συνδεθείτε . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Η επαφή τροποποιήθηκε επιτυχώς"

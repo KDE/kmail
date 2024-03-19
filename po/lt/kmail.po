@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3731,12 +3731,12 @@ msgstr "Įdėti į adresų knygą"
 msgid "Contact created successfully"
 msgstr "Kontaktas sėkmingai sukurtas"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktas negali būti išsaugotas: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -4806,7 +4806,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Trinti"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Per&kelti giją į šiukšlinę"
@@ -4816,12 +4816,12 @@ msgstr "Per&kelti giją į šiukšlinę"
 msgid "Move thread to trashcan"
 msgstr "Perkelti giją į šiukšlinę"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Trinti &giją"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Ieškoti laiškų..."
@@ -5216,7 +5216,7 @@ msgstr "&Eksportuoti KMail duomenis..."
 msgid "New AddressBook Contact..."
 msgstr "Naujas adresų knygos kontaktas..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5342,48 +5342,48 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Pridėti mėgstamą aplanką"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "Pašalinti paieškos aplanką"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, kde-format
 msgid "Edit Search..."
 msgstr "Keisti paiešką..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Konfi&gūruoti KMail..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Iš&tuštinti šiukšlinę"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Perkelti visus laiškus į &šiukšlinę"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr "Atš&aukti"
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Atš&aukti: „%1“"
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtruoti: %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
@@ -5391,7 +5391,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Ieškoti...<%1>"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5401,19 +5401,19 @@ msgstr ""
 "Naudojant laiškuose HTML gali padidėti tikimybė gauti „brukalą“;  taip pat "
 "išauga Jūsų sistemos pažeidimo dėl esamų ar būsimų saugumo skylių tikimybė."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Saugumo perspėjimas"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr "Naudoti HTML"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5423,40 +5423,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Ar norite pašalinti žymę: „%1“?"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Restart Akonadi"
 msgstr "Keisti paskyrų eiliškumą..."
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Restart"
 msgstr "Keisti paskyrų eiliškumą..."
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5688,7 +5688,7 @@ msgstr ""
 "neprisijungęs. Spauskite <a href=\"kmail:goResourceOnline\">čia</a> norėdami "
 "prisijungti . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontaktas sėkmingai pakeistas"

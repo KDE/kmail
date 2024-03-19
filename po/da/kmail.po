@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -3804,12 +3804,12 @@ msgstr "Føj til adressebog"
 msgid "Contact created successfully"
 msgstr "Kontakten blev oprettet"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontakten kan ikke lagres: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -4855,7 +4855,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Slet"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Flyt tråd til papirkurv"
@@ -4865,12 +4865,12 @@ msgstr "&Flyt tråd til papirkurv"
 msgid "Move thread to trashcan"
 msgstr "Flyt tråd til papirkurv"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Slet t&råd"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Find breve..."
@@ -5261,7 +5261,7 @@ msgstr "Importér/eksportér KMail-data..."
 msgid "New AddressBook Contact..."
 msgstr "Ny adressebogskontakt..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, kde-format
 msgid "Account &Settings"
 msgstr "Konto&indstillinger"
@@ -5384,54 +5384,54 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Tilføj favoritmappe"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Slet søgning"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, kde-format
 msgid "Edit Search..."
 msgstr "Redigér søgning..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgid "Configure Unified Mailbox"
 msgstr "Aktivér forenede postkasser"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&Tøm papirkurv"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Flyt alle breve til papirkurv"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr "Fo&rtryd"
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Fo&rtryd: \"%1\""
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Søg...<%1>"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5442,19 +5442,19 @@ msgstr ""
 "sandsynligheden for, at dit system vil blive kompromitteret af andre "
 "nuværende og fremtidige sikkerhedsudnyttelser."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Sikkerhedsadvarsel"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr "Brug HTML"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5469,39 +5469,39 @@ msgstr ""
 "Du kan konfigurere forenede postkasser, oprette tilpassede postkasser eller\n"
 "deaktivere funktionen helt i KMails plugin-indstillinger."
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Aktivér forenede postkasser?"
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Aktivér forenede postkasser"
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, kde-format
 msgid "Cancel"
 msgstr "Annullér"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Vil du fjerne mærket \"%1\"?"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgid "Restart Akonadi"
 msgstr "Genstart konto"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, kde-format
 msgid "Restart"
 msgstr "Genstart"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 #| msgid "Akonadi Agents"
 msgid "Akonadi restarted."
@@ -5716,7 +5716,7 @@ msgstr ""
 "Kontoen er aktuelt i offline-tilstand. Klik <a href=\"kmail:goOnline\">her</"
 "a> for at gå online . . .</p>"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakten blev ændret"

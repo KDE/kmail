@@ -20,15 +20,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
-"PO-Revision-Date: 2024-03-14 12:06+0200\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
+"PO-Revision-Date: 2024-03-18 10:18+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -2294,10 +2294,10 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "לא ציינת נושא. האם לשלוח את ההודעה בכל זאת?"
 
 #: editor/kmcomposerwin.cpp:2807
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
-msgstr "לא צויין נושא"
+msgstr "לא צוין אל:"
 
 #: editor/kmcomposerwin.cpp:2808 editor/kmcomposerwin.cpp:2822
 #, kde-format
@@ -2305,10 +2305,9 @@ msgid "S&end as Is"
 msgstr "&שלח ללא שינוי"
 
 #: editor/kmcomposerwin.cpp:2809
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgid "&Specify the To field"
-msgstr "&תן לי לציין את הנושא"
+msgstr "&ציון שדה אל"
 
 #: editor/kmcomposerwin.cpp:2819
 #, kde-format
@@ -2316,11 +2315,10 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "לא ציינת נושא. האם לשלוח את ההודעה בכל זאת?"
 
 #: editor/kmcomposerwin.cpp:2821
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
-msgstr "לא צויין נושא"
+msgstr "לא צוין נושא"
 
 #: editor/kmcomposerwin.cpp:2823
 #, kde-format
@@ -2328,11 +2326,11 @@ msgid "&Specify the Subject"
 msgstr "&תן לי לציין את הנושא"
 
 #: editor/kmcomposerwin.cpp:2868
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
-msgstr "עליך לציין לפחות נמען אחד בשדה, או בשדה \"נמען\" או \"עותק סמוי\"."
+msgstr "צריך לציין לפחות נמען אחד כדי להצפין טיוטה."
 
 #: editor/kmcomposerwin.cpp:3054
 #, kde-format
@@ -2340,11 +2338,10 @@ msgid "About to send email..."
 msgstr "עומד לשלוח דואר..."
 
 #: editor/kmcomposerwin.cpp:3055
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "וידוא שליחה"
+msgstr "אימות שליחה"
 
 #: editor/kmcomposerwin.cpp:3056
 #, kde-format
@@ -2359,9 +2356,9 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3133
-#, fuzzy, kde-format
+#, kde-format
 msgid "Too many recipients"
-msgstr "<נמענים>"
+msgstr "יותר מדי נמענים"
 
 #: editor/kmcomposerwin.cpp:3134
 #, kde-format
@@ -2369,9 +2366,9 @@ msgid "&Send as Is"
 msgstr "&שלח ללא שינוי"
 
 #: editor/kmcomposerwin.cpp:3135
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Edit Recipients"
-msgstr "<נמענים>"
+msgstr "&עריכת נמענים"
 
 #: editor/kmcomposerwin.cpp:3172
 #, kde-format
@@ -2428,18 +2425,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3603
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
-msgstr "הצפן"
+msgstr "להצפין"
 
 #: editor/kmcomposerwin.cpp:3605
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "הצפן"
+msgstr "לא להצפין"
 
 #: editor/kmcomposerwin.cpp:3745
 #, kde-format
@@ -2572,20 +2567,20 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:4209
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encryption Key Selection"
-msgstr "הצג סמלי הצפ&נה"
+msgstr "בחירת מפתח הצפנה"
 
 #: editor/kmcomposerwin.cpp:4294
-#, fuzzy, kde-format
+#, kde-format
 msgid "Plugin Editor Information"
-msgstr "וידוא שליחה"
+msgstr "פרטי עורך תוספים"
 
 #: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:27
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Details"
-msgstr "[פרטים]"
+msgstr "פרטים"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:22
 #, kde-format
@@ -2600,9 +2595,9 @@ msgid ""
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
+#, kde-format
 msgid "Set a subject for this message"
-msgstr "                 קבע את נושא ההודעה"
+msgstr "הגדרת נושא להודעה הזאת"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -2613,24 +2608,24 @@ msgid ""
 msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:31
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure shortcut"
-msgstr "הגדרות &מסננים..."
+msgstr "הגדרת קיצור מקשים"
 
 #: editor/validatesendmailshortcut.cpp:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove Shortcut"
-msgstr "קיצור:"
+msgstr "הסרת קיצור מקשים"
 
 #: editor/validatesendmailshortcut.cpp:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ask Before Sending"
-msgstr "&בטל שליחה"
+msgstr "לשאול טרם השליחה"
 
 #: editor/validatesendmailshortcut.cpp:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "Sending Without Confirmation"
-msgstr "וידוא שליחה"
+msgstr "שליחה ללא אישור"
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
@@ -2654,9 +2649,9 @@ msgid ""
 msgstr ""
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:23
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Attach file"
-msgstr "צירוף קובץ"
+msgstr "&צירוף קובץ"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:28
 #, fuzzy, kde-format
@@ -2664,9 +2659,9 @@ msgid "&Remind me later"
 msgstr "שלח אחר כך"
 
 #: editor/warningwidgets/externaleditorwarning.cpp:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "External editor was started."
-msgstr "עורך חיצוני"
+msgstr "הופעל עורך חיצוני."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
@@ -2700,41 +2695,41 @@ msgid "We have reached maximum recipients. Truncating recipients list to %1."
 msgstr ""
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message will be signed"
-msgstr "ההודעה נחתמה על ידי %1."
+msgstr "ההודעה תיחתם"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message will not be signed"
-msgstr "רשימת ההודעות - שדה התאריך"
+msgstr "ההודעה לא תיתחם"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message will be encrypted"
-msgstr "שמור הודעות בצורה מוצ&פנת"
+msgstr "ההודעה תוצפן"
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message will not be encrypted"
-msgstr "שמור הודעות בצורה מוצ&פנת"
+msgstr "ההודעה לא תוצפן"
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:35
 #: folderarchive/folderarchiveagentjob.cpp:59
 #: folderarchive/folderarchiveagentjob.cpp:65
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot fetch collection. %1"
-msgstr "העברת הודעות לתיקייה"
+msgstr "לא ניתן למשוך אוסף. %1"
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "Folder name not defined."
-msgstr "שגיאה: החתימה לא וודאה"
+msgstr "שם התיקייה לא צוין."
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:86
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to create folder. %1"
-msgstr "תיקייה לא ידועה \"%1\""
+msgstr "לא ניתן ליצור תיקייה. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:32
 #, kde-format
@@ -2742,9 +2737,9 @@ msgid "Archive folder not defined. Please verify settings for account %1"
 msgstr ""
 
 #: folderarchive/folderarchiveagentjob.cpp:36
-#, fuzzy, kde-format
+#, kde-format
 msgid "No messages selected."
-msgstr "אין הודעות למחיקה..."
+msgstr "לא נבחרו הודעות."
 
 #: folderarchive/folderarchiveagentjob.cpp:71
 #, kde-format
@@ -2758,34 +2753,34 @@ msgid ""
 msgstr ""
 
 #: folderarchive/folderarchiveagentjob.cpp:102
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cannot move messages."
-msgstr "העברת הודעות לתיקייה"
+msgstr "לא ניתן להעביר הודעות."
 
 #: folderarchive/folderarchivemanager.cpp:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
-msgstr "נכשל בעת יצירת התיקייה"
+msgstr "לא ניתן למשוך את התיקייה. השגיאה שדווחה: %1"
 
 #: folderarchive/folderarchivemanager.cpp:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "No folder returned."
-msgstr "לא נבחרה תיקייה."
+msgstr "לא הוחזרה תיקייה."
 
 #: folderarchive/folderarchivemanager.cpp:93
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
-msgstr "נכשל בעת יצירת התיקייה"
+msgstr "לא ניתן למשוך את תיקיית ההודעה. השגיאה שדווחה: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to return list of folders."
-msgstr "נמחקה הודעה ישנה אחת מהתיקייה %2."
+msgstr "לא ניתן לחזור לרשימת התיקיות."
 
 #: folderarchive/folderarchivemanager.cpp:166
-#, fuzzy, kde-format
+#, kde-format
 msgid "Messages archived"
-msgstr "ההודעה נחתמה על ידי %1."
+msgstr "ההודעות הועברו לארכיון"
 
 #: foldershortcutactionmanager.cpp:123 foldershortcutactionmanager.cpp:124
 #, kde-format
@@ -2804,9 +2799,9 @@ msgid "Clear History"
 msgstr ""
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "הודעה חדשה"
+msgstr "פתיחת המציג שנסגר מחדש"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:84 kmcommands.cpp:1918
@@ -2822,8 +2817,7 @@ msgstr ""
 
 #: identity/encodedimagepicker.cpp:132 identity/encodedimagepicker.cpp:142
 #: identity/encodedimagepicker.cpp:150
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "אין תמונה"
@@ -2835,10 +2829,10 @@ msgstr "לא נקבה תמונה עבור הכניסה שלך בפנקס הכו�
 
 #: identity/identityaddvcarddialog.cpp:27
 #: identity/identityeditvcarddialog.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
-msgstr "שינוי חשבון"
+msgstr "יציאת כרטיס ביקור (vCard) עצמי"
 
 #: identity/identityaddvcarddialog.cpp:47 identity/newidentitydialog.cpp:70
 #, kde-format
@@ -2846,9 +2840,9 @@ msgid "&With empty fields"
 msgstr "עם שדות &ריקים"
 
 #: identity/identityaddvcarddialog.cpp:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "&From existing vCard"
-msgstr "&שכפל זהות קיימת"
+msgstr "מכרטיס ביקור &קיים"
 
 #: identity/identityaddvcarddialog.cpp:65
 #, kde-format
@@ -2856,9 +2850,9 @@ msgid "&vCard path:"
 msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Duplicate existing vCard"
-msgstr "&שכפל זהות קיימת"
+msgstr "&שכפול כרטיס ביקור קיים"
 
 #: identity/identityaddvcarddialog.cpp:88 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -2866,9 +2860,9 @@ msgid "&Existing identities:"
 msgstr "זהויות &קיימות:"
 
 #: identity/identitydialog.cpp:172
-#, fuzzy, kde-format
+#, kde-format
 msgid "Error while generating new key pair: %1"
-msgstr "שגיאה בעת שינוי שם התיקייה %1"
+msgstr "שגיאה ביצירת צמד מפתחות חדש: %1"
 
 #: identity/identitydialog.cpp:173
 #, kde-format
@@ -2881,9 +2875,9 @@ msgid "No key"
 msgstr ""
 
 #: identity/identitydialog.cpp:215
-#, fuzzy, kde-format
+#, kde-format
 msgid "Generate a new key pair"
-msgstr "הזן קידומת תשובה חדשה:"
+msgstr "יצירת צמד מפתחות חדש"
 
 #: identity/identitydialog.cpp:227
 #, kde-format
@@ -2891,14 +2885,13 @@ msgid "Generating new key pair..."
 msgstr ""
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Edit Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "עריכת זהות"
 
 #: identity/identitydialog.cpp:264
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "כללי"
@@ -2961,9 +2954,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:350
-#, fuzzy, kde-format
+#, kde-format
 msgid "Cryptography"
-msgstr "&קריפטוגרפיה"
+msgstr "קריפטוגרפיה"
 
 #: identity/identitydialog.cpp:356
 #, kde-format
@@ -2986,8 +2979,7 @@ msgid "Use same key for encryption and signing"
 msgstr ""
 
 #: identity/identitydialog.cpp:378
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgid "OpenPGP key:"
 msgstr "מפתח OpenPGP:"
 
@@ -3043,10 +3035,9 @@ msgid "Preferred format:"
 msgstr "מועדף"
 
 #: identity/identitydialog.cpp:467
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "הצפן"
+msgstr "הפעלת הצפנה אוטומטית"
 
 #: identity/identitydialog.cpp:471
 #, kde-format
@@ -3069,35 +3060,32 @@ msgid "Overwrite defaults:"
 msgstr ""
 
 #: identity/identitydialog.cpp:487
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign messages"
-msgstr "&חתום על ההודעה"
+msgstr "חתימה על הודעות"
 
 #: identity/identitydialog.cpp:490
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encrypt messages when possible"
-msgstr "הצ&פן הודעות באופן אוטומטי בכל עת שהדבר אפשרי"
+msgstr "להצפין את ההודעות כשאפשר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: identity/identitydialog.cpp:493 ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send &unsigned messages"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "הצג אזהרה בעת ניסיון לשלוח הודעות &לא חתומות"
+msgstr "להזהיר בעת ניסיון לשלוח הודעות לא חתומות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: identity/identitydialog.cpp:496 ui/securitypageencryptiontab.ui:120
-#, fuzzy, kde-format
-#| msgid "&Warn when trying to send unencrypted messages"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "הצג אזהרה בעת ניסיון לשלוח הודעות &לא מוצפנות"
+msgstr "להזהיר בעת ניסיון לשלוח הודעות לא מוצפנות"
 
 #: identity/identitydialog.cpp:506
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
-msgstr "&מתקדם"
+msgstr "מתקדם"
 
 #: identity/identitydialog.cpp:514
 #, kde-format
@@ -3172,9 +3160,9 @@ msgid "Sent-mail &folder:"
 msgstr "תיקיית דואר שנש&לח:"
 
 #: identity/identitydialog.cpp:590
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select Draft Folder"
-msgstr "בחר תיקייה"
+msgstr "בחירת תיקיית טיוטות"
 
 #: identity/identitydialog.cpp:592
 #, kde-format
@@ -3182,39 +3170,39 @@ msgid "&Drafts folder:"
 msgstr "תיקיית &טיוטות:"
 
 #: identity/identitydialog.cpp:598
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select Templates Folder"
-msgstr "תיקיית אש&פה:"
+msgstr "בחירת תיקיית תבניות"
 
 #: identity/identitydialog.cpp:600
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Templates folder:"
-msgstr "תיקיית אש&פה:"
+msgstr "תיקיית ת&בניות:"
 
 #: identity/identitydialog.cpp:605
-#, fuzzy, kde-format
+#, kde-format
 msgid "Outgoing Account:"
-msgstr "הגדרות החשבון"
+msgstr "חשבון יוצא:"
 
 #: identity/identitydialog.cpp:612
-#, fuzzy, kde-format
+#, kde-format
 msgid "Attach my vCard to message"
-msgstr "     להודעה \"header\" הוסף את הכותרת"
+msgstr "צירוף כרטיס הביקור שלי (vCard) להודעות"
 
 #: identity/identitydialog.cpp:613 identity/identitydialog.cpp:1165
-#, fuzzy, kde-format
+#, kde-format
 msgid "Create..."
-msgstr "שינוי שם..."
+msgstr "יצירה…"
 
 #: identity/identitydialog.cpp:617
-#, fuzzy, kde-format
+#, kde-format
 msgid "Autocorrection language:"
-msgstr "בחר ש&פה:"
+msgstr "שפת התיקון האוטומטי:"
 
 #: identity/identitydialog.cpp:629
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restore default domain name"
-msgstr "תחום &ברירת מחדל:"
+msgstr "שחזור שם התחום כברירת המחדל"
 
 #: identity/identitydialog.cpp:632
 #, kde-format
@@ -3317,11 +3305,10 @@ msgid "The signature file is not valid"
 msgstr "קובץ החתימה לא תקף"
 
 #: identity/identitydialog.cpp:876
-#, fuzzy, kde-format
-#| msgid "Edit Identity \"%1\""
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "עריכת הזהות \"%1\""
+msgstr "עריכת הזהות „%1”"
 
 #: identity/identitydialog.cpp:945
 #, fuzzy, kde-format
@@ -3440,9 +3427,9 @@ msgid "&Remove"
 msgstr "ה&סרה"
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename"
-msgstr "&שנה שם"
+msgstr "שינוי שם"
 
 #: identity/identitypage.cpp:280
 #, kde-format
@@ -3450,8 +3437,7 @@ msgid "Set as Default"
 msgstr "קבע כברירת מחדל"
 
 #: identity/newidentitydialog.cpp:38
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "New Identity"
 msgstr "זהות חדשה"
@@ -3489,18 +3475,18 @@ msgid ""
 msgstr ""
 
 #: identity/xfaceconfigurator.cpp:41
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/"
 "\">https://ace.home.xs4all.nl/X-Faces/</a>."
 msgstr ""
-"קיימות מספר דוגמאות בכתובת <a href=\"http://www.xs4all.nl/~ace/X-Faces/\"> "
-"http://www.xs4all.nl/~ace/X-Faces/</a>."
+"דוגמאות זמינות ב־<a href=\"https://ace.home.xs4all.nl/X-Faces/\">https://ace."
+"home.xs4all.nl/X-Faces/</a>."
 
 #: identity/xfaceconfigurator.cpp:123
-#, fuzzy, kde-format
+#, kde-format
 msgid "No image will be sent."
-msgstr "שמור הודעות בצורה מוצ&פנת"
+msgstr "לא תישלח תמונה."
 
 #: identity/xfaceconfigurator.cpp:126
 #, kde-format
@@ -3540,9 +3526,9 @@ msgid "pngquant exited with code %1: %2"
 msgstr ""
 
 #: job/addemailtoexistingcontactjob.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgid "Email added successfully."
-msgstr "ההודעות נמחקו בהצלחה"
+msgstr "כתובת הדוא״ל נוספה בהצלחה."
 
 #: job/addressvalidationjob.cpp:76
 #, kde-format
@@ -3579,45 +3565,43 @@ msgid "Add to Address Book"
 msgstr "הוספה לפנקס הכתובות"
 
 #: job/createnewcontactjob.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Contact created successfully"
-msgstr "ההודעות נמחקו בהצלחה"
+msgstr "איש הקשר נוצר בהצלחה"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
-#, fuzzy, kde-format
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
-msgstr "שם המצורף:"
+msgstr "אחסון איש הקשר נכשל"
 
 #: job/opencomposerjob.cpp:116
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do you want to attach this folder \"%1\"?"
-msgstr "האם אתה בטוח שברצונך לרוקן את תיקיית האשפה?"
+msgstr "לצרף את התיקייה „%1”?"
 
 #: job/opencomposerjob.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
-msgstr "תיקייה חדשה"
+msgstr "לצרף תיקייה"
 
 #: job/opencomposerjob.cpp:118
-#, fuzzy, kde-format
-#| msgid "&Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Attach"
-msgstr "&צירוף"
+msgstr "לצרף"
 
 #: job/opencomposerjob.cpp:119
-#, fuzzy, kde-format
-#| msgid "&Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr "&צירוף"
+msgstr "לא לצרף"
 
 #: job/removecollectionjob.cpp:56
 #, kde-format
@@ -3634,10 +3618,10 @@ msgstr ""
 "בו, עדיין יהיו זמינות בתיקיות המקוריות שלהן. </qt>"
 
 #: job/removecollectionjob.cpp:61
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button Delete search"
 msgid "&Delete"
-msgstr "נמחק"
+msgstr "מ&חיקה"
 
 #: job/removecollectionjob.cpp:63
 #, kde-format
@@ -3682,35 +3666,35 @@ msgstr ""
 "תוך אובדן התכולה שלהן? </qt>"
 
 #: job/removecollectionjob.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button Delete folder"
 msgid "&Delete"
-msgstr "נמחק"
+msgstr "מ&חיקה"
 
 #: job/removeduplicatemailjob.cpp:31
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:72
-#, fuzzy, kde-format
+#, kde-format
 msgid "Removing duplicates"
-msgstr "הסר הודעות כפולות"
+msgstr "הכפילויות נמחקות"
 
 #: job/removeduplicatemailjob.cpp:63
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
-#, fuzzy, kde-format
+#, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "שגיאה במהלך הסרת התקייה."
+msgstr "שגיאה בהסרת הודעות הדוא״ל הכפולות: ‚%1’"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "שגיאה במהלך הסרת התקייה."
+msgstr "שגיאה בהסרת כפילויות"
 
 #: job/saveasfilejob.cpp:26
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Save File as"
-msgstr "שמור לקובץ"
+msgstr "שמירת קובץ בשם"
 
 #: kmail_options.h:15
 #, kde-format
@@ -4614,7 +4598,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "נמחק"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&העבר אשכל לאשפה"
@@ -4624,12 +4608,12 @@ msgstr "&העבר אשכל לאשפה"
 msgid "Move thread to trashcan"
 msgstr "העבר אשכול אל פח האשפה"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "&מחק אשכול"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&חיפוש הודעות..."
@@ -5018,7 +5002,7 @@ msgstr "ה&גדרת KMail..."
 msgid "New AddressBook Contact..."
 msgstr "&פנקס כתובות..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&שליחה"
@@ -5141,53 +5125,53 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "תיקייה חדשה"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "&מחיקת חיפוש"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, kde-format
 msgid "Edit Search..."
 msgstr "עריכת חיפוש…"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "ה&גדרת KMail..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&פינוי אשפה"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "העברת כל ההודעות ל&אשפה"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "סינון %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "חיפוש… <%1>"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5197,19 +5181,19 @@ msgstr ""
 "שימוש ב־HTML בדוא״ל חושף אותך ליותר „דואר זבל” ועלול להגדיל את הסבירות לכך "
 "שהמערכת שלך תהיה פגיעה לחולשות אבטחה קיימות או עתידיות אחרות."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "אזהרת אבטחה"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr ""
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5219,37 +5203,37 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 msgid "Restart Akonadi"
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, fuzzy, kde-format
 msgid "Restart"
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5458,7 +5442,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>לא מקוון</h2><p> KMail כרגע במצב לא מקוון. לחץ "
 "<a href=\"kmail:goOnline\">כאן</a> כדי לעבור למצב מקוון . . . </p> &nbsp;"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, fuzzy, kde-format
 msgid "Contact modified successfully"
 msgstr "ההודעות הועברו בהצלחה"
@@ -5823,9 +5807,9 @@ msgid "Filter on Mailing-List %1..."
 msgstr "סינון לפי רשימת הדיוור %1…"
 
 #: messageactions.cpp:661
-#, fuzzy, kde-format
+#, kde-format
 msgid "email"
-msgstr "דוא\"ל"
+msgstr "דוא״ל"
 
 #: messageactions.cpp:664
 #, kde-format
@@ -5833,12 +5817,12 @@ msgid "web"
 msgstr ""
 
 #: messageactions.cpp:669
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
 "email though could be irc/ftp or other url variant"
 msgid "%1 (%2)"
-msgstr "דואר"
+msgstr "%1 (%2)"
 
 #: messageactions.cpp:778
 #, kde-format
@@ -5856,9 +5840,9 @@ msgid "Reindex"
 msgstr ""
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search Anyway"
-msgstr "שלח עכשיו"
+msgstr "לחפש בכל זאת"
 
 #: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
@@ -5867,22 +5851,22 @@ msgid "Indexing"
 msgstr ""
 
 #: searchdialog/incompleteindexdialog.cpp:221
-#, fuzzy, kde-format
+#, kde-format
 msgid "Indexing Collections..."
-msgstr "הגדרות סדר השלמה"
+msgstr "האוספים מסודרים במפתח…"
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
 #: searchdialog/kmsearchmessagemodel.cpp:94
-#, fuzzy, kde-format
+#, kde-format
 msgid "From"
-msgstr "&מאת"
+msgstr "מאת"
 
 #: searchdialog/kmsearchmessagemodel.cpp:84
 #: searchdialog/kmsearchmessagemodel.cpp:97
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
-msgstr "א&ל"
+msgstr "אל"
 
 #: searchdialog/kmsearchmessagemodel.cpp:87
 #: searchdialog/kmsearchmessagemodel.cpp:100
@@ -5892,12 +5876,12 @@ msgstr "תאריך"
 
 #: searchdialog/kmsearchmessagemodel.cpp:90
 #: searchdialog/kmsearchmessagemodel.cpp:103
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preview"
-msgstr "ההודעה ה&קודמת"
+msgstr "תצוגה מקדימה"
 
 #: searchdialog/kmsearchmessagemodel.cpp:160
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
 msgstr "תיקייה"
@@ -5908,11 +5892,10 @@ msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
 #: searchdialog/searchwindow.cpp:73
-#, fuzzy, kde-format
-#| msgid "Find Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
-msgstr "חפש הודעות"
+msgstr "איתור הודעות"
 
 #: searchdialog/searchwindow.cpp:89
 #, kde-format
@@ -5921,10 +5904,10 @@ msgid "&Search"
 msgstr "&חיפוש"
 
 #: searchdialog/searchwindow.cpp:171
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline..."
-msgstr "בצורה &מוטבעת..."
+msgstr "כ&חלק מההודעה…"
 
 #: searchdialog/searchwindow.cpp:175
 #, kde-format
@@ -6044,9 +6027,9 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: searchdialog/searchwindow.cpp:909
-#, fuzzy, kde-format
+#, kde-format
 msgid "Checking index status..."
-msgstr "&בדוק דואר בהפעלה"
+msgstr "מצב המפתח נבדק…"
 
 #: secondarywindow.cpp:57
 #, kde-format
@@ -6121,22 +6104,21 @@ msgstr "הודעה &מפורטת לגבי הודעת דוא״ל חדשה"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "Other Actio&ns..."
-msgstr "&פעולות אחרות"
+msgstr "&פעולות אחרות…"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
-#, fuzzy, kde-format
-#| msgid "Set From Address Book"
+#, kde-format
 msgid "Set from Address Book"
-msgstr "קבע מספר הכתובות"
+msgstr "הגדרה מפנקס הכתובות"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add a new identity"
-msgstr "&זהות חדשה:"
+msgstr "הוספת זהות חדשה"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
@@ -6158,9 +6140,9 @@ msgstr "שי&נוי…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identitypage.ui:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "Rename the selected identity"
-msgstr "הסר הודעות כפולות"
+msgstr "שינוי שם הזהות הנבחרת"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
 #: ui/identitypage.ui:53
@@ -6170,9 +6152,9 @@ msgstr "&שינוי שם"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
 #: ui/identitypage.ui:63
-#, fuzzy, kde-format
+#, kde-format
 msgid "Remove the selected identity"
-msgstr "הסר הודעות כפולות"
+msgstr "הסרת הזהות הנבחרת"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
 #: ui/identitypage.ui:79
@@ -6198,15 +6180,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Select All"
-msgstr "בחר את כל הטקסט"
+msgstr "&בחירה בהכול"
 
 #. i18n: ectx: property (text), widget (QPushButton, unselectAllBtn)
 #: ui/incompleteindexdialog.ui:59
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unselect All"
-msgstr "בחר את כל הטקסט"
+msgstr "ביטול בחירה בהכול"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
@@ -6246,27 +6228,27 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to First Unread Message"
-msgstr "קפוץ להודעה הראשונה החדשה או שלא ניקראה"
+msgstr "דילוג להודעה הראשונה שלא נקראה"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to Last Selected Message"
-msgstr "קפוץ להודעה המסומנת האחרונה"
+msgstr "דילוג להודעה האחרונה שלא נקראה"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to Newest Message"
-msgstr "קפוץ להודעה הראשונה החדשה"
+msgstr "דילוג להודעה החדשה ביותר"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to Oldest Message"
-msgstr "קפוץ להודעה הראשונה החדשה"
+msgstr "דילוג להודעה הישנה ביותר"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDelayedMarkAsRead)
 #: ui/miscpagemaintab.ui:105
@@ -6318,27 +6300,27 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do not Loop"
-msgstr "אל תגלוש"
+msgstr "לא לחזור בלולאה"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
-#, fuzzy, kde-format
+#, kde-format
 msgid "Loop in Current Folder"
-msgstr "הצג רק תיקיות פתוחות"
+msgstr "חזרה בלולאה על התיקייה הנוכחית"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
-#, fuzzy, kde-format
+#, kde-format
 msgid "Loop in All Folders"
-msgstr "גלוש בכל התיקיות"
+msgstr "חזרה בלולאה בכל התיקיות"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
-#, fuzzy, kde-format
+#, kde-format
 msgid "Loop in All Marked Folders"
-msgstr "גלוש בכל התיקיות"
+msgstr "חזרה בלולאה בכל התיקיות המסומנות"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, mDelayedMarkTime)
 #: ui/miscpagemaintab.ui:157
@@ -6348,15 +6330,15 @@ msgstr " שניות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStartUpFolderCheck)
 #: ui/miscpagemaintab.ui:173
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open this folder on &startup:"
-msgstr "פתח את תיקייה הזאת בפתיחה"
+msgstr "פתיחת התיקייה הזאת עם ה&עלייה:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
-#, fuzzy, kde-format
+#, kde-format
 msgid "Allow deleting messages without confirmation"
-msgstr "וידוא שליחה"
+msgstr "לאפשר מחיקת הודעות בלי אישור"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
 #: ui/miscpagemaintab.ui:187
@@ -6366,9 +6348,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search in &all folders"
-msgstr "חפש בכל התיקיות ה&מקומיות"
+msgstr "חיפוש ב&כל התיקיות"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxSpecificFolders)
 #: ui/searchwindow.ui:26
@@ -6378,21 +6360,21 @@ msgstr "חיפוש רק &ב־:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mChkSubFolders)
 #: ui/searchwindow.ui:39
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Include sub-folders"
-msgstr "&כלול תיקיות משנה"
+msgstr "ל&כלול תת־תיקיות"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkMultiFolders)
 #: ui/searchwindow.ui:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select specific folders:"
-msgstr "סימון ספציפי לחשבון"
+msgstr "בחירת תיקיות מסוימות:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select Folders..."
-msgstr "בחר תיקייה"
+msgstr "בחירת תיקיות…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -6402,28 +6384,27 @@ msgstr "&שם התיקייה לחיפוש:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSearchFolderOpenBtn)
 #: ui/searchwindow.ui:133
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open &Search Folder"
-msgstr "מחיקת חיפוש"
+msgstr "פתיחת תיקיית ה&חיפוש"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSearchResultOpenBtn)
 #: ui/searchwindow.ui:143
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open &Message"
-msgstr "פתח הודעה"
+msgstr "פ&תיחת ההודעה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "קבע כברירת מחדל"
+msgstr "ברירות מחדל לאבטחת מידע"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "הודעה מוצפנת"
+msgstr "הצפנת הודעות טיוטה"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -6456,34 +6437,33 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "הודעה מוצפנת"
+msgstr "הצפנת הודעות ש&נשלחו"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "&Sign Message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "&חתום על ההודעה"
+msgstr "לחתום על כל ההודעות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encrypt all messages when possible"
-msgstr "הצ&פן הודעות באופן אוטומטי בכל עת שהדבר אפשרי"
+msgstr "להצפין את כל ההודעות כשניתן"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup2)
 #: ui/securitypageencryptiontab.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encryption indicators"
-msgstr "הצג סמלי הצפ&נה"
+msgstr "מחווני הצפנה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show sign/encrypt indicator"
-msgstr "הצג סמלי הצפ&נה"
+msgstr "הצגת מחוון חתימה/הצפנה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
@@ -6499,15 +6479,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
+#, kde-format
 msgid "Always approve encryption keys before send"
-msgstr "מפתחות הצפנה מרובים לכתובת"
+msgstr "תמיד לאשר מפתחות הצפנה לפני שליחה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:127
-#, fuzzy, kde-format
+#, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
-msgstr "הצג אזהרה אם תעודת &רשות התעודות פגה תוך פחות מ:"
+msgstr "להזהיר אם תוקף של אישורים/מ&פתחות פג בקרוב (להגדיר ספים להלן)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/securitypageencryptiontab.ui:139
@@ -6730,15 +6710,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Prefer HTML to plain text"
-msgstr "הע&דף HTML על פני טקסט רגיל"
+msgstr "להע&דיף HTML על פני טקסט רגיל"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: ui/securitypagegeneraltab.ui:94
-#, fuzzy, kde-format
+#, kde-format
 msgid "E-mails Scams"
-msgstr "כתובת דוא\"ל:"
+msgstr "הונאות דוא״ל"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/securitypagegeneraltab.ui:100
@@ -6780,9 +6760,9 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:159
-#, fuzzy, kde-format
+#, kde-format
 msgid "Encrypted Messages"
-msgstr "הודעה מוצפנת"
+msgstr "הודעות מוצפנות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
 #: ui/securitypagegeneraltab.ui:165
@@ -6882,15 +6862,15 @@ msgstr "&כלום"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioFull)
 #: ui/securitypagemdntab.ui:109
-#, fuzzy, kde-format
+#, kde-format
 msgid "Full message"
-msgstr "הו&דעה מלאה"
+msgstr "הודעה מלאה"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioHeaders)
 #: ui/securitypagemdntab.ui:119
-#, fuzzy, kde-format
+#, kde-format
 msgid "Only headers"
-msgstr "&רק כותרות"
+msgstr "כותרות בלבד"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mNoMDNsWhenEncryptedCheck)
 #: ui/securitypagemdntab.ui:142

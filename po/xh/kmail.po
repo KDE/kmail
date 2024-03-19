@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -3699,12 +3699,12 @@ msgstr "Yongeza kwi Ncwadi Yedilesi"
 msgid "Contact created successfully"
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4738,7 +4738,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Ci&ma"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, fuzzy, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Yiya Kwinkunkuma"
@@ -4748,12 +4748,12 @@ msgstr "Yiya Kwinkunkuma"
 msgid "Move thread to trashcan"
 msgstr "Yisa imiyalezo kumgqomo wenkukuma"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, fuzzy, kde-format
 msgid "Delete T&hread"
 msgstr "Ci&ma"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Fumana Imiyalezo..."
@@ -5153,7 +5153,7 @@ msgstr "Qwa&lasela..."
 msgid "New AddressBook Contact..."
 msgstr "&Incwadi Yedilesi..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&Ithumela"
@@ -5281,53 +5281,53 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "&Incwadi enenkcukacha Entsha..."
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, fuzzy, kde-format
 msgid "&Delete Search"
 msgstr "&Cima Incwadi enenkcukacha"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, fuzzy, kde-format
 msgid "Edit Search..."
 msgstr "Hlela..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Qwa&lasela..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, fuzzy, kde-format
 msgid "E&mpty Trash"
 msgstr "Chitha Inkunkuma"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Hambisa Yonke Imiyalezo Esemonakalweni"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, fuzzy, kde-format
 msgid "Filter %1"
 msgstr "Iintshukumo Yecebo lokucoca ulwelo"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, fuzzy, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Inkcazelo"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5338,19 +5338,19 @@ msgstr ""
 "\"spam\" kwaye kungandisa okunokwenzeka ethi umatshini wakho uzakuvumelana "
 "ngenye ekhoyo kunye nezenzo ezilindelekileyo zokhuseleko."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Isilumkiso Sokhuseleko"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr ""
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5360,40 +5360,40 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, fuzzy, kde-format
 msgid "Cancel"
 msgstr "Irhoxisiwe."
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5609,7 +5609,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, fuzzy, kde-format
 msgid "Contact modified successfully"
 msgstr "Imiyalezo inciphisa ubungakanani"

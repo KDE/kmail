@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-16 00:38+0000\n"
+"POT-Creation-Date: 2024-03-19 00:38+0000\n"
 "PO-Revision-Date: 2024-02-12 08:28+0200\n"
 "Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -3676,12 +3676,12 @@ msgstr "Pievienot adrešu grāmatai"
 msgid "Contact created successfully"
 msgstr "Kontakts veiksmīgi izveidots"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktu nevar saglabāt: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:899
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:903
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4726,7 +4726,7 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Dzēst"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Pārviet&ot pavedienu uz atkritni"
@@ -4736,12 +4736,12 @@ msgstr "Pārviet&ot pavedienu uz atkritni"
 msgid "Move thread to trashcan"
 msgstr "Pārvietot pavedienu uz atkritni"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4100
+#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Dzēst pa&vedienu"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&Meklēt vēstules..."
@@ -5129,7 +5129,7 @@ msgstr "Importēt/eksportēt „KMail“ datus..."
 msgid "New AddressBook Contact..."
 msgstr "Atvērt adrešu grāmatas kontaktu..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
 #, kde-format
 msgid "Account &Settings"
 msgstr "&Konta iestatījumi"
@@ -5250,53 +5250,53 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Pievienot mapi iecienītajām"
 
-#: kmmainwidget.cpp:4088
+#: kmmainwidget.cpp:4091
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Dzēst meklēšanu"
 
-#: kmmainwidget.cpp:4102
+#: kmmainwidget.cpp:4105
 #, kde-format
 msgid "Edit Search..."
 msgstr "Rediģēt meklēšanu..."
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4143
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Konfigurēt apvienoto e-pasta kastīti"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Iztukšot &atkritni"
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4154
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Pārvietot visas vēstules uz atkritni"
 
-#: kmmainwidget.cpp:4225
+#: kmmainwidget.cpp:4228
 #, kde-format
 msgid "&Undo"
 msgstr "&Atsaukt"
 
-#: kmmainwidget.cpp:4227
+#: kmmainwidget.cpp:4230
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Atsaukt: „%1“"
 
-#: kmmainwidget.cpp:4284
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtrēt %1"
 
-#: kmmainwidget.cpp:4752
+#: kmmainwidget.cpp:4755
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "Meklē... <%1>"
 
-#: kmmainwidget.cpp:4760
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5307,18 +5307,18 @@ msgstr ""
 "palielina iespēju ka jūsu sistēma tiks uzlauzta izmantojot kādu esošu vai "
 "nākotnes drošības ievainojamību."
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4766
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Drošības brīdinājums"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4767
 #, kde-format
 msgid "Use HTML"
 msgstr "Izmantot HTML"
 
-#: kmmainwidget.cpp:4910
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5333,37 +5333,37 @@ msgstr ""
 "Apvienotās e-pasta kastītes varat konfigurēt, izveidot pielāgotas vai\n"
 "šo funkciju pilnībā izslēgt „KMail“ spraudņu iestatījumos."
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4916
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Vai ieslēgt apvienotās e-pastu kastītes?"
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4917
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "Ieslēgt apvienotās e-pastu kastītes"
 
-#: kmmainwidget.cpp:4915
+#: kmmainwidget.cpp:4918
 #, kde-format
 msgid "Cancel"
 msgstr "Atcelt"
 
-#: kmmainwidget.cpp:4950
+#: kmmainwidget.cpp:4953
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Vai tiešām vēlaties pārstartēt „Akonadi“?"
 
-#: kmmainwidget.cpp:4951
+#: kmmainwidget.cpp:4954
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "Pārstartēt „Akonadi“"
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4955
 #, kde-format
 msgid "Restart"
 msgstr "Pārstartēt"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "„Akonadi“ ir pārstartēts."
@@ -5574,7 +5574,7 @@ msgstr ""
 "Šobrīd konts atrodas nesaistes režīmā. Klikšķiniet <a href=\"kmail:"
 "goResourceOnline\">te</a>, lai ieslēgtu tiešsaistes režīmu . . .</p>"
 
-#: kmreaderwin.cpp:909
+#: kmreaderwin.cpp:913
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakts ir veiksmīgi modificēts"
