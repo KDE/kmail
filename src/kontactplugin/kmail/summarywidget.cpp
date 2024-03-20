@@ -40,6 +40,7 @@
 SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     : KontactInterface::Summary(parent)
     , mPlugin(plugin)
+    , mChangeRecorder(new Akonadi::ChangeRecorder(this))
 {
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(3);
@@ -54,7 +55,6 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     mLayout->setRowStretch(6, 1);
 
     // Create a new change recorder.
-    mChangeRecorder = new Akonadi::ChangeRecorder(this);
     mChangeRecorder->setMimeTypeMonitored(KMime::Message::mimeType());
     mChangeRecorder->fetchCollectionStatistics(true);
     mChangeRecorder->setAllMonitored(true);

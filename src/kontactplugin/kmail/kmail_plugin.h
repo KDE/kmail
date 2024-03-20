@@ -61,6 +61,6 @@ protected Q_SLOTS:
     void slotSyncFolders();
 
 private:
-    OrgKdeKmailKmailInterface *m_instance = nullptr;
+    OrgKdeKmailKmailInterface *mInstance = nullptr;
     KontactInterface::UniqueAppWatcher *mUniqueAppWatcher = nullptr;
 };

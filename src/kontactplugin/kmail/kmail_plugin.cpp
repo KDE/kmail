@@ -108,12 +108,12 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 void KMailPlugin::openComposer(const QUrl &attach)
 {
     (void)part(); // ensure part is loaded
-    Q_ASSERT(m_instance);
-    if (m_instance) {
+    Q_ASSERT(mInstance);
+    if (mInstance) {
         if (attach.isValid()) {
-            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile() ? attach.toLocalFile() : attach.path());
+            mInstance->newMessage(QString(), QString(), QString(), false, true, QString(), attach.isLocalFile() ? attach.toLocalFile() : attach.path());
         } else {
-            m_instance->newMessage(QString(), QString(), QString(), false, true, QString(), QString());
+            mInstance->newMessage(QString(), QString(), QString(), false, true, QString(), QString());
         }
     }
 }
@@ -121,9 +121,9 @@ void KMailPlugin::openComposer(const QUrl &attach)
 void KMailPlugin::openComposer(const QString &to)
 {
     (void)part(); // ensure part is loaded
-    Q_ASSERT(m_instance);
-    if (m_instance) {
-        m_instance->newMessage(to, QString(), QString(), false, true, QString(), QString());
+    Q_ASSERT(mInstance);
+    if (mInstance) {
+        mInstance->newMessage(to, QString(), QString(), false, true, QString(), QString());
     }
 }
 
@@ -143,8 +143,8 @@ void KMailPlugin::slotSyncFolders()
 
 KMailPlugin::~KMailPlugin()
 {
-    delete m_instance;
-    m_instance = nullptr;
+    delete mInstance;
+    mInstance = nullptr;
 }
 
 KParts::Part *KMailPlugin::createPart()
@@ -154,7 +154,7 @@ KParts::Part *KMailPlugin::createPart()
         return nullptr;
     }
 
-    m_instance = new OrgKdeKmailKmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    mInstance = new OrgKdeKmailKmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
 
     return part;
 }

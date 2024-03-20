@@ -56,8 +56,8 @@ private:
 
     QList<QLabel *> mLabels;
     QGridLayout *mLayout = nullptr;
-    KontactInterface::Plugin *mPlugin = nullptr;
-    Akonadi::ChangeRecorder *mChangeRecorder = nullptr;
+    KontactInterface::Plugin *const mPlugin;
+    Akonadi::ChangeRecorder *const mChangeRecorder;
     Akonadi::EntityTreeModel *mModel = nullptr;
     KViewStateMaintainer<Akonadi::ETMViewStateSaver> *mModelState = nullptr;
     KCheckableProxyModel *mModelProxy = nullptr;

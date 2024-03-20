@@ -28,6 +28,7 @@
 K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kcmkmailsummary.json")
 KCMKMailSummary::KCMKMailSummary(QObject *parent, const KPluginMetaData &data)
     : KCModule(parent, data)
+    , mCheckedCollectionWidget(new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType()))
     , mFullPath(new QCheckBox(i18n("Show full path for folders"), widget()))
 {
     initGUI();
@@ -48,8 +49,6 @@ void KCMKMailSummary::initGUI()
 {
     auto layout = new QVBoxLayout(widget());
     layout->setContentsMargins({});
-
-    mCheckedCollectionWidget = new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType());
 
     mFullPath->setToolTip(i18nc("@info:tooltip", "Show full path for each folder"));
     mFullPath->setWhatsThis(i18nc("@info:whatsthis",
