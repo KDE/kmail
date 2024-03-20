@@ -2166,7 +2166,11 @@ void KMMainWidget::slotToFilter()
     if (!msg) {
         return;
     }
-    openFilterDialog("To", msg->to()->asUnicodeString());
+    QString str;
+    if (auto to = msg->to()) {
+        str = to->asUnicodeString();
+    }
+    openFilterDialog("To", str);
 }
 
 void KMMainWidget::slotCcFilter()
@@ -2175,7 +2179,11 @@ void KMMainWidget::slotCcFilter()
     if (!msg) {
         return;
     }
-    openFilterDialog("Cc", msg->cc()->asUnicodeString());
+    QString str;
+    if (auto cc = msg->cc(false)) {
+        str = cc->asUnicodeString();
+    }
+    openFilterDialog("Cc", str);
 }
 
 //-----------------------------------------------------------------------------
