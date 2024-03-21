@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 00:38+0000\n"
+"POT-Creation-Date: 2024-03-21 00:38+0000\n"
 "PO-Revision-Date: 2024-03-18 10:18+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1687,7 +1687,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "תיקייה חדשה"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3619
+#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3627
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1916,7 +1916,7 @@ msgstr "&הוספת קובץ..."
 msgid "&Insert Recent Text File"
 msgstr "&הוסף קובץ אחרון"
 
-#: editor/kmcomposerwin.cpp:1310 kmmainwidget.cpp:2952
+#: editor/kmcomposerwin.cpp:1310 kmmainwidget.cpp:2960
 #, kde-format
 msgid "&Address Book"
 msgstr "&פנקס כתובות"
@@ -3804,7 +3804,7 @@ msgid "F&older"
 msgstr "ת&יקייה"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3468 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3476 kmmainwin.rc:134
 #: kmmainwin.rc:291
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder"
@@ -3836,7 +3836,7 @@ msgid "&Forward"
 msgstr "ה&עברה"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3284 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3292 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "החל מס&נן"
@@ -3986,13 +3986,13 @@ msgstr ""
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:636 kmmainwidget.cpp:2453 kmmainwidget.cpp:2468
+#: kmkernel.cpp:636 kmmainwidget.cpp:2461 kmmainwidget.cpp:2476
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&שלח דואר"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2454 kmmainwidget.cpp:2469
+#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
@@ -4021,12 +4021,12 @@ msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "עבוד באופן לא מקוון"
 
-#: kmkernel.cpp:746 kmmainwidget.cpp:2442
+#: kmkernel.cpp:746 kmmainwidget.cpp:2450
 #, kde-format
 msgid "Work Online"
 msgstr "עבוד באופן מקוון"
 
-#: kmkernel.cpp:747 kmmainwidget.cpp:2439
+#: kmkernel.cpp:747 kmmainwidget.cpp:2447
 #, kde-format
 msgid "Work Offline"
 msgstr "עבוד באופן לא מקוון"
@@ -4435,14 +4435,14 @@ msgstr "העברת ההודעות אל הפח בוטלה."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "העברת ההודעות אל הפח בוטלה."
 
-#: kmmainwidget.cpp:2193
+#: kmmainwidget.cpp:2201
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "העתק לתיקייה"
 
-#: kmmainwidget.cpp:2385
+#: kmmainwidget.cpp:2393
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4455,7 +4455,7 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmmainwidget.cpp:2388
+#: kmmainwidget.cpp:2396
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -4465,7 +4465,7 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmmainwidget.cpp:2393
+#: kmmainwidget.cpp:2401
 #, fuzzy, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4482,447 +4482,447 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmmainwidget.cpp:2400
+#: kmmainwidget.cpp:2408
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2405
+#: kmmainwidget.cpp:2413
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2410
+#: kmmainwidget.cpp:2418
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "&מצורפים"
 
-#: kmmainwidget.cpp:2901
+#: kmmainwidget.cpp:2909
 #, kde-format
 msgid "Save &As..."
 msgstr "שמירה &בשם..."
 
-#: kmmainwidget.cpp:2912
+#: kmmainwidget.cpp:2920
 #, kde-format
 msgid "&Expire All Folders"
 msgstr "הפ&ג את כל התיקיות"
 
-#: kmmainwidget.cpp:2917
+#: kmmainwidget.cpp:2925
 #, kde-format
 msgid "Check &Mail"
 msgstr "בדוק דו&אר"
 
-#: kmmainwidget.cpp:2925
+#: kmmainwidget.cpp:2933
 #, fuzzy, kde-format
 msgid "Check Mail In"
 msgstr "בדוק דוא&ר בחשבון"
 
-#: kmmainwidget.cpp:2927 kmmainwidget.cpp:2928
+#: kmmainwidget.cpp:2935 kmmainwidget.cpp:2936
 #, fuzzy, kde-format
 msgid "Check Mail"
 msgstr "בדוק דו&אר"
 
-#: kmmainwidget.cpp:2932
+#: kmmainwidget.cpp:2940
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "&שלח הודעות שבתור"
 
-#: kmmainwidget.cpp:2940
+#: kmmainwidget.cpp:2948
 #, kde-format
 msgid "Online status (unknown)"
 msgstr ""
 
-#: kmmainwidget.cpp:2945
+#: kmmainwidget.cpp:2953
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "&שלח הודעות שבתור דרך"
 
-#: kmmainwidget.cpp:2961
+#: kmmainwidget.cpp:2969
 #, fuzzy, kde-format
 msgid "Certificate Manager"
 msgstr "מנהל תעודות..."
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:2979
 #, fuzzy, kde-format
 msgid "&Import Messages..."
 msgstr "&ייבוא הודעות..."
 
-#: kmmainwidget.cpp:2981
+#: kmmainwidget.cpp:2989
 #, kde-format
 msgid "&Debug Sieve..."
 msgstr ""
 
-#: kmmainwidget.cpp:2988
+#: kmmainwidget.cpp:2996
 #, fuzzy, kde-format
 msgid "Filter &Log Viewer..."
 msgstr "סינון לפי &מאת..."
 
-#: kmmainwidget.cpp:2993
+#: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 msgid "Notification History..."
 msgstr "הודעה לגבי דואר חדש"
 
-#: kmmainwidget.cpp:2998
+#: kmmainwidget.cpp:3006
 #, kde-format
 msgid "&Import from another Email Client..."
 msgstr ""
 
-#: kmmainwidget.cpp:3003
+#: kmmainwidget.cpp:3011
 #, kde-format
 msgid "Edit \"Out of Office\" Replies..."
 msgstr "ערוך הודעות \"מחוץ למשרד\"..."
 
-#: kmmainwidget.cpp:3009
+#: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 msgid "&Configure Automatic Archiving..."
 msgstr "הגדרות &התראות..."
 
-#: kmmainwidget.cpp:3015
+#: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 msgid "Delayed Messages..."
 msgstr "מוחק הודעות"
 
-#: kmmainwidget.cpp:3021
+#: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 msgid "Followup Reminder Messages..."
 msgstr "&חיפוש הודעות..."
 
-#: kmmainwidget.cpp:3032 util.cpp:148
+#: kmmainwidget.cpp:3040 util.cpp:148
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "נמחק"
 
-#: kmmainwidget.cpp:3037 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3045 kmmainwidget.cpp:4111
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&העבר אשכל לאשפה"
 
-#: kmmainwidget.cpp:3041
+#: kmmainwidget.cpp:3049
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "העבר אשכול אל פח האשפה"
 
-#: kmmainwidget.cpp:3044 kmmainwidget.cpp:4103
+#: kmmainwidget.cpp:3052 kmmainwidget.cpp:4111
 #, kde-format
 msgid "Delete T&hread"
 msgstr "&מחק אשכול"
 
-#: kmmainwidget.cpp:3050 kmmainwidget.cpp:4106
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
 #, kde-format
 msgid "&Find Messages..."
 msgstr "&חיפוש הודעות..."
 
-#: kmmainwidget.cpp:3055
+#: kmmainwidget.cpp:3063
 #, kde-format
 msgid "Select &All Messages"
 msgstr "בחר את &כל ההודעות"
 
-#: kmmainwidget.cpp:3062
+#: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
 msgid "&Mailing List Management..."
 msgstr "ניהול רשימת־דיוור"
 
-#: kmmainwidget.cpp:3070
+#: kmmainwidget.cpp:3078
 #, kde-format
 msgid "&Clear Akonadi Cache..."
 msgstr ""
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 
-#: kmmainwidget.cpp:3080
+#: kmmainwidget.cpp:3088
 #, kde-format
 msgid "&Assign Shortcut..."
 msgstr "&שייך קיצור..."
 
-#: kmmainwidget.cpp:3098
+#: kmmainwidget.cpp:3106
 #, kde-format
 msgid "&Expiration Settings"
 msgstr "הגדרות &תפוגה"
 
-#: kmmainwidget.cpp:3123
+#: kmmainwidget.cpp:3131
 #, fuzzy, kde-format
 msgid "&Archive Folder..."
 msgstr "תיקייה &חדשה..."
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3139
 #, kde-format
 msgid "Load E&xternal References"
 msgstr "טען הפניות &חיצוניות"
 
-#: kmmainwidget.cpp:3154
+#: kmmainwidget.cpp:3162
 #, fuzzy, kde-format
 msgid "Copy Message To..."
 msgstr "הודעה חדשה אל..."
 
-#: kmmainwidget.cpp:3156
+#: kmmainwidget.cpp:3164
 #, fuzzy, kde-format
 msgid "Move Message To..."
 msgstr "הודעה חדשה אל..."
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3169
 #, kde-format
 msgid "&New Message..."
 msgstr "הודעה &חדשה..."
 
-#: kmmainwidget.cpp:3163
+#: kmmainwidget.cpp:3171
 #, fuzzy, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "חדש"
 
-#: kmmainwidget.cpp:3171
+#: kmmainwidget.cpp:3179
 #, fuzzy, kde-format
 msgid "Message From &Template"
 msgstr "אין הודעות חדשות בשרת"
 
-#: kmmainwidget.cpp:3177
+#: kmmainwidget.cpp:3185
 #, kde-format
 msgid "New Message t&o Mailing-List..."
 msgstr "הודעה חדשה לרשימת־ה&דיוור..."
 
-#: kmmainwidget.cpp:3183
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgid "&Create Filter"
 msgstr "&צור מסנן"
 
-#: kmmainwidget.cpp:3187
+#: kmmainwidget.cpp:3195
 #, kde-format
 msgid "Filter on &Subject..."
 msgstr "סינון לפי ה&נושא..."
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgid "Filter on &From..."
 msgstr "סינון לפי &מאת..."
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3208
 #, kde-format
 msgid "Filter on &To..."
 msgstr "סינון לפי &אל..."
 
-#: kmmainwidget.cpp:3206
+#: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 msgid "Filter on &Cc..."
 msgstr "סינון לפי &אל..."
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Mark &Thread"
 msgstr "סמ&ן אשכול"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3231
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "סמן אשכול בתור &נקרא"
 
-#: kmmainwidget.cpp:3226
+#: kmmainwidget.cpp:3234
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "סימון כל ההודעות באשכול הנבחר בתור הודעות שנקראו"
 
-#: kmmainwidget.cpp:3229
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "סמן אשכול בתור &לא נקרא"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "סימון כל ההודעות באשכול הנבחר בתור הודעות שלא נקראו"
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3246
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "סמן אשכול בתור &חשוב"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3249
 #, kde-format
 msgid "Remove &Important Thread Mark"
 msgstr "בטל סימון של אשכול &חשוב"
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3252
 #, fuzzy, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "סמן אשכול בתור ח&דש"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3255
 #, fuzzy, kde-format
 msgid "Remove &Action Item Thread Mark"
 msgstr "הסר סימון של הודעה &חשובה"
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&עקוב אחר אשכול"
 
-#: kmmainwidget.cpp:3255
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "ה&תעלם מאשכול"
 
-#: kmmainwidget.cpp:3263 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3271 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments..."
 msgstr "שמירת &מצורפים..."
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "מכיל מצורף"
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3283
 #, fuzzy, kde-format
 msgid "Copy Decrypted To..."
 msgstr "הודעה חדשה אל..."
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3287
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "ה&חל את כל מסננים"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3296
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&הרחב אשכול"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3299
 #, fuzzy, kde-format
 msgid "Expand the current thread or group"
 msgstr "הרחבת האשכול הנוכחי"
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3303
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&צמצם אשכול"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3306
 #, fuzzy, kde-format
 msgid "Collapse the current thread or group"
 msgstr "צמצום האשכול הנוכחי"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3310
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "ה&רחב את כל האשכולות"
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3313
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "הרחבת כל האשכולות בתיקייה הנוכחית"
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3317
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "צמצם את כ&ל האשכולות"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "צמצום כל האשכולות בתיקייה הנוכחית"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3324
 #, kde-format
 msgid "&Display Message"
 msgstr "&הצג הודעה"
 
-#: kmmainwidget.cpp:3323
+#: kmmainwidget.cpp:3331
 #, kde-format
 msgid "&Next Message"
 msgstr "&ההודעה הבאה"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3334
 #, kde-format
 msgid "Go to the next message"
 msgstr "מעבר להודעה הבאה"
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3338
 #, kde-format
 msgid "Next &Unread Message"
 msgstr "ההודעה ה&באה שלא נקראה"
 
-#: kmmainwidget.cpp:3338
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr ""
 
-#: kmmainwidget.cpp:3339
+#: kmmainwidget.cpp:3347
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "מעבר להודעה הבאה שלא נקראה"
 
-#: kmmainwidget.cpp:3343
+#: kmmainwidget.cpp:3351
 #, kde-format
 msgid "&Previous Message"
 msgstr "ההודעה ה&קודמת"
 
-#: kmmainwidget.cpp:3345
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgid "Go to the previous message"
 msgstr "מעבר להודעה הקודמת"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgid "Previous Unread &Message"
 msgstr "ההודעה הקודמת ש&לא נקראה"
 
-#: kmmainwidget.cpp:3358
+#: kmmainwidget.cpp:3366
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "ההודעה ה&קודמת"
 
-#: kmmainwidget.cpp:3359
+#: kmmainwidget.cpp:3367
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "מעבר להודעה הקודמת שלא נקראה"
 
-#: kmmainwidget.cpp:3363
+#: kmmainwidget.cpp:3371
 #, kde-format
 msgid "Next Unread &Folder"
 msgstr "ה&תיקייה הבאה שלא נקראה"
 
-#: kmmainwidget.cpp:3369
+#: kmmainwidget.cpp:3377
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "מעבר לתיקייה הבאה שיש בה הודעות שלא נקראו"
 
-#: kmmainwidget.cpp:3372
+#: kmmainwidget.cpp:3380
 #, kde-format
 msgid "Previous Unread F&older"
 msgstr "התיקייה הקודמת שלא &נקראה"
 
-#: kmmainwidget.cpp:3378
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "מעבר לתיקייה הקודמת שיש בה הודעות שלא נקראו"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3390
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "ה&טקסט הבא שלא נקרא"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3393
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "מעבר לטקסט הבא שלא נקרא"
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -4931,247 +4931,247 @@ msgstr ""
 "גלילה כלפי מטה של ההודעה הנוכחית. אם זהו סוף ההודעה הנוכחית, מעבר להודעה "
 "הבאה שלא נקראה."
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgid "Configure &Filters..."
 msgstr "הגדרת מ&סננים…"
 
-#: kmmainwidget.cpp:3401
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgid "Manage &Sieve Scripts..."
 msgstr "&ניהול סקריפטים של Sieve…"
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 msgid "&Add Account..."
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:3411
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "מ&בוא ל־KMail"
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3421
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "הצגת דף הכניסה של KMail"
 
-#: kmmainwidget.cpp:3420
+#: kmmainwidget.cpp:3428
 #, kde-format
 msgid "Configure &Notifications..."
 msgstr "הגדרת ה&תראות…"
 
-#: kmmainwidget.cpp:3427
+#: kmmainwidget.cpp:3435
 #, kde-format
 msgid "&Configure KMail..."
 msgstr "ה&גדרת KMail…"
 
-#: kmmainwidget.cpp:3434
+#: kmmainwidget.cpp:3442
 #, fuzzy, kde-format
 msgid "Expire..."
 msgstr "הפג..."
 
-#: kmmainwidget.cpp:3440
+#: kmmainwidget.cpp:3448
 #, fuzzy, kde-format
 msgid "Add Favorite Folder..."
 msgstr "תיקייה &חדשה..."
 
-#: kmmainwidget.cpp:3446
+#: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
 msgid "Serverside Subscription..."
 msgstr "רישום..."
 
-#: kmmainwidget.cpp:3452 kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "ה&חל את כל מסננים"
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3481
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "ה&חל את כל מסננים"
 
-#: kmmainwidget.cpp:3478
+#: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 msgid "Import/Export KMail Data..."
 msgstr "ה&גדרת KMail..."
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 msgid "New AddressBook Contact..."
 msgstr "&פנקס כתובות..."
 
-#: kmmainwidget.cpp:3492 kmmainwidget.cpp:4145
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&שליחה"
 
-#: kmmainwidget.cpp:3496
+#: kmmainwidget.cpp:3504
 #, fuzzy, kde-format
 msgid "Restart Account"
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:3512
+#: kmmainwidget.cpp:3520
 #, kde-format
 msgid "Copy Message to Folder"
 msgstr "העתקת הודעה לתיקייה"
 
-#: kmmainwidget.cpp:3518
+#: kmmainwidget.cpp:3526
 #, fuzzy, kde-format
 msgid "Jump to Folder..."
 msgstr "העתק לתיקייה"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3532
 #, kde-format
 msgid "Abort Current Operation"
 msgstr "ביטול הפעולה נוכחית"
 
-#: kmmainwidget.cpp:3530
+#: kmmainwidget.cpp:3538
 #, kde-format
 msgid "Focus on Next Folder"
 msgstr "התמקדות בתיקייה הבאה"
 
-#: kmmainwidget.cpp:3536
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Focus on Previous Folder"
 msgstr "התמקדות בתיקייה הקודמת"
 
-#: kmmainwidget.cpp:3542
+#: kmmainwidget.cpp:3550
 #, kde-format
 msgid "Select Folder with Focus"
 msgstr "בחירת התיקייה שעליה המיקוד"
 
-#: kmmainwidget.cpp:3549
+#: kmmainwidget.cpp:3557
 #, fuzzy, kde-format
 msgid "Focus on First Folder"
 msgstr "התמקד בתיקייה הבאה"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3563
 #, fuzzy, kde-format
 msgid "Focus on Last Folder"
 msgstr "התמקד בתיקייה הבאה"
 
-#: kmmainwidget.cpp:3561
+#: kmmainwidget.cpp:3569
 #, kde-format
 msgid "Focus on Next Message"
 msgstr "התמקדות בהודעה הבאה"
 
-#: kmmainwidget.cpp:3567
+#: kmmainwidget.cpp:3575
 #, kde-format
 msgid "Focus on Previous Message"
 msgstr "התמקדות בהודעה הקודמת"
 
-#: kmmainwidget.cpp:3573
+#: kmmainwidget.cpp:3581
 #, fuzzy, kde-format
 msgid "Select First Message"
 msgstr "בחר את &כל ההודעות"
 
-#: kmmainwidget.cpp:3579
+#: kmmainwidget.cpp:3587
 #, fuzzy, kde-format
 msgid "Select Last Message"
 msgstr "בחר את &כל ההודעות"
 
-#: kmmainwidget.cpp:3585
+#: kmmainwidget.cpp:3593
 #, kde-format
 msgid "Select Message with Focus"
 msgstr "העברת ההודעת שעליה המיקוד"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3600
 #, fuzzy, kde-format
 msgid "Set Focus to Quick Search"
 msgstr "אפס חיפוש מהיר"
 
-#: kmmainwidget.cpp:3600
+#: kmmainwidget.cpp:3608
 #, fuzzy, kde-format
 msgid "Extend Selection to Previous Message"
 msgstr "התמקד בהודעה הקודמת"
 
-#: kmmainwidget.cpp:3606
+#: kmmainwidget.cpp:3614
 #, fuzzy, kde-format
 msgid "Extend Selection to Next Message"
 msgstr "התמקד בהודעה הבאה"
 
-#: kmmainwidget.cpp:3613
+#: kmmainwidget.cpp:3621
 #, kde-format
 msgid "Move Message to Folder"
 msgstr "העברת הודעות לתיקייה"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3631
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3628
+#: kmmainwidget.cpp:3636
 #, kde-format
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3634
+#: kmmainwidget.cpp:3642
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgid "Previous Selected Folder"
 msgstr "התיקייה הקודמת שלא &נקראה"
 
-#: kmmainwidget.cpp:3641
+#: kmmainwidget.cpp:3649
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Next Selected Folder"
 msgstr "מחיקת תיקייה"
 
-#: kmmainwidget.cpp:3670
+#: kmmainwidget.cpp:3678
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "תיקייה חדשה"
 
-#: kmmainwidget.cpp:4091
+#: kmmainwidget.cpp:4099
 #, kde-format
 msgid "&Delete Search"
 msgstr "&מחיקת חיפוש"
 
-#: kmmainwidget.cpp:4105
+#: kmmainwidget.cpp:4113
 #, kde-format
 msgid "Edit Search..."
 msgstr "עריכת חיפוש…"
 
-#: kmmainwidget.cpp:4143
+#: kmmainwidget.cpp:4151
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "ה&גדרת KMail..."
 
-#: kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:4162
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&פינוי אשפה"
 
-#: kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:4162
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "העברת כל ההודעות ל&אשפה"
 
-#: kmmainwidget.cpp:4228
+#: kmmainwidget.cpp:4236
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4230
+#: kmmainwidget.cpp:4238
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4287
+#: kmmainwidget.cpp:4295
 #, kde-format
 msgid "Filter %1"
 msgstr "סינון %1"
 
-#: kmmainwidget.cpp:4755
+#: kmmainwidget.cpp:4763
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search... <%1>"
 msgstr "חיפוש… <%1>"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4771
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5181,19 +5181,19 @@ msgstr ""
 "שימוש ב־HTML בדוא״ל חושף אותך ליותר „דואר זבל” ועלול להגדיל את הסבירות לכך "
 "שהמערכת שלך תהיה פגיעה לחולשות אבטחה קיימות או עתידיות אחרות."
 
-#: kmmainwidget.cpp:4766
+#: kmmainwidget.cpp:4774
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "אזהרת אבטחה"
 
-#: kmmainwidget.cpp:4767
+#: kmmainwidget.cpp:4775
 #, kde-format
 msgid "Use HTML"
 msgstr ""
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4921
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5203,37 +5203,37 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4916
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4917
+#: kmmainwidget.cpp:4925
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4918
+#: kmmainwidget.cpp:4926
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4961
 #, fuzzy, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 msgid "Restart Akonadi"
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:4955
+#: kmmainwidget.cpp:4963
 #, fuzzy, kde-format
 msgid "Restart"
 msgstr "הוספת חשבון"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4970
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5466,18 +5466,18 @@ msgstr[1] "הודעה שלא נקראה"
 msgstr[2] ""
 msgstr[3] ""
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:31
+#: kontactplugin/kmail/kcmkmailsummary.cpp:32
 #, fuzzy, kde-format
 msgid "Show full path for folders"
 msgstr "קיצור עבור תיקייה %1"
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:54
+#: kontactplugin/kmail/kcmkmailsummary.cpp:53
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show full path for each folder"
 msgstr ""
 
-#: kontactplugin/kmail/kcmkmailsummary.cpp:56
+#: kontactplugin/kmail/kcmkmailsummary.cpp:55
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5513,7 +5513,7 @@ msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
 msgstr ""
 
-#: kontactplugin/kmail/summarywidget.cpp:48
+#: kontactplugin/kmail/summarywidget.cpp:49
 #, fuzzy, kde-format
 msgid "New Messages"
 msgstr "הודעה חדשה"
