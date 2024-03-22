@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-21 00:38+0000\n"
-"PO-Revision-Date: 2024-03-17 02:47+0300\n"
+"PO-Revision-Date: 2024-03-21 23:07+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -709,7 +709,7 @@ msgstr "Açılışta posta denetimi yap"
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
-"Yeni Posta Bildirici Yardımcısı kayıtlı değil. Lütfen yöneticinize danışın."
+"Yeni Posta Bildiricisi Yardımcısı kayıtlı değil. Lütfen yöneticinize danışın."
 
 #: configuredialog/configureappearancepage.cpp:84
 #, kde-format
@@ -968,7 +968,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:704
 #, kde-format
 msgid "Date Display:"
-msgstr "Tarih Gösterimi:"
+msgstr "Tarih gösterimi:"
 
 #: configuredialog/configureappearancepage.cpp:812
 #, kde-format
@@ -979,7 +979,7 @@ msgstr "İleti Penceresi"
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
-msgstr "İletiyi yanıtlarken veya yönlendirirken ileti penceresini kapat"
+msgstr "İletiyi yanıtlarken veya iletirken ileti penceresini kapat"
 
 #: configuredialog/configureappearancepage.cpp:827
 #, kde-format
@@ -1169,9 +1169,8 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
-"Yanıtlarken veya yönlendirirken, yalnızca alınan biçimdeki orijinal "
-"biçimdeki iletiyi alıntıla. Seçili değilse öntanımlı olarak düz metin "
-"şeklinde yanıtlanacaktır."
+"Yanıtlarken veya iletirken, iletiyi alındığı özgün biçimde alıntılayın. "
+"İşaretlenmezse yanıt öntanımlı olarak düz metin biçiminde olacaktır."
 
 #: configuredialog/configurecomposerpage.cpp:246
 #, kde-format
@@ -1179,29 +1178,29 @@ msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
-"HTML işaretlemesinden iletinin düz metin bölümünü biçimlendir. Kalın, yatık "
-"ve altı çizili metinler, listeler ve dış başvurular desteklenmektedir."
+"İletinin düz metin kısmını HTML işaretlemesinden biçimlendirin. Kalın, yatık "
+"ve altı çizili metinler, listeler ve dış başvurular desteklenir."
 
 #: configuredialog/configurecomposerpage.cpp:256
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
-msgstr "İçinde"
+msgstr "Satır içi"
 
 #: configuredialog/configurecomposerpage.cpp:256
 #, kde-format
 msgid "As Attachment"
-msgstr "Ek Olarak"
+msgstr "Ek olarak"
 
 #: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgid "Set the default forwarded message format"
-msgstr "Öntanımlı yönlendirilen ileti biçimini ayarla"
+msgstr "Öntanımlı iletilen ileti biçimini ayarla"
 
 #: configuredialog/configurecomposerpage.cpp:262
 #, kde-format
 msgid "Default forwarding type:"
-msgstr "Öntanımlı yönlendirme türü:"
+msgstr "Öntanımlı iletme türü:"
 
 #: configuredialog/configurecomposerpage.cpp:280
 #, kde-format
@@ -1336,7 +1335,7 @@ msgstr "&Değiştir…"
 #: configuredialog/configurecomposerpage.cpp:646
 #, kde-format
 msgid "Enter new reply prefix:"
-msgstr "Yeni yanıt önekini girin:"
+msgstr "Yeni yanıt önekini gir:"
 
 #: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
@@ -1346,12 +1345,12 @@ msgstr "Yanıt önekini kaldırmak istiyor musunuz?"
 #: configuredialog/configurecomposerpage.cpp:649
 #, kde-format
 msgid "Reply Prefix:"
-msgstr "Yanıt Öneki:"
+msgstr "Yanıt öneki:"
 
 #: configuredialog/configurecomposerpage.cpp:660
 #, kde-format
 msgid "For&ward Subject Prefixes"
-msgstr "Yönlendirme &Konusu Önekleri"
+msgstr "İletme &Konusu Önekleri"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:670 ui/identitypage.ui:66
@@ -1372,17 +1371,17 @@ msgstr "Değiştir…"
 #: configuredialog/configurecomposerpage.cpp:670
 #, kde-format
 msgid "Enter new forward prefix:"
-msgstr "Yeni ilet önekini girin:"
+msgstr "Yeni iletme önekini gir:"
 
 #: configuredialog/configurecomposerpage.cpp:671
 #, kde-format
 msgid "Do you want to remove forward prefix?"
-msgstr "İlet önekini kaldırmak istiyor musunuz?"
+msgstr "İletme önekini kaldırmak istiyor musunuz?"
 
 #: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgid "Forward Prefix:"
-msgstr "İlet Öneki:"
+msgstr "İletme öneki:"
 
 #: configuredialog/configurecomposerpage.cpp:721
 #, kde-format
@@ -1426,7 +1425,7 @@ msgstr "&Ad:"
 #: configuredialog/configurecomposerpage.cpp:785
 #, kde-format
 msgid "&Value:"
-msgstr "&Kaynak:"
+msgstr "&Değer:"
 
 #: configuredialog/configurecomposerpage.cpp:924
 #, kde-format
@@ -1455,7 +1454,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:982
 #, kde-format
 msgid "Enter new key word:"
-msgstr "Yeni anahtar sözcüğü girin:"
+msgstr "Yeni anahtar sözcüğü gir:"
 
 #: configuredialog/configurecomposerpage.cpp:983
 #, kde-format
@@ -1465,12 +1464,12 @@ msgstr "Bu ek sözcüğünü kaldırmak istiyor musunuz?"
 #: configuredialog/configurecomposerpage.cpp:984
 #, kde-format
 msgid "Attachment Word:"
-msgstr "Ek Sözcüğü:"
+msgstr "Ek sözcüğü:"
 
 #: configuredialog/configurecomposerpage.cpp:992
 #, kde-format
 msgid "Maximum Attachment Size:"
-msgstr "En Büyük Ek Boyutu:"
+msgstr "En büyük ek boyutu:"
 
 #: configuredialog/configurecomposerpage.cpp:999
 #, kde-format
@@ -3952,7 +3951,7 @@ msgstr "Özel Yanıtla"
 #: kmail_part.rc:172 kmmainwin.rc:172 kmreadermainwin.rc:56
 #, kde-format
 msgid "&Forward"
-msgstr "&Yönlendir"
+msgstr "İ&let"
 
 #. i18n: ectx: Menu (apply_filter_actions)
 #: kmail_part.rc:191 kmmainwidget.cpp:3292 kmmainwin.rc:191
@@ -4029,8 +4028,8 @@ msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
-"Seçilmiş iletileri tek bir ileti içinde (MIME özeti şeklinde) ek dosyalar "
-"olarak mı, yoksa her birini ayrı ileti olarak mı yönlendirmek istersiniz?"
+"Seçili iletileri tek bir iletinin ekleri olarak mı (MIME özeti olarak) yoksa "
+"tek tek iletiler olarak mı iletmek istiyorsunuz?"
 
 #: kmcommands.cpp:925
 #, kde-format
@@ -4040,7 +4039,7 @@ msgstr "Özet Olarak Gönder"
 #: kmcommands.cpp:926
 #, kde-format
 msgid "Send Individually"
-msgstr "Ayrı Gönder"
+msgstr "Tek Tek Gönder"
 
 #: kmcommands.cpp:1313
 #, kde-format
@@ -5283,7 +5282,7 @@ msgstr "&Geri Al"
 #: kmmainwidget.cpp:4238
 #, kde-format
 msgid "&Undo: \"%1\""
-msgstr "&Geri Al: ‘%1’"
+msgstr "&Geri Al: “%1”"
 
 #: kmmainwidget.cpp:4295
 #, kde-format
@@ -5412,7 +5411,7 @@ msgstr "Yanıtla…"
 #: kmreaderwin.cpp:133
 #, kde-format
 msgid "Forward To..."
-msgstr "Yönlendir…"
+msgstr "Şuna İlet…"
 
 #: kmreaderwin.cpp:139
 #, kde-format
@@ -5820,7 +5819,7 @@ msgstr "&Ek Olarak…"
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect..."
-msgstr "&Yeniden Yönlendir…"
+msgstr "&Yeniden İlet…"
 
 #: messageactions.cpp:72
 #, kde-format
@@ -5836,7 +5835,7 @@ msgstr "&İletiyi İmle"
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
-msgstr "&Yönlendir"
+msgstr "İ&let"
 
 #: messageactions.cpp:75
 #, kde-format
@@ -7040,7 +7039,7 @@ msgstr "Her zaman gönder"
 #: ui/securitypagemdntab.ui:86
 #, kde-format
 msgid "Quote original message:"
-msgstr "Orijinal iletiden alıntı yap:"
+msgstr "Özgün iletiden alıntı yap:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioNothing)
 #: ui/securitypagemdntab.ui:99
