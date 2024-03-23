@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-21 00:38+0000\n"
+"POT-Creation-Date: 2024-03-23 00:38+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -1045,12 +1045,15 @@ msgstr ""
 msgid "System Tray"
 msgstr "Način radai sustavske kasete"
 
-#: configuredialog/configureappearancepage.cpp:833
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:833 settings/kmail.kcfg.in:88
 #, fuzzy, kde-format
 msgid "Enable system tray icon"
 msgstr "obavijest u sustavskoj kaseti"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:837 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6256,6 +6259,408 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr ""
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr ""
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, fuzzy, kde-format
+msgid "Send queued mail on mail check"
+msgstr "Uključi u provjeru:"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, fuzzy, kde-format
+#| msgid "Hide this folder in the folder selection dialog"
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "Sakrij ovu mapu u dijalogu za odabir mapa"
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, fuzzy, kde-format
+msgid "Show Unread Email in TaskBar"
+msgstr "&Uvijek prikazuj sustemska traka"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "&Navedite uređivač:"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "&Koristi vanjski uređivač umjesto sastavljača"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr ""
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, fuzzy, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr "Ispražnjivanje &smeća"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, fuzzy, kde-format
+msgid "Delete messages without confirmation"
+msgstr "Potvrde o prijemu"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, fuzzy, kde-format
+msgid "Allow to start specific folder"
+msgstr "Obriši Mapu"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr ""
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr ""
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr ""
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr ""
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, fuzzy, kde-format
+msgid "Warn if the number of recipients is more than:"
+msgstr "Upozori ako koreni certifikat ističe za &manje od"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "&Potvrdi prije slanja"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, fuzzy, kde-format
+#| msgid "Confirm &before send"
+msgid "Check spelling before send"
+msgstr "&Potvrdi prije slanja"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "Auto&matski zahtijevaj obavijest o raspoređivanju poruke"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, fuzzy, kde-format
+msgid "Autosave interval:"
+msgstr "Pe&riod provjere:"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr ""
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr ""
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr ""
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr ""
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, fuzzy, kde-format
+msgid "Show crypto label indicator"
+msgstr "Pokaži šifro &sličice"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, fuzzy, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr "Pokaži šifro &sličice"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr ""
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "Ploča za pregled poruke"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Do not show a message preview pane"
+msgstr "Ploča za pregled poruke"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, fuzzy, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "Pokaži pano za pregled poruke &ispod liste poruka"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, fuzzy, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr "Pokaži pano za pregled poruke &pored liste poruka"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "Popis direktorija"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, fuzzy, kde-format
+#| msgid "Lon&g folder list"
+msgid "Long folder list"
+msgstr "&Duži popis mapa"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, fuzzy, kde-format
+msgid "Short folder list"
+msgstr "&Kratka lista mapi"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, fuzzy, kde-format
+msgid "Message template for new message"
+msgstr "Lista poruka — polje za datum"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, fuzzy, kde-format
+msgid "Message template for reply"
+msgstr "Označi trenutnu poruku kao p&roslijeđenu"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, fuzzy, kde-format
+msgid "Message template for reply to all"
+msgstr "Označi trenutnu poruku kao p&roslijeđenu"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, fuzzy, kde-format
+msgid "Message template for forward"
+msgstr "Označi trenutnu poruku kao p&roslijeđenu"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, fuzzy, kde-format
+msgid "Quote characters"
+msgstr "Dodaj znake za &citiranje"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr ""
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 msgid "Message Tag: %1"
@@ -7557,107 +7962,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Uključite ovu opciju ako želite da Outlook(tm) razumije imena privitaka "
 #~ "koja sadrže ne-engleske znakove"
-
-#, fuzzy
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "Uključi u provjeru:"
-
-#, fuzzy
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "&Uvijek prikazuj sustemska traka"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "&Navedite uređivač:"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "&Koristi vanjski uređivač umjesto sastavljača"
-
-#, fuzzy
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "Ispražnjivanje &smeća"
-
-#, fuzzy
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "Potvrde o prijemu"
-
-#, fuzzy
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "Upozori ako koreni certifikat ističe za &manje od"
-
-#~ msgid "Confirm &before send"
-#~ msgstr "&Potvrdi prije slanja"
-
-#, fuzzy
-#~| msgid "Confirm &before send"
-#~ msgid "Check spelling before send"
-#~ msgstr "&Potvrdi prije slanja"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "Auto&matski zahtijevaj obavijest o raspoređivanju poruke"
-
-#, fuzzy
-#~ msgid "Autosave interval:"
-#~ msgstr "Pe&riod provjere:"
-
-#, fuzzy
-#~ msgid "Show crypto label indicator"
-#~ msgstr "Pokaži šifro &sličice"
-
-#, fuzzy
-#~ msgid "Show crypto ownertrust icons"
-#~ msgstr "Pokaži šifro &sličice"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "Ploča za pregled poruke"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "Ploča za pregled poruke"
-
-#, fuzzy
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "Pokaži pano za pregled poruke &ispod liste poruka"
-
-#, fuzzy
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "Pokaži pano za pregled poruke &pored liste poruka"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "Popis direktorija"
-
-#, fuzzy
-#~| msgid "Lon&g folder list"
-#~ msgid "Long folder list"
-#~ msgstr "&Duži popis mapa"
-
-#, fuzzy
-#~ msgid "Short folder list"
-#~ msgstr "&Kratka lista mapi"
-
-#, fuzzy
-#~ msgid "Message template for new message"
-#~ msgstr "Lista poruka — polje za datum"
-
-#, fuzzy
-#~ msgid "Message template for reply"
-#~ msgstr "Označi trenutnu poruku kao p&roslijeđenu"
-
-#, fuzzy
-#~ msgid "Message template for reply to all"
-#~ msgstr "Označi trenutnu poruku kao p&roslijeđenu"
-
-#, fuzzy
-#~ msgid "Message template for forward"
-#~ msgstr "Označi trenutnu poruku kao p&roslijeđenu"
-
-#, fuzzy
-#~ msgid "Quote characters"
-#~ msgstr "Dodaj znake za &citiranje"
 
 #, fuzzy
 #~ msgid "kontactsummary"
@@ -9387,9 +9691,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Keep replies in this folder"
 #~ msgstr "I&zbaci stare poruke iz ove mape"
-
-#~ msgid "Hide this folder in the folder selection dialog"
-#~ msgstr "Sakrij ovu mapu u dijalogu za odabir mapa"
 
 #, fuzzy
 #~ msgid "Use &default identity"

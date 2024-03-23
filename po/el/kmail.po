@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-21 00:38+0000\n"
+"POT-Creation-Date: 2024-03-23 00:38+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1048,12 +1048,15 @@ msgstr ""
 msgid "System Tray"
 msgstr "Πλαίσιο συστήματος"
 
-#: configuredialog/configureappearancepage.cpp:833
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:833 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Εικονίδιο στο πλαίσιο συστήματος"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:837 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6521,6 +6524,459 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"Αυτό αποτρέπει την αυτόματη λήξη των παλιών μηνυμάτων σε ένα φάκελο και τη "
+"διαγραφή (ή τη μετακίνηση σε φάκελο αρχειοθήκης) των μηνυμάτων που είναι "
+"σημειωμένα ως 'Σημαντικά' ή ως 'Ενέργεια'"
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "Επίτρεψε τοπικές σημαίες σε φακέλους μόνο ανάγνωσης"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "Αποστολή μηνυμάτων σε αναμονή κατά τον έλεγχο αλληλογραφίας"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p>Επιλέξτε αν θέλετε το KMail να αποστέλλει πάντα τα μηνύματα που "
+"βρίσκονται στο φάκελο εξερχόμενα κατά το χειροκίνητο έλεγχο. Μπορείτε ακόμη "
+"να ορίσετε να μη γίνεται ποτέ αυτόματη αποστολή μηνυμάτων. </p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "Ο πιο πρόσφατα επιλεγμένος φάκελος στο διάλογο επιλογής φακέλου."
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, fuzzy, kde-format
+#| msgid "Show unread mail in system tray"
+msgid "Show Unread Email in TaskBar"
+msgstr ""
+"Εμφάνιση των μη αναγνωσμένων μηνυμάτων στο εικονίδιο του πλαισίου συστήματος"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "&Ορισμός επεξεργαστή:"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "&Χρήση εξωτερικού επεξεργαστή για τη σύνταξη μηνυμάτων"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+"Καθορίζει τον αριθμό των προσαρμοσμένων πεδίων επικεφαλίδων MIME που θα "
+"εισάγονται στα μηνύματα (μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr ""
+"Το κατώφλι προειδοποίησης του χρήστη όταν ένας φάκελος πλησιάζει στο όριο "
+"μεγέθους του."
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr ""
+"Άδειασμα του τοπικού φακέλου απορριμμά&των κατά την έξοδο από το πρόγραμμα"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, fuzzy, kde-format
+#| msgid "Delete Sieve Script Confirmation"
+msgid "Delete messages without confirmation"
+msgstr "Επιβεβαίωση διαγραφής σεναρίου Sieve"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, kde-format
+msgid "Allow to start specific folder"
+msgstr "Επιτρέπει την εκκίνηση συγκεκριμένου φακέλου"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr "Καθορίζει το φάκελο που θα ανοίγει κατά την εκκίνηση του προγράμματος"
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr ""
+"Καθορίζει αν θα γίνεται λήξη των φακέλων στο παρασκήνιο (για εσωτερική χρήση "
+"μόνο)"
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+"Καθορίζει αν είναι η πρώτη φορά που εκτελείται η εφαρμογή (για εσωτερική "
+"χρήση μόνο)"
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr ""
+"Αυτή η τιμή χρησιμοποιείται για να καθορίσει αν θα εμφανίζεται η σελίδα "
+"εισαγωγής στο KMail."
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "Εμφάνιση γραμμής γρήγορης αναζήτησης"
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "Προκαθορισμένα προώθηση εμβόλιμα."
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, kde-format
+msgid "Warn if the number of recipients is more than:"
+msgstr "Προειδοποίηση αν ο αριθμός παραληπτών είναι περισσότερος από:"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"Αν ο αριθμός των παραληπτών είναι μεγαλύτερος από αυτήν την τιμή, το KMail "
+"θα εμφανίσει μια προειδοποίηση και θα σας ζητηθεί επιβεβαίωση πριν την "
+"αποστολή του μηνύματος. Η προειδοποίηση μπορεί να απενεργοποιηθεί."
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "Επι&βεβαίωση πριν την αποστολή"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, kde-format
+msgid "Check spelling before send"
+msgstr "Έλεγχος ορθογραφίας πριν την αποστολή"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "Αυτόματη αίτηση ειδοποιήσεων παράδοσης &μηνύματος"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt><p>Ενεργοποιήστε αυτή την επιλογή αν επιθυμείτε το KMail να ζητάει "
+"ειδοποίηση παράδοσης μηνύματος (MDN) για κάθε εξερχόμενο μήνυμα.</p><p>Αυτή "
+"η επιλογή είναι η προκαθορισμένη συμπεριφορά. Μπορείτε να ενεργοποιείτε ή να "
+"απενεργοποιείτε τις ειδοποιήσεις παράδοσης για κάθε μήνυμα ξεχωριστά από το "
+"μενού του παραθύρου σύνταξης <em>Επιλογές</em>-><em>Αίτηση ειδοποίησης "
+"παράδοσης</em>.</p></qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "Χρονικό διάστημα αυτόματης αποθήκευσης:"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"Ένα εφεδρικό αντίγραφο του κειμένου στο παράθυρο σύνταξης μπορεί να "
+"δημιουργείται σε τακτά διαστήματα. Το χρονικό διάστημα που θα χρησιμοποιηθεί "
+"για τη δημιουργία του εφεδρικού αντιγράφου καθορίζεται εδώ. Μπορείτε να "
+"απενεργοποιήσετε τη δημιουργία του θέτοντας εδώ την τιμή  0."
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr ""
+"Εμφάνιση του πίνακα εισαγωγής και διαχείρισης δειγμάτων κειμένου στον "
+"συντάκτη."
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr ""
+"Όταν είναι επιλεγμένο, τα απεσταλμένα μηνύματα θα αποθηκεύονται σε "
+"κρυπτογραφημένη μορφή"
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr "Μια λίστα με όλα τα πρόσφατα χρησιμοποιημένα URL"
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr "Μια λίστα με όλες τις πρόσφατα χρησιμοποιημένες κωδικοποιήσεις"
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, kde-format
+msgid "Show crypto label indicator"
+msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, fuzzy, kde-format
+#| msgid "Show crypto label indicator"
+msgid "Show crypto ownertrust icons"
+msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr "Επαλήθευση προκαθορισμένης συντόμευσης αποστολής"
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr "Το μέγεθος του διαλόγου ταυτότητας (για εσωτερική χρήση μόνο)"
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr "Το πλάτος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr "Το ύψος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr ""
+"Το πλάτος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr "Το ύψος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "Πλαίσιο προεπισκόπησης μηνυμάτων"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "Να μην εμφανίζεται το πλαίσιο προεπισκόπησης μηνυμάτων"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr ""
+"Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων κάτω από τη λίστα μηνυμάτων"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr ""
+"Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων δίπλα από τη λίστα μηνυμάτων"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "Λίστα φακέλων"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "Εκτενής λίστα φακέλων"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "Σύντομη λίστα φακέλων"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "Πρότυπο μηνύματος για νέο μήνυμα"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "Πρότυπο μηνύματος για απάντηση"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "Πρότυπο μηνύματος για απάντηση σε όλους"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "Πρότυπο μηνύματος για προώθηση"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "Χαρακτήρες παράθεσης"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr ""
+"Καθορίζει την πολιτική που θα χρησιμοποιείται όταν θα γίνεται εμφάνιση της "
+"πολιτικής"
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου συλλογής στο διάλογο του παραθύρου αναζήτησης "
+"(μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου θέματος στο διάλογο του παραθύρου αναζήτησης "
+"(μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου του αποστολέα στο διάλογο του παραθύρου "
+"αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου του παραλήπτη στο διάλογο του παραθύρου "
+"αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου της ημερομηνίας στο διάλογο του παραθύρου "
+"αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"Καθορίζει το πλάτος του πεδίου φακέλου στο διάλογο του παραθύρου αναζήτησης "
+"(μόνο για εσωτερική χρήση)"
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -8056,287 +8512,6 @@ msgstr "Εστίαση"
 #~ "πρότυπα, και ακολούθως είναι πιθανό τα μηνύματά σας να μη διαβάζονται από "
 #~ "πελάτες αλληλογραφίας συμβατούς με τα πρότυπα. Έτσι, εκτός αν δεν έχετε "
 #~ "άλλη δυνατότητα, δεν θα πρέπει να ενεργοποιήσετε αυτή την επιλογή."
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "Αυτό αποτρέπει την αυτόματη λήξη των παλιών μηνυμάτων σε ένα φάκελο και "
-#~ "τη διαγραφή (ή τη μετακίνηση σε φάκελο αρχειοθήκης) των μηνυμάτων που "
-#~ "είναι σημειωμένα ως 'Σημαντικά' ή ως 'Ενέργεια'"
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "Επίτρεψε τοπικές σημαίες σε φακέλους μόνο ανάγνωσης"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "Αποστολή μηνυμάτων σε αναμονή κατά τον έλεγχο αλληλογραφίας"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Επιλέξτε αν θέλετε το KMail να αποστέλλει πάντα τα μηνύματα που "
-#~ "βρίσκονται στο φάκελο εξερχόμενα κατά το χειροκίνητο έλεγχο. Μπορείτε "
-#~ "ακόμη να ορίσετε να μη γίνεται ποτέ αυτόματη αποστολή μηνυμάτων. </p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "Ο πιο πρόσφατα επιλεγμένος φάκελος στο διάλογο επιλογής φακέλου."
-
-#, fuzzy
-#~| msgid "Show unread mail in system tray"
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr ""
-#~ "Εμφάνιση των μη αναγνωσμένων μηνυμάτων στο εικονίδιο του πλαισίου "
-#~ "συστήματος"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "&Ορισμός επεξεργαστή:"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "&Χρήση εξωτερικού επεξεργαστή για τη σύνταξη μηνυμάτων"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει τον αριθμό των προσαρμοσμένων πεδίων επικεφαλίδων MIME που θα "
-#~ "εισάγονται στα μηνύματα (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr ""
-#~ "Το κατώφλι προειδοποίησης του χρήστη όταν ένας φάκελος πλησιάζει στο όριο "
-#~ "μεγέθους του."
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr ""
-#~ "Άδειασμα του τοπικού φακέλου απορριμμά&των κατά την έξοδο από το πρόγραμμα"
-
-#, fuzzy
-#~| msgid "Delete Sieve Script Confirmation"
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "Επιβεβαίωση διαγραφής σεναρίου Sieve"
-
-#~ msgid "Allow to start specific folder"
-#~ msgstr "Επιτρέπει την εκκίνηση συγκεκριμένου φακέλου"
-
-#~ msgid "Specify the folder to open when the program is started"
-#~ msgstr ""
-#~ "Καθορίζει το φάκελο που θα ανοίγει κατά την εκκίνηση του προγράμματος"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "Καθορίζει αν θα γίνεται λήξη των φακέλων στο παρασκήνιο (για εσωτερική "
-#~ "χρήση μόνο)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει αν είναι η πρώτη φορά που εκτελείται η εφαρμογή (για εσωτερική "
-#~ "χρήση μόνο)"
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr ""
-#~ "Αυτή η τιμή χρησιμοποιείται για να καθορίσει αν θα εμφανίζεται η σελίδα "
-#~ "εισαγωγής στο KMail."
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "Εμφάνιση γραμμής γρήγορης αναζήτησης"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "Προκαθορισμένα προώθηση εμβόλιμα."
-
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "Προειδοποίηση αν ο αριθμός παραληπτών είναι περισσότερος από:"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "Αν ο αριθμός των παραληπτών είναι μεγαλύτερος από αυτήν την τιμή, το "
-#~ "KMail θα εμφανίσει μια προειδοποίηση και θα σας ζητηθεί επιβεβαίωση πριν "
-#~ "την αποστολή του μηνύματος. Η προειδοποίηση μπορεί να απενεργοποιηθεί."
-
-#~ msgid "Confirm &before send"
-#~ msgstr "Επι&βεβαίωση πριν την αποστολή"
-
-#~ msgid "Check spelling before send"
-#~ msgstr "Έλεγχος ορθογραφίας πριν την αποστολή"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "Αυτόματη αίτηση ειδοποιήσεων παράδοσης &μηνύματος"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Ενεργοποιήστε αυτή την επιλογή αν επιθυμείτε το KMail να ζητάει "
-#~ "ειδοποίηση παράδοσης μηνύματος (MDN) για κάθε εξερχόμενο μήνυμα.</"
-#~ "p><p>Αυτή η επιλογή είναι η προκαθορισμένη συμπεριφορά. Μπορείτε να "
-#~ "ενεργοποιείτε ή να απενεργοποιείτε τις ειδοποιήσεις παράδοσης για κάθε "
-#~ "μήνυμα ξεχωριστά από το μενού του παραθύρου σύνταξης <em>Επιλογές</em>-"
-#~ "><em>Αίτηση ειδοποίησης παράδοσης</em>.</p></qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "Χρονικό διάστημα αυτόματης αποθήκευσης:"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "Ένα εφεδρικό αντίγραφο του κειμένου στο παράθυρο σύνταξης μπορεί να "
-#~ "δημιουργείται σε τακτά διαστήματα. Το χρονικό διάστημα που θα "
-#~ "χρησιμοποιηθεί για τη δημιουργία του εφεδρικού αντιγράφου καθορίζεται "
-#~ "εδώ. Μπορείτε να απενεργοποιήσετε τη δημιουργία του θέτοντας εδώ την "
-#~ "τιμή  0."
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr ""
-#~ "Εμφάνιση του πίνακα εισαγωγής και διαχείρισης δειγμάτων κειμένου στον "
-#~ "συντάκτη."
-
-#~ msgid "When check, sent messages will be stored in the encrypted form"
-#~ msgstr ""
-#~ "Όταν είναι επιλεγμένο, τα απεσταλμένα μηνύματα θα αποθηκεύονται σε "
-#~ "κρυπτογραφημένη μορφή"
-
-#~ msgid "A list of all the recently used URLs"
-#~ msgstr "Μια λίστα με όλα τα πρόσφατα χρησιμοποιημένα URL"
-
-#~ msgid "A list of all the recently used encodings"
-#~ msgstr "Μια λίστα με όλες τις πρόσφατα χρησιμοποιημένες κωδικοποιήσεις"
-
-#~ msgid "Show crypto label indicator"
-#~ msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
-
-#, fuzzy
-#~| msgid "Show crypto label indicator"
-#~ msgid "Show crypto ownertrust icons"
-#~ msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
-
-#~ msgid "Validate Send Default Shortcut"
-#~ msgstr "Επαλήθευση προκαθορισμένης συντόμευσης αποστολής"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "Το μέγεθος του διαλόγου ταυτότητας (για εσωτερική χρήση μόνο)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "Το πλάτος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "Το ύψος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr ""
-#~ "Το πλάτος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr ""
-#~ "Το ύψος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "Πλαίσιο προεπισκόπησης μηνυμάτων"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "Να μην εμφανίζεται το πλαίσιο προεπισκόπησης μηνυμάτων"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr ""
-#~ "Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων κάτω από τη λίστα μηνυμάτων"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr ""
-#~ "Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων δίπλα από τη λίστα "
-#~ "μηνυμάτων"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "Λίστα φακέλων"
-
-#~ msgid "Long folder list"
-#~ msgstr "Εκτενής λίστα φακέλων"
-
-#~ msgid "Short folder list"
-#~ msgstr "Σύντομη λίστα φακέλων"
-
-#~ msgid "Message template for new message"
-#~ msgstr "Πρότυπο μηνύματος για νέο μήνυμα"
-
-#~ msgid "Message template for reply"
-#~ msgstr "Πρότυπο μηνύματος για απάντηση"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "Πρότυπο μηνύματος για απάντηση σε όλους"
-
-#~ msgid "Message template for forward"
-#~ msgstr "Πρότυπο μηνύματος για προώθηση"
-
-#~ msgid "Quote characters"
-#~ msgstr "Χαρακτήρες παράθεσης"
-
-#~ msgid "Specifies the policy used when displaying policy"
-#~ msgstr ""
-#~ "Καθορίζει την πολιτική που θα χρησιμοποιείται όταν θα γίνεται εμφάνιση "
-#~ "της πολιτικής"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου συλλογής στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου θέματος στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου του αποστολέα στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου του παραλήπτη στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου της ημερομηνίας στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Καθορίζει το πλάτος του πεδίου φακέλου στο διάλογο του παραθύρου "
-#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
 
 #, fuzzy
 #~| msgctxt "type of folder content"

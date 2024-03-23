@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-21 00:38+0000\n"
+"POT-Creation-Date: 2024-03-23 00:38+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1018,12 +1018,15 @@ msgstr "បិទ​​បង្អួច​សារ​តែ​ឯង​បន
 msgid "System Tray"
 msgstr "ថាសប្រព័ន្ធ​"
 
-#: configuredialog/configureappearancepage.cpp:833
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:833 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "អនុញ្ញាត​រូបតំណាង​ក្នុង​ថាស​ប្រព័ន្ធ"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:837 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6312,6 +6315,426 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"វា​ការពារ​កា​រផុត​កំណត់​ដោយ​ស្វ័យ​ប្រវត្តិ​របស់​សារចាស់ៗ​នៅ​ក្នុង​ថត​ពី​ការ​លុប (ឬ​ផ្លាស់ទី​ទៅ​ថត​ប័ណ្ណសារ) សារ​ដែល​"
+"ត្រូ​វបាន​សម្គាល់ជា 'សំខាន់' ឬ'ធាតុ​សកម្មភាព'"
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "អនុញ្ញាត​ទង់មូលដ្ឋាន​នៅ​ក្នុង​ថត​បាន​តែ​អាន"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "ផ្ញើ​សំបុត្រ​ដែល​បាន​ដាក់ជាជួរ​នៅលើ​ការពិនិត្យ​សំបុត្រ"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p>ជ្រើស​ថាតើ​អ្នកចង់​ឲ្យ​ KMail ផ្ញើ​​សារទាំងអស់​នៅក្នុង​ប្រអប់ចេញ​នៅលើសៀវភៅដៃ ឬក៏ ការពិនិត្យ​"
+"សារទាំងអស់, ឬ ថាតើ​អ្នក​មិនចង់​ឲ្យ​ផ្ញើសារ​ទាំងអស់​ដោយស្វ័យប្រវត្តិ ។ </p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "ថត​ដែលបាន​ជ្រើស​ថ្មីៗ​បំផុត នៅក្នុង​ប្រអប់​ជ្រើស​ថត ។"
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, fuzzy, kde-format
+#| msgid "Show unread mail in system tray"
+msgid "Show Unread Email in TaskBar"
+msgstr "បង្ហាញ​សំបុត្រ​ដែល​មិន​ទាន់​បាន​​អាន​នៅ​ក្នុង​ថាស​ប្រព័ន្ធ​"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "បញ្ជាក់​កម្មវិធី​កែសម្រួល ៖"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "ប្រើ​កម្មវិធី​កែសម្រួល​ខាងក្នុង ជំនួស​ឲ្យ​កម្មវិធី​តែង"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+"បញ្ជាក់​ចំនួន​វាល​បឋមកថា MIME ផ្ទាល់ខ្លួន ដើម្បី​​ឲ្យ​បញ្ចូល​ក្នុង​សារ (សម្រាប់​ការ​ប្រើប្រាស់​ខា​ងក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr "កម្រិត​ពន្លឺ​សម្រាប់​នៅ​ពេល​ព្រមាន​អ្នក​ប្រើ​ ដែល​ថត​មួយ​នៅ​ជិត​ដែន​កំណត់​កូតា​របស់​វា ។"
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr "សម្អាត​ថត​ធុងសំរាម ពេល​ចេញ​ពី​កម្មវិធី"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, fuzzy, kde-format
+#| msgid "Send Confirmation"
+msgid "Delete messages without confirmation"
+msgstr "​ផ្ញើ​ការ​អះអាង"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, fuzzy, kde-format
+#| msgid "Select Shortcut for Folder"
+msgid "Allow to start specific folder"
+msgstr "ជ្រើស​ផ្លូវកាត់​សម្រាប់​ថត"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr "បញ្ជាក់​ចំនួន​ថត​ត្រូវ​បើក នៅពេល​កម្មវិធី​ចាប់ផ្ដើម"
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr "បញ្ជាក់​ថាតើថត​នឹង​ផុត​កំណត់​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ​ដែរឬទេ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុងប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+"បញ្ជាក់​ថាតើ​​ នេះ​ជា​ពេល​ដំបូង​បង្អស់​ដែល​កម្មវិធី​ដំណើការ​មែនឬ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr "តម្លៃ​នេះ​គឺត្រូវបាន​ប្រើ​ដើម្បី​សម្រេច​ថាតើ​ ការណែនាំ​អំពី KMail គួរតែត្រូវបាន​បង្ហាញ​ឬអត់ ។"
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "បង្ហាញ​ការ​កែសម្រួល​ស្វែង​រក​​ថត​រហ័ស"
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "បញ្ជូន​បន្ត​ក្នុងតួ​ជា​លំនាំដើម ។"
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, fuzzy, kde-format
+#| msgid "Warn if the number of recipients is larger than"
+msgid "Warn if the number of recipients is more than:"
+msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្នក​ទទួល​​ច្រើន​ជាង"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"ប្រសិនបើ​ចំនួន​អ្នក​ទទួល​ធំជាង​តម្លៃ​នេះ KMail នឹង​ព្រមាន​ ហើយ​ស្នើ​ការ​អះអាង​មុននឹង​ផ្ញើ​សំបុត្រ ។ កា​រព្រមាន​"
+"អាច​ត្រូវ​បាន​បិទ ។"
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "អះអាងមុនផ្ញើ"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, kde-format
+msgid "Check spelling before send"
+msgstr "ពិនិត្យមើល​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt><p>បើក​ជម្រើស​នេះ​ប្រសិនបើ​អ្នក​ចង់​ឲ្យ​ KMail ស្នើ​ការជូនដំណឹង​អំពី​ការរៀបចំសារ (MDNs) សម្រាប់​​"
+"សារផ្ញើចេញ​របស់អ្នក​នីមួយៗ ។</p><p>ជម្រើស​នេះ​​មានឥទ្ធិពល​តែ​នៅលើលំនាំដើម​តែប៉ុណ្ណោះ ។ អ្នក​នៅតែអាច​"
+"បើក ឬ បិទការស្នើ MDN ​នៅលើ​មូលដ្ឋាន​ក្នុង​មួយសារ​នៅក្នុង​កម្មវិធី​តែង ធាតុ​ម៉ឺនុយ <em>ជម្រើស</em>-"
+"><em>ការជូនដំណឹង​អំពី​ការរៀបចំ​សំណើរ</em> ។</p></qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "រក្សាទុក​ចន្លោះពេល​ដោយស្វ័យប្រវត្តិ ៖"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"ច្បាប់​ចម្លង​បម្រុង​ទុក​របស់​អត្ថបទ​នៅ​ក្នុង​បង្អួច​កម្ម​វិធី​តែង ដែល​អាច​ត្រូវ​បាន​បង្កើត​យ៉ាងទៀងទាត់ ។ ចន្លោះ​ពេល​"
+"ដែល​​បាន​ប្រើ​ដើម្បី​បង្កើត​ព័ត៌មាន​បម្រុងទុក​គឺ​ត្រូវ​បាន​កំណត់​នៅទីនេះ ។ អ្នក​អាច​បិទ​ការ​រក្សាទុក​ដោយស្វ័យប្រវត្តិ​​"
+"ដោយ​កំណត់​វា​ទៅ​តម្លៃ 0 ។"
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr "បង្ហាញ​កា​រគ្រប់គ្រង​អត្ថបទ​ដែល​បាន​ច្រឹប និង​បញ្ចូល​បន្ទះ​នៅ​ក្នុង​កម្មវិធី​តែង ។"
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr "នៅ​ពេល​ពិនិត្យ​មើល សារ​ដែលបានផ្ញើ​នឹង​ត្រូវ​បាន​ទុក​នៅ​ក្នុង​ទម្រង់​ដែល​បានអ៊ីនគ្រិប"
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr "បញ្ជី​របស់​ URLs ដែលបាន​ប្រើប្រាស់​ថ្មី​ទាំងអស់"
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr "បញ្ជី​របស់​ការ​អ៊ីនកូ​ដដែល​បាន​ប្រើ​ថ្មី​ទាំងអស់"
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, fuzzy, kde-format
+#| msgid "Show signed/encrypted text after composing"
+msgid "Show crypto label indicator"
+msgstr "បង្ហាញ​អត្ថបទ​ដែលបាន​​ចុះហត្ថលេខា/បាន​អ៊ិនគ្រីប​បន្ទាប់ពីការតែង"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr ""
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr ""
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "កុំ​បង្ហាញ​ស្លាបព្រិល​សារ​មើលជា​មុន"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "បង្ហាញ​ស្លាបព្រិល​​មើល​សារ​ជា​មុន​ខាង​ក្រោម​បញ្ជី​សារ"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ​ជាមុន​នៅ​ជាប់នឹង​បញ្ជីសារ"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "បញ្ជី​ថត"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "បញ្ជី​ថត​សារ​វែង"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "បញ្ជី​ថត​ខ្លី"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "ពុម្ពសារ​​សម្រាប់​សារ​ថ្មី"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប​ទៅ​អ្នក​ទាំងអស់"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "ពុម្ព​សារ​សម្រាប់​បញ្ជូន​បន្ត"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "តួអក្សរ​សម្រង់"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr "បញ្ជាក់​ថាតើ​ គោលនយោបាយ​ត្រូវ​បាន​ប្រើ​នៅពេល​បង្ហាញ​គោលនយោបាយ​ដែរឬទេ"
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr "បញ្ជាក់​​ទទឹង​របស់​វាល​ថត​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 #| msgid "Message Tag %1"
@@ -7812,240 +8235,6 @@ msgstr "ពង្រីក"
 #~ "ចងចាំថា KMail អាច​បង្កើត​សារ​ដែល​​មិនធ្វើ​តាម​ខ្នាត​គំរូ ហើយ​ ដោយហេតុ​នេះ វា​គឺ​អាចធ្វើ​បាន​ដែល​សារ​"
 #~ "របស់​អ្នក​នឹង​មិនត្រូវបាន​យល់ដោយ​ម៉ាស៊ីន​ភ្ញៀវ​សំបុត្រ​ដែល​ធ្វើតាម​ខ្នាតគំរូ ។ ដូច្នេះ លើកលែងតែអ្នក​​គ្មាន​"
 #~ "ជម្រើស​ផ្សេង អ្នក​មិនគួរ​​បើក​ជម្រើស​នេះ​ឡើយ ។"
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "វា​ការពារ​កា​រផុត​កំណត់​ដោយ​ស្វ័យ​ប្រវត្តិ​របស់​សារចាស់ៗ​នៅ​ក្នុង​ថត​ពី​ការ​លុប (ឬ​ផ្លាស់ទី​ទៅ​ថត​ប័ណ្ណសារ) សារ​"
-#~ "ដែល​ត្រូ​វបាន​សម្គាល់ជា 'សំខាន់' ឬ'ធាតុ​សកម្មភាព'"
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "អនុញ្ញាត​ទង់មូលដ្ឋាន​នៅ​ក្នុង​ថត​បាន​តែ​អាន"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "ផ្ញើ​សំបុត្រ​ដែល​បាន​ដាក់ជាជួរ​នៅលើ​ការពិនិត្យ​សំបុត្រ"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>ជ្រើស​ថាតើ​អ្នកចង់​ឲ្យ​ KMail ផ្ញើ​​សារទាំងអស់​នៅក្នុង​ប្រអប់ចេញ​នៅលើសៀវភៅដៃ ឬក៏ ការពិនិត្យ​"
-#~ "សារទាំងអស់, ឬ ថាតើ​អ្នក​មិនចង់​ឲ្យ​ផ្ញើសារ​ទាំងអស់​ដោយស្វ័យប្រវត្តិ ។ </p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "ថត​ដែលបាន​ជ្រើស​ថ្មីៗ​បំផុត នៅក្នុង​ប្រអប់​ជ្រើស​ថត ។"
-
-#, fuzzy
-#~| msgid "Show unread mail in system tray"
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "បង្ហាញ​សំបុត្រ​ដែល​មិន​ទាន់​បាន​​អាន​នៅ​ក្នុង​ថាស​ប្រព័ន្ធ​"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "បញ្ជាក់​កម្មវិធី​កែសម្រួល ៖"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "ប្រើ​កម្មវិធី​កែសម្រួល​ខាងក្នុង ជំនួស​ឲ្យ​កម្មវិធី​តែង"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ចំនួន​វាល​បឋមកថា MIME ផ្ទាល់ខ្លួន ដើម្បី​​ឲ្យ​បញ្ចូល​ក្នុង​សារ (សម្រាប់​ការ​ប្រើប្រាស់​ខា​ងក្នុង​"
-#~ "ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr "កម្រិត​ពន្លឺ​សម្រាប់​នៅ​ពេល​ព្រមាន​អ្នក​ប្រើ​ ដែល​ថត​មួយ​នៅ​ជិត​ដែន​កំណត់​កូតា​របស់​វា ។"
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "សម្អាត​ថត​ធុងសំរាម ពេល​ចេញ​ពី​កម្មវិធី"
-
-#, fuzzy
-#~| msgid "Send Confirmation"
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "​ផ្ញើ​ការ​អះអាង"
-
-#~ msgid "Specify the folder to open when the program is started"
-#~ msgstr "បញ្ជាក់​ចំនួន​ថត​ត្រូវ​បើក នៅពេល​កម្មវិធី​ចាប់ផ្ដើម"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ថាតើថត​នឹង​ផុត​កំណត់​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ​ដែរឬទេ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុងប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ថាតើ​​ នេះ​ជា​ពេល​ដំបូង​បង្អស់​ដែល​កម្មវិធី​ដំណើការ​មែនឬ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr "តម្លៃ​នេះ​គឺត្រូវបាន​ប្រើ​ដើម្បី​សម្រេច​ថាតើ​ ការណែនាំ​អំពី KMail គួរតែត្រូវបាន​បង្ហាញ​ឬអត់ ។"
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "បង្ហាញ​ការ​កែសម្រួល​ស្វែង​រក​​ថត​រហ័ស"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "បញ្ជូន​បន្ត​ក្នុងតួ​ជា​លំនាំដើម ។"
-
-#, fuzzy
-#~| msgid "Warn if the number of recipients is larger than"
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្នក​ទទួល​​ច្រើន​ជាង"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "ប្រសិនបើ​ចំនួន​អ្នក​ទទួល​ធំជាង​តម្លៃ​នេះ KMail នឹង​ព្រមាន​ ហើយ​ស្នើ​ការ​អះអាង​មុននឹង​ផ្ញើ​សំបុត្រ ។ កា​"
-#~ "រព្រមាន​អាច​ត្រូវ​បាន​បិទ ។"
-
-#~ msgid "Confirm &before send"
-#~ msgstr "អះអាងមុនផ្ញើ"
-
-#~ msgid "Check spelling before send"
-#~ msgstr "ពិនិត្យមើល​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>បើក​ជម្រើស​នេះ​ប្រសិនបើ​អ្នក​ចង់​ឲ្យ​ KMail ស្នើ​ការជូនដំណឹង​អំពី​ការរៀបចំសារ (MDNs) សម្រាប់​​"
-#~ "សារផ្ញើចេញ​របស់អ្នក​នីមួយៗ ។</p><p>ជម្រើស​នេះ​​មានឥទ្ធិពល​តែ​នៅលើលំនាំដើម​តែប៉ុណ្ណោះ ។ អ្នក​"
-#~ "នៅតែអាច​បើក ឬ បិទការស្នើ MDN ​នៅលើ​មូលដ្ឋាន​ក្នុង​មួយសារ​នៅក្នុង​កម្មវិធី​តែង ធាតុ​ម៉ឺនុយ "
-#~ "<em>ជម្រើស</em>-><em>ការជូនដំណឹង​អំពី​ការរៀបចំ​សំណើរ</em> ។</p></qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "រក្សាទុក​ចន្លោះពេល​ដោយស្វ័យប្រវត្តិ ៖"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "ច្បាប់​ចម្លង​បម្រុង​ទុក​របស់​អត្ថបទ​នៅ​ក្នុង​បង្អួច​កម្ម​វិធី​តែង ដែល​អាច​ត្រូវ​បាន​បង្កើត​យ៉ាងទៀងទាត់ ។ ចន្លោះ​"
-#~ "ពេល​ដែល​​បាន​ប្រើ​ដើម្បី​បង្កើត​ព័ត៌មាន​បម្រុងទុក​គឺ​ត្រូវ​បាន​កំណត់​នៅទីនេះ ។ អ្នក​អាច​បិទ​ការ​រក្សាទុក​"
-#~ "ដោយស្វ័យប្រវត្តិ​​ដោយ​កំណត់​វា​ទៅ​តម្លៃ 0 ។"
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr "បង្ហាញ​កា​រគ្រប់គ្រង​អត្ថបទ​ដែល​បាន​ច្រឹប និង​បញ្ចូល​បន្ទះ​នៅ​ក្នុង​កម្មវិធី​តែង ។"
-
-#~ msgid "When check, sent messages will be stored in the encrypted form"
-#~ msgstr "នៅ​ពេល​ពិនិត្យ​មើល សារ​ដែលបានផ្ញើ​នឹង​ត្រូវ​បាន​ទុក​នៅ​ក្នុង​ទម្រង់​ដែល​បានអ៊ីនគ្រិប"
-
-#~ msgid "A list of all the recently used URLs"
-#~ msgstr "បញ្ជី​របស់​ URLs ដែលបាន​ប្រើប្រាស់​ថ្មី​ទាំងអស់"
-
-#~ msgid "A list of all the recently used encodings"
-#~ msgstr "បញ្ជី​របស់​ការ​អ៊ីនកូ​ដដែល​បាន​ប្រើ​ថ្មី​ទាំងអស់"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "កុំ​បង្ហាញ​ស្លាបព្រិល​សារ​មើលជា​មុន"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "បង្ហាញ​ស្លាបព្រិល​​មើល​សារ​ជា​មុន​ខាង​ក្រោម​បញ្ជី​សារ"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ​ជាមុន​នៅ​ជាប់នឹង​បញ្ជីសារ"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "បញ្ជី​ថត"
-
-#~ msgid "Long folder list"
-#~ msgstr "បញ្ជី​ថត​សារ​វែង"
-
-#~ msgid "Short folder list"
-#~ msgstr "បញ្ជី​ថត​ខ្លី"
-
-#~ msgid "Message template for new message"
-#~ msgstr "ពុម្ពសារ​​សម្រាប់​សារ​ថ្មី"
-
-#~ msgid "Message template for reply"
-#~ msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប​ទៅ​អ្នក​ទាំងអស់"
-
-#~ msgid "Message template for forward"
-#~ msgstr "ពុម្ព​សារ​សម្រាប់​បញ្ជូន​បន្ត"
-
-#~ msgid "Quote characters"
-#~ msgstr "តួអក្សរ​សម្រង់"
-
-#~ msgid "Specifies the policy used when displaying policy"
-#~ msgstr "បញ្ជាក់​ថាតើ​ គោលនយោបាយ​ត្រូវ​បាន​ប្រើ​នៅពេល​បង្ហាញ​គោលនយោបាយ​ដែរឬទេ"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "បញ្ជាក់​​ទទឹង​របស់​វាល​ថត​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #~ msgid "Composing"
 #~ msgstr "ការ​តែង"

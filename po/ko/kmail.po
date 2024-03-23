@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-21 00:38+0000\n"
+"POT-Creation-Date: 2024-03-23 00:38+0000\n"
 "PO-Revision-Date: 2024-02-24 22:07+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -969,12 +969,15 @@ msgstr "메시지에 답장을 쓰거나 전달한 후 단독 메시지 창 닫�
 msgid "System Tray"
 msgstr "시스템 트레이"
 
-#: configuredialog/configureappearancepage.cpp:833
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:833 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "시스템 트레이 아이콘 사용"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:837 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "트레이에 최소화된 상태로 시작"
@@ -6074,6 +6077,416 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"이 설정을 사용하면 '중요함'이나 '동작 항목'으로 표시된 메시지를 삭제하거나 아"
+"카이브 폴더로 이동할 때 오래된 메시지 자동 정리에서 제외합니다."
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "읽기 전용 폴더에 로컬 전용 플래그 허용"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "메일 확인 시 보낼 편지 보냄"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p>보낸 편지함에 있는 메시지를 수동 및 자동 메일 확인 시 자동으로 보낼"
+"지, 아니면 완전히 수동으로 보낼지 선택하십시오.</p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "폴더 선택 대화 상자에서 가장 최근에 선택된 폴더입니다."
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, kde-format
+msgid "Show Unread Email in TaskBar"
+msgstr "작업 표시줄에 읽지 않은 메일 개수 표시"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "편집기 지정(&D):"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "내부 편집기 대신에 외부 편집기 사용(&X)"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr "메시지에 추가할 사용자 정의 MIME 헤더 개수를 지정합니다(내부용)"
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr "폴더가 할당량에 근접할 때 사용자에게 알릴 한계치입니다."
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr "끝낼 때 로컬 지운 편지함 폴더 비우기"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, kde-format
+msgid "Delete messages without confirmation"
+msgstr "확인하지 않고 메시지 삭제"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, kde-format
+msgid "Allow to start specific folder"
+msgstr "지정한 폴더로 시작 허용"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr "프로그램이 시작되었을 때 열 폴더 지정"
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr "백그라운드에서 폴더의 오래된 메시지를 정리할지 여부 선택(내부용)"
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr "앱이 맨 처음으로 실행되었는지 여부 선택(내부용)"
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+"두 개 이상의 계정이 설정되어 있을 때 사용자에게 통합된 받은 편지함 사용 여부"
+"를 물어 봅니다. 단 한 번만 묻습니다."
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr "KMail 소개를 표시할지 여부를 결정합니다."
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "폴더 빠른 검색 입력줄 표시"
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "기본적으로 인라인 답장을 사용합니다."
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, kde-format
+msgid "Warn if the number of recipients is more than:"
+msgstr "받는 사람이 다음보다 많을 때 알려 주기:"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"받는 사람 수가 다음보다 더 많으면 메일을 보내기 전에 경고하고 확인합니다. 이 "
+"경고를 끌 수 있습니다."
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "보내기 전에 확인(&B)"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, kde-format
+msgid "Check spelling before send"
+msgstr "보내기 전에 맞춤법 검사"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "자동으로 읽음 확인 알림 요청(&M)"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt><p>보내는 메시지에 읽음 확인 요청(MDN)을 같이 보내려면 선택하십시오.</"
+"p><p>이 옵션은 기본값에만 영향을 주므로 작성기 창에서 메시지 개별적으로 읽음 "
+"확인 요청을 켜거나 끌 수 있으며, 메뉴 항목 <em>옵션</em>-><em>읽음 확인 요청"
+"</em>으로도 여부를 선택할 수 있습니다.</p></qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "자동 저장 간격:"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"작성기 창에 있는 메시지의 백업본이 주기적으로 생성됩니다. 백업을 주기적으로 "
+"생성할 시간 간격을 설정하십시오. 0으로 설정하면 자동 저장을 비활성화합니다."
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr "작성기 창에 텍스트 스니펫 관리 및 삽입 패널을 표시합니다."
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr "선택하면 보낸 메시지를 암호화된 형태로 저장합니다"
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr "최근에 사용한 모든 URL 목록"
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr "최근에 사용한 모든 인코딩 목록"
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, kde-format
+msgid "Show crypto label indicator"
+msgstr "암호화 표시기 이름표 표시"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr "암호화 소유자 신뢰 아이콘 표시"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr "기본 보내기 단축키 검증"
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr "프로필 대화 상자의 크기(내부용)"
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr "검색 창의 너비(내부용)"
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr "검색 창의 높이(내부용)"
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr "KMail 설정 창의 너비(내부용)"
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr "KMail 설정 창의 높이(내부용)"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, kde-format
+msgid "Message preview pane:"
+msgstr "메시지 미리 보기 패널:"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "메시지 미리 보기 패널을 표시하지 않음"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "메시지 목록 아래에 메시지 미리 보기 패널 표시"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr "메시지 목록 옆에 메시지 미리 보기 패널 표시"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, kde-format
+msgid "Folder list:"
+msgstr "폴더 목록:"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "긴 폴더 목록"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "짧은 폴더 목록"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "새 메시지에 사용할 템플릿"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "답장할 때 사용할 템플릿"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "모두 답장할 때 사용할 템플릿"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "전달할 때 사용할 템플릿"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "인용 부호"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr "정책을 표시할 때 사용할 정책"
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 모음집 필드의 너비 지정(내부용)"
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 모음집 필드의 높이 지정(내부용)"
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 보낸 사람 필드의 너비 지정(내부용)"
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 받는 사람 필드의 너비 지정(내부용)"
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 날짜 필드의 너비 지정(내부용)"
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr "검색 창의 폴더 필드의 너비 지정(내부용)"
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -7441,240 +7854,6 @@ msgstr "크기 조정: %1%"
 #~ "이 옵션을 사용하면 표준 지원 클라이언트를 사용하는 수신자가 메시지에 들어 "
 #~ "있는 첨부 파일을 제대로 읽지 못할 수도 있습니다. 다른 대안이 없는 한 이 옵"
 #~ "션을 선택하지 마십시오."
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "이 설정을 사용하면 '중요함'이나 '동작 항목'으로 표시된 메시지를 삭제하거"
-#~ "나 아카이브 폴더로 이동할 때 오래된 메시지 자동 정리에서 제외합니다."
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "읽기 전용 폴더에 로컬 전용 플래그 허용"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "메일 확인 시 보낼 편지 보냄"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>보낸 편지함에 있는 메시지를 수동 및 자동 메일 확인 시 자동으로 보낼"
-#~ "지, 아니면 완전히 수동으로 보낼지 선택하십시오.</p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "폴더 선택 대화 상자에서 가장 최근에 선택된 폴더입니다."
-
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "작업 표시줄에 읽지 않은 메일 개수 표시"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "편집기 지정(&D):"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "내부 편집기 대신에 외부 편집기 사용(&X)"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr "메시지에 추가할 사용자 정의 MIME 헤더 개수를 지정합니다(내부용)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr "폴더가 할당량에 근접할 때 사용자에게 알릴 한계치입니다."
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "끝낼 때 로컬 지운 편지함 폴더 비우기"
-
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "확인하지 않고 메시지 삭제"
-
-#~ msgid "Allow to start specific folder"
-#~ msgstr "지정한 폴더로 시작 허용"
-
-#~ msgid "Specify the folder to open when the program is started"
-#~ msgstr "프로그램이 시작되었을 때 열 폴더 지정"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr "백그라운드에서 폴더의 오래된 메시지를 정리할지 여부 선택(내부용)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr "앱이 맨 처음으로 실행되었는지 여부 선택(내부용)"
-
-#~ msgid ""
-#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
-#~ "one email accounts are detected. We only ever ask once."
-#~ msgstr ""
-#~ "두 개 이상의 계정이 설정되어 있을 때 사용자에게 통합된 받은 편지함 사용 여"
-#~ "부를 물어 봅니다. 단 한 번만 묻습니다."
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr "KMail 소개를 표시할지 여부를 결정합니다."
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "폴더 빠른 검색 입력줄 표시"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "기본적으로 인라인 답장을 사용합니다."
-
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "받는 사람이 다음보다 많을 때 알려 주기:"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "받는 사람 수가 다음보다 더 많으면 메일을 보내기 전에 경고하고 확인합니다. "
-#~ "이 경고를 끌 수 있습니다."
-
-#~ msgid "Confirm &before send"
-#~ msgstr "보내기 전에 확인(&B)"
-
-#~ msgid "Check spelling before send"
-#~ msgstr "보내기 전에 맞춤법 검사"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "자동으로 읽음 확인 알림 요청(&M)"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>보내는 메시지에 읽음 확인 요청(MDN)을 같이 보내려면 선택하십시오.</"
-#~ "p><p>이 옵션은 기본값에만 영향을 주므로 작성기 창에서 메시지 개별적으로 읽"
-#~ "음 확인 요청을 켜거나 끌 수 있으며, 메뉴 항목 <em>옵션</em>-><em>읽음 확"
-#~ "인 요청</em>으로도 여부를 선택할 수 있습니다.</p></qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "자동 저장 간격:"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "작성기 창에 있는 메시지의 백업본이 주기적으로 생성됩니다. 백업을 주기적으"
-#~ "로 생성할 시간 간격을 설정하십시오. 0으로 설정하면 자동 저장을 비활성화합"
-#~ "니다."
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr "작성기 창에 텍스트 스니펫 관리 및 삽입 패널을 표시합니다."
-
-#~ msgid "When check, sent messages will be stored in the encrypted form"
-#~ msgstr "선택하면 보낸 메시지를 암호화된 형태로 저장합니다"
-
-#~ msgid "A list of all the recently used URLs"
-#~ msgstr "최근에 사용한 모든 URL 목록"
-
-#~ msgid "A list of all the recently used encodings"
-#~ msgstr "최근에 사용한 모든 인코딩 목록"
-
-#~ msgid "Show crypto label indicator"
-#~ msgstr "암호화 표시기 이름표 표시"
-
-#~ msgid "Show crypto ownertrust icons"
-#~ msgstr "암호화 소유자 신뢰 아이콘 표시"
-
-#~ msgid "Validate Send Default Shortcut"
-#~ msgstr "기본 보내기 단축키 검증"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "프로필 대화 상자의 크기(내부용)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "검색 창의 너비(내부용)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "검색 창의 높이(내부용)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "KMail 설정 창의 너비(내부용)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr "KMail 설정 창의 높이(내부용)"
-
-#~ msgid "Message preview pane:"
-#~ msgstr "메시지 미리 보기 패널:"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "메시지 미리 보기 패널을 표시하지 않음"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "메시지 목록 아래에 메시지 미리 보기 패널 표시"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "메시지 목록 옆에 메시지 미리 보기 패널 표시"
-
-#~ msgid "Folder list:"
-#~ msgstr "폴더 목록:"
-
-#~ msgid "Long folder list"
-#~ msgstr "긴 폴더 목록"
-
-#~ msgid "Short folder list"
-#~ msgstr "짧은 폴더 목록"
-
-#~ msgid "Message template for new message"
-#~ msgstr "새 메시지에 사용할 템플릿"
-
-#~ msgid "Message template for reply"
-#~ msgstr "답장할 때 사용할 템플릿"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "모두 답장할 때 사용할 템플릿"
-
-#~ msgid "Message template for forward"
-#~ msgstr "전달할 때 사용할 템플릿"
-
-#~ msgid "Quote characters"
-#~ msgstr "인용 부호"
-
-#~ msgid "Specifies the policy used when displaying policy"
-#~ msgstr "정책을 표시할 때 사용할 정책"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "검색 창의 모음집 필드의 너비 지정(내부용)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "검색 창의 모음집 필드의 높이 지정(내부용)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "검색 창의 보낸 사람 필드의 너비 지정(내부용)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "검색 창의 받는 사람 필드의 너비 지정(내부용)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "검색 창의 날짜 필드의 너비 지정(내부용)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "검색 창의 폴더 필드의 너비 지정(내부용)"
 
 #~ msgid ""
 #~ "Medium security encryption will be used for this recipient (the "

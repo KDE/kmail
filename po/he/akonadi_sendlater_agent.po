@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-03-03 00:48+0000\n"
-"PO-Revision-Date: 2024-03-13 12:35+0200\n"
+"PO-Revision-Date: 2024-03-22 09:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: sendlaterconfiguredialog.cpp:31
 #, kde-format
@@ -113,24 +113,28 @@ msgid "No"
 msgstr "לא"
 
 #: sendlaterconfigurewidget.cpp:207
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "למחוק את הפריט הנבחר?"
 msgstr[1] "למחוק את הפריטים הנבחרים?"
+msgstr[2] "למחוק את הפריטים הנבחרים?"
+msgstr[3] "למחוק את הפריטים הנבחרים?"
 
 #: sendlaterconfigurewidget.cpp:208
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "למחוק פריטים"
 
 #: sendlaterconfigurewidget.cpp:216
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "למחוק גם את ההודעה?"
 msgstr[1] "למחוק גם את ההודעות?"
+msgstr[2] "למחוק גם את ההודעות?"
+msgstr[3] "למחוק גם את ההודעות?"
 
 #: sendlaterconfigurewidget.cpp:217
 #, kde-format

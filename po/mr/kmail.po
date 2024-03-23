@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-21 00:38+0000\n"
+"POT-Creation-Date: 2024-03-23 00:38+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1021,12 +1021,15 @@ msgstr ""
 msgid "System Tray"
 msgstr "प्रणाली ट्रे"
 
-#: configuredialog/configureappearancepage.cpp:833
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:833 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "प्रणाली ट्रे चिन्ह कार्यान्वित करा"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:837 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6338,6 +6341,439 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"'महत्वाचे' वा 'कार्यवाही करणे' अशा खुणा केलेले आणि संचयीकेत काढून टाकण्यासाठी साठविलेले "
+"संदेशआपोआप बाद होणे किंवा (अर्काईव्ह संचयीकेत हलविणे) ही कृती हे थांबविते"
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "फक्त वाचण्यासाठी ह्या संचयीकेत स्थानिक खुणा/बाबींना परवानगी द्या"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "मेल तपासताना रांगेतील मेल पाठवा"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p>तुम्हाला के-मेल ने आउटबॉक्समधील सर्व संदेश मानवी तपासणी अथवा सर्व मेल तपासणीसाठी "
+"पाठवायचे आहेत का किंवा तुम्ही संदेश आपोआप अजिबात पाठवू इच्छित नाही.</p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "संचयीका निवड संवादातील आताच निवडलेल्या संचयीका"
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, fuzzy, kde-format
+#| msgid "Show unread mail in system tray"
+msgid "Show Unread Email in TaskBar"
+msgstr "न वाचलेले मेल प्रणाली ट्रे मध्ये दर्शवा"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "संपादक निर्देशीत करा (&D):"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "कंपोझर ऐवजी बाहेरील संपादकाचा वापर करा (&X)"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+"संदेशात समाविष्ट करावयाची इच्छिक MIME ची शीर्षक प्रक्षेत्रे विनिर्दिष्ट करते (फक्त अंतर्गत "
+"उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr "प्रयोगकर्त्याला संचयीकेतील जागा संपत आल्याचा इशारा देणारी मर्यादा सूचना"
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr "कार्यक्रमातून बाहेर पडताना स्थानिक कचरापेटी रिकामी करा"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, fuzzy, kde-format
+#| msgid "Send Confirmation"
+msgid "Delete messages without confirmation"
+msgstr "मंजूरी पाठवा"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, fuzzy, kde-format
+#| msgid "Select Shortcut for Folder"
+msgid "Allow to start specific folder"
+msgstr "संचयीकेसाठी जवळचा मार्ग शोधा"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr "प्रणाली सुरु झाल्यावर कोणती संचयीका उघडायची ते विनिर्दिष्ट करा"
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr ""
+"पार्श्वभूमीवरील संचयीकांची मुदत केंव्हा संपत आहे ते विनिर्दिष्ट करते (फक्त अंतर्गत उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+"कार्यप्रणाली अगदी पहिल्यांदाच वापरली जात आहे का हे विनिर्दिष्ट करते (फक्त अंतर्गत "
+"उपयोगासाठी)"
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr ""
+"के-मेल चा माहितीपर परिचय प्रदर्शित करावा की नाही हे ठरविण्यासाठी ह्या तंत्राचा उपयोग "
+"केला जातो"
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "संचयीका जलद शोध घेणारी संपादित पद्धती "
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "मूलभूतसारखे इनलाइन फॉर्वर्ड करा."
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, fuzzy, kde-format
+#| msgid "Warn if the number of recipients is larger than"
+msgid "Warn if the number of recipients is more than:"
+msgstr "प्राप्तकर्त्यांची संख्या   पेक्षा मोठी असेल तर इशारा द्या"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"ह्या मूल्यापेक्षा प्राप्तकर्त्यांची संख्या जास्त असेल तर के-मेल इशारा देईल आणि मेल पाठविण्याआधी "
+"पुष्टीसाठी विचारणा करेल. इशारा इशाऱ्याकडे दुर्लक्ष करा/इशारा बंद करा."
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "पाठविण्यापूर्वी खात्री करा (&B)"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, kde-format
+msgid "Check spelling before send"
+msgstr "पाठविण्यापूर्वी वर्णलेखन तपासा"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "विनंती आणि संदेशाच्या मांडणीची स्वयंचलीत सूचना (&M)"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt><p>तुमच्या पाठविल्या जाणाऱ्या प्रत्येक मेलसाठी तुम्हाला के-मेल कडे संदेश अधिसूचनेसाठी "
+"विनंती करायची असेल तर हा पर्याय वापरा.</p><p>तरीही तुम्हाला मांडणी/मेनू यादीत असलेल्या "
+"प्रत्येक संदेशासाठी MDN वापरण्याची वा न वापरण्याची मुभा आहे <em>पर्याय</em>-><em>मांडणी "
+"अधिसूचनेसाठी विनंती</em>.</p></qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "स्वयंचलित साठवणे मध्यांतर :"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"मांडणीच्या खिडकीत मजकुराची जादा सुरक्षित प्रत नेहमी तयार करता येईल. सुरक्षित प्रती तयार "
+"करण्याचा कालावधी येथे निश्चीत केलेला आहे. स्वयंचलिट पद्धतीने साठा करण्याची सुविधा तुम्ही ती "
+"० ह्या मूल्यावर निश्चीत करून असमर्थ करू शकता."
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr "मांडणीतील मजकुराच्या तुकड्याचे/छोट्या भागाचे व्यवस्थापन आणि समावेशन चौकोन दाखवा."
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr "तपासणी झाल्यानंतर पाठविलेले संदेश संकेतन स्वरूपात साठविले जातील"
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr "नुकत्याच वापरलेल्या वैश्विक/एकात्म साधन शोधकांची (URLs) यादी"
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr "नुकत्याच वापरलेल्या सर्व संकेतनांची यादी"
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, fuzzy, kde-format
+#| msgid "Show signed/encrypted text after composing"
+msgid "Show crypto label indicator"
+msgstr "संकेत चिन्हे दिलेला/संकेतीकरण केलेला मजकूर जुळणी /मांडणी केल्यानंतर दाखवा"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr ""
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr ""
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr "ऑनलाईन ओळख संवादाचा आकार (अंतर्गत उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr "शोध खिडकीची रुंदी (अंतर्गत उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr "शोध खिडकीची उंची (अंतर्गत उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr "व्यूहरचना केलेल्या के-मेल संवादाची रुंदी (अंतर्गत उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr " व्यूहरचना केलेल्या के-मेल संवादाची उंची (अंतर्गत उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "संदेश पूर्वावलोकन उपखंड"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "संदेश पूर्वावलोकन उपखंड दाखवू नका"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "संदेशांच्या यादीखाली पूर्वावलोकन उपखंड दाखवा"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr " संदेश पूर्ववलोकन उपखंड संदेशांच्या यादीखाली दाखवा"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "संचयीका यादी"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "लांब/नोठ्या संचयीकांची यादी"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "लहान संचयीकांची यादी"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "नवीन संदेशासाठी प्रमाणित संदेश मजकूर"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "उत्तरासाठी प्रमाणित संदेश मजकूर"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "सर्वाना उत्तर पाठविण्यासाठी प्रमाणित संदेश मजकूर"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "फॉर्वर्ड करिता संदेश नमूना"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "अक्षर समूह उधृत करा"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr "नीति प्रदर्शित करताना उपयोगात आणलेली नीति दाखवते"
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील संचय/संग्रह प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत उपयोगासाठी)"
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील विषय या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील प्रेषक/पाठविणारा या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
+"उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील प्राप्तकर्ता या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
+"उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील दिनांक या  प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
+"उपयोगासाठी) "
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+"शोध खिडकी संवादातील संचयीका या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
+"उपयोगासाठी) "
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 #| msgid "Message Tag %1"
@@ -7843,253 +8279,6 @@ msgstr "झूम"
 #~ "हे लक्षात घ्या की के-मेल प्रमाणित दर्जा नसलेले संदेश निर्माण करू शकेल, आणि त्यामुळे तुमचे "
 #~ "संदेश प्रमाणित पद्धती मानणारे ग्राहक समजू शकणार नाहीत; त्यामुळे तुमच्याकडे इतर विकल्प "
 #~ "असल्याशिवाय हा पर्याय निवडू नका."
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "'महत्वाचे' वा 'कार्यवाही करणे' अशा खुणा केलेले आणि संचयीकेत काढून टाकण्यासाठी साठविलेले "
-#~ "संदेशआपोआप बाद होणे किंवा (अर्काईव्ह संचयीकेत हलविणे) ही कृती हे थांबविते"
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "फक्त वाचण्यासाठी ह्या संचयीकेत स्थानिक खुणा/बाबींना परवानगी द्या"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "मेल तपासताना रांगेतील मेल पाठवा"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>तुम्हाला के-मेल ने आउटबॉक्समधील सर्व संदेश मानवी तपासणी अथवा सर्व मेल "
-#~ "तपासणीसाठी पाठवायचे आहेत का किंवा तुम्ही संदेश आपोआप अजिबात पाठवू इच्छित नाही.</"
-#~ "p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "संचयीका निवड संवादातील आताच निवडलेल्या संचयीका"
-
-#, fuzzy
-#~| msgid "Show unread mail in system tray"
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "न वाचलेले मेल प्रणाली ट्रे मध्ये दर्शवा"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "संपादक निर्देशीत करा (&D):"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "कंपोझर ऐवजी बाहेरील संपादकाचा वापर करा (&X)"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "संदेशात समाविष्ट करावयाची इच्छिक MIME ची शीर्षक प्रक्षेत्रे विनिर्दिष्ट करते (फक्त "
-#~ "अंतर्गत उपयोगासाठी)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr "प्रयोगकर्त्याला संचयीकेतील जागा संपत आल्याचा इशारा देणारी मर्यादा सूचना"
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "कार्यक्रमातून बाहेर पडताना स्थानिक कचरापेटी रिकामी करा"
-
-#, fuzzy
-#~| msgid "Send Confirmation"
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "मंजूरी पाठवा"
-
-#~ msgid "Specify the folder to open when the program is started"
-#~ msgstr "प्रणाली सुरु झाल्यावर कोणती संचयीका उघडायची ते विनिर्दिष्ट करा"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "पार्श्वभूमीवरील संचयीकांची मुदत केंव्हा संपत आहे ते विनिर्दिष्ट करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "कार्यप्रणाली अगदी पहिल्यांदाच वापरली जात आहे का हे विनिर्दिष्ट करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी)"
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr ""
-#~ "के-मेल चा माहितीपर परिचय प्रदर्शित करावा की नाही हे ठरविण्यासाठी ह्या तंत्राचा "
-#~ "उपयोग केला जातो"
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "संचयीका जलद शोध घेणारी संपादित पद्धती "
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "मूलभूतसारखे इनलाइन फॉर्वर्ड करा."
-
-#, fuzzy
-#~| msgid "Warn if the number of recipients is larger than"
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "प्राप्तकर्त्यांची संख्या   पेक्षा मोठी असेल तर इशारा द्या"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "ह्या मूल्यापेक्षा प्राप्तकर्त्यांची संख्या जास्त असेल तर के-मेल इशारा देईल आणि मेल "
-#~ "पाठविण्याआधी पुष्टीसाठी विचारणा करेल. इशारा इशाऱ्याकडे दुर्लक्ष करा/इशारा बंद करा."
-
-#~ msgid "Confirm &before send"
-#~ msgstr "पाठविण्यापूर्वी खात्री करा (&B)"
-
-#~ msgid "Check spelling before send"
-#~ msgstr "पाठविण्यापूर्वी वर्णलेखन तपासा"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "विनंती आणि संदेशाच्या मांडणीची स्वयंचलीत सूचना (&M)"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>तुमच्या पाठविल्या जाणाऱ्या प्रत्येक मेलसाठी तुम्हाला के-मेल कडे संदेश अधिसूचनेसाठी "
-#~ "विनंती करायची असेल तर हा पर्याय वापरा.</p><p>तरीही तुम्हाला मांडणी/मेनू यादीत "
-#~ "असलेल्या प्रत्येक संदेशासाठी MDN वापरण्याची वा न वापरण्याची मुभा आहे <em>पर्याय</em>-"
-#~ "><em>मांडणी अधिसूचनेसाठी विनंती</em>.</p></qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "स्वयंचलित साठवणे मध्यांतर :"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "मांडणीच्या खिडकीत मजकुराची जादा सुरक्षित प्रत नेहमी तयार करता येईल. सुरक्षित प्रती "
-#~ "तयार करण्याचा कालावधी येथे निश्चीत केलेला आहे. स्वयंचलिट पद्धतीने साठा करण्याची सुविधा "
-#~ "तुम्ही ती ० ह्या मूल्यावर निश्चीत करून असमर्थ करू शकता."
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr ""
-#~ "मांडणीतील मजकुराच्या तुकड्याचे/छोट्या भागाचे व्यवस्थापन आणि समावेशन चौकोन दाखवा."
-
-#~ msgid "When check, sent messages will be stored in the encrypted form"
-#~ msgstr "तपासणी झाल्यानंतर पाठविलेले संदेश संकेतन स्वरूपात साठविले जातील"
-
-#~ msgid "A list of all the recently used URLs"
-#~ msgstr "नुकत्याच वापरलेल्या वैश्विक/एकात्म साधन शोधकांची (URLs) यादी"
-
-#~ msgid "A list of all the recently used encodings"
-#~ msgstr "नुकत्याच वापरलेल्या सर्व संकेतनांची यादी"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "ऑनलाईन ओळख संवादाचा आकार (अंतर्गत उपयोगासाठी)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "शोध खिडकीची रुंदी (अंतर्गत उपयोगासाठी)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "शोध खिडकीची उंची (अंतर्गत उपयोगासाठी)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "व्यूहरचना केलेल्या के-मेल संवादाची रुंदी (अंतर्गत उपयोगासाठी)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr " व्यूहरचना केलेल्या के-मेल संवादाची उंची (अंतर्गत उपयोगासाठी) "
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "संदेश पूर्वावलोकन उपखंड"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "संदेश पूर्वावलोकन उपखंड दाखवू नका"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "संदेशांच्या यादीखाली पूर्वावलोकन उपखंड दाखवा"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr " संदेश पूर्ववलोकन उपखंड संदेशांच्या यादीखाली दाखवा"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "संचयीका यादी"
-
-#~ msgid "Long folder list"
-#~ msgstr "लांब/नोठ्या संचयीकांची यादी"
-
-#~ msgid "Short folder list"
-#~ msgstr "लहान संचयीकांची यादी"
-
-#~ msgid "Message template for new message"
-#~ msgstr "नवीन संदेशासाठी प्रमाणित संदेश मजकूर"
-
-#~ msgid "Message template for reply"
-#~ msgstr "उत्तरासाठी प्रमाणित संदेश मजकूर"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "सर्वाना उत्तर पाठविण्यासाठी प्रमाणित संदेश मजकूर"
-
-#~ msgid "Message template for forward"
-#~ msgstr "फॉर्वर्ड करिता संदेश नमूना"
-
-#~ msgid "Quote characters"
-#~ msgstr "अक्षर समूह उधृत करा"
-
-#~ msgid "Specifies the policy used when displaying policy"
-#~ msgstr "नीति प्रदर्शित करताना उपयोगात आणलेली नीति दाखवते"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील संचय/संग्रह प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील विषय या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील प्रेषक/पाठविणारा या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील प्राप्तकर्ता या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील दिनांक या  प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "शोध खिडकी संवादातील संचयीका या प्रक्षेत्राची रुंदी निर्देशित करते (फक्त अंतर्गत "
-#~ "उपयोगासाठी) "
 
 #~ msgid "Composing"
 #~ msgstr "लिहित आहे"
