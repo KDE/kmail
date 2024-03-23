@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 02:30+0000\n"
+"POT-Creation-Date: 2024-03-23 02:26+0000\n"
 "PO-Revision-Date: 2023-08-19 22:12+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -971,12 +971,15 @@ msgstr "أغلق نافذة الرّسالة المستقلّة بعد الرّ�
 msgid "System Tray"
 msgstr "صينيّة النّظام"
 
-#: configuredialog/configureappearancepage.cpp:834
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "فعّل أيقونة صينيّة النّظام"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "بدء مُصغّراً إلى الصينيّة"
@@ -6167,6 +6170,423 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr " – "
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"يمنع هذا كل رسالة معلمة بـ 'مهمة' أو  'عنصر  إجراء' في حالة الانتهاء "
+"التِّلقائيّ للرَّسائل  حذفها من المجلد (أو نقلها إلى مُجلَّد الأرشيف)"
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "اسمح بالأعلام الداخليَّة في مجلّدات القراءة فقط"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "أرسل البريد المصطفّ عند التماس البريد"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p> حدّد ما إذا أردت أن يُرسل بريدك جميع الرَّسائل في الصَّادر يدويًّا أو عند كُلِّ "
+"التَّمَاسِّ للبريد، أو ما إذا لم تُرد أن تُرْسَل الرَّسائل بشكل آليّ مطلقًا.</p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "المجلَّد الأكثر تحديد مؤخرًا في  حواريّ اختيار المجلد."
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, kde-format
+msgid "Show Unread Email in TaskBar"
+msgstr "أظهر البريد غير المقروء في شريط المهام"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "حدَّد مُح&رر:"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "استخدم محرّرًا &خارجيًّا بدل الكاتب"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+"حدَّد عدد حقول ترويسة MIME المخصَّصة لإدراجها في الرَّسائل (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr "الحد الأدنى لوقت تحذير المستخدم من أن أحد المجلدات يقترب من حد حصته."
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, kde-format
+msgid "Empty the local trash folder on program exit"
+msgstr "أفرغ مجلّد المهملات المحليّ عند إنهاء البرنامج"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, kde-format
+msgid "Delete messages without confirmation"
+msgstr "احذف الرَّسائل بلا تأكيد"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, kde-format
+msgid "Allow to start specific folder"
+msgstr "اسمح ببدء مجلَّد محدَّد"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr "حدَّد المجلد المُراد فتحه عند بدء البرنامج"
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr ""
+"تحدَّد ما إذا كان سينهي صلاحية المجلَّدات في الخلفيَّة (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+"تحدَّد ما إذا كانت هذه أوّل مرَّة يتم فيها تشغيل التَّطبيق  (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+"إذا كنت ستسأل هل يريد المستخدمون تمكين البريد الموحد في حالة اكتشاف أكثر من "
+"حساب بريد إلكتروني. نحن نسأل مرة واحدة فقط."
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr "تستخدم هذه القيمة لتقرر إذا ما ينبغي أن يتم عرض مقدمة بريدك."
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "أعرض تحرير سطر مجلد البحث السريع"
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "مرَّر ضمنيًّا كمبدئي."
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, kde-format
+msgid "Warn if the number of recipients is more than:"
+msgstr "حذّرني إن كان عدد المستلمين أكثر من:"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"بريدك سيحذَّرك ويطلب منك التَّأكيد قبل إرسال البريد إذا كان عدد المستلمين أكبر "
+"من هذه القيمة , يُمكن إيقاف هذا التَّحذير ."
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "أكّد &قبل الإرسال"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, kde-format
+msgid "Check spelling before send"
+msgstr "دقّق الهجاء قبل الإرسال"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "اطلُب إ&خطارات قُرأت الرسالة آليّاً"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt> <p> قم بتمكين هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة "
+"الرسائل لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد "
+"الافتراضي فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على "
+"أساس كل رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار "
+"قراءة الرسالة </em>. </p> </qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "فترة الحفظ الآليّ:"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"يمكن إنشاء نسخة احتياطيَّة من النَّص في نافذة المؤلف بانتظام. تُضبط الفترة "
+"المستخدمة لإنشاء النُّسخ الاحتياطيَّة هنا. تستطيع تعطيل الحفظ الآلي من خلال وضع "
+"القيمة 0."
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr "اعرض لوحة إدارة مقتطف النص ولوحة الإدراج في ا لمؤلف."
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr "عند التفعيل، ستخزن الرّسائل المرسلة بالنسق المعمَّى"
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr "قائمة بجميع العناوين المستخدمة مؤخراً"
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr "قائمة بجميع الترميزات المستخدمة مؤخرا"
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, kde-format
+msgid "Show crypto label indicator"
+msgstr "اعرض مؤشر التعمية"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr "اعرض أيقونات وثوقية التعمية"
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr "تحقق سلامة اختصار أرسل المبدئي"
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr "حجم حواري الهويَّة (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr "عرض نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr "ارتفاع نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr "عرض حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr "ارتفاع حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "لوحة معاينة الرِّسالة"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "لا تُظهر لوحة معاينة الرِّسالة"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "أظهر لوحة معاينة الرِّسالة أسفل قائمة الرسائل"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr "أظهر لوحة معاينة الرِّسالة بعد قائمة الرسائل"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "قائمة المجلّدات"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "قائمة مجلَّدات طويلة"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "قائمة مجلَّدات قصيرة"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "قالب رسالة الرسائل الجديدة"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "قالب رسالة الردّ"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "قالب رسالة الردّ على الكل"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "قالب رسالة التمرير"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "محارف الاقتباس"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr "تحدَّد السياسة المستخدمة عند عرض السياسة"
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل المجموعة في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل  الموضوع في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل المرسل في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل المستلم  في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل  التاريخ في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr "تحدَّد عرض حقل المجلد في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
 msgid "Message Tag: %1"
@@ -7562,252 +7982,6 @@ msgstr "التكبير: %1٪"
 #~ "لاحظ أن بريدك قد ينشئ رسائل غير متوافقة مع المعايير، وبذلك من الممكن ألا "
 #~ "يتم فهم رسائلك من قبل عملاء البريد المتوافق مع المعايير؛ لذلك ما لم يكن "
 #~ "لديك خِيار آخر، يجب ألا تمكن هذا الخِيار."
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "يمنع هذا كل رسالة معلمة بـ 'مهمة' أو  'عنصر  إجراء' في حالة الانتهاء "
-#~ "التِّلقائيّ للرَّسائل  حذفها من المجلد (أو نقلها إلى مُجلَّد الأرشيف)"
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "اسمح بالأعلام الداخليَّة في مجلّدات القراءة فقط"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "أرسل البريد المصطفّ عند التماس البريد"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p> حدّد ما إذا أردت أن يُرسل بريدك جميع الرَّسائل في الصَّادر يدويًّا أو عند "
-#~ "كُلِّ التَّمَاسِّ للبريد، أو ما إذا لم تُرد أن تُرْسَل الرَّسائل بشكل آليّ مطلقًا.</p></"
-#~ "qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "المجلَّد الأكثر تحديد مؤخرًا في  حواريّ اختيار المجلد."
-
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "أظهر البريد غير المقروء في شريط المهام"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "حدَّد مُح&رر:"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "استخدم محرّرًا &خارجيًّا بدل الكاتب"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "حدَّد عدد حقول ترويسة MIME المخصَّصة لإدراجها في الرَّسائل (للاستخدام الداخلي "
-#~ "فقط)"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr ""
-#~ "الحد الأدنى لوقت تحذير المستخدم من أن أحد المجلدات يقترب من حد حصته."
-
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "أفرغ مجلّد المهملات المحليّ عند إنهاء البرنامج"
-
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "احذف الرَّسائل بلا تأكيد"
-
-#~ msgid "Allow to start specific folder"
-#~ msgstr "اسمح ببدء مجلَّد محدَّد"
-
-#~ msgid "Specify the folder to open when the program is started"
-#~ msgstr "حدَّد المجلد المُراد فتحه عند بدء البرنامج"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "تحدَّد ما إذا كان سينهي صلاحية المجلَّدات في الخلفيَّة (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "تحدَّد ما إذا كانت هذه أوّل مرَّة يتم فيها تشغيل التَّطبيق  (للاستخدام الداخلي "
-#~ "فقط)"
-
-#~ msgid ""
-#~ "Whether to ask if users wants to enable Unified Mailboxes if more than "
-#~ "one email accounts are detected. We only ever ask once."
-#~ msgstr ""
-#~ "إذا كنت ستسأل هل يريد المستخدمون تمكين البريد الموحد في حالة اكتشاف أكثر "
-#~ "من حساب بريد إلكتروني. نحن نسأل مرة واحدة فقط."
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr "تستخدم هذه القيمة لتقرر إذا ما ينبغي أن يتم عرض مقدمة بريدك."
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "أعرض تحرير سطر مجلد البحث السريع"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "مرَّر ضمنيًّا كمبدئي."
-
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "حذّرني إن كان عدد المستلمين أكثر من:"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "بريدك سيحذَّرك ويطلب منك التَّأكيد قبل إرسال البريد إذا كان عدد المستلمين "
-#~ "أكبر من هذه القيمة , يُمكن إيقاف هذا التَّحذير ."
-
-#~ msgid "Confirm &before send"
-#~ msgstr "أكّد &قبل الإرسال"
-
-#~ msgid "Check spelling before send"
-#~ msgstr "دقّق الهجاء قبل الإرسال"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "اطلُب إ&خطارات قُرأت الرسالة آليّاً"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt> <p> قم بتمكين هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة "
-#~ "الرسائل لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد "
-#~ "الافتراضي فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على "
-#~ "أساس كل رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار "
-#~ "قراءة الرسالة </em>. </p> </qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "فترة الحفظ الآليّ:"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "يمكن إنشاء نسخة احتياطيَّة من النَّص في نافذة المؤلف بانتظام. تُضبط الفترة "
-#~ "المستخدمة لإنشاء النُّسخ الاحتياطيَّة هنا. تستطيع تعطيل الحفظ الآلي من خلال "
-#~ "وضع القيمة 0."
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr "اعرض لوحة إدارة مقتطف النص ولوحة الإدراج في ا لمؤلف."
-
-#~ msgid "When check, sent messages will be stored in the encrypted form"
-#~ msgstr "عند التفعيل، ستخزن الرّسائل المرسلة بالنسق المعمَّى"
-
-#~ msgid "A list of all the recently used URLs"
-#~ msgstr "قائمة بجميع العناوين المستخدمة مؤخراً"
-
-#~ msgid "A list of all the recently used encodings"
-#~ msgstr "قائمة بجميع الترميزات المستخدمة مؤخرا"
-
-#~ msgid "Show crypto label indicator"
-#~ msgstr "اعرض مؤشر التعمية"
-
-#~ msgid "Show crypto ownertrust icons"
-#~ msgstr "اعرض أيقونات وثوقية التعمية"
-
-#~ msgid "Validate Send Default Shortcut"
-#~ msgstr "تحقق سلامة اختصار أرسل المبدئي"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "حجم حواري الهويَّة (للاستخدام الداخلي فقط)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "عرض نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "ارتفاع نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "عرض حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr "ارتفاع حواريّ ضبط بريدك (للاستخدام الداخلي فقط)"
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "لوحة معاينة الرِّسالة"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "لا تُظهر لوحة معاينة الرِّسالة"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "أظهر لوحة معاينة الرِّسالة أسفل قائمة الرسائل"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "أظهر لوحة معاينة الرِّسالة بعد قائمة الرسائل"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "قائمة المجلّدات"
-
-#~ msgid "Long folder list"
-#~ msgstr "قائمة مجلَّدات طويلة"
-
-#~ msgid "Short folder list"
-#~ msgstr "قائمة مجلَّدات قصيرة"
-
-#~ msgid "Message template for new message"
-#~ msgstr "قالب رسالة الرسائل الجديدة"
-
-#~ msgid "Message template for reply"
-#~ msgstr "قالب رسالة الردّ"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "قالب رسالة الردّ على الكل"
-
-#~ msgid "Message template for forward"
-#~ msgstr "قالب رسالة التمرير"
-
-#~ msgid "Quote characters"
-#~ msgstr "محارف الاقتباس"
-
-#~ msgid "Specifies the policy used when displaying policy"
-#~ msgstr "تحدَّد السياسة المستخدمة عند عرض السياسة"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "تحدَّد عرض حقل المجموعة في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "تحدَّد عرض حقل  الموضوع في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "تحدَّد عرض حقل المرسل في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "تحدَّد عرض حقل المستلم  في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "تحدَّد عرض حقل  التاريخ في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "تحدَّد عرض حقل المجلد في حواريّ نافذة البحث (للاستخدام الداخلي فقط)"
 
 #~ msgid ""
 #~ "Medium security encryption will be used for this recipient (the "

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-19 02:30+0000\n"
+"POT-Creation-Date: 2024-03-23 02:26+0000\n"
 "PO-Revision-Date: 2010-01-13 18:47+0200\n"
 "Last-Translator: Viesturs Zarins <viesturs.zarins@mii.lu.lv>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -1060,12 +1060,15 @@ msgstr ""
 msgid "System Tray"
 msgstr "Sistēmas ikonu josla"
 
-#: configuredialog/configureappearancepage.cpp:834
+#. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
+#: configuredialog/configureappearancepage.cpp:834 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Ieslēgt ikonu sistēmas ikonu joslā"
 
+#. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:838 kmail_options.h:30
+#: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -6514,6 +6517,427 @@ msgctxt "Document/application separator in titlebar"
 msgid " – "
 msgstr ""
 
+#. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
+#: settings/kmail.kcfg.in:54
+#, kde-format
+msgid ""
+"This prevents the automatic expiry of old messages in a folder from deleting "
+"(or moving to an archive folder) the messages that are marked 'Important' or "
+"'Action Item'"
+msgstr ""
+"Šis aizsargā 'Svarīgas' un 'Darāmas' vēstules pret automātisku vecu vēstuļu "
+"izdzēšanu (vai pārvietošanu uz arhīva mapi) "
+
+#. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
+#: settings/kmail.kcfg.in:58
+#, kde-format
+msgid "Allow local flags in read-only folders"
+msgstr "Atļaut lokālus karodziņus tikai lasāmām mapēm"
+
+#. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:64
+#, kde-format
+msgid "Send queued mail on mail check"
+msgstr "Nosūtīt ierindotās vēstules pārbaudot pastu"
+
+#. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
+#: settings/kmail.kcfg.in:65
+#, kde-format
+msgid ""
+"<qt><p>Select whether you want KMail to send all messages in the outbox on "
+"manual or all mail checks, or whether you do not want messages to be sent "
+"automatically at all. </p></qt>"
+msgstr ""
+"<qt><p>Norādiet vai KMail, veicot rokas pasta pārbaudi, nosūtīt izsūtāmajās "
+"saliktās vēstules, vai nesūtīt tās automātiski. </p></qt>"
+
+#. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
+#: settings/kmail.kcfg.in:77
+#, kde-format
+msgid "The most recently selected folder in the folder selection dialog."
+msgstr "Pēdējā mapju izvēles logā izvēlētā mape."
+
+#. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
+#: settings/kmail.kcfg.in:96
+#, fuzzy, kde-format
+#| msgid "Always show KMail in system tray"
+msgid "Show Unread Email in TaskBar"
+msgstr "Ļauj KMail parādīties sistēmas ikonu joslā"
+
+#. i18n: ectx: label, entry (ExternalEditor), group (General)
+#: settings/kmail.kcfg.in:100
+#, kde-format
+msgid "Specify e&ditor:"
+msgstr "Norādīt re&daktoru:"
+
+#. i18n: ectx: label, entry (UseExternalEditor), group (General)
+#: settings/kmail.kcfg.in:104
+#, kde-format
+msgid "Use e&xternal editor instead of composer"
+msgstr "Lietot ā&rēju redaktorau vēstuļu rakstītāja vietā"
+
+#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
+#: settings/kmail.kcfg.in:108
+#, kde-format
+msgid ""
+"Specifies the number of custom MIME header fields to be inserted in messages "
+"(for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
+#: settings/kmail.kcfg.in:111
+#, kde-format
+msgid ""
+"The threshold for when to warn the user that a folder is nearing its quota "
+"limit."
+msgstr "Slieksnis, kad brīdināt ka mapes izmērs tuvojas maksimālajai kvotai."
+
+#. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
+#: settings/kmail.kcfg.in:115
+#, fuzzy, kde-format
+#| msgid "Empty local &trash folder on program exit"
+msgid "Empty the local trash folder on program exit"
+msgstr "Beidzot darbu, iz&tīrīt lokālo miskastes mapi"
+
+#. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
+#: settings/kmail.kcfg.in:119
+#, fuzzy, kde-format
+#| msgid "Delete Sieve Script Confirmation"
+msgid "Delete messages without confirmation"
+msgstr "Sieve skripta dzēšanas apstiprināšana"
+
+#. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
+#: settings/kmail.kcfg.in:123
+#, fuzzy, kde-format
+#| msgid "Select Folder"
+msgid "Allow to start specific folder"
+msgstr "Norādiet mapi"
+
+#. i18n: ectx: label, entry (StartupFolder), group (General)
+#: settings/kmail.kcfg.in:127
+#, kde-format
+msgid "Specify the folder to open when the program is started"
+msgstr ""
+
+#. i18n: ectx: label, entry (AutoExpiring), group (General)
+#: settings/kmail.kcfg.in:134
+#, kde-format
+msgid ""
+"Specifies whether the folders will expire in the background (for internal "
+"use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (FirstStart), group (General)
+#: settings/kmail.kcfg.in:138
+#, kde-format
+msgid ""
+"Specifies whether this is the very first time that the application is run "
+"(for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry, group (General)
+#: settings/kmail.kcfg.in:163
+#, kde-format
+msgid ""
+"Whether to ask if users wants to enable Unified Mailboxes if more than one "
+"email accounts are detected. We only ever ask once."
+msgstr ""
+
+#. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
+#: settings/kmail.kcfg.in:171
+#, kde-format
+msgid ""
+"This value is used to decide whether the KMail Introduction should be "
+"displayed."
+msgstr "Šī vērtība tiek izmantota, lai izlemtu, vai rādīt KMail ievadu."
+
+#. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
+#: settings/kmail.kcfg.in:178
+#, kde-format
+msgid "Show folder quick search line edit"
+msgstr "Rādīt mapju ātrās meklēšanas joslu"
+
+#. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
+#: settings/kmail.kcfg.in:186
+#, kde-format
+msgid "Forward Inline As Default."
+msgstr "Noklusēti pārsūtīt vēstules iegulti."
+
+#. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
+#: settings/kmail.kcfg.in:189
+#, fuzzy, kde-format
+#| msgid "Warn if the number of recipients is larger than"
+msgid "Warn if the number of recipients is more than:"
+msgstr "Brīdināt, ja saņēmēju skaits ir lielāks par"
+
+#. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
+#. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#, kde-format
+msgid ""
+"If the number of recipients is larger than this value, KMail will warn and "
+"ask for a confirmation before sending the mail. The warning can be turned "
+"off."
+msgstr ""
+"Ja saņēmēju skaits pārsniedz šo skaitli, KMail brīdinās un pirms sūtīšanas "
+"prasīs apstiprinājumu. Šo brīdinājumu var izslēgt."
+
+#. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:212
+#, kde-format
+msgid "Confirm &before send"
+msgstr "Ap&stiprināt pirms sūtšanas"
+
+#. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
+#: settings/kmail.kcfg.in:219
+#, fuzzy, kde-format
+#| msgid "Confirm &before send"
+msgid "Check spelling before send"
+msgstr "Ap&stiprināt pirms sūtšanas"
+
+#. i18n: ectx: label, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:223
+#, kde-format
+msgid "Automatically request &message disposition notifications"
+msgstr "Automātiski pirprasīt &vēstuļu saņemšanas apstiprinājumus"
+
+#. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
+#: settings/kmail.kcfg.in:224
+#, kde-format
+msgid ""
+"<qt><p>Enable this option if you want KMail to request Message Disposition "
+"Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
+"only affects the default; you can still enable or disable MDN requesting on "
+"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"Disposition Notification</em>.</p></qt>"
+msgstr ""
+"<qt><p>Ieslēdziet šo iespēju, ja vēlaties, ka KMail visām nosūtītajām "
+"vēstulēm pieprasa vēstules saņemšanas paziņojumu (MDN) .</p><p>Šis "
+"iestatījums ietekmē tikai noklusēto vērtību, jūs katrai vēstulei varat to "
+"indivuduāli ieslēgt vai izslēgt, izvēlnē <em>Opcijas</em>-><em>Pieprasīt "
+"saņemšanas paziņojumu</em>.</p></qt>"
+
+#. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:246
+#, kde-format
+msgid "Autosave interval:"
+msgstr "Automātiskas saglabāšanas intervāls:"
+
+#. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
+#: settings/kmail.kcfg.in:247
+#, kde-format
+msgid ""
+"A backup copy of the text in the composer window can be created regularly. "
+"The interval used to create the backups is set here. You can disable "
+"autosaving by setting it to the value 0."
+msgstr ""
+"Iespējams regulāri izveidot vēstules rakstīšanas loga teksta rezerves "
+"kopiju. Šeit var norādīt rezerves kopēšanas intervālu. Jūs varat atslēgt "
+"rezerves kopijas, šeit ievadot 0."
+
+#. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
+#: settings/kmail.kcfg.in:254
+#, kde-format
+msgid "Show the Text Snippet Management and Insertion Panel in the composer."
+msgstr ""
+"Vēstuļu rakstitājā rādīt teksta fragmentu pārvaldnieku un ievietošanas "
+"paneli."
+
+#. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
+#: settings/kmail.kcfg.in:260
+#, kde-format
+msgid "When check, sent messages will be stored in the encrypted form"
+msgstr ""
+
+#. i18n: ectx: label, entry (RecentUrls), group (Composer)
+#: settings/kmail.kcfg.in:264
+#, kde-format
+msgid "A list of all the recently used URLs"
+msgstr ""
+
+#. i18n: ectx: label, entry (RecentEncodings), group (Composer)
+#: settings/kmail.kcfg.in:270
+#, kde-format
+msgid "A list of all the recently used encodings"
+msgstr ""
+
+#. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
+#: settings/kmail.kcfg.in:276
+#, fuzzy, kde-format
+#| msgid "Show s&igned/encrypted text after composing"
+msgid "Show crypto label indicator"
+msgstr "Pēc vēstules uzrakstīšanas parādīt &parakstīto šifrēto tekstu"
+
+#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
+#: settings/kmail.kcfg.in:280
+#, kde-format
+msgid "Show crypto ownertrust icons"
+msgstr ""
+
+#. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
+#: settings/kmail.kcfg.in:284
+#, kde-format
+msgid "Validate Send Default Shortcut"
+msgstr ""
+
+#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
+#: settings/kmail.kcfg.in:301
+#, kde-format
+msgid "The size of the identity dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
+#: settings/kmail.kcfg.in:305
+#, kde-format
+msgid "The width of the search window (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
+#: settings/kmail.kcfg.in:309
+#, kde-format
+msgid "The height of the search window (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
+#: settings/kmail.kcfg.in:313
+#, kde-format
+msgid "The width of the Configure KMail dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
+#: settings/kmail.kcfg.in:317
+#, kde-format
+msgid "The height of the Configure KMail dialog (for internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:343
+#, fuzzy, kde-format
+#| msgid "Message Preview Pane"
+msgid "Message preview pane:"
+msgstr "Vēstuļu priekšapskates panelis"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:346
+#, kde-format
+msgid "Do not show a message preview pane"
+msgstr "Nerādīt vēstules priekšapskates paneli"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:349
+#, kde-format
+msgid "Show the message preview pane below the message list"
+msgstr "Rādīt vēstules priekšapskates paneli zem vēstuļu saraksta"
+
+#. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
+#: settings/kmail.kcfg.in:352
+#, kde-format
+msgid "Show the message preview pane next to the message list"
+msgstr "Rādīt vēstules priekšapskates paneli blakus vēstuļu sarakstam"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:359
+#, fuzzy, kde-format
+#| msgid "Folder List"
+msgid "Folder list:"
+msgstr "Mapju saraksts"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:362
+#, kde-format
+msgid "Long folder list"
+msgstr "Garš mapju saraksts"
+
+#. i18n: ectx: label, entry (FolderList), group (Geometry)
+#: settings/kmail.kcfg.in:365
+#, kde-format
+msgid "Short folder list"
+msgstr "Īss mapju saraksts"
+
+#. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:374
+#, kde-format
+msgid "Message template for new message"
+msgstr "Sagatave jaunai vēstulei"
+
+#. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:379
+#, kde-format
+msgid "Message template for reply"
+msgstr "Sagatave atbildei"
+
+#. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:384
+#, kde-format
+msgid "Message template for reply to all"
+msgstr "Sagatave atbildei visiem"
+
+#. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:389
+#, kde-format
+msgid "Message template for forward"
+msgstr "Sagatave pārsūtīšanai"
+
+#. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
+#: settings/kmail.kcfg.in:394
+#, kde-format
+msgid "Quote characters"
+msgstr "Citēšanas rakstzīmes"
+
+#. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
+#: settings/kmail.kcfg.in:409
+#, kde-format
+msgid "Specifies the policy used when displaying policy"
+msgstr ""
+
+#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:417
+#, kde-format
+msgid ""
+"Specifies the width of the collection field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:421
+#, kde-format
+msgid ""
+"Specifies the width of the subject field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:425
+#, kde-format
+msgid ""
+"Specifies the width of the sender field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:429
+#, kde-format
+msgid ""
+"Specifies the width of the receiver field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:433
+#, kde-format
+msgid ""
+"Specifies the width of the date field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
+#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
+#: settings/kmail.kcfg.in:437
+#, kde-format
+msgid ""
+"Specifies the width of the folder field in the Search Window dialog (for "
+"internal use only)"
+msgstr ""
+
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
 #| msgid "Message Tag %1"
@@ -8081,164 +8505,6 @@ msgstr ""
 #~ "atbilstošus pielikumu nosaukumus) saprotamā veidā. Tādējādi, iespējams, "
 #~ "standartus atbalstoši klienti nesapratīs jūsu vēstules. Lietojiet šo "
 #~ "iespēju tikai, ja jums nav citas izvēles."
-
-#~ msgid ""
-#~ "This prevents the automatic expiry of old messages in a folder from "
-#~ "deleting (or moving to an archive folder) the messages that are marked "
-#~ "'Important' or 'Action Item'"
-#~ msgstr ""
-#~ "Šis aizsargā 'Svarīgas' un 'Darāmas' vēstules pret automātisku vecu "
-#~ "vēstuļu izdzēšanu (vai pārvietošanu uz arhīva mapi) "
-
-#~ msgid "Allow local flags in read-only folders"
-#~ msgstr "Atļaut lokālus karodziņus tikai lasāmām mapēm"
-
-#~ msgid "Send queued mail on mail check"
-#~ msgstr "Nosūtīt ierindotās vēstules pārbaudot pastu"
-
-#~ msgid ""
-#~ "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#~ "on manual or all mail checks, or whether you do not want messages to be "
-#~ "sent automatically at all. </p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Norādiet vai KMail, veicot rokas pasta pārbaudi, nosūtīt "
-#~ "izsūtāmajās saliktās vēstules, vai nesūtīt tās automātiski. </p></qt>"
-
-#~ msgid "The most recently selected folder in the folder selection dialog."
-#~ msgstr "Pēdējā mapju izvēles logā izvēlētā mape."
-
-#, fuzzy
-#~| msgid "Always show KMail in system tray"
-#~ msgid "Show Unread Email in TaskBar"
-#~ msgstr "Ļauj KMail parādīties sistēmas ikonu joslā"
-
-#~ msgid "Specify e&ditor:"
-#~ msgstr "Norādīt re&daktoru:"
-
-#~ msgid "Use e&xternal editor instead of composer"
-#~ msgstr "Lietot ā&rēju redaktorau vēstuļu rakstītāja vietā"
-
-#~ msgid ""
-#~ "The threshold for when to warn the user that a folder is nearing its "
-#~ "quota limit."
-#~ msgstr ""
-#~ "Slieksnis, kad brīdināt ka mapes izmērs tuvojas maksimālajai kvotai."
-
-#, fuzzy
-#~| msgid "Empty local &trash folder on program exit"
-#~ msgid "Empty the local trash folder on program exit"
-#~ msgstr "Beidzot darbu, iz&tīrīt lokālo miskastes mapi"
-
-#, fuzzy
-#~| msgid "Delete Sieve Script Confirmation"
-#~ msgid "Delete messages without confirmation"
-#~ msgstr "Sieve skripta dzēšanas apstiprināšana"
-
-#~ msgid ""
-#~ "This value is used to decide whether the KMail Introduction should be "
-#~ "displayed."
-#~ msgstr "Šī vērtība tiek izmantota, lai izlemtu, vai rādīt KMail ievadu."
-
-#~ msgid "Show folder quick search line edit"
-#~ msgstr "Rādīt mapju ātrās meklēšanas joslu"
-
-#~ msgid "Forward Inline As Default."
-#~ msgstr "Noklusēti pārsūtīt vēstules iegulti."
-
-#, fuzzy
-#~| msgid "Warn if the number of recipients is larger than"
-#~ msgid "Warn if the number of recipients is more than:"
-#~ msgstr "Brīdināt, ja saņēmēju skaits ir lielāks par"
-
-#~ msgid ""
-#~ "If the number of recipients is larger than this value, KMail will warn "
-#~ "and ask for a confirmation before sending the mail. The warning can be "
-#~ "turned off."
-#~ msgstr ""
-#~ "Ja saņēmēju skaits pārsniedz šo skaitli, KMail brīdinās un pirms "
-#~ "sūtīšanas prasīs apstiprinājumu. Šo brīdinājumu var izslēgt."
-
-#~ msgid "Confirm &before send"
-#~ msgstr "Ap&stiprināt pirms sūtšanas"
-
-#, fuzzy
-#~| msgid "Confirm &before send"
-#~ msgid "Check spelling before send"
-#~ msgstr "Ap&stiprināt pirms sūtšanas"
-
-#~ msgid "Automatically request &message disposition notifications"
-#~ msgstr "Automātiski pirprasīt &vēstuļu saņemšanas apstiprinājumus"
-
-#~ msgid ""
-#~ "<qt><p>Enable this option if you want KMail to request Message "
-#~ "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#~ "p><p>This option only affects the default; you can still enable or "
-#~ "disable MDN requesting on a per-message basis in the composer, menu item "
-#~ "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Ieslēdziet šo iespēju, ja vēlaties, ka KMail visām nosūtītajām "
-#~ "vēstulēm pieprasa vēstules saņemšanas paziņojumu (MDN) .</p><p>Šis "
-#~ "iestatījums ietekmē tikai noklusēto vērtību, jūs katrai vēstulei varat to "
-#~ "indivuduāli ieslēgt vai izslēgt, izvēlnē <em>Opcijas</em>-><em>Pieprasīt "
-#~ "saņemšanas paziņojumu</em>.</p></qt>"
-
-#~ msgid "Autosave interval:"
-#~ msgstr "Automātiskas saglabāšanas intervāls:"
-
-#~ msgid ""
-#~ "A backup copy of the text in the composer window can be created "
-#~ "regularly. The interval used to create the backups is set here. You can "
-#~ "disable autosaving by setting it to the value 0."
-#~ msgstr ""
-#~ "Iespējams regulāri izveidot vēstules rakstīšanas loga teksta rezerves "
-#~ "kopiju. Šeit var norādīt rezerves kopēšanas intervālu. Jūs varat atslēgt "
-#~ "rezerves kopijas, šeit ievadot 0."
-
-#~ msgid ""
-#~ "Show the Text Snippet Management and Insertion Panel in the composer."
-#~ msgstr ""
-#~ "Vēstuļu rakstitājā rādīt teksta fragmentu pārvaldnieku un ievietošanas "
-#~ "paneli."
-
-#, fuzzy
-#~| msgid "Message Preview Pane"
-#~ msgid "Message preview pane:"
-#~ msgstr "Vēstuļu priekšapskates panelis"
-
-#~ msgid "Do not show a message preview pane"
-#~ msgstr "Nerādīt vēstules priekšapskates paneli"
-
-#~ msgid "Show the message preview pane below the message list"
-#~ msgstr "Rādīt vēstules priekšapskates paneli zem vēstuļu saraksta"
-
-#~ msgid "Show the message preview pane next to the message list"
-#~ msgstr "Rādīt vēstules priekšapskates paneli blakus vēstuļu sarakstam"
-
-#, fuzzy
-#~| msgid "Folder List"
-#~ msgid "Folder list:"
-#~ msgstr "Mapju saraksts"
-
-#~ msgid "Long folder list"
-#~ msgstr "Garš mapju saraksts"
-
-#~ msgid "Short folder list"
-#~ msgstr "Īss mapju saraksts"
-
-#~ msgid "Message template for new message"
-#~ msgstr "Sagatave jaunai vēstulei"
-
-#~ msgid "Message template for reply"
-#~ msgstr "Sagatave atbildei"
-
-#~ msgid "Message template for reply to all"
-#~ msgstr "Sagatave atbildei visiem"
-
-#~ msgid "Message template for forward"
-#~ msgstr "Sagatave pārsūtīšanai"
-
-#~ msgid "Quote characters"
-#~ msgstr "Citēšanas rakstzīmes"
 
 #, fuzzy
 #~| msgctxt "type of folder content"
