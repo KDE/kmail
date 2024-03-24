@@ -6022,18 +6022,21 @@ msgid ""
 "(or moving to an archive folder) the messages that are marked 'Important' or "
 "'Action Item'"
 msgstr ""
+"Dette hindrar at automatisk forelding av gamle meldingar slettar (eller "
+"flyttar til ei arkivmappe) meldingar som er merkte «viktig» eller "
+"«handlingselement»."
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg.in:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
-msgstr ""
+msgstr "Tillat lokale flagg i skriveverna mapper"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
 #, kde-format
 msgid "Send queued mail on mail check"
-msgstr ""
+msgstr "Send meldingar i køen ved sjekking av e-post"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:65
@@ -6043,12 +6046,15 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>Vel om du vil at KMail ska senda alle meldingar i utboksen ved "
+"manuell e-postsjekk eller sjekk av alle e-postkontoar, eller om du ikkje vil "
+"at meldingar i køen skal sendast automatisk i det heile.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg.in:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
+msgstr "Den mest nyleg valde mappa i mappevalsvindauget."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
@@ -6060,13 +6066,13 @@ msgstr ""
 #: settings/kmail.kcfg.in:100
 #, kde-format
 msgid "Specify e&ditor:"
-msgstr ""
+msgstr "Vel &skriveprogram:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.in:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr ""
+msgstr "Bruk eit anna &skriveprogram enn det innebygde"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.in:108
@@ -6075,6 +6081,7 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
+"Kor mange MIME-felt skal leggjast inn i meldinga (kun til intern bruk)."
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.in:111
@@ -6083,6 +6090,7 @@ msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
 msgstr ""
+"Grensa for når ein skal åtvara brukaren at mappa nærmar seg kvotegrensa."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:115
@@ -6140,19 +6148,20 @@ msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
 msgstr ""
+"Denne verdien vert brukt til å avgjera om velkomstteksten i KMail skal "
+"visast."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgid "Show folder quick search line edit"
-msgstr "Vis snøggsøkfeltet for mapper"
+msgstr "Vis snøggsøkfelt for mapper"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr ""
+msgstr "Vidaresend i teksten som standard."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.in:189
@@ -6169,12 +6178,14 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"Viss talet på mottakarar er større enn denne verdien, vil KMail åtvara, og "
+"spørja om stadfesting før sending av e-posten. Du kan slå denne åtvaringa av."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:212
 #, kde-format
 msgid "Confirm &before send"
-msgstr ""
+msgstr "Sta&dfest før sending"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
@@ -6184,10 +6195,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
-#, fuzzy, kde-format
-#| msgid "Message Disposition Notifications"
+#, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Meldingskvitteringar"
+msgstr "Be alltid om &meldingskvitteringar"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
@@ -6199,12 +6209,17 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
+"<qt><p>Kryss av for dette viss du vil at KMail skal be om meldingskvittering "
+"(MDN) for alle utgåande meldingar.</p><p>Dette valet påverkar berre "
+"standardinnstillinga, så du kan framleis slå på eller av meldingskvittering "
+"for einskildmeldingar via menyen: <b>Innstillingar → Be om "
+"meldingskvittering</b>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
 #, kde-format
 msgid "Autosave interval:"
-msgstr ""
+msgstr "Tid mellom autolagring:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6214,12 +6229,16 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
+"Det kan takast regelmessige reservekopiar av e-postar du skriv på. Her kan "
+"du velja kor lang tid det skal gå mellom kvar reservekopi. Du kan slå av "
+"automatisk reservekopiering ved å setja denne verdien til 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.in:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
+"Vis panel for innsetjing og handsaming av tekstbitar i skrivevindauget."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.in:260
@@ -6255,13 +6274,13 @@ msgstr ""
 #: settings/kmail.kcfg.in:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "Skjekk send standard snarveg"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
 #: settings/kmail.kcfg.in:301
 #, kde-format
 msgid "The size of the identity dialog (for internal use only)"
-msgstr ""
+msgstr "Storleiken på identitetsvindauget (kun til intern bruk)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
 #: settings/kmail.kcfg.in:305
@@ -6273,19 +6292,19 @@ msgstr ""
 #: settings/kmail.kcfg.in:309
 #, kde-format
 msgid "The height of the search window (for internal use only)"
-msgstr ""
+msgstr "Høgda til søkjevindauge (kun til intern bruk)"
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
 #: settings/kmail.kcfg.in:313
 #, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
+msgstr "Breidd for «Set opp» KMail vindauge (kun til intern bruk)"
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
 #: settings/kmail.kcfg.in:317
 #, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
+msgstr "Høgd for «Set opp» KMail vindauge (kun til intern bruk)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
@@ -6298,19 +6317,19 @@ msgstr "Meldinga vert signert"
 #: settings/kmail.kcfg.in:346
 #, kde-format
 msgid "Do not show a message preview pane"
-msgstr ""
+msgstr "Ikkje førehandsvis meldingar"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
-msgstr ""
+msgstr "Førehandsvis meldingar under meldingslista"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
-msgstr ""
+msgstr "Førehandsvis meldingar ved sida av meldingslista"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
@@ -6321,56 +6340,51 @@ msgstr "Hjelpebobler for mapper"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgid "Long folder list"
-msgstr "Inga mappe vald"
+msgstr "Lang mappeliste"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:365
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgid "Short folder list"
-msgstr "Vis full sti for mapper"
+msgstr "Kort mappeliste"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
-#| msgid "Message List - Important Messages"
+#, kde-format
 msgid "Message template for new message"
-msgstr "Meldingsliste – viktige meldingar"
+msgstr "Meldingsmal for ny melding"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for reply"
-msgstr "Melding frå &mal"
+msgstr "Meldingsmal for svar"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
 #, kde-format
 msgid "Message template for reply to all"
-msgstr ""
+msgstr "Meldingsmal for svar til alle"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for forward"
-msgstr "Melding frå &mal"
+msgstr "Meldingsmal for vidaresending"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
 #, kde-format
 msgid "Quote characters"
-msgstr ""
+msgstr "Sitatteikn"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.in:409
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr ""
+msgstr "Set vilkår for vising av vilkår"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:417
@@ -6378,7 +6392,7 @@ msgstr ""
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
 "internal use only)"
-msgstr ""
+msgstr "Angi breidde for «Samling» felt i søkjevindauge (kun til intern bruk) "
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:421
@@ -6386,7 +6400,7 @@ msgstr ""
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
 "internal use only)"
-msgstr ""
+msgstr "Angi breidde for «Emne» felt i søkjevindauge (kun til intern bruk) "
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:425
@@ -6395,6 +6409,7 @@ msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"Angi breidde for «Avsendar» felt i søkjevindauge (kun til intern bruk) "
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:429
@@ -6403,6 +6418,7 @@ msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
 "internal use only)"
 msgstr ""
+"Angi breidde for «Mottakar» felt i søkjevindauge (kun til intern bruk) "
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:433
@@ -6410,7 +6426,7 @@ msgstr ""
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
 "internal use only)"
-msgstr ""
+msgstr "Angi breidde for «Dato» felt i søkjevindauge (kun til intern bruk) "
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:437
@@ -6418,7 +6434,7 @@ msgstr ""
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
 "internal use only)"
-msgstr ""
+msgstr "Angi breidde for «Mappe» felt i søkjevindauge (kun til intern bruk) "
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
