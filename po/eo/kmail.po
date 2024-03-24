@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-23 00:38+0000\n"
-"PO-Revision-Date: 2024-03-09 09:22+0100\n"
+"PO-Revision-Date: 2024-03-23 17:06+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -6203,22 +6203,21 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr "Montri nelegitan retpoŝton en Taskbreto"
+msgstr "Montri Nelegitan Retpoŝton en Taskbreto"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
 #, kde-format
 msgid "Specify e&ditor:"
-msgstr ""
+msgstr "Difini re&daktilon:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.in:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr ""
+msgstr "Uzi ek&steran redaktilon anstataŭ komponilon"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.in:108
@@ -6227,6 +6226,8 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
+"Difinas la nombron da propraj MIME-kapokampoj enmetendajn en mesaĝojn (nur "
+"por interna uzado)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.in:111
@@ -6238,30 +6239,27 @@ msgstr ""
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:115
-#, fuzzy, kde-format
-#| msgid "Empty local &trash folder on program exit"
+#, kde-format
 msgid "Empty the local trash folder on program exit"
-msgstr "&Malplenigi lokan rubujon dum programfino"
+msgstr "Malplenigi lokan rubujon dum programfiniĝo"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.in:119
-#, fuzzy, kde-format
-#| msgid "Allow deleting messages without confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "Permesi forigi mesaĝojn sen konfirmo"
+msgstr "Forigi mesaĝojn sen konfirmo"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
-#, fuzzy, kde-format
-#| msgid "Select specific folders:"
+#, kde-format
 msgid "Allow to start specific folder"
-msgstr "Elekti specifajn dosierujojn:"
+msgstr "Permesi lanĉi specifan dosierujon"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg.in:127
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr ""
+msgstr "Specifu la dosierujon malfermendan kiam la programo estas lanĉata"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
 #: settings/kmail.kcfg.in:134
@@ -6297,23 +6295,21 @@ msgstr ""
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgid "Show folder quick search line edit"
-msgstr "Montri rapidan serĉkampon pri dosierujo"
+msgstr "Montri rapid-serĉan linioredaktilon de dosierujo"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr ""
+msgstr "Plusendi Entekste Kiel Defaŭlto."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.in:189
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgid "Warn if the number of recipients is more than:"
-msgstr "Agordi la maksimuman nombron da ricevantoj por la averto"
+msgstr "Averti se la nombro da ricevantoj estas pli ol:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
@@ -6333,17 +6329,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgid "Check spelling before send"
-msgstr "Kontroli literumadon"
+msgstr "Kontroli literumadon antaŭ ol sendi"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
-#, fuzzy, kde-format
-#| msgid "Message Disposition Notifications"
+#, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Ricevkonfirmoj"
+msgstr "Aŭtomate alpeti &mesaĝpritraktajn sciigojn"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
@@ -6358,11 +6352,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Autosave"
+#, kde-format
 msgid "Autosave interval:"
-msgstr "Aŭtokonservado"
+msgstr "Aŭtokonservada intervalo:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6399,23 +6391,21 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:276
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator"
+#, kde-format
 msgid "Show crypto label indicator"
-msgstr "Montri subskriban/ĉifran indikilon"
+msgstr "Montri ĉifroetikedan indikilon"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show encryption key ownertrust level"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Montri la nivelon de konfido de la posedanto de ĉifra ŝlosilo"
+msgstr "Montri ĉifroposedantkonfidajn piktogramojn"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "Defaŭlta Ŝparvojo por Konfirmi Sendadon"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
 #: settings/kmail.kcfg.in:301
@@ -6449,10 +6439,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Viewer"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Mesaĝo-Vidilo"
+msgstr "Mesaĝ-antaŭrigarda panelo:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6474,60 +6463,51 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgctxt "@label"
-#| msgid "Folder tooltips:"
+#, kde-format
 msgid "Folder list:"
-msgstr "Dosierujaj konsiletoj:"
+msgstr "Dosieruja listo:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "No folder selected"
+#, kde-format
 msgid "Long folder list"
-msgstr "Neniu dosierujo elektita"
+msgstr "Longa dosierujolisto"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:365
-#, fuzzy, kde-format
-#| msgctxt "@label"
-#| msgid "Show favorite folders view:"
+#, kde-format
 msgid "Short folder list"
-msgstr "Montri vidon de ŝatataj dosierujoj:"
+msgstr "Mallonga dosierujolisto"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
-#| msgid "Message List - Important Messages"
+#, kde-format
 msgid "Message template for new message"
-msgstr "Mesaĝolisto - Gravaj Mesaĝoj"
+msgstr "Mesaĝoŝablono por nova mesaĝo"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for reply"
-msgstr "Mesaĝo de Ŝ&ablono"
+msgstr "Mesaĝoŝablono por respondo"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
 #, kde-format
 msgid "Message template for reply to all"
-msgstr ""
+msgstr "Mesaĝoŝablono por respondo al ĉiuj"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for forward"
-msgstr "Mesaĝo de Ŝ&ablono"
+msgstr "Mesaĝoŝablono por plusendo"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
 #, kde-format
 msgid "Quote characters"
-msgstr ""
+msgstr "Citilaj signoj"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.in:409
