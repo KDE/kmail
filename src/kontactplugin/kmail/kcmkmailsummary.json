@@ -36,7 +36,7 @@
         "Description[x-test]": "xxMail Summary Setupxx",
         "Description[zh_CN]": "邮件摘要设置",
         "Description[zh_TW]": "郵件摘要設定",
-        "Icon": "kmail",
+        "Icon": "view-pim-mail",
         "Name": "New Messages",
         "Name[ar]": "رسائل جديدة",
         "Name[az]": "Yeni məktublar",
