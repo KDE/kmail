@@ -6301,11 +6301,7 @@ msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
 #: settings/kmail.kcfg.in:54
-#, fuzzy, kde-format
-#| msgid ""
-#| "This prevents the automatic expiry of old messages in a folder from "
-#| "deleting (or moving to an archive folder) the messages that are marked "
-#| "'Important' or 'Action Item'"
+#, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
 "(or moving to an archive folder) the messages that are marked 'Important' or "
@@ -6317,25 +6313,19 @@ msgstr ""
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg.in:58
-#, fuzzy, kde-format
-#| msgid "Allow local flags in read-only folders"
+#, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Autoriser les drapeaux locaux dans les dossiers en lecture seule"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
-#, fuzzy, kde-format
-#| msgid "Send queued mail on mail check"
+#, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Envoyer les messages en attente lors de la vérification du courriel"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:65
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Select whether you want KMail to send all messages in the outbox "
-#| "on manual or all mail checks, or whether you do not want messages to be "
-#| "sent automatically at all. </p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
 "manual or all mail checks, or whether you do not want messages to be sent "
@@ -6348,39 +6338,32 @@ msgstr ""
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg.in:77
-#, fuzzy, kde-format
-#| msgid "The most recently selected folder in the folder selection dialog."
+#, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr ""
 "Le dernier dossier sélectionné dans la fenêtre de sélection des dossiers."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
-#, fuzzy, kde-format
-#| msgid "Show Unread Email in TaskBar"
+#, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Afficher les courriels non lus dans la barre de tâches"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
-#, fuzzy, kde-format
-#| msgid "Specify e&ditor:"
+#, kde-format
 msgid "Specify e&ditor:"
 msgstr "&Nom de l'éditeur :"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.in:104
-#, fuzzy, kde-format
-#| msgid "Use e&xternal editor instead of composer"
+#, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Utiliser un éditeur de message e&xterne"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.in:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the number of custom MIME header fields to be inserted in "
-#| "messages (for internal use only)"
+#, kde-format
 msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
@@ -6390,10 +6373,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.in:111
-#, fuzzy, kde-format
-#| msgid ""
-#| "The threshold for when to warn the user that a folder is nearing its "
-#| "quota limit."
+#, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
@@ -6403,38 +6383,31 @@ msgstr ""
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:115
-#, fuzzy, kde-format
-#| msgid "Empty the local trash folder on program exit"
+#, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Vider la corbeille locale en quittant le programme"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.in:119
-#, fuzzy, kde-format
-#| msgid "Delete messages without confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Supprimer les messages sans confirmation"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
-#, fuzzy, kde-format
-#| msgid "Allow to start specific folder"
+#, kde-format
 msgid "Allow to start specific folder"
 msgstr "Définir un dossier de démarrage"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg.in:127
-#, fuzzy, kde-format
-#| msgid "Specify the folder to open when the program is started"
+#, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Définir un dossier à ouvrir lorsque le programme démarre"
 
 #. i18n: ectx: label, entry (AutoExpiring), group (General)
 #: settings/kmail.kcfg.in:134
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies whether the folders will expire in the background (for internal "
-#| "use only)"
+#, kde-format
 msgid ""
 "Specifies whether the folders will expire in the background (for internal "
 "use only)"
@@ -6444,10 +6417,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
 #: settings/kmail.kcfg.in:138
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies whether this is the very first time that the application is run "
-#| "(for internal use only)"
+#, kde-format
 msgid ""
 "Specifies whether this is the very first time that the application is run "
 "(for internal use only)"
@@ -6457,10 +6427,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.in:163
-#, fuzzy, kde-format
-#| msgid ""
-#| "Whether to ask if users wants to enable Unified Mailboxes if more than "
-#| "one email accounts are detected. We only ever ask once."
+#, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
@@ -6471,10 +6438,7 @@ msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
 #: settings/kmail.kcfg.in:171
-#, fuzzy, kde-format
-#| msgid ""
-#| "This value is used to decide whether the KMail Introduction should be "
-#| "displayed."
+#, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
@@ -6482,33 +6446,26 @@ msgstr "Ceci permet d'afficher ou non l'introduction de KMail."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
-#, fuzzy, kde-format
-#| msgid "Show folder quick search line edit"
+#, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Afficher le champ de recherche rapide"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.in:186
-#, fuzzy, kde-format
-#| msgid "Forward Inline As Default."
+#, kde-format
 msgid "Forward Inline As Default."
 msgstr "Transmettre par défaut dans le corps du message."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.in:189
-#, fuzzy, kde-format
-#| msgid "Warn if the number of recipients is more than:"
+#, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Avertir si le nombre de destinataires dépasse : "
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
 #: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
-#, fuzzy, kde-format
-#| msgid ""
-#| "If the number of recipients is larger than this value, KMail will warn "
-#| "and ask for a confirmation before sending the mail. The warning can be "
-#| "turned off."
+#, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
 "ask for a confirmation before sending the mail. The warning can be turned "
@@ -6520,34 +6477,25 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:212
-#, fuzzy, kde-format
-#| msgid "Confirm &before send"
+#, kde-format
 msgid "Confirm &before send"
 msgstr "&Confirmer avant l'envoi"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
-#, fuzzy, kde-format
-#| msgid "Check spelling before send"
+#, kde-format
 msgid "Check spelling before send"
 msgstr "Vérification de l'orthographe avant envoi"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
-#, fuzzy, kde-format
-#| msgid "Automatically request &message disposition notifications"
+#, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Automatiquement demander un accusé de réception du &message"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6564,18 +6512,13 @@ msgstr ""
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
-#, fuzzy, kde-format
-#| msgid "Autosave interval:"
+#, kde-format
 msgid "Autosave interval:"
 msgstr "Intervalle d'enregistrement automatique :"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
-#, fuzzy, kde-format
-#| msgid ""
-#| "A backup copy of the text in the composer window can be created "
-#| "regularly. The interval used to create the backups is set here. You can "
-#| "disable autosaving by setting it to the value 0."
+#, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
 "The interval used to create the backups is set here. You can disable "
@@ -6588,9 +6531,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.in:254
-#, fuzzy, kde-format
-#| msgid ""
-#| "Show the Text Snippet Management and Insertion Panel in the composer."
+#, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 "Afficher le gestionnaire de fragments de texte et le panneau d'insertion "
@@ -6598,8 +6539,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.in:260
-#, fuzzy, kde-format
-#| msgid "When check, sent messages will be stored in the encrypted form"
+#, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
 "Lors de la vérification, les messages envoyés seront enregistrés dans un "
@@ -6607,29 +6547,25 @@ msgstr ""
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
 #: settings/kmail.kcfg.in:264
-#, fuzzy, kde-format
-#| msgid "A list of all the recently used URLs"
+#, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Une liste de toutes les adresses dernièrement utilisées"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.in:270
-#, fuzzy, kde-format
-#| msgid "A list of all the recently used encodings"
+#, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Une liste de tous les encodages dernièrement utilisés"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:276
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto label indicator"
 msgstr "Afficher l'indicateur de chiffrement"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto ownertrust icons"
+#, kde-format
 msgid "Show crypto ownertrust icons"
 msgstr ""
 "Afficher les icônes du niveau de confiance de l'utilisateur envers la "
@@ -6637,23 +6573,20 @@ msgstr ""
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
-#, fuzzy, kde-format
-#| msgid "Validate Send Default Shortcut"
+#, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Raccourci par défaut de confirmation d'envoi"
 
 #. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
 #: settings/kmail.kcfg.in:301
-#, fuzzy, kde-format
-#| msgid "The size of the identity dialog (for internal use only)"
+#, kde-format
 msgid "The size of the identity dialog (for internal use only)"
 msgstr ""
 "La taille de la fenêtre d'identité (pour une utilisation interne uniquement)"
 
 #. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
 #: settings/kmail.kcfg.in:305
-#, fuzzy, kde-format
-#| msgid "The width of the search window (for internal use only)"
+#, kde-format
 msgid "The width of the search window (for internal use only)"
 msgstr ""
 "La largeur de la fenêtre de recherche (pour une utilisation interne "
@@ -6661,8 +6594,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
 #: settings/kmail.kcfg.in:309
-#, fuzzy, kde-format
-#| msgid "The height of the search window (for internal use only)"
+#, kde-format
 msgid "The height of the search window (for internal use only)"
 msgstr ""
 "La hauteur de la fenêtre de recherche (pour une utilisation interne "
@@ -6670,8 +6602,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
 #: settings/kmail.kcfg.in:313
-#, fuzzy, kde-format
-#| msgid "The width of the Configure KMail dialog (for internal use only)"
+#, kde-format
 msgid "The width of the Configure KMail dialog (for internal use only)"
 msgstr ""
 "La largeur de la fenêtre de configuration de KMail (pour une utilisation "
@@ -6679,8 +6610,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
 #: settings/kmail.kcfg.in:317
-#, fuzzy, kde-format
-#| msgid "The height of the Configure KMail dialog (for internal use only)"
+#, kde-format
 msgid "The height of the Configure KMail dialog (for internal use only)"
 msgstr ""
 "La hauteur de la fenêtre de configuration de KMail (pour une utilisation "
@@ -6688,101 +6618,85 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message preview pane:"
+#, kde-format
 msgid "Message preview pane:"
 msgstr "Panneau d'aperçu de messages :"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
-#, fuzzy, kde-format
-#| msgid "Do not show a message preview pane"
+#, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Ne pas afficher"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:349
-#, fuzzy, kde-format
-#| msgid "Show the message preview pane below the message list"
+#, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Afficher en dessous de la liste des messages"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:352
-#, fuzzy, kde-format
-#| msgid "Show the message preview pane next to the message list"
+#, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Afficher à côté de la liste des messages"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder list:"
+#, kde-format
 msgid "Folder list:"
 msgstr "Liste de dossiers :"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
-#, fuzzy, kde-format
-#| msgid "Long folder list"
+#, kde-format
 msgid "Long folder list"
 msgstr "Longue liste de dossiers"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:365
-#, fuzzy, kde-format
-#| msgid "Short folder list"
+#, kde-format
 msgid "Short folder list"
 msgstr "Liste de dossiers courte"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
-#| msgid "Message template for new message"
+#, kde-format
 msgid "Message template for new message"
 msgstr "Modèle pour les nouveaux messages"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
-#, fuzzy, kde-format
-#| msgid "Message template for reply"
+#, kde-format
 msgid "Message template for reply"
 msgstr "Modèle de message pour la réponse"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
-#, fuzzy, kde-format
-#| msgid "Message template for reply to all"
+#, kde-format
 msgid "Message template for reply to all"
 msgstr "Modèle de message pour la réponse à tous"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
-#, fuzzy, kde-format
-#| msgid "Message template for forward"
+#, kde-format
 msgid "Message template for forward"
 msgstr "Modèle de message pour la transmission"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
-#, fuzzy, kde-format
-#| msgid "Quote characters"
+#, kde-format
 msgid "Quote characters"
 msgstr "Marques de citation"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.in:409
-#, fuzzy, kde-format
-#| msgid "Specifies the policy used when displaying policy"
+#, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Définit la politique utilisée à l'affichage de celle-ci"
 
 #. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:417
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the collection field in the Search Window dialog "
-#| "(for internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the collection field in the Search Window dialog (for "
 "internal use only)"
@@ -6792,10 +6706,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:421
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the subject field in the Search Window dialog (for "
-#| "internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the subject field in the Search Window dialog (for "
 "internal use only)"
@@ -6805,10 +6716,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:425
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the sender field in the Search Window dialog (for "
-#| "internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the sender field in the Search Window dialog (for "
 "internal use only)"
@@ -6818,10 +6726,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:429
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the receiver field in the Search Window dialog "
-#| "(for internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the receiver field in the Search Window dialog (for "
 "internal use only)"
@@ -6831,10 +6736,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:433
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the date field in the Search Window dialog (for "
-#| "internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the date field in the Search Window dialog (for "
 "internal use only)"
@@ -6844,10 +6746,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
 #: settings/kmail.kcfg.in:437
-#, fuzzy, kde-format
-#| msgid ""
-#| "Specifies the width of the folder field in the Search Window dialog (for "
-#| "internal use only)"
+#, kde-format
 msgid ""
 "Specifies the width of the folder field in the Search Window dialog (for "
 "internal use only)"

@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-23 00:38+0000\n"
-"PO-Revision-Date: 2024-03-10 11:15+0530\n"
+"PO-Revision-Date: 2024-03-24 18:16+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.02.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -216,10 +216,8 @@ msgid "Smiley-->emoticons processing"
 msgstr ""
 
 #: aboutdata.cpp:94
-#, fuzzy
-#| msgid "Mark Message as &Important"
 msgid "Improve 'Mark Message as' popup menu"
-msgstr "Mark Message as &Important"
+msgstr "'அஞ்சலைக் குறி' பட்டியை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
@@ -234,10 +232,8 @@ msgid "Optionally compress attachments"
 msgstr "உடனிணைப்புகளை வேண்டுமானால் சுருக்குவது"
 
 #: aboutdata.cpp:107
-#, fuzzy
-#| msgid "Show s&pam status in fancy headers"
 msgid "Added spam status to fancy headers"
-msgstr "தலைப்புகளில் வேண்டாத அஞ்சல் நிலையைக் காட்டு"
+msgstr "அலங்கார தலைப்புகளில் ஸ்பேம் நிலையைச் சேர்த்தார்"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
@@ -256,10 +252,8 @@ msgid "Major contributor to Akonadi"
 msgstr ""
 
 #: aboutdata.cpp:116
-#, fuzzy
-#| msgid "Documentation"
 msgid "Documentation, still active"
-msgstr "ஆவணமாக்கம்"
+msgstr "ஆவணமாக்கம், இன்னும் பங்களிக்கிறார்"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
@@ -316,24 +310,20 @@ msgid "Substantial contributor"
 msgstr ""
 
 #: aboutdata.cpp:149
-#, fuzzy
 msgid "Improve configuration dialog"
-msgstr "கையொப்ப கட்டமைப்பு"
+msgstr "அமைப்புகள் சாளரத்தை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:150
-#, fuzzy
 msgid "Improved message importing"
-msgstr "1 அஞ்சல், %2."
+msgstr "அஞ்சல் இறக்குமதியை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:151
-#, fuzzy
-#| msgid "Important Message"
 msgid "Improve status bar messages"
-msgstr "முக்கியசெய்தி"
+msgstr "நிலைப்பட்டையிலுள்ள தகவல்களை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr ""
+msgstr "சாளர அளவுமாற்றத்திலிருந்த சிக்கலை சரிசெய்தார்"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
@@ -404,7 +394,7 @@ msgstr "முகவரிக்கு பல மறையாக்க விச
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
-msgstr ""
+msgstr "சின்ன/பட செயல்முறையாக்கத்தை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:190
 msgid "Fixed many IMAP bugs"
@@ -4209,7 +4199,7 @@ msgstr "அஞ்சலை பின்னர் அனுப்பும் ச
 #: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr ""
+msgstr "அஞ்சல் ஒன்றிணைப்பு சேவை தன்னைப் பதிவிடவில்லை."
 
 #: kmlaunchexternalcomponent.cpp:74
 #, kde-format
@@ -5474,6 +5464,8 @@ msgstr "அஞ்சல்களில் குறிப்புகளை ச�
 #: kmreaderwin.cpp:271
 msgid "Less GUI freezes, mail checks happen in the background"
 msgstr ""
+"அஞ்சல்களைப் பெறுவது பின்னணி சேவையால் கையாளப்படுவதால் இடைமுகப்பு பதிலளிக்காமல் இருப்பது "
+"குறைந்துள்ளது"
 
 #: kmreaderwin.cpp:272
 msgid "Plugins support"
@@ -5484,10 +5476,8 @@ msgid "New HTML renderer (QtWebEngine)"
 msgstr "புதிய HTML வரைநிரல் (QtWebEngine)"
 
 #: kmreaderwin.cpp:274
-#, fuzzy
-#| msgid "Confirm &before send"
 msgid "Added Check for Phishing URL"
-msgstr "&அனுப்பு முன் உறுதிசெய்"
+msgstr "ஏமாற்று முகவரியா என சோதிக்கும் அம்சம் சேர்க்கப்பட்டுள்ளது"
 
 #: kmreaderwin.cpp:275
 msgid "Added Check DKIM"
@@ -6271,10 +6261,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
-#, fuzzy, kde-format
-#| msgid "Show quick search line edit"
+#, kde-format
 msgid "Show folder quick search line edit"
-msgstr "வேக தேடல் வரி திருத்தியை காட்டு"
+msgstr "அடைவு வேகத் தேடல் வரி திருத்தியை காட்டு"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.in:186
@@ -6426,10 +6415,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "அஞ்சல் முன்பார்வை பலகை"
+msgstr "அஞ்சல் முன்பார்வை பலகை:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6451,10 +6439,9 @@ msgstr "அஞ்சல் முன்பார்வை பலகையை அ
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "அடைவுப் பட்டியல்"
+msgstr "அடைவுப் பட்டியல்:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
@@ -6929,17 +6916,7 @@ msgstr "அஞ்சல்களை மறையாக்கம் செய்�
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Store Messages Encrypted</h1>\n"
-#| "When this box is checked, sent messages are stored encrypted like they "
-#| "were sent. This is not recommended, as you will not be able to read the "
-#| "messages any longer if a necessary certificate expires.\n"
-#| "<p>\n"
-#| "However, there may be local rules that require you to turn this option "
-#| "on. When in doubt, check with your local administrator.\n"
-#| "</qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Store Messages Encrypted</h1>\n"
@@ -6995,7 +6972,7 @@ msgstr "மறையாக்கம்/கையொப்ப நிலையை 
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
-msgstr ""
+msgstr "மறையாக்கச் சாவியின் உரிமாயாளரின் நம்பக நிலையைக் காட்டு"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
@@ -7055,8 +7032,8 @@ msgstr ""
 "<h1>கையெழுத்து சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "குறைந்தபட்ச நாளை தேர்ந்தெடுத்தால் எச்சரிக்காமல் ஏற்றுக்கொள்ளவும்.\n"
 "<p>\n"
-"SPHINX அமைப்புகள் 14 நாளுக்கு பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
+"SPHINX அமைப்பாக 14 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:205
