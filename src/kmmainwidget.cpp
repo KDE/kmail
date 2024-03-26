@@ -4760,7 +4760,7 @@ void KMMainWidget::updateQuickSearchLineText()
 {
     // If change change shortcut
     mMessagePane->setQuickSearchClickMessage(
-        i18nc("Show shortcut for focus quick search. Don't change it", "Search... <%1>", mQuickSearchAction->shortcut().toString()));
+        i18nc("Show shortcut for focus quick search. Don't change it", "Search... <%1>", mQuickSearchAction->shortcut().toString(QKeySequence::NativeText)));
 }
 
 void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format)
