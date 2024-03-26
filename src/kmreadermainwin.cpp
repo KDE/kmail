@@ -531,7 +531,7 @@ void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
             menuBar()->show();
         } else {
             if (!dontShowWarning) {
-                const QString accel = mHideMenuBarAction->shortcut().toString();
+                const QString accel = mHideMenuBarAction->shortcut().toString(QKeySequence::NativeText);
                 KMessageBox::information(this,
                                          i18n("<qt>This will hide the menu bar completely."
                                               " You can show it again by typing %1.</qt>",
