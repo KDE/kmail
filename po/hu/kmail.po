@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-23 02:26+0000\n"
-"PO-Revision-Date: 2024-02-08 23:08+0100\n"
+"PO-Revision-Date: 2024-03-26 11:41+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.04.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6200,10 +6200,9 @@ msgstr "A mappaválasztó párbeszédablakban legutoljára kiválasztott mappa."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
-#, fuzzy, kde-format
-#| msgid "Show unread mail in system tray"
+#, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr "Olvasatlan levél megjelenítése a rendszertálcán"
+msgstr "Olvasatlan levél megjelenítése a feladatsávon"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
@@ -6245,10 +6244,9 @@ msgstr "A helyi kuka ürítése a program kilépésekor"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.in:119
-#, fuzzy, kde-format
-#| msgid "Delete Sieve Script Confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "Megerősítés Sieve-szkript törléséhez"
+msgstr "Üzenetek törlése megerősítés nélkül"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
@@ -6287,6 +6285,8 @@ msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
 msgstr ""
+"Rákérdezzen-e a felhasználónál az Egyesített postafiókok bekapcsolására, ha "
+"több, mint egy postafiók található. Csak egyszer kérdezi meg."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
 #: settings/kmail.kcfg.in:171
@@ -6411,10 +6411,9 @@ msgstr "Titkossági szint jelző megjelenítése"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Titkossági szint jelző megjelenítése"
+msgstr "Titkosítási tulajdonosmegbízhatóság ikon megjelenítése"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
@@ -6454,10 +6453,9 @@ msgstr "A KMail beállítóablakának magassága (csak belső használatra)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Előnézeti panel"
+msgstr "Előnézeti panel:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6479,10 +6477,9 @@ msgstr "Az üzenetlista mellett"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Mappalista"
+msgstr "Mappalista:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362

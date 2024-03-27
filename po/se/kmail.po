@@ -5968,13 +5968,13 @@ msgstr ""
 #: settings/kmail.kcfg.in:100
 #, kde-format
 msgid "Specify e&ditor:"
-msgstr ""
+msgstr "Mearrit čállin&prográmma:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.in:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr ""
+msgstr "G&eavat eará čállinprográmma go KMail:a iežas"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.in:108
@@ -6082,7 +6082,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:212
 #, kde-format
 msgid "Confirm &before send"
-msgstr ""
+msgstr "N&anne ovdal sáddema"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
@@ -6111,7 +6111,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:246
 #, kde-format
 msgid "Autosave interval:"
-msgstr ""
+msgstr "Autovurkengaskkadat:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6241,10 +6241,9 @@ msgstr "Čájet máhpáid olles bálgáid"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
-#| msgid "Message List - Important Messages"
+#, kde-format
 msgid "Message template for new message"
-msgstr "Reivelistu – Dehálaš reivvet"
+msgstr "Reivemálle ođđa reivve várás"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
