@@ -134,7 +134,7 @@ void KMSystemTray::initialize(int count)
 void KMSystemTray::updateCount(int count)
 {
     if (count == 0) {
-        setIconByName(QStringLiteral("kmail"));
+        setIconByName(QStringLiteral("kmail-symbolic"));
     } else {
         setIconByName(QStringLiteral("mail-mark-unread-new"));
     }
