@@ -70,6 +70,7 @@ install(TARGETS akonadi_mailmerge_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+akonadi_install_systemd_unit(AGENT TARGET akonadi_mailmerge_agent DESCRIPTION "Akonadi Mail Merge Agent")
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
 #    SOURCES ${mailmergeagentconfig_SRCS}

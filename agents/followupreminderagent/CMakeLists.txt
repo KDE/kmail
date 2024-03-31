@@ -98,6 +98,8 @@ endif()
 
 install(FILES akonadi_followupreminder_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 
+akonadi_install_systemd_unit(AGENT TARGET akonadi_followupreminder_agent DESCRIPTION "Akonadi Follow-up Reminder Agent")
+
 ########## Configuration ##############
 
 set(followupreminderagentconfig_SRCS

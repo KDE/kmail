@@ -62,4 +62,6 @@ install(TARGETS akonadi_unifiedmailbox_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 
 install(FILES unifiedmailboxagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 
+akonadi_install_systemd_unit(AGENT TARGET akonadi_unifiedmailbox_agent DESCRIPTION "Akonadi Unified Mailbox Agent")
+
 

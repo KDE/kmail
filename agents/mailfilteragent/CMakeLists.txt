@@ -88,5 +88,6 @@ target_link_libraries(akonadi_mailfilter_agent
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES mailfilteragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+akonadi_install_systemd_unit(AGENT TARGET akonadi_mailfilter_agent DESCRIPTION "Akonadi Mail Filter Agent")
 
 add_subdirectory(tests)

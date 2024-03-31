@@ -74,7 +74,7 @@ install(TARGETS akonadi_archivemail_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
 
 install(FILES archivemailagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_archivemail_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
-
+akonadi_install_systemd_unit(AGENT TARGET akonadi_archivemail_agent DESCRIPTION "Akonadi Archive Mail Agent")
 
 if (BUILD_TESTING)
     add_subdirectory(autotests)
