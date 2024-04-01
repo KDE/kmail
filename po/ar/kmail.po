@@ -6,13 +6,13 @@
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, 2016, 2018.
-# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022, 2023.
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 02:54+0000\n"
-"PO-Revision-Date: 2023-08-19 22:12+0400\n"
+"PO-Revision-Date: 2024-03-31 09:52+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-POOTLE-MTIME: 1381756262.0\n"
 
 #, kde-format
@@ -6461,10 +6461,9 @@ msgstr "ارتفاع حواريّ ضبط بريدك (للاستخدام الدا
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "لوحة معاينة الرِّسالة"
+msgstr "لوحة معاينة الرِّسالة:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6486,10 +6485,9 @@ msgstr "أظهر لوحة معاينة الرِّسالة بعد قائمة ال
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "قائمة المجلّدات"
+msgstr "قائمة المجلدات:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
