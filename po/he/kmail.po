@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:40+0000\n"
-"PO-Revision-Date: 2024-03-22 09:12+0200\n"
+"PO-Revision-Date: 2024-04-01 00:09+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4945,9 +4945,9 @@ msgid "Manage &Sieve Scripts..."
 msgstr "&ניהול סקריפטים של Sieve…"
 
 #: kmmainwidget.cpp:3414
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Add Account..."
-msgstr "הוספת חשבון"
+msgstr "הוספת &חשבון…"
 
 #: kmmainwidget.cpp:3419
 #, kde-format
@@ -4975,9 +4975,9 @@ msgid "Expire..."
 msgstr "הפג..."
 
 #: kmmainwidget.cpp:3448
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Favorite Folder..."
-msgstr "תיקייה &חדשה..."
+msgstr "הוספת תיקייה מועדפת…"
 
 #: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
@@ -4985,10 +4985,9 @@ msgid "Serverside Subscription..."
 msgstr "רישום..."
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
-#, fuzzy, kde-format
-#| msgid "Appl&y All Filters"
+#, kde-format
 msgid "Apply All Filters"
-msgstr "ה&חל את כל מסננים"
+msgstr "החלת כל המסננים"
 
 #: kmmainwidget.cpp:3481
 #, fuzzy, kde-format
@@ -4996,9 +4995,9 @@ msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "ה&חל את כל מסננים"
 
 #: kmmainwidget.cpp:3486
-#, fuzzy, kde-format
+#, kde-format
 msgid "Import/Export KMail Data..."
-msgstr "ה&גדרת KMail..."
+msgstr "ייבוא/ייצוא נתוני KMail…"
 
 #: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
@@ -5006,14 +5005,14 @@ msgid "New AddressBook Contact..."
 msgstr "&פנקס כתובות..."
 
 #: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
-#, fuzzy, kde-format
+#, kde-format
 msgid "Account &Settings"
-msgstr "&שליחה"
+msgstr "הגדרות &חשבון"
 
 #: kmmainwidget.cpp:3504
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restart Account"
-msgstr "הוספת חשבון"
+msgstr "איפוס חשבון"
 
 #: kmmainwidget.cpp:3520
 #, kde-format
@@ -5021,9 +5020,9 @@ msgid "Copy Message to Folder"
 msgstr "העתקת הודעה לתיקייה"
 
 #: kmmainwidget.cpp:3526
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to Folder..."
-msgstr "העתק לתיקייה"
+msgstr "קפיצה לתיקייה…"
 
 #: kmmainwidget.cpp:3532
 #, kde-format
@@ -5046,14 +5045,14 @@ msgid "Select Folder with Focus"
 msgstr "בחירת התיקייה שעליה המיקוד"
 
 #: kmmainwidget.cpp:3557
-#, fuzzy, kde-format
+#, kde-format
 msgid "Focus on First Folder"
-msgstr "התמקד בתיקייה הבאה"
+msgstr "התמקדות על התיקייה הראשונה"
 
 #: kmmainwidget.cpp:3563
-#, fuzzy, kde-format
+#, kde-format
 msgid "Focus on Last Folder"
-msgstr "התמקד בתיקייה הבאה"
+msgstr "התמקדות על התיקייה האחרונה"
 
 #: kmmainwidget.cpp:3569
 #, kde-format
@@ -5066,14 +5065,14 @@ msgid "Focus on Previous Message"
 msgstr "התמקדות בהודעה הקודמת"
 
 #: kmmainwidget.cpp:3581
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select First Message"
-msgstr "בחר את &כל ההודעות"
+msgstr "בחירת ההודעה הראשונה"
 
 #: kmmainwidget.cpp:3587
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select Last Message"
-msgstr "בחר את &כל ההודעות"
+msgstr "בחירת ההודעה האחרונה"
 
 #: kmmainwidget.cpp:3593
 #, kde-format
@@ -5081,19 +5080,19 @@ msgid "Select Message with Focus"
 msgstr "העברת ההודעת שעליה המיקוד"
 
 #: kmmainwidget.cpp:3600
-#, fuzzy, kde-format
+#, kde-format
 msgid "Set Focus to Quick Search"
-msgstr "אפס חיפוש מהיר"
+msgstr "הגדרת המיקוד לחיפוש המהיר"
 
 #: kmmainwidget.cpp:3608
-#, fuzzy, kde-format
+#, kde-format
 msgid "Extend Selection to Previous Message"
-msgstr "התמקד בהודעה הקודמת"
+msgstr "הרחבת הבחירה להודעה הקודמת"
 
 #: kmmainwidget.cpp:3614
-#, fuzzy, kde-format
+#, kde-format
 msgid "Extend Selection to Next Message"
-msgstr "התמקד בהודעה הבאה"
+msgstr "הרחבת הבחירה להודעה הבאה"
 
 #: kmmainwidget.cpp:3621
 #, kde-format
@@ -5111,22 +5110,20 @@ msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
 #: kmmainwidget.cpp:3642
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgid "Previous Selected Folder"
-msgstr "התיקייה הקודמת שלא &נקראה"
+msgstr "התיקייה הקודמת שנבחרה"
 
 #: kmmainwidget.cpp:3649
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Next Selected Folder"
-msgstr "מחיקת תיקייה"
+msgstr "התיקייה הבאה שנבחרה"
 
 #: kmmainwidget.cpp:3678
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
-msgstr "תיקייה חדשה"
+msgstr "הוספת תיקייה מועדפת"
 
 #: kmmainwidget.cpp:4099
 #, kde-format
@@ -5139,9 +5136,9 @@ msgid "Edit Search..."
 msgstr "עריכת חיפוש…"
 
 #: kmmainwidget.cpp:4151
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure Unified Mailbox"
-msgstr "ה&גדרת KMail..."
+msgstr "הגדרת תיבת דוא״ל מאוחדת"
 
 #: kmmainwidget.cpp:4162
 #, kde-format
@@ -5185,8 +5182,7 @@ msgstr ""
 "שהמערכת שלך תהיה פגיעה לחולשות אבטחה קיימות או עתידיות אחרות."
 
 #: kmmainwidget.cpp:4774
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "אזהרת אבטחה"
@@ -5222,19 +5218,19 @@ msgid "Cancel"
 msgstr ""
 
 #: kmmainwidget.cpp:4961
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do you want to restart Akonadi?"
-msgstr "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
+msgstr "להתחיל את Akonadi מחדש?"
 
 #: kmmainwidget.cpp:4962
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restart Akonadi"
-msgstr "הוספת חשבון"
+msgstr "הפעלת Akonadi מחדש"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
+#, kde-format
 msgid "Restart"
-msgstr "הוספת חשבון"
+msgstr "להפעיל מחדש"
 
 #: kmmainwidget.cpp:4970
 #, kde-format
@@ -5242,9 +5238,9 @@ msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:51
-#, fuzzy, kde-format
+#, kde-format
 msgid "Starting..."
-msgstr "רישום..."
+msgstr "מופעל…"
 
 #: kmreadermainwin.cpp:491 util.cpp:148
 #, kde-format
@@ -5278,9 +5274,9 @@ msgid "New Message To..."
 msgstr "הודעה חדשה אל…"
 
 #: kmreaderwin.cpp:127
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reply To..."
-msgstr "שליחת תשובה אל..."
+msgstr "תגובה אל…"
 
 #: kmreaderwin.cpp:133
 #, kde-format
@@ -5593,10 +5589,10 @@ msgid "Sync All"
 msgstr "&שלח דואר"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:42
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
-msgstr "הכל"
+msgstr "הכול"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:102
 #, kde-format
@@ -5604,9 +5600,9 @@ msgid "Kontact Summary View"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 1997-2005, KMail המפתחים של"
+msgstr "(c) 2003‏-2024 מפתחי Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
@@ -5624,9 +5620,9 @@ msgid "Tobias Koenig"
 msgstr ""
 
 #: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:136
-#, fuzzy, kde-format
+#, kde-format
 msgid "Retrieving folder properties"
-msgstr "מאחזר רשימת תיקיות"
+msgstr "מאפייני התיקייה מתקבלים"
 
 #: manageshowcollectionproperties.cpp:102
 #, kde-format
@@ -5634,7 +5630,7 @@ msgid "Network is unconnected. Folder information cannot be updated."
 msgstr ""
 
 #: manageshowcollectionproperties.cpp:183
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "מאפייני התיקייה %1"
@@ -5677,10 +5673,10 @@ msgid "&Inline..."
 msgstr "בצורה &מוטבעת..."
 
 #: messageactions.cpp:70
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment..."
-msgstr "בצורת מ&צורף..."
+msgstr "כקובץ מ&צורף…"
 
 #: messageactions.cpp:71
 #, kde-format
@@ -5689,10 +5685,9 @@ msgid "&Redirect..."
 msgstr "ה&פנייה…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message t&o Mailing-List..."
+#, kde-format
 msgid "New Message to Recipients..."
-msgstr "הודעה חדשה לרשימת־ה&דיוור..."
+msgstr "הודעה חדשה לנמענים…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -5706,21 +5701,20 @@ msgid "&Forward"
 msgstr "ה&עברה"
 
 #: messageactions.cpp:75
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
-msgstr "השב &לרשימת־הדיוור..."
+msgstr "רשימת &דיוור"
 
 #: messageactions.cpp:76 messageactions.cpp:371
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Note..."
-msgstr "הוספה..."
+msgstr "הוספת הערה…"
 
 #: messageactions.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Edit Message"
+#, kde-format
 msgid "&Edit As New"
-msgstr "&ערוך הודעה"
+msgstr "עריכה כ&חדשה"
 
 #: messageactions.cpp:78
 #, kde-format
@@ -5728,9 +5722,9 @@ msgid "Filter on Mailing-&List..."
 msgstr "סינון לפי &רשימת דיוור…"
 
 #: messageactions.cpp:79
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Followup Reminder..."
-msgstr "&חיפוש הודעות..."
+msgstr "הוספת תזכורת לטיפול…"
 
 #: messageactions.cpp:81
 #, kde-format
@@ -5738,9 +5732,9 @@ msgid "Send A&gain..."
 msgstr "שליחה חו&זרת…"
 
 #: messageactions.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgid "New Message From &Template"
-msgstr "אין הודעות חדשות בשרת"
+msgstr "הודעה חדשה מ&תבנית"
 
 #: messageactions.cpp:84
 #, kde-format
@@ -5748,15 +5742,15 @@ msgid "Export to PDF..."
 msgstr ""
 
 #: messageactions.cpp:85
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "הודעה חדשה אל..."
+msgstr "העברת הודעה לארכיון"
 
 #: messageactions.cpp:373
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit Note..."
-msgstr "עריכה..."
+msgstr "עריכת הערה…"
 
 #: messageactions.cpp:418
 #, kde-format
@@ -5769,19 +5763,19 @@ msgid "<unknown>"
 msgstr ""
 
 #: messageactions.cpp:454
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mailing List Name: %1"
-msgstr "השב &לרשימת־הדיוור..."
+msgstr "שם ברשימת הדיוור: %1"
 
 #: messageactions.cpp:457
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open Message in List Archive"
-msgstr "הודעה של OpenPGP - חתימה לא תקינה"
+msgstr "פתיחת הודעה בארכיון הרשימה"
 
 #: messageactions.cpp:460
-#, fuzzy, kde-format
+#, kde-format
 msgid "Post New Message"
-msgstr "הודעה חדשה"
+msgstr "פרסום הודעה חדשה"
 
 #: messageactions.cpp:463
 #, kde-format
@@ -5794,15 +5788,15 @@ msgid "Request Help"
 msgstr ""
 
 #: messageactions.cpp:469
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
-msgstr "אנשי קשר"
+msgstr "יצירת קשר עם הבעלים"
 
 #: messageactions.cpp:475
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unsubscribe from List"
-msgstr "תיאור"
+msgstr "ביטול מינוי מהרשימה"
 
 #: messageactions.cpp:484
 #, kde-format
@@ -6202,9 +6196,9 @@ msgstr "שא&ל לפני שליחה"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
-#, fuzzy, kde-format
+#, kde-format
 msgid "Check spelling before send"
-msgstr "שא&ל לפני שליחה"
+msgstr "בדיקת האיות לפני השליחה"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
@@ -6225,9 +6219,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
-#, fuzzy, kde-format
+#, kde-format
 msgid "Autosave interval:"
-msgstr "שירה אוטומטית כל:"
+msgstr "הפרש בין שמירות אוטומטיות:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6336,46 +6330,45 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "רשימת התיקיות"
+msgstr "רשימת תיקיות:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
-#, fuzzy, kde-format
+#, kde-format
 msgid "Long folder list"
-msgstr "רשימת תיקיות &ארוכה"
+msgstr "רשימת תיקיות ארוכה"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:365
-#, fuzzy, kde-format
+#, kde-format
 msgid "Short folder list"
-msgstr "רשימת תיקיות &קצרה"
+msgstr "רשימת תיקיות קצרה"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for new message"
-msgstr "רשימת ההודעות - הודעות חדשות"
+msgstr "תבנית הודעה להודעה חדשה"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for reply"
-msgstr "רשימת ההודעות - הודעות חדשות"
+msgstr "תבנית הודעה לתגובה"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for reply to all"
-msgstr "רשימת ההודעות - הודעות חדשות"
+msgstr "תבנית הודעה לתגובה לכולם"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message template for forward"
-msgstr "רשימת ההודעות - הודעות חדשות"
+msgstr "תבנית הודעה להעברה"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394

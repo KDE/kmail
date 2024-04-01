@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-03-28 00:40+0000\n"
-"PO-Revision-Date: 2024-02-10 21:33+0400\n"
+"PO-Revision-Date: 2024-03-31 09:52+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -5703,10 +5703,9 @@ msgid "Kontact Summary View"
 msgstr "عرض ملخص متراسلك"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021  مطوري متراسلك"
+msgstr "(c) 2003-2024  مطوري متراسلك"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
@@ -6437,10 +6436,9 @@ msgstr "ارتفاع حواريّ ضبط بريدك (للاستخدام الدا
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "لوحة معاينة الرِّسالة"
+msgstr "لوحة معاينة الرِّسالة:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6462,10 +6460,9 @@ msgstr "أظهر لوحة معاينة الرِّسالة بعد قائمة ال
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "قائمة المجلّدات"
+msgstr "قائمة المجلدات:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
