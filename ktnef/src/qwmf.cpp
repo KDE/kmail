@@ -19,8 +19,6 @@
 
 #include "ktnef_debug.h"
 
-bool qwmfDebug = false;
-
 #include "metafuncs.h"
 #include "qwmf.h"
 #include "wmfstruct.h"
