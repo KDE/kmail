@@ -6,6 +6,8 @@
 */
 
 #include "kmsystemtray.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmmainwidget.h"
 #include "unityservicemanager.h"
 #include <Akonadi/NewMailNotifierAttribute>
@@ -229,7 +231,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
                 }
             }
         }
-        QString label = parentName.isEmpty() ? QString() : QString(parentName + QLatin1StringView("->"));
+        QString label = parentName.isEmpty() ? QString() : QString(parentName + "->"_L1);
         label += model->data(index).toString();
         label.replace(QLatin1Char('&'), QStringLiteral("&&"));
         if (count > 0) {

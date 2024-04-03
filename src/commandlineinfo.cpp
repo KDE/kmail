@@ -9,7 +9,7 @@
 #include "kmail_options.h"
 #include "messagecore/stringutil.h"
 #include <QCommandLineParser>
-
+using namespace Qt::Literals::StringLiterals;
 CommandLineInfo::CommandLineInfo() = default;
 
 CommandLineInfo::~CommandLineInfo() = default;
@@ -48,13 +48,13 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
     QStringList newargs;
     bool addAttachmentAttribute = false;
     for (const QString &argument : std::as_const(args)) {
-        if (argument == QLatin1StringView("--attach")) {
+        if (argument == "--attach"_L1) {
             addAttachmentAttribute = true;
         } else {
-            if (argument.startsWith(QLatin1StringView("--"))) {
+            if (argument.startsWith("--"_L1)) {
                 addAttachmentAttribute = false;
             }
-            if (argument.contains(QLatin1Char('@')) || argument.startsWith(QLatin1StringView("mailto:"))) { // address mustn't be trade as a attachment
+            if (argument.contains(QLatin1Char('@')) || argument.startsWith("mailto:"_L1)) { // address mustn't be trade as a attachment
                 addAttachmentAttribute = false;
             }
             if (addAttachmentAttribute) {
@@ -76,7 +76,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         // via D-Bus which apparently executes the application with the original
         // command line arguments and those include "-session ..." if
         // kmail/kontact was restored by session management
-        if (mSubject == QLatin1StringView("ession")) {
+        if (mSubject == "ession"_L1) {
             mSubject.clear();
             mCalledWithSession = true;
         } else {
@@ -151,38 +151,38 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         // not called with "-session foo"
         const QStringList lstPositionalArguments = parser.positionalArguments();
         for (const QString &arg : lstPositionalArguments) {
-            if (arg.startsWith(QLatin1StringView("mailto:"), Qt::CaseInsensitive)) {
+            if (arg.startsWith("mailto:"_L1, Qt::CaseInsensitive)) {
                 const QUrl urlDecoded(QUrl::fromPercentEncoding(arg.toUtf8()));
                 const QList<QPair<QString, QString>> values = MessageCore::StringUtil::parseMailtoUrl(urlDecoded);
                 QString previousKey;
                 for (int i = 0; i < values.count(); ++i) {
                     const QPair<QString, QString> element = values.at(i);
                     const QString key = element.first.toLower();
-                    if (key == QLatin1StringView("to")) {
+                    if (key == "to"_L1) {
                         if (!element.second.isEmpty()) {
                             mTo += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("cc")) {
+                    } else if (key == "cc"_L1) {
                         if (!element.second.isEmpty()) {
                             mCc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("bcc")) {
+                    } else if (key == "bcc"_L1) {
                         if (!element.second.isEmpty()) {
                             mBcc += element.second + QStringLiteral(", ");
                         }
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("subject")) {
+                    } else if (key == "subject"_L1) {
                         mSubject = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("body")) {
+                    } else if (key == "body"_L1) {
                         mBody = element.second;
                         previousKey = key;
-                    } else if (key == QLatin1StringView("in-reply-to")) {
+                    } else if (key == "in-reply-to"_L1) {
                         mInReplyTo = element.second;
                         previousKey.clear();
-                    } else if (key == QLatin1StringView("attachment") || key == QLatin1StringView("attach")) {
+                    } else if (key == "attachment"_L1 || key == "attach"_L1) {
                         if (!element.second.isEmpty()) {
                             mAttachURLs << makeAbsoluteUrl(element.second, workingDir);
                         }
@@ -192,7 +192,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                         // Workaround: https://bugs.kde.org/show_bug.cgi?id=390939
                         // QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
                         // But if we have a "&" unknown key we lost it.
-                        if (previousKey == QLatin1StringView("mBody")) {
+                        if (previousKey == "mBody"_L1) {
                             mBody += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
                         }
                         // Don't clear previous key.

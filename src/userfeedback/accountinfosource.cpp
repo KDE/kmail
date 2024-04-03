@@ -5,6 +5,8 @@
 */
 
 #include "accountinfosource.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <Akonadi/AgentInstance>
 #include <KLocalizedString>
 #include <KUserFeedback/Provider>
@@ -46,17 +48,17 @@ QVariant AccountInfoSource::data()
     int numberOfMbox = 0;
     for (const Akonadi::AgentInstance &type : lst) {
         const QString identifier = type.identifier();
-        if (identifier.startsWith(QLatin1StringView("akonadi_pop3_resource"))) {
+        if (identifier.startsWith("akonadi_pop3_resource"_L1)) {
             numberOfPop3++;
-        } else if (identifier.startsWith(QLatin1StringView("akonadi_imap_resource"))) {
+        } else if (identifier.startsWith("akonadi_imap_resource"_L1)) {
             numberOfImap++;
-        } else if (identifier.startsWith(QLatin1StringView("akonadi_kolab_resource"))) {
+        } else if (identifier.startsWith("akonadi_kolab_resource"_L1)) {
             numberOfKolab++;
-        } else if (identifier.startsWith(QLatin1StringView("akonadi_ews_resource"))) {
+        } else if (identifier.startsWith("akonadi_ews_resource"_L1)) {
             numberOfEws++;
-        } else if (identifier.startsWith(QLatin1StringView("akonadi_maildir_resource"))) {
+        } else if (identifier.startsWith("akonadi_maildir_resource"_L1)) {
             numberOfMaildir++;
-        } else if (identifier.startsWith(QLatin1StringView("akonadi_mbox_resource"))) {
+        } else if (identifier.startsWith("akonadi_mbox_resource"_L1)) {
             numberOfMbox++;
         }
     }

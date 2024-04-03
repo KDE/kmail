@@ -9,6 +9,7 @@
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
@@ -850,12 +851,12 @@ void KMReaderWin::updateHtmlActions()
     } else {
         const QStringList customs = mSearchedAddress.customs();
         for (const QString &custom : customs) {
-            if (custom.contains(QLatin1StringView("MailPreferedFormatting"))) {
+            if (custom.contains("MailPreferedFormatting"_L1)) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
-                mViewAsHtml->setChecked(value == QLatin1StringView("HTML"));
-            } else if (custom.contains(QLatin1StringView("MailAllowToRemoteContent"))) {
+                mViewAsHtml->setChecked(value == "HTML"_L1);
+            } else if (custom.contains("MailAllowToRemoteContent"_L1)) {
                 const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
-                mLoadExternalReference->setChecked((value == QLatin1StringView("TRUE")));
+                mLoadExternalReference->setChecked((value == "TRUE"_L1));
             }
         }
     }

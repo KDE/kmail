@@ -5,6 +5,8 @@
 */
 
 #include "refreshsettringsfinishpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <QHBoxLayout>
 #include <QPlainTextEdit>
 
@@ -13,10 +15,10 @@ RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     , mTextEdit(new QPlainTextEdit(this))
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
+    mainLayout->setObjectName("mainLayout"_L1);
     mainLayout->setContentsMargins({});
 
-    mTextEdit->setObjectName(QLatin1StringView("textedit"));
+    mTextEdit->setObjectName("textedit"_L1);
     mTextEdit->setReadOnly(true);
     mainLayout->addWidget(mTextEdit);
     connect(this, &RefreshSettringsFinishPage::cleanDoneInfo, this, &RefreshSettringsFinishPage::slotCleanDoneInfo);

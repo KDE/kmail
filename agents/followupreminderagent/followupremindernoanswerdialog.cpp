@@ -5,6 +5,8 @@
 */
 
 #include "followupremindernoanswerdialog.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
 #include "followupreminderinfowidget.h"
@@ -42,7 +44,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
 
     auto lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
     mainLayout->addWidget(lab);
-    mWidget->setObjectName(QLatin1StringView("FollowUpReminderInfoWidget"));
+    mWidget->setObjectName("FollowUpReminderInfoWidget"_L1);
     mainLayout->addWidget(mWidget);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close, this);

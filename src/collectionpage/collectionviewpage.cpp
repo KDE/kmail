@@ -5,6 +5,8 @@
 */
 
 #include "collectionviewpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <MailCommon/MailKernel>
 
 #include <Akonadi/EntityDisplayAttribute>
@@ -30,7 +32,7 @@ using namespace MailCommon;
 CollectionViewPage::CollectionViewPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
 {
-    setObjectName(QLatin1StringView("KMail::CollectionViewPage"));
+    setObjectName("KMail::CollectionViewPage"_L1);
     setPageTitle(i18nc("@title:tab View settings for a folder.", "View"));
 }
 

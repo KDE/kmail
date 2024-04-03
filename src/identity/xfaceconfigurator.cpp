@@ -7,6 +7,8 @@
 */
 
 #include "xfaceconfigurator.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "encodedimagepicker.h"
 #include "ui_xfaceconfigurator.h"
 
@@ -88,7 +90,7 @@ void XFaceConfigurator::setFaceEnabled(bool enable)
 QString XFaceConfigurator::xface() const
 {
     QString str = mUi->xFaceConfig->source().trimmed();
-    str.remove(QLatin1StringView("x-face:"), Qt::CaseInsensitive);
+    str.remove("x-face:"_L1, Qt::CaseInsensitive);
     str = str.trimmed();
 
     return str;
@@ -102,7 +104,7 @@ void XFaceConfigurator::setXFace(const QString &text)
 QString XFaceConfigurator::face() const
 {
     QString str = mUi->faceConfig->source().trimmed();
-    str.remove(QLatin1StringView("face:"), Qt::CaseInsensitive);
+    str.remove("face:"_L1, Qt::CaseInsensitive);
     str = str.trimmed();
 
     return str;

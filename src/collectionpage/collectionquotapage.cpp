@@ -7,6 +7,8 @@
  */
 
 #include "collectionquotapage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "collectionquotawidget.h"
 #include <Akonadi/Collection>
 #include <Akonadi/CollectionQuotaAttribute>
@@ -17,7 +19,7 @@ CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mQuotaWidget(new CollectionQuotaWidget(this))
 {
-    setObjectName(QLatin1StringView("KMail::CollectionQuotaPage"));
+    setObjectName("KMail::CollectionQuotaPage"_L1);
     setPageTitle(i18n("Quota"));
     init();
 }

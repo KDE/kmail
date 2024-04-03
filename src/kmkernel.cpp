@@ -1,6 +1,7 @@
 /*   */
 
 #include "kmkernel.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "job/fillcomposerjob.h"
 #include "job/newmessagejob.h"
@@ -622,8 +623,7 @@ void KMKernel::setAccountStatus(bool goOnline)
     for (Akonadi::AgentInstance type : lst) {
         const QString identifier(type.identifier());
         if (PimCommon::Util::isImapResource(identifier) || identifier.contains(POP3_RESOURCE_IDENTIFIER)
-            || identifier.contains(QLatin1StringView("akonadi_maildispatcher_agent"))
-            || type.type().capabilities().contains(QLatin1StringView("NeedsNetwork"))) {
+            || identifier.contains("akonadi_maildispatcher_agent"_L1) || type.type().capabilities().contains("NeedsNetwork"_L1)) {
             type.setIsOnline(goOnline);
         }
     }
@@ -836,18 +836,18 @@ void KMKernel::slotSenderFinished()
 // Open a composer for each message found in the dead.letter folder
 void KMKernel::recoverDeadLetters()
 {
-    const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/kmail2/");
+    const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/kmail2/"_L1;
     QDir dir(pathName);
     if (!dir.exists(QStringLiteral("autosave"))) {
         return;
     }
 
-    dir.cd(pathName + QLatin1StringView("autosave"));
+    dir.cd(pathName + "autosave"_L1);
     const QFileInfoList autoSaveFiles = dir.entryInfoList();
     for (const QFileInfo &file : autoSaveFiles) {
         // Disregard the '.' and '..' folders
         const QString filename = file.fileName();
-        if (filename == QLatin1Char('.') || filename == QLatin1StringView("..") || file.isDir()) {
+        if (filename == QLatin1Char('.') || filename == ".."_L1 || file.isDir()) {
             continue;
         }
         qCDebug(KMAIL_LOG) << "Opening autosave file:" << file.absoluteFilePath();
@@ -952,7 +952,7 @@ void KMKernel::doSessionManagement()
         int n = 1;
         while (KMMainWin::canBeRestored(n)) {
             // only restore main windows! (Matthias);
-            if (KMMainWin::classNameOfToplevel(n) == QLatin1StringView("KMMainWin")) {
+            if (KMMainWin::classNameOfToplevel(n) == "KMMainWin"_L1) {
                 (new KMMainWin)->restoreDockedState(n);
             }
             ++n;
@@ -1130,7 +1130,7 @@ void KMKernel::slotShowConfigurationDialog()
 
     if (!mConfigureDialog) {
         mConfigureDialog = new ConfigureDialog(nullptr, false);
-        mConfigureDialog->setObjectName(QLatin1StringView("configure"));
+        mConfigureDialog->setObjectName("configure"_L1);
         connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
     }
 
@@ -1461,7 +1461,7 @@ void KMKernel::itemDispatchStarted()
 
 void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 {
-    if (instance.identifier() == QLatin1StringView("akonadi_mailfilter_agent")) {
+    if (instance.identifier() == "akonadi_mailfilter_agent"_L1) {
         // Creating a progress item twice is ok, it will simply return the already existing
         // item
         KPIM::ProgressItem *progress = PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
@@ -1495,7 +1495,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                     const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
                     if (grp.isValid()) {
                         const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
-                        if (imapSafety == QLatin1StringView("None")) {
+                        if (imapSafety == "None"_L1) {
                             cryptoStatus = KPIM::ProgressItem::Unencrypted;
                         } else {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
@@ -1590,7 +1590,7 @@ void KMKernel::stopAgentInstance()
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
         // Keep sync in ConfigureDialog, don't forget to change there.
-        if (group.readEntry("OfflineOnShutdown", identifier.startsWith(QLatin1StringView("akonadi_pop3_resource")) ? true : false)) {
+        if (group.readEntry("OfflineOnShutdown", identifier.startsWith("akonadi_pop3_resource"_L1) ? true : false)) {
             type.setIsOnline(false);
         }
     }
@@ -1645,7 +1645,7 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
 {
     if (!mFilterEditDialog) {
         mFilterEditDialog = new MailCommon::KMFilterDialog(getKMMainWidget()->actionCollections(), nullptr, createDummyFilter);
-        mFilterEditDialog->setObjectName(QLatin1StringView("filterdialog"));
+        mFilterEditDialog->setObjectName("filterdialog"_L1);
     }
     mFilterEditDialog->show();
     mFilterEditDialog->raise();

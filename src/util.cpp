@@ -5,6 +5,7 @@
 */
 
 #include "util.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "job/handleclickedurljob.h"
 #include <MessageComposer/MessageHelper>
@@ -50,7 +51,7 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
 
 bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
-    if (url.scheme() == QLatin1StringView("mailto")) {
+    if (url.scheme() == "mailto"_L1) {
         auto job = new HandleClickedUrlJob;
         job->setUrl(url);
         job->setFolder(folder);

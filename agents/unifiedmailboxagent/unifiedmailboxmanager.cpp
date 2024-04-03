@@ -5,6 +5,8 @@
 */
 
 #include "unifiedmailboxmanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "common.h"
 #include "settings.h"
 #include "unifiedmailbox.h"
@@ -63,7 +65,7 @@ UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QOb
     : QObject(parent)
     , mConfig(config)
 {
-    mMonitor.setObjectName(QLatin1StringView("UnifiedMailboxChangeRecorder"));
+    mMonitor.setObjectName("UnifiedMailboxChangeRecorder"_L1);
     mMonitor.setConfig(&mMonitorSettings);
     mMonitor.setChangeRecordingEnabled(true);
     mMonitor.setTypeMonitored(Akonadi::Monitor::Items);

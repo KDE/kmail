@@ -12,7 +12,7 @@
 #include <QPointer>
 #include <QTextDocument>
 #include <QTextDocumentWriter>
-
+using namespace Qt::Literals::StringLiterals;
 SaveAsFileJob::SaveAsFileJob(QObject *parent)
     : QObject(parent)
 {
@@ -37,11 +37,11 @@ void SaveAsFileJob::start()
         QTextDocumentWriter writer;
         const QString filename = dlg->selectedFiles().at(0);
         writer.setFileName(filename);
-        if (dlg->selectedNameFilter() == QLatin1StringView("text/plain") || filename.endsWith(QLatin1StringView(".txt"))) {
+        if (dlg->selectedNameFilter() == "text/plain"_L1 || filename.endsWith(".txt"_L1)) {
             writer.setFormat("plaintext");
-        } else if (dlg->selectedNameFilter() == QLatin1StringView("text/html") || filename.endsWith(QLatin1StringView(".html"))) {
+        } else if (dlg->selectedNameFilter() == "text/html"_L1 || filename.endsWith(".html"_L1)) {
             writer.setFormat("HTML");
-        } else if (dlg->selectedNameFilter() == QLatin1StringView("application/vnd.oasis.opendocument.text") || filename.endsWith(QLatin1StringView(".odf"))) {
+        } else if (dlg->selectedNameFilter() == "application/vnd.oasis.opendocument.text"_L1 || filename.endsWith(".odf"_L1)) {
             writer.setFormat("ODF");
         } else {
             writer.setFormat("plaintext");

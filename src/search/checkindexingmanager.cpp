@@ -5,6 +5,8 @@
 */
 
 #include "checkindexingmanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
 #include <Akonadi/CachePolicy>
@@ -140,7 +142,7 @@ void CheckIndexingManager::initializeCollectionList(QAbstractItemModel *model, c
         if (collection.hasAttribute<Akonadi::EntityHiddenAttribute>()) {
             continue;
         }
-        if (PimCommon::Util::isImapResource(collection.resource()) && !collection.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
+        if (PimCommon::Util::isImapResource(collection.resource()) && !collection.cachePolicy().localParts().contains("RFC822"_L1)) {
             continue;
         }
         if (!mCollectionsIndexed.contains(collection.id())) {

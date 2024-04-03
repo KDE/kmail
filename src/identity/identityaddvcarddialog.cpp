@@ -5,6 +5,7 @@
 */
 
 #include "identityaddvcarddialog.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <KSeparator>
@@ -41,7 +42,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     auto vlay = new QVBoxLayout(mainWidget);
     vlay->setContentsMargins({});
 
-    mButtonGroup->setObjectName(QLatin1StringView("buttongroup"));
+    mButtonGroup->setObjectName("buttongroup"_L1);
 
     // row 1: radio button
     auto radio = new QRadioButton(i18n("&With empty fields"), this);
@@ -58,7 +59,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
 
-    mVCardPath->setObjectName(QLatin1StringView("kurlrequester_vcardpath"));
+    mVCardPath->setObjectName("kurlrequester_vcardpath"_L1);
     mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
     mVCardPath->setMode(KFile::LocalOnly | KFile::File);
@@ -80,7 +81,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // row 5: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mComboBox->setObjectName(QLatin1StringView("identity_combobox"));
+    mComboBox->setObjectName("identity_combobox"_L1);
     mComboBox->setEditable(false);
 
     mComboBox->addItems(shadowIdentities);

@@ -5,6 +5,7 @@
 */
 
 #include "attachmentaddedfromexternalwarning.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <QUrl>
 
@@ -39,8 +40,7 @@ void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &l
     if (attachments.count() == 1) {
         setText(i18n("This attachment: <ul><li>%1</li></ul> was added externally. Remove it if it's an error.", attachments.at(0)));
     } else {
-        setText(i18n("These attachments: <ul><li>%1</li></ul> were added externally. Remove them if it's an error.",
-                     attachments.join(QLatin1StringView("</li><li>"))));
+        setText(i18n("These attachments: <ul><li>%1</li></ul> were added externally. Remove them if it's an error.", attachments.join("</li><li>"_L1)));
     }
 }
 

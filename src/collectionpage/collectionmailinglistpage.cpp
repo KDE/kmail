@@ -31,11 +31,12 @@
 #include <QComboBox>
 
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 CollectionMailingListPage::CollectionMailingListPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
 {
-    setObjectName(QLatin1StringView("KMail::CollectionMailingListPage"));
+    setObjectName("KMail::CollectionMailingListPage"_L1);
     setPageTitle(i18nc("@title:tab Mailing list settings for a folder.", "Mailing List"));
 }
 
@@ -250,7 +251,7 @@ void CollectionMailingListPage::fillMLFromWidgets()
     QStringList newList; // the correct string list
     QStringList::ConstIterator end = oldList.constEnd();
     for (QStringList::ConstIterator it = oldList.constBegin(); it != end; ++it) {
-        if (!(*it).startsWith(QLatin1StringView("http:")) && !(*it).startsWith(QLatin1StringView("https:")) && !(*it).startsWith(QLatin1StringView("mailto:"))
+        if (!(*it).startsWith(QLatin1StringView("http:")) && !(*it).startsWith("https:"_L1) && !(*it).startsWith("mailto:"_L1)
             && ((*it).contains(QLatin1Char('@')))) {
             listChanged = true;
             newList << QStringLiteral("mailto:") + *it;

@@ -5,6 +5,8 @@
 */
 
 #include "fillcomposerjob.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmkernel.h"
 #include <MessageComposer/Composer>
 #include <MessageViewer/MessageViewerSettings>
@@ -60,7 +62,7 @@ void FillComposerJob::slotOpenComposer()
     bool noWordWrap = false;
     bool isICalInvitation = false;
     if (!mSettings.mAttachData.isEmpty()) {
-        isICalInvitation = (mSettings.mAttachName == QLatin1StringView("cal.ics")) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
+        isICalInvitation = (mSettings.mAttachName == "cal.ics"_L1) && mSettings.mAttachType == "text" && mSettings.mAttachSubType == "calendar"
             && mSettings.mAttachParamAttr == "method";
         // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
         if (isICalInvitation && mSettings.mBcc.isEmpty()) {

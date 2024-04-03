@@ -7,6 +7,8 @@
 */
 
 #include "collectionshortcutpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "foldershortcutactionmanager.h"
 #include "kmkernel.h"
 #include "kmmainwidget.h"
@@ -25,7 +27,7 @@ CollectionShortcutPage::CollectionShortcutPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mKeySeqWidget(new KKeySequenceWidget(this))
 {
-    setObjectName(QLatin1StringView("KMail::CollectionShortcutPage"));
+    setObjectName("KMail::CollectionShortcutPage"_L1);
     setPageTitle(i18nc("@title:tab Shortcut settings for a folder.", "Shortcut"));
 }
 
@@ -49,7 +51,7 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
     auto hbHBoxLayout = new QHBoxLayout;
 
     hbHBoxLayout->addWidget(mKeySeqWidget);
-    mKeySeqWidget->setObjectName(QLatin1StringView("FolderShortcutSelector"));
+    mKeySeqWidget->setObjectName("FolderShortcutSelector"_L1);
     connect(mKeySeqWidget, &KKeySequenceWidget::keySequenceChanged, this, &CollectionShortcutPage::slotShortcutChanged);
 
     topLayout->addItem(new QSpacerItem(0, 10));

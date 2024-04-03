@@ -6,6 +6,8 @@
 */
 
 #include "potentialphishingdetaildialog.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "potentialphishingdetailwidget.h"
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -28,7 +30,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     auto topLayout = new QVBoxLayout(this);
     setModal(true);
 
-    mPotentialPhishingDetailWidget->setObjectName(QLatin1StringView("potentialphising_widget"));
+    mPotentialPhishingDetailWidget->setObjectName("potentialphising_widget"_L1);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);

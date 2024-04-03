@@ -5,6 +5,7 @@
 */
 
 #include "pimmessagebox.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <QDialog>
 #include <QPushButton>
@@ -21,7 +22,7 @@ QDialogButtonBox::StandardButton PIMMessageBox::fourBtnMsgBox(QWidget *parent,
     auto dialog = new QDialog(parent);
     dialog->setWindowTitle(caption);
     auto box = new QDialogButtonBox(QDialogButtonBox::Yes | QDialogButtonBox::No | QDialogButtonBox::Cancel | QDialogButtonBox::Ok, parent);
-    dialog->setObjectName(QLatin1StringView("PIMMessageBox"));
+    dialog->setObjectName("PIMMessageBox"_L1);
     box->button(QDialogButtonBox::Ok)->setText(button3Text);
     box->button(QDialogButtonBox::Yes)->setText(button1Text);
     box->button(QDialogButtonBox::No)->setText(button2Text);

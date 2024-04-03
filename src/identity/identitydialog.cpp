@@ -94,6 +94,7 @@ using MailTransport::TransportManager;
 
 using namespace MailTransport;
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 namespace KMail
 {
@@ -220,9 +221,9 @@ void KeySelectionCombo::init()
 
 void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 {
-    if (type == QLatin1StringView("no-key")) {
+    if (type == "no-key"_L1) {
         return;
-    } else if (type == QLatin1StringView("generate-new-key")) {
+    } else if (type == "generate-new-key"_L1) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
         auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
         dlg->setModal(true);
@@ -257,7 +258,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto vlay = new QVBoxLayout(page);
     vlay->setContentsMargins({});
     mTabWidget = new QTabWidget(page);
-    mTabWidget->setObjectName(QLatin1StringView("config-identity-tab"));
+    mTabWidget->setObjectName("config-identity-tab"_L1);
     vlay->addWidget(mTabWidget);
 
     auto tab = new QWidget(mTabWidget);
@@ -379,7 +380,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
             const auto key = mPGPSigningKeyRequester->currentKey();
             if (!key.isBad()) {
                 mPGPEncryptionKeyRequester->setCurrentKey(key);
-            } else if (mPGPSigningKeyRequester->currentData() == QLatin1StringView("no-key")) {
+            } else if (mPGPSigningKeyRequester->currentData() == "no-key"_L1) {
                 mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
             }
         } else {
@@ -392,7 +393,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         }
     });
     connect(mPGPSigningKeyRequester, &KeySelectionCombo::customItemSelected, this, [&](const QVariant &type) {
-        if (mPGPSameKey->isChecked() && type == QLatin1StringView("no-key")) {
+        if (mPGPSameKey->isChecked() && type == "no-key"_L1) {
             mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
         }
     });
@@ -510,7 +511,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Reply-To Address" line edit and label:
     mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonEnabled(true);
-    mReplyToEdit->setObjectName(QLatin1StringView("mReplyToEdit"));
+    mReplyToEdit->setObjectName("mReplyToEdit"_L1);
     label = new QLabel(i18n("&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
     formLayout->addRow(label, mReplyToEdit);
@@ -532,7 +533,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "CC addresses" line edit and label:
     mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonEnabled(true);
-    mCcEdit->setObjectName(QLatin1StringView("mCcEdit"));
+    mCcEdit->setObjectName("mCcEdit"_L1);
     label = new QLabel(i18n("&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
     formLayout->addRow(label, mCcEdit);
@@ -553,7 +554,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "BCC addresses" line edit and label:
     mBccEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mBccEdit->setClearButtonEnabled(true);
-    mBccEdit->setObjectName(QLatin1StringView("mBccEdit"));
+    mBccEdit->setObjectName("mBccEdit"_L1);
     KLineEditEventHandler::catchReturnKey(mBccEdit);
     label = new QLabel(i18n("&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
@@ -757,8 +758,7 @@ void IdentityDialog::slotAccepted()
     }
 
     // Check if the 'Reply to' and 'BCC' recipients are valid
-    const QString recipients =
-        mReplyToEdit->text().trimmed() + QLatin1StringView(", ") + mBccEdit->text().trimmed() + QLatin1StringView(", ") + mCcEdit->text().trimmed();
+    const QString recipients = mReplyToEdit->text().trimmed() + ", "_L1 + mBccEdit->text().trimmed() + ", "_L1 + mCcEdit->text().trimmed();
     auto job = new AddressValidationJob(recipients, this, this);
     // Use default Value
     job->setDefaultDomain(mDefaultDomainEdit->text());
@@ -949,14 +949,12 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
-        mVcardFilename =
-            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1StringView(".vcf");
+        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
         QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         // Convert path.
-        const QString path =
-            QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + QLatin1StringView(".vcf");
+        const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
         if (QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }

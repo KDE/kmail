@@ -5,6 +5,7 @@
 */
 
 #include "messageactions.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "kmcommands.h"
 #include "kmkernel.h"
@@ -657,10 +658,10 @@ void MessageActions::addMailingListAction(const QString &item, const QUrl &url)
 {
     QString protocol = url.scheme().toLower();
     QString prettyUrl = url.toDisplayString();
-    if (protocol == QLatin1StringView("mailto")) {
+    if (protocol == "mailto"_L1) {
         protocol = i18n("email");
         prettyUrl.remove(0, 7); // length( "mailto:" )
-    } else if (protocol.startsWith(QLatin1StringView("http"))) {
+    } else if (protocol.startsWith("http"_L1)) {
         protocol = i18n("web");
     }
     // item is a mailing list url description passed from the updateActions method above.

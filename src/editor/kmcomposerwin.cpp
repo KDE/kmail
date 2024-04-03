@@ -198,7 +198,7 @@ using namespace std::chrono_literals;
 using MailTransport::Transport;
 using MailTransport::TransportManager;
 using Sonnet::DictionaryComboBox;
-
+using namespace Qt::Literals::StringLiterals;
 Q_DECLARE_METATYPE(MessageComposer::Recipient::Ptr)
 
 KMail::Composer *KMail::makeComposer(const KMime::Message::Ptr &msg,
@@ -317,7 +317,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
                 }
             });
 
-    mdbusObjectPath = QLatin1StringView("/Composer_") + QString::number(++s_composerNumber);
+    mdbusObjectPath = "/Composer_"_L1 + QString::number(++s_composerNumber);
     QDBusConnection::sessionBus().registerObject(mdbusObjectPath, this);
 
     auto sigController = new MessageComposer::SignatureController(this);
@@ -330,7 +330,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mMainWidget = new QWidget(this);
     // splitter between the headers area and the actual editor
     mHeadersToEditorSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mHeadersToEditorSplitter->setObjectName(QLatin1StringView("mHeadersToEditorSplitter"));
+    mHeadersToEditorSplitter->setObjectName("mHeadersToEditorSplitter"_L1);
     mHeadersToEditorSplitter->setChildrenCollapsible(false);
     mHeadersArea = new QWidget(mHeadersToEditorSplitter);
     mHeadersArea->setSizePolicy(mHeadersToEditorSplitter->sizePolicy().horizontalPolicy(), QSizePolicy::Expanding);
@@ -343,7 +343,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     v->addWidget(mHeadersToEditorSplitter);
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
-    identity->setObjectName(QLatin1StringView("identitycombo"));
+    identity->setObjectName("identitycombo"_L1);
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
@@ -370,7 +370,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
     mEdtFrom->installEventFilter(this);
-    mEdtFrom->setObjectName(QLatin1StringView("fromLine"));
+    mEdtFrom->setObjectName("fromLine"_L1);
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
 
@@ -410,10 +410,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mDone = false;
     // the attachment view is separated from the editor by a splitter
     mSplitter = new QSplitter(Qt::Vertical, mMainWidget);
-    mSplitter->setObjectName(QLatin1StringView("mSplitter"));
+    mSplitter->setObjectName("mSplitter"_L1);
     mSplitter->setChildrenCollapsible(false);
     mSnippetSplitter = new QSplitter(Qt::Horizontal, mSplitter);
-    mSnippetSplitter->setObjectName(QLatin1StringView("mSnippetSplitter"));
+    mSnippetSplitter->setObjectName("mSnippetSplitter"_L1);
     mSplitter->addWidget(mSnippetSplitter);
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
@@ -1579,8 +1579,7 @@ void KMComposerWin::initializePluginActions()
             localEditorManagerActionsType.next();
             QList<QAction *> lst = localEditorManagerActionsType.value();
             if (!lst.isEmpty()) {
-                const QString actionlistname =
-                    QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
+                const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
                 hashActions.insert(actionlistname, lst);
             }
         }
@@ -1591,7 +1590,7 @@ void KMComposerWin::initializePluginActions()
             QList<QAction *> lst = localEditorConvertTextManagerActionsType.value();
             if (!lst.isEmpty()) {
                 const QString actionlistname =
-                    QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
+                    "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
                 if (hashActions.contains(actionlistname)) {
                     lst = hashActions.value(actionlistname) + lst;
                     hashActions.remove(actionlistname);
@@ -1601,8 +1600,7 @@ void KMComposerWin::initializePluginActions()
         }
 
         const QList<KToggleAction *> customToolsWidgetActionList = mCustomToolsWidget->actionList();
-        const QString actionlistname =
-            QLatin1StringView("kmaileditor") + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
+        const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(MessageComposer::PluginActionType::Tools);
         for (KToggleAction *act : customToolsWidgetActionList) {
             QList<QAction *> lst{act};
             if (hashActions.contains(actionlistname)) {
@@ -1884,7 +1882,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
     if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
         const QString xpriority = newMsg->headerByType("X-PRIORITY")->asUnicodeString();
         const QString priority = newMsg->headerByType("Priority")->asUnicodeString();
-        if (xpriority == QLatin1StringView("2 (High)") && priority == QLatin1StringView("urgent")) {
+        if (xpriority == "2 (High)"_L1 && priority == "urgent"_L1) {
             mUrgentAction->setChecked(true);
         }
     }
@@ -1954,7 +1952,7 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
 
     delete msgContent;
 
-    if ((MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto")) && mayAutoSign) {
+    if ((MessageComposer::MessageComposerSettings::self()->autoTextSignature() == "auto"_L1) && mayAutoSign) {
         //
         // Espen 2000-05-16
         // Delay the signature appending. It may start a fileseletor.
@@ -2340,7 +2338,7 @@ void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlLi
     QStringList urlAdded;
     for (const QUrl &url : urlList) {
         QString urlStr;
-        if (url.scheme() == QLatin1StringView("mailto")) {
+        if (url.scheme() == "mailto"_L1) {
             urlStr = KEmailAddress::decodeMailtoUrl(url);
         } else {
             urlStr = url.toDisplayString();
@@ -2545,14 +2543,14 @@ void KMComposerWin::slotFetchJob(KJob *job)
             QString attachmentName = QStringLiteral("attachment");
             if (item.hasPayload<KContacts::Addressee>()) {
                 const auto contact = item.payload<KContacts::Addressee>();
-                attachmentName = contact.realName() + QLatin1StringView(".vcf");
+                attachmentName = contact.realName() + ".vcf"_L1;
                 // Workaround about broken kaddressbook fields.
                 QByteArray data = item.payloadData();
                 KContacts::adaptIMAttributes(data);
                 addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), data, "text/x-vcard");
             } else if (item.hasPayload<KContacts::ContactGroup>()) {
                 const auto group = item.payload<KContacts::ContactGroup>();
-                attachmentName = group.name() + QLatin1StringView(".vcf");
+                attachmentName = group.name() + ".vcf"_L1;
                 auto expandJob = new Akonadi::ContactGroupExpandJob(group, this);
                 expandJob->setProperty("groupName", attachmentName);
                 connect(expandJob, &KJob::result, this, &KMComposerWin::slotExpandGroupResult);
@@ -2808,8 +2806,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                                i18n("To: field is empty. "
                                                                     "Send message anyway?"),
                                                                i18nc("@title:window", "No To: specified"),
-                                                               KGuiItem(i18n("S&end as Is"), QLatin1StringView("mail-send")),
-                                                               KGuiItem(i18n("&Specify the To field"), QLatin1StringView("edit-rename")));
+                                                               KGuiItem(i18n("S&end as Is"), "mail-send"_L1),
+                                                               KGuiItem(i18n("&Specify the To field"), "edit-rename"_L1));
                 if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                     return;
                 }
@@ -2856,7 +2854,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         setEnabled(false);
 
         // Validate the To:, CC: and BCC fields
-        auto job = new AddressValidationJob(recipients.join(QLatin1StringView(", ")), this, this);
+        auto job = new AddressValidationJob(recipients.join(", "_L1), this, this);
         job->setDefaultDomain(defaultDomainName);
         job->setProperty("method", static_cast<int>(method));
         job->setProperty("saveIn", static_cast<int>(saveIn));
@@ -3056,8 +3054,8 @@ void KMComposerWin::confirmBeforeSend()
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
                                                         i18n("About to send email..."),
                                                         i18nc("@title:window", "Send Confirmation"),
-                                                        KGuiItem(i18n("&Send Now"), QLatin1StringView("mail-send")),
-                                                        KGuiItem(i18n("Send &Later"), QLatin1StringView("mail-queue")));
+                                                        KGuiItem(i18n("&Send Now"), "mail-send"_L1),
+                                                        KGuiItem(i18n("Send &Later"), "mail-queue"_L1));
 
     if (rc == KMessageBox::ButtonCode::PrimaryAction) {
         doSend(MessageComposer::MessageSender::SendImmediate);
@@ -3987,8 +3985,8 @@ void KMComposerWin::slotCursorPositionChanged()
 
     // Show link target in status bar
     if (mComposerBase->editor()->textCursor().charFormat().isAnchor()) {
-        const QString text = mComposerBase->editor()->composerControler()->currentLinkText() + QLatin1StringView(" -> ")
-            + mComposerBase->editor()->composerControler()->currentLinkUrl();
+        const QString text =
+            mComposerBase->editor()->composerControler()->currentLinkText() + " -> "_L1 + mComposerBase->editor()->composerControler()->currentLinkUrl();
         mStatusbarLabel->setText(text);
     } else {
         mStatusbarLabel->clear();

@@ -31,6 +31,7 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include "kmreadermainwin.h"
@@ -493,7 +494,7 @@ KMAddBookmarksCommand::KMAddBookmarksCommand(const QUrl &url, QWidget *parent)
 
 KMCommand::Result KMAddBookmarksCommand::execute()
 {
-    const QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1StringView("/konqueror/bookmarks.xml");
+    const QString filename = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/konqueror/bookmarks.xml"_L1;
     QFileInfo fileInfo(filename);
     QDir().mkpath(fileInfo.absolutePath());
     KBookmarkManager bookManager(filename);
@@ -1027,7 +1028,7 @@ KMCommand::Result KMRedirectCommand::execute()
         MessageComposer::MessageComposerSettings::self()->sendImmediate() ? MailCommon::RedirectDialog::SendNow : MailCommon::RedirectDialog::SendLater;
 
     QScopedPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
-    dlg->setObjectName(QLatin1StringView("redirect"));
+    dlg->setObjectName("redirect"_L1);
     if (dlg->exec() == QDialog::Rejected || !dlg) {
         return Failed;
     }
@@ -1309,7 +1310,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     KCursorSaver saver(Qt::WaitCursor);
     int msgCount = 0;
     const int msgCountToFilter = mMsgListId.count();
-    ProgressItem *progressItem = ProgressManager::createProgressItem(QLatin1StringView("filter") + ProgressManager::getUniqueID(),
+    ProgressItem *progressItem = ProgressManager::createProgressItem("filter"_L1 + ProgressManager::getUniqueID(),
                                                                      i18n("Filtering messages"),
                                                                      QString(),
                                                                      true,
@@ -1527,7 +1528,7 @@ KMCommand::Result KMMoveCommand::execute()
     }
     // TODO set SSL state according to source and destfolder connection?
     Q_ASSERT(!mProgressItem);
-    mProgressItem = ProgressManager::createProgressItem(QLatin1StringView("move") + ProgressManager::getUniqueID(),
+    mProgressItem = ProgressManager::createProgressItem("move"_L1 + ProgressManager::getUniqueID(),
                                                         mDestFolder.isValid() ? i18n("Moving messages") : i18n("Deleting messages"),
                                                         QString(),
                                                         true,
@@ -1659,7 +1660,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     // TODO set SSL state according to source and destfolder connection?
     if (!mPendingMoves.isEmpty()) {
         Q_ASSERT(!mMoveProgress);
-        mMoveProgress = ProgressManager::createProgressItem(QLatin1StringView("move") + ProgressManager::getUniqueID(),
+        mMoveProgress = ProgressManager::createProgressItem("move"_L1 + ProgressManager::getUniqueID(),
                                                             i18n("Moving messages"),
                                                             QString(),
                                                             true,
@@ -1669,7 +1670,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     }
     if (!mPendingDeletes.isEmpty()) {
         Q_ASSERT(!mDeleteProgress);
-        mDeleteProgress = ProgressManager::createProgressItem(QLatin1StringView("delete") + ProgressManager::getUniqueID(),
+        mDeleteProgress = ProgressManager::createProgressItem("delete"_L1 + ProgressManager::getUniqueID(),
                                                               i18n("Deleting messages"),
                                                               QString(),
                                                               true,
@@ -1811,7 +1812,7 @@ KMCommand::Result KMDeleteAttachmentsCommand::execute()
     qCDebug(KMAIL_LOG) << mRunningJobs.size() << "Items now pending update after deleting attachments";
 
     if (!mRunningJobs.empty()) {
-        mProgressItem = ProgressManager::createProgressItem(QLatin1StringView("deleteAttachments") + ProgressManager::getUniqueID(),
+        mProgressItem = ProgressManager::createProgressItem("deleteAttachments"_L1 + ProgressManager::getUniqueID(),
                                                             i18nc("@info:progress", "Deleting Attachments"),
                                                             QString(),
                                                             true,

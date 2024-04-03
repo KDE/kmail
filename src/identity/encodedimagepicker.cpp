@@ -9,6 +9,8 @@
 */
 
 #include "encodedimagepicker.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "ui_encodedimagepicker.h"
 
 #include <Akonadi/ContactSearchJob>
@@ -78,7 +80,7 @@ void EncodedImagePicker::selectFile()
         if (!filter.isEmpty()) {
             filter += QLatin1Char(' ');
         }
-        filter += QLatin1StringView("*.") + QString::fromLatin1(ba);
+        filter += "*."_L1 + QString::fromLatin1(ba);
     }
 
     filter = QStringLiteral("%1 (%2)").arg(i18n("Image"), filter);

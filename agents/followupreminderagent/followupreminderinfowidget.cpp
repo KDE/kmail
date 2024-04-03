@@ -4,6 +4,8 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "followupreminderinfowidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
 #include "followupreminderutil.h"
@@ -53,10 +55,10 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     : QWidget(parent)
     , mTreeWidget(new QTreeWidget(this))
 {
-    setObjectName(QLatin1StringView("FollowUpReminderInfoWidget"));
+    setObjectName("FollowUpReminderInfoWidget"_L1);
     auto hbox = new QHBoxLayout(this);
     hbox->setContentsMargins({});
-    mTreeWidget->setObjectName(QLatin1StringView("treewidget"));
+    mTreeWidget->setObjectName("treewidget"_L1);
     QStringList headers;
     headers << i18n("To") << i18n("Subject") << i18n("Deadline") << i18n("Answer")
 #ifdef DEBUG_MESSAGE_ID

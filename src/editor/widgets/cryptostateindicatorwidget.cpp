@@ -5,6 +5,8 @@
 */
 
 #include "cryptostateindicatorwidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <MessageCore/ColorUtil>
 
 #include <KLocalizedString>
@@ -23,7 +25,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     mSignatureStateIndicator->setTextFormat(Qt::PlainText);
     mSignatureStateIndicator->setContentsMargins(4, 4, 4, 4);
     hbox->addWidget(mSignatureStateIndicator);
-    mSignatureStateIndicator->setObjectName(QLatin1StringView("signatureindicator"));
+    mSignatureStateIndicator->setObjectName("signatureindicator"_L1);
     QPalette p(mSignatureStateIndicator->palette());
     p.setColor(QPalette::Window, MessageCore::ColorUtil::self()->pgpSignedTrustedMessageColor());
     p.setColor(QPalette::Text, MessageCore::ColorUtil::self()->pgpSignedTrustedTextColor());
@@ -39,7 +41,7 @@ CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     p.setColor(QPalette::Text, MessageCore::ColorUtil::self()->pgpEncryptedTextColor());
     mEncryptionStateIndicator->setPalette(p);
     mEncryptionStateIndicator->setAutoFillBackground(true);
-    mEncryptionStateIndicator->setObjectName(QLatin1StringView("encryptionindicator"));
+    mEncryptionStateIndicator->setObjectName("encryptionindicator"_L1);
     hide();
 }
 

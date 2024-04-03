@@ -5,6 +5,8 @@
 */
 
 #include "configureappearancepage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "configuredialog/colorlistbox.h"
@@ -230,13 +232,13 @@ void AppearancePageFontsTab::doLoadOther()
 
         for (int i = 0; i < numFontNames; ++i) {
             const QString configName = QLatin1StringView(fontNames[i].configName);
-            if (configName == QLatin1StringView("MessageListFont")) {
+            if (configName == "MessageListFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->messageListFont();
-            } else if (configName == QLatin1StringView("UnreadMessageFont")) {
+            } else if (configName == "UnreadMessageFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->unreadMessageFont();
-            } else if (configName == QLatin1StringView("ImportantMessageFont")) {
+            } else if (configName == "ImportantMessageFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->importantMessageFont();
-            } else if (configName == QLatin1StringView("TodoMessageFont")) {
+            } else if (configName == "TodoMessageFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->todoMessageFont();
             } else {
                 mFont[i] = fonts.readEntry(configName, (fontNames[i].onlyFixed) ? fixedFont : mFont[0]);
@@ -265,13 +267,13 @@ void AppearancePageFontsTab::save()
 
         for (int i = 0; i < numFontNames; ++i) {
             const QString configName = QLatin1StringView(fontNames[i].configName);
-            if (customFonts && configName == QLatin1StringView("MessageListFont")) {
+            if (customFonts && configName == "MessageListFont"_L1) {
                 MessageList::MessageListSettings::self()->setMessageListFont(mFont[i]);
-            } else if (customFonts && configName == QLatin1StringView("UnreadMessageFont")) {
+            } else if (customFonts && configName == "UnreadMessageFont"_L1) {
                 MessageList::MessageListSettings::self()->setUnreadMessageFont(mFont[i]);
-            } else if (customFonts && configName == QLatin1StringView("ImportantMessageFont")) {
+            } else if (customFonts && configName == "ImportantMessageFont"_L1) {
                 MessageList::MessageListSettings::self()->setImportantMessageFont(mFont[i]);
-            } else if (customFonts && configName == QLatin1StringView("TodoMessageFont")) {
+            } else if (customFonts && configName == "TodoMessageFont"_L1) {
                 MessageList::MessageListSettings::self()->setTodoMessageFont(mFont[i]);
             } else {
                 if (customFonts || fonts.hasKey(configName)) {
@@ -390,11 +392,11 @@ void AppearancePageColorsTab::loadColor(bool loadFromConfig)
         for (int i = 0; i < numColorNames; ++i) {
             if (loadFromConfig) {
                 const QString configName = QLatin1StringView(colorNames[i].configName);
-                if (configName == QLatin1StringView("UnreadMessageColor")) {
+                if (configName == "UnreadMessageColor"_L1) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->unreadMessageColor());
-                } else if (configName == QLatin1StringView("ImportantMessageColor")) {
+                } else if (configName == "ImportantMessageColor"_L1) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->importantMessageColor());
-                } else if (configName == QLatin1StringView("TodoMessageColor")) {
+                } else if (configName == "TodoMessageColor"_L1) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->todoMessageColor());
                 } else {
                     mColorList->setColorSilently(i, reader.readEntry(configName, defaultColor[i]));
@@ -429,11 +431,11 @@ void AppearancePageColorsTab::save()
 
     for (int i = 0; i < numColorNames; ++i) {
         const QString configName = QLatin1StringView(colorNames[i].configName);
-        if (customColors && configName == QLatin1StringView("UnreadMessageColor")) {
+        if (customColors && configName == "UnreadMessageColor"_L1) {
             MessageList::MessageListSettings::self()->setUnreadMessageColor(mColorList->color(i));
-        } else if (customColors && configName == QLatin1StringView("ImportantMessageColor")) {
+        } else if (customColors && configName == "ImportantMessageColor"_L1) {
             MessageList::MessageListSettings::self()->setImportantMessageColor(mColorList->color(i));
-        } else if (customColors && configName == QLatin1StringView("TodoMessageColor")) {
+        } else if (customColors && configName == "TodoMessageColor"_L1) {
             MessageList::MessageListSettings::self()->setTodoMessageColor(mColorList->color(i));
         } else {
             if (customColors || reader.hasKey(configName)) {
@@ -634,7 +636,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
         const auto label = KLocalizedString(dateDisplayConfig[i].displayName).untranslatedText();
 
         QString buttonLabel;
-        if (label.contains(QLatin1StringView("%1"))) {
+        if (label.contains("%1"_L1)) {
             buttonLabel = KLocalizedString(dateDisplayConfig[i].displayName)
                               .subs(DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay))
                               .toString(); // i18n(label, DateFormatter::formatCurrentDate(dateDisplayConfig[i].dateDisplay));
@@ -714,7 +716,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
 
 void AppearancePageHeadersTab::slotLinkClicked(const QString &link)
 {
-    if (link == QLatin1StringView("whatsthis1")) {
+    if (link == "whatsthis1"_L1) {
         QWhatsThis::showText(QCursor::pos(), mCustomDateWhatsThis);
     }
 }

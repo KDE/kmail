@@ -5,6 +5,8 @@
 */
 
 #include "mailmergeconfiguredialog.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail-version.h"
 #include "mailmergeconfigurewidget.h"
 #include <KAboutData>
@@ -39,7 +41,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &MailMergeConfigureDialog::reject);
 
-    mWidget->setObjectName(QLatin1StringView("mailmergewidget"));
+    mWidget->setObjectName("mailmergewidget"_L1);
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);
     connect(okButton, &QPushButton::clicked, this, &MailMergeConfigureDialog::slotSave);

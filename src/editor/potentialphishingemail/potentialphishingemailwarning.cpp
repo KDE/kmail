@@ -6,6 +6,8 @@
 */
 
 #include "potentialphishingemailwarning.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "potentialphishingdetaildialog.h"
 #include <KLocalizedString>
 #include <QAction>
@@ -23,7 +25,7 @@ PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
 
     connect(this, &KMessageWidget::linkActivated, this, &PotentialPhishingEmailWarning::slotShowDetails);
     auto action = new QAction(i18n("Send Now"), this);
-    action->setObjectName(QLatin1StringView("sendnow"));
+    action->setObjectName("sendnow"_L1);
     connect(action, &QAction::triggered, this, &PotentialPhishingEmailWarning::sendNow);
     addAction(action);
 }
@@ -32,7 +34,7 @@ PotentialPhishingEmailWarning::~PotentialPhishingEmailWarning() = default;
 
 void PotentialPhishingEmailWarning::slotShowDetails(const QString &link)
 {
-    if (link == QLatin1StringView("phishingdetails")) {
+    if (link == "phishingdetails"_L1) {
         PotentialPhishingDetailDialog dlg(this);
         dlg.fillList(mPotentialPhishingEmails);
         dlg.exec();

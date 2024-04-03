@@ -5,6 +5,7 @@
 */
 
 #include "mailfilteragent.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "dummykernel.h"
 #include "filterlogdialog.h"
@@ -67,7 +68,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     connect(mFilterManager, &FilterManager::progressMessage, this, &MailFilterAgent::emitProgressMessage);
 
     auto collectionMonitor = new Akonadi::Monitor(this);
-    collectionMonitor->setObjectName(QLatin1StringView("MailFilterCollectionMonitor"));
+    collectionMonitor->setObjectName("MailFilterCollectionMonitor"_L1);
     collectionMonitor->fetchCollection(true);
     collectionMonitor->ignoreSession(Akonadi::Session::defaultSession());
     collectionMonitor->collectionFetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::All);
@@ -92,7 +93,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     QDBusConnection::sessionBus().registerService(service);
     // Enabled or not filterlogdialog
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    if (config->hasGroup(QLatin1StringView("FilterLog"))) {
+    if (config->hasGroup("FilterLog"_L1)) {
         KConfigGroup group(config, QStringLiteral("FilterLog"));
         if (group.readEntry("Enabled", false)) {
             auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
@@ -113,7 +114,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     });
 
     mItemMonitor = new Akonadi::Monitor(this);
-    mItemMonitor->setObjectName(QLatin1StringView("MailFilterItemMonitor"));
+    mItemMonitor->setObjectName("MailFilterItemMonitor"_L1);
     mItemMonitor->itemFetchScope().setFetchRemoteIdentification(true);
     mItemMonitor->itemFetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
     connect(mItemMonitor, &Akonadi::Monitor::itemChanged, this, &MailFilterAgent::slotItemChanged);

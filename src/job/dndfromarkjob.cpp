@@ -5,6 +5,8 @@
 */
 
 #include "dndfromarkjob.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "editor/kmcomposerwin.h"
 #include "kmail_debug.h"
 
@@ -43,7 +45,7 @@ bool DndFromArkJob::extract(const QMimeData *source)
         const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
         const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
 
-        const QString tmpPath = QDir::tempPath() + QLatin1StringView("/attachments_ark");
+        const QString tmpPath = QDir::tempPath() + "/attachments_ark"_L1;
         QDir().mkpath(tmpPath);
 
         auto linkDir = new QTemporaryDir(tmpPath);

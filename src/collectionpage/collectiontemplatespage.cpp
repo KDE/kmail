@@ -5,6 +5,8 @@
 */
 
 #include "collectiontemplatespage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <MailCommon/CollectionTemplatesWidget>
 
 #include <Akonadi/Collection>
@@ -22,7 +24,7 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mCollectionTemplateWidget(new MailCommon::CollectionTemplatesWidget(this))
 {
-    setObjectName(QLatin1StringView("KMail::CollectionTemplatesPage"));
+    setObjectName("KMail::CollectionTemplatesPage"_L1);
     setPageTitle(i18n("Templates"));
     init();
 }

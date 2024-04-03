@@ -5,6 +5,8 @@
 */
 
 #include "refreshsettingsfirstpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <KLocalizedString>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -13,14 +15,14 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     : QWidget(parent)
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
+    mainLayout->setObjectName("mainLayout"_L1);
     mainLayout->setContentsMargins({});
     auto label = new QLabel(i18n("Please close KMail/Kontact before using it."));
     QFont f = label->font();
     f.setBold(true);
     f.setPixelSize(22);
     label->setFont(f);
-    label->setObjectName(QLatin1StringView("label"));
+    label->setObjectName("label"_L1);
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
 }
 

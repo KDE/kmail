@@ -10,6 +10,7 @@
  */
 
 #include "identitypage.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "identitydialog.h"
 #include "newidentitydialog.h"
@@ -112,7 +113,7 @@ void IdentityPage::slotNewIdentity()
     Q_ASSERT(!mIdentityDialog);
 
     QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
-    dialog->setObjectName(QLatin1StringView("new"));
+    dialog->setObjectName("new"_L1);
 
     if (dialog->exec() == QDialog::Accepted && dialog) {
         QString identityName = dialog->identityName().trimmed();

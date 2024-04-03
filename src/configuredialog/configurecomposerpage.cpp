@@ -5,6 +5,8 @@
 */
 
 #include "configurecomposerpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
@@ -312,7 +314,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 #if KDEPIM_ENTERPRISE_BUILD
     // "Warn if too many recipients" checkbox/spinbox
     mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
-    mRecipientCheck->setObjectName(QLatin1StringView("kcfg_TooManyRecipients"));
+    mRecipientCheck->setObjectName("kcfg_TooManyRecipients"_L1);
     helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
     mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18n("Warn if too many recipients are specified"));
@@ -322,7 +324,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setMinimum(1 /*min*/);
     mRecipientSpin->setSingleStep(1 /*step*/);
     mRecipientSpin->setValue(5 /*init*/);
-    mRecipientSpin->setObjectName(QLatin1StringView("kcfg_RecipientThreshold"));
+    mRecipientSpin->setObjectName("kcfg_RecipientThreshold"_L1);
     mRecipientSpin->setEnabled(false);
     helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8().constData());
     mRecipientSpin->setWhatsThis(helpText);
@@ -417,7 +419,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoSave->setMinimum(0);
     mAutoSave->setSingleStep(1);
     mAutoSave->setValue(1);
-    mAutoSave->setObjectName(QLatin1StringView("kcfg_AutosaveInterval"));
+    mAutoSave->setObjectName("kcfg_AutosaveInterval"_L1);
     mAutoSave->setSpecialValueText(i18n("No autosave"));
     mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
 
@@ -447,7 +449,7 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
 
-    const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto");
+    const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == "auto"_L1;
     const bool topQuoteCheck = MessageComposer::MessageComposerSettings::self()->prependSignature();
     const bool dashDashSignature = MessageComposer::MessageComposerSettings::self()->dashDashSignature();
     const bool smartQuoteCheck = MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly();
@@ -477,7 +479,7 @@ void ComposerPageGeneralTab::doLoadFromGlobalSettings()
 {
     // various check boxes:
 
-    mAutoAppSignFileCheck->setChecked(MessageComposer::MessageComposerSettings::self()->autoTextSignature() == QLatin1StringView("auto"));
+    mAutoAppSignFileCheck->setChecked(MessageComposer::MessageComposerSettings::self()->autoTextSignature() == "auto"_L1);
     loadWidget(mTopQuoteCheck, MessageComposer::MessageComposerSettings::self()->prependSignatureItem());
     loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
     loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
@@ -881,7 +883,7 @@ void ComposerPageHeadersTab::doLoadOther()
 
     const int count = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < count; ++i) {
-        KConfigGroup config(KMKernel::self()->config(), QLatin1StringView("Mime #") + QString::number(i));
+        KConfigGroup config(KMKernel::self()->config(), "Mime #"_L1 + QString::number(i));
         const QString name = config.readEntry("name");
         const QString value = config.readEntry("value");
         if (!name.isEmpty()) {
@@ -920,7 +922,7 @@ void ComposerPageHeadersTab::save()
         item = mHeaderList->topLevelItem(i);
         const QString str = item->text(0).trimmed();
         if (!str.isEmpty()) {
-            if (str == QLatin1StringView("Content-Type")) {
+            if (str == "Content-Type"_L1) {
                 KMessageBox::error(this, i18n("\'Content-Type\' is not an authorized string. This header will be not saved."), i18n("Invalid header"));
                 continue;
             }

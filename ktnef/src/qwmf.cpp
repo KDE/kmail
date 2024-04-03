@@ -26,6 +26,7 @@ bool qwmfDebug = false;
 #include "wmfstruct.h"
 
 #define QWMF_DEBUG 0
+using namespace Qt::Literals::StringLiterals;
 
 class WmfCmd
 {
@@ -362,13 +363,13 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
             QString str;
             QString param;
             if (metaFuncTab[idx].name == nullptr) {
-                str += QLatin1StringView("UNKNOWN ");
+                str += "UNKNOWN "_L1;
             }
             if (metaFuncTab[idx].method == &QWinMetaFile::noop) {
-                str += QLatin1StringView("UNIMPLEMENTED ");
+                str += "UNIMPLEMENTED "_L1;
             }
             str += QLatin1StringView(metaFuncTab[idx].name);
-            str += QLatin1StringView(" : ");
+            str += " : "_L1;
 
             for (i = 0; i < cmd->numParm; ++i) {
                 param.setNum(cmd->parm[i]);

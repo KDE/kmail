@@ -5,6 +5,8 @@
 */
 
 #include "handleclickedurljob.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KMime/Message>
@@ -30,29 +32,29 @@ void HandleClickedUrlJob::start()
     const QList<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
-        if (element.first == QLatin1StringView("to")) {
+        if (element.first == "to"_L1) {
             mMsg->to()->fromUnicodeString(element.second, "utf-8");
-        } else if (element.first == QLatin1StringView("subject")) {
+        } else if (element.first == "subject"_L1) {
             const QString subject = element.second;
             if (!subject.isEmpty()) {
                 mMsg->subject()->fromUnicodeString(subject, "utf-8");
             }
-        } else if (element.first == QLatin1StringView("body")) {
+        } else if (element.first == "body"_L1) {
             const QString body = element.second;
             if (!body.isEmpty()) {
                 mMsg->setBody(body.toUtf8());
             }
-        } else if (element.first == QLatin1StringView("cc")) {
+        } else if (element.first == "cc"_L1) {
             const QString cc = element.second;
             if (!cc.isEmpty()) {
                 mMsg->cc()->fromUnicodeString(cc, "utf-8");
             }
-        } else if (element.first == QLatin1StringView("bcc")) {
+        } else if (element.first == "bcc"_L1) {
             const QString bcc = element.second;
             if (!bcc.isEmpty()) {
                 mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
             }
-        } else if (element.first == QLatin1StringView("attach")) {
+        } else if (element.first == "attach"_L1) {
             const QString attach = element.second;
             if (!attach.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Attachment not supported yet";

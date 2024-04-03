@@ -10,6 +10,8 @@
 */
 
 #include "summaryview_part.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "dropwidget.h"
 #include <PimCommon/BroadcastStatus>
 using PimCommon::BroadcastStatus;
@@ -401,7 +403,7 @@ void SummaryViewPart::setDate(QDate newDate)
 void SummaryViewPart::slotConfigure()
 {
     QPointer<KCMultiDialog> dlg = new KCMultiDialog(mMainWidget);
-    dlg->setObjectName(QLatin1StringView("ConfigDialog"));
+    dlg->setObjectName("ConfigDialog"_L1);
     dlg->setModal(true);
     connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
     const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/summary/"));
@@ -422,7 +424,7 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
     sa->setWidgetResizable(true);
 
     mMainWidget = new QFrame;
-    mMainWidget->setObjectName(QLatin1StringView("mMainWidget"));
+    mMainWidget->setObjectName("mMainWidget"_L1);
     sa->setWidget(mMainWidget);
     mMainWidget->setFocusPolicy(Qt::StrongFocus);
     setWidget(sa);

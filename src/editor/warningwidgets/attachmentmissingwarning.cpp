@@ -5,6 +5,8 @@
 */
 
 #include "attachmentmissingwarning.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <KLocalizedString>
 #include <QAction>
 #include <QIcon>
@@ -21,12 +23,12 @@ AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     setWordWrap(true);
 
     auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("&Attach file"), this);
-    action->setObjectName(QLatin1StringView("attachfileaction"));
+    action->setObjectName("attachfileaction"_L1);
     connect(action, &QAction::triggered, this, &AttachmentMissingWarning::slotAttachFile);
     addAction(action);
 
     action = new QAction(QIcon::fromTheme(QStringLiteral("window-close")), i18n("&Remind me later"), this);
-    action->setObjectName(QLatin1StringView("remindmelater"));
+    action->setObjectName("remindmelater"_L1);
     connect(action, &QAction::triggered, this, &AttachmentMissingWarning::explicitlyClosed);
     addAction(action);
 }

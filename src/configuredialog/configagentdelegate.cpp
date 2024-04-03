@@ -7,6 +7,7 @@
 */
 
 #include "configagentdelegate.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentInstanceModel>
@@ -101,8 +102,8 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
               "<tr>"
               "<td><img src=\"status_icon\"/> %1 %2</td>"
               "</tr>")
-              .arg(statusMessage, status == 1 ? i18n("(%1%)", progress) : QLatin1StringView(""))
-        + QLatin1StringView("</table></body></html>");
+              .arg(statusMessage, status == 1 ? i18n("(%1%)", progress) : ""_L1)
+        + "</table></body></html>"_L1;
 
     document->setHtml(content);
 

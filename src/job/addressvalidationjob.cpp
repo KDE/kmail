@@ -18,6 +18,7 @@ using MessageComposer::AliasesExpandJob;
 #include <KMessageBox>
 
 #include <KEmailAddress>
+using namespace Qt::Literals::StringLiterals;
 
 AddressValidationJob::AddressValidationJob(const QString &emailAddresses, QWidget *parentWidget, QObject *parent)
     : KJob(parent)
@@ -69,7 +70,7 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         QString listOfDistributionList;
         for (int i = 0; i < numberOfDistributionList; ++i) {
             if (i != 0) {
-                listOfDistributionList.append(QLatin1StringView(", "));
+                listOfDistributionList.append(", "_L1);
             }
             listOfDistributionList.append(QStringLiteral("\"%1\"").arg(emptyDistributionLists.at(i)));
         }
@@ -81,8 +82,7 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         mIsValid = false;
     } else {
         if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
-            const QString errorMsg(QLatin1StringView("<qt><p><b>") + brokenAddress + QLatin1StringView("</b></p><p>")
-                                   + KEmailAddress::emailParseResultToString(errorCode) + QLatin1StringView("</p></qt>"));
+            const QString errorMsg("<qt><p><b>"_L1 + brokenAddress + "</b></p><p>"_L1 + KEmailAddress::emailParseResultToString(errorCode) + "</p></qt>"_L1);
             KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
             mIsValid = false;
         }

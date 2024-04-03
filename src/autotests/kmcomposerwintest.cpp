@@ -5,6 +5,8 @@
 */
 
 #include "kmcomposerwintest.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "editor/warningwidgets/nearexpirywarning.h"
 #include "kmkernel.h"
 
@@ -141,7 +143,7 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     : QObject(parent)
 {
     QStandardPaths::setTestModeEnabled(true);
-    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + QLatin1StringView("/.qttest")).constData());
+    qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + "/.qttest"_L1).constData());
 
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
     QDir gnupgHomeData(QLatin1StringView(TEST_DATA_DIR) + QStringLiteral("/gnupg"));

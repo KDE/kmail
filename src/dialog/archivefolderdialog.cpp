@@ -6,6 +6,7 @@
 */
 
 #include "archivefolderdialog.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 #include <MailCommon/BackupJob>
@@ -40,14 +41,14 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
         currentPath = QDir::homePath();
     }
     return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
-        + QDate::currentDate().toString(Qt::ISODate) + QLatin1StringView(".tar.bz2");
+        + QDate::currentDate().toString(Qt::ISODate) + ".tar.bz2"_L1;
 }
 
 ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     : QDialog(parent)
     , mParentWidget(parent)
 {
-    setObjectName(QLatin1StringView("archive_folder_dialog"));
+    setObjectName("archive_folder_dialog"_L1);
     setWindowTitle(i18nc("@title:window for archiving a folder", "Archive Folder"));
     auto topLayout = new QVBoxLayout(this);
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);

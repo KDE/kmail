@@ -5,6 +5,8 @@
 */
 
 #include "removecollectionjob.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmkernel.h"
 #include "kmmainwidget.h"
 #include <Akonadi/CollectionDeleteJob>
@@ -52,7 +54,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     QString title;
     QString buttonLabel;
     const QString colNameHtmlEscaped{col.name().toHtmlEscaped()};
-    if (col.resource() == QLatin1StringView("akonadi_search_resource")) {
+    if (col.resource() == "akonadi_search_resource"_L1) {
         title = i18n("Delete Search");
         str = i18n(
             "<qt>Are you sure you want to delete the search <b>%1</b>?<br />"

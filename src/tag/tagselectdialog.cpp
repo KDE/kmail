@@ -5,6 +5,7 @@
 */
 
 #include "tagselectdialog.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 
@@ -59,9 +60,9 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     auto vbox = new QVBoxLayout;
     mainWidget->setLayout(vbox);
     vbox->setContentsMargins({});
-    mListTag->setObjectName(QLatin1StringView("listtag"));
+    mListTag->setObjectName("listtag"_L1);
     auto listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
-    listWidgetSearchLine->setObjectName(QLatin1StringView("searchline"));
+    listWidgetSearchLine->setObjectName("searchline"_L1);
 
     listWidgetSearchLine->setPlaceholderText(i18n("Search tag..."));
     listWidgetSearchLine->setClearButtonEnabled(true);

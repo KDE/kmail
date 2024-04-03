@@ -7,6 +7,8 @@
  */
 
 #include "summaryview_plugin.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail-version.h"
 #include "kmailinterface.h"
 #include "summaryview_part.h"
@@ -90,7 +92,7 @@ void SummaryView::doSync()
 KParts::Part *SummaryView::createPart()
 {
     mPart = new SummaryViewPart(core(), aboutData(), this);
-    mPart->setObjectName(QLatin1StringView("summaryPart"));
+    mPart->setObjectName("summaryPart"_L1);
     return mPart;
 }
 

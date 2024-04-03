@@ -5,6 +5,8 @@
 */
 
 #include "kmknotify.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmkernel.h"
 
 #include <KConfig>
@@ -91,12 +93,12 @@ void KMKnotify::initCombobox()
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
                                                 << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
     for (const QString &notify : lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QLatin1StringView("knotifications6/") + notify);
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify);
 
         if (!fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
             QString appname = fullPath.right(fullPath.length() - slash - 1);
-            appname.remove(QLatin1StringView(".notifyrc"));
+            appname.remove(".notifyrc"_L1);
             if (!appname.isEmpty()) {
                 KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
                 KConfigGroup globalConfig(&config, QStringLiteral("Global"));

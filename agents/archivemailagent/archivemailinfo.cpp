@@ -4,6 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "archivemailinfo.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailagent_debug.h"
 #include <KLocalizedString>
@@ -114,7 +115,7 @@ QStringList ArchiveMailInfo::listOfArchive(const QString &folderName, bool &dirE
 
     QStringList nameFilters;
     nameFilters << i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + normalizeFolderName(folderName) + QLatin1Char('_')
-            + QLatin1StringView("*") + QString::fromLatin1(extensions[mArchiveType]);
+            + "*"_L1 + QString::fromLatin1(extensions[mArchiveType]);
     const QStringList lst = dir.entryList(nameFilters, QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
     return lst;
 }

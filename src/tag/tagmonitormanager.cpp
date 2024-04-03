@@ -5,6 +5,8 @@
 */
 
 #include "tagmonitormanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail_debug.h"
 
 #include <Akonadi/Monitor>
@@ -16,7 +18,7 @@ TagMonitorManager::TagMonitorManager(QObject *parent)
     : QObject(parent)
     , mMonitor(new Akonadi::Monitor(this))
 {
-    mMonitor->setObjectName(QLatin1StringView("TagActionManagerMonitor"));
+    mMonitor->setObjectName("TagActionManagerMonitor"_L1);
     mMonitor->setTypeMonitored(Akonadi::Monitor::Tags);
     mMonitor->tagFetchScope().fetchAttribute<Akonadi::TagAttribute>();
     connect(mMonitor, &Akonadi::Monitor::tagAdded, this, &TagMonitorManager::onTagAdded);

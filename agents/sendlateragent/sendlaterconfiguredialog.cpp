@@ -5,6 +5,8 @@
 */
 
 #include "sendlaterconfiguredialog.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail-version.h"
 #include "sendlaterconfigurewidget.h"
 
@@ -37,7 +39,7 @@ SendLaterConfigureDialog::SendLaterConfigureDialog(QWidget *parent)
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &SendLaterConfigureDialog::reject);
 
-    mWidget->setObjectName(QLatin1StringView("sendlaterwidget"));
+    mWidget->setObjectName("sendlaterwidget"_L1);
     connect(mWidget, &SendLaterWidget::sendNow, this, &SendLaterConfigureDialog::sendNow);
     mainLayout->addWidget(mWidget);
     mainLayout->addWidget(buttonBox);

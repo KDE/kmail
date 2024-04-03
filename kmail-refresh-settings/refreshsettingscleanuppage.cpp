@@ -5,6 +5,8 @@
 */
 
 #include "refreshsettingscleanuppage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <QHBoxLayout>
@@ -15,10 +17,10 @@ RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     : QWidget(parent)
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
+    mainLayout->setObjectName("mainLayout"_L1);
     mainLayout->setContentsMargins({});
     auto button = new QPushButton(i18n("Clean"), this);
-    button->setObjectName(QLatin1StringView("button"));
+    button->setObjectName("button"_L1);
     mainLayout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &RefreshSettingsCleanupPage::cleanSettings);
 }

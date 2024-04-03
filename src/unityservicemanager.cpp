@@ -5,6 +5,8 @@
 */
 
 #include "unityservicemanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include "kmsystemtray.h"
@@ -136,7 +138,7 @@ void UnityServiceManager::updateCount()
     }
 
     if (mUnityServiceAvailable) {
-        const QString launcherId = qApp->desktopFileName() + QLatin1StringView(".desktop");
+        const QString launcherId = qApp->desktopFileName() + ".desktop"_L1;
         const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
         const QVariantMap properties{{QStringLiteral("count-visible"), unreadEmail > 0}, {QStringLiteral("count"), unreadEmail}};
 
@@ -186,7 +188,7 @@ void UnityServiceManager::initUnity()
 
         const QStringList &services = reply.value();
 
-        mUnityServiceAvailable = services.contains(QLatin1StringView("com.canonical.Unity"));
+        mUnityServiceAvailable = services.contains("com.canonical.Unity"_L1);
         if (mUnityServiceAvailable) {
             updateCount();
         }

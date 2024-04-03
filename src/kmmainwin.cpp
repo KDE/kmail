@@ -7,6 +7,8 @@
  */
 
 #include "kmmainwin.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
 #include <Libkdepim/ProgressStatusBarWidget>
@@ -65,7 +67,7 @@ KMMainWin::KMMainWin(QWidget *)
         }
     });
 #endif
-    setObjectName(QLatin1StringView("kmail-mainwindow#"));
+    setObjectName("kmail-mainwindow#"_L1);
 
     resize(700, 500); // The default size
 

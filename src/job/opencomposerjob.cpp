@@ -5,6 +5,8 @@
 */
 
 #include "opencomposerjob.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KIdentityManagementCore/Identity>
@@ -111,7 +113,7 @@ void OpenComposerJob::slotOpenComposer()
     QList<KMail::Composer::AttachmentInfo> infoList;
     for (QList<QUrl>::ConstIterator it = attachURLs.constBegin(); it != endAttachment; ++it) {
         QMimeDatabase mimeDb;
-        if (mimeDb.mimeTypeForUrl(*it).name() == QLatin1StringView("inode/directory")) {
+        if (mimeDb.mimeTypeForUrl(*it).name() == "inode/directory"_L1) {
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
                                                                i18nc("@title:window", "Attach Folder"),

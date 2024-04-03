@@ -5,6 +5,8 @@
 */
 
 #include "sendlaterconfigurewidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "sendlaterutil.h"
 
 #include <MessageComposer/SendLaterDialog>
@@ -59,7 +61,7 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
         ;
 #endif
 
-    mWidget->treeWidget->setObjectName(QLatin1StringView("treewidget"));
+    mWidget->treeWidget->setObjectName("treewidget"_L1);
     mWidget->treeWidget->setHeaderLabels(headers);
     mWidget->treeWidget->setSortingEnabled(true);
     mWidget->treeWidget->setRootIsDecorated(false);

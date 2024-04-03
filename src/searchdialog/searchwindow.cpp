@@ -10,6 +10,8 @@
  */
 
 #include "searchwindow.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "incompleteindexdialog.h"
 
 #include "kmcommands.h"
@@ -896,7 +898,7 @@ QList<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List
             const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
             const auto modelCol = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             // Only index offline IMAP collections
-            if (PimCommon::Util::isImapResource(modelCol.resource()) && !modelCol.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
+            if (PimCommon::Util::isImapResource(modelCol.resource()) && !modelCol.cachePolicy().localParts().contains("RFC822"_L1)) {
                 continue;
             } else {
                 cols.push_back(modelCol);
@@ -925,12 +927,12 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
     for (const Akonadi::Collection &col : cols) {
         const QModelIndex colIdx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
         if (col.statistics().count() > -1) {
-            if (col.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
+            if (col.cachePolicy().localParts().contains("RFC822"_L1)) {
                 result.push_back(col);
             }
         } else {
             const auto collection = etm->data(colIdx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            if (!collection.hasAttribute<Akonadi::EntityHiddenAttribute>() && collection.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
+            if (!collection.hasAttribute<Akonadi::EntityHiddenAttribute>() && collection.cachePolicy().localParts().contains("RFC822"_L1)) {
                 result.push_back(collection);
             }
         }
@@ -942,7 +944,7 @@ Akonadi::Collection::List SearchWindow::searchCollectionsRecursive(const Akonadi
             for (int i = 0; i < childrenCount; ++i) {
                 const QModelIndex idx = etm->index(i, 0, colIdx);
                 const auto child = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-                if (child.cachePolicy().localParts().contains(QLatin1StringView("RFC822"))) {
+                if (child.cachePolicy().localParts().contains("RFC822"_L1)) {
                     subCols.push_back(child);
                 }
             }

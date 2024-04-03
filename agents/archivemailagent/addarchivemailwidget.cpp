@@ -5,6 +5,8 @@
 */
 
 #include "addarchivemailwidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "archivemailrangewidget.h"
 #include "widgets/formatcombobox.h"
 #include "widgets/unitcombobox.h"
@@ -34,7 +36,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     mainLayout->setContentsMargins({});
 
     auto folderLabel = new QLabel(i18n("Folder:"), this);
-    mFolderRequester->setObjectName(QLatin1StringView("folder_requester"));
+    mFolderRequester->setObjectName("folder_requester"_L1);
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
     mainLayout->addRow(folderLabel, mFolderRequester);
@@ -44,22 +46,22 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     }
 
     auto formatLabel = new QLabel(i18n("Format:"), this);
-    formatLabel->setObjectName(QLatin1StringView("label_format"));
+    formatLabel->setObjectName("label_format"_L1);
     mainLayout->addRow(formatLabel, mFormatComboBox);
 
-    mRecursiveCheckBox->setObjectName(QLatin1StringView("recursive_checkbox"));
+    mRecursiveCheckBox->setObjectName("recursive_checkbox"_L1);
     mRecursiveCheckBox->setChecked(true);
     mainLayout->addWidget(mRecursiveCheckBox);
 
     auto pathLabel = new QLabel(i18n("Path:"), this);
-    pathLabel->setObjectName(QLatin1StringView("path_label"));
+    pathLabel->setObjectName("path_label"_L1);
     mPath->lineEdit()->setTrapReturnKey(true);
     connect(mPath, &KUrlRequester::textChanged, this, &AddArchiveMailWidget::slotUpdateOkButton);
     mPath->setMode(KFile::Directory);
     mainLayout->addRow(pathLabel, mPath);
 
     auto dateLabel = new QLabel(i18n("Backup each:"), this);
-    dateLabel->setObjectName(QLatin1StringView("date_label"));
+    dateLabel->setObjectName("date_label"_L1);
 
     auto hlayout = new QHBoxLayout;
     mDays->setMinimum(1);
@@ -77,7 +79,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     maxCountlabel->setBuddy(mMaximumArchive);
     mainLayout->addRow(maxCountlabel, mMaximumArchive);
 
-    mArchiveMailRangeWidget->setObjectName(QLatin1StringView("mArchiveMailRangeWidget"));
+    mArchiveMailRangeWidget->setObjectName("mArchiveMailRangeWidget"_L1);
 
     mainLayout->addRow(mArchiveMailRangeWidget);
     if (mInfo) {

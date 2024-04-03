@@ -5,6 +5,8 @@
 */
 
 #include "archivemailwidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "addarchivemaildialog.h"
 #include "archivemailagent_debug.h"
 #include "archivemailagentutil.h"
@@ -69,7 +71,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
 
     const QStringList headers = QStringList{i18n("Name"), i18n("Last archive"), i18n("Next archive in"), i18n("Storage directory")};
     mWidget.treeWidget->setHeaderLabels(headers);
-    mWidget.treeWidget->setObjectName(QLatin1StringView("treewidget"));
+    mWidget.treeWidget->setObjectName("treewidget"_L1);
     mWidget.treeWidget->setSortingEnabled(true);
     mWidget.treeWidget->setRootIsDecorated(false);
     mWidget.treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);

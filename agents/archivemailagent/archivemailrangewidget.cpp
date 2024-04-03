@@ -5,6 +5,8 @@
 */
 
 #include "archivemailrangewidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "archivemailagent_debug.h"
 #include "widgets/hourcombobox.h"
 #include <KLocalizedString>
@@ -20,15 +22,15 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     , mRangeEnabled(new QCheckBox(i18n("Use Range"), this))
 {
     auto mainLayout = new QHBoxLayout(this);
-    mainLayout->setObjectName(QLatin1StringView("mainLayout"));
+    mainLayout->setObjectName("mainLayout"_L1);
     mainLayout->setContentsMargins({});
 
-    mRangeEnabled->setObjectName(QLatin1StringView("mRangeEnabled"));
+    mRangeEnabled->setObjectName("mRangeEnabled"_L1);
     mainLayout->addWidget(mRangeEnabled);
 
-    mStartRange->setObjectName(QLatin1StringView("mStartRange"));
+    mStartRange->setObjectName("mStartRange"_L1);
 
-    mEndRange->setObjectName(QLatin1StringView("mEndRange"));
+    mEndRange->setObjectName("mEndRange"_L1);
 
     mainLayout->addWidget(mStartRange);
     mainLayout->addWidget(mEndRange);

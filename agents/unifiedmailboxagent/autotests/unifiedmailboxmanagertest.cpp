@@ -5,6 +5,8 @@
 */
 
 #include "../unifiedmailboxmanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "../common.h"
 #include "../unifiedmailbox.h"
 
@@ -223,12 +225,12 @@ private Q_SLOTS:
         QVERIFY(manager.unifiedMailboxForSource(sourceCol) != nullptr);
 
         // But nothing should bne written in the config yet
-        QVERIFY(!boxesGroup.groupList().contains(QLatin1StringView("Test1")));
+        QVERIFY(!boxesGroup.groupList().contains("Test1"_L1));
 
         // Now write to the config file and check it's actually there - we don't test
         // the contents of the group, UnifiedMailbox serialization has its own test
         manager.saveBoxes();
-        QVERIFY(boxesGroup.hasGroup(QLatin1StringView("Test1")));
+        QVERIFY(boxesGroup.hasGroup("Test1"_L1));
     }
 
     void testRemoveMailbox()

@@ -5,6 +5,7 @@
 
 */
 #include "potentialphishingdetailwidget.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -20,10 +21,10 @@ PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     auto mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins({});
     auto lab = new QLabel(i18n("Select email to put in whitelist:"), this);
-    lab->setObjectName(QLatin1StringView("label"));
+    lab->setObjectName("label"_L1);
     mainLayout->addWidget(lab);
 
-    mListWidget->setObjectName(QLatin1StringView("list_widget"));
+    mListWidget->setObjectName("list_widget"_L1);
     mainLayout->addWidget(mListWidget);
 }
 

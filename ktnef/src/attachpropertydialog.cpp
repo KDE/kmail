@@ -36,7 +36,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QWindow>
-
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 static const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";
@@ -90,7 +90,7 @@ void AttachPropertyDialog::writeConfig()
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
 {
     QString s = attach->fileName().isEmpty() ? attach->name() : attach->fileName();
-    mUI.mFilename->setText(QLatin1StringView("<b>") + s + QLatin1StringView("</b>"));
+    mUI.mFilename->setText("<b>"_L1 + s + "</b>"_L1);
     setWindowTitle(i18nc("@title:window", "Properties for Attachment %1", s));
     mUI.mDisplay->setText(attach->displayName());
     mUI.mMime->setText(attach->mimeTag());
@@ -137,7 +137,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         QVariant value = (*it)->value();
         if (value.userType() == QMetaType::QVariantList) {
             newItem->setExpanded(true);
-            newItem->setText(0, newItem->text(0) + QLatin1StringView(" [") + QString::number(value.toList().count()) + QLatin1Char(']'));
+            newItem->setText(0, newItem->text(0) + " ["_L1 + QString::number(value.toList().count()) + QLatin1Char(']'));
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
             for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
@@ -175,7 +175,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
     } else {
         QString tag = item->text(2);
         const int key = QStringView(tag).mid(5).toInt();
-        const QVariant prop = (tag.startsWith(QLatin1StringView("attr_")) ? pSet->attribute(key) : pSet->property(key));
+        const QVariant prop = (tag.startsWith("attr_"_L1) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
             QFile f(filename);

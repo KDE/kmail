@@ -5,6 +5,8 @@
 */
 
 #include "configureaccountpage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "configagentdelegate.h"
 #include "kmkernel.h"
 #include "newmailnotifierinterface.h"
@@ -249,7 +251,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
         IncludeInManualChecks = group.readEntry("IncludeInManualChecks", true);
 
         // Keep sync with kmkernel, don't forget to change there.
-        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith(QLatin1StringView("akonadi_pop3_resource")) ? true : false);
+        OfflineOnShutdown = group.readEntry("OfflineOnShutdown", ident.startsWith("akonadi_pop3_resource"_L1) ? true : false);
 
         CheckOnStartup = group.readEntry("CheckOnStartup", false);
         QSharedPointer<RetrievalOptions> opts(new RetrievalOptions(IncludeInManualChecks, OfflineOnShutdown, CheckOnStartup));

@@ -5,6 +5,8 @@
 */
 
 #include "configuresecuritypage.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailCommon/FolderSettings>
@@ -96,9 +98,9 @@ void SecurityPageGeneralTab::slotOpenExternalReferenceExceptions()
 
 void SecurityPageGeneralTab::slotLinkClicked(const QString &link)
 {
-    if (link == QLatin1StringView("whatsthis1")) {
+    if (link == "whatsthis1"_L1) {
         QWhatsThis::showText(QCursor::pos(), mSGTab.mHtmlMailCheck->whatsThis());
-    } else if (link == QLatin1StringView("whatsthis2")) {
+    } else if (link == "whatsthis2"_L1) {
         QWhatsThis::showText(QCursor::pos(), mSGTab.mExternalReferences->whatsThis());
     }
 }
@@ -184,7 +186,7 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
 
 void SecurityPageMDNTab::slotLinkClicked(const QString &link)
 {
-    if (link == QLatin1StringView("whatsthis-mdn")) {
+    if (link == "whatsthis-mdn"_L1) {
         QWhatsThis::showText(QCursor::pos(), mUi.radioIgnore->whatsThis());
     }
 }

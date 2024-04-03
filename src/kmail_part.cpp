@@ -9,6 +9,7 @@
 */
 
 #include "kmail_part.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 
@@ -55,10 +56,10 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaDa
     // create a canvas to insert our widget
     auto canvas = new QWidget(parentWidget);
     canvas->setFocusPolicy(Qt::ClickFocus);
-    canvas->setObjectName(QLatin1StringView("canvas"));
+    canvas->setObjectName("canvas"_L1);
     setWidget(canvas);
     mainWidget = new KMMainWidget(canvas, this, actionCollection(), KSharedConfig::openConfig());
-    mainWidget->setObjectName(QLatin1StringView("partmainwidget"));
+    mainWidget->setObjectName("partmainwidget"_L1);
     auto topLayout = new QVBoxLayout(canvas);
     topLayout->addWidget(mainWidget);
     topLayout->setContentsMargins({});

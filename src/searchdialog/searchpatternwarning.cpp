@@ -5,6 +5,7 @@
 */
 
 #include "searchpatternwarning.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 
@@ -23,7 +24,7 @@ SearchPatternWarning::~SearchPatternWarning() = default;
 
 void SearchPatternWarning::setError(const QStringList &lstError)
 {
-    setText(i18n("Search failed some errors were found: <ul><li>%1</li></ul>", lstError.join(QLatin1StringView("</li><li>"))));
+    setText(i18n("Search failed some errors were found: <ul><li>%1</li></ul>", lstError.join("</li><li>"_L1)));
 }
 
 void SearchPatternWarning::showWarningPattern(const QStringList &lstError)
