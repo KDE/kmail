@@ -6038,18 +6038,21 @@ msgid ""
 "(or moving to an archive folder) the messages that are marked 'Important' or "
 "'Action Item'"
 msgstr ""
+"Toto nastavení zabrání automatickému vypršení starých zpráv ve složce (a "
+"jejich následnému smazání nebo přesunutí do archivu) u zpráv, které jsou "
+"označené jako Důležité nebo Úkol"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg.in:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
-msgstr ""
+msgstr "Povolit místní označení stavu na složkách bez práva zápisu"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
 #, kde-format
 msgid "Send queued mail on mail check"
-msgstr ""
+msgstr "Při kontrole pošty odeslat zprávy ve frontě"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:65
@@ -6059,17 +6062,19 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>Zvolte, zda si přejete aby KMail odesílal odchozí zprávy při všech "
+"kontrolách pošty, při manuálních kontrolách pošty, nebo aby je automaticky "
+"neodesílal vůbec.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg.in:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
+msgstr "Naposledy zvolená složka v dialogu pro výběr složky."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Zobrazit nepřečtenou poštu v panelu úloh"
 
@@ -6077,13 +6082,13 @@ msgstr "Zobrazit nepřečtenou poštu v panelu úloh"
 #: settings/kmail.kcfg.in:100
 #, kde-format
 msgid "Specify e&ditor:"
-msgstr ""
+msgstr "Zvolte e&ditor:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg.in:104
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr ""
+msgstr "Používat e&xterní editor místo vestavěného"
 
 #. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
 #: settings/kmail.kcfg.in:108
@@ -6100,27 +6105,26 @@ msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
 msgstr ""
+"Hranice od které bude uživatel upozorněn, že se se složka blíží k limitu "
+"kvóty."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:115
-#, fuzzy, kde-format
-#| msgid "Empty local &trash folder on program exit"
+#, kde-format
 msgid "Empty the local trash folder on program exit"
-msgstr "Vyprázdni&t lokální složku koše při ukončení programu"
+msgstr "Vyprázdnit lokální složku koše při ukončení programu"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.in:119
-#, fuzzy, kde-format
-#| msgid "Allow deleting messages without confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "Povolit mazání zpráv bez potvrzení"
+msgstr "Smazat zprávy bez potvrzení"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
-#, fuzzy, kde-format
-#| msgid "Select specific folders:"
+#, kde-format
 msgid "Allow to start specific folder"
-msgstr "Vyberte konkrétní složky:"
+msgstr ""
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg.in:127
@@ -6134,7 +6138,7 @@ msgstr ""
 msgid ""
 "Specifies whether the folders will expire in the background (for internal "
 "use only)"
-msgstr ""
+msgstr "Určuje zda složka vyprší na pozadí (pouze pro interní použití)"
 
 #. i18n: ectx: label, entry (FirstStart), group (General)
 #: settings/kmail.kcfg.in:138
@@ -6158,14 +6162,13 @@ msgstr ""
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
-msgstr ""
+msgstr "Tato hodnota určuje, zda má být zobrazován Úvod do KMailu."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgid "Show folder quick search line edit"
-msgstr "Zobrazovat pole pro rychlé hledání"
+msgstr "Zobrazovat políčko pro rychle hledání ve složkách"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg.in:186
@@ -6175,10 +6178,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.in:189
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgid "Warn if the number of recipients is more than:"
-msgstr "Nastavit maximální počet příjemců pro varování"
+msgstr "Varovat, pokud počet příjemců překročí:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
@@ -6194,21 +6196,19 @@ msgstr ""
 #: settings/kmail.kcfg.in:212
 #, kde-format
 msgid "Confirm &before send"
-msgstr ""
+msgstr "P&otvrdit před odesláním"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:219
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgid "Check spelling before send"
-msgstr "Zkontrolovat pravopis"
+msgstr "Zkontrolovat pravopis před odesláním"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
-#, fuzzy, kde-format
-#| msgid "Message Disposition Notifications"
+#, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Upozornění na naložení se zprávou"
+msgstr "Auto&maticky požadovat upozornění na dispozice zprávy"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
@@ -6220,14 +6220,17 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
+"<qt><p>Povolte tuto volbu, pokud si přejete, aby KMail požadoval oznámení o "
+"naložení se zprávou (MDN) pro každou odchozí zprávu.</p><p>Tato volba určuje "
+"výchozí chování; stále můžete MDN povolit nebo zakázat individuálně pro "
+"každou zprávu v editoru nových zpráv volbou <em>Možnosti</em>-&gt;"
+"<em>Požadovat oznámení o naložení</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Autosave"
+#, kde-format
 msgid "Autosave interval:"
-msgstr "Automatické uložení"
+msgstr "Interval automatického ukládání:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6237,12 +6240,15 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
+"Text v okně editoru lze pravidelně zálohovat. Zde se nastavuje časový "
+"interval mezi zálohami. Přejete-li si automatické ukládání zakázat, nastavte "
+"zde 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.in:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
+msgstr "Zobrazovat v editoru Správce útržků a Panel vkládání."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.in:260
@@ -6254,27 +6260,25 @@ msgstr ""
 #: settings/kmail.kcfg.in:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr ""
+msgstr "Seznam všech nedávno použitých URL"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.in:270
 #, kde-format
 msgid "A list of all the recently used encodings"
-msgstr ""
+msgstr "Seznam všech nedávno použitých kódování"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:276
-#, fuzzy, kde-format
-#| msgid "Show sign/encrypt indicator"
+#, kde-format
 msgid "Show crypto label indicator"
-msgstr "Zobrazit ukazatel zašifrovaný/podepsaný"
+msgstr ""
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show encryption key ownertrust level"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Zobrazit úroveň důvěry šifrovacího klíče"
+msgstr ""
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
@@ -6314,85 +6318,75 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Viewer"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Prohlížeč zpráv"
+msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
 #, kde-format
 msgid "Do not show a message preview pane"
-msgstr ""
+msgstr "Nezobrazovat rám s náhledem zprávy"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:349
 #, kde-format
 msgid "Show the message preview pane below the message list"
-msgstr ""
+msgstr "Zobrazovat rám s náhledem zprávy pod seznamem zpráv"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:352
 #, kde-format
 msgid "Show the message preview pane next to the message list"
-msgstr ""
+msgstr "Zobrazovat rám s náhledem zprávy vedle seznamu zpráv"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgctxt "@label"
-#| msgid "Folder tooltips:"
+#, kde-format
 msgid "Folder list:"
-msgstr "Nástrojové tipy složek:"
+msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "No folder selected"
+#, kde-format
 msgid "Long folder list"
-msgstr "Žádná složka není vybrána"
+msgstr "Dlouhý seznam složek"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:365
-#, fuzzy, kde-format
-#| msgctxt "@label"
-#| msgid "Show favorite folders view:"
+#, kde-format
 msgid "Short folder list"
-msgstr "Zobrazit pohled na oblíbené složky:"
+msgstr "Krátký seznam složek"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:374
-#, fuzzy, kde-format
-#| msgid "Message List - Important Messages"
+#, kde-format
 msgid "Message template for new message"
-msgstr "Seznam zpráv - důležité zprávy"
+msgstr "Šablona nové zprávy"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for reply"
-msgstr "Zpráva ze š&ablony"
+msgstr "Šablona zprávy pro odpověď"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
 #, kde-format
 msgid "Message template for reply to all"
-msgstr ""
+msgstr "Šablona zprávy pro odpověď všem"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
-#, fuzzy, kde-format
-#| msgid "Message From &Template"
+#, kde-format
 msgid "Message template for forward"
-msgstr "Zpráva ze š&ablony"
+msgstr "Šablona zprávy pro přeposlání"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
 #, kde-format
 msgid "Quote characters"
-msgstr ""
+msgstr "Znaky pro citaci"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.in:409
