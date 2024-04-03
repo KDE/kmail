@@ -3872,6 +3872,9 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
             Q_UNREACHABLE();
         }
 
+        // Ensure the tooltips are word wrapped
+        tooltip = QStringLiteral("<div>") + tooltip + QStringLiteral("</div>");
+
         if (keyState == NoKey) {
             mEncryptionState.setAcceptedSolution(false);
             if (showAllIcons) {
