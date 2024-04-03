@@ -1330,7 +1330,7 @@ void KMComposerWin::setupActions()
 
     KStandardAction::print(this, &KMComposerWin::slotPrint, actionCollection());
     KStandardAction::printPreview(this, &KMComposerWin::slotPrintPreview, actionCollection());
-    KStandardAction::close(this, &KMComposerWin::slotClose, actionCollection());
+    KStandardAction::close(this, &KMComposerWin::close, actionCollection());
 
     KStandardAction::undo(mGlobalAction, &KMComposerGlobalAction::slotUndo, actionCollection());
     KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
@@ -2573,11 +2573,6 @@ void KMComposerWin::slotExpandGroupResult(KJob *job)
     if (!groupData.isEmpty()) {
         addAttachment(attachmentName, KMime::Headers::CEbase64, QString(), groupData, "text/x-vcard");
     }
-}
-
-void KMComposerWin::slotClose()
-{
-    close();
 }
 
 void KMComposerWin::slotNewComposer()
