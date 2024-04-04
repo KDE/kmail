@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2020-09-20 09:30+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -171,18 +171,18 @@ msgstr "<b>Έναρξη φιλτραρίσματος στο μήνυμα \"%1\" 
 msgid "Filtering messages"
 msgstr "Φιλτράρισμα μηνυμάτων"
 
-#: mailfilteragent.cpp:101
+#: mailfilteragent.cpp:102
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Οι καταγραφές του φίλτρου αλληλογραφίας είναι ενεργοποιημένες"
 
-#: mailfilteragent.cpp:165
+#: mailfilteragent.cpp:166
 #, kde-format
 msgid "Ready"
 msgstr "Έτοιμο"
 
-#: mailfilteragent.cpp:251
+#: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Φιλτράρισμα σε %1"

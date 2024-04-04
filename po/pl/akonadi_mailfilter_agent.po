@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-09-30 10:23+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -168,18 +168,18 @@ msgstr "<b>Rozpocznij filtrowanie wiadomości \"%1\" z \"%2\" z \"%3\" :</b>"
 msgid "Filtering messages"
 msgstr "Filtrowanie wiadomości"
 
-#: mailfilteragent.cpp:101
+#: mailfilteragent.cpp:102
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Dziennik filtrowania poczty jest włączony"
 
-#: mailfilteragent.cpp:165
+#: mailfilteragent.cpp:166
 #, kde-format
 msgid "Ready"
 msgstr "Gotowe"
 
-#: mailfilteragent.cpp:251
+#: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrowanie w %1"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-12-29 21:57+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -161,18 +161,18 @@ msgstr "<b>開始過濾從 \"%2\" 於 \"%3\" 來的信件 \"%1\"：</b>"
 msgid "Filtering messages"
 msgstr "過濾信件中"
 
-#: mailfilteragent.cpp:101
+#: mailfilteragent.cpp:102
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "過濾信件紀錄已開啟"
 
-#: mailfilteragent.cpp:165
+#: mailfilteragent.cpp:166
 #, kde-format
 msgid "Ready"
 msgstr "已就緒"
 
-#: mailfilteragent.cpp:251
+#: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
 msgstr "正在 %1 中過濾"

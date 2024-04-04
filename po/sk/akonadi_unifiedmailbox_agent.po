@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -74,17 +74,17 @@ msgstr "Vybrať ikonu..."
 msgid "Icon:"
 msgstr "Ikona:"
 
-#: unifiedmailboxmanager.cpp:294
+#: unifiedmailboxmanager.cpp:296
 #, kde-format
 msgid "Inbox"
 msgstr "Inbox"
 
-#: unifiedmailboxmanager.cpp:301
+#: unifiedmailboxmanager.cpp:303
 #, kde-format
 msgid "Sent"
 msgstr "Odoslané"
 
-#: unifiedmailboxmanager.cpp:308
+#: unifiedmailboxmanager.cpp:310
 #, kde-format
 msgid "Drafts"
 msgstr "Koncepty"

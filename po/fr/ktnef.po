@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2021-05-15 10:26+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -78,7 +78,7 @@ msgstr ""
 "Impossible d'ouvrir le fichier en écriture. Veuillez vérifier les droits "
 "d'accès sur les fichiers."
 
-#: ktnefmain.cpp:94
+#: ktnefmain.cpp:96
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -88,79 +88,79 @@ msgstr ""
 "Une boîte de dialogue va apparaître où vous pouvez configurer les raccourcis "
 "à applicable à toute l'application."
 
-#: ktnefmain.cpp:108
+#: ktnefmain.cpp:110
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View"
 msgstr "Affichage"
 
-#: ktnefmain.cpp:113
+#: ktnefmain.cpp:115
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With..."
 msgstr "Afficher avec..."
 
-#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Extraire"
 
-#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#: ktnefmain.cpp:123 ktnefmain.cpp:402
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
 msgstr "Extraire vers..."
 
-#: ktnefmain.cpp:126
+#: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
 msgstr "Tout extraire vers..."
 
-#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
 msgstr "Propriétés"
 
-#: ktnefmain.cpp:136
+#: ktnefmain.cpp:138
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Message Properties"
 msgstr "Propriétés du message"
 
-#: ktnefmain.cpp:140
+#: ktnefmain.cpp:142
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
 msgstr "Afficher le texte du message"
 
-#: ktnefmain.cpp:145
+#: ktnefmain.cpp:147
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
 msgstr "Enregistrer le texte du message sous..."
 
-#: ktnefmain.cpp:158
+#: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder..."
 msgstr "Dossier par défaut..."
 
-#: ktnefmain.cpp:170
+#: ktnefmain.cpp:172
 #, kde-format
 msgctxt "@info:status"
 msgid "No file loaded"
 msgstr "Aucun fichier chargé"
 
-#: ktnefmain.cpp:193
+#: ktnefmain.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
 msgstr "Impossible d'ouvrir le fichier « %1 »."
 
-#: ktnefmain.cpp:198
+#: ktnefmain.cpp:200
 #, kde-format
 msgctxt "@info:status"
 msgid "%1 attachment found"
@@ -168,13 +168,13 @@ msgid_plural "%1 attachments found"
 msgstr[0] "%1 pièce jointe trouvée"
 msgstr[1] "%1 pièces jointes trouvées"
 
-#: ktnefmain.cpp:208
+#: ktnefmain.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Ouvrir un fichier « TNEF »"
 
-#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#: ktnefmain.cpp:246 ktnefmain.cpp:277
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
@@ -182,19 +182,19 @@ msgstr ""
 "Il n'existe aucun fichier sélectionné. Veuillez en sélectionner un et ré-"
 "essayer."
 
-#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "Impossible d'extraire le fichier « %1 »."
 
-#: ktnefmain.cpp:486
+#: ktnefmain.cpp:487
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "Le message ne contient aucune donnée en texte enrichi."
 
-#: ktnefmain.cpp:504
+#: ktnefmain.cpp:505
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
@@ -202,30 +202,30 @@ msgstr ""
 "Impossible d'ouvrir le fichier « %1 » en écriture. Veuillez vérifier les "
 "droits d'accès sur les fichiers."
 
-#: ktnefmain.cpp:526
+#: ktnefmain.cpp:527
 #, kde-format
 msgid "Open &with %1"
 msgstr "Ouvrir &avec %1"
 
-#: ktnefmain.cpp:528
+#: ktnefmain.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:553
+#: ktnefmain.cpp:554
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "&Ouvrir avec"
 
-#: ktnefmain.cpp:569
+#: ktnefmain.cpp:570
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
 msgstr "&Autres..."
 
-#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With..."

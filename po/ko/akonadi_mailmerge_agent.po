@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-12-03 00:47+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2022-02-20 22:22+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -17,44 +17,44 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 21.08.1\n"
 
-#: mailmergeconfiguredialog.cpp:33
+#: mailmergeconfiguredialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "설정"
 
-#: mailmergeconfiguredialog.cpp:50
+#: mailmergeconfiguredialog.cpp:52
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr "메일 머지 에이전트"
 
-#: mailmergeconfiguredialog.cpp:52
+#: mailmergeconfiguredialog.cpp:54
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr "이메일 주소 합치기 에이전트입니다."
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
 msgstr "Copyright (C) 2021-%1 Laurent Montel"
 
-#: mailmergeconfiguredialog.cpp:56
+#: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: mailmergeconfiguredialog.cpp:56
+#: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgid "Maintainer"
 msgstr "관리자"
 
-#: mailmergeconfiguredialog.cpp:59
+#: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "박신조"
 
-#: mailmergeconfiguredialog.cpp:59
+#: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

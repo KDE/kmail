@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2022-01-11 23:45+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,127 +17,127 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 21.12.0\n"
 
-#: sendlaterconfiguredialog.cpp:31
+#: sendlaterconfiguredialog.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Tənzimləmək"
 
-#: sendlaterconfiguredialog.cpp:49
+#: sendlaterconfiguredialog.cpp:51
 #, kde-format
 msgid "Send Later Agent"
 msgstr "Təxirə salınan göndərilşlər vasitəsi"
 
-#: sendlaterconfiguredialog.cpp:51
+#: sendlaterconfiguredialog.cpp:53
 #, kde-format
 msgid "Send emails later agent."
 msgstr "Təxirə salınan göndərilşlər vasitəsi."
 
-#: sendlaterconfiguredialog.cpp:53
+#: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Müəllif Hüquqları (C) 2013-%1 Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Maintainer"
 msgstr "Himayəçi"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Xəyyam Qocayev"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "xxmn77@gmail.com"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "To"
 msgstr "Alıcı"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Subject"
 msgstr "Başlıq"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Send around"
 msgstr "Təyin olunan vaxt"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Recurrent"
 msgstr "Təkrarlanan"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:59
 #, kde-format
 msgid "Message Id"
 msgstr "Məktun İD-si"
 
-#: sendlaterconfigurewidget.cpp:68
+#: sendlaterconfigurewidget.cpp:70
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Göndərilməli məktub yoxdur..."
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgid "Send now"
 msgstr "İndi göndərin"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Silmək"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "Yes"
 msgstr "Bəli"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "No"
 msgstr "Xeyr"
 
-#: sendlaterconfigurewidget.cpp:207
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "Seçilmiş elementi silmək istəyirsiniz?"
 msgstr[1] "Seçilmiş elementləri silmək istəyirsiniz?"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Elementləri silin"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Məktubu da silmək istəyirsiniz?"
 msgstr[1] "Məktubları da silmək istəyirsiniz?"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Məktubları silin"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"

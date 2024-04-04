@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -16,102 +16,102 @@ msgstr ""
 "X-Generator: Lokalize 21.07.80\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: sendlaterconfiguredialog.cpp:31
+#: sendlaterconfiguredialog.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Nastaviť"
 
-#: sendlaterconfiguredialog.cpp:49
+#: sendlaterconfiguredialog.cpp:51
 #, kde-format
 msgid "Send Later Agent"
 msgstr "Agent na poslanie neskôr"
 
-#: sendlaterconfiguredialog.cpp:51
+#: sendlaterconfiguredialog.cpp:53
 #, kde-format
 msgid "Send emails later agent."
 msgstr "Agent na poslanie e-mailov neskôr."
 
-#: sendlaterconfiguredialog.cpp:53
+#: sendlaterconfiguredialog.cpp:55
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2013-2021 Laurent Montel"
 msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Copyright (C) 2013-2021 Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Maintainer"
 msgstr "Správca"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Roman Paholík"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "wizzardsk@gmail.com"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "To"
 msgstr "Pre"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Subject"
 msgstr "Predmet"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Send around"
 msgstr "Poslať okolo"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Recurrent"
 msgstr "Opakované"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:59
 #, kde-format
 msgid "Message Id"
 msgstr "ID správy"
 
-#: sendlaterconfigurewidget.cpp:68
+#: sendlaterconfigurewidget.cpp:70
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Žiadna čakajúca správa..."
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgid "Send now"
 msgstr "Poslať teraz"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Vymazať"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "Yes"
 msgstr "Áno"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "No"
 msgstr "Nie"
 
-#: sendlaterconfigurewidget.cpp:207
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -119,14 +119,14 @@ msgstr[0] "Chcete vymazať vybranú položku?"
 msgstr[1] "Chcete vymazať vybrané položky?"
 msgstr[2] "Chcete vymazať vybrané položky?"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:210
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Vymazať"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "Do you want to remove the messages as well?"
 msgid "Do you want to delete the message as well?"
@@ -135,14 +135,14 @@ msgstr[0] "Chcete odstrániť aj správy?"
 msgstr[1] "Chcete odstrániť aj správy?"
 msgstr[2] "Chcete odstrániť aj správy?"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:219
 #, fuzzy, kde-format
 #| msgid "Remove messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Odstrániť správy"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:221
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action:button"

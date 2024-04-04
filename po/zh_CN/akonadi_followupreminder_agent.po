@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2022-09-28 00:50+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2024-03-30 19:37\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -55,58 +55,58 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-china@kde.org"
 
-#: followupreminderinfowidget.cpp:61
+#: followupreminderinfowidget.cpp:63
 #, kde-format
 msgid "To"
 msgstr "收件人"
 
-#: followupreminderinfowidget.cpp:61
+#: followupreminderinfowidget.cpp:63
 #, kde-format
 msgid "Subject"
 msgstr "主题"
 
-#: followupreminderinfowidget.cpp:61
+#: followupreminderinfowidget.cpp:63
 #, kde-format
 msgid "Deadline"
 msgstr "截止日期"
 
-#: followupreminderinfowidget.cpp:61
+#: followupreminderinfowidget.cpp:63
 #, kde-format
 msgid "Answer"
 msgstr "回复"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:147
 #, kde-format
 msgid "Received"
 msgstr "已接收"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:147
 #, kde-format
 msgid "On hold"
 msgstr "暂停"
 
-#: followupreminderinfowidget.cpp:217
+#: followupreminderinfowidget.cpp:219
 #, kde-format
 msgid "Show Message"
 msgstr "显示消息"
 
-#: followupreminderinfowidget.cpp:220
+#: followupreminderinfowidget.cpp:222
 #, kde-format
 msgid "Show Original Message"
 msgstr "显示原始邮件"
 
-#: followupreminderinfowidget.cpp:223
+#: followupreminderinfowidget.cpp:225
 #, kde-format
 msgid "Delete"
 msgstr "删除"
 
-#: followupreminderinfowidget.cpp:250
+#: followupreminderinfowidget.cpp:252
 #, kde-format
 msgid "Do you want to delete this selected item?"
 msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "是否要删除这 %1 个选定项目？"
 
-#: followupreminderinfowidget.cpp:251
+#: followupreminderinfowidget.cpp:253
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
@@ -117,13 +117,13 @@ msgstr "删除项目"
 msgid "Answer from %1 received"
 msgstr "收到来自 %1 的回复"
 
-#: followupremindernoanswerdialog.cpp:37
+#: followupremindernoanswerdialog.cpp:39
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "后续提醒"
 
-#: followupremindernoanswerdialog.cpp:43
+#: followupremindernoanswerdialog.cpp:45
 #, kde-format
 msgid "You still wait an answer about this mail:"
 msgstr "您仍然在等待此邮件的应答："

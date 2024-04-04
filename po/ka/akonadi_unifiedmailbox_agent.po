@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-09-26 05:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian<kde-i18n-doc@kde.org>\n"
@@ -75,17 +75,17 @@ msgstr "აირჩიეთ ხატულა..."
 msgid "Icon:"
 msgstr "ხატულა:"
 
-#: unifiedmailboxmanager.cpp:294
+#: unifiedmailboxmanager.cpp:296
 #, kde-format
 msgid "Inbox"
 msgstr "საფოსტო ყუთი"
 
-#: unifiedmailboxmanager.cpp:301
+#: unifiedmailboxmanager.cpp:303
 #, kde-format
 msgid "Sent"
 msgstr "გაგზავნილია"
 
-#: unifiedmailboxmanager.cpp:308
+#: unifiedmailboxmanager.cpp:310
 #, kde-format
 msgid "Drafts"
 msgstr "მონახაზები"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2013-01-13 22:24+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -69,7 +69,7 @@ msgid "Unable to open file for writing, check file permissions."
 msgstr ""
 "Fișierul nu poate fi deschis pentru scriere, verificați-i permisiunile."
 
-#: ktnefmain.cpp:94
+#: ktnefmain.cpp:96
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -77,79 +77,79 @@ msgid ""
 "wide shortcuts."
 msgstr ""
 
-#: ktnefmain.cpp:108
+#: ktnefmain.cpp:110
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View"
 msgstr "Vizualizează"
 
-#: ktnefmain.cpp:113
+#: ktnefmain.cpp:115
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With..."
 msgstr "Vizualizare cu..."
 
-#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Extrage"
 
-#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#: ktnefmain.cpp:123 ktnefmain.cpp:402
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
 msgstr "Extrage la..."
 
-#: ktnefmain.cpp:126
+#: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
 msgstr "Extragere totală către..."
 
-#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
 msgstr "Proprietăți"
 
-#: ktnefmain.cpp:136
+#: ktnefmain.cpp:138
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Message Properties"
 msgstr "Proprietăți mesaj"
 
-#: ktnefmain.cpp:140
+#: ktnefmain.cpp:142
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
 msgstr "Arată textul mesajului"
 
-#: ktnefmain.cpp:145
+#: ktnefmain.cpp:147
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
 msgstr "Salvare text mesaj ca..."
 
-#: ktnefmain.cpp:158
+#: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder..."
 msgstr "Dosar implicit..."
 
-#: ktnefmain.cpp:170
+#: ktnefmain.cpp:172
 #, kde-format
 msgctxt "@info:status"
 msgid "No file loaded"
 msgstr "Niciun fișier încărcat"
 
-#: ktnefmain.cpp:193
+#: ktnefmain.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
 msgstr ""
 
-#: ktnefmain.cpp:198
+#: ktnefmain.cpp:200
 #, kde-format
 msgctxt "@info:status"
 msgid "%1 attachment found"
@@ -158,60 +158,60 @@ msgstr[0] "%1 atașament găsit"
 msgstr[1] "%1 atașamente găsite"
 msgstr[2] "%1 de atașamente găsite"
 
-#: ktnefmain.cpp:208
+#: ktnefmain.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Deschide fișier TNEF"
 
-#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#: ktnefmain.cpp:246 ktnefmain.cpp:277
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
 msgstr ""
 
-#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr ""
 
-#: ktnefmain.cpp:486
+#: ktnefmain.cpp:487
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr ""
 
-#: ktnefmain.cpp:504
+#: ktnefmain.cpp:505
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr ""
 
-#: ktnefmain.cpp:526
+#: ktnefmain.cpp:527
 #, kde-format
 msgid "Open &with %1"
 msgstr ""
 
-#: ktnefmain.cpp:528
+#: ktnefmain.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr ""
 
-#: ktnefmain.cpp:553
+#: ktnefmain.cpp:554
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr ""
 
-#: ktnefmain.cpp:569
+#: ktnefmain.cpp:570
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
 msgstr ""
 
-#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "View With..."

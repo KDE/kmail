@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-06-23 08:40+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -17,101 +17,101 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.2\n"
 
-#: sendlaterconfiguredialog.cpp:31
+#: sendlaterconfiguredialog.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Nastavit"
 
-#: sendlaterconfiguredialog.cpp:49
+#: sendlaterconfiguredialog.cpp:51
 #, kde-format
 msgid "Send Later Agent"
 msgstr "Agent pro odeslání později"
 
-#: sendlaterconfiguredialog.cpp:51
+#: sendlaterconfiguredialog.cpp:53
 #, kde-format
 msgid "Send emails later agent."
 msgstr ""
 
-#: sendlaterconfiguredialog.cpp:53
+#: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Autorská práva (C) 2013-%1 Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Maintainer"
 msgstr "Správce"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Vít Pelčák"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "vit@pelcak.org"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "To"
 msgstr "Komu"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Subject"
 msgstr "Předmět"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Send around"
 msgstr "Poslat okolo"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Recurrent"
 msgstr "Opakující se"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:59
 #, kde-format
 msgid "Message Id"
 msgstr "ID zprávy"
 
-#: sendlaterconfigurewidget.cpp:68
+#: sendlaterconfigurewidget.cpp:70
 #, kde-format
 msgid "No messages waiting..."
 msgstr ""
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgid "Send now"
 msgstr "Odeslat nyní"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "Yes"
 msgstr "Ano"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "No"
 msgstr "Ne"
 
-#: sendlaterconfigurewidget.cpp:207
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -119,13 +119,13 @@ msgstr[0] "Přejete si smazat zvolenou položku?"
 msgstr[1] "Přejete si smazat zvolené položky?"
 msgstr[2] "Přejete si smazat zvolen0 položky?"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Smazat položky"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -133,13 +133,13 @@ msgstr[0] "Chcete rovněž odstranit tuto zprávu?"
 msgstr[1] "Chcete rovněž odstranit tyto zprávy?"
 msgstr[2] "Chcete rovněž odstranit tyto zprávy?"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Smazat zprávy"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"

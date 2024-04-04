@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-09-21 00:45+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2024-03-15 00:34+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -68,7 +68,7 @@ msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
 msgstr "Dosya yazmak için açılamadı, dosya izinlerini denetleyin."
 
-#: ktnefmain.cpp:94
+#: ktnefmain.cpp:96
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -78,79 +78,79 @@ msgstr ""
 "Uygulama çapındaki kısayolları ayarlayabileceğiniz bir iletişim kutusuyla "
 "karşılaşacaksınız."
 
-#: ktnefmain.cpp:108
+#: ktnefmain.cpp:110
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View"
 msgstr "Görünüm"
 
-#: ktnefmain.cpp:113
+#: ktnefmain.cpp:115
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With..."
 msgstr "Birlikte Görüntüle…"
 
-#: ktnefmain.cpp:117 ktnefmain.cpp:399
+#: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Çıkar"
 
-#: ktnefmain.cpp:121 ktnefmain.cpp:400
+#: ktnefmain.cpp:123 ktnefmain.cpp:402
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
 msgstr "Şuraya Çıkar…"
 
-#: ktnefmain.cpp:126
+#: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
 msgstr "Tümünü Şuraya Çıkar…"
 
-#: ktnefmain.cpp:131 ktnefmain.cpp:403
+#: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
 msgstr "Özellikler"
 
-#: ktnefmain.cpp:136
+#: ktnefmain.cpp:138
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Message Properties"
 msgstr "İleti Özellikleri"
 
-#: ktnefmain.cpp:140
+#: ktnefmain.cpp:142
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Show Message Text"
 msgstr "İleti Metnini Göster"
 
-#: ktnefmain.cpp:145
+#: ktnefmain.cpp:147
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
 msgstr "İleti Metnini Farklı Kaydet…"
 
-#: ktnefmain.cpp:158
+#: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder..."
 msgstr "Öntanımlı Klasör…"
 
-#: ktnefmain.cpp:170
+#: ktnefmain.cpp:172
 #, kde-format
 msgctxt "@info:status"
 msgid "No file loaded"
 msgstr "Yüklü dosya yok"
 
-#: ktnefmain.cpp:193
+#: ktnefmain.cpp:195
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
 msgstr "“%1” dosyası açılamadı."
 
-#: ktnefmain.cpp:198
+#: ktnefmain.cpp:200
 #, kde-format
 msgctxt "@info:status"
 msgid "%1 attachment found"
@@ -158,60 +158,60 @@ msgid_plural "%1 attachments found"
 msgstr[0] "%1 ek bulundu"
 msgstr[1] "%1 ek bulundu"
 
-#: ktnefmain.cpp:208
+#: ktnefmain.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "TNEF Dosyası Aç"
 
-#: ktnefmain.cpp:244 ktnefmain.cpp:275
+#: ktnefmain.cpp:246 ktnefmain.cpp:277
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
 msgstr "Dosya seçilmedi. Lütfen bir dosya seçip yeniden deneyin."
 
-#: ktnefmain.cpp:304 ktnefmain.cpp:380
+#: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "“%1” dosyası çıkarılamadı."
 
-#: ktnefmain.cpp:486
+#: ktnefmain.cpp:487
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "İleti hiç Zengin Metin verisi içermiyor."
 
-#: ktnefmain.cpp:504
+#: ktnefmain.cpp:505
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr "“%1” dosyası yazmak için açılamadı, dosya izinlerini denetleyin."
 
-#: ktnefmain.cpp:526
+#: ktnefmain.cpp:527
 #, kde-format
 msgid "Open &with %1"
 msgstr "%1 &ile Aç"
 
-#: ktnefmain.cpp:528
+#: ktnefmain.cpp:529
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:553
+#: ktnefmain.cpp:554
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "&Birlikte Aç"
 
-#: ktnefmain.cpp:569
+#: ktnefmain.cpp:570
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
 msgstr "Diğ&er…"
 
-#: ktnefmain.cpp:571 ktnefmain.cpp:579
+#: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With..."

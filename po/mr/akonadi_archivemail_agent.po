@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-03-14 00:38+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2013-03-12 17:54+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -23,7 +23,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr ""
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
 #, fuzzy, kde-format
 #| msgctxt "Start of the filename for a mail archive file"
 #| msgid "Archive"
@@ -31,158 +31,158 @@ msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "संग्रह"
 
-#: addarchivemailwidget.cpp:26
+#: addarchivemailwidget.cpp:28
 #, kde-format
 msgid "Archive all subfolders"
 msgstr ""
 
-#: addarchivemailwidget.cpp:36
+#: addarchivemailwidget.cpp:38
 #, fuzzy, kde-format
 #| msgid "&Folder:"
 msgid "Folder:"
 msgstr "संचयीका (&F):"
 
-#: addarchivemailwidget.cpp:46
+#: addarchivemailwidget.cpp:48
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgid "Format:"
 msgstr "स्वरूप (&O):"
 
-#: addarchivemailwidget.cpp:54
+#: addarchivemailwidget.cpp:56
 #, kde-format
 msgid "Path:"
 msgstr "मार्ग :"
 
-#: addarchivemailwidget.cpp:61
+#: addarchivemailwidget.cpp:63
 #, kde-format
 msgid "Backup each:"
 msgstr ""
 
-#: addarchivemailwidget.cpp:73
+#: addarchivemailwidget.cpp:75
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr ""
 
-#: addarchivemailwidget.cpp:76
+#: addarchivemailwidget.cpp:78
 #, kde-format
 msgid "unlimited"
 msgstr "अमर्यादीत"
 
-#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
+#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "संग्रह"
 
-#: archivemailrangewidget.cpp:20
+#: archivemailrangewidget.cpp:22
 #, kde-format
 msgid "Use Range"
 msgstr ""
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:72
 #, kde-format
 msgid "Name"
 msgstr "नाव"
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:72
 #, kde-format
 msgid "Last archive"
 msgstr ""
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:72
 #, kde-format
 msgid "Next archive in"
 msgstr ""
 
-#: archivemailwidget.cpp:70
+#: archivemailwidget.cpp:72
 #, kde-format
 msgid "Storage directory"
 msgstr ""
 
-#: archivemailwidget.cpp:89
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr ""
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Archive emails automatically."
 msgstr ""
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:95
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr ""
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:96
 #, kde-format
 msgid "Laurent Montel"
 msgstr ""
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:96
 #, kde-format
 msgid "Maintainer"
 msgstr ""
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:98
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:98
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "जोडा..."
 
-#: archivemailwidget.cpp:113
+#: archivemailwidget.cpp:115
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "काढून टाका"
 
-#: archivemailwidget.cpp:167
+#: archivemailwidget.cpp:169
 #, kde-format
 msgid "Folder: %1"
 msgstr "संचयीका : %1"
 
-#: archivemailwidget.cpp:189
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: archivemailwidget.cpp:198
+#: archivemailwidget.cpp:200
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 
-#: archivemailwidget.cpp:234
+#: archivemailwidget.cpp:236
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr ""
 
-#: archivemailwidget.cpp:235
+#: archivemailwidget.cpp:237
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "काढून टाका"
 
-#: archivemailwidget.cpp:276
+#: archivemailwidget.cpp:278
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

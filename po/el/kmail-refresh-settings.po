@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 01:32+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2020-09-20 10:23+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -69,37 +69,37 @@ msgstr "Καθαρισμός ρυθμίσεων"
 msgid "Finish"
 msgstr "Τέλος"
 
-#: refreshsettingscleanuppage.cpp:20
+#: refreshsettingscleanuppage.cpp:22
 #, kde-format
 msgid "Clean"
 msgstr "Καθαρισμός"
 
-#: refreshsettingscleanuppage.cpp:50
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Αφαίρεση απαρχαιωμένων ρυθμίσεων «Συμβουλή της ημέρας»: Έγινε"
 
-#: refreshsettingscleanuppage.cpp:62
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Διαγραφή ρυθμίσεων διαλόγου στο αρχείο '%1': Έγινε"
 
-#: refreshsettingscleanuppage.cpp:74
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Διαγραφή ρυθμίσεων φίλτρων στο αρχείο '%1': Έγινε"
 
-#: refreshsettingscleanuppage.cpp:90
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "Καθαρισμός ρυθμίσεων φακέλου στο αρχείο ρυθμίσεων '%1': Έγινε"
 
-#: refreshsettingscleanuppage.cpp:146
+#: refreshsettingscleanuppage.cpp:148
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Καθαρισμός μεγέθους διαλόγου στο αρχείο ρυθμίσεων '%1': Έγινε"
 
-#: refreshsettingsfirstpage.cpp:18
+#: refreshsettingsfirstpage.cpp:20
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "Κλείστε το KMail/Kontact πριν το χρησιμοποιήσετε."

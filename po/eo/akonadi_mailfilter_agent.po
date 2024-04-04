@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-09-25 23:06+0100\n"
 "Last-Translator: Oliver Kellogg <okellogg@users.sourceforge.net>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -170,18 +170,18 @@ msgstr "<b>Komencu filtri ĉe mesaĝo \"%1\" de \"%2\" ĉe \"%3\" :</b>"
 msgid "Filtering messages"
 msgstr "Filtri mesaĝojn"
 
-#: mailfilteragent.cpp:101
+#: mailfilteragent.cpp:102
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Poŝtfiltrila Protokolo Ebligita"
 
-#: mailfilteragent.cpp:165
+#: mailfilteragent.cpp:166
 #, kde-format
 msgid "Ready"
 msgstr "Preta"
 
-#: mailfilteragent.cpp:251
+#: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtri en %1"

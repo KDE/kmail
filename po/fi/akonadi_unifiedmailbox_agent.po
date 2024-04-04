@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-02-13 00:38+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2023-09-26 13:22+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -74,17 +74,17 @@ msgstr "Valitse kuvake…"
 msgid "Icon:"
 msgstr "Kuvake:"
 
-#: unifiedmailboxmanager.cpp:294
+#: unifiedmailboxmanager.cpp:296
 #, kde-format
 msgid "Inbox"
 msgstr "Saapuva"
 
-#: unifiedmailboxmanager.cpp:301
+#: unifiedmailboxmanager.cpp:303
 #, kde-format
 msgid "Sent"
 msgstr "Lähetetty"
 
-#: unifiedmailboxmanager.cpp:308
+#: unifiedmailboxmanager.cpp:310
 #, kde-format
 msgid "Drafts"
 msgstr "Luonnokset"

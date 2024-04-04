@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-03-03 00:48+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2024-02-02 12:15+0200\n"
 "Last-Translator: Māris Nartišs <maris.kde@gmail.com>\n"
 "Language-Team: \n"
@@ -19,101 +19,101 @@ msgstr ""
 "2);\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: sendlaterconfiguredialog.cpp:31
+#: sendlaterconfiguredialog.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Konfigurēt"
 
-#: sendlaterconfiguredialog.cpp:49
+#: sendlaterconfiguredialog.cpp:51
 #, kde-format
 msgid "Send Later Agent"
 msgstr "Atliktas nosūtīšanas aģents"
 
-#: sendlaterconfiguredialog.cpp:51
+#: sendlaterconfiguredialog.cpp:53
 #, kde-format
 msgid "Send emails later agent."
 msgstr "Atliktas e-pastu nosūtīšanas aģents."
 
-#: sendlaterconfiguredialog.cpp:53
+#: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Autortiesības (C) 2013–%1 Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: sendlaterconfiguredialog.cpp:55
+#: sendlaterconfiguredialog.cpp:57
 #, kde-format
 msgid "Maintainer"
 msgstr "Uzturētājs"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Toms Trasūns"
 
-#: sendlaterconfiguredialog.cpp:58
+#: sendlaterconfiguredialog.cpp:60
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "tomst.trasuns@posteo.net"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "To"
 msgstr "Kam"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Subject"
 msgstr "Temats"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Send around"
 msgstr "Nosūtīt ap"
 
-#: sendlaterconfigurewidget.cpp:55
+#: sendlaterconfigurewidget.cpp:57
 #, kde-format
 msgid "Recurrent"
 msgstr "Atkārtota sūtīšana"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:59
 #, kde-format
 msgid "Message Id"
 msgstr "Vēstules ID"
 
-#: sendlaterconfigurewidget.cpp:68
+#: sendlaterconfigurewidget.cpp:70
 #, kde-format
 msgid "No messages waiting..."
 msgstr "Rindā nav vēstuļu..."
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgid "Send now"
 msgstr "Nosūtīt tagad"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:96 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Dzēst"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "Yes"
 msgstr "Jā"
 
-#: sendlaterconfigurewidget.cpp:157
+#: sendlaterconfigurewidget.cpp:159
 #, kde-format
 msgid "No"
 msgstr "Nē"
 
-#: sendlaterconfigurewidget.cpp:207
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -121,13 +121,13 @@ msgstr[0] "Vai vēlaties dzēst šo vienumu?"
 msgstr[1] "Vai vēlaties dzēst šos vienumus?"
 msgstr[2] "Vai vēlaties dzēst šos vienumus?"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Dzēst vienumus"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -135,13 +135,13 @@ msgstr[0] "Vai vēlaties dzēst arī šo vēstuli?"
 msgstr[1] "Vai vēlaties dzēst arī šīs vēstules?"
 msgstr[2] "Vai vēlaties dzēst arī šīs vēstules?"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Dzēst vēstules"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"

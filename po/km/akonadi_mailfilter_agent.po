@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2023-12-08 01:35+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -169,18 +169,18 @@ msgstr "<b>ចាប់ផ្ដើម​ត្រង​សារ \"%1\" ពី 
 msgid "Filtering messages"
 msgstr "ត្រង​សារ"
 
-#: mailfilteragent.cpp:101
+#: mailfilteragent.cpp:102
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "បាន​បើក​កំណត់ហេតុ​តម្រង​សារ"
 
-#: mailfilteragent.cpp:165
+#: mailfilteragent.cpp:166
 #, kde-format
 msgid "Ready"
 msgstr "រួច​ហើយ"
 
-#: mailfilteragent.cpp:251
+#: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
 msgstr "ការ​ត្រង​នៅ​ក្នុង %1"
