@@ -74,7 +74,7 @@ set(PIMCOMMON_LIB_VERSION "6.0.40")
 set(LIBKDEPIM_LIB_VERSION "6.0.40")
 set(LIBKSIEVE_LIB_VERSION "6.0.40")
 set(AKONADI_SEARCH_VERSION "6.0.40")
-set(QT6KEYCHAIN_LIB_VERSION "0.14.1")
+set(QT6KEYCHAIN_LIB_VERSION "0.14.2")
 
 find_package(KPim6WebEngineViewer ${MESSAGELIB_LIB_VERSION} CONFIG REQUIRED)
 
@@ -157,10 +157,6 @@ set_package_properties(Qt6Keychain PROPERTIES
     DESCRIPTION "Provides support for secure credentials storage"
     URL "https://github.com/frankosterfeld/qtkeychain"
     TYPE REQUIRED)
-
-if (Qt6Keychain_VERSION VERSION_LESS 0.14.2)
-    MESSAGE(STATUS "Qt6KeyChain version is less 0.14.2. It will not support KWallet 6... It will not able to load password. Please update it.")
-endif()
 
 configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
 
