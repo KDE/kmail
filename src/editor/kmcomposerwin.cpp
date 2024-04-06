@@ -1472,7 +1472,7 @@ void KMComposerWin::setupActions()
     changeCryptoAction();
 
     connect(&mEncryptionState, &EncryptionState::possibleEncryptChanged, mEncryptAction, &KToggleAction::setEnabled);
-    connect(&mEncryptionState, &EncryptionState::encryptChanged, [this](bool enabled) {
+    connect(&mEncryptionState, &EncryptionState::encryptChanged, this, [this](bool enabled) {
         mEncryptAction->setChecked(enabled);
         mComposerBase->attachmentModel()->setEncryptSelected(enabled);
     });
