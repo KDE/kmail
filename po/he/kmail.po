@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-04 00:39+0000\n"
-"PO-Revision-Date: 2024-04-01 00:09+0300\n"
+"PO-Revision-Date: 2024-04-04 08:27+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5442,9 +5442,9 @@ msgstr ""
 "<a href=\"kmail:goOnline\">כאן</a> כדי לעבור למצב מקוון . . . </p> &nbsp;"
 
 #: kmreaderwin.cpp:914
-#, fuzzy, kde-format
+#, kde-format
 msgid "Contact modified successfully"
-msgstr "ההודעות הועברו בהצלחה"
+msgstr "איש הקשר נערך בהצלחה"
 
 #: kmsystemtray.cpp:93
 #, kde-format
@@ -5452,7 +5452,7 @@ msgid "New Messages In"
 msgstr "הודעות חדשות ב־"
 
 #: kmsystemtray.cpp:268
-#, fuzzy, kde-format
+#, kde-format
 msgid "There are no unread messages"
 msgstr "אין הודעות שלא נקראו"
 
@@ -5466,9 +5466,9 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show full path for folders"
-msgstr "קיצור עבור תיקייה %1"
+msgstr "הצגת הנתיב המלא של התיקיות"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:53
 #, kde-format
@@ -5486,10 +5486,10 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message..."
-msgstr "הודעה &חדשה..."
+msgstr "הודעה חדשה…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5500,10 +5500,10 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:54
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
-msgstr "&שלח דואר"
+msgstr "סנכרון דוא״ל"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
 #: kontactplugin/kmail/kmail_plugin.cpp:57
@@ -5513,9 +5513,9 @@ msgid "Choose this option to synchronize your groupware email."
 msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:49
-#, fuzzy, kde-format
+#, kde-format
 msgid "New Messages"
-msgstr "הודעה חדשה"
+msgstr "הודעות חדשות"
 
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
@@ -5529,14 +5529,14 @@ msgid "%1 / %2"
 msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, fuzzy, kde-format
+#, kde-format
 msgid "No unread messages in your monitored folders"
-msgstr "שלח את ההו&דעות שבתיבת הדואר היוצא:"
+msgstr "אין הודעות שלא נקראו בתיקיות המושגחות שלך"
 
 #: kontactplugin/kmail/summarywidget.cpp:214
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open Folder: \"%1\""
-msgstr "תיקיית יעד:"
+msgstr "פתיחת התיקייה: „%1”"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:61
 #, kde-format
@@ -5550,9 +5550,9 @@ msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Configure Summary View..."
-msgstr "ה&גדרת KMail..."
+msgstr "ה&גדרת תצוגת תקציר…"
 
 #: kontactplugin/summary/summaryview_part.cpp:50
 #: kontactplugin/summary/summaryview_plugin.cpp:102
@@ -5574,9 +5574,9 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:107
-#, fuzzy, kde-format
+#, kde-format
 msgid "Summary for %1"
-msgstr "תבנית מהו&דרת (%1)"
+msgstr "תקציר של %1"
 
 #: kontactplugin/summary/summaryview_part.cpp:365
 #, kde-format
@@ -5584,9 +5584,9 @@ msgid "What's next?"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "Sync All"
-msgstr "&שלח דואר"
+msgstr "סנכרון של הכול"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:44
 #, kde-format
@@ -6258,15 +6258,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:276
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show crypto label indicator"
-msgstr "הצג סמלי הצפ&נה"
+msgstr "הצגת מחוון תווית קריפטוגרפית"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "הצג סמלי הצפ&נה"
+msgstr "הצגת סמלי אמינות בעלים קריפטוגרפית"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
@@ -6306,15 +6306,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message preview pane:"
-msgstr "&אל תציג הודעה במציג ההודעות"
+msgstr "לוח תצוגה מקדימה של הודעה:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
-#, fuzzy, kde-format
+#, kde-format
 msgid "Do not show a message preview pane"
-msgstr "&אל תציג הודעה במציג ההודעות"
+msgstr "לא להציג לוח תצוגה מקדימה של הודעה"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:349
@@ -6372,9 +6372,9 @@ msgstr "תבנית הודעה להעברה"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
-#, fuzzy, kde-format
+#, kde-format
 msgid "Quote characters"
-msgstr "הוסף &מרכאות ציטוט:"
+msgstr "סימני ציטוט"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
 #: settings/kmail.kcfg.in:409
@@ -6451,9 +6451,9 @@ msgid "Tag not Found"
 msgstr ""
 
 #: tag/tagactionmanager.cpp:204
-#, fuzzy, kde-format
+#, kde-format
 msgid "Toggle Message Tag: %1"
-msgstr "הודעת מטלה"
+msgstr "החלפת מצב תגית הודעה: %1"
 
 #: tag/tagselectdialog.cpp:42
 #, kde-format
@@ -6597,21 +6597,21 @@ msgstr "פינוי ה&אשפה המקומית בעת היציאה"
 
 #. i18n: ectx: property (text), widget (QLabel, mLoopLabel)
 #: ui/miscpagemaintab.ui:39
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "to be continued with \"do not loop\", \"loop in current folder\", and \"loop "
 "in all folders\""
 msgid "When &trying to find unread messages:"
-msgstr "בעת חיפוש אחרי הודעות שלא ניקראו:"
+msgstr "ב&ניסיון למצוא הודעות שלא נקראו:"
 
 #. i18n: ectx: property (text), widget (QLabel, mEnterFolderLabel)
 #: ui/miscpagemaintab.ui:58
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "to be continued with \"jump to first new message\", \"jump to first unread "
 "or new message\", and \"jump to last selected message\""
 msgid "When ente&ring a folder:"
-msgstr "שגיאה במהלך שינוי שם התקיייה."
+msgstr "ב&כניסה לתיקייה:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
 #: ui/miscpagemaintab.ui:68
@@ -6884,9 +6884,9 @@ msgstr "להזהיר אם תוקף של אישורים/מ&פתחות פג בקר
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/securitypageencryptiontab.ui:139
-#, fuzzy, kde-format
+#, kde-format
 msgid "For end-user certificates/&keys:"
-msgstr "אל תשלח תעו&דות"
+msgstr "לאישורים/מפתחות של משתמשי &קצה:"
 
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
@@ -6989,9 +6989,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: ui/securitypageencryptiontab.ui:323
-#, fuzzy, kde-format
+#, kde-format
 msgid "For intermediate CA certificates:"
-msgstr "אל תשלח תעו&דות"
+msgstr "לאישורי ביניים של רשות אישורים:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
