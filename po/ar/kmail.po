@@ -1,4 +1,5 @@
 # translation of kmail.po to
+# SPDX-FileCopyrightText: 2022, 2023, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 # Ahmad M. Zawawi <azawawi@emirates.net.ae>, 2004.
 # Ahmad M. Zawawi <zawawi@arabeyes.org>, 2004.
 # Usamah Ali Al-Maqdad <msareehi@kacst.edu.sa>, 2004.
@@ -6,22 +7,22 @@
 # محمد سعد  Mohamed SAAD <metehyi@free.fr>, 2006.
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, 2016, 2018.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-04 00:39+0000\n"
-"PO-Revision-Date: 2024-03-31 09:52+0400\n"
+"PO-Revision-Date: 2024-04-09 11:35+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
-"Language-Team: ar\n"
+"Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 21.12.3\n"
 "X-POOTLE-MTIME: 1381756262.0\n"
 
 #, kde-format
@@ -557,7 +558,7 @@ msgstr "&غير المقروءة:"
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1٪)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -2383,7 +2384,7 @@ msgctxt "The argument is as PGP fingerprint"
 msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
-msgstr ""
+msgstr "مفتاح PGP المحدد (%1) غير موجود في حلقة المفاتيح أو غير مناسب للتشفير."
 
 #: editor/kmcomposerwin.cpp:3402
 #, kde-format
@@ -2392,6 +2393,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"مفتاح توقيع PGP المحدد (%1) غير موجود في حلقة المفاتيح الخاصة بك أو غير "
+"مناسب للتوقيع."
 
 #: editor/kmcomposerwin.cpp:3418
 #, kde-format
@@ -2400,6 +2403,7 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"مفتاح SMIME المحدد (%1) غير موجود في حلقة المفاتيح أو غير مناسب للتشفير."
 
 #: editor/kmcomposerwin.cpp:3431
 #, kde-format
@@ -2408,6 +2412,8 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"مفتاح توقيع SMIME المحدد (%1) غير موجود في حلقة المفاتيح أو غير مناسب "
+"للتوقيع."
 
 #: editor/kmcomposerwin.cpp:3604
 #, kde-format
@@ -2425,7 +2431,7 @@ msgstr "لا تشفير"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "لم يعثر على مفتاح للمستلِم."
 
 #: editor/kmcomposerwin.cpp:3768
 #, kde-format
@@ -2465,6 +2471,8 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"مفتاح التشفير غير موثوق به. ليس لديه صلاحية كافية. يمكنك توقيع المفتاح، إذا "
+"أوصلتَ بصمة الإصبع عن طريق قناة أخرى. انقر فوق الأيقونة للحصول على التفاصيل."
 
 #: editor/kmcomposerwin.cpp:3811
 #, kde-format
@@ -2475,19 +2483,19 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"مفتاح التشفير غير موثوق به. لم يستخدم في أي مكان لضمان أنه ينتمي إلى الشخص "
+"المذكور. باستخدام المفتاح سيتم الوثوق به أكثر. أو يمكنك التوقيع على المفتاح، "
+"إذا أوصلتَ بصمة الإصبع من قبل قناة أخرى. انقر فوق الأيقونة للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3819
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"سيستخدم التطبيق تشفير منخفض الحماية لهذا المسْتلم (مفتاح التَّشفير غير موثُوق) . "
-"اِضغط على الأيقونة للتَّفاصيل."
+"مفتاح التشفير غير موثوق به. لديه بيانات TOFU متضاربة. اِضغط على الأيقونة "
+"للتَّفاصيل."
 
 #: editor/kmcomposerwin.cpp:3825
 #, kde-format
@@ -2496,19 +2504,18 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"مفتاح التشفير غير موثوق به. له صلاحية غير معروفة في بيانات التوفو. انقر فوق "
+"الأيقونة للحصول على التفاصيل."
 
 #: editor/kmcomposerwin.cpp:3831
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"سيستخدم التطبيق تشفير منخفض الحماية لهذا المسْتلم (مفتاح التَّشفير غير موثُوق) . "
-"اِضغط على الأيقونة للتَّفاصيل."
+"مفتاح التشفير غير موثوق به. وُضعتْ علامة على المفتاح على أنه سيء. اِضغط على "
+"الأيقونة للتَّفاصيل."
 
 #: editor/kmcomposerwin.cpp:3839
 #, kde-format
@@ -2519,6 +2526,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"مفتاح التشفير موثوق به بشكل هامشي فقط ولم يستخدم بشكل كاف حان الوقت لضمان "
+"أنه ينتمي إلى الشخص المذكور. باستخدام المفتاح سيكون موثوقا به أكثر. أو يمكنك "
+"التوقيع على المفتاح، إذا أوصلتَ بصمة الإصبع بواسطة قناة أخرى. انقر فوق "
+"الأيقونة للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3847
 #, kde-format
@@ -2527,6 +2538,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"مفتاح التشفير موثوق به بشكل هامشي فقط. يمكنك التوقيع على المفتاح، إذا أوصلتَ "
+"بصمة الإصبع عن طريق قناة أخرى. انقر فوق الأيقونة للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3853
 #, kde-format
@@ -2537,35 +2550,33 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"مفتاح التشفير موثوق به بشكل هامشي فقط، ولكن تم استخدامه بشكل كاف من الوقت "
+"الذي من المحتمل جدا أن يسيطر عليه الشخص المذكور. باستخدام المفتاح سيتم "
+"الوثوق به أكثر. أو يمكنك التوقيع على المفتاح، إذا أوصلتَ بصمة الإصبع بواسطة "
+"قناة أخرى. انقر فوق الأيقونة للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3861
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"سيستخدم التطبيق تشفير عالي الحماية لهذا المستلم (مفتاح التَّشفيرموثُوق كُلِّيّا). "
+"مفتاح التشفير موثوق به تماما. يمكنك رفع مستوى الأمان، عن طريق توقيع المفتاح. "
 "اِضْغط على الأيقونة للتَّفاصيل."
 
 #: editor/kmcomposerwin.cpp:3866
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"سيستخدم التطبيق تشفير عالي الحماية لهذا المستلم (مفتاح التَّشفيرموثُوق كُلِّيّا). "
+"مفتاح التشفير في نهاية المطاف موثوق به أو موقع من قبل مفتاح آخر موثوق به. "
 "اِضْغط على الأيقونة للتَّفاصيل."
 
 #: editor/kmcomposerwin.cpp:4198
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2575,7 +2586,11 @@ msgid ""
 "there is no suitable certificate in the list you can also search for "
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
-msgstr "لا سليم و تشفير  مفتاح موجود لـ n مفتاح s مُستخدَم لـ."
+msgstr ""
+"<qt>لم يعثر على شهادة تشفير صالحة وموثوقة لـ  \"%1\".<br/><br/>حدد الشهادة "
+"(الشهادات) التي يجب استخدامها لهذا المستلم. لو لا توجد شهادة مناسبة في "
+"القائمة يمكنك أيضا البحث عن الشهادات الخارجية بالنقر فوق الزر: البحث عن "
+"الشهادات الخارجيّة.</qt>"
 
 #: editor/kmcomposerwin.cpp:4210
 #, kde-format
@@ -4531,49 +4546,57 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"الرسالة المحددة مشفرة. لا يمكن حاليا حذف المرفقات من الرسائل المشفرة."
 msgstr[1] ""
+"الرسالة المحددة مشفرة. لا يمكن حاليا حذف المرفقات من الرسائل المشفرة."
 msgstr[2] ""
+"يحتوي التحديد على رسالتين مشفرتين فقط، واللتان هما حاليا لا يمكن حذف "
+"المرفقات."
 msgstr[3] ""
+"يحتوي التحديد على رسائل مشفرة فقط، والتي هي منها حاليا لا يمكن حذف المرفقات."
 msgstr[4] ""
+"يحتوي التحديد على رسائل مشفرة فقط، والتي هي منها حاليا لا يمكن حذف المرفقات."
 msgstr[5] ""
+"يحتوي التحديد على رسائل مشفرة فقط، والتي هي منها حاليا لا يمكن حذف المرفقات."
 
 #: kmmainwidget.cpp:2396
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "احذف المرفقات من الرسالة المشفرة"
+msgstr[1] "احذف المرفقات من الرسالة المشفرة"
+msgstr[2] "احذف المرفقات من الرسالتين المشفرتين"
+msgstr[3] "احذف المرفقات من الرسائل المشفرة"
+msgstr[4] "احذف المرفقات من الرسائل المشفرة"
+msgstr[5] "احذف المرفقات من الرسائل المشفرة"
 
 #: kmmainwidget.cpp:2401
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
 msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
-msgstr[0] "<qt>لا شيء سيُحذف.<br /></qt>"
+msgstr[0] ""
+"<html><p>هل تريد حقا حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، "
+"لا يمكن استعادتها..</p></html>"
 msgstr[1] ""
-"<qt>أتريد حقًّا حذف الرّسالة المحدّدة؟<br />إرجاعها بعد الحذف محال.</qt>"
+"<html><p>هل تريد حقا حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، "
+"لا يمكن استعادتها..</p></html>"
 msgstr[2] ""
-"<qt>أتريد حقًّا حذف الرّسالتين المحدّدتين؟<br />إرجاعهما بعد الحذف محال.</qt>"
+"<html>هل تريد حقا حذف كافة المرفقات من الرسالتين المحددتين؟<br />بمجرد "
+"حذفها، لا يمكن استعادتها.</html>"
 msgstr[3] ""
-"<qt>أتريد حقًّا حذف ال‍%1 رسائل المحدّدة؟<br />إرجاعها بعد الحذف محال.</qt>"
+"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
+"لا يمكن استعادتها.</html>"
 msgstr[4] ""
-"<qt>أتريد حقًّا حذف ال‍%1 رسالة المحدّدة؟<br />إرجاعها بعد الحذف محال.</qt>"
+"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
+"لا يمكن استعادتها.</html>"
 msgstr[5] ""
-"<qt>أتريد حقًّا حذف ال‍%1 رسالة المحدّدة؟<br />إرجاعها بعد الحذف محال.</qt>"
+"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
+"لا يمكن استعادتها.</html>"
 
 #: kmmainwidget.cpp:2408
 #, kde-format
@@ -4581,6 +4604,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>لاحظ أن حذف المرفقات من رسالة موقعة بالتشفير سيبطل توقيعها.</p></"
+"html>"
 
 #: kmmainwidget.cpp:2413
 #, kde-format
@@ -4588,6 +4613,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>لا يمكن حاليا حذف المرفقات من الرسائل المشفرة.<br />ستُتجاهل الرسائل "
+"المشفرة.</p></html>"
 
 #: kmmainwidget.cpp:2418
 #, kde-format
