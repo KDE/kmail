@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-11 00:38+0000\n"
-"PO-Revision-Date: 2024-04-11 19:20\n"
+"PO-Revision-Date: 2024-04-12 19:12\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -20,14 +20,14 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral"
+msgstr "KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral, 9z"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tds00@qq.com, "
-"wordless@echo.moe, integral@member.fsf.org"
+"wordless@echo.moe, integral@member.fsf.org, ihchiz@163.com"
 
 #: about/introduction_kmail.html:5
 #, kde-format
@@ -2341,7 +2341,7 @@ msgctxt "The argument is as PGP fingerprint"
 msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
-msgstr ""
+msgstr "您所选的 PGP 密钥 (%1) 不存在于您的密钥环中，或者不适合加密。"
 
 #: editor/kmcomposerwin.cpp:3397
 #, kde-format
@@ -2349,7 +2349,7 @@ msgctxt "The argument is as PGP fingerprint"
 msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
-msgstr ""
+msgstr "您所选的 PGP 签名密钥 (%1) 不存在于您的密钥环中，或者不适合签名。"
 
 #: editor/kmcomposerwin.cpp:3413
 #, kde-format
@@ -2357,7 +2357,7 @@ msgctxt "The argument is as SMIME fingerprint"
 msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
-msgstr ""
+msgstr "您所选的 SMIME 密钥 (%1) 不存在于您的密钥环中，或者不适合加密。"
 
 #: editor/kmcomposerwin.cpp:3426
 #, kde-format
@@ -2365,7 +2365,7 @@ msgctxt "The argument is as SMIME fingerprint"
 msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
-msgstr ""
+msgstr "您所选的 SMIME 签名密钥 (%1) 不存在于您的密钥环中，或者不适合签名。"
 
 #: editor/kmcomposerwin.cpp:3599
 #, kde-format
@@ -2377,13 +2377,13 @@ msgstr "加密"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr ""
+msgstr "未加密"
 
 #: editor/kmcomposerwin.cpp:3741
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "找不到该收件人的密钥。"
 
 #: editor/kmcomposerwin.cpp:3763
 #, kde-format
@@ -2450,7 +2450,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
-msgstr ""
+msgstr "加密密钥不可信。密钥被标记为损坏。点击图标了解详情。"
 
 #: editor/kmcomposerwin.cpp:3834
 #, kde-format
@@ -3224,7 +3224,7 @@ msgstr "无效的电子邮件别名“%1”"
 #: identity/identitydialog.cpp:751
 #, kde-format
 msgid "You must provide an email for this identity."
-msgstr ""
+msgstr "您必须为此身份提供一个电子邮件地址。"
 
 #: identity/identitydialog.cpp:751
 #, kde-format
@@ -3515,7 +3515,7 @@ msgstr "无效的电子邮件地址"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, kde-format
 msgid "Clear Akonadi Cache"
-msgstr ""
+msgstr "清除 Akonadi 缓存"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -3915,7 +3915,7 @@ msgstr "删除消息中"
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr ""
+msgstr "正在删除附件"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4395,14 +4395,14 @@ msgid ""
 msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
-msgstr[0] ""
+msgstr[0] "已选项仅包含加密的信件，目前无法从加密信件中删除附件。"
 
 #: kmmainwidget.cpp:2396
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
+msgstr[0] "从加密信件中删除附件"
 
 #: kmmainwidget.cpp:2401
 #, kde-format
@@ -4432,7 +4432,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr ""
+msgstr "删除附件"
 
 #: kmmainwidget.cpp:2909
 #, kde-format
@@ -4497,7 +4497,7 @@ msgstr "过滤器日志查看器(&L)..."
 #: kmmainwidget.cpp:3001
 #, kde-format
 msgid "Notification History..."
-msgstr ""
+msgstr "通知历史记录..."
 
 #: kmmainwidget.cpp:3006
 #, kde-format
@@ -4568,7 +4568,7 @@ msgstr "清除 Akonadi 缓存..."
 #: kmmainwidget.cpp:3083
 #, kde-format
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr ""
+msgstr "清除此文件夹及其所有子文件夹中的 Akonadi 缓存(&C)"
 
 #: kmmainwidget.cpp:3088
 #, kde-format
@@ -4710,7 +4710,7 @@ msgstr "保存附件(&T)..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr ""
+msgstr "删除所有附件"
 
 #: kmmainwidget.cpp:3283
 #, kde-format
@@ -5674,7 +5674,7 @@ msgstr "导出为 PDF..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr ""
+msgstr "归档信件"
 
 #: messageactions.cpp:374
 #, kde-format
@@ -6242,7 +6242,7 @@ msgstr "KMail 配置对话框高度 (仅供内部使用)"
 #: settings/kmail.kcfg.in:343
 #, kde-format
 msgid "Message preview pane:"
-msgstr ""
+msgstr "消息预览面板："
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6266,7 +6266,7 @@ msgstr "在消息列表旁显示消息预览面板"
 #: settings/kmail.kcfg.in:359
 #, kde-format
 msgid "Folder list:"
-msgstr ""
+msgstr "文件夹列表："
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
@@ -6835,7 +6835,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:100
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "警告"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:106
@@ -7555,12 +7555,12 @@ msgstr "撤销发送"
 #: undosend/undosendmanager.cpp:43
 #, kde-format
 msgid "<b>To:</b> %1"
-msgstr ""
+msgstr "<b>到：</b> %1"
 
 #: undosend/undosendmanager.cpp:49
 #, kde-format
 msgid "<b>Subject:</b> %1"
-msgstr ""
+msgstr "<b>主题：</b> %1"
 
 #: undostack.cpp:47
 #, kde-format
