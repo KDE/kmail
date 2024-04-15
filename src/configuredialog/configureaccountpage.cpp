@@ -92,11 +92,19 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // "confirm before send" check box:
     mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
     formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
+#else
+    connect(mConfirmSendCheck, &QCheckBox::checkStateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
+#endif
 
     mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
     formLayout->addRow(QString(), mCheckSpellingBeforeSending);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
+#else
+    connect(mCheckSpellingBeforeSending, &QCheckBox::checkStateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
+#endif
 
     // "send on check" combo:
     mSendOnCheckCombo = new QComboBox(this);
@@ -188,7 +196,11 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);

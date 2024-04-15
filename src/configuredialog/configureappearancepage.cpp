@@ -149,7 +149,11 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     mCustomFontCheck = new QCheckBox(i18n("&Use custom fonts"), this);
     vlay->addWidget(mCustomFontCheck);
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCustomFontCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mCustomFontCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     // "font location" combo box and label:
     auto hlay = new QHBoxLayout(); // inherites spacing
@@ -320,11 +324,19 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
     mCustomColorCheck = new QCheckBox(i18n("&Use custom colors"), this);
     vlay->addWidget(mCustomColorCheck);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCustomColorCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mCustomColorCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     mUseInlineStyle = new QCheckBox(i18n("&Do not change color from original HTML mail"), this);
     vlay->addWidget(mUseInlineStyle);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mUseInlineStyle, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mUseInlineStyle, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     // color list box:
     mColorList = new ColorListBox(this);
@@ -338,7 +350,11 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     mRecycleColorCheck = new QCheckBox(i18n("Recycle colors on deep &quoting"), this);
     mRecycleColorCheck->setEnabled(false);
     vlay->addWidget(mRecycleColorCheck);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mRecycleColorCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mRecycleColorCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     // close to quota threshold
     auto hbox = new QHBoxLayout();
@@ -357,7 +373,11 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     // {en,dir}able widgets depending on the state of mCustomColorCheck:
     connect(mCustomColorCheck, &QAbstractButton::toggled, mColorList, &QWidget::setEnabled);
     connect(mCustomColorCheck, &QAbstractButton::toggled, mRecycleColorCheck, &QWidget::setEnabled);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCustomColorCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mCustomColorCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
     connect(mColorList, &ColorListBox::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
@@ -593,7 +613,11 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
     mDisplayMessageToolTips = new QCheckBox(MessageList::MessageListSettings::self()->messageToolTipEnabledItem()->label(), this);
     formLayout->addRow(QString(), mDisplayMessageToolTips);
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mDisplayMessageToolTips, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mDisplayMessageToolTips, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     // "Aggregation"
     using MessageList::Utils::AggregationComboBox;
@@ -820,7 +844,11 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this), MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     mCloseAfterReplyOrForwardCheck->setToolTip(i18n("Close the standalone message window after replying or forwarding the message"));
     readerBoxLayout->addWidget(mCloseAfterReplyOrForwardCheck);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCloseAfterReplyOrForwardCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mCloseAfterReplyOrForwardCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     mViewerSettings = new MessageViewer::ConfigureWidget;
     connect(mViewerSettings, &MessageViewer::ConfigureWidget::settingsChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -840,13 +868,21 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     systrayBoxlayout->addWidget(mStartInTrayCheck);
 
     // Dependencies between the two checkboxes
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mStartInTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
+#else
+    connect(mStartInTrayCheck, &QCheckBox::checkStateChanged, this, [this](int state) {
+#endif
         if (state == Qt::Checked) {
             mSystemTrayCheck->setCheckState(Qt::Checked);
         }
         slotEmitChanged();
     });
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mSystemTrayCheck, &QCheckBox::stateChanged, this, [this](int state) {
+#else
+    connect(mSystemTrayCheck, &QCheckBox::checkStateChanged, this, [this](int state) {
+#endif
         if (state == Qt::Unchecked) {
             mStartInTrayCheck->setCheckState(Qt::Unchecked);
         }
@@ -856,7 +892,11 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     // "Enable system tray applet" check box
     mShowNumberInTaskBar = new QCheckBox(i18n("Show unread email in Taskbar"), this);
     systrayBoxlayout->addWidget(mShowNumberInTaskBar);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mShowNumberInTaskBar, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mShowNumberInTaskBar, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
 
     topLayout->addStretch(100); // spacer
 }

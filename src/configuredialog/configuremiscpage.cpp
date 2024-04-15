@@ -62,15 +62,27 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
 
     mMMTab.mExcludeImportantFromExpiry->setWhatsThis(i18n(KMailSettings::self()->excludeImportantMailFromExpiryItem()->whatsThis().toUtf8().constData()));
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#else
+    connect(mMMTab.mExcludeImportantFromExpiry, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#endif
     connect(mMMTab.mLoopOnGotoUnread, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mActionEnterFolder, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkTime, &QSpinBox::valueChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#else
+    connect(mMMTab.mShowPopupAfterDnD, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#endif
     connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mMMTab.mEmptyTrashCheck, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#else
+    connect(mMMTab.mEmptyTrashCheck, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
+#endif
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mStartUpFolderCheck, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
     connect(mMMTab.mDeleteMessagesWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
