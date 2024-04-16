@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:38+0000\n"
+"POT-Creation-Date: 2024-04-16 00:38+0000\n"
 "PO-Revision-Date: 2024-03-08 03:33+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -608,63 +608,63 @@ msgstr "確認動作(&C)"
 msgid "Before sending:"
 msgstr "傳送前："
 
-#: configuredialog/configureaccountpage.cpp:97
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgid "Check spelling"
 msgstr "檢查拼字"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "不自動執行"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "手動檢查信件時"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "檢查所有帳號信件時"
 
-#: configuredialog/configureaccountpage.cpp:106
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "檢查時傳送寄件匣內的信件(&F)"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:120
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
 msgid "Send Now"
 msgstr "立即傳送"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "稍後傳送"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "預設傳送方式(&U)："
 
-#: configuredialog/configureaccountpage.cpp:117
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Enable Undo Send"
 msgstr "啟用傳送復原"
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:209
 #, kde-format
 msgid "Add Mail Account..."
 msgstr "新增郵件帳號"
 
-#: configuredialog/configureaccountpage.cpp:198
+#: configuredialog/configureaccountpage.cpp:210
 #, kde-format
 msgid "Custom Account..."
 msgstr "自訂帳號..."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:230
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -672,31 +672,31 @@ msgid ""
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查您是否正確安裝 AccountWizard。"
 
-#: configuredialog/configureaccountpage.cpp:220
+#: configuredialog/configureaccountpage.cpp:232
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "無法啟動帳號精靈"
 
-#: configuredialog/configureaccountpage.cpp:268
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手動檢查信件時檢查這個帳號"
 
-#: configuredialog/configureaccountpage.cpp:276
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "KMail 關閉時切換到離線模式"
 
-#: configuredialog/configureaccountpage.cpp:283
+#: configuredialog/configureaccountpage.cpp:295
 #, kde-format
 msgid "Check mail on startup"
 msgstr "啟動時檢查信件"
 
-#: configuredialog/configureaccountpage.cpp:330
+#: configuredialog/configureaccountpage.cpp:342
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -766,153 +766,153 @@ msgstr "列印輸出"
 msgid "&Use custom fonts"
 msgstr "使用自訂字型(&U)"
 
-#: configuredialog/configureappearancepage.cpp:167
+#: configuredialog/configureappearancepage.cpp:171
 #, kde-format
 msgid "Apply &to:"
 msgstr "回覆給(&T)："
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:307
 msgid "Quoted Text - First Level"
 msgstr "引用文字 - 第一層"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:308
 msgid "Quoted Text - Second Level"
 msgstr "引用文字 - 第二層"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:309
 msgid "Quoted Text - Third Level"
 msgstr "引用文字 - 第三層"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:310
 msgid "Link"
 msgstr "URL 連結"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:311
 msgid "Unread Message"
 msgstr "未讀取的信件"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:312
 msgid "Important Message"
 msgstr "重要信件"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:313
 msgid "Action Item Message"
 msgstr "動作項目信件"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:314
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "HTML 狀態列背景 - 非 HTML 信件"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:315
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "HTML 狀態列前景 - 非 HTML 信件"
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:316
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "HTML 狀態列背景 - HTML 信件"
 
-#: configuredialog/configureappearancepage.cpp:313
+#: configuredialog/configureappearancepage.cpp:317
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "HTML 狀態列前景 - 非 HTML 信件"
 
-#: configuredialog/configureappearancepage.cpp:321
+#: configuredialog/configureappearancepage.cpp:325
 #, kde-format
 msgid "&Use custom colors"
 msgstr "使用自訂顏色(&U)"
 
-#: configuredialog/configureappearancepage.cpp:325
+#: configuredialog/configureappearancepage.cpp:333
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr "不要變更來自原 HTML 郵件的顏色(&D)"
 
-#: configuredialog/configureappearancepage.cpp:338
+#: configuredialog/configureappearancepage.cpp:350
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "多層引文時，顏色循環(&Q)"
 
-#: configuredialog/configureappearancepage.cpp:346
+#: configuredialog/configureappearancepage.cpp:362
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr "接近滿載："
 
-#: configuredialog/configureappearancepage.cpp:352
+#: configuredialog/configureappearancepage.cpp:368
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:479
+#: configuredialog/configureappearancepage.cpp:499
 #, kde-format
 msgid "Show folder quick search field"
 msgstr "顯示快速搜尋資料夾欄位"
 
-#: configuredialog/configureappearancepage.cpp:487
-#: configuredialog/configureappearancepage.cpp:510
+#: configuredialog/configureappearancepage.cpp:507
+#: configuredialog/configureappearancepage.cpp:530
 #, kde-format
 msgid "Never"
 msgstr "永不"
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:510
 #, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "顯示最愛資料夾檢視："
 
-#: configuredialog/configureappearancepage.cpp:492
+#: configuredialog/configureappearancepage.cpp:512
 #, kde-format
 msgid "As icons"
 msgstr "為圖示"
 
-#: configuredialog/configureappearancepage.cpp:497
+#: configuredialog/configureappearancepage.cpp:517
 #, kde-format
 msgid "As list"
 msgstr "為清單"
 
-#: configuredialog/configureappearancepage.cpp:506
+#: configuredialog/configureappearancepage.cpp:526
 #, kde-format
 msgid "Always"
 msgstr "總是"
 
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:528
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "資料夾工具提示："
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:602
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "標準格式（%1）(&N)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:603
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "地區格式（%1）(&Z)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:604
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "聰明格式（%1）(&M)"
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:605
 msgid "C&ustom format:"
 msgstr "自訂字型(&U)："
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:632
 #, kde-format
 msgid "Default aggregation:"
 msgstr "預設集合模式："
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:650
 #, kde-format
 msgid "Default theme:"
 msgstr "預設主題："
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:687
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">自訂字型資訊...</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:693
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -951,93 +951,93 @@ msgstr ""
 "數字顯示，如 +0800)</li></ul><p><strong>其他的輸入字元都會被忽略</strong></"
 "p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:730
 #, kde-format
 msgid "Date Display:"
 msgstr "日期顯示："
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:838
 #, kde-format
 msgid "Message Window"
 msgstr "信件視窗"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "在回覆或轉寄信件後，關閉該獨立信件視窗"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:857
 #, kde-format
 msgid "System Tray"
 msgstr "系統匣"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:835 settings/kmail.kcfg.in:88
+#: configuredialog/configureappearancepage.cpp:863 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "開啟系統匣圖示"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:839 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
 #: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "啟動時最小化至系統匣"
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:893
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr "在工作列中顯示唯讀郵件"
 
-#: configuredialog/configureappearancepage.cpp:925
+#: configuredialog/configureappearancepage.cpp:965
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "可用的標籤(&V)"
 
-#: configuredialog/configureappearancepage.cpp:938
+#: configuredialog/configureappearancepage.cpp:978
 #, kde-format
 msgid "Add new tag"
 msgstr "新增標籤"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:983
 #, kde-format
 msgid "Remove selected tag"
 msgstr "移除選取的標籤"
 
-#: configuredialog/configureappearancepage.cpp:952
+#: configuredialog/configureappearancepage.cpp:992
 #, kde-format
 msgid "Increase tag priority"
 msgstr "遞增標籤優先權"
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:998
 #, kde-format
 msgid "Decrease tag priority"
 msgstr "遞減標籤優先權"
 
-#: configuredialog/configureappearancepage.cpp:982
+#: configuredialog/configureappearancepage.cpp:1022
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "標籤設定(&G)"
 
-#: configuredialog/configureappearancepage.cpp:1032
+#: configuredialog/configureappearancepage.cpp:1072
 #, kde-format
 msgid "Delete"
 msgstr "刪除"
 
-#: configuredialog/configureappearancepage.cpp:1162
+#: configuredialog/configureappearancepage.cpp:1202
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "您確定要移除標籤 %1 嗎？"
 
-#: configuredialog/configureappearancepage.cpp:1163
+#: configuredialog/configureappearancepage.cpp:1203
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "移除標籤"
 
-#: configuredialog/configureappearancepage.cpp:1208
-#: configuredialog/configureappearancepage.cpp:1243
+#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1283
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "無法建立標籤。因為已經有同名的標籤存在。"
@@ -1098,30 +1098,30 @@ msgid ""
 "message"
 msgstr "開始寫信時自動插入設定好的簽名"
 
-#: configuredialog/configurecomposerpage.cpp:144
+#: configuredialog/configurecomposerpage.cpp:148
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "在引言上方插入簽名"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:164
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr "在簽名前插入 RFC 定義的簽名分隔器（兩個 - 加上一個空白然後斷行）"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "回覆時，不要引入任何現有的簽名"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:195
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "格式"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:200
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1129,7 +1129,7 @@ msgid ""
 msgstr ""
 "回覆時，若有選取信件內容中的文字，則只引入選取的文字，而不是完整的信件內容。"
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:214
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1138,17 +1138,17 @@ msgid ""
 msgstr ""
 "回覆時，在所有引言文字的前面加上引言符耗，即使文字因過長而折到新行時也一樣。"
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:229
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "啟動在特定寬度後自動折行的功能"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:240
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "設定自動折行的文字寬度"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:264
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1157,7 +1157,7 @@ msgstr ""
 "在回覆或轉寄信件時，只使用接收到的原始格式做引用。若未勾選，則預設使用純文字"
 "回覆。"
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:280
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1166,34 +1166,34 @@ msgstr ""
 "將信件中的純文字部份加上 HTML 標籤格式。支援粗體、斜體、底線、列表與外部參"
 "考。"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:294
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "內含"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:294
 #, kde-format
 msgid "As Attachment"
 msgstr "當成附件"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:296
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "設定預設轉寄信件格式"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:300
 #, kde-format
 msgid "Default forwarding type:"
 msgstr "預設轉寄型態："
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "收件者"
 
-#: configuredialog/configurecomposerpage.cpp:295
+#: configuredialog/configurecomposerpage.cpp:331
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1203,17 +1203,17 @@ msgstr ""
 "預設在開始寫信時要求回覆。您可以在「選項」─「要求回覆通知」中對每封信件做設"
 "定。"
 
-#: configuredialog/configurecomposerpage.cpp:320
+#: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr "若是指定太多收件者則提出警告"
 
-#: configuredialog/configurecomposerpage.cpp:331
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgid "Set the maximum number of recipients for the warning"
 msgstr "最多幾個收件者時發出警告"
 
-#: configuredialog/configurecomposerpage.cpp:351
+#: configuredialog/configurecomposerpage.cpp:399
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1226,233 +1226,233 @@ msgstr ""
 "擇」來選收件者時若超過數量則會提出警告。這樣您可以避免不小心一次送給太多人。"
 "注意，它不會把郵件論壇或是群組清單裡的人數算進去。"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:420
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "記住最近輸入的地址，並讓它們可以用來做收件人補完。"
 
-#: configuredialog/configurecomposerpage.cpp:384
+#: configuredialog/configurecomposerpage.cpp:436
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "不儲存"
 
-#: configuredialog/configurecomposerpage.cpp:387
+#: configuredialog/configurecomposerpage.cpp:439
 #, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr "最近常用的位址記住最大數量："
 
-#: configuredialog/configurecomposerpage.cpp:391
+#: configuredialog/configurecomposerpage.cpp:443
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "要記住以用來做收件人補完的地址的最大數量"
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgid "Configure Completion..."
 msgstr "設定補完..."
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:465
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:423
+#: configuredialog/configurecomposerpage.cpp:475
 #, kde-format
 msgid "No autosave"
 msgstr "不自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:424
+#: configuredialog/configurecomposerpage.cpp:476
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " 分"
 
-#: configuredialog/configurecomposerpage.cpp:426
+#: configuredialog/configurecomposerpage.cpp:478
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "在此指定間隔時間自動儲存信件"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:688
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "回覆主題前置文字(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:640
-#: configuredialog/configurecomposerpage.cpp:666
+#: configuredialog/configurecomposerpage.cpp:692
+#: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr "辨認下列的前置文字（不區分大小寫）："
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "A&dd..."
 msgstr "新增(&D)..."
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:768
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:832
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Re&move"
 msgstr "移除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Mod&ify..."
 msgstr "修改(&I)..."
 
-#: configuredialog/configurecomposerpage.cpp:648
+#: configuredialog/configurecomposerpage.cpp:700
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "輸入新的回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "您確定要移除回覆前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:703
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:662
+#: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "轉寄主題前置文字(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:672 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "移除(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:672 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add..."
 msgstr "新增..."
 
-#: configuredialog/configurecomposerpage.cpp:672 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify..."
 msgstr "修改..."
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "輸入新的轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:673
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "您確定要移除轉寄前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:674
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:723
+#: configuredialog/configurecomposerpage.cpp:783
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "使用自訂的 Message-Id 項目(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:799
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr "自訂 Message-Id 項目(&I)："
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:811
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr "定義電子郵件的 mime 自訂標頭："
 
-#: configuredialog/configurecomposerpage.cpp:755
+#: configuredialog/configurecomposerpage.cpp:819
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "名稱"
 
-#: configuredialog/configurecomposerpage.cpp:756
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "數值"
 
-#: configuredialog/configurecomposerpage.cpp:764
+#: configuredialog/configurecomposerpage.cpp:828
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "新的(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:777
+#: configuredialog/configurecomposerpage.cpp:841
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "名稱(&N)："
 
-#: configuredialog/configurecomposerpage.cpp:787
+#: configuredialog/configurecomposerpage.cpp:851
 #, kde-format
 msgid "&Value:"
 msgstr "數值(&V)："
 
-#: configuredialog/configurecomposerpage.cpp:926
+#: configuredialog/configurecomposerpage.cpp:990
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'Content-Type' 是不被允許的字串。這個標頭不會被儲存。"
 
-#: configuredialog/configurecomposerpage.cpp:926
+#: configuredialog/configurecomposerpage.cpp:990
 #, kde-format
 msgid "Invalid header"
 msgstr "無效的標頭"
 
-#: configuredialog/configurecomposerpage.cpp:967
+#: configuredialog/configurecomposerpage.cpp:1031
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "判斷是否忘記附加檔案"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:1041
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "檢查信件中是否有下列關鍵字，以顯示此封信是否應該有附檔而忘了加上去："
 
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Enter new key word:"
 msgstr "輸入新的關鍵字："
 
-#: configuredialog/configurecomposerpage.cpp:985
+#: configuredialog/configurecomposerpage.cpp:1053
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "您確定要移除這個附件文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:986
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Attachment Word:"
 msgstr "附加文字："
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:1062
 #, kde-format
 msgid "Maximum Attachment Size:"
 msgstr "最大附件大小："
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:1069
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1003
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgid "No limit"
 msgstr "不限制"
@@ -1567,61 +1567,61 @@ msgstr "加密"
 msgid "S/MIME Validation"
 msgstr "S/MIME 確認"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:109
 #, kde-format
 msgid "Email Address:"
 msgstr "電子郵件地址："
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:110
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "您確定要移除這個電子郵件地址嗎？"
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:145
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改變全域的 HTML 設定，將會覆蓋個別資料夾原先的 HTML 設定。"
 
-#: configuredialog/configuresecuritypage.cpp:293
-#: configuredialog/configuresecuritypage.cpp:295
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
+#: configuredialog/configuresecuritypage.cpp:313
+#: configuredialog/configuresecuritypage.cpp:315
+#: configuredialog/configuresecuritypage.cpp:317
+#: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " 天"
 
-#: configuredialog/configuresecuritypage.cpp:335
+#: configuredialog/configuresecuritypage.cpp:355
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
-#: configuredialog/configuresecuritypage.cpp:342
+#: configuredialog/configuresecuritypage.cpp:362
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr "缺乏該模組。請確認您的安裝。該模組由 Kleopatra 所提供。"
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:367
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 設定模組錯誤"
 
-#: configuredialog/configuresecuritypage.cpp:414
+#: configuredialog/configuresecuritypage.cpp:434
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "這個選項需要 dirmngr 版本 >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:573 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "沒有代理伺服器"
 
-#: configuredialog/configuresecuritypage.cpp:555
+#: configuredialog/configuresecuritypage.cpp:575
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(目前的系統設定: %1)"

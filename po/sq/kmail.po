@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-11 00:38+0000\n"
+"POT-Creation-Date: 2024-04-16 00:38+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -594,65 +594,65 @@ msgstr ""
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:97
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgid "Check spelling"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:106
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:120
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
 msgid "Send Now"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:117
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:197
+#: configuredialog/configureaccountpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "&Add..."
 msgid "Add Mail Account..."
 msgstr "&Shto..."
 
-#: configuredialog/configureaccountpage.cpp:198
+#: configuredialog/configureaccountpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "&Add..."
 msgid "Custom Account..."
 msgstr "&Shto..."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:230
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -660,31 +660,31 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:220
+#: configuredialog/configureaccountpage.cpp:232
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:268
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:276
+#: configuredialog/configureaccountpage.cpp:288
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:283
+#: configuredialog/configureaccountpage.cpp:295
 #, kde-format
 msgid "Check mail on startup"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:330
+#: configuredialog/configureaccountpage.cpp:342
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -756,154 +756,154 @@ msgstr ""
 msgid "&Use custom fonts"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:167
+#: configuredialog/configureappearancepage.cpp:171
 #, kde-format
 msgid "Apply &to:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:307
 msgid "Quoted Text - First Level"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:308
 msgid "Quoted Text - Second Level"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:309
 msgid "Quoted Text - Third Level"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:310
 msgid "Link"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:311
 msgid "Unread Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:312
 msgid "Important Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:313
 msgid "Action Item Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:314
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:315
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:316
 msgid "HTML Status Bar Background - HTML Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:313
+#: configuredialog/configureappearancepage.cpp:317
 msgid "HTML Status Bar Foreground - HTML Message"
-msgstr ""
-
-#: configuredialog/configureappearancepage.cpp:321
-#, kde-format
-msgid "&Use custom colors"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:325
 #, kde-format
+msgid "&Use custom colors"
+msgstr ""
+
+#: configuredialog/configureappearancepage.cpp:333
+#, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:338
+#: configuredialog/configureappearancepage.cpp:350
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:346
+#: configuredialog/configureappearancepage.cpp:362
 #, kde-format
 msgid "Close to quota threshold:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:352
+#: configuredialog/configureappearancepage.cpp:368
 #, kde-format
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:479
+#: configuredialog/configureappearancepage.cpp:499
 #, kde-format
 msgid "Show folder quick search field"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:487
-#: configuredialog/configureappearancepage.cpp:510
+#: configuredialog/configureappearancepage.cpp:507
+#: configuredialog/configureappearancepage.cpp:530
 #, kde-format
 msgid "Never"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:490
+#: configuredialog/configureappearancepage.cpp:510
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "Kartela"
 
-#: configuredialog/configureappearancepage.cpp:492
+#: configuredialog/configureappearancepage.cpp:512
 #, kde-format
 msgid "As icons"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:497
+#: configuredialog/configureappearancepage.cpp:517
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:506
+#: configuredialog/configureappearancepage.cpp:526
 #, kde-format
 msgid "Always"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:508
+#: configuredialog/configureappearancepage.cpp:528
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:602
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:603
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:604
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:605
 msgid "C&ustom format:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:632
 #, kde-format
 msgid "Default aggregation:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:650
 #, kde-format
 msgid "Default theme:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:687
 #, kde-format
 msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:693
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -929,94 +929,94 @@ msgid ""
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:730
 #, kde-format
 msgid "Date Display:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:838
 #, kde-format
 msgid "Message Window"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:857
 #, kde-format
 msgid "System Tray"
 msgstr ""
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:835 settings/kmail.kcfg.in:88
+#: configuredialog/configureappearancepage.cpp:863 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr ""
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:839 kmail_options.h:30
+#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
 #: settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:893
 #, kde-format
 msgid "Show unread email in Taskbar"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:925
+#: configuredialog/configureappearancepage.cpp:965
 #, kde-format
 msgid "A&vailable Tags"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:938
+#: configuredialog/configureappearancepage.cpp:978
 #, kde-format
 msgid "Add new tag"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:983
 #, kde-format
 msgid "Remove selected tag"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:952
+#: configuredialog/configureappearancepage.cpp:992
 #, kde-format
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:998
 #, kde-format
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:982
+#: configuredialog/configureappearancepage.cpp:1022
 #, kde-format
 msgid "Ta&g Settings"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1032
+#: configuredialog/configureappearancepage.cpp:1072
 #, kde-format
 msgid "Delete"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1162
+#: configuredialog/configureappearancepage.cpp:1202
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1163
+#: configuredialog/configureappearancepage.cpp:1203
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "&Hiqe"
 
-#: configuredialog/configureappearancepage.cpp:1208
-#: configuredialog/configureappearancepage.cpp:1243
+#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1283
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -1078,37 +1078,37 @@ msgid ""
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:144
+#: configuredialog/configurecomposerpage.cpp:148
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:164
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:195
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:200
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:214
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1116,58 +1116,58 @@ msgid ""
 "wrapping the text."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:229
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:240
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:264
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:280
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:294
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:294
 #, kde-format
 msgid "As Attachment"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:296
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:300
 #, kde-format
 msgid "Default forwarding type:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:295
+#: configuredialog/configurecomposerpage.cpp:331
 #, kde-format
 msgid ""
 "By default, request an MDN when starting to compose a message. You can "
@@ -1175,17 +1175,17 @@ msgid ""
 "Notification\""
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:320
+#: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:331
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:351
+#: configuredialog/configurecomposerpage.cpp:399
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1195,48 +1195,48 @@ msgid ""
 "does not take account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:420
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:384
+#: configuredialog/configurecomposerpage.cpp:436
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:387
+#: configuredialog/configurecomposerpage.cpp:439
 #, kde-format
 msgid "Maximum recent addresses retained:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:391
+#: configuredialog/configurecomposerpage.cpp:443
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgid "Configure Completion..."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:465
 #, fuzzy, kde-format
 #| msgid "Auto"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Auto"
 
-#: configuredialog/configurecomposerpage.cpp:423
+#: configuredialog/configurecomposerpage.cpp:475
 #, kde-format
 msgid "No autosave"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:424
+#: configuredialog/configurecomposerpage.cpp:476
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
@@ -1244,190 +1244,190 @@ msgid_plural " minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configurecomposerpage.cpp:426
+#: configuredialog/configurecomposerpage.cpp:478
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:688
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:640
-#: configuredialog/configurecomposerpage.cpp:666
+#: configuredialog/configurecomposerpage.cpp:692
+#: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "A&dd..."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:768
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:832
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Re&move"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:648
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Mod&ify..."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:648
+#: configuredialog/configurecomposerpage.cpp:700
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:703
 #, kde-format
 msgid "Reply Prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:662
+#: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:672 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:672 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add..."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:672 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify..."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:673
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:674
+#: configuredialog/configurecomposerpage.cpp:730
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Forward"
 msgid "Forward Prefix:"
 msgstr "&Përpara"
 
-#: configuredialog/configurecomposerpage.cpp:723
+#: configuredialog/configurecomposerpage.cpp:783
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:799
 #, kde-format
 msgid "Custom message-&id suffix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:811
 #, kde-format
 msgid "Define custom mime header fields:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:755
+#: configuredialog/configurecomposerpage.cpp:819
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:756
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:764
+#: configuredialog/configurecomposerpage.cpp:828
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:777
+#: configuredialog/configurecomposerpage.cpp:841
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:787
+#: configuredialog/configurecomposerpage.cpp:851
 #, kde-format
 msgid "&Value:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:926
+#: configuredialog/configurecomposerpage.cpp:990
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:926
+#: configuredialog/configurecomposerpage.cpp:990
 #, kde-format
 msgid "Invalid header"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:967
+#: configuredialog/configurecomposerpage.cpp:1031
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:1041
 #, kde-format
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:984
+#: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Enter new key word:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:985
+#: configuredialog/configurecomposerpage.cpp:1053
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:986
+#: configuredialog/configurecomposerpage.cpp:1054
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgid "Attachment Word:"
 msgstr "Ruaj të bashkangjiturit ..."
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:1062
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgid "Maximum Attachment Size:"
 msgstr "Ruaj të bashkangjiturit ..."
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:1069
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1003
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgid "No limit"
 msgstr ""
@@ -1549,63 +1549,63 @@ msgstr "Përshkrimi"
 msgid "S/MIME Validation"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:109
 #, kde-format
 msgid "Email Address:"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:110
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:145
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:293
-#: configuredialog/configuresecuritypage.cpp:295
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
+#: configuredialog/configuresecuritypage.cpp:313
+#: configuredialog/configuresecuritypage.cpp:315
+#: configuredialog/configuresecuritypage.cpp:317
+#: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ditë"
 msgstr[1] " ditë"
 
-#: configuredialog/configuresecuritypage.cpp:335
+#: configuredialog/configuresecuritypage.cpp:355
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Nisja..."
 
-#: configuredialog/configuresecuritypage.cpp:342
+#: configuredialog/configuresecuritypage.cpp:362
 #, kde-format
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:367
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:414
+#: configuredialog/configuresecuritypage.cpp:434
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:553 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:573 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:555
+#: configuredialog/configuresecuritypage.cpp:575
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
