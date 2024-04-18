@@ -340,6 +340,9 @@ if (TARGET Plasma::Activities)
     target_sources(kmailprivate PRIVATE
         activities/activitiesmanager.h
         activities/activitiesmanager.cpp
+
+        activities/transportactivities.h
+        activities/transportactivities.cpp
     )
     if (BUILD_TESTING)
        add_subdirectory(activities/autotests)

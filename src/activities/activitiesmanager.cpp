@@ -7,6 +7,7 @@
 #include "activitiesmanager.h"
 #include "kmail_activities_debug.h"
 #include <PlasmaActivities/Consumer>
+
 ActivitiesManager::ActivitiesManager(QObject *parent)
     : QObject{parent}
     , mActivitiesConsumer(new KActivities::Consumer(this))
