@@ -330,6 +330,17 @@ target_sources(kmailprivate PRIVATE
     historyclosedreader/historyclosedreadermenu.cpp
 )
 
+if (TARGET Plasma::Activities)
+    target_sources(kmailprivate PRIVATE
+        activities/activitiesmanager.h
+        activities/activitiesmanager.cpp
+    )
+    if (BUILD_TESTING)
+       add_subdirectory(activities/autotests)
+    endif()
+endif()
+
+
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
 )
@@ -462,6 +473,10 @@ target_link_libraries(kmailprivate
 if (TARGET KF6::TextEditTextToSpeech)
     target_link_libraries(kmailprivate
         PRIVATE KF6::TextEditTextToSpeech)
+endif()
+
+if (TARGET Plasma::Activities)
+    target_link_libraries(kmailprivate PRIVATE Plasma::Activities)
 endif()
 
 target_link_libraries(kmailprivate PRIVATE qt6keychain)
