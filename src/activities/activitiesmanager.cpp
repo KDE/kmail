@@ -5,6 +5,7 @@
 */
 
 #include "activitiesmanager.h"
+#include "identityactivities.h"
 #include "kmail_activities_debug.h"
 #include "transportactivities.h"
 
@@ -13,6 +14,7 @@
 ActivitiesManager::ActivitiesManager(QObject *parent)
     : QObject{parent}
     , mTransportActivities(new TransportActivities(this))
+    , mIdentityActivities(new IdentityActivities(this))
     , mActivitiesConsumer(new KActivities::Consumer(this))
 {
     connect(mActivitiesConsumer, &KActivities::Consumer::currentActivityChanged, this, [this](const QString &activityId) {
