@@ -31,11 +31,17 @@ ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_debug.h ID
     EXPORT KMAIL
 )
 
-ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
+ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail.undo.send
     DESCRIPTION "kmail undo send (kmail)"
     OLD_CATEGORY_NAMES log_undo_send_kmail
     EXPORT KMAIL
 )
+
+ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_activities_debug.h IDENTIFIER KMAIL_ACTIVITIES_LOG CATEGORY_NAME org.kde.pim.kmail.activities
+    DESCRIPTION "kmail activities (kmail)"
+    EXPORT KMAIL
+)
+
 
 add_library(kmailprivate)
 if (TARGET KF6::UserFeedbackWidgets)
