@@ -9,7 +9,7 @@ add_custom_target(kmail_xml ALL
     DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
-    )
+)
 
 if (TARGET KF6::UserFeedbackWidgets)
     add_definitions(-DWITH_KUSERFEEDBACK)
@@ -26,16 +26,16 @@ add_subdirectory(kontactplugin)
 
 set(kmail_debugcategory_SRCS)
 ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_debug.h IDENTIFIER KMAIL_LOG CATEGORY_NAME org.kde.pim.kmail
-        DESCRIPTION "kmail (kmail)"
-        OLD_CATEGORY_NAMES log_kmail
-        EXPORT KMAIL
-    )
+    DESCRIPTION "kmail (kmail)"
+    OLD_CATEGORY_NAMES log_kmail
+    EXPORT KMAIL
+)
 
 ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_undo_send_debug.h IDENTIFIER KMAIL_UNDO_SEND_LOG CATEGORY_NAME org.kde.pim.kmail
-        DESCRIPTION "kmail undo send (kmail)"
-        OLD_CATEGORY_NAMES log_undo_send_kmail
-        EXPORT KMAIL
-    )
+    DESCRIPTION "kmail undo send (kmail)"
+    OLD_CATEGORY_NAMES log_undo_send_kmail
+    EXPORT KMAIL
+)
 
 add_library(kmailprivate)
 if (TARGET KF6::UserFeedbackWidgets)
@@ -46,7 +46,7 @@ if (TARGET KF6::UserFeedbackWidgets)
         userfeedback/plugininfosource.h
         userfeedback/kmailuserfeedbackprovider.cpp
         userfeedback/kmailuserfeedbackprovider.h
-        )
+    )
 endif()
 
 target_sources(kmailprivate PRIVATE
@@ -328,45 +328,45 @@ target_sources(kmailprivate PRIVATE
     historyclosedreader/historyclosedreadermanager.cpp
     historyclosedreader/historyclosedreadermenu.h
     historyclosedreader/historyclosedreadermenu.cpp
-    )
+)
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml editor/kmcomposerwin.h KMComposerWin
-    )
+)
 
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml kmkernel.h KMKernel
-    )
+)
 qt_add_dbus_adaptor(kmailprivate_LIB_SRCS
     ${MAILTRANSPORT_DBUS_SERVICE} mailserviceimpl.h
     KMail::MailServiceImpl
-    )
+)
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
-    )
+)
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/archivemailagent/org.freedesktop.Akonadi.ArchiveMailAgent.xml
-    )
+)
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/sendlateragent/org.freedesktop.Akonadi.SendLaterAgent.xml
-    )
+)
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailmergeagent/org.freedesktop.Akonadi.MailMergeAgent.xml
-    )
+)
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     dbusinterface/org.freedesktop.Akonadi.NewMailNotifier.xml
-    )
+)
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/followupreminderagent/org.freedesktop.Akonadi.FollowUpReminder.xml
-    )
+)
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
-    )
+)
 
 
 ki18n_wrap_ui(kmailprivate
@@ -381,7 +381,7 @@ ki18n_wrap_ui(kmailprivate
     ui/incompleteindexdialog.ui
     ui/xfaceconfigurator.ui
     ui/encodedimagepicker.ui
-    )
+)
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
 # in the build directory.
@@ -397,7 +397,7 @@ configure_file(settings/kmail.kcfg.in ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
 kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     settings/globalsettings_kmail.kcfgc
     editor/custommimeheader/custommimeheader.kcfgc
-    )
+)
 
 set(kmail_userfeedback_LIB)
 if (TARGET KF6::UserFeedbackWidgets)
@@ -458,7 +458,7 @@ target_link_libraries(kmailprivate
     KF6::TextUtils
     KF6::StatusNotifierItem
     ${kmail_userfeedback_LIB}
-    )
+)
 if (TARGET KF6::TextEditTextToSpeech)
     target_link_libraries(kmailprivate
         PRIVATE KF6::TextEditTextToSpeech)
@@ -472,7 +472,7 @@ target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MailComm
 
 set_target_properties(kmailprivate
     PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
-    )
+)
 
 ########### kcm_kmail ###############
 add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
@@ -504,7 +504,7 @@ set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_debugcategory_SRCS})
 qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
-    )
+)
 qt_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
@@ -518,7 +518,7 @@ target_link_libraries(kmailpart
     KF6::Parts
     KF6::IconThemes
     KPim6::TemplateParser
-    )
+)
 
 ########### KMail executable ###############
 
@@ -538,7 +538,7 @@ target_link_libraries(kmail
     KPim6::WebEngineViewer
     ${kmail_userfeedback_LIB}
     KF6::WindowSystem
-    )
+)
 
 if(BUILD_TESTING)
     add_subdirectory(autotests)
@@ -561,19 +561,19 @@ install(PROGRAMS data/org.kde.kmail2.desktop data/kmail_view.desktop DESTINATION
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
     DESTINATION ${KDE_INSTALL_KCFGDIR}
-    )
+)
 install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
 install(TARGETS
     kmailpart
     DESTINATION ${KDE_INSTALL_PLUGINDIR}
-    )
+)
 install(FILES
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
     DESTINATION ${KDE_INSTALL_DBUSINTERFACEDIR}
-    )
+)
 
 configure_file(data/org.kde.kmail.service.in org.kde.kmail.service)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.service DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})
