@@ -159,6 +159,7 @@ set_package_properties(Qt6Keychain PROPERTIES
     TYPE REQUIRED)
 
 configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
+configure_file(config-kmail.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
 
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
