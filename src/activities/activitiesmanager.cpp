@@ -43,6 +43,7 @@ void ActivitiesManager::setEnabled(bool newEnabled)
     if (mEnabled != newEnabled) {
         mEnabled = newEnabled;
         mTransportActivities->setEnabled(newEnabled);
+        mIdentityActivities->setEnabled(newEnabled);
     }
 }
 
