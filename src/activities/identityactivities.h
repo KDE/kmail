@@ -17,4 +17,10 @@ public:
 
     [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
     [[nodiscard]] bool hasActivitySupport() const override;
+
+    [[nodiscard]] bool enabled() const;
+    void setEnabled(bool newEnabled);
+
+private:
+    bool mEnabled = false;
 };

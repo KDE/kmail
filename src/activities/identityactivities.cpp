@@ -20,7 +20,17 @@ bool IdentityActivities::filterAcceptsRow(int source_row, const QModelIndex &sou
 
 bool IdentityActivities::hasActivitySupport() const
 {
-    return false;
+    return mEnabled;
+}
+
+bool IdentityActivities::enabled() const
+{
+    return mEnabled;
+}
+
+void IdentityActivities::setEnabled(bool newEnabled)
+{
+    mEnabled = newEnabled;
 }
 
 #include "moc_identityactivities.cpp"
