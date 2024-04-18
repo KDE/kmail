@@ -21,6 +21,17 @@ bool TransportActivities::filterAcceptsRow(int source_row, const QModelIndex &so
 
 bool TransportActivities::hasActivitySupport() const
 {
-    // TODO
-    return false;
+    return mEnabled;
 }
+
+bool TransportActivities::enabled() const
+{
+    return mEnabled;
+}
+
+void TransportActivities::setEnabled(bool newEnabled)
+{
+    mEnabled = newEnabled;
+}
+
+#include "moc_transportactivities.cpp"

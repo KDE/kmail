@@ -6,10 +6,13 @@
 
 #include "activitiesmanager.h"
 #include "kmail_activities_debug.h"
+#include "transportactivities.h"
+
 #include <PlasmaActivities/Consumer>
 
 ActivitiesManager::ActivitiesManager(QObject *parent)
     : QObject{parent}
+    , mTransportActivities(new TransportActivities(this))
     , mActivitiesConsumer(new KActivities::Consumer(this))
 {
     connect(mActivitiesConsumer, &KActivities::Consumer::currentActivityChanged, this, [this](const QString &activityId) {
@@ -35,7 +38,10 @@ bool ActivitiesManager::enabled() const
 
 void ActivitiesManager::setEnabled(bool newEnabled)
 {
-    mEnabled = newEnabled;
+    if (mEnabled != newEnabled) {
+        mEnabled = newEnabled;
+        mTransportActivities->setEnabled(newEnabled);
+    }
 }
 
 #include "moc_activitiesmanager.cpp"

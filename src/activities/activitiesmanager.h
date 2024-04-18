@@ -11,6 +11,7 @@ namespace KActivities
 {
 class Consumer;
 }
+class TransportActivities;
 class ActivitiesManager : public QObject
 {
     Q_OBJECT
@@ -25,6 +26,7 @@ Q_SIGNALS:
     void activitiesChanged();
 
 private:
+    TransportActivities *const mTransportActivities;
     KActivities::Consumer *const mActivitiesConsumer;
     bool mEnabled = false;
 };
