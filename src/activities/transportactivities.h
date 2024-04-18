@@ -7,20 +7,17 @@
 #pragma once
 
 #include <MailTransport/TransportActivitiesAbstract>
-
+class ActivitiesManager;
 class TransportActivities : public MailTransport::TransportActivitiesAbstract
 {
     Q_OBJECT
 public:
-    explicit TransportActivities(QObject *parent = nullptr);
+    explicit TransportActivities(ActivitiesManager *manager);
     ~TransportActivities() override;
 
-    [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    [[nodiscard]] bool filterAcceptsRow(const QStringList &activities) const override;
     [[nodiscard]] bool hasActivitySupport() const override;
 
-    [[nodiscard]] bool enabled() const;
-    void setEnabled(bool newEnabled);
-
 private:
-    bool mEnabled = false;
+    ActivitiesManager *const mActivitiesManager;
 };

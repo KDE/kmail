@@ -17,6 +17,8 @@ class ActivitiesManager : public QObject
 {
     Q_OBJECT
 public:
+    static ActivitiesManager *self();
+
     explicit ActivitiesManager(QObject *parent = nullptr);
     ~ActivitiesManager() override;
 
@@ -25,6 +27,9 @@ public:
 
     [[nodiscard]] TransportActivities *transportActivities() const;
 
+    [[nodiscard]] IdentityActivities *identityActivities() const;
+
+    [[nodiscard]] bool isInCurrentActivity(const QStringList &lst) const;
 Q_SIGNALS:
     void activitiesChanged();
 

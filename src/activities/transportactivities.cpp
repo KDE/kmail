@@ -5,33 +5,31 @@
 */
 
 #include "transportactivities.h"
+#include "activitiesmanager.h"
 
-TransportActivities::TransportActivities(QObject *parent)
-    : MailTransport::TransportActivitiesAbstract{parent}
+TransportActivities::TransportActivities(ActivitiesManager *manager)
+    : MailTransport::TransportActivitiesAbstract{manager}
+    , mActivitiesManager(manager)
 {
 }
 
 TransportActivities::~TransportActivities() = default;
 
-bool TransportActivities::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool TransportActivities::filterAcceptsRow(const QStringList &activities) const
 {
-    // TODO
-    return false;
+    if (mActivitiesManager && mActivitiesManager->enabled()) {
+        if (!activities.isEmpty()) {
+            return mActivitiesManager->isInCurrentActivity(activities);
+        } else {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool TransportActivities::hasActivitySupport() const
 {
-    return mEnabled;
-}
-
-bool TransportActivities::enabled() const
-{
-    return mEnabled;
-}
-
-void TransportActivities::setEnabled(bool newEnabled)
-{
-    mEnabled = newEnabled;
+    return mActivitiesManager->enabled();
 }
 
 #include "moc_transportactivities.cpp"

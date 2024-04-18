@@ -5,32 +5,31 @@
 */
 
 #include "identityactivities.h"
+#include "activitiesmanager.h"
 
-IdentityActivities::IdentityActivities(QObject *parent)
-    : KIdentityManagementCore::IdentityActivitiesAbstract{parent}
+IdentityActivities::IdentityActivities(ActivitiesManager *manager)
+    : KIdentityManagementCore::IdentityActivitiesAbstract{manager}
+    , mActivitiesManager(manager)
 {
 }
 
 IdentityActivities::~IdentityActivities() = default;
 
-bool IdentityActivities::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
+bool IdentityActivities::filterAcceptsRow(const QStringList &activities) const
 {
-    return false;
+    if (mActivitiesManager && mActivitiesManager->enabled()) {
+        if (!activities.isEmpty()) {
+            return mActivitiesManager->isInCurrentActivity(activities);
+        } else {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool IdentityActivities::hasActivitySupport() const
 {
-    return mEnabled;
-}
-
-bool IdentityActivities::enabled() const
-{
-    return mEnabled;
-}
-
-void IdentityActivities::setEnabled(bool newEnabled)
-{
-    mEnabled = newEnabled;
+    return mActivitiesManager->enabled();
 }
 
 #include "moc_identityactivities.cpp"

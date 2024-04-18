@@ -7,20 +7,17 @@
 #pragma once
 
 #include <KIdentityManagementCore/IdentityActivitiesAbstract>
-
+class ActivitiesManager;
 class IdentityActivities : public KIdentityManagementCore::IdentityActivitiesAbstract
 {
     Q_OBJECT
 public:
-    explicit IdentityActivities(QObject *parent = nullptr);
+    explicit IdentityActivities(ActivitiesManager *manager);
     ~IdentityActivities() override;
 
-    [[nodiscard]] bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+    [[nodiscard]] bool filterAcceptsRow(const QStringList &lst) const override;
     [[nodiscard]] bool hasActivitySupport() const override;
 
-    [[nodiscard]] bool enabled() const;
-    void setEnabled(bool newEnabled);
-
 private:
-    bool mEnabled = false;
+    ActivitiesManager *const mActivitiesManager;
 };

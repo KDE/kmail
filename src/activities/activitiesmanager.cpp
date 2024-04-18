@@ -29,9 +29,24 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
     if (mActivitiesConsumer->serviceStatus() != KActivities::Consumer::ServiceStatus::Running) {
         qCWarning(KMAIL_ACTIVITIES_LOG) << "Plasma activities is not running: " << mActivitiesConsumer->serviceStatus();
     }
+    connect(this, &ActivitiesManager::activitiesChanged, this, [this]() {
+        Q_EMIT mIdentityActivities->activitiesChanged();
+        Q_EMIT mTransportActivities->activitiesChanged();
+    });
 }
 
 ActivitiesManager::~ActivitiesManager() = default;
+
+ActivitiesManager *ActivitiesManager::self()
+{
+    static ActivitiesManager s_self;
+    return &s_self;
+}
+
+IdentityActivities *ActivitiesManager::identityActivities() const
+{
+    return mIdentityActivities;
+}
 
 bool ActivitiesManager::enabled() const
 {
@@ -42,8 +57,7 @@ void ActivitiesManager::setEnabled(bool newEnabled)
 {
     if (mEnabled != newEnabled) {
         mEnabled = newEnabled;
-        mTransportActivities->setEnabled(newEnabled);
-        mIdentityActivities->setEnabled(newEnabled);
+        Q_EMIT activitiesChanged();
     }
 }
 
@@ -52,4 +66,24 @@ TransportActivities *ActivitiesManager::transportActivities() const
     return mTransportActivities;
 }
 
+bool ActivitiesManager::isInCurrentActivity(const QStringList &lst) const
+{
+    if (mActivitiesConsumer->serviceStatus() == KActivities::Consumer::ServiceStatus::Running) {
+        if (lst.contains(mActivitiesConsumer->currentActivity())) {
+            return true;
+        } else {
+            const QStringList activities = mActivitiesConsumer->activities();
+            auto index = std::find_if(activities.constBegin(), activities.constEnd(), [lst](const QString &str) {
+                return lst.contains(str);
+            });
+            // Account doesn't contains valid activities => show it.
+            if (index == activities.constEnd()) {
+                return true;
+            }
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
 #include "moc_activitiesmanager.cpp"
