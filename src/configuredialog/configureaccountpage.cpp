@@ -16,8 +16,8 @@ using namespace Qt::Literals::StringLiterals;
 #include <MessageComposer/MessageComposerSettings>
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
-#include <MailTransport/TransportManagementWidget>
-using MailTransport::TransportManagementWidget;
+#include <MailTransport/TransportManagementWidgetNg>
+using MailTransport::TransportManagementWidgetNg;
 #include <MailCommon/MailUtil>
 
 #include "identity/identitypage.h"
@@ -85,7 +85,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // label: zero stretch ### FIXME more
     formLayout->addRow(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
 
-    auto tmw = new TransportManagementWidget(this);
+    auto tmw = new TransportManagementWidgetNg(this);
     tmw->layout()->setContentsMargins({});
     formLayout->addRow(tmw);
 
