@@ -14,6 +14,7 @@
 // KMail includes
 #include "attachment/attachmentcontroller.h"
 #include "attachment/attachmentview.h"
+#include "config-kmail.h"
 #include "custommimeheader.h"
 #include "editor/kmcomposereditorng.h"
 #include "editor/plugininterface/kmailplugineditorcheckbeforesendmanagerinterface.h"
@@ -46,6 +47,10 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
+#if HAVE_ACTIVITY_SUPPORT
+#include "activities/activitiesmanager.h"
+#include "activities/transportactivities.h"
+#endif
 #include <templateparser/templatesconfiguration_kfg.h>
 
 #include <Akonadi/ChangeRecorder>
@@ -364,6 +369,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mFccFolder, &MailCommon::FolderRequester::invalidFolder, this, &KMComposerWin::slotFccIsInvalid);
 
     auto transport = new MailTransport::TransportComboBox(mHeadersArea);
+#if HAVE_ACTIVITY_SUPPORT
+    transport->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
+#endif
     transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
     connect(transport, &MailTransport::TransportComboBox::activated, this, &KMComposerWin::slotTransportChanged);
