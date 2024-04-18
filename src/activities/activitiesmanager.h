@@ -22,6 +22,8 @@ public:
     [[nodiscard]] bool enabled() const;
     void setEnabled(bool newEnabled);
 
+    [[nodiscard]] TransportActivities *transportActivities() const;
+
 Q_SIGNALS:
     void activitiesChanged();
 

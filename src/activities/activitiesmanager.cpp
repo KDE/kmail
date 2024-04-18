@@ -44,4 +44,9 @@ void ActivitiesManager::setEnabled(bool newEnabled)
     }
 }
 
+TransportActivities *ActivitiesManager::transportActivities() const
+{
+    return mTransportActivities;
+}
+
 #include "moc_activitiesmanager.cpp"
