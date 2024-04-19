@@ -7,11 +7,10 @@ macro(add_kmail_activities_test _source)
     add_executable( ${_name} ${_test} ${ARGN} ${_name}.h)
     add_test(NAME ${_name} COMMAND ${_name} )
     ecm_mark_as_test(${_name})
-    target_link_libraries( ${_name} Qt::Test Plasma::Activities)
+    target_link_libraries( ${_name} Qt::Test Plasma::Activities kmailprivate)
     set_target_properties(${_name} PROPERTIES
         DISABLE_PRECOMPILE_HEADERS ON
     )
 
 endmacro()
-
-
+add_kmail_activities_test(activitiesmanagertest.cpp)

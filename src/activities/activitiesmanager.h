@@ -5,7 +5,7 @@
 */
 
 #pragma once
-
+#include "kmail_private_export.h"
 #include <QObject>
 namespace KActivities
 {
@@ -13,7 +13,7 @@ class Consumer;
 }
 class TransportActivities;
 class IdentityActivities;
-class ActivitiesManager : public QObject
+class KMAILTESTS_TESTS_EXPORT ActivitiesManager : public QObject
 {
     Q_OBJECT
 public:
