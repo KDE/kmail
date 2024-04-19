@@ -20,3 +20,5 @@ void ActivitiesManagerTest::shouldHaveDefaultValues()
     QVERIFY(w.transportActivities());
     QVERIFY(w.identityActivities());
 }
+
+#include "moc_activitiesmanagertest.cpp"
