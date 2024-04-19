@@ -49,6 +49,7 @@
 #include "widgets/kactionmenutransport.h"
 #if HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
+#include "activities/identityactivities.h"
 #include "activities/transportactivities.h"
 #endif
 #include <templateparser/templatesconfiguration_kfg.h>
@@ -349,6 +350,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
     identity->setObjectName("identitycombo"_L1);
+#if HAVE_ACTIVITY_SUPPORT
+    identity->setIdentityActivitiesAbstract(ActivitiesManager::self()->identityActivities());
+#endif
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
     mComposerBase->setIdentityCombo(identity);
