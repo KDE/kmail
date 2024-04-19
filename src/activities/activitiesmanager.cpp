@@ -86,4 +86,10 @@ bool ActivitiesManager::isInCurrentActivity(const QStringList &lst) const
         return true;
     }
 }
+
+QString ActivitiesManager::currentActivity() const
+{
+    return mActivitiesConsumer->currentActivity();
+}
+
 #include "moc_activitiesmanager.cpp"

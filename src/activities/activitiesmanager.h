@@ -30,6 +30,7 @@ public:
     [[nodiscard]] IdentityActivities *identityActivities() const;
 
     [[nodiscard]] bool isInCurrentActivity(const QStringList &lst) const;
+    [[nodiscard]] QString currentActivity() const;
 Q_SIGNALS:
     void activitiesChanged();
 
