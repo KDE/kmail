@@ -32,4 +32,9 @@ bool TransportActivities::hasActivitySupport() const
     return mActivitiesManager->enabled();
 }
 
+QString TransportActivities::currentActivity() const
+{
+    return mActivitiesManager->currentActivity();
+}
+
 #include "moc_transportactivities.cpp"

@@ -17,6 +17,7 @@ public:
 
     [[nodiscard]] bool filterAcceptsRow(const QStringList &lst) const override;
     [[nodiscard]] bool hasActivitySupport() const override;
+    [[nodiscard]] QString currentActivity() const override;
 
 private:
     ActivitiesManager *const mActivitiesManager;

@@ -32,4 +32,9 @@ bool IdentityActivities::hasActivitySupport() const
     return mActivitiesManager->enabled();
 }
 
+QString IdentityActivities::currentActivity() const
+{
+    return mActivitiesManager->currentActivity();
+}
+
 #include "moc_identityactivities.cpp"
