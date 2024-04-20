@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-19 00:38+0000\n"
+"POT-Creation-Date: 2024-04-20 00:38+0000\n"
 "PO-Revision-Date: 2024-03-09 06:25+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -365,7 +365,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "გასწორდა ბევრი IMAP-ის შეცდომა"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: editor/kmcomposerwin.cpp:2406 kmreaderwin.cpp:306 kmsystemtray.cpp:48
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:306 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -1760,331 +1760,331 @@ msgstr "მიმაგრებული ფაილების სიის 
 msgid "Show attachment list"
 msgstr "მიმაგრებული ფაილების სიის ჩვენება"
 
-#: editor/kmcomposerwin.cpp:333 kmail_part.cpp:40 kmmainwin.cpp:97
+#: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:360
+#: editor/kmcomposerwin.cpp:364
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "აირჩიეთ ამ შეტყობინების მართლწერის შემოწმებისას გამოყენებული ლექსიკონი"
 
-#: editor/kmcomposerwin.cpp:367
+#: editor/kmcomposerwin.cpp:371
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "აირჩიეთ გაგზავნილი-ელფოსტის საქაღალდე, სადაც ამ შეტყობინების ასლი შეინახება"
 
-#: editor/kmcomposerwin.cpp:375
+#: editor/kmcomposerwin.cpp:379
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "აირჩიეთ გამავალი ანგარიში ამ შეტყობინების გასაგზავნად"
 
-#: editor/kmcomposerwin.cpp:383
+#: editor/kmcomposerwin.cpp:387
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "მიუთითეთ ამ შეტყობინების \"ვისგან:\" ელფოსტის მისამართი"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgid "&Identity:"
 msgstr "&იდენტიფიკაცია:"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgid "&Dictionary:"
 msgstr "&ლექსიკონი:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:417
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "&გაგზავნილი ელფოსტის საქაღალდე:"
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:418
 #, kde-format
 msgid "&Mail transport:"
 msgstr "&ელფოსტის ტრანსპორტი:"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:419
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&საიდან:"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:420
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&თემა:"
 
-#: editor/kmcomposerwin.cpp:490
+#: editor/kmcomposerwin.cpp:494
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "კომპოზიტორი"
 
-#: editor/kmcomposerwin.cpp:1239 editor/kmcomposerwin.cpp:1273
+#: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1277
 #, kde-format
 msgid "&Send Mail"
 msgstr "&ელფოსტის გაგზავნა"
 
-#: editor/kmcomposerwin.cpp:1246 editor/kmcomposerwin.cpp:1279
+#: editor/kmcomposerwin.cpp:1250 editor/kmcomposerwin.cpp:1283
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "ელფოსტის გაგზავნა &გავლით"
 
-#: editor/kmcomposerwin.cpp:1248
+#: editor/kmcomposerwin.cpp:1252
 #, kde-format
 msgid "Send"
 msgstr "გაგზავნა"
 
-#: editor/kmcomposerwin.cpp:1251 editor/kmcomposerwin.cpp:1263
-#: editor/kmcomposerwin.cpp:3061
+#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:3065
 #, kde-format
 msgid "Send &Later"
 msgstr "&მოგვიანებით გაგზავნა"
 
-#: editor/kmcomposerwin.cpp:1257 editor/kmcomposerwin.cpp:1270
+#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1274
 #, kde-format
 msgid "Send &Later Via"
 msgstr "გაგზავნა მოგვიანებით, გ&ავლით"
 
-#: editor/kmcomposerwin.cpp:1259
+#: editor/kmcomposerwin.cpp:1263
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "რიგი"
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1292
 #, kde-format
 msgid "Save as &Draft"
 msgstr "&მონახაზად შენახვა"
 
-#: editor/kmcomposerwin.cpp:1290
+#: editor/kmcomposerwin.cpp:1294
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "ელფოსტის შენახვა მონახაზების საქაღალდეში"
 
-#: editor/kmcomposerwin.cpp:1294
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save as &Template"
 msgstr "&ნიმუშად შენახვა"
 
-#: editor/kmcomposerwin.cpp:1295
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "ელფოტის შენახვა ნიმუშების საქაღალდეში"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save as &File"
 msgstr "&ფაილად შენახვა"
 
-#: editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "ელფოსტის შენახვა ტექსტურ ან html failSi"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "&ტექსტური ფაილის ჩასმა..."
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1312
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "&უახლესი ტექსტური ფაილის ჩასმა"
 
-#: editor/kmcomposerwin.cpp:1318 kmmainwidget.cpp:2960
+#: editor/kmcomposerwin.cpp:1322 kmmainwidget.cpp:2960
 #, kde-format
 msgid "&Address Book"
 msgstr "&მისამართების წიგნი"
 
-#: editor/kmcomposerwin.cpp:1319
+#: editor/kmcomposerwin.cpp:1323
 #, kde-format
 msgid "Open Address Book"
 msgstr "მისამართების წიგნის გახსნა"
 
-#: editor/kmcomposerwin.cpp:1326
+#: editor/kmcomposerwin.cpp:1330
 #, kde-format
 msgid "&New Composer"
 msgstr "&ახალი კომპოზიტორი"
 
-#: editor/kmcomposerwin.cpp:1332
+#: editor/kmcomposerwin.cpp:1336
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "&აირჩიეთ მიმღებები..."
 
-#: editor/kmcomposerwin.cpp:1335
+#: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "&დაგზავნიის სიის შენახვა..."
 
-#: editor/kmcomposerwin.cpp:1356
+#: editor/kmcomposerwin.cpp:1360
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "მიმაგრებული ფაილის ჩ&ასმა"
 
-#: editor/kmcomposerwin.cpp:1360
+#: editor/kmcomposerwin.cpp:1364
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "ადგილების &გასუფთავება"
 
-#: editor/kmcomposerwin.cpp:1364
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "&ფიქსირებული ფონტის გამოყენება"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1374
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&გადაუდებელი"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "ჩაბარების გაფრთხილების &მოთხოვნა"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1380
 #, kde-format
 msgid "&Request Delivery Confirmation"
 msgstr "ჩაბარების გაფრთხილების &მოთხოვნა"
 
-#: editor/kmcomposerwin.cpp:1381
+#: editor/kmcomposerwin.cpp:1385
 #, kde-format
 msgid "&Wordwrap"
 msgstr "&სიტყვების გადატანა"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1390
 #, kde-format
 msgid "&Snippets"
 msgstr "&ფრაზები"
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "&ავტომატური მართლწერის შემოწმება"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1411
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "მდიდარი ტექსტის ჩასწორება"
 
-#: editor/kmcomposerwin.cpp:1409
+#: editor/kmcomposerwin.cpp:1413
 #, kde-format
 msgid "Rich Text"
 msgstr "მდიდარი ტექსტი"
 
-#: editor/kmcomposerwin.cpp:1410
+#: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr "მდიდარი ტექსტის ჩასწორების რეჟიმის გადართვა"
 
-#: editor/kmcomposerwin.cpp:1414
+#: editor/kmcomposerwin.cpp:1418
 #, kde-format
 msgid "&All Fields"
 msgstr "&ყველა ველი"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "&Identity"
 msgstr "&იდენტიფიკაცია"
 
-#: editor/kmcomposerwin.cpp:1420
+#: editor/kmcomposerwin.cpp:1424
 #, kde-format
 msgid "&Dictionary"
 msgstr "&ლექსიკონი"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1427
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "&გაგზავნილი ელფოსტის საქაღალდე"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgid "&Mail Transport"
 msgstr "&ელფოსტის ტრანსპორტი"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1433
 #, kde-format
 msgid "&From"
 msgstr "&ვისგან"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1436
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&თემა"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1441
 #, kde-format
 msgid "Append S&ignature"
 msgstr "&ხელმოწერის ბოლოში მიწერა"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1445
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "ხელმოწერის &თავში დამატება"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "ხელმოწერის ჩასმა კურსორის პოზიციაზე"
 
-#: editor/kmcomposerwin.cpp:1460
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "&მართლწერის შემოწმება..."
 
-#: editor/kmcomposerwin.cpp:1461
+#: editor/kmcomposerwin.cpp:1465
 #, kde-format
 msgid "Spellchecker"
 msgstr "სინტაქსის შემოწმება"
 
-#: editor/kmcomposerwin.cpp:1465
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&შეტყობინების დაშიფვრა"
 
-#: editor/kmcomposerwin.cpp:1466
+#: editor/kmcomposerwin.cpp:1470
 #, kde-format
 msgid "Encrypt"
 msgstr "დაშიფრვა"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "&Sign Message"
 msgstr "&შეტყობინების ხელმოწერა"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Sign"
 msgstr "ხელმოწერა"
 
-#: editor/kmcomposerwin.cpp:1496
+#: editor/kmcomposerwin.cpp:1500
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "&კრიპტოგრაფიული შეტყობინების ფორმატი"
 
-#: editor/kmcomposerwin.cpp:1499
+#: editor/kmcomposerwin.cpp:1503
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "აირჩიეთ კრიპტოგრაფიული შეტყობინების ფორმატი ამ შეტყობინებისთვის"
 
-#: editor/kmcomposerwin.cpp:1504
+#: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "Create Follow Up Reminder..."
 msgstr "საუბრის გაგრძელების შემხსენებლის დამატება..."
 
-#: editor/kmcomposerwin.cpp:1538
+#: editor/kmcomposerwin.cpp:1542
 #, kde-format
 msgid "Configure KMail..."
 msgstr "KMail-ის მორგება..."
 
-#: editor/kmcomposerwin.cpp:1569 kmmainwin.cpp:222 kmreadermainwin.cpp:538
+#: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2093,54 +2093,54 @@ msgstr ""
 "<qt>მენიუს ზოლი მთლიანად დაიმალება. მისი თავიდან საჩვენებლად დააწექით: %1.</"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:1572 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "მენიუს ზოლის დამალვა"
 
-#: editor/kmcomposerwin.cpp:1670 editor/kmcomposerwin.cpp:3984
+#: editor/kmcomposerwin.cpp:1674 editor/kmcomposerwin.cpp:3988
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " ხაზი: %1 "
 
-#: editor/kmcomposerwin.cpp:1673 editor/kmcomposerwin.cpp:3986
+#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
 #, kde-format
 msgid " Column: %1 "
 msgstr " სვეტი: %1 "
 
-#: editor/kmcomposerwin.cpp:1678
+#: editor/kmcomposerwin.cpp:1682
 #, kde-format
 msgid "OVR"
 msgstr "OVR"
 
-#: editor/kmcomposerwin.cpp:1678
+#: editor/kmcomposerwin.cpp:1682
 #, kde-format
 msgid "INS"
 msgstr "INS"
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "მართლწერა: ჩართ"
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "მართლწერა: გამორთ"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Re&save as Template"
 msgstr "თ&ავიდან შენახვა ნიმუშის სახით"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&მონახაზად შენახვა"
 
-#: editor/kmcomposerwin.cpp:2063
+#: editor/kmcomposerwin.cpp:2067
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2149,7 +2149,7 @@ msgstr ""
 "ამ შეტყობინების თავიდან შენახვა ნიმუშების საქაღალდეში. ამ შემთხვევაში მას "
 "მოგვიანებითაც გამოიყენებთ."
 
-#: editor/kmcomposerwin.cpp:2065
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2158,87 +2158,87 @@ msgstr ""
 "ამ შეტყობინების მონახაზების საქაღალდეში შენახვა. ამის შემდეგ ის შეგიძლიათ, "
 "ნებისმერ დროს ჩაასწოროთ და გააგზავნოთ."
 
-#: editor/kmcomposerwin.cpp:2069
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
 "გნებავთ, შეინახოთ ეს შეტყობინება მოგვიანებით გამოსაყენებლად თუ მოვაცილო?"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "შემდგენის დახურვა"
 
-#: editor/kmcomposerwin.cpp:2138
+#: editor/kmcomposerwin.cpp:2142
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "შეტყობინების ავტომატური შენახვის შეცდომა"
 
-#: editor/kmcomposerwin.cpp:2139
+#: editor/kmcomposerwin.cpp:2143
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "შეტყობინების გაგზავნის შეცდომა"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2329
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "ფაილის ჩასმა"
 
-#: editor/kmcomposerwin.cpp:2390
+#: editor/kmcomposerwin.cpp:2394
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "&ხაზშივე გამოსახულების სახით დამატება"
 
-#: editor/kmcomposerwin.cpp:2391
+#: editor/kmcomposerwin.cpp:2395
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "მიმაგრებულ ფაილად &დამატება"
 
-#: editor/kmcomposerwin.cpp:2406 editor/kmcomposerwin.cpp:2510
+#: editor/kmcomposerwin.cpp:2410 editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "მიმაგრებული ფაილის სახელი:"
 
-#: editor/kmcomposerwin.cpp:2412
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "მიმაგრებული ფაილის სახელი ცარიელი ვერ იქნება"
 
-#: editor/kmcomposerwin.cpp:2412
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "მიმაგრებული ფაილის არასწორი სახელი"
 
-#: editor/kmcomposerwin.cpp:2463
+#: editor/kmcomposerwin.cpp:2467
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "შეტყობინებისთვის ბმულის დამატება"
 msgstr[1] "შეტყობინებისთვის ბმულების დამატება"
 
-#: editor/kmcomposerwin.cpp:2464
+#: editor/kmcomposerwin.cpp:2468
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "ფაილის &მიმაგრება"
 msgstr[1] "ფაილების &მიმაგრება"
 
-#: editor/kmcomposerwin.cpp:2510
+#: editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "ბუფერში არსებული ტექსტის მიმაგრება"
 
-#: editor/kmcomposerwin.cpp:2602
+#: editor/kmcomposerwin.cpp:2606
 #, kde-format
 msgid "unnamed"
 msgstr "უსახელო"
 
-#: editor/kmcomposerwin.cpp:2628
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2249,13 +2249,13 @@ msgstr ""
 "(OpenPGP ან S/MIME) ხელმოწერის გასაღების მითითება.</p><p>აირჩიეთ გასაღები "
 "იდენტიფიკატორის მორგების ფანჯარაში.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2635
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "ხელმოწერის აღუწერელი გასაღები"
 
-#: editor/kmcomposerwin.cpp:2794
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2266,7 +2266,7 @@ msgstr ""
 "დააყენოთ ყველა იდენტიფიკაციის ელფოსტის მისამართი, რათა მისი შეყვანა ყოველ "
 "ჯერზე არ გიწევდეთ."
 
-#: editor/kmcomposerwin.cpp:2803
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2275,67 +2275,67 @@ msgstr ""
 "აუცილებელია, ერთი მიმღები მაინც მიუთითოთ. ან ველში 'ვის:', ან როგორც ასლი, "
 "ან ბრმა ასლი."
 
-#: editor/kmcomposerwin.cpp:2809
+#: editor/kmcomposerwin.cpp:2813
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "შეტყობინების ველი 'ვის:' ცარიელია. მაინც გავაგზავნო შეტყობინება?"
 
-#: editor/kmcomposerwin.cpp:2811
+#: editor/kmcomposerwin.cpp:2815
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "ველი ვის: მითითებული არაა"
 
-#: editor/kmcomposerwin.cpp:2812 editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
 #, kde-format
 msgid "S&end as Is"
 msgstr "&გაგზავნა, როგორც არის"
 
-#: editor/kmcomposerwin.cpp:2813
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "&Specify the To field"
 msgstr "&მიუთითეთ ვის ველი"
 
-#: editor/kmcomposerwin.cpp:2823
+#: editor/kmcomposerwin.cpp:2827
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "სათაური არ მიგითითებიათ. მაინც გავაგზავნო შეტყობინება?"
 
-#: editor/kmcomposerwin.cpp:2825
+#: editor/kmcomposerwin.cpp:2829
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "თემა მითითებული არაა"
 
-#: editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2831
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "მიუთითეთ &თემა"
 
-#: editor/kmcomposerwin.cpp:2872
+#: editor/kmcomposerwin.cpp:2876
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "მონახაზის დასაშიფრად, სულ ცოტა, ერთი მიმღები უნდა მიუთითოთ."
 
-#: editor/kmcomposerwin.cpp:3058
+#: editor/kmcomposerwin.cpp:3062
 #, kde-format
 msgid "About to send email..."
 msgstr "ელფოსტის გაგზავნის შესახებ..."
 
-#: editor/kmcomposerwin.cpp:3059
+#: editor/kmcomposerwin.cpp:3063
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "თანხმობის გაგზავნა"
 
-#: editor/kmcomposerwin.cpp:3060
+#: editor/kmcomposerwin.cpp:3064
 #, kde-format
 msgid "&Send Now"
 msgstr "&ახლა გაგზავნა"
 
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3140
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2343,22 +2343,22 @@ msgid ""
 msgstr ""
 "ცდილობთ, ელფოსტა, %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
 
-#: editor/kmcomposerwin.cpp:3137
+#: editor/kmcomposerwin.cpp:3141
 #, kde-format
 msgid "Too many recipients"
 msgstr "მეტისმეტად ბევრი მიმღები"
 
-#: editor/kmcomposerwin.cpp:3138
+#: editor/kmcomposerwin.cpp:3142
 #, kde-format
 msgid "&Send as Is"
 msgstr "&გაგზავნა, როგორც არის"
 
-#: editor/kmcomposerwin.cpp:3139
+#: editor/kmcomposerwin.cpp:3143
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "&მიმღებების ჩასწორება"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2367,22 +2367,22 @@ msgstr ""
 "HTML რეჟიმის გამორთვა ტექსტის ფორმატირებას დაკარგავს. დარწმუნებული "
 "ბრძანდებით?"
 
-#: editor/kmcomposerwin.cpp:3178
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "დაკარგავთ დაფორმატებას?"
 
-#: editor/kmcomposerwin.cpp:3179
+#: editor/kmcomposerwin.cpp:3183
 #, kde-format
 msgid "Lose Formatting"
 msgstr "დაფორმატების დაკარგვა"
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3184
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "მარკირების უბრალო ტექსტის დამატება"
 
-#: editor/kmcomposerwin.cpp:3392
+#: editor/kmcomposerwin.cpp:3396
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2392,7 +2392,7 @@ msgstr ""
 "თქვენი არჩეული PGP გასაღები (%1) თქვენს ბრელოკში არ არსებობს, ან "
 "დაშიფვრისთვის შესაფერისი არაა."
 
-#: editor/kmcomposerwin.cpp:3405
+#: editor/kmcomposerwin.cpp:3409
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2402,7 +2402,7 @@ msgstr ""
 "თქვენი არჩეული PGP ხელმოწერის გასაღები (%1) თქვენს ბრელოკში არ არსებობს, ან "
 "ხელმოწერისთვის შესაფერისი არაა."
 
-#: editor/kmcomposerwin.cpp:3421
+#: editor/kmcomposerwin.cpp:3425
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2412,7 +2412,7 @@ msgstr ""
 "თქვენი არჩეული S/MIME გასაღები (%1) თქვენს ბრელოკში არ არსებობს, ან "
 "დაშიფვრისთვის შესაფერისი არაა."
 
-#: editor/kmcomposerwin.cpp:3434
+#: editor/kmcomposerwin.cpp:3438
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2422,25 +2422,25 @@ msgstr ""
 "თქვენი არჩეული S/MIME ხელმოწერის გასაღები (%1) თქვენს ბრელოკში არ არსებობს, "
 "ან ხელმოწერისთვის შესაფერისი არაა."
 
-#: editor/kmcomposerwin.cpp:3607
+#: editor/kmcomposerwin.cpp:3611
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "დაშიფრვა"
 
-#: editor/kmcomposerwin.cpp:3609
+#: editor/kmcomposerwin.cpp:3613
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "არ-დაშიფრვა"
 
-#: editor/kmcomposerwin.cpp:3749
+#: editor/kmcomposerwin.cpp:3753
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "მიმღების გასაღები აღმოჩენილი არაა."
 
-#: editor/kmcomposerwin.cpp:3771
+#: editor/kmcomposerwin.cpp:3775
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2450,7 +2450,7 @@ msgstr ""
 "ამ მიმღებისთვის ავტოშიფრის ჭორის გასაღები გამოყენება. ეს გასაღები მესამე "
 "პირებისგან მივიღეთ და გადამოწმებული არაა."
 
-#: editor/kmcomposerwin.cpp:3775
+#: editor/kmcomposerwin.cpp:3779
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2460,7 +2460,7 @@ msgstr ""
 "ამ მიმღებისთვის ავტომატური დაშიფვრის გასაღები გამოიყენება. ეს გასაღები არ "
 "გადამოწმებულა. მიმღებს დაშიფრული პასუხები ურჩევნია."
 
-#: editor/kmcomposerwin.cpp:3779
+#: editor/kmcomposerwin.cpp:3783
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2470,7 +2470,7 @@ msgstr ""
 "ამ მიმღებისთვის ავტომატური დაშიფვრის გასაღები გამოიყენება. ეს გასაღები არ "
 "გადამოწმებულა. მიმღებს დაშიფრული პასუხები არ ურჩევნია."
 
-#: editor/kmcomposerwin.cpp:3806
+#: editor/kmcomposerwin.cpp:3810
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2482,7 +2482,7 @@ msgstr ""
 "შეგიძლიათ, გასაღებს ხელი მოაწეროთ, თუ სხვა არხის მიერ ანაბეჭდს დაელაპარაკეთ. "
 "დეტალებისთვის დააწკაპუნეთ ხატულას."
 
-#: editor/kmcomposerwin.cpp:3814
+#: editor/kmcomposerwin.cpp:3818
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2496,7 +2496,7 @@ msgstr ""
 "გახდება. ან, შეგიძლიათ, ამ გასაღებზე ხელი მოაწეროთ, თუ ანაბეჭდი სხვა არხით "
 "გადაეცით. დეტალებისთვის ხატულაზე დააწკაპუნეთ."
 
-#: editor/kmcomposerwin.cpp:3822
+#: editor/kmcomposerwin.cpp:3826
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2506,7 +2506,7 @@ msgstr ""
 "დაშიფვრის გასაღები სანდო არაა. მას კონფლიქტური TOFU მონაცემები აქვს. "
 "დეტალებისთვის დააწკაპუნეთ ხატულაზე."
 
-#: editor/kmcomposerwin.cpp:3828
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2516,7 +2516,7 @@ msgstr ""
 "დაშიფვრის გასაღები სანდო არაა. მას კონფლიქტური TOFU მონაცემები აქვს. "
 "დეტალებისთვის დააწკაპუნეთ ხატულაზე."
 
-#: editor/kmcomposerwin.cpp:3834
+#: editor/kmcomposerwin.cpp:3838
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2526,7 +2526,7 @@ msgstr ""
 "დაშიფვრის გასაღები სანდო არაა. გასაღები მონიშნულია, როგორც არასწორი. "
 "დეტალებისთვის დააწკაპუნეთ ხატულაზე."
 
-#: editor/kmcomposerwin.cpp:3842
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2541,7 +2541,7 @@ msgstr ""
 "თუ ანაბეჭდთან კომუნიკაცია სხვა არხით გქონდათ. დეტალებისთვის დააწკაპუნეთ "
 "ხატულაზე."
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2551,7 +2551,7 @@ msgstr ""
 "დაშიფვრის გასაღები სანდო არაა. შეგიძლიათ, გასაღებს ხელი მოაწეროთ, თუ სხვა "
 "არხის მიერ ანაბეჭდს დაელაპარაკეთ. დეტალებისთვის დააწკაპუნეთ ხატულას."
 
-#: editor/kmcomposerwin.cpp:3856
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2566,7 +2566,7 @@ msgstr ""
 "მოაწეროთ, თუ სხვა არხის მიერ ანაბეჭდს დაელაპარაკეთ. დეტალებისთვის "
 "დააწკაპუნეთ ხატულას."
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2576,7 +2576,7 @@ msgstr ""
 "დაშიფვრის გასაღები სრულად სანდოა. გასაღების ხელმოწერით, შეგიძლიათ, "
 "უსაფრთხოების დონე გაზარდოთ. დეტალებისთვის ხატულაზე დააწკაპუნეთ."
 
-#: editor/kmcomposerwin.cpp:3869
+#: editor/kmcomposerwin.cpp:3873
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2586,7 +2586,7 @@ msgstr ""
 "დაშიფვრის გასაღები სრულად სანდოა ან ხელმოწერილია სხვა სრულად სანდო "
 "გასაღებით. დეტალებისთვის ხატულაზე დააწკაპუნეთ."
 
-#: editor/kmcomposerwin.cpp:4201
+#: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2603,12 +2603,12 @@ msgstr ""
 "შესაბამისი სერტიფიკატი არაა, გარე სერტიფიკატების მოძებნა 'გარე "
 "სერტიფიკატების მოძებნის' ღილაკზე დაწკაპუნებით შეგიძლიათ.</qt>"
 
-#: editor/kmcomposerwin.cpp:4213
+#: editor/kmcomposerwin.cpp:4217
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "დაშიფვრის გასაღების არჩევანი"
 
-#: editor/kmcomposerwin.cpp:4298
+#: editor/kmcomposerwin.cpp:4302
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "დამატების რედაქტორის ინფორმაცია"

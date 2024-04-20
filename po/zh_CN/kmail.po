@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-19 00:38+0000\n"
-"PO-Revision-Date: 2024-04-18 19:50\n"
+"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"PO-Revision-Date: 2024-04-19 15:17\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -365,7 +365,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "修复了许多 IMAP 错误"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: editor/kmcomposerwin.cpp:2406 kmreaderwin.cpp:306 kmsystemtray.cpp:48
+#: editor/kmcomposerwin.cpp:2410 kmreaderwin.cpp:306 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -1730,475 +1730,475 @@ msgstr "隐藏附件列表"
 msgid "Show attachment list"
 msgstr "显示附件列表"
 
-#: editor/kmcomposerwin.cpp:333 kmail_part.cpp:40 kmmainwin.cpp:97
+#: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:360
+#: editor/kmcomposerwin.cpp:364
 #, kde-format
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "选择对此消息拼写检查时所用的词典"
 
-#: editor/kmcomposerwin.cpp:367
+#: editor/kmcomposerwin.cpp:371
 #, kde-format
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "选择保存此消息副本所用的发件夹"
 
-#: editor/kmcomposerwin.cpp:375
+#: editor/kmcomposerwin.cpp:379
 #, kde-format
 msgid "Select the outgoing account to use for sending this message"
 msgstr "选择用于发送此消息的账户"
 
-#: editor/kmcomposerwin.cpp:383
+#: editor/kmcomposerwin.cpp:387
 #, kde-format
 msgid "Set the \"From:\" email address for this message"
 msgstr "设定此消息的“发件人”地址"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgid "&Identity:"
 msgstr "身份(&I)："
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgid "&Dictionary:"
 msgstr "字典(&D)："
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:417
 #, kde-format
 msgid "&Sent-Mail folder:"
 msgstr "已发文件夹(&S)："
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:418
 #, kde-format
 msgid "&Mail transport:"
 msgstr "邮件传送(&M)："
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:419
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "发件人(&F)："
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:420
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "主题(&U)："
 
-#: editor/kmcomposerwin.cpp:490
+#: editor/kmcomposerwin.cpp:494
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "撰写器"
 
-#: editor/kmcomposerwin.cpp:1239 editor/kmcomposerwin.cpp:1273
+#: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1277
 #, kde-format
 msgid "&Send Mail"
 msgstr "发送邮件(&S)"
 
-#: editor/kmcomposerwin.cpp:1246 editor/kmcomposerwin.cpp:1279
+#: editor/kmcomposerwin.cpp:1250 editor/kmcomposerwin.cpp:1283
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "发送邮件的身份(&S)"
 
-#: editor/kmcomposerwin.cpp:1248
+#: editor/kmcomposerwin.cpp:1252
 #, kde-format
 msgid "Send"
 msgstr "发送"
 
-#: editor/kmcomposerwin.cpp:1251 editor/kmcomposerwin.cpp:1263
-#: editor/kmcomposerwin.cpp:3061
+#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:3065
 #, kde-format
 msgid "Send &Later"
 msgstr "稍后发送(&L)"
 
-#: editor/kmcomposerwin.cpp:1257 editor/kmcomposerwin.cpp:1270
+#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1274
 #, kde-format
 msgid "Send &Later Via"
 msgstr "稍后发送的身份(&L)"
 
-#: editor/kmcomposerwin.cpp:1259
+#: editor/kmcomposerwin.cpp:1263
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "队列"
 
-#: editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1292
 #, kde-format
 msgid "Save as &Draft"
 msgstr "保存为草稿(&D)"
 
-#: editor/kmcomposerwin.cpp:1290
+#: editor/kmcomposerwin.cpp:1294
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "保存邮件到草稿箱"
 
-#: editor/kmcomposerwin.cpp:1294
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save as &Template"
 msgstr "保存为模板(&T)"
 
-#: editor/kmcomposerwin.cpp:1295
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "保存邮件到模板文件夹"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save as &File"
 msgstr "另存为文件(&F)"
 
-#: editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "邮件另存为文本或 html 文件"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "&Insert Text File..."
 msgstr "插入文本文件(&I)..."
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1312
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "插入最近的文本文件(&I)"
 
-#: editor/kmcomposerwin.cpp:1318 kmmainwidget.cpp:2960
+#: editor/kmcomposerwin.cpp:1322 kmmainwidget.cpp:2960
 #, kde-format
 msgid "&Address Book"
 msgstr "地址簿(&A)"
 
-#: editor/kmcomposerwin.cpp:1319
+#: editor/kmcomposerwin.cpp:1323
 #, kde-format
 msgid "Open Address Book"
 msgstr "打开地址簿"
 
-#: editor/kmcomposerwin.cpp:1326
+#: editor/kmcomposerwin.cpp:1330
 #, kde-format
 msgid "&New Composer"
 msgstr "新建撰写器(&N)"
 
-#: editor/kmcomposerwin.cpp:1332
+#: editor/kmcomposerwin.cpp:1336
 #, kde-format
 msgid "Select &Recipients..."
 msgstr "选择收件人(&R)..."
 
-#: editor/kmcomposerwin.cpp:1335
+#: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgid "Save &Distribution List..."
 msgstr "保存分发列表(&D)..."
 
-#: editor/kmcomposerwin.cpp:1356
+#: editor/kmcomposerwin.cpp:1360
 #, kde-format
 msgid "Paste as Attac&hment"
 msgstr "粘贴为附件(&H)"
 
-#: editor/kmcomposerwin.cpp:1360
+#: editor/kmcomposerwin.cpp:1364
 #, kde-format
 msgid "Cl&ean Spaces"
 msgstr "清理空格(&E)"
 
-#: editor/kmcomposerwin.cpp:1364
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "使用等宽字体(&X)"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1374
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "标记为紧急(&U)"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "请求处理回执(&R)"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1380
 #, kde-format
 msgid "&Request Delivery Confirmation"
 msgstr "请求送达通知(&R)"
 
-#: editor/kmcomposerwin.cpp:1381
+#: editor/kmcomposerwin.cpp:1385
 #, kde-format
 msgid "&Wordwrap"
 msgstr "自动换行(&W)"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1390
 #, kde-format
 msgid "&Snippets"
 msgstr "片断(&S)"
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "自动拼写检查(&A)"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1411
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "富文本编辑"
 
-#: editor/kmcomposerwin.cpp:1409
+#: editor/kmcomposerwin.cpp:1413
 #, kde-format
 msgid "Rich Text"
 msgstr "富文本"
 
-#: editor/kmcomposerwin.cpp:1410
+#: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgid "Toggle rich text editing mode"
 msgstr "切换富文本编辑模式"
 
-#: editor/kmcomposerwin.cpp:1414
+#: editor/kmcomposerwin.cpp:1418
 #, kde-format
 msgid "&All Fields"
 msgstr "全部字段(&A)"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "&Identity"
 msgstr "身份(&I)"
 
-#: editor/kmcomposerwin.cpp:1420
+#: editor/kmcomposerwin.cpp:1424
 #, kde-format
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1427
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "已发文件夹(&S)"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgid "&Mail Transport"
 msgstr "邮件传送(&M)"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1433
 #, kde-format
 msgid "&From"
 msgstr "发件人(&F)"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1436
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "主题(&U)"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1441
 #, kde-format
 msgid "Append S&ignature"
 msgstr "在结尾附加签名(&I)"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1445
 #, kde-format
 msgid "Pr&epend Signature"
 msgstr "在开头附加签名(&E)"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgid "Insert Signature At C&ursor Position"
 msgstr "在光标位置处插入签名(&U)"
 
-#: editor/kmcomposerwin.cpp:1460
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "&Spellchecker..."
 msgstr "拼写检查器(&S)..."
 
-#: editor/kmcomposerwin.cpp:1461
+#: editor/kmcomposerwin.cpp:1465
 #, kde-format
 msgid "Spellchecker"
 msgstr "拼写检查器"
 
-#: editor/kmcomposerwin.cpp:1465
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "加密消息(&E)"
 
-#: editor/kmcomposerwin.cpp:1466
+#: editor/kmcomposerwin.cpp:1470
 #, kde-format
 msgid "Encrypt"
 msgstr "加密"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "&Sign Message"
 msgstr "给消息签名(&S)"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Sign"
 msgstr "签名"
 
-#: editor/kmcomposerwin.cpp:1496
+#: editor/kmcomposerwin.cpp:1500
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "密文消息格式(&C)"
 
-#: editor/kmcomposerwin.cpp:1499
+#: editor/kmcomposerwin.cpp:1503
 #, kde-format
 msgid "Select a cryptographic format for this message"
 msgstr "为这封信选择加密格式"
 
-#: editor/kmcomposerwin.cpp:1504
+#: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "Create Follow Up Reminder..."
 msgstr "创建后续提醒..."
 
-#: editor/kmcomposerwin.cpp:1538
+#: editor/kmcomposerwin.cpp:1542
 #, kde-format
 msgid "Configure KMail..."
 msgstr "配置 KMail..."
 
-#: editor/kmcomposerwin.cpp:1569 kmmainwin.cpp:222 kmreadermainwin.cpp:538
+#: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr "<qt>这将完全隐藏菜单栏。您可以按下 %1 使其重新显示。</qt>"
 
-#: editor/kmcomposerwin.cpp:1572 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "隐藏菜单栏"
 
-#: editor/kmcomposerwin.cpp:1670 editor/kmcomposerwin.cpp:3984
+#: editor/kmcomposerwin.cpp:1674 editor/kmcomposerwin.cpp:3988
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " 行：%1 "
 
-#: editor/kmcomposerwin.cpp:1673 editor/kmcomposerwin.cpp:3986
+#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
 #, kde-format
 msgid " Column: %1 "
 msgstr " 列：%1 "
 
-#: editor/kmcomposerwin.cpp:1678
+#: editor/kmcomposerwin.cpp:1682
 #, kde-format
 msgid "OVR"
 msgstr "覆盖"
 
-#: editor/kmcomposerwin.cpp:1678
+#: editor/kmcomposerwin.cpp:1682
 #, kde-format
 msgid "INS"
 msgstr "插入"
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "拼写检查：开"
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "拼写检查：关"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Re&save as Template"
 msgstr "重新保存为模板(&S)"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "&Save as Draft"
 msgstr "保存为草稿(&S)"
 
-#: editor/kmcomposerwin.cpp:2063
+#: editor/kmcomposerwin.cpp:2067
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr "将这封信重新保存在模板文件夹中。您可以稍后再编辑或者发送。"
 
-#: editor/kmcomposerwin.cpp:2065
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr "将这封信保存在草稿文件夹中。您可以稍后再编辑或者发送。"
 
-#: editor/kmcomposerwin.cpp:2069
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "您想要丢弃消息，还是保存留作以后使用？"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "关闭撰写器"
 
-#: editor/kmcomposerwin.cpp:2138
+#: editor/kmcomposerwin.cpp:2142
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "自动保存消息失败"
 
-#: editor/kmcomposerwin.cpp:2139
+#: editor/kmcomposerwin.cpp:2143
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "发送消息失败"
 
-#: editor/kmcomposerwin.cpp:2325
+#: editor/kmcomposerwin.cpp:2329
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "插入文件"
 
-#: editor/kmcomposerwin.cpp:2390
+#: editor/kmcomposerwin.cpp:2394
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "添加为内嵌图像(&I)"
 
-#: editor/kmcomposerwin.cpp:2391
+#: editor/kmcomposerwin.cpp:2395
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "添加为附件(&A)"
 
-#: editor/kmcomposerwin.cpp:2406 editor/kmcomposerwin.cpp:2510
+#: editor/kmcomposerwin.cpp:2410 editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "附件名："
 
-#: editor/kmcomposerwin.cpp:2412
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "附件名不能是空的。"
 
-#: editor/kmcomposerwin.cpp:2412
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "无效的附件名"
 
-#: editor/kmcomposerwin.cpp:2463
+#: editor/kmcomposerwin.cpp:2467
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "在邮件中添加链接"
 
-#: editor/kmcomposerwin.cpp:2464
+#: editor/kmcomposerwin.cpp:2468
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "添加文件为附件(&A)"
 
-#: editor/kmcomposerwin.cpp:2510
+#: editor/kmcomposerwin.cpp:2514
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "将剪贴板内的文字作为附件插入"
 
-#: editor/kmcomposerwin.cpp:2602
+#: editor/kmcomposerwin.cpp:2606
 #, kde-format
 msgid "unnamed"
 msgstr "未命名"
 
-#: editor/kmcomposerwin.cpp:2628
+#: editor/kmcomposerwin.cpp:2632
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2208,13 +2208,13 @@ msgstr ""
 "<qt><p>为了对此消息签名，您必须首先定义要使用的签名密钥(OpenPGP 或 S/MIME)。"
 "</p><p>请在身份配置中选择要使用的密钥。</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2635
+#: editor/kmcomposerwin.cpp:2639
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "未定义的签名密钥"
 
-#: editor/kmcomposerwin.cpp:2794
+#: editor/kmcomposerwin.cpp:2798
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2224,118 +2224,118 @@ msgstr ""
 "您必须在发件人字段中输入您自己的电子邮件地址。您还应该为全部身份都设置电子邮"
 "件地址，以免每封信都要重新输入一次。"
 
-#: editor/kmcomposerwin.cpp:2803
+#: editor/kmcomposerwin.cpp:2807
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "您必须在收件人、抄送或密送字段中指定至少一个接收者。"
 
-#: editor/kmcomposerwin.cpp:2809
+#: editor/kmcomposerwin.cpp:2813
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "收件人字段为空。仍然要发送吗？"
 
-#: editor/kmcomposerwin.cpp:2811
+#: editor/kmcomposerwin.cpp:2815
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "未指定收件人"
 
-#: editor/kmcomposerwin.cpp:2812 editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
 #, kde-format
 msgid "S&end as Is"
 msgstr "原样发送(&E)"
 
-#: editor/kmcomposerwin.cpp:2813
+#: editor/kmcomposerwin.cpp:2817
 #, kde-format
 msgid "&Specify the To field"
 msgstr "指定收件人字段(&S)"
 
-#: editor/kmcomposerwin.cpp:2823
+#: editor/kmcomposerwin.cpp:2827
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "您没有指定主题。仍然要发送吗？"
 
-#: editor/kmcomposerwin.cpp:2825
+#: editor/kmcomposerwin.cpp:2829
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "未指定主题"
 
-#: editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2831
 #, kde-format
 msgid "&Specify the Subject"
 msgstr "指定主题(&S)"
 
-#: editor/kmcomposerwin.cpp:2872
+#: editor/kmcomposerwin.cpp:2876
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "您必须指定至少一个收件人才能加密草稿。"
 
-#: editor/kmcomposerwin.cpp:3058
+#: editor/kmcomposerwin.cpp:3062
 #, kde-format
 msgid "About to send email..."
 msgstr "即将发送邮件..."
 
-#: editor/kmcomposerwin.cpp:3059
+#: editor/kmcomposerwin.cpp:3063
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "发送确认"
 
-#: editor/kmcomposerwin.cpp:3060
+#: editor/kmcomposerwin.cpp:3064
 #, kde-format
 msgid "&Send Now"
 msgstr "立即发送(&S)"
 
-#: editor/kmcomposerwin.cpp:3136
+#: editor/kmcomposerwin.cpp:3140
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "您正尝试一次向多于 %1 名收件人发送邮件，确认要发送吗？"
 
-#: editor/kmcomposerwin.cpp:3137
+#: editor/kmcomposerwin.cpp:3141
 #, kde-format
 msgid "Too many recipients"
 msgstr "收件人过多"
 
-#: editor/kmcomposerwin.cpp:3138
+#: editor/kmcomposerwin.cpp:3142
 #, kde-format
 msgid "&Send as Is"
 msgstr "原样发送(&S)"
 
-#: editor/kmcomposerwin.cpp:3139
+#: editor/kmcomposerwin.cpp:3143
 #, kde-format
 msgid "&Edit Recipients"
 msgstr "编辑收件人(&E)"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "关闭 HTML 模式将使消息中的一些格式丢失。您确认吗？"
 
-#: editor/kmcomposerwin.cpp:3178
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "丢弃格式吗？"
 
-#: editor/kmcomposerwin.cpp:3179
+#: editor/kmcomposerwin.cpp:3183
 #, kde-format
 msgid "Lose Formatting"
 msgstr "丢弃格式"
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3184
 #, kde-format
 msgid "Add Markup Plain Text"
 msgstr "添加标记纯文本"
 
-#: editor/kmcomposerwin.cpp:3392
+#: editor/kmcomposerwin.cpp:3396
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2343,7 +2343,7 @@ msgid ""
 "for encryption."
 msgstr "您所选的 PGP 密钥 (%1) 不存在于您的密钥环中，或者不适合加密。"
 
-#: editor/kmcomposerwin.cpp:3405
+#: editor/kmcomposerwin.cpp:3409
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2351,7 +2351,7 @@ msgid ""
 "suitable for signing."
 msgstr "您所选的 PGP 签名密钥 (%1) 不存在于您的密钥环中，或者不适合签名。"
 
-#: editor/kmcomposerwin.cpp:3421
+#: editor/kmcomposerwin.cpp:3425
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2359,7 +2359,7 @@ msgid ""
 "suitable for encryption."
 msgstr "您所选的 SMIME 密钥 (%1) 不存在于您的密钥环中，或者不适合加密。"
 
-#: editor/kmcomposerwin.cpp:3434
+#: editor/kmcomposerwin.cpp:3438
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2367,25 +2367,25 @@ msgid ""
 "suitable for signing."
 msgstr "您所选的 SMIME 签名密钥 (%1) 不存在于您的密钥环中，或者不适合签名。"
 
-#: editor/kmcomposerwin.cpp:3607
+#: editor/kmcomposerwin.cpp:3611
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "加密"
 
-#: editor/kmcomposerwin.cpp:3609
+#: editor/kmcomposerwin.cpp:3613
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "未加密"
 
-#: editor/kmcomposerwin.cpp:3749
+#: editor/kmcomposerwin.cpp:3753
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "找不到该收件人的密钥。"
 
-#: editor/kmcomposerwin.cpp:3771
+#: editor/kmcomposerwin.cpp:3775
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2393,7 +2393,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3775
+#: editor/kmcomposerwin.cpp:3779
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2401,7 +2401,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3779
+#: editor/kmcomposerwin.cpp:3783
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2409,7 +2409,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3806
+#: editor/kmcomposerwin.cpp:3810
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2418,7 +2418,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3814
+#: editor/kmcomposerwin.cpp:3818
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2428,7 +2428,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3822
+#: editor/kmcomposerwin.cpp:3826
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2436,7 +2436,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3828
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2444,7 +2444,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3834
+#: editor/kmcomposerwin.cpp:3838
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2452,7 +2452,7 @@ msgid ""
 "for details."
 msgstr "加密密钥不可信。密钥被标记为损坏。点击图标了解详情。"
 
-#: editor/kmcomposerwin.cpp:3842
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2462,7 +2462,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2470,7 +2470,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3856
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2480,7 +2480,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2488,7 +2488,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3869
+#: editor/kmcomposerwin.cpp:3873
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2496,7 +2496,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4201
+#: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2511,12 +2511,12 @@ msgstr ""
 "<qt>未找到“%1”的有效且可信任的加密密钥。<br/><br/>请选择应为此收件人使用的密"
 "钥。如果列表中没有合适的密钥，您还可以点击按钮：搜索外部密钥。</qt>"
 
-#: editor/kmcomposerwin.cpp:4213
+#: editor/kmcomposerwin.cpp:4217
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "加密密钥选择"
 
-#: editor/kmcomposerwin.cpp:4298
+#: editor/kmcomposerwin.cpp:4302
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr "插件编辑器信息"
