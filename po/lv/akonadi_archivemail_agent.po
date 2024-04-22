@@ -1,212 +1,216 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
 # Einars Sprugis <einars8@gmail.com>, 2012.
-# Māris Nartišs <maris.kde@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
-"PO-Revision-Date: 2024-02-02 12:13+0200\n"
-"Last-Translator: Māris Nartišs <maris.kde@gmail.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2024-03-14 03:05+0000\n"
+"PO-Revision-Date: 2012-07-01 15:43+0300\n"
+"Last-Translator: Einars Sprugis <einars8@gmail.com>\n"
+"Language-Team: Latvian <locale@laka.lv>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 1.4\n"
 
 #: addarchivemaildialog.cpp:21
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
-msgstr "Rediģēt arhivēto pastu"
+msgstr "Modificēt arhivēto pastu"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
-#, kde-format
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
+#, fuzzy, kde-format
+#| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Pievienot arhivēto pastu"
 
-#: addarchivemailwidget.cpp:28
+#: addarchivemailwidget.cpp:26
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Arhivēt visas apakšmapes"
 
-#: addarchivemailwidget.cpp:38
-#, kde-format
+#: addarchivemailwidget.cpp:36
+#, fuzzy, kde-format
+#| msgid "&Folder:"
 msgid "Folder:"
-msgstr "Mape:"
+msgstr "&Mape:"
 
-#: addarchivemailwidget.cpp:48
-#, kde-format
+#: addarchivemailwidget.cpp:46
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
 msgid "Format:"
-msgstr "Formāts:"
+msgstr "F&ormāts:"
 
-#: addarchivemailwidget.cpp:56
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "Ceļš:"
 
-#: addarchivemailwidget.cpp:63
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
-msgstr "Dublējumkopija ik pēc:"
+msgstr "Veidot rezerves kopiju katras:"
 
-#: addarchivemailwidget.cpp:75
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
-msgstr "Maksimālais arhīvu skaits:"
+msgstr ""
 
-#: addarchivemailwidget.cpp:78
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
-msgstr "neierobežots"
+msgstr ""
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arhīvs"
 
-#: archivemailrangewidget.cpp:22
+#: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
-msgstr "Izmantot diapazonu"
+msgstr ""
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "Nosaukums"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "Pēdējais arhīvs"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "Nākamais arhīvs"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
-msgstr "Krātuves mape"
+msgstr ""
+
+#: archivemailwidget.cpp:89
+#, fuzzy, kde-format
+#| msgid "Configure Archive Mail Agent"
+msgid "Archive Mail Agent"
+msgstr "Konfigurēt arhivētā pasta aģentu"
 
 #: archivemailwidget.cpp:91
 #, kde-format
-msgid "Archive Mail Agent"
-msgstr "Arhivētā pasta aģents"
+msgid "Archive emails automatically."
+msgstr ""
 
 #: archivemailwidget.cpp:93
 #, kde-format
-msgid "Archive emails automatically."
-msgstr "Automātiski arhivēt e-pastus"
-
-#: archivemailwidget.cpp:95
-#, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Autortiesības (C) 2014–%1 Laurent Montel"
+msgstr ""
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
-msgstr "Laurent Montel"
+msgstr ""
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
-msgstr "Uzturētājs"
+msgstr ""
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Toms Trasūns"
+msgstr ""
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "toms.trasuns@posteo.net"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Pievienot..."
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
-msgstr "Atvērt saturošo mapi..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
-msgstr "Dzēst"
+msgstr ""
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:167
 #, kde-format
 msgid "Folder: %1"
 msgstr "Mape: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:189
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
-msgstr[0] "%1 diena"
-msgstr[1] "%1 dienas"
-msgstr[2] "%1 dienu"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:198
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Arhīvs būs gatavs %1"
 
-#: archivemailwidget.cpp:236
-#, kde-format
+#: archivemailwidget.cpp:234
+#, fuzzy, kde-format
+#| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected items?"
-msgstr "Vai vēlaties dzēst atlasītos vienumus?"
+msgstr "Vai vēlaties dzēst izvēlētās vienības? Vai vēlaties turpināt?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:235
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Dzēst vienumus"
+msgstr ""
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:276
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
-msgstr "Šai mapei nevar pievienot otru arhīvu. Rediģējiet jau esošo."
+msgstr "Šajai mapei nevar pievienot otru arhīvu. Labojiet jau esošo."
 
 #: job/archivejob.cpp:58
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
-msgstr "Mape neeksistē. Pārbaudiet iestatījumus. Arhivēšana ir atlikta."
+msgstr ""
 
 #: job/archivejob.cpp:75
 #, kde-format
 msgid "Start to archive %1"
-msgstr "Sākt arhivēt „%1“"
+msgstr "Sākt arhivēt %1"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
 #, kde-format
 msgid "Modify..."
-msgstr "Rediģēt..."
+msgstr "Labot..."
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
-msgstr "Saspiests „Zip“ arhīvs (.zip)"
+msgstr "Saspiests Zip arhīvs (.zip)"
 
 #: widgets/formatcombobox.cpp:15
 #, kde-format
@@ -216,32 +220,32 @@ msgstr "Nesaspiests arhīvs (.tar)"
 #: widgets/formatcombobox.cpp:16
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
-msgstr "Ar BZ2 saspiests „Tar“ arhīvs (.tar.bz2)"
+msgstr "BZ2-saspiests Tar arhīvs (.tar.bz2)"
 
 #: widgets/formatcombobox.cpp:17
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
-msgstr "Ar GZ saspiests „Tar“ arhīvs (.tar.gz)"
+msgstr "GZ-saspiests Tar arhīvs (.tar.gz)"
 
 #: widgets/unitcombobox.cpp:13
 #, kde-format
 msgid "Days"
-msgstr "Dienas"
+msgstr "dienas"
 
 #: widgets/unitcombobox.cpp:14
 #, kde-format
 msgid "Weeks"
-msgstr "Nedēļas"
+msgstr "nedēļas"
 
 #: widgets/unitcombobox.cpp:15
 #, kde-format
 msgid "Months"
-msgstr "Mēneši"
+msgstr "mēnešus"
 
 #: widgets/unitcombobox.cpp:16
 #, kde-format
 msgid "Years"
-msgstr "Gadi"
+msgstr ""
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Pievienot arhivēto pastu"

@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Vastamise meeldetuletuse agent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Vastamise meeldetuletuse agendi käsiraamat</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2014-06-10</date>
+<releaseinfo
+>&kde; 4.14</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Sissejuhatus</title>
+
+<para
+>&i18n-followupreminderagent; on Akonadi agent, mis tuletab meelde kirjadele vastamist. </para>
+
+<sect2 id="credits">
+
+<title
+>Autorid ja litsents</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Rakenduse autoriõigus 2014: &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentatsiooni autoriõigus &copy; 2014: &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-01-02 01:32+0000\n"
 "PO-Revision-Date: 2024-01-03 09:45+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -67,43 +67,43 @@ msgstr "Paramètres de nettoyage"
 msgid "Finish"
 msgstr "Terminer"
 
-#: refreshsettingscleanuppage.cpp:22
+#: refreshsettingscleanuppage.cpp:20
 #, kde-format
 msgid "Clean"
 msgstr "Nettoyer"
 
-#: refreshsettingscleanuppage.cpp:52
+#: refreshsettingscleanuppage.cpp:50
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Suppression des paramètres « Astuce du Jour » obsolètes : terminé"
 
-#: refreshsettingscleanuppage.cpp:64
+#: refreshsettingscleanuppage.cpp:62
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr ""
 "Suppression des paramètres de boîtes de dialogue dans le fichier « %1 » : "
 "terminé"
 
-#: refreshsettingscleanuppage.cpp:76
+#: refreshsettingscleanuppage.cpp:74
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Suppression des paramètres de filtres dans le fichier « %1 » : terminé"
 
-#: refreshsettingscleanuppage.cpp:92
+#: refreshsettingscleanuppage.cpp:90
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr ""
 "Nettoyage des paramètres des Dossiers dans le fichier de configuration "
 "« %1 » : terminé"
 
-#: refreshsettingscleanuppage.cpp:148
+#: refreshsettingscleanuppage.cpp:146
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr ""
 "Nettoyage de la taille des boîtes de dialogue dans le fichier de "
 "configuration « %1 » : terminé"
 
-#: refreshsettingsfirstpage.cpp:20
+#: refreshsettingsfirstpage.cpp:18
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "Veuillez fermer KMail / Kontact avant de l'utiliser."

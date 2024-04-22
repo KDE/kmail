@@ -1,0 +1,174 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>El manual del visor de archivos TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Javier</firstname
+><surname
+>Viñal</surname
+><affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+></address
+></affiliation
+><contrib
+>Traductor</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (Aplicaciones 16.08)</releaseinfo>
+
+<abstract
+><para
+>El visor de archivos TNEF es una aplicación para adjuntos de correo <ulink url="http://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>.</para
+></abstract>
+
+<keywordset>
+<keyword
+>correo</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Introducción</title>
+
+	<para
+>El visor de archivos TNEF permite manejar fácilmente adjuntos de correo que usen el formato TNEF. Esos adjuntos se encuentran, generalmente, en correos que provienen de servidores <trademark class="registered"
+>Microsoft</trademark
+> e incrustan las propiedades del correo, así como los adjuntos reales.</para>
+		<para
+>Un adjunto en formato TNEF se denomina más frecuentemente <filename
+>winmail.dat</filename
+> o <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Ventana principal de TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Ventana principal de TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Esta utilidad permite realizar varias operaciones sobre esos adjuntos:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Ver/abrir adjuntos con sus aplicaciones asociadas.</para
+></listitem>
+		<listitem
+><para
+>Extraer los adjuntos reales</para
+></listitem>
+		<listitem
+><para
+>Ver las propiedades del mensaje (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Ver/Extraer el texto formateado del mensaje (en formato RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; muestra automáticamente el contenido de un adjunto TNEF. Usted puede abrir o guardar los adjuntos usando las acciones del menú de contexto.</para>
+<screenshot>
+<screeninfo
+>Adjunto TNEF en &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Adjunto TNEF en &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Créditos y licencia</title>
+
+	<para
+>Visor de archivos TNEF (KTnef)</para>
+
+	<para
+>Derechos de autor del programa 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Derechos de autor del programa 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Traducido por Javier Viñal <email
+>fjvinal@gmail.com</email
+></para
+> 
+&underFDL; &underGPL; </sect1>
+
+</article>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
-"PO-Revision-Date: 2024-03-30 19:37\n"
+"POT-Creation-Date: 2024-03-14 03:05+0000\n"
+"PO-Revision-Date: 2024-03-30 19:38\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_archivemail_agent.pot\n"
-"X-Crowdin-File-ID: 45791\n"
+"X-Crowdin-File: /kf6-stable/messages/kmail/akonadi_archivemail_agent.pot\n"
+"X-Crowdin-File-ID: 50490\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -23,160 +23,160 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "修改存档的邮件"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "添加存档邮件"
 
-#: addarchivemailwidget.cpp:28
+#: addarchivemailwidget.cpp:26
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "归档全部子文件夹"
 
-#: addarchivemailwidget.cpp:38
+#: addarchivemailwidget.cpp:36
 #, kde-format
 msgid "Folder:"
 msgstr "文件夹："
 
-#: addarchivemailwidget.cpp:48
+#: addarchivemailwidget.cpp:46
 #, kde-format
 msgid "Format:"
 msgstr "格式："
 
-#: addarchivemailwidget.cpp:56
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "路径："
 
-#: addarchivemailwidget.cpp:63
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "备份间隔："
 
-#: addarchivemailwidget.cpp:75
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "归档数上限："
 
-#: addarchivemailwidget.cpp:78
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "无限制"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "归档"
 
-#: archivemailrangewidget.cpp:22
+#: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
 msgstr ""
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "名称"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "上一个归档"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "下个归档在"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "存储目录"
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "邮件归档代理"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "自动归档邮件"
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "维护者"
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "KDE 中国"
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-china@kde.org"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "添加..."
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "打开所在文件夹..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "删除"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:167
 #, kde-format
 msgid "Folder: %1"
 msgstr "文件夹：%1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:189
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "%1 天"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:198
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "归档会在 %1 完成"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:234
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "您想要删除选中项目吗？"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:235
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "删除项目"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:276
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

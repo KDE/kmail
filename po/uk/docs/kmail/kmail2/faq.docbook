@@ -1,0 +1,1476 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<author
+>&David.Bryant; &David.Bryant.mail;</author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>9 квітня 2021 року</date>
+<releaseinfo
+>5.14.2 (Програми 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Часті питання (ЧаП)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry>
+  <question
+><para
+>Як зробити Firefox типовою програмою для перегляду посилань?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Ви бажаєте зробити так, щоб після натискання посилання у &kmail; сторінку було відкрито у <guilabel
+>Firefox</guilabel
+>. Зараз використовується інша програма для перегляду інтернету. Ви бажаєте змінити ситуацію.</para>
+    <para
+><emphasis
+>Вирішення:</emphasis
+> Зміни стосуватимуться усіх програм &kde;, не лише &kmail;. Виберіть у пункті <menuchoice
+> <guimenu
+>Системні параметри</guimenu
+><guisubmenu
+>Типові програми</guisubmenu
+><guimenuitem
+>Переглядач інтернету</guimenuitem
+><guimenuitem
+>Mozilla Firefox</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>Якщо ви є адміністратором системи і бажаєте виконати відповідні налаштування для всіх ваших користувачів, слід виконати такі дії:</para>
+    <itemizedlist>
+      <listitem>
+        <para
+>Віддайте команду <screen
+># qtpaths --paths ConfigLocation</screen
+> у терміналі. У результаті її виконання буде виведено шляхи до файлів налаштувань програм KDE у вашій системі. Скористайтеся шляхом, який починається у домашній теці користувача. Знайдіть файл із назвою <filename
+>kdeglobals</filename
+> і додайте такий рядок до категорії <guilabel
+>[General]</guilabel
+>:</para>
+        <para
+><userinput
+>BrowserApplication[$e]=firefox.desktop</userinput>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>Крім того, ви можете скористатися скриптом з <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/Modify_KDE_Software_Defaults</ulink
+>.</para>
+    <note
+><para
+>Розташування файлів налаштувань залежить від дистрибутива. Тому немає нічого дивного у тому, що деякі з настанов щодо внесення змін до змінних налаштувань, які можна знайти у вікі &kde;, у вашій системі не працюватимуть. Отримати додаткову допомогу у пошуку можна на відкритих форумах (у інтернеті) вашого дистрибутива.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як керувати вашим з’єднанням профілю роумінґу?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Ви налаштували <emphasis
+>профіль роумінґу</emphasis
+> для доступу до вашого домашнього сервера, коли ви у дорозі, але програма намагається встановити з’єднання, навіть коли ви вдома. Автоматичне з’єднання вимкнено за допомогою вікон налаштування.</para>
+    <para
+><emphasis
+>Вирішення:</emphasis
+> Перейдіть до пункту <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guisubmenu
+>Налаштування KMail</guisubmenu
+> <guimenuitem
+>Облікові записи</guimenuitem
+> <guimenuitem
+>Отримування (вкладка)</guimenuitem
+> <guimenuitem
+>(виберіть обліковий запис, який слід виключити)</guimenuitem
+> <guimenuitem
+>Параметри отримування</guimenuitem
+></menuchoice
+>, зніміть позначку з пункту <guilabel
+>Включити до перевірку вручну</guilabel
+>. Таким чином, профіль буде виключено з перевірок у відповідь на натискання кнопки отримання пошти, але до профілю можна буде отримати доступ зі спадного списку, що полегшить отримання пошти, коли ви перебуватимете не вдома.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як наказати програмі зберігати надіслані поштові повідомлення у окремій теці?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Ви бажаєте зберігати надіслані повідомлення у окремій теці. Можливо, ви використовуєте сервер &IMAP; і бажаєте зберігати ваші повідомлення на стороні сервера, а не у локальній теці.</para>
+    <para
+><emphasis
+>Вирішення</emphasis
+>: У &kmail;, виберіть пункт меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guisubmenu
+>Налаштувати KMail</guisubmenu
+> <guimenuitem
+>Профілі</guimenuitem
+> <guimenuitem
+>(Виберіть ваш профіль)</guimenuitem
+> <guimenuitem
+>Змінити</guimenuitem
+> <guimenuitem
+>Додатково</guimenuitem
+> <guimenuitem
+>Тека надісланої пошти</guimenuitem
+></menuchoice
+> і виберіть теку, якою хочете скористатися.</para>
+    <para
+>Крім того, ви можете скористатися полем <guilabel
+>Тека надісланої пошти</guilabel
+> (доступ до нього можна отримати за допомогою меню <guimenu
+>Перегляд</guimenu
+> вікна редактора повідомлень) для перевизначення типової теки надісланої пошти для окремого повідомлення.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як пересувати смітник повідомлень у спеціальній теці?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: Ви бажаєте зберігати смітник повідомлень у окремій теці. Можливо, ви використовуєте сервер &IMAP; і бажаєте зберігати ваші повідомлення на стороні сервера, а не локально.</para>
+    <para
+><emphasis
+>Вирішення:</emphasis
+> У діалоговому вікні параметрів позначте обліковий запис &IMAP; на сторінці <guilabel
+>Облікові записи</guilabel
+>. Натисніть кнопку <guibutton
+>Змінити</guibutton
+> і змініть розташування теки смітника на вкладці <guilabel
+>Додатково</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #5 -->
+<qandaentry>
+  <question
+><para
+>Як зробити так, щоб зашифровані повідомлення зберігалися розшифрованими?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: Ви обмінюєтеся шифрованими повідомленнями з вашим приятелем, але бажаєте зберігати ваші власні копії повідомлення незашифрованими після відкриття повідомлення.</para>
+    <para
+><emphasis
+>Вирішення</emphasis
+>: Щоб зберігати нові зашифровані повідомлення у незашифрованому форматі, додайте такі рядки у файл налаштування <filename
+>kmail2rc</filename
+>, розділ [Reader]:</para>
+    <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як відфільтрувати спам на сервері &IMAP;?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: Ви маєте намір читати вашу пошту з сервера &IMAP; і бажаєте дізнатися про те, як можна здійснювати фільтрування і обробку небажаної кореспонденції (спаму)?</para>
+    <para
+><emphasis
+>Вирішення</emphasis
+>: комп’ютер, на якому зберігається ваш поштовий архів, може стати вашим сервером &IMAP;. Вам слід налаштувати серверну програму. Однією з таких програм є <application
+>Dovecot</application
+>, на сторінці сервера ви можете знайти настанов, які спростять вам налаштування. Після встановлення сервера проблему фільтрування не буде знято, оскільки фільтрування варто виконувати на стороні сервера (якщо ви вкажете &kmail; сервер, ви побачите теки, які було створено на сервері). Знову ж таки, тут можливі варіанти, найвідомішим з яких є <application
+>Procmail</application
+>. Ще одним варіантом є <application
+>Imapfilter</application
+>. В інтернеті можна знайти багато інформації щодо налаштовування цих програм. Подальше обговорення цих пакунків вільного програмного забезпечення не є предметом обговорення у документації до &kmail;.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як заощадити місце у вікні &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: Ви використовуєте &kmail; на ноутбуці чи нетбуці. Новий сумарний показ залишає для роботи зовсім небагато місця.</para>
+
+    <para
+><emphasis
+>Вирішення:</emphasis
+> Якщо ви бажаєте змінити вигляд списку так, щоб одне поштове повідомлення використовувало один рядок замість двох рядків. Натисніть <menuchoice
+><guimenu
+>Перегляд</guimenu
+><guisubmenu
+>Список повідомлень</guisubmenu
+><guimenuitem
+>Тема</guimenuitem
+></menuchoice
+> і змініть тему на <guilabel
+>Класичну</guilabel
+>. Якщо ви бажаєте вимкнути групування за датою, змініть складання за допомогою пункту меню <menuchoice
+><guimenu
+>Перегляд</guimenu
+><guisubmenu
+>Список повідомлень</guisubmenu
+><guimenuitem
+>Складання</guimenuitem
+></menuchoice
+> на <guilabel
+>Стандартний список листування</guilabel
+>. Тепер ваше вікно &kmail; виглядатиме точно так, як у попередніх версіях.</para>
+
+    <para
+>На сторінці <menuchoice
+><guimenu
+>Параметри</guimenu
+><guisubmenu
+>Налаштувати &kmail;</guisubmenu
+><guimenuitem
+>Вигляд</guimenuitem
+><guimenuitem
+>Шрифти</guimenuitem
+></menuchoice
+> ви можете вибрати <guilabel
+>Використовувати нетипові шрифти</guilabel
+>, щоб змінити параметр для списку повідомлень. За допомогою діалогового вікна <guilabel
+>Використовувати нетипові шрифти</guilabel
+> ви також можете встановити розмір символів шрифту.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як наказати &kmail; не показувати панелей підказок для тек?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: ви користуєтеся &kmail; на ноутбуці або нетбуці. <emphasis
+>Підказки</emphasis
+> до тек закривають занадто багато назв тек.</para>
+    <para
+><emphasis
+>Вирішення:</emphasis
+> наведіть вказівник миші на заголовок «Назва» над панеллю <guilabel
+>Список тек</guilabel
+>, клацніть правою кнопкою миші і позначте пункт <guilabel
+>Ніколи</guilabel
+> у підменю <guilabel
+>Показувати підказки</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як наказати &kmail; не показувати панелей підказок для списків повідомлень?</para
+></question>
+  <answer>
+    <para
+>У головному вікні &kmail; скористайтеся пунктом меню <menuchoice
+><guimenu
+>Параметри</guimenu
+><guisubmenu
+>Налаштувати KMail</guisubmenu
+><guimenuitem
+>Вигляд</guimenuitem
+><guimenuitem
+>Список повідомлень</guimenuitem
+></menuchoice
+>. Зніміть позначку з пункту <menuchoice
+><guimenu
+>Загальні</guimenu
+><guimenuitem
+>Показувати підказки для повідомлень і заголовків груп</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>Інший спосіб: клацніть правою кнопкою миші на одному із заголовків над списком повідомлень і зніміть позначку з пункту <guilabel
+>Показувати підказки</guilabel
+>.</para>
+    <note
+><para
+>Заголовки над списком повідомлень не буде показано, якщо вами вибрано тему «Кмітлива».</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- <qandaentry>
+<question
+><para
+>How can I remove alternate line colorings?</para
+></question>
+<answer>
+<para
+>In <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Application 
+Appearance</guisubmenu
+><guimenuitem
+>Colors</guimenuitem
+><guimenuitem
+>Colors</guimenuitem
+></menuchoice
+>, for each color 
+set except <guilabel
+>Common Colors</guilabel
+> (which doesn't have it), change the <guilabel
+>Alternate 
+Background</guilabel
+> to be the same as the <guilabel
+>Normal Background</guilabel
+>.</para>
+<para
+><emphasis
+>Mandriva</emphasis
+> and <emphasis
+>Mageia</emphasis
+> doesn't use the name <guilabel
+>System 
+Settings</guilabel
+>.  As in <guilabel
+>KControl</guilabel
+>, the KDE 3 control centre, they name it <quote
+>Configure your 
+Desktop</quote
+> to distinguish it from <quote
+>Configure your Computer</quote
+>, a.k.a. the Mandriva/Mageia Control 
+Center (MCC). Other than this name change, the method is as described above.</para>
+</answer>
+</qandaentry
+> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+
+<!-- FAQ #10 -->
+<qandaentry id="transfer-mail-and-settings">
+  <question>
+    <para
+>Як перенести пошту і параметри програми на інший комп’ютер (або інший обліковий запис на тому самому комп’ютері)?</para>
+  </question>
+  <answer>
+    <para
+>Для експортування та імпортування параметрів і даних скористайтеся пунктом меню <menuchoice
+><guimenu
+>Інструменти</guimenu
+><guimenuitem
+>Імпортувати/Експортувати дані &kmail;...</guimenuitem
+></menuchoice
+>. Докладніший опис можна знайти у <ulink url="help:/pimsettingexporter"
+>розділі щодо засобу експортування параметрів</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чому не вдається скопіювати теки електронної пошти на флешку USB?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: ви встановлюєте систему на новому комп’ютері і бажаєте перенести туди всю вашу пошту. Ви вирішили скопіювати всі дані на картку пам’яті USB. Копіювання розпочинається, а потім ви отримуєте повідомлення про помилку:</para>
+    <screen
+>Не вдалося скопіювати ............Некоректний аргумент</screen>
+    
+    <para
+><emphasis
+>Вирішення</emphasis
+>: форматом зберігання даних вашої флеш-картки USB є <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>VFAT</ulink
+>, отже вона не може зберігати назви тек <emphasis
+>maildir</emphasis
+> (а також <emphasis
+>права доступу</emphasis
+>, що може спричинити багато інших проблем). Ви можете скористатися одним з двох варіантів дій. Або змініть формат даних вашої картки USB на ext2 (або ext3/ext4 — вам варто знати, що дані на таких дисках буде неможливо прочитати у операційних системах &Windows; без встановлення додаткового програмного забезпечення), або створіть файл .tar чи .zip з усією вашою поштою, скопіюйте цей файл на картку, а потім розпакуйте його на новому комп’ютері.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чому мої фільтри не застосовуються до вхідних повідомлень облікових записів &IMAP;?</para
+></question>
+  <answer>
+    <para
+>У звичайному режимі &IMAP; фільтрування не підтримується, але таке фільтрування підтримується у новому типі облікових записів — від’єднаному &IMAP;. Ви можете спробувати скористатися фільтруванням на боці сервера, оскільки у &IMAP; всі операції з керування вашою електронною поштою відбуваються <emphasis
+>на сервері</emphasis
+>. Див. <menuchoice
+><guimenu
+>Параметри</guimenu
+><guisubmenu
+>Налаштувати &kmail;...</guisubmenu
+><guimenuitem
+>Отримання</guimenuitem
+><guimenuitem
+>(якийсь обліковий запис &IMAP;)</guimenuitem
+></menuchoice
+>, далі натисніть кнопку <guilabel
+>Змінити...</guilabel
+> і скористайтеся вкладкою <guilabel
+>Фільтрування</guilabel
+> для налаштовування фільтрування на боці сервера за допомогою мови програмування <ulink url="http://sieve.info/"
+>Sieve</ulink
+> (якщо на вашому сервері &IMAP; передбачено її підтримку).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>Що мені слід знати, якщо я бажаю користуватися <application
+>PGP</application
+>/<application
+>GnuPG</application
+> у &kmail;?</para
+></question>
+
+  <answer>
+    <para
+>У &kmail; передбачено простий у користуванні інтерфейс до основних функціональних можливостей цих програм; але вам все ж слід розуміти принципи роботи цих програм та можливі проблеми з безпекою їх використання. Ось декілька важливих принципів забезпечення безпеки:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para
+>Вам <emphasis
+>завжди</emphasis
+> слід переконатися, що шифрування працює, перш ніж використовувати його. Реакцію &kmail; на результати роботи <application
+>PGP</application
+>/<application
+>GnuPG</application
+> частково засновано на повідомленнях про помилки, які буде отримано від цих програм, а ці повідомлення можуть змінюватися зі зміною версій програм.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>&kmail; не буде шифрувати повідомлення ненадійним (непідписаним) відкритим ключем: якщо ви бажаєте зашифрувати повідомлення таким ключем, спочатку перевірте профіль власника ключа, і лише потім підписуйте цей ключ вашим закритим ключем. Якщо ви не бажаєте або не можете перевірити особу власника ключа, але все ж бажаєте зашифрувати повідомлення, будь ласка, підпишіть ключ локально за допомогою команди <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>ідентифікатор_ключа</replaceable
+></userinput
+>.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Навряд чи буде гарною думкою довіряти сторонньому відкритому ключеві без перевірки.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Починаючи з версії GnuPG 1.0.7 вам слід самому створити ваш власний ключ для необмеженої довіри власнику: програма більше не робить цього автоматично.</para>
+      </listitem>
+    </itemizedlist>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Де &kmail; зберігає мої параметри і мою пошту?</para
+></question>
+  <answer>
+    <para
+>Більшість параметрів роботи &kmail; зберігається у файлі <filename
+>~/.config/kmail2rc</filename
+>&nbsp;.</para>
+    <para
+>Керовані <emphasis
+>Akonadi</emphasis
+> записи зберігаються у таких теках:</para>
+      <itemizedlist>
+        <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename
+>.</para
+></listitem>
+        <listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </itemizedlist>
+    <para
+>Зауважте, що частина файлів є прихованими: не забудьте скопіювати і ці файли, якщо вам потрібна резервна копію або архів ваших повідомлень. Заради безпеки, скористайтеся для резервного копіювання вашої пошти і параметрів <ulink url="help:/pimdataexporter"
+>Засобом експортування даних PIM</ulink
+>.</para
+><para
+>&nbsp;</para
+> 
+  </answer>
+</qandaentry>
+
+<!-- FAQ #15 -->
+<qandaentry id="faq-index-regeneration">
+  <question
+><para
+>Навіщо &kmail; повторно створює покажчик теки?</para
+></question>
+  <answer>
+    <para
+>&kmail; повторює процедуру створення покажчика теки кожного разу, коли програмі здається, що покажчик застарів, тобто, коли вміст теки виявляється новішим за покажчик. У такому випадку &kmail; повторно створює покажчик, щоб запобігти втраті або пошкодженню повідомлень.</para>
+    <para
+>Причин застарілості покажчика може бути декілька. Наведені тут є найрозповсюдженішими. <itemizedlist>
+        <listitem
+><para
+>Якась стороння програма змінила вміст теки: якщо ви маєте намір використовувати &kmail; разом з procmail, будь ласка, ознайомтеся з <link linkend="faq-procmail"
+>цією відповіддю</link
+>. Якщо ви маєте намір використовувати &kmail; разом з іншим клієнтом електронної пошти, будь ласка, ознайомтеся з  <link linkend="faq-other-muas"
+>цією відповіддю</link
+>.</para
+></listitem>
+        <listitem
+><para
+>Якщо ваша поштова тека зберігається на логічному розділі, який було змонтовано за допомогою NFS, а годинник сервера NFS випереджає годинник вашого комп’ютера, сервер NFS іноді може повідомляти хибну часову мітку файла покажчика. У такому випадку &kmail; вважатиме, що покажчик застарів, хоча це і не так. Щоб усунути цю проблему, ви (або ваш адміністратор системи) маєте забезпечити синхронність ходу годинника на сервері NFS і годинника вашого комп’ютера. Одним зі способів забезпечення такої синхронності є використання фонової служби ntp.</para
+></listitem>
+      </itemizedlist>
+    </para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чому не вдається запустити &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема</emphasis
+>: ви бажаєте скористатися &kmail; у мінімалістичному стільничному середовищі, наприклад <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>. Програма не запускається.</para>
+    <para
+><emphasis
+>Вирішення:</emphasis
+> Причиною є неможливість отримання доступу до <emphasis
+>dbus</emphasis
+>. Запустіть &kmail; з вікна термінала з використанням dbus-launch, ось так:</para>
+    <screen
+># dbus-launch kmail</screen
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+  <question
+><para
+>Чи можна використовувати &kmail; разом з іншим клієнтом електронної пошти, наприклад <application
+>mutt</application
+>?</para
+></question>
+  <answer>
+    <para
+>Якщо ви використовуєте формат mbox для зберігання даних у ваших теках пошти, ви не зможете скористатися стороннім клієнтом електронної пошти, доки запущено &kmail;. За використання <application
+>mutt</application
+> проблеми можуть виникнути навіть і без одночасного запуску двох програм. У випадку паралельного використання декількох клієнтів автори &kmail; рекомендують використовувати для зберігання даних пошти формат maildir, якщо ви хочете використовувати разом із &kmail; mutt.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+  <question
+><para
+>Як мені перетворити мої файли поштових скриньок mbox на maildir?</para
+></question>
+  <answer>
+    <para
+>Не існує способів виконати цю дію автоматично. Вам доведеться створити нову теку у форматі maildir і скопіювати повідомлення з теки mbox у цю нову теку. Не забудьте адаптувати всі правила фільтрування, пов’язані зі старою текою, перш ніж вилучати її.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як меню вилучити долучення з повідомлення без вилучення самого повідомлення?</para
+></question>
+  <answer>
+    <para
+>Відкрийте контекстне меню за допомогою наведення вказівника миші на пункт долучення і клацання правою кнопкою миші. Виберіть у меню пункт <guimenuitem
+>Вилучити долучення</guimenuitem
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #20 -->
+<qandaentry>
+  <question
+><para
+>Як змусити &kmail; перевіряти надходження нових повідомлень під час запуску?</para
+></question>
+  <answer>
+    <para
+>Якщо ви вважаєте, що &kmail; має завжди перевіряти наявність нових повідомлень під час запуску програми, позначте пункт <guilabel
+>Перевіряти пошту при запуску</guilabel
+> на <link linkend="configure-accounts-receiving"
+>сторінці налаштування облікових записів</link
+>. Іншим способом виконувати таку перевірку є запуск &kmail; командою <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Де можна переглянути список змін у версіях &kmail;?</para
+></question>
+  <answer>
+    <para
+>У вітальному вікні перелічено всі важливі зміни для вашої версії. Відкрити це вікно можна за допомогою пункту меню <menuchoice
+><guimenu
+>Довідка</guimenu
+> <guimenuitem
+>Вступ до &kmail;</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Я один (одна) з тих, чиї листи складаються зі 100 рядків цитат і одного рядка написаного мною власноруч. З певних причин такі листи дратують інших людей. Чи може &kmail; допомогти мені і полегшити життя інших людей?</para
+></question>
+  <answer>
+    <para
+>Звичайно. Вам просто слід обрати потрібну частину початкового листа за допомогою миші, перш ніж відкривати вікно редактора для написання відповіді. У створеній таким чином відповіді буде процитовано лише позначену частину початкового листа.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чому у деяких повідомленнях значення поля <guilabel
+>Дата</guilabel
+> вказано як <guilabel
+>невідома</guilabel
+> або вказано неправильно?</para
+></question>
+  <answer>
+    <para
+>Ймовірно, частину заголовка, <quote
+>Date:</quote
+>, цих повідомлень пошкоджено, і &kmail; не може її обробити. Причиною цього не є вада у &kmail;, — причина у програмному забезпеченні, за допомогою якого було надіслано листа.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Над моїм підписом рядок з двох рисок. Навіщо це?</para
+></question>
+  <answer>
+    <para
+>Відокремлення підпису від тексту повідомлення двома рисками з пробілом у окремому рядку є типовим. За допомогою цих символів клієнти електронної пошти визначають місце, де завершується текст повідомлення і починається підпис. Якщо у вашому підписі ще немає такого роздільника, &kmail; автоматично додасть його.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #25 -->
+<qandaentry>
+  <question
+><para
+>Чи є у &kmail; якісь відомі вади?</para
+></question>
+  <answer>
+    <para
+>Посилання на список відомих вад програми можна знайти на <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>сторінці Bugzilla &kmail;</ulink
+>. На момент написання цього підручника (квітень 2021 року) приблизно 70% повідомлень про вади не підтверджено або не вдалося відтворити. Щоб там не сталося, автори вважають &kmail; достатньо надійною програмою.</para>
+    <warning
+><para
+>Вам не слід запускати &kmail; одночасно з іншим клієнтом електронної пошти, який вже працює з файлами у каталозі пошти, — такий паралельний запуск може призвести до втрати повідомлень. Не забувайте також регулярно створювати резервні копії архіву ваших поштових повідомлень. Це корисна звичка у нашу цифрову добу.</para
+></warning
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чому &kmail; неправильно показує повідомлення у форматі &HTML;?</para
+></question>
+  <answer>
+    <para
+>Типово, посилання на сторонні об’єкти у повідомленнях буде вимкнено, оскільки ними можна скористатися для визначення того, чи прочитали ви повідомлення і, якщо прочитали, то коли. Увімкнути завантаження сторонніх об’єктів можна на вкладці <guilabel
+>Безпека</guilabel
+> діалогового вікна налаштувань &kmail;. Крім того, вміст, для показу якого слід використовувати додатки (зокрема <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; і JavaScript не буде задіяно у &kmail; з міркувань безпеки, увімкнути такий вміст неможливо.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чи можу я використовувати одразу дві різні версії &kmail; одночасно? Чи можу я повернутися з поточної версії &kmail; на старішу?</para
+></question>
+  <answer>
+    <para
+>Одночасно слід запускати лише один екземпляр програми &kmail;. Крім того, автори рекомендують вам користуватися лише однією певною версією програми, а не стрибати з одної версії на іншу. Повернення до старішої версії, ймовірно призведе до проблем, причиною яких може бути, наприклад, зміна формату файлів покажчика. Встановлення новішої версії не повинно призвести до виникнення проблем.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Чи підтримує &kmail; файли закодовані uuencode?</para
+></question>
+  <answer>
+    <para
+>Підтримки долучення з кодуванням uuencode не передбачено. Вам слід зберегти закодоване долучення окремо і скористатися програмою <command
+>uudecode</command
+> для його декодування.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>&kmail; аварійно завершив роботу під час створення листа, тепер цей лист втрачено назавжди?</para
+></question>
+  <answer>
+    <para
+>У разі аварійного завершення роботи &kmail; намагається зберегти вашу пошту до файла <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+>. Після наступного запуску &kmail; у редакторі листів має знову з’явитися ваше повідомлення. Якщо ви не бачите повідомлення, спробуйте відкрити файл <filename class="directory"
+>~.local/share/kmail2/autosave/</filename
+> у текстовому редакторі. Якщо такого файла просто не існує, проблеми з програмою були настільки значними, що &kmail; не вдалося зберегти ваше поштове повідомлення.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #30 -->
+<qandaentry>
+  <question
+><para
+>Налаштовано теку, яку призначено для списку листування, але повідомлення зі списку не зберігаються у цій теці. Що не так?</para
+></question>
+  <answer>
+    <para
+>Прив’язування теки до списку листування не має нічого спільного з фільтруванням поштових повідомлень списку листування — вам слід додати нове правило фільтрування вручну. Після пов’язування теки зі списком листування, ви лише можете скористатися пунктами меню <menuchoice
+> <guimenu
+>Повідомлення</guimenu
+><guimenuitem
+>Відповісти до списку листування...</guimenuitem
+></menuchoice
+> або <menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guimenuitem
+>Нове повідомлення до списку листування...</guimenuitem
+></menuchoice
+>, — за використання цих пунктів у поле <guilabel
+>Кому:</guilabel
+> буде додано адресу списку листування.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Для роботи з моїм сервером SMTP потрібно пройти розпізнавання. Чи підтримує &kmail; таку можливість?</para
+></question>
+  <answer>
+    <para
+>Параметри <guilabel
+>Розпізнавання</guilabel
+> можна налаштувати за допомогою вкладки <guilabel
+>Додатково</guilabel
+> <link linkend="configure-accounts-sending"
+>діалогового вікна налаштовування SMTP</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+  <question
+><para
+>Чи можна використовувати &kmail; і <application
+>procmail</application
+>?</para
+></question>
+  <answer>
+    <para
+>Так, але важливо зробити це від початку, інакше можлива втрата пошти. Щоб використовувати <application
+>procmail</application
+> і &kmail; паралельно, вам слід налаштувати &kmail; так, щоб програма отримувала нові повідомлення електронної пошти з файлів-сховищ, у яких <application
+>procmail</application
+> збирає вашу пошту. <emphasis
+>Не</emphasis
+> налаштовуйте procmail на доставку пошти до теки &kmail;, це не потрібно.</para>
+
+    <para
+>Для кожного з файлів-сховищ (spoolfile) procmail вам слід створити обліковий запис, з якого &kmail; отримуватиме нові повідомлення; крім того, вам слід не забути вказати правильну назву файла блокування для цього облікового запису. Після налаштування облікового запису, &kmail; виконуватиме мінімальну обробку вашого файла <filename
+>.procmail</filename
+>, а потім намагатиметься створити список всіх файлів-сховищ, які було знайдено, і файлів блокування, поряд з елементами <guilabel
+>procmail lockfile</guilabel
+>. У procmail існує три різних способи, у які користувач може вказати файли блокування, отже не існує загального способу встановлення відповідності між файлами-сховищ і файлами блокування, — ви маєте самостійно визначити належний файл блокування для кожного з файлів-сховищ.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Перевірка правопису не може розпізнати неанглійські символи. Чому?</para
+></question>
+  <answer>
+    <para
+>Для того, щоб скористатися інструментом перевірки правопису, цей інструмент слід налаштувати. Виконати таке налаштування можна за допомогою пункту меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Перевірка правопису...</guimenuitem
+></menuchoice
+>. У діалоговому вікні, що відкриється, ви зможете вказати назву словника.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як використати мої теки пошти <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+>/... у &kmail;?</para
+></question>
+  <answer>
+    <para
+>Ознайомтеся з розділом щодо <link linkend="importing-options"
+>відновлення та імпортування даних до &kmail;</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #35 -->
+<qandaentry>
+  <question
+><para
+>Чи можу я скористатися шифруванням у звичайному (не-<acronym
+>SSL</acronym
+>) обліковому записі POP3?</para
+></question>
+  <answer>
+    <para
+>Якщо на вашому сервері POP3 запущено фонову службу <application
+>ssh</application
+>, ви можете скористатися ssh для переспрямування вашого з’єднання POP3 за допомогою такої команди:</para>
+
+    <para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 користувач@вузол</option
+></userinput
+></para>
+
+    <para
+>Змініть ваші налаштування &kmail; так, щоб програма отримувала пошту через POP3 з <userinput
+>localhost</userinput
+>, а ssh забезпечить тунелювання з’єднання. </para>
+
+    <note
+><para
+>Якщо ви вже надсилали нешифровані повідомлення у мережі Інтернет, єдиною перевагою використання <application
+>ssh</application
+> є те, що ваш <emphasis
+>пароль</emphasis
+> буде надіслано до сервера POP3 зашифрованим.</para
+></note>
+
+    <para
+>Докладніший опис налаштовування SSH наведено на <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
+>цій сторінці в інтернеті</ulink
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+  <question
+><para
+>Чи блокує &kmail; теки, які використовує?</para
+></question>
+  <answer>
+    <para
+>&kmail; не блокує файли у теці <filename class="directory"
+>~/.local/share</filename
+>.</para>
+    <para
+>Щоб уникнути ризику втрати пошти <emphasis
+>за використання локального облікового запису</emphasis
+>, потрібно переконатися, що &kmail; використовує той самий тип блокування, що і агент доставки пошти.</para>
+
+    <para
+>Існує п’ять різних варіантів блокування, одним з яких ви можете скористатися:</para>
+
+      <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Файл блокування procmail</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Блокування, як у програми mutt</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Привілейоване блокування, як у програми mutt</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (типовий)</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>немає (користуйтеся з осторогою)</guilabel
+></para
+></listitem>
+      </itemizedlist>
+
+    <para
+>За використання пункту <guilabel
+>Файл блокування Procmail</guilabel
+> &kmail; скористається невеличкою програмою, яка входить до складу пакунка <application
+>procmail</application
+> і називається <command
+>lockfile</command
+>. Ви можете скористатися цим, якщо ваша поштова тека доступна для запису від імені вашого користувача. Отже, здебільшого, цей пункт не спрацює для теки <filename class="directory"
+>/var/spool/mail/user</filename
+>. Програмою буде створено файли <filename
+>.lock</filename
+> для вашого облікового запису на час перевірки &kmail; надходження нових повідомлень. Будь ласка, зауважте, що цей спосіб блокування працюватиме, лише якщо у вашій системі встановлено <application
+>procmail</application
+>.</para>
+
+    <para
+>За позначення пунктів <guilabel
+>Блокування, як у програми mutt</guilabel
+> і <guilabel
+>Привілейоване блокування, як у програми mutt</guilabel
+> буде використано невеличку програмку, яка входить до складу пакунка <application
+>mutt</application
+> і називається <command
+>mutt_dotlock</command
+>. Варіант <guilabel
+>Блокування, як у програми mutt</guilabel
+> використовується у той самий спосіб, що і <guilabel
+>Файл блокування procmail</guilabel
+>, з тими самими обмеженнями щодо тек <filename class="directory"
+>/var/spool/mail/</filename
+>. За використання пункту <guilabel
+>Привілейоване блокування, як у програми mutt</guilabel
+> ви зможете створювати файли блокування і у теці <filename class="directory"
+>/var/spool/mail</filename
+>. Команда <command
+>mutt_dotlock</command
+> має дозволи адміністратора і за використання цього варіанта, програму буде запущено у режимі роботи від імені адміністратора. Будь ласка, пам’ятайте про те, що ці пункти працюватимуть, лише якщо у вашій системі встановлено програму <application
+>mutt</application
+>.</para>
+
+    <para
+><guilabel
+>FCNTL</guilabel
+> використовує системний виклик <function
+>fcntl()</function
+>.</para>
+
+    <warning
+><para
+>Використання блокування FCNTL може призвести до зависання системи, якщо файл сховища пошти знаходиться на пристрої, змонтованому за допомогою NFS.</para
+></warning>
+
+    <para
+>Якщо ви не бажаєте використовувати блокування, виберіть варіант <guilabel
+>немає</guilabel
+>. Пам’ятайте, що, якщо ви не користуватиметеся блокуванням, існує ризик втрати поштових повідомлень.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як зробити так, щоб повідомлення залишалися на сервері POP3?</para
+></question>
+  <answer>
+    <para
+>Якщо ви бажаєте залишати всі повідомлення на сервері, виконайте такі дії: оберіть пункт меню <menuchoice
+><guimenu
+>Параметри</guimenu
+><guimenuitem
+>Налаштувати &kmail;...</guimenuitem
+> </menuchoice
+>. У вікні, що відкриється, перейдіть на сторінку <guilabel
+>Облікові записи</guilabel
+>. Оберіть зі списку потрібний вам обліковий запис і натисніть кнопку <guibutton
+>Змінити...</guibutton
+>. У діалоговому вікні, що відкриється, позначте пункт <guilabel
+>Залишати повідомлення на сервері</guilabel
+> (вкладка «Додатково»).</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як автоматично додавати текстовий підпис у мої повідомлення?</para
+></question>
+  <answer>
+    <para
+>Нижній текстовий колонтитул повідомлення також називають підписом (його не слід плутати з криптографічним підписом). Оберіть пункт меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &kmail;...</guimenuitem
+></menuchoice
+>, перейдіть у діалоговому вікні, що відкриється на сторінку <guilabel
+>Профіль</guilabel
+> і відкрийте вкладку <guilabel
+>Підпис</guilabel
+>, додайте ваш підпис. Після цього, перейдіть на вкладку <guilabel
+>Загальне</guilabel
+> сторінки <guilabel
+>Редактор листів</guilabel
+> і позначте відповідний пункт (<xref linkend="configure-composer-general-append-signature"/>).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як мені налаштувати &Sendmail; для роботи з &kmail;, якщо я користуюся комутованим з’єднанням?</para
+></question>
+  <answer>
+    <para
+>Спочатку вам слід перевірити, чи не можна цього зробити засобами вашого дистрибутива. Ймовірно, що все вже налаштовано під час встановлення.</para>
+
+    <para
+>Якщо це не так, ймовірно, вам слід зазирнути на сторінку <ulink url="https://www.tldp.org/HOWTO/Mail-Queue.html"
+>Рецептів з налаштування черги пошти</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #40 -->
+<qandaentry>
+  <question
+><para
+>Мені вдалося переглянути демонстрацію віддаленого керування поведінкою за допомогою &kmail;. Чи існує якась документація щодо доступних інтерфейсів?</para
+></question>
+  <answer>
+    <para
+>Список доступних функцій можна отримати за допомогою такої команди: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail</option
+></userinput
+>. Керувати &kmail; можна ось так: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. Для перегляду всіх можливих методів керування ви також можете скористатися графічним інтерфейсом програми <application
+>qdbusviewer</application
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Коли я відповідаю на повідомлення, цитується лише частина повідомлення. У чому справа?</para
+></question>
+  <answer>
+    <para
+>Таке трапляється, якщо у повідомленні міститься рядок, що складається з двох дефісів і пробілу. Програма вважає такий рядок початком підпису. Решту повідомлення не буде процитовано, оскільки під час відповіді на повідомлення &kmail; вирізає підписи.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Я користуюся лише &IMAP;, чи можна позбутися локальних тек у списку тек, або принаймні тримати їх завжди згорнутими?</para
+></question>
+  <answer>
+    <para
+>Ні, ви не зможете цього зробити. Локальні теки використовуються як резервні, якщо програма не може отримати доступ до сервера &IMAP;. Хоча ви використовуєте лише &IMAP;, &kmail; використовує теку «вихідні» для надсилання повідомлень. Якщо сховати всі локальні теки, ви не зможете виправити ті повідомлення у теці «вихідні», які з певних причин неможливо надіслати. Але локальні теки можна тримати згорнутими. Щоб згорнути локальні теки, скористайтеся пунктом меню <menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &kmail;...</guimenuitem
+></menuchoice
+>, у вікні, що відкриється, перейдіть у розділ «Різне», у якому ви зможете налаштувати вигляд тек після запуску. Якщо ви перемкнете відповідний параметр для теки облікового запису &IMAP;, локальні теки лишатимуться згорнутими після запуску &kmail;.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як спостерігати за певною гілкою обговорення?</para
+></question>
+  <answer>
+    <para
+>Якщо ви бажаєте стежити за гілкою обговорення, клацніть на ній правою кнопкою миші і виберіть у контекстному меню пункт <menuchoice
+><guimenu
+>Позначити гілку</guimenu
+><guimenuitem
+>Наглядати за гілкою</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>З цього часу всі повідомлення гілки, яку започатковано цим повідомленням, буде позначено як такі, за якими слід наглядати.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Як спостерігати за власними гілками обговорення?</para
+></question>
+  <answer>
+    <para
+>Ця дія буде корисною, якщо ви зареєструвалися у списку листування, наприклад kdepim-users@kde.org, і бажаєте спостерігати лише за тими гілками обговорення, у яких ви брали участь.</para>
+      <itemizedlist>
+        <listitem>
+          <para
+>Створення фільтра для позначення всіх вхідних повідомлень до списку листування як такі, за якими ведеться нагляд</para>
+          <para
+>Щоб створити фільтр, скористайтеся пунктом меню</para>
+          <para
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати фільтри...</guimenuitem
+></menuchoice
+></para>
+            <itemizedlist>
+              <listitem>
+	            <para
+>Виберіть <guilabel
+>Має збігатися з усім з наступного</guilabel
+></para>
+              </listitem>
+              <listitem>
+	            <para
+>Додайте такі умови: <itemizedlist>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>Від</guimenu
+><guisubmenu
+>Містить</guisubmenu
+><guimenuitem
+></guimenuitem
+></menuchoice
+> <replaceable
+>ваша_скринька@домен_пошти</replaceable
+> <footnote
+><para
+>замініть <replaceable
+>ваша_скринька@домен_пошти</replaceable
+> на адресу вашої поштової скриньки, звідки надсилається пошта.</para
+></footnote
+></para>
+	                </listitem>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>ІД списку</guimenu
+><guimenuitem
+>Містить</guimenuitem
+></menuchoice
+> <replaceable
+>ідентифікатор списку</replaceable
+><footnote
+><para
+>замініть <replaceable
+>ідентифікатор_списку</replaceable
+> ідентифікатором певного списку листування, наприклад (&lt;kdepim-users.kde.org&gt;) або просто «.», щоб включити всю вихідну пошту до всіх списків листування з «.» у ідентифікаторі (майже всі списки).</para
+></footnote
+></para>
+	                </listitem>
+	              </itemizedlist>
+	            </para>
+              </listitem>
+              <listitem>
+	            <para
+>На панелі <guilabel
+>Дії фільтра</guilabel
+> виберіть <menuchoice
+><guimenu
+>Позначити як</guimenu
+> <guimenuitem
+>З наглядом</guimenuitem
+></menuchoice
+>.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para
+>На вкладці <guilabel
+>Додатково</guilabel
+>.</para>
+              <itemizedlist>
+                <listitem>
+	              <para
+>Зніміть позначку з пункту <guilabel
+>За відповідності зупинити фільтрування</guilabel
+>, щоб програма могла виконувати інші різновиди фільтрування, зокрема впорядкування вхідних повідомлень зі списків листування до відповідних тек.</para>
+                </listitem>
+                <listitem>
+	              <para
+>Розташуйте фільтр над іншими фільтрами, які можуть зупиняти фільтрування, або просто розташуйте його у списку першим. (Змінити порядок фільтрів можна за допомогою двох стрілок (вгору і вниз) поряд зі списком <guilabel
+>наявних фільтрів</guilabel
+>.)</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para
+>Налаштування виявлення повідомлень списків листування</para>
+              <para
+>Перейдіть до теки, де зберігаються повідомлення з вашого списку листування, (наприклад Локальні теки/KDE-PIM-USERS), і натисніть клавішу <keycap
+>S</keycap
+> або скористайтеся пунктом меню <menuchoice
+><guimenu
+>Змінити</guimenu
+><guimenuitem
+>Знайти повідомлення</guimenuitem
+></menuchoice
+>.</para>
+                <itemizedlist>
+                  <listitem>
+	                <para
+>Виберіть <guilabel
+>Задовольняє всім наступним</guilabel
+><footnote
+><para
+>Не забудьте позначити пункт <guilabel
+>Включити підтеки</guilabel
+>.</para
+></footnote
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Додайте умову: <menuchoice
+><guimenu
+>Стан повідомлення</guimenu
+><guisubmenu
+>є</guisubmenu
+><guimenuitem
+>З наглядом</guimenuitem
+></menuchoice
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Надайте результатам пошуку інформативну назву (<guilabel
+>Назву теки пошуку</guilabel
+>), наприклад <replaceable
+>Нагляд-за-KDE-PIM-USERS</replaceable
+>.</para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Створіть пошук. Після створення ви можете закрити вікно пошуку.</para>
+                  </listitem>
+                </itemizedlist>
+              <para
+>Тепер, коли ви створюватимете гілку або братимете у ній участь, її буде позначено як гілку «З наглядом».</para>
+        </listitem>
+      </itemizedlist>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #45 -->
+<qandaentry>
+  <question
+><para
+>Як скористатися можливостями перекладу повідомлень?</para
+></question>
+  <answer>
+    <para
+>Настанови щодо перекладу тексту у вікні редактора можна знайти у розділі щодо <link linkend="using-the-translator"
+>використання вбудованого засобу перекладу</link
+>.</para>
+    <para
+>На панелі попереднього перегляду повідомлення позначте текстовий фрагмент, який має бути перекладено, потім скористайтеся пунктом контекстного меню (викликається клацанням правою кнопкою миші) <guimenuitem
+>Перекласти</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>).</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

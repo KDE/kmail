@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-01-02 01:32+0000\n"
 "PO-Revision-Date: 2024-01-11 21:44+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -68,37 +68,37 @@ msgstr "Изчистване на настройките"
 msgid "Finish"
 msgstr "Завършване"
 
-#: refreshsettingscleanuppage.cpp:22
+#: refreshsettingscleanuppage.cpp:20
 #, kde-format
 msgid "Clean"
 msgstr "Изчистване"
 
-#: refreshsettingscleanuppage.cpp:52
+#: refreshsettingscleanuppage.cpp:50
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Премахване на остарели настройки \"Съвет на деня\": Завършено"
 
-#: refreshsettingscleanuppage.cpp:64
+#: refreshsettingscleanuppage.cpp:62
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Изтриване на настройките на диалогов прозорец във файл `%1`: Завършено"
 
-#: refreshsettingscleanuppage.cpp:76
+#: refreshsettingscleanuppage.cpp:74
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Изтриване на настройките на филтрите във файл `%1`: Завършено"
 
-#: refreshsettingscleanuppage.cpp:92
+#: refreshsettingscleanuppage.cpp:90
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "Изчистване на настройките на папката във файл `%1`: Завършено"
 
-#: refreshsettingscleanuppage.cpp:148
+#: refreshsettingscleanuppage.cpp:146
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Изчистване на размера на диалогов прозорец във файл `%1`: Завършено"
 
-#: refreshsettingsfirstpage.cpp:20
+#: refreshsettingsfirstpage.cpp:18
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "Моля, затворете KMail/Kontact, преди да го използвате."

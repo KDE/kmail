@@ -1,0 +1,195 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Агент «Отправить позже»</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Руководство пользователя агента «Отправить позже»</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 сентября 2019 г.</date>
+<releaseinfo
+>5.13 (Приложения KDE 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Введение</title>
+
+<para
+>&i18n-sendlateragent; — это агент akonadi, позволяющий отправлять запланированные электронные письма один или несколько раз. </para>
+
+<sect2 id="using-kapp">
+<title
+>Использование агента «Отправить позже»</title>
+
+<para
+>Пункт меню <menuchoice
+><guimenu
+>Письмо</guimenu
+><guimenuitem
+>Отправить позже</guimenuitem
+></menuchoice
+> в окне создания письма &kmail; открывает диалог, позволяющий настроить расписание даты и времени для отправки созданного письма.</para>
+
+<screenshot>
+<screeninfo
+>Диалог агента «Отправить позже»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Диалог агента «Отправить позже»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Диалог агента «Отправить позже»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Допустим, было создано отличное электронное письмо с описанием задач, которые должны выполнить сотрудники, пока начальство находится на конференции, но во время отправки письма начальство будет находиться в самолёте. Эта функция позволит отправить электронное письмо в точную дату и время. Чтобы запланировать отправку электронного письма позже, установите флажок <guilabel
+>Задержка</guilabel
+>, а затем  укажите дату и время в меню <guilabel
+>Время отправки:</guilabel
+>.</para>
+<para
+>Если требуется отправлять еженедельное напоминание, возможно настроить повторение с помощью флажка <guilabel
+>Повторять с интервалом:</guilabel
+>.</para>
+<para
+>Чтобы поместить письмо в очередь и запланировать дату его отправки, нажмите кнопку <guibutton
+>В очередь</guibutton
+>. </para>
+<para
+>Этот агент работает независимо от &kmail;, и для отправки отложенных писем не обязательно открывать &kmail; или держать его в фоновом режиме.</para>
+<para
+>Если во время, когда должно быть отправлено отложенное письмо, нет подключения к сети, агент сообщит об ошибке и спросит, следует ли его отправить позже.</para>
+<para
+>При входе в сеанс &kde; агент проверяет отложенные письма и при необходимости отправляет все просроченные с момента последнего выхода из системы. </para>
+<para
+>Чтобы изменить параметры запланированных электронных писем, воспользуйтесь меню <menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &kmail;...</guimenuitem
+></menuchoice
+>, а затем выберите вкладку <guilabel
+>Модули</guilabel
+> и нажмите кнопку настройки рядом с элементом <guilabel
+>Агент «Отправить позже»</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Настройка агента «Отправить позже»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Настройка агента «Отправить позже»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Настройка агента «Отправить позже»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Откроется диалог, в котором можно будет изменить расписание и удалить электронные письма, отправленные с помощью функции «Отправить позже».</action>
+</para>
+<para
+>Содержимое отложенного письма (тело, заголовки и так далее) изменить невозможно. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Авторские права и лицензия</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Авторские права на программу принадлежат &Laurent.Montel; &Laurent.Montel.mail;, 2013-2019 </para>
+<para
+>Авторское право на документацию &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Перевод на русский язык — Мария Шикунова<email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

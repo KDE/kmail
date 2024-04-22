@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-03-14 03:05+0000\n"
 "PO-Revision-Date: 2023-12-30 16:25+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -23,161 +23,161 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "E-posta Arşivini Değiştir"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:277
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "E-posta Arşivi Ekle"
 
-#: addarchivemailwidget.cpp:28
+#: addarchivemailwidget.cpp:26
 #, kde-format
 msgid "Archive all subfolders"
 msgstr "Tüm alt klasörleri arşivle"
 
-#: addarchivemailwidget.cpp:38
+#: addarchivemailwidget.cpp:36
 #, kde-format
 msgid "Folder:"
 msgstr "Klasör:"
 
-#: addarchivemailwidget.cpp:48
+#: addarchivemailwidget.cpp:46
 #, kde-format
 msgid "Format:"
 msgstr "Biçim:"
 
-#: addarchivemailwidget.cpp:56
+#: addarchivemailwidget.cpp:54
 #, kde-format
 msgid "Path:"
 msgstr "Yol:"
 
-#: addarchivemailwidget.cpp:63
+#: addarchivemailwidget.cpp:61
 #, kde-format
 msgid "Backup each:"
 msgstr "Her birini yedekle:"
 
-#: addarchivemailwidget.cpp:75
+#: addarchivemailwidget.cpp:73
 #, kde-format
 msgid "Maximum number of archive:"
 msgstr "En çok arşiv sayısı:"
 
-#: addarchivemailwidget.cpp:78
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgid "unlimited"
 msgstr "sınırsız"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:100 archivemailinfo.cpp:116
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arşiv"
 
-#: archivemailrangewidget.cpp:22
+#: archivemailrangewidget.cpp:20
 #, kde-format
 msgid "Use Range"
 msgstr "Erim Kullan"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Name"
 msgstr "Ad"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Last archive"
 msgstr "Son arşivleme"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Next archive in"
 msgstr "Sonraki arşivleme"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:70
 #, kde-format
 msgid "Storage directory"
 msgstr "Depolama dizini"
 
-#: archivemailwidget.cpp:91
+#: archivemailwidget.cpp:89
 #, kde-format
 msgid "Archive Mail Agent"
 msgstr "E-posta Arşivleme Aracısı"
 
-#: archivemailwidget.cpp:93
+#: archivemailwidget.cpp:91
 #, kde-format
 msgid "Archive emails automatically."
 msgstr "E-postaları kendiliğinden arşivle."
 
-#: archivemailwidget.cpp:95
+#: archivemailwidget.cpp:93
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Telif hakkı (C) 2014-%1 Laurent Montel"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: archivemailwidget.cpp:96
+#: archivemailwidget.cpp:94
 #, kde-format
 msgid "Maintainer"
 msgstr "Projeyi Sürdüren"
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Emir SARI"
 
-#: archivemailwidget.cpp:98
+#: archivemailwidget.cpp:96
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "emir_sari@icloud.com"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:107 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
 msgstr "Ekle..."
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:113
 #, kde-format
 msgid "Open Containing Folder..."
 msgstr "İçeren Klasörü Aç..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:116 ui/archivemailwidget.ui:45
 #, kde-format
 msgid "Delete"
 msgstr "Sil"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:167
 #, kde-format
 msgid "Folder: %1"
 msgstr "Klasör: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:189
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Yarın"
 msgstr[1] "%1 gün"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:198
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Arşivleme zamanı: %1"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:234
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Seçili ögeleri silmek istiyor musunuz?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:235
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ögeleri Sil"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:276
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

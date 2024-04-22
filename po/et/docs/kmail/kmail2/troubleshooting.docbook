@@ -1,0 +1,552 @@
+<chapter id="troubleshooting">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<personname
+><firstname
+>See peatükk on teisendatud KDE UserBase'i leheküljelt <ulink url="http://userbase.kde.org/KMail/FAQs Hints and Tips"
+>KMail/FAQs Hints and Tips</ulink
+>.</firstname
+><surname
+></surname
+> </personname>
+      </author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+      </authorgroup>
+<date
+>2012-07-28</date>
+      <releaseinfo
+>&kde; SC 4.9</releaseinfo>
+</chapterinfo>
+
+<title
+>&kmail;i probleemide lahendamine</title>
+
+<sect1 id="kmail2-doesnt-send-mail"
+><title
+>KMail ei saada kirju</title>
+<para
+>Mõned kasutajad on avastanud, et kirjad ei lähe teele, ning tundub, nagu oleks &SMTP; puudu, isegi kui <guilabel
+>seadistustes</guilabel
+> paistab kõik korras. Nad on teatanud, et probleemist saab üle, kui avada <application
+>akonadiconsole</application
+> ja lisada kirjade transportimise agent. </para>
+<para
+>Kui arvuti uneseisundis järsku vooluta jääb (näiteks kui toitejuhe tagant võetakse), jäävad kirjad mõnikord väljuvate kirjade kausta, ilma et neid ära saadetaks, kuid ka veateadet ei näidata. Seda võib põhjustada asjaolu, et kirjade transpordi agent on määratud seadistusfailis olema uneseisundi ajal <quote
+>võrgust väljas</quote
+> ning seda ei muudeta krahhi tõttu. Siis tuleb muuta järgmist faili: </para>
+<para
+><filename
+>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename>
+</para>
+<para
+>ja kirjutada </para>
+<para
+><screen
+>[Agent]
+Online=false</screen>
+</para>
+<para
+>asemele </para>
+<para
+><screen
+>[Agent]
+Online=true</screen>
+</para>
+</sect1>
+<sect1 id="clean-start-after-a-failed-migration"
+><title
+>Alustamine puhtalt lehelt pärast nurjunud migreerimist</title>
+<para
+>Kui migreerimine &kmail; 1 pealt &kmail; 2 peale nurjus või esineb pärast seda imelikke probleeme, võib proovida seniste seadistuste migreerimise asemel hoopis oma andmete puhast importimist. Arvesta kindlasti, et see nõuab palju rohkem käsitsi tegutsemist, nii et võta see ette ainult siis, kui tunned ennast oma &kmail;i kontode häälestamisel kindlalt ja sul on ühtlasi võimalik lubada endale võimsat võrguliiklust, mida vajavad &imap; ressursid. </para>
+<orderedlist>
+<listitem
+><para
+>Peata Akonadi ja muud asjakohased rakendused</para>
+<para
+>Välju &kmail;ist/&kontact;ist/&korganizer;ist ja anna käsk: </para>
+<para
+><userinput
+><command
+>akonadictl stop</command
+></userinput>
+</para>
+<para
+>Kontrolli, et enam ei töötaks ükski <application
+>Akonadi</application
+> või <application
+>MySQL</application
+>-i protsess: </para>
+<para
+><userinput
+><command
+>ps ux | grep mysql</command
+></userinput>
+</para>
+<para
+><userinput
+><command
+>ps ux | grep akonadi</command
+></userinput>
+</para>
+<para
+>Need käsud ei tohiks näidata muud kui ainult protsessi <application
+>grep</application
+> ennast. </para>
+</listitem>
+<listitem
+><para
+>Eemalda Akonadi vana andmebaas ja seadistus</para>
+<para
+>Kustuta järgmised kataloogid </para>
+<itemizedlist>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.local/share/akonadi</filename>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.config/akonadi</filename>
+    </para>
+  </listitem>
+</itemizedlist>
+<para
+>Samuti kustuta kataloogis <filename role="directory"
+>~/.kde4/share/config</filename
+> kõik failid, mille alguses seisab <emphasis
+>akonadi</emphasis
+> </para>
+</listitem>
+<listitem>
+<para
+>Käivita Akonadi server uuesti </para>
+<para
+><userinput
+><command
+>akonadictl start</command
+></userinput>
+</para>
+</listitem>
+<listitem>
+<para
+>Lisa uuesti kontod </para>
+<para
+>Nüüd tuleb oma konto uuesti lisada. Selleks võib kasutada &kmail;i (&kontact;i) või ka tööriista <application
+>akonadiconsole</application
+>. </para>
+<para
+>&kmail;i korral vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Kontod</guimenuitem
+></menuchoice
+> ja <guilabel
+>Lisa</guilabel
+>. </para>
+<para
+>Kui sul on kasutusel &imap;, lisa <guimenuitem
+>&imap; e-posti server</guimenuitem
+>. Kui soovid kasutada lahutatud režiimi (et saaksid lugeda kirju ka siis, kui ei ole võrgus), lülita see sisse kaardil <guilabel
+>Muu</guilabel
+>. Kontrolli kindlasti, et oleksid tellinud kõik enda vajalikud kaustad. </para>
+<para
+>Võimalik, et näed juba ressurssi <guilabel
+>Kohalik kaust</guilabel
+>. See osutab kohalikule maildir-kaustale. Võid seda muuta, et see osutaks sinu olemasolevatele maildir-kaustadele või siis lisada kohalike kirjade tarbeks uue ressursi. </para>
+<para
+>Maildir-ressurssi lisades on su ees kaks valikut: <guilabel
+>&kmail;i kirjade kaust</guilabel
+> ja <guilabel
+>Maildir</guilabel
+>. Kui sul ei ole just segakausta, mis sisaldab <emphasis
+>korraga</emphasis
+> maildir-kaustu ja mbox-faile, tuleks valida <guilabel
+>Maildir</guilabel
+>. Iseseisvate mbox-failide jaoks, näiteks <filename role="directory"
+>/var/spool/mail</filename
+>, võib luua uue <emphasis
+>MBox</emphasis
+>-kausta. </para>
+<para
+>Vajaduse korral lisa ka POP3 kaustad. Kui sul tuleb määrata mitu kohalikku kausta, vali kaardil <guilabel
+>Muu</guilabel
+> sihtkaust, kuhu tõmmatakse allalaaditud kirjad. </para>
+<para
+>Kõigi kontode korral seadusta kirjade kontrollimise intervall. Kohalike kaustade puhul lülita intervall välja ning samuti lülita <guilabel
+>tõmbamisvalikute</guilabel
+> seas välja valik <guilabel
+>Kaasatakse uute kirjade kontrollimisel käsitsi</guilabel
+>. </para>
+<para
+>Lisa saatmise (SMTP) kontod. </para>
+</listitem>
+<listitem>
+<para
+>Paranda oma filtrid, identiteedid ja lemmikkaustad </para>
+<para
+>Kui kasutad kliendipoolset filtreerimist (levinud POP3 kirjade puhul), vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guimenuitem
+>Filtrite seadistamine</guimenuitem
+></menuchoice
+> ja paranda filtrite sihtkaustad, mis on peaaegu kindlasti vale. Vastasel juhul satuvad kirjad soovimatutesse kaustadesse. </para>
+<para
+>Rämpsposti filter (vähemalt versioonis 4.7.3 ja vanemates versioonides) ei tööta oodatult selles mõttes, et nõustaja loodud reegel ei saada rämpsposti kausta, mille oled määranud. </para>
+<para
+>Sellest hädast saab ole, kui muuta kirjeid <quote
+>spam</quote
+> ja <quote
+>spam unsure</quote
+> (kui kasutatav rämpsposti filter viimast toetab). Selleks peavad Status-väljad päises <literal
+>X-Spam-Status</literal
+> sisaldama <guimenuitem
+>Päised</guimenuitem
+> X-<replaceable
+>sinu rämpspostifilter</replaceable
+>-Classification: <quote
+>SPAM või unsure</quote
+> jaoks. Vaata nõustaja loodud filtreid ja kopeeri osa <quote
+>contains</quote
+>. Näide <application
+>Spambayes</application
+>i puhul: <quote
+>X-Spambayes-Classification: spam</quote
+> ja <quote
+>X-Spambayes-Classification: unsure</quote
+>. </para>
+<para
+>Samuti tuleb kontrollida identiteedi seadistusi ning panna saadetud kirjade, mustandite ja mallide kaustad osutama õigetele kataloogidele. Selleks vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Identiteedid</guimenuitem
+></menuchoice
+>, muuda identiteeti, vali kaart <guilabel
+>Muu</guilabel
+> ja muuda mainitud kaustade seadistust. </para>
+<para
+>Kontrolli sedagi, et sinu <guilabel
+>lemmikkaustad</guilabel
+> on just need, mille oled varem valinud. </para>
+</listitem>
+<listitem>
+<para
+>Kontrolli uute kirjade olemasolu </para>
+<para
+>Alusta oma kontodel uute kirjade kontrollimist. Soovitatav oleks seda teha kontode kaupa eraldi. </para>
+<para
+>Kõigepealt võta ette &imap;, kui seda kasutad. </para>
+<para
+>Järgmisena kontrolli (impordi) oma kohalikud kirjad. Üks võimalus on teha täielik kontroll, valides <menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Kontrolli posti</guimenuitem
+></menuchoice
+> ja seal kohaliku konto. Teine võimalus on klõpsata ükshaaval kaustadele, mis peaks käivitama iga kausta puhul kirjade kontrollimise (seda saab teha ka paremklõpsuga kausta nimel ja valides <guilabel
+>Uuenda kausta</guilabel
+>). </para>
+<para
+>Esialgne import võib olla aeglane ja kasutada rohkelt mälu, eriti kui sul on väga paljude kirjadega kaustu. Sellisel juhul on eelistatavam kontrollida kirju kaustade kaupa. Kui kontroll (kas kõigi või ühe kausta) on lõpetatud ja mälukasutus on endiselt kõrge, tuleks taaskäivitada Akonadi server &mdash; nagu eespool kirjeldatud &mdash; või ka lihtsalt maildiri agent, kui kasutad <varname
+>akonadiconsole</varname
+>'i. Muretseda ei tasu, kõrge mälukasutus iseloomustab <emphasis
+>ainult</emphasis
+> esialgset importi. </para>
+<para
+>Kontrolli kirju POP3 ressurssidel. </para>
+</listitem>
+</orderedlist>
+<para
+>Loodetavasti on sul pärast kõiki neid samme võimalik asuda &kmail;i juba täiel rinnal nautima. </para>
+</sect1>
+
+<sect1 id="local-folders-is-added-over-and-over"
+><title
+>Kohalikud kaustad lisatakse aina uuesti</title>
+<para
+>Mõnikord võib juhtuda, et maildir-konto osutab küll kindlale kohale (näiteks <filename
+>$HOME/Mail</filename
+>), aga ikka näeb kaustade nimekirjas kausta <guilabel
+>Kohalikud kaustad</guilabel
+> alamkaustadega Sisenevad kirjad/Väljuvad kirjad/Prügikast/Mustandid/&etc; ning &kmail; paneb sinna aina kirju, eriti saadetud kirju juurde. </para>
+<para
+>Asi on selles, et teatavad kaustad on märgitud erikaustadeks (süsteemseteks kaustadeks) ja kui neid ei ole, ei saa ka &kmail; korralikult töötada. Seepärast loobki ta selle kausta aina uuesti. </para>
+<para
+>Praegu ei ole lihtsat võimalust muuta seda kasutajaliideses korraga kõigi erikaustatüüpide puhul. Ette tuleks võtta järgmist: </para>
+<orderedlist>
+<listitem
+><para
+>Kaustu <emphasis
+>Saadetud kirjad, Mustandid ja Mallid</emphasis
+> saab seadistada igale identiteedile eraldi. Selleks vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Identiteedid</guimenuitem
+></menuchoice
+>, vali identiteet, vali kaart <guilabel
+>Muu</guilabel
+> ja muuda mainitud kaustade seadistust.</para
+></listitem>
+<listitem
+><para
+>Kausta <emphasis
+>Sisenevad kirjad</emphasis
+> saab seadistada igale POP3 kontole eraldi. Selleks vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Konto</guimenuitem
+></menuchoice
+>, vali oma POP3 konto, klõpsa <guilabel
+>Muuda</guilabel
+>, vali kaart <guilabel
+>Muu</guilabel
+> ja määra <guilabel
+>sihtkataloog</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>IMAP konto korral saab seadistada kausta <emphasis
+>Prügikast</emphasis
+>. Talita samamoodi nagu eespool. Sätte nimi on <emphasis
+>Prügikastikataloog</emphasis
+>.</para
+></listitem>
+<listitem
+><para
+>Kõige keerulisem on kaustaga <emphasis
+>Väljuvad kirjad</emphasis
+>. Kõigepealt tuvasta fail <filename
+>specialmailcollectionsrc</filename
+> oma &kde; seadistustekataloogis (<filename
+>$HOME/.kde4/share/config</filename
+> või midagi sarnast). See sisaldab umbes niisugust rida:</para
+></listitem>
+</orderedlist>
+<para
+><userinput
+>[SpecialCollections] DefaultResourceId=akonadi_maildir_resource_0</userinput>
+</para>
+<para
+>Nüüd käivita <application
+>akonadiconsole</application
+>, tuvasta kaardil <guilabel
+>Agendid</guilabel
+> oma kohalik konto, milles sinu meelest peaks asuma kaust <emphasis
+>Väljuvad kirjad</emphasis
+>, klõpsa sellel ja jäta meelde all näha olev identifikaator (<replaceable
+>akonadi_maildir_resource_XXX</replaceable
+> või midagi sellist). Kirjuta see identifikaator mainitud faili <filename
+>specialmailcollectionsrc</filename
+> senise asemele. </para>
+<para
+>Seejärel taaskäivita <application
+>akonadi</application
+>. Seda saab teha rakenduses <application
+>akonadiconsole</application
+> käsuga <menuchoice
+><guimenu
+>Server</guimenu
+><guimenuitem
+>Käivita server uuesti</guimenuitem
+></menuchoice
+> või käsureal käsuga: </para>
+<para
+><userinput
+>akonadictl restart</userinput>
+</para>
+<para
+>Nüüd eemalda <guilabel
+>kohalikud kaustad</guilabel
+>, mida sa ei soovi rohkem kasutada. </para>
+<para
+>Kui see ikkagi aina uuesti ilmub ning <guilabel
+>kirjade transpordi agent</guilabel
+> jätkuvalt krahhe üle elab, tuleb <application
+>akonadiconsole</application
+> abil veel üks toiming ette võtta. Vali kaart <guilabel
+>Brauser</guilabel
+>, vali väljuvate kirjade kaust, mida <emphasis
+>soovid</emphasis
+> kasutada, klõpsa sellel, vali <guilabel
+>Kausta omadused</guilabel
+>, <guilabel
+>Atribuudid</guilabel
+> kaart, sisesta <userinput
+>SpecialCollectionAttribute</userinput
+>, seejärel klõpsa <guilabel
+>Lisa</guilabel
+>, tee topeltklõps kirjel <guilabel
+>Väärtus</guilabel
+> <guilabel
+>SpecialCollectionAttribute</guilabel
+> kõrval ja sisesta <userinput
+>outbox</userinput
+>. Lisa veel üks atribuut, mille nimi peab olema <guilabel
+>ENTITYDISPLAY</guilabel
+> ja väärtus <userinput
+>("outbox" "mail-folder-outbox" "" ())</userinput
+> (selle võib otse siit kopeerida). Käivita <application
+>akonadi</application
+> uuesti ja nüüd peaks olema võimalik eemaldada soovimatu kohalike kaustade konto lõplikult. </para>
+</sect1>
+
+<sect1 id="you-get-the-error-unable-to-fetch-item-from-backend-when-entering-imap-folder"
+><title
+>IMAP kataloogi sisenemisel tekib viga 'elemendi tõmbamine taustaprogrammilt nurjus'</title>
+<para
+>Sellel on mitmeid põhjusi ja &kmail;i meeskond loodab sellest ajapikku üle saada. Seni on aga teada mõned kaudsemad tõrkest jagusaamise viisid: </para>
+<variablelist>
+  <varlistentry>
+    <term
+>Esimene võimalus</term>
+    <listitem>
+      <itemizedlist>
+        <listitem
+><para
+>muuda faili <filename
+>~/.local/share/akonadi/mysql.conf</filename
+></para
+></listitem>
+        <listitem
+><para
+>lisa sektsiooni <guilabel
+>[mysql]</guilabel
+>: <userinput
+>binlog_format=row</userinput
+></para
+></listitem>
+      </itemizedlist>
+      <para
+>Kui see ei aita, proovi teist võimalust (allpool): </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+>Teine võimalus</term>
+    <listitem>
+      <para
+>Peamiselt tuleb &kmail; taaskäivitada, et nood tõrksad elemendid kätte saada. Mõned võimalikud sammud:</para>
+      <para
+>Vali <keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+> või &konsole; ja kirjuta <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, oota minutike, siis anna käsk <userinput
+><command
+>akonadictl stop</command
+></userinput
+>, oota minutike, anna käsk <userinput
+><command
+>akonadictl start</command
+></userinput
+>, oota minutike ja anna käsk <userinput
+><command
+>kmail</command
+></userinput
+>. See peatab &kmail;i (sulgedes <emphasis
+>kõik</emphasis
+> aknad), peatab &kmail;i taustaprogrammi, käivitab &kmail;i taustaprogrammi ja käivitab &kmail;i. Mõnikord võib piisata ka sellest, kui anda käsk <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, oodata minutike ja käivitada &kmail; uuesti. Tihtipeale on vaja mitu taaskäivitust. Pole päris selge, mis on selle põhjust, aga kindlasti juhtub seda sagedamini kehva võrguühenduse korral. </para>
+    </listitem>
+  </varlistentry>
+</variablelist>
+<para
+>Vaata ka altpoolt, kuidas võib abiks olla <application
+>akonadiconsole</application
+>. </para>
+</sect1>
+
+<sect1 id="your-mails-are-not-being-sent-without-error-messages"
+><title
+>Kirju ei saadeta ära, aga ka veateateid pole</title>
+<para
+>Kui &kmail; kirja ära ei saada, aga midagi selle kohta ei ütle, võib kirjade saatmise eest vastutav <quote
+>agent</quote
+> olla umbe jooksnud. Loomulikult peab kirjade saatmiseks kindlasti olema ka korralikult töötav võrguühendus! </para>
+<para
+>Ülesaamiseks võib abi olla sellest, kui parajasti käsiolevast tegevusest loobuda ja see uuesti käivitada. Kõigepealt välju &kmail;ist, kasutades &krunner;it (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) või &konsole;'i, kirjutades käsu <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>. Pane tähele, et tavaline <keycombo
+>&Alt;<keycap
+>F4</keycap
+></keycombo
+> või <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Välju</guimenuitem
+></menuchoice
+> <emphasis
+>ei ole</emphasis
+> piisav! Oota minutike ja käivita &kmail; uuesti. Nüüd käivita <application
+>akonadiconsole</application
+>, kasutades &krunner;it (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) või &konsole;'i. Vali <guilabel
+>Kirjade edastamise agent</guilabel
+>, tee paremklõps ja loobu aktiivsest toimingust. Tõenäoliselt näed selle peale mõningaid veateateid. Mine tagasi &kmail;i ja vali <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras kirjas</guimenuitem
+></menuchoice
+>. See võib juba toimida. Kui mitte, siis püüa aktiivsest toimingust loobumise asemel lülitada <guilabel
+>kirjade edastamise agenti</guilabel
+> sisse-välja või taaskäivitada asju nii, nagu oli soovitatud eelneva probleemi teises lahendusvõimaluses. </para>
+<para
+><note
+><para
+>akonadiconsole võib olla abiks õige mitmes olukorras, sest see näitab kõiki <quote
+>agente</quote
+> ehk &kmail;i taustaprogrammi eraldi komponente. Neid saab peatada ja käivitada, panna võrguta režiimi, loobuda käimasolevatest toimingutest jne. Kui midagi kokku jookseb, võib sellest palju abi olla.</para
+></note>
+</para>
+</sect1>
+
+</chapter>

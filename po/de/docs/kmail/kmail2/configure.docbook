@@ -1,0 +1,5450 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>Matthias</firstname
+><surname
+>Kiefer</surname
+> <affiliation
+><address
+><email
+>matthias.kiefer@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Deutsche Übersetzung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Alexander</firstname
+><surname
+>Gretencord</surname
+> <affiliation
+><address
+><email
+>arutha@gmx.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Frank</firstname
+><surname
+>Schütte</surname
+> <affiliation
+><address
+><email
+>F.Schuette@t-online.de</email
+></address
+></affiliation
+> <contrib
+>Überarbeitung ab Version 1.3</contrib
+></othercredit
+> <othercredit role="translator"
+><firstname
+>Matthias Kalle</firstname
+><surname
+>Dalheimer</surname
+> <affiliation
+><address
+><email
+>kalle@kdab.net</email
+></address
+></affiliation
+> <contrib
+>Übersetzung der Krypto-Dokumentation</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-02-13</date>
+<releaseinfo
+>5.14.2 (Anwendungen 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Einrichtung von &kmail;</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Allgemeine Informationen</title>
+
+<screenshot>
+<screeninfo
+>&kmail;-Einrichtungsdialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&kmail;-Einrichtungsdialog</phrase>
+    </textobject>
+    <caption>
+      <para
+>Der Dialog &kmail; einrichten</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail;'s Einrichtungsdialog ermöglicht eine flexible Einrichtung von &kmail;. Man erreicht ihn über <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+>&kmail; einrichten...</guimenuitem
+></menuchoice
+></para>
+<para
+>Der Dialog hat im unteren Bereich mehrere Knöpfe:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Hilfe</guibutton
+></term>
+<listitem
+><para
+>Öffnet das Handbuch zu &kmail; (dieses Handbuch) auf der entsprechenden Seite.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Zurücksetzen</guibutton
+></term>
+<listitem
+><para
+>Setzt alle Änderungen zurück, die Sie seit dem letzten Speichern vorgenommen haben.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Voreinstellungen</guibutton
+></term>
+<listitem
+><para
+>Setzt die Konfigurationsoptionen auf der aktuellen Seite auf die voreingestellten Werte zurück.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> OK</guibutton
+></term>
+<listitem
+><para
+>Speichert die Einstellungen und schließt den Einrichtungsdialog.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Anwenden</guibutton
+></term>
+<listitem
+><para
+>Speichert die Einstellungen, ohne den Einrichtungsdialog zu schließen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Abbrechen</guibutton
+></term>
+<listitem
+><para
+>Schließt den Einrichtungsdialog, ohne Ihre Änderungen zu speichern.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Der Dialog ist in sechs Seiten aufgeteilt, von denen jede durch eines der Symbole links im Dialog repräsentiert wird. Dieses Kapitel beschreibt detailliert jede der Seiten. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Konten</title>
+
+<para
+>Die Seite <guilabel
+>Konten</guilabel
+> wird automatisch angezeigt, wenn <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+>&kmail; einrichten ...</guimenuitem
+></menuchoice
+> ausgewählt ist. Es gibt vier Karteikarten: <guilabel
+>Identitäten</guilabel
+>, <guilabel
+>Empfang</guilabel
+>, <guilabel
+>Senden</guilabel
+>, und <guilabel
+>LDAP-Server</guilabel
+>. Die Karteikarte <guilabel
+>Identitäten</guilabel
+> ist im Abschnitt <link linkend="configure-generalinfo"
+>Einrichtung von &kmail;</link
+> oben beschrieben.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>Karteikarte Identitäten</title
+>    
+
+<para
+>Eine kurze Einführung zur Karteikarte <guilabel
+>Identitäten</guilabel
+> finden Sie im Abschnitt <link linkend="getting-started"
+>Erste Schritte</link
+>.</para>
+
+<para
+>Auf dieser Seite können Sie eine oder mehrere <emphasis
+>Identitäten</emphasis
+> erstellen, &ie;, Kombinationen aus einem Namen, einer E-Mail-Adresse und einigen anderen Einstellungen. Sie können beispielsweise eine Identität für die geschäftliche Kommunikation und eine andere für den persönlichen Gebrauch anlegen. Wenn Sie mehr als eine E-Mail-Adresse haben, können Sie eine Identität für jede Adresse erstellen. Sie können dann eine passende Identität auswählen, wenn Sie eine neue Nachricht verfassen.</para>
+
+<para
+>Die Karteikarte besteht aus einer Liste von Identitäten und Knöpfen zu deren Verwaltung. Die Identitätenliste zeigt immer mindestens eine Identität, die <guilabel
+>Standard</guilabel
+>-Identität. Um eine neue Identität zu erstellen, klicken Sie auf <guibutton
+>Hinzufügen</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>Der Dialog Neue Identität</title>
+<screenshot>
+<screeninfo
+>Dialog Neue Identität</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialog Neue Identität</phrase>
+    </textobject>
+    <caption>
+      <para
+>Der Dialog Neue Identität</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Geben Sie en Namen der neuen Identität wird in das Feld <guilabel
+>Neue Identität</guilabel
+> ein. Dieser Name erscheint in der Identitätenliste.</para>
+
+<para
+>Die Grundeinstellungen der neuen Identität können Sie über die drei Auswahlknöpfe im Dialog bestimmen:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Mit leeren Feldern</guilabel
+></term>
+<listitem>
+<para
+>Alle Felder der neuen Identität werden geleert oder mit Standardwerten vorbelegt.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Werte der Systemeinstellungen benutzen</guilabel
+></term>
+<listitem>
+<para
+>Verwendet die Werte aus der Standardidentität.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Existierende Identität kopieren</guilabel
+></term>
+<listitem>
+<para
+>Kopiert alle Feldinhalte von einer existierenden Identität. Man kann die gewünschte Identität im erscheinenden Dialog <guilabel
+>Existierende Identitäten</guilabel
+> aus einem Auswahlfeld auswählen.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Allgemein</title>
+<screenshot>
+<screeninfo
+>Identität - Allgemein</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Allgemein</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Allgemein</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Die Karteikarte <guilabel
+>Allgemein</guilabel
+> erlaubt die Festlegung einiger Grundeinstellungen für die ausgewählte Identität.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Ihr Name</guilabel
+></term>
+<listitem>
+<para
+>Geben Sie hier den vollständigen Namen, diese Name wird in der Anzeige verwendet.. Es ist zwar keine Eingabe erforderlich, dennoch sollten Sie Ihren Namen hier eintragen.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organisation</guilabel
+></term>
+<listitem>
+<para
+>Geben Sie hier Ihre Organisation ein. Dieses Feld muss nicht ausgefüllt werden.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-Mail-Adresse</guilabel
+></term>
+<listitem>
+<para
+>Geben Sie hier Ihre E-Mail-Adresse ein, etwa <userinput
+>hugo@beispiel.de</userinput
+>.</para>
+<example>
+<title
+>E-Mail-Adresse</title>
+<para
+>Wenn die eigene Adresse <replaceable
+>Karl Mustermann &lt;karl@mustermann.de&gt;</replaceable
+> lautet, sollte man <userinput
+>Karl Mustermann</userinput
+> im Feld <guilabel
+>Ihr Name</guilabel
+> und <userinput
+>karl@mustermann.de</userinput
+> im Feld <guilabel
+>E-Mail-Adresse</guilabel
+> eintragen.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-Mail-Aliase</guilabel
+></term>
+<listitem>
+<para
+>Dieses Feld enthält Alias-Adressen, die ebenfalls zu dieser Identität gehören, im Gegensatz zu Adressen für eine andere Identität. Sie können mehrere Aliase definieren. Um einen weiteren Alias hinzuzufügen, geben Sie eine E-Mail-Adresse in das Feld <guilabel
+>E-Mail-Aliase</guilabel
+> ein und klicken Sie dann auf die <guibutton
+>&plus; Hinzufügen</guibutton
+>.</para>
+<example>
+<title
+>E-Mail-Aliase</title>
+<para
+>Primäre Adresse: vorname.nachname@beispiel.de</para>
+<para
+>Aliase: vorname@beispiel.de und nachname@beispiel.de</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Kryptografie</title>
+<screenshot>
+<screeninfo
+>Identität - Kryptografie</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Kryptografie</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Kryptografie</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf der Karteikarte <guilabel
+>Kryptografie</guilabel
+> können Sie die &openpgp;- und &smime;-Schlüssel konfigurieren, die zu dieser Identität gehören, sowie das bevorzugte (kryptografische) Nachrichtenformat auswählen.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>OpenPGP-Signaturschlüssel:</guilabel
+></term>
+<listitem>
+<para
+>Hier können Sie einen &openpgp;-Schlüssel zum Signieren von Nachrichten auswählen, die mit dieser Identität verfasst wurden. Hier wird nur die kurze Schlüssel-Kennung des ausgewählten Schlüssel angezeigt. Wenn Sie den Mauszeiger über diesen Eintrag bewegen, werden weitere Informationen angezeigt. Um einen vorhandenen Schlüssel auszuwählen, verwenden Sie das Auswahlfeld. Wenn Sie ein neues Schlüsselpaar erstellen möchten, wählen Sie <guilabel
+>Ein neues Schlüsselpaar erstellen</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>OpenPGP-Schlüssel zum Verschlüsseln:</guilabel
+></term>
+<listitem
+><para
+>Hier können Sie den &openpgp;-Schlüssel auswählen, mit dem Nachrichten verschlüsselt werden sollen, wenn diese Identität und <xref linkend="configure-security-composing-encrypt-to-self"/> ausgewählt sind. Dieser Schlüssel wird außerdem für die Funktion <xref linkend="composer-attach-attach-my-public-key"/> verwendet.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>&smime;-Signaturzertifikat:</guilabel
+></term>
+<listitem>
+<para
+>Hier können Sie ein x.509-Zertifikat auswählen, das zum Signieren von Nachrichten verwendet wird, die mit dieser Identität geschrieben wurden. &kmail; kann keine x.509-Zertifikate erzeugen. Sie werden von Zertifizierungsstellen ausgestellt. Wenn Sie ein solches Zertifikat zu Ihrem Schlüsselbund hinzugefügt haben, kann &kmail; es importieren und verwenden.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>&smime;-Verschlüsselungszertifikat:</guilabel
+></term>
+<listitem>
+<para
+>Hier können Sie das x.509-Zertifikat auswählen, mit dem Nachrichten verschlüsselt werden sollen, wenn diese Identität und <xref linkend="configure-security-composing-encrypt-to-self"/> ausgewählt sind. </para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Bevorzugtes Format:</guilabel
+></term>
+<listitem>
+<para
+>Hier können Sie das kryptografische Nachrichtenformat wählen, das als Voreinstellung mit dieser Identität benutzt wird. Sie können entweder eines der vier von &kmail; unterstützten Formate auswählen, oder die Einstellung in der empfohlenen Voreinstellung <guilabel
+>Alle</guilabel
+> belassen, wodurch je nach Nachrichtenempfängern ein passendes Format ausgewählt wird, oder sogar zwei Kopien einer Nachricht erstellt werden, eine mit x.509-Zertifikat signierte und/oder verschlüsselte, und eine mit &openpgp; signierte und/oder verschlüsselte.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Nachrichten automatisch signieren:</guilabel
+></term>
+<listitem
+><para
+>Wenn Sie dies aktivieren, fügt &kmail; Ihre digitale Signatur zu den Nachrichten hinzu, die von dieser Identität verfasst wurden, es sei denn, diese Einstellung wird manuell im <guilabel
+>Editorfenster</guilabel
+> überschrieben.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Nachrichten automatisch verschlüsseln:</guilabel
+></term>
+<listitem
+><para
+>Wenn Sie dies aktivieren, werden Nachrichten mit dieser Identität verschlüsselt, wenn dies möglich ist. Es sei denn, diese Einstellung wird manuell im <guilabel
+>Editorfenster</guilabel
+> überschrieben.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Erweiterte Einstellungen</title>
+
+<screenshot>
+<screeninfo
+>Identität - Erweitert</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Erweitert</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Erweitert</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf der Karteikarte <guilabel
+>Erweitert</guilabel
+> können Sie einige selten benötigte Einstellungen für die ausgewählte Identität ändern.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Antwortadresse:</guilabel
+></term>
+<listitem>
+<para
+>Hier können Sie die Adresse angeben, an die Antworten auf E-Mails geschickt werden sollen. Dieses Feld muss nur ausgefüllt werden, wenn sich der Eintrag von der normalen Adresse (die für die Felder <guilabel
+>Name</guilabel
+> und <guilabel
+>E-Mail-Adresse</guilabel
+> auf der Karteikarte <link linkend="configure-identity-general"
+><guilabel
+>Allgemein</guilabel
+></link
+> verwendet wurde) unterscheidet, da Antworten standardmäßig immer an die Absenderadresse geschickt werden.</para>
+<para
+>Das Feld ist sinnvoll, falls die Antworten an eine andere als die normale E-Mail-Adresse gehen sollen, wenn man &eg; die Nachricht von einer Adresse versendet, an der man keine Antworten annehmen kann.</para>
+<note
+><para
+>Einige Mailinglisten überschreiben dieses Feld mit der Listenadresse, damit Antworten an die Liste gehen. Damit ist der Nutzen dieses Feldes begrenzt und sollte mit Vorsicht verwendet werden.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Kopie-Adressen:</guilabel
+></term>
+<listitem>
+<para
+>Wahlweise können Sie hier durch Kommata getrennte Adressen eingeben, an die Blindkopien Ihrer Nachrichten geschickt werden sollen. Wenn Sie eine E-Mail mit dieser Identität schreiben, werden diese Adressen in das Feld <guilabel
+>Blindkopie</guilabel
+> eingetragen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Blindkopie-Adressen:</guilabel
+></term>
+<listitem>
+<para
+>Wahlweise können Sie hier durch Kommata getrennte Adressen eingeben, an die Blindkopien Ihrer Nachrichten geschickt werden sollen. Wenn Sie eine E-Mail mit dieser Identität schreiben, werden diese Adressen in das Feld <guilabel
+>Blindkopie</guilabel
+> eingetragen. Wenn Sie Blindkopien an die gleiche Adresse mit allen definieren Identitäten wollen, dann werfen Sie einen Blick auf die Karteikarte <guilabel
+>Vorspann</guilabel
+> der Seite <guilabel
+>E-Mail-Editor</guilabel
+> und erstellen einen eigenen Blindkopie-Vorspann.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Wörterbuch:</guilabel
+></term>
+<listitem>
+<para
+>Legt das Standard-Wörterbuch für die aktuell ausgewählte Identität fest.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Ordner für versendete Nachrichten:</guilabel
+></term>
+<listitem>
+<para
+>Wählen Sie den Ordner aus, in den Nachrichten nach dem Versand mit dieser Identität gespeichert werden sollen. &IMAP;-Benutzer sollten hierfür einen &IMAP;-Ordner statt eines lokalen Ordners verwenden., so dass die Nachrichten auf dem Server gespeichert werden. Dann können Sie auf die Nachrichten auch von einem anderen Standort aus zugreifen.</para>
+<tip
+><para
+>Genauer kann der Ablageort für gesendete Nachrichten mit Hilfe eines <link linkend="filters"
+>Filters</link
+> für zu versendende Nachrichten festgelegt werden.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Ordner für Entwürfe:</guilabel
+></term>
+<listitem>
+<para
+>Wählen Sie den Ordner aus, in den Entwürfe mit dieser Identität gespeichert werden sollen. &IMAP;-Benutzer sollten hierfür einen &IMAP;-Ordner verwenden, damit ihre Entwürfe auf dem Server anstatt in einem lokalen Ordner gespeichert werden. Auf diese Weise können Sie auf die Entwürfe auch von einem anderen Standort aus zugreifen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Vorlagenordner:</guilabel
+></term>
+<listitem>
+<para
+>Wählen Sie den Ordner aus, in den Vorlagen mit dieser Identität gestellt werden sollen. Weitere Informationen finden Sie unter <link linkend="new-compose-from-templates"
+>Nachrichten aus Vorlagen</link
+>.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Versand-Postfach:</guilabel
+></term>
+<listitem>
+<para
+>Geben Sie einen &SMTP;-, &Sendmail; oder &Microsoft;-Server an, der für den Versand von Nachrichten für diese Identität verwendet werden soll.</para>
+<note
+><para
+>Mail-Server für den Versand müssen erst eingerichtet werden, bevor man sie aus der Liste auswählen kann. Diese Einrichtung können Sie auf der Karteikarte <link linkend="configure-accounts-sending"
+><guilabel
+>Versand</guilabel
+></link
+> der Seite <link linkend="configure-accounts"
+><guilabel
+>Zugänge</guilabel
+></link
+> durchführen.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Eigene vCard zur Nachricht hinzufügen</guilabel
+></term>
+<listitem>
+<para
+>Wählen Sie dies, wenn Sie eine vCard-Datei an jede Nachricht anhängen möchten, die von dieser Identität aus gesendet wird. Es folgt ein kurzer Dialog.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>Mit leeren Feldern</guilabel
+></term>
+        <listitem
+><para
+>Wie im Dialog <ulink url="help:/kaddressbook/editing-contact-data.html"
+>Kontaktdaten hinzufügen</ulink
+> von &kaddressbook; geben Sie Ihren Namen, Ihre E-Mail-Adresse, &etc; ein und klicken Sie dann auf <guilabel
+>OK</guilabel
+>, um eine neue vCard zu erstellen.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>Aus vorhandene vCard</guilabel
+></term>
+        <listitem
+><para
+>Öffnet einen Dialog zum Durchsuchen von Ordnern, in dem Sie eine .vcf-Datei auswählen können. Verwenden Sie &kaddressbook;, um eine vCard-Datei zu exportieren, die hier verwendet werden kann.</para
+></listitem>
+        </varlistentry
+>        
+        <varlistentry>
+        <term
+><guilabel
+>Existierende vCard duplizieren</guilabel
+></term>
+        <listitem
+><para
+>Öffnet ein Auswahlfeld mit allen anderen bereits definierten Identitäten, so dass Sie die vCard zu einer Identität auswählen können.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Sprache der Autokorrektur:</guilabel
+></term>
+<listitem>
+<para
+>Verwenden Sie das Auswahlfeld um die Sprache für die Autokorrektur zu dieser Identität auszuwählen.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Standard-Domain:</guilabel
+></term>
+<listitem>
+<para
+>Dieses Feld wird mit dem Wert aus der Datei <filename
+>/etc/hostnames</filename
+> vorbelegt. Der <guilabel
+>E-Mail-Editor</guilabel
+> fügt diesen Domänennamen an jede rein lokale E-Mail-Adresse an, die Sie angeben. Diese Funktion ist vor allem in einer &Sendmail;-Umgebung nützlich.</para>
+<example>
+<title
+>Standard-Domain</title>
+<para
+>Als Standard-Domain ist <userinput
+>kde.org</userinput
+> und als „An“ ist <userinput
+>foo</userinput
+> eingegeben.</para>
+<para
+>Der <guilabel
+>Editor</guilabel
+> sendet die Nachricht an foo@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Vorlagen</title>
+<screenshot>
+<screeninfo
+>Identität - Vorlagen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Vorlagen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Vorlagen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Hier können Sie benutzerdefinierte Vorlagen für diese Identität erstellen und verwalten, die beim Verfassen neuer Nachrichten, beim Beantworten von Nachrichten oder beim Weiterleiten von Nachrichten verwendet werden. Die Nachrichtenvorlagen unterstützen Ersetzungsbefehle. Sie können sie einfach eintippen oder aus dem Menü <guimenu
+>Befehl einfügen <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+> auswählen. Drei Arten von Befehle sind vorgesehen.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Ursprüngliche Nachricht &gt;</guilabel
+> / <guilabel
+>Aktuelle Nachricht &gt;</guilabel
+></term>
+        <listitem
+><para
+>Diese Befehle extrahieren Informationen aus der Nachricht, auf die Sie antworten, oder weiterleiten, und fügen diese Informationen in den E-Mail-Editor ein.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Mit externen Programmen verarbeiten &gt;</guilabel
+></term>
+        <listitem
+><para
+>Diese Befehle leiten die Nachricht, auf die Sie antworten, durch ein externes Programm und fügen die Ausgabe dann in den E-Mail-Editor von &kmail; ein.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Verschiedenes &gt;</guilabel
+></term>
+        <listitem
+><para
+>Diese Befehle führen Funktionen aus, wie die Auswahl des Wörterbuchs, das die Rechtschreibprüfung verwenden soll, oder das Einfügen des Inhalts einer Textdatei in den E-Mail-Editor.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Das Feld <guilabel
+>Zitatkennzeichnung:</guilabel
+> ermöglicht das Überschreiben des Standardzeichens „&gt;“ für die Kennzeichnung von Zitaten. Mit <guibutton
+>Global Vorlagen kopieren</guibutton
+> werden alle hier definierten benutzerdefinierten Vorlagen auf die Standardwerte von &kmail; zurückgesetzt. Sie können dasselbe Ergebnis erzielen, indem Sie <guilabel
+>Eigene Nachrichtenvorlagen benutzen</guilabel
+> oben links in diesem Dialog deaktivieren.</para>
+
+<para
+>Vorlagen, die hier erstellt werden, gelten nur für diese Identität. Sie haben Priorität vor globalen Vorlagen, können aber von Ordner-Vorlagen überschrieben werden, falls solche existieren.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Signatur</title>
+<screenshot>
+<screeninfo
+>Identität - Signatur</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Signatur</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Signatur</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf dieser Karteikarte kann eine Signatur (manchmal auch <quote
+>Fußnote</quote
+> genannt) festgelegt werden, die an jede unter dieser Identität versandte Nachricht angehängt wird.</para>
+<note
+><para
+>Diese Art von Signatur hat nichts mit einer digitalen Signatur zu tun, die auf der Karteikarte <link linkend="configure-identity-cryptography"
+>Kryptografie</link
+> gewählt werden kann. Der Ausdruck Signatur ist hier völlig unpassend, aber weil er sich eingebürgert hat, wird er beibehalten. Diese Signatur und die digitale Signaturen sind zwei völlig unterschiedliche Dinge.</para
+></note>
+
+<para
+>Falls Sie eine Signatur für diese Identität verwenden möchte, markieren Sie <guilabel
+>Signatur anhängen</guilabel
+>. Um an jede Nachricht <emphasis
+>automatisch</emphasis
+> eine Signatur anhängen zu lassen, wählen Sie man <guilabel
+>Auto# Signatur einfügen</guilabel
+> im Einrichtungsdialog auf der Seite <guilabel
+>E-Mail-Editor</guilabel
+>.</para>
+
+<para
+>Der Signaturtext in &kmail; kann aus verschiedenen Quellen stammen. Als Standard ist aus <guilabel
+>Eingabefeld unten</guilabel
+> eingestellt. Geben Sie den gewünschten Signaturtext in das Textfeld unterhalb des Auswahlfeldes ein. Möchten Sie „Rich Text“ verwenden, aktivieren Sie <guilabel
+>&HTML; verwenden</guilabel
+> unten links an. Daraufhin wird eine Formatierungs-Symbolleiste angezeigt.</para>
+
+<para
+>Unter &UNIX; ist es üblich, diesen Text aus einer Datei namens <filename
+>.signature</filename
+> im Persönlichen Ordner zu nehmen. Diese Datei kann von verschiedenen Programmen verwendet werden. Damit ist die Signatur unabhängig vom verwendeten Programm. Wählen Sie <guilabel
+>Datei</guilabel
+> im Auswahlfeld <guilabel
+>Signaturtext aus</guilabel
+>. Möchten Sie die Datei bearbeiten, klicken Sie auf <guibutton
+>Datei bearbeiten</guibutton
+>.</para>
+
+<para
+>&kmail; kann den Signaturtext auch von der Befehlsausgabe eines Programms lesen. Sie können ein Programm wie <command
+>fortune</command
+> verwenden, um für jede Nachricht einen neuen zufälligen Signaturtext zu erzeugen. Alles was das Programm auf die Befehlsausgabe <acronym
+>stdout</acronym
+> ausgibt, wird als Signatur verwendet. Um Text mit dieser Methode einzulesen, wählen Sie <guilabel
+>Ausgabe eines Befehls</guilabel
+> und tragen diesen Befehl vorzugsweise mit vollständigem Pfad in das Feld <guilabel
+>Befehl angeben</guilabel
+> ein.</para>
+
+<note
+><para
+>Im Internet werden Signaturen üblicherweise durch eine Zeile, die nur die drei Zeichen <quote
+>-- </quote
+> (Bindestrich, Bindestrich, Leerzeichen) enthält, vom Hauptteil der Nachricht getrennt. Wenn <guilabel
+>Trennzeichen vor die Signatur stellen</guilabel
+>in der Einstellung des <guilabel
+>E-Mail-Editors</guilabel
+> aktiviert wurde, stellt &kmail; diese Zeile automatisch vor die Signatur, sofern sie nicht bereits vorhanden ist.</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Bild</title>
+<screenshot>
+<screeninfo
+>Identität - Bild</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identität - Bild</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identität - Bild</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail; kann mit jeder Nachricht ein kleines (48×48 Pixel) Schwarz-Weiß-Bild geringer Qualität versenden. Dabei kann es sich z. B. um ein Porträtfoto oder ein Symbol handeln. Einige E-Mail-Programme zeigen dieses Bild an.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Bild mit jeder Nachricht versenden</guilabel
+></term>
+<listitem>
+<para
+>Markieren Sie dieses Ankreuzfeld, falls &kmail; zu jeder Nachricht mit dieser Identität ein sogenanntes „X-Face“-Vorspannfeld hinzufügen soll. Dabei handelt es sich um ein kleines (48×48 Pixel) Schwarz-Weiß-Bild, das von einigen E-Mail-Programmen zusammen mit der Nachricht angezeigt wird.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bild verwenden von:</guilabel
+></term>
+<listitem>
+<para
+>Dieses Auswahlfeld bietet Ihnen zwei Möglichkeiten, ein Bild auszuwählen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Externe Quelle<inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (Voreinstellung)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Datei auswählen ...</guibutton
+></term>
+<listitem>
+<para
+>Hiermit kann eine Bilddatei zur Erzeugung des Bildes ausgewählt werden. Die Datei sollte ein Bild mit hohem Kontrast und quadratischer Form enthalten. Ein heller Hintergrund verbessert das Ergebnis.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Aus Adressbuch holen</guibutton
+></term>
+<listitem>
+<para
+>Sie können eine entsprechend skalierte Version Ihres Bildes aus dem Adressbuch verwenden lassen.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Eingabefeld unten</guilabel
+></term>
+<listitem>
+<para
+>Verwenden Sie dieses Feld zur Eingabe einer beliebigen X-Face-Zeichenfolge. Beispiele finden Sie unter  <ulink url="https://ace.home.xs4all.nl/X-Faces/"
+>https://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>E-Mail-Konten</title>
+
+<para
+>Eine kurze Beschreibung zur Seite <guilabel
+>Konten</guilabel
+> finden Sie im Abschnitt <link linkend="setting-up-your-account"
+>Einrichtung des Kontos</link
+>.</para>
+
+<para
+>Auf dieser Seite können Sie eines oder mehrere <emphasis
+>Konten</emphasis
+> für Posteingang und Postausgang einrichten, &ie; Kombinationen von Mail-Servern, Anmeldeinformationen und anderen Einstellungen. Üblicherweise richtet man ein Konto für den Postausgang zum Versenden von Nachrichten und eines für den Posteingang zum Abholen von Nachrichten ein. Man kann aber auch mehrere Postfächer einrichten und jedes einer anderen <link linkend="configure-identity"
+>Identität</link
+> zuordnen oder sogar für jede Nachricht einzeln entscheiden. Oder Sie können nur eine Identität einrichten und entscheiden, welches Konto Sie Sie jedes Mal verwenden, wenn Sie eine Nachricht verfassen. Auf dieser Seite können Sie auch einen oder mehrere <acronym
+>LDAP</acronym
+>-Server (Lightweight Directory Access Protocol) einrichten.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Empfang</title>
+<screenshot>
+<screeninfo
+>Konto - Empfang</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konto - Empfang</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Konto - Empfang</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Grundlegende Informationen findet man unter <link linkend="receiving-mail"
+>Einrichtung eines Postfaches: Empfang</link
+>.</para>
+
+<para
+>Mit den Knöpfen auf der rechten Seite können Sie Konten <guibutton
+>Hinzufügen...</guibutton
+>, <guibutton
+>Ändern</guibutton
+> oder <guilabel
+>Entfernen</guilabel
+>. Nicht ändern oder entfernen sollten Sie <guilabel
+>Lokale Ordner</guilabel
+>, da dieser Eintrag standardmäßig vorhanden ist. Der <guilabel
+>Neustart</guilabel
+> simuliert einen Programmneustart.</para>
+
+<para
+>Klicken auf <guibutton
+>Zugangsreihenfolge bearbeiten ...</guibutton
+> öffnet einen Dialog mit dem Sie alle erstellten IMAP-Konten und die Gruppe der Konten für <guilabel
+>Lokale Ordner</guilabel
+> in der Liste nach oben oder unten verschieben können.</para>
+
+<para
+>Im Aufklappmenü <guilabel
+>Abrufeinstellungen</guilabel
+> können Sie für jedes Konto getrennt einstellen, ob &kmail; beim Start sofort nach E-Mail sehen soll. Zusätzlich können Sie auch <guilabel
+>Bei manueller Prüfung einbeziehen</guilabel
+> und <guilabel
+>Beim Beenden in Offline-Modus wechseln</guilabel
+> aktivieren. </para>
+
+<para
+>Wenn <guilabel
+>Ausführliche Benachrichtigung bei neuen Nachrichten</guilabel
+> eingeschaltet ist, dann zeigt &kmail; für jeden Ordner die Anzahl neuer Nachrichten, sofern Sie sich per Dialog benachrichtigen lassen möchten. Umfangreichere Benachrichtigungsmöglichkeiten wie das Anspielen eines Klangs oder das Ausführen eines bestimmten Befehls können über den Knopf <guibutton
+>Andere Aktionen</guibutton
+> eingerichtet werden können.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Versand</title>
+<screenshot>
+<screeninfo
+>Konto - Versand</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konto - Versand</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Konto - Versand</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf der Karteikarte <guilabel
+>Versand</guilabel
+> können Sie Mail-Server für den Versand von Nachrichten einrichten und einige allgemeine Einstellungen für den Versand vornehmen.</para>
+
+<para
+>Grundlegende Informationen findet finden Sie unter <link linkend="sending-mail"
+>Einrichtung eines Postfaches: Versand</link
+>.</para>
+
+<para
+>Wenn Sie auf <guibutton
+>Hinzufügen...</guibutton
+> oder <guibutton
+>Ändern ...</guibutton
+> klicken, wird der Dialog <guilabel
+>Versand-Konto erstellen</guilabel
+> oder <guilabel
+>Konto einrichten</guilabel
+> geöffnet. Zum Versand per &Sendmail; geben Sie den Namen und den Pfad des &Sendmail;-Programms an. Bei &SMTP; müssen Sie <guilabel
+>Name</guilabel
+>, <guilabel
+>Ausgehender Mailserver</guilabel
+> und <guilabel
+>Port</guilabel
+> angeben. Die Auswahl von <guilabel
+>Server erfordert Authentifizierung</guilabel
+> aktiviert die Felder <guilabel
+>Benutzer</guilabel
+> und <guilabel
+>Passwort</guilabel
+>. Bei Unsicherheit über die Sicherheitseinstellungen können Sie &kmail; durch Klicken auf den Knopf <guibutton
+>Automatisch erkennen</guibutton
+> zur automatischen Einstellung der sichersten Methode veranlassen.</para>
+
+<para
+>Die Einstellung <guilabel
+>Vor Versenden nachfragen</guilabel
+> zeigt vor jedem Nachrichtenversand einen Bestätigungsdialog.<guilabel
+>Rechtschreibprüfung vor dem Senden</guilabel
+> ruft die Rechtschreibprüfung auf, bevor eine Nachricht gesendet wird.</para>
+
+<para
+>Mit <guilabel
+>Nachrichten im Postausgang senden</guilabel
+> können Sie auswählen, wann Nachrichten in der Warteschlange, d.h. Nachrichten im Postausgang-Ordner, die auf den Versand warten, versendet werden sollten. Sie haben folgende Möglichkeiten:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Nie automatisch <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>Nachrichten in der Warteschlange werden nur verschickt, wenn Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+> auswählen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bei manuellem Abholen</guilabel
+></term>
+<listitem
+><para
+>Nachrichten in der Warteschlange werden verschickt, nachdem Sie manuell nach neuen Nachrichten gesehen haben, &eg; mit <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen</guimenuitem
+></menuchoice
+>. Natürlich können Sie die Nachrichten in der Warteschlange auch manuell mit <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+> versenden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bei allen Abholvorgängen</guilabel
+></term>
+<listitem
+><para
+>Wartende Nachrichten werden jedes mal versendet, sobald das automatische wie auch das manuelle Sehen nach neuen Nachrichten abgeschlossen ist. Natürlich können Sie die Nachrichten in der Warteschlange auch manuell mit <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+> versenden.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Mit<guilabel
+>Standard-Sendemethode</guilabel
+> legen Sie fest, wie eine Nachricht gesendet wird. Wenn <guilabel
+>Sofort senden</guilabel
+> ausgewählt ist, wird die Nachricht sofort an den Mailserver geschickt. Ist <guilabel
+>Später senden</guilabel
+> aktiviert, so wird die Nachricht zuerst in den Postausgang übertragen, um später automatisch oder mit <menuchoice
+><guimenu
+>Datei </guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+> gesendet zu werden, abhängig von den Einstellungen des Ankreuzfeldes <guilabel
+>Nachrichten im Postausgang senden</guilabel
+> weiter oben.</para>
+
+<para
+>Mit <guilabel
+>Senden rückgängig machen:</guilabel
+> können Sie ein Zeitintervall von 10 bis 50 Sekunden festlegen, in dem Sie den Mail-Transport abbrechen können. Ihre Nachricht wird in die Warteschlange gestellt, und eine kleiner Knopf <guibutton
+>Sendung rückgängig machen</guibutton
+>erscheint im Benachrichtigungsbereich. Klicken Sie rechtzeitig auf den Knopf,um den Versand der Nachricht abzubrechen.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>LDAP-Server</title>
+<screenshot>
+<screeninfo
+>LDAP-Server</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>LDAP-Server</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte LDAP-Server</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>In diesem Dialog können Sie alle LDAP-Server einrichten, auf die Sie zugreifen möchten. Weitere Informationen finden Sie im <ulink url="help:/kaddressbook/configure-ldap-server.html"
+>Anhang</ulink
+> des Handbuchs zu &kaddressbook;.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Erscheinungsbild</title>
+
+<para
+>Auf der Seite Erscheinungsbild können Sie viele Aspekte der grafischen Benutzeroberfläche von &kmail; anpassen, einschließlich der Farbschemata, der Schriftauswahl und der Anordnung der Nachrichtenliste im Hauptfenster.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>Allgemein</title>
+
+<screenshot>
+<screeninfo
+>Erscheinungsbild - Allgemein</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Erscheinungsbild - Allgemein</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Erscheinungsbild - Allgemein</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Wenn <guilabel
+>Nachrichtenfenster nach Antworten oder Weiterleiten schließen</guilabel
+> aktiviert ist, schließt &kmail; das separate Nachrichtenfenster, wenn der E-Mail-Editor für eine Antwort oder zum Weiterleiten der Nachricht geöffnet wird. In der Voreinstellung ist <guilabel
+>Zugriffstasten aktivieren</guilabel
+> eingeschaltet. Mit dieser Einstellung können Sie die Tastatur für Funktionen benutzen, die normalerweise mit der Maus ausgeführt werden, wie zum Beispiel dem Folgen von Verknüpfungen. Weitere Informationen dazu finden Sie im Kapitel <ulink url="help:/konqueror/accesskeys.html"
+>Zugriffstasten</ulink
+> des &konqueror;-Handbuchs.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+ 
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys 
+like <userinput
+>:-)</userinput
+> appearing in the message text to be 
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>Aktivieren Sie <guilabel
+>Schriftgröße bei Zitaten verkleinern</guilabel
+>, um zitierten Text in einer Antwort mit einem kleineren Schriftbild anzuzeigen. <guilabel
+>Bei Zitaten Markierungen zum Ein-/Ausblenden anzeigen</guilabel
+> zeigt kleine Symbole zusammen mit jedem Teil des zitierten Text. Damit können Sie verschachtelte Zitate ab einer bestimmten Ebene anzeigen (+) oder ausblenden (-). Dies bei längeren E-Mail-Konversationen ist nützlich, bei denen niemand Zitate nicht kürzt.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+><guilabel
+>Original-Kodierung übergehen und diese verwenden</guilabel
+>: Wenn Sie die Einstellung <guilabel
+>Automatisch</guilabel
+> nicht verwenden, wird die eingestellte Kodierung unabhängig vom &MIME;-Vorspann für alle E-Mails verwendet. Mit <guilabel
+>Minimale Schriftgröße</guilabel
+> können Sie die kleinste Schriftart in &kmail; einstellen. Stellen Sie diesen Wert höher ein, wenn Sie Probleme haben, wirklich kleine Schriftarten zu lesen.</para>
+
+<para
+>In <guilabel
+>Systemabschnitt der Kontrollleiste</guilabel
+> gibt es drei Einstellungen. Wenn <guilabel
+>Anzeige im Systemabschnitt der Kontrollleiste</guilabel
+> ausgewählt ist, wird ein kleines Symbol <inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+> angezeigt. Wenn <guilabel
+>Minimiert im Systemabschnitt der Kontrollleiste starten</guilabel
+> aktiviert ist, wird dieses Symbol nur beim Start von &kmail; angezeigt. Die Auswahl von <guilabel
+>Ungelesene E-Mails in der Fensterleiste anzeigen</guilabel
+> bewirkt, dass die Anzahl der ungelesenen Nachrichten auf dem &kmail;-Symbol in der Fensterleiste angezeigt wird.</para>
+
+<para
+>Wenn das Symbol sichtbar ist, dann können Sie das Hauptfenster von &kmail; ausblenden, indem Sie auf das Symbol oder den Knopf „Schließen“ des Fensters klicken. Durch Anklicken des Symbols können Sie das Hauptfenster von &kmail; wieder anzeigen. Wenn Sie mit der &RMBn; auf das Symbol klicken, dann wird ein Menü angezeigt. Sie können nach neuen Nachrichten schauen, eine neue Nachricht schreiben, oder &kmail; beenden. Außerdem gibt es den Eintrag <guilabel
+>Neue Nachrichten in &gt;</guilabel
+> mit einer Liste aller Ordner, in denen sich ungelesene Nachrichten befinden. Wenn Sie einen dieser Ordner auswählen, dann wird dieser Ordner im Hauptfenster von &kmail; geöffnet. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Schriftarten</title>
+
+<screenshot>
+<screeninfo
+>Erscheinungsbild - Schriftarten</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Erscheinungsbild - Allgemein</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Erscheinungsbild - Schriftarten</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>n diesem Abschnitt können Sie die Schriftarten anpassen, die &kmail; verwendet. Wählen Sie <guilabel
+>Eigene Schriftarten benutzen</guilabel
+>, um den Dialog zu aktivieren. Anwenden auf <guilabel
+>Nachrichtentext </guilabel
+> legt die Schriftart für den Lesebereich fest. Die Option <guilabel
+>E-Mail-Editor</guilabel
+> legt die Schriftart fest, in der neue Klartextmeldungen beim Schreiben angezeigt werden.  <guilabel
+>Nachrichtenliste</guilabel
+> ändert die Schriftart für die Anzeige der Nachrichtenliste. Sie können auch spezielle Schriftarten für ungelesene, wichtige und Aufgaben-Einträge in der Nachrichtenlisten wählen. <guilabel
+>Druckausgabe</guilabel
+> ändert die Schriftart, die beim Drucken verwendet wird. <guilabel
+>Feste Zeichenbreiten</guilabel
+> beeinflusst die Darstellung einiger &HTML; Meldungen.</para>
+
+<para
+><guilabel
+>Nur nichtproportionale Schriften anzeigen</guilabel
+> schränkt die Anzahl der verfügbaren Schriftarten ein. Es werden nur die Namen von Schriftarten mit fester Breite angezeigt, wenn diese Option aktiviert ist.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Farben</title>
+
+<screenshot>
+<screeninfo
+>Erscheinungsbild - Farben</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Erscheinungsbild - Farben</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Erscheinungsbild - Farben</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf dieser Karteikarte können Sie die Farbe ändern, indem Sie auf einen Eintrag in der Liste doppelklicken. Wählen Sie <guilabel
+>Eigene Farben benutzen</guilabel
+>, um diese Funktion zu aktivieren. Wählen Sie <guilabel
+>Farbe der ursprünglichen &HTML;-E-Mail nicht ändern</guilabel
+>, um das vom Absender einer &HTML;-Mail gewählte Farbschema beizubehalten.</para>
+
+<para
+><guilabel
+>Farben bei tief verschachtelten Zitaten wiederholen</guilabel
+> bedeutet, dass ab der dritten Zitatebene wieder die Farbe der ersten Ebene verwendet wird. Zu beachten ist, das sich die Farben für <guilabel
+>Zitierten Text</guilabel
+> nur auf das Hauptfenster beziehen, aber nicht auf den E-Mail-Editor. Sollen Ordner, die fast ihre zulässige Größe erreicht haben, &eg; Speicherplatzzuteilung wie sie üblicherweise auf &IMAP;-Servern benutzt wird, in einer anderen Farbe angezeigt werden, kann auch ein Schwellwert in Prozent dafür eingestellt werden.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Layout</title>
+<screenshot>
+  <screeninfo
+>Standard-Layout</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Standard-Layout</phrase>
+      </textobject>
+      <caption>
+        <para
+>Die Karteikarte Erscheinungsbild - Layout</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Auf dieser Karteikarte können Sie die Anordnung der Elemente im Hauptfenster einstellen.</para>
+<para
+>Im Abschnitt <guilabel
+>Ordnerliste</guilabel
+> können Sie zwischen der Voreinstellung <guilabel
+>Lange Ordnerliste</guilabel
+>, die die volle Höhe des Fensters nutzt, und der <guilabel
+>Kurzen Ordnerliste</guilabel
+> wählen. Mit <guilabel
+>Kurze Ordnerliste</guilabel
+> und der Einstellung <guilabel
+>Anzeigen das Nachrichtenvorschaubereich unterhalb der Nachrichtenliste anzeigen</guilabel
+> werden Nachrichtenliste und die Ordnerliste einen untereinander angezeigt, wobei das Nachrichtenvorschaufenster den gesamten unteren Teil des Fensters einnimmt. Wenn Sie <guilabel
+>Das Nachrichtenvorschaubereich neben der Nachrichtenliste anzeigen</guilabel
+> gewählt haben, werden die Ordnerliste und die Nachrichtenliste nebeneinander angezeigt, mit dem Nachrichtenvorschaufenster auf der rechten Seite.</para>
+
+<para
+>Wählen Sie <guilabel
+>Ordner-Schnellsuche anzeigen</guilabel
+>, um ein kleines Textfeld am oberen Rand der Ordnerliste zu erstellen. Wenn Sie etwas in dieses Feld eingeben, werden nur die Ordner angezeigt, deren Namen mit den eingegebenen Zeichen übereinstimmen. Deaktivieren Sie das Feld, um alle Ordner anzuzeigen.</para>
+
+<para
+>Im Abschnitt <guilabel
+>Bevorzugte Ordner anzeigen</guilabel
+> können Sie einstellen, ob und wie Ihre bevorzugten Ordner angezeigt werden. Die Anzeige <guilabel
+>Als Symbole</guilabel
+> belegt viel Platz im Fenster, daher sollten Sie bei mehreren Ordnern besser <guilabel
+>Als Liste</guilabel
+> wählen. Mit <guilabel
+>Niemals</guilabel
+> können Sie die Anzeige bevorzugter Ordner ganz abschalten.</para>
+
+<para
+>In der Voreinstellung zeigen die <guilabel
+>Ordner-Kurzinfos</guilabel
+> zusätzliche Informationen wie die gesamte Anzahl der Nachrichten, die Anzahl der ungelesenen Nachrichten und die Größe eines Ordners an, wenn Sie mit dem Mauszeiger darüber fahren. Wählen Sie <guilabel
+>Niemals</guilabel
+>, um diese Funktion auszuschalten.</para>
+
+<para
+>Im Abschnitt <guilabel
+>Nachrichtenvorschaubereich</guilabel
+> können Sie einstellen, wie die Nachrichtenliste und der Vorschaubereich angeordnet werden sollen. Sie können den Nachrichtenvorschaubereich ausblenden und ausgewählte Nachrichten im Vollbildmodus durch Drücken der &Enter;taste anzeigen.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Nachrichtenliste</title>
+
+<screenshot>
+<screeninfo
+>Erscheinungsbild - Nachrichtenliste</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Erscheinungsbild - Nachrichtenliste</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Erscheinungsbild - Nachrichtenliste</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>In dieser Karteikarte können Sie das Erscheinungsbild der Nachrichtenliste einstellen.</para>
+<para
+>Wählen Sie <guilabel
+>Kurzinfos für Nachrichten und Zusammenfassungsüberschriften aktivieren</guilabel
+> dann wird eine kurze Zusammenfassung einer Nachricht oder Gruppe angezeigt, wenn sich der Mauszeiger über einem Eintrag in der Nachrichtenliste befindet.</para>
+
+<para
+>Die Einstellungen für <guilabel
+>Standard-Zusammenstellung</guilabel
+> und <guilabel
+>Standard-Design</guilabel
+>können für jeden einzelnen Ordner im Dialog <guilabel
+>Ordner-Eigenschaften</guilabel
+> überschrieben werden. Klicken Sie auf <guibutton
+>Einrichten</guibutton
+>, dann wird ein Dialog geöffnet, in dem Sie die voreingestellten Zusammenstellungen und Designs ändern und auch neue erstellen können.</para>
+
+<para
+>Acht Zusammenstellungen und drei Designs sind voreingestellt.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standard-Zusammenstellung</guilabel
+></term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Aktivität nach Datum, flach</term>
+<listitem
+><para
+>Diese Ansicht verwendet tagesbezogene Datumsbereiche; die Nachrichten werden nicht gruppiert angezeigt. Beispiel: Im Datumsbereich <quote
+>Heute</quote
+> finden Sie alle Nachrichten, die am heutigen Tag angekommen sind. Die Gruppen werden in umgekehrter zeitlicher Reihenfolge angezeigt und sind mit <quote
+>Heute</quote
+>, <quote
+>Gestern</quote
+> und den nächsten fünf folgenden Tagesnamen beschriftetet, dann mit dem Datum im Format <quote
+>mm/dd/yy</quote
+></para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktivität nach Datum, gruppiert</term>
+<listitem
+><para
+>Diese Ansicht verwendet tagesbezogene Datumsbereiche; die Nachrichten werden gruppiert angezeigt. Beispiel: Im Datumsbereich <quote
+>Heute</quote
+> finden Sie alle Nachrichten, die am heutigen Tag angekommen sind, sowie alle Gruppen, in denen heute eine Nachricht eingegangen ist. Verwendet die Gruppierung wie Aktuelle Aktivität, flach.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktuelle Aktivität, flach</term>
+<listitem
+><para
+>Diese Ansicht verwendet intelligente Datumsbereiche; die Nachrichten werden nicht gruppiert angezeigt. Beispiel: Im Datumsbereich <quote
+>Heute</quote
+> finden Sie alle Nachrichten, die am heutigen Tag angekommen sind. Die Gruppen werden in umgekehrter zeitlicher Reihenfolge angezeigt und sind mit <quote
+>Heute</quote
+>, <quote
+>Gestern</quote
+>, den nächsten fünf folgenden Tagesnamen, <quote
+>Letzte Woche</quote
+>, <quote
+>Vor zwei Wochen</quote
+> und dann mit den Monatsnamen beschriftetet.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Aktuelle Aktivität, gruppiert </term>
+<listitem
+><para
+>Diese Ansicht verwendet intelligente Datumsbereiche; die Nachrichten werden gruppiert angezeigt. Beispiel: Im Datumsbereich <quote
+>Heute</quote
+> finden Sie alle Nachrichten, die am heutigen Tag angekommen sind, sowie alle Gruppen, in denen heute eine Nachricht eingegangen ist. Ansonsten wie Aktuelle Aktivität, flach.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Flache Datumsansicht</term>
+<listitem
+><para
+>Dies ist eine einfache, altbekannte Nachrichtenliste, nach Datum sortiert: keine Datumsbereiche und keine Gruppierung.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Absender/Empfänger, flach</term>
+<listitem
+><para
+>Diese Ansicht zeigt Nachrichten gruppiert nach Absender bzw. Empfänger an (abhängig vom Ordnertyp). Sie können Absender oder Empfänger im Dialog <menuchoice
+><guimenu
+>Ordner</guimenu
+><guimenuitem
+>Ordner-Eigenschaften</guimenuitem
+></menuchoice
+> auf der Karteikarte <guilabel
+>Ansicht </guilabel
+> im Feld <guilabel
+>Spalte anzeigen</guilabel
+> angeben.Die enthaltenen Nachrichten werden nicht gruppiert.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Standard-Nachrichtenliste</term>
+<listitem
+><para
+>Dies ist eine einfache, flache Nachrichtenliste: keine Datumsbereiche und starke Gruppierung, sortiert nach dem Datum der ersten Nachricht.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Diskussionsleiter</term>
+<listitem
+><para
+>Diese Ansicht fasst Nachrichten in Diskussionsgruppen zusammen und gruppiert diese wiederum nach dem Diskussionsleiter.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+><guibutton
+>Einrichten ...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+   
+<para
+>Um eine eigene Zusammenstellung zu erstellen, klicken Sie auf den Knopf <guibutton
+>Einrichten</guibutton
+>. Wählen Sie eine geeignete vorhandene Zusammenstellung als Ausgangsbasis und klicken Sie auf <guibutton
+>Zusammenstellung kopieren</guibutton
+>. Finden Sie keine passende Zusammenstellung, klicken Sie auf <guibutton
+>Neue Zusammenstellung</guibutton
+>. Auf der Karteikarte <guilabel
+>Allgemein</guilabel
+> können Sie einen <guilabel
+>Namen</guilabel
+> und eine <guilabel
+>Beschreibung</guilabel
+> eingeben oder ändern. Auf der Karteikarte <guilabel
+>Gruppierung und Zusammenstellung</guilabel
+> finden Sie mehrere Einstellungen zur Anpassung Ihrer Zusammenstellung.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Gruppierung</guilabel
+> erlaubt die Auswahl von Datum, Absender, Empfänger oder keine Gruppierung. Mit den intelligenten Einstellungen werden zusammengehörige E-Mails in &kmail; zusammenfasst. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Aufklapprichtlinie für Gruppen</guilabel
+> Hier können Sie einstellen, ob Gruppen in &kmail; automatisch aufgeklappt werden. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Diskussions-Gruppierung</guilabel
+> Stellen Sie ein, ob in &kmail; Referenzen und Betreff bei der Gruppierung berücksichtigt werden, die Gruppierung kann auch vollständig abgeschaltet werden. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Diskussions-Beginn</guilabel
+> Hier können Sie als Beginn der Diskussion die neueste oder erste Nachricht auswählen. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Diskussions-Aufklapp-Richtlinie</guilabel
+> Stellen Sie hier ein, nach welchen Kriterien Gruppen aufgeklappt werden sollen.  </para
+></listitem>
+</itemizedlist>
+<para
+>Auf der Karteikarte <guilabel
+>Erweitert</guilabel
+> können Sie die <guilabel
+>Füllstrategie</guilabel
+> ändern. Sie sollten Geschwindigkeit bevorzugen, wenn Sie eine langsame Verbindung haben. Interaktivität zeigt zuerst Ihre aktuellen Gespräche und im Stapelverarbeitungsmodus wird die Ansicht überhaupt nicht sortiert.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standard-Design</guilabel
+></term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Klassisch</term>
+<listitem
+><para
+>Ein einfaches, rückwärts-kompatibles Design, welches nur eine Zeile verwendet.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intelligent</term>
+<listitem
+><para
+>Ein intelligentes Design, welches mehrere Zeilen und Objekte verwendet.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intelligent mit anklickbarem Status</term>
+<listitem
+><para
+>Ein intelligentes Design, welches mehrere Zeilen und Objekte verwendet und anklickbare Status-Symbole enthält.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+><guibutton
+>Einrichten ...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+  
+<para
+>Um ein eigenes Design für die Nachrichtenliste zu erstellen, klicken Sie auf den Knopf <guibutton
+>Einrichten</guibutton
+>. Wählen Sie ein geeignetes vorhandenes Design als Ausgangsbasis und klicken Sie auf <guibutton
+>Design kopieren</guibutton
+>. Finden Sie kein passendes Design, klicken Sie auf <guibutton
+>Neues Design</guibutton
+>. Auf der Karteikarte <guilabel
+>Allgemein</guilabel
+> können Sie einen <guilabel
+>Namen</guilabel
+> und eine <guilabel
+>Beschreibung</guilabel
+> eingeben oder ändern.</para>
+
+<para
+>Auf der Karteikarte <guilabel
+>Erscheinungsbild</guilabel
+> können Sie die angezeigten Spalten und Statussymbole auswählen und einrichten. Um eine Spalte hinzuzufügen, klicken Sie mit der &RMBn; auf die Zeile mit den Spaltentiteln und wählen <guilabel
+>Spalte hinzufügen</guilabel
+> aus dem Kontextmenü. Geben Sie einen Namen an und wählen im Auswahlfeld <guilabel
+>Ein Klick auf die Spaltenüberschrift sortiert die Nachrichten</guilabel
+>, wie die Spalte durch Klicken sortiert werden soll. <guilabel
+>In der Voreinstellung sichtbar</guilabel
+> ist für neue Spalten immer aktiviert. Deaktivieren Sie diese Einstellung, wenn Sie die Anzeige im Kontextmenü der Titelleiste der Nachrichtenliste nach Bedarf einschalten möchten. Ziehen Sie dann ein passendes Symbol aus dem Bereich <guilabel
+>Inhalts-Elemente</guilabel
+> in das Anzeigefeld der Spalte darunter. Schrift und Farbe von Elementen in der Spalte ändern Sie mit dem Kontextmenü in diesem Bereich. Um Spalten zu verschieben, zu löschen oder deren Größe zu ändern, benutzen Sie das Kontextmenü der Spaltenleiste.</para>
+
+<para
+>Auf der Karteikarte <guilabel
+>Erweitert</guilabel
+> können Sie einstellen, ob der Vorspann angezeigt wird. Hier kann auch die Größe der Status-Symbole eingestellt werden.</para>
+</listitem
+></varlistentry
+> 
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Im Abschnitt <guilabel
+>Datumsanzeige</guilabel
+> können Sie zwischen verschiedenen Datumsformaten wählen oder eigene erstellen. Das <guilabel
+>Standard-Format</guilabel
+> zeigt den Wochentag und Datum und Zeit. Das <guilabel
+>Regionale Format</guilabel
+> zeigt nur Datum und Zeit. Das <guilabel
+>Intelligente Format</guilabel
+> zeigt Heute, Gestern und die Wochentage der letzten Woche &etc; an. Für das <guilabel
+>Benutzerdefinierte Format</guilabel
+> erhalten Sie eine Beschreibung der möglichen Werte, indem Sie auf <guilabel
+>Hilfe zum benutzerdefinierten Format</guilabel
+> klicken.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>Nachrichten-Markierungen</title>
+    
+<screenshot>
+<screeninfo
+>Erscheinungsbild - Nachrichten-Markierungen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Erscheinungsbild - Nachrichten-Markierungen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Die Karteikarte Erscheinungsbild - Nachrichten-Markierungen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>In &kmail; gibt es standardmäßig mehrere Möglichkeiten, Nachrichten zu markieren (Wichtig / Aufgabe / Gelesen), die über das Untermenü <menuchoice
+><guimenu
+>Nachricht</guimenu
+> <guisubmenu
+>Nachricht markieren &gt;</guisubmenu
+></menuchoice
+> erreichbar sind. Sie können auch zusätzliche Markierungen definieren, um Nachrichten zu kategorisieren.</para>
+
+<para
+>Verwenden Sie das Eingabefeld <guilabel
+>Verfügbare Markierungen</guilabel
+>, um einen Namen für Ihre eigene Markierung einzugeben. Verwenden Sie <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+>, um diesen Namen zur Liste hinzuzufügen. Verwenden Sie <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> um eine Markierung zu entfernen. Das eingebauten Markierungen können nicht entfernt werden. Verwenden Sie die Pfeiltasten nach oben und unten, um die Elemente in der Liste zu sortieren.</para>
+
+<para
+>Markieren Sie einen Eintrag in der Liste, um den Dialog <guilabel
+>Einstellungen für Markierungen</guilabel
+>zu aktivieren. Sie können eine oder alle sechs Einstellungen auswählen.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Textfarbe ändern:</guilabel
+></term>
+        <listitem
+><para
+>Wählen Sie diese Einstellung, um markierte Einträge in der Nachrichtenlisten in einer anderen Farbe anzuzeigen. Es wird dann eine Liste angezeigt. Wählen Sie eine voreingestellte Farbe oder „Benutzerdefiniert ...“ für mehr Möglichkeiten.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Hintergrundfarbe ändern:</guilabel
+></term>
+        <listitem
+><para
+>Wählen Sie diese Einstellung, um die Hintergrundfarbe von markierten Einträgen in der Nachrichtenliste zu ändern.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Schriftart ändern:</guilabel
+></term>
+        <listitem
+><para
+>Hier können Sie zwischen <guilabel
+>Fett</guilabel
+> oder <guilabel
+>Kursiv</guilabel
+> wählen.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Markierungs-Symbol:</guilabel
+></term>
+        <listitem
+><para
+>Klicken Sie auf diesen Knopf, um einen Symbolauswahldialog zu öffnen. Das Symbol wird auf markierten Listeneinträgen angezeigt.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Kurzbefehl:</guilabel
+></term>
+        <listitem
+><para
+>Verwenden Sie diesen Knopf, um ein Tastenkürzel für die Zuordnung dieser Markierung zu ausgewählten Nachrichten zu erstellen.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Werkzeugleisten-Knopf aktivieren:</guilabel
+></term>
+        <listitem
+><para
+>Mit dieser Einstellung wird ein neuer Eintrag zur Werkzeugleiste von &kmail; hinzugefügt. Klicken Sie dann auf diesen Eintrag, um die ausgewählte Nachricht zu markieren.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Alle hier definierten Markierungen werden automatisch als neuer Eintrag im Untermenü <menuchoice
+> <guimenu
+>Nachricht</guimenu
+><guisubmenu
+>Nachricht markieren &gt;</guisubmenu
+></menuchoice
+> angezeigt.</para>
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>E-Mail-Editor </title>
+    
+    <para
+>Eine Beschreibung zum <guilabel
+>E-Mail-Editor</guilabel
+> finden Sie auf dieser <link linkend="the-composer-window"
+>Seite</link
+>. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Allgemein </title>
+    
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Allgemein</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Allgemein</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Allgemein</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Auf dieser Karteikarte können Sie einstellen, wie &kmail; mit Signaturen umgeht und einige Formatierungsfunktionen sowie die automatische Vervollständigung von Adressen einzustellen und die automatische Speicherfunktion von &kmail; zu optimieren. </para>
+    
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Signatur automatisch einfügen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, dann wird Ihre auf der Seite <link linkend="configure-identity-signature"
+>Identitäten</link
+> eingestellt Signatur automatisch an alle von Ihnen geschriebenen Nachrichten (neue Nachrichten, Antworten &etc;) angehängt. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Signatur über dem zitierten Text einfügen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn dies ausgewählt ist, dann wird die Signatur oben und nicht unten im Editorfenster angezeigt. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Trennzeichen vor die Signatur stellen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn dies aktiviert ist, fügt &kmail; "-- " (Bindestrich Bindestrich Leerzeichen) vor Ihrer Signatur ein, wenn Ihre Signatur nicht so beginnt. Diese Trennlinie ist ein <emphasis
+>de facto</emphasis
+> Internet-Standard. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Beim Antworten Signatur entfernen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn dies aktiviert ist, entfernt &kmail; die Signatur aus der ursprünglichen Nachricht, wenn Sie eine Antwort verfassen. Wenn Sie die Signatur nicht ausgewählt haben und <guilabel
+>Beim Antworten nur ausgewählten Text zitieren</guilabel
+> aktiviert ist, lässt &kmail; die Signatur weg, ohne diese Einstellung zu berücksichtigen. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Beim Antworten nur ausgewählten Text zitieren</guilabel>
+    </term>
+    <listitem>
+      <para
+>Ist diese Einstellung aktiv, wird beim Antworten nur der ausgewählte Text im Nachrichtenfenster zitiert, nicht der gesamte Nachrichtentext. Damit kann schnell so geantwortet werden, dass nur die wichtigen Teile der Nachricht, auf die Sie sich beziehen, zitiert wird. Ist dies aktiviert, aber kein Text ausgewählt, wird die gesamte Nachricht als Zitat eingefügt. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Intelligent zitieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Bei Aktivierung von <guilabel
+>Intelligent zitieren</guilabel
+> wird versucht, umgebrochene lange Zeilen dennoch korrekt zu zitieren (nämlich das Zeichen <quote
+>&gt;</quote
+> am Zeilenanfang einzufügen). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Zeilenumbruch in Spalte:</guilabel>
+    </term>
+    <listitem>
+      <para
+>Ist dies aktiviert, wird der Zeilenumbruch (<menuchoice
+> <guimenu
+>Optionen</guimenu
+><guimenuitem
+>Zeilenumbruch</guimenuitem
+> </menuchoice
+> im E-Mail-Editor automatisch ausgewählt. Verwenden Sie das Drehfeld, um die maximale Zeilenlänge einzustellen. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Antworten oder Weiterleiten im visuellen Format der ursprünglichen Nachricht (Klartext oder &HTML;)</guilabel>
+    </term>
+    <listitem>
+      <para
+>Wenn dies aktiviert ist, wird immer die &HTML;-Werkzeugleiste angezeigt, wenn die Nachricht, auf die Sie antworten, einen &HTML;-&MIME;-Vorspann enthält.  Ansonsten, behält der E-Mail-Editor den Status der Symbolleiste aus der vorherigen Sitzung bei. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Anzeige von einfachem Text in &HTML;-Nachrichten verbessern</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Einfachen Textteil einer Nachricht nach dem &HTML;-Markup formatieren. Fettdruck, Kursiv und unterstrichener Text, Listen und externe Referenzen werden unterstützt. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Automatisch Empfangs- und Lesebestätigungen anfordern</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, dann ist die Standardeinstellung für <xref linkend="composer-options-request-mdn"/> <emphasis
+>aktiviert</emphasis
+>. Verwenden Sie diese Option nur, wenn Sie wissen, was Sie tun. &mdn;s gelten vielen Leuten als lästig (oder werden einfach ignoriert). Es ist besser, sie nur bei Bedarf anzufordern. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>In E-Mails gefundene Adressen zum Vervollständigen verwenden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn dies aktiviert ist, nimmt &kmail; die Adressen aus allen gespeicherten Nachrichten in die Liste der Ziele für die automatische Vervollständigung auf, &eg;, wenn Sie mit der Eingabe in das Feld <guilabel
+>An</guilabel
+>: beginnen. Diese erscheinen dann als <guilabel
+>In Ihren Daten gefundene Kontakte</guilabel
+>. Ohne diese Einstellung werden nur die passenden Einträge aus &kaddressbook; und <guilabel
+>Zuletzt verwendete Adressen</guilabel
+> in der Liste angezeigt. Verwenden Sie das Drehfeld, um die Anzahl der Einträge in der Liste einzustellen. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Zuletzt verwendete Adressen zum Vervollständigen verwenden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Mit dieser Einstellung nimmt &kmail; die zuletzt verwendeten Adressen in die Liste der Ziele für die automatische Vervollständigung auf, &eg; wenn Sie mit der Eingabe in das Feld <guilabel
+>An</guilabel
+>: beginnen. Diese erscheinen dann als <guilabel
+>Zuletzt verwendete Adressen</guilabel
+>. Ohne diese Einstellung werden nur die passenden Einträge aus &kaddressbook; und <guilabel
+>In Ihren Daten gefundene Kontakte</guilabel
+> in der Liste angezeigt. Verwenden Sie das Drehfeld, um die Anzahl der Einträge in der Liste einzustellen. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+><guibutton
+>Vervollständigung einrichten ...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>Klicken Sie auf diesen Knopf, um den Einrichtungsdialog für die Adressen-Vervollständigung zu öffnen. Sie können die Reihenfolge der Einträge anpassen, <guilabel
+>Zuletzt verwendete Adressen</guilabel
+> hinzufügen oder entfernen und eine Sperrliste mit Adressen erstellen, die nie in der Vervollständigung angezeigt werden sollen. Beachten Sie, dass dieser Dialog auch über ein Kontextmenü aufgerufen werden kann. indem Sie zum Beispiel mit der &RMBn; in das Feld <guilabel
+>An:</guilabel
+> im E-Mail-Editor klicken. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Intervall für automatisches Speichern</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Eine Sicherheitskopie des Texts im Editorfenster kann in regelmäßigen Abständen angelegt werden. Mit dieser Einstellung können Sie das Intervall angeben. „Kein automatisches Speichern“ schaltet das Erstellen von Sicherheitskopien ab. </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>Standard-Vorlagen</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Standard-Vorlagen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Standard-Vorlagen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Standard-Vorlagen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Hier können Sie die Standard-Vorlagen bearbeiten, die beim Verfassen einer neuen Ersetzungsbefehle, indem Sie sie einfach eingeben oder aus dem Menü <guimenu
+>Befehl einfügen</guimenu
+> wählen. Dies sind globale Standard-Vorlagen. Sie können durch Vorlagen für eine Identität oder einen Ordner überschrieben werden. Hier können Sie diese Standardvorlagen ändern. </para>
+
+    <para
+>Eine ausführliche Erklärung zur Einstellung von Vorlagen finden Die im Kapitel <link linkend="configure-identity-templates"
+>Identitäten</link
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>Eigene Vorlagen</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Eigene Vorlagen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Eigene Vorlagen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Eingen Vorlagen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Hier können Sie eigene Vorlagen für das Antworten auf oder das Weiterleiten von Nachrichten erstellen, ändern und löschen. Erstellen Sie eine eigene Vorlage, indem Sie den Namen ins Eingabefeld eintragen und dann auf den Knopf <guiicon
+>+</guiicon
+> drücken. Sie können der Vorlage auch eine Tastenkombination zuweisen, um einen schnelleren Zugriff darauf zu haben. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+    
+    <para
+>Die Vorlagen unterstützen das automatische Ersetzen von Platzhaltern; Sie können diese manuell eingeben oder aus dem Menü <guimenu
+>Platzhalter einfügen</guimenu
+> wählen. </para>
+    
+    <para
+>Es gibt vier Vorlagen-Typen: <guilabel
+>Antworten</guilabel
+>, <guilabel
+>Allen antworten</guilabel
+>, <guilabel
+>Weiterleiten</guilabel
+> und <guilabel
+>Allgemein</guilabel
+> für Vorlagen, die zu jeder Aktion passen. Vorlagen des Typs <guilabel
+>Allgemein</guilabel
+> können nicht mit einer Tastenkombination verknüpft werden. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>Betreff</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Betreff</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Betreff</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Betreff</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Dieser Abschnitt enthält eine Liste von Präfixen für <quote
+>Antworten</quote
+> und <quote
+>weitergeleitete Nachrichten</quote
+>. Falls man Nachrichten erhält, die andere Präfixe für diesen Zweck verwenden, kann man sie der Liste in &kmail; hinzufügen, damit &kmail; sie von nun an erkennt. Auf diese Weise kann &kmail; diese Präfixe bei der Sortierung von Nachrichten oder der Erstellung der Betreffzeile einer Antwort ignorieren und optional durch <quote
+>Re:</quote
+> oder <quote
+>Fwd:</quote
+> ersetzen. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>Zeichensatz</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Zeichensatz</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Zeichensatz</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Zeichensatz</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Hier können Sie die Standardzeichensätze für eigene Nachrichten festlegen. Für jede geschriebene Nachricht wird überprüft, ob sie in einem der aufgelisteten Zeichensätze geschrieben wurde. Begonnen wird dabei oben in der Liste. Falls keiner der gelisteten Zeichensätze für die Nachricht ausreicht, erscheint eine Meldung, einen geeigneten Zeichensatz im Menü <menuchoice
+><guimenu
+>Optionen</guimenu
+><guisubmenu
+>Kodierung</guisubmenu
+></menuchoice
+> auszuwählen. </para>
+
+    <para
+>Falls man <guilabel
+>Ursprungs-Zeichensatz beim Beantworten und Weiterleiten möglichst beibehalten</guilabel
+> markiert, wird der ursprüngliche Zeichensatz beibehalten, wenn es nicht mittlerweile Zeichen gibt, die nicht mehr in diesem Zeichensatz dargestellt werden können. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>Vorspann</title>
+    <screenshot>
+    <screeninfo
+>E-Mai-Editor - Vorspann</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mai-Editor - Vorspann</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mai-Editor - Vorspann</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Mit <guilabel
+>Benutzerdefinierte Endung für Nachrichtenkennung benutzen</guilabel
+> erzeugt &kmail; Nachrichtenkennungen mit einer eigenen Endung. Die gewünschte Endung kann im Feld <guilabel
+>Benutzerdefiniert Endung für Nachrichtenkennung</guilabel
+> eingetragen werden. Die Endung muss weltweit eindeutig sein. Sie sollten möglichst den Namen einer eigenen Domain verwenden. Falls <guilabel
+>Benutzerdefinierte Endung für Nachrichtenkennung benutzen</guilabel
+> nicht markiert ist, generiert &kmail; automatisch die komplette Nachrichtenkennung. Im Zweifelsfalls sollte man dieses Ankreuzfeld nicht markieren. </para>
+
+    <para
+>Die Liste <guilabel
+>Definieren Sie eigene MIME-Vorspannfelder</guilabel
+> legt die Vorspannfelder fest, die &kmail; für den Versand von Nachrichten verwendet. Man kann entweder neue Felder erfinden oder existierende überschreiben. Diese Einstellmöglichkeit ist für Anfänger nicht sinnvoll. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>Anhänge</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Anhänge</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Anhänge</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Anhänge</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Wenn Sie Anhänge mit Dateinamen, die nicht-englische Zeichen enthalten, an Benutzer von <application
+>&Microsoft; Outlook</application
+> oder <application
+>&Microsoft; Outlook Express</application
+> verschicken wollen, dann sollten Sie die Option <guilabel
+>Outlook-kompatible Namensvergabe für Anhänge</guilabel
+> anwählen. &kmail; kodiert dann die Anhangnamen auf eine nicht-standardisierte Weise, die von <application
+>&Microsoft; Outlook</application
+> verstanden wird. </para>
+
+    <para
+>Mit dieser Einstellung erzeugt &kmail; nicht-standard-konforme Nachrichten, die von standard-konformen E-Mail-Programmen nicht verstanden werden. Sie sollten dies also nur verwenden, wenn es wirklich nötig ist. </para>
+
+    <para
+>Wählen Sie <guilabel
+>Suche nach fehlenden Anhängen aktivieren</guilabel
+> aus, wenn Sie von &kmail; gewarnt werden möchten, wenn Sie eine Nachricht ohne Anhänge versenden, obwohl der Nachrichtentext bestimmte Wörter enthält, die anzeigen, dass Sie eigentlich einen Anhang anhängen wollten. Die Liste der Schlüsselwörter kann bearbeitet werden. </para>
+    
+    <para
+>Im Drehfeld <guilabel
+>Maximale Größe des Anhangs</guilabel
+> können Sie einen Wert dafür einstellen. Wenn Sie versuchen, eine Datei anzuhängen, die größer ist als der angegebene Wert, gibt &kmail; eine Fehlermeldung aus und verweigert das Anhängen der Datei. Beachten Sie, dass es sich hierbei um einen Wert für einen einzelne angehängte Datei und nicht für die Größe aller Anhänge zusammen handelt. Außerdem wird die Dateigröße geprüft, bevor die Datei in Base 64-Kodierung konvertiert wird, falls dies erforderlich ist. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>Autokorrektur</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Autokorrektur</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Autokorrektur</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Autokorrektur</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Um die automatische Korrektur von häufigen Tippfehlern zu aktivieren, wählen Sie <guilabel
+>Autokorrektur aktivieren</guilabel
+>. Wählen Sie dann im Auswahlfeld die Sprache für die Autokorrektureinstellungen. Sie können die Einstellungen aus <application
+>LibreOffice</application
+> oder von einer anderen &kmail;- oder &calligra;-Installation importieren, indem Sie die entsprechenden Optionen im Auswahlfeld <guilabel
+>Importieren ... <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guilabel
+> auswählen. Möchten Sie Ihre Einstellungen in einem anderen Programm oder in einer anderen &kmail;-Installation benutzen, wählen Sie den Knopf <guibutton
+>Exportieren</guibutton
+>. </para>
+    
+    <para>
+      <variablelist
+><title
+>Autokorrektur-Einstellungen</title>
+        <varlistentry>
+             <term
+><guilabel
+>Einfache Autokorrektur</guilabel
+></term>
+             <listitem>
+               <para
+>Auf dieser Karteikarte können Sie die Autokorrektur von häufigen Schreibfehlern einstellen. Klicken Sie auf das Ankreuzfeld neben der Funktion, die Sie verwenden möchten. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Benutzerdefinierte Anführungszeichen</guilabel
+></term>
+             <listitem>
+               <para
+>Sie können doppelte oder einfache Anführungszeichen durch typographische Anführungszeichen ersetzen lassen, wenn Sie die entsprechenden Felder ankreuzen. Außerdem können Sie geschützte Leerzeichen vor bestimmten Satzzeichen für französischen Text einfügen lassen. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Erweiterte Autokorrektur</guilabel
+></term>
+             <listitem>
+               <para
+>Kreuzen Sie <guilabel
+>Wortersetzung aktivieren</guilabel
+> an, um benutzerdefinierte automatische Worterstzungen einzugeben. Geben Sie eine eigene zu ersetzende Zeichenfolge im Feld <guilabel
+>Suchen</guilabel
+> und das Ersetzungswort dazu im Feld <guilabel
+>Ersetzen</guilabel
+> ein. Klicken Sie dann auf <guibutton
+>Hinzufügen</guibutton
+>. Um eine definierte Wortersetzung zu löschen, klicken Sie auf die Zeile und dann auf <guibutton
+>Entfernen</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Ausnahmen</guilabel
+></term>
+             <listitem>
+               <para
+>Hier können Sie Ausnahmen eintragen, die von &kmail; bei der Autokorrektur nicht als Satzende behandelt und als zwei Großbuchstaben zugelassen werden soll. Geben Sie die Ausnahmen ein und klicken Sie dann auf <guibutton
+>Hinzufügen</guibutton
+>. Um eine Ausnahme zu löschen, klicken darauf und dann auf <guibutton
+>Entfernen</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+      
+    <para
+>Haben Sie alle Einstellungen für die Autokorrektur vorgenommen, klicken Sie auf den Knopf <guibutton
+>Anwenden</guibutton
+> oder <guibutton
+>OK</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace --> 
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>Bildgröße automatisch ändern</title>
+    <screenshot>
+    <screeninfo
+>E-Mail-Editor - Bildgröße automatisch ändern</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>E-Mail-Editor - Bildgröße automatisch ändern</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte E-Mail-Editor - Bildgröße automatisch ändern</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Manchmal möchten Sie die Größe von Bildern als Anhänge von ausgehenden Nachrichten ändern, &eg; wegen Einschränkungen durch den E-Mail-Server. Wählen Sie dazu <guilabel
+>Bildgröße automatisch ändern</guilabel
+>. Es gibt mehrere Einstellungen für diese Funktion. </para>
+      
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Allgemein</guilabel
+></term>
+       <listitem>
+         <para
+>Hier können drei Einstellungen für die Größenänderung von Bildern angegeben werden. Soll das Verhältnis von Breite zu Höhe erhalten bleiben, &eg; für Fotos, wählen Sie <guilabel
+>Größenverhältnis beibehalten</guilabel
+>. Als Voreinstellung wird vor der Änderung der Bildgröße um Bestätigung gefragt, Diese Verhalten können Sie abschalten, indem Sie <guilabel
+>Nachfragen vor Größenänderung</guilabel
+> deaktivieren. Normalerweise wird die Datei im Format <acronym
+>JPG</acronym
+> gespeichert, möchten Sie aber das Format <acronym
+>PNG</acronym
+> benutzen, wählen Sie des im Auswahlfeld <guilabel
+>Ausweichen auf Format</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Bild</guilabel
+></term>
+       <listitem>
+         <para
+>Angenommen Sie haben einen Empfänger, der nur Bilder bis zu einer bestimmten Größe wegen Beschränkungen durch seinen E-Mail-Anbieter empfangen kann. Benutzen Sie dann die Einstellung <guilabel
+>Bild auf maximale Abmessung verkleinern</guilabel
+>. Geben Sie dann minimale und maximale Bildgrößen ein und tragen deren E-Mail-Adressen auf der Karteikarte <guilabel
+>Empfänger</guilabel
+> ein. Weitere Informationen zu Empfängern werden später gegeben. Möchten Sie eigene Größen verwenden, wählen Sie die letzte Einstellung <guilabel
+>Benutzerdefiniert</guilabel
+> in den Auswahlfeldern für Höhe und Breite und geben die gewünschten Dimensionen in die Größenfelder ein. Sie können außerdem auch kleine Bilder vergrößern, indem Sie <guilabel
+>Bild auf minimale Abmessung vergrößern</guilabel
+> auswählen. Die letzte Einstellung erlaubt es, Bilder kleiner als die festgelegte Dateigröße zu überspringen. </para>
+       </listitem>
+     </varlistentry>
+     
+     <varlistentry
+><term
+><guilabel
+>Dateiname</guilabel
+></term>
+       <listitem>
+         
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Quellenfilter</guilabel
+></term>
+             <listitem>
+               <para
+>Möchten Sie die Größenänderung anhand der Dateinamen durchführen, stellen Sie hier den passenden Filter ein, wenn Sie &eg; jeden Tag mehrere Bilder mit der gleichen Größe versenden. Sie könnten dann &etc; für alle Bilder den Text „Arbeit“ im Namen verwenden, dann <guilabel
+>Alle Dateien einschließen, deren Namen eines der Muster enthält</guilabel
+> auswählen und „Arbeit“ in das Textfeld <guilabel
+>Muster</guilabel
+> eintragen. Auf die gleiche Weise können Sie Dateien ausschließen, indem Sie stattdessen <guilabel
+>Alle Dateien ausschließen, deren Namen eines der Muster enthält</guilabel
+> auswählen. Als Voreinstellung wird keine Filterung durchgeführt. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Bildformat</guilabel
+></term>
+             <listitem>
+               <para
+>Wählen Sie <guilabel
+>Größe aller Bilder in einem dieser Formate ändern</guilabel
+>, um ein bestimmtes Format für die Größenänderung anzugeben. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>Ist diese Einstellung aktiviert, müssen Sie auf <guibutton
+>Format auswählen ...</guibutton
+> klicken und im Dialog ein Format auswählen. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Dateinamen geänderter Bilder</guilabel
+></term>
+             <listitem>
+               <para
+>Wählen Sie <guilabel
+>In der Größe geänderte Bilder nach folgendem Muster ändern</guilabel
+>, wenn Sie geänderte Bilder nach einem bestimmten Muster umbenennen möchten. Geben Sie dazu einige der folgenden Platzhalter in das Textfeld ein: <simplelist>
+                 <member
+>%t für die aktuelle Zeit</member>
+                 <member
+>%d für das aktuelle Datum</member>
+                 <member
+>%n für den ursprünglichen Dateinamen</member>
+                 <member
+>%e für die ursprüngliche Dateierweiterung</member>
+                 <member
+>%x für die neue Dateierweiterung</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         
+         </listitem>
+       </varlistentry>
+     
+       <varlistentry
+><term
+><guilabel
+>Empfänger</guilabel
+></term>
+         <listitem>
+           <para
+>Auf dieser Karteikarte geben Sie Empfänger ein, die Bilder mit geänderten Größen erhalten sollen. Sie müssen angeben, ob eine oder mehrere E-Mail-Adressen verwendet werden sollen und dann die Adressen mit Doppelpunkt <quote
+>:</quote
+> als Trennzeichen eintragen. Sie können auch bestimmte Empfänger eingeben, die keine in der Größe geänderte Bilder erhalten sollen. In der Voreinstellung ist diese Filterung abgeschaltet. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Sicherheit</title>
+  
+  <para
+>Auf dieser Seite können Sie Anzeige von &HTML; einstellen. Außerdem können Sie hier Ver- und Entschlüsselungsfunktionen und Einstellungen für betrügerische E-Mails anpassen. und festlegen, wie Empfangs- und Lesebenachrichtigungen behandelt werden. Beachten Sie, dass diese Einstellungen <emphasis
+>nichts</emphasis
+> mit mit Antiviren-Sicherheitsmaßnahmen zu tun haben. Informationen dazu finden Sie im Kapitel <link linkend="the-anti-virus-wizard"
+>Anti-Virus-Assistent</link
+> von &kmail; </para>
+  
+  <sect2 id="configure-security-reading">
+    <title
+>Lesen</title>
+    
+    <screenshot>
+    <screeninfo
+>Sicherheit - Lesen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Sicherheit - Lesen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Die Karteikarte Sicherheit - Lesen</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+    
+    <para
+>Auf dieser Seite können Sie sicherheitsrelevante Optionen für das Lesen von Nachrichten einstellen.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>HTML-Ansicht vor Klartext bevorzugen</guilabel
+></term>
+	  <listitem>
+            <para
+>Als Standard werden &HTML;-Nachrichten als einfacher Text angezeigt. Möchten Sie diese Nachrichten automatisch im &HTML;-Format und -Layout anzeigen lassen, wählen Sie diese Einstellung. Es wird empfohlen, auf die &HTML;-Formatierung zu verzichten, da es Sicherheitsproblemen bei der Anzeige im &HTML;-Format auftreten können. </para>
+            <para
+>Sie können trotzdem einzelne E-Mails im &HTML;-Format betrachten, indem Sie auf die Leiste Klartext-Nachricht/&HTML;-Nachricht links im Nachrichtenfenster klicken. Weitere Informationen und Einstellungen zu dieser Funktion finden Sie auf der Karteikarte <link linkend="configure-appearance-general"
+>Allgemein</link
+> auf der Seite <guilabel
+>Erscheinungsbild</guilabel
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>Nachrichten dürfen externe Referenzen aus dem Internet laden</guilabel
+></term>
+	  <listitem>
+            <para
+>Ist dies aktiviert kann &kmail; externe Bilder, Stilvorlagen &etc; aus dem Internet laden, wenn Sie eine &HTML;-Nachricht lesen. Diese Einstellung sollte möglichst nicht gewählt werden, sie hat allerdings keine Auswirkungen, wenn Sie lediglich einfache Text-Nachrichten lesen. </para>
+            <para
+>Durch externe Referenzen können Personen, die Spam-Mail versenden, leicht überprüfen, ob und wann die Nachricht gelesen wurde. Diese Einstellung hat keinen Effekt auf &Java;, JavaScript, da diese in &kmail; nicht unterstützt werden. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>Hinweis auf verdächtige betrügerische E-Mails</guilabel
+></term>
+      <listitem>
+            <para
+>Mit der zunehmenden Verbreitung von E-Mails nimmt leider auch die Anzahl von Betrugsversuchen mit E-Mails zu. Diese betrügerischen E-Mails täuschen zum Beispiel als Absender eine tatsächlich existierende Firma oder Institution vor, aber in Wirklichkeit enthalten sie Verknüpfungen zu bösartigen Webseiten, die Ihre persönlichen Daten abfragen. Das kann zum Identitätsdiebstahl und Schlimmerem führen. In der Voreinstellung analysiert &kmail; Nachrichten auf bekannte Betrugsverfahren und informiert Sie über verdächtige E-Mails. Es wird dringend empfohlen, diese Funktion zu benutzen. Möchten Sie diese Prüfung abschalten, deaktivieren Sie <guilabel
+>Benachrichtigung über möglicherweise betrügerische E-Mails</guilabel
+>. </para>
+            <para
+>Werden &eg; E-Mails von vertrauenswürdigen Freunden fälschlicherweise als betrügerische E-Mails gekennzeichnet, können Sie deren E-Mail-Adresse in die <guilabel
+>Positiv</guilabel
+>liste eintragen, indem Sie auf <guibutton
+>Hinzufügen</guibutton
+> klicken und die Adressen im Dialog eingeben. Beachten Sie, dass zurzeit nur vollständige E-Mail-Adressen unterstützt werden. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>URL mit Googles Phishing-System überprüfen</guilabel
+></term>
+          <listitem>
+            <para
+>Wählen Sie diese Einstellung, damit &kmail; die Google-Datenbank mit verdächtigen Phishing-Webseiten abfragt, wenn URLs in eine Nachricht eingebettet sind. Wenn eine Übereinstimmung gefunden wird, erhalten Sie eine Warnung. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>E-Mails nach Tracking-URLs durchsuchen</guilabel
+></term>
+          <listitem>
+            <para
+>Standardmäßig überprüft &kmail; automatisch in &HTML;-Nachrichten eingebettete URLs und warnt Sie, wenn eine davon versucht, Sie zu verfolgen. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Verschlüsselte Nachrichten beim Betrachten automatisch entschlüsseln, sofern möglich</guilabel
+></term>
+          <listitem>
+            <para
+>In der Voreinstellung versucht &kmail; verschlüsselte Nachrichten automatisch zu entschlüsseln. Deaktivieren Sie diese Einstellung, wenn Sie das Entschlüsseln manuell durchführen möchten. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+	      <term
+><guilabel
+>Schlüssel und Zertifikate automatisch importieren</guilabel
+></term>
+	      <listitem>
+	        <para
+>Wenn diese Option angewählt ist, importiert &kmail; automatisch alle Anhänge, die &openpgp;-Schlüssel enthalten, in Ihren lokalen Schlüsselring, und alle Anhänge, die &smime;-Schlüssel enthalten in Ihren lokalen Schlüsselspeicher. </para>
+	        <note>
+	          <para
+>Zum Überprüfen von &smime;-Signaturen müssen immer die enthaltenen Zertifikate importiert werden. Das ist von dieser Option daher nicht betroffen. Dies hat auch nichts mit der Option <option
+>auto-key-retrieve</option
+> von &gpg; zu tun, mit der &gpg; versucht, unbekannte Schlüssel von einem Schlüssel-Server zu importieren. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>Empfangs- und Lesebenachrichtigungen</title>
+        <screenshot>
+          <screeninfo
+>Sicherheit - Empfangs- und Lesebenachrichtigungen</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>Sicherheit - Empfangs- und Lesebenachrichtigungen</phrase>
+              </textobject>
+              <caption>
+                <para
+>Die Karteikarte Sicherheit - Empfangs- und Lesebenachrichtigungen</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>Empfangs- und Lesebenachrichtigungen</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>&mdn;s sind eine Generalisierung dessen, was allgemein eine <quote
+>Lesebestätigung</quote
+> genannt wird. Der Autor einer Nachricht erbittet das Verschicken einer Benachrichtigung, und das E-Mail-Programm des Empfängers erzeugt eine Antwort, aus der der Autor ersehen kann, was mit seiner Nachricht passiert ist. Gängige Benachrichtigungsarten sind <quote
+>displayed</quote
+> (angezeigt, also gelesen), <quote
+>deleted</quote
+> (gelöscht) und <quote
+>dispatched</quote
+> (&ie; weitergeleitet). </para>
+	        <para
+>Die folgenden Optionen zur <guilabel
+>Versandregelung</guilabel
+> stehen zur Verfügung, um zu steuern, <emphasis
+>wann</emphasis
+> &kmail; &mdn;s versenden soll. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>Ignorieren</guilabel
+> (empfohlen) </term>
+		    <listitem>
+		      <para
+>Ignoriert automatisch alle Anforderungen nach Bestätigungen. Keine &mdn; wird jemals automatisch versendet werden. </para>
+		    </listitem>
+          </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Nachfragen</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Versendet Benachrichtigungen erst, nachdem der Benutzer seine Erlaubnis gegeben hat. Auf diese Weise können Sie &mdn;s für ausgewählte Nachrichten verschicken, für andere aber verweigern oder ignorieren. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Ablehnen</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Schickt immer eine <quote
+>denied</quote
+> (verweigert)-Benachrichtigung. Das ist nur <emphasis
+>geringfügig</emphasis
+> besser als immer &mdn;s zu verwenden. Der Autor weiß trotzdem noch, dass etwas mit der Nachricht gemacht worden ist, er kann nur nicht sehen, ob diese gelesen, gelöscht &etc; worden ist. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Immer senden</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Schickt immer die angeforderten Zustellungsbenachrichtigungen. Das bedeutet, dass der Autor der Nachricht erfährt, wann etwas mit der Nachricht gemacht worden, und was (gelesen, gelöscht &etc;) damit gemacht wurde. Von der Verwendung dieser Option wird dringend abgeraten, aber sie kann sinnvoll sein, wenn der Schutz der Privatsphäre bedeutungslos ist, etwa in der Kundenpflege. Daher ist sie hier enthalten. </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Wenn Sie sich nicht sicher sind, experimentieren Sie ein Weilchen mit <guilabel
+>Nachfragen</guilabel
+>, und wenn Ihnen &kmail;s Fragen lästig werden, dann schalten Sie auf <guilabel
+>Ignorieren</guilabel
+> um. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+	    <para
+>Die folgenden Optionen zu <guilabel
+>Ursprüngliche Nachricht zitieren</guilabel
+> stehen zur Verfügung, um zu steuern, <emphasis
+>wie viel</emphasis
+> von der ursprünglichen Nachricht von &kmail; mit &mdn;s zurückgeschickt werden soll. </para>
+        
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Nichts</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Kein Teil der Nachricht außer der ursprünglichen Nachrichtenkennung und dem ursprünglichen Empfänger ist in der &mdn;-Antwort enthalten. Dies erhält genug Informationen für den Absender, um die Nachricht unter seinen gesendeten Nachrichten zu finden, für die diese &mdn; erzeugt wurde. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Vollständige Nachricht</guilabel>
+            </term>
+            <listitem>
+              <para
+>Hängt die vollständige Nachricht an die Benachrichtigung an. Normalerweise ist dies übertrieben viel. Es wird keine wertvolle Information hinzugefügt, die man nicht schon aus dem Nachrichtenkopf ableiten könnte, aber manche Leute bestehen darauf, weil es für Menschen viel einfacher ist, den Inhalt der Nachricht mit dem zuvor Gesendeten in Beziehung zu setzen, als nur den Nachrichtenkopf. </para>
+            </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Nur Vorspann</guilabel>
+            </term>
+            <listitem>
+              <para
+>Hängt nur den Vorspann an die Benachrichtigung an. Das ist normalerweise sowohl für Menschen (anhand des Betreffs) und für Rechner (anhand der Nachrichtenkennung) genug, um die &mdn; der ursprünglichen Nachricht zuzuordnen. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Wenn Sie sich unsicher sind, behalten Sie die Voreinstellung. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Keine MDNs für verschlüsselte Nachrichten senden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Diese Option unterdrückt das Verschicken von &mdn;s, wenn die Nachricht (ganz oder teilweise) verschlüsselt ist. Das macht Versuche zunichte, die &mdn;-Funktionalität von &kmail; dazu zu verwenden, um herauszufinden, ob Sie in der Lage waren, die Nachricht zu entschlüsseln oder nicht. </para>
+	    <para
+>Genau genommen braucht man diese Option nicht, weil &kmail; &mdn;s unabhängig davon schickt, ob die Nachricht erfolgreich entschlüsselt werden konnte oder nicht (die Benachrichtigungsanforderung steckt im unverschlüsselten Teil der Nachricht), gibt aber dem sicherheitsbewussten Benutzer die Möglichkeit, die &mdn;s immer wenn verlangt (Option abgewählt) oder nie (Option angewählt) zu verschicken. </para>
+	    <para
+>Wenn Sie sich unsicher sind, behalten Sie die Voreinstellung, dies nicht zu aktivieren. </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Nachrichten erstellen</title>
+        <screenshot>
+        <screeninfo
+>Sicherheit - Nachrichten erstellen</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Sicherheit - Nachrichten erstellen</phrase>
+            </textobject>
+            <caption>
+              <para
+>Die Karteikarte Sicherheit - Nachrichten erstellen</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+      <para
+>Auf dieser Karteikarte können Sie die sicherheitsrelevanten Optionen für das Erstellen von Nachrichten konfigurieren. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Nachrichten automatisch signieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn dies ausgewählt ist, dann ist die Standardeinstellung <xref linkend="composer-options-sign-message"/>im Editorfenster <emphasis
+>an</emphasis
+>. </para>
+	    <para
+>Sie können dies aber trotzdem noch für jede einzelne Nachricht ein- und ausstellen. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>Beim Verschlüsseln von E-Mails immer auch für den eigenen Schlüssel verschlüsseln</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, dann wird jede Nachricht, die an die Empfänger verschlüsselt wird, auch an Sie selbst verschlüsselt. </para>
+	    <warning>
+	      <para
+>Wenn Sie diese Option abwählen, dann können Sie Nachrichten, die Sie geschrieben und an andere Leute verschlüsselt haben, möglicherweise nicht mehr lesen. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Versendete Nachrichten verschlüsselt speichern</guilabel>
+	      <footnote>
+	      <para
+>Diese Option schaltet einen Modus der Nachrichtenverschlüsselung ein, der manchmal (irreführend) <quote
+>nur-Transport</quote
+>-Verschlüsselung genannt wird. In diesem Betriebsmodus wird die Nachrichtenverschlüsselung unmittelbar entfernt, wenn die Nachricht ihr Ziel erreicht hat. Die Verschlüsselung dauert also nur solange an, wie sich die Nachricht auf dem Weg befindet. </para>
+	      <para
+>&kmail; unterstützt diesen Modus halbherzig, weil solche Funktionalität besser im E-Mail-<emphasis
+>Server</emphasis
+> (<acronym
+>MTA</acronym
+>) als im E-Mail-<emphasis
+>Klient</emphasis
+> (<acronym
+>MUA</acronym
+>) implementiert sein sollte. Zukünftige Versionen von &kmail; werden diese Option daher möglicherweise nicht mehr enthalten. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, werden Nachrichten in Ihrem Ordner <guilabel
+>Versendete Nachrichten</guilabel
+> so gespeichert, wie Sie sie verschickt haben (d.h., wenn sie verschlüsselt verschickt worden sind, dann werden sie auch so gespeichert). </para>
+	    <para
+>Wenn diese Option abgewählt ist, dann werden Nachrichten <emphasis
+>immer</emphasis
+> unverschlüsselt in Ihrem Ordner <guilabel
+>Versendete Nachrichten</guilabel
+> gespeichert, auch wenn sie verschlüsselt verschickt worden sind. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Verschlüsselungsschlüssel immer zur Bestätigung anzeigen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, dann erscheint bei jedem Verschlüsseln einer Nachricht ein Dialog, der Ihnen die Verschlüsselungsschlüssel anzeigt, die für die einzelnen Empfänger verwendet werden. Sie können dieses prüfen, verändern, und dann die Verschlüsselungsoperation bestätigen oder abbrechen. Wir empfehlen, diese Option anzuwählen, weil sie den Verschlüsselungsprozess transparenter macht. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Nachrichten möglichst automatisch verschlüsseln</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wird auch <quote
+>opportunistische Verschlüsselung</quote
+> genannt. Wenn diese Option angewählt ist, dann versucht &kmail; den Empfängern &openpgp;- oder &smime;-Schlüssel zuzuordnen, auch wenn Sie <emphasis
+>nicht</emphasis
+> ausdrücklich Verschlüsselung angefordert haben. Wenn für alle Empfänger passende Schlüssel vorhanden sind, fragt &kmail; Sie, ob Sie diese Nachricht verschlüsseln wollen oder nicht. </para>
+	    <para
+>Wir empfehlen dringend, diese Option einzuschalten, weil sie das Verschlüsseln von Nachrichten wirklich stark vereinfacht. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Nachrichten beim Speichern als Entwurf niemals signieren/verschlüsseln</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, versucht &kmail; nicht, Nachrichten zu signieren und/oder zu verschlüsseln, die lediglich im <guilabel
+>Entwürfe</guilabel
+>-Ordner gespeichert werden. Dies ist bequemer und kein großes Sicherheitsproblem, sofern der Entwürfe-Ordner nicht kompromittiert wird. &IMAP;-Benutzer sollten diese Option abschalten, wenn sich ihr <guilabel
+>Entwürfe</guilabel
+>-Ordner auf dem Server befindet. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Verschiedenes</title>
+        <screenshot>
+        <screeninfo
+>Sicherheit - Verschiedenes</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Sicherheit - Verschiedenes</phrase>
+            </textobject>
+            <caption>
+              <para
+>Die Karteikarte Sicherheit - Verschiedenes</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+
+      <para
+>Auf dieser Karteikarte können Sie sicherheitsrelevante Warnungen ein- und ausschalten. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Vor dem Versand unsignierter Nachrichten warnen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, zeigt &kmail; eine Warnung an, wenn eine Nachricht aus beliebigem Grund ohne digitale Signatur versendet werden soll. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Vor dem Versand unverschlüsselter Nachrichten warnen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, zeigt &kmail; eine Warnung an, wenn aus irgendeinem Grund eine unverschlüsselte Nachricht versendet werden soll. </para>
+	    <note>
+	      <para
+>Es ist zwar nicht ungewöhnlich, alle ausgehenden Nachrichten zu signieren, aber nicht, alle zu verschlüsseln. Sofern also Ihre Firma eine Regelung hat, nie unverschlüsselte Nachrichten zu verschicken, sollten Sie vielleicht diese Option besser ausgeschaltet lassen und sich stattdessen auf <link linkend="configure-security-composing-opportunistic-encryption"
+>opportunistische Verschlüsselung</link
+> verlassen, um benachrichtigt zu werden, wenn Sie verschlüsselte Nachrichten versenden <emphasis
+>könnten</emphasis
+>, dies aber nicht angefordert haben. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Warnen, falls Zertifikate/Schlüssel in Kürze ablaufen (Zeitgrenzen werden weiter unten festgelegt)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, gibt &kmail; eine Warnung aus, wenn ein &smime;-Zertifikat oder ein &openpgp;-Schlüssel verwendet wird, der bald abläuft. </para>
+	    <para
+>Die Vorwarnzeit, in der gewarnt wird, bevor ein Schlüssel oder Zertifikat abläuft, kann für Signier- und Verschlüsselungsschlüssel separat konfiguriert werden; für &smime; auch separat für Endbenutzerzertifikate, Zwischen-<acronym
+>CA</acronym
+>-Zertifikate und Wurzelzertifikate. </para>
+	  </listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	  <term>
+	    <guibutton
+>GnuPG-Einstellungen ...</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>Klicken Sie auf diesen Knopf, um einen umfangreichen Dialog für dieInteraktionen zwischen &kmail; und &gpg;, dem „Gnu Privacy Guard “-Programm, zu öffnen. &gpg; ist zu komplex, um es hier zu dokumentieren. Weitere Informationen finden Sie im <ulink url="https://www.gnupg.org/docs.html#guides"
+>&GNU; Privacy Handbook</ulink
+>. Wenn Sie kein Verschlüsselungsexperte sind, sollten Sie die Standardeinstellungen unverändert lassen.. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Alle „Nicht wieder fragen“-Warnungen reaktivieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Neben den wichtigsten, oben beschriebenen, Warnungen gibt es noch weitere Warnungen und Informationsmeldungen, die eine Option enthalten, sie nicht mehr anzuzeigen. Wenn Sie diese wieder einschalten möchten, nachdem Sie sie abgeschaltet hatten, können Sie dies mit diesem Knopf erreichen. <footnote
+> <para
+>Damit werden <emphasis
+>alle</emphasis
+> derartigen Warnungen in &kmail; wieder eingeschaltet. Es ergibt nicht sehr viel Sinn, dies genauer einstellen zu können, weil Sie die Optionen, die Sie weiterhin unterdrücken wollen, einfach beim nächsten Auftreten wieder abschalten können. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>&smime;-Prüfung</title>
+        <screenshot>
+        <screeninfo
+>Sicherheit - &smime;-Prüfung</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Sicherheit - &smime;-Prüfung</phrase>
+            </textobject>
+            <caption>
+              <para
+>Die Karteikarte Sicherheit - &smime;-Prüfung</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>Diese Karteikarte enthält ausgewählte Einträge aus dem <ulink url="https://linux.die.net/man/1/gpgsm"
+>Einrichtungsdialog von &gpgsm;</ulink
+>. Eine Beschreibung der Optionen finden Sie im &gpgsm;-Handbuch. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Zertifikate unter Verwendung von Sperrlisten prüfen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option angewählt ist, werden S/MIME-Zertifikate mittels Zertifikatswiderrufslisten (Certificate Revocation Lists <acronym
+>CRLs</acronym
+>) überprüft. Dies ist die Standardeinstellung. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Zertifikate online überprüfen (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option ausgewählt ist, werden S/MIME-Zertifikate mittels des Online Certificates Status Protocol (<acronym
+>OCSP</acronym
+>) überprüft. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>Adresse der OCSP-Gegenstelle:</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Geben Sie die Adresse des Servers für die Online-Überprüfung von Zertifikaten ein. Die &URL; beginnt normalerweise mit <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Signatur des OCSP-Antwortservers</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Geben Sie den zu verwenden S/MIME-Schlüssel ein oder verändern Sie diesen. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Dienst-Adresse von Zertifikaten ignorieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wählen Sie diese Option an, um die Online-Überprüfung mittels OCSP zu überspringen. Hierzu ist die Version 0.9.0 oder neuer von <emphasis
+>dirmngr</emphasis
+> notwendig. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Zertifikateinstellungen nicht überprüfen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als Voreinstellung verwendet <guilabel
+>GnuPG</guilabel
+> die Datei <filename
+>~/.gnupg/policies.txt</filename
+>, um zu überprüfen, ob eine Zertifikatseinstellung zulässig ist. Wenn diese Option ausgewählt ist, werden Einstellungen nicht überprüft. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>CRLs niemals verwenden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option ausgewählt ist, werden Zertifikat-Widerrufslisten (Certificate Revocation Lists, CRLs) nie zur Überprüfung von &smime;-Zertifikaten verwendet. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Fehlende Ausstellerzertifikate herunterladen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option ausgewählt ist, werden fehlende Ausstellerzertifikate bei Bedarf nachträglich geholt. Dies gilt für beide Überprüfungsmethoden, <acronym
+>CRLs</acronym
+> und <acronym
+>OCSP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>Keine &HTTP;-Anfragen durchführen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Schaltet die Verwendung von &HTTP; für &smime; gänzlich ab. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>&HTTP;-CRL-Verteilungspunkt von Zertifikaten ignorieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn nach der Adresse einer <acronym
+>CRL</acronym
+> gesucht wird, enthält das <quote
+>zu testende</quote
+> Zertifikat normalerweise sogenannte CRL-Verteilungspunkt-Einträge (<acronym
+>DP</acronym
+>). Diese sind &URL;s, die beschreiben, wie man auf die &URL; zugreift. Der zuerst gefundene Verteilungspunkt-Eintrag wird verwendet. Mit dieser Option werden alle Einträge, die das &HTTP;-Schema verwenden, bei der Suchen nach einem passenden Verteilungspunkt ignoriert. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>System-&HTTP;-Proxy verwenden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn diese Option ausgewählt ist, wird der rechts angezeigt Wert für den &HTTP;-Proxy (der aus der Umgebungsvariablen <varname
+>http_proxy</varname
+> stammt) für alle &HTTP;-Anfragen verwendet. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Diesen Proxy für &HTTP;-Anfragen verwenden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Geben Sie hier die Adresse Ihres &HTTP;-Proxies ein, die für alle &smime;-bezogenen &HTTP;-Anfragen verwendet werden soll. Die Syntax lautet <quote
+>host:port</quote
+>, also beispielsweise <emphasis
+>myproxy.nowhere.com:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>Keine LDAP-Anfragen durchführen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Die Verwendung von <acronym
+>LDAP</acronym
+> für &smime; gänzlich abschalten. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>LDAP-CRL-Verteilungspunkte von Zertifikaten ignorieren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn nach der Adresse einer <acronym
+>CRL</acronym
+> gesucht wird, enthält das <quote
+>zu testende</quote
+> Zertifikat normalerweise sogenannte CRL-Verteilungspunkt-Einträge (<acronym
+>DP</acronym
+>). Diese sind &URL;s, die beschreiben, wie man auf die &URL; zugreift. Der zuerst gefundene Verteilungspunkt-Eintrag wird verwendet. Mit dieser Option werden alle Einträge, die das <acronym
+>LDAP</acronym
+>-Schema verwenden, bei der Suchen nach einem passenden Verteilungspunkt <acronym
+>DP</acronym
+> ignoriert. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Primärer Rechner für LDAP-Anfragen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Wenn Sie hier einen <acronym
+>LDAP</acronym
+>-Server angeben, werden alle <acronym
+>LDAP</acronym
+>-Anfragen zunächst an diesen Server geschickt. Genauer gesagt überschreibt diese Einstellung die in <acronym
+>LDAP</acronym
+> &URL;s angegebenen Rechner und Ports und werden auch dann verwendet, wenn in den &URL;s keine Rechner- und Port-Angaben enthalten sind. Andere <acronym
+>LDAP</acronym
+>-Server werden nur dann verwendet, wenn die Verbindung zum <emphasis
+>Proxy</emphasis
+> fehlgeschlagen ist. Die Syntax lautet <acronym
+>HOST</acronym
+> oder <acronym
+>HOST:PORT</acronym
+>. Wenn <acronym
+>PORT</acronym
+> nicht angegeben wird, dann wird der Standard-<acronym
+>LDAP</acronym
+>-Port <quote
+>389</quote
+> verwendet. </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Diverses</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>Ordner</title>
+    <screenshot>
+      <screeninfo
+>Diverses - Ordner</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverses - Ordner</phrase>
+          </textobject>
+          <caption>
+            <para
+>Die Karteikarte Diverses - Ordner</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>Aufbewahrungsfrist gilt nicht für wichtige Nachrichten</guilabel
+></term>
+      <listitem>
+        <para
+>Wenn diese Option angewählt ist, werden wichtige Nachrichten nie automatisch gelöscht. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>Regelung für die Suche nach ungelesenen Nachrichten</guilabel
+></term>
+      <listitem>
+        <para
+>Diese Einstellung legt das Verhalten fest, wenn Sie eine der Tastenkombinationen (&eg; <keycap
+>Leertaste</keycap
+>) drücken, um zur nächsten oder vorherigen ungelesenen Nachricht zu gehen. Wenn es keine ungelesene Nachricht unterhalb der aktuell ausgewählten Nachricht gibt, passiert Folgendes. <itemizedlist>
+              <listitem>
+                <para
+>Mit <guilabel
+>Nicht zyklisch suchen</guilabel
+> wird die Suche an der letzten ungelesenen Nachricht im aktuellen Ordner angehalten. </para>
+              </listitem>
+              <listitem>
+                <para
+>Mit der Einstellung <guilabel
+>Im aktuellen Ordner zyklisch suchen</guilabel
+> sucht &kmail; nach der ersten ungelesenen Nachricht im Ordner. Sind alle Nachrichten gelesen, wird nicht zum nächsten Ordner gewechselt </para>
+              </listitem>
+              <listitem>
+                <para
+>Ist <guilabel
+>In allen Ordnern zyklisch suchen</guilabel
+> ausgewählt, geht &kmail; zuerst zu einer anderen ungelesenen Nachricht im aktuellen Ordner und dann erst zum nächsten Ordner mit ungelesenen Nachrichten. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Beim Öffnen eines Ordners</guilabel
+></term>
+      <listitem>
+        <para
+>Hier kann das Verhalten beim Öffnen eines Ordners eingestellt werden. <itemizedlist>
+              <listitem>
+                <para
+>Mit <guilabel
+>Zur ersten ungelesenen Nachricht springen</guilabel
+> geht &kmail; zur ersten Nachricht, die als ungelesen markiert ist. </para>
+              </listitem>
+              <listitem>
+                <para
+>Mit der Einstellung <guilabel
+>Zur zuletzt ausgewählten Nachricht springen</guilabel
+> geht &kmail; zur Nachricht, die bei der letzten Anzeige diese Ordners ausgewählt war. </para>
+              </listitem>
+              <listitem>
+                <para
+>Mit <guilabel
+>Zur neuesten Nachricht springen</guilabel
+> geht &kmail; zur neuesten Nachricht unabhängig vom Status. </para>
+              </listitem>
+              <listitem>
+                <para
+>Mit <guilabel
+>Zur ältesten Nachricht springen</guilabel
+> geht &kmail; zur ältesten Nachricht unabhängig vom Status. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Aktuelle Nachricht nach dieser Zeitspanne als gelesen markieren:</guilabel
+></term>
+      <listitem>
+        <para
+>Wenn Sie eine <guilabel
+>neue</guilabel
+> oder <guilabel
+>ungelesene</guilabel
+> Nachricht auswählen, ändert &kmail; den Status der Nachricht auf <guilabel
+>gelesen</guilabel
+> nach der eingegebenen Zeitspanne. Wenn Sie dies deaktivieren, behalten die Nachrichten ihren Status <guilabel
+>neu</guilabel
+> oder <guilabel
+>ungelesen</guilabel
+>, bis Sie ihn manuell über das Menü <guilabel
+>Ordner</guilabel
+> anpassen. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Beim Verschieben von Nachrichten in einen anderen Ordner nach der gewünschten Aktion fragen</guilabel
+></term>
+      <listitem>
+        <para
+>Falls man eine Nachricht auf einen anderen Ordner zieht, erscheint ein kleiner Dialog, der fragt, ob die Nachricht kopiert oder verschoben werden soll. Falls diese Option deaktiviert ist, wird die Nachricht ohne Nachfrage verschoben. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>Dieses Ordner beim Start öffnen</guilabel
+></term>
+      <listitem>
+        <para
+>Hier können Sie den Ordner auswählen, der beim Start von &kmail; ausgewählt sein soll. Wenn Sie nur &IMAP;-Ordner verwenden, werden Sie diese Einstellung wahrscheinlich auf Ihren &IMAP;-Posteingang setzen wollen. Ist das der Fall, können Sie die lokalen Ordner in der Liste einklappen, und sie werden beim Start von &kmail; eingeklappt bleiben. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Beim Beenden lokalen Papierkorb leeren</guilabel
+></term>
+      <listitem>
+        <para
+>Wenn diese Option aktiviert ist, dann werden beim Verlassen von &kmail; alle Nachrichten im Papierkorb gelöscht. </para>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+      <term
+><guilabel
+>Löschen von Nachrichten ohne Bestätigung erlauben</guilabel
+></term>
+      <listitem>
+        <para
+>Als Voreinstellung wird beim Löschen einer Nachricht nach einer Bestätigung gefragt. Wählen Sie diese Einstellung, wenn Sie diesen Bestätigung überspringen möchten. Beachten Sie, dass die Funktion <guilabel
+>Löschen</guilabel
+> nicht über die Menüs von den Menüs von &kmail; zugänglich ist. Sie können diese Funktion aber zur Werkzeugleiste im Dialog <menuchoice
+> <guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>Werkzeugleisten einrichten ...</guimenuitem
+></menuchoice
+> hinzufügen. </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>Einladungen</title>
+    <screenshot>
+      <screeninfo
+>Diverses - Einladungen</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverses - Einladungen</phrase>
+          </textobject>
+          <caption>
+            <para
+>Die Karteikarte Diverses - Einladungen</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Vorspannfelder für „Von“ und „An“ in Antworten auf Terminanfragen einsetzen</guilabel
+></term>
+        <listitem>
+          <para
+>Schalten Sie diese Option ein, damit <application
+>&Microsoft; Outlook</application
+> Ihre Antworten auf Einladungen versteht. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Einladung im Textteil der E-Mail verschicken</guilabel
+></term>
+        <listitem>
+          <para
+>Einladungen werden normalerweise als Anhang einer Nachricht versendet. Ist dies aktiviert. verschicken Sie Einladungen im Text der Nachricht. Das ist Einladungen und Antworten an<application
+>&Microsoft; Outlook</application
+> nötig. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Exchange-kompatible Namensvergabe für Einladungen</guilabel
+></term>
+        <listitem>
+          <para
+>Wenn <application
+>&Microsoft; Outlook</application
+> mit einem &Microsoft;-Exchange-Server eingesetzt wird, versteht es keine standardkonformen Arbeitsgruppen-E-Mails. Wenn diese Einstellung aktiviert ist, werden Einladungen in einem Format gesendet, das von &Microsoft; Exchange verstanden wird. Die Einladung wird als Anhang mit dem Namen <filename
+>ical.ics</filename
+> gesendet. </para>
+        </listitem>
+      </varlistentry>
+      
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+      
+      <varlistentry>
+        <term
+><guilabel
+>Einladungen löschen, nachdem eine Antwort versendet wurde</guilabel
+></term>
+        <listitem>
+          <para
+>Wenn diese Einstellung aktiviert ist, werden Einladungs-Nachrichten in den Papierkorb verschoben, nachdem die Antwort auf sie versendet wurde. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>Drucken</title>
+    <screenshot>
+      <screeninfo
+>Diverses - Drucken</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diverses - Drucken</phrase>
+          </textobject>
+          <caption>
+            <para
+>Die Karteikarte Diverses - Drucken</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Aus dieser Karteikarte können Sie einstellen, wie Funktion <menuchoice
+> <guimenu
+>Datei</guimenu
+><guimenuitem
+>Drucken</guimenuitem
+> </menuchoice
+> arbeitet. </para
+> 
+    
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Nur ausgewählten Text drucken</guilabel
+></term>
+        <listitem>
+          <para
+>Aktivieren Sie dies, um die ausgewählten Teile einer Nachricht zu drucken. Als Voreinstellung wird die gesamte Nachricht gedruckt. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Einstellungen der Markierungen für das Ein-/Ausblenden von Zitatzeichen beachten</guilabel
+></term>
+        <listitem>
+          <para
+>Ist dies aktiv, dann wird die Einstellung  <guilabel
+>Bei Zitaten Markierungen zum Ein-/Ausblenden anzeigen</guilabel
+> auf der Karteikarte <link linkend="configure-appearance-general"
+>Erscheinungsbild - Allgemein</link
+> beachtet. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Hintergrundfarbe und Bilder drucken</guilabel
+></term>
+        <listitem>
+          <para
+>Druckt die Hintergrundfarbe und Bilder der E-Mails. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Verschlüsselungsdetails und Signaturdetails immer anzeigen</guilabel
+></term>
+        <listitem>
+          <para
+>Aktivieren Sie dies, damit &kmail; die Verschlüsselungsdetails für verschlüsselte und/oder digital signierte Nachrichten druckt. </para>
+        </listitem>
+      </varlistentry>
+      
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>Module</title>
+    
+    <para
+>&kmail; enthält eine große Anzahl von Funktionen, die nicht alle Benutzer benötigen. Sie können eine oder mehrere dieser Funktionen auswählen, indem Sie sie auf der Einrichtungsseite <guilabel
+>Module</guilabel
+> auswählen. Wenn Sie eine bestimmte Funktion nicht benötigen, können Sie Zeit und Speicherplatz sparen, indem Sie das zugehörige Modul abwählen. </para>
+    
+    <para
+>Klicken Sie auf den Namen des Moduls, dann erscheint einekurze Beschreibung der Funktion des Moduls  auf der rechten Seite des Dialogs. </para>
+    
+    <para
+>Die verschiedenen Module, die in dieser Version von &kmail; enthalten sind, werden im Folgenden beschrieben. Die tatsächlich auf Ihrem System vorhandenen Module hängen von Ihrer verwendeten Distribution ab. </para>
+    
+    <para
+>Es gibt zwei allgemeine Regeln für die Module.  </para>
+    
+    <para
+>1. Wenn es für ein Module Einstellungen gibt, können Sie diese durch Klicken auf das Symbol <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> neben dem Namen öffnen. </para>
+    
+    <para
+>2. Wenn ein Modul aktiviert oder deaktiviert wird, muss &kmail; neu gestartet werden, damit diese Änderungen wirksam werden. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>Akonadi und Prüfen vor dem Senden</title>
+    <screenshot>
+      <screeninfo
+>Bildschirmfoto Module 1</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Bildschirmfoto Module 1</phrase>
+          </textobject>
+          <caption>
+            <para
+>Akonadi &amp; Prüfen vor dem Senden</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Agent zur E-Mail-Archivierung</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert automatische Archivierung. Informationen dazu im Handbuch zum <ulink url="help:/akonadi_archivemail_agent"
+>Agent zur E-Mail-Archivierung</ulink
+> und im Abschnitt <link linkend="archiving"
+>Archivierung</link
+> dieses Handbuchs. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent zur Erinnerung an Folgenachrichten</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert Erinnerungen an Folgenachrichten. Informationen dazu im Handbuch zum <ulink url="help:/akonadi_followupreminder_agent"
+>Agent zur Erinnerung an Folgenachrichten</ulink
+>. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>E-Mail-Benachrichtigung</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert Benachrichtigungen über neue E-Mails. Sie können die Felder auswählen, die in der Standard-Benachrichtigung angezeigt werden sollen und auch Audiosignale auswählen (gesprochener Text, Klänge), Protokoll-Einträge erstellen, &etc;.Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent zum späteren Senden</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das spätere Senden von Nachrichten. Informationen dazu im Handbuch zum <ulink url="help:/akonadi_sendlater_agent"
+>Agent zum späteren Senden</ulink
+>. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent für einheitliches Postfach</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um einen einheitliche Postfächer zu erstellen. &kmail; erstellt automatisch drei dieser Postfächer mit den Bezeichnungen Posteingang, Entwürfe und Versendete Nachrichten. Wenn Sie sowohl einen Posteingang für Lokale Ordner als auch einen oder mehrere Posteingänge für &IMAP; definiert haben, zeigt &kmail; alle verschiedenen Posteingangsdateien als einen gemeinsamen virtuellen Posteingangsordner. Sie können den Einrichtungsdialog verwenden, um weitere virtuelle Postfächer zu erstellen und jedes einzelne nach Ihren Vorstellungen anpassen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Kontakte automatisch hinzufügen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um neue Adressen zu einem Ihrer Adressbücher hinzuzufügen, wenn Sie eine E-Mail an einen neuen Kontakt senden. Verwenden Sie den Einrichtungsdialog, um Adressbücher mit Identitäten zu verknüpfen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vor dem Versenden prüfen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um ein einige Regeln anzuwenden, bevor eine Nachricht tatsächlich gesendet wird. Sie automatisch benachrichtigt, wenn Sie mehr als eine Kopie einer Nachricht an dieselbe Person zu senden. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Adresse bestätigen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Adressprüfung bei ausgehenden Nachrichten zu aktivieren. Verwenden Sie den Einrichtungsdialog, um eine Positivliste und/oder eine Negativliste für jede definierte Identität festzulegen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-composer">
+    <title
+>E-Mail-Editor und Editor-Module</title>
+    <screenshot>
+      <screeninfo
+>Bildschirmfoto Module 2</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Bildschirmfoto Module 2</phrase>
+          </textobject>
+          <caption>
+            <para
+>E-Mail-Editor &amp; Editor-Module</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Externen E-Mail-Editor öffnen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um Nachrichten in einem externen Texteditor zu schreiben. Verwenden Sie den Einrichtungsdialog für dieses Modul, um den Editor auszuwählen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Autokorrektur</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Extras</guimenu
+> <guimenuitem
+>Automatische Korrektur von Text</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Groß-/Kleinschreibung ändern</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Bearbeiten</guimenu
+> <guimenuitem
+>Groß-/Kleinschreibung ändern &gt;</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>E-Mail-Adresse einfügen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Funktion <menuchoice
+><guimenu
+>Bearbeiten</guimenu
+> <guimenuitem
+>E-Mail-Adresse einfügen ...</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Damit können Sie eine ausgewählte Email-Adresse aus einem Adressbuch in den Textkörper Ihrer Nachricht mit einem einfachen Klick der &LMBn; einfügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Geschütztes Leerzeichen einfügen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Bearbeiten</guimenu
+> <guimenuitem
+>Geschütztes Leerzeichen einfügen</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Abgekürzte Adresse einfügen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um eine abgekürzte Adresse einzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Sonderzeichen einfügen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Bearbeiten</guimenu
+> <guimenuitem
+>Sonderzeichen einfügen</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Textbausteine</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Ansicht</guimenu
+><guimenuitem
+>Textbausteine</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Text teilen</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Nachricht</guimenu
+> <guimenuitem
+>E-Mail-Text teilen ... &gt;</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Es gibt vier Einstellungen: Nextcloud, Pastebin, Bluetooth und E-Mail (öffnet einen zweiten E-Mail-Editor).Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Textgröße ändern</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Bearbeiten</guimenu
+> <guimenuitem
+>Skalierung ... &gt;</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+        
+    <sect2 id="configure-plugins-grammar">
+    <title
+>Grammatikprüfung und Vorspannstile</title>
+    <screenshot>
+      <screeninfo
+>Bildschirmfoto Module 3</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Bildschirmfoto Module 3</phrase>
+          </textobject>
+          <caption>
+            <para
+>Grammatikprüfung &amp; Vorspannstile</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Französische Grammatikprüfung</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Extras</guimenu
+> <guimenuitem
+>Grammatikprüfung (Grammalecte)</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dieses Modul ist nur für Französisch geeignet. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Grammatikprüfung (Language Tool)</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um die Aktion <menuchoice
+><guimenu
+>Extras</guimenu
+> <guimenuitem
+>Grammatikprüfung (Language Tool)</guimenuitem
+></menuchoice
+> zum E-Mail-Editor hinzuzufügen. Dies ist für diePrüfung der Grammatik in vielen verschiedenen Sprachen geeignet. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->  
+    
+    <para
+>Die folgenden sechs Modulen enthalten Vorspann-Designs, die aus dem Menü <guimenu
+>Ansicht</guimenu
+> ausgewählt werden können. Weitere Informationen im Abschnitt <link linkend="the-preview-pane-headers"
+>Vorspannzeilen</link
+> im Kapitel „&kmail; verwenden“. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Kurz“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Kurz“. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Standard-Grantlee“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Standard-Grantlee“. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Dekorativ“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Dekorativ“. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Grantlee“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Grantlee“. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Lang“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Lang“. Ähnlich wie der Standard-Vorspann, aber mit einigen weniger gebräuchliche Informationen wie „Antwort an“. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vorspann-Design „Standard“</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert das Vorspann-Design „Standard“. Wie „Dekorativ“, aber ohne Hintergrundschatten. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-misc">
+    <title
+>Nachrichtenanzeige und Verschiedenes</title>
+    <screenshot>
+      <screeninfo
+>Bildschirmfoto Module 4</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Bildschirmfoto Module 4</phrase>
+          </textobject>
+          <caption>
+            <para
+>Nachrichtenanzeige &amp; Verschiedenes</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Die nächsten sechs Module enthalten spezielle Funktionen, die nur über die Werkzeugleiste aufgerufen werden können. Verwenden Sie den Dialog <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Werkzeugleisten einrichten ... </guimenuitem
+> </menuchoice
+> zum Hinzufügen oder Entfernen zur Werkzeugleiste, nachdem Sie eines dieser Module aktiviert oder deaktiviert haben. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Termin erstellen</guilabel
+></term>
+        <listitem>
+          <para
+>Erstellt einen Kalender-Termin bei der Anzeige einer Nachricht. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Notiz erstellen</guilabel
+></term>
+        <listitem>
+          <para
+>Erstellt eine Notiz in &kontact; bei der Anzeige einer Nachricht. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Aufgabe erstellen</guilabel
+></term>
+        <listitem>
+          <para
+>Erstellt eine Aufgabe in &korganizer; bei der Anzeige einer Nachricht. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Adresse erweitern</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert die Funktion „Adresse erweitern“. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Externes Skript</guilabel
+></term>
+        <listitem>
+          <para
+>Aufruf eines ausführbaren Befehls aus der Werkzeugleisten. Verwenden Sie den zugehörigen Einrichtungsdialog, um die ausführbare Datei auszuwählen und ihr einen Namen zu geben. Der von Ihnen gewählte Name kann später als Knopf in die Werkzeugleiste eingefügt werden, so dass Sie das Skript nach Belieben aufrufen können. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Übersetzung</guilabel
+></term>
+        <listitem>
+          <para
+>Die <link linkend="using-the-translator"
+>Übersetzungs-Funktion</link
+> ist im E-Mail-Editor standardmäßig verfügbar. Verwenden Sie dieses Modul über die Werkzeugleiste, um um eine Übersetzung im Vorschaufenster der Nachricht verfügbar zu machen. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Die nächsten vier Einträge sind keine Module, sondern eingebaute &kmail;-Funktionen. Zur Einrichtung klicken Sie auf die Symbole  <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> neben dem Namen der Module. Es ist kein Neustart erforderlich, damit diese Änderungen an der Einrichtung wirksam werden. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>DKIM-Prüfung</guilabel
+></term>
+        <listitem>
+          <para
+>Mit diesem Modul können Sie die Verarbeitung von „DomainKeys Identified Mail“ (DKIM) aktivieren. DKIM ist ein kryptografisches Protokoll zur Sicherstellung der Authentizität von E-Mail-Absendern. Wenn der Absender DKIM richtig eingerichtet hat und DKIM hier aktiviert ist, sehen Sie in der Statusleiste die Meldung „DKIM gültig“ und manchmal den Namen des Servers, der die Nachricht signiert hat, in der Statusleiste am unteren Rand der Nachrichtenvorschau. </para>
+          <note
+><para
+>Wenn Sie dieses Module aktivieren, müssen Sie den Standardwert („Nichts“) im Drehfeld <guilabel
+>Datensatzschlüssel speichern</guilabel
+> in einen anderen Wert ändern. Die DKIM-Prüfung funktioniert nicht korrekt, wenn diese Variable auf „Nichts“ gesetzt ist. </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Papierkorb leeren</guilabel
+></term>
+        <listitem>
+          <para
+>Mit diesem Modul können Sie Ablaufkriterien für Ihren Papierkorb-Ordner festzulegen. Weitere Informationen finden Sie in der Dokumentation zu <link linkend="folders-properties-expiry"
+>"Ordner-Eigenschaften</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Ordner-Einstellungen</guilabel
+></term>
+        <listitem>
+          <para
+>Verwenden Sie diesen Einrichtungsdialog, um benutzerdefinierte Ordnereigenschaften für mehrere verschiedene Ordner auf einmal einzustellen. Sie können die zu ändernden Ordner aus einer Baumansicht aller Ihrer Ordner auf der linken Seite auswählen und die zu setzenden Eigenschaften aus den Karteikarten <guilabel
+>Allgemein</guilabel
+>, <guilabel
+>Ansicht</guilabel
+>, <guilabel
+>Vorlagen</guilabel
+> und <guilabel
+>Ablauf</guilabel
+> des Dialogs <link linkend="folders-properties-window"
+>Ordner-Eigenschaften</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gravatar</guilabel
+></term>
+        <listitem>
+          <para
+>Verwenden Sie dieses Modul, um die Unterstützung von Gravatar (Globally Recognized Avatar) einzurichten. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-tools">
+        <title
+>Extras und Webengine</title>
+
+    <screenshot>
+      <screeninfo
+>Bildschirmfoto Module 5</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Bildschirmfoto Module 5</phrase>
+          </textobject>
+          <caption>
+            <para
+>Extras &amp; Webengine</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Anti-Spam</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um den <link linkend="the-anti-spam-wizard"
+>Anti-Spam-Assistent</link
+> zum Menü <guimenu
+>Extras</guimenu
+> hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. Sobald Sie eine Anti-Spam-Software installiert haben, kann dieses Modul deaktiviert werden. Es wird nur für die Installation von Anti-Spam-Software benötigt, nicht für deren Ausführung. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Anti-Virus</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, um den <link linkend="the-anti-virus-wizard"
+>Virus-Assistent</link
+> zum Menü <guimenu
+>Extras</guimenu
+> hinzuzufügen. Dieses Modul ist in der Voreinstellung deaktiviert. Sobald Sie eine Anti-Virus-Software installiert haben, kann dieses Modul deaktiviert werden. Es wird nur für die Installation von Anti-Virus-Software benötigt, nicht für deren Ausführung. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Experten-Modul</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert die Funktion <menuchoice
+><guimenu
+>Nachricht</guimenu
+> <guimenuitem
+>Nachrichtenstruktur anzeigen Strg+Alt+D</guimenuitem
+></menuchoice
+> im Nachrichtenvorschaubereich. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Aktivitäten protokollieren</guilabel
+></term>
+        <listitem>
+          <para
+>Aktiviert die Funktion Aktivitätsprotokoll, die als Voreinstellung deaktiviert ist Dieses Modul fügt einen neuen Eintrag <guilabel
+>Aktivitäten protokollieren</guilabel
+> zum dem Menü <guilabel
+>Extras</guilabel
+> hinzu. Hauptsächlich für die Verwendung durch Programmentwickler gedacht, die Standard-Protokoll-Funktion liefert nicht viele Informationen (nur einen Zeitstempel "Bereit" für die meisten "Ereignisse"). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>AdBlock</guilabel
+></term>
+        <listitem>
+          <para
+>Fügt die <ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+>-Filter zu &kmail; hinzu. Die Anpassung der Filter an Ihre Erfordernisse kann einige Zeit in Anspruch nehmen. Dieses Modul ist in der Voreinstellung deaktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Do Not Track</guilabel
+></term>
+        <listitem>
+          <para
+>Wählen Sie dieses Modul, damit &kmail; eine "Do Not Track"-Anfrage an einen entfernten Server sendet, wenn eine &HTML; Nachricht zum Herunterladen von externen Inhalten auffordert. Die Wirkung einer "Do Not Track"-Anforderung hängt von den Richtlinien des Webservers ab, der die Anfrage erhält. Nicht alle Webseiten beachten diese Aufforderung. </para>
+          <para
+>Werbetreibende benutzen in &HTML;-kodierten Nachrichten oft ein 0x0- oder 1x1-Pixel-„Bild“ (auch „Tracking-Pixel“ genannt), das eigentlich eine getarnte Tracking-&URL; ist. Wenn &kmail; Bilddaten von einem Webserver abruft, muss es die in der Nachricht eingebetteten &URL;s verwenden. Der Server kann aus den in der &URL; eingebetteten Informationen ableiten, dass Sie die Nachricht geöffnet haben, &etc;. </para>
+          <para
+>Das Senden einer "Do Not Track"-Anfrage kann Ihre Privatsphäre etwas besser schützen. Aber der einzige sichere Weg zum Vermeiden von Zählpixeln besteht darin, niemals entfernte Bilder, die in &HTML; Nachrichten verschlüsselt sind, herunterzuladen. Dieses Modul ist in der Voreinstellung aktiviert. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
+    
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Optionen, die nicht über die Bedienoberfläche einzurichten sind</title>
+<para
+>Zusätzlich zu den Optionen im Einrichtungsdialog können einige Optionen direkt in der Einrichtungsdatei von &kmail; oder durch das KIOSK-System (&eg; Eingabe in einer &konsole;)gesetzt werden. Diese sogenannten <quote
+>versteckten</quote
+> Einstellungen können nicht im normalen Einrichtungsdialog von &kmail; geändert werden. Dazu muss die Einrichtungsdatei mit einem Texteditor oder mit dem Programm <command
+>kwriteconfig</command
+> geändert werden. Die Einrichtungsdatei hat das Format [Abschnittsname] gefolgt von Zeilen mit Variablen und deren Einstellung. Wenn Sie die Einrichtungsdatei manuell ändern, müssen Sie <quote
+>[Abschnittsname]</quote
+> vor den Variablen einfügen. Der Befehl <command
+>kwriteconfig</command
+> kann diesen Abschnitt für Sie hinzufügen, wenn Sie die Option <userinput
+>--group</userinput
+> verwenden. </para>
+
+<para
+>Die Einrichtungsdatei von &kmail; hat den Namen <filename
+>kmail2rc</filename
+> und befindet sich im persönlichen Ordner des Benutzers. Je nach Betriebssystem oder Distribution gibt es unterschiedliche Speicherorte für diese Datei. Die Ausgabe des Befehls <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+> zeigt den Pfad zur Einrichtungsdatei an. Für die folgenden Beispiele in diesem Kapitel wird als Pfad der Datei <filename
+>/pfad/zu/kmail2rc</filename
+> benutzt. </para>
+
+<warning
+><para
+>Beenden Sie zuerst &kmail; ehe Sie die Einrichtungsdatei bearbeiten. Starten Sie &kmail; erst dann neu, wenn die Datei geändert und die  Änderungen <emphasis
+>gespeichert</emphasis
+> sind. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Sendet Empfangs- und Lesebenachrichtigungen mit leerem Absender-Vorspann. Manche Server sind so eingerichtet, dass Sie solche Nachrichten zurückweisen. Falls Sie also Schwierigkeiten beim Versenden von MDNs haben, setzen Sie diese Option auf <quote
+>false</quote
+>. Um dies wieder zu aktivieren, fügen Sie folgendes im Abschnitt <quote
+>[MDN]</quote
+> ein:</para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>Die Standardeinstellung <quote
+>false</quote
+> verstößt streng genommen gegen Internet-Standards, wird aber aus praktischen Gründen so eingestellt. Dies verhindert, dass Server von &kmail; erzeugte MDNs zurückweisen, weil sie als Span eingestuft werden.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>Mit dieser Option kann eingestellt werden, dass das Programm vollständig beendet wird, auch wenn das Kontrollleistensymbol aktiviert ist und damit normalerweise das Programm weiter läuft. Um dieses Verhalten zu aktivieren, geben sie folgendes im Abschnitt <quote
+>[General]</quote
+> ein: </para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>In den Versionen von &kmail; vor 1.9 wurden alle Anhänge mit den Berechtigungen 600 &mdash; Lese- und Schreibrecht nur für den Eigentümer der Datei &mdash; auf der Festplatte gespeichert. Auf Wunsch vieler Benutzer wurde in &kmail; Version 1.9 diese Verhalten geändert, beim Speichern von Dateien werden jetzt die Einstellungen des Benutzerkontos aus der „umask“ berücksichtigt. Um dieses Verhalten als Standard zu aktivieren, geben sie folgendes im Abschnitt <quote
+>[General]</quote
+> ein: </para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Ist diese Einstellung aktiv, wird bei jedem Start überprüft, ob eine aktive Abwesenheits-Benachrichtigung eingerichtet ist und in diesem Fall eine Warnung angezeigt. Um dieses Verhalten abzuschalten, geben sie folgendes im Abschnitt <quote
+>[OutOfOffice]</quote
+> ein: </para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>Soll es Benutzern nicht erlaubt werden, eigene Skripte für Abwesenheits-Benachrichtigungen auf den Server zu laden, fügen Sie zum Abschnitt <quote
+>[OutOfOffice]</quote
+> folgendes hinzu: </para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Soll es den Benutzern erlaubt werden, eigene Skripte für Abwesenheits-Benachrichtigungen auf den Server zu laden, aber ohne Möglichkeit zur Änderung der Einstellungen von Domäne und Spam-Reaktion, fügen Sie zum Abschnitt <quote
+>[OutOfOffice]</quote
+> folgendes hinzu: </para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>In Skripten für Abwesenheits-Benachrichtigungen kann eine Domäne angegeben werden, um das Senden solcher Antworten zu begrenzen. Wenn Sie die <guibutton
+>Voreinstellung</guibutton
+> im Einrichtungsdialog für Abwesenheits-Benachrichtigungen wählen, wird die Domäne auf diesen Wert zurück gesetzt. Um die Voreinstellung für eine Domäne zu setzen, fügen Sie zum Abschnitt <quote
+>[OutOfOffice]</quote
+> folgendes hinzu:</para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>OutOfOfficeDomain=myMailDomain.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain myMailDomain.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Als Standard werden Abwesenheits-Antworten nicht für E-Mails gesendet, die als Spam markiert sind. Um dieses Verhalten zu ändern, fügen Sie zum Abschnitt [OutOfOffice] hinzu:</para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>ShowUserAgent</guilabel
+></term>
+<listitem>
+<para
+>Ab &kmail; Version 1.9 können die Vorspannzeilen „User-Agent“ und „X-Mailer“ im dekorativen Vorspannformat (siehe <menuchoice
+><guimenu
+>Ansicht</guimenu
+> <guisubmenu
+>Vorspann</guisubmenu
+></menuchoice
+> im Menü) angezeigt werden. Um dies zu aktivieren, geben sie folgende Zeile im Abschnitt <quote
+>[Reader]</quote
+> ein:</para>
+<itemizedlist>
+<listitem
+><para
+>Einrichtungsdatei:</para>
+<programlisting
+>ShowUserAgent=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/pfad/zu/kmail2rc</replaceable
+> --group Reader --key ShowUserAgent true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

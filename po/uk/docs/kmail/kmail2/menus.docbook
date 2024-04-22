@@ -1,0 +1,4735 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Michel.Boyer; <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>31 березня 2021 року</date>
+<releaseinfo
+>5.14.2 (Програми KDE 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Довідник щодо команд і меню</title>
+<para
+>Далі за текстом докладно обговорено кожен зі специфічних для &kmail; пунктів меню. Якщо існує клавіатурне скорочення, яке виконує ту саму дію, що і пункт меню, поряд з пунктом меню буде вказано це скорочення.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>Вікно читання повідомлень &kmail;</title>
+
+<sect2 id="reader-file-menu">
+<title
+>Меню «Файл»</title>
+<screenshot>
+<screeninfo
+>Меню «Файл»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfile.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Файл»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Файл»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="file-new">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+><guisubmenu
+>Створити &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього підменю можна створити один із чотирьох записів, ось таких:</para>
+
+    <variablelist>
+    <varlistentry id="reader-file-new-newmessage">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+><guisubmenu
+>Створити</guisubmenu
+> <guimenuitem
+>Нове повідомлення...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Створити повідомлення. Буде відкрито вікно редактора, у якому ви зможете написати текст нового повідомлення.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-file-new-message-from-template">
+      <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+><guisubmenu
+>Створити</guisubmenu
+><guisubmenu
+>Повідомлення на основі шаблону &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Створити повідомлення на основі вибраного шаблону. Додаткові відомості щодо створення шаблонів можна знайти у розділі щодо <link linkend="new-compose-from-templates"
+>створення повідомлень на основі шаблонів</link
+>. Якщо вами ще не було збережено жодного шаблону, ви побачите у меню пункт <menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Повідомлення з шаблона &gt;</guisubmenu
+><guimenuitem
+>(немає шаблонів)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-add-folder">
+      <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+><guisubmenu
+>Створити</guisubmenu
+><guimenuitem
+>Додати теку...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Створити теку. У показаному діалоговому вікні програма попросить вас вказати назву нової теки. Нову теку буде створено як підтеку поточної позначеної теки.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-new-addressbook-contact">
+      <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Створити</guisubmenu
+> <guimenuitem
+>Створити запис контакту у адресній книзі</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Відкрвиає діалогове вікно <ulink url="help:/kaddressbook/how-to-add-a-new-contact.html"
+>Новий контакт</ulink
+>, за допомогою якого ви зможете додати новий запис до збірки записів &kaddressbook;.</para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-open">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкрити...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити збережені повідомлення електронної пошти (файли .mbox).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-open-recent">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкрити недавні</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Показати список нещодавно відкритих повідомлень. У списку буде показано лише повідомлення, які було збережено як файли .mbox, а потім відкрито. Якщо таких повідомлень немає, цей пункт меню буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-save-as">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Зберегти як...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Зберігає поточне показане повідомлення до файла <filename role="extension"
+>.mbox</filename
+>. До цього файла буде включено усі заголовки і долучення у форматі &MIME;. Якщо вам потрібно зберегти повідомлення у іншому форматі (наприклад у форматі файла <filename role="extension"
+>.txt</filename
+>), зніміть позначку з пункту <guilabel
+>Автоматично вибрати суфікс назви файла (.mbox)</guilabel
+> і змініть суфікс назви файла на бажаний під час визначення назви файла.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-export-pdf">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Експортувати до PDF...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Експортувати поточне показане повідомлення у форматі файла .pdf.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Імпортувати повідомлення...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Запустити програму <application
+>Інструмент імпортування PIM</application
+>. Ця програма надає вам змогу імпортувати повідомлення з декількох клієнтів електронної пошти у &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перегляд друку...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>Відкриває діалогове вікно, за допомогою якого ви можете попередньо переглянути зображення повідомлення електронної пошти після його друку.</action
+></para>
+  <note
+><para
+>Цим пунктом можна буде скористатися, лише якщо у системі налаштовано принтер, і цей принтер є доступним до використання.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+><guimenuitem
+>Друкувати...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно, за допомогою якого ви можете надрукувати поточне показане повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-expire-all-folders">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вилучити застарілі повідомлення з усіх тек</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вилучити застарілі повідомлення з усіх тек, відповідно до правил, встановлених у <link linkend="folders-properties-window"
+>діалоговому вікні «Властивості»</link
+> кожної з тек (типовим значенням відповідного параметра є скасування вилучення всіх застарілих повідомлень).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="reader-empty-all-trash-folders">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Спорожнити всі смітники</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Скористайтеся цим пунктом, щоб спорожнити всі теки смітників, тобто локальну теку смітника і всі теки смітників, які є у вас на серверах &IMAP;. Повідомлення у теці «Смітник» буде вилучено остаточно, їх не можна буде відновити.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-work-offline">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Працювати автономно</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Перемкнути &kmail; у режим автономної роботи. Після вибору цього пункту буде скасовано всі завдання, пов'язані з роботою у мережі. Цей пункт меню буде корисним, якщо ви працюєте з повідомленнями без з'єднання з мережею. Після вибору пункту його назва зміниться на <menuchoice
+><guimenu
+>Файл</guimenu
+><guimenuitem
+>Працювати в мережі</guimenuitem
+></menuchoice
+>. Новим пунктом слід скористатися для повернення до режиму роботи у інтернеті (лише у такому режимі можна надсилати і отримувати пошту).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-check-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Перевірити пошту</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Виконати перевірку надходження нових повідомлень до всіх ваших облікових записів.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-check-mail-in">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guisubmenu
+>Перевірити пошту у &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Перевірити наявність нових повідомлень для окремого облікового запису. Список облікових записів буде показано у підменю.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надіслати всі повідомлення з теки «Вихідні». Повідомлення можуть опинитися у теці «Вхідні» через помилки у передаванні даних або якщо ви вибрали пункт відкладеного надсилання у меню створення повідомлень, створили повідомлення у автономному режимі або надіслали повідомлення, коли у програми не було доступу до інтернет-з'єднання. Якщо у теці «Вихідні» немає повідомлень, цей пункт меню буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages-via">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги за допомогою &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надіслати повідомлення з теки «Вихідні» за допомогою певного облікового запису надсилання пошти. За допомогою цього пункту ви можете вибрати сервер, який буде використано для надсилання повідомлень з черги. Параметри серверів можна визначити за допомогою діалогового вікна налаштовування &kmail; на вкладці <menuchoice
+><guiicon
+>Облікові записи</guiicon
+><guilabel
+>Надсилання</guilabel
+></menuchoice
+>. Якщо у теці «Вхідні» немає повідомлень, цей пункт меню буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-delayed">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Відкладені повідомлення...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <ulink url="help:/akonadi_sendlater_agent"
+>Агента відкладеного надсилання Akonadi</ulink
+>. У цьому діалоговому вікні буде показано список усіх повідомлень, які заплановано до надсилання згодом за допомогою пункту меню редактора повідомлень <menuchoice
+> <guimenu
+>Повідомлення</guimenu
+><guimenuitem
+>Надіслати пізніше</guimenuitem
+></menuchoice
+>. Ви можете змінювати і/або вилучати записи у цьому списку. Зауважте, що відкладені повідомлення зберігаються у теці чернеток, а не у теці «Вихідні».</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-followup">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Повідомлення стеження за нагадуванням...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <ulink url="help:/akonadi_followupreminder_agent"
+>Агента нагадування про відповіді Akonadi</ulink
+>. У цьому діалоговому вікні буде показано список усіх повідомлень із нагадуваннями («завдань»), які було створено у вікні редактора повідомлень за допомогою пункту <menuchoice
+> <guimenu
+>Налаштування</guimenu
+><guimenuitem
+>Створити нагадування щодо стеження...</guimenuitem
+></menuchoice
+>. Ви можете вилучити ці повідомлення за допомогою контекстного меню, яке можна відкрити клацанням правою кнопкою миші.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-quit">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Файл</guimenu
+> <guimenuitem
+>Вийти</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Завершити роботу &kmail;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>Меню «Зміни»</title>
+<screenshot>
+<screeninfo
+>Меню «Зміни»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Зміни»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Зміни»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-edit"
+>загального опису меню редагування</ulink
+> у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
+
+<variablelist>
+    
+<varlistentry id="reader-edit-copy-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Копіювати теку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Створити вказівник «Akonadi» на увесь вміст поточної позначеної теки і скопіювати цей вказівник до буфера обміну даними. Наступне вставлення до вікна текстового редактора призведе до додавання тексту вказівника. Якщо ж виконати дію зі вставлення у теці &kmail; (або у вікні програми для керування файлами &dolphin;) буде створено копію теки та її вмісту.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вирізати теку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Створити вказівник «Akonadi» на поточну позначену теку і скопіювати цей вказівник до буфера обміну даними. Наступна дій із вставлення до вікна текстового редактора або &dolphin; призведе до тих самих наслідків, що і дія <guimenuitem
+>Копіювати теку</guimenuitem
+>. Дія зі вставлення у вікні &kmail; призведе до пересування теки і усього її вмісту до іншого місця (якщо дані вставлено до якоїсь теки, відмінної від початкової).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-copy-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Копіювати повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Створити вказівник «Akonadi» на поточні позначені повідомлення і скопіювати цей вказівник до буфера обміну даними. Наступне вставлення до вікна текстового редактора призведе до додавання тексту вказівника. Якщо ж виконати дію зі вставлення у теці &kmail; (або у вікні програми для керування файлами &dolphin;) буде створено копію повідомлень, заголовків та усіх даних.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вирізати повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Створити вказівник «Akonadi» на поточні позначені повідомлення і скопіювати цей вказівник до буфера обміну даними. Наступна дій із вставлення до вікна текстового редактора або &dolphin; призведе до тих самих наслідків, що і дія <guimenuitem
+>Копіювати повідомлення</guimenuitem
+>. Дія зі вставлення у вікні &kmail; призведе або до створення другої копії повідомлень (якщо вставлення відбулося у початковій теці) або до пересування повідомлень до іншої теки (якщо вставлено у якусь теку, відмінну від початкової).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-paste">
+  <term
+><menuchoice
+><shortcut
+>&Ctrl;<keycap
+>V</keycap
+></shortcut
+> <guimenu
+>Зміни</guimenu
+><guimenuitem
+>Вставити</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє або увесь вміст теки або вміст позначених повідомлень, залежно від дії, яка передувала дії «Вставити». Цією дією не можна скористатися для вставлення позначеного тексту у вікні програми для читання повідомлень. Якщо у черзі дій немає дій з копіювання або вирізання, цей пункт буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-to-trash">
+  <term
+><menuchoice
+><shortcut
+>&Del;</shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Пересунути до смітника</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Пересуває вибрані повідомлення до теки смітника. Якщо вибрані повідомлення вже знаходяться у теці смітника, їх буде остаточно вилучено.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-thread-to-trash">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Del;</keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+><guimenuitem
+>Пересунути гілку до смітника</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Пересунути позначену гілку повідомлень, наприклад певну дискусію у списку листування, до теки смітника.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-find-in-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Знайти в повідомленні...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Виконати пошук у тексті поточного повідомлення для рядка, введеного у поле <guilabel
+>Знайти:</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вибрати всі повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Обирає всі повідомлення у поточній теці.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-text">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вибрати весь текст</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Обирає текст поточного показаного повідомлення.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>Меню «Перегляд»</title>
+<screenshot>
+<screeninfo
+>Меню «Перегляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Перегляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Перегляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Список повідомлень &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>У цьому підменю ви побачите вказані нижче пункти, за допомогою яких можна змінити вигляд вашого списку повідомлень.</para>
+    
+    <variablelist>
+    <varlistentry id="reader-view-messagelist-sorting">
+      <term
+><menuchoice
+><guisubmenu
+>Впорядкування &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>У цьому підменю містяться пункти визначення порядку показу повідомлень:</para>
+        <itemizedlist>
+        <listitem
+><para
+>У списку <guilabel
+>Порядок сортування повідомлень</guilabel
+> ви побачите декілька пунктів, призначення більшості з яких є очевидним. Призначення ж вказаних нижче пунктів може бути не зовсім очевидним, тому вони заслуговують на додаткові пояснення.</para>
+          <itemizedlist>
+            <listitem
+><para
+><guilabel
+>За визначеним відправником/отримувачем</guilabel
+> — показувати отримувача, коли ви переглядаєте теку надісланих повідомлень, і показуватиме відправника, якщо ви читаєте вміст вашої теки вхідних повідомлень.</para
+></listitem>
+    
+            <listitem
+><para
+>Прапорці <guilabel
+>За станом елемента дії</guilabel
+> та <guilabel
+>За станом важливості</guilabel
+> потребують обробки повідомлень до можливості використання цих варіантів. Будь ласка, ознайомтеся з розділом щодо <link linkend="reader-mark-messages"
+>позначення повідомлень</link
+>, щоб дізнатися більше про те, як позначати повідомлення.</para
+></listitem>
+          </itemizedlist>
+        </listitem>
+        
+        <listitem
+><para
+>За допомогою пунктів <guilabel
+>Напрям сортування повідомлень</guilabel
+> та <guilabel
+>Напрям сортування груп</guilabel
+> ви можете змінити напрям сортування ваших повідомлень або груп, відповідно. Зауважте, що пункти «Група» будуть доступними, лише якщо повідомлення складаються за групами.</para
+></listitem>
+        <listitem
+><para
+>За допомогою пункту <guilabel
+>У теці завжди використовується цей порядок</guilabel
+> ви можете визначати порядок сортування у окремих теках.</para
+></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-aggregation">
+      <term
+><menuchoice
+><guisubmenu
+>Складання &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Надає вам змогу вибрати варіант складання. Будь ласка, ознайомтеся із вмістом документації до вкладки <link linkend="configure-appearance-message-list"
+>Вигляд списку повідомлень</link
+> (у вікні <menuchoice
+> <guimenu
+>Параметри</guimenu
+><guisubmenu
+>Налаштувати &kmail;...</guisubmenu
+></menuchoice
+>), щоб дізнатися більше про складання.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-theme">
+      <term
+><menuchoice
+><guisubmenu
+>Тема &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Надає вам змогу вибрати візуальну тему. Будь ласка, ознайомтеся із вмістом документації до вкладки <link linkend="configure-appearance-message-list"
+>Вигляд списку повідомлень</link
+> (у вікні <menuchoice
+> <guimenu
+>Параметри</guimenu
+><guisubmenu
+>Налаштувати &kmail;...</guisubmenu
+></menuchoice
+>), щоб дізнатися більше про теми.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-create-new-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Створити вкладку</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Створити вкладку на панелі вкладок. Створена вкладка вказуватиме на теку, яку ви переглядали, коли було вибрано пункт меню. Якщо панель вкладок ще не показано, вибір цього пункту призведе до її показу. Панель вкладок може бути корисною, якщо у вас багато тек, але ви регулярно користуєтеся лише декількома з них.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-activate-next-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgDn;</keycombo
+></shortcut
+> <guisubmenu
+>Активувати наступну вкладку</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Відкриває теку, яку пов'язано із наступною вкладкою на панелі інструментів вкладок.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-activate-previous-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgUp;</keycombo
+></shortcut
+> <guisubmenu
+>Активувати попередню вкладку</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Відкриває теку, яку пов'язано із попередньою вкладкою на панелі інструментів вкладок.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-move-tab-left">
+      <term
+><menuchoice
+><guisubmenu
+>Пересунути вкладку ліворуч</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Перевпорядковує вкладки на панелі вкладок, пересуваючи активну вкладку ліворуч. Якщо ця вкладка вже перебуває на першому місці ліворуч, її буде пересунуто на кінцеву позицію праворуч.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-move-tab-right">
+      <term
+><menuchoice
+><guisubmenu
+>Пересунути вкладку праворуч</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Перевпорядковує вкладки на панелі вкладок, пересуваючи активну вкладку праворуч. Якщо ця вкладка вже перебуває на першому місці праворуч, її буде пересунуто на кінцеву позицію ліворуч.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-close-tab">
+      <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guisubmenu
+>Закрити вкладку</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+><action
+>Закрити поточну вкладку.</action
+></para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-headers">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Заголовки &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна вибрати формат перегляду заголовків повідомлення. Докладніший опис форматів можна знайти у <link linkend="using-header-options"
+>розділі, присвяченому параметрам заголовків</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-attachments">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+><guimenuitem
+>Долучення &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Змінює спосіб показу долучень на <guilabel
+>панелі попереднього перегляду повідомлення</guilabel
+> (незалежно від ієрархії &MIME;). Докладніший опис способів показу долучень можна знайти у <link linkend="using-attachment-view-options"
+>розділі, присвяченому параметрам долучень</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>.</keycap
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Розгорнути гілку/групу</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна буде показати гілку поточного повідомлення, тобто всі повідомлення, які належать до ієрархії відповідей на поточне повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>,</keycap
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Згорнути гілку/групу</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту меню можна буде згорнути гілку поточного повідомлення, тобто сховати всі повідомлення, які належать до ієрархії відповідей на поточне повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Розгорнути всі гілки</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Розгортає всі гілки у поточній теці.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Згорнути всі гілки</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Згортає всі гілки у поточній теці.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-save-display-format">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Зберегти формат показу</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Цей пункт, здається, мав бути чимось корисним, але він ще не працює як слід.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-restore-display-format">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Відновити формат показу</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Цей пункт, здається, мав відновлювати щось, що було збережено попередньою дією «Зберегти», але він також ще не працює як слід.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-disable-emoticon">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Вимкнути емоційку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Позначте цей пункт, щоб заборонити &kmail; перетворювати <literal
+>:-)</literal
+> на <inlinemediaobject
+><imageobject
+><imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-use-fixed-font">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Використовувати моноширинний шрифт</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Позначення цього пункту меню призводить до використання шрифту з символами однакової ширини (моноширинного) для показу поточного редагованого повідомлення. Шрифт, який буде використано, можна налаштувати на вкладці <link linkend="configure-appearance-fonts"
+>Шрифти</link
+> сторінки <guilabel
+>Вигляд</guilabel
+> діалогового вікна налаштовування &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-set-encoding">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Встановити кодування &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту ви зможете обрати кодування, яке буде використано для символів записів панелі повідомлень. Типово, буде позначено пункт <guilabel
+>Автоматично</guilabel
+>, він має добре працювати у більшості випадків.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-zoom">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guisubmenu
+>Масштаб &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту ви зможете збільшувати і зменшувати усі повідомлення, які показано на панелі попереднього перегляду.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>Меню «Перехід»</title>
+<screenshot>
+<screeninfo
+>Меню «Перехід»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readergo.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Перехід»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Перехід»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>J</keycap
+></shortcut
+><guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Перейти до теки...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо буде вибрано цей пункт меню, програма відкриє діалогове вікно зі списком усіх ваших тек. Натисніть на позначці теки, якщо ви хочете переглянути її вміст, і програма покаже вміст теки на панелі перегляду повідомлень.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступне повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вибрати наступне повідомлення у списку повідомлень. Цю саму дію можна виконати за допомогою клавіатурного скорочення — клавіші <keycap
+>→</keycap
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>+</keycap
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступне непрочитане повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вибрати наступне непрочитане повідомлення у списку повідомлень. Якщо під позначкою поточного обраного повідомлення більше немає позначок непрочитаних повідомлень, поведінка програми у відповідь на використання цього пункту меню залежатиме від значення параметра <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>P</keycap
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Попереднє повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Виділяє попереднє повідомлення у списку повідомлень.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>&minus;</keycap
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Попереднє непрочитане повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вибрати попереднє непрочитане повідомлення у списку повідомлень. Якщо над позначкою поточного обраного повідомлення більше немає позначок непрочитаних повідомлень, поведінка програми у відповідь на використання цього пункту меню залежатиме від значення параметра <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&plus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступна непрочитана тека</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Переводить фокус на наступну теку з непрочитаними повідомленнями.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&minus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Попередня непрочитана тека</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Переводить фокус на попередню теку з непрочитаними повідомленнями.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-text">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>Пробіл</keycap
+></shortcut
+> <guimenu
+>Перехід</guimenu
+> <guimenuitem
+>Наступний непрочитаний текст</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Гортає вниз вміст повідомлення, якщо точка перегляду не знаходиться у кінці повідомлення, якщо ж повідомлення вже було прогорнуто до кінця, переводить вас до перегляду наступного непрочитаного повідомлення.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>Меню «Тека»</title>
+<screenshot>
+<screeninfo
+>Меню «Тека»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfolder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Тека»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Тека»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-folder-properties">
+  <term
+><guimenu
+>Властивості теки</guimenu
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <link linkend="folders-properties-window"
+>Властивості теки</link
+>, за допомогою якого ви зможете змінити властивості поточної теки.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-add-folder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Додати теку...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надсилає вам запит щодо назви, а потім створює нову теку як підтеку поточної теки. Працює точно так само, як <xref linkend="reader-add-folder"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Позначити всі повідомлення як прочитані</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Встановлює для всіх непрочитаних повідомлень у поточній теці стан «прочитано».</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Позначити всі повідомлення як прочитані у цій теці і усіх її підтеках</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Встановлює для всіх нових і непрочитаних повідомлень у поточній теці (і усіх її підтеках) стан «прочитано».</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Тека</guimenu
+> <guimenuitem
+>Оновити теку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Перевірити надходження нових повідомлень до поточної вибраної теки.</para>
+  <note
+><para
+>Цим пунктом можна скористатися лише для тек &IMAP;.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Файл</guimenu
+><guimenuitem
+>Оновити цю теку і всі її підтеки</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Перевірити надходження нових повідомлень до поточної позначеної теки та усіх її підтек.</para>
+  <note
+><para
+>Цим пунктом можна скористатися лише для тек &IMAP;.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Пересунути всі повідомлення у смітник</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Пересунути всі повідомлення у вибраній теці до теки смітника.</para>
+  <note
+><para
+>Цей пункт буде доступним лише у випадку, якщо поточна вибрана тека не є текою смітника. Якщо поточна позначена тека є текою смітника, ви зможете скористатися пунктом меню <guilabel
+>Спорожнити смітник</guilabel
+>. Вибір цього пункту призведе до спорожнення смітника шляхом остаточного вилучення усіх повідомлень у теці «Смітник».</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-delete-folder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+><guimenuitem
+>Вилучити теку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вилучає позначену теку і увесь її вміст. Буде показано проміжне повідомлення-попередження. Якщо поточна тека є однією зі стандартних тек &kmail; (наприклад, текою «Вхідні»), цей пункт меню буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-archive-folder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Архівувати теку...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту ви зможете створити архів поточної позначеної теки. Докладніший опис можна знайти у розділі <xref linkend="folder-archive"/> глави щодо користування &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Тека</guimenu
+> <guimenuitem
+>Вилучити подвійні повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Шукає у теці повтори повідомлень і вилучає ці повтори.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+><guimenuitem
+>Вилучити дублікати у цій теці і усіх її підтеках</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Шукає у теці і усіх її підтеках повтори повідомлень і вилучає ці повтори.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-folder">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+><guimenuitem
+>Застосувати фільтри до теки &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Застосовує вибрані фільтри («Усі», «Спам» або «Не спам») до поточної позначеної теки. Докладніше про фільтрування можна дізнатися з розділу, присвяченого <link linkend="filter-dialog-id"
+>діалоговому вікну фільтрування</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-subfolders">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+><guimenuitem
+>Застосувати фільтри до теки і усіх її підтек &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Застосовує вибрані фільтри («Усі», «Спам» або «Не спам») до поточної позначеної теки і усіх її підтек. Докладніше про фільтрування можна дізнатися з розділу, присвяченого <link linkend="filter-dialog-id"
+>діалоговому вікну фільтрування</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-message-default-format">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+><guimenuitem
+>Типовий формат повідомлень &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Тут ви можете вибрати один із трьох варіантів: <guilabel
+>Надавати перевагу &HTML; на простим текстом</guilabel
+>, <guilabel
+>Надавати перевагу простому тексту над &HTML;</guilabel
+> і <guilabel
+>Використовувати загальні параметри</guilabel
+>.</para>
+  <warning
+><para
+>З міркувань безпеки, автори програми рекомендують позначати пункт <guilabel
+>Надавати перевагу &HTML; над простим текстом</guilabel
+> лише для тек, у яких ніколи не можуть опинитися повідомлення з ненадійних джерел.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-load-external-references">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Завантажити зовнішні посилання</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо увімкнено показ повідомлень у форматі &HTML; (див. вище), за допомогою позначення цього пункту можна наказати програмі завантажувати зображення та інші дані, на які посилається повідомлення, автоматично.</para>
+  <warning
+><para
+>Цим пунктом можна скористатися, лише якщо було вибрано варіант <guilabel
+>Надавати перевагу &HTML; над простим текстом</guilabel
+>. Якщо увімкнено цю можливість, і ви пізніше вирішите змінити <guimenuitem
+>Типовий формат повідомлення</guimenuitem
+>, не забудьте зняти позначку з цього пункту до перемикання. У &kmail; є вада — якщо не зняти позначку з цього пункту, пункт стане недоступним, а результати обробки непередбачуваними.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mailing-list-management">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Керування списком листування...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна відкрити діалогове вікно керування списками листування. Цим пунктом можна буде скористатися, лише якщо у поточній теці містяться повідомлення зі списку листування. Будь ласка, зверніться до розділу, присвяченого <link linkend="folders-properties-mailinglist"
+>діалоговому вікну списків листування</link
+>, якщо хочете дізнатися більше про списки листування.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-assign-shortcut">
+  <term
+><menuchoice
+><guimenu
+>Тека</guimenu
+> <guimenuitem
+>Призначити скорочення...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна визначити клавіатурне скорочення для поточної позначеної теки.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>Меню «Повідомлення»</title>
+<screenshot>
+<screeninfo
+>Меню «Повідомлення»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Повідомлення»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Повідомлення»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Нове повідомлення...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває <link linkend="the-composer-window"
+>вікно редактора листів</link
+>, у якому ви можете написати текст нового повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-new-message-to-mailing-list">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати повідомлення до списку листування...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно редактора листів, у якому ви можете написати нове повідомлення електронної пошти. Якщо поточна тека є текою списку листування і визначено адресу списку листування, цю адресу буде типово показано у полі <guilabel
+>Кому:</guilabel
+>, коли буде відкрито вікно редактора повідомлень. Якщо у поточній теці не міститься повідомлень списку листування, цей пункт буде неактивним.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>R</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Відповісти...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно редактора листів, вставляє туди цитату з поточного вибраного повідомлення і додає у поле адреси <guilabel
+>Кому:</guilabel
+> або адресу списку листування (якщо ви відповідаєте на лист зі списку листування), або адресу для відповідей, якій надає перевагу відправник. Якщо ви бажаєте самі керувати тим, яку адресу буде вказано у полі <guilabel
+>Кому:</guilabel
+>, скористайтеся пунктом меню <link linkend="reader-message-reply-special"
+>Особлива відповідь</link
+>. Профіль буде вибрано автоматично за даними щодо профілю, на який було надіслано це повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-all">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>A</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Відповісти всім...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>Відкриває вікно редактора листів, вставляє туди цитату з поточного вибраного повідомлення і додає у поле адреси <guilabel
+>Кому:</guilabel
+> або адресу списку листування (якщо ви відповідаєте на лист зі списку листування), або адресу для відповідей, якій надає перевагу відправник.</action
+> У полі адреси <guilabel
+>Копія (CC):</guilabel
+> буде вказано адреси всіх інших отримувачів поточного вибраного повідомлення (окрім, звісно, ваших власних адрес). Програма автоматично використає той з ваших профілів, на який було надіслано початкове повідомлення.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Особлива відповідь &gt;</guisubmenu
+> <guimenuitem
+>Відповісти автору...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно редактора листів, вставляє туди цитату з поточного вибраного повідомлення і додає у поле адреси <guilabel
+>Кому:</guilabel
+> адресу для відповідей, якій надає перевагу відправник. Профіль буде вибрано автоматично за даними щодо профілю, на який було надіслано це повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>L</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Особлива відповідь &gt;</guisubmenu
+> <guimenuitem
+>Відповісти до списку листування...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно редактора листів, вставляє туди цитату з поточного вибраного повідомлення і додає у поле адреси <guilabel
+>Кому:</guilabel
+> адресу списку листування (якщо ви відповідаєте на лист зі списку листування). Якщо ви не вказали адресу списку листування для поточної вибраної теки, а &kmail; не вдалося визначити адресу, куди слід надсилати листи з поточного виділеного повідомлення, тоді поле адреси <guilabel
+>Кому:</guilabel
+> буде порожнім. Програма автоматично використає той з ваших профілів, на який було надіслано початкове повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Особлива відповідь &gt;</guisubmenu
+><guimenuitem
+>Відповідь без цитування...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Працює так само, як і <guimenuitem
+>Відповісти...</guimenuitem
+>, але без цитування тексту поточного вибраного повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Особлива відповідь &gt;</guisubmenu
+><guimenuitem
+>Відповісти з використанням нетипового шаблону</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Працює у той самий спосіб, що і <guimenuitem
+>Відповісти...</guimenuitem
+>, але ви можете вибрати нетиповий шаблон, який було налаштовано у <link linkend="configure-composer-custom-templates"
+>розділі нетипових шаблонів</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Особлива відповідь &gt;</guisubmenu
+><guimenuitem
+>Відповісти всім з використанням нетипового шаблону</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Працює у той самий спосіб, що і <guimenuitem
+>Відповісти усім...</guimenuitem
+>, але ви можете вибрати нетиповий шаблон, який було налаштовано у <link linkend="configure-composer-custom-templates"
+>розділі нетипових шаблонів</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-as-attachment">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Переслати &gt;</guisubmenu
+><guimenuitem
+>Як долучення</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Переспрямувати повідомлення новому отримувачу. Повідомлення і долучення до нього стануть долученням до нового повідомлення. До переспрямованого повідомлення буде включено заголовки початкового повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-inline">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Переслати &gt;</guisubmenu
+><guimenuitem
+>Всередині</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Текст повідомлення та деякі з важливих полів заголовків буде скопійовано до тексту нового повідомлення і додано текст, що позначає початок переспрямованої частини. Долучення буде переспрямовано як долучення до нового повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-redirect">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>E</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Переслати &gt;</guisubmenu
+><guimenuitem
+>Переспрямувати</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Працює подібно до переспрямовування, але початкове повідомлення залишається незмінним (навіть значення у полі <guilabel
+>Від:</guilabel
+>). Дані щодо користувача, який переспрямував повідомлення визначаються за спеціальними полями заголовка (<literal
+>Redirect-From</literal
+>, <literal
+>Redirect-Date</literal
+>, <literal
+>Redirect-To</literal
+> тощо).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+><guisubmenu
+>Переслати &gt;</guisubmenu
+><guimenuitem
+>З нетиповим шаблоном</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Працює у той самий спосіб, що і переспрямування, але ви можете вибрати нетиповий шаблон, який було налаштовано на вкладці нетипових шаблонів у <link linkend="configure-composer-custom-templates"
+>розділі нетипових шаблонів</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-send-again">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати знову...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити вікно редактора повідомлень з текстом поточного позначеного повідомлення для повторного надсилання цього повідомлення.</para>
+  <note
+><para
+>Цим пунктом меню можна скористатися лише для повідомлень, які ви надіслали, або, якщо точніше, для повідомлень, для яких встановлено стан <guilabel
+>надіслано</guilabel
+>. Якщо ви хочете повторно надіслати якесь інше повідомлення, двічі клацніть на його пункті у списку повідомлень або під час перегляду повідомлення натисніть клавішу <keycap
+>T</keycap
+> (у латинській розкладці). Також це можна зробити, додавши кнопку <guibutton
+>Редагувати як нове</guibutton
+> на панель інструментів.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut>
+<guimenu
+>Message</guimenu
+><guimenuitem
+>Edit Message</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Opens the selected message in a composer window.</para
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-message-mailing-list">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Назва списку листування &gt;</guimenuitem
+></menuchoice
+></term>
+  
+  <listitem
+><para
+>У цьому підменю розташовано пункти дій, пов'язаних з повідомленнями зі списків листування.</para>
+  <note
+><para
+>Це підменю стане доступним, лише якщо поточну робочу теку налаштовано як теку списку листування. Докладніше про налаштування тек як тек списків листування можна дізнатися з <link linkend="folders-properties-mailinglist"
+>розділу щодо властивостей тек списків листування</link
+>.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  <para
+>Вказаними нижче пунктами можна скористатися для керування теками списків листування:</para>
+  
+  <itemizedlist>
+    <listitem
+><para
+><guimenuitem
+>Надіслати нове повідомлення (ел. пошта)</guimenuitem
+>: створити нове повідомлення з адресою <guilabel
+>Кому:</guilabel
+>, встановленою для надсилання повідомлень до списку листування.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Попросити про допомогу (ел. пошта)</guimenuitem
+>: створити нове повідомлення з адресою <guilabel
+>Кому:</guilabel
+>, встановленою для надсилання повідомлень до списку листування, та словом «<literal
+>help</literal
+>» у полі <guilabel
+>Тема:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Підписатися на список листування (сторінка у інтернеті)</guimenuitem
+>: відкрити типову програму для перегляду сторінок інтернету на сторінці, за допомогою якої можна підписатися на список листування.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Підписатися на список листування (ел. пошта)</guimenuitem
+>: створити нове повідомлення з адресою <guilabel
+>Кому:</guilabel
+>, встановленою оформлення підписки на список листування, та словом «<literal
+>subscribe</literal
+>» у полі <guilabel
+>Тема:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Скасувати підписку на список листування (сторінка у інтернеті)</guimenuitem
+>: відкрити типову програму для перегляду сторінок інтернету на сторінці, за допомогою якої можна скасувати підписку на список листування.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Скасувати підписку на список листування (ел. пошта)</guimenuitem
+>: створити нове повідомлення з адресою <guilabel
+>Кому:</guilabel
+>, встановленою керування підписками на список листування, та словом «<literal
+>unsubscribe</literal
+>» у полі <guilabel
+>Тема:</guilabel
+>.</para
+></listitem>
+  </itemizedlist>
+  
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-copy-message-to">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Копіювати повідомлення до &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Копювати позначені повідомлення до вказаної теки. Ви можете вибрати нещодавно використані теки, локальні теки або теку певного облікового запису &IMAP;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-move-message-to">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Пересунути повідомлення до &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Те саме, що і копіювання повідомлення, але з пересуванням позначених повідомлень до вказаної теки.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-messages">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Позначити повідомлення &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу встановити один з таких станів вибраного повідомлення:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Стан</entry
+><entry
+>Символ</entry
+><entry
+>Значення</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+></shortcut
+><guimenuitem
+>Поозначити повідомлення як прочитане</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Повідомлення було прочитано.</entry
+></row>
+
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+></shortcut
+><guimenuitem
+>Позначити повідомлення як непрочитане</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Повідомлення ще не було прочитано.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Позначити повідомлення як важливе</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Цей стан не встановлюється &kmail; у автоматичному режимі. Ви можете встановлювати його самі, щоб позначити повідомлення, які є для вас важливими.</entry
+></row>
+ 
+    <row>
+    <entry
+><guimenuitem
+>Вилучити позначення важливості</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Вилучити з повідомлення раніше встановлений прапорець важливості.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Позначити повідомлення як елемент дії</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Цей стан не встановлюється &kmail; у автоматичному режимі. Скористайтеся цим пунктом меню для позначення повідомлень, пов'язаних з певними діями, наприклад діями зі списку завдань.</entry
+></row>
+
+    <row
+><entry
+><guimenuitem
+>Вилучити мітку щодо виконання дії</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Вилучити раніше встановлену позначку дії з пункту повідомлення.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-thread">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Позначити гілку</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу встановити один з таких станів усіх повідомлень у гілці:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Стан</entry
+><entry
+>Символ</entry
+><entry
+>Значення</entry
+></row
+></thead>
+    
+    <tbody>
+    <row>
+    <entry
+><guimenuitem
+>Позначити гілку як прочитану</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Усю гілку було прочитано.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Позначити гілку як непрочитану</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Цю гілку ще не було прочитано.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Позначити гілку як важливу</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Цей стан не встановлюється &kmail; у автоматичному режимі. Ви можете встановлювати його самі, щоб позначити гілки, які є для вас важливими.</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Зняти мітку про важливість гілки</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Вилучити з гілки раніше встановлений прапорець важливості.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Позначити гілку як елемент дії</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Цей стан не встановлюється &kmail; у автоматичному режимі. Скористайтеся цим пунктом меню для позначення гілок, пов'язаних з певними діями, наприклад діями зі списку завдань.</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Вилучити мітку про елемент дії з гілки</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Вилучити раніше встановлену позначку дії з пункту гілки.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Наглядати за гілкою</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Встановити для гілки стан нагляду. За допомогою цього стану спрощується перегляд цікавих для вас гілок обговорень: достатньо вибрати пункт <guimenu
+>З наглядом</guimenu
+> на панелі впорядковування за станом. (Натисніть піктограму <inlinemediaobject
+><imageobject
+><imagedata fileref="view-filter.png" format="PNG"/> </imageobject
+></inlinemediaobject
+>, щоб переглянути категорії фільтрування.)</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Ігнорувати гілку</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Надає вам змогу проігнорувати цілу гілку.</entry
+></row>
+    </tbody>
+    
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="message-create-filter">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guisubmenu
+>Створити фільтр</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває <link linkend="filter-dialog-id"
+>діалогове вікно фільтрування</link
+> для додавання нового фільтра. Основою для цього фільтра стануть поля поточного повідомлення, їхній перелік залежатиме від пункту підменю, який ви виберете:</para>
+  <simplelist>
+    <member
+>Фільтр за темою...</member>
+    <member
+>Фільтр за відправником...</member>
+    <member
+>Фільтр за адресатом...</member>
+    <member
+>Фільтр за списком листування... (у поточній версії програми, щоб можна було скористатися цим фільтром, поточне позначене повідомлення має бути повідомленням зі списку листування)</member>
+  </simplelist
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-apply-filter">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Застосувати фільтр</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>Надає вам змогу <guimenuitem
+>Застосувати всі фільтри</guimenuitem
+>.</action
+> Якщо за допомогою <link linkend="the-anti-spam-wizard"
+>майстра боротьби з небажаною кореспонденцією</link
+> вами було налаштовано фільтрування спаму, ви зможете скористатися пунктами <guimenuitem
+>Фільтр «Класифікувати як спам»</guimenuitem
+> та <guimenuitem
+>Фільтр «Класифікувати як НЕ спам»</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Create To-do/Reminder</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; To-do/Reminder dialog</action
+> with options to add the selected email as a link, inline, or inline without attachments.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Add Note...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; Note dialog to add a note to the selected email.</action
+></para
+></listitem>
+</varlistentry
+>  These items have been moved to "Plugins", and can now only be invoked via the Toolbar. @dcb2021086 -->
+
+<varlistentry id="reader-message-viewsource">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>V</keycap
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Переглянути джерело повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Показати у новому вікні повідомлення і повний текст його заголовків у форматі звичайного тексту. За допомогою цього пункту ви зможете визначити, звідки насправді прийшло повідомлення. </para>
+  <note
+><para
+>Як вам відомо, дуже просто підробити заголовок листа <literal
+>From:</literal
+>, але завжди можна встановити, які поштові сервери було використано для надсилання пошти, — достатньо поглянути на рядки <literal
+>Received:</literal
+> заголовка повідомлення.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-show-message-structure">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+><guimenuitem
+>Показати структуру повідомлення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Показує панель перегляду структури, область під панеллю попереднього перегляду, за допомогою якої ви зможете бачити усі компоненти &MIME; повідомлення окремо. Цим пунктом можна буде скористатися, лише якщо було задіяно <link linkend="configure-plugins-tools"
+>додаток для досвідчених користувачів</link
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist
+> 
+
+</sect2>
+
+<sect2 id="reader-tools-menu">
+<title
+>Меню «Інструменти»</title>
+<screenshot>
+<screeninfo
+>Меню «Інструменти»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Інструменти»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Інструменти»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+
+<varlistentry id="reader-tools-find-messages">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Пошук повідомлень...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно пошуку, за допомогою якого ви зможете шукати повідомлення за певними характеристиками, наприклад певною темою. Докладніші відомості щодо параметрів пошуку можна знайти у <link linkend="filter-criteria"
+>розділі, присвяченому критеріям фільтрування</link
+>.</para>
+  <para
+>Результати пошуку буде показано на панелі показу тексту. Ви можете <guibutton
+>Відкрити теку пошуку</guibutton
+>, щоб переглянути теку, яка містить знайдені повідомлення, або позначити потрібне повідомлення і натиснути кнопку <guibutton
+>Відкрити повідомлення</guibutton
+>. Доступ до додаткових пунктів дій можна отримати за допомогою контекстного меню, відкрити яке можна клацанням правою кнопкою миші.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Адресна книга</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Запускає <ulink url="help:kaddressbook"
+>&kaddressbook;</ulink
+>, адресну книгу &kde; і програму для керування особистими даними контактів.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-certificate-manager">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Менеджер сертифікатів</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Запускає <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+>, інструмент для керування сертифікатами у &kde;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guisubmenu
+>Редагувати відповідь "Мене немає"...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <guilabel
+>Налаштувати відповідь "Мене немає"</guilabel
+>, за допомогою якого ви зможете налаштувати сповіщення про відсутність.</para>
+  <note
+><para
+>Функціональна можливість <guilabel
+>відповідь "Мене немає"</guilabel
+> працює на основі фільтрування на боці сервера. Для того, щоб мати змогу скористатися цією можливістю вам слід налаштувати параметри <link linkend="receiving-mail"
+>вкладки «Фільтрування»</link
+> (зокрема пункт щодо сервера &kolab;) вашого облікового запису &IMAP;.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice>
+<guimenu
+>Tools</guimenu>
+<guisubmenu
+>Debug Sieve...</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Launch the <guilabel
+>Sieve Diagnostics</guilabel
+> dialog.</action
+> This is useful to debug sieve if you are having problems with it.</para>
+<note
+><para
+>You must have sieve support on your email server.</para
+></note
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-tools-filter-log-viewer">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guisubmenu
+>Переглядач журналу фільтрування...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно перегляду журналу фільтрування, у якому ви знайдете деякі пункти, пов'язані з керуванням запису процесу фільтрування. Програма записує до журналу цінні відомості щодо правил фільтрування, які було використано, результату застосування цих правил та дій, які було виконано з повідомленням відповідно до правил.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+><guisubmenu
+>Імпортувати з іншої програми для роботи з ел. поштою...</guisubmenu
+> </menuchoice
+></term>
+  <listitem
+><para
+>Відкрити діалогове вікно майстра імпортування Akonadi, яке допоможе вам у імпортуванні параметрів сторонніх програм та електронної пошти. Докладніший опис можна знайти у <ulink url="help:/importwizard"
+>розділі, присвяченому майстру імпортування</ulink
+>.</para>
+  <note
+><para
+>Закрити &kmail; до імпортування даних. Майстер може внести зміни до файла налаштувань &kmail;, а це може призвести до непередбачуваних наслідків, якщо ви спробуєте імпортувати дані, доки запущено &kmail;.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-export-data">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+><guisubmenu
+>Імпортувати/Експортувати дані &kmail;...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити діалогове вікно майстра експортування параметрів роботи з особистими даними, яке допоможе вам у експортуванні параметрів програми та електронної пошти або відновленні їх з резервної копії. Докладніший опис можна знайти у <ulink url="help:/pimdataexporter"
+>розділі, присвяченому майстру експортування особистих даних</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-activity-log">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Журнал дій...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Запускає журнал дій, який записує до журналу певні дії. Цим пунктом можна буде скористатися, лише якщо було завантажено додаток <guilabel
+>Запис журналу дій</guilabel
+>. В основному, призначено для розробників.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-spam-wizard">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Майстер блокування спаму...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити вікно майстра захисту від небажаної кореспонденції. Це вікно допоможе вам налаштувати засіб фільтрування відповідних повідомлень. Докладніший опис можна знайти у <link linkend="the-anti-spam-wizard"
+>розділі, присвяченому майстру захисту від спаму</link
+>. Цим пунктом можна буде скористатися, лише якщо завантажено додаток <guilabel
+>Антиспам</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-virus-wizard">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Майстер блокування вірусів...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити вікно майстра захисту від вірусів. Це вікно допоможе вам налаштувати антивірусне програмне забезпечення для пошуку вірусів у повідомленнях. Докладніший опис можна знайти у <link linkend="the-anti-virus-wizard"
+>розділі, присвяченому майстру блокування вірусів</link
+>. Цим пунктом меню можна буде скористатися, лише якщо завантажено додаток <guilabel
+>Антивірус</guilabel
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>Меню «Параметри»</title>
+<screenshot>
+<screeninfo
+>Меню «Параметри»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Параметри»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Параметри»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-settings"
+>загального опису меню параметрів</ulink
+> у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
+<variablelist>
+
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Показати панель пришвидшення пошуку</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Вмикає показ панелі швидкого пошуку, за допомогою цієї панелі може бути пришвидшено пошук повідомлень за вказаними вами критеріями пошуку.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-filters">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати фільтри...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно <link linkend="filters"
+>фільтрів повідомлення</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-manage-sieve-scripts">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Керування скриптами фільтрування...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо на вашому поштовому сервері передбачено фільтрування, за допомогою цього пункту можна налаштувати його параметри.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-add-account">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+><guisubmenu
+>Додати обліковий запис...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкрити діалогове вікно майстра створення облікових записів, яке допоможе вам у налаштуванні роботи з новими або додатковими обліковими записами у програмі. Докладніший опис можна знайти у <link linkend="account-wizard"
+>розділі, присвяченому майстру створення облікових записів</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-automatic-archiving">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати автоматичне архівування...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна налаштувати автоматичне архівування. Будь ласка, ознайомтеся з розділом <ulink url="help:/akonadi_archivemail_agent"
+>Автоматичне архівування</ulink
+>, щоб дізнатися більше.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Send Later Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to modify and remove emails that have been sent using the send later feature.</action>
+ Please see <ulink url="help:/akonadi_sendlater_agent"
+>Send Later Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Folder Archive Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to configure accounts to use the folder archive agent feature with.</action>
+ Please see <ulink url="help:/akonadi_folderarchive_agent"
+>Folder Archive Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Notifications...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Opens a dialog that lets you configure what happens when new mail arrives,</action
+> &eg; play a sound, display a popup, &etc;</para
+></listitem>
+</varlistentry
+> These three options have been moved to the Plugins Configuration tab. @dcb2021086.  -->
+
+<varlistentry id="reader-settings-configure-kmail">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Налаштувати &kmail;...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <link linkend="configure"
+>налаштування програми</link
+>. Там сотні параметрів, значення яких ви можете змінити. Спробуйте!</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="reader-help-menu">
+<title
+>Меню «Довідка»</title>
+<screenshot>
+<screeninfo
+>Меню «Довідка»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Довідка»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Довідка»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Це звичайне <ulink url="help:/fundamentals/menus.html#menus-help"
+>меню «Довідка»</ulink
+>, яке описано у підручнику з основ роботи у &kde; із одним додатковим пунктом.</para>
+
+<variablelist>
+<varlistentry id="reader-help-intro">
+  <term
+><menuchoice
+><guimenu
+>Довідка</guimenu
+> <guimenuitem
+>Вступ до &kmail;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вітальне вікно <link linkend="intro"
+>Вступ</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>Вікно створення повідомлення &kmail;</title>
+
+<sect2 id="composer-file-menu">
+<title
+>Меню «Повідомлення»</title>
+<screenshot>
+<screeninfo
+>Меню «Повідомлення»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Повідомлення»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Повідомлення»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Новий редактор</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно редактора листів, у якому ви можете написати текст нового повідомлення.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New Main Window</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Creates a new main window.</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New AddressBook Contact</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; New Contact Dialog</action
+> to add a new contact your addressbook.</para
+></listitem>
+</varlistentry
+> Thes options not available in 5.14.2 @dcb2021088. -->
+
+<varlistentry id="composer-message-send-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>&Enter;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати пошту</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту меню можна негайно надіслати повідомлення. Якщо ви використовуєте &SMTP; для надсилання ваших повідомлень, а сервер &SMTP; недоступний, повідомлення буде пересунуто до теки «вихідні», а програма покаже повідомлення про помилку. Щойно буде отримано доступ до з'єднання, ви зможете надіслати повідомлення з теки «вихідні» за допомогою пункту меню <link linkend="reader-send-queued-messages"
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Надіслати повідомлення з черги</guimenuitem
+></menuchoice
+></link
+> (у меню засобу для читання повідомлень).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-mail-via">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати пошту за допомогою &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна вказати сервер вихідної пошти, яким програма має скористатися для надсилання повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати пізніше</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна відкрити діалогове вікно відкладеного надсилання. Докладний опис роботи засобу можна знайти у розділі щодо <ulink url="help:/akonadi_sendlater_agent"
+>засобу відкладеного надсилання</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later-via">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Надіслати пізніше за допомогою &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна вказати сервер вихідної пошти, яким програма має скористатися для відкладеного надсилання повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-file">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Зберегти як файл</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Зберігає повідомлення як файл. Передбачено три формати: форматований текст (.html), звичайний текст (.txt) та Open Document Format (.odt).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-draft">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Зберегти як чернетку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Зберегти повідомлення у теці <guilabel
+>Чернетки</guilabel
+> для пізнішого редагування і надсилання.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-template">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Зберегти як шаблон</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту ви можете зберегти ваше повідомлення як шаблон. Докладніший опис роботи з шаблонами повідомлень можна знайти у розділі щодо <link linkend="new-compose-from-templates"
+>створення повідомлень на основі шаблонів</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-text-file">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Вставити текстовий файл...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє текстовий файл до тексту повідомлення, починаючи з позиції курсора.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-recent-text-file">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Вставити недавній текстовий файл &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна вибрати зі списку нещодавно вставлених фрагментів тексту текстовий файл, вміст якого слід вставити до вашого повідомлення. Виберіть пункт <guimenuitem
+>Спорожнити список</guimenuitem
+>, щоб спорожнити список фрагментів.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Перегляд друку...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно попереднього перегляду друку і показує ваше повідомлення, яке форматовано для друку.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Друкувати...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Форматує і друкує створене вами повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-share">
+  <term
+><menuchoice
+><guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Оприлюднити текст повідомлення... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу створити копію повідомлення на сторонньому сервері. Передбачено чотири варіанти: Nextcloud (програма для оприлюднення файлів із вільним відкритим кодом), Pastebin <ulink url="https://pastebin.com"
+>(безкоштовно доступна служба зберігання даних)</ulink
+>, Bluetooth і електронна пошта (відкриває ще одне вікно редактора, у якому додає поточне повідомлення до нового повідомлення як долучення). Цим пунктом можна скористатися, лише якщо увімкнено додаток <guilabel
+>Оприлюднення тексту</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-close">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Повідомлення</guimenu
+> <guimenuitem
+>Закрити</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Закриває вікно редактора повідомлень.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>Меню «Зміни»</title>
+<screenshot>
+<screeninfo
+>Меню «Зміни»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Зміни»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Зміни»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-edit"
+>загального опису меню редагування</ulink
+> у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
+
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити як цитату</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє текст з буфера обміну даними і позначає його як цитату (тобто додає на початку кожного рядка символ «&gt;» із пробілом).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-attachment">
+  <term
+><menuchoice
+><guimenu
+>міни</guimenu
+> <guimenuitem
+>Вставити як долучення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє файл, який було скопійовано до буфера обміну даними (наприклад, за допомогою програми для керування файлами &dolphin;), як долучення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-without-formatting">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити без форматування</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє текст з буфера обміну інформацією як є, без будь-якого додаткового форматування &HTML;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-clean-spaces">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Очистити пропуски</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту меню можна було б замінити декілька послідовних пробілів або символів розриву рядка на одиничні символи пробілів або розривів рядка, але на практиці, здається, він не працює.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-add-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Додати символи цитування</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Додає на початку кожного рядка позначеного тексту символ цитування (типово, символ &gt; і пробіл). Якщо нічого не позначено, додає індикатор до кожного рядка повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-remove-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вилучити символи цитування</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вилучити найлівіші позначки цитування з виділеного тексту.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-email">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити адресу ел. пошти...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Показує список усіх назв контактів у вашій адресній книзі, потім вставляє вибрану адресу електронної пошти у позицію курсора (після того, як ви щось виберете і натиснете кнопку <guibutton
+>Гаразд</guibutton
+>). Цей пункт буде доступним, лише якщо завантажено додаток <guimenuitem
+>Вставлення адреси ел. пошти</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-nbsp">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Пробіл</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Зміни</guimenu
+><guimenuitem
+>Вставити нерозривний пробіл</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє нерозривний пробіл у позицію курсора. Цим пунктом можна буде скористатися, лише якщо завантажено додаток <guimenuitem
+>Вставлення нерозривного пробілу</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Uppercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to uppercase.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Lowercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to lowercase.</para
+></listitem>
+</varlistentry
+> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+
+<varlistentry id="composer-edit-insert-special-character">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Вставити спеціальний символ...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу вставити спеціальний символу у поточну позицію курсора. Доступними є символи Unicode. Цим пунктом можна буде скористатися, лише якщо завантажено додаток <guimenuitem
+>Вставлення спеціального символу</guimenuitem
+>.</para>
+  
+  <para
+>Цей пункт меню було пересунуто до меню <guimenu
+>Вставлення</guimenu
+> у випуску 5.17. Якщо активовано цей додаток, і цей пункт не з'явився у меню &kmail;, пошукайте його у меню <guimenu
+>Вставлення</guimenu
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-change-case">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Змінити регістр &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Допомагає вам змінити правила використання великих літер у позначеному фрагменті тексту. Передбачено чотири варіанти: <guilabel
+>Верхній регістр</guilabel
+> (зробити усі літери позначеного фрагмента великими), <guilabel
+>Нижній регістр</guilabel
+> (зробити усі літери позначеного фрагмента малими), <guilabel
+>Перше слово з прописної</guilabel
+> (зробити першу літеру кожного слова позначеного фрагмента великою, а решту літер — малими) і <guilabel
+>Обернений регістр</guilabel
+> (перетворити великі літери на малі, і навпаки). Цим пунктом можна буде скористатися, лише якщо увімкнено додаток <guimenuitem
+>Зміна регістру</guimenuitem
+>. Цим пунктом меню не можна буде скористатися, якщо не позначено жодного фрагмента тексту.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-zoom">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+><guimenuitem
+>Масштаб &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу збільшити або зменшити масштаб тексту повідомлення, яке ви пишете. Це та сама можливість, якою можна скористатися за допомогою пункту меню <menuchoice
+><guimenu
+>Перегляд</guimenu
+><guisubmenu
+>Масштаб &gt;</guisubmenu
+></menuchoice
+> у вікні перегляду повідомлень. Цим пунктом можна буде скористатися, лише якщо увімкнено додаток <guimenuitem
+>Масштабування тексту</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-variables">
+  <term
+><menuchoice
+><guimenu
+>Зміни</guimenu
+> <guimenuitem
+>Змінні &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу вставити вміст іменованого поля у позицію курсора. Ви можете вибрати одне з таких полів: <guilabel
+>Кому &gt;</guilabel
+>, <guilabel
+>Від &gt;</guilabel
+>, <guilabel
+>Копія &gt;</guilabel
+>, <guilabel
+>Долучення &gt;</guilabel
+>, <guilabel
+>Дата/Час &gt;</guilabel
+> та <guilabel
+>Інше &gt;</guilabel
+> (у якому є один пункт підменю, «Тема»). Є одна помітна вада: показані у підменю дата і час зупиняються на моменті відкриття вікна редактора, але вставлені дані буде взято з поточного моменту часу.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>Меню «Перегляд»</title>
+<screenshot>
+<screeninfo
+>Меню «Перегляд»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Перегляд»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Перегляд»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>За допомогою цього меню ви зможете увімкнути або вимкнути показ полів заголовків та налаштувати інші параметри вікна редактора повідомлень. Вибрані пункти буде позначено (зафарбованим пунктом позначки) у меню.</para>
+
+<para
+>Можна скористатися декількома варіантами:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>Усі поля</guimenuitem
+>. Показу усі шість наступних полів.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Профіль</guimenuitem
+>. Якщо вами визначено декілька профілів, тут буде показано спадний список.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Словник</guimenuitem
+>, який буде використано для перевірки правопису. Якщо встановлено декілька словників, тут буде показано спадний список.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Тека надісланої пошти</guimenuitem
+>. Якщо позначено цей пункт, кнопка <guilabel
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;</guilabel
+>, яку буде показано праворуч, відкриватиме діалогове вікно вибору теки.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Передавання пошти</guimenuitem
+>. Якщо вами визначено декілька облікових записів вихідної пошти, тут буде показано спадний список.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Від</guimenuitem
+>. Вміст цього поля може бути різним, він залежить від використаного профілю.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Тема</guimenuitem
+>. Скористайтеся цим полем для короткого опису вашого повідомлення.</para>
+  </listitem>
+</itemizedlist>
+
+<para
+>Поле <guilabel
+>Кому <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guilabel
+> зі спадним списком буде завжди показано у верхній частині вікна редактора. Скористайтеся ним для вибору адрес <guilabel
+>Копії</guilabel
+>, <guilabel
+>Потаємної копії</guilabel
+> та <guilabel
+>Відповідати</guilabel
+>, якщо потрібно. Будь ласка, ознайомтеся із розділом щодо <link linkend="composer-headers"
+>заголовків редактора</link
+>, щоб дізнатися більше про заголовки повідомлення.</para>
+  
+<para
+>&nbsp;</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Використовувати моноширинний шрифт</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Позначення цього пункту меню призводить до використання шрифту з символами однакової ширини (моноширинного) для показу поточного редагованого повідомлення.Шрифт, який буде використано, можна налаштувати у розділі <guilabel
+>Вигляд</guilabel
+> діалогового вікна налаштування &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-view-snippets">
+  <term
+><menuchoice
+><guimenu
+>Перегляд</guimenu
+> <guimenuitem
+>Фрагменти</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Показує бічну панель фрагментів у правій частині вікна редактора повідомлень. За допомогою цієї панелі ви зможете використовувати і створювати фрагменти. Докладніший опис роботи з фрагментами можна знайти у <link linkend="setup-text-snippets"
+>розділі, присвяченому фрагментам</link
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+  </varlistentry>
+  
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>Меню «Налаштування»</title>
+<screenshot>
+<screeninfo
+>Меню «Налаштування»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeroptions.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Налаштування»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Налаштування»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>За допомогою цього меню ви зможете визначити різноманітні параметри поточного повідомлення. Вибрані пункти буде позначено (зафарбовано пункт позначки) у меню.</para>
+
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Термінове</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Встановлює для повідомлення пріоритет «Термінове» додавання двох рядків заголовка: «X-PRIORITY: 2 (High)» і «Priority: urgent». Клієнт електронної пошти отримувача має реалізовувати підтримку цих заголовків, інакше це не спрацює. У самій програмі &kmail; не передбачено підтримки пріоритетності для вхідних повідомлень (хоча ви можете <link linkend="reader-mark-messages"
+>позначити повідомлення</link
+> як важливе).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-mdn">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Запитати сповіщення про долю листа</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо позначити цей пункт, &kmail; вставить до повідомлення рядок заголовка «Disposition-Notification-To:», який є запитом на отримання сповіщення про те, що отримувач отримав і прочитав ваше повідомлення. Для того, щоб ви могли отримати подібну відповідь, у клієнті електронної пошти отримувача має бути увімкнено можливість такої відповіді, інакше це не працюватиме.</para>
+  <para
+>Про супутні відомості і декілька способів налаштовування підтвердження прочитання, які буде надсилати &kmail;у відповідь на отриманий рядок заголовка «Disposition-Notification-To:», можна дізнатися з розділу <xref linkend="configure-security-reading-mdns"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-confirm">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Запитати сповіщення щодо отримання</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо ви скористаєтеся цим пунктом, &kmail; вставить до повідомлення рядок заголовка «Return-Receipt-To:», який є запитом на отримання сповіщення електронною поштою, щойно ваше повідомлення буде вивантажено вашим сервером електронної пошти і доставлено отримувачу. Щоб це спрацювало, підтримку відповідної функціональної можливості має бути реалізовано на сервері вихідної електронної пошти.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-sign-message">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Підписати повідомлення</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна додати до повідомлення цифровий підпис <application
+>OpenPGP</application
+> або сертифікат X.509. Докладніше про цифрові підписи можна дізнатися з <link linkend="pgp"
+>глави, присвяченої OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encrypt-message">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Зашифрувати повідомлення</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна зашифрувати повідомлення за допомогою <application
+>OpenPGP</application
+> або сертифіката X.509. Докладніше про цифрові підписи можна дізнатися з <link linkend="pgp"
+>глави, присвяченої OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-select-crypto-message-format">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Формат криптографічного повідомлення &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна вибрати формат криптографії повідомлення, яке буде використано для створення цифрового підпису і/або шифрування вашого повідомлення. Докладніше про це можна дізнатися з <link linkend="cryptographic-message-formats"
+>розділу, присвяченому форматам криптографії повідомлень</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-rich-text-editing">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Редагування з форматуванням</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Вмикає редагування у режимі форматованого тексту або &HTML;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encoding">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guisubmenu
+>Кодування &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна встановити кодування символів поточного повідомлення. Обране вами кодування буде вказано у заголовку вихідного повідомлення. У більшості випадків можна обмежитися пунктом <guilabel
+>Автоматично</guilabel
+>, якщо вам слід буде обрати інше повідомлення вручну, програма &kmail; повідомить вас про це.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-wordwrap">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Перенесення слів</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вмикає або вимикає автоматичне розбиття тексту на рядки. Ймовірно, вам слід зняти позначку з цього пункту, якщо ви маєте намір вставити до тексту повідомлення довгі рядки (наприклад адреси), які не слід розбивати на коротші.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-automatic-spellchecking">
+  <term
+><menuchoice
+><guimenu
+>Налаштування</guimenu
+> <guimenuitem
+>Автоматична перевірка правопису</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вмикає або вимикає автоматичну перевірку правопису.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-followup">
+  <term
+><menuchoice
+><guimenu
+>Файл</guimenu
+> <guimenuitem
+>Створити нагадування щодо стеження...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно, за допомогою якого ви можете додати запис завдання до вашого календаря. Цим пунктом меню можна буде скористатися, лише якщо увімкнено додаток <ulink url="help:/akonadi_followupreminder_agent"
+>Агент нагадування щодо стеження</ulink
+>.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>Меню «Долучення»</title>
+<screenshot>
+<screeninfo
+>Меню «Долучення»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerattachmenu.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Долучення»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Долучення»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>За допомогою цього меню ви зможете визначити параметри долучення.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Додати підпис</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Додати ваш підпис («підвал») наприкінці повідомлення. Докладний опис способів визначення вашого підпису можна знайти у <link linkend="configure-identity-signature"
+>розділі, присвяченому налаштовуванню підпису у параметрах профілю</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-prepend-signature">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Приєднати підпис</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Дописує ваш підпис (<quote
+>заголовок</quote
+>) на початку повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-cursor-signature">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Вставити підпис у позицію курсора</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вставляє ваш підпис у поточній позиції курсора.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-public-key">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Долучити відкритий ключ...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <guilabel
+>Долучення відкритого ключа OpenPGP</guilabel
+>. Докладніший опис параметрів долучення можна знайти у <link linkend="configure-identity-cryptography-openpgp-sign"
+>розділі щодо налаштовування криптографічного підпису OpenPGP у параметрах профілю</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attach-my-public-key">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Долучити мій відкритий ключ</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>За допомогою цього пункту можна долучити ваш відкритий ключ <application
+>GnuPG</application
+> або ваш сертифікат X.509 (тобто відкритий ключ, який пов'язано із поточним профілем) до вашого повідомлення.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-file">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guisubmenu
+>Долучити &gt;</guisubmenu
+> <guimenuitem
+>Долучити файл...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Допомагає долучити один або декілька файлів до поточного повідомлення. Типово долучення шифруються (якщо зашифровано повідомлення). Докладний опис налаштовування шифрування повідомлення та долучень можна знайти у <link linkend="cryptographic-message-formats"
+>розділі щодо криптографічних параметрів повідомлення</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-directory">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guisubmenu
+>Долучити &gt;</guisubmenu
+> <guimenuitem
+>Долучити каталог...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Створює архів ZIP, який містить вибраний каталог, і долучає архів до поточного повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-ownvcard">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guisubmenu
+>Долучити &gt;</guisubmenu
+> <guimenuitem
+>Долучити власну візитівку</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Долучає вашу власну електронну візитівку до поточного повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-vcard">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guisubmenu
+>Долучити &gt;</guisubmenu
+> <guimenuitem
+>Долучити візитівки...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно &kaddressbook;, за допомогою якого ви можете вибрати один або декілька записів контактів (&Ctrl; і клацання лівою кнопкою миші) і долучити відповідні візитівки до повідомлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-clipboard">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guisubmenu
+>Долучити &gt;</guisubmenu
+> <guimenuitem
+>Долучити текст з буфера обміну даними...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Якщо верхній запис даних у буфері обміну даними містить принаймні два байти, буде відкрито діалогове вікно вибору назви файла. &kmail; створить долучення, у якому міститиметься текст з буфера обміну даними і надасть долученню вибрану вами назву.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-remove-attachment">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Вилучити долучення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Вилучає позначене долучення (позначити долучення можна на панелі долучень під основною областю редактора повідомлень).</para>
+  <note
+><para
+>Цей і два наступних пункти меню будуть неактивними, якщо не позначено долучення.</para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-save-attachment">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Зберегти долучення як...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Зберігає долучення, яке було обрано у вікні долучень, до файла.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attachment-properties">
+  <term
+><menuchoice
+><guimenu
+>Долучення</guimenu
+> <guimenuitem
+>Властивості долучення</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває <link linkend="attachments"
+>діалогове вікно властивостей долучення</link
+>, яке було вибрано у вікні долучень. Програма також надає вам змогу підписати або зашифрувати долучення і змінити декілька інших його властивостей (назву, опис, тип &MIME; тощо).</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>Меню «Інструменти»</title>
+<screenshot>
+<screeninfo
+>Меню «Інструменти»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Інструменти»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Інструменти»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-tools"
+>загального опису меню інструментів</ulink
+> у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
+  
+<variablelist>
+  <varlistentry id="composer-tools-select-recipients">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Вибрати адресатів...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно <guilabel
+>Вибір отримувача</guilabel
+> із вмістом усіх ваших адресних книг, з яких ви можете вибрати потрібні записи.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Адресна книга...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Запускає програму <ulink url="help:/kaddressbook"
+>&kaddressbook;</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-save-distribution-list">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Зберегти список поширення...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває діалогове вікно, за допомогою якого ви можете зберегти групи записів контактів у одному іменованому записі. Дуже зручно, якщо ви часто надсилаєте одне повідомлення отримувачам із, наприклад, однієї установи.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-autocorrect">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Автоматичне виправлення тексту &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Виконує автоматичне виправлення. Передбачено два варіанти: сканування і автоматичне виправлення позначеного фрагмента тексту або застосування <link linkend="configure-composer-autocorrection"
+>автоматичного виправлення</link
+> до усього повідомлення. Цей пункт меню буде показано, лише якщо завантажено додаток <guilabel
+>Автовиправлення</guilabel
+>. Він також не працюватиме, що на сторінці налаштувань редактора не було увімкнено функціональну можливість автоматичного виправлення.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-translator">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Інструменти</guimenu
+><guimenuitem
+>Перекладач</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно <link linkend="using-the-translator"
+>засобу перекладу</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-grammarcheck">
+  <term
+><menuchoice
+><guimenu
+>Інструменти</guimenu
+> <guimenuitem
+>Перевірка граматики (LanguageTool)</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Відкриває вікно перевірки граматики із результатами вивчення вашого повідомлення, підсвічуючи усі знайдені помилки. Використання цієї функціональної можливості не призводить до неперервного оновлення сканованого тексту під час його введення. Вам слід спочатку написати ваше повідомлення, а потім викликати засіб перевірки граматики. Цим засобом не можна буде скористатися, якщо не було увімкнено додаток <guilabel
+>Перевірка граматики</guilabel
+>. Подібно до можливості перекладу, засіб перевірки граматики надсилає текст вашого повідомлення на сервер в інтернеті (типовим сервером є https://languagetool.org/api/v2).</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>Меню «Параметри»</title>
+<screenshot>
+<screeninfo
+>Меню «Параметри»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Параметри»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Параметри»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-settings"
+>загального опису меню параметрів</ulink
+> у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
+  
+<variablelist>
+<varlistentry id="composer-settings-toolbars">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Показані панелі &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу визначитися із показаними панелями. Ви можете вибрати будь-яку комбінацію з трьох варіантів: головна панель (<guilabel
+>Надіслати</guilabel
+>, <guilabel
+>Черга</guilabel
+>, <guilabel
+>Форматований текст</guilabel
+> тощо), панель інструментів HTML (<guilabel
+>Стиль</guilabel
+>, <guilabel
+>Шрифт / Розмір</guilabel
+> тощо) і напрям тексту (якщо ви пишете справа ліворуч). Зауважте, що видимість панелі інструментів HTML просто увімкнути або вимкнути за допомогою кнопки <guibutton
+>Форматований текст</guibutton
+> на головній панелі інструментів.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-settings-spellcheck">
+  <term
+><menuchoice
+><guimenu
+>Параметри</guimenu
+> <guimenuitem
+>Перевірка правопису...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Надає вам змогу налаштувати <ulink url="help:/sonnet/"
+>&sonnet;</ulink
+>, інструмент для перевірки правопису у &kde;.</para
+><para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="composer-help-menu">
+<title
+>Меню «Довідка»</title>
+<screenshot>
+<screeninfo
+>Меню «Довідка»</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Меню «Довідка»</phrase>
+    </textobject>
+    <caption>
+      <para
+>Меню «Довідка»</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Це звичайне <ulink url="help:/fundamentals/menus.html#menus-help"
+>меню «Довідка»</ulink
+>, яке описано у підручнику з основ роботи у &kde;. </para>
+</sect2>
+</sect1>
+
+</chapter>

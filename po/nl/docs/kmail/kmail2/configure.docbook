@@ -1,0 +1,5285 @@
+<chapter id="configure">
+
+<chapterinfo>
+<authorgroup>
+  <author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+  <author
+>&David.Rugge; &David.Rugge.mail; </author>
+  <author
+>&Marc.Mutz; &Marc.Mutz.mail; </author>
+  <author
+>&Michel.Boyer; &Michel.Boyer.mail; </author>
+  <author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+  <author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+  <author
+>&David.Bryant; &David.Bryant.mail; </author>
+&Niels.Reedijk;&Tom.Albers;&Rinse.Devries;&Rijk.van.Wel;&Sander.Koning;&Natalie.Koning;&Freek.de.Kruijf; 
+</authorgroup>
+
+<date
+>2021-02-13</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>&kmail; instellen</title>
+
+<sect1 id="configure-generalinfo">
+<title
+>Algemene informatie</title>
+
+<screenshot>
+<screeninfo
+>Dialoogvenster van &kmail; instellen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialoogvenster van &kmail; instellen</phrase>
+    </textobject>
+    <caption>
+      <para
+>De configuratiedialoog van &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Het configuratievenster van &kmail; geeft de mogelijkheid om &kmail; te configureren. U bereikt het via <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> &kmail; configureren...</guimenuitem
+></menuchoice
+></para>
+<para
+>Het dialoogvenster heeft onderaan verschillende knoppen.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="system-help.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Help</guibutton
+></term>
+<listitem
+><para
+>Dit zal Het handboek van &kmail; (deze handleiding) openen op van toepassing zijnde pagina.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="edit-undo.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Beginwaarde</guibutton
+></term>
+<listitem
+><para
+>Dit zal alle wijzigingen, die u sinds de laatste keer dat u de instellingen hebt opgeslagen, ongedaan te maken.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Standaard</guibutton
+></term>
+<listitem
+><para
+>Dit zal alle configuratie-opties op de huidige pagina terug te zetten naar de standaard waarden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> OK</guibutton
+></term>
+<listitem
+><para
+>Klik op deze knop om de instellingen op te slaan en het venster te sluiten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-ok-apply.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Toepassen</guibutton
+></term>
+<listitem
+><para
+>Klik op deze knop om de instellingen op te slaan, maar het venster niet te sluiten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="dialog-cancel.png"
+format="PNG"/></imageobject
+></inlinemediaobject
+> Annuleren</guibutton
+></term>
+<listitem
+><para
+>Klik op deze knop om het venster te sluiten zonder de gemaakte wijzigingen op te slaan.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>De configuratiedialoog is opgedeeld in zes subsets, waarbij elk gerepresenteerd wordt door de pictogrammen in de lijst aan de linkerkant. Deze subsets worden in detail onderstaand beschreven. </para>
+</sect1>
+
+<sect1 id="configure-identity">
+<title
+>Accounts</title>
+
+<para
+>Het tabblad <guilabel
+>Accounts</guilabel
+> wordt automatisch getoond wanneer <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> &kmail; configureren...</guimenuitem
+></menuchoice
+> is geselecteerd. Er zijn vier tabbladen: <guilabel
+>Identiteiten</guilabel
+>, <guilabel
+>Ontvangen</guilabel
+>, <guilabel
+>Verzenden</guilabel
+> en <guilabel
+>LDAP-server</guilabel
+>. (Het <guilabel
+>Identiteiten</guilabel
+> wordt getoond in de sectie <link linkend="configure-generalinfo"
+>&kmail; configureren</link
+> hierboven.)</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-identities-tab">
+<title
+>Tabblad Identiteiten</title
+>    
+
+<para
+>Een korte handleiding voor het tabblad <guilabel
+>Identiteiten</guilabel
+> is te vinden in de sectie <link linkend="getting-started"
+>Hoe te beginnen</link
+>.</para>
+
+<para
+>Op dit tabblad kunt u meerdere <emphasis
+>identiteiten</emphasis
+> instellen. Een identiteit is een verzameling van e-mailadres, naam, organisatie en enige andere instellingen. Zo is het mogelijk een identiteit te maken voor de zakelijke e-mail en een andere voor de persoonlijke e-mail. Bij elk e-mailbericht kan aangegeven worden welke identiteit gebruikt moet worden. U kunt dan de bijbehorende identiteit kiezen wanneer u een nieuw bericht opstelt.</para>
+
+<para
+>Het tabblad toont de verschillende identiteiten, geeft de mogelijkheid nieuwe aan te maken en bestaande identiteiten te wijzigen of te verwijderen. Na initiële instelling wordt er altijd één identiteit getoond, die dan de <guilabel
+>standaard</guilabel
+>-identiteit is. Om een nieuwe identiteit toe te voegen aan de lijst, klik op de knop <guibutton
+>Toevoegen...</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-newidentitydialog">
+<title
+>Het dialoogvenster Nieuwe identiteit</title>
+<screenshot>
+<screeninfo
+>Het dialoogvenster Nieuwe identiteit</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="newidentity.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het dialoogvenster Nieuwe identiteit</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het dialoogvenster Nieuwe identiteit</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Voer een naam in van de nieuwe identiteit in het tekstveld <guilabel
+>Nieuwe identiteit</guilabel
+>. Deze naam zal in de lijst met identiteiten getoond worden.</para>
+
+<para
+>Met de drie keuzemogelijkheden kunt u aangeven hoe deze identiteit geïnitialiseerd moet worden:</para>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>Met lege velden</guilabel
+></term>
+<listitem>
+<para
+>Er zullen geen instellingen gemaakt worden. Dit betekent dat alle velden leeg gelaten worden of dat er een standaardwaarde gekozen wordt.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Waarden van de systeeminstellingen gebruiken</guilabel
+></term>
+<listitem>
+<para
+>De waarden van uw standaard identiteit worden gebruikt.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bestaande identiteit dupliceren</guilabel
+></term>
+<listitem>
+<para
+>Kopieert alle velden uit een bestaande identiteit. U kunt kiezen welke identiteit gekopieerd wordt door het betreffende item in het afrolvak <guilabel
+>Bestaande identiteiten</guilabel
+> te selecteren.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-general">
+<title
+>Algemeen</title>
+<screenshot>
+<screeninfo
+>Identiteit Algemeen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitygeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteit Algemeen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteit Algemeen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Op het tabblad <guilabel
+>Algemeen</guilabel
+> kunnen enkele algemene gegevens voor de identiteit worden opgegeven.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Uw naam</guilabel
+></term>
+<listitem>
+<para
+>Vul hier de volledige naam in die als afzender zal worden gebruikt (soms getoonde naam genoemd). Alhoewel dit veld niet verplicht is, zou u hier uw naam in moeten vullen.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Organisatie</guilabel
+></term>
+<listitem>
+<para
+>Vul hier de naam van de organisatie in. Dit veld is optioneel.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-mailadres</guilabel
+></term>
+<listitem>
+<para
+>Voer hier uw e-mailadres in, bijvoorbeeld <userinput
+>jan@jansen.nl</userinput
+>.</para>
+<example>
+<title
+>E-mailadres</title>
+<para
+>Dus als het adres <replaceable
+>Jan Janssen &lt;jan@janssen.nl&gt;</replaceable
+> is, vul dan <userinput
+>Jan Janssen</userinput
+> in bij het tekstvak <guilabel
+>Uw naam</guilabel
+> en <userinput
+>jan@jansen.nl</userinput
+> bij het tekstvak  <guilabel
+>E-mailadres</guilabel
+>.</para
+></example>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>E-mail-aliassen</guilabel
+></term>
+<listitem>
+<para
+>Dit veld bevat alias-adressen die ook tot deze identiteit behoren (tegenover een andere identiteit representerend). U kunt meerdere aliassen definiëren. Om een andere alias toe te voegen, voer een e-mailadres in in het veld <guilabel
+>E-mailalias:</guilabel
+>, klik daarna op de knop <guibutton
+>&plus; Toevoegen</guibutton
+></para>
+<example>
+<title
+>E-mail-aliassen</title>
+<para
+>Primaire adres: voor.achternaam@voorbeeld.org</para>
+<para
+>Aliassen: eerste@voorbeeld.org en laatste@voorbeeld.org</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-cryptography">
+<title
+>Cryptografie</title>
+<screenshot>
+<screeninfo
+>Identiteit Versleuteling</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitycryptography.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteit Versleuteling</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteit Versleuteling</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Op het tabblad <guilabel
+>Cryptografie</guilabel
+> kunt u de &openpgp;- en/of &smime;-sleutel associëren met deze identiteit. Ook kunt u het voorkeursformaat voor de versleuteling opgeven.</para>
+
+ <variablelist>
+<varlistentry id="configure-identity-cryptography-openpgp-sign">
+<term
+><guilabel
+>OpenPGP-ondertekeningssleutel:</guilabel
+></term>
+<listitem>
+<para
+>Hier kunt u een &openpgp; sleutel selecteren voor het ondertekenen van berichten geschreven met deze identiteit in effect. Kortheidshalve wordt alleen de korte sleutel-id van geselecteerde sleutels getoond. Zweven boven het item zal meer informatie tonen in een tekstballon. Om een bestaande sleutel te selecteren, gebruik de afrollijst. Als u een nieuw publiek / privaat sleutelpaar wilt aanmaken, selecteer <guilabel
+>Een nieuw sleutelpaar genereren</guilabel
+>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-openpgp-encrypt">
+<term
+><guilabel
+>OpenPGP-versleutelingssleutel:</guilabel
+></term>
+<listitem
+><para
+>Hier kunt u de &openpgp;-sleutel selecteren die gebruikt zal worden om de berichten die opgesteld worden met deze identiteit te versleutelen. Ook de instellingen bij <xref linkend="configure-security-composing-encrypt-to-self"/> zijn van toepassing. Deze sleutel wordt ook gebruikt bij de functie <xref linkend="composer-attach-attach-my-public-key"/>.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-sign">
+<term
+><guilabel
+>&smime; ondertekeningscertificaat:</guilabel
+></term>
+<listitem>
+<para
+>Hier kunt u een x.509 certificaat selecteren gebruikt om berichten geschreven met deze identiteit in effect te ondertekenen. &kmail; kan geen x.509 certificaten genereren. Ze worden uitgegeven door certificaatautoriteiten. Als u zo'n certificaat hebt toegevoegd aan uw sleutelring, kan &kmail; deze importen en gebruiken.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-smime-encrypt">
+<term
+><guilabel
+>&smime; versleutelingscertificaat:</guilabel
+></term>
+<listitem>
+<para
+>Hier kunt u een x.509-certificaat selecteren dat gebruikt zal worden voor het versleutelen van berichten en <xref linkend="configure-security-composing-encrypt-to-self"/> zijn in gebruik.</para>
+</listitem
+></varlistentry>
+
+<varlistentry id="configure-identity-cryptography-preferred-format">
+<term
+><guilabel
+>Voorkeursformaat:</guilabel
+></term>
+<listitem>
+<para
+>Hier kunt u kiezen welk formaat de standaard versleuteling is bij deze identiteit. U kunt één van de vier formaten selecteren die &kmail; ondersteunt of de instelling <guilabel
+>Alles</guilabel
+> laten staan, wat wordt aangeraden. Met deze instelling wordt het beste formaat gekozen, gebaseerd op de ontvangers van het bericht. Het zou zelfs zo kunnen zijn dat er twee verschillende berichten worden verstuurd. Eén ondertekend en/of versleuteld met &smime; en de andere ondertekend en/of versleuteld met &openpgp;.</para>
+</listitem
+></varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Berichten automatisch ondertekenen:</guilabel
+></term>
+<listitem
+><para
+>Activeren van dit vakje zorgt dat &kmail; uw digitale ondertekening vastplakt aan berichten opgesteld door deze identiteit tenzij deze optie handmatig wordt overschreven in het <guilabel
+>Opsteller</guilabel
+>venster.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Berichten automatisch versleutelen:</guilabel
+></term>
+<listitem
+><para
+>Activeren van dit vakje zorgt dat &kmail; berichten versleutelt opgesteld door deze identiteit wanneer deze versleuteling mogelijk is (tenzij het wordt overschreven in het <guilabel
+>Opsteller</guilabel
+>venster).</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-advanced">
+<title
+>Geavanceerd</title>
+
+<screenshot>
+<screeninfo
+>Identiteit Geavanceerd</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitiesadvanced.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Identiteit Geavanceerd</phrase>
+    </textobject>
+    <caption>
+      <para
+>Identiteit Geavanceerd</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Het tabblad <guilabel
+>Geavanceerd</guilabel
+> kan gebruikt worden om enkele minder vaak gebruikte instellingen voor de identiteit, die u nu bewerkt, te veranderen.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Antwoord-naar-adres:</guilabel
+></term>
+<listitem>
+<para
+>Voer het adres in waarnaar antwoorden op uw berichten gezonden zouden moeten worden. U hebt dit veld alleen nodig als het verschilt met uw normale adres (gespecificeerd met de velden <guilabel
+>Naam</guilabel
+> en <guilabel
+>E-mailadres</guilabel
+> op het tabblad <link linkend="configure-identity-general"
+><guilabel
+>Algemeen</guilabel
+></link
+>), omdat antwoorden standaard gaan naar het adres van de afzender.</para>
+<para
+>Dit veld is nuttig als u wilt dat antwoorden op uw e-mailbericht ergens anders heen gaan dan naar uw reguliere e-mailadres, &eg; als u deze identiteit gebruikt om berichten te verzenden vanaf een e-mailadres dat geen antwoorden kan ontvangen.</para>
+<note
+><para
+>Sommige e-maillijsten vervangen dit adres in de kopregels door het adres van de mailinglijst, zodat antwoorden ook naar de e-maillijst gaan in plaats van alleen naar de afzender. Dit veld is dus niet zo betrouwbaar en zou alleen gebruikt moeten met voorzichtigheid.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Cc-adressen:</guilabel
+></term>
+<listitem>
+<para
+>Vul hier eventueel adressen in, gescheiden door komma's, waarheen eensluidende berichten verzonden moeten worden. Wanneer u een bericht maakt met deze identiteit, dan zal het veld <guimenuitem
+>CC</guimenuitem
+> gevuld worden met deze adressen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>BCC-adressen:</guilabel
+></term>
+<listitem>
+<para
+>Vul hier adressen in, gescheiden door komma's, waarheen een BCC (blinde kopie) van uw berichten verzonden moet worden. Wanneer u een bericht maakt met deze identiteit, dan zal het veld <guimenuitem
+>BCC</guimenuitem
+> gevuld worden met deze adressen. Indien u een BCC wilt versturen naar hetzelfde adres voor elke identiteit die u definieert, kijk dan in <link linkend="configure-composer-headers"
+>het tabbled <guilabel
+>Berichtkoppen</guilabel
+> van de subset <guilabel
+>Bericht opstellen</guilabel
+></link
+> (een aangepaste BCC-kopregel aanmaken).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Woordenboek:</guilabel
+></term>
+<listitem>
+<para
+>Selecteer het standaard woordenboek voor de huidige identiteit.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Map voor verzonden berichten:</guilabel
+></term>
+<listitem>
+<para
+>Selecteer de map waarin de verzonden berichten na het versturen opgeslagen moeten worden wanneer deze identiteit gebruikt wordt. Wanneer u &IMAP; gebruikt, kunt u het beste een &IMAP;-map selecteren, zodat de verzonden berichten op de server bewaard worden, in plaats van in een lokale map. Dan kunnen de verzonden berichten ook op een andere locatie bekeken worden.</para>
+<tip
+><para
+>Met behulp van <link linkend="filters"
+>berichtfilters</link
+> kunt u per verzonden bericht bepalen in welke map deze zal worden opgeslagen.</para
+></tip>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Map voor concepten:</guilabel
+></term>
+<listitem>
+<para
+>Selecteer de map waarin de concepten opgeslagen moeten worden wanneer deze identiteit gebruikt wordt. Wanneer u &IMAP; gebruikt kunt u het beste een &IMAP;-map selecteren, zodat de concepten op de server bewaard worden, in plaats van in een lokale map. Op deze manier kunnen de concepten ook op andere locaties bekeken, aangevuld en verzonden worden.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Sjabloonmap:</guilabel
+></term>
+<listitem>
+<para
+>Selecteer de map waarin sjablonen opgeslagen moeten worden bij gebruik van deze identiteit. Zie <link linkend="new-compose-from-templates"
+>Opstellen vanuit sjablonen</link
+> voor meer informatie over sjablonen.</para>
+</listitem>
+</varlistentry>
+ 
+<varlistentry>
+<term
+><guilabel
+>Uitgaand account:</guilabel
+></term>
+<listitem>
+<para
+>Hier kunt u een afwijkende &SMTP;- / &Sendmail;- / &Microsoft; Exchange-server specificeren die voor deze identiteit gebruikt moet worden.</para>
+<note
+><para
+>Om uit de lijst te kunnen selecteren is het noodzakelijk om deze eerst in te stellen in het gedeelte <link linkend="configure-accounts-sending"
+> <guilabel
+>Verzenden</guilabel
+></link
+> van het <link linkend="configure-accounts"
+> tabblad<guilabel
+>Accounts</guilabel
+>.</link
+>.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mijn vCard in bericht bijvoegen</guilabel
+></term>
+<listitem>
+<para
+>Kies deze optie als u een vCard bestand wilt bijvoegen aan elk bericht verzonden vanuit deze identiteit. Een korte dialoog zal volgen.</para>
+    <variablelist>
+        <varlistentry>
+        <term
+><guilabel
+>Met lege velden</guilabel
+></term>
+        <listitem
+><para
+>Deze optie opent een dialoog net als de dialoog <ulink url="help:/kaddressbook/editing-contact-data.html"
+>&kaddressbook; contactpersoonsgegevens toevoegen</ulink
+>. Voer uw naam, e-mailadres, &etc; in, klik daarna op <guilabel
+>OK</guilabel
+> om een nieuwe vCard aan te maken.</para
+></listitem>
+        </varlistentry>
+        <varlistentry>
+        <term
+><guilabel
+>Van bestaande vCard</guilabel
+></term>
+        <listitem
+><para
+>Deze optie opent een dialoog om te bladeren in mappen waarmee u een .vcf-bestand kunt selecteren. (Tip: gebruiken &kaddressbook; om een vCard-bestand te exporteren die hier gebruikt kan worden.)</para
+></listitem>
+        </varlistentry
+>        
+        <varlistentry>
+        <term
+><guilabel
+>Bestaande vCard dupliceren</guilabel
+></term>
+        <listitem
+><para
+>Deze optie opent een afrollijst van alle andere al gedefinieerde identiteiten, zodat u de vCard verbonden met een van hen kunt selecteren.</para
+></listitem>
+        </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Autocorrectietaal:</guilabel
+></term>
+<listitem>
+<para
+>Gebruik de afrollijst om de taal, verbonden met het optionele hulpmiddel voor automatische correctie, te selecteren bij gebruik van deze identiteit.</para>
+</listitem
+><!-- FIXME Need a link to "Plugins" section -->
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Standaarddomein:</guilabel
+></term>
+<listitem>
+<para
+>Dit veld is standaard gevuld met de waarde van het <filename
+>hostnamen</filename
+>-bestand (in /etc). De <guilabel
+>Opsteller</guilabel
+> zal deze domeinnaam achtervoegen aan elk puur lokaal e-mailadres dat u specificeert. Deze functie is primair nuttig in een &Sendmail; omgeving.</para>
+<example>
+<title
+>Standaarddomein</title>
+<para
+>Standaarddomein ingesteld op <userinput
+>kde.org</userinput
+>; "Aan:"-adres ingesteld op <userinput
+>foo</userinput
+>.</para>
+<para
+><guilabel
+>Opsteller</guilabel
+> stuurt het bericht naar foo@kde.org.</para>
+</example>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-templates">
+<title
+>Sjablonen</title>
+<screenshot>
+<screeninfo
+>Sjablonen bij een identiteit</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitytemplate.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Sjablonen bij een identiteit</phrase>
+    </textobject>
+    <caption>
+      <para
+>Sjablonen bij een identiteit</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Hier kunt u aangepaste sjablonen aanmaken en beheren voor deze identiteit om te gebruiken bij opstellen van nieuwe berichten, antwoorden aan iemand of inline berichten doorsturen. De berichtensjablonen ondersteunen substitutieopdrachten. U kunt ze eenvoudig intypen of ze selecteren uit het menu <guimenu
+>Opdracht invoegen <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guimenu
+>. Drie soorten opdrachten worden geleverd.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Oorspronkelijk bericht &gt;</guilabel
+> / <guilabel
+>Huidig bericht &gt;</guilabel
+></term>
+        <listitem
+><para
+>Deze opdrachten halen informatie uit het bericht waarnaar u antwoord of doorstuurt en voegt die informatie in in het opstelvenster.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Verwerken met externe programma's &gt;</guilabel
+></term>
+        <listitem
+><para
+>Deze opdrachten zullen het bericht waarop u antwoord doorzenden (pipe) naar een extern programma en daarna de uitvoer invoegen in het opstelvenster van &kmail;.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Diversen &gt;</guilabel
+></term>
+        <listitem
+><para
+>Deze opdrachten voeren functies uit zoals het kiezen van het woordenboek dat de spellingscontrole moet gebruiken of de inhoud van een tekstbestand invoegen in het opstelvenster.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Het veld <guilabel
+>Aanhalingsindicator:</guilabel
+> biedt u het overschrijven van het standaard aanhalingsindicatorteken "&gt;". De knop <guibutton
+>Globale sjablonen kopiëren</guibutton
+> zal alle aangepaste sjablonen resetten naar de hier in &kmail; gedefinieerde standaarden. (U kunt hetzelfde eindresultaat bereiken door het keuzevakje <guilabel
+>Aangepaste berichtensjablonen voor deze identiteit gebruiken</guilabel
+> linksboven dit dialoogvak te deactiveren.)</para>
+
+<para
+>Sjablonen die hier worden opgegeven zijn specifiek voor identiteiten. Ze hebben voorrang boven globale sjablonen, maar hebben geen voorrang boven mapspecifieke sjablonen indien aanwezig.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-signature">
+<title
+>Ondertekening</title>
+<screenshot>
+<screeninfo
+>Ondertekening bij identiteit</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitysignature.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Ondertekening bij identiteit</phrase>
+    </textobject>
+    <caption>
+      <para
+>Ondertekening bij identiteit</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Op dit tabblad kunt u een standaard ondertekening activeren. Een ondertekening kan bestaan uit een naam, een lijfspreuk of bijvoorbeeld een bedrijfs-<quote
+>disclaimer</quote
+> om achtergevoegd te worden aan ieder bericht dat vanuit deze identiteit verzonden wordt.</para>
+<note
+><para
+>Deze ondertekening heeft niets te maken met de digitale ondertekening zoals eerder op het tabblad <link linkend="configure-identity-cryptography"
+>Cryptografie</link
+> is aangegeven. In veel e-mailapplicaties wordt dit "handtekening" genoemd. Wij noemen het ondertekening omdat dit de lading beter dekt, maar onthoud wel dat dit dus niets te maken heeft met de digitale ondertekening.</para
+></note>
+
+<para
+>Activeer de optie <guilabel
+>Ondertekening activeren</guilabel
+> als u wilt dat &kmail; de ondertekening achtervoegt bij het gebruiken van deze identiteit. Indien dit bij elk nieuw bericht <emphasis
+>automatisch</emphasis
+> moet gebeuren, dan moet u via de pagina <guilabel
+>Bericht opstellen</guilabel
+> de optie <guilabel
+>Automatisch ondertekening invoegen</guilabel
+> activeren.</para>
+
+<para
+>&kmail; kan de tekst voor de ondertekening verkrijgen uit verschillende bronnen. De standaard is <guilabel
+>Onderstaand invoerveld</guilabel
+>. Voer de tekst in in het tekstvak. Als u opgemaakte tekst wilt gebruiken, selecteer het keuzevak <guilabel
+>&HTML; gebruiken</guilabel
+> linksonder. Een werkbalk voor opmaak zal dan verschijnen.</para>
+
+<para
+>De traditionele procedure in Unix is om de ondertekening uit een bestand genaamd <filename
+>.signature</filename
+> te halen uit uw persoonlijke map. Dit bestand kan gedeeld tussen verschillende programma's, zodat u dezelfde ondertekening krijgt in elk e-mailprogramma dat u gebruikt. Selecteer <guilabel
+>Bestand</guilabel
+> uit het afrolmenu <guilabel
+>Tekst voor ondertekening halen uit</guilabel
+>. Als u het bestand wilt bewerken, klik op de knop <guilabel
+>Bestand bewerken</guilabel
+>.</para>
+
+<para
+>&kmail; kan de ondertekening ook genereren door het uitvoeren van een commando. Op deze manier is het mogelijk om een steeds wisselende ondertekening te gebruiken. <command
+>fortune</command
+> is hier een mooi voorbeeld van, maar ieder commando dat het resultaat naar <acronym
+>stdout</acronym
+> stuurt is bruikbaar. Om de tekst uit de uitvoer van een commando te lezen selecteer <guilabel
+>Uitvoer van commando</guilabel
+>. Voer het commando in (bij voorkeur met het volledige pad) in het bewerkingsveld <guilabel
+>Commando specificeren:</guilabel
+>.</para>
+
+<note
+><para
+>Op internet is het gebruikelijk om de ondertekening door middel van een regel met slechts drie lettertekens <quote
+>-- </quote
+> (twee streepjes en een spatie) te scheiden van het e-mailbericht. Als de optie <guilabel
+>Scheiding invoegen voor de handtekening</guilabel
+> is gezet in configuratie van de <guilabel
+>Opsteller</guilabel
+> zal &kmail; de ondertekening automatisch laten beginnen met deze lettertekens indien deze niet voorkomen in de ondertekening.</para
+></note>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-identity-pictures">
+<title
+>Afbeelding</title>
+<screenshot>
+<screeninfo
+>Afbeelding bij identiteit</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="identitypicture.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Afbeelding bij identiteit</phrase>
+    </textobject>
+    <caption>
+      <para
+>Afbeelding bij identiteit</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>&kmail; kan een kleine lage kwaliteit, zwartwit afbeelding (48x48 pixels) met ieder bericht meesturen. Dit kan bijvoorbeeld een logo zijn, of een foto van uzelf. Dit plaatje wordt in het e-mailprogramma van de geadresseerde getoond (indien dit wordt ondersteund).</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Afbeelding verzenden met ieder bericht</guilabel
+></term>
+<listitem>
+<para
+>Selecteer deze optie om &kmail; een zogenaamde X-Face kop te laten toevoegen aan de berichten die u met deze identiteit schrijft. Een X-Face is een klein zwart-wit plaatje (48x48 pixels). Sommige e-mailprogramma's zijn in staat om zo'n plaatje te tonen.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Afbeelding ophalen van:</guilabel
+></term>
+<listitem>
+<para
+>Deze afrollijst geeft u twee manieren om een afbeelding te selecteren.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Externe bron <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> (de standaard)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+><guibutton
+>Bestand selecteren...</guibutton
+></term>
+<listitem>
+<para
+>Deze knop gebruiken om een afbeeldingsbestand te selecteren voor het maken van de afbeelding. De afbeelding moet contrastrijk en (nagenoeg) vierkant zijn. Een lichte achtergrond zorgt voor een beter resultaat.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guibutton
+>Uit adresboek</guibutton
+></term>
+<listitem>
+<para
+>U kunt deze knop gebruiken om een verkleinde versie te maken van de afbeelding in uw eigen adresboekitem.</para>
+</listitem>
+</varlistentry>
+</variablelist
+>  
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Onderstaand invoerveld</guilabel
+></term>
+<listitem>
+<para
+>Gebruik deze optie om een willekeurige X-face-tekenreeks te versturen. Voorbeelden zijn beschikbaar op <ulink url="http://ace.home.xs4all.nl/X-Faces/"
+>https://ace.home.xs4all.nl/X-Faces/</ulink
+> </para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-accounts">
+<title
+>E-mailaccounts</title>
+
+<para
+>Een korte instructie voor zowel zenden als ontvangen is te vinden in de sectie <link linkend="setting-up-your-account"
+>Uw account instellen</link
+>.</para>
+
+<para
+>In dit gedeelte kunt u één of meer <emphasis
+>accounts</emphasis
+> aanmaken. Een account is een combinatie van mailserver, inloggegevens en andere instellingen. Gebruikelijk is om één inkomend account (voor binnenkomende e-mail) aan te maken en één account voor de uitgaande e-mail (voor de e-mail die verstuurd wordt). Het is uiteraard toegestaan om meerdere accounts aan te maken en elk account aan een andere <link linkend="configure-identity"
+>identiteit</link
+> te koppelen. Of slechts één identiteit in te stellen en beslissen welk account te gebruiken elke keer dat u een bericht opstelt. Deze pagina laat u ook een of meer <acronym
+>LDAP</acronym
+> (Lightweight Directory Access Protocol) servers instellen.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<sect2 id="configure-accounts-receiving">
+<title
+>Ontvangen</title>
+<screenshot>
+<screeninfo
+>Account voor ontvangen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-receiving.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Account voor ontvangen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Account voor ontvangen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Voor de basisinstellingen verwijzen wij naar het gedeelte <link linkend="receiving-mail"
+>Een account instellen: Ontvangen</link
+>.</para>
+
+<para
+>De kolom met knoppen rechts laat u een nieuw account <guibutton
+>Toevoegen...</guibutton
+> en een bestand account <guibutton
+>Wijzigen</guibutton
+> of <guilabel
+>Verwijderen</guilabel
+>. U zou het item <guilabel
+>Lokale mappen</guilabel
+>, dat standaard aanwezig is, niet moeten wijzigen of verwijderen. De knop <guilabel
+>Herstarten</guilabel
+> zal een herstart van het programma simuleren.</para>
+
+<para
+>De knop <guibutton
+>Volgorde van accounts aanpassen...</guibutton
+> opent een dialoog die u elk IMAP-account, dat u hebt aangemaakt, en de groep van accounts verbonden met <guilabel
+>Lokale mappen</guilabel
+>, hoger of lager in de lijst laat plaatsen.</para>
+
+<para
+>Met het popup-menu <guilabel
+>Opties voor ophalen</guilabel
+> voor elke account, kunt u specificeren of &kmail; moet controleren op nieuwe e-mail onmiddellijk nadat deze is opgestart. U kunt ook <guilabel
+>Meenemen in handmatige e-mailcontrole</guilabel
+> en <guilabel
+>Omschakelen naar offline bij afsluiten van &kmail;</guilabel
+>. </para>
+
+<para
+>Als <guilabel
+>Gedetailleerde melding van nieuwe e-mail</guilabel
+> is geactiveerd zal &kmail; het aantal nieuwe berichten voor elke map tonen. Dit alleen als u hebt aangegeven in een dialoog dat u dat gemeld wil hebben. Meer geavanceerde meldingen, zoals met geluid of gesynthetiseerde spraak, zijn beschikbaar Meer geavanceerde notificaties zijn beschikbaar via de knop <guibutton
+>Overige acties</guibutton
+>.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-accounts-sending">
+<title
+>Verzenden</title>
+<screenshot>
+<screeninfo
+>Account voor verzenden</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-sending.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Account voor verzenden</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Account voor verzenden</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Op het tabblad <guilabel
+>Verzenden</guilabel
+> kunt u uitgaande e-mailservers configureren en instellingen maken die daarmee samenhangen.</para>
+
+<para
+>Voor de basisinstellingen verwijzen wij naar het gedeelte <link linkend="receiving-mail"
+>Een account instellen: Verzenden</link
+>.</para>
+
+<para
+>Wanneer u op de knop <guibutton
+>Toevoegen...</guibutton
+> of <guibutton
+> Wijzigen..</guibutton
+> klikt, wordt respectievelijk het venster <guilabel
+>Uitgaand account toevoegen</guilabel
+> of <guilabel
+>Account wijzigen</guilabel
+> geopend. Voor het versturen van berichten via het &Sendmail;-programma, kan de naam en de locatie van het programma aangegeven worden. Voor het versturen van berichten via &SMTP; kunnen de <guilabel
+>Naam</guilabel
+>, de <guilabel
+>Uitgaande mailserver</guilabel
+> en de <guilabel
+>Poort</guilabel
+> van de server aangegeven worden. In het gedeelte <guilabel
+>Server vereist authenticatie</guilabel
+> kunt u een <guilabel
+>Gebruikersnaam</guilabel
+> en <guilabel
+>Wachtwoord</guilabel
+> opgeven. Indien onbekend is welke beveiligingsinstelling door de server ondersteund wordt, dan kunt u dit testen door op de knop <guibutton
+>Automatisch detecteren</guibutton
+> te klikken op het tabblad <guilabel
+>Geavanceerd</guilabel
+>.</para>
+
+<para
+>In de sectie <guilabel
+>Vóór verzending</guilabel
+>, zal <guilabel
+>Actie bevestigen</guilabel
+> verschijnen met een bevestigingsvakje elke dat u een bericht verstuurt, terwijl <guilabel
+>Spelling controleren</guilabel
+> de spellingscontrole zal inschakelen voordat een bericht wordt verzonden.</para>
+
+<para
+>Bij <guilabel
+>Berichten in "postvak uit" verzenden</guilabel
+> kunt u aangeven wanneer de te verzenden berichten die klaarstaan in het "postvak uit" verzonden moeten worden. U kunt kiezen uit drie opties.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Nooit automatisch <inlinemediaobject
+><imageobject
+><imagedata
+fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+></term>
+<listitem
+><para
+>Berichten in "postvak uit" worden alleen verzonden wanneer u het menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten verzenden</guimenuitem
+></menuchoice
+> kiest.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bij handmatige berichtencontroles</guilabel
+></term>
+<listitem
+><para
+>Berichten in het "postvak uit" worden alleen verzonden wanneer u handmatig controleert of er nieuwe berichten zijn, bijv. via <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten ophalen</guimenuitem
+></menuchoice
+>. Uiteraard is het ook mogelijk de berichten te versturen door het menu <menuchoice
+> <guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten verzenden</guimenuitem
+></menuchoice
+> te kiezen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Bij alle berichtencontroles</guilabel
+></term>
+<listitem
+><para
+>Berichten in het "postvak uit" worden verzonden nadat er, op welke manier dan ook, gecontroleerd is of er nieuwe berichten zijn. Uiteraard is het ook mogelijk de berichten te versturen door het menu <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten verzenden</guimenuitem
+></menuchoice
+> te kiezen.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Bij <guilabel
+>Standaardverzendwijze</guilabel
+> kunt u instellen wat er gebeurt als een bericht verzonden wordt. Er zijn twee mogelijkheden. De keuze <guilabel
+>Nu verzenden</guilabel
+> zorgt ervoor dat het bericht direct naar de mailserver wordt verzonden. De keuze <guilabel
+>Later verzenden</guilabel
+> zorgt ervoor dat het bericht in het "postvak uit" blijft staan totdat er gekozen wordt voor <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten verzenden</guimenuitem
+></menuchoice
+> of wanneer er gecontroleerd wordt op nieuwe berichten. Dit laatste hangt uiteraard wel af van de instelling bij <guilabel
+>Berichten in "postvak uit" verzenden</guilabel
+>.</para>
+
+<para
+>Het keuzevakje <guilabel
+>Verzenden ongedaan maken inschakelen:</guilabel
+> laat u een tijdsinterval specificeren (van 10 tot 50 seconden) gedurende welke u e-mailtransport kunt annuleren. Uw bericht zal in de wachtrij gezet worden en een kleine knop <guibutton
+>Verzenden ongedaan maken</guibutton
+> zal verschijnen in het meldingengebied. Klik op de knop (op tijd) om het bericht te stoppen van verzenden.</para>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-ldap-servers">
+<title
+>LDAP-servers</title>
+<screenshot>
+<screeninfo
+>LDAP-servers</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accounts-ldap.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>LDAP-servers</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad LDAP-servers</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Gebruik deze dialoog om een LDAP-server te configureren die u wilt gebruiken. Raadpleeg de <ulink url="help:/kaddressbook/configure-ldap-server.html"
+>&kaddressbook; Appendix</ulink
+> voor meer details.</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="configure-appearance">
+<title
+>Uiterlijk</title>
+
+<para
+>De pagina Uiterlijk laat u vele aspecten van het grafische gebruikersinterface van &kmail; aanpassen, inclusief kleurenschema's, selectie van lettertype en zelfs de fysieke indeling van de berichtenlijst in het hoofdvenster.</para>
+
+<!-- <sect2 id="configure-appearance-message-window"
+> -->
+<sect2 id="configure-appearance-general">
+<title
+>Algemeen</title>
+
+<screenshot>
+<screeninfo
+>Uiterlijk Algemeen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancegeneral.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Uiterlijk Algemeen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Tabblad Het uiterlijk (algemeen)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Als de optie <guilabel
+>Berichtvenster sluiten na antwoorden of doorsturen</guilabel
+> is geactiveerd zal &kmail; het aparte berichtvenster sluiten wanneer een opstelvenster (voor een antwoord of om het bericht door te sturen) is geopend. <guilabel
+>Toegangstoetsen inschakelen</guilabel
+> is standaard geselecteerd. Toegangstoetsen bieden u het gebruik van het toetsenbord voor functies die normaal gedaan worden met de muis, zoals koppelingen volgen. Voor meer informatie zie <ulink url="help:/konqueror/accesskeys.html"
+>Toegangstoetsen</ulink
+>.</para>
+
+<!-- <para
+><guilabel
+>Show HTML status bar</guilabel
+> activates a bar at the left side of the reader
+pane that tells you if a message is &HTML; or not. This is important because
+&HTML; messages might imitate the look of a signed and encrypted message, so
+you should be aware of the fact that you are reading an &HTML; message. The &HTML;
+status bar itself cannot be influenced by the &HTML; code of the message.</para>
+ 
+<para
+>Enable <guilabel
+>Replace smileys by emoticons</guilabel
+> if you want smileys 
+like <userinput
+>:-)</userinput
+> appearing in the message text to be 
+replaced by emoticons (small pictures) such as
+<inlinemediaobject
+><imageobject>
+<imagedata fileref="smile.png" format="PNG"/></imageobject>
+</inlinemediaobject
+>.</para
+> --><!-- No longer on the General tab. -->
+
+<para
+>Schakel <guilabel
+>Lettergrootte voor aangehaalde tekst verkleinen</guilabel
+> om aangehaalde tekst (in een antwoord) met een kleiner lettertype te tonen. <guilabel
+>Markeringen voor tonen van aanhalingen uit-/invouwen</guilabel
+> toont kleine widgets naast elk stukje aangehaalde tekst. Dit biedt u het tonen (+) of verbergen (-) van geneste aanhalingen verder dan een bepaald niveau. dit is nuttig in langdurig e-mailconversaties waar niemand verwijdert wat er eerder was.</para>
+
+<!-- <para
+><guilabel
+>Fallback character encoding</guilabel
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
+the world. As a default the encoding configured for the whole system is used.</para
+> -->
+
+<para
+><guilabel
+>Tekensetcodering met voorrang:</guilabel
+> anders instellen dan op het standaard <guilabel
+>Auto</guilabel
+> zal de gespecificeerde tekensetcodering afgedwingen voor alle e-mailberichten, ongeacht wat in die berichten, &MIME;-kop, zelf is opgegeven. <guilabel
+>Minimale lettergrootte:</guilabel
+> laat u het kleinste lettertype besturen dat &kmail; zal gebruiken. Stel dit hoger in als u problemen hebt met het lezen van echt kleine letters.</para>
+
+<para
+><guilabel
+>Systeemvak</guilabel
+> biedt drie manieren om de interactie van &kmail; met de takenbalk / paneel van &kde; te besturen. Als <guilabel
+>Systeemvakpictogram inschakelen</guilabel
+> is geactiveerd zal een klein pictogram (<inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject
+></inlinemediaobject
+>) getoond worden in het systeemvakgebied. Als <guilabel
+>Geminimaliseerd in systeemvak starten</guilabel
+> is geactiveerd, zal alleen dit pictogram verschijnen wanneer &kmail; wordt gestart. <guilabel
+>Ongelezen e-mail in taakbalk tonen</guilabel
+> veroorzaakt dat het aantal nu ongelezen verschijnt in taakbalkknop van &kmail;.</para>
+
+<para
+>Als het pictogram zichtbaar is kunt u het hoofdvenster van &kmail; minimaliseren en maximaliseren door er op te klikken. Als u met de &RMB; op het pictogram klikt, verschijnt een klein menu, waarin u kunt kiezen om te controleren op nieuwe berichten, berichten op te stellen of &kmail; af te sluiten. Als er ongelezen berichten zijn zal het item <guilabel
+>Nieuwe berichten in &gt;</guilabel
+> verschijnen, samen met een lijst van mappen die ongelezen berichten bevatten. Door op een map te klikken, wordt deze geopend in het hoofdvenster van &kmail;. </para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-fonts">
+<title
+>Lettertypen</title>
+
+<screenshot>
+<screeninfo
+>Lettertypen in uiterlijk</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancefonts.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Uiterlijk Algemeen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Uiterlijk (lettertypen)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Deze sectie laat u de lettertypen die &kmail; gebruikt aanpassen. Selecteer <guilabel
+>Aangepaste lettertypen gebruiken</guilabel
+> om de dialoog te activeren. Toepassen op: <guilabel
+>Inhoud van bericht</guilabel
+> stelt het lettertype in voor het paneel van de lezer. De optie <guilabel
+>Opsteller</guilabel
+> stelt het lettertype in waarin nieuwe platte tekstberichten worden getoond wanneer ze geschreven worden. <guilabel
+>Berichtenlijst</guilabel
+> wijzigt het lettertype om de berichtenlijst te tonen. U kunt ook speciale lettertypen voor items in de lijst voor Ongelezen, Belangrijk en Actie-item kiezen. <guilabel
+>Uitvoer afdrukken</guilabel
+> wijzigt het lettertype dat wordt gebruikt bij afdrukken. <guilabel
+>Vaste breedte lettertype</guilabel
+> beïnvloedt het tonen van sommige &HTML; berichten.</para>
+
+<para
+><guilabel
+>Alleen niet-proportionele lettertypen tonen</guilabel
+> beperkt het aantal beschikbare lettertypen. Alleen de namen van lettertype met vaste breedte zullen getoond worden wanneer deze optie is gekozen.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-colors">
+<title
+>Kleuren</title>
+
+<screenshot>
+<screeninfo
+>Uiterlijk kleuren</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancecolors.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Uiterlijk kleuren</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Uiterlijk (kleuren)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Deze sectie biedt u het wijzigen van de kleur van een paar dingen door dubbel te klikken op een item in het vak. Selecteer <guilabel
+>Aangepaste kleuren gebruiken</guilabel
+> om deze functie te activeren. Selecteer <guilabel
+>Kleur niet wijzigen in originele HTML e-mail</guilabel
+> om het kleurschema geselecteerd door de afzender van een &HTML; bericht te behouden.</para>
+
+<para
+><guilabel
+>Kleuren hergebruiken bij aanhalingen</guilabel
+> laat het kleuren van aangehaalde tekst opnieuw beginnen op het eerste niveau nadat het derde niveau kleuren is bereikt. De kleuren voor <guilabel
+>Aangehaalde tekst</guilabel
+> worden alleen gebruikt bij het bekijken van een bericht, niet bij het opstellen van een bericht. Als u wilt dat mappen die dicht bij hun quota zitten (ruimtetoekenning, gebruikelijk in &IMAP;-servers) in een verschillende kleur worden getoond dan kunt u een percentage specificeren als een drempel.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-layout">
+<title
+>Opmaak</title>
+<screenshot>
+  <screeninfo
+>Standaard indeling</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelayout.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Standaard indeling</phrase>
+      </textobject>
+      <caption>
+        <para
+>Het tabblad Uiterlijk (indeling)</para>
+      </caption>
+    </mediaobject>
+  </screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Dit tabblad stelt u in staat de indeling van het hoofdvenster van &kmail; te configureren.</para>
+<para
+>In de sectie <guilabel
+>Mappenlijst</guilabel
+> kunt u kiezen tussen de optie <guilabel
+>Lange mappenlijst</guilabel
+> (standaard), die de volledige hoogte van het venster gebruikt en de <guilabel
+>Korte mappenlijst</guilabel
+>. Met de optie <guilabel
+>Kort</guilabel
+>, als u <guilabel
+>Het berichtenvoorbeeldpaneel onder de berichtenlijst</guilabel
+> hebt geselecteerd zal de berichtenlijst en de mappenlijst een horizontale strip bezetten, met het berichtenvoorbeeldpaneel die de gehele onderkant van het venster. Als u <guilabel
+>Het berichtenvoorbeeldpaneel naast de berichtenlijst</guilabel
+> hebt geselecteerd, zullen de mappenlijst en de berichtenlijst een verticale strip bezetten, met het berichtenvoorbeeldpaneel rechts.</para>
+
+<para
+>Selecteer <guilabel
+>Snel zoekveld in map tonen</guilabel
+> om een klein tekstvak boven de mappenlijst aan te maken. Wanneer u iets in dat vak typt, zullen alleen de mappen waarvan de namen overeenkomen met de ingevoerde tekens verschijnen. Wis het vak om al uw mappen te tonen.</para>
+
+<para
+>De sectie <guilabel
+>Mappenweergave van favorieten tonen</guilabel
+> stelt u in staat de weergave van uw favoriete map te kiezen. De optie <guilabel
+>Als pictogrammen</guilabel
+> gebruikt heel wat ruimte, dus als u verschillende favoriete mappen hebt, dan kunt u <guilabel
+>Als lijst</guilabel
+> proberen. Als u helemaal geen favoriete mappen hebt dan kunt u dit geheel uitschakelen door <guilabel
+>Nooit</guilabel
+> te selecteren.</para>
+
+<para
+><guilabel
+>Tekstballonnen van folders</guilabel
+>, standaard ingeschakeld, toont extra informatie (het totale aantal berichten, ongelezen berichten en grootte van de opslag) bij het zweven boven een map met de muisaanwijzer. Selecteer <guilabel
+>Nooit</guilabel
+> om deze functie uit te schakelen.</para>
+
+<para
+>In de sectie <guilabel
+>Paneel voorbeeldbericht</guilabel
+> kunt u kiezen waar in relatie tot de berichtenlijst u het paneel met voorbeeldbericht wilt laten verschijnen. Of u kunt het helemaal verwijderen en alleen de volledig-schermlezer gebruiken om geselecteerde berichten te bekijken (druk op &Enter;).</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+<sect2 id="configure-appearance-message-list">
+<title
+>Berichtenlijst</title>
+
+<screenshot>
+<screeninfo
+>Uiterlijk Berichtenlijst</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancelist.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Uiterlijk Berichtenlijst</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Uiterlijk (berichtenlijst)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Deze dialoog gebruiken om het uiterlijk van het paneel Berichtenlijst te wijzigen.</para>
+<para
+>Als u <guilabel
+>Tekstballonnen tonen voor berichten en groepskoppen</guilabel
+> selecteert, ziet u een beknopte samenvatting van elk bericht (of groep -- afhankelijk van de weergavemodus) wanneer de muis boven een item in de berichtenlijst zweeft.</para>
+
+<para
+><guilabel
+>Standaard samenvoeging</guilabel
+> en <guilabel
+>Standaard thema</guilabel
+> kan overschreven worden met de dialoog <guilabel
+>Mapeigenschappen</guilabel
+> voor elke map afzonderlijk. Klikken op de knop <guibutton
+>Configureren</guibutton
+> opent een venster om de voor-geconfigureerde samenvoeging / thema's aan te passen; u kunt op die manier uw eigen schema's aanmaken.</para>
+
+<para
+>Acht modi voor samenvatting en drie thema's zijn voor-geconfigureerd.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standaard samenvatting:</guilabel
+> (afrollijst)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Activiteit op datum, plat</term>
+<listitem
+><para
+>Berichten worden weergegeven in groepen per dag. De berichten worden niet per discussie gerangschikt. Dus bijvoorbeeld, in "Vandaag" vindt u alle berichten die vandaag zijn ontvangen gerangschikt in omgekeerde chronologische volgorde, met het label "Vandaag", "Gisteren", daarna de voorgaande vijf dagen van de week, gevold door mm/dd/yy.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Activiteit op datum, per discussie gerangschikt</term>
+<listitem
+><para
+>Berichten worden dag-bij-dag weergegeven in groepen. De berichten worden per discussie gerangschikt. Dus bijvoorbeeld, in "Vandaag" vindt u alle berichten die vandaag zijn ontvangen, gerangschikt in alle discussies die vandaag actief zijn. Gebruikt dezelfde groepering als Activiteit per dag, plat.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Huidige activiteit, plat</term>
+<listitem
+><para
+>Berichten worden gegroepeerd op slim datumbereik. De berichten worden niet per discussie gerangschikt. Dus bijvoorbeeld, in "Vandaag" vindt u alle berichten die vandaag zijn ontvangen. De groepen worden standaard getoond in omgekeerde chronologische volgorde: "Vandaag", "Gisteren", de vijf voorgaande dagen van de week, "Vorige week", "Twee weken geleden" en daarna per maand.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Huidige activiteit, gegroepeerd </term>
+<listitem
+><para
+>Berichten worden systematisch weergegeven in groepen gebaseerd op datumbereik. De berichten worden per discussie gerangschikt. Dus bijvoorbeeld, in "Vandaag" vindt u alle berichten die vandaag zijn ontvangen, gerangschikt in alle discussies die vandaag actief zijn. Verder hetzelfde als Huidige activiteit, plat.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Platte indeling per datum</term>
+<listitem
+><para
+>Dit is een gewone, ouderwetse lijst met berichten gesorteerd op datum. Geen groepen en geen indeling in discussies.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Zenders/Ontvangers, plat</term>
+<listitem
+><para
+>Berichten worden weergegeven in groepen van afzenders of geadresseerden (afhankelijk van het soort map). U kunt afzenders (of ontvangers) in de dialoog <menuchoice
+><guimenu
+>Mappen</guimenu
+> <guimenuitem
+>Mapeigenschappen</guimenuitem
+></menuchoice
+> (Tabblad "Beeld", <guilabel
+>Kolom tonen:</guilabel
+>). De berichten worden niet in discussies gerangschikt.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Standaard discussiegroep</term>
+<listitem
+><para
+>Dit is een gewone, ouderwetse weergave van een -maillijst: geen groepen en zware geen indeling in discussies, geordend op de datum waarop elke discussie begon.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Discussiestarters</term>
+<listitem
+><para
+>Berichten worden naar discussie weergegeven, waarna de de discussies worden gegroepeerd naar de discussiestarters.</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-aggregation-theme">
+    <term
+>Knop <guibutton
+>Configureren...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message Aggregation Modes</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="aggregationtheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message Aggregation Modes</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message Aggregation Modes</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+   
+<para
+>Om een aangepast thema voor samenvoeging te maken klik op de knop <guibutton
+>Configureren...</guibutton
+>. Selecteer een bestaande samenvoeging gelijkend op waarnaar u het wilt wijzigen en klik op <guibutton
+>Kloon samenvoeging</guibutton
+>, als er niets vergelijkbaars is klik op de knop <guibutton
+>Nieuwe samenvoeging</guibutton
+>. Het tabblad <guilabel
+>Algemeen</guilabel
+> biedt u om de <guilabel
+>Naam:</guilabel
+> en <guilabel
+>Beschrijving:</guilabel
+> te wijzigen. Het tabblad <guilabel
+>Groepen &amp; discussies</guilabel
+> biedt u om verschillende elementen in te stellen om uw samenvoeging aan te passen.</para>
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Groeperen:</guilabel
+> laat u uit datums, afzender/ontvanger of geen selecteren. Met de slimme opties zal &kmail; gerelateerde e-mailberichten groeperen. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Beleid voor uitvouwen van groepen:</guilabel
+> laat u instellen of &kmail; automatisch gegroepeerde e-mailberichten zal uitvouwen of niet. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Discussiebundeling:</guilabel
+> laat u bepalen of &kmail; referenties en onderwerp zal meenemen bij het bepalen van de perfecte discussiebundeling. U kunt discussiebundeling in zijn geheel uitschakelen. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Discussiestarter:</guilabel
+> laat u het startbericht van de discussie te wijzigen: naar het meest recente bericht of het eerste. </para
+></listitem>
+<listitem
+><para
+><guilabel
+>Beleid voor uitvouwen van discussies:</guilabel
+> laat u wijzigen hoe &kmail; bepaalt of een discussie uitgevouwen moet worden. </para
+></listitem>
+</itemizedlist>
+<para
+>Het tabblad <guilabel
+>Geavanceerd</guilabel
+> laat u de <guilabel
+>Strategie voor invullen van weergave:</guilabel
+> wijzigen. U zou "Voorrang geven aan snelheid" kunnen kiezen als u een langzame verbinding hebt. "Interactiviteit" toont u eerst al uw huidige conversaties. En "Batch-modus" zal de weergave in het geheel niet sorteren.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Standaard thema:</guilabel
+> (afrollijst)</term>
+<listitem>
+<variablelist>
+<varlistentry>
+<term
+>Klassiek</term>
+<listitem
+><para
+>Een eenvoudig thema met enkelvoudige rijen</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intelligent</term>
+<listitem
+><para
+>Een intelligent thema met meerdere regels en meerdere items</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Intelligent met aanklikbare status</term>
+<listitem
+><para
+>Een intelligent thema met meerdere regels, meerdere items en een aanklikbare statuskolom</para
+></listitem>
+</varlistentry>
+<varlistentry id="customize-messagelist-theme">
+    <term
+>Knop <guibutton
+>Configureren...</guibutton
+></term>
+<listitem>
+<!-- <screenshot>
+  <screeninfo
+>Customize Message List Theme</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="messagelisttheme.png" format="PNG"/>
+      </imageobject>
+      <textobject>
+        <phrase
+>Customize Message List Theme</phrase>
+      </textobject>
+      <caption>
+        <para
+>Customize Message List Theme</para>
+      </caption>
+    </mediaobject>
+    </screenshot
+> -->
+  
+<para
+>Om een eigen trema voor de berichtenlijst te maken klikt u op de knop <guibutton
+>Configureren...</guibutton
+>. Selecteer een bestaand thema gelijkend op waarnaar u het wilt wijzigen en klik op <guibutton
+>Thema klonen</guibutton
+>. Als er geen gelijkende is, klik dan op de knop <guibutton
+>Nieuw thema</guibutton
+>. Het tabblad <guilabel
+> Algemeen</guilabel
+> biedt u de <guilabel
+>Naam:</guilabel
+> en <guilabel
+>Beschrijving:</guilabel
+> te wijzigen.</para>
+
+<para
+>Het tabblad <guilabel
+>Uiterlijk</guilabel
+> laat u zichtbare kolommen en statusitems configureren. Om een kolom toe te voegen, klik rechts op de kolommenbalk en selecteer <guilabel
+>Kolom toevoegen</guilabel
+>. Geef de kolom een naam en selecteer wat de kolom zal representeren uit de afrollijst <guilabel
+>Klikken op de kop sorteert berichten:</guilabel
+>. <guilabel
+>Standaard zichtbaar</guilabel
+> is automatisch geactiveerd. Deactiveer het als u alleen wilt dat de kolom beschikbaar moet zijn in het contextmenu voor de aan te klikken sorteerbalk. Sleep het van toepassing zijnde label uit <guilabel
+>Inhoudsitems</guilabel
+> naar het weergavevak van de kolom onder de kolommenbalk, &eg; als u er voor koos om een kolom Grootte toe te voegen, dan zou u het label Grootte onder de kolom Grootte moeten slepen. Ga hier mee door totdat u alle kolommen u wenst hebt. U kunt het lettertype en kleur van de kolomitems wijzigen via het weergavegebied in het &RMB;-menu. Verplaats, verwijder en wijzig grootte van kolommen via het &RMB;-menu van de kolommenbalk.</para>
+
+<para
+>Het tabblad <guilabel
+>Geavanceerd</guilabel
+> laat u de kopregels tonen. U kunt ook de afmeting van pictogrammen voor status wijzigen.</para>
+</listitem
+></varlistentry
+> 
+</variablelist>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>In het gedeelte <guilabel
+>Datumweergave</guilabel
+> kiest u een van de drie formaten van de datum (of u maak uw eigen aan). Het <guilabel
+>Standaard formaat</guilabel
+> toont de dag van de week en de datum. De <guilabel
+>Gelokaliseerde opmaak</guilabel
+> is korter, de dag van de week wordt weggelaten. De <guilabel
+>Slimme opmaak</guilabel
+> zal vandaag, gisteren &etc; tonen. Als u een <guilabel
+>Aangepast</guilabel
+> datumformaat wilt, klik op <guilabel
+>Informatie over eigen opmaak</guilabel
+> en volg de aanwijzingen.</para>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="configure-message-tags">
+    <title
+>Berichttags</title>
+    
+<screenshot>
+<screeninfo
+>Tags voor uiterlijk</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="appearancetags.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Tags voor uiterlijk</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het tabblad Uiterlijk (tags)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+<para
+>Standaard geeft &kmail; u verschillende manieren om berichten te markeren (Belangrijk / Actie-item / Verjaardag), toegankelijk via het submenu <menuchoice
+><guimenu
+>Bericht</guimenu
+> <guisubmenu
+>Bericht markeren &gt;</guisubmenu
+></menuchoice
+>. U kunt ook additionele tags definiëren om u te helpen bij het categoriseren van berichten.</para>
+
+<para
+>Gebruik het invoerveld <guilabel
+>Beschikbare tags</guilabel
+> om uw speciale tag een naam te geven. Gebruik de knop <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> om deze naam aan de lijst toe te voegen. Gebruik de knop <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> om een tag te verwijderen. (De tag "Verjaardag" is ingebouwd en kan niet verwijderd worden.) Gebruik de omhoog en omlaag pijltjesknoppen om de items in de lijst te sorteren.</para>
+
+<para
+>Accentueer een item in de lijst om de dialoog <guilabel
+>Tag instellen</guilabel
+> te activeren. U kunt een aantal of alle zes opties kiezen.</para>
+
+<variablelist>
+    <varlistentry>
+        <term
+><guilabel
+>Tekstkleur wijzigen:</guilabel
+></term>
+        <listitem
+><para
+>Deze optie selecteren om berichtenlijstitems met tags in een andere kleur te tonen. Een kleurpalet zal gepresenteerd worden wanneer u deze optie kiest. Selecteer een vooraf ingestelde kleur of kies "Aangepast..." voor meer flexibiliteit.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Achtergrondkleur wijzigen:</guilabel
+></term>
+        <listitem
+><para
+>Kies deze optie om de achtergrond kleur van items met tags in de berichtenlijst te wijzigen.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Lettertype wijzigen:</guilabel
+></term>
+        <listitem
+><para
+>U kunt ofwel een vet of <emphasis
+>cursief</emphasis
+> lettertype selecteren.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Pictogram van berichttag:</guilabel
+></term>
+        <listitem
+><para
+>Klik op deze knop om een  selectiedialoog voor een pictogram te openen. Het pictogram zal getoond worden op items met tags in de berichtenlijst.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Sneltoets:</guilabel
+></term>
+        <listitem
+><para
+>Gebruik deze knop om een sneltoets aan te maken om deze tag te koppelen met geselecteerde berichten.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry>
+        <term
+><guilabel
+>Werkbalkknop inschakelen:</guilabel
+></term>
+        <listitem
+><para
+>Selecteer deze optie om een nieuwe knop aan de werkbalk van &kmail; toe te voegen. Op de knop klikken zal de tag koppelen aan het nu geselecteerde bericht.</para
+></listitem>
+    </varlistentry>
+</variablelist>
+
+<para
+>Alle hier gedefinieerde tags zullen automatisch als nieuwe opties in het submenu <menuchoice
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Bericht markeren &gt;</guisubmenu
+></menuchoice
+> verschijnen.</para>
+</sect2>
+ 
+</sect1>
+
+<sect1 id="configure-composer">
+    <title
+>Opsteller </title>
+    
+    <para
+>Voor een beschrijving van hoe de <guilabel
+>Opsteller</guilabel
+> te gebruiken, lees <link linkend="the-composer-window"
+>deze pagina</link
+>. Om meer te weten over fijnafstemming van het gedrag van de <guilabel
+> Opsteller</guilabel
+>, druk op. </para>
+
+    <sect2 id="configure-composer-general">
+      <title
+>Algemeen </title>
+    
+    <screenshot>
+    <screeninfo
+>Opsteller algemeen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composergeneral.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Opsteller algemeen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Opsteller (Algemeen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Deze dialoog laat u de manier aanpassen waarop &kmail; ondertekenen behandeld. Het biedt u ook besturing van enige formatteringsfuncties, om enige opties voor automatische aanvulling en functies voor automatisch opslaan van &kmail; te verfijnen. </para>
+    
+    <variablelist>
+	<varlistentry id="configure-composer-general-append-signature">
+	  <term>
+	    <guilabel
+>Handtekening automatisch invoegen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geactiveerd is wordt uw handtekening (gedetecteerd in <link linkend="configure-identity-signature"
+>identiteitenpagina</link
+> automatisch aan het eind van uw aangemaakte berichten ingevoegd (&ie;, nieuwe berichten, antwoorden, &etc;). </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Handtekening invoegen boven de aangehaalde tekst</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; uw ondertekening bovenaan het opstelvenster invoegen en niet onderaan. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Scheiding invoegen voor de handtekening</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; "-- " (steepje streepje spatie) invoegen vóór uw handtekening als uw handtekening niet op die manier begint. (Deze scheidingsregel is een <emphasis
+>de facto</emphasis
+> internetstandaard.) </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Ondertekening verwijderen bij antwoorden</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; de handtekening uit het originele bericht verwijderen wanneer u een antwoord opstelt. Natuurlijk, als u de handtekening niet hebt geselecteerd en de optie <guilabel
+>Alleen geselecteerde tekst aanhalen...</guilabel
+> is geactiveerd, dan zal &kmail; de handtekening weglaten zonder te verwijzen naar deze instelling. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry id="configure-composer-general-quote-selection-only">
+    <term>
+      <guilabel
+>Alleen geselecteerde tekst aanhalen bij het antwoorden</guilabel>
+    </term>
+    <listitem>
+      <para
+>Indien geactiveerd, zal &kmail; bij antwoorden alleen de geselecteerde tekst in het berichtenvenster aanhalen, in plaats van het complete bericht. Hiermee is het mogelijk om snel antwoorden te maken waarin alleen de relevante paragraaf waarop u wilt antwoorden wordt aangehaald. Als deze optie is geactiveerd u selecteert niets, zal &kmail; het gehele bericht aanhalen. </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry id="configure-composer-general-smart-quoting">
+	  <term>
+	    <guilabel
+>Intelligente aanhalingen gebruiken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geactiveerd is zullen lange regels afgebroken worden, om de juiste manier van aanhalen te behouden (&ie; het teken <quote
+>&gt;</quote
+> zal wel altijd aan het begin van de regel blijven staan). </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Regels afbreken bij kolom:</guilabel>
+    </term>
+    <listitem>
+      <para
+>Indien geactiveerd zal de optie regel afbreken (<menuchoice
+> <guimenu
+>Opties</guimenu
+><guimenuitem
+>Regelafbreking</guimenuitem
+> </menuchoice
+> in het opstellervenster automatisch geselecteerd worden. Gebruik de draaischakelaar om de maximale regellengte in te stellen. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+    <term>
+      <guilabel
+>Antwoorden of doorsturen met hetzelfde visuele formaat als het originele bericht (platte tekst of HTML)</guilabel>
+    </term>
+    <listitem>
+      <para
+>Indien geactiveerd zal &kmail; altijd de werkbalk voor opgemaakte tekst inschakelen als het bericht waarop u reageert een &HTML; &MIME; kop bevat. Als deze optie niet is geactiveerd, dan behoud de opsteller de status van de werkbalk uit de vorige sessie. </para>
+    </listitem>
+    </varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Platte tekst versie van &HTML;-bericht verbeteren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; voetnoten toevoegen aan de platte tekst versie van elk bericht gemaakt in &HTML;. Deze platte tekst voetnoten zullen te klikken koppelingen zijn die wijzen naar hulpbronnen gecodeerd als ankertags (aka links) in de &HTML; versie van het bericht. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-auto-request-mdns">
+	  <term>
+	    <guilabel
+>Automatisch bevestigingen voor ontvangst en gelezen verzoeken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als u dit keuzevakje selecteert, wordt de optie <xref linkend="composer-options-request-mdn"/> standaard <emphasis
+>aangezet</emphasis
+>. Aangeraden wordt om dit niet te doen, want &mdn;'s worden door veel mensen als hinderlijk ervaren, of genegeerd. Het is beter dit alleen, indien nodig, te vragen. </para>
+	  </listitem>
+    </varlistentry>
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Geïndexeerde adressen uit e-mailberichten gebruiken voor automatische aanvulling</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; de adressen invoegen van al uw opgeslagen berichten in de lijst met doelen voor automatisch aanvullen (&eg;, toen u begon met typen in het Aan: invoerveld). Deze zullen verschijnen als "Contactpersonen gevonden in uw gegevens". Als u dit uitschakelt verschijnen alleen de overeenkomende &kaddressbook; items en "Recente adressen" in de lijst. Gebruik de draaischakelaar om het aantal items getoond in de lijst te beperken. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term>
+	    <guilabel
+>Recente adressen gebruiken voor automatische aanvulling</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Indien geactiveerd zal &kmail; de adressen invoegen die recent gebruikt zijn in de lijst met doelen voor automatisch aanvullen (&eg;, wanneer u begint met typen in het CC: invoerveld). Deze zullen als "Recente adressen" verschijnen. Als u dit uitschakelt zullen alleen de overeenkomende &kaddressbook; items en "Contactpersonen gevonden in uw gegevens" verschijnen in de lijst. Gebruik de draaischakelaar om het aantal items dat als "Recent" wordt beschouwd te beperken. </para>
+	  </listitem>
+	</varlistentry>
+    <varlistentry>
+	  <term
+>Knop <guibutton
+>Aanvullen configureren ...</guibutton
+> </term>
+	  <listitem>
+	    <para
+>Klik op deze knop om de configuratiedialoog voor automatisch aanvullen te openen. U kunt de volgorde waarin items verschijnen wijzigen, "Recente" adressen toevoegen of verwijderen en een zwarte-lijst van adressen die nooit zouden moeten verschijnen als doelen voor automatisch aanvullen. Merk op dat deze dialoog ook gestart kan worden uit een contextmenu door te klikken met de &RMB; in, bijvoorbeeld, het "Aan:" veld van de opsteller. </para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry id="configure-composer-general-autosave-interval">
+	  <term>
+	    <guilabel
+>Automatisch opslaan iedere</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Standaard zal er automatisch een periodieke kopie gemaakt worden van de tekst in het opstel-vak. Hier kunt u instellen hoe vaak u wilt dat dit gebeurt. U schakelt dit uit door "Niet automatisch opslaan" te selecteren. </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-standard-templates">
+    <title
+>Standaardsjablonen</title>
+    <screenshot>
+    <screeninfo
+>Standaardsjablonen voor de opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerstandard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Standaardsjablonen voor de opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad van de opsteller (Standaardsjablonen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>U kunt hier de standaard berichtensjablonen bewerken gebruikt wanneer u een nieuw bericht maakt, een antwoord schrijft of een bericht doorstuurt. Berichtensjablonen ondersteunen substitutieopdrachten, door eenvoudig ze te typen of ze te selecteren uit het menu <guimenu
+>Opdracht invoegen</guimenu
+>. Dit zijn globale (standaard) sjablonen. Ze kunnen overschreven worden door sjablonen per identiteit of sjablonen per-map als zulke zijn gespecificeerd. De meeste mensen zijn blij met de standaard sjablonen. Maar als u de standaarden wilt aanpassen, dan is dit de plaats om het te doen. </para>
+
+    <para
+>Voor een meer gedetailleerde uitleg over configureren van sjablonen, kijk op <link linkend="configure-identity-templates"
+>het hoofdstuk Identiteiten.</link
+> </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-custom-templates">
+    <title
+>Aangepaste sjablonen</title>
+    <screenshot>
+    <screeninfo
+>Aangepaste sjablonen voor de opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercustom.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Aangepaste sjablonen voor de opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad van de opsteller (Aangepaste sjablonen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Hier kunt u eigen berichtensjablonen toevoegen, bewerken en verwijderen, om te gebruiken wanneer u een antwoord maakt of en bericht doorstuurt. Maak het eigen sjabloon door de naam in te typen in het invoervak en druk op de knop <guiicon
+>+</guiicon
+>. U kunt een sneltoets aan het sjabloon hangen om sneller te werken. </para>
+    <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
+    
+    <para
+>Berichtensjablonen ondersteunen substitutiecommando's door ze eenvoudig in te typen of te selecteren uit het menu <guimenu
+>Commando invoegen</guimenu
+>. </para>
+    
+    <para
+>Er zijn vier typen eigen sjablonen: te gebruiken voor <guilabel
+>Antwoord</guilabel
+>, <guilabel
+>Antwoord aan allen</guilabel
+>, <guilabel
+>Doorsturen</guilabel
+> en <guilabel
+>Universeel</guilabel
+> die gebruikt kan worden voor alle soorten van verwerken. U kunt geen snelkoppeling aan <guilabel
+>Universeel</guilabel
+>-sjablonen koppelen. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-subject">
+    <title
+>Onderwerp</title>
+    <screenshot>
+    <screeninfo
+>Onderwerp in de opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composersubject.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Onderwerp in de opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Opsteller (onderwerp)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Deze sectie bevat een lijst met voorvoegsels voor <quote
+>Beantwoordde</quote
+> of <quote
+>Doorgestuurde</quote
+> berichten. Als u berichten ontvangt met andere voorvoegsels, dan is het raadzaam deze hier toe te voegen, zodat &kmail; deze als reactie op een bericht of als doorgestuurd bericht herkent. Dit is van belang voor de discussiegroepen, de sortering van de berichten en (om het onderwerpveld goed in te stellen wanneer u berichten beantwoordt of doorstuurt), en ze optioneel vervangt, respectievelijk door <quote
+>Re:</quote
+> of <quote
+>Fwd:</quote
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-charset">
+    <title
+>Tekenset</title>
+    <screenshot>
+    <screeninfo
+>Tekenset in de opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercharset.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Tekenset in de opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Opsteller (tekenset)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Op dit tabblad kunt u de standaard-tekenset voor de opgestelde berichten instellen. Bij elk bericht wordt gekeken of die in zijn geheel voldoet aan één van de gedefinieerde tekensets (van boven naar beneden). Voldoet het er aan, dan zal die tekenset gebruikt worden, voldoet het aan geen van de genoemde tekensets, dan zal er gevraagd worden om handmatig onder <menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Codering instellen</guisubmenu
+></menuchoice
+> een keuze te maken. </para>
+
+    <para
+>Indien het keuzevakje <guilabel
+>Originele tekenset behouden bij beantwoorden en doorsturen (indien mogelijk)</guilabel
+> is geselecteerd, zal de tekenset van het originele bericht overgenomen worden, tenzij de bericht tekens bevat die niet in die tekenset voorkomen. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-headers">
+    <title
+>Berichtkoppen</title>
+    <screenshot>
+    <screeninfo
+>Koppen in de opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerheaders.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Koppen in de opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Opsteller (koppen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>Selecteer het keuzevakje <guilabel
+>Aangepast message-id achtervoegsel gebruiken</guilabel
+> indien dit achtervoegsel aangepast moet worden. Elk e-mailbericht bevat een zogenaamd <quote
+>Message-ID</quote
+>-veld met daarin een unieke waarde (in de webwereld), waardoor het bericht door mailservers herkend kan worden. Indien gewenst kan hiervoor dus een aangepast achtervoegsel gebruikt worden. Indien dit aangepast moet worden, wat overigens niet gebruikelijk is, dan wordt hiervoor vaak de domeinnaam (zonder .nl of .com) gebruikt waarvan u de eigenaar bent, zodat het Message-ID een wereldwijd unieke waarde blijft houden. Indien u geen idee hebt waar dit over gaat, selecteer deze optie dan niet. </para>
+
+    <para
+>Bij <guilabel
+>Definieer hier uw eigen mime-velden</guilabel
+> kunt u eigen mime-velden opgeven die meegezonden moeten worden met alle uitgaande berichten. Het is mogelijk om nieuwe velden aan te maken of om bestaande velden te overschrijven met andere waarden. In de regel is het niet nodig om hier wijzigingen aan te brengen; iets voor experts. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-attachments">
+    <title
+>Bijlagen</title>
+    <screenshot>
+    <screeninfo
+>Bijlagen in opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerattach.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Bijlagen in opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Opsteller (bijlagen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+    <para
+>De optie <guilabel
+>Outlook-compatibele bijlagenamen</guilabel
+> is nuttig als u bijlagen met ongebruikelijke lettertekens in de bestandsnaam wilt sturen naar gebruikers van <application
+>&Microsoft; Outlook</application
+> of <application
+>&Microsoft; Outlook Express</application
+>. &kmail; zal dan de namen van de bijlagen aanpassen zodat <application
+>&Microsoft; Outlook</application
+> ze begrijpt. </para>
+
+    <para
+>Als u deze optie selecteert, zal &kmail; berichten aanmaken die niet overeenkomen met e-mailstandaarden, ten gevolge waarvan de mogelijkheid bestaat dat de berichten niet begrepen kunnen worden in e-mailclients die voldoen aan standaarden. U zou deze optie dus niet in moeten schakelen, tenzij u geen andere keuze hebt. </para>
+
+    <para
+>Als de optie <guilabel
+>Detectie van ontbrekende bijlagen activeren</guilabel
+> ingeschakeld is, geeft &kmail; een waarschuwing als u een bericht wilt versturen waar geen bijlagen bij zitten, hoewel er wel woorden in de tekst voorkomen die daarop duiden. De lijst met sleutelwoorden kan uitgebreid worden. </para>
+    
+    <para
+>Gebruik de draaischakelaar <guilabel
+>Maximum grootte bijlage:</guilabel
+> om de grootte van een bijlage die u verzendt beperkt. Als u een grotere dan de gespecificeerde limiet wilt bijvoegen zal &kmail; een foutmelding uitgeven en weigeren het bestand bij te voegen. Merk op dat dit een individuele limiet is en niet een geaggregeerde limiet. De bestandsgrootte wordt gecontroleerd voordat het bestand geconverteerd wordt tot base-64 codering, als dat nodig is. </para>
+    
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-composer-autocorrection">
+    <title
+>Automatische correctie</title>
+    <screenshot>
+    <screeninfo
+>Automatisch correctie in opsteller</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composercorrect.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Automatisch correctie in opsteller</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad in de opsteller (Automatisch correctie)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>Om automatische correctie van algemene typefouten in te schakelen, activeert u de optie <guilabel
+>Automatische correctie inschakelen</guilabel
+>. In het afrolvak kiest u de taal die u wilt gebruiken. U kunt instellingen ofwel uit <application
+>LibreOffice</application
+> of een andere installatie van &kmail; / &calligra; importeren, via de knop <guibutton
+>Importeren ... <inlinemediaobject
+> <imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guibutton
+>. Als u uw instellingen voor een andere installatie of toepassing wilt opslaan, gebruik de knop <guibutton
+>Exporteren...</guibutton
+>. </para>
+    
+    <para>
+      <variablelist
+><title
+>Opties voor autocorrectie</title>
+        <varlistentry>
+             <term
+><guilabel
+>Eenvoudige autocorrectie</guilabel
+></term>
+             <listitem>
+               <para
+>Dit biedt u om &kmail; zo te configureren dat verschillende algemene typografische fouten automatische worden gecorrigeerd. Activeer de vakjes, die u wilt, naast de functies autocorrectie. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Aangepaste aanhalingstekens</guilabel
+></term>
+             <listitem>
+               <para
+>U kunt dubbele of enkele aanhalingstekens vervangen door "slimme" aanhalingstekens door het van toepassing zijnde vakje te activeren. U kunt ook de niet-afbreek spatie voor specifieke punctuatie markeringen in Franse tekst toevoegen door die optie te activeren. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Geavanceerde autocorrectie</guilabel
+></term>
+             <listitem>
+               <para
+>U kunt automatische vervanging van woorden aanpassen door deze optie te selecteren. Om een eigen tekenreeks in te voeren die automatisch wordt vervangen, voer het te vervangen woord in in het vakje <guilabel
+>Zoek</guilabel
+> en het vervangende woord in het vakje <guilabel
+>Vervangen</guilabel
+> en klik daarna op de knop <guibutton
+>Toevoegen</guibutton
+>. Om een eigen tekenreeks voor woordvervanging uit de lijst te verwijderen, accentueer de tekenreeks en klik op <guibutton
+>Verwijderen</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry>
+             <term
+><guilabel
+>Uitzonderingen</guilabel
+></term>
+             <listitem>
+               <para
+>Deze dialoog laat u uitzonderingen te naken waar u &kmail; vertelt om sommige punten (einde van de zin) en twee hoofdletters (&eg;, &kmail;) te negeren. Voer de uitzondering in en klik op de knop <guibutton
+>Toevoegen</guibutton
+>. Om de uitzondering te verwijderen, accentueer de tekenreeks en klik op <guibutton
+>Verwijderen</guibutton
+>. </para>
+             </listitem>
+           </varlistentry>
+        </variablelist>
+    </para>
+      
+    <para
+>Nadat u al uw selecties voor autocorrectie hebt gemaakt, klik op <guibutton
+>Toepassen</guibutton
+> of <guibutton
+>OK</guibutton
+>. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace --> 
+    </sect2>
+
+    <sect2 id="configure-resize-image">
+    <title
+>Afbeeldingsgrootte automatisch wijzigen</title>
+    <screenshot>
+    <screeninfo
+>Opsteller automatisch grootte wijzigen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="composerresize.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Opsteller automatisch grootte wijzigen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad van de opsteller (Automatisch grootte wijzigen van afbeelding)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+   
+    <para
+>In sommige omstandigheden wilt u misschien dat &kmail; automatisch een bijlage als afbeelding in uitgaande e-mails in grootte aanpast (&eg; vanwege limieten op de e-mailserver). Om dat te doen, selecteer <guilabel
+>Afbeeldingen automatisch van grootte wijzigen</guilabel
+>. Er zijn verschillende opties die met deze functie samengaan. </para>
+      
+    <variablelist>
+     <varlistentry
+><term
+><guilabel
+>Algemeen</guilabel
+></term>
+       <listitem>
+         <para
+>Er zijn drie opties onder "Algemeen". Als u de verhouding van lengte en breedte van afbeeldingen intact te laten, selecteer dan <guilabel
+>Beeldverhouding behouden</guilabel
+>. &kmail; zal standaard vragen of of u de grootte wilt wijzigen alvorens dat te doen. Als u dat wilt zonder vragen, deactiveer dan <guilabel
+>Vragen voor grootte wijzigen</guilabel
+>. &kmail; zal standaard het gewijzigde bestand in <acronym
+>JPG</acronym
+> opslaan. Als u ze liever wilt verzenden in <acronym
+>PNG</acronym
+> formaat, selecteer dat in het afrolvak <guilabel
+>Terugvallen op formaat:</guilabel
+>. </para>
+       </listitem>
+     </varlistentry>
+     <varlistentry
+><term
+><guilabel
+>Afbeelding</guilabel
+></term>
+       <listitem>
+         <para
+>Veronderstel dat u een familielid hebt die slechts afbeeldingsbestanden van een zekere grootte kan ontvangen vanwege limieten van zijn/haar e-mailleverancier. U kunt dan de optie <guilabel
+>Reduceer afbeelding tot maximale afmeting:</guilabel
+> gebruiken om een grootte te selecteren van de afbeelding en het e-mailadres in de filters in het tabblad <guilabel
+>Ontvangers</guilabel
+> te zetten. (Het tabblad <guilabel
+>Ontvangers</guilabel
+> wordt verderop in verdere details bediscussieerd). Als u een eigen grootte wilt, kies dan de laatste optie <guilabel
+>Aanpassen</guilabel
+> uit de afrolvakken voor breedte en hoogte en voer een aantal pixels in in het tekstvak. U kunt ook afbeeldingen vergroten door <guilabel
+>Vergroot afbeelding tot minimale afmeting</guilabel
+> te selecteren. De laatste optie biedt u om afbeeldingen met een bepaalde bestandsgrootte, kleiner dan de gespecificeerde bestandsgrootte, over te slaan. </para>
+       </listitem>
+     </varlistentry>
+     
+     <varlistentry
+><term
+><guilabel
+>Bestandsnaam</guilabel
+></term>
+       <listitem>
+         
+           <variablelist>
+           <varlistentry
+><term
+><guilabel
+>Filter op de bron</guilabel
+></term>
+             <listitem>
+               <para
+>Als u wilt dat dat het wijzigen van grootte gedaan wordt op basis van de naam van het bestand, dan selecteert u het van toepassing zijnde filter hier. Veronderstel dat u dagelijks meerdere afbeeldingen aan uw chef moet sturen en uw chef vereist dat ze allemaal dezelfde afmetingen hebben. U zou de naam van uw werkafbeeldingen werk1, werk2 &etc; kunnen geven en dan <guilabel
+>Sluit alle bestanden in waarvan de namen een van de patronen bevatten</guilabel
+> selecteren en voer werk in in het tekstvak <guilabel
+>Patroon:</guilabel
+>. U kunt ook bestanden op dezelfde manier uitsluiten door <guilabel
+>Sluit alle bestanden uit waarvan de namen een van de patronen bevatten</guilabel
+>. Het standaard gedrag is geen filtering. </para>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Type van afbeelding</guilabel
+></term>
+             <listitem>
+               <para
+>Selecteer <guilabel
+>Alle afmetingen van afbeeldingen wijzigen in één van deze formaten</guilabel
+> om een specifiek formaat in te stellen waarnaar de afbeelding gewijzigd moet worden. </para>
+               <itemizedlist>
+                 <listitem>
+                   <para
+>Wanneer deze optie is ingeschakeld klikt u op de knop <guibutton
+>Formaat selecteren...</guibutton
+> en daarna een formaat in de dialoog kiezen. </para>
+                 </listitem>
+               </itemizedlist>
+             </listitem>
+           </varlistentry>
+           <varlistentry
+><term
+><guilabel
+>Afbeeldingsgrootte wijzigen van bestand met naam</guilabel
+></term>
+             <listitem>
+               <para
+>Selecteer <guilabel
+>Hernoem van grootte gewijzigde afbeeldingen met het volgende patroon</guilabel
+> als u wilt dat uw van grootte gewijzigde afbeeldingen worden hernoemd met behulp van een specifiek patroon. Voer het patroon in in het tekstvak. U kunt gebruiken: <simplelist>
+                 <member
+>%t huidige tijd instellen</member>
+                 <member
+>%d huidige datum instellen</member>
+                 <member
+>%n oorspronkelijke bestandsnaam</member>
+                 <member
+>%e oorspronkelijke extensie</member>
+                 <member
+>%x nieuwe extensie</member>
+               </simplelist>
+               </para>
+             </listitem>
+           </varlistentry>
+         </variablelist>
+         
+         </listitem>
+       </varlistentry>
+     
+       <varlistentry
+><term
+><guilabel
+>Ontvangers</guilabel
+></term>
+         <listitem>
+           <para
+>Dit tabblad is waar u ontvangers specificeert die van grootte veranderde afbeeldingen nodig hebben. U moet beslissen of u er meerdere of slechts één nodig hebt en het/de e-mailadres(sen) in het tekstvak invoeren met de <quote
+>;</quote
+> als scheidingsteken wanneer er meerdere items zijn. U kunt ook ontvangers specificeren waarvoor niet van grootte veranderd moet worden. De standaard is geen filtering. </para>
+         </listitem>
+       </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+</sect1>
+
+<sect1 id="configure-security">
+  <title
+>Beveiliging instellen</title>
+  
+  <para
+>De configuratiedialoog Beveiliging laat u bepaalde opties voor opgemaakte tekst (&HTML;) fijn afstemmen. Het biedt u ook functies voor versleutelen en ontsleutelen, sommige ingebouwde anti-phishing logica aanpassen en hoe verzoeken voor meldingen over ontvangen / gelezen worden behandeld. Merk op dat deze dialoog <emphasis
+>niets</emphasis
+> te maken heeft met beveiligingsinstellingen voor anti-virus. Zie het hoofdstuk <link linkend="the-anti-virus-wizard"
+>&kmail; gebruiken: de anti-virus assistent</link
+> als u beveiliging tegen anti-virus wilt. </para>
+  
+  <sect2 id="configure-security-reading">
+    <title
+>Lezen</title>
+    
+    <screenshot>
+    <screeninfo
+>Beveiliging bij lezen</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="securityreading.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Beveiliging bij lezen</phrase>
+        </textobject>
+        <caption>
+          <para
+>Het tabblad Beveiliging (lezen)</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+    
+    <para
+>Op dit tabblad kunt u beveiligingsopties configureren die effect hebben op de manier waarop u berichten leest.</para>
+
+      <variablelist>
+        <varlistentry id="configure-security-reading-prefer-html">
+	  <term
+><guilabel
+>HTML over platte tekst prefereren</guilabel
+></term>
+	  <listitem>
+            <para
+>Standaard zal &kmail; &HTML; berichten in platte tekst tonen. Als u de voorkeur geeft aan automatisch tonen in &HTML; formattering en indeling, selecteer dan deze optie. We bevelen echter aan deze optie uit te laten, omdat beveiligingsproblemen met &HTML; te voorschijn kunnen komen. </para>
+            <para
+>U kunt toch gemakkelijk berichten in &HTML; formaat per e-mailbericht bekijken door te klikken op de omschakelbalk platte tekstbericht/HTML bericht aan de linker kant van het voorbeeldpaneel. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-reading-external-references">
+	  <term
+><guilabel
+>E-mailberichten toestaan externe referenties van internet te laden</guilabel
+></term>
+	  <listitem>
+            <para
+>Indien ingeschakeld kan &kmail; externe afbeeldingen, stijlbladen, &etc; laden vanaf internet, wanneer u een &HTML; bericht bekijkt. We raden ten sterkste aan om deze optie uit te laten (hoewel het geen effect heeft als totdat u &HTML; inschakelt). </para>
+            <para
+>Door externe verwijzingen aan hun berichten toe te voegen, kunnen mensen die spam verzenden detecteren wanneer u naar hun bericht hebt gekeken, wat uw locatie is en heel wat andere informatie die gelogd wordt op webservers. Merk op dat deze optie geen effect heeft op &Java; of JavaScript, omdat deze in &kmail; helemaal niet worden ondersteund. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
+    <varlistentry id="configure-security-email-scams">
+      <term
+><guilabel
+>Informeert of het gelezen bericht een verdachte e-mail-scam is</guilabel
+></term>
+      <listitem>
+            <para
+>Omdat e-mail populairder is geworden, hebben e-mailscams zich ook uitgebreid. E-mailscams kan e-mails omvatten die gemaakt lijken te zijn alsof ze van legitieme bedrijven komen, maar in werkelijkheid naar valse websites verwijzen die om uw persoonlijke informatie vragen. Dit kan leiden tot identiteitsdiefstal en erger. Standaard zal &kmail; berichten scannen op algemene scams en zal u informeren als het e-mailbericht verdacht is. Het is ten zeerste aangeraden om deze functie ingeschakeld te laten. Als u deze waarschuwingen uit wilt schakelen, deactiveer dan <guilabel
+>Informeert of het gelezen bericht een verdachte e-mail-scam is</guilabel
+>. </para>
+            <para
+>Als legitieme e-mails gevlagd worden, (&eg; van vertrouwde vrienden), dan kunt u hun e-mailadres toevoegen aan de <guilabel
+>Witte lijst:</guilabel
+> door te klikken op de knop <guibutton
+>Toevoegen...</guibutton
+> en het e-mailadres dat in de dialoog verschijnt invoeren. Merk op, dat op dit moment, alleen volledige e-mailadressen in deze lijst geplaatst kunnen worden. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>URL controleren met Google-systeem voor phishing</guilabel
+></term>
+          <listitem>
+            <para
+>Selecteer deze optie om af te dwingen dat &kmail; de database van Google voor verdachte phishing-websites raadpleegt wanneer URL's ingebed zijn in een bericht en u te waarschuwen wanneer een overeenkomst wordt gevonden. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>E-mails scannen voor volgen van URL's</guilabel
+></term>
+          <listitem>
+            <para
+>&kmail; zal standaard automatisch URL's ingebed in &HTML;-berichten controleren en u waarschuwen als er een verschijnt om te proberen u misleiden. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+          <term
+><guilabel
+>Versleutelde berichten proberen te ontcijferen bij het bekijken</guilabel
+></term>
+          <listitem>
+            <para
+>Standaard zal &kmail; automatisch proberen versleutelde berichten te decoderen wanneer u ze bekijkt. Als u er de voorkeur aan geeft om dat handmatig te doen, deactiveer dan deze optie. </para>
+          </listitem>
+        </varlistentry>
+        
+        <varlistentry>
+	      <term
+><guilabel
+>Sleutels en certificaten automatisch importeren</guilabel
+></term>
+	      <listitem>
+	        <para
+>Als dit keuzevakje geselecteerd is, zal &kmail; automatisch bijlagen importeren die &openpgp;-sleutels bevatten. Hetzelfde geldt voor de &smime;-sleutels. </para>
+	        <note>
+	          <para
+>Voor het verifiëren van &smime;-ondertekeningen is het noodzakelijk dat de bijgevoegde certificaten worden geïmporteerd. Deze instelling heeft daar geen invloed op. Ook is deze instelling onafhankelijk van de instelling voor <option
+>automatisch sleutel ophalen</option
+> van &gpg;. </para>
+	        </note>
+	      </listitem>
+	    </varlistentry>
+      </variablelist>
+      <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-message-disposition-notifications">
+        <title
+>Bevestigingen voor ontvangst en gelezen</title>
+        <screenshot>
+          <screeninfo
+>MDN's van beveiliging</screeninfo>
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="securitymdn.png" format="PNG"/>
+              </imageobject>
+              <textobject>
+                <phrase
+>MDN's van beveiliging</phrase>
+              </textobject>
+              <caption>
+                <para
+>Het tabblad Beveiliging (Bevestigingen voor ontvangst en gelezen)</para>
+              </caption>
+            </mediaobject>
+          </screenshot>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+        <variablelist>
+          <varlistentry id="configure-security-reading-mdns">
+	      <term>
+	        <guilabel
+>Bevestigingen voor ontvangst en gelezen</guilabel>
+	      </term>
+	      <listitem>
+	        <para
+>&mdn;'s zijn een generalisatie van wat algemeen genoemd wordt een <quote
+>leesbevestiging</quote
+>. De schrijver van een bericht verzoekt om een bevestiging van ontvangst en/of lezen te sturen en het e-mailprogramma van de ontvanger genereert een bericht waaruit de schrijver op kan maken wat er met dit bericht is gebeurd. Gebruikelijke typen zijn <quote
+>weergegeven</quote
+> (&ie;, gelezen), <quote
+>verwijderd</quote
+> en <quote
+>verzonden</quote
+> (&ie;, doorgestuurd). </para>
+	        <para
+>Met de opties bij <guilabel
+>Verzendbeleid</guilabel
+> is in te stellen wat &kmail; moet doen <emphasis
+>wanneer</emphasis
+> een verzoek voor een &mdn; wordt ontvangen. </para>
+	        <variablelist>
+	          <varlistentry>
+		    <term
+><guilabel
+>Negeren</guilabel
+> (aanbevolen) </term>
+		    <listitem>
+		      <para
+>Negeert elk verzoek om ontvangst- en leesbevestiging. Er zal nooit automatisch een &mdn; verzonden worden. </para>
+		    </listitem>
+          </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Vragen</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Verstuurt &mdn;s na daarvoor toestemming te hebben gevraagd. Op deze manier kunt u zelf bepalen aan wie u een bevestiging verstuurt. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Weigeren</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Met deze optie wordt altijd de melding <quote
+>geweigerd</quote
+> verstuurd. Dit is <emphasis
+>iets</emphasis
+> veiliger dan altijd een &mdn; verzenden; de verzender kan nog steeds zien dat het bericht ontvangen is, hij weet alleen niet of het bericht verwijderd of gelezen is. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Altijd verzenden</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>Verstuurt (indien gevraagd) altijd een ontvangst- en leesbevestiging. Het wordt u sterk afgeraden deze optie te gebruiken, in verband met ongewenste e-mail. Met deze optie komt de verzender namelijk precies te weten wat er met zijn bericht gebeurd is (gelezen, verwijderd, &etc;). </para>
+		    </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Als u het niet zeker weet, kies dan <guilabel
+>Vragen</guilabel
+>, en probeer dat een tijdje uit. Als u deze vragen hinderlijk vindt, schakel dan over op <guilabel
+>Negeren</guilabel
+>. </para>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+        
+	    <para
+>Met de opties onder <guilabel
+>Originele bericht aanhalen</guilabel
+> kunt u bepalen hoeveel van een bericht wordt teruggestuurd met &mdn;'s. </para>
+        
+	    <variablelist>
+	      <varlistentry>
+		    <term>
+		      <guilabel
+>Niets</guilabel>
+		    </term>
+		    <listitem>
+		      <para
+>In de &mdn; wordt niets anders dan de message-id en de oorspronkelijke geadresseerde bijgevoegd. Dit geeft de verzender genoeg unieke informatie om het bericht terug te vinden waarin deze &mdn; is gegenereerd. </para>
+		    </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Volledig bericht</guilabel>
+            </term>
+            <listitem>
+              <para
+>Het hele bericht wordt bijgevoegd. Dit is overbodig, omdat de berichtkoppen vaak alle benodigde informatie bevatten, maar het is natuurlijk gemakkelijker voor de ontvanger. </para>
+            </listitem>
+	      </varlistentry>
+          
+	      <varlistentry>
+            <term>
+              <guilabel
+>Alleen berichtkoppen</guilabel>
+            </term>
+            <listitem>
+              <para
+>In de &mdn; worden alleen de berichtkoppen toegevoegd. Dit is meestal genoeg informatie voor mensen (het onderwerp) en computers (de message-id), om het bericht dat bij de &mdn; hoort, terug te vinden. </para>
+              </listitem>
+	      </varlistentry>
+	    </variablelist>
+        
+	    <para
+>Als u het niet zeker weet, kunt u deze optie op de standaardinstelling (niets) laten staan. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry>
+	  <term>
+	    <guilabel
+>Verstuur geen MDN's in antwoord op versleutelde berichten</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Met deze optie wordt het verzenden van &mdn;'s onderdrukt als het bericht (gedeeltelijk) versleuteld is. Dit verijdelt pogingen om via &mdn;'s te controleren of u het bericht kunt decoderen. </para>
+	    <para
+>In principe heeft u deze optie nooit nodig, omdat &kmail; een &mdn; verstuurt, of het bericht nu gedecodeerd kon worden of niet (het verzoek voor een terugmelding zit in het niet versleutelde deel van het bericht); maar het geeft een gebruiker die zich bewust is van de veiligheidsrisico's de keuze om ofwel deze te versturen (optie gedeactiveerd) of nooit (optie geactiveerd). </para>
+	    <para
+>Als u het niet zeker weet, kunt u deze optie op de standaardinstelling (geactiveerd) laten staan. </para>
+	  </listitem>
+	</varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-composing">
+      <title
+>Opstellen</title>
+        <screenshot>
+        <screeninfo
+>Beveilig Opstellen</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitycomposing.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Beveiliging Opstellen</phrase>
+            </textobject>
+            <caption>
+              <para
+>Het tabblad Beveiliging (opstellen)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+      <para
+>Op dit tabblad kunt u opties die betrekking hebben op de veiligheid bij het opstellen van berichten instellen. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-composing-automatically-sign">
+	  <term>
+	    <guilabel
+>Berichten automatisch ondertekenen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als u dit keuzevakje selecteert, wordt de optie <xref linkend="composer-options-sign-message"/> standaard ingeschakeld. </para>
+	    <para
+>U kunt dit echter nog steeds per bericht uitschakelen. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-encrypt-to-self">
+	  <term>
+	    <guilabel
+>Bij het versleutelen van e-mail, altijd ook versleutelen naar het certificaat van mijn eigen identiteit</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geselecteerd is, worden de berichten die u voor de ontvanger versleutelt ook voor uzelf versleuteld. </para>
+	    <warning>
+	      <para
+>Als u dit keuzevakje geactiveerd laat, kan het mogelijk zijn dat u de versleutelde berichten niet meer kunt decoderen. U hebt dan geen leesbare variant van de door u verzonden berichten. </para>
+	    </warning>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-store-sent-encrypted">
+	  <term>
+	    <guilabel
+>Verzonden berichten versleuteld oplaan</guilabel>
+	      <footnote>
+	      <para
+>Deze optie zorgt ervoor dat zodra het bericht de eindbestemming heeft bereikt, de versleuteling uit het bericht verwijderd wordt. De berichten worden dus niet versleuteld opgeslagen. Deze modus wordt ook wel <quote
+>transport-only</quote
+>-versleuteling (alleen tijdens transport) genoemd, wat enigszins misleidend is. </para>
+	      <para
+>&kmail; ondersteunt deze modus wel, maar volgens ons zou deze modus geregeld moeten worden door de <emphasis
+>server</emphasis
+> (<acronym
+>MTA</acronym
+>) in plaats van door de mail<emphasis
+>client</emphasis
+> (<acronym
+>MUA</acronym
+>). In toekomstige versies van &kmail; zou het kunnen zijn dat deze ondersteuning verdwijnt. </para>
+	    </footnote>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geselecteerd is, worden berichten in uw <guilabel
+>verzonden</guilabel
+>-map opgeslagen zoals u ze verstuurd heeft (als u een bericht gecodeerd verzonden heeft, wordt het gecodeerd opgeslagen). </para>
+	    <para
+>Als u deze optie niet selecteert, worden berichten <emphasis
+>altijd</emphasis
+> onversleuteld opgeslagen op uw computer, ook als u ze versleuteld hebt verzonden. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-show-encryption-key">
+	  <term>
+	    <guilabel
+>Altijd de sleutels voor goedkeuring tonen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geactiveerd is, zal er bij het verzenden van het bericht een venster verschijnen waarmee u kunt controleren of de juiste sleutel voor de juiste ontvanger wordt gebruikt. U kunt deze dan eventueel ook wijzigen. Wij adviseren om deze optie te activeren, omdat een en ander wat transparanter werkt. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-opportunistic-encryption">
+	  <term>
+	    <guilabel
+>Berichten automatisch versleutelen, indien mogelijk</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Dit wordt ook wel <quote
+>opportunistic encryption</quote
+> (opportunistische versleuteling) genoemd. Als het keuzevakje geselecteerd zal &kmail; proberen de ontvangers te koppelen aan (&openpgp;- of &smime;-) sleutels, zelfs wanneer u hier <emphasis
+>niet</emphasis
+> expliciet om vraagt. Indien een koppeling gevonden wordt voor alle ontvangers zal &kmail; vragen of het bericht versleuteld verzonden dient te worden. </para>
+	    <para
+>Wij adviseren u deze instelling te activeren, omdat dit het versleutelen erg eenvoudig maakt. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-composing-never-sign-encrypt-drafts">
+	  <term>
+	    <guilabel
+>Nooit versleutelen bij het opslaan van een concept</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als het keuzevakje geselecteerd is, zal &kmail; de berichten die u opslaat in de concepten-map niet proberen te ondertekenen of te versleutelen. Dit verhoogt het gebruiksgemak en is geen groot beveiligingsrisico als de concepten-map een lokale map is. Als u &IMAP; gebruikt, waarbij de map <guilabel
+>concepten</guilabel
+> op de server wordt bewaard, kunt u dit keuzevakje beter niet selecteren. </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-warnings">
+      <title
+>Diversen</title>
+        <screenshot>
+        <screeninfo
+>Beveiliging Diversen automatische correctie</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitymisc.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Beveiliging Diversen</phrase>
+            </textobject>
+            <caption>
+              <para
+>Het tabblad Beveiliging (diversen)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+        <para
+>&nbsp;</para
+><!-- add whitespace -->
+      
+
+      <para
+>Op dit tabblad kunt u waarschuwingen met betrekking tot beveiliging in- en uitschakelen. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-security-warnings-warn-send-unsigned">
+	  <term>
+	    <guilabel
+>Waarschuwen voor het verzenden van niet-ondertekende berichten</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geselecteerd is, wordt u gewaarschuwd als u een bericht wilt verzenden dat niet ondertekend is. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-security-warnings-warn-send-unencrypted">
+	  <term>
+	    <guilabel
+>Waarschuwen wanneer niet-versleutelde berichten zullen worden verstuurd</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit keuzevakje geselecteerd is, wordt u gewaarschuwd als u een bericht wilt verzenden dat u niet versleuteld hebt. </para>
+	    <note>
+	      <para
+>In tegenstelling tot ondertekenen is het niet gebruikelijk om alle uitgaande berichten te versleutelen. Tenzij uw bedrijf een beleid heeft nooit onversleutelde berichten te verzenden, is het misschien verstandig om deze optie uitgeschakeld te laten, en de optie <link linkend="configure-security-composing-opportunistic-encryption"
+>opportunistische versleuteling</link
+> in te schakelen, zodat u gewaarschuwd wordt wanneer u een versleuteld bericht kunt verzenden, maar deze optie niet hebt ingeschakeld. </para>
+	    </note>
+	  </listitem>
+	</varlistentry>
+
+	<!-- <varlistentry id="configure-security-warnings-warn-receiver-email-not-in-cert">
+	  <term>
+	    <guilabel
+>Warn if receiver's email address is not in certificate</guilabel>
+	  </term>
+	  <listitem>
+	    <para>
+	      If checked, &kmail; will emit a warning if an &smime;
+	      certificate or &openpgp; key will be used for a recipient
+	      whose email address is not listed in the email addresses
+	      stored in the certificate.
+	    </para>
+	    <para>
+	      Situations in which this warning will trigger include
+	      when configuring your per-identity &openpgp; keys or
+	      &smime; certificates, when encrypting, and when verifying
+	      signatures, if the signature was made with a certificate
+	      that does not include the email address of the sender.
+	    </para>
+	  </listitem>
+    </varlistentry
+> --> <!-- This option is no longer provided. @dcb2020340. -->
+
+	<varlistentry id="configure-security-warnings-warn-near-expire">
+	  <term>
+	    <guilabel
+>Waarschuwen wanneer een certificaat/sleutel binnenkort zal verlopen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als het keuzevakje geselecteerd is, zal &kmail; waarschuwen wanneer een &smime;-certificaat of &openpgp;-sleutel binnenkort zal verlopen. </para>
+	    <para
+>De definitie van binnenkort kunt u eronder aangeven. Dit geldt ook voor de tijdelijke <acronym
+>CA</acronym
+>-certificaten en de hoofdcertificaten (ook wel root-certificaten genoemd). </para>
+	  </listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	  <term>
+	    <guibutton
+>GnuPG-instellingen ...</guibutton>
+	  </term>
+	  <listitem>
+	    <para
+>Klik op deze knop om een uitgebreide dialoog te openen die de interactie tussen &kmail; en &gpg; configureert, het Gnu Privacy Guard programma. &gpg; is te complex om hier te documenteren. Voor details wordt u verwezen naar <ulink url="https://www.gnupg.org/docs.html#guides"
+>Het &GNU; Privacy Handbook</ulink
+>. Tenzij u een expert in encryptie bent, zou u waarschijnlijk de standaard instellingen hier moeten accepteren. </para>
+	  </listitem>
+	</varlistentry>
+    
+	<varlistentry id="configure-security-warnings-reenable-all-warnings">
+	  <term>
+	    <guilabel
+>Alle &quot;Niet meer vragen&quot; waarschuwingen weer inschakelen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Naast de waarschuwingen hierboven zijn er nog veel waarschuwingen en informatieberichten, die een optie hebben om ze niet meer te laten zien. U kunt deze weer inschakelen door op deze knop te klikken. <footnote
+> <para
+>Alle waarschuwingen en informatieberichten zullen weer ingeschakeld zijn. U kunt de waarschuwingen die u niet meer wilt zien vervolgens weer uitschakelen door de optie in het bericht te selecteren wanneer ze weer verschijnen. </para>
+        </footnote>
+	    </para>
+	  </listitem>
+	</varlistentry>
+
+      </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+
+    <sect2 id="configure-security-smime-validation">
+      <!-- copy of section configuration-smime-validation from kleopatra docbook
+      keep in sync, both apps have the same page in settings-->
+      <title
+>&smime;-validatie</title>
+        <screenshot>
+        <screeninfo
+>Beveiliging &smime; validatie</screeninfo>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="securitysmime.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <phrase
+>Beveiliging &smime; validatie</phrase>
+            </textobject>
+            <caption>
+              <para
+>Het tabblad Beveiliging (&smime; validatie)</para>
+            </caption>
+          </mediaobject>
+        </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+      <para
+>Dit tabblad bevat enkele items uit <ulink url="https://linux.die.net/man/1/gpgsm"
+>dynamische backend-configuratiedialoog</ulink
+> van &gpgsm; In de handleiding van &gpgsm; vindt u een meer gedetecteerde beschrijving van de instellingen. </para>
+
+      <variablelist>
+
+	<varlistentry id="configure-smime-validation-certificate-crls">
+	  <term>
+	    <guilabel
+>Certificaten valideren door gebruikmaking van CRL's</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als dit ingeschakeld is, worden &smime;-certificaten gevalideerd door gebruikmaking van Certificate Revocation Lists (<acronym
+>CRL's</acronym
+>). Dit is de standaard configuratie-optie. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-validation-certificate-ocps">
+	  <term>
+	    <guilabel
+>Certificaten online valideren (OCSP)</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als deze optie ingeschakeld is, worden &smime;-certificaten gevalideerd met gebruikmaking van het Online Certificates Status Protocol (<acronym
+>OCSP</acronym
+>). </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-url">
+	  <term>
+	    <guilabel
+>&URL; van OCSP-responder</guilabel>
+          </term>
+         <listitem>
+	      <para
+>Vul het adres in van de server die gebruikt wordt voor het online valideren van certificaten. Deze &URL; begint normaal met <emphasis
+>https://</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-signature">
+	  <term>
+	    <guilabel
+>Handtekening OCSP-dienst</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Kies de &smime;-sleutel die u wilt gebruiken, of wijzig deze. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-online-certificate-responder-ignore">
+	  <term>
+	    <guilabel
+>Service-&URL; van certificaten negeren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Schakel deze optie in om online valideren met gebruikmaking van OCSP over te slaan. Deze optie vereist <emphasis
+>dirmngr &gt;= 0.9.0</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-policies">
+	  <term>
+	    <guilabel
+>Certificaatbeleid niet controleren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Standaard gebruikt <guilabel
+>GnuPG</guilabel
+> het bestand <filename
+>~/.gnupg/policies.txt</filename
+> om te controleren of een certificaatbeleid toegestaan is. Als deze optie is ingeschakeld, wordt niet op beleid gecontroleerd. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-consult-crls">
+	  <term>
+	    <guilabel
+>Nooit een CRL raadplegen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als deze optie ingeschakeld is, worden Certificate Revocation Lists nooit gebruikt om &smime;-certificaten te valideren. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-validation-fetch-issuer">
+	  <term>
+	    <guilabel
+>Ontbrekende uitgevers certificaten ophalen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Schakel deze optie in als u de ontbrekende uitgeverscertificaten wilt laten ophalen als dat nodig is. Dit is op zowel <acronym
+>CRL's</acronym
+> als op <acronym
+>OCSP</acronym
+> van toepassing. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests">
+	  <term>
+	    <guilabel
+>Geen &HTTP;-verzoeken maken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Schakelt het gebruik van &HTTP; voor &smime; geheel uit. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-ignore-distribution-point">
+	  <term>
+	    <guilabel
+>&HTTP; CRL-distributiepunt van certificaten negeren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Bij het zoeken naar de locatie van een CRL bevat het <quote
+>te-testen</quote
+> certificaat normaal gesproken zogenaamde CRL Distribution Point (<acronym
+>DP</acronym
+>) items, die &URL;'s; zijn waarin beschreven staat hoe de &URL; benaderd moet worden. Het eerste gevonden <acronym
+>DP</acronym
+>-item wordt gebruikt. Met deze optie worden alle items die het &HTTP;-schema gebruiken genegeerd bij het zoeken naar een geschikte <acronym
+>DP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-proxy">
+	  <term>
+	    <guilabel
+>&HTTP;-proxy van systeem gebruiken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als deze optie ingeschakeld is, wordt de rechts weergegeven waarde van de &HTTP;-proxy (die uit de omgevingsvariabele <varname
+>http_proxy</varname
+> komt) gebruikt voor elk &HTTP;-verzoek. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-http-requests-proxy">
+	  <term>
+	    <guilabel
+>Deze proxy voor &HTTP;-verzoeken gebruiken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Vul hier de locatie in van uw &HTTP;-proxy, die voor alle &HTTP;-verzoeken voor &smime; gebruikt zal worden. De syntaxis is <quote
+>"host:port"</quote
+>, bijvoorbeeld <emphasis
+>mijnproxy.nergens.com:3128</emphasis
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-requests">
+	  <term>
+	    <guilabel
+>Geen LDAP-verzoeken doen</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Schakelt het gebruik van LDAP voor &smime; geheel uit. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-distribution-point">
+	  <term>
+	    <guilabel
+>LDAP CRL-distributiepunt van certificaat negeren</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Bij het zoeken naar de locatie van een <acronym
+>CRL</acronym
+> bevat het <quote
+>te-testen</quote
+> certificaat normaal gesproken zogenaamde CRL Distribution Point (<acronym
+>DP</acronym
+>) items, die <acronym
+>URL's</acronym
+> zijn waarin beschreven staat hoe de &URL; benaderd moet worden. Het eerste gevonden <acronym
+>DP</acronym
+>-item wordt gebruikt. Met deze optie worden alle items die het <acronym
+>LDAP</acronym
+>-schema gebruiken genegeerd bij het zoeken naar een geschikte <acronym
+>DP</acronym
+>. </para>
+	  </listitem>
+	</varlistentry>
+
+	<varlistentry id="configure-smime-certificate-ldap-proxy-host">
+	  <term>
+	    <guilabel
+>Primaire host voor LDAP-verzoeken</guilabel>
+	  </term>
+	  <listitem>
+	    <para
+>Als u hier een <acronym
+>LDAP</acronym
+>-server invoert zullen alle <acronym
+>LDAP</acronym
+>-verzoeken eerst naar die server verstuurd worden. Preciezer gezegd, overschrijft deze instelling alle host- en poort-delen in een <acronym
+>LDAP</acronym
+> &URL; en wordt deze ook gebruikt als host en poort uit de &URL; zijn weggelaten. Andere <acronym
+>LDAP</acronym
+>-servers worden alleen gebruikt als de verbinding met de <emphasis
+>proxy</emphasis
+> niet tot stand kon komen. De syntaxis is <acronym
+>HOST</acronym
+> of <acronym
+>HOST:POORT</acronym
+>. Als <acronym
+>PORT</acronym
+> is weggelaten, wordt <quote
+>poort 389</quote
+> (standaard <acronym
+>LDAP</acronym
+>-poort) gebruikt. </para>
+	  </listitem>
+	</varlistentry>
+
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+</sect1
+> <!-- configure-security -->
+
+<sect1 id="configure-misc">
+<title
+>Diversen</title>
+
+  <sect2 id="configure-misc-folders">
+    <title
+>Mappen</title>
+    <screenshot>
+      <screeninfo
+>Diversen mappen</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscfolders.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diversen mappen</phrase>
+          </textobject>
+          <caption>
+            <para
+>Het tabblad Diversen (mappen)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+
+  <variablelist>
+
+    <!--varlistentry>
+      <term
+><guilabel
+>Ask for confirmation before moving all messages to trash</guilabel
+></term>
+      <listitem>
+        <para>
+          Enable this option if you want to be asked for confirmation whenever
+          you use <menuchoice
+><guimenu
+>Folder</guimenu
+><guimenuitem
+>Move All to Trash</guimenuitem
+></menuchoice
+>.
+        </para>
+      </listitem>
+      </varlistentry--><!-- Option has been removed @dcb2020311 -->
+
+    <varlistentry>
+      <term
+><guilabel
+>Berichten gemarkeerd als belangrijk niet laten verlopen</guilabel
+></term>
+      <listitem>
+        <para
+>Deze optie inschakelen als belangrijke berichten nooit automatisch verwijderd mogen worden. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="configure-misc-folders-go-unread">
+      <term
+><guilabel
+>Bij het zoeken naar ongelezen berichten</guilabel
+></term>
+      <listitem>
+        <para
+>Deze optie bestuurt wat er gebeurt als u op een van de sneltoetsen drukt om naar het volgende of vorige ongelezen bericht te gaan (&eg; <keycap
+>Spatie</keycap
+>). Als u &kmail; vraagt om naar het volgende ongelezen bericht te gaan hoewel er geen ongelezen bericht onder het nu geselecteerde bericht te gaan dan gebeurt het volgende. <itemizedlist>
+              <listitem>
+                <para
+>Als <guilabel
+>Niet rondlopen</guilabel
+> is geselecteerd dan zal er niets gebeuren. </para>
+              </listitem>
+              <listitem>
+                <para
+>Als <guilabel
+>In huidige map rondlopen</guilabel
+> is geselecteerd dan zal &kmail; naar een ongelezen bericht zoeken vanaf het begin van de huidige map. Als er niets wordt gevonden gebeurt er niets. </para>
+              </listitem>
+              <listitem>
+                <para
+>Als <guilabel
+>Alle mappen doorlopen</guilabel
+> is geselecteerd zal &kmail; eerst in de huidige map naar een ander ongelezen bericht zoeken. Als er geen wordt gevonden zal &kmail; de volgende map doorzoeken op ongelezen berichten. </para>
+              </listitem>
+            </itemizedlist>
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Bij het binnengaan van een map</guilabel
+></term>
+      <listitem>
+        <para
+>Deze optie bepaalt wat er gebeurt wanneer u een map opent. <itemizedlist>
+              <listitem>
+                <para
+>Als <guilabel
+>Naar het eerste ongelezen bericht gaan</guilabel
+> is geselecteerd zal &kmail; het eerste bericht selecteren dat gevonden wordt en gemarkeerd is als ongelezen. </para>
+              </listitem>
+              <listitem>
+                <para
+>Als <guilabel
+>Ga naar het laatst geselecteerde bericht</guilabel
+> is geselecteerd dan zal &kmail; naar het bericht gaan dat was geselecteerd toen de map de laatste keer open was. </para>
+              </listitem>
+              <listitem>
+                <para
+>Als <guilabel
+>Naar het nieuwste bericht gaan</guilabel
+> is geselecteerd zal &kmail; het nieuwste bericht selecteren. </para>
+              </listitem>
+              <listitem>
+                <para
+>Als <guilabel
+>Naar het oudste bericht gaan</guilabel
+> is geselecteerd zal &kmail; het oudste bericht selecteren. </para>
+              </listitem>
+            </itemizedlist>
+
+        </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Geselecteerd bericht markeren als gelezen na...</guilabel
+></term>
+      <listitem>
+        <para
+>Wanneer u een <guilabel
+>nieuw</guilabel
+> of <guilabel
+>ongelezen</guilabel
+> bericht selecteert, zal &kmail; de status van het bericht dit aantal seconden veranderen in <guilabel
+>gelezen</guilabel
+>. Als deze optie niet is geselecteerd zal het bericht zijn status <guilabel
+>ongelezen</guilabel
+> behouden totdat u het handmatig aanpast (via het menu <guilabel
+>Map</guilabel
+>). </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Vragen wat er moet gebeuren na slepen naar een andere map</guilabel
+></term>
+      <listitem>
+        <para
+>Indien berichten naar een andere map gesleept worden, zal &kmail; vragen of u wilt dat het bericht gekopieerd of verplaatst wordt. Indien deze optie niet is geselecteerd zal deze vraag achterwege blijven en zal het bericht verplaatst worden. </para>
+      </listitem>
+    </varlistentry>
+
+<!-- not in kmail 2.0.96 varlistentry>
+<term
+><guilabel
+>By default, message folders on disk are...</guilabel
+></term>
+<listitem>
+<para
+>Here you can set the default <link linkend="folders-format"
+>folder format</link>
+that is used when you create a new folder.</para>
+</listitem>
+</varlistentry-->
+
+    <varlistentry>
+      <term
+><guilabel
+>Map openen bij opstarten</guilabel
+></term>
+      <listitem>
+        <para
+>Hier kunt u instellen welke map geopend moet worden wanneer u &kmail; start. Als u alleen &IMAP;-mappen gebruikt, kunt u hier het beste uw &IMAP;-postvak instellen. Als u dat op deze manier instelt, dan kunt u de lokale folders invouwen. Deze zullen dan ingevouwd blijven, ook wanneer u &kmail; opnieuw start. </para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
+      <term
+><guilabel
+>Lokale prullenbak legen bij afsluiten van toepassing</guilabel
+></term>
+      <listitem>
+        <para
+>Als deze optie geselecteerd is, wordt bij het afsluiten van &kmail; de prullenbak geleegd. </para>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry>
+      <term
+><guilabel
+>Verwijderen van berichten zonder bevestiging toestaan</guilabel
+></term>
+      <listitem>
+        <para
+>Het standaard gedrag van &kmail;is om te vragen naar bevestiging wanneer een bericht wordt verwijderd. Selecteer deze optie als u de verificatie stap wilt overslaan. (Merk op dat de functie <guilabel
+>Verwijderen</guilabel
+> niet toegankelijk is vanuit menu's van &kmail;. Maar u kunt een knop <guibutton
+>Verwijderen</guibutton
+> toevoegen aan de werkbalk via de dialoog <menuchoice
+> <guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Werkbalken configureren ...</guimenuitem
+></menuchoice
+>.) </para>
+      </listitem>
+    </varlistentry>
+
+  </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-invitation">
+    <title
+>Uitnodigingen</title>
+    <screenshot>
+      <screeninfo
+>Diversen Invitatie</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscinvite.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diversen Invitatie</phrase>
+          </textobject>
+          <caption>
+            <para
+>Het tabblad Diversen (Invitatie)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->    
+
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>De kopschriften Van:/Aan: aanpassen bij antwoorden op uitnodigingen</guilabel
+></term>
+        <listitem>
+          <para
+>Activeer deze optie om er voor te zorgen dat <application
+>&Microsoft; Outlook</application
+> de antwoorden op uitnodigingen begrijpt. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Uitnodigingen in berichtinhoud verzenden</guilabel
+></term>
+        <listitem>
+          <para
+>Uitnodigingen worden gewoonlijk als bijlage in een bericht verzonden. Door deze optie te activeren worden uitnodigingen in de inhoud van het bericht geplaatst. Dit is nodig om uitnodigingen en antwoorden te versturen naar <application
+>&Microsoft; Outlook</application
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Naamgeving van uitnodigingen compatibel met Exchange</guilabel
+></term>
+        <listitem>
+          <para
+><application
+>&Microsoft; Outlook</application
+> heeft, indien gebruikt met een &Microsoft; Exchange-server, problemen met het begrijpen van groupware e-mail die zich aan de standaarden houdt. Schakel deze optie in om groupware-uitnodigingen in een formaat te versturen dat correct kan worden verwerkt door &Microsoft; Exchange. De uitnodiging zal worden verstuurd in een bijlage met de naam <filename
+>ical.ics</filename
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+<!--varlistentry>
+<term
+><guilabel
+>Outlook compatible invitation reply comments</guilabel
+></term>
+<listitem>
+<para
+>When the user provides comments when responding to invitations, send the comment in a way that <application
+>&Microsoft; Outlook</application
+> understands. If this option is not enabled, the response comments will not be seen in Outlook.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Show invitation update differences in the Outlook style</guilabel
+></term>
+<listitem>
+<para
+>When viewing updated invitations, this option enables the differences between the previous
+and current invitations to be displayed in a way very much like <application
+>&Microsoft; Outlook</application
+>.
+This is the default. The user can turn this option off if they want to see the invitation
+  update differences shown in the <quote
+>classic</quote
+> &kmail; style.
+</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Automatic invitation sending</guilabel
+></term>
+<listitem>
+<para
+>When this is checked, you will not see the mail composer window. Instead,
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
+modifying it by hand.</para>
+</listitem>
+</varlistentry--><!-- These options are no longer available. @dcb2020342-->
+      
+      <varlistentry>
+        <term
+><guilabel
+>Uitnodigings-e-mails verwijderen na beantwoorden</guilabel
+></term>
+        <listitem>
+          <para
+>Wanneer deze optie is geactiveerd zullen met succes beantwoorde ontvangen e-mails met uitnodigingen verplaatst worden naar de prullenbak zodra ze zijn beantwoord. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </sect2>
+
+  <sect2 id="configure-misc-printing">
+    <title
+>Afdrukken</title>
+    <screenshot>
+      <screeninfo
+>Diversen Afdrukken</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="miscprint.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Diversen Afdrukken</phrase>
+          </textobject>
+          <caption>
+            <para
+>Het tabblad Diversen (Afdrukken)</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>Deze dialoog helpt u om fijn af te stemmen de manier waarop de functie <menuchoice
+> <guimenu
+>Bestand</guimenu
+><guimenuitem
+>Afdrukken</guimenuitem
+> </menuchoice
+> werkt. </para
+> 
+    
+    <variablelist>
+
+      <varlistentry>
+        <term
+><guilabel
+>Alleen geselecteerde tekst afdrukken</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie inschakelen om afdrukken van slechts de geselecteerde portie van een bericht. De standaard waarde schakelt deze functie uit, zodat het gehele bericht standaard wordt afgedrukt. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Respecteer instellingen van markeringen voor uitvouwen/invouwen </guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie is bedoeld om met de functie <guilabel
+>Markering van uitvouwen/invouwen van aanhalingen tonen</guilabel
+> van het tabblad <link linkend="configure-appearance-general"
+>Uiterlijk/algemeen</link
+>, maar het werkt nu niet correct. In andere woorden, er is een bug. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Achtergrondkleur en -afbeeldingen afdrukken</guilabel
+></term>
+        <listitem>
+          <para
+>Zoals de voorgaande optie is er hier een bug, dus &kmail; drukt altijd afbeeldingen af, ongeacht hoe deze optievlag is gezet. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Altijd details van versleuteling/ondertekening tonen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie inschakelen om &kmail; te laten zorgen dat versleutelingsdetails voor versleutelde en/of digitaal ondertekende berichten worden afgedrukt. </para>
+        </listitem>
+      </varlistentry>
+      
+  </variablelist>
+  </sect2>
+
+</sect1>
+
+<sect1 id="configure-plugins">
+    <title
+>Pagina plug-ins</title>
+    
+    <para
+>&kmail; bevat een groot aantal speciale functies die al dan niet nuttig zijn voor bepaalde gebruikers. U kunt een of meer van deze speciale functies selecteren door (de)ze te kiezen in de configuratiepagina "plug-ins". Of, als u geen speciale functie nodig hebt, kunt u tijd en opslagruimte besparen door de selectie van de bijbehorende plug-inmodule ongedaan te maken. </para>
+    
+    <para
+>Op vele Linux distributies worden de meeste van deze plug-ins niet ingevoegd in het basis pakket &kmail;. Om volledige functionaliteit met plug-ins te hebben, ga dan na of het pakket genaamd "kdepim-addons" (of zoiets) is geïnstalleerd. </para>
+    
+    <para
+>U kunt een ruw idee krijgen over wat een specifieke plug-in doet door eenvoudig de naam van de plug-in te accentueren in de configuratiepagina van &kmail;. Een korte beschrijving van de functie van de plug-in zal dan appear aan de rechterkant van de dialoog verschijnen. </para>
+    
+    <para
+>De verschillende plug-ins die nu in &kmail; (2021) beschikbaar zijn staan in de onderstaande lijst. Merk op dat de set van "standaard" plug-ins gebaseerd is op de openSUSE versie van &kmail; (5.14.2) die gebruikt wordt als een referentie voor deze editie van de documentatie. De actuele standaards op uw systeem kunnen verschillen; ze zijn afhankelijk van de distributie. </para>
+    
+    <para
+>Omdat er van tijd tot tijd nieuwe functionaliteit wordt toegevoegd, kan deze lijst groeien als de tijd vordert. Er zijn twee algemene regels waar u op kunt bouwen die de structuur van plug-ins bepalen zelfs als de specifieke plug-in waarmee u te maken krijgt niet in de onderstaande lijst staat. </para>
+    
+    <para
+>1. Als de te configureren variabelen heeft, kunt u de configuratiedialoog voor die plug-in openen door op de knop <guibutton
+>&nbsp;<inlinemediaobject
+> <imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> te klikken die verschijnt naast de naam van de plug-in. </para>
+    
+    <para
+>2. Wanneer een plug-in is geselecteerd of selectie ongedaan gemaakt, moet &kmail; opnieuw gestart worden voordat de gewenste wijzig(en) effect hebben. </para>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <sect2 id="configure-plugins-akonadi">
+    <title
+>Akonadi en controle vóór verzenden</title>
+    <screenshot>
+      <screeninfo
+>Afbeelding Nr. Eén van plug-in</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin01.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Afbeelding Nr. Eén van plug-in</phrase>
+          </textobject>
+          <caption>
+            <para
+>Plug-ins: Akonadi &amp; controle vóór verzenden</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>E-mailagent voor archiveren</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om automatische archivering in te schakelen. Zie de documentatie <ulink url="help:/akonadi_archivemail_agent"
+>Mailagent voor archiveren</ulink
+> voor gedetailleerde informatie. U zou ook de sectie <link linkend="archiving"
+>Archivering</link
+> van dit handboek kunnen lezen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent voor herinneren aan vervolgactie</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om opvolgherinneringen in te schakelen. Zie de documentatie <ulink url="help:/akonadi_followupreminder_agent"
+>Agent voor opvolgherinneringen</ulink
+> voor extra informatie. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Nieuwe e-mailmelder</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om meldingen over nieuwe e-mail in te schakelen. U kunt de te tonen velden aanpassen in het "standaard" meldingsbericht. U kunt ook geluidssignalen (gesproken tekst, eerder opgenomen spraak), items in een logbestand, &etc; selecteren. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Agent voor later verzenden</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om vertraagde verzending in te schakelen Zie de documentatie <ulink url="help:/akonadi_sendlater_agent"
+>Agent voor later verzenden</ulink
+> voor extra informatie. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Geünificeerde e-mailboxagent</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om een set "geünificeerde" e-mailvakken aan te maken. &kmail; zal er automatisch drie van aanmaken, gelabeld Postvak in, Concepten en Verzonden. Als u zowel een postvak in in Lokale mappen als in een of meer &IMAP; postvak in bestemmingen hebt gedefinieerd, zal &kmail; al de verschillende postvak-in-bestanden als één geconsolideerde virtuele map Postvak in tonen. U kunt de configuratiedialoog gebruiken om extra virtuele postvakken aan te maken, elk aangepast zoals u wilt. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Contactpersonen automatisch toevoegen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om nieuwe adressen toe te voegen aan een van uw adresboeken wanneer u e-mail verzendt naar een nieuwe contactpersoon. De configuratiedialoog gebruiken om adresboeken te verbinden met identiteiten. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Controle voor verzenden</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om een paar regels toe te passen alvorens een bericht te verzenden. Deze plug-in is standaard ingeschakeld en zal automatisch aan u melden wanneer u meer dan één kopie van het bericht naar dezelfde persoon probeert te verzenden. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Adres bevestigen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om adresscreening in te schakelen bij uitgaande berichten. De configuratiedialoog gebruiken om een witte en/of zwarte lijst te gebruiken voor elk van de gedefinieerde identiteiten. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-composer">
+    <title
+>Opsteller / bewerker</title>
+    <screenshot>
+      <screeninfo
+>Afbeelding Nr. Twee van plug-in</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin02.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Afbeelding Nr. Twee van plug-in</phrase>
+          </textobject>
+          <caption>
+            <para
+>Opsteller &amp; bewerker</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Extern opsteller openen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de opsteller te dwingen een externe tekstbewerker te openen wanneer deze opstart. De configuratiedialoog voor deze plug-in gebruiken om de tekstbewerker te specificeren die zal worden opgeroepen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Automatische correctie</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Tekst automatisch corrigeren &gt;</guimenuitem
+></menuchoice
+> toe te voegen aan de opsteller. Deze plug-in is standaard uitgeschakeld en is kennelijk nog steeds in bewerking. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Hoofd-/kleine letters wijzigen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Hoofd-/kleine letter wijzigen &gt;</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>E-mail invoegen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>E-mail invoegen...</guimenuitem
+></menuchoice
+> in de opsteller toe te voegen. Deze laat u een geselecteerd e-mailadres uit een adresboek in de inhoud van uw bericht met een eenvoudige aanwijzen en klik van de &LMB; invoegen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Niet af te breken spatie invoegen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Niet af te breken spatie invoegen</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Ingekort URL-adres invoegen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om om een klein beetje van niet erg functionele code toe te voegen. Deze plug-in is nog in de maak en is ook standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Speciaal teken invoegen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Speciaal teken invoegen...</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Snelle tekst</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Tekstfragmenten</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gedeelde tekst</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie om de functie <menuchoice
+><guimenu
+>Bericht</guimenu
+> <guimenuitem
+>E-mailtekst delen &gt;</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Er worden vier opties geboden: Nextcloud, Pastebin, Bluetooth en E-mail (opent een tweede opstelvenster). Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Tekst zoomen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Zoomen...</guimenuitem
+></menuchoice
+> aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+        
+    <sect2 id="configure-plugins-grammar">
+    <title
+>Grammatica controles / kopstijlen</title>
+    <screenshot>
+      <screeninfo
+>Afbeelding Nr. Drie van plug-in</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin03.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Afbeelding Nr. Drie van plug-in</phrase>
+          </textobject>
+          <caption>
+            <para
+>Grammatica controles &amp; kopstijlen</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+        
+      <varlistentry>
+        <term
+><guilabel
+>Grammatica controle op Frans</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de optie <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Grammatica controleren (Grammalecte)</guimenuitem
+></menuchoice
+> aan het opstelvenster toe te voegen. Deze optie is speciaal, alleen voor de Franse taal. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Grammatica controle (Taalhulpmiddel)</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de optie <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+> <guimenuitem
+>Grammatica controleren (Taalhulpmiddel)</guimenuitem
+></menuchoice
+> aan het opstelvenster toe te voegen. Dit is hulpmiddel voor meerdere doelen, met ondersteuning voor controleren van grammatica in veel verschillende talen. </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->  
+    
+    <para
+>De volgende zes plug-ins bieden u te beslissen welke kopstijlen geselecteerd kunnen worden uit het menu <guimenu
+>Beeld</guimenu
+>. Zie <link linkend="the-preview-pane-headers"
+>de beschrijving van verschillende kopweergaven</link
+> in het hoofdstuk "&kmail; gebruiken" voor meer informatie. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met gering aantal headers</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "Beknopte" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met standaard Grantlee header</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "KMail 5.2" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met elegante headers</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "Elegante" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met Grantlee headers</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "Grappige" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met lange headers</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "Lange" koppen in te schakelen. Deze plugin is standaard uitgeschakeld. (Lange koppen zijn gelijk aan standaard koppen, maar zullen enige minder algemene informatie in koppen tonen, zoals "Beantwoorden-aan", wanneer zoiets in de koppen aanwezig is.) </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Stijl met standaard headers</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het tonen van "Standaard" koppen in te schakelen. Deze plug-in is standaard uitgeschakeld. (Standaard koppen zijn hetzelfde als Elegante koppen, maar zonder de beschaduwde achtergrond.) </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-misc">
+    <title
+>Berichtviewer / diversen</title>
+    <screenshot>
+      <screeninfo
+>Afbeelding Nr. Vier van plug-in</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin04.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Afbeelding Nr. Vier van plug-in</phrase>
+          </textobject>
+          <caption>
+            <para
+>Berichtviewer &amp; diversen</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>De volgende zes plug-ins bieden allemaal speciale functies die alleen gebruikt kunnen worden met een werkbalkknop. De dialoog <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Werkbalken configureren... </guimenuitem
+> </menuchoice
+> gebruiken om de werkbalkknoppen behorende bij deze functies toe te voegen of te verwijderen nadat u select een van deze plug-ins in of uitschakelt. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gebeurtenis aanmaken</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het maken van een agenda-item toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Notitie aanmaken</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het maken van een notitie in &kontact; toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Te-doen aanmaken</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het maken van een te-doen-item in &korganizer; toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Expandeer URL</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie "URL uitvouwen" in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Extern script</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om het aanroepen van een uit te voeren commando vanaf de werkbalk toe te staan. De bijbehorende configuratiedialoog gebruiken om het uitvoerbare bestand te selecteren en het een naam te geven. De gekozen naam kan later toegevoegd worden aan de werkbalk als een knop, zodat u het wanneer u wilt kan aanroepen. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Vertaler</guilabel
+></term>
+        <listitem>
+          <para
+>De <link linkend="using-the-translator"
+>vertalerfunctie</link
+> is standaard beschikbaar in de opsteller. Deze plug-in (via de werkbalk) gebruiken om de vertaler beschikbaar te maken in het venster voor een voorbeeldbericht. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist
+> 
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <para
+>De volgende vier items zijn niet echt plug-ins; het zijn ingebouwde functies van &kmail;. Elk hiervan kan afzonderlijk geconfigureerd worden, door de knop <guibutton
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>&nbsp;</guibutton
+> die naast de naam van de functie verschijnt. Er is geen herstart nodig om deze configuratievariabelen effectief te maken. </para>
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Controleren op DKIM</guilabel
+></term>
+        <listitem>
+          <para
+>Deze dialoog biedt u de controle over verwerking van DomainKeys Identified Mail (DKIM). DKIM is een cryptografisch protocol dat u kan verzekeren dat een specifiek bericht dat claimt uit een internetdomein te komen daar ook vandaan komt. Als de verzender DKIM juist heeft opgezet en DKIM is hier ingeschakeld, zult u een bericht "DKIM geldig" zien en soms de naam van de entiteit die het bericht ondertekende, in de statusbalk onderaan het venster van het berichtvoorbeeld. </para>
+          <note
+><para
+>Als u deze optie inschakelt, ga dan na dat de standaard waarde ("Niets") in de draaischakelaar met label "Sleutel van record opslaan" naar een andere waarde is gewijzigd. De controle op DKIM werkt niet correct als die variabele is ingesteld op "Niets". </para
+></note>
+          <para
+>&nbsp;</para
+><!-- add whitespace -->
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Prullenbak laten verlopen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze configuratiedialoog gebruiken om de criteria in te stellen voor uw prullenbakmap(pen). Zie de documentatie <link linkend="folders-properties-expiry"
+>"Eigenschappen van map"</link
+> voor meer informatie. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Mapinstellingen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze configuratiedialoog gebruiken om eigenschappen van aangepaste mappen tegelijk in te stellen voor verschillende mappen. U kunt de te wijzigen mappen selecteren uit een boomstructuur van al uw mappen links en in te stellen eigenschappen uit de tabbladen Algemeen, Beeld, Sjablonen en Verlopen van de dialoog <link linkend="folders-properties-window"
+>"Eigenschappen van mappen"</link
+>. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Gravatar</guilabel
+></term>
+        <listitem>
+          <para
+>Deze configuratiedialoog gebruiken om ondersteuning van Gravatar (Globaal herkende avatar) in / uit te schakelen. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    </sect2>
+    
+    <sect2 id="configure-plugins-tools">
+        <title
+>Hulpmiddelen</title>
+
+    <screenshot>
+      <screeninfo
+>Afbeelding Nr. Vijf van plug-ins</screeninfo>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="plugin05.png" format="PNG"/>
+          </imageobject>
+          <textobject>
+            <phrase
+>Afbeelding Nr. Vijf van plug-ins</phrase>
+          </textobject>
+          <caption>
+            <para
+>Hulpmiddelen &amp; webengine</para>
+          </caption>
+        </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+    
+    <variablelist>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Antispam</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de <link linkend="the-anti-spam-wizard"
+>Anti-Spam assistent</link
+> toe te voegen aan het menu <guimenu
+>Hulpmiddelen</guimenu
+>. Deze plug-in is standaard uitgeschakeld. Merk op dat wanneer u anti-spam software hebt geïnstalleerd, deze plug-in veilig uitgeschakeld kan worden; de plug-in is alleen nodig voor het installeren van anti-spam software, niet voor het uitvoeren. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Antivirus</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de <link linkend="the-anti-virus-wizard"
+>Anti-Virus assistent</link
+> toe te voegen aan het menu <guimenu
+>Hulpmiddelen</guimenu
+>. Deze plug-in is standaard uitgeschakeld. Merk op dat wanneer u anti-virus software hebt geïnstalleerd, deze plug-in veilig uitgeschakeld kan worden; de plug-in is alleen nodig voor het installeren van anti-virus software, niet voor het uitvoeren. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Plug-in voor expert</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie <menuchoice
+><guimenu
+>Bericht</guimenu
+> <guimenuitem
+>Berichtstructuur tonen Ctrl+Alt+D</guimenuitem
+></menuchoice
+> in het venster met berichtenvoorbeeld. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Activiteiten vastleggen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de functie activiteitenlog in te schakelen, die standaard is uitgeschakeld. Deze plug-in voegt een nieuw item <guilabel
+>Activiteiten loggen</guilabel
+> toe aan het menu <guilabel
+>Hulpmiddelen</guilabel
+>. Primair voor gebruikt door ontwikkelaars van programma's -- de standaard logfunctie levert niet genoeg informatie (alleen een tijdstip en "Gereed", voor de meeste "gebeurtenissen"). </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Adblock</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om de filters <ulink url="https://adblockplus.org"
+>Adblock Plus</ulink
+> aan &kmail; toe te voegen. Als u er voor kiest deze plug-in te activeren, wees er op voorbereid om veel tijd te besteden aan het aanpassen van het configuratiebestand om de filters te krijgen die u werkelijk wilt. Deze plug-in is standaard uitgeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term
+><guilabel
+>Niet volgen</guilabel
+></term>
+        <listitem>
+          <para
+>Deze optie selecteren om van &kmail; af te dwingen om een "Niet volgen" verzoek te verzenden naar een server op afstand wanneer een &HTML; bericht vraagt om inhoud op afstand te downloaden. Het effect van een "Niet volgen" verzoek hangt af van het beleid aangenomen door de webserver die het verzoek ontvangt. Sommige sites honoreren het. Anderen doen dat niet. </para>
+          <para
+>Adverteerders hebben overal hun ogen. &HTML;-gecodeerde berichten hebben vaak een 0x0- of 1x1-pixel "afbeelding" (ook wel een "volgpixel") ingevoegd wat in werkelijkheid een volg &URL; is in vermomming. Wanneer &kmail; afbeeldingsgegevens ophaalt van een webserver, moet het de &URL;s ingebed in het bericht gebruiken; de server kan informatie ingebed in de &URL; gebruiken om op te maken dat u het bericht hebt geopend, &etc; </para>
+          <para
+>Verzenden van een "Niet volgen" verzoek kan uw privacy een beetje verhogen. Maar de enige zekere manier bij het vermijden van volgpixels is nooit afbeeldingen op afstand in &HTML; berichten te downloaden. Deze plug-in is standaard ingeschakeld. </para>
+        </listitem>
+      </varlistentry>
+      
+    </variablelist>
+    </sect2>
+    
+</sect1>
+
+<sect1 id="configure-non-gui-options">
+<title
+>Opties die geen gebruikersinterface hebben</title>
+<para
+>Naast de opties die in de configuratiedialoog worden getoond, zijn er opties die alleen direct in het configuratiebestand van &kmail; kunnen worden ingesteld of door KIOSK (&eg; invoer naar &konsole;). Deze zogenoemde <quote
+>verborgen</quote
+> configuratieopties kunnen niet worden gewijzigd via de normale instellingendialoog van &kmail;; ze moeten worden gemaakt door het configuratiebestand te wijzigen met een tekstbewerker of het programma <command
+>kwriteconfig</command
+>. Het configuratiebestand moet beschreven worden in het formaat van [Sectienaam] en de volgende regels zijn de variabelen en hun instellingen. Als u handmatig het configuratiebestand wilt bewerken dan moet u de [Sectienaam] toevoegen alvorens de variabelen toe te voegen. Het programma <command
+>kwriteconfig</command
+> zal de sectie voor u toevoegen zolang als u de switch <userinput
+>--group</userinput
+> gebruikt. </para>
+
+<para
+>Het configuratiebestand van &kmail; heeft de naam <filename
+>kmail2rc</filename
+> en bevindt zich in uw persoonlijke map. De locatie kan variëren en hangt af van uw besturingssysteem of distributie, maar kan altijd worden gevonden door het commando <userinput
+><command
+>kf5-config --path config --locate kmail2rc</command
+></userinput
+>. Voor de rest van deze sectie, nemen we aan dat het configuratiebestand zich bevindt in <filename
+>/path/to/kmail2rc</filename
+>. </para>
+
+<warning
+><para
+>Als u deze opties wijzigt, dan moet u &kmail; eerst afsluiten alvorens het configuratiebestand te bewerken. Herstart &kmail; nadat u de wijzigen hebt aangebracht <emphasis
+>en opgeslagen</emphasis
+> in het configuratiebestand. </para
+></warning>
+
+<variablelist>
+
+<varlistentry>
+<term
+><guilabel
+>SendMDNsWithEmptySender</guilabel
+></term>
+<listitem>
+<para
+>Ontvangstbevestigingen verzenden met een lege afzender. Sommige servers kunnen deze berichten weigeren, dus bij problemen met het verzenden van ontvangstbevestigingen moet u deze optie uitzetten. Om deze optie aan te zetten, voeg aan de sectie <quote
+>[MDN]</quote
+> toe:</para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>SendMDNsWithEmptySender=true</programlisting
+></listitem>
+  <listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+  <para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group MDN --key SendMDNsWithEmptySender true</option
+></userinput
+> </para>
+</listitem>
+</itemizedlist>
+<note
+><para
+>De standaard instelling <quote
+>false</quote
+> is strict gesproken tegen internet-standaarden, maar is zo ingesteld om praktische redenen, om te vermijden dat servers MDN's weigeren die &kmail; maakt omdat ze denken dat her SPAM is.</para
+></note>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>CloseDespiteSystemTray</guilabel
+></term>
+<listitem>
+<para
+>Deze optie stelt u in staat het programma zo in te stellen dat het volledig sluit, zelfs als er is een pictogram in het systeemvak is geconfigureerd, die normaal zou het programma laat draaien. Om deze optie in te schakelen voegt u een regel toe onder de sectie <quote
+>[General]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>CloseDespiteSystemTray=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group General --key CloseDespiteSystemTray true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>disregardUmask</guilabel
+></term>
+<listitem>
+<para
+>In versies voor 1.9, sloeg &kmail; alle bijlagen op naar de schijf met rechten ingesteld op 600 &mdash; alleen te lezen en te schrijven door de eigenaar van het bestand. In antwoord op terugkoppeling van de gebruikers, is dit instelbaar gemaakt in &kmail; versie 1.9, met de standaard gewijzigd in de umask ingesteld in het gebruikersaccount bij het opslaan van bestanden naar schijf. Om deze functie in te schakelen, voeg een regel toe onder de sectie <quote
+>[General]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>disregardUmask=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group General --key disregardUmask true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>CheckOutOfOfficeOnStartup</guilabel
+></term>
+<listitem>
+<para
+>Met deze optie ingeschakeld, zal &kmail; bij iedere keer opstarten controleren of er een actief afwezigheidsbericht is geconfigureerd en een waarschuwing tonen als dat het geval is. Om deze functie uit te schakelen, voeg een regel toe onder de sectie <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>CheckOutOfOfficeOnStartup=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key CheckOutOfOfficeOnStartup false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeSettings</guilabel
+></term>
+<listitem>
+<para
+>In het geval dat u niet wilt dat gebruikers in staat zijn om hun eigen scripts voor afwezigheidsberichten naar de server te uploaden, kunt u  toevoegen aan de sectie <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>AllowOutOfOfficeSettings=false</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>AllowOutOfOfficeUploadButNoSettings</guilabel
+></term>
+<listitem>
+<para
+>Als u uw gebruikers wilt toestaan om hun eigen scripts voor afwezigheidsberichten te uploaden maar niet wilt dat ze in staat zijn om het domein te veranderen waarnaar gereageerd mag worden en de instelling om te reageren op spam te veranderen, kunt u toevoegen aan de sectie <quote
+>[OutOfOffice]</quote
+>: </para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>AllowOutOfOfficeUploadButNoSettings=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key AllowOutOfOfficeUploadButNoSettings false</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeDomain</guilabel
+></term>
+<listitem>
+<para
+>Bij het bewerken van een een script voor vakantie (afwezigheidsbericht) , kan de gebruiker een domein specificeren om het zenden van zulke berichten te limiteren tot dat domein. Toepassen van standaarden aan de instellingen van out-of-office via de overeenkomstige knop zal dit domein domein herstellen, in het geval de gebruiker deze had gewijzigd. Om deze instelling vooraf te laden met een standaard waarde, voeg toe aan de sectie <quote
+>[OutOfOffice]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>OutOfOfficeDomain=mijnMailDomein.nl.test</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeDomain myMailDomain.test</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>OutOfOfficeReactToSpam</guilabel
+></term>
+<listitem>
+<para
+>Standaard worden er geen afwezigheidsberichten verstuurd naar afzenders van berichten die als spam (ongewenst) zijn gemarkeerd. Om dit gedrag te veranderen, voeg toe aan de sectie <quote
+>[OutOfOffice]</quote
+>:</para>
+<itemizedlist>
+<listitem
+><para
+>Configuratiebestand:</para>
+<programlisting
+>OutOfOfficeReactToSpam=true</programlisting
+></listitem>
+<listitem
+><para
+><command
+>kwriteconfig</command
+></para>
+<para
+><prompt
+>&percnt;</prompt
+> <userinput
+><command
+>kwriteconfig</command
+> <option
+>--file <replaceable
+>/path/to/kmail2rc</replaceable
+> --group OutOfOffice --key OutOfOfficeReactToSpam true</option
+></userinput
+> </para
+></listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+
+</chapter>

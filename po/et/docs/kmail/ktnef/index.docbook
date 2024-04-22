@@ -1,0 +1,176 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY kappname "&ktnef;">
+  <!ENTITY package "kdepim">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<book id="ktnef" lang="&language;">
+
+<bookinfo id="ktnefinfo">
+<title
+>TNEF-failide näitaja käsiraamat</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2013-05-31</date>
+<releaseinfo
+>4.11 pre (4.11)</releaseinfo>
+
+<abstract
+><para
+>TNEF-failide näitaja on rakendus kirjadele lisatud <ulink url="http://en.wikipedia.org/wiki/TNEF"
+>TNEF-vormingus</ulink
+> failide vaatamiseks.</para
+></abstract>
+
+<keywordset>
+<keyword
+>KDE</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+	<title
+>Sissejuhatus</title>
+
+	<para
+>TNEF-failide näitaja võimaldab vähese vaevaga kasutada kirjadele lisatud TNEF-vormingus manuseid. Tavaliselt leiab selliseid manuseid kirjadel, mis on pärit <trademark class="registered"
+>Microsoft</trademark
+> e-posti serveritest, ning need hõlmavad nii kirja omadusi kui ka tegelikke manuseid.</para>
+		<para
+>TNEF-vormingus manus kannab enamasti nime <filename
+>winmail.dat</filename
+> või <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>TNEF-i peaaken</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF-i peaaken</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Tööriist võimaldab manustega ette võtta mitmesuguseid toiminguid:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Vaadata ja avada manuseid vastavate rakendustega</para
+></listitem>
+		<listitem
+><para
+>Ekstraktida tegeliku manuse</para
+></listitem>
+		<listitem
+><para
+>Vaadata kirja omadusi (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Vaadata/ekstraktida kirja vormindatud teksti (RTF-vormingus)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; näitab automaatselt TNEF-manuse sisu. Manuseid saab avada või salvestada kontekstimenüü käskudega.</para>
+<screenshot>
+<screeninfo
+>TNEF-manus &kmail;is</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF-manus &kmail;is</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</chapter>
+
+<chapter id="credits">
+	<title
+>Autorid ja litsents</title>
+
+	<para
+>TNEF-failide näitaja (KTnef)</para>
+
+	<para
+>Rakenduse autoriõigus 2000: &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Rakenduse autoriõigus 2012: Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; &underGPL; </chapter>
+
+</book>

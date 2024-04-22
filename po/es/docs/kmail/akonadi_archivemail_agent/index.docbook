@@ -1,0 +1,219 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Agente de archivado de correo</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>El manual de &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Javier</firstname
+><surname
+>Viñal</surname
+> <affiliation
+><address
+><email
+>fjvinal@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Traductor</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2013-08-30</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introducción</title>
+
+<para
+>&i18n-archivemailagent; es un agente de Akonadi que permite archivar carpetas de correo automáticamente. </para>
+
+<sect2 id="using-kapp">
+<title
+>Uso de &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Use <menuchoice
+><guimenu
+>Herramientas</guimenu
+><guimenuitem
+>Configurar archivado automático...</guimenuitem
+> </menuchoice
+><action
+> en la ventana del lector de &kmail; para abrir un diálogo para configurar automáticamente el archivado de carpetas de correo.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Esta es una poderosa herramienta que se puede usar para ayudar en el respaldo de su correo. Para usarla, pulse el botón <guibutton
+>Añadir...</guibutton
+> y el diálogo <guilabel
+>Añadir archivo de correo</guilabel
+> se desplegará.</para>
+
+<screenshot>
+<screeninfo
+>Añadir diálogo de archivar correo</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Añadir diálogo de archivar correo</phrase>
+    </textobject>
+    <caption>
+      <para
+>Añadir diálogo de archivar correo</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Primero seleccione la carpeta que le gustaría archivar.</para
+></listitem>
+<listitem
+><para
+>Seleccione el formato en el que le gustaría guardarlo. &eg; <literal role="extension"
+>.tar.bz2</literal
+> en la lista desplegable. El nombre de archivo consistirá en el prefijo <userinput
+>Archivo_</userinput
+>, la ruta a la carpeta seleccionada en la lista de carpetas de &kmail;, la fecha en formato <userinput
+>año-mes-día</userinput
+> y la extensión de archivo seleccionada, &eg; <filename
+>Archivo_Carpeta local_bandeja de entrada_2013-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Por omisión, <guilabel
+>Archivar todas las subcarpetas</guilabel
+> está activado. Desmarque esto si usted solo quiere que la carpeta padre esté archivada.</para
+></listitem>
+<listitem
+><para
+>Usted puede teclear la ubicación en la que le gustaría guardar su archivo comprimido, o pulsar el botón <guibutton
+>Abrir diálogo de archivo</guibutton
+> para seleccionar la carpeta.</para
+></listitem>
+<listitem
+><para
+>Seleccione con que frecuencia desearía respaldar mediante los menús desplegables al lado de <guilabel
+>Respaldar cada:</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Si usted tiene un límite de espacio en el dispositivo, podrá querer establecer un límite en <guilabel
+>Máximo número de archivos comprimidos:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>Si usted ha añadido o modificado un trabajo de archivo, este se ejecutará automáticamente tras cerrar el diálogo. </para>
+
+<para
+>Si usted ya ha añadido trabajos de archivo de correo, el diálogo <guilabel
+> Configurar agente de archivado de correo</guilabel
+> los listará y permitirá modificarlos. </para>
+<screenshot>
+<screeninfo
+>Configurar agente de archivado de correo</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurar agente de archivado de correo</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurar agente de archivado de correo</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Usted puede usar la casilla de verificación de la izquierda de cada entrada de la lista para activar o desactivar el archivado de este trabajo. </para>
+<para
+>Usando el menú contextual lanzado con un &RMB; al pulsar sobre un trabajo de archivo, usted puede abrir la carpeta que contiene los archivos o iniciar el trabajo de archivo inmediatamente. Esto sobrescribirá un archivo existente creado antes en el mismo día sin notificación. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Créditos y licencia</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Derechos de autor del programa 2013 Laurent Montel montel@kde.org </para>
+<para
+>Derechos de autor de la documentación &copy; 2013 Laurent Montel montel@kde.org </para>
+
+<para
+>Traducido por Javier Viñal <email
+>fjvinal@gmail.com</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

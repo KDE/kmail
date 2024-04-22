@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Handbuch zu KTnef</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (Anwendungen 16.08)</releaseinfo>
+
+<abstract
+><para
+>KTnef ist ein Anzeigeprogramm für E-Mail-Anhänge im <ulink url="https://de.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>-Format.</para
+></abstract>
+
+<keywordset>
+<keyword
+>E-Mail</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Einleitung</title>
+
+	<para
+>Das Anzeigeprogramm KTnef erleichtert den Umgang mit E-Mail-Anhängen im TNEF-Format. Diese Anhänge finden Sie üblicherweise in E-Mails von <trademark class="registered"
+>Microsoft</trademark
+>-Mail-Servern und enthalten sowohl die Eigenschaften der E-Mail als auch die Anhänge.</para>
+		<para
+>Ein Anhang im TNEF-Format hat meistens den Namen <filename
+>winmail.dat</filename
+> oder <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>TNEF-Hauptfenster</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF-Hauptfenster</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Dieses Dienstprogramm ermöglicht es, solche Anhänge in folgender Weise zu bearbeiten:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Betrachten und Öffnen von Anhängen mit zugeordneten Anwendungen.</para
+></listitem>
+		<listitem
+><para
+>Anhänge entpacken</para
+></listitem>
+		<listitem
+><para
+>Eigenschaften der Nachricht anzeigen (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Nachrichtentext anzeigen/entpacken (im RTF-Format)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; zeigt automatisch den Inhalt eines TNEF-Anhangs. Mit den Aktionen im Kontextmenü können Sie die Anhänge öffnen oder speichern.</para>
+<screenshot>
+<screeninfo
+>TNEF-Anhang in &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF-Anhang in &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Danksagungen und Lizenz</title>
+
+	<para
+>TNEF File Viewer (KTnef)</para>
+
+	<para
+>Programm Copyright 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Programm Copyright 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Übersetzung Burkhard Lück<email
+>lueck@hube-lueck.de</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

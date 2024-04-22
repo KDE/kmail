@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-01-02 01:32+0000\n"
 "PO-Revision-Date: 2023-02-18 17:18+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -69,37 +69,37 @@ msgstr "Ayarları təmizləyin"
 msgid "Finish"
 msgstr "Son"
 
-#: refreshsettingscleanuppage.cpp:22
+#: refreshsettingscleanuppage.cpp:20
 #, kde-format
 msgid "Clean"
 msgstr "Təmizləmək"
 
-#: refreshsettingscleanuppage.cpp:52
+#: refreshsettingscleanuppage.cpp:50
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Köhnəlmiş \"TipOfDay\" ayarlarını silmək: Hazırdır"
 
-#: refreshsettingscleanuppage.cpp:64
+#: refreshsettingscleanuppage.cpp:62
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "\"%1\" faylındakı dialoq ayarlarını silmək: Hazırdır"
 
-#: refreshsettingscleanuppage.cpp:76
+#: refreshsettingscleanuppage.cpp:74
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "\"%1\" faylındakı süzgəc ayarlarını silmək: Hazırdır"
 
-#: refreshsettingscleanuppage.cpp:92
+#: refreshsettingscleanuppage.cpp:90
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "\"%1\" ayar faylındakı qovluq ayarlarını silmək: Hazırdır"
 
-#: refreshsettingscleanuppage.cpp:148
+#: refreshsettingscleanuppage.cpp:146
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "\"%1\" ayar faylındakı Dialoqun ölçüsünü silmək: Hazırdır"
 
-#: refreshsettingsfirstpage.cpp:20
+#: refreshsettingsfirstpage.cpp:18
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "Bunu istifadə etmədən öncə Kmail/Kontact tətbiqini bağlayın."

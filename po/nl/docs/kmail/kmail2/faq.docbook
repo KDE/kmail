@@ -1,0 +1,1474 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<author
+>&David.Bryant; &David.Bryant.mail;</author>
+&Tom.Albers;&Rinse.Devries;&Natalie.Koning;&Freek.de.Kruijf; 
+</authorgroup>
+
+<date
+>2021-04-09</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Veel voorkomende vragen (&FAQ;)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik Firefox als mijn standaard browser instellen?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U wilt op een link in &kmail; klikken en deze laten openen in <application
+>Firefox</application
+>. Op dit moment wordt een andere browser gebruikt. U wilt dat wijzigen.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Deze wijziging zal geheel &kde; treffen, niet alleen &kmail;. Selecteer <menuchoice
+> <guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Standaard toepassingen</guisubmenu
+><guimenuitem
+>Webbrowser</guimenuitem
+><guimenuitem
+>Open http en https-URL-adressen in de volgende browser</guimenuitem
+><guimenuitem
+>Mozilla Firefox</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>Als u een systeembeheerder bent en u wilt deze instelling automatisch voor al uw gebruikersmaken, doe dan dit.</para>
+    <itemizedlist>
+      <listitem>
+        <para
+>Voer <screen
+># qtpaths --paths ConfigLocation</screen
+> uit in een terminal. Dit zal het/de pad(en) leidend naar configuratiebestanden voor KDE programma's in uw systeem tonen. Gebruik het pad dat start in elke persoonlijke map van een gebruiker en lokaliseer het bestand genaamd <filename
+>kdeglobals</filename
+>, voeg dan deze tegel toe onder de categorie <guilabel
+>[General]</guilabel
+>:</para>
+        <para
+><userinput
+>BrowserApplication[$e]=firefox.desktop</userinput>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>U kunt ook het script in <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/Modify_KDE_Software_Defaults</ulink
+> proberen</para>
+    <note
+><para
+>De actuele fysieke locatie van configuratievariabelen is afhankelijk van de distributie. Wees niet verrast als sommige van de instructies over wijzigen van configuratievariabelen gedocumenteerd in de &kde; wiki voor u niet zullen werken. Het publieke forum (online) voor uw distributie is een goede plaats om hulp te zoeken.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe beheer ik de verbinding in mijn profiel voor roaming?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U stelt een <emphasis
+>Profiel voor roaming</emphasis
+> in zodat u toegang hebt tot uw thuisserver wanneer u op weg bent, maar het blijft proberen om te verbinden wanneer u thuis bent. Automatisch verbinden is uitgeschakeld in de instellingsschermen.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Navigeer naar <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+>KMail configureren</guisubmenu
+><guimenuitem
+>Accounts</guimenuitem
+><guimenuitem
+>Ontvangen (tabblad)</guimenuitem
+> <guimenuitem
+>(selecteer het uit te sluiten account)</guimenuitem
+><guimenuitem
+>Opties voor ophalen</guimenuitem
+> </menuchoice
+>, deactiveer <guilabel
+>In handmatige e-mailcontrole meenemen</guilabel
+>. Dit sluit het profiel uit wanneer u op het pictogram download klikt, maar het account zal nog steeds beschikbaar zijn in de afrollijst, waarmee het gemakkelijk is om uw e-mail op te halen wanneer u van huis bent.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe sla ik verzonden berichten op in een speciale map?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U wilt berichten die u hebt verzonden in een speciale map opslaan. Misschien gebruikt u een &IMAP;-server en wilt u uw verzonden berichten op de server opslaan en niet in een lokale map.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Navigeer in &kmail; naar <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+>KMail configureren</guisubmenu
+><guimenuitem
+>Identiteiten</guimenuitem
+><guimenuitem
+>(Kies een identiteit)</guimenuitem
+><guimenuitem
+>Wijzigen</guimenuitem
+><guimenuitem
+>Geavanceerd</guimenuitem
+><guimenuitem
+>Map verzonden mail</guimenuitem
+></menuchoice
+> en selecteer de map die u wilt gebruiken.</para>
+    <para
+>Anders kunt u het veld <guilabel
+>Map verzonden berichten</guilabel
+> (toegankelijk via het menu <guimenu
+>Beeld</guimenu
+> in het opstelvenster) gebruiken om de standaard map voor verzonden berichten voor een specifiek bericht overschrijven.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe verplaats ik e-mailberichten in de prullenbak naar een speciale map?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U wilt berichten in de prullenbak in een speciale map opslaan. Misschien gebruikt u een &IMAP;-server en wilt u e-mailberichten in de prullenbak op de server opslaan en niet lokaal.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Selecteer in de instellingendialoog een &IMAP;-account op de pagina <guilabel
+>Accounts</guilabel
+>. Klik op <guibutton
+>Wijzigen</guibutton
+> en wijzig de locatie van de map prullenbak via het tabblad <guilabel
+>Geavanceerd</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #5 -->
+<qandaentry>
+  <question
+><para
+>Hoe kan ik versleutelde berichten opslaan als niet versleuteld?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U wisselt versleutelde e-mail uit met een vriend, maar u wilt uw eigen kopie niet-versleuteld opslaan, nadat u het bericht hebt geopend.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Om ontcijferde e-mails niet-versleuteld op te slaan, voegt u dit item aan uw configuratiebestand <filename
+>kmail2rc</filename
+> toe, in de sectie [Reader]:</para>
+    <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+></para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik spam filteren op een &IMAP;-server?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U wilt verder met het lezen van uw e-mail uit een &IMAP;-server en vraagt zich af hoe het filteren en behandelen van spam gedaan wordt.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> De machine die uw e-mail al bevat kan uw &IMAP;-server worden. U zult een server-toepassing moeten configureren. <application
+>Dovecot</application
+> is er zo een en de handleiding op de webpagina's van het project maken het relatief gemakkelijk om het in te stellen. Dat laat u nog achter met het probleem van de filtering, omdat het zinvol is dat op de server te doen (wanneer u &kmail; naar de server laat wijzen zult u de mappen zien die u hebt aangemaakt op dat systeem). Er zijn verschillende opties. Een van de meest bekende is <guilabel
+>Procmail</guilabel
+>. Een andere is <application
+>Imapfilter</application
+>. Er is genoeg informatie op het internet over hoe dit in te stellen. Verdere discussie over deze OSS pakketten ligt buiten de scoop van de documentatie van &kmail;.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe krijg ik meer ruimte op het scherm in &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U gebruikt &kmail; op een laptop of notebook en ontdekt dat het nieuwe <emphasis
+>Aggregatie</emphasis
+>-scherm te weinig ruimte op het scherm biedt.</para>
+
+    <para
+><emphasis
+>Oplossing:</emphasis
+> als u de berichtenlijst wilt wijzigen zodat elk bericht een enkele rij gebruikt in plaats van twee rijen, ga dan naar <menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Berichtenlijst</guisubmenu
+><guimenuitem
+>Thema</guimenuitem
+></menuchoice
+> en wijzig het thema naar <guilabel
+>Klassiek</guilabel
+>. Als u groepering per datum wilt uitschakelen, wijzig dan de aggregatie met <menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Berichtenlijst</guisubmenu
+><guimenuitem
+>Aggregatie</guimenuitem
+></menuchoice
+> naar <guilabel
+>Standaard e-maillijst</guilabel
+>. Daarna zal &kmail; er uitzien op dezelfde manier als in vroegere versies.</para>
+
+    <para
+>In <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+>&kmail; configureren</guisubmenu
+> <guimenuitem
+>Uiterlijk</guimenuitem
+><guimenuitem
+>Lettertypen</guimenuitem
+></menuchoice
+> kunt u <guilabel
+>Eigen lettertype gebruiken</guilabel
+> selecteren en de instelling voor de berichtenlijst wijzigen. U kunt ook de grootte van het lettertype instellen in het dialoogvenster <guilabel
+>Aangepast lettertype gebruiken</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kunt u ballonteksten voor mappen in &kmail; uitschakelen?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U gebruikt &kmail; op een laptop of notebook en ontdekt dat de <emphasis
+>ballonteksten</emphasis
+> die verschijnen teveel mapnamen verbergen</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> klik rechts op de kop "Naam" boven de <guilabel
+>Mappenlijst</guilabel
+> en activeer <guilabel
+>Nooit</guilabel
+> onder <guilabel
+>Ballonteksten tonen</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik ballonteksten in de berichtenlijst verbergen?</para
+></question>
+  <answer>
+    <para
+>Ophet tabblad van &kmail;, <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+>KMail configureren</guisubmenu
+><guimenuitem
+>Uiterlijk</guimenuitem
+><guimenuitem
+>Berichtenlijst</guimenuitem
+></menuchoice
+>, deactiveer <menuchoice
+><guimenu
+>Algemeen</guimenu
+><guimenuitem
+>Ballonteksten tonen voor berichten en groepskoppen</guimenuitem
+></menuchoice
+></para>
+    <para
+>Anders, klik rechts op de kop boven de berichtenlijst en deactiveer het vakje met label <guilabel
+>Ballonteksten tonen</guilabel
+>.</para>
+    <note
+><para
+>De koppen boven de berichtenlijst verschijnen niet als u het thema "Intelligent" hebt gekozen.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- <qandaentry>
+<question
+><para
+>How can I remove alternate line colorings?</para
+></question>
+<answer>
+<para
+>In <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Application 
+Appearance</guisubmenu
+><guimenuitem
+>Colors</guimenuitem
+><guimenuitem
+>Colors</guimenuitem
+></menuchoice
+>, for each color 
+set except <guilabel
+>Common Colors</guilabel
+> (which doesn't have it), change the <guilabel
+>Alternate 
+Background</guilabel
+> to be the same as the <guilabel
+>Normal Background</guilabel
+>.</para>
+<para
+><emphasis
+>Mandriva</emphasis
+> and <emphasis
+>Mageia</emphasis
+> doesn't use the name <guilabel
+>System 
+Settings</guilabel
+>.  As in <guilabel
+>KControl</guilabel
+>, the KDE 3 control centre, they name it <quote
+>Configure your 
+Desktop</quote
+> to distinguish it from <quote
+>Configure your Computer</quote
+>, a.k.a. the Mandriva/Mageia Control 
+Center (MCC). Other than this name change, the method is as described above.</para>
+</answer>
+</qandaentry
+> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+
+<!-- FAQ #10 -->
+<qandaentry id="transfer-mail-and-settings">
+  <question>
+    <para
+>Hoe kan ik mijn e-mail en instellingen overbrengen naar een andere computer (of een ander gebruikersaccount op dezelfde machine)?</para>
+  </question>
+  <answer>
+    <para
+>Gebruik <menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>&kmail;-gegevens im/exporteren...</guimenuitem
+></menuchoice
+> om instellingen en gegevens te importeren en te exporteren. Zie <ulink url="help:/pimsettingexporter"
+>PIM-exportprogramma van instellingen</ulink
+> voor details.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waarom kan ik mijn e-mailmappen niet naar een USB-stick kopiëren?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> U bent een nieuwe computer aan het instellen en wilt al uw e-mail overbrengen. U besluit om alles naar een USB-stick te kopiëren. De job begint en dan krijgt u een foutmelding,</para>
+    <screen
+>Kopiëren lukt niet ............ ongeldig argument</screen>
+    
+    <para
+><emphasis
+>Oplossing:</emphasis
+> Uw USB-stick is <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>VFAT</ulink
+> geformatteerd en kan dus geen <emphasis
+>maildir</emphasis
+> mapnamen behandelen (ook kan het geen <emphasis
+>toegangsrechten</emphasis
+> aan, wat vele andere problemen kan veroorzaken). U hebt twee keuzen. Ofwel u formatteert uw <acronym
+>USB</acronym
+>-stick als ext2 (of ext3/4 -- in welk geval u er zich van bewust moet zijn dat het niet meer gelezen kan worden door &Windows; zonder daar extra software te installeren) of maak een .tar-bestand of .zip aan met al uw e-mail, kopieer dat daarna naar de stick en extraheer het archief naar de nieuwe host.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waarom worden mijn filters niet toegepast op inkomende berichten uit mijn &IMAP;-accounts?</para
+></question>
+  <answer>
+    <para
+>De normale &IMAP;-modus ondersteunt dit niet. Het nieuwe niet-verbonden &IMAP;-account doet dat wel. U kuntfiltering aan de serverzijde proberen te gebruiken (vraag uw systeembeheerder hoe filters op de server te installeren en in welk formaat), omdat &IMAP; gaat over alle e-mail beheren <emphasis
+>op de server</emphasis
+>. Zie <menuchoice
+><guimenu
+>instellingen</guimenu
+><guisubmenu
+>&kmail; configureren...</guisubmenu
+><guimenuitem
+>Ontvangen</guimenuitem
+><guimenuitem
+>(een &IMAP;-account)</guimenuitem
+></menuchoice
+>, klik daarna op <guilabel
+>Wijzigen...</guilabel
+> en het tabblad <guilabel
+>Filtering</guilabel
+> om filtering aan de serverzijde met de programmeertaal <ulink url="http://sieve.info/"
+>Sieve</ulink
+> te configureren (als uw &IMAP;-server het ondersteunt).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>Wat moet ik weten als ik <application
+>PGP</application
+>/<application
+>GnuPG</application
+> binnen &kmail; wil gebruiken?</para
+></question>
+
+  <answer>
+    <para
+>&kmail; biedt een eenvoudige en gebruikersvriendelijke interface om de basisfunctionaliteit van deze programma's te gebruiken. Echter, het is belangrijk dat u begrijpt hoe deze programma's zelf werken en welke acties leiden tot onveilige situaties. Een aantal belangrijke punten:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para
+>U <emphasis
+>moet</emphasis
+> echt testen of de versleuteling daadwerkelijk goed werkt voordat u het serieus gaat gebruiken. &kmail; maakt gebruik van <application
+>PGP</application
+>'s en <application
+>GnuPG</application
+>'s foutmeldingen, maar deze willen nog wel eens veranderen in de verschillende versies van deze programma's.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>&kmail; zal geen berichten versleutelen met een niet-vertrouwde publieke sleutel. Indien u met zo'n sleutel zou willen versleutelen, dan moet u de identiteit van de eigenaar controleren en vervolgens de niet-vertrouwde sleutel ondertekenen met uw eigen geheime sleutel, zodat het een vertrouwde sleutel wordt. Indien de identiteit van de eigenaar niet te controleren is, maar u wilt de sleutel alsnog gebruiken, dan kunt u de sleutel lokaal ondertekenen met behulp van het commando <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>keyID</replaceable
+></userinput
+>.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Een publieke sleutel vertrouwen zonder de identiteit te controleren is een zeer slecht idee.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Vanaf GnuPG 1.0.7 moet u uw eigen sleutel instellen op "Ultiem" vertrouwen: dit wordt niet meer automatisch gedaan.</para>
+      </listitem>
+    </itemizedlist>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waar slaat &kmail; mijn instellingen en mijn e-mail op?</para
+></question>
+  <answer>
+    <para
+>De meeste instellingen van &kmail; worden opgeslagen in <filename
+>~/.config/kmail2rc</filename
+>&nbsp;.</para>
+    <para
+>De door <emphasis
+>Akonadi</emphasis
+> gecontroleerde items worden in deze mappen opgeslagen:</para>
+      <itemizedlist>
+        <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename
+>.</para
+></listitem>
+        <listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </itemizedlist>
+    <para
+>Merk op dat sommige van de bestanden verborgen zijn: denk er ook aan deze te kopiëren als u een reservekopie van uw e-mails wilt maken of deze wilt archiveren. Om veilig te zijn, gebruik <ulink url="help:/pimdataexporter"
+>PIM-exportprogramma van gegevens</ulink
+> om een reservekopie van uw e-mail en uw instellingen te maken.</para
+><para
+>&nbsp;</para
+> 
+  </answer>
+</qandaentry>
+
+<!-- FAQ #15 -->
+<qandaentry id="faq-index-regeneration">
+  <question
+><para
+>Waarom heeft &kmail; de index van een map opnieuw aangemaakt?</para
+></question>
+  <answer>
+    <para
+>&kmail; maakt de mapindex opnieuw aan wanneer de index verouderd lijkt te zijn, dit is bijvoorbeeld het geval wanneer de inhoud van een map nieuwer is dan de index. &kmail; genereert de index in dit geval opnieuw om het verlies of verstoring van berichten te voorkomen.</para>
+    <para
+>Een index kan verouderd raken door verschillende oorzaken. Dit zijn de belangrijkste oorzaken. <itemizedlist>
+        <listitem
+><para
+>Een ander programma heeft de inhoud van de map gewijzigd. Indien &kmail; tezamen met procmail wordt gebruikt, lees dan deze <link linkend="faq-procmail"
+>&FAQ;</link
+>. Indien &kmail; tezamen met een ander e-mailprogramma wordt gebruikt, lees dan deze <link linkend="faq-other-muas"
+>&FAQ;</link
+>.</para
+></listitem>
+        <listitem
+><para
+>Als de map waarin de post wordt bewaard een map is die via NFS gekoppeld is en de klok van de NFS-server loopt voor op uw klok, dan kan het gebeuren dat &kmail; aanneemt dat er iets mis is met het indexbestand, terwijl dat helemaal niet het geval is. Om dit probleem op te lossen moet de klok op de NFS-server en de klok op uw computer synchroon lopen. Dit kan bereikt worden met het ntp-programma.</para
+></listitem>
+      </itemizedlist>
+    </para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waarom start &kmail; niet op?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Probleem:</emphasis
+> u wilt &kmail; starten vanaf een minimale bureaubladomgeving zoals <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>. Het start niet.</para>
+    <para
+><emphasis
+>Oplossing:</emphasis
+> dit gebeurt omdat de <emphasis
+>dbus</emphasis
+> functionaliteit ontbreekt. Start &kmail; vanuit een terminal met dbus-launch, zoals dit:</para>
+    <screen
+># dbus-launch kmail</screen
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+  <question
+><para
+>Kan ik &kmail; tegelijk met een ander e-mailprogramma, zoals <application
+>mutt</application
+>, gebruiken?</para
+></question>
+  <answer>
+    <para
+>Indien u het mbox-formaat gebruikt in uw mappen, dan is het niet mogelijk om een ander e-mailprogramma te gebruiken terwijl &kmail; aanstaat. Met <application
+>Mutt</application
+> kunnen er zelfs problemen zijn, zelfs wanneer beide programma's niet tegelijk actief zijn. We bevelen het gebruik van het maildir-formaat aan als u mutt samen met &kmail; wilt gebruiken.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+  <question
+><para
+>Hoe kan ik het mbox-formaat van mijn mappen omzetten naar het maildir-formaat?</para
+></question>
+  <answer>
+    <para
+>Er is geen geautomatiseerde manier om dat te doen. U moet een nieuwe map in maildir-formaat aanmaken en vervolgens de berichten uit de mbox-map naar de andere map kopiëren. Denk er wel aan om de filters aan te passen voordat u de oude map verwijdert.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik bijlagen van een ontvangen bericht verwijderen zonder het bericht zelf te verwijderen?</para
+></question>
+  <answer>
+    <para
+>Open het contextmenu met een klik met de &RMB; op een bijlage en selecteer <guimenuitem
+>Bijlage verwijderen</guimenuitem
+></para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #20 -->
+<qandaentry>
+  <question
+><para
+>Kan &kmail; bij het opstarten direct op nieuwe berichten controleren?</para
+></question>
+  <answer>
+    <para
+>Indien &kmail; altijd moet controleren op nieuwe berichten bij het opstarten, dan kunt u de optie <guilabel
+>Berichten ophalen bij opstarten</guilabel
+> op het tabblad <guilabel
+>Ontvangen</guilabel
+> in het gedeelte <link linkend="configure-accounts-receiving"
+>Accounts</link
+> van de instellingen activeren. Een andere mogelijkheid is om &kmail; te starten met het commando <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waar kan ik een lijst met de verschillen tussen de ene versie van &kmail; en de volgende vinden?</para
+></question>
+  <answer>
+    <para
+>Het welkom-scherm somt de belangrijkste wijzigingen op. Dit scherm is te bekijken door te kiezen voor <menuchoice
+><guimenu
+>Help</guimenu
+><guimenuitem
+>Inleiding in &kmail;</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Ik ben zo iemand die altijd de volledige correspondentie meestuurt, wanneer ik alleen reageer op een klein gedeelte. Om een rare reden krijg ik hier commentaar op. Heeft &kmail; hier een oplossing voor?</para
+></question>
+  <answer>
+    <para
+>Natuurlijk. Indien u het tekstgedeelte waar u op wilt reageren selecteert voordat u op beantwoorden klikt, dan wordt alleen het geselecteerde gedeelte van het oorspronkelijke bericht overgenomen in het nieuw op te stellen bericht.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waarom hebben sommige berichten een waarde "onbekend" in het veld <guilabel
+>Datum</guilabel
+>? Waarom is de datum soms onjuist?</para
+></question>
+  <answer>
+    <para
+>Waarschijnlijk is de "Date:"-berichtkop van deze berichten corrupt en kan &kmail; deze niet interpreteren. Dit is geen fout in &kmail;, maar in de software die deze berichten heeft verstuurd.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Mijn ondertekening begint met twee streepjes. Wat is dat?</para
+></question>
+  <answer>
+    <para
+>De handtekening van de berichtinhoud scheiden met twee mintekens en een spatie op een enkele regel is algemeen gebruik. Deze symbolen bieden e-mailclients deze te herkennen om de handtekening te verwijderen uit een antwoord. Als uw handtekening deze scheiding niet bevat, zal &kmail; dit automatisch toevoegen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #25 -->
+<qandaentry>
+  <question
+><para
+>Zitten er nog bugs in &kmail;?</para
+></question>
+  <answer>
+    <para
+>Er zijn er heel wat, zoals u kunt zien door de <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>Bugzilla-pagina</ulink
+> op te vragen. Vanaf dit schrijven (april, 2021) was ruwweg 70% van de gerapporteerde bugs onbevestigd of niet te reproduceren. Al met al denken we dat &kmail; een robuust stuk software is.</para>
+    <warning
+><para
+>U kunt &kmail; beter niet tegelijkertijd met een ander e-mailprogramma gebruiken. Wanneer twee programma's tegelijk de e-mailbestanden gebruiken, dan is dat vragen om problemen. Berichten kunnen dan verloren gaan. Het maken van reservekopieën van uw berichten -- en al uw belangrijke gegevens -- is echter altijd een goed idee. Dat is digitale hygiëne.</para
+></warning
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Waarom laat &kmail; &HTML;-berichten er niet goed uitzien?</para
+></question>
+  <answer>
+    <para
+>Het weergeven van referenties naar externe inhoud, zoals afbeeldingen, is standaard uitgeschakeld, omdat ze gebruikt kunnen worden om na te gaan wanneer u uw e-mail leest. Het laden hiervan kan worden ingeschakeld in het tabblad <guilabel
+>Beveiliging</guilabel
+> in de configuratiedialoog van &kmail;. Voor de veiligheid moet u dit alleen doen voor berichten die u vertrouwt. Ook plug-ins (zoals <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; en JavaScript zullen in &kmail; nooit, om redenen van veiligheid, worden weergeven en er is geen manier om dit te activeren.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Kan ik twee verschillende versies van &kmail; naast elkaar gebruiken? Kan ik terugkeren naar een oudere versie van &kmail;?</para
+></question>
+  <answer>
+    <para
+>U zou maar één exemplaar van &kmail; tegelijk actief moeten hebben. Wij adviseren tevens om bij één versie van &kmail; te blijven en niet continu te wisselen van versie. Teruggaan naar een oudere versie zal waarschijnlijk niet probleemloos gaan omdat de opbouw van bijvoorbeeld het index-bestand steeds verandert. Daarentegen moet overstappen naar een nieuwere versie wel probleemloos verlopen.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Ondersteunt &kmail; uuencoded bijlagen?</para
+></question>
+  <answer>
+    <para
+>Uuencoded bijlagen worden niet ondersteund. Sla uw bericht met een bijlage gecodeerd met uuencode op en gebruik daarna <command
+>uudecode</command
+> om de bijlage te decoderen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>&kmail; is gecrasht terwijl ik een bericht aan het opstellen was. Is dat bericht nu kwijt?</para
+></question>
+  <answer>
+    <para
+>&kmail; probeert uw e-mail in het geval van een vastloper te bewaren in het bestand <filename class="directory"
+>~/.local/share/kmail2/autosave</filename
+>. &kmail; zal dit bestand openen zodra &kmail; weer wordt gestart. Indien dat niet gebeurt, probeer dan de bestanden in <filename class="directory"
+>~/.local/share/kmail2/autosave</filename
+> met een editor te openen. Indien ze niet bestaan, dan was het vastlopen zo ernstig dat &kmail; geen kans had om het bestand op te slaan.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #30 -->
+<qandaentry>
+  <question
+><para
+>Ik heb een map ingesteld met bewust voor e-maillijst, maar berichten uit de lijst worden niet in die map opgeslagen. Wat is er fout?</para
+></question>
+  <answer>
+    <para
+>Een discussiegroep associëren met een map heeft niets te maken met het filteren van de discussiegroep berichten &mdash; u zult hiervoor handmatig een filter moeten toevoegen. Door de associatie is het wel mogelijk om te kiezen voor <menuchoice
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Beantwoorden aan discussiegroep...</guimenuitem
+></menuchoice
+> of <menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Nieuw bericht aan discussiegroep...</guimenuitem
+></menuchoice
+>, waarbij het e-mailadres van de discussiegroep in het veld <guilabel
+>Aan:</guilabel
+> zal worden ingevuld.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Mijn SMTP-server vereist authenticatie. Wordt dat door &kmail; ondersteund?</para
+></question>
+  <answer>
+    <para
+><guilabel
+>Authenticatie</guilabel
+> kan ingesteld worden in het tabblad <guilabel
+>Geavanceerd</guilabel
+> van de <link linkend="configure-accounts-sending"
+>Configuratiedialoog voor SMTP</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+  <question
+><para
+>Kan ik &kmail; in combinatie met het programma <application
+>procmail</application
+> gebruiken?</para
+></question>
+  <answer>
+    <para
+>Dat kan, maar om te voorkomen dat e-mail verloren gaat is het belangrijk om dat op de juiste manier te doen. Om <application
+>procmail</application
+> en &kmail; te gebruiken moet nieuwe e-mail uit de spoolbestanden waarin <application
+>procmail</application
+> uw e-mail plaatst. Laat <application
+>procmail</application
+> <emphasis
+>nooit</emphasis
+> de berichten afleveren in een &kmail;-map. Dit kan en zal niet goed gaan.</para>
+
+    <para
+>Voor elk lokaal postvak dat procmail aanmaakt, moet u een account maken binnen &kmail; dat die e-mail ophaalt uit dit lokale postvak. Ook moet de juiste vergrendelingsmethode gekozen worden om te voorkomen dat procmail en &kmail; tegelijk het postvak raadplegen. Wanneer het account binnen &kmail; opgezet wordt, dan zal &kmail; proberen om de mogelijke vergrendelingsbestanden aan te geven, maar omdat het vergrendelingsbestand op drie verschillende manieren kan worden aangegeven binnen procmail, is het voor &kmail; niet mogelijk om het juiste vergrendelingsbestand automatisch te selecteren, dit dient u dus zelf te doen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>De spellingcontrole controleert niet zoals ik zou verwachten. Waarom?</para
+></question>
+  <answer>
+    <para
+>Voordat de spellingcontrole gebruikt moet het geconfigureerd worden. Dit kunt u doen in het opstelvenster onder <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Spellingcontrole...</guimenuitem
+> </menuchoice
+>. U kunt hier een woordenboek kiezen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik de postvakken van <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+>/... gebruiken binnen &kmail;?</para
+></question>
+  <answer>
+    <para
+>Bekijk het sectie <link linkend="importing-options"
+>In &kmail; importeren en herstellen</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #35 -->
+<qandaentry>
+  <question
+><para
+>Kan ik versleuteling gebruiken als ik een POP3-account heb ingesteld zonder gebruik te maken van <acronym
+>SSL</acronym
+>?</para
+></question>
+  <answer>
+    <para
+>Indien de POP3-server een <application
+>ssh</application
+>-programma heeft draaien, dan is het mogelijk om de POP3 verbinding door een ssh-tunnel op te zetten door het volgende commando te gebruiken:</para>
+
+    <para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 gebruikersnaam@server</option
+></userinput
+></para>
+
+    <para
+>Pas de instellingen van &kmail; aan zodat de post wordt opgehaald van <userinput
+>localhost</userinput
+> en de post zal door de ssh-tunnel opgehaald gaan worden. </para>
+
+    <note
+><para
+>Als niet-versleutelde berichten al via het internet zijn verzonden, is het enige voordeel van het gebruik van <application
+>ssh</application
+> dat het <emphasis
+>wachtwoord</emphasis
+> versleuteld naar de POP3-server verzonden wordt.</para
+></note>
+
+    <para
+>Voor meer details over instellen van ssh, zie <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
+>deze webpagina</ulink
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+  <question
+><para
+>Vergrendelt &kmail; mappen?</para
+></question>
+  <answer>
+    <para
+>&kmail; vergrendelt de bestanden in <filename class="directory"
+>~/.local/share</filename
+> niet.</para>
+    <para
+>Om te zorgen dat er geen e-mail verloren raakt, <emphasis
+>wanneer een lokaal account</emphasis
+> wordt gebruikt, is het noodzakelijk na te gaan dat &kmail; dezelfde vergrendelingsmethode gebruikt als het programma dat de post daar plaatst.</para>
+
+    <para
+>Er zijn vijf verschillende vergrendelingsmethoden:</para>
+
+      <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Procmail vergrendelingsbestand (standaard)</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Mutt vergrendeling</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Mutt groepsvergrendeling</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>FCNTL</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Geen (met zorg gebruiken)</guilabel
+></para
+></listitem>
+      </itemizedlist>
+
+    <para
+><guilabel
+>Procmail-vergrendeling</guilabel
+> gebruikt een apart hulpmiddel (<command
+>lockfile</command
+>) dat bij <application
+>procmail</application
+> meegeleverd wordt. Dit kunt u gebruiken wanneer u schrijfrechten hebt in de map waar de post staat. Dit werkt dus niet in de map <filename class="directory"
+>/var/spool/mail/</filename
+>. Het creëert een <application
+>.lock</application
+>-bestand zolang &kmail; bezig is met het controleren op nieuwe berichten. Zoals gezegd, dit systeem werkt alleen wanneer <application
+>procmail</application
+> geïnstalleerd is op de computer.</para>
+
+    <para
+><guilabel
+>Mutt-dotlock</guilabel
+> en <guilabel
+>Mutt-dotlock-privileged</guilabel
+> werken beide met een apart hulpmiddel (<command
+>mutt_dotlock</command
+>) dat meegeleverd wordt met <application
+>mutt</application
+>. <guilabel
+>Mutt-dotlock</guilabel
+> werkt op dezelfde manier als de <guilabel
+>Procmail-vergrendeling</guilabel
+>, met dezelfde beperking betreffende de map <filename class="directory"
+>/var/spool/mail/</filename
+>. Echter <guilabel
+>Mutt-dotlock-privileged</guilabel
+> kan wel vergrendelingsbestanden maken in de map <filename class="directory"
+>/var/spool/mail/</filename
+>. <command
+>mutt_dotlock</command
+> is een setgid-programma en deze optie wordt uitgevoerd in modus setgid. Merk op dat deze opties alleen zullen werken als <application
+>mutt</application
+> oo uw systeem is geïnstalleerd.</para>
+
+    <para
+><guilabel
+>FCNTL</guilabel
+> gebruikt de systeemprocedure <function
+>fcntl()</function
+>.</para>
+
+    <warning
+><para
+>De FCNTL-vergrendeling gebruiken kan het systeem vertragen wanneer de map die geraadpleegd moet worden zich op een NFS-schijf bevindt.</para
+></warning>
+
+    <para
+>Indien u geen vergrendeling wilt gebruiken, dan bestaat de mogelijkheid om te kiezen voor <guilabel
+>geen</guilabel
+>. Er is echter een kans dat e-mail verloren gaat wanneer er geen vergrendeling gebruikt wordt.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe zorg ik er voor dat de e-mail op de POP3-server blijft?</para
+></question>
+  <answer>
+    <para
+>Indien alle berichten op de server moeten blijven staan, open dan het dialoogvenster <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+> &kmail; configureren...</guimenuitem
+> </menuchoice
+>. Klik op de pagina <guilabel
+>Accounts</guilabel
+>. Selecteer het betreffende account en kies de knop <guilabel
+>Wijzigen...</guilabel
+>. Het dialoogvenster dat nu verschijnt bevat de instelling <guilabel
+>Laat opgehaalde berichten op de server staan</guilabel
+> (tabblad Geavanceerd), die u kunt inschakelen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Kan ik een tekst maken die onder elk bericht komt te staan?</para
+></question>
+  <answer>
+    <para
+>Dit heet een handtekening, overigens niet te verwarren met de digitale ondertekening. Kies voor <menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>&kmail; instellen...</guimenuitem
+></menuchoice
+>. Klik vervolgens binnen de <guilabel
+>identiteiten</guilabel
+> op het tabblad <guilabel
+>Handtekening</guilabel
+> en voeg de juiste handtekening toe. Activeer <xref linkend="configure-composer-general-append-signature"/> vervolgens bij de <guilabel
+>Opsteller</guilabel
+>, op het tabblad <guilabel
+>Algemeen</guilabel
+> het automatisch invoegen van de ondertekening.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe moet ik &Sendmail; instellen om met &kmail; samen te werken wanneer ik een inbelverbinding heb?</para
+></question>
+  <answer>
+    <para
+>Kijk allereerst even of uw distributie dit voor u kan regelen. Waarschijnlijk is het tijdens de installatie reeds goed ingesteld.</para>
+
+    <para
+>Als dat niet het geval is, dan kunt u eens kijken naar de <ulink url="https://www.tldp.org/HOWTO/Mail-Queue.html"
+>the Mail Queue HOWTO</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #40 -->
+<qandaentry>
+  <question
+><para
+>Ik heb een demonstratie gezien waarbij &kmail; op afstand gebruikt wordt via <application
+>dcop</application
+>. Is hier documentatie over?</para
+></question>
+  <answer>
+    <para
+>U kunt een lijst van functies krijgen door het volgende commando in een shell te gebruiken: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail</option
+></userinput
+>. Daarna kunt u &kmail; als volgt besturen: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. U kunt ook <application
+>qdbusviewer</application
+> gebruiken om door de beschikbare methoden in een grafische interface te lopen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Wanneer ik reageer op een bericht wordt slechts een deel van het bericht aangehaald, de rest is weg! Hoe kan dat?</para
+></question>
+  <answer>
+    <para
+>Dit kan gebeuren indien het bericht twee streepjes en een spatie op een afzonderlijke regel bevat. Dit wordt gezien als het begin van de handtekening. Het gedeelte onder deze lijn zal niet worden meegenomen, aangezien bij het beantwoorden van het bericht &kmail; altijd de handtekening zal verwijderen.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Ik gebruik alleen maar &IMAP;. Kan ik van die lokale mappen af komen in de linkerbalk? Of ze tenminste ingeklapt laten?</para
+></question>
+  <answer>
+    <para
+>Nee, u kunt ze niet wegkrijgen. De lokale mappen functioneren als een backup wanneer de &IMAP;-server onbereikbaar is. Ondanks dat u alleen maar &IMAP; gebruikt, zal &kmail; toch "Postvak uit" gebruiken om het bericht te verzenden. Indien we alle lokale mappen zouden verbergen, zou u niet meer in staat zijn berichten te verwijderen die in "Postvak uit" zijn blijven hangen wanneer er iets mis is gegaan met de verzending. Het is echter wel mogelijk om de lokale mappen ingeklapt te houden. Kies hiervoor het menu <menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>&kmail; instellen...</guimenuitem
+></menuchoice
+> en klik op het pictogram "Diversen". Als u de instelling voor de opstartmap verandert in een map op de &IMAP;-server zullen de lokale mappen ingeklapt blijven wanneer &kmail; start.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kan ik een specifieke discussies volgen?</para
+></question>
+  <answer>
+    <para
+>Als u discussies wilt volgen, klik dan rechts en kies <menuchoice
+><guimenu
+>Discussie markeren</guimenu
+> <guimenuitem
+>Discussie volgen</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>Vanaf dit punt af zullen alle berichten in de discussie die begint in dit bericht worden gemarkeerd als <guilabel
+>Volgen</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Hoe kunt u mijn eigen discussies volgen?</para
+></question>
+  <answer>
+    <para
+>Dit is nuttig in het geval dat u geregistreerd bent bij een e-maillijst zoals kdepim-users@kde.org en u wilt de discussies eruit filteren waarin u meedoet.</para>
+      <itemizedlist>
+        <listitem>
+          <para
+>Maak een filter aan om al uw inkomende berichten naar een e-maillijst als Volgen te markeren</para>
+          <para
+>Om een filter aan te maken gaat u naar:</para>
+          <para
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+> <guimenuitem
+>Filters instellen</guimenuitem
+></menuchoice
+></para>
+            <itemizedlist>
+              <listitem>
+	            <para
+>selecteer <guilabel
+>Komt overeen met al het volgende</guilabel
+></para>
+              </listitem>
+              <listitem>
+	            <para
+>Voeg de voorwaarden toe: <itemizedlist>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>From</guimenu
+><guisubmenu
+>Bevat</guisubmenu
+><guimenuitem
+> </guimenuitem
+></menuchoice
+> <replaceable
+>uwnaam@e-maildomein</replaceable
+> <footnote
+><para
+>vervang <replaceable
+>uwnaam@e-maildomein</replaceable
+>&nbsp;door uw afzender-e-mailadres</para
+></footnote
+></para>
+	                </listitem>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>List-Id</guimenu
+><guimenuitem
+>Bevat</guimenuitem
+></menuchoice
+> <replaceable
+>listID</replaceable
+><footnote
+><para
+>vervang <replaceable
+>listID</replaceable
+> door een specifieke e-maillijst-id &eg; (&lt;kdepim-users.kde.org&gt;) of gewoon een <quote
+>.</quote
+> om uitgaande e-mail naar alle e-maillijsten met <quote
+>.</quote
+> in hun id (dus alle).</para
+></footnote
+></para>
+	                </listitem>
+	              </itemizedlist>
+	            </para>
+              </listitem>
+              <listitem>
+	            <para
+>Kies onder <guilabel
+>Filteracties</guilabel
+> <menuchoice
+><guimenu
+>Markeren als</guimenu
+><guimenuitem
+>Volgen</guimenuitem
+></menuchoice
+>.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para
+>In het tabblad <guilabel
+>Geavanceerd</guilabel
+>.</para>
+              <itemizedlist>
+                <listitem>
+	              <para
+>Deactiveer <guilabel
+>als dit filter overeenkomt, stop hier met verwerken</guilabel
+>, zodat andere filters zoals sortering van de inkomende berichten van de e-maillijst naar submappen wordt uitgevoerd.</para>
+                </listitem>
+                <listitem>
+	              <para
+>Plaats dat filter voor andere filters die het filterproces kunnen stoppen of zet het als eerste. (Wijzigen van de volgorde van de filters gaat met de twee pijlen omhoog en omlaag, onder de lijst met <guilabel
+>Beschikbare filters</guilabel
+>)</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para
+>Maak een zoekopdracht op berichten in een e-maillijst</para>
+              <para
+>Ga naar de map waar berichten behorende bij uw e-maillijst zijn opgeslagen (&eg;, lokale mappen/KDE-PIM-USERS) en druk op de toets <keycap
+>S</keycap
+> of in het menu <menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Berichten zoeken</guimenuitem
+></menuchoice
+>:</para>
+                <itemizedlist>
+                  <listitem>
+	                <para
+>Selecteer <guilabel
+>Komt overeen met al het volgende</guilabel
+><footnote
+><para
+>Let op <guilabel
+>Submappen meenemen</guilabel
+>.</para
+></footnote
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Voeg de voorwaarde toe: <menuchoice
+><guimenu
+>Berichtstatus</guimenu
+><guisubmenu
+>is</guisubmenu
+> <guimenuitem
+>Volgen</guimenuitem
+></menuchoice
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Geef de zoekopdracht een informatieve naam (<guilabel
+>Zoekmapnaam</guilabel
+>) zoals <replaceable
+>KDE-PIM-GEBRUIKERS-Gevold</replaceable
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Doe de zoekopdracht. Nadat dat gedaan is kunt u het zoekvenster sluiten.</para>
+                  </listitem>
+                </itemizedlist>
+              <para
+>Wanneer u nu een discussie start of er aan meedoet, dan wordt het <guilabel
+>Volgen</guilabel
+>.</para>
+        </listitem>
+      </itemizedlist>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #45 -->
+<qandaentry>
+  <question
+><para
+>Hoe kan ik vertalen van e-mail gebruiken?</para
+></question>
+  <answer>
+    <para
+>Om tekst in het venster voor opstellen te vertalen, lees het hoofdstuk <link linkend="using-the-translator"
+>De ingebouwde vertaler gebruiken</link
+></para>
+    <para
+>Accentueer in het voorbeeld venster van het bericht de tekst die u wilt vertalen en selecteer <guimenuitem
+>Vertalen</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>) uit het contextmenu van de &RMB;.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

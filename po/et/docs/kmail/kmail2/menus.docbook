@@ -1,0 +1,3730 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+>&Daniel.Naber.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+>&David.Rugge.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <affiliation
+><address
+> <email
+>michel@klaralvdalens-datakonsult.se</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> <affiliation
+><address
+>&Laurent.Montel.mail; </address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-11-25</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</chapterinfo>
+
+<title
+>Käskude ja menüüde seletused</title>
+<para
+>Järgnevalt kirjeldatakse kõiki &kmail;o menüüsid. Kui antud menüükirjega seotud tegevusele on olemas ka kiirklahv, on see kirje juures ära näidatud.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>&kmail;i peaaken</title>
+
+<sect2 id="reader-file-menu">
+<title
+>Menüü Fail</title>
+<variablelist>
+<varlistentry id="file-new">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Uus</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Selle abil saab luua järgmisi uusi asju:</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-newmessage">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Uus</guisubmenu
+> <guimenuitem
+>Uus kiri...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uue kirja loomine.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-new-message-from-template">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Uus</guisubmenu
+> <guisubmenu
+>Kiri malli põhjal</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uue kirja loomine valitud malli põhjal.</action
+> Täpsemalt kõneleb mallide loomisest osa <link linkend="new-compose-from-templates"
+>Kiri malli põhjal</link
+>.</para>
+<para
+>Kui sul pole ühtegi malli salvestatud, näed menüüs <menuchoice
+><guimenu
+>Kiri</guimenu
+><guisubmenu
+>Kiri malli põhjal</guisubmenu
+><guimenuitem
+>(mallid puuduvad)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-add-folder">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Uus</guisubmenu
+> <guimenuitem
+>Lisa kaust...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Uue kausta loomine.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-new-addressbook-contact">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Uus</guisubmenu
+> <guimenuitem
+>Uus aadressiraamatu kontakt...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <guilabel
+>uue kontakti</guilabel
+> dialoogi.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-open">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Ava...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab kirja või postkasti.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-open-recent">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Ava viimati kasutatud</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab viimati kasutatud kirju.</action
+> Nimekirjas on näha ainult kirjad, mis on salvestatud ja seejärel avatud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-save-as">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Salvesta kui...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Salvestab parajasti avatud kirja <filename role="extension"
+>.mbox</filename
+>-faili</action
+>, sealhulgas ka päised ja manused.</para>
+<para
+>Kui soovid salvestada mõnda muusse vormingusse, &eg; <filename role="extension"
+>.txt</filename
+>, eemalda märge valiku <guilabel
+>Faililaiendi automaatne valik (.mbox)</guilabel
+> eest ning muuda kindlasti failile nime andes ka laiendit.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-import-messages">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Impordi kirjad...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab rakenduse <application
+>KMailCVT</application
+>.</action
+> See võimaldab importida &kmail;i kirju mitmetest muudest e-posti klientidest.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-print-preview">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Trükkimise eelvaatlus...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Avab dialoogi, kus näeb, millisena kiri trükitakse.</action
+></para>
+<note
+><para
+>Seda saab kasutada ainult siis, kui printer on seadistatud ning on parajasti võrgus kasutamisvalmis.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="file-print">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Trüki...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, mis võimaldab trükkida parajasti avatud kirja.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-expire-all-folders">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Kustuta aegunud kirjad kõigist kaustadest</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kustutab aegunud kirjad kõigist kaustadest.</action
+> Kustutamine käib vastavalt igale kaustale <link linkend="folders-properties-window"
+>omaduste dialoogis</link
+> määratud reeglitele (vaikimisi aegunud kirju ei kustutata).</para>
+</listitem>
+</varlistentry>
+<varlistentry id="reader-empty-all-trash-folders">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Tühjenda kõik prügikastid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Sellega saab tühjendada kõik prügikastid,</action
+> &ie; nii kohaliku prügikastikausta kui ka kõik prügikastikaustad &imap; serverites.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-work-offline">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Töötamine võrguta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Paneb &kmail;i tööle võrguta režiimis.</action
+> See lülitab välja kõik võrguga seotud tööd. See on kasuks, kui soovid kirjadega midagi ette võtta ilma võrguühenduseta. Valimise järel asendub see menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Töötamine võrgus</guimenuitem
+></menuchoice
+>, mis tuleb valida, kui soovid taas võrku minna (seda on vaja kirjade saatmiseks ja saamiseks).</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-check-mail">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Kontrolli posti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib uute kirjade olemasolu kõigil kontodel.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-check-mail-in">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guisubmenu
+>Kontrolli posti kontos</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib uute kirjade olemasolu konkreetses kontos,</action
+> mis ilmuvad nähtavale alammenüüs.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-update-folder">
+<term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Uuenda kausta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib, kas parajasti valitud kausta on saabunud uusi kirju.</action
+></para>
+<note
+><para
+>Seda saab pruukida ainult &imap; kaustade korral.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-update-this-folder-and-all-subfolders">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Uuenda kausta ja selle alamkaustu</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib, kas parajasti valitud kausta ja selle alamkaustadesse on saabunud uusi kirju.</action
+></para>
+<para
+>Samuti võib valida mitu kausta, mispuhul menüükäsk võtab kuju <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Uuenda kaustu ja nende alamkaustu</guimenuitem
+></menuchoice
+>.</para>
+<note
+><para
+>Seda saab pruukida ainult &imap; kaustade korral.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Saadab väljuvate kirjade kaustas olevad kirjad.</action
+> Kirjad võivad sellesse kausta jõuda, kui valida kirja koostamise aknas <guibutton
+>Pane järjekorda</guibutton
+>, koostada kiri võrguta režiimis või saata see, kui internetiühendus puudub.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-send-queued-messages-via">
+<term
+><menuchoice
+><guimenu
+>Fail</guimenu
+> <guimenuitem
+>Saada järjekorras ootavad kirjad kasutades</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Saadab väljuvate kirjade kaustas olevad kirjad konkreetse konto kaudu.</action
+>. See võimaldab valida, millise serveri vahendusel järjekorras kirjad saata. Et need siin näha oleks, peavad serverid olema seadistatud &kmail;i seadistustedialoogis <menuchoice
+><guiicon
+>Kontod</guiicon
+><guilabel
+>Saatmine</guilabel
+></menuchoice
+> all.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-file-quit">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Fail</guimenu
+> <guimenuitem
+>Välju</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Lõpetab &kmail;i töö.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>Menüü Redigeerimine</title>
+<para
+>Kui mõni menüükirje, mille kohta seletust otsid, siit puudub, uuri palun &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-edit"
+>Menüü Redigeerimine</ulink
+>. Siin käsitletakse vaid &kmail;ile eriomaseid kirjeid.</para>
+<variablelist>
+<varlistentry id="reader-edit-move-to-trash">
+<term
+><menuchoice
+><shortcut
+><keycap
+>Del</keycap
+></shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Liiguta prügikasti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Liigutab valitud kirjad prügikasti kausta.</action
+> Kui valitud kirjad on juba prügikastis, siis kustutab need lõplikult.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-move-thread-to-trash">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Del</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Liiguta lõim prügikasti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Liigutab prügikasti kausta valitud lõime,</action
+> &eg; mõne postiloendi vestluse.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-messages">
+<term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Otsi kirjadest...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab otsimisakna,</action
+> mis võimaldab otsida teatud kindlaid kirju, &eg; kirju konkreetse teemaga. Otsinguvalikutest kõneleb lähemalt osa <link linkend="filter-criteria"
+>Filtri kriteeriumid</link
+>.</para>
+<para
+>Otsingutulemusi näidatakse tekstialas, misjärel võib <guibutton
+>avada otsingukausta</guibutton
+> või tõsta esile soovitud kirja ja valida käsu <guibutton
+>Ava kiri</guibutton
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-find-in-message">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Otsi kirjast...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Otsib aktiivse kirja tekstis stringi, mille oled sisestanud kasti <guilabel
+>Otsing</guilabel
+>.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-messages">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Vali kõik kirjad</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib kõik kirjad parajasti avatud kaustas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-edit-select-all-text">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Vali kogu tekst</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib parajasti avatud kirja teksti.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>Menüü Vaade</title>
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guisubmenu
+>Kirjade nimekiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Selles menüüs leiab järgmised kirjade nimekirja vaadet muuta võimaldavad käsud.</para>
+<variablelist>
+<varlistentry id="reader-view-messagelist-sorting">
+<term
+><menuchoice>
+<guisubmenu
+>Sortimine</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Sisaldab valikuid sortimisjärjekorra muutmiseks:</para>
+<itemizedlist>
+  <listitem
+><para
+><guilabel
+>Kirjade sortimiskord</guilabel
+> pakub mitut võimalust, millest enamik on hõlpsasti mõistetavad. Järgmised valikud ei pruugi olla kohe arusaadavad, sestap selgitame neid siin.</para>
+  <itemizedlist>
+    <listitem
+><para
+><guilabel
+>Nutikalt saatja/saaja järgi</guilabel
+> näitab saatjat, kui loed kirja oma väljuvate kirjade või mallide kaustas, ja saajat, kui viibid saabuvate kirjade kaustas või selle alamkaustades.</para
+></listitem>
+    <listitem
+><para
+><guilabel
+>Toimingu elemendi oleku järgi</guilabel
+> ja <guilabel
+>Tähtsuse järgi</guilabel
+>: vastavad omadused tuleb kirjadele määrata, enne kui nende järgi sortida saab. Kirjade märkimisest kõneleb lähemalt osa <link linkend="reader-mark-messages"
+>Kirjade märkimine</link
+>.</para
+></listitem>
+  </itemizedlist
+></listitem>
+  <listitem
+><para
+><guilabel
+>Kirjade sortimise suund</guilabel
+> ja <guilabel
+>Rühma sortimise suund</guilabel
+> võimaldavad muuta suunda, mille alusel kirju või rühmi sorditakse.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Kaust kasutab alati seda sortimiskorda</guilabel
+> võimaldab säilitada konkreetses kaustas määratud sortimiskorra.</para
+></listitem>
+</itemizedlist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-aggregation">
+<term
+><menuchoice>
+<guisubmenu
+>Koondamisviis</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Võimaldab määrata kirjade koondamisviisi.</para>
+<para
+><guilabel
+>Seadista...</guilabel
+> võimaldab seadistada koondamisviisi. Sellest kõneleb lähemalt osa <link linkend="configure-appearance-message-list"
+>Kirjade nimekirja välimuse seadistamine</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-theme">
+<term
+><menuchoice>
+<guisubmenu
+>Teema</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+>Võimaldab valida teema.</para>
+<para
+><guilabel
+>Seadista...</guilabel
+> võimaldab seadistada teemasid. Sellest kõneleb lähemalt osa <link linkend="configure-appearance-message-list"
+>Kirjade nimekirja välimuse seadistamine</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-create-new-tab">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guisubmenu
+>Loo uus kaart</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Loob uue kaardi,</action
+> mille järel saab valida kausta, mida sellel kaardil näidata.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-messagelist-close-tab">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guisubmenu
+>Sulge kaart</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Sulgeb parajasti valitud kaardi.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-headers">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guisubmenu
+>Päised</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab valida päiste välimuse.</action
+> Täpsemalt kõneleb päistest osa <link linkend="using-header-options"
+>Päiste valikud</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-attachments">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Kaasatud failid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab muuta, kuidas manuseid kuvatakse <guilabel
+>lugemispaneel</guilabel
+>il</action
+> (sõltumatult &MIME; puust). Täpsemalt kõneleb manustest osa <link linkend="using-attachment-view-options"
+>Manuste valikud</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-thread-or-group">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>.</keycap
+></shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Ava lõim / grupp</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selle abil saab näidata parajasti avatud kirja lõime,</action
+> &ie; kõiki kirju, mis kujutavad endast vastust parajasti avatud kirjale.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-thread-or-group">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>,</keycap
+> </shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Sulge lõim / grupp</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Selle abil saab varjata parajasti avatud kirja lõime,</action
+> &ie; kõik kirjad, mis kujutavad endast vastust parajasti avatud kirjale.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-expand-all-threads">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Ava kõik lõimed</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab kõik parajasti avatud kausta lõimed.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-collapse-all-threads">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Sulge kõik lõimed</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Sulgeb kõik lõimed parajasti avatud kaustas.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-viewsource">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>V</keycap
+> </shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Vaata lähteteksti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Näitab kirja ning selle kõiki päiseid puhta tekstina uues aknas.</action
+> See võib olla kasulik kirja päritolu selgitamiseks. </para>
+<note
+><para
+>Peaksid arvesse võtma, et on üsna lihtne võltsida kirja päise rida <literal
+>Saatja</literal
+> (From), kuid sellele vaatamata on võimalik teada saada, millist meiliserverit kasutati kirja saatmiseks, kui uurida päises ridu <literal
+>Saabunud:</literal
+> (Received).</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-show-message-structure">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Näita kirja struktuuri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Näitab struktuurinäitajat</action
+> ehk peaakna osa, mis lubab ligi pääseda kirja kõigile osadele.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-use-fixed-font">
+<term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Kasuta fikseeritud fonti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kasutab fikseeritud laiusega (ühelaiust) kirjatüüpi parajasti avatud kausta kirjade näitamiseks.</action
+> Kasutatava fondi saab määrata &kmail;i seadistustedialoogi kaardi <guilabel
+>Välimus</guilabel
+> alamkaardil <link linkend="configure-appearance-fonts"
+>Fondid</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-set-encoding">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guisubmenu
+>Määra kodeering</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab valida lugemispaneelil kasutatava kodeeringu.</action
+> Vaikimisi on see <guilabel
+>Automaatne</guilabel
+>, mis üldjuhul peaks ka sobima.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-view-zoom">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guisubmenu
+>Suurendus</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab lugemispaneelis kirju suurendada ja vähendada.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>Menüü Liikumine</title>
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>J</keycap
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Hüppa kausta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, kus on ära toodud kõik kaustad.</action
+> Klõpsa kaustal, mida soovid näha, ning seda näidatakse kirjade paneelil.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+></shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Järgmine kiri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib kirjade nimekirja paneelil järgmise kirja.</action
+> Sama tulemuse saab kiirklahviga <keycap
+>Nool paremale</keycap
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>+</keycap
+></shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Järgmine lugemata kiri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib kirjade nimekirjas järgmise lugemata kirja.</action
+> Kui parajasti valitud kirjast edasi pole enam ühtegi lugemata kirja, sõltub selle käsu toime valikuga <xref linkend="configure-misc-folders-go-unread"/> määratust.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-message">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>P</keycap
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Eelmine kiri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib kirjade nimekirjas eelmise kirja.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>-</keycap
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Eelmine lugemata kiri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Valib kirjade nimekirjas eelmise lugemata kirja.</action
+> Kui parajasti valitud kirjast tagasi pole enam ühtegi lugemata kirja, sõltub selle käsu toime valikuga <xref linkend="configure-misc-folders-go-unread"/> määratust.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-folder">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt;<keycap
+>+</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Järgmine lugemata kaust</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Hüppab järgmisse lugemata kirjadega kausta.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-previous-unread-folder">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Alt;<keycap
+>-</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Eelmine lugemata kaust</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Hüppab eelmisse lugemata kirjadega kausta.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-go-next-unread-text">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>Tühikuklahv</keycap
+> </shortcut
+> <guimenu
+>Liikumine</guimenu
+> <guimenuitem
+>Järgmine lugemata tekst</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kerib alla, kui sa ei ole veel kirja lõpus; viimasel juhul hüppab järgmisele lugemata kirjale.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>Menüü Kaust</title>
+<variablelist>
+<varlistentry id="reader-folder-add-folder">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Lisa kaust...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <link linkend="folders-properties-window"
+>kausta omaduste</link
+> dialoogi,</action
+> mille abil saab luua uue kausta.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Märgi kõik kirjad loetuks</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Seab parajasti avatud kausta kõigi uute ja lugemata kirjade staatuseks 'loetud'.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Uuenda kausta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib, kas parajasti valitud kausta on saabunud uusi kirju.</action
+></para>
+<note
+><para
+>Seda saab pruukida ainult &imap; kaustade korral.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Uuenda kausta ja selle alamkaustu</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kontrollib, kas parajasti valitud kausta ja selle alamkaustadesse on saabunud uusi kirju.</action
+></para>
+<note
+><para
+>Seda saab pruukida ainult &imap; kaustade korral.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Liiguta kõik kirjad prügikasti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Liigutab kõik parajasti avatud kaustas olevad kirjad prügikasti.</action
+></para>
+<note
+><para
+>Seda saab kasutada ainult siis, kui parajasti avatud kaust ei ole prügikastikaust. Kui parajasti avatud kaust on prügikastikaust, näed menüükirjet <guilabel
+>Tühjenda prügikast</guilabel
+>. Täpsemalt kõneleb sellest järgmine osa.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-empty-trash">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Tühjenda prügikast</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kustutab kõik kirjad jäädavalt.</action
+></para>
+<note
+><para
+>Seda saab kasutada ainult siis, kui parajasti avatud kaust on prügikastikaust.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-archive-folder">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Arhiveeri kaust...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, mis võimaldab luua parajasti avatud kausta arhiivi.</action
+> Täpsemalt kõneleb sellest osa <link linkend="folder-archive"
+>Kausta arhiveerimine</link
+>.</para>
+ </listitem>
+</varlistentry>
+<varlistentry id="reader-folder-delete-folder">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Kustuta kaust</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kustutab parajasti avatud kausta koos selle sisuga, kaasa arvatud alamkaustad.</action
+></para>
+<warning
+><para
+>Arvesta, et kausta sisu pole võimalik taastada, kui see on kustutatud.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-remove-duplicate-messages">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kaustad</guimenu
+> <guimenuitem
+>Eemalda topeltkirjad</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Otsib kaustast topeltkirju ja hävitab duplikaadid.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-apply-all-filters-on-folder">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Rakenda kõik filtrid kaustale</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Rakendab kõik seadistatud filtrid parajasti avatud kaustale.</action
+> Täpsemalt kõneleb filtritest osa <link linkend="filter-dialog-id"
+>Filtrite dialoog</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-prefer-html-to-plain-text">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Eelista HTML-i tavalisele tekstile</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Näitab kaustas leiduvaid &html;-kirju &html;-iks teisendatult.</action
+></para>
+<warning
+><para
+>Turbekaalutlustel on soovitav seda võimalust kasutada ainult usaldusväärsete kirjade puhul.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-load-external-references">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Väliste viidete laadimine</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Kui &html;-kirjad on lubatud (vt. eespool), on sul selle valikuga võimalik <action
+>laadida automaatselt veebist lingitud pildid ja ressursid.</action
+></para>
+<warning
+><para
+>Turbekaalutlustel on soovitav seda võimalust kasutada ainult usaldusväärsete kirjade puhul.</para
+></warning
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-mailing-list-management">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Postiloendi haldus...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab postiloendite haldamise dialoogi.</action
+> Postiloenditest kõneleb lähemalt osa <link linkend="folders-properties-mailinglist"
+>Postiloendite dialoog</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-folder-assign-shortcut">
+<term
+><menuchoice
+><guimenu
+>Kaust</guimenu
+> <guimenuitem
+>Omista kiirklahv...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab omistada parajasti avatud kaustale kiirklahvi.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>Menüü Kiri</title>
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Uus kiri...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <link linkend="the-composer-window"
+>redaktori akna</link
+>,</action
+> kus saab kirjutada uue kirja.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-new-message-to-mailing-list">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Uus kiri postiloendisse...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna, kus saab kirjutada uue kirja.</action
+> Kui parajasti avatud kaust sisaldas postiloendit ja määratud on postiloendi aadress, lisatakse see aadress automaatselt saadetava kirja reale <guilabel
+>Saaja</guilabel
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>R</keycap
+></shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Vasta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna, kusjuures ette on antud parajasti valitud kirja tekst tsiteerituna ning väljal <guilabel
+>Saaja</guilabel
+> kas postiloendi aadress (kui tegu on vastusega postiloendisse) või kirja saaja eelistatud vastamise aadress.</action
+> Kui soovid täpselt määrata, milline aadress peaks väljal <guilabel
+>Saaja</guilabel
+> asuma, võiksid kasutada käsku <link linkend="reader-message-reply-special"
+>Vasta eriliselt</link
+>. Sinu identiteediks määratakse automaatselt see, millele kiri oli saadetud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-all">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>A</keycap
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Vasta kõigile...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna, kusjuures ette on antud parajasti valitud kirja tekst tsiteerituna ning väljal <guilabel
+>Saaja</guilabel
+> kas postiloendi aadress (kui tegu on vastusega postiloendisse) või kirja saaja eelistatud vastamise aadress. Väljal <guilabel
+>Koopia (CC):</guilabel
+> on ette antud kõigi parajasti valitud kirja saajate aadressid, välja arvatud muidugi sinu enda oma.</action
+> Sinu identiteediks määratakse automaatselt see, millele kiri oli saadetud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Vasta eriliselt</guisubmenu
+> <guimenuitem
+>Vasta autorile...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna, kusjuures ette on antud parajasti valitud kirja tekst tsiteerituna ning väljal <guilabel
+>Saaja</guilabel
+> kirja saaja eelistatud vastamise aadress.</action
+> Sinu identiteediks määratakse automaatselt see, millele kiri oli saadetud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>L</keycap
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Vasta eriliselt</guisubmenu
+> <guimenuitem
+>Vasta postiloendisse...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna, kusjuures ette on antud parajasti valitud kirja tekst tsiteerituna ning väljal <guilabel
+>Saaja</guilabel
+> postiloendi aadress.</action
+> Kui sa ei ole antud kaustale postiloendi aadressi määranud ning &kmail; ei suuda parajasti valitud kirjast mingit mõistlikku postiloendi aadressi välja lugeda, on väli <guilabel
+>Saaja</guilabel
+> tühi. Sinu identiteediks määratakse automaatselt see, millele kiri oli saadetud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Vasta eriliselt</guisubmenu
+> <guimenuitem
+>Vasta ilma tsiteerimiseta...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Täpselt nagu <guimenuitem
+>Vasta...</guimenuitem
+>, ainult et parajasti valitud kirja teksti ei vastuses ei tsiteerita.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Vasta eriliselt</guisubmenu
+> <guimenuitem
+>Vasta kohandatud malliga</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Täpselt nagu <guimenuitem
+>Vasta...</guimenuitem
+>, ainult et saab valida kohandatud malli, mis on seadistatud <link linkend="configure-composer-custom-templates"
+>kohandatud mallide</link
+> all.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Vasta eriliselt</guisubmenu
+> <guimenuitem
+>Vasta kõigile kohandatud malliga</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Täpselt nagu <guimenuitem
+>Vasta kõigile...</guimenuitem
+>, ainult et saab valida kohandatud malli, mis on seadistatud <link linkend="configure-composer-custom-templates"
+>kohandatud mallide</link
+> all.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-as-attachment">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Edasisaatmine</guisubmenu
+> <guimenuitem
+>Kaasatud failina</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Edastab kirja uuele saajale.</action
+> Kiri ja selle manused pannakse uuele kirjale kaasa manustena. Algse kirja päised säilivad ka edasi saadetud kirjas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-inline">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>F</keycap
+></shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Edasisaatmine</guisubmenu
+> <guimenuitem
+>Kirja sees</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kirja tekst ja mõned olulised päiseväljad kopeeritakse uue kirja põhiteksti, kusjuures edasi saadetav osa märgitakse ära.</action
+> Manused saadetakse edasi uue kirja manustena.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-redirect">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>E</keycap
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Edasisaatmine</guisubmenu
+> <guimenuitem
+>Suuna ümber</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>See on nagu edasisaatmine, ainult et kiri jääb samaks (isegi väli <guilabel
+>Saatja</guilabel
+>). Kasutaja, kes kirja ümber suunab, märgitakse ära spetsiaalsetel päiseväljadel (<literal
+>Redirect-From</literal
+>, <literal
+>Redirect-Date</literal
+>, <literal
+>Redirect-To</literal
+> &etc;).</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-forward-with-custom-template">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Edasisaatmine</guisubmenu
+> <guimenuitem
+>Kohandatud malliga</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Nagu edasisaatmine, ainult et saab valida kohandatud malli, mis on seadistatud kirjade koostamise <link linkend="configure-composer-custom-templates"
+>kohandatud mallide</link
+> kaardil.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-send-again">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Saada uuesti...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab redaktori akna parajasti valitud kirjaga ja lubab sul selle uuesti teele saata.</action
+></para>
+<note
+><para
+>Seda saab kasutada ainult kirjade korral, mille sa oled juba saatnud - või kui väga täpne olla, siis kirjade korral, mille olekuks on <guilabel
+>saadetud</guilabel
+>.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Muuda kirja</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab muuta valitud kirja, kui see on redigeeritav.</action
+></para>
+<note
+><para
+>Muuta saab ainult kirju, mis asuvad kaustas <guilabel
+>Väljuvad</guilabel
+> või <guilabel
+>Mustandid</guilabel
+>.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-mailing-list">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Postiloend</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Pakub mitmeid postiloendeid puudutavaid valikuid.</para>
+<note
+><para
+>Selle kasutamiseks peab aktiivne kaust olema seadistatud postiloendikaustana. Täpsemalt kõneleb postiloenditest osa <link linkend="folders-properties-mailinglist"
+>Postiloendi kausta omadused</link
+>.</para
+></note>
+<para
+>Postiloendikaustade puhul saab kasutada järgmisi valikuid:</para>
+<itemizedlist>
+  <listitem
+><para
+><guimenuitem
+>Saada uus kiri</guimenuitem
+> määrab saadetava kirja väljale <guilabel
+>Saaja</guilabel
+> postiloendi aadressi.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Palu abi</guimenuitem
+> määrab saadetava kirja väljale <guilabel
+>Saaja</guilabel
+> postiloendi aadressi ning lisab väljale <guilabel
+>Teema</guilabel
+> sõna <literal
+>help</literal
+>.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Postiloendi tellimine</guimenuitem
+> avab vaikimisi veebibrauseri postiloendi tellimise leheküljega. </para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Postiloendi tellimine</guimenuitem
+> määrab saadetava kirja väljale <guilabel
+>Saaja</guilabel
+> postiloendi tellimisaadressi ning lisab väljale <guilabel
+>Teema</guilabel
+> sõna <literal
+>subscribe</literal
+>.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Lõpeta tellimine</guimenuitem
+> avab vaikimisi veebibrauseri postiloendi tellimise lõpetamise leheküljega.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Lõpeta tellimine</guimenuitem
+> määrab saadetava kirja väljale <guilabel
+>Saaja</guilabel
+> postiloendi tellimisaadressi ning lisab väljale <guilabel
+>Teema</guilabel
+> sõna <literal
+>unsubscribe</literal
+>.</para
+></listitem>
+</itemizedlist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-copy-message-to">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Kopeeri kiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kopeerib valitud kirjad mõnda kausta</action
+>: valida saab viimati kasutatud kaustade, kohalike kausta või konkreetse konto kaustade vahel.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-move-message-to">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Liiguta kiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Sama, mis kirja kipeerimine, ainult et <action
+> liigutab valitud kirjad jäädavalt mõnda muusse kausta.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-messages">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Märgi kiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab muuta valitud kirja oleku üheks järgnevatest:</para>
+<informaltable
+><tgroup cols="2">
+<thead
+><row
+><entry
+>Olek</entry
+><entry
+>Sümbol</entry
+><entry
+>Tähendus</entry
+></row
+></thead>
+<tbody>
+<row>
+<entry
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+> </shortcut
+> <guimenuitem
+>Märgi kiri loetuks</guimenuitem
+> </menuchoice
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Kiri on loetud.</entry
+></row>
+<row>
+<entry
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+> </shortcut
+> <guimenuitem
+>Märgi kiri lugemata kirjaks</guimenuitem
+> </menuchoice
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Kirja ei ole veel loetud.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Märgi kiri tähtsaks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Seda olekut &kmail; automaatselt ei sea. Võid seda vabalt kasutada tähistamaks kirju, mis millegi poolest on sulle tähtsad.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Eemalda tähtsa kirja märge</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Eemaldab kirjalt sellele varem pandud tähtsa kirja märke.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Märgi kiri ülesandeks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Seda olekut &kmail; automaatselt ei sea. Võid seda vabalt kasutada tähistamaks kirju, mis nõuavad millegi tegemist (&eg; ülesannete nimekiri).</entry
+></row>
+<row
+><entry
+><guimenuitem
+>Eemalda ülesande märge</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Eemaldab kirjalt sellele varem pandud ülesande märke.</entry
+></row>
+</tbody>
+</tgroup
+></informaltable
+></listitem>
+</varlistentry>
+<varlistentry id="reader-mark-thread">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Märgi lõim</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab muuta lõime kõigi kirjade oleku üheks järgnevatest:</para>
+<informaltable
+><tgroup cols="2">
+<thead
+><row
+><entry
+>Olek</entry
+><entry
+>Sümbol</entry
+><entry
+>Tähendus</entry
+></row
+></thead>
+<tbody>
+<row>
+<entry
+><guimenuitem
+>Märgi lõim loetuks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Kogu lõim on loetud.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Märgi lõim lugemata lõimeks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Lõime ei ole veel loetud.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Märgi lõim tähtsaks lõimeks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Seda olekut &kmail; automaatselt ei sea. Võid seda vabalt kasutada tähistamaks lõimi, mis millegi poolest on sulle tähtsad.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Eemalda tähtsa lõime märge</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Eemaldab lõimelt sellele varem pandud tähtsa lõime märke.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Märgi lõim ülesandeks</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Seda olekut &kmail; automaatselt ei sea. Võid seda vabalt kasutada tähistamaks lõimi, mis nõuavad millegi tegemist (&eg; ülesannete nimekiri).</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Eemalda ülesande märge</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Eemaldab lõimelt sellele varem pandud ülesande märke.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Jälgi lõime</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Määrab lõimele jälgitava oleku, mis võimaldab hõlpsasti näha huvipakkuvaid lõimi, kui valida kiirotsinguribal rippmenüüst olek <guimenu
+>Jälgitav</guimenu
+>.</entry
+></row>
+<row>
+<entry
+><guimenuitem
+>Ignoreeri lõime</guimenuitem
+></entry>
+<entry
+><inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+</inlinemediaobject
+></entry>
+<entry
+>Võimaldab eirata kogu lõime.</entry
+></row>
+</tbody
+></tgroup
+></informaltable
+></listitem>
+</varlistentry>
+<varlistentry id="message-create-filter">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guisubmenu
+>Loo filter</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <link linkend="filter-dialog-id"
+>filtridialoogi</link
+>, kus on juba lisatud uus filter.</action
+> See tugineb parajasti avatud kirja väljadele vastavalt sellele, millist alammenüü kirjet sa kasutasid.</para>
+<simplelist>
+  <member
+>Teema järgi...</member>
+  <member
+>Saatja järgi...</member>
+  <member
+>Saaja järgi...</member>
+  <member
+>Postiloendi järgi... (valitud kiri peab olema postiloendi kiri, et seda saaks kasutada)</member>
+</simplelist
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-apply-filter">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Rakenda filter</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Võimaldab <guimenuitem
+>rakendada kõik filtrid</guimenuitem
+>.</action
+> Kui oled seadistanud rämpsposti filtreerimise <link linkend="the-anti-spam-wizard"
+>rämpspostiga võitlemise nõustaja</link
+> abil, saab rämpsposti filtreerimiseks pruukida käske <guimenuitem
+>Märgitakse rämpspostiks</guimenuitem
+> ja <guimenuitem
+>Märgitakse MITTE-rämpspostiks</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Loo ülesanne/meeldetuletus</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab &kontact;i ülesannete/meeldetuletuste dialoogi</action
+>, kus saab lisada valitud kirja lingina, tekstina või tekstina ilma manusteta.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Lisa märkus...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab &kontact;i märkuste dialoogi märkuse lisamiseks valitud kirjale.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-tools-menu">
+<title
+>Menüü Tööriistad</title>
+<variablelist>
+<varlistentry id="reader-tools-find-messages">
+<term
+><menuchoice
+><shortcut
+> <keycap
+>S</keycap
+> </shortcut
+> <guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Otsi kirjadest...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab otsimisakna,</action
+> mis võimaldab otsida teatud kindlaid kirju, &eg; kirju konkreetse teemaga. Otsinguvalikutest kõneleb lähemalt osa <link linkend="filter-criteria"
+>Filtri kriteeriumid</link
+>.</para>
+<para
+>Otsingutulemusi näidatakse tekstialas, misjärel võib <guibutton
+>avada otsingukausta</guibutton
+> või tõsta esile soovitud kirja ja valida käsu <guibutton
+>Ava kiri</guibutton
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-certificate-manager">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Sertifikaadihaldur...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Käivitab &kde; sertifikaadihalduri <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+>.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-gnupg-log-viewer">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>GnuPG loginäitaja...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Käivitab <ulink url="help:kwatchgnupg"
+><application
+>KWatchGnuPG</application
+></ulink
+>,</action
+> mis lubab vaadata programmi <application
+>GnuPG</application
+> silumisväljundit. Kui allkirjastamine, krüptimine või nende kontrollimine ootamatult enam toimi, oleks kasulik vaadata, mida ütleb asja kohta logi.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>Puhkuseteate muutmine...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Käivitab <guilabel
+>Puhkusevastuste seadistamise</guilabel
+> dialoogi,</action
+> kus saab paika panna oma puhkuseteated.</para>
+<note
+><para
+><guilabel
+>Puhkusevastuste</guilabel
+> võimalus sõltub ennekõike serverist. Selle kasutamiseks tuleb määrata seadistused oma &imap; kontot luues <link linkend="receiving-mail"
+>filtreerimise kaardil</link
+> (kasuta seal Kolabi serveri kohta käivaid võimalusi).</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>Sieve silumine...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <guilabel
+>Sieve diagnostika</guilabel
+> dialoogi.</action
+> Sellest on abiks Sieve silumisel, kui sellega peaks probleeme esinema.</para>
+<note
+><para
+>Selleks peab sinu e-posti server Sievet toetama.</para
+></note
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-filter-log-viewer">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>Filtrilogi näitaja...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab filtrilogi näitaja akna,</action
+> kus saab ka mingil määral juhtida filtreerimise logimist. Logis leiab tänuväärset infot, milliseid filtrireegleid on kasutatud, milline oli kasutamise tulemuse ja milliseid filtritoiminguid kirjale rakendati.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-import-wizard">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>Impordinõustaja...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab impordinõustaja dialoogi,</action
+> mis aitab vähese vaevaga importida seadistusi ja kirju. Täpsemalt kõneleb sellest osa <ulink url="help:/importwizard"
+>Impordinõustaja</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-export-data">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>&kmail;i andmete eksport...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab PIM-i seadistuste eksportija dialoogi,</action
+> mis aitab vähese vaevaga eksportida oma seadistusi ja kirju. Täpsemalt kõneleb sellest osa <ulink url="help:/pimsettingexporter"
+>PIM-i seadistuste eksportija</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-account-wizard">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guisubmenu
+>Kontonõustaja...</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab kontonõustaja dialoogi,</action
+> mis aitab vähese vaevaga luua kontosid. Täpsemalt kõneleb sellest osa <link linkend="account-wizard"
+>Kontonõustaja</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-spam-wizard">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Rämpspostiga võitlemise nõustaja...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab rämpspostiga võitlemise nõustaja,</action
+> mis aitab seadistada rämpsposti filtreerimist. Täpsemalt kõneleb sellest osa <link linkend="the-anti-spam-wizard"
+>Rämpspostiga võitlemise nõustaja</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-tools-anti-virus-wizard">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Viirustega võitlemise nõustaja...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab viirustega võitlemise nõustaja,</action
+> mis aitab seadistada kirjade uurimise viiruste leidmiseks. Täpsemalt kõneleb sellest osa <link linkend="the-anti-virus-wizard"
+>Viirustega võitlemise nõustaja</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>Menüü Seadistused</title>
+<para
+>Kui mõni menüükirje, mille kohta seletust otsid, siit puudub, uuri palun &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-settings"
+>Menüü Seadistused</ulink
+>. Siin käsitletakse vaid &kmail;ile eriomaseid kirjeid.</para>
+<variablelist>
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Kiirotsinguriba näitamine</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Kui see on lubatud, on nähtav kiirotsinguriba,</action
+> mille abil saab kiiresti kirjades vajalikku teksti otsida.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-filters">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Filtrite seadistamine...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <link linkend="filters"
+>filtrite dialoogi</link
+>.</action
+></para
+></listitem>
+</varlistentry>
+<!--FIXME http://www.aegiap.eu/kdeblog/2013/08/new-in-kdepim-4-12-sieve-12/ -->
+<varlistentry id="settings-manage-sieve-scripts">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Sieve skriptide haldus...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Kui sinu e-posti server toetab Sievet (serveripoolset filtreerimist), saab <action
+>siin seadistada oma skripte.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-automatic-archiving">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Automaatse arhiveerimise seadistamine...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi automaatse arhiveerimise seadistamiseks.</action
+> Täpsemalt kõneleb sellest osa <ulink url="help:/akonadi_archivemail_agent"
+>Automaatne arhiveerimine</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Hilisema saatmise seadistamine...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, kus saab muuta ja eemaldada kirju, mida on saadetud hilisema saatmise võimalust kasutades.</action
+> Täpsemalt kõneleb sellest osa <ulink url="help:/akonadi_sendlater_agent"
+>Hilisema saatmise agent</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Kirjade arhiveerimise seadistamine...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, kus saab seadistada kontosid, mille puhul kasutada kaustade arhiveerimise agenti.</action
+> Täpsemalt kõneleb sellest osa <ulink url="help:/akonadi_folderarchive_agent"
+>Kausta arhiveerimise agent</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Märguannete seadistamine...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi, kus saab seadistada, mis juhtub uue kirja saabumisel,</action
+> &eg; helisignaal, hüpikaken &etc;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+<sect2>
+<title
+>Menüü Abi</title>
+<para
+>Vaata &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-help"
+>Menüü Abi</ulink
+>.</para>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>&kmail;i redaktori aken</title>
+
+<sect2 id="composer-file-menu">
+<title
+>Menüü Kiri</title>
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+><guimenuitem
+>Uus redaktor</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab uue redaktori akna.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Uus peaaken</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab uue peaakna.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Uus aadressiraamatu kontakt</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab &kontact;i uue kontakti dialoogi</action
+> uue kirje lisamiseks sinu aadressiraamatusse.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>Return</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Saada kiri</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Saadab kirja kohe teele.</action
+> Kui kasutad kirjade saatmiseks &SMTP;-serverit ja &SMTP;-server ei ole parajasti kättesaadav, pannakse kiri väljuvate kirjade kausta ning sulle näidatakse veateadet. Ühenduse taastumisel saad saata väljuvate kirjade kaustas olevad kirjad menüükäsuga <menuchoice
+><guimenu
+>Fail</guimenu
+><guimenuitem
+>Saada järjekorras ootavad kirjad</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-mail-via">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Saada kiri kasutades</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab valida, millist väljuvate kirjade serverit kasutada kirja saatmiseks.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Saada hiljem</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab hilisema saatmise dialoogi.</action
+> Täpsemalt kõneleb sellest osa <link linkend="send-later"
+>Hilisem saatmine</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-send-later-via">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Saada hiljem kasutades</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab valida, millist väljuvate kirjade kontot kasutada hilisemaks saatmiseks mõeldud kirja puhul.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-file">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Salvesta faili</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Salvestab kirja tekstidokumendina.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-draft">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Salvesta mustandina</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Salvestab kirja <guilabel
+>mustandite</guilabel
+> kausta,</action
+> kus seda on võimalik hiljem veel muuta ja ära saata.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-save-as-template">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Salvesta mallina</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab <action
+>salvestada kirja mallina.</action
+> Täpsemalt kõneleb mallidest osa <link linkend="new-compose-from-templates"
+>Kiri malli põhjal</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-text-file">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Lisa tekstifail...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Lisab kirja tekstile tekstifaili kursori asukohta.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-insert-recent-text-file">
+<term
+><menuchoice
+><guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Lisa viimati kasutatud tekstifail...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab valida viimati kasutatud testifailide seast, millist neist lisada kirja. Loendi puhastamiseks vali <guimenuitem
+>Puhasta nimekiri</guimenuitem
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-print">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Trüki...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Trükib parajasti avatud teksti.</action
+></para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-message-close">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Kiri</guimenu
+> <guimenuitem
+>Sulge</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Sulgeb parajasti avatud redaktori akna.</action
+></para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>Menüü Redigeerimine</title>
+<para
+>Kui mõni menüükirje, mille kohta seletust otsid, siit puudub, uuri palun &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-edit"
+>Menüü Redigeerimine</ulink
+>. Siin käsitletakse vaid &kmail;ile eriomaseid kirjeid.</para>
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Aseta tsitaadina</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Asetab teksti lõikepuhvrist,</action
+> märkides selle tsiteeritavaks tekstiks.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-attachment">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Aseta kaasatud failina</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Asetab teksti lõikepuhvrist</action
+> manusena.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-paste-without-formatting">
+<term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Aseta vorminduseta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Asetab teksti lõikepuhvrist</action
+> täpselt nii, nagu see on, ilma seda kuidagi vormindamata.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-clean-spaces">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Puhasta tühikutest</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Asendab mitmekordse reamurdmise resp. tühikud üheainsa reamurdmise resp. tühikuga. Toimib parajasti valitud teksti või kogu teksti peal, kui midagi ei ole valitud.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-add-quote-characters">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Lisa tsitaadimärgid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lisab valitud teksti ette seda tsitaadiks muutvad märgid.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-remove-quote-characters">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Eemalda tsitaadimärgid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Eemaldab valitud teksti eest kõige vasakpoolsemad tsitaadimärgid.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Suurtähed</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Muudab valitud teksti suurtäheliseks.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Väiketähed</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Muudab valitud teksti väiketäheliseks.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-edit-insert-special-characters">
+<term
+><menuchoice
+><guimenu
+>Redigeerimine</guimenu
+> <guimenuitem
+>Lisa erisümbol</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab lisada erisümboleid.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>Menüü Vaade</title>
+
+<para
+>See menüü võimaldab lülitada päiseväljade näitamist ja muid võimalusi parajasti avatud redaktori aknas.</para>
+<para
+>Parajasti nähtavate väljade kirjete ees on menüüs märge.</para>
+
+<para
+>Valikuvõimalused on:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>Kõik väljad</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Identiteet</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Sõnaraamat</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Saadetud kirjade kaust</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Meili saatmise viis</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Saatja</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Vastus</guimenuitem
+></para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Teema</guimenuitem
+></para>
+  </listitem>
+</itemizedlist>
+
+<para
+>Neist valikutest kõneleb lähemalt osa <link linkend="composer-headers"
+>Redaktori päised</link
+>.</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Fikseeritud fondi kasutamine</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab kasutada fikseeritud laiusega (ühelaiust) kirjatüüpi parajasti muudetava kirja näitamisel. Kasutatava fondi saab määrata &kmail;i seadistustedialoogi kaardil <guilabel
+>Välimus</guilabel
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-view-snippets">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Tekstijupid</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Avab redaktori akna paremas servas veeru, mille abil saab luua ja kasutada tekstijuppe. Täpsemalt kõneleb sellest osa <link linkend="setup-text-snippets"
+>Tekstijupid</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-view-translator">
+<term
+><menuchoice
+><guimenu
+>Vaade</guimenu
+> <guimenuitem
+>Tõlkija</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Avab redaktori akna allservas tõlketööriista. Täpsemalt kõneleb sellest osa <link linkend="using-the-translator"
+>Tõlkija kasutamine</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>Menüü Valikud</title>
+<para
+>See menüü võimaldab lülitada mitmeid aktiivset kirja mõjutavaid valikuid.</para>
+<para
+>Parajasti kasutatavate valikute kirjete ees on menüüs märge.</para>
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guimenuitem
+>Kiire</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Määrab kirja prioriteediks 'kiire'. Seda peab toetama ka kirja saaja e-posti klient, muidu ei ole sel mingit toimet. &kmail; ise ei toeta sisenevate kirjade prioriteeti.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-request-mdn">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guimenuitem
+>Lisa kättesaamise/lugemise kinnituse soov</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Selle võimaluse valimine tähendab, et soovid saada kinnitust, kui adressaat on kirja tõmmanud ja läbi lugenud. Selle toimimiseks peab seda toetama ka adressaadi e-posti klient (ja see peab olema adressaadil ka lubatud).</para>
+<para
+>Taustainfot ja teavet, kuidas kohandada &kmail;i saadetavaid lugemise kinnitusi, annab <xref linkend="configure-security-reading-mdns"/>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-sign-message">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guisubmenu
+>Allkirjasta kiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab kirja digitaalselt allkirjastada <application
+>OpenPGP</application
+> abil. Sellest räägitakse pikemalt <link linkend="pgp"
+>OpenPGP-le pühendatud peatükis</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encrypt-message">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guisubmenu
+>Krüpti kiri</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab kirja krüptida <application
+>OpenPGP</application
+> abil. Sellest räägitakse pikemalt <link linkend="pgp"
+>OpenPGP-le pühendatud peatükis</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-select-crypto-message-format">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guisubmenu
+>Krüptitud kirja vorming</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab valida krüptitud kirja vormingu, kui tahad oma kirja digitaalselt allkirjastada ja/või krüptida. Täpsemalt kõneleb sellest osa <link linkend="cryptographic-message-formats"
+>Krüptitud kirja vormingud</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-rich-text-editing">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guisubmenu
+>Vormindatud teksti redigeerimine</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Lülitab sisse vormindatud teksti/&html;-i redigeerimise.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-encoding">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guisubmenu
+>Kodeering</guisubmenu
+> </menuchoice
+></term>
+<listitem
+><para
+>Määrab kirja kodeeringu. Valitud kodeering on näha väljuva kirja päises. Üldjuhul võib alati kasutada võimalust <guilabel
+>Automaatne</guilabel
+>, sest &kmail; teatab vajaduse korral, et kasutada tuleks mõnda muud kodeeringut.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-wordwrap">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guimenuitem
+>Reamurdmine</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lülitab sisse ja välja automaatse reamurdmise. Võib osutuda mõttekaks see välja lülitada, kui soovid asetada teksti pikki ridu, mis peaksid ka ühte ritta jääma.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-options-automatic-spellchecking">
+<term
+><menuchoice
+><guimenu
+>Valikud</guimenu
+> <guimenuitem
+>Automaatne õigekirja kontroll</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lülitab automaatse õigekirja kontrollimise sisse ja välja.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>Menüü Kaasamine</title>
+
+<para
+>See menüü võimaldab valida manustega seonduvaid võimalusi.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+<term
+><menuchoice
+><guimenu
+>Kaasamine </guimenu
+> <guimenuitem
+>Lisa allkiri järele</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lisab allkirja (<quote
+>jaluse</quote
+>) kirja lõppu. Täpsemalt kõneleb oma allkirja seadistamisest osa <link linkend="configure-identity-signature"
+>Identiteedi allkirjaseadistused</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-prepend-signature">
+<term
+><menuchoice
+><guimenu
+>Kaasamine </guimenu
+> <guimenuitem
+>Lisa allkiri ette</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lisab allkirja (<quote
+>päise</quote
+>) kirja algusse. Täpsemalt kõneleb oma allkirja seadistamisest osa <link linkend="configure-identity-signature"
+>Identiteedi allkirjaseadistused</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-cursor-signature">
+<term
+><menuchoice
+><guimenu
+>Kaasamine </guimenu
+> <guimenuitem
+>Lisa allkiri kursori asukohta</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lisab sinu allkirja kursori asukohta kirjas. Täpsemalt kõneleb oma allkirja seadistamisest osa <link linkend="configure-identity-signature"
+>Identiteedi allkirjaseadistused</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-public-key">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guimenuitem
+>Kaasa avalik võti...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Avab <guilabel
+>Avaliku OpenPGP võtme kaasamise</guilabel
+> dialoogi. Täpsemalt kõneleb sellest <link linkend="configure-identity-cryptography-openpgp-sign"
+>Identiteedi krüptoseadistuste OpenPGP allkirjastamise</link
+> osa.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attach-my-public-key">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guimenuitem
+>Kaasa minu avalik võti</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Kaasab kirjale sinu <application
+>GnuPG</application
+> avaliku võtme.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-file">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guisubmenu
+>Kaasamine</guisubmenu
+> <guimenuitem
+>Kaasa fail...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Lisab aktiivsele kirjale manusena õhe või ka mitu faili. Vaikimisi manuseid ei krüptita. Täpsemalt kõneleb krüptimisest ja manustest osa <link linkend="cryptographic-message-formats"
+>Krüptitud kirja vormingud</link
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-vcard">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guisubmenu
+>Kaasamine</guisubmenu
+> <guimenuitem
+>Lisa oma vCard</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Võimaldab lisada aktiivsele kirjale oma vCardi.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-remove-attachment">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guimenuitem
+>Eemalda kaasatud fail</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Eemaldab kaasatud faili, mis on valitud redaktori kaasatud failide osas.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-save-attachment">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guimenuitem
+>Salvesta kaasatud fail kui...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+>Salvestab kaasatud faili, mis on valitud redaktori kaasatud failide osas, faili kujul.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-attach-attachment-properties">
+<term
+><menuchoice
+><guimenu
+>Kaasamine</guimenu
+> <guimenuitem
+>Kaasatud faili omadused</guimenuitem
+> </menuchoice>
+</term>
+<listitem>
+<para
+>Avab selle <link linkend="attachments"
+>kaasatud faili omaduste</link
+> dialoogi, mis on valitud kaasatud failide aknas. Samuti võimaldab see manust allkirjastada/krüptida. Täpsemalt kõneleb krüptimisest osa <link linkend="configure-security-composing"
+>Turvalisuse seadistamine</link
+>.</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>Menüü Tööriistad</title>
+<para
+>Kui mõni menüükirje, mille kohta seletust otsid, siit puudub, uuri palun &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-tools"
+>Menüü Tööriistad</ulink
+>. Siin käsitletakse vaid &kmail;ile eriomaseid kirjeid.</para>
+<variablelist>
+<varlistentry id="composer-tools-select-recipients">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Vali saajad...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <guilabel
+>saajate valimise</guilabel
+> dialoogi,</action
+> kus saab valida oma kontaktide seast vajalikud kirja saajad.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-addressbook">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Aadressiraamat...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab <ulink url="help:/kaddressbook"
+>&aadressiraamat;u</ulink
+></action
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry id="composer-tools-save-distribution-list">
+<term
+><menuchoice
+><guimenu
+>Tööriistad</guimenu
+> <guimenuitem
+>Salvesta postiloend...</guimenuitem
+> </menuchoice
+></term>
+<listitem
+><para
+><action
+>Avab dialoogi,</action
+> millega saab salvestada kontaktirühmi.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>Menüü Seadistused</title>
+<para
+>Kui mõni menüükirje, mille kohta seletust otsid, siit puudub, uuri palun &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-settings"
+>Menüü Seadistused</ulink
+>. Siin käsitletakse vaid &kmail;ile eriomaseid kirjeid.</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Õigekirja kontroll...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>Võimaldab seadistada &kde; õigekirja kontrollijat <ulink url="help:/sonnet/"
+>&sonnet;</ulink
+>.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2>
+<title
+>Menüü Abi</title>
+<para
+>Vaata &kde; põhialuste käsiraamatu osa <ulink url="help:/fundamentals/ui.html#menus-help"
+>Menüü Abi</ulink
+>.</para>
+</sect2>
+</sect1>
+
+</chapter>
