@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 01:32+0000\n"
-"PO-Revision-Date: 2024-02-10 13:45+0300\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"PO-Revision-Date: 2024-02-07 13:42+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.01.95\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -70,37 +70,37 @@ msgstr "Очистка параметров"
 msgid "Finish"
 msgstr "Завершить"
 
-#: refreshsettingscleanuppage.cpp:20
+#: refreshsettingscleanuppage.cpp:22
 #, kde-format
 msgid "Clean"
 msgstr "Очистить"
 
-#: refreshsettingscleanuppage.cpp:50
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Завершено удаление устаревшего раздела настроек «Подсказка дня»"
 
-#: refreshsettingscleanuppage.cpp:62
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Завершено удаление параметров диалога в файле «%1»"
 
-#: refreshsettingscleanuppage.cpp:74
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Завершено удаление параметров фильтров в файле «%1»"
 
-#: refreshsettingscleanuppage.cpp:90
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "Завершено удаление параметров папки в файле параметров «%1»"
 
-#: refreshsettingscleanuppage.cpp:146
+#: refreshsettingscleanuppage.cpp:148
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Завершено удаление параметров размеров диалога в файле параметров «%1»"
 
-#: refreshsettingsfirstpage.cpp:18
+#: refreshsettingsfirstpage.cpp:20
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr ""

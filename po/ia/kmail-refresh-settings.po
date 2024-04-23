@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 01:32+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2024-01-03 12:29+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -68,37 +68,37 @@ msgstr "Netta preferentias"
 msgid "Finish"
 msgstr "Termina"
 
-#: refreshsettingscleanuppage.cpp:20
+#: refreshsettingscleanuppage.cpp:22
 #, kde-format
 msgid "Clean"
 msgstr "Netta"
 
-#: refreshsettingscleanuppage.cpp:50
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Remove preferentias de obsolete \"Condilios del die\":Facite"
 
-#: refreshsettingscleanuppage.cpp:62
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Dele preferentias de Dialogo in file '%1': Facite"
 
-#: refreshsettingscleanuppage.cpp:74
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Dele preferentias de filtros in file '%1':Facite"
 
-#: refreshsettingscleanuppage.cpp:90
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "Netta preferentias de dossier in file de preferentia '%1':Facite"
 
-#: refreshsettingscleanuppage.cpp:146
+#: refreshsettingscleanuppage.cpp:148
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Netta grandor de dialogo in file de preferentia '%1':Facite"
 
-#: refreshsettingsfirstpage.cpp:18
+#: refreshsettingsfirstpage.cpp:20
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "Pro favor claude KMail/Kontact ante que usar lo."

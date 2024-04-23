@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-01-02 01:32+0000\n"
+"POT-Creation-Date: 2024-04-04 00:39+0000\n"
 "PO-Revision-Date: 2024-01-02 19:54+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -71,37 +71,37 @@ msgstr "清理設定"
 msgid "Finish"
 msgstr "完成"
 
-#: refreshsettingscleanuppage.cpp:20
+#: refreshsettingscleanuppage.cpp:22
 #, kde-format
 msgid "Clean"
 msgstr "清理"
 
-#: refreshsettingscleanuppage.cpp:50
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "移除過時的「每日小祕訣」設定：完成"
 
-#: refreshsettingscleanuppage.cpp:62
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "刪除檔案 `%1` 中的對話框設定：完成"
 
-#: refreshsettingscleanuppage.cpp:74
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "刪除檔案 `%1` 中的過濾器設定：完成"
 
-#: refreshsettingscleanuppage.cpp:90
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "清理設定檔案 `%1` 中的資料夾設定：完成"
 
-#: refreshsettingscleanuppage.cpp:146
+#: refreshsettingscleanuppage.cpp:148
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "清理設定檔案 `%1` 中的對話框大小：完成"
 
-#: refreshsettingsfirstpage.cpp:18
+#: refreshsettingsfirstpage.cpp:20
 #, kde-format
 msgid "Please close KMail/Kontact before using it."
 msgstr "請先關閉 KMail 和 Kontact 再使用它。"
