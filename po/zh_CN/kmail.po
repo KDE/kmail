@@ -27,7 +27,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tds00@qq.com, "
-"wordless@echo.moe, integral@member.fsf.org, ihchiz@163.com"
+"wordless@echo.moe, integral@member.fsf.org, ihchiz@outlook.com"
 
 #: about/introduction_kmail.html:5
 #, kde-format

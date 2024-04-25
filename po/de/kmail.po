@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-20 21:33+0100\n"
+"PO-Revision-Date: 2024-04-23 23:19+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1612,7 +1612,7 @@ msgstr "Verschlüsselung"
 #: configuredialog/configuresecuritypage.cpp:62
 #, kde-format
 msgid "S/MIME Validation"
-msgstr "S/MIME-&Prüfung"
+msgstr "S/MIME-Prüfung"
 
 #: configuredialog/configuresecuritypage.cpp:109
 #, kde-format
@@ -2520,6 +2520,10 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Er besitzt nicht "
+"genügend Aussagekraft. Sie können den Schlüssel signieren, wenn der "
+"Fingerabdruck über einen anderen Kanal übermittelt wurde. Klicken Sie auf "
+"das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3818
 #, kde-format
@@ -2530,20 +2534,22 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Er wurde bisher "
+"nicht verwendet, um die Zugehörigkeit zur angegebenen Person garantieren zu "
+"können. Durch die Verwendung wird ihm mehr Vertrauen ausgesprochen. Zudem "
+"können Sie ihn signieren, wenn der Fingerabdruck über einen anderen Kanal "
+"übermittelt wurde. Klicken Sie auf das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3826
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Für diesen Empfänger wird eine Verschlüsselung mit geringer Sicherheit "
-"verwendet (der Schlüssel ist nicht vertrauenswürdig). Klicken Sie auf das "
-"Symbol für weitere Informationen."
+"Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Er besitzt "
+"widersprechende TOFU-Daten. Klicken Sie auf das Symbol für weitere "
+"Informationen."
 
 #: editor/kmcomposerwin.cpp:3832
 #, kde-format
@@ -2552,20 +2558,19 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Seine TOFU-Daten "
+"sind von unbekannter Aussagekraft. Klicken Sie auf das Symbol für weitere "
+"Informationen."
 
 #: editor/kmcomposerwin.cpp:3838
-#, fuzzy, kde-format
-#| msgid ""
-#| "Low security encryption will be used for this recipient (the encryption "
-#| "key is untrusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Für diesen Empfänger wird eine Verschlüsselung mit geringer Sicherheit "
-"verwendet (der Schlüssel ist nicht vertrauenswürdig). Klicken Sie auf das "
-"Symbol für weitere Informationen."
+"Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Er ist als "
+"böswillig definiert. Klicken Sie auf das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3846
 #, kde-format
@@ -2576,6 +2581,12 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nur wenig vertrauenswürdig und ist zu "
+"wenig verwendet worden, um die Zugehörigkeit zur angegebenen Person "
+"garantieren zu können. Durch die Verwendung wird ihm mehr Vertrauen "
+"ausgesprochen. Zudem können Sie ihn signieren, wenn der Fingerabdruck über "
+"einen anderen Kanal übermittelt wurde. Klicken Sie auf das Symbol für "
+"weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3854
 #, kde-format
@@ -2584,6 +2595,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nur wenig vertrauenswürdig. Sie können den "
+"Schlüssel signieren, wenn der Fingerabdruck über einen anderen Kanal "
+"übermittelt wurde. Klicken Sie auf das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3860
 #, kde-format
@@ -2594,33 +2608,33 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Der Verschlüsselungsschlüssel ist nur wenig vertrauenswürdig. Er wurde "
+"jedoch bereits oft genug verwendet, dass die Kontrolle über ihn der "
+"angegebenen Person unterstellt werden kann. Durch die Verwendung wird ihm "
+"mehr Vertrauen ausgesprochen. Zudem können Sie ihn signieren, wenn der "
+"Fingerabdruck über einen anderen Kanal übermittelt wurde. Klicken Sie auf "
+"das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3868
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Für diesen Empfänger wird eine Verschlüsselung mit hoher Sicherheit "
-"verwendet (der Schlüssel ist voll vertrauenswürdig). Klicken Sie auf das "
-"Symbol für weitere Informationen."
+"Der Verschlüsselungsschlüssel ist voll vertrauenswürdig. Sie können die "
+"Sicherheitsstufe durch das Signieren des Schlüssels anheben. Klicken Sie auf "
+"das Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:3873
-#, fuzzy, kde-format
-#| msgid ""
-#| "High security encryption will be used for this recipient (the encryption "
-#| "key is fully trusted). Click the icon for details."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Für diesen Empfänger wird eine Verschlüsselung mit hoher Sicherheit "
-"verwendet (der Schlüssel ist voll vertrauenswürdig). Klicken Sie auf das "
+"Der Verschlüsselungsschlüssel ist absolut vertrauenswürdig oder durch einen "
+"anderen absolut vertrauenswürdigen Schlüssel signiert. Klicken Sie auf das "
 "Symbol für weitere Informationen."
 
 #: editor/kmcomposerwin.cpp:4205
@@ -2889,11 +2903,10 @@ msgid "Folder Shortcut %1"
 msgstr "Ordner-Kurzbefehl %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:15
-#, fuzzy, kde-format
-#| msgid "Quoted Headers"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Nachrichtenvorspann (als Zitat)"
+msgstr "Geschlossener Betrachter"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
@@ -2901,10 +2914,9 @@ msgid "Clear History"
 msgstr "Verlauf leeren"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "Neue Nachricht senden"
+msgstr "Geschlossenen Betrachter wieder öffnen"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -4701,6 +4713,9 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Bitte beachten Sie, dass das Entfernen der Anhänge von "
+"kryptographisch signierten Nachrichten deren Signatur ungültig machen.</p></"
+"html>"
 
 #: kmmainwidget.cpp:2413
 #, kde-format
@@ -4708,6 +4723,9 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Zurzeit können keine Anänge von verschlüsselten Nachrichten "
+"entfernt werden.<br />Verschlüsselte Nachrichten werden deshalb "
+"ausgeschlossen.</p></html>"
 
 #: kmmainwidget.cpp:2418
 #, kde-format
@@ -6529,10 +6547,9 @@ msgstr "Markierung für Verschlüsselung anzeigen"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "Markierung für Verschlüsselung anzeigen"
+msgstr "Symbole für Vertrauen der Inhaber der Verschlüsselung anzeigen"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
@@ -6572,10 +6589,9 @@ msgstr "Die Höhe des KMail-Einrichtungsdialogs (nur zur internen Verwendung)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Nachrichtenvorschaubereich"
+msgstr "Nachrichtenvorschaubereich:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6597,8 +6613,7 @@ msgstr "Nachrichtenvorschaubereich neben der Nachrichtenliste anzeigen"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
 msgstr "Ordnerliste"
 
@@ -7189,6 +7204,7 @@ msgstr "Markierung für Signieren/Verschlüsseln anzeigen"
 #, kde-format
 msgid "Show encryption key ownertrust level"
 msgstr ""
+"Werte des Vertrauens zu den Inhabern der Verschlüsselungsschlüssel anzeigen"
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
 #: ui/securitypageencryptiontab.ui:100
