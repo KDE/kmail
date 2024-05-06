@@ -7,6 +7,7 @@
 #include "activitiesmanager.h"
 #include "identityactivities.h"
 #include "kmail_activities_debug.h"
+#include "ldapactivities.h"
 #include "transportactivities.h"
 
 #include <PlasmaActivities/Consumer>
@@ -15,6 +16,7 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
     : QObject{parent}
     , mTransportActivities(new TransportActivities(this))
     , mIdentityActivities(new IdentityActivities(this))
+    , mLdapActivities(new LdapActivities(this))
     , mActivitiesConsumer(new KActivities::Consumer(this))
 {
     connect(mActivitiesConsumer, &KActivities::Consumer::currentActivityChanged, this, [this](const QString &activityId) {
@@ -32,6 +34,7 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
     connect(this, &ActivitiesManager::activitiesChanged, this, [this]() {
         Q_EMIT mIdentityActivities->activitiesChanged();
         Q_EMIT mTransportActivities->activitiesChanged();
+        Q_EMIT mLdapActivities->activitiesChanged();
     });
 }
 
@@ -90,6 +93,11 @@ bool ActivitiesManager::isInCurrentActivity(const QStringList &lst) const
 QString ActivitiesManager::currentActivity() const
 {
     return mActivitiesConsumer->currentActivity();
+}
+
+LdapActivities *ActivitiesManager::ldapActivities() const
+{
+    return mLdapActivities;
 }
 
 #include "moc_activitiesmanager.cpp"

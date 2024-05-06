@@ -13,6 +13,7 @@ class Consumer;
 }
 class TransportActivities;
 class IdentityActivities;
+class LdapActivities;
 class KMAILTESTS_TESTS_EXPORT ActivitiesManager : public QObject
 {
     Q_OBJECT
@@ -31,12 +32,15 @@ public:
 
     [[nodiscard]] bool isInCurrentActivity(const QStringList &lst) const;
     [[nodiscard]] QString currentActivity() const;
+    [[nodiscard]] LdapActivities *ldapActivities() const;
+
 Q_SIGNALS:
     void activitiesChanged();
 
 private:
     TransportActivities *const mTransportActivities;
     IdentityActivities *const mIdentityActivities;
+    LdapActivities *const mLdapActivities;
     KActivities::Consumer *const mActivitiesConsumer;
     bool mEnabled = false;
 };
