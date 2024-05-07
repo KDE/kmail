@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-09 08:55+0100\n"
+"PO-Revision-Date: 2024-05-06 22:08+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -629,7 +629,7 @@ msgstr "Ob vseh preverjanjih pošte"
 #: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr "Pošlji sporočila v mapi odhajajoče:"
+msgstr "Pošlji sporočila v mapi Odhajajoče:"
 
 #: configuredialog/configureaccountpage.cpp:120
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
@@ -3892,7 +3892,7 @@ msgstr "Seznam razpoložljivih možnosti za povratne informacije uporabnikov"
 #, kde-format
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
-"Pošlji sporočilo na »naslov« oziroma priloži datoteko, na katero kaže »URL«"
+"Pošlji sporočilo na 'naslov' oziroma priloži datoteko, na katero kaže 'URL'"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
