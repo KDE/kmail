@@ -154,15 +154,15 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
 
     // set up actions
     KActionCollection *ac = actionCollection();
-    mReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this);
+    mReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply…"), this);
     actionCollection()->addAction(QStringLiteral("search_reply"), mReplyAction);
     connect(mReplyAction, &QAction::triggered, this, &SearchWindow::slotReplyToMsg);
 
-    mReplyAllAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All..."), this);
+    mReplyAllAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All…"), this);
     actionCollection()->addAction(QStringLiteral("search_reply_all"), mReplyAllAction);
     connect(mReplyAllAction, &QAction::triggered, this, &SearchWindow::slotReplyAllToMsg);
 
-    mReplyListAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List..."), this);
+    mReplyListAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List…"), this);
     actionCollection()->addAction(QStringLiteral("search_reply_list"), mReplyListAction);
     connect(mReplyListAction, &QAction::triggered, this, &SearchWindow::slotReplyListToMsg);
 
@@ -170,11 +170,11 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     actionCollection()->addAction(QStringLiteral("search_message_forward"), mForwardActionMenu);
     connect(mForwardActionMenu, &KActionMenu::triggered, this, &SearchWindow::slotForwardMsg);
 
-    mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Forward message inline.", "&Inline..."), this);
+    mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Forward message inline.", "&Inline…"), this);
     actionCollection()->addAction(QStringLiteral("search_message_forward_inline"), mForwardInlineAction);
     connect(mForwardInlineAction, &QAction::triggered, this, &SearchWindow::slotForwardMsg);
 
-    mForwardAttachedAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->Forward->", "As &Attachment..."), this);
+    mForwardAttachedAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->Forward->", "As &Attachment…"), this);
     actionCollection()->addAction(QStringLiteral("search_message_forward_as_attachment"), mForwardAttachedAction);
     connect(mForwardAttachedAction, &QAction::triggered, this, &SearchWindow::slotForwardAttachedMsg);
 
@@ -189,7 +189,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     mSaveAsAction = actionCollection()->addAction(KStandardAction::SaveAs, QStringLiteral("search_file_save_as"));
     connect(mSaveAsAction, &QAction::triggered, this, &SearchWindow::slotSaveMsg);
 
-    mSaveAtchAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save Attachments..."), this);
+    mSaveAtchAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save Attachments…"), this);
     actionCollection()->addAction(QStringLiteral("search_save_attachments"), mSaveAtchAction);
     connect(mSaveAtchAction, &QAction::triggered, this, &SearchWindow::slotSaveAttachments);
 
@@ -519,7 +519,7 @@ void SearchWindow::doSearch()
     connect(mSearchJob, &Akonadi::CollectionModifyJob::result, this, &SearchWindow::searchDone);
     mUi.mProgressIndicator->show();
     enableGUI();
-    mUi.mStatusLbl->setText(i18n("Searching..."));
+    mUi.mStatusLbl->setText(i18n("Searching…"));
 }
 
 void SearchWindow::searchDone(KJob *job)
@@ -908,7 +908,7 @@ QList<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List
 
     enableGUI();
     mUi.mProgressIndicator->hide();
-    mUi.mStatusLbl->setText(i18n("Checking index status..."));
+    mUi.mStatusLbl->setText(i18n("Checking index status…"));
     // Fetch collection ?
     for (const Akonadi::Collection &col : std::as_const(cols)) {
         const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());

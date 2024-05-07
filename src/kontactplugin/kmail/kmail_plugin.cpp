@@ -40,7 +40,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const KPluginMetaData &da
 {
     setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
 
-    auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message..."), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message…"), this);
     actionCollection()->addAction(QStringLiteral("new_mail"), action);
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M));
     // action->setHelpText(

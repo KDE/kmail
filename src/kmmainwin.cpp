@@ -50,7 +50,7 @@ using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
-    , mMessageLabel(new QLabel(i18n("Starting...")))
+    , mMessageLabel(new QLabel(i18n("Starting…")))
 
 {
 #ifdef Q_OS_UNIX
@@ -62,7 +62,7 @@ KMMainWin::KMMainWin(QWidget *)
     connect(KSignalHandler::self(), &KSignalHandler::signalReceived, this, [this](int signal) {
         if (signal == SIGINT || signal == SIGTERM) {
             // Intercept console.
-            printf("Shutting down...\n");
+            printf("Shutting down…\n");
             slotQuit();
         }
     });

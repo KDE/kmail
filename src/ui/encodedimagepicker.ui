@@ -75,7 +75,7 @@
      <item>
       <widget class="QPushButton" name="openImageButton">
        <property name="text">
-        <string>Open Image...</string>
+        <string>Open Image…</string>
        </property>
       </widget>
      </item>

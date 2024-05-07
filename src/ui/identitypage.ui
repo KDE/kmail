@@ -24,7 +24,7 @@
           <string>Add a new identity</string>
          </property>
          <property name="text">
-          <string>&amp;Add...</string>
+          <string>&amp;Add…</string>
          </property>
         </widget>
        </item>
@@ -37,7 +37,7 @@
           <string>Modify the selected identity</string>
          </property>
          <property name="text">
-          <string>&amp;Modify...</string>
+          <string>&amp;Modify…</string>
          </property>
         </widget>
        </item>

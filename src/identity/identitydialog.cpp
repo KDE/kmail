@@ -225,7 +225,7 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
         return;
     } else if (type == "generate-new-key"_L1) {
         auto job = new KeyGenerationJob(mName, mEmail, this);
-        auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair..."), parentWidget());
+        auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair…"), parentWidget());
         dlg->setModal(true);
         setEnabled(false);
         connect(job, &KeyGenerationJob::done, this, [this]() {
@@ -611,7 +611,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
-    mEditVCard = new QPushButton(i18n("Create..."), tab);
+    mEditVCard = new QPushButton(i18n("Create…"), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
     mAutoCorrectionLanguage = new TextAutoCorrectionWidgets::AutoCorrectionLanguage(tab);
@@ -1160,9 +1160,9 @@ void IdentityDialog::slotVCardRemoved()
 void IdentityDialog::updateVcardButton()
 {
     if (mVcardFilename.isEmpty() || !QFileInfo::exists(mVcardFilename)) {
-        mEditVCard->setText(i18n("Create..."));
+        mEditVCard->setText(i18n("Create…"));
     } else {
-        mEditVCard->setText(i18n("Edit..."));
+        mEditVCard->setText(i18n("Edit…"));
     }
 }
 }

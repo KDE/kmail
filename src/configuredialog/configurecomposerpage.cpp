@@ -397,7 +397,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     helpText = i18n(
         "Only allow this many recipients to be specified for the message. This applies to doing a \"Reply to All\", entering recipients manually"
-        " or using the \"Select...\" picker.  Setting this limit helps you to avoid accidentally sending a message to too many people.  Note,"
+        " or using the \"Select…\" picker.  Setting this limit helps you to avoid accidentally sending a message to too many people.  Note,"
         " however, that it does not take account of distribution lists or mailing lists.");
     mMaximumRecipients->setToolTip(helpText);
     mMaximumRecipients->setWhatsThis(helpText);
@@ -453,7 +453,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Configure All Address settings
-    auto configureCompletionButton = new QPushButton(i18n("Configure Completion..."), this);
+    auto configureCompletionButton = new QPushButton(i18n("Configure Completion…"), this);
     connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     groupGridLayout->setRowStretch(row, 1);
@@ -697,12 +697,12 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
         PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mReplyListEditor =
-        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("A&dd..."), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new reply prefix:"));
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new reply prefix:"));
     mReplyListEditor->setRemoveDialogLabel(i18n("Do you want to remove reply prefix?"));
     connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mReplyListEditor->setAddDialogLabel(i18n("Reply Prefix:"));
 
-    // row 2: "replace [...]" check box:
+    // row 2: "replace […]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(), group);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -725,12 +725,12 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 1: string list editor
     mForwardListEditor =
-        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("Add..."), i18n("Remo&ve"), i18n("Modify..."), i18n("Enter new forward prefix:"));
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("Add…"), i18n("Remo&ve"), i18n("Modify..."), i18n("Enter new forward prefix:"));
     mForwardListEditor->setRemoveDialogLabel(i18n("Do you want to remove forward prefix?"));
     mForwardListEditor->setAddDialogLabel(i18n("Forward Prefix:"));
     connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
 
-    // row 3: "replace [...]" check box:
+    // row 3: "replace […]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(), group);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -1049,7 +1049,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
         PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mAttachWordsListEditor =
-        new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd..."), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new key word:"));
+        new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new key word:"));
     mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     mAttachWordsListEditor->setAddDialogLabel(i18n("Attachment Word:"));
     connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);

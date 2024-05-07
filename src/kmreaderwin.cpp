@@ -63,7 +63,7 @@ using namespace MessageViewer;
 
 #include <QClipboard>
 
-// X headers...
+// X headers…
 #undef Never
 #undef Always
 
@@ -119,19 +119,19 @@ void KMReaderWin::createActions()
     // Message Menu
     //
     // new message to
-    mMailToComposeAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("New Message To..."), this);
+    mMailToComposeAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("New Message To…"), this);
     ac->addAction(QStringLiteral("mail_new"), mMailToComposeAction);
     ac->setShortcutsConfigurable(mMailToComposeAction, false);
     connect(mMailToComposeAction, &QAction::triggered, this, &KMReaderWin::slotMailtoCompose);
 
     // reply to
-    mMailToReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply To..."), this);
+    mMailToReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply To…"), this);
     ac->addAction(QStringLiteral("mailto_reply"), mMailToReplyAction);
     ac->setShortcutsConfigurable(mMailToReplyAction, false);
     connect(mMailToReplyAction, &QAction::triggered, this, &KMReaderWin::slotMailtoReply);
 
     // forward to
-    mMailToForwardAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18n("Forward To..."), this);
+    mMailToForwardAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18n("Forward To…"), this);
     ac->setShortcutsConfigurable(mMailToForwardAction, false);
     ac->addAction(QStringLiteral("mailto_forward"), mMailToForwardAction);
     connect(mMailToForwardAction, &QAction::triggered, this, &KMReaderWin::slotMailtoForward);
@@ -158,31 +158,31 @@ void KMReaderWin::createActions()
     ac->addAction(QStringLiteral("add_bookmarks"), mAddUrlToBookmarkAction);
     connect(mAddUrlToBookmarkAction, &QAction::triggered, this, &KMReaderWin::slotAddUrlToBookmark);
 
-    mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact..."), this);
+    mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact…"), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
     ac->addAction(QStringLiteral("edit_contact"), mOpenAddrBookAction);
     connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
 
     // save URL as
-    mUrlSaveAsAction = new QAction(i18n("Save Link As..."), this);
+    mUrlSaveAsAction = new QAction(i18n("Save Link As…"), this);
     ac->addAction(QStringLiteral("saveas_url"), mUrlSaveAsAction);
     ac->setShortcutsConfigurable(mUrlSaveAsAction, false);
     connect(mUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotUrlSave);
 
     // find text
-    auto action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("&Find in Message..."), this);
+    auto action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("&Find in Message…"), this);
     ac->addAction(QStringLiteral("find_in_messages"), action);
     connect(action, &QAction::triggered, this, &KMReaderWin::slotFind);
     ac->setDefaultShortcut(action, KStandardShortcut::find().first());
 
     // save Image On Disk
-    mImageUrlSaveAsAction = new QAction(i18n("Save Image On Disk..."), this);
+    mImageUrlSaveAsAction = new QAction(i18n("Save Image On Disk…"), this);
     ac->addAction(QStringLiteral("saveas_imageurl"), mImageUrlSaveAsAction);
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false);
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
 
     // save Image On Disk
-    mOpenImageAction = new QAction(i18n("Open Image..."), this);
+    mOpenImageAction = new QAction(i18n("Open Image…"), this);
     ac->addAction(QStringLiteral("open_image"), mOpenImageAction);
     ac->setShortcutsConfigurable(mOpenImageAction, false);
     connect(mOpenImageAction, &QAction::triggered, this, &KMReaderWin::slotOpenImage);
@@ -201,7 +201,7 @@ void KMReaderWin::createActions()
     mLoadExternalReference->setCheckable(true);
     mViewHtmlOptions->addAction(mLoadExternalReference);
 
-    mShareImage = new QAction(i18n("Share image..."), this);
+    mShareImage = new QAction(i18n("Share image…"), this);
     ac->addAction(QStringLiteral("share_imageurl"), mShareImage);
     ac->setShortcutsConfigurable(mShareImage, false);
     connect(mShareImage, &QAction::triggered, this, &KMReaderWin::slotShareImage);
@@ -262,7 +262,7 @@ static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
 
 // enter items for the "new features" list here, so the main body of
 // the welcome page can be left untouched (probably much easier for
-// the translators). Note that the <li>...</li> tags are added
+// the translators). Note that the <li>…</li> tags are added
 // automatically below:
 static const KLazyLocalizedString kmailNewFeatures[] = {
 

@@ -50,7 +50,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &TagSelectDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &TagSelectDialog::reject);
-    user1Button->setText(i18n("Add New Tag..."));
+    user1Button->setText(i18n("Add New Tag…"));
     setModal(true);
 
     auto mainWidget = new QWidget(this);
@@ -64,7 +64,7 @@ TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, 
     auto listWidgetSearchLine = new KListWidgetSearchLine(this, mListTag);
     listWidgetSearchLine->setObjectName("searchline"_L1);
 
-    listWidgetSearchLine->setPlaceholderText(i18n("Search tag..."));
+    listWidgetSearchLine->setPlaceholderText(i18n("Search tag…"));
     listWidgetSearchLine->setClearButtonEnabled(true);
 
     vbox->addWidget(listWidgetSearchLine);

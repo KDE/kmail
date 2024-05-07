@@ -38,7 +38,7 @@
 #include "kmcomposerglobalaction.h"
 #include "kmcomposerupdatetemplatejob.h"
 #include "kmkernel.h"
-#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff...
+#include "mailcomposeradaptor.h" // TODO port all D-Bus stuff…
 #include "settings/kmailsettings.h"
 #include "undosend/undosendmanager.h"
 #include "util.h"
@@ -1305,7 +1305,7 @@ void KMComposerWin::setupActions()
     actionCollection()->addAction(QStringLiteral("save_as_file"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotSaveAsFile);
 
-    action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("&Insert Text File..."), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("document-open")), i18n("&Insert Text File…"), this);
     actionCollection()->addAction(QStringLiteral("insert_file"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotInsertFile);
 
@@ -1333,10 +1333,10 @@ void KMComposerWin::setupActions()
     connect(action, &QAction::triggered, this, &KMComposerWin::slotNewComposer);
     actionCollection()->setDefaultShortcuts(action, KStandardShortcut::shortcut(KStandardShortcut::New));
 
-    action = new QAction(i18n("Select &Recipients..."), this);
+    action = new QAction(i18n("Select &Recipients…"), this);
     actionCollection()->addAction(QStringLiteral("select_recipients"), action);
     connect(action, &QAction::triggered, mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::selectRecipients);
-    action = new QAction(i18n("Save &Distribution List..."), this);
+    action = new QAction(i18n("Save &Distribution List…"), this);
     actionCollection()->addAction(QStringLiteral("save_distribution_list"), action);
     connect(action, &QAction::triggered, mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::saveDistributionList);
 
@@ -1461,7 +1461,7 @@ void KMComposerWin::setupActions()
     KStandardAction::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
     KStandardAction::preferences(kmkernel, &KMKernel::slotShowConfigurationDialog, actionCollection());
 
-    action = new QAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18n("&Spellchecker..."), this);
+    action = new QAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18n("&Spellchecker…"), this);
     action->setIconText(i18n("Spellchecker"));
     actionCollection()->addAction(QStringLiteral("setup_spellchecker"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotSpellcheckConfig);
@@ -1505,7 +1505,7 @@ void KMComposerWin::setupActions()
 
     mComposerBase->editor()->createActions(actionCollection());
 
-    mFollowUpToggleAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("appointment-new")), i18n("Create Follow Up Reminder..."), this);
+    mFollowUpToggleAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("appointment-new")), i18n("Create Follow Up Reminder…"), this);
     actionCollection()->addAction(QStringLiteral("follow_up_mail"), mFollowUpToggleAction);
     connect(mFollowUpToggleAction, &KToggleAction::triggered, this, &KMComposerWin::slotFollowUpMail);
     mFollowUpToggleAction->setEnabled(MessageComposer::FollowUpReminder::isAvailableAndEnabled());
@@ -1539,7 +1539,7 @@ void KMComposerWin::setupActions()
     // up KMail's config dialog. That's sensible, though, so fix the label.
     QAction *configureAction = actionCollection()->action(QStringLiteral("options_configure"));
     if (configureAction) {
-        configureAction->setText(i18n("Configure KMail..."));
+        configureAction->setText(i18n("Configure KMail…"));
     }
 }
 
@@ -2891,13 +2891,13 @@ void KMComposerWin::slotDoDelayedSend(KJob *job)
 
     const AddressValidationJob *validateJob = qobject_cast<AddressValidationJob *>(job);
 
-    // Abort sending if one of the recipient addresses is invalid ...
+    // Abort sending if one of the recipient addresses is invalid …
     if (!validateJob->isValid()) {
         setEnabled(true);
         return;
     }
 
-    // ... otherwise continue as usual
+    // … otherwise continue as usual
     const MessageComposer::MessageSender::SendMethod method = static_cast<MessageComposer::MessageSender::SendMethod>(job->property("method").toInt());
     const MessageComposer::MessageSender::SaveIn saveIn = static_cast<MessageComposer::MessageSender::SaveIn>(job->property("saveIn").toInt());
 
@@ -3059,7 +3059,7 @@ void KMComposerWin::slotSendNow()
 void KMComposerWin::confirmBeforeSend()
 {
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
-                                                        i18n("About to send email..."),
+                                                        i18n("About to send email…"),
                                                         i18nc("@title:window", "Send Confirmation"),
                                                         KGuiItem(i18n("&Send Now"), "mail-send"_L1),
                                                         KGuiItem(i18n("Send &Later"), "mail-queue"_L1));

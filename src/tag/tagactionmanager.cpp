@@ -152,7 +152,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorNewTagAction);
 
     if (!mNewTagAction) {
-        mNewTagAction = new QAction(QIcon::fromTheme(QStringLiteral("tag-new")), i18n("Add new tag..."), this);
+        mNewTagAction = new QAction(QIcon::fromTheme(QStringLiteral("tag-new")), i18n("Add new tag…"), this);
         connect(mNewTagAction, &QAction::triggered, this, &TagActionManager::newTagActionClicked);
     }
     mMessageActions->messageStatusMenu()->menu()->addAction(mNewTagAction);
@@ -165,7 +165,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
         mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorMoreAction);
 
         if (!mMoreAction) {
-            mMoreAction = new QAction(i18n("More..."), this);
+            mMoreAction = new QAction(i18n("More…"), this);
             connect(mMoreAction, &QAction::triggered, this, &TagActionManager::tagMoreActionClicked);
         }
         mMessageActions->messageStatusMenu()->menu()->addAction(mMoreAction);

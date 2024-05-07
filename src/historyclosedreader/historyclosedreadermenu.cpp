@@ -42,7 +42,7 @@ void HistoryClosedReaderMenu::updateMenu()
             QString subject = info.subject();
             const QString originalSubject{subject};
             if (subject.length() > 61) {
-                subject = subject.first(60) + QStringLiteral("...");
+                subject = subject.first(60) + QStringLiteral("…");
             }
             auto action = new QAction(subject, menu());
             action->setToolTip(originalSubject);

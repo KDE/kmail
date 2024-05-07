@@ -59,7 +59,7 @@
          <enum>Qt::NoContextMenu</enum>
         </property>
         <property name="text">
-         <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails...&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
+         <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails…&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>

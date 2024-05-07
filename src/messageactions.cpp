@@ -61,28 +61,27 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent)
     , mParent(parent)
     , mReplyActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this))
-    , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply..."), this))
-    , mReplyAllAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All..."), this))
-    , mReplyAuthorAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor..."), this))
-    , mReplyListAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List..."), this))
-    , mNoQuoteReplyAction(new QAction(i18n("Reply Without &Quote..."), this))
-    , mForwardInlineAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "&Inline..."), this))
-    , mForwardAttachedAction(
-          new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "As &Attachment..."), this))
-    , mRedirectAction(new QAction(i18nc("Message->Forward->", "&Redirect..."), this))
-    , mNewToRecipientsAction(new QAction(i18n("New Message to Recipients..."), this))
+    , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply…"), this))
+    , mReplyAllAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All…"), this))
+    , mReplyAuthorAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor…"), this))
+    , mReplyListAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List…"), this))
+    , mNoQuoteReplyAction(new QAction(i18n("Reply Without &Quote…"), this))
+    , mForwardInlineAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "&Inline…"), this))
+    , mForwardAttachedAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "As &Attachment…"), this))
+    , mRedirectAction(new QAction(i18nc("Message->Forward->", "&Redirect…"), this))
+    , mNewToRecipientsAction(new QAction(i18n("New Message to Recipients…"), this))
     , mStatusMenu(new KActionMenu(i18n("Mar&k Message"), this))
     , mForwardActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this))
     , mMailingListActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-message-new-list")), i18nc("Message->", "Mailing-&List"), this))
-    , mAnnotateAction(new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note..."), this))
+    , mAnnotateAction(new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note…"), this))
     , mEditAsNewAction(new QAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("&Edit As New"), this))
-    , mListFilterAction(new QAction(i18n("Filter on Mailing-&List..."), this))
-    , mAddFollowupReminderAction(new QAction(i18n("Add Followup Reminder..."), this))
-    , mDebugAkonadiSearchAction(new QAction(QStringLiteral("Debug Akonadi Search..."), this)) /* dont translate it*/
-    , mSendAgainAction(new QAction(i18n("Send A&gain..."), this))
+    , mListFilterAction(new QAction(i18n("Filter on Mailing-&List…"), this))
+    , mAddFollowupReminderAction(new QAction(i18n("Add Followup Reminder…"), this))
+    , mDebugAkonadiSearchAction(new QAction(QStringLiteral("Debug Akonadi Search…"), this)) /* dont translate it*/
+    , mSendAgainAction(new QAction(i18n("Send A&gain…"), this))
     , mNewMessageFromTemplateAction(new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
-    , mExportToPdfAction(new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF..."), this))
+    , mExportToPdfAction(new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF…"), this))
     , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
 
 {
@@ -369,9 +368,9 @@ void MessageActions::updateActions()
     mAnnotateAction->setEnabled(uniqItem);
     mAddFollowupReminderAction->setEnabled(uniqItem);
     if (!mCurrentItem.hasAttribute<Akonadi::EntityAnnotationsAttribute>()) {
-        mAnnotateAction->setText(i18n("Add Note..."));
+        mAnnotateAction->setText(i18n("Add Note…"));
     } else {
-        mAnnotateAction->setText(i18n("Edit Note..."));
+        mAnnotateAction->setText(i18n("Edit Note…"));
     }
 
     mStatusMenu->setEnabled(multiVisible);
@@ -416,7 +415,7 @@ void MessageActions::clearMailingListActions()
 {
     mMailingListActionMenu->setEnabled(false);
     mListFilterAction->setEnabled(false);
-    mListFilterAction->setText(i18n("Filter on Mailing-List..."));
+    mListFilterAction->setText(i18n("Filter on Mailing-List…"));
 }
 
 void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
@@ -482,7 +481,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         const QString lname = MailingList::name(message, name, value);
         if (!lname.isEmpty()) {
             mListFilterAction->setEnabled(true);
-            mListFilterAction->setText(i18n("Filter on Mailing-List %1...", lname));
+            mListFilterAction->setText(i18n("Filter on Mailing-List %1…", lname));
         }
     }
 }
@@ -740,7 +739,7 @@ void MessageActions::slotDebugAkonadiSearch()
 
 void MessageActions::slotResendMessage()
 {
-    // mCurrentItem.isValid() may be false here if message was imported via 'File' -> 'Open...'
+    // mCurrentItem.isValid() may be false here if message was imported via 'File' -> 'Open…'
     KMCommand *command = new KMResendMessageCommand(mParent, mCurrentItem);
     command->start();
 }

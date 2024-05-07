@@ -487,7 +487,7 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments..."), actionCollection());
+    mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments…"), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
     mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("&Move to Trash"), this);

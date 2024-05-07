@@ -31,7 +31,7 @@
      <item>
       <widget class="QPushButton" name="customizeAccountOrder">
        <property name="text">
-        <string>Customize accounts order...</string>
+        <string>Customize accounts order…</string>
        </property>
       </widget>
      </item>
@@ -78,7 +78,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Other Actio&amp;ns...</string>
+           <string>Other Actio&amp;ns…</string>
           </property>
          </widget>
         </item>

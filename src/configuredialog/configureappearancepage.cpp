@@ -684,7 +684,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             connect(radio, &QAbstractButton::toggled, mCustomDateFormatEdit, &QWidget::setEnabled);
             connect(mCustomDateFormatEdit, &QLineEdit::textChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-            auto formatHelp = new QLabel(i18n("<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"), hbox);
+            auto formatHelp = new QLabel(i18n("<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"), hbox);
             formatHelp->setContextMenuPolicy(Qt::NoContextMenu);
             connect(formatHelp, &QLabel::linkActivated, this, &AppearancePageHeadersTab::slotLinkClicked);
             hboxHBoxLayout->addWidget(formatHelp);

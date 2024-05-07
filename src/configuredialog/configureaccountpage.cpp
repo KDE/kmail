@@ -206,8 +206,8 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
     mAccountsReceiving.mAccountsReceiving->disconnectAddAccountButton();
     auto accountMenu = new QMenu(this);
-    accountMenu->addAction(i18n("Add Mail Account..."), this, &AccountsPageReceivingTab::slotAddMailAccount);
-    accountMenu->addAction(i18n("Custom Account..."), this, &AccountsPageReceivingTab::slotAddCustomAccount);
+    accountMenu->addAction(i18n("Add Mail Account…"), this, &AccountsPageReceivingTab::slotAddMailAccount);
+    accountMenu->addAction(i18n("Custom Account…"), this, &AccountsPageReceivingTab::slotAddCustomAccount);
     mAccountsReceiving.mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
 }
 

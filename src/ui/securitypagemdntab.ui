@@ -149,7 +149,7 @@
       <enum>Qt::NoContextMenu</enum>
      </property>
      <property name="text">
-      <string>&lt;b&gt;WARNING:&lt;/b&gt; Unconditionally returning confirmations undermines your privacy. &lt;a href=&quot;whatsthis-mdn&quot;&gt;More about MDNs...&lt;/a&gt;</string>
+      <string>&lt;b&gt;WARNING:&lt;/b&gt; Unconditionally returning confirmations undermines your privacy. &lt;a href=&quot;whatsthis-mdn&quot;&gt;More about MDNs…&lt;/a&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

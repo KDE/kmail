@@ -44,7 +44,7 @@ using PimCommon::BroadcastStatus;
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)
     , mCore(core)
-    , mConfigAction(new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View..."), this))
+    , mConfigAction(new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View…"), this))
 {
     Q_UNUSED(aboutData)
     setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
