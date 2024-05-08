@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"POT-Creation-Date: 2024-05-08 00:39+0000\n"
 "PO-Revision-Date: 2024-04-09 11:35+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: \n"
@@ -435,7 +435,7 @@ msgstr "نوع العنوان:"
 msgid "URL for mailing list posting:"
 msgstr "عنوان قائمة النشر البريديّة:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:473
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "اشتراك بالقائمة"
@@ -652,13 +652,15 @@ msgid "Enable Undo Send"
 msgstr "فعّل التَّراجع عن الإرْسال"
 
 #: configuredialog/configureaccountpage.cpp:209
-#, kde-format
-msgid "Add Mail Account..."
+#, fuzzy, kde-format
+#| msgid "Add Mail Account..."
+msgid "Add Mail Account…"
 msgstr "أضف حساب بريد..."
 
 #: configuredialog/configureaccountpage.cpp:210
-#, kde-format
-msgid "Custom Account..."
+#, fuzzy, kde-format
+#| msgid "Custom Account..."
+msgid "Custom Account…"
 msgstr "خصّص الحساب..."
 
 #: configuredialog/configureaccountpage.cpp:230
@@ -906,8 +908,9 @@ msgid "Default theme:"
 msgstr "السّمة المبدئيّة:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, kde-format
-msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, fuzzy, kde-format
+#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">معلومات عن النّسق المخصّص...</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:693
@@ -1218,13 +1221,19 @@ msgid "Set the maximum number of recipients for the warning"
 msgstr "حدّد أقصى عدد من المستلمين قبل التّحذير"
 
 #: configuredialog/configurecomposerpage.cpp:399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Only allow this many recipients to be specified for the message. This "
+#| "applies to doing a \"Reply to All\", entering recipients manually or "
+#| "using the \"Select...\" picker.  Setting this limit helps you to avoid "
+#| "accidentally sending a message to too many people.  Note, however, that "
+#| "it does not take account of distribution lists or mailing lists."
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
-"the \"Select...\" picker.  Setting this limit helps you to avoid "
-"accidentally sending a message to too many people.  Note, however, that it "
-"does not take account of distribution lists or mailing lists."
+"the \"Select…\" picker.  Setting this limit helps you to avoid accidentally "
+"sending a message to too many people.  Note, however, that it does not take "
+"account of distribution lists or mailing lists."
 msgstr ""
 "اسمح فقط لهذا العدد من المستلمين بتحديده في الرّسالة. هذا يُطبّق عل ”الرّدّ على "
 "الكلّ“، أو إدخال المستلمين يدويًّا أو استخدام منتقي ”اختر...“. ضبط هذا الحدّ "
@@ -1256,8 +1265,9 @@ msgid ""
 msgstr "الحد الأقصى لعدد العناوين المدخلة مؤخرًا والتي ستحفظ لاستكمالها"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, kde-format
-msgid "Configure Completion..."
+#, fuzzy, kde-format
+#| msgid "Configure Completion..."
+msgid "Configure Completion…"
 msgstr "اضبط الإكمال..."
 
 #: configuredialog/configurecomposerpage.cpp:465
@@ -1306,8 +1316,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
-msgid "A&dd..."
-msgstr "أ&ضف..."
+msgid "A&dd…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:832
@@ -1350,10 +1360,10 @@ msgstr "أز&ل"
 
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
-msgid "Add..."
-msgstr "أضف..."
+msgid "Add…"
+msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Modify..."
 msgstr "عدّل..."
@@ -1887,8 +1897,9 @@ msgid "Save email as text or html file"
 msgstr "احفظ الرّسالة كملفّ نصّيّ أو HTML"
 
 #: editor/kmcomposerwin.cpp:1308
-#, kde-format
-msgid "&Insert Text File..."
+#, fuzzy, kde-format
+#| msgid "&Insert Text File..."
+msgid "&Insert Text File…"
 msgstr "أ&درج ملفًّا نصّيًّا..."
 
 #: editor/kmcomposerwin.cpp:1312
@@ -1912,14 +1923,16 @@ msgid "&New Composer"
 msgstr "كاتب &جديد"
 
 #: editor/kmcomposerwin.cpp:1336
-#, kde-format
-msgid "Select &Recipients..."
-msgstr "حدّد ال&مستلمين..."
+#, fuzzy, kde-format
+#| msgid "Select Recipient"
+msgid "Select &Recipients…"
+msgstr "إختر المراسل"
 
 #: editor/kmcomposerwin.cpp:1339
-#, kde-format
-msgid "Save &Distribution List..."
-msgstr "احفظ قائمة ال&تّوزيع..."
+#, fuzzy, kde-format
+#| msgid "Save Distribution List"
+msgid "Save &Distribution List…"
+msgstr "إحفظ لائحة التوزيع"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2034,9 +2047,10 @@ msgid "Insert Signature At C&ursor Position"
 msgstr "أدرج التّوقيع مكان المؤ&شر"
 
 #: editor/kmcomposerwin.cpp:1464
-#, kde-format
-msgid "&Spellchecker..."
-msgstr "&مدقّق الهجاء..."
+#, fuzzy, kde-format
+#| msgid "Spellchecker"
+msgid "&Spellchecker…"
+msgstr "مدقّق الهجاء"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2074,13 +2088,15 @@ msgid "Select a cryptographic format for this message"
 msgstr "حدد تّنسيق التعمية لهذه الرِّسالة"
 
 #: editor/kmcomposerwin.cpp:1508
-#, kde-format
-msgid "Create Follow Up Reminder..."
+#, fuzzy, kde-format
+#| msgid "Create Follow Up Reminder..."
+msgid "Create Follow Up Reminder…"
 msgstr "أنشئ تذكير بالمتابعة…"
 
 #: editor/kmcomposerwin.cpp:1542
-#, kde-format
-msgid "Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "Configure KMail..."
+msgid "Configure KMail…"
 msgstr "اضبط «بريدك»..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
@@ -2318,8 +2334,9 @@ msgid ""
 msgstr "عليك تحديد مستلم واحد على الأقل لتعمّي مسودّة."
 
 #: editor/kmcomposerwin.cpp:3062
-#, kde-format
-msgid "About to send email..."
+#, fuzzy, kde-format
+#| msgid "About to send email..."
+msgid "About to send email…"
 msgstr "على وشك إرسال الرّسالة..."
 
 #: editor/kmcomposerwin.cpp:3063
@@ -2614,10 +2631,13 @@ msgid "Select email to put in whitelist:"
 msgstr "حدّد البريد لوضعه في القائمة البيضاء:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Found potential phishing email addresses <a href=\"phishingdetails"
+#| "\">(details...)</a>"
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"\">(details…)</a>"
 msgstr ""
 "عثر التطبيق على عناوين بريد إلكتروني احتيالي <a href=\"phishingdetails"
 "\">(تفاصيل...)</a>"
@@ -2913,8 +2933,9 @@ msgid "Generate a new key pair"
 msgstr "ولّد زوج مفاتيح جديد"
 
 #: identity/identitydialog.cpp:228
-#, kde-format
-msgid "Generating new key pair..."
+#, fuzzy, kde-format
+#| msgid "Generating new key pair..."
+msgid "Generating new key pair…"
 msgstr "يولّد زوج مفاتيح جديد..."
 
 #: identity/identitydialog.cpp:241
@@ -3261,8 +3282,9 @@ msgid "Attach my vCard to message"
 msgstr "أرفق vCard خاصّتي إلى الرّسالة"
 
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
-#, kde-format
-msgid "Create..."
+#, fuzzy, kde-format
+#| msgid "Create..."
+msgid "Create…"
 msgstr "أنشئ..."
 
 #: identity/identitydialog.cpp:618
@@ -3401,9 +3423,9 @@ msgstr ""
 "المبدئيّ."
 
 #: identity/identitydialog.cpp:1165
-#, kde-format
-msgid "Edit..."
-msgstr "حرّر..."
+#, fuzzy, kde-format
+msgid "Edit…"
+msgstr "تحرير"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, kde-format
@@ -3506,6 +3528,12 @@ msgstr[5] "أزل الهويّة"
 #, kde-format
 msgid "&Remove"
 msgstr "أ&زل"
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
+msgstr "عدّل..."
 
 #: identity/identitypage.cpp:275
 #, kde-format
@@ -4420,14 +4448,16 @@ msgid "Delete Message"
 msgstr "احذف الرّسالة"
 
 #: kmmainwidget.cpp:1674
-#, kde-format
-msgid "Moving messages..."
-msgstr "ينقل الرّسائل..."
+#, fuzzy, kde-format
+#| msgid "Moving messages"
+msgid "Moving messages…"
+msgstr "ينقل الرّسائل"
 
 #: kmmainwidget.cpp:1676 kmmainwidget.cpp:1870
-#, kde-format
-msgid "Deleting messages..."
-msgstr "يحذف الرّسائل..."
+#, fuzzy, kde-format
+#| msgid "Deleting messages"
+msgid "Deleting messages…"
+msgstr "يحذف الرّسائل"
 
 #: kmmainwidget.cpp:1691 kmmainwidget.cpp:1890
 #, kde-format
@@ -4466,8 +4496,9 @@ msgid "Move Messages to Folder"
 msgstr "انقل الرّسائل إلى المجلّد"
 
 #: kmmainwidget.cpp:1799
-#, kde-format
-msgid "Copying messages..."
+#, fuzzy, kde-format
+#| msgid "Copying messages..."
+msgid "Copying messages…"
 msgstr "ينسخ الرّسائل..."
 
 #: kmmainwidget.cpp:1807
@@ -4492,13 +4523,15 @@ msgid "Copy Messages to Folder"
 msgstr "انسخ الرّسائل إلى المجلّد"
 
 #: kmmainwidget.cpp:1867
-#, kde-format
-msgid "Moving messages to trash..."
+#, fuzzy, kde-format
+#| msgid "Moving messages to trash..."
+msgid "Moving messages to trash…"
 msgstr "ينقل الرّسائل إلى المهملات..."
 
 #: kmmainwidget.cpp:1874
-#, kde-format
-msgid "Deleting and moving messages to trash..."
+#, fuzzy, kde-format
+#| msgid "Deleting and moving messages to trash..."
+msgid "Deleting and moving messages to trash…"
 msgstr "يحذف وينقل الرّسائل إلى المهملات..."
 
 #: kmmainwidget.cpp:1887
@@ -4623,8 +4656,9 @@ msgid "Delete Attachments"
 msgstr "احذف المرفقات"
 
 #: kmmainwidget.cpp:2909
-#, kde-format
-msgid "Save &As..."
+#, fuzzy, kde-format
+#| msgid "Save &As..."
+msgid "Save &As…"
 msgstr "احفظ &ك‍..."
 
 #: kmmainwidget.cpp:2920
@@ -4668,48 +4702,57 @@ msgid "Certificate Manager"
 msgstr "مدير الشّهادات"
 
 #: kmmainwidget.cpp:2979
-#, kde-format
-msgid "&Import Messages..."
+#, fuzzy, kde-format
+#| msgid "&Import Messages..."
+msgid "&Import Messages…"
 msgstr "ا&ستورد رسائلًا..."
 
 #: kmmainwidget.cpp:2989
-#, kde-format
-msgid "&Debug Sieve..."
+#, fuzzy, kde-format
+#| msgid "&Debug Sieve..."
+msgid "&Debug Sieve…"
 msgstr "&نقّح لغة تصفية البريد..."
 
 #: kmmainwidget.cpp:2996
-#, kde-format
-msgid "Filter &Log Viewer..."
-msgstr "مُرشِّح &عارض السجل..."
+#, fuzzy, kde-format
+#| msgid "Filter Log Viewer"
+msgid "Filter &Log Viewer…"
+msgstr "عارض سجل المُرشّح"
 
 #: kmmainwidget.cpp:3001
-#, kde-format
-msgid "Notification History..."
+#, fuzzy, kde-format
+#| msgid "Notification History..."
+msgid "Notification History…"
 msgstr "تاريخ الإخطارات..."
 
 #: kmmainwidget.cpp:3006
-#, kde-format
-msgid "&Import from another Email Client..."
+#, fuzzy, kde-format
+#| msgid "&Import from another Email Client..."
+msgid "&Import from another Email Client…"
 msgstr "استورد من &عميل بريد آخر..."
 
 #: kmmainwidget.cpp:3011
-#, kde-format
-msgid "Edit \"Out of Office\" Replies..."
+#, fuzzy, kde-format
+#| msgid "Edit \"Out of Office\" Replies..."
+msgid "Edit \"Out of Office\" Replies…"
 msgstr "حرّر ردود ”خارج المكتب“..."
 
 #: kmmainwidget.cpp:3017
-#, kde-format
-msgid "&Configure Automatic Archiving..."
+#, fuzzy, kde-format
+#| msgid "&Configure Automatic Archiving..."
+msgid "&Configure Automatic Archiving…"
 msgstr "ا&ضبط الأرشفة الآليّة..."
 
 #: kmmainwidget.cpp:3023
-#, kde-format
-msgid "Delayed Messages..."
+#, fuzzy, kde-format
+#| msgid "Delayed Messages..."
+msgid "Delayed Messages…"
 msgstr "رسائل متأخرة..."
 
 #: kmmainwidget.cpp:3029
-#, kde-format
-msgid "Followup Reminder Messages..."
+#, fuzzy, kde-format
+#| msgid "Followup Reminder Messages..."
+msgid "Followup Reminder Messages…"
 msgstr "رسائل تذكير بالمتابعة ..."
 
 #: kmmainwidget.cpp:3040 util.cpp:149
@@ -4733,10 +4776,12 @@ msgstr "انقل الموضوع إلى سلّة المهملات"
 msgid "Delete T&hread"
 msgstr "احذف المو&ضوع"
 
-#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
-#, kde-format
-msgid "&Find Messages..."
-msgstr "ا&بحث عن رسائل..."
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4113
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Find Messages"
+msgid "&Find Messages…"
+msgstr "ابحث عن رسائل"
 
 #: kmmainwidget.cpp:3063
 #, kde-format
@@ -4744,14 +4789,16 @@ msgid "Select &All Messages"
 msgstr "حدّد &كلّ الرّسائل"
 
 #: kmmainwidget.cpp:3070
-#, kde-format
-msgid "&Mailing List Management..."
+#, fuzzy, kde-format
+#| msgid "&Mailing List Management..."
+msgid "&Mailing List Management…"
 msgstr "إدارة ال&قوائم البريديّة..."
 
 #: kmmainwidget.cpp:3078
-#, kde-format
-msgid "&Clear Akonadi Cache..."
-msgstr "امحُ &خبيئة اكوندا..."
+#, fuzzy, kde-format
+#| msgid "Clear Akonadi Cache"
+msgid "&Clear Akonadi Cache…"
+msgstr "امحُ خبيئة اكوندا"
 
 #: kmmainwidget.cpp:3083
 #, kde-format
@@ -4759,8 +4806,9 @@ msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "امحُ &خبيئة اكوندا في هذا المجلد وكلّ مجلَّداته الفرعيَّة"
 
 #: kmmainwidget.cpp:3088
-#, kde-format
-msgid "&Assign Shortcut..."
+#, fuzzy, kde-format
+#| msgid "&Assign Shortcut..."
+msgid "&Assign Shortcut…"
 msgstr "ا&ضبط اختصارًا..."
 
 #: kmmainwidget.cpp:3106
@@ -4769,9 +4817,11 @@ msgid "&Expiration Settings"
 msgstr "إعدادات الح&ذف النّهائيّ"
 
 #: kmmainwidget.cpp:3131
-#, kde-format
-msgid "&Archive Folder..."
-msgstr "أر&شف المجلّد..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window for archiving a folder"
+#| msgid "Archive Folder"
+msgid "&Archive Folder…"
+msgstr "أرشف مجلّدًا"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -4779,19 +4829,22 @@ msgid "Load E&xternal References"
 msgstr "حمّل المراجع ال&خارجيّة"
 
 #: kmmainwidget.cpp:3162
-#, kde-format
-msgid "Copy Message To..."
+#, fuzzy, kde-format
+#| msgid "Copy Message To..."
+msgid "Copy Message To…"
 msgstr "انسخ الرّسالة إلى..."
 
 #: kmmainwidget.cpp:3164
-#, kde-format
-msgid "Move Message To..."
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgid "Move Message To…"
 msgstr "انقل الرّسالة إلى..."
 
 #: kmmainwidget.cpp:3169
-#, kde-format
-msgid "&New Message..."
-msgstr "رسالة &جديدة..."
+#, fuzzy, kde-format
+#| msgid "New Messages"
+msgid "&New Message…"
+msgstr "رسائل جديدة"
 
 #: kmmainwidget.cpp:3171
 #, kde-format
@@ -4805,8 +4858,9 @@ msgid "Message From &Template"
 msgstr "رسالة من &قالب"
 
 #: kmmainwidget.cpp:3185
-#, kde-format
-msgid "New Message t&o Mailing-List..."
+#, fuzzy, kde-format
+#| msgid "New Message t&o Mailing-List..."
+msgid "New Message t&o Mailing-List…"
 msgstr "رسالة جديدة إلى قا&ئمة بريدية..."
 
 #: kmmainwidget.cpp:3191
@@ -4815,23 +4869,27 @@ msgid "&Create Filter"
 msgstr "أ&نشئ مرشّحًا"
 
 #: kmmainwidget.cpp:3195
-#, kde-format
-msgid "Filter on &Subject..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Subject..."
+msgid "Filter on &Subject…"
 msgstr "رشّح حسب المو&ضوع..."
 
 #: kmmainwidget.cpp:3202
-#, kde-format
-msgid "Filter on &From..."
+#, fuzzy, kde-format
+#| msgid "Filter on &From..."
+msgid "Filter on &From…"
 msgstr "رشّح حسب المُر&سل..."
 
 #: kmmainwidget.cpp:3208
-#, kde-format
-msgid "Filter on &To..."
+#, fuzzy, kde-format
+#| msgid "Filter on &To..."
+msgid "Filter on &To…"
 msgstr "رشّح حس&ب المستلم..."
 
 #: kmmainwidget.cpp:3214
-#, kde-format
-msgid "Filter on &Cc..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Cc..."
+msgid "Filter on &Cc…"
 msgstr "رشّح حسب &ن‌ك..."
 
 #: kmmainwidget.cpp:3228
@@ -4890,9 +4948,10 @@ msgid "&Ignore Thread"
 msgstr "ت&جاهل الموضوع"
 
 #: kmmainwidget.cpp:3271 kmreadermainwin.cpp:490
-#, kde-format
-msgid "Save A&ttachments..."
-msgstr "احفظ الم&رفقات..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment"
+msgid "Save A&ttachments…"
+msgstr "احفظ المرفق"
 
 #: kmmainwidget.cpp:3275
 #, kde-format
@@ -4901,8 +4960,9 @@ msgid "Delete All Attachments"
 msgstr "احذف كل المرفقات"
 
 #: kmmainwidget.cpp:3283
-#, kde-format
-msgid "Copy Decrypted To..."
+#, fuzzy, kde-format
+#| msgid "Copy Decrypted To..."
+msgid "Copy Decrypted To…"
 msgstr "انسخ فك التعمية إلى…"
 
 #: kmmainwidget.cpp:3287
@@ -5052,18 +5112,21 @@ msgstr ""
 "المقروءة التّالية."
 
 #: kmmainwidget.cpp:3403
-#, kde-format
-msgid "Configure &Filters..."
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgid "Configure &Filters…"
 msgstr "اضبط المر&شّحات..."
 
 #: kmmainwidget.cpp:3409
-#, kde-format
-msgid "Manage &Sieve Scripts..."
-msgstr "أ&در سكربتات تصفية البريد..."
+#, fuzzy, kde-format
+#| msgid "Manage Sieve Scripts"
+msgid "Manage &Sieve Scripts…"
+msgstr "أدر سكربتات Sieve"
 
 #: kmmainwidget.cpp:3414
-#, kde-format
-msgid "&Add Account..."
+#, fuzzy, kde-format
+#| msgid "&Add Account..."
+msgid "&Add Account…"
 msgstr "أ&ضف حسابًا..."
 
 #: kmmainwidget.cpp:3419
@@ -5077,28 +5140,34 @@ msgid "Display KMail's Welcome Page"
 msgstr "اعرض صفحة بداية «بريدك»"
 
 #: kmmainwidget.cpp:3428
-#, kde-format
-msgid "Configure &Notifications..."
+#, fuzzy, kde-format
+#| msgid "Configure &Notifications..."
+msgid "Configure &Notifications…"
 msgstr "اضبط الإ&خطارات..."
 
 #: kmmainwidget.cpp:3435
-#, kde-format
-msgid "&Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "&Configure KMail..."
+msgid "&Configure KMail…"
 msgstr "ا&ضبط «بريدك»..."
 
 #: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Expire..."
-msgstr "انتهى..."
+#, fuzzy, kde-format
+#| msgid "Expire"
+msgid "Expire…"
+msgstr "انتهى"
 
 #: kmmainwidget.cpp:3448
-#, kde-format
-msgid "Add Favorite Folder..."
-msgstr "أضف مجلّدًا مفضّلًا..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Add Favorite Folder"
+msgid "Add Favorite Folder…"
+msgstr "أضف مجلّدًا مفضّلًا"
 
 #: kmmainwidget.cpp:3454
-#, kde-format
-msgid "Serverside Subscription..."
+#, fuzzy, kde-format
+#| msgid "Serverside Subscription..."
+msgid "Serverside Subscription…"
 msgstr "الاشتراك من جانب الخادوم..."
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
@@ -5112,16 +5181,18 @@ msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "طبّق المرشّحات على المجلّد وكلّ مجلَّداته الفرْعيَّة"
 
 #: kmmainwidget.cpp:3486
-#, kde-format
-msgid "Import/Export KMail Data..."
+#, fuzzy, kde-format
+#| msgid "Import/Export KMail Data..."
+msgid "Import/Export KMail Data…"
 msgstr "استورد/صدّر بيانات «بريدك»..."
 
 #: kmmainwidget.cpp:3492
-#, kde-format
-msgid "New AddressBook Contact..."
+#, fuzzy, kde-format
+#| msgid "New AddressBook Contact..."
+msgid "New AddressBook Contact…"
 msgstr "متراسل دفتر عناوين جديد."
 
-#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4152
 #, kde-format
 msgid "Account &Settings"
 msgstr "إعدادات ال&حساب"
@@ -5137,9 +5208,11 @@ msgid "Copy Message to Folder"
 msgstr "انسخ الرّسالة إلى المجلّد"
 
 #: kmmainwidget.cpp:3526
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "اقفز إلى مجلّد..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Jump to Folder"
+msgid "Jump to Folder…"
+msgstr "اقفز إلى مجلد"
 
 #: kmmainwidget.cpp:3532
 #, kde-format
@@ -5248,47 +5321,50 @@ msgid "&Delete Search"
 msgstr "ا&حذف البحث"
 
 #: kmmainwidget.cpp:4113
-#, kde-format
-msgid "Edit Search..."
+#, fuzzy, kde-format
+#| msgid "Edit Search..."
+msgid "Edit Search…"
 msgstr "حرّر البحث..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4150
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "اضبط صندوق البريد الموحَّد"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "أ&فرغ المهملات"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ا&نقل كلّ الرّسائل إلى المهملات"
 
-#: kmmainwidget.cpp:4236
+#: kmmainwidget.cpp:4235
 #, kde-format
 msgid "&Undo"
 msgstr "ترا&جع"
 
-#: kmmainwidget.cpp:4238
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "ترا&جع عن: ”%1“"
 
-#: kmmainwidget.cpp:4295
+#: kmmainwidget.cpp:4294
 #, kde-format
 msgid "Filter %1"
 msgstr "المرشّح %1"
 
-#: kmmainwidget.cpp:4763
-#, kde-format
+#: kmmainwidget.cpp:4762
+#, fuzzy, kde-format
+#| msgctxt "Show shortcut for focus quick search. Don't change it"
+#| msgid "Search... <%1>"
 msgctxt "Show shortcut for focus quick search. Don't change it"
-msgid "Search... <%1>"
+msgid "Search… <%1>"
 msgstr "ابحث... <%1>"
 
-#: kmmainwidget.cpp:4771
+#: kmmainwidget.cpp:4770
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5298,18 +5374,18 @@ msgstr ""
 "استخدام HTML في البريد سيجعلك أكثر عرضة لـ \"البريد العشوائي\" وقد يزيد من "
 "احتمالية تعرض نظامك للاختراق من خلال الثغرات الأمنية الحالية والمستقبلية."
 
-#: kmmainwidget.cpp:4774
+#: kmmainwidget.cpp:4773
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "تحذير أمنيّ"
 
-#: kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgid "Use HTML"
 msgstr "استخدم HTML"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4920
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5324,44 +5400,45 @@ msgstr ""
 "تستطيع إعداد صندوق البريد الموحد، أو إنشاء واحد مخصص أو  \n"
 "إلغاء تفعيل هذه الميزة  في إعدادات ملحقات بريدك."
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "فعّل صناديق البريد الموحَّدة؟"
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr "فعّل صناديق البريد الموحَّدة"
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4925
 #, kde-format
 msgid "Cancel"
 msgstr "ألغِ"
 
-#: kmmainwidget.cpp:4961
+#: kmmainwidget.cpp:4960
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "أتريد حقا إعادة تشغيل اكوندا؟"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4961
 #, kde-format
 msgid "Restart Akonadi"
 msgstr "أعد تشغيل اكوندا"
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Restart"
 msgstr "أعد التّشغيل"
 
-#: kmmainwidget.cpp:4970
+#: kmmainwidget.cpp:4969
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "انتهت عملية إعادة تشغيل اكوندا"
 
 #: kmmainwin.cpp:53
-#, kde-format
-msgid "Starting..."
+#, fuzzy, kde-format
+#| msgid "Starting..."
+msgid "Starting…"
 msgstr "يبدأ..."
 
 #: kmreadermainwin.cpp:493 util.cpp:149
@@ -5391,19 +5468,22 @@ msgid "Cannot copy item. %1"
 msgstr "تعذّر نسخ العنصر. %1"
 
 #: kmreaderwin.cpp:122
-#, kde-format
-msgid "New Message To..."
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "New Message To…"
 msgstr "رسالة جديدة إلى..."
 
 #: kmreaderwin.cpp:128
-#, kde-format
-msgid "Reply To..."
-msgstr "ردّ على..."
+#, fuzzy, kde-format
+#| msgid "&Reply To"
+msgid "Reply To…"
+msgstr "&رُدّ على"
 
 #: kmreaderwin.cpp:134
-#, kde-format
-msgid "Forward To..."
-msgstr "مرّر إلى..."
+#, fuzzy, kde-format
+#| msgid "Forward To"
+msgid "Forward To…"
+msgstr "مرّر إلى"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5426,29 +5506,34 @@ msgid "Bookmark This Link"
 msgstr "علّم هذه الوصلة"
 
 #: kmreaderwin.cpp:161
-#, kde-format
-msgid "Edit contact..."
+#, fuzzy, kde-format
+#| msgid "Edit contact..."
+msgid "Edit contact…"
 msgstr "حرّر المتراسل..."
 
 #: kmreaderwin.cpp:167
-#, kde-format
-msgid "Save Link As..."
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Save Link As…"
 msgstr "احفظ الوصلة ك‍..."
 
 #: kmreaderwin.cpp:173
-#, kde-format
-msgid "&Find in Message..."
+#, fuzzy, kde-format
+#| msgid "&Find in Message..."
+msgid "&Find in Message…"
 msgstr "ا&بحث في الرّسالة..."
 
 #: kmreaderwin.cpp:179
-#, kde-format
-msgid "Save Image On Disk..."
+#, fuzzy, kde-format
+#| msgid "Save Image On Disk..."
+msgid "Save Image On Disk…"
 msgstr "احفظ الصّورة على القرص..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
-#, kde-format
-msgid "Open Image..."
+#, fuzzy, kde-format
+#| msgid "Open Image..."
+msgid "Open Image…"
 msgstr "افتح صورة..."
 
 #: kmreaderwin.cpp:191
@@ -5467,8 +5552,9 @@ msgid "Load external reference when mail comes for this contact"
 msgstr "حمّل المراجع الخارجيّة للبريد القادم من هذا المتراسل"
 
 #: kmreaderwin.cpp:204
-#, kde-format
-msgid "Share image..."
+#, fuzzy, kde-format
+#| msgid "Share image..."
+msgid "Share image…"
 msgstr "شارك الصّورة..."
 
 #: kmreaderwin.cpp:259
@@ -5614,10 +5700,11 @@ msgstr ""
 "الخيار مفعّلًا، فسيُعرض المجلّد الرّئيس فقط."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "New Messages"
 msgctxt "@action:inmenu"
-msgid "New Message..."
-msgstr "رسالة جديدة..."
+msgid "New Message…"
+msgstr "رسائل جديدة"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5678,8 +5765,9 @@ msgid "Select the plugin summaries to show on the summary page."
 msgstr "حدد ملخَّصات الملحق لعرضها في صفحة الملخَّص."
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#, kde-format
-msgid "&Configure Summary View..."
+#, fuzzy, kde-format
+#| msgid "&Configure Summary View..."
+msgid "&Configure Summary View…"
 msgstr "ا&ضبط عرض الملخص..."
 
 #: kontactplugin/summary/summaryview_part.cpp:50
@@ -5772,178 +5860,196 @@ msgid "&Reply"
 msgstr "&ردّ"
 
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
-#, kde-format
-msgid "&Reply..."
-msgstr "&ردّ..."
+#, fuzzy, kde-format
+#| msgctxt "Message->"
+#| msgid "&Reply"
+msgid "&Reply…"
+msgstr "&ردّ"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
-#, kde-format
-msgid "Reply to &All..."
-msgstr "ردّ &على الكل..."
+#, fuzzy, kde-format
+#| msgid "Reply to All"
+msgid "Reply to &All…"
+msgstr "رُدّ على الكل"
 
 #: messageactions.cpp:66
-#, kde-format
-msgid "Reply to A&uthor..."
+#, fuzzy, kde-format
+#| msgid "Reply to A&uthor..."
+msgid "Reply to A&uthor…"
 msgstr "رُدّ على ال&مؤلّف..."
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
-#, kde-format
-msgid "Reply to Mailing-&List..."
+#, fuzzy, kde-format
+#| msgid "Reply to Mailing-&List..."
+msgid "Reply to Mailing-&List…"
 msgstr "ردّ على القائمة ال&بريديّة..."
 
 #: messageactions.cpp:68
-#, kde-format
-msgid "Reply Without &Quote..."
+#, fuzzy, kde-format
+#| msgid "Reply Without &Quote..."
+msgid "Reply Without &Quote…"
 msgstr "رُدّ بدون ا&قتباس..."
 
 #: messageactions.cpp:69
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
-msgid "&Inline..."
-msgstr "&ضمن السّياق..."
+msgid "&Inline…"
+msgstr "&ضمن السّياق"
+
+#: messageactions.cpp:70
+#, fuzzy, kde-format
+#| msgid "As Attachment"
+msgctxt "@action:inmenu Message->Forward->"
+msgid "As &Attachment…"
+msgstr "كمرفق"
 
 #: messageactions.cpp:71
-#, kde-format
-msgctxt "@action:inmenu Message->Forward->"
-msgid "As &Attachment..."
-msgstr "كمر&فق..."
-
-#: messageactions.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Message->Forward->"
+#| msgid "&Redirect..."
 msgctxt "Message->Forward->"
-msgid "&Redirect..."
+msgid "&Redirect…"
 msgstr "أ&عد التَّوجيه..."
 
-#: messageactions.cpp:73
-#, kde-format
-msgid "New Message to Recipients..."
+#: messageactions.cpp:72
+#, fuzzy, kde-format
+#| msgid "New Message to Recipients..."
+msgid "New Message to Recipients…"
 msgstr "رسالة جديدة للمستلمين..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "علّ&م الرّسالة"
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&مرّر"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "ال&قائمة البريديّة"
 
-#: messageactions.cpp:77 messageactions.cpp:372
-#, kde-format
-msgid "Add Note..."
+#: messageactions.cpp:76 messageactions.cpp:371
+#, fuzzy, kde-format
+#| msgid "Add Note..."
+msgid "Add Note…"
 msgstr "أضف ملاحظة..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "&حرّر كجديد"
 
-#: messageactions.cpp:79
-#, kde-format
-msgid "Filter on Mailing-&List..."
+#: messageactions.cpp:78
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-&List…"
 msgstr "رشّح ال&قائمة البريديّة..."
 
-#: messageactions.cpp:80
-#, kde-format
-msgid "Add Followup Reminder..."
+#: messageactions.cpp:79
+#, fuzzy, kde-format
+#| msgid "Add Followup Reminder..."
+msgid "Add Followup Reminder…"
 msgstr "أضف تذكير بالمتابعة..."
 
-#: messageactions.cpp:82
-#, kde-format
-msgid "Send A&gain..."
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+#| msgid "Send A&gain..."
+msgid "Send A&gain…"
 msgstr "أرسل م&جدّدًا..."
 
-#: messageactions.cpp:83
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "رسالة جديدة من &قالب"
 
-#: messageactions.cpp:85
-#, kde-format
-msgid "Export to PDF..."
-msgstr "صدر إلى بي دي اف..."
+#: messageactions.cpp:84
+#, fuzzy, kde-format
+#| msgid "Export to PDF"
+msgid "Export to PDF…"
+msgstr "صدر إلى بي دي اف"
 
-#: messageactions.cpp:86
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "أرشف الرسالة"
 
-#: messageactions.cpp:374
-#, kde-format
-msgid "Edit Note..."
+#: messageactions.cpp:373
+#, fuzzy, kde-format
+#| msgid "Edit Note..."
+msgid "Edit Note…"
 msgstr "حرّر الملاحظة..."
 
-#: messageactions.cpp:419
-#, kde-format
-msgid "Filter on Mailing-List..."
+#: messageactions.cpp:418
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List..."
+msgid "Filter on Mailing-List…"
 msgstr "رشّح القائمة البريديّة..."
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr "< مجهول >"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "اسم القائمة البريديّة: %1"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "افتح الرّسالة في قائمة الأرشيف"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "أرسل رسالة جديدة"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "تنقّل إلى الأرشيف"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "اطلب المساعدة"
 
-#: messageactions.cpp:470
+#: messageactions.cpp:469
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "راسل المؤلّف"
 
-#: messageactions.cpp:476
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "ألغ الاشتراك بالقائمة"
 
-#: messageactions.cpp:485
-#, kde-format
-msgid "Filter on Mailing-List %1..."
+#: messageactions.cpp:484
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List %1..."
+msgid "Filter on Mailing-List %1…"
 msgstr "رشّح القائمة البريديّة %1..."
 
-#: messageactions.cpp:662
+#: messageactions.cpp:661
 #, kde-format
 msgid "email"
 msgstr "البريد الإلكتروني"
 
-#: messageactions.cpp:665
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr "الوبّ"
 
-#: messageactions.cpp:670
+#: messageactions.cpp:669
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -5951,12 +6057,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "Export to PDF"
 msgstr "صدر إلى بي دي اف"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "وثيقة بي دي اف (pdf.*)"
@@ -5978,8 +6084,9 @@ msgid "Indexing"
 msgstr "يفهرس"
 
 #: searchdialog/incompleteindexdialog.cpp:221
-#, kde-format
-msgid "Indexing Collections..."
+#, fuzzy, kde-format
+#| msgid "Indexing Collections..."
+msgid "Indexing Collections…"
 msgstr "يفهرس التّجميعات..."
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
@@ -6031,21 +6138,23 @@ msgid "&Search"
 msgstr "ا&بحث"
 
 #: searchdialog/searchwindow.cpp:173
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@action:inmenu Forward message inline."
-msgid "&Inline..."
-msgstr "&ضمن السّياق..."
+msgid "&Inline…"
+msgstr "&ضمن السّياق"
 
 #: searchdialog/searchwindow.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "As Attachment"
 msgctxt "Message->Forward->"
-msgid "As &Attachment..."
-msgstr "كمر&فق..."
+msgid "As &Attachment…"
+msgstr "كمرفق"
 
 #: searchdialog/searchwindow.cpp:192
-#, kde-format
-msgid "Save Attachments..."
-msgstr "احفظ المرفقات..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment"
+msgid "Save Attachments…"
+msgstr "احفظ المرفق"
 
 #: searchdialog/searchwindow.cpp:199
 #, kde-format
@@ -6105,8 +6214,9 @@ msgid ""
 msgstr "لا يمكن استخدام شرط ضمّن لأقل من 4 محارف."
 
 #: searchdialog/searchwindow.cpp:522
-#, kde-format
-msgid "Searching..."
+#, fuzzy, kde-format
+#| msgid "Searching..."
+msgid "Searching…"
 msgstr "يبحث..."
 
 #: searchdialog/searchwindow.cpp:535
@@ -6162,8 +6272,9 @@ msgstr[4] "قُص %1رسالة"
 msgstr[5] "قُص %1رسالة"
 
 #: searchdialog/searchwindow.cpp:911
-#, kde-format
-msgid "Checking index status..."
+#, fuzzy, kde-format
+#| msgid "Checking index status..."
+msgid "Checking index status…"
 msgstr "يفحص حالة الفهرسة..."
 
 #: secondarywindow.cpp:57
@@ -6593,14 +6704,15 @@ msgid "Message Tag: %1"
 msgstr "وسم الرسالة: %1"
 
 #: tag/tagactionmanager.cpp:155
-#, kde-format
-msgid "Add new tag..."
-msgstr "أضف وسمًا جديدًا..."
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgid "Add new tag…"
+msgstr "أضف وسمًا جديدًا"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
-msgid "More..."
-msgstr "المزيد..."
+msgid "More…"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -6619,19 +6731,22 @@ msgid "Select Tags"
 msgstr "حدد الوسوم"
 
 #: tag/tagselectdialog.cpp:53
-#, kde-format
-msgid "Add New Tag..."
+#, fuzzy, kde-format
+#| msgid "Add New Tag..."
+msgid "Add New Tag…"
 msgstr "أضف وسمًا جديدًا..."
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
-msgid "Search tag..."
+#, fuzzy, kde-format
+#| msgid "Search tag..."
+msgid "Search tag…"
 msgstr "ابحث عن وسم..."
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
-#, kde-format
-msgid "Customize accounts order..."
+#, fuzzy, kde-format
+#| msgid "Customize accounts order..."
+msgid "Customize accounts order…"
 msgstr "خصّص ترتيب الحسابات..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
@@ -6654,8 +6769,9 @@ msgstr "إشعار بريد جديد &مفصل"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
-#, kde-format
-msgid "Other Actio&ns..."
+#, fuzzy, kde-format
+#| msgid "Other Actio&ns..."
+msgid "Other Actio&ns…"
 msgstr "إ&جراءات أخرى..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
@@ -6673,8 +6789,8 @@ msgstr "أضف هويّة جديدة"
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
 #, kde-format
-msgid "&Add..."
-msgstr "أ&ضف..."
+msgid "&Add…"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -6684,8 +6800,9 @@ msgstr "عدّل الهويّة المحدّدة"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
-#, kde-format
-msgid "&Modify..."
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "&Modify…"
 msgstr "&عدّل..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
@@ -6959,8 +7076,9 @@ msgstr "حدّد المجلّدات الفرعيّة:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
-#, kde-format
-msgid "Select Folders..."
+#, fuzzy, kde-format
+#| msgid "Select Folders..."
+msgid "Select Folders…"
 msgstr "حدّد المجلّدات..."
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
@@ -7194,9 +7312,11 @@ msgstr "لشهادات CA المتوسِّطة:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
-#, kde-format
-msgid "GnuPG Settings..."
-msgstr "إعدادات GnuPG..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "GnuPG Settings"
+msgid "GnuPG Settings…"
+msgstr "إعدادات GnuPG"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:393
@@ -7247,11 +7367,16 @@ msgstr "الاستثناءات"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
 #: ui/securitypagegeneraltab.ui:62
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
+#| "system will be compromised by present and anticipated security exploits. "
+#| "<a href=\"whatsthis1\">More about HTML mails...</a> <a href="
+#| "\"whatsthis2\">More about external references...</a>"
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
-"href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
+"href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
 "<b> تحذير: </b> قد يؤدي السماح لـ HTML في البريد الإلكتروني إلى زيادة مخاطر "
@@ -7478,10 +7603,13 @@ msgstr "لا تُرسل إشعارات قراءة الرسائل  كجواب ع�
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarning)
 #: ui/securitypagemdntab.ui:152
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
+#| "privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
-"privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
+"privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<b> تحذير:</b>  التَّأكيدات العائدة بدون شرط ستقوِّض خُصوصيَّتك.<a href=\"whatsthis-"
 "mdn\">للمزيد حول  إشعارات قراءة الرسائل...</a>"
@@ -7903,6 +8031,110 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid "A&dd..."
+#~ msgstr "أ&ضف..."
+
+#~ msgid "Add..."
+#~ msgstr "أضف..."
+
+#~ msgid "Select &Recipients..."
+#~ msgstr "حدّد ال&مستلمين..."
+
+#~ msgid "Save &Distribution List..."
+#~ msgstr "احفظ قائمة ال&تّوزيع..."
+
+#~ msgid "&Spellchecker..."
+#~ msgstr "&مدقّق الهجاء..."
+
+#~ msgid "Edit..."
+#~ msgstr "حرّر..."
+
+#~ msgid "Moving messages..."
+#~ msgstr "ينقل الرّسائل..."
+
+#~ msgid "Deleting messages..."
+#~ msgstr "يحذف الرّسائل..."
+
+#~ msgid "Filter &Log Viewer..."
+#~ msgstr "مُرشِّح &عارض السجل..."
+
+#~ msgid "&Find Messages..."
+#~ msgstr "ا&بحث عن رسائل..."
+
+#~ msgid "&Clear Akonadi Cache..."
+#~ msgstr "امحُ &خبيئة اكوندا..."
+
+#~ msgid "&Archive Folder..."
+#~ msgstr "أر&شف المجلّد..."
+
+#~ msgid "&New Message..."
+#~ msgstr "رسالة &جديدة..."
+
+#~ msgid "Save A&ttachments..."
+#~ msgstr "احفظ الم&رفقات..."
+
+#~ msgid "Manage &Sieve Scripts..."
+#~ msgstr "أ&در سكربتات تصفية البريد..."
+
+#~ msgid "Expire..."
+#~ msgstr "انتهى..."
+
+#~ msgid "Add Favorite Folder..."
+#~ msgstr "أضف مجلّدًا مفضّلًا..."
+
+#~ msgid "Jump to Folder..."
+#~ msgstr "اقفز إلى مجلّد..."
+
+#~ msgid "Reply To..."
+#~ msgstr "ردّ على..."
+
+#~ msgid "Forward To..."
+#~ msgstr "مرّر إلى..."
+
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Message..."
+#~ msgstr "رسالة جديدة..."
+
+#~ msgid "&Reply..."
+#~ msgstr "&ردّ..."
+
+#~ msgid "Reply to &All..."
+#~ msgstr "ردّ &على الكل..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "&Inline..."
+#~ msgstr "&ضمن السّياق..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "كمر&فق..."
+
+#~ msgid "Export to PDF..."
+#~ msgstr "صدر إلى بي دي اف..."
+
+#~ msgctxt "@action:inmenu Forward message inline."
+#~ msgid "&Inline..."
+#~ msgstr "&ضمن السّياق..."
+
+#~ msgctxt "Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "كمر&فق..."
+
+#~ msgid "Save Attachments..."
+#~ msgstr "احفظ المرفقات..."
+
+#~ msgid "Add new tag..."
+#~ msgstr "أضف وسمًا جديدًا..."
+
+#~ msgid "More..."
+#~ msgstr "المزيد..."
+
+#~ msgid "&Add..."
+#~ msgstr "أ&ضف..."
+
+#~ msgid "GnuPG Settings..."
+#~ msgstr "إعدادات GnuPG..."
 
 #~ msgid "Charset"
 #~ msgstr "طقم المحارف"
@@ -8471,9 +8703,6 @@ msgstr "التكبير: %1٪"
 #~| msgid "New Message"
 #~ msgid "Show Message"
 #~ msgstr "رسالة جديدة"
-
-#~ msgid "Filter Log Viewer"
-#~ msgstr "عارض سجل المُرشّح"
 
 #~ msgid "&Log filter activities"
 #~ msgstr "&سجّل نشاطات المُرشّح"
@@ -10686,9 +10915,6 @@ msgstr "التكبير: %1٪"
 #~ msgid "Allow out-of-office replies to be sent to messages marked as SPAM."
 #~ msgstr "اسمح خارج من إلى إلى رسائل."
 
-#~ msgid "Manage Sieve Scripts"
-#~ msgstr "أدر سكربتات Sieve"
-
 #~ msgid "Available Scripts"
 #~ msgstr "السكربتات المتوفرة"
 
@@ -10773,10 +10999,6 @@ msgstr "التكبير: %1٪"
 #~ "شخص ما (على الأغلب أنت) غير ملف الاوامر للغيابت على الخادم.\n"
 #~ "برنامج KMail م يعدس مؤهلا لتحديد اضوابتت للرد التلقائي.\n"
 #~ "سيتم إستخدام قيم إفتراضية."
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "تحرير"
 
 #~ msgid ""
 #~ "Sieve script installed successfully on the server.\n"
@@ -11043,11 +11265,6 @@ msgstr "التكبير: %1٪"
 
 #~ msgid "CC"
 #~ msgstr "ن.ك"
-
-#, fuzzy
-#~| msgid "&Reply To"
-#~ msgid "Reply To"
-#~ msgstr "&رُدّ على"
 
 #, fuzzy
 #~| msgid "Organization:"
@@ -11335,9 +11552,6 @@ msgstr "التكبير: %1٪"
 
 #~ msgid "Copy Into Folder"
 #~ msgstr "أنسخ إلى هذا المجلد"
-
-#~ msgid "Forward To"
-#~ msgstr "مرّر إلى"
 
 #~ msgid "The addressee to whom the message will be forwarded."
 #~ msgstr "العنوان الذي ستمرّر له هذه الرسالة."
@@ -12631,9 +12845,6 @@ msgstr "التكبير: %1٪"
 #~ msgid "attachment.1"
 #~ msgstr "مرفق.1"
 
-#~ msgid "Save Attachment"
-#~ msgstr "احفظ المرفق"
-
 #~ msgctxt "filename for the %1-th unnamed attachment"
 #~ msgid "attachment.%1"
 #~ msgstr "مرفق.%1"
@@ -12854,9 +13065,6 @@ msgstr "التكبير: %1٪"
 #~ msgid "<qt>Unable to access <b>%1</b>.</qt>"
 #~ msgstr "<qt>غير قادر على الوصول إلى <b>%1</b>.</qt>"
 
-#~ msgid "Select Recipient"
-#~ msgstr "إختر المراسل"
-
 #, fuzzy
 #~| msgid "Search Criteria"
 #~ msgid "Search &Directory Service"
@@ -12891,12 +13099,6 @@ msgstr "التكبير: %1٪"
 #~ msgstr ""
 #~ "ألغِ هذا الخيار إن كنت لا تريد إظهار العناوين المستخدمة حديثًا في قائمة "
 #~ "الإكمال التلقائي في حقل عنوان المُرسل."
-
-#, fuzzy
-#~| msgid "Save Distribution List"
-#~ msgctxt "@title:window"
-#~ msgid "Save Distribution List"
-#~ msgstr "إحفظ لائحة التوزيع"
 
 #~ msgctxt "@action:button"
 #~ msgid "Save List"
@@ -13387,9 +13589,6 @@ msgstr "التكبير: %1٪"
 
 #~ msgid "Reply"
 #~ msgstr "رُدّ"
-
-#~ msgid "Reply to All"
-#~ msgstr "رُدّ على الكل"
 
 #~ msgctxt "Template type for forwarding messages."
 #~ msgid "Forward"
@@ -16912,11 +17111,6 @@ msgstr "التكبير: %1٪"
 
 #~ msgid "Show attachments as suggested by sender."
 #~ msgstr "أظهر الملحقات كما هو مقترح من المرسل."
-
-#, fuzzy
-#~ msgctxt "View->attachments->"
-#~ msgid "&Inline"
-#~ msgstr "&ضمن السّياق"
 
 #~ msgid "Show all attachments inline (if possible)"
 #~ msgstr "أظهر كل الملحقات داخل المحتوى (إن أمكن)"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"POT-Creation-Date: 2024-05-08 00:39+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -468,7 +468,7 @@ msgstr "ঠিকানা তালিকা:"
 msgid "URL for mailing list posting:"
 msgstr ""
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:473
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr ""
@@ -702,13 +702,13 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "Add Mail Account..."
+msgid "Add Mail Account…"
 msgstr "অ্যাকাউন্ট যোগ করো"
 
 #: configuredialog/configureaccountpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "Custom Account..."
+msgid "Custom Account…"
 msgstr "অ্যাকাউন্ট যোগ করো"
 
 #: configuredialog/configureaccountpage.cpp:230
@@ -980,7 +980,7 @@ msgstr "[&স]সূত্র মুছে ফেলো"
 
 #: configuredialog/configureappearancepage.cpp:687
 #, kde-format
-msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:693
@@ -1285,9 +1285,9 @@ msgstr ""
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
-"the \"Select...\" picker.  Setting this limit helps you to avoid "
-"accidentally sending a message to too many people.  Note, however, that it "
-"does not take account of distribution lists or mailing lists."
+"the \"Select…\" picker.  Setting this limit helps you to avoid accidentally "
+"sending a message to too many people.  Note, however, that it does not take "
+"account of distribution lists or mailing lists."
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:420
@@ -1319,7 +1319,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
-msgid "Configure Completion..."
+msgid "Configure Completion…"
 msgstr "ফিল্টা&র কনফিগার করো..."
 
 #: configuredialog/configurecomposerpage.cpp:465
@@ -1364,8 +1364,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
-msgid "A&dd..."
-msgstr "যো&গ করো..."
+msgid "A&dd…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:832
@@ -1410,10 +1410,10 @@ msgstr "&সরিয়ে ফেলো"
 
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
-msgid "Add..."
-msgstr "যোগ করো..."
+msgid "Add…"
+msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Modify..."
 msgstr "বদলাও..."
@@ -1990,7 +1990,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1308
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
-msgid "&Insert Text File..."
+msgid "&Insert Text File…"
 msgstr "ফাই&ল ঢোকাও..."
 
 #: editor/kmcomposerwin.cpp:1312
@@ -2016,13 +2016,15 @@ msgid "&New Composer"
 msgstr "&নতুন রচনাক্ষেত্র"
 
 #: editor/kmcomposerwin.cpp:1336
-#, kde-format
-msgid "Select &Recipients..."
+#, fuzzy, kde-format
+#| msgid "Select &Recipients..."
+msgid "Select &Recipients…"
 msgstr "প্রাপ&ক নির্বাচন করো..."
 
 #: editor/kmcomposerwin.cpp:1339
-#, kde-format
-msgid "Save &Distribution List..."
+#, fuzzy, kde-format
+#| msgid "Save &Distribution List..."
+msgid "Save &Distribution List…"
 msgstr "বিতর&ণ তালিকা সংরক্ষণ করো..."
 
 #: editor/kmcomposerwin.cpp:1360
@@ -2142,9 +2144,10 @@ msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1464
-#, kde-format
-msgid "&Spellchecker..."
-msgstr "বানান &পরীক্ষক..."
+#, fuzzy, kde-format
+#| msgid "Spellchecker"
+msgid "&Spellchecker…"
+msgstr "বানান পরীক্ষক"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2184,12 +2187,12 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Create Follow Up Reminder..."
+msgid "Create Follow Up Reminder…"
 msgstr "বার্তা &সন্ধান করো"
 
 #: editor/kmcomposerwin.cpp:1542
 #, fuzzy, kde-format
-msgid "Configure KMail..."
+msgid "Configure KMail…"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
@@ -2425,8 +2428,9 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3062
-#, kde-format
-msgid "About to send email..."
+#, fuzzy, kde-format
+#| msgid "About to send email..."
+msgid "About to send email…"
 msgstr "ই-মেইল পাঠাতে চলেছি..."
 
 #: editor/kmcomposerwin.cpp:3063
@@ -2692,7 +2696,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"\">(details…)</a>"
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -3018,9 +3022,10 @@ msgid "Generate a new key pair"
 msgstr "নতুন শব্দ লিখুন:"
 
 #: identity/identitydialog.cpp:228
-#, kde-format
-msgid "Generating new key pair..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgid "Generating new key pair…"
+msgstr "নতুন শব্দ লিখুন:"
 
 #: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
@@ -3339,7 +3344,7 @@ msgstr "বার্তায় 'হেডার' যোগ করো "
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
 #, fuzzy, kde-format
 #| msgid "Rename..."
-msgid "Create..."
+msgid "Create…"
 msgstr "নাম পাল্টাও..."
 
 #: identity/identitydialog.cpp:618
@@ -3468,9 +3473,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:1165
-#, kde-format
-msgid "Edit..."
-msgstr "সম্পাদনা..."
+#, fuzzy, kde-format
+msgid "Edit…"
+msgstr "প্রস্থান করো"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
@@ -3576,6 +3581,12 @@ msgstr[1] "পরিচিতি সরিয়ে ফেলো"
 #, fuzzy, kde-format
 msgid "&Remove"
 msgstr "&সরিয়ে ফেলো"
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
+msgstr "বদলাও..."
 
 #: identity/identitypage.cpp:275
 #, fuzzy, kde-format
@@ -4482,13 +4493,13 @@ msgstr "বার্তা মুছে ফেলো"
 #: kmmainwidget.cpp:1674
 #, fuzzy, kde-format
 #| msgid "Moving messages"
-msgid "Moving messages..."
+msgid "Moving messages…"
 msgstr "বার্তা সরানো হচ্ছে"
 
 #: kmmainwidget.cpp:1676 kmmainwidget.cpp:1870
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
-msgid "Deleting messages..."
+msgid "Deleting messages…"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
 #: kmmainwidget.cpp:1691 kmmainwidget.cpp:1890
@@ -4533,7 +4544,7 @@ msgstr "বার্তা ফোল্ডার-এ সরাও"
 #: kmmainwidget.cpp:1799
 #, fuzzy, kde-format
 #| msgid "Moving messages"
-msgid "Copying messages..."
+msgid "Copying messages…"
 msgstr "বার্তা সরানো হচ্ছে"
 
 #: kmmainwidget.cpp:1807
@@ -4564,13 +4575,13 @@ msgstr "বার্তা ফোল্ডার-এ কপি করো"
 #: kmmainwidget.cpp:1867
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
-msgid "Moving messages to trash..."
+msgid "Moving messages to trash…"
 msgstr "বার্তা সরিয়ে আবর্জনা ফোল্ডারে নিয়ে যাও"
 
 #: kmmainwidget.cpp:1874
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
-msgid "Deleting and moving messages to trash..."
+msgid "Deleting and moving messages to trash…"
 msgstr "বার্তা সরিয়ে আবর্জনা ফোল্ডারে নিয়ে যাও"
 
 #: kmmainwidget.cpp:1887
@@ -4667,8 +4678,9 @@ msgid "Delete Attachments"
 msgstr "অ্যাটাচমেন্ট &সরাও"
 
 #: kmmainwidget.cpp:2909
-#, kde-format
-msgid "Save &As..."
+#, fuzzy, kde-format
+#| msgid "Save &As..."
+msgid "Save &As…"
 msgstr "&নতুন নামে সংরক্ষণ করো..."
 
 #: kmmainwidget.cpp:2920
@@ -4717,51 +4729,53 @@ msgstr "সার্টিফিকেট ম্যানেজার..."
 #: kmmainwidget.cpp:2979
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
-msgid "&Import Messages..."
+msgid "&Import Messages…"
 msgstr "বার্তা আ&মদানি করো..."
 
 #: kmmainwidget.cpp:2989
 #, kde-format
-msgid "&Debug Sieve..."
+msgid "&Debug Sieve…"
 msgstr ""
 
 #: kmmainwidget.cpp:2996
-#, kde-format
-msgid "Filter &Log Viewer..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Filter Log Viewer"
+msgid "Filter &Log Viewer…"
+msgstr "ফিল্টার লগ প্রদর্শক"
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
-msgid "Notification History..."
+msgid "Notification History…"
 msgstr "নতুন মেইল বিজ্ঞপ্তি"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
-msgid "&Import from another Email Client..."
+msgid "&Import from another Email Client…"
 msgstr ""
 
 #: kmmainwidget.cpp:3011
-#, kde-format
-msgid "Edit \"Out of Office\" Replies..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Configure \"Out of Office\" Replies"
+msgid "Edit \"Out of Office\" Replies…"
+msgstr "\"অফিসে নেই\" উত্তর কনফিগার করো"
 
 #: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
-msgid "&Configure Automatic Archiving..."
+msgid "&Configure Automatic Archiving…"
 msgstr "বার্তা&বলী কনফিগার করো..."
 
 #: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
-msgid "Delayed Messages..."
+msgid "Delayed Messages…"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Followup Reminder Messages..."
+msgid "Followup Reminder Messages…"
 msgstr "বার্তা &সন্ধান করো"
 
 #: kmmainwidget.cpp:3040 util.cpp:149
@@ -4785,10 +4799,11 @@ msgstr "সূত্র আবর্জনার বাক্সে পাঠা
 msgid "Delete T&hread"
 msgstr "[&স]সূত্র মুছে ফেলো"
 
-#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
-#, kde-format
-msgid "&Find Messages..."
-msgstr "বার্তা &সন্ধান করো"
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4113
+#, fuzzy, kde-format
+#| msgid "Find Messages"
+msgid "&Find Messages…"
+msgstr "বার্তা সন্ধান করো"
 
 #: kmmainwidget.cpp:3063
 #, kde-format
@@ -4797,13 +4812,14 @@ msgstr "&সব বার্তা নির্বাচন করো"
 
 #: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
-msgid "&Mailing List Management..."
+msgid "&Mailing List Management…"
 msgstr "মে&ইলিং-লিস্ট ব্যবস্থাপনা"
 
 #: kmmainwidget.cpp:3078
-#, kde-format
-msgid "&Clear Akonadi Cache..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "&Clear Akonadi Cache…"
+msgstr "পরিচিতির নাম"
 
 #: kmmainwidget.cpp:3083
 #, kde-format
@@ -4812,7 +4828,7 @@ msgstr ""
 
 #: kmmainwidget.cpp:3088
 #, kde-format
-msgid "&Assign Shortcut..."
+msgid "&Assign Shortcut…"
 msgstr ""
 
 #: kmmainwidget.cpp:3106
@@ -4822,9 +4838,9 @@ msgstr ""
 
 #: kmmainwidget.cpp:3131
 #, fuzzy, kde-format
-#| msgid "&New Folder..."
-msgid "&Archive Folder..."
-msgstr "&নতুন ফোল্ডার..."
+#| msgid "New Folder"
+msgid "&Archive Folder…"
+msgstr "নতুন ফোল্ডার"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -4834,19 +4850,20 @@ msgstr ""
 #: kmmainwidget.cpp:3162
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Copy Message To..."
+msgid "Copy Message To…"
 msgstr "একে নতুন বার্তা..."
 
 #: kmmainwidget.cpp:3164
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Move Message To..."
+msgid "Move Message To…"
 msgstr "একে নতুন বার্তা..."
 
 #: kmmainwidget.cpp:3169
-#, kde-format
-msgid "&New Message..."
-msgstr "&নতুন বার্তা..."
+#, fuzzy, kde-format
+#| msgid "New Message"
+msgid "&New Message…"
+msgstr "নতুন বার্তা"
 
 #: kmmainwidget.cpp:3171
 #, fuzzy, kde-format
@@ -4861,8 +4878,9 @@ msgid "Message From &Template"
 msgstr "সার্ভার-এ কোন নতুন বার্তা নেই"
 
 #: kmmainwidget.cpp:3185
-#, kde-format
-msgid "New Message t&o Mailing-List..."
+#, fuzzy, kde-format
+#| msgid "New Message t&o Mailing-List..."
+msgid "New Message t&o Mailing-List…"
 msgstr "মেইলিং লিস্ট-&এ নতুন বার্তা পাঠাও..."
 
 #: kmmainwidget.cpp:3191
@@ -4871,24 +4889,27 @@ msgid "&Create Filter"
 msgstr "ফিল্টা&র তৈরি করো"
 
 #: kmmainwidget.cpp:3195
-#, kde-format
-msgid "Filter on &Subject..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Subject..."
+msgid "Filter on &Subject…"
 msgstr "বিষ&য় দিয়ে ফিল্টার করো"
 
 #: kmmainwidget.cpp:3202
-#, kde-format
-msgid "Filter on &From..."
+#, fuzzy, kde-format
+#| msgid "Filter on &From..."
+msgid "Filter on &From…"
 msgstr "প্রের&ক দিয়ে ফিল্টার করো"
 
 #: kmmainwidget.cpp:3208
-#, kde-format
-msgid "Filter on &To..."
+#, fuzzy, kde-format
+#| msgid "Filter on &To..."
+msgid "Filter on &To…"
 msgstr "প্রা&পক দিয়ে ফিল্টার করো"
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
-msgid "Filter on &Cc..."
+msgid "Filter on &Cc…"
 msgstr "প্রা&পক দিয়ে ফিল্টার করো"
 
 #: kmmainwidget.cpp:3228
@@ -4949,9 +4970,10 @@ msgid "&Ignore Thread"
 msgstr "সূত্র &অগ্রাহ্য করো"
 
 #: kmmainwidget.cpp:3271 kmreadermainwin.cpp:490
-#, kde-format
-msgid "Save A&ttachments..."
-msgstr "অ্যাটা&চমেন্ট সংরক্ষণ করো..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment As"
+msgid "Save A&ttachments…"
+msgstr "অ্যাটাচমেন্ট নতুন নামে সংরক্ষণ করো"
 
 #: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
@@ -4963,7 +4985,7 @@ msgstr "সব অ্যাটাচমেন্ট সংরক্ষণ কর
 #: kmmainwidget.cpp:3283
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Copy Decrypted To..."
+msgid "Copy Decrypted To…"
 msgstr "একে নতুন বার্তা..."
 
 #: kmmainwidget.cpp:3287
@@ -5118,19 +5140,20 @@ msgid ""
 msgstr ""
 
 #: kmmainwidget.cpp:3403
-#, kde-format
-msgid "Configure &Filters..."
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgid "Configure &Filters…"
 msgstr "ফিল্টা&র কনফিগার করো..."
 
 #: kmmainwidget.cpp:3409
 #, kde-format
-msgid "Manage &Sieve Scripts..."
+msgid "Manage &Sieve Scripts…"
 msgstr ""
 
 #: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "&Add Account..."
+msgid "&Add Account…"
 msgstr "অ্যাকাউন্ট যোগ করো"
 
 #: kmmainwidget.cpp:3419
@@ -5144,29 +5167,30 @@ msgid "Display KMail's Welcome Page"
 msgstr "কে-মেইলের পরিচিতি পৃষ্ঠা দেখাও"
 
 #: kmmainwidget.cpp:3428
-#, kde-format
-msgid "Configure &Notifications..."
+#, fuzzy, kde-format
+#| msgid "Configure &Notifications..."
+msgid "Configure &Notifications…"
 msgstr "বার্তা&বলী কনফিগার করো..."
 
 #: kmmainwidget.cpp:3435
-#, kde-format
-msgid "&Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "&Configure KMail..."
+msgid "&Configure KMail…"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
 #: kmmainwidget.cpp:3442
 #, kde-format
-msgid "Expire..."
+msgid "Expire…"
 msgstr ""
 
 #: kmmainwidget.cpp:3448
 #, fuzzy, kde-format
-#| msgid "&New Folder..."
-msgid "Add Favorite Folder..."
-msgstr "&নতুন ফোল্ডার..."
+msgid "Add Favorite Folder…"
+msgstr "নতুন ফোল্ডার"
 
 #: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
-msgid "Serverside Subscription..."
+msgid "Serverside Subscription…"
 msgstr "বর্ণনা"
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
@@ -5184,16 +5208,16 @@ msgstr "সমস্ত ফিল্টার প্রয়ো&গ করো"
 #: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "Import/Export KMail Data..."
+msgid "Import/Export KMail Data…"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
 #: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 #| msgid "&Address Book..."
-msgid "New AddressBook Contact..."
+msgid "New AddressBook Contact…"
 msgstr "ঠিকানা তালিকা (&ঠ)..."
 
-#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4152
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "প্রের&ণ"
@@ -5211,7 +5235,7 @@ msgstr "বার্তা ফোল্ডার-এ কপি করো"
 
 #: kmmainwidget.cpp:3526
 #, fuzzy, kde-format
-msgid "Jump to Folder..."
+msgid "Jump to Folder…"
 msgstr "এই ফোল্ডার-এ কপি করো"
 
 #: kmmainwidget.cpp:3532
@@ -5332,46 +5356,46 @@ msgstr "&সন্ধান মুছে ফেলো"
 #: kmmainwidget.cpp:4113
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit Search..."
+msgid "Edit Search…"
 msgstr "স্ক্রিপ্ট সম্পাদন করো..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4150
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&আবর্জনা ফোল্ডার ফাঁকা করো"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&সব বার্তা আবর্জনা ফোল্ডারে পাঠাও"
 
-#: kmmainwidget.cpp:4236
+#: kmmainwidget.cpp:4235
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4238
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4295
+#: kmmainwidget.cpp:4294
 #, kde-format
 msgid "Filter %1"
 msgstr "ফিল্টার %1"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4762
 #, fuzzy, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
-msgid "Search... <%1>"
+msgid "Search… <%1>"
 msgstr "প্রের&ণ"
 
-#: kmmainwidget.cpp:4771
+#: kmmainwidget.cpp:4770
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5379,19 +5403,19 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4774
+#: kmmainwidget.cpp:4773
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "নিরাপত্তা সতর্কীকরণ"
 
-#: kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgid "Use HTML"
 msgstr "এইচ-টি-এম-এল ব্যবহার করো"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4920
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5401,48 +5425,48 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "বাতি&ল"
 
-#: kmmainwidget.cpp:4961
+#: kmmainwidget.cpp:4960
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>আপনি কি সত্যিই <b>%1</b> নামক পরিচিতিটি সরিয়ে ফেলতে চান?</qt>"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4961
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "পরিচিতির নাম"
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "পরিচিতির নাম"
 
-#: kmmainwidget.cpp:4970
+#: kmmainwidget.cpp:4969
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
-msgid "Starting..."
+msgid "Starting…"
 msgstr "প্রের&ণ"
 
 #: kmreadermainwin.cpp:493 util.cpp:149
@@ -5474,19 +5498,22 @@ msgid "Cannot copy item. %1"
 msgstr "বার্তা ফোল্ডার-এ সরাও"
 
 #: kmreaderwin.cpp:122
-#, kde-format
-msgid "New Message To..."
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "New Message To…"
 msgstr "একে নতুন বার্তা..."
 
 #: kmreaderwin.cpp:128
-#, kde-format
-msgid "Reply To..."
-msgstr "একে উত্তর দাও..."
+#, fuzzy, kde-format
+#| msgid "&Reply To"
+msgid "Reply To…"
+msgstr "&উত্তর প্রাপক"
 
 #: kmreaderwin.cpp:134
-#, kde-format
-msgid "Forward To..."
-msgstr "একে ফরোয়ার্ড করো..."
+#, fuzzy, kde-format
+#| msgid "Forward To"
+msgid "Forward To…"
+msgstr "এখানে ফরওয়ার্ড করো"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5512,30 +5539,32 @@ msgstr "এই লিঙ্কটি বুকমার্ক করো"
 #: kmreaderwin.cpp:161
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit contact..."
+msgid "Edit contact…"
 msgstr "স্ক্রিপ্ট সম্পাদন করো..."
 
 #: kmreaderwin.cpp:167
-#, kde-format
-msgid "Save Link As..."
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Save Link As…"
 msgstr "লিঙ্ক নতুন নামে সংরক্ষণ করো..."
 
 #: kmreaderwin.cpp:173
-#, kde-format
-msgid "&Find in Message..."
+#, fuzzy, kde-format
+#| msgid "&Find in Message..."
+msgid "&Find in Message…"
 msgstr "বার্তা&য় সন্ধান করো..."
 
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Save Image On Disk..."
+msgid "Save Image On Disk…"
 msgstr "লিঙ্ক নতুন নামে সংরক্ষণ করো..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Open Image..."
+msgid "Open Image…"
 msgstr "লিঙ্ক নতুন নামে সংরক্ষণ করো..."
 
 #: kmreaderwin.cpp:191
@@ -5557,7 +5586,7 @@ msgstr ""
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Share image..."
+msgid "Share image…"
 msgstr "লিঙ্ক নতুন নামে সংরক্ষণ করো..."
 
 #: kmreaderwin.cpp:259
@@ -5706,10 +5735,10 @@ msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, fuzzy, kde-format
-#| msgid "&New Message..."
+#| msgid "New Message"
 msgctxt "@action:inmenu"
-msgid "New Message..."
-msgstr "&নতুন বার্তা..."
+msgid "New Message…"
+msgstr "নতুন বার্তা"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5775,7 +5804,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "&Configure Summary View..."
+msgid "&Configure Summary View…"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
 #: kontactplugin/summary/summaryview_part.cpp:50
@@ -5871,195 +5900,205 @@ msgid "&Reply"
 msgstr "&উত্তর পাঠাও"
 
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
-#, kde-format
-msgid "&Reply..."
-msgstr "উত্ত&র দাও..."
+#, fuzzy, kde-format
+#| msgctxt "Message->"
+#| msgid "&Reply"
+msgid "&Reply…"
+msgstr "&উত্তর পাঠাও"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
-#, kde-format
-msgid "Reply to &All..."
+#, fuzzy, kde-format
+msgid "Reply to &All…"
 msgstr "&সবাইকে উত্তর দাও..."
 
 #: messageactions.cpp:66
-#, kde-format
-msgid "Reply to A&uthor..."
+#, fuzzy, kde-format
+#| msgid "Reply to A&uthor..."
+msgid "Reply to A&uthor…"
 msgstr "লে&খককে উত্তর পাঠাও..."
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
-#, kde-format
-msgid "Reply to Mailing-&List..."
+#, fuzzy, kde-format
+#| msgid "Reply to Mailing-&List..."
+msgid "Reply to Mailing-&List…"
 msgstr "মে&ইলিং-লিস্ট-এ উত্তর দাও..."
 
 #: messageactions.cpp:68
-#, kde-format
-msgid "Reply Without &Quote..."
+#, fuzzy, kde-format
+#| msgid "Reply Without &Quote..."
+msgid "Reply Without &Quote…"
 msgstr "উদ্ধৃতি ছাড়া উত্তর দা&ও..."
 
 #: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "&Inline..."
 msgctxt "@action:inmenu Message->Forward->"
-msgid "&Inline..."
+msgid "&Inline…"
 msgstr "বার্তার মূ&ল অংশে..."
+
+#: messageactions.cpp:70
+#, fuzzy, kde-format
+#| msgid "Has Attachment"
+msgctxt "@action:inmenu Message->Forward->"
+msgid "As &Attachment…"
+msgstr "অ্যাটাচমেন্ট আছে"
 
 #: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
-#| msgid "As &Attachment..."
-msgctxt "@action:inmenu Message->Forward->"
-msgid "As &Attachment..."
-msgstr "সংযুক্ত করে (&স)..."
-
-#: messageactions.cpp:72
-#, kde-format
+#| msgid "&Redirect..."
 msgctxt "Message->Forward->"
-msgid "&Redirect..."
+msgid "&Redirect…"
 msgstr "&অন্য ঠিকানায় পাঠাও..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
-msgid "New Message to Recipients..."
+msgid "New Message to Recipients…"
 msgstr "মেইলিং লিস্ট-&এ নতুন বার্তা পাঠাও..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "বার্তা চিহ্নি&ত করো"
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&ফরোয়ার্ড করো"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "মে&ইলিং-লিস্ট-এ উত্তর দাও..."
 
-#: messageactions.cpp:77 messageactions.cpp:372
+#: messageactions.cpp:76 messageactions.cpp:371
 #, fuzzy, kde-format
 #| msgid "Add..."
-msgid "Add Note..."
+msgid "Add Note…"
 msgstr "যোগ করো..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "বার্তা সম্পা&দন করো"
 
-#: messageactions.cpp:79
-#, kde-format
-msgid "Filter on Mailing-&List..."
+#: messageactions.cpp:78
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-&List…"
 msgstr "মে&ইলিং-লিস্ট দিয়ে ফিল্টার করো..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Add Followup Reminder..."
+msgid "Add Followup Reminder…"
 msgstr "বার্তা &সন্ধান করো"
 
-#: messageactions.cpp:82
-#, kde-format
-msgid "Send A&gain..."
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+#| msgid "Send A&gain..."
+msgid "Send A&gain…"
 msgstr "&আবার পাঠাও..."
 
-#: messageactions.cpp:83
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 msgid "New Message From &Template"
 msgstr "সার্ভার-এ কোন নতুন বার্তা নেই"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "&Import"
-msgid "Export to PDF..."
+msgid "Export to PDF…"
 msgstr "&আমদানি"
 
-#: messageactions.cpp:86
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "একে নতুন বার্তা..."
 
-#: messageactions.cpp:374
+#: messageactions.cpp:373
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit Note..."
+msgid "Edit Note…"
 msgstr "স্ক্রিপ্ট সম্পাদন করো..."
 
-#: messageactions.cpp:419
-#, kde-format
-msgid "Filter on Mailing-List..."
-msgstr ""
+#: messageactions.cpp:418
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-List…"
+msgstr "মে&ইলিং-লিস্ট দিয়ে ফিল্টার করো..."
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr "<অজানা>"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "মে&ইলিং-লিস্ট-এ উত্তর দাও..."
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "ওপেন-পি-জি-পি বার্তা - ত্রুটিপূর্ণ স্বাক্ষর"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:460
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "নতুন বার্তা"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:463
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgid "Go to Archive"
 msgstr "লিস্ট আর্কাইভ"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr ""
 
-#: messageactions.cpp:470
+#: messageactions.cpp:469
 #, fuzzy, kde-format
 #| msgid "contains"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "-এর মধ্যে রয়েছে"
 
-#: messageactions.cpp:476
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr ""
 
-#: messageactions.cpp:485
-#, kde-format
-msgid "Filter on Mailing-List %1..."
-msgstr ""
+#: messageactions.cpp:484
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-List %1…"
+msgstr "মে&ইলিং-লিস্ট দিয়ে ফিল্টার করো..."
 
-#: messageactions.cpp:662
+#: messageactions.cpp:661
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "ই-মেইল"
 
-#: messageactions.cpp:665
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:670
+#: messageactions.cpp:669
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6068,13 +6107,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "মেইল"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgid "Export to PDF"
 msgstr "&আমদানি"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6101,7 +6140,7 @@ msgstr "প্রের&ণ"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
-msgid "Indexing Collections..."
+msgid "Indexing Collections…"
 msgstr "ফিল্টা&র কনফিগার করো..."
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
@@ -6162,19 +6201,21 @@ msgstr "&সন্ধান"
 #, fuzzy, kde-format
 #| msgid "&Inline..."
 msgctxt "@action:inmenu Forward message inline."
-msgid "&Inline..."
+msgid "&Inline…"
 msgstr "বার্তার মূ&ল অংশে..."
 
 #: searchdialog/searchwindow.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Has Attachment"
 msgctxt "Message->Forward->"
-msgid "As &Attachment..."
-msgstr "সংযুক্ত করে (&স)..."
+msgid "As &Attachment…"
+msgstr "অ্যাটাচমেন্ট আছে"
 
 #: searchdialog/searchwindow.cpp:192
-#, kde-format
-msgid "Save Attachments..."
-msgstr "অ্যাটাচমেন্ট সংরক্ষণ করো..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment As"
+msgid "Save Attachments…"
+msgstr "অ্যাটাচমেন্ট নতুন নামে সংরক্ষণ করো"
 
 #: searchdialog/searchwindow.cpp:199
 #, kde-format
@@ -6231,7 +6272,7 @@ msgstr ""
 
 #: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
-msgid "Searching..."
+msgid "Searching…"
 msgstr "প্রের&ণ"
 
 #: searchdialog/searchwindow.cpp:535
@@ -6282,7 +6323,7 @@ msgstr[1] "বার্তা মুছে ফেলো"
 #: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
-msgid "Checking index status..."
+msgid "Checking index status…"
 msgstr "শুরু করার স&ময় মেইল পরীক্ষা করো"
 
 #: secondarywindow.cpp:57
@@ -6710,13 +6751,13 @@ msgstr "বার্তা তালিকা"
 #: tag/tagactionmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
-msgid "Add new tag..."
+msgid "Add new tag…"
 msgstr "এন্ট্রি যোগ করো..."
 
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-msgid "More..."
-msgstr "কে-মেইল ক&নফিগার করো..."
+#, kde-format
+msgid "More…"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -6738,19 +6779,20 @@ msgstr "পরিবাহক"
 #: tag/tagselectdialog.cpp:53
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
-msgid "Add New Tag..."
+msgid "Add New Tag…"
 msgstr "এন্ট্রি যোগ করো..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
-msgid "Search tag..."
+msgid "Search tag…"
 msgstr "&সন্ধান"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
-#, kde-format
-msgid "Customize accounts order..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Modify Account"
+msgid "Customize accounts order…"
+msgstr "অ্যাকাউন্ট পাল্টাও"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6775,7 +6817,7 @@ msgstr "বিস্তারিত &নতুন মেইল বিজ্ঞ�
 #: ui/accountspagereceivingtab.ui:81
 #, fuzzy, kde-format
 #| msgid "Other Actio&ns"
-msgid "Other Actio&ns..."
+msgid "Other Actio&ns…"
 msgstr "&অন্যান্য কাজ"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
@@ -6795,8 +6837,8 @@ msgstr "প্রেরক &পরিচিতি:"
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
 #, kde-format
-msgid "&Add..."
-msgstr "যো&গ করো..."
+msgid "&Add…"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -6806,8 +6848,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
-#, kde-format
-msgid "&Modify..."
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "&Modify…"
 msgstr "&বদলাও..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
@@ -7069,7 +7112,7 @@ msgstr "ফোল্ডার নির্বাচন করো"
 #: ui/searchwindow.ui:60
 #, fuzzy, kde-format
 #| msgid "Select Folder"
-msgid "Select Folders..."
+msgid "Select Folders…"
 msgstr "ফোল্ডার নির্বাচন করো"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
@@ -7280,7 +7323,7 @@ msgstr "সার্টিফিকেট পাঠানো"
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
 #, fuzzy, kde-format
-msgid "GnuPG Settings..."
+msgid "GnuPG Settings…"
 msgstr "প্রের&ণ"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
@@ -7328,7 +7371,7 @@ msgstr "সাধারণ অপশন"
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
-"href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
+"href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
 
@@ -7537,7 +7580,7 @@ msgstr "এনক্রিপশনবিহীন বার্তা পাঠ�
 #, kde-format
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
-"privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
+"privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
@@ -7934,6 +7977,114 @@ msgstr[1] "\"অফিসে নেই\" উত্তর কনফিগার �
 msgid "Zoom: %1%"
 msgstr ""
 
+#~ msgid "A&dd..."
+#~ msgstr "যো&গ করো..."
+
+#~ msgid "Add..."
+#~ msgstr "যোগ করো..."
+
+#~ msgid "Save &Distribution List..."
+#~ msgstr "বিতর&ণ তালিকা সংরক্ষণ করো..."
+
+#~ msgid "&Spellchecker..."
+#~ msgstr "বানান &পরীক্ষক..."
+
+#~ msgid "Edit..."
+#~ msgstr "সম্পাদনা..."
+
+#, fuzzy
+#~| msgid "Moving messages"
+#~ msgid "Moving messages..."
+#~ msgstr "বার্তা সরানো হচ্ছে"
+
+#, fuzzy
+#~| msgid "Deleting messages"
+#~ msgid "Deleting messages..."
+#~ msgstr "বার্তা মুছে ফেলা হচ্ছে"
+
+#~ msgid "&Find Messages..."
+#~ msgstr "বার্তা &সন্ধান করো"
+
+#, fuzzy
+#~| msgid "&New Folder..."
+#~ msgid "&Archive Folder..."
+#~ msgstr "&নতুন ফোল্ডার..."
+
+#~ msgid "&New Message..."
+#~ msgstr "&নতুন বার্তা..."
+
+#~ msgid "Save A&ttachments..."
+#~ msgstr "অ্যাটা&চমেন্ট সংরক্ষণ করো..."
+
+#, fuzzy
+#~| msgid "&New Folder..."
+#~ msgid "Add Favorite Folder..."
+#~ msgstr "&নতুন ফোল্ডার..."
+
+#, fuzzy
+#~ msgid "Jump to Folder..."
+#~ msgstr "এই ফোল্ডার-এ কপি করো"
+
+#~ msgid "Reply To..."
+#~ msgstr "একে উত্তর দাও..."
+
+#~ msgid "Forward To..."
+#~ msgstr "একে ফরোয়ার্ড করো..."
+
+#, fuzzy
+#~| msgid "&New Message..."
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Message..."
+#~ msgstr "&নতুন বার্তা..."
+
+#~ msgid "&Reply..."
+#~ msgstr "উত্ত&র দাও..."
+
+#~ msgid "Reply to &All..."
+#~ msgstr "&সবাইকে উত্তর দাও..."
+
+#, fuzzy
+#~| msgid "&Inline..."
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "&Inline..."
+#~ msgstr "বার্তার মূ&ল অংশে..."
+
+#, fuzzy
+#~| msgctxt "Message->Forward->"
+#~| msgid "As &Attachment..."
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "সংযুক্ত করে (&স)..."
+
+#, fuzzy
+#~| msgid "&Import"
+#~ msgid "Export to PDF..."
+#~ msgstr "&আমদানি"
+
+#, fuzzy
+#~| msgid "&Inline..."
+#~ msgctxt "@action:inmenu Forward message inline."
+#~ msgid "&Inline..."
+#~ msgstr "বার্তার মূ&ল অংশে..."
+
+#~ msgctxt "Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "সংযুক্ত করে (&স)..."
+
+#~ msgid "Save Attachments..."
+#~ msgstr "অ্যাটাচমেন্ট সংরক্ষণ করো..."
+
+#, fuzzy
+#~ msgid "More..."
+#~ msgstr "কে-মেইল ক&নফিগার করো..."
+
+#~ msgid "&Add..."
+#~ msgstr "যো&গ করো..."
+
+#, fuzzy
+#~ msgid "GnuPG Settings..."
+#~ msgstr "প্রের&ণ"
+
 #, fuzzy
 #~| msgid "Cha&rset"
 #~ msgid "Charset"
@@ -8316,9 +8467,6 @@ msgstr ""
 #~| msgid "New Message"
 #~ msgid "Show Message"
 #~ msgstr "নতুন বার্তা"
-
-#~ msgid "Filter Log Viewer"
-#~ msgstr "ফিল্টার লগ প্রদর্শক"
 
 #, fuzzy
 #~| msgid "Show alway&s"
@@ -8982,11 +9130,6 @@ msgstr ""
 #~ msgstr "এন্ট্রি যোগ করো..."
 
 #, fuzzy
-#~| msgid "Modify Account"
-#~ msgid "Edit Accounts Order"
-#~ msgstr "অ্যাকাউন্ট পাল্টাও"
-
-#, fuzzy
 #~| msgid "&Use custom colors"
 #~ msgid "Use custom order"
 #~ msgstr "স্বনির্বাচি&ত রং ব্যবহার করো"
@@ -9631,13 +9774,6 @@ msgstr ""
 #~ "ইতি,\n"
 #~ "-- <এখানে আপনার নাম ও ই-মেইল লিখুন>\n"
 
-#~ msgid "Configure \"Out of Office\" Replies"
-#~ msgstr "\"অফিসে নেই\" উত্তর কনফিগার করো"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "প্রস্থান করো"
-
 #~ msgid ""
 #~ "(Account is not an IMAP account)\n"
 #~ "\n"
@@ -9791,11 +9927,6 @@ msgstr ""
 #~ msgctxt "Subject of an email."
 #~ msgid "Subject"
 #~ msgstr "বিষয়"
-
-#, fuzzy
-#~| msgid "&Reply To"
-#~ msgid "Reply To"
-#~ msgstr "&উত্তর প্রাপক"
 
 #, fuzzy
 #~| msgid "Organization:"
@@ -9959,9 +10090,6 @@ msgstr ""
 
 #~ msgid "Copy Into Folder"
 #~ msgstr "এই ফোল্ডার-এ কপি করো"
-
-#~ msgid "Forward To"
-#~ msgstr "এখানে ফরওয়ার্ড করো"
 
 #, fuzzy
 #~ msgid "The addressee to whom the message will be forwarded."
@@ -10388,11 +10516,6 @@ msgstr ""
 #~ msgid "attachment.1"
 #~ msgstr "attachment.1"
 
-#, fuzzy
-#~| msgid "Save Attachment As"
-#~ msgid "Save Attachment"
-#~ msgstr "অ্যাটাচমেন্ট নতুন নামে সংরক্ষণ করো"
-
 #~ msgctxt "filename for the %1-th unnamed attachment"
 #~ msgid "attachment.%1"
 #~ msgstr "attachment.%1"
@@ -10578,12 +10701,6 @@ msgstr ""
 #~| msgid "Add Transport"
 #~ msgid "Add as &To"
 #~ msgstr "বার্তাবাহক যোগ করো"
-
-#, fuzzy
-#~| msgid "Save &Distribution List..."
-#~ msgctxt "@title:window"
-#~ msgid "Save Distribution List"
-#~ msgstr "বিতর&ণ তালিকা সংরক্ষণ করো..."
 
 #, fuzzy
 #~ msgctxt "@action:button"
@@ -10825,10 +10942,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Reply"
 #~ msgstr "&উত্তর প্রাপক"
-
-#, fuzzy
-#~ msgid "Reply to All"
-#~ msgstr "&সবাইকে উত্তর দাও..."
 
 #, fuzzy
 #~ msgctxt "Template type for forwarding messages."

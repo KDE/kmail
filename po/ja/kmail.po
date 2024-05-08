@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"POT-Creation-Date: 2024-05-08 00:39+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -473,7 +473,7 @@ msgstr "アドレスのタイプ(&A):"
 msgid "URL for mailing list posting:"
 msgstr "メーリングリストの説明:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:473
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "リストを購読"
@@ -705,13 +705,13 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Add Note..."
-msgid "Add Mail Account..."
+msgid "Add Mail Account…"
 msgstr "ノートを追加..."
 
 #: configuredialog/configureaccountpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "Add Note..."
-msgid "Custom Account..."
+msgid "Custom Account…"
 msgstr "ノートを追加..."
 
 #: configuredialog/configureaccountpage.cpp:230
@@ -969,8 +969,9 @@ msgid "Default theme:"
 msgstr "デフォルトのテーマ:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, kde-format
-msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, fuzzy, kde-format
+#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">カスタムフォーマットについて...</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:693
@@ -1292,9 +1293,9 @@ msgstr "受信者の数がこれより多い場合に警告する"
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
-"the \"Select...\" picker.  Setting this limit helps you to avoid "
-"accidentally sending a message to too many people.  Note, however, that it "
-"does not take account of distribution lists or mailing lists."
+"the \"Select…\" picker.  Setting this limit helps you to avoid accidentally "
+"sending a message to too many people.  Note, however, that it does not take "
+"account of distribution lists or mailing lists."
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:420
@@ -1325,7 +1326,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
-msgid "Configure Completion..."
+msgid "Configure Completion…"
 msgstr "補完順序を設定..."
 
 #: configuredialog/configurecomposerpage.cpp:465
@@ -1375,8 +1376,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
-msgid "A&dd..."
-msgstr "追加(&D)..."
+msgid "A&dd…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:832
@@ -1421,10 +1422,10 @@ msgstr "削除(&V)"
 
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
-msgid "Add..."
-msgstr "追加..."
+msgid "Add…"
+msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Modify..."
 msgstr "編集..."
@@ -1988,8 +1989,9 @@ msgid "Save email as text or html file"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1308
-#, kde-format
-msgid "&Insert Text File..."
+#, fuzzy, kde-format
+#| msgid "&Insert Text File..."
+msgid "&Insert Text File…"
 msgstr "テキストファイルを挿入(&I)..."
 
 # ACCELERATOR changed by translator
@@ -2014,13 +2016,15 @@ msgid "&New Composer"
 msgstr "新しいメール作成ウィンドウ(&N)"
 
 #: editor/kmcomposerwin.cpp:1336
-#, kde-format
-msgid "Select &Recipients..."
+#, fuzzy, kde-format
+#| msgid "Select &Recipients..."
+msgid "Select &Recipients…"
 msgstr "受信者を選択(&R)..."
 
 #: editor/kmcomposerwin.cpp:1339
-#, kde-format
-msgid "Save &Distribution List..."
+#, fuzzy, kde-format
+#| msgid "Save &Distribution List..."
+msgid "Save &Distribution List…"
 msgstr "配布リストを保存(&D)..."
 
 #: editor/kmcomposerwin.cpp:1360
@@ -2139,9 +2143,10 @@ msgid "Insert Signature At C&ursor Position"
 msgstr "カーソル位置に署名を挿入(&U)"
 
 #: editor/kmcomposerwin.cpp:1464
-#, kde-format
-msgid "&Spellchecker..."
-msgstr "スペルチェッカー(&S)..."
+#, fuzzy, kde-format
+#| msgid "Spellchecker"
+msgid "&Spellchecker…"
+msgstr "スペルチェッカー"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2181,12 +2186,13 @@ msgstr "このメッセージの暗号化フォーマットを選択"
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Create Follow Up Reminder..."
+msgid "Create Follow Up Reminder…"
 msgstr "メッセージを検索(&F)..."
 
 #: editor/kmcomposerwin.cpp:1542
-#, kde-format
-msgid "Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "Configure KMail..."
+msgid "Configure KMail…"
 msgstr "KMail を設定..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
@@ -2430,8 +2436,9 @@ msgstr ""
 "下書きを暗号化するには、少なくとも一人の受信者を指定しなければなりません。"
 
 #: editor/kmcomposerwin.cpp:3062
-#, kde-format
-msgid "About to send email..."
+#, fuzzy, kde-format
+#| msgid "About to send email..."
+msgid "About to send email…"
 msgstr "メールを送信します..."
 
 #: editor/kmcomposerwin.cpp:3063
@@ -2694,7 +2701,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"\">(details…)</a>"
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -2999,9 +3006,10 @@ msgid "Generate a new key pair"
 msgstr "新しいキーワードを入力:"
 
 #: identity/identitydialog.cpp:228
-#, kde-format
-msgid "Generating new key pair..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgid "Generating new key pair…"
+msgstr "新しいキーワードを入力:"
 
 #: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
@@ -3390,7 +3398,7 @@ msgstr "<placeholder>ヘッダ</placeholder> をメッセージに追加"
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
 #, fuzzy, kde-format
 #| msgid "Chang&e..."
-msgid "Create..."
+msgid "Create…"
 msgstr "変更..."
 
 #: identity/identitydialog.cpp:618
@@ -3537,9 +3545,10 @@ msgstr ""
 "の下書きフォルダを使用します。"
 
 #: identity/identitydialog.cpp:1165
-#, kde-format
-msgid "Edit..."
-msgstr "編集..."
+#, fuzzy, kde-format
+#| msgid "&Edit"
+msgid "Edit…"
+msgstr "編集(&E)"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
@@ -3640,6 +3649,12 @@ msgstr[0] "個人情報を削除"
 #, kde-format
 msgid "&Remove"
 msgstr "削除(&R)"
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
+msgstr "編集..."
 
 #: identity/identitypage.cpp:275
 #, fuzzy, kde-format
@@ -4589,14 +4604,16 @@ msgid "Delete Message"
 msgstr "メッセージを削除"
 
 #: kmmainwidget.cpp:1674
-#, kde-format
-msgid "Moving messages..."
-msgstr "メッセージを移動中..."
+#, fuzzy, kde-format
+#| msgid "Moving messages"
+msgid "Moving messages…"
+msgstr "メッセージを移動中"
 
 #: kmmainwidget.cpp:1676 kmmainwidget.cpp:1870
-#, kde-format
-msgid "Deleting messages..."
-msgstr "メッセージを削除中..."
+#, fuzzy, kde-format
+#| msgid "Deleting messages"
+msgid "Deleting messages…"
+msgstr "メッセージを削除中"
 
 #: kmmainwidget.cpp:1691 kmmainwidget.cpp:1890
 #, kde-format
@@ -4636,8 +4653,9 @@ msgid "Move Messages to Folder"
 msgstr "メッセージをフォルダに移動"
 
 #: kmmainwidget.cpp:1799
-#, kde-format
-msgid "Copying messages..."
+#, fuzzy, kde-format
+#| msgid "Copying messages..."
+msgid "Copying messages…"
 msgstr "メッセージをコピー中..."
 
 #: kmmainwidget.cpp:1807
@@ -4663,14 +4681,15 @@ msgid "Copy Messages to Folder"
 msgstr "メッセージをフォルダにコピー"
 
 #: kmmainwidget.cpp:1867
-#, kde-format
-msgid "Moving messages to trash..."
+#, fuzzy, kde-format
+#| msgid "Moving messages to trash..."
+msgid "Moving messages to trash…"
 msgstr "メッセージをごみ箱に移動中..."
 
 #: kmmainwidget.cpp:1874
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
-msgid "Deleting and moving messages to trash..."
+msgid "Deleting and moving messages to trash…"
 msgstr "メッセージをごみ箱に移動中..."
 
 #: kmmainwidget.cpp:1887
@@ -4771,8 +4790,9 @@ msgid "Delete Attachments"
 msgstr "添付ファイル"
 
 #: kmmainwidget.cpp:2909
-#, kde-format
-msgid "Save &As..."
+#, fuzzy, kde-format
+#| msgid "Save &As..."
+msgid "Save &As…"
 msgstr "名前を付けて保存(&A)..."
 
 #: kmmainwidget.cpp:2920
@@ -4822,52 +4842,55 @@ msgstr "証明書の管理(&C)"
 #: kmmainwidget.cpp:2979
 #, fuzzy, kde-format
 #| msgid "&Import Messages"
-msgid "&Import Messages..."
+msgid "&Import Messages…"
 msgstr "メッセージをインポート(&I)"
 
 #: kmmainwidget.cpp:2989
-#, kde-format
-msgid "&Debug Sieve..."
+#, fuzzy, kde-format
+#| msgid "&Debug Sieve..."
+msgid "&Debug Sieve…"
 msgstr "Sieve のデバッグ(&D)..."
 
 #: kmmainwidget.cpp:2996
-#, kde-format
-msgid "Filter &Log Viewer..."
+#, fuzzy, kde-format
+#| msgid "Filter &Log Viewer..."
+msgid "Filter &Log Viewer…"
 msgstr "フィルタログビューア(&L)..."
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "Notification"
-msgid "Notification History..."
+msgid "Notification History…"
 msgstr "通知"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
-msgid "&Import from another Email Client..."
+msgid "&Import from another Email Client…"
 msgstr ""
 
 # ACCELERATOR added by translator
 #: kmmainwidget.cpp:3011
-#, kde-format
-msgid "Edit \"Out of Office\" Replies..."
+#, fuzzy, kde-format
+#| msgid "Edit \"Out of Office\" Replies..."
+msgid "Edit \"Out of Office\" Replies…"
 msgstr "不在返信を編集(&E)..."
 
 #: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
-msgid "&Configure Automatic Archiving..."
+msgid "&Configure Automatic Archiving…"
 msgstr "通知を設定(&N)..."
 
 #: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
-msgid "Delayed Messages..."
+msgid "Delayed Messages…"
 msgstr "メッセージを削除中..."
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Followup Reminder Messages..."
+msgid "Followup Reminder Messages…"
 msgstr "メッセージを検索(&F)..."
 
 #: kmmainwidget.cpp:3040 util.cpp:149
@@ -4891,10 +4914,11 @@ msgstr "スレッドをごみ箱に移動"
 msgid "Delete T&hread"
 msgstr "スレッドを削除(&H)"
 
-#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
-#, kde-format
-msgid "&Find Messages..."
-msgstr "メッセージを検索(&F)..."
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4113
+#, fuzzy, kde-format
+#| msgid "Find Messages"
+msgid "&Find Messages…"
+msgstr "メッセージを検索"
 
 #: kmmainwidget.cpp:3063
 #, kde-format
@@ -4903,14 +4927,16 @@ msgstr "すべてのメッセージを選択(&A)"
 
 # ACCELERATOR changed by translator
 #: kmmainwidget.cpp:3070
-#, kde-format
-msgid "&Mailing List Management..."
+#, fuzzy, kde-format
+#| msgid "&Mailing List Management..."
+msgid "&Mailing List Management…"
 msgstr "メーリングリストの管理(&L)..."
 
 #: kmmainwidget.cpp:3078
-#, kde-format
-msgid "&Clear Akonadi Cache..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Add Note..."
+msgid "&Clear Akonadi Cache…"
+msgstr "ノートを追加..."
 
 #: kmmainwidget.cpp:3083
 #, kde-format
@@ -4918,8 +4944,9 @@ msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 
 #: kmmainwidget.cpp:3088
-#, kde-format
-msgid "&Assign Shortcut..."
+#, fuzzy, kde-format
+#| msgid "&Assign Shortcut..."
+msgid "&Assign Shortcut…"
 msgstr "ショートカットを割り当て(&A)..."
 
 #: kmmainwidget.cpp:3106
@@ -4927,11 +4954,11 @@ msgstr "ショートカットを割り当て(&A)..."
 msgid "&Expiration Settings"
 msgstr "古いメッセージ整理の設定(&E)"
 
-# ACCELERATOR changed by translator
 #: kmmainwidget.cpp:3131
-#, kde-format
-msgid "&Archive Folder..."
-msgstr "フォルダをアーカイブ(&V)..."
+#, fuzzy, kde-format
+#| msgid "Archive Folder"
+msgid "&Archive Folder…"
+msgstr "フォルダをアーカイブ"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -4939,19 +4966,22 @@ msgid "Load E&xternal References"
 msgstr "外部参照をロードする(&X)"
 
 #: kmmainwidget.cpp:3162
-#, kde-format
-msgid "Copy Message To..."
+#, fuzzy, kde-format
+#| msgid "Copy Message To..."
+msgid "Copy Message To…"
 msgstr "メッセージをコピー..."
 
 #: kmmainwidget.cpp:3164
-#, kde-format
-msgid "Move Message To..."
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgid "Move Message To…"
 msgstr "メッセージを移動..."
 
 #: kmmainwidget.cpp:3169
-#, kde-format
-msgid "&New Message..."
-msgstr "新しいメッセージ(&N)..."
+#, fuzzy, kde-format
+#| msgid "New Messages In"
+msgid "&New Message…"
+msgstr "新着メッセージ"
 
 #: kmmainwidget.cpp:3171
 #, kde-format
@@ -4965,8 +4995,9 @@ msgid "Message From &Template"
 msgstr "テンプレートから新しいメッセージを作成(&T)"
 
 #: kmmainwidget.cpp:3185
-#, kde-format
-msgid "New Message t&o Mailing-List..."
+#, fuzzy, kde-format
+#| msgid "New Message t&o Mailing-List..."
+msgid "New Message t&o Mailing-List…"
 msgstr "メーリングリストに投稿(&O)..."
 
 # ACCELERATOR changed by translator
@@ -4976,24 +5007,27 @@ msgid "&Create Filter"
 msgstr "フィルタを作成(&I)"
 
 #: kmmainwidget.cpp:3195
-#, kde-format
-msgid "Filter on &Subject..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Subject..."
+msgid "Filter on &Subject…"
 msgstr "件名でのフィルタ(&S)..."
 
 #: kmmainwidget.cpp:3202
-#, kde-format
-msgid "Filter on &From..."
+#, fuzzy, kde-format
+#| msgid "Filter on &From..."
+msgid "Filter on &From…"
 msgstr "送信元でのフィルタ(&F)..."
 
 #: kmmainwidget.cpp:3208
-#, kde-format
-msgid "Filter on &To..."
+#, fuzzy, kde-format
+#| msgid "Filter on &To..."
+msgid "Filter on &To…"
 msgstr "送信先でのフィルタ(&T)..."
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
-msgid "Filter on &Cc..."
+msgid "Filter on &Cc…"
 msgstr "送信先でのフィルタ(&T)..."
 
 #: kmmainwidget.cpp:3228
@@ -5054,8 +5088,9 @@ msgstr "スレッドを無視(&G)"
 
 # ACCELERATOR changed by translator
 #: kmmainwidget.cpp:3271 kmreadermainwin.cpp:490
-#, kde-format
-msgid "Save A&ttachments..."
+#, fuzzy, kde-format
+#| msgid "Save A&ttachments..."
+msgid "Save A&ttachments…"
 msgstr "添付ファイルを保存(&S)..."
 
 #: kmmainwidget.cpp:3275
@@ -5068,7 +5103,7 @@ msgstr "添付ファイルとして"
 #: kmmainwidget.cpp:3283
 #, fuzzy, kde-format
 #| msgid "Copy Message To..."
-msgid "Copy Decrypted To..."
+msgid "Copy Decrypted To…"
 msgstr "メッセージをコピー..."
 
 #: kmmainwidget.cpp:3287
@@ -5218,19 +5253,21 @@ msgstr ""
 "セージに移動します。"
 
 #: kmmainwidget.cpp:3403
-#, kde-format
-msgid "Configure &Filters..."
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgid "Configure &Filters…"
 msgstr "フィルタの設定(&F)..."
 
 #: kmmainwidget.cpp:3409
-#, kde-format
-msgid "Manage &Sieve Scripts..."
+#, fuzzy, kde-format
+#| msgid "Manage &Sieve Scripts..."
+msgid "Manage &Sieve Scripts…"
 msgstr "Sieve スクリプトの管理(&S)..."
 
 #: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 #| msgid "Add Note..."
-msgid "&Add Account..."
+msgid "&Add Account…"
 msgstr "ノートを追加..."
 
 #: kmmainwidget.cpp:3419
@@ -5244,29 +5281,33 @@ msgid "Display KMail's Welcome Page"
 msgstr "「KMail はじめに」のページを表示"
 
 #: kmmainwidget.cpp:3428
-#, kde-format
-msgid "Configure &Notifications..."
+#, fuzzy, kde-format
+#| msgid "Configure &Notifications..."
+msgid "Configure &Notifications…"
 msgstr "通知を設定(&N)..."
 
 #: kmmainwidget.cpp:3435
-#, kde-format
-msgid "&Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "&Configure KMail..."
+msgid "&Configure KMail…"
 msgstr "KMail を設定(&C)..."
 
-# ACCELERATOR added by translator
 #: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Expire..."
-msgstr "古いメッセージを整理(&E)..."
+#, fuzzy, kde-format
+#| msgid "Expire"
+msgid "Expire…"
+msgstr "整理する"
 
 #: kmmainwidget.cpp:3448
-#, kde-format
-msgid "Add Favorite Folder..."
-msgstr "お気に入りフォルダを追加..."
+#, fuzzy, kde-format
+#| msgid "Add Favorite Folder"
+msgid "Add Favorite Folder…"
+msgstr "お気に入りフォルダを追加"
 
 #: kmmainwidget.cpp:3454
-#, kde-format
-msgid "Serverside Subscription..."
+#, fuzzy, kde-format
+#| msgid "Serverside Subscription..."
+msgid "Serverside Subscription…"
 msgstr "サーバ側の購読..."
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
@@ -5284,16 +5325,16 @@ msgstr "すべてのフィルタを適用(&Y)"
 #: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "Import/Export KMail Data..."
+msgid "Import/Export KMail Data…"
 msgstr "KMail を設定(&C)..."
 
 #: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
-msgid "New AddressBook Contact..."
+msgid "New AddressBook Contact…"
 msgstr "アドレス帳で開く"
 
-#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4152
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5311,9 +5352,10 @@ msgid "Copy Message to Folder"
 msgstr "メッセージをフォルダにコピー"
 
 #: kmmainwidget.cpp:3526
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "フォルダへジャンプ..."
+#, fuzzy, kde-format
+#| msgid "Jump to Folder"
+msgid "Jump to Folder…"
+msgstr "フォルダへジャンプ"
 
 #: kmmainwidget.cpp:3532
 #, kde-format
@@ -5431,49 +5473,49 @@ msgstr "検索を削除(&D)"
 #: kmmainwidget.cpp:4113
 #, fuzzy, kde-format
 #| msgid "Starting..."
-msgid "Edit Search..."
+msgid "Edit Search…"
 msgstr "開始..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4150
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "KMail を設定..."
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ごみ箱を空にする(&M)"
 
 # ACCELERATOR changed by translator
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "すべてのメッセージをごみ箱に移動(&G)"
 
-#: kmmainwidget.cpp:4236
+#: kmmainwidget.cpp:4235
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4238
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4295
+#: kmmainwidget.cpp:4294
 #, kde-format
 msgid "Filter %1"
 msgstr "フィルタ %1"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4762
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
-msgid "Search... <%1>"
+msgid "Search… <%1>"
 msgstr "開始..."
 
-#: kmmainwidget.cpp:4771
+#: kmmainwidget.cpp:4770
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5484,19 +5526,19 @@ msgstr ""
 "今後予想されるその他のセキュリティ上の問題によって、あなたのシステムが危険に"
 "さらされる可能性が増します。"
 
-#: kmmainwidget.cpp:4774
+#: kmmainwidget.cpp:4773
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "セキュリティ警告"
 
-#: kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgid "Use HTML"
 msgstr "HTML を使う"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4920
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5506,47 +5548,48 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4925
 #, kde-format
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4961
+#: kmmainwidget.cpp:4960
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "アカウント「%1」を削除しますか？"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4961
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Restart Akonadi"
 msgstr "ノートを追加..."
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Restart"
 msgstr "ノートを追加..."
 
-#: kmmainwidget.cpp:4970
+#: kmmainwidget.cpp:4969
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:53
-#, kde-format
-msgid "Starting..."
+#, fuzzy, kde-format
+#| msgid "Starting..."
+msgid "Starting…"
 msgstr "開始..."
 
 # ACCELERATOR changed by translator
@@ -5578,18 +5621,21 @@ msgid "Cannot copy item. %1"
 msgstr "メッセージを移動できません。%1"
 
 #: kmreaderwin.cpp:122
-#, kde-format
-msgid "New Message To..."
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "New Message To…"
 msgstr "新しいメッセージ..."
 
 #: kmreaderwin.cpp:128
-#, kde-format
-msgid "Reply To..."
+#, fuzzy, kde-format
+#| msgid "Reply To..."
+msgid "Reply To…"
 msgstr "返信..."
 
 #: kmreaderwin.cpp:134
-#, kde-format
-msgid "Forward To..."
+#, fuzzy, kde-format
+#| msgid "Forward To..."
+msgid "Forward To…"
 msgstr "転送..."
 
 #: kmreaderwin.cpp:140
@@ -5616,31 +5662,33 @@ msgstr "このリンクをブックマークに追加"
 #: kmreaderwin.cpp:161
 #, fuzzy, kde-format
 #| msgid "Edit Note..."
-msgid "Edit contact..."
+msgid "Edit contact…"
 msgstr "ノートを編集..."
 
 #: kmreaderwin.cpp:167
-#, kde-format
-msgid "Save Link As..."
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Save Link As…"
 msgstr "名前を付けてリンクを保存..."
 
 # ACCELERATOR changed by translator
 #: kmreaderwin.cpp:173
-#, kde-format
-msgid "&Find in Message..."
+#, fuzzy, kde-format
+#| msgid "&Find in Message..."
+msgid "&Find in Message…"
 msgstr "メッセージ内を検索(&I)..."
 
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Save Image On Disk..."
+msgid "Save Image On Disk…"
 msgstr "名前を付けてリンクを保存..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Open Image..."
+msgid "Open Image…"
 msgstr "名前を付けてリンクを保存..."
 
 #: kmreaderwin.cpp:191
@@ -5661,7 +5709,7 @@ msgstr ""
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Share image..."
+msgid "Share image…"
 msgstr "名前を付けてリンクを保存..."
 
 #: kmreaderwin.cpp:259
@@ -5820,10 +5868,10 @@ msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, fuzzy, kde-format
-#| msgid "&New Message..."
+#| msgid "New Messages In"
 msgctxt "@action:inmenu"
-msgid "New Message..."
-msgstr "新しいメッセージ(&N)..."
+msgid "New Message…"
+msgstr "新着メッセージ"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5891,7 +5939,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "&Configure Summary View..."
+msgid "&Configure Summary View…"
 msgstr "KMail を設定(&C)..."
 
 #: kontactplugin/summary/summaryview_part.cpp:50
@@ -5985,183 +6033,200 @@ msgid "&Reply"
 msgstr "返信(&R)"
 
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
-#, kde-format
-msgid "&Reply..."
-msgstr "返信(&R)..."
+#, fuzzy, kde-format
+#| msgctxt "Message->"
+#| msgid "&Reply"
+msgid "&Reply…"
+msgstr "返信(&R)"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
-#, kde-format
-msgid "Reply to &All..."
+#, fuzzy, kde-format
+#| msgid "Reply to &All..."
+msgid "Reply to &All…"
 msgstr "全員に返信(&A)..."
 
 #: messageactions.cpp:66
-#, kde-format
-msgid "Reply to A&uthor..."
+#, fuzzy, kde-format
+#| msgid "Reply to A&uthor..."
+msgid "Reply to A&uthor…"
 msgstr "送信者に返信(&U)..."
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
-#, kde-format
-msgid "Reply to Mailing-&List..."
+#, fuzzy, kde-format
+#| msgid "Reply to Mailing-&List..."
+msgid "Reply to Mailing-&List…"
 msgstr "メーリングリストに返信(&L)..."
 
 #: messageactions.cpp:68
-#, kde-format
-msgid "Reply Without &Quote..."
+#, fuzzy, kde-format
+#| msgid "Reply Without &Quote..."
+msgid "Reply Without &Quote…"
 msgstr "引用なしで返信(&Q)..."
 
 #: messageactions.cpp:69
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox Inline mail forwarding"
+#| msgid "Inline"
 msgctxt "@action:inmenu Message->Forward->"
-msgid "&Inline..."
-msgstr "本文に引用(&I)..."
+msgid "&Inline…"
+msgstr "本文に引用"
+
+#: messageactions.cpp:70
+#, fuzzy, kde-format
+#| msgid "As Attachment"
+msgctxt "@action:inmenu Message->Forward->"
+msgid "As &Attachment…"
+msgstr "添付ファイルとして"
 
 #: messageactions.cpp:71
-#, kde-format
-msgctxt "@action:inmenu Message->Forward->"
-msgid "As &Attachment..."
-msgstr "添付ファイルとして(&A)..."
-
-#: messageactions.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Message->Forward->"
+#| msgid "&Redirect..."
 msgctxt "Message->Forward->"
-msgid "&Redirect..."
+msgid "&Redirect…"
 msgstr "リダイレクト(&R)..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
-msgid "New Message to Recipients..."
+msgid "New Message to Recipients…"
 msgstr "メーリングリストに投稿(&O)..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "メッセージをマーク(&K)"
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "転送(&F)"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "メーリングリスト(&L)"
 
-#: messageactions.cpp:77 messageactions.cpp:372
-#, kde-format
-msgid "Add Note..."
+#: messageactions.cpp:76 messageactions.cpp:371
+#, fuzzy, kde-format
+#| msgid "Add Note..."
+msgid "Add Note…"
 msgstr "ノートを追加..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr ""
 
-#: messageactions.cpp:79
-#, kde-format
-msgid "Filter on Mailing-&List..."
+#: messageactions.cpp:78
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-&List…"
 msgstr "メーリングリストでのフィルタ(&L)..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Add Followup Reminder..."
+msgid "Add Followup Reminder…"
 msgstr "メッセージを検索(&F)..."
 
-#: messageactions.cpp:82
-#, kde-format
-msgid "Send A&gain..."
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+#| msgid "Send A&gain..."
+msgid "Send A&gain…"
 msgstr "再送信(&G)..."
 
-#: messageactions.cpp:83
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "テンプレートから新しいメッセージを作成(&T)"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, kde-format
-msgid "Export to PDF..."
+msgid "Export to PDF…"
 msgstr ""
 
-#: messageactions.cpp:86
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "メッセージを移動..."
 
-#: messageactions.cpp:374
-#, kde-format
-msgid "Edit Note..."
+#: messageactions.cpp:373
+#, fuzzy, kde-format
+#| msgid "Edit Note..."
+msgid "Edit Note…"
 msgstr "ノートを編集..."
 
-#: messageactions.cpp:419
-#, kde-format
-msgid "Filter on Mailing-List..."
+#: messageactions.cpp:418
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List..."
+msgid "Filter on Mailing-List…"
 msgstr "メーリングリストでのフィルタ..."
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr ""
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "Mailing-&List"
 msgid "Mailing List Name: %1"
 msgstr "メーリングリスト(&L)"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "リストアーカイブのメッセージを開く"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "新しいメッセージを投稿"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "アーカイブへ移動"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "ヘルプを求める"
 
-#: messageactions.cpp:470
+#: messageactions.cpp:469
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "所有者に連絡を取る"
 
-#: messageactions.cpp:476
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "リストの購読を取り消す"
 
-#: messageactions.cpp:485
-#, kde-format
-msgid "Filter on Mailing-List %1..."
+#: messageactions.cpp:484
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List %1..."
+msgid "Filter on Mailing-List %1…"
 msgstr "メーリングリスト “%1” でのフィルタ..."
 
-#: messageactions.cpp:662
+#: messageactions.cpp:661
 #, kde-format
 msgid "email"
 msgstr "メール"
 
-#: messageactions.cpp:665
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr "ウェブ"
 
-#: messageactions.cpp:670
+#: messageactions.cpp:669
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6169,12 +6234,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "Export to PDF"
 msgstr ""
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6201,7 +6266,7 @@ msgstr "インデックス中"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
-msgid "Indexing Collections..."
+msgid "Indexing Collections…"
 msgstr "補完順序を設定..."
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
@@ -6256,20 +6321,24 @@ msgid "&Search"
 msgstr "検索(&S)"
 
 #: searchdialog/searchwindow.cpp:173
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox Inline mail forwarding"
+#| msgid "Inline"
 msgctxt "@action:inmenu Forward message inline."
-msgid "&Inline..."
-msgstr "本文に引用(&I)..."
+msgid "&Inline…"
+msgstr "本文に引用"
 
 #: searchdialog/searchwindow.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "As Attachment"
 msgctxt "Message->Forward->"
-msgid "As &Attachment..."
-msgstr "添付ファイルとして(&A)..."
+msgid "As &Attachment…"
+msgstr "添付ファイルとして"
 
 #: searchdialog/searchwindow.cpp:192
-#, kde-format
-msgid "Save Attachments..."
+#, fuzzy, kde-format
+#| msgid "Save Attachments..."
+msgid "Save Attachments…"
 msgstr "添付ファイルを保存..."
 
 #: searchdialog/searchwindow.cpp:199
@@ -6328,7 +6397,7 @@ msgstr ""
 #: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Starting..."
-msgid "Searching..."
+msgid "Searching…"
 msgstr "開始..."
 
 #: searchdialog/searchwindow.cpp:535
@@ -6386,7 +6455,7 @@ msgstr[0] "%1 個のメッセージを切り取り"
 #: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
-msgid "Checking index status..."
+msgid "Checking index status…"
 msgstr "起動時に新着メールをチェックする"
 
 #: secondarywindow.cpp:57
@@ -6818,15 +6887,13 @@ msgstr "メッセージタグ “%1”"
 #: tag/tagactionmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Add new tag"
-msgid "Add new tag..."
+msgid "Add new tag…"
 msgstr "新しいタグを追加"
 
-# ACCELERATOR added by translator
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-#| msgid "Expire..."
-msgid "More..."
-msgstr "古いメッセージを整理(&E)..."
+#, kde-format
+msgid "More…"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -6849,20 +6916,20 @@ msgstr "すべてのメッセージを選択(&A)"
 #: tag/tagselectdialog.cpp:53
 #, fuzzy, kde-format
 #| msgid "Add new tag"
-msgid "Add New Tag..."
+msgid "Add New Tag…"
 msgstr "新しいタグを追加"
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messages"
 #| msgid "&Search"
-msgid "Search tag..."
+msgid "Search tag…"
 msgstr "検索(&S)"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
-msgid "Customize accounts order..."
+msgid "Customize accounts order…"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
@@ -6885,8 +6952,9 @@ msgstr "詳細な新着メール通知(&I)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
-#, kde-format
-msgid "Other Actio&ns..."
+#, fuzzy, kde-format
+#| msgid "Other Actio&ns..."
+msgid "Other Actio&ns…"
 msgstr "他のアクション(&N)..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
@@ -6905,8 +6973,8 @@ msgstr "新しい個人情報を追加します"
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
 #, kde-format
-msgid "&Add..."
-msgstr "追加(&A)..."
+msgid "&Add…"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -6916,8 +6984,9 @@ msgstr "選択した個人情報を編集します"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
-#, kde-format
-msgid "&Modify..."
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "&Modify…"
 msgstr "編集(&M)..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
@@ -7215,7 +7284,7 @@ msgstr "フォルダのショートカットを選択"
 #: ui/searchwindow.ui:60
 #, fuzzy, kde-format
 #| msgid "Select File..."
-msgid "Select Folders..."
+msgid "Select Folders…"
 msgstr "ファイルを選択..."
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
@@ -7502,8 +7571,9 @@ msgstr "中間 CA 証明書:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
-#, kde-format
-msgid "GnuPG Settings..."
+#, fuzzy, kde-format
+#| msgid "GnuPG Settings..."
+msgid "GnuPG Settings…"
 msgstr "GnuPG の設定..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
@@ -7566,11 +7636,16 @@ msgstr "オプション(&O)"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
 #: ui/securitypagegeneraltab.ui:62
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
+#| "system will be compromised by present and anticipated security exploits. "
+#| "<a href=\"whatsthis1\">More about HTML mails...</a> <a href="
+#| "\"whatsthis2\">More about external references...</a>"
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
-"href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
+"href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
 "<qt>【警告】 HTML をメールで許可すると、既知または今後予想されるセキュリティ"
@@ -7815,7 +7890,7 @@ msgstr "暗号化されたメッセージへの返信時には開封通知を送
 #| "privacy. <a href=\"whatsthis3\">More about MDNs...</a>"
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
-"privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
+"privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<qt><warning>無条件に開封通知を返すと、あなたのプライバシーが危うくなります。"
 "<a href=\"whatsthis3\">開封通知について</a></warning></qt>"
@@ -8257,3 +8332,83 @@ msgstr[0] "不在返信がアクティブです"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "A&dd..."
+#~ msgstr "追加(&D)..."
+
+#~ msgid "Add..."
+#~ msgstr "追加..."
+
+#~ msgid "&Spellchecker..."
+#~ msgstr "スペルチェッカー(&S)..."
+
+#~ msgid "Edit..."
+#~ msgstr "編集..."
+
+#~ msgid "Moving messages..."
+#~ msgstr "メッセージを移動中..."
+
+#~ msgid "Deleting messages..."
+#~ msgstr "メッセージを削除中..."
+
+#~ msgid "&Find Messages..."
+#~ msgstr "メッセージを検索(&F)..."
+
+# ACCELERATOR changed by translator
+#~ msgid "&Archive Folder..."
+#~ msgstr "フォルダをアーカイブ(&V)..."
+
+#~ msgid "&New Message..."
+#~ msgstr "新しいメッセージ(&N)..."
+
+# ACCELERATOR added by translator
+#~ msgid "Expire..."
+#~ msgstr "古いメッセージを整理(&E)..."
+
+#~ msgid "Add Favorite Folder..."
+#~ msgstr "お気に入りフォルダを追加..."
+
+#~ msgid "Jump to Folder..."
+#~ msgstr "フォルダへジャンプ..."
+
+#, fuzzy
+#~| msgid "&New Message..."
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Message..."
+#~ msgstr "新しいメッセージ(&N)..."
+
+#~ msgid "&Reply..."
+#~ msgstr "返信(&R)..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "&Inline..."
+#~ msgstr "本文に引用(&I)..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "添付ファイルとして(&A)..."
+
+#~ msgctxt "@action:inmenu Forward message inline."
+#~ msgid "&Inline..."
+#~ msgstr "本文に引用(&I)..."
+
+#~ msgctxt "Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "添付ファイルとして(&A)..."
+
+#, fuzzy
+#~| msgid "Add new tag"
+#~ msgid "Add new tag..."
+#~ msgstr "新しいタグを追加"
+
+# ACCELERATOR added by translator
+#, fuzzy
+#~| msgid "Expire..."
+#~ msgid "More..."
+#~ msgstr "古いメッセージを整理(&E)..."
+
+#~ msgid "&Add..."
+#~ msgstr "追加(&A)..."
+
+#~ msgid "GnuPG Settings..."
+#~ msgstr "GnuPG の設定..."

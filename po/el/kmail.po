@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"POT-Creation-Date: 2024-05-08 00:39+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -486,7 +486,7 @@ msgstr "Τύπος διεύθυνσης:"
 msgid "URL for mailing list posting:"
 msgstr "Περιγραφή λίστας ταχυδρομείου:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:473
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Εγγραφή στη λίστα"
@@ -711,13 +711,13 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "Add Mail Account..."
+msgid "Add Mail Account…"
 msgstr "Προσθήκη λογαριασμού"
 
 #: configuredialog/configureaccountpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
-msgid "Custom Account..."
+msgid "Custom Account…"
 msgstr "Προσαρμογή προτεραιότητας λογαριασμών..."
 
 #: configuredialog/configureaccountpage.cpp:230
@@ -972,8 +972,9 @@ msgid "Default theme:"
 msgstr "Προκαθορισμένο θέμα:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, kde-format
-msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, fuzzy, kde-format
+#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis\">Πληροφορίες προσαρμοσμένης μορφής...</a></qt>"
 
@@ -1347,9 +1348,9 @@ msgstr "Καθορισμός του μεγίστου αριθμού παραλη
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
-"the \"Select...\" picker.  Setting this limit helps you to avoid "
-"accidentally sending a message to too many people.  Note, however, that it "
-"does not take account of distribution lists or mailing lists."
+"the \"Select…\" picker.  Setting this limit helps you to avoid accidentally "
+"sending a message to too many people.  Note, however, that it does not take "
+"account of distribution lists or mailing lists."
 msgstr ""
 "Επιτρέψτε μόνο σε αυτόν τον μέγιστο αριθμό ατόμων να παραλάβουν ένα μήνυμα.\n"
 "Αυτό εφαρμόζεται κατά την απάντηση σε όλους ή κατά την χειροκίνητη\n"
@@ -1396,7 +1397,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
-msgid "Configure Completion..."
+msgid "Configure Completion…"
 msgstr "Διαμόρφωση της σειράς συμπλήρωσης..."
 
 #: configuredialog/configurecomposerpage.cpp:465
@@ -1445,8 +1446,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
-msgid "A&dd..."
-msgstr "Προσ&θήκη..."
+msgid "A&dd…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:832
@@ -1491,10 +1492,10 @@ msgstr "&Αφαίρεση"
 
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
-msgid "Add..."
-msgstr "Προσθήκη..."
+msgid "Add…"
+msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Modify..."
 msgstr "Τροποποίηση..."
@@ -2057,8 +2058,9 @@ msgid "Save email as text or html file"
 msgstr "Αποθήκευση μηνύματος ως κείμενο ή html αρχείο"
 
 #: editor/kmcomposerwin.cpp:1308
-#, kde-format
-msgid "&Insert Text File..."
+#, fuzzy, kde-format
+#| msgid "&Insert Text File..."
+msgid "&Insert Text File…"
 msgstr "&Εισαγωγή αρχείου κειμένου..."
 
 #: editor/kmcomposerwin.cpp:1312
@@ -2082,14 +2084,17 @@ msgid "&New Composer"
 msgstr "&Νέο παράθυρο σύνταξης"
 
 #: editor/kmcomposerwin.cpp:1336
-#, kde-format
-msgid "Select &Recipients..."
-msgstr "Επιλογή &παραληπτών..."
+#, fuzzy, kde-format
+#| msgid "Select Recipient"
+msgid "Select &Recipients…"
+msgstr "Επιλογή παραλήπτη"
 
 #: editor/kmcomposerwin.cpp:1339
-#, kde-format
-msgid "Save &Distribution List..."
-msgstr "Αποθήκευση λίστας &διανομής..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Save Distribution List"
+msgid "Save &Distribution List…"
+msgstr "Αποθήκευση λίστας διανομής"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2206,9 +2211,10 @@ msgid "Insert Signature At C&ursor Position"
 msgstr "Εισαγωγή υπογραφής στη θέση &δρομέα"
 
 #: editor/kmcomposerwin.cpp:1464
-#, kde-format
-msgid "&Spellchecker..."
-msgstr "Ελεγκτής &ορθογραφίας..."
+#, fuzzy, kde-format
+#| msgid "Spellchecker"
+msgid "&Spellchecker…"
+msgstr "Ελεγκτής ορθογραφίας"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2248,12 +2254,13 @@ msgstr "Επιλέξτε μια μορφή κρυπτογράφησης για �
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Create Follow Up Reminder..."
+msgid "Create Follow Up Reminder…"
 msgstr "Αναζήτηση μ&ηνυμάτων..."
 
 #: editor/kmcomposerwin.cpp:1542
-#, kde-format
-msgid "Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "Configure KMail..."
+msgid "Configure KMail…"
 msgstr "Διαμόρφωση του KMail..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
@@ -2505,8 +2512,9 @@ msgstr ""
 "κρυπτογραφήσετε ένα προσχέδιο."
 
 #: editor/kmcomposerwin.cpp:3062
-#, kde-format
-msgid "About to send email..."
+#, fuzzy, kde-format
+#| msgid "About to send email..."
+msgid "About to send email…"
 msgstr "Έτοιμο για αποστολή αλληλογραφίας..."
 
 #: editor/kmcomposerwin.cpp:3063
@@ -2784,7 +2792,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"\">(details…)</a>"
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -3102,9 +3110,10 @@ msgid "Generate a new key pair"
 msgstr "Εισάγετε νέα λέξη κλειδί:"
 
 #: identity/identitydialog.cpp:228
-#, kde-format
-msgid "Generating new key pair..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgid "Generating new key pair…"
+msgstr "Εισάγετε νέα λέξη κλειδί:"
 
 #: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
@@ -3493,8 +3502,9 @@ msgid "Attach my vCard to message"
 msgstr "Επισύναψη της κάρτας μου vCard στο μήνυμα"
 
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
-#, kde-format
-msgid "Create..."
+#, fuzzy, kde-format
+#| msgid "Create..."
+msgid "Create…"
 msgstr "Δημιουργία..."
 
 #: identity/identitydialog.cpp:618
@@ -3645,9 +3655,10 @@ msgstr ""
 "(πια), και γι' αυτό θα χρησιμοποιηθεί ο προκαθορισμένος φάκελος προσχεδίων."
 
 #: identity/identitydialog.cpp:1165
-#, kde-format
-msgid "Edit..."
-msgstr "Επεξεργασία..."
+#, fuzzy, kde-format
+#| msgid "Edit"
+msgid "Edit…"
+msgstr "Επεξεργασία"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
@@ -3755,6 +3766,12 @@ msgstr[1] "Αφαίρεση ταυτότητας"
 #, kde-format
 msgid "&Remove"
 msgstr "Α&φαίρεση"
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
+msgstr "Τροποποίηση..."
 
 #: identity/identitypage.cpp:275
 #, kde-format
@@ -4728,14 +4745,16 @@ msgid "Delete Message"
 msgstr "Διαγραφή μηνύματος"
 
 #: kmmainwidget.cpp:1674
-#, kde-format
-msgid "Moving messages..."
-msgstr "Μετακίνηση μηνυμάτων..."
+#, fuzzy, kde-format
+#| msgid "Moving messages"
+msgid "Moving messages…"
+msgstr "Μετακίνηση μηνυμάτων"
 
 #: kmmainwidget.cpp:1676 kmmainwidget.cpp:1870
-#, kde-format
-msgid "Deleting messages..."
-msgstr "Διαγραφή μηνυμάτων..."
+#, fuzzy, kde-format
+#| msgid "Deleting messages"
+msgid "Deleting messages…"
+msgstr "Διαγραφή μηνυμάτων"
 
 #: kmmainwidget.cpp:1691 kmmainwidget.cpp:1890
 #, kde-format
@@ -4775,8 +4794,9 @@ msgid "Move Messages to Folder"
 msgstr "Μετακίνηση μηνυμάτων σε άλλο φάκελο"
 
 #: kmmainwidget.cpp:1799
-#, kde-format
-msgid "Copying messages..."
+#, fuzzy, kde-format
+#| msgid "Copying messages..."
+msgid "Copying messages…"
 msgstr "Αντιγραφή μηνυμάτων..."
 
 #: kmmainwidget.cpp:1807
@@ -4802,14 +4822,15 @@ msgid "Copy Messages to Folder"
 msgstr "Αντιγραφή μηνυμάτων στο φάκελο"
 
 #: kmmainwidget.cpp:1867
-#, kde-format
-msgid "Moving messages to trash..."
+#, fuzzy, kde-format
+#| msgid "Moving messages to trash..."
+msgid "Moving messages to trash…"
 msgstr "Μετακίνηση μηνυμάτων στα απορρίμματα..."
 
 #: kmmainwidget.cpp:1874
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
-msgid "Deleting and moving messages to trash..."
+msgid "Deleting and moving messages to trash…"
 msgstr "Μετακίνηση μηνυμάτων στα απορρίμματα..."
 
 #: kmmainwidget.cpp:1887
@@ -4914,8 +4935,9 @@ msgid "Delete Attachments"
 msgstr "Επιλογή συνημμένου:"
 
 #: kmmainwidget.cpp:2909
-#, kde-format
-msgid "Save &As..."
+#, fuzzy, kde-format
+#| msgid "Save &As..."
+msgid "Save &As…"
 msgstr "Αποθήκευση &ως..."
 
 #: kmmainwidget.cpp:2920
@@ -4959,50 +4981,56 @@ msgid "Certificate Manager"
 msgstr "Διαχειριστής πιστοποιητικών"
 
 #: kmmainwidget.cpp:2979
-#, kde-format
-msgid "&Import Messages..."
+#, fuzzy, kde-format
+#| msgid "&Import Messages..."
+msgid "&Import Messages…"
 msgstr "Ε&ισαγωγή μηνυμάτων..."
 
 #: kmmainwidget.cpp:2989
-#, kde-format
-msgid "&Debug Sieve..."
+#, fuzzy, kde-format
+#| msgid "&Debug Sieve..."
+msgid "&Debug Sieve…"
 msgstr "&Αποσφαλμάτωση Sieve..."
 
 #: kmmainwidget.cpp:2996
-#, kde-format
-msgid "Filter &Log Viewer..."
-msgstr "Προβο&λέας καταγραφών φίλτρου..."
+#, fuzzy, kde-format
+#| msgid "Filter Log Viewer"
+msgid "Filter &Log Viewer…"
+msgstr "Προβολέας καταγραφής φίλτρου"
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "Notification"
-msgid "Notification History..."
+msgid "Notification History…"
 msgstr "Ειδοποίηση"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
-msgid "&Import from another Email Client..."
+msgid "&Import from another Email Client…"
 msgstr ""
 
 #: kmmainwidget.cpp:3011
-#, kde-format
-msgid "Edit \"Out of Office\" Replies..."
+#, fuzzy, kde-format
+#| msgid "Edit \"Out of Office\" Replies..."
+msgid "Edit \"Out of Office\" Replies…"
 msgstr "Επεξεργασία απαντήσεων \"Εκτός γραφείου\"..."
 
 #: kmmainwidget.cpp:3017
-#, kde-format
-msgid "&Configure Automatic Archiving..."
+#, fuzzy, kde-format
+#| msgid "&Configure Automatic Archiving..."
+msgid "&Configure Automatic Archiving…"
 msgstr "&Διαμόρφωση της αυτόματης αρχειοθέτησης..."
 
 #: kmmainwidget.cpp:3023
-#, kde-format
-msgid "Delayed Messages..."
+#, fuzzy, kde-format
+#| msgid "Delayed Messages..."
+msgid "Delayed Messages…"
 msgstr "Καθυστερημένα μηνύματα..."
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Followup Reminder Messages..."
+msgid "Followup Reminder Messages…"
 msgstr "Αναζήτηση μ&ηνυμάτων..."
 
 #: kmmainwidget.cpp:3040 util.cpp:149
@@ -5026,10 +5054,11 @@ msgstr "Μετακίνηση νήματος στα απορρίμματα"
 msgid "Delete T&hread"
 msgstr "Δια&γραφή νήματος"
 
-#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
-#, kde-format
-msgid "&Find Messages..."
-msgstr "Αναζήτηση μ&ηνυμάτων..."
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4113
+#, fuzzy, kde-format
+#| msgid "Find Messages"
+msgid "&Find Messages…"
+msgstr "Αναζήτηση μηνυμάτων"
 
 #: kmmainwidget.cpp:3063
 #, kde-format
@@ -5037,14 +5066,16 @@ msgid "Select &All Messages"
 msgstr "Επιλογή ό&λων των μηνυμάτων"
 
 #: kmmainwidget.cpp:3070
-#, kde-format
-msgid "&Mailing List Management..."
+#, fuzzy, kde-format
+#| msgid "&Mailing List Management..."
+msgid "&Mailing List Management…"
 msgstr "Διαχείριση λίστας τα&χυδρομείου..."
 
 #: kmmainwidget.cpp:3078
-#, kde-format
-msgid "&Clear Akonadi Cache..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "&Clear Akonadi Cache…"
+msgstr "Όνομα ταυτότητας"
 
 #: kmmainwidget.cpp:3083
 #, fuzzy, kde-format
@@ -5053,8 +5084,9 @@ msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Ο τρέχων φάκελος και οι υποφάκελοι του"
 
 #: kmmainwidget.cpp:3088
-#, kde-format
-msgid "&Assign Shortcut..."
+#, fuzzy, kde-format
+#| msgid "&Assign Shortcut..."
+msgid "&Assign Shortcut…"
 msgstr "&Ορισμός συντόμευσης..."
 
 #: kmmainwidget.cpp:3106
@@ -5063,9 +5095,11 @@ msgid "&Expiration Settings"
 msgstr "Ρυθμίσεις &λήξης"
 
 #: kmmainwidget.cpp:3131
-#, kde-format
-msgid "&Archive Folder..."
-msgstr "&Αρχειοθέτηση φακέλου..."
+#, fuzzy, kde-format
+#| msgctxt "@title:window for archiving a folder"
+#| msgid "Archive Folder"
+msgid "&Archive Folder…"
+msgstr "Αρχειοθέτηση του φακέλου"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -5073,19 +5107,22 @@ msgid "Load E&xternal References"
 msgstr "Φόρτωση ε&ξωτερικών αναφορών"
 
 #: kmmainwidget.cpp:3162
-#, kde-format
-msgid "Copy Message To..."
+#, fuzzy, kde-format
+#| msgid "Copy Message To..."
+msgid "Copy Message To…"
 msgstr "Αντιγραφή μηνύματος προς..."
 
 #: kmmainwidget.cpp:3164
-#, kde-format
-msgid "Move Message To..."
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgid "Move Message To…"
 msgstr "Μετακίνηση μηνύματος προς..."
 
 #: kmmainwidget.cpp:3169
-#, kde-format
-msgid "&New Message..."
-msgstr "&Νέο μήνυμα..."
+#, fuzzy, kde-format
+#| msgid "New Message"
+msgid "&New Message…"
+msgstr "Νέο μήνυμα"
 
 #: kmmainwidget.cpp:3171
 #, kde-format
@@ -5099,8 +5136,9 @@ msgid "Message From &Template"
 msgstr "Μήνυμα από &πρότυπο"
 
 #: kmmainwidget.cpp:3185
-#, kde-format
-msgid "New Message t&o Mailing-List..."
+#, fuzzy, kde-format
+#| msgid "New Message t&o Mailing-List..."
+msgid "New Message t&o Mailing-List…"
 msgstr "Νέο μήνυμα &σε λίστα ταχυδρομείου..."
 
 #: kmmainwidget.cpp:3191
@@ -5109,24 +5147,27 @@ msgid "&Create Filter"
 msgstr "Δ&ημιουργία φίλτρου"
 
 #: kmmainwidget.cpp:3195
-#, kde-format
-msgid "Filter on &Subject..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Subject..."
+msgid "Filter on &Subject…"
 msgstr "Φίλτρο &στο Θέμα..."
 
 #: kmmainwidget.cpp:3202
-#, kde-format
-msgid "Filter on &From..."
+#, fuzzy, kde-format
+#| msgid "Filter on &From..."
+msgid "Filter on &From…"
 msgstr "&Φίλτρο στο Από..."
 
 #: kmmainwidget.cpp:3208
-#, kde-format
-msgid "Filter on &To..."
+#, fuzzy, kde-format
+#| msgid "Filter on &To..."
+msgid "Filter on &To…"
 msgstr "Φίλ&τρο στο Προς..."
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
-msgid "Filter on &Cc..."
+msgid "Filter on &Cc…"
 msgstr "Φίλ&τρο στο Προς..."
 
 #: kmmainwidget.cpp:3228
@@ -5185,9 +5226,10 @@ msgid "&Ignore Thread"
 msgstr "Παρά&βλεψη νήματος"
 
 #: kmmainwidget.cpp:3271 kmreadermainwin.cpp:490
-#, kde-format
-msgid "Save A&ttachments..."
-msgstr "Αποθήκευ&ση συνημμένων..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment"
+msgid "Save A&ttachments…"
+msgstr "Αποθήκευση συνημμένου"
 
 #: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
@@ -5199,7 +5241,7 @@ msgstr "Αποθήκευση όλων των συνημμένων..."
 #: kmmainwidget.cpp:3283
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
-msgid "Copy Decrypted To..."
+msgid "Copy Decrypted To…"
 msgstr "Αντιγραφή αντικειμένου προς..."
 
 #: kmmainwidget.cpp:3287
@@ -5349,19 +5391,21 @@ msgstr ""
 "επόμενο μη αναγνωσμένο μήνυμα."
 
 #: kmmainwidget.cpp:3403
-#, kde-format
-msgid "Configure &Filters..."
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgid "Configure &Filters…"
 msgstr "Διαμόρφωση &φίλτρων..."
 
 #: kmmainwidget.cpp:3409
-#, kde-format
-msgid "Manage &Sieve Scripts..."
-msgstr "Διαχείριση σεναρίων &Sieve..."
+#, fuzzy, kde-format
+#| msgid "Manage Sieve Scripts"
+msgid "Manage &Sieve Scripts…"
+msgstr "Διαχείριση σεναρίων Sieve"
 
 #: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "&Add Account..."
+msgid "&Add Account…"
 msgstr "Προσθήκη λογαριασμού"
 
 #: kmmainwidget.cpp:3419
@@ -5375,28 +5419,33 @@ msgid "Display KMail's Welcome Page"
 msgstr "Εμφάνιση της σελίδας καλωσορίσματος του KMail"
 
 #: kmmainwidget.cpp:3428
-#, kde-format
-msgid "Configure &Notifications..."
+#, fuzzy, kde-format
+#| msgid "Configure &Notifications..."
+msgid "Configure &Notifications…"
 msgstr "Διαμόρφωση &ειδοποιήσεων..."
 
 #: kmmainwidget.cpp:3435
-#, kde-format
-msgid "&Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "&Configure KMail..."
+msgid "&Configure KMail…"
 msgstr "&Διαμόρφωση του KMail..."
 
 #: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Expire..."
-msgstr "Λήξη..."
+#, fuzzy, kde-format
+#| msgid "Expire"
+msgid "Expire…"
+msgstr "Λήξη"
 
 #: kmmainwidget.cpp:3448
-#, kde-format
-msgid "Add Favorite Folder..."
-msgstr "Προσθήκη αγαπημένου φακέλου..."
+#, fuzzy, kde-format
+#| msgid "Add Favorite Folder"
+msgid "Add Favorite Folder…"
+msgstr "Προσθήκη αγαπημένου φακέλου"
 
 #: kmmainwidget.cpp:3454
-#, kde-format
-msgid "Serverside Subscription..."
+#, fuzzy, kde-format
+#| msgid "Serverside Subscription..."
+msgid "Serverside Subscription…"
 msgstr "Εγγραφή στο άκρο του διακομιστή..."
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
@@ -5414,15 +5463,16 @@ msgstr "Ο τρέχων φάκελος και οι υποφάκελοι του"
 #: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
-msgid "Import/Export KMail Data..."
+msgid "Import/Export KMail Data…"
 msgstr "&Εξαγωγή δεδομένων του KMail..."
 
 #: kmmainwidget.cpp:3492
-#, kde-format
-msgid "New AddressBook Contact..."
+#, fuzzy, kde-format
+#| msgid "New AddressBook Contact..."
+msgid "New AddressBook Contact…"
 msgstr "Νέα επαφή βιβλίου διευθύνσεων..."
 
-#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4152
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5440,9 +5490,10 @@ msgid "Copy Message to Folder"
 msgstr "Αντιγραφή μηνύματος στο φάκελο"
 
 #: kmmainwidget.cpp:3526
-#, kde-format
-msgid "Jump to Folder..."
-msgstr "Μετάβαση στο φάκελο..."
+#, fuzzy, kde-format
+#| msgid "Jump to Folder"
+msgid "Jump to Folder…"
+msgstr "Μετάβαση στο φάκελο"
 
 #: kmmainwidget.cpp:3532
 #, kde-format
@@ -5554,50 +5605,51 @@ msgid "&Delete Search"
 msgstr "&Διαγραφή αναζήτησης"
 
 #: kmmainwidget.cpp:4113
-#, kde-format
-msgid "Edit Search..."
+#, fuzzy, kde-format
+#| msgid "Edit Search..."
+msgid "Edit Search…"
 msgstr "Επεξεργασία αναζήτησης..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4150
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Διαμόρφωση του KMail..."
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Ά&δειασμα απορριμμάτων"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Μετακίνηση όλων των μηνυμάτων στα απορρίμματα"
 
-#: kmmainwidget.cpp:4236
+#: kmmainwidget.cpp:4235
 #, kde-format
 msgid "&Undo"
 msgstr "Α&ναίρεση"
 
-#: kmmainwidget.cpp:4238
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Α&ναίρεση: «%1»"
 
-#: kmmainwidget.cpp:4295
+#: kmmainwidget.cpp:4294
 #, kde-format
 msgid "Filter %1"
 msgstr "Φίλτρο %1"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4762
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
 msgctxt "Show shortcut for focus quick search. Don't change it"
-msgid "Search... <%1>"
+msgid "Search… <%1>"
 msgstr "Αναζήτηση...<%1>"
 
-#: kmmainwidget.cpp:4771
+#: kmmainwidget.cpp:4770
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5608,19 +5660,19 @@ msgstr ""
 "\"spam\" (διαφημιστικά κλπ) και ίσως αυξήσει την πιθανότητα άλωσης του "
 "συστήματός σας μέσω των τωρινών και μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:4774
+#: kmmainwidget.cpp:4773
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Προειδοποίηση ασφαλείας"
 
-#: kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgid "Use HTML"
 msgstr "Χρήση HTML"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4920
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5630,48 +5682,49 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Ακύρωση"
 
-#: kmmainwidget.cpp:4961
+#: kmmainwidget.cpp:4960
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4961
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Όνομα ταυτότητας"
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4962
 #, kde-format
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: kmmainwidget.cpp:4970
+#: kmmainwidget.cpp:4969
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
 msgstr "Akonadi Id:"
 
 #: kmmainwin.cpp:53
-#, kde-format
-msgid "Starting..."
+#, fuzzy, kde-format
+#| msgid "Starting..."
+msgid "Starting…"
 msgstr "Έναρξη..."
 
 #: kmreadermainwin.cpp:493 util.cpp:149
@@ -5701,19 +5754,22 @@ msgid "Cannot copy item. %1"
 msgstr "Αδυναμία αντιγραφής του αντικειμένου. %1"
 
 #: kmreaderwin.cpp:122
-#, kde-format
-msgid "New Message To..."
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "New Message To…"
 msgstr "Νέο μήνυμα σε..."
 
 #: kmreaderwin.cpp:128
-#, kde-format
-msgid "Reply To..."
-msgstr "Απάντηση σε..."
+#, fuzzy, kde-format
+#| msgid "&Reply To"
+msgid "Reply To…"
+msgstr "&Απάντηση σε"
 
 #: kmreaderwin.cpp:134
-#, kde-format
-msgid "Forward To..."
-msgstr "Προώθηση σε..."
+#, fuzzy, kde-format
+#| msgid "Forward To"
+msgid "Forward To…"
+msgstr "Προώθηση σε"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5736,30 +5792,34 @@ msgid "Bookmark This Link"
 msgstr "Προσθήκη αυτού του συνδέσμου στους σελιδοδείκτες"
 
 #: kmreaderwin.cpp:161
-#, kde-format
-msgid "Edit contact..."
+#, fuzzy, kde-format
+#| msgid "Edit contact..."
+msgid "Edit contact…"
 msgstr "Επεξεργασία επαφής..."
 
 #: kmreaderwin.cpp:167
-#, kde-format
-msgid "Save Link As..."
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Save Link As…"
 msgstr "Αποθήκευση συνδέσμου ως..."
 
 #: kmreaderwin.cpp:173
-#, kde-format
-msgid "&Find in Message..."
+#, fuzzy, kde-format
+#| msgid "&Find in Message..."
+msgid "&Find in Message…"
 msgstr "Αναζήτηση στο &μήνυμα..."
 
 #: kmreaderwin.cpp:179
-#, kde-format
-msgid "Save Image On Disk..."
+#, fuzzy, kde-format
+#| msgid "Save Image On Disk..."
+msgid "Save Image On Disk…"
 msgstr "Αποθήκευση της εικόνας στο δίσκο..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
 #, fuzzy, kde-format
 #| msgid "Share image..."
-msgid "Open Image..."
+msgid "Open Image…"
 msgstr "Διαμοιρασμός της εικόνας..."
 
 #: kmreaderwin.cpp:191
@@ -5780,8 +5840,9 @@ msgstr ""
 "επαφή"
 
 #: kmreaderwin.cpp:204
-#, kde-format
-msgid "Share image..."
+#, fuzzy, kde-format
+#| msgid "Share image..."
+msgid "Share image…"
 msgstr "Διαμοιρασμός της εικόνας..."
 
 #: kmreaderwin.cpp:259
@@ -5945,10 +6006,10 @@ msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, fuzzy, kde-format
-#| msgid "&New Message..."
+#| msgid "New Message"
 msgctxt "@action:inmenu"
-msgid "New Message..."
-msgstr "&Νέο μήνυμα..."
+msgid "New Message…"
+msgstr "Νέο μήνυμα"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -6017,7 +6078,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "&Configure Summary View..."
+msgid "&Configure Summary View…"
 msgstr "&Διαμόρφωση του KMail..."
 
 #: kontactplugin/summary/summaryview_part.cpp:50
@@ -6115,110 +6176,124 @@ msgid "&Reply"
 msgstr "&Απάντηση"
 
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
-#, kde-format
-msgid "&Reply..."
-msgstr "&Απάντηση..."
+#, fuzzy, kde-format
+#| msgctxt "Message->"
+#| msgid "&Reply"
+msgid "&Reply…"
+msgstr "&Απάντηση"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
-#, kde-format
-msgid "Reply to &All..."
-msgstr "&Απάντηση σε όλους..."
+#, fuzzy, kde-format
+#| msgid "Reply to All"
+msgid "Reply to &All…"
+msgstr "Απάντηση σε όλους"
 
 #: messageactions.cpp:66
-#, kde-format
-msgid "Reply to A&uthor..."
+#, fuzzy, kde-format
+#| msgid "Reply to A&uthor..."
+msgid "Reply to A&uthor…"
 msgstr "Απάντηση στο &συγγραφέα..."
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
-#, kde-format
-msgid "Reply to Mailing-&List..."
+#, fuzzy, kde-format
+#| msgid "Reply to Mailing-&List..."
+msgid "Reply to Mailing-&List…"
 msgstr "Απάντηση στη λίστα τα&χυδρομείου..."
 
 #: messageactions.cpp:68
-#, kde-format
-msgid "Reply Without &Quote..."
+#, fuzzy, kde-format
+#| msgid "Reply Without &Quote..."
+msgid "Reply Without &Quote…"
 msgstr "Απάντηση &χωρίς παράθεση..."
 
 #: messageactions.cpp:69
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "View->attachments->"
+#| msgid "&Inline"
 msgctxt "@action:inmenu Message->Forward->"
-msgid "&Inline..."
-msgstr "&Εμβόλιμο..."
+msgid "&Inline…"
+msgstr "&Εμβόλιμα"
+
+#: messageactions.cpp:70
+#, fuzzy, kde-format
+#| msgid "As Attachment"
+msgctxt "@action:inmenu Message->Forward->"
+msgid "As &Attachment…"
+msgstr "Σαν συνημμένο"
 
 #: messageactions.cpp:71
-#, kde-format
-msgctxt "@action:inmenu Message->Forward->"
-msgid "As &Attachment..."
-msgstr "Ως &συνημμένο..."
-
-#: messageactions.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Message->Forward->"
+#| msgid "&Redirect..."
 msgctxt "Message->Forward->"
-msgid "&Redirect..."
+msgid "&Redirect…"
 msgstr "Ανακατεύθ&υνση..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
-msgid "New Message to Recipients..."
+msgid "New Message to Recipients…"
 msgstr "Νέο μήνυμα &σε λίστα ταχυδρομείου..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&Σημείωση μηνύματος"
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "Προώ&θηση"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Λίστα αλληλογραφίας"
 
-#: messageactions.cpp:77 messageactions.cpp:372
-#, kde-format
-msgid "Add Note..."
+#: messageactions.cpp:76 messageactions.cpp:371
+#, fuzzy, kde-format
+#| msgid "Add Note..."
+msgid "Add Note…"
 msgstr "Προσθήκη σημείωσης..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Επεξεργασία μηνύματος"
 
-#: messageactions.cpp:79
-#, kde-format
-msgid "Filter on Mailing-&List..."
+#: messageactions.cpp:78
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-&List…"
 msgstr "Φίλτρο στη λίστα τα&χυδρομείου..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Add Followup Reminder..."
+msgid "Add Followup Reminder…"
 msgstr "Αναζήτηση μ&ηνυμάτων..."
 
-#: messageactions.cpp:82
-#, kde-format
-msgid "Send A&gain..."
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+#| msgid "Send A&gain..."
+msgid "Send A&gain…"
 msgstr "&Επαναποστολή..."
 
-#: messageactions.cpp:83
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Νέο μήνυμα από &πρότυπο"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
-msgid "Export to PDF..."
+msgid "Export to PDF…"
 msgstr "Εξαγωγή σε HTML..."
 
-#: messageactions.cpp:86
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"
@@ -6226,77 +6301,80 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Μετακίνηση του μηνύματος"
 
-#: messageactions.cpp:374
-#, kde-format
-msgid "Edit Note..."
+#: messageactions.cpp:373
+#, fuzzy, kde-format
+#| msgid "Edit Note..."
+msgid "Edit Note…"
 msgstr "Επεξεργασία σημείωσης..."
 
-#: messageactions.cpp:419
-#, kde-format
-msgid "Filter on Mailing-List..."
+#: messageactions.cpp:418
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List..."
+msgid "Filter on Mailing-List…"
 msgstr "Φίλτρο στη λίστα ταχυδρομείου..."
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, kde-format
 msgid "<unknown>"
 msgstr "<άγνωστο>"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgctxt "@title:tab Mailing list settings for a folder."
 #| msgid "Mailing List"
 msgid "Mailing List Name: %1"
 msgstr "Λίστα αλληλογραφίας"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Άνοιγμα του μηνύματος στην αρχειοθήκη της λίστας"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:460
 #, kde-format
 msgid "Post New Message"
 msgstr "Αποστολή νέου μηνύματος"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:463
 #, kde-format
 msgid "Go to Archive"
 msgstr "Μετάβαση στην αρχειοθήκη"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Request Help"
 msgstr "Ζητήστε βοήθεια"
 
-#: messageactions.cpp:470
+#: messageactions.cpp:469
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Επικοινωνήστε με τον ιδιοκτήτη"
 
-#: messageactions.cpp:476
+#: messageactions.cpp:475
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Διαγραφή από τη λίστα"
 
-#: messageactions.cpp:485
-#, kde-format
-msgid "Filter on Mailing-List %1..."
+#: messageactions.cpp:484
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List %1..."
+msgid "Filter on Mailing-List %1…"
 msgstr "Φίλτρο στη λίστα ταχυδρομείου %1..."
 
 # Εγγραφή στη λίστα αλληλογραφίας με αποστολή ηλ. αλληλογαφίας
-#: messageactions.cpp:662
+#: messageactions.cpp:661
 #, kde-format
 msgid "email"
 msgstr "ηλ. αλληλογραφία"
 
 # Εγγραφή στην λίστα αλληλογραφίας από την ιστοσελίδα
-#: messageactions.cpp:665
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr "ιστοσελίδα"
 
-#: messageactions.cpp:670
+#: messageactions.cpp:669
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6304,13 +6382,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
 msgid "Export to PDF"
 msgstr "Εξαγωγή σε HTML..."
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6337,7 +6415,7 @@ msgstr "Ευρετήριο"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
-msgid "Indexing Collections..."
+msgid "Indexing Collections…"
 msgstr "Διαμόρφωση της σειράς συμπλήρωσης..."
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
@@ -6391,21 +6469,25 @@ msgid "&Search"
 msgstr "Αναζήτη&ση"
 
 #: searchdialog/searchwindow.cpp:173
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "View->attachments->"
+#| msgid "&Inline"
 msgctxt "@action:inmenu Forward message inline."
-msgid "&Inline..."
-msgstr "&Εμβόλιμο..."
+msgid "&Inline…"
+msgstr "&Εμβόλιμα"
 
 #: searchdialog/searchwindow.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "As Attachment"
 msgctxt "Message->Forward->"
-msgid "As &Attachment..."
-msgstr "Σ&αν συνημμένο..."
+msgid "As &Attachment…"
+msgstr "Σαν συνημμένο"
 
 #: searchdialog/searchwindow.cpp:192
-#, kde-format
-msgid "Save Attachments..."
-msgstr "Αποθήκευση συνημμένων..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment"
+msgid "Save Attachments…"
+msgstr "Αποθήκευση συνημμένου"
 
 #: searchdialog/searchwindow.cpp:199
 #, kde-format
@@ -6463,8 +6545,9 @@ msgstr ""
 "4."
 
 #: searchdialog/searchwindow.cpp:522
-#, kde-format
-msgid "Searching..."
+#, fuzzy, kde-format
+#| msgid "Searching..."
+msgid "Searching…"
 msgstr "Αναζήτηση..."
 
 #: searchdialog/searchwindow.cpp:535
@@ -6515,7 +6598,7 @@ msgstr[1] "Αποκοπή %1 μηνυμάτων"
 #: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
-msgid "Checking index status..."
+msgid "Checking index status…"
 msgstr "Έλεγχος αλληλογραφίας κατά την εκκίνηση"
 
 #: secondarywindow.cpp:57
@@ -6983,14 +7066,15 @@ msgid "Message Tag: %1"
 msgstr "Ετικέτα μηνύματος: %1"
 
 #: tag/tagactionmanager.cpp:155
-#, kde-format
-msgid "Add new tag..."
-msgstr "Προσθήκη νέας ετικέτας..."
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgid "Add new tag…"
+msgstr "Προσθήκη νέας ετικέτας"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
-msgid "More..."
-msgstr "Περισσότερα..."
+msgid "More…"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -7010,20 +7094,22 @@ msgid "Select Tags"
 msgstr "Επιλογή ετικετών"
 
 #: tag/tagselectdialog.cpp:53
-#, kde-format
-msgid "Add New Tag..."
+#, fuzzy, kde-format
+#| msgid "Add New Tag..."
+msgid "Add New Tag…"
 msgstr "Προσθήκη νέας ετικέτας..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
-msgid "Search tag..."
+msgid "Search tag…"
 msgstr "Αναζήτηση ετικέτας"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
-#, kde-format
-msgid "Customize accounts order..."
+#, fuzzy, kde-format
+#| msgid "Customize accounts order..."
+msgid "Customize accounts order…"
 msgstr "Προσαρμογή προτεραιότητας λογαριασμών..."
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
@@ -7046,8 +7132,9 @@ msgstr "Λεπτομερής ε&ιδοποίηση νέας αλληλογραφ
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
-#, kde-format
-msgid "Other Actio&ns..."
+#, fuzzy, kde-format
+#| msgid "Other Actio&ns..."
+msgid "Other Actio&ns…"
 msgstr "Άλλες ε&νέργειες..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
@@ -7066,8 +7153,8 @@ msgstr "Προσθήκη νέας ταυτότητας"
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
 #, kde-format
-msgid "&Add..."
-msgstr "Προσ&θήκη..."
+msgid "&Add…"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -7077,8 +7164,9 @@ msgstr "Τροποποίηση της επιλεγμένης ταυτότητα�
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
-#, kde-format
-msgid "&Modify..."
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "&Modify…"
 msgstr "&Τροποποίηση..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
@@ -7400,7 +7488,7 @@ msgstr "Επιλογή συγκεκριμένων φακέλων:"
 #: ui/searchwindow.ui:60
 #, fuzzy, kde-format
 #| msgid "Select folders..."
-msgid "Select Folders..."
+msgid "Select Folders…"
 msgstr "Επιλογή φακέλων..."
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
@@ -7657,8 +7745,9 @@ msgstr "Για ενδιάμεσα πιστοποιητικά CA:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
-#, kde-format
-msgid "GnuPG Settings..."
+#, fuzzy, kde-format
+#| msgid "GnuPG Settings..."
+msgid "GnuPG Settings…"
 msgstr "Ρυθμίσεις GnuPG..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
@@ -7725,11 +7814,16 @@ msgstr "Επιλο&γές"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
 #: ui/securitypagegeneraltab.ui:62
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
+#| "system will be compromised by present and anticipated security exploits. "
+#| "<a href=\"whatsthis1\">More about HTML mails...</a> <a href="
+#| "\"whatsthis2\">More about external references...</a>"
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
-"href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
+"href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
 "<b>ΠΡΟΕΙΔΟΠΟΙΗΣΗ:</b> Η χρήση της HTML στα μηνύματα ηλ. αλληλογραφίας μπορεί "
@@ -7979,10 +8073,13 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarning)
 #: ui/securitypagemdntab.ui:152
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
+#| "privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
-"privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
+"privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<b>ΠΡΟΕΙΔΟΠΟΙΗΣΗ:</b> Η επιστροφή επιβεβαιώσεων χωρίς προϋποθέσεις "
 "υπονομεύει το προσωπικό σας απόρρητο. <a href=\"whatsthis-mdn\">Περισσότερα "
@@ -8427,6 +8524,111 @@ msgstr[1] "Απάντηση εκτός γραφείου ενεργή στους 
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Εστίαση"
+
+#~ msgid "A&dd..."
+#~ msgstr "Προσ&θήκη..."
+
+#~ msgid "Add..."
+#~ msgstr "Προσθήκη..."
+
+#~ msgid "Select &Recipients..."
+#~ msgstr "Επιλογή &παραληπτών..."
+
+#~ msgid "Save &Distribution List..."
+#~ msgstr "Αποθήκευση λίστας &διανομής..."
+
+#~ msgid "&Spellchecker..."
+#~ msgstr "Ελεγκτής &ορθογραφίας..."
+
+#~ msgid "Edit..."
+#~ msgstr "Επεξεργασία..."
+
+#~ msgid "Moving messages..."
+#~ msgstr "Μετακίνηση μηνυμάτων..."
+
+#~ msgid "Deleting messages..."
+#~ msgstr "Διαγραφή μηνυμάτων..."
+
+#~ msgid "Filter &Log Viewer..."
+#~ msgstr "Προβο&λέας καταγραφών φίλτρου..."
+
+#~ msgid "&Find Messages..."
+#~ msgstr "Αναζήτηση μ&ηνυμάτων..."
+
+#~ msgid "&Archive Folder..."
+#~ msgstr "&Αρχειοθέτηση φακέλου..."
+
+#~ msgid "&New Message..."
+#~ msgstr "&Νέο μήνυμα..."
+
+#~ msgid "Save A&ttachments..."
+#~ msgstr "Αποθήκευ&ση συνημμένων..."
+
+#~ msgid "Manage &Sieve Scripts..."
+#~ msgstr "Διαχείριση σεναρίων &Sieve..."
+
+#~ msgid "Expire..."
+#~ msgstr "Λήξη..."
+
+#~ msgid "Add Favorite Folder..."
+#~ msgstr "Προσθήκη αγαπημένου φακέλου..."
+
+#~ msgid "Jump to Folder..."
+#~ msgstr "Μετάβαση στο φάκελο..."
+
+#~ msgid "Reply To..."
+#~ msgstr "Απάντηση σε..."
+
+#~ msgid "Forward To..."
+#~ msgstr "Προώθηση σε..."
+
+#, fuzzy
+#~| msgid "&New Message..."
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Message..."
+#~ msgstr "&Νέο μήνυμα..."
+
+#~ msgid "&Reply..."
+#~ msgstr "&Απάντηση..."
+
+#~ msgid "Reply to &All..."
+#~ msgstr "&Απάντηση σε όλους..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "&Inline..."
+#~ msgstr "&Εμβόλιμο..."
+
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "Ως &συνημμένο..."
+
+#, fuzzy
+#~| msgid "Export to HTML..."
+#~ msgid "Export to PDF..."
+#~ msgstr "Εξαγωγή σε HTML..."
+
+#~ msgctxt "@action:inmenu Forward message inline."
+#~ msgid "&Inline..."
+#~ msgstr "&Εμβόλιμο..."
+
+#~ msgctxt "Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "Σ&αν συνημμένο..."
+
+#~ msgid "Save Attachments..."
+#~ msgstr "Αποθήκευση συνημμένων..."
+
+#~ msgid "Add new tag..."
+#~ msgstr "Προσθήκη νέας ετικέτας..."
+
+#~ msgid "More..."
+#~ msgstr "Περισσότερα..."
+
+#~ msgid "&Add..."
+#~ msgstr "Προσ&θήκη..."
+
+#~ msgid "GnuPG Settings..."
+#~ msgstr "Ρυθμίσεις GnuPG..."
 
 #~ msgid "Charset"
 #~ msgstr "Σύνολο χαρακτήρων"
@@ -9106,9 +9308,6 @@ msgstr "Εστίαση"
 #~| msgid "Follow Up Mail..."
 #~ msgid "Follow Up Mail"
 #~ msgstr "Συμπληρωματική απάντηση αλληλογραφίας..."
-
-#~ msgid "Filter Log Viewer"
-#~ msgstr "Προβολέας καταγραφής φίλτρου"
 
 #~ msgid "&Log filter activities"
 #~ msgstr "&Καταγραφή ενεργειών φίλτρου"
@@ -11699,9 +11898,6 @@ msgstr "Εστίαση"
 #~ "Έλεγχος ύπαρξης ρυθμισμένης απάντησης 'εκτός γραφείου' κατά την εκκίνηση "
 #~ "του KMail."
 
-#~ msgid "Manage Sieve Scripts"
-#~ msgstr "Διαχείριση σεναρίων Sieve"
-
 #~ msgid "Available Scripts"
 #~ msgstr "Διαθέσιμα σενάρια"
 
@@ -11800,9 +11996,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Out-of-office reply still active"
 #~ msgstr "Ενεργή απάντηση εκτός γραφείου"
-
-#~ msgid "Edit"
-#~ msgstr "Επεξεργασία"
 
 #~ msgid ""
 #~ "Sieve script installed successfully on the server.\n"
@@ -12065,11 +12258,6 @@ msgstr "Εστίαση"
 
 #~ msgid "CC"
 #~ msgstr "Κοιν."
-
-#, fuzzy
-#~| msgid "&Reply To"
-#~ msgid "Reply To"
-#~ msgstr "&Απάντηση σε"
 
 #, fuzzy
 #~| msgid "Organization:"
@@ -12335,9 +12523,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Copy Into Folder"
 #~ msgstr "Αντιγραφή στο φάκελο"
-
-#~ msgid "Forward To"
-#~ msgstr "Προώθηση σε"
 
 #, fuzzy
 #~| msgid "Please wait while the message is transferred"
@@ -13546,9 +13731,6 @@ msgstr "Εστίαση"
 #~ msgid "attachment.1"
 #~ msgstr "συνημμένο.1"
 
-#~ msgid "Save Attachment"
-#~ msgstr "Αποθήκευση συνημμένου"
-
 #~ msgctxt "filename for the %1-th unnamed attachment"
 #~ msgid "attachment.%1"
 #~ msgstr "συνημμένο.%1"
@@ -13764,9 +13946,6 @@ msgstr "Εστίαση"
 #~ msgid "<qt>Unable to access <b>%1</b>.</qt>"
 #~ msgstr "<qt>Αδυναμία προσπέλασης του <b>%1</b>.</qt>"
 
-#~ msgid "Select Recipient"
-#~ msgstr "Επιλογή παραλήπτη"
-
 #~ msgid "Search &Directory Service"
 #~ msgstr "Αναζήτηση υπηρεσίας &καταλόγου"
 
@@ -13799,10 +13978,6 @@ msgstr "Εστίαση"
 #~ "Απενεργοποιήστε αυτή την επιλογή αν δε θέλετε να χρησιμοποιούνται οι "
 #~ "πρόσφατες διευθύνσεις στη λίστα αυτόματης συμπλήρωσης στα πεδία "
 #~ "διευθύνσεων του παραθύρου σύνταξης."
-
-#~ msgctxt "@title:window"
-#~ msgid "Save Distribution List"
-#~ msgstr "Αποθήκευση λίστας διανομής"
 
 #~ msgctxt "@action:button"
 #~ msgid "Save List"
@@ -14350,9 +14525,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Reply"
 #~ msgstr "Απάντηση"
-
-#~ msgid "Reply to All"
-#~ msgstr "Απάντηση σε όλους"
 
 #~ msgctxt "Template type for forwarding messages."
 #~ msgid "Forward"
@@ -17963,10 +18135,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Show attachments as suggested by sender."
 #~ msgstr "Εμφάνιση συνημμένων όπως προτείνεται από τον αποστολέα."
-
-#~ msgctxt "View->attachments->"
-#~ msgid "&Inline"
-#~ msgstr "&Εμβόλιμα"
 
 #~ msgid "Show all attachments inline (if possible)"
 #~ msgstr "Εμφάνιση όλων των συνημμένων εμβόλιμα (αν αυτό είναι δυνατό)"

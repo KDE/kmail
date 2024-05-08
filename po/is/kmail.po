@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-20 00:38+0000\n"
+"POT-Creation-Date: 2024-05-08 00:39+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -499,7 +499,7 @@ msgstr "T&egund vistfangs:"
 msgid "URL for mailing list posting:"
 msgstr "Lýsing póstlista:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:473
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Áskrift að lista"
@@ -741,13 +741,13 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "Add Mail Account..."
+msgid "Add Mail Account…"
 msgstr "Bæta við tengingu"
 
 #: configuredialog/configureaccountpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "Custom Account..."
+msgid "Custom Account…"
 msgstr "Bæta við tengingu"
 
 #: configuredialog/configureaccountpage.cpp:230
@@ -1020,7 +1020,7 @@ msgstr "Eyða &þræði"
 
 #: configuredialog/configureappearancepage.cpp:687
 #, kde-format
-msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:693
@@ -1371,9 +1371,9 @@ msgstr "Hámarksfjöldi af mótakandalínum."
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
-"the \"Select...\" picker.  Setting this limit helps you to avoid "
-"accidentally sending a message to too many people.  Note, however, that it "
-"does not take account of distribution lists or mailing lists."
+"the \"Select…\" picker.  Setting this limit helps you to avoid accidentally "
+"sending a message to too many people.  Note, however, that it does not take "
+"account of distribution lists or mailing lists."
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:420
@@ -1405,7 +1405,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order"
-msgid "Configure Completion..."
+msgid "Configure Completion…"
 msgstr "Stilla vinnsluröð"
 
 #: configuredialog/configurecomposerpage.cpp:465
@@ -1456,8 +1456,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
-msgid "A&dd..."
-msgstr "&Bæta við..."
+msgid "A&dd…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:700
 #: configuredialog/configurecomposerpage.cpp:832
@@ -1502,10 +1502,10 @@ msgstr "E&yða"
 
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
 #, kde-format
-msgid "Add..."
-msgstr "Bæta við..."
+msgid "Add…"
+msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
 msgid "Modify..."
 msgstr "Breyta..."
@@ -2086,7 +2086,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1308
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
-msgid "&Insert Text File..."
+msgid "&Insert Text File…"
 msgstr "Setja &inn skrá..."
 
 #: editor/kmcomposerwin.cpp:1312
@@ -2112,14 +2112,16 @@ msgid "&New Composer"
 msgstr "&Nýr ritill"
 
 #: editor/kmcomposerwin.cpp:1336
-#, kde-format
-msgid "Select &Recipients..."
-msgstr "Veldu móttakendu&r..."
+#, fuzzy, kde-format
+#| msgid "Select Recipient"
+msgid "Select &Recipients…"
+msgstr "Veldu viðtakanda"
 
 #: editor/kmcomposerwin.cpp:1339
-#, kde-format
-msgid "Save &Distribution List..."
-msgstr "Vista &póstlista..."
+#, fuzzy, kde-format
+#| msgid "Save Distribution List"
+msgid "Save &Distribution List…"
+msgstr "Vista póstlista"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2239,9 +2241,10 @@ msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1464
-#, kde-format
-msgid "&Spellchecker..."
-msgstr "&Stafsetningarráðgjafinn..."
+#, fuzzy, kde-format
+#| msgid "Spellchecker"
+msgid "&Spellchecker…"
+msgstr "Stafsetningarráðgjafi"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2281,12 +2284,12 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Create Follow Up Reminder..."
+msgid "Create Follow Up Reminder…"
 msgstr "&Leita að bréfi..."
 
 #: editor/kmcomposerwin.cpp:1542
 #, fuzzy, kde-format
-msgid "Configure KMail..."
+msgid "Configure KMail…"
 msgstr "Stilla &KMail..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
@@ -2540,8 +2543,9 @@ msgstr ""
 "BCC."
 
 #: editor/kmcomposerwin.cpp:3062
-#, kde-format
-msgid "About to send email..."
+#, fuzzy, kde-format
+#| msgid "About to send email..."
+msgid "About to send email…"
 msgstr "Að fara að senda póst..."
 
 #: editor/kmcomposerwin.cpp:3063
@@ -2817,7 +2821,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
-"\">(details...)</a>"
+"\">(details…)</a>"
 msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
@@ -3141,9 +3145,10 @@ msgid "Generate a new key pair"
 msgstr "Sláðu inn nýtt stikkorð:"
 
 #: identity/identitydialog.cpp:228
-#, kde-format
-msgid "Generating new key pair..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgid "Generating new key pair…"
+msgstr "Sláðu inn nýtt stikkorð:"
 
 #: identity/identitydialog.cpp:241
 #, fuzzy, kde-format
@@ -3537,7 +3542,7 @@ msgstr "Bæta 'haus' við bréfið"
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
 #, fuzzy, kde-format
 #| msgid "Rename..."
-msgid "Create..."
+msgid "Create…"
 msgstr "Endurnefna..."
 
 #: identity/identitydialog.cpp:618
@@ -3685,9 +3690,9 @@ msgstr ""
 "sjálfgefna mappan fyrir uppköst notuð."
 
 #: identity/identitydialog.cpp:1165
-#, kde-format
-msgid "Edit..."
-msgstr "Breyta..."
+#, fuzzy, kde-format
+msgid "Edit…"
+msgstr "Hætta"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, fuzzy, kde-format
@@ -3794,6 +3799,12 @@ msgstr[1] "Fjarlægja auðkenni"
 #, fuzzy, kde-format
 msgid "&Remove"
 msgstr "E&yða"
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
+msgstr "Breyta..."
 
 #: identity/identitypage.cpp:275
 #, fuzzy, kde-format
@@ -4759,13 +4770,13 @@ msgstr "Eyða bréfi"
 #: kmmainwidget.cpp:1674
 #, fuzzy, kde-format
 #| msgid "Moving messages"
-msgid "Moving messages..."
+msgid "Moving messages…"
 msgstr "Færi bréf"
 
 #: kmmainwidget.cpp:1676 kmmainwidget.cpp:1870
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
-msgid "Deleting messages..."
+msgid "Deleting messages…"
 msgstr "Eyði bréfum"
 
 #: kmmainwidget.cpp:1691 kmmainwidget.cpp:1890
@@ -4810,7 +4821,7 @@ msgstr "Flytja bréf í möppu"
 #: kmmainwidget.cpp:1799
 #, fuzzy, kde-format
 #| msgid "Moving messages"
-msgid "Copying messages..."
+msgid "Copying messages…"
 msgstr "Færi bréf"
 
 #: kmmainwidget.cpp:1807
@@ -4841,13 +4852,13 @@ msgstr "Afrita bréf yfir í möppu"
 #: kmmainwidget.cpp:1867
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
-msgid "Moving messages to trash..."
+msgid "Moving messages to trash…"
 msgstr "Setja bréf í ruslakörfuna"
 
 #: kmmainwidget.cpp:1874
 #, fuzzy, kde-format
 #| msgid "Move message to trashcan"
-msgid "Deleting and moving messages to trash..."
+msgid "Deleting and moving messages to trash…"
 msgstr "Setja bréf í ruslakörfuna"
 
 #: kmmainwidget.cpp:1887
@@ -4948,8 +4959,9 @@ msgid "Delete Attachments"
 msgstr "Fja&rlægja viðhengi"
 
 #: kmmainwidget.cpp:2909
-#, kde-format
-msgid "Save &As..."
+#, fuzzy, kde-format
+#| msgid "Save &As..."
+msgid "Save &As…"
 msgstr "Vista &sem..."
 
 #: kmmainwidget.cpp:2920
@@ -4998,51 +5010,54 @@ msgstr "Skírteinisstjóri..."
 #: kmmainwidget.cpp:2979
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
-msgid "&Import Messages..."
+msgid "&Import Messages…"
 msgstr "&Flytja inn bréf..."
 
 #: kmmainwidget.cpp:2989
-#, kde-format
-msgid "&Debug Sieve..."
+#, fuzzy, kde-format
+#| msgid "&Debug Sieve..."
+msgid "&Debug Sieve…"
 msgstr "&Aflúsa Sieve..."
 
 #: kmmainwidget.cpp:2996
-#, kde-format
-msgid "Filter &Log Viewer..."
-msgstr "Síu&annálabirtir..."
+#, fuzzy, kde-format
+#| msgid "Filter Log Viewer"
+msgid "Filter &Log Viewer…"
+msgstr "Síuannálabirtir"
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
-msgid "Notification History..."
+msgid "Notification History…"
 msgstr "Tilkynning um nýjan póst"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
-msgid "&Import from another Email Client..."
+msgid "&Import from another Email Client…"
 msgstr ""
 
 #: kmmainwidget.cpp:3011
-#, kde-format
-msgid "Edit \"Out of Office\" Replies..."
+#, fuzzy, kde-format
+#| msgid "Edit \"Out of Office\" Replies..."
+msgid "Edit \"Out of Office\" Replies…"
 msgstr "Breyta \"Ekki við\" svörum..."
 
 #: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
-msgid "&Configure Automatic Archiving..."
+msgid "&Configure Automatic Archiving…"
 msgstr "Stilla &tilkynningar..."
 
 #: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
-msgid "Delayed Messages..."
+msgid "Delayed Messages…"
 msgstr "Eyði bréfum"
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Followup Reminder Messages..."
+msgid "Followup Reminder Messages…"
 msgstr "&Leita að bréfi..."
 
 #: kmmainwidget.cpp:3040 util.cpp:149
@@ -5066,10 +5081,11 @@ msgstr "Setja þráð í ruslakörfuna"
 msgid "Delete T&hread"
 msgstr "Eyða &þræði"
 
-#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4114
-#, kde-format
-msgid "&Find Messages..."
-msgstr "&Leita að bréfi..."
+#: kmmainwidget.cpp:3058 kmmainwidget.cpp:4113
+#, fuzzy, kde-format
+#| msgid "Find Messages"
+msgid "&Find Messages…"
+msgstr "Finna bréf"
 
 #: kmmainwidget.cpp:3063
 #, kde-format
@@ -5078,13 +5094,14 @@ msgstr "Velja &öll bréf"
 
 #: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
-msgid "&Mailing List Management..."
+msgid "&Mailing List Management…"
 msgstr "U&msjón póstlista"
 
 #: kmmainwidget.cpp:3078
-#, kde-format
-msgid "&Clear Akonadi Cache..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Identity Name"
+msgid "&Clear Akonadi Cache…"
+msgstr "Heiti auðkennis"
 
 #: kmmainwidget.cpp:3083
 #, fuzzy, kde-format
@@ -5092,8 +5109,9 @@ msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
 
 #: kmmainwidget.cpp:3088
-#, kde-format
-msgid "&Assign Shortcut..."
+#, fuzzy, kde-format
+#| msgid "&Assign Shortcut..."
+msgid "&Assign Shortcut…"
 msgstr "Velj&a flýtilykil..."
 
 #: kmmainwidget.cpp:3106
@@ -5103,9 +5121,9 @@ msgstr "&Gildisloka stillingar"
 
 #: kmmainwidget.cpp:3131
 #, fuzzy, kde-format
-#| msgid "&New Folder..."
-msgid "&Archive Folder..."
-msgstr "&Ný mappa..."
+#| msgid "New Folder"
+msgid "&Archive Folder…"
+msgstr "Ný mappa"
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -5115,19 +5133,20 @@ msgstr "Hlaða inn &utanaðkomandi tilvísunum"
 #: kmmainwidget.cpp:3162
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Copy Message To..."
+msgid "Copy Message To…"
 msgstr "Nýtt bréf til..."
 
 #: kmmainwidget.cpp:3164
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Move Message To..."
+msgid "Move Message To…"
 msgstr "Nýtt bréf til..."
 
 #: kmmainwidget.cpp:3169
-#, kde-format
-msgid "&New Message..."
-msgstr "&Nýtt bréf..."
+#, fuzzy, kde-format
+#| msgid "New Message"
+msgid "&New Message…"
+msgstr "Nýtt bréf"
 
 #: kmmainwidget.cpp:3171
 #, fuzzy, kde-format
@@ -5142,8 +5161,9 @@ msgid "Message From &Template"
 msgstr "Engin ný bréf frá miðlara"
 
 #: kmmainwidget.cpp:3185
-#, kde-format
-msgid "New Message t&o Mailing-List..."
+#, fuzzy, kde-format
+#| msgid "New Message t&o Mailing-List..."
+msgid "New Message t&o Mailing-List…"
 msgstr "Nýtt bréf á póst&lista..."
 
 #: kmmainwidget.cpp:3191
@@ -5152,24 +5172,27 @@ msgid "&Create Filter"
 msgstr "Búa til sí&u"
 
 #: kmmainwidget.cpp:3195
-#, kde-format
-msgid "Filter on &Subject..."
+#, fuzzy, kde-format
+#| msgid "Filter on &Subject..."
+msgid "Filter on &Subject…"
 msgstr "&Sía eftir viðfangsefni..."
 
 #: kmmainwidget.cpp:3202
-#, kde-format
-msgid "Filter on &From..."
+#, fuzzy, kde-format
+#| msgid "Filter on &From..."
+msgid "Filter on &From…"
 msgstr "Sía e&ftir sendanda..."
 
 #: kmmainwidget.cpp:3208
-#, kde-format
-msgid "Filter on &To..."
+#, fuzzy, kde-format
+#| msgid "Filter on &To..."
+msgid "Filter on &To…"
 msgstr "Sía eftir mót&takanda..."
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
-msgid "Filter on &Cc..."
+msgid "Filter on &Cc…"
 msgstr "Sía eftir mót&takanda..."
 
 #: kmmainwidget.cpp:3228
@@ -5230,9 +5253,10 @@ msgid "&Ignore Thread"
 msgstr "&Hunsa þráð"
 
 #: kmmainwidget.cpp:3271 kmreadermainwin.cpp:490
-#, kde-format
-msgid "Save A&ttachments..."
-msgstr "Vi&sta viðhengi..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment As"
+msgid "Save A&ttachments…"
+msgstr "Vista viðhengi sem"
 
 #: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
@@ -5244,7 +5268,7 @@ msgstr "Vista öll viðhengi..."
 #: kmmainwidget.cpp:3283
 #, fuzzy, kde-format
 #| msgid "New Message To..."
-msgid "Copy Decrypted To..."
+msgid "Copy Decrypted To…"
 msgstr "Nýtt bréf til..."
 
 #: kmmainwidget.cpp:3287
@@ -5400,19 +5424,21 @@ msgstr ""
 "Fletta niður núverandi bréf. Ef á enda bréfs, fara í næsta ólesna bréf."
 
 #: kmmainwidget.cpp:3403
-#, kde-format
-msgid "Configure &Filters..."
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgid "Configure &Filters…"
 msgstr "Stilla síu&r..."
 
 #: kmmainwidget.cpp:3409
-#, kde-format
-msgid "Manage &Sieve Scripts..."
-msgstr "Sýsla með &Sieve skriftur..."
+#, fuzzy, kde-format
+#| msgid "Manage Sieve Scripts"
+msgid "Manage &Sieve Scripts…"
+msgstr "Sýsla með Sieve skriftur"
 
 #: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 #| msgid "Add Account"
-msgid "&Add Account..."
+msgid "&Add Account…"
 msgstr "Bæta við tengingu"
 
 #: kmmainwidget.cpp:3419
@@ -5426,30 +5452,32 @@ msgid "Display KMail's Welcome Page"
 msgstr "Sýna inngangssíðu KMail"
 
 #: kmmainwidget.cpp:3428
-#, kde-format
-msgid "Configure &Notifications..."
+#, fuzzy, kde-format
+#| msgid "Configure &Notifications..."
+msgid "Configure &Notifications…"
 msgstr "Stilla &tilkynningar..."
 
 #: kmmainwidget.cpp:3435
-#, kde-format
-msgid "&Configure KMail..."
+#, fuzzy, kde-format
+#| msgid "&Configure KMail..."
+msgid "&Configure KMail…"
 msgstr "Stilla &KMail..."
 
 #: kmmainwidget.cpp:3442
-#, kde-format
-msgid "Expire..."
-msgstr "Úrelda..."
+#, fuzzy, kde-format
+#| msgid "Expire"
+msgid "Expire…"
+msgstr "Eyða"
 
 #: kmmainwidget.cpp:3448
 #, fuzzy, kde-format
-#| msgid "&New Folder..."
-msgid "Add Favorite Folder..."
-msgstr "&Ný mappa..."
+msgid "Add Favorite Folder…"
+msgstr "Ný mappa"
 
 #: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
 #| msgid "Subscription..."
-msgid "Serverside Subscription..."
+msgid "Serverside Subscription…"
 msgstr "Áskrift..."
 
 #: kmmainwidget.cpp:3460 kmmainwidget.cpp:3468
@@ -5466,16 +5494,16 @@ msgstr "Auðlindamöppur eru undi&rmöppur af:"
 #: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "Import/Export KMail Data..."
+msgid "Import/Export KMail Data…"
 msgstr "Stilla &KMail..."
 
 #: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
-msgid "New AddressBook Contact..."
+msgid "New AddressBook Contact…"
 msgstr "Opna í vistfangaskrá"
 
-#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
+#: kmmainwidget.cpp:3500 kmmainwidget.cpp:4152
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&Sending"
@@ -5493,7 +5521,7 @@ msgstr "Afrita bréf yfir í möppu"
 
 #: kmmainwidget.cpp:3526
 #, fuzzy, kde-format
-msgid "Jump to Folder..."
+msgid "Jump to Folder…"
 msgstr "Afrita í möppu"
 
 #: kmmainwidget.cpp:3532
@@ -5614,47 +5642,47 @@ msgstr "&Eyða leit"
 #: kmmainwidget.cpp:4113
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit Search..."
+msgid "Edit Search…"
 msgstr "Breyta skriftu..."
 
-#: kmmainwidget.cpp:4151
+#: kmmainwidget.cpp:4150
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Stilla &KMail..."
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Tæ&ma rusl"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4161
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Færa öll bréf í &ruslið"
 
-#: kmmainwidget.cpp:4236
+#: kmmainwidget.cpp:4235
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4238
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4295
+#: kmmainwidget.cpp:4294
 #, kde-format
 msgid "Filter %1"
 msgstr "%1 sía"
 
-#: kmmainwidget.cpp:4763
+#: kmmainwidget.cpp:4762
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
-msgid "Search... <%1>"
+msgid "Search… <%1>"
 msgstr "Áskrift..."
 
-#: kmmainwidget.cpp:4771
+#: kmmainwidget.cpp:4770
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5665,19 +5693,19 @@ msgstr ""
 "misnotkun þeirra sem senda ruslpóst.  HTML er jafnframt ákaflega flókin "
 "tækni og gallar í útfærslu hennar gætu veikt öryggi tölvunnar þinnar."
 
-#: kmmainwidget.cpp:4774
+#: kmmainwidget.cpp:4773
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Öryggisaðvörun"
 
-#: kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgid "Use HTML"
 msgstr "Nota HTML"
 
-#: kmmainwidget.cpp:4921
+#: kmmainwidget.cpp:4920
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5687,41 +5715,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4924
+#: kmmainwidget.cpp:4923
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4924
 #, kde-format
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgid "Cancel"
 msgstr "&Hætta við"
 
-#: kmmainwidget.cpp:4961
+#: kmmainwidget.cpp:4960
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Viltu örugglega fjarlægja auðkennið <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4961
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Akonadi"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4962
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:4970
+#: kmmainwidget.cpp:4969
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -5729,7 +5757,7 @@ msgstr ""
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Subscription..."
-msgid "Starting..."
+msgid "Starting…"
 msgstr "Áskrift..."
 
 #: kmreadermainwin.cpp:493 util.cpp:149
@@ -5761,19 +5789,22 @@ msgid "Cannot copy item. %1"
 msgstr "Flytja bréf í möppu"
 
 #: kmreaderwin.cpp:122
-#, kde-format
-msgid "New Message To..."
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "New Message To…"
 msgstr "Nýtt bréf til..."
 
 #: kmreaderwin.cpp:128
-#, kde-format
-msgid "Reply To..."
-msgstr "Senda svar til..."
+#, fuzzy, kde-format
+#| msgid "&Reply To"
+msgid "Reply To…"
+msgstr "Senda sva&r til"
 
 #: kmreaderwin.cpp:134
-#, kde-format
-msgid "Forward To..."
-msgstr "Framsenda til..."
+#, fuzzy, kde-format
+#| msgid "Forward To"
+msgid "Forward To…"
+msgstr "Áframsenda til"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5799,30 +5830,32 @@ msgstr "Bókamerkja þennan tengil"
 #: kmreaderwin.cpp:161
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit contact..."
+msgid "Edit contact…"
 msgstr "Breyta skriftu..."
 
 #: kmreaderwin.cpp:167
-#, kde-format
-msgid "Save Link As..."
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Save Link As…"
 msgstr "Vista tengil sem..."
 
 #: kmreaderwin.cpp:173
-#, kde-format
-msgid "&Find in Message..."
+#, fuzzy, kde-format
+#| msgid "&Find in Message..."
+msgid "&Find in Message…"
 msgstr "&Leita í bréfi..."
 
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Save Image On Disk..."
+msgid "Save Image On Disk…"
 msgstr "Vista tengil sem..."
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Open Image..."
+msgid "Open Image…"
 msgstr "Vista tengil sem..."
 
 #: kmreaderwin.cpp:191
@@ -5845,7 +5878,7 @@ msgstr "Hlaða inn utanaðkomandi tilvísunum frá Internetinu fyrir þetta bré
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
-msgid "Share image..."
+msgid "Share image…"
 msgstr "Vista tengil sem..."
 
 #: kmreaderwin.cpp:259
@@ -6008,10 +6041,10 @@ msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, fuzzy, kde-format
-#| msgid "&New Message..."
+#| msgid "New Message"
 msgctxt "@action:inmenu"
-msgid "New Message..."
-msgstr "&Nýtt bréf..."
+msgid "New Message…"
+msgstr "Nýtt bréf"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -6077,7 +6110,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
-msgid "&Configure Summary View..."
+msgid "&Configure Summary View…"
 msgstr "Stilla &KMail..."
 
 #: kontactplugin/summary/summaryview_part.cpp:50
@@ -6175,199 +6208,210 @@ msgid "&Reply"
 msgstr "&Svara"
 
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
-#, kde-format
-msgid "&Reply..."
-msgstr "&Svara..."
+#, fuzzy, kde-format
+#| msgctxt "Message->"
+#| msgid "&Reply"
+msgid "&Reply…"
+msgstr "&Svara"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
-#, kde-format
-msgid "Reply to &All..."
+#, fuzzy, kde-format
+msgid "Reply to &All…"
 msgstr "S&vara öllum..."
 
 #: messageactions.cpp:66
-#, kde-format
-msgid "Reply to A&uthor..."
+#, fuzzy, kde-format
+#| msgid "Reply to A&uthor..."
+msgid "Reply to A&uthor…"
 msgstr "S&vara sendanda..."
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
-#, kde-format
-msgid "Reply to Mailing-&List..."
+#, fuzzy, kde-format
+#| msgid "Reply to Mailing-&List..."
+msgid "Reply to Mailing-&List…"
 msgstr "Svara til póst&lista..."
 
 #: messageactions.cpp:68
-#, kde-format
-msgid "Reply Without &Quote..."
+#, fuzzy, kde-format
+#| msgid "Reply Without &Quote..."
+msgid "Reply Without &Quote…"
 msgstr "Svara á&n tilvitnunar..."
 
 #: messageactions.cpp:69
 #, fuzzy, kde-format
-#| msgid "&Inline..."
+#| msgctxt "View->attachments->"
+#| msgid "&Inline"
 msgctxt "@action:inmenu Message->Forward->"
-msgid "&Inline..."
-msgstr "Setja &inn skrá..."
+msgid "&Inline…"
+msgstr "&Innfelld"
+
+#: messageactions.cpp:70
+#, fuzzy, kde-format
+#| msgid "Has Attachment"
+msgctxt "@action:inmenu Message->Forward->"
+msgid "As &Attachment…"
+msgstr "Hefur viðhengi"
 
 #: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
-#| msgid "As &Attachment..."
-msgctxt "@action:inmenu Message->Forward->"
-msgid "As &Attachment..."
-msgstr "Sem viðhen&gi..."
-
-#: messageactions.cpp:72
-#, kde-format
+#| msgid "&Redirect..."
 msgctxt "Message->Forward->"
-msgid "&Redirect..."
+msgid "&Redirect…"
 msgstr "&Beina til..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
-msgid "New Message to Recipients..."
+msgid "New Message to Recipients…"
 msgstr "Nýtt bréf á póst&lista..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Mer&kja bréf "
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "Á&framsenda"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Svara til póst&lista..."
 
-#: messageactions.cpp:77 messageactions.cpp:372
+#: messageactions.cpp:76 messageactions.cpp:371
 #, fuzzy, kde-format
 #| msgid "Add..."
-msgid "Add Note..."
+msgid "Add Note…"
 msgstr "Bæta við..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Breyta bréfi"
 
-#: messageactions.cpp:79
-#, kde-format
-msgid "Filter on Mailing-&List..."
+#: messageactions.cpp:78
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-&List..."
+msgid "Filter on Mailing-&List…"
 msgstr "Sía eftir póst&lista..."
 
-#: messageactions.cpp:80
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
-msgid "Add Followup Reminder..."
+msgid "Add Followup Reminder…"
 msgstr "&Leita að bréfi..."
 
-#: messageactions.cpp:82
-#, kde-format
-msgid "Send A&gain..."
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+#| msgid "Send A&gain..."
+msgid "Send A&gain…"
 msgstr "Senda a&ftur..."
 
-#: messageactions.cpp:83
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 msgid "New Message From &Template"
 msgstr "Engin ný bréf frá miðlara"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Expire"
-msgid "Export to PDF..."
+msgid "Export to PDF…"
 msgstr "Eyða"
 
-#: messageactions.cpp:86
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Nýtt bréf til..."
 
-#: messageactions.cpp:374
+#: messageactions.cpp:373
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
-msgid "Edit Note..."
+msgid "Edit Note…"
 msgstr "Breyta skriftu..."
 
-#: messageactions.cpp:419
-#, kde-format
-msgid "Filter on Mailing-List..."
+#: messageactions.cpp:418
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List..."
+msgid "Filter on Mailing-List…"
 msgstr "Sía á póstlista..."
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgctxt "name used for a virgin filter"
 #| msgid "unknown"
 msgid "<unknown>"
 msgstr "óskilgreint"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:454
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Svara til póst&lista..."
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "OpenPGP bréf - ógild undirritun"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:460
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "Nýtt bréf"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:463
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgid "Go to Archive"
 msgstr "Safn lista"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "Hjálp lista"
 
-#: messageactions.cpp:470
+#: messageactions.cpp:469
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Netföng"
 
-#: messageactions.cpp:476
+#: messageactions.cpp:475
 #, fuzzy, kde-format
 #| msgid "Unsubscribe from List"
 msgid "Unsubscribe from List"
 msgstr "Segja upp áskrift að lista"
 
-#: messageactions.cpp:485
-#, kde-format
-msgid "Filter on Mailing-List %1..."
+#: messageactions.cpp:484
+#, fuzzy, kde-format
+#| msgid "Filter on Mailing-List %1..."
+msgid "Filter on Mailing-List %1…"
 msgstr "Sía á póstlistann %1..."
 
-#: messageactions.cpp:662
+#: messageactions.cpp:661
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "Netfang"
 
-#: messageactions.cpp:665
+#: messageactions.cpp:664
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:670
+#: messageactions.cpp:669
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6376,13 +6420,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Póstur"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF"
 msgstr "Eyða"
 
-#: messageactions.cpp:779
+#: messageactions.cpp:778
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6408,7 +6452,7 @@ msgstr "Númer:"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order"
-msgid "Indexing Collections..."
+msgid "Indexing Collections…"
 msgstr "Stilla vinnsluröð"
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
@@ -6467,21 +6511,24 @@ msgstr "&Leita"
 
 #: searchdialog/searchwindow.cpp:173
 #, fuzzy, kde-format
-#| msgid "&Inline..."
+#| msgctxt "View->attachments->"
+#| msgid "&Inline"
 msgctxt "@action:inmenu Forward message inline."
-msgid "&Inline..."
-msgstr "Setja &inn skrá..."
+msgid "&Inline…"
+msgstr "&Innfelld"
 
 #: searchdialog/searchwindow.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Has Attachment"
 msgctxt "Message->Forward->"
-msgid "As &Attachment..."
-msgstr "Sem viðhen&gi..."
+msgid "As &Attachment…"
+msgstr "Hefur viðhengi"
 
 #: searchdialog/searchwindow.cpp:192
-#, kde-format
-msgid "Save Attachments..."
-msgstr "Vista viðhengi..."
+#, fuzzy, kde-format
+#| msgid "Save Attachment As"
+msgid "Save Attachments…"
+msgstr "Vista viðhengi sem"
 
 #: searchdialog/searchwindow.cpp:199
 #, kde-format
@@ -6540,7 +6587,7 @@ msgstr ""
 #: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Subscription..."
-msgid "Searching..."
+msgid "Searching…"
 msgstr "Áskrift..."
 
 #: searchdialog/searchwindow.cpp:535
@@ -6590,7 +6637,7 @@ msgstr[1] "Eyða bréfum"
 #: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
-msgid "Checking index status..."
+msgid "Checking index status…"
 msgstr "Gá að pósti við &ræsingu"
 
 #: secondarywindow.cpp:57
@@ -7031,14 +7078,13 @@ msgstr "Bréfalisti"
 #: tag/tagactionmanager.cpp:155
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
-msgid "Add new tag..."
+msgid "Add new tag…"
 msgstr "Bæta við færslu..."
 
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-#| msgid "Expire..."
-msgid "More..."
-msgstr "Úrelda..."
+#, kde-format
+msgid "More…"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -7061,19 +7107,20 @@ msgstr "Stilla flutningsleið"
 #: tag/tagselectdialog.cpp:53
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
-msgid "Add New Tag..."
+msgid "Add New Tag…"
 msgstr "Bæta við færslu..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
-msgid "Search tag..."
+msgid "Search tag…"
 msgstr "&Leita"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
-#, kde-format
-msgid "Customize accounts order..."
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Modify Account"
+msgid "Customize accounts order…"
+msgstr "Breyta tengingu"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -7098,7 +7145,7 @@ msgstr "&Nákvæmari tilkynning um nýjan póst"
 #: ui/accountspagereceivingtab.ui:81
 #, fuzzy, kde-format
 #| msgid "Other Actio&ns"
-msgid "Other Actio&ns..."
+msgid "Other Actio&ns…"
 msgstr "Aðrar að&gerðir"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
@@ -7118,8 +7165,8 @@ msgstr "Auðkenni &sendanda:"
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:27
 #, kde-format
-msgid "&Add..."
-msgstr "B&æta við..."
+msgid "&Add…"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -7129,8 +7176,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
-#, kde-format
-msgid "&Modify..."
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgid "&Modify…"
 msgstr "&Breyta..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
@@ -7403,7 +7451,7 @@ msgstr "Veldu möppu"
 #: ui/searchwindow.ui:60
 #, fuzzy, kde-format
 #| msgid "Select Folder"
-msgid "Select Folders..."
+msgid "Select Folders…"
 msgstr "Veldu möppu"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
@@ -7694,7 +7742,7 @@ msgstr "Fyrir milliliðs CA skírteini:"
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:354
 #, fuzzy, kde-format
-msgid "GnuPG Settings..."
+msgid "GnuPG Settings…"
 msgstr "&Sending"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
@@ -7763,7 +7811,7 @@ msgstr "Almennar stillingar"
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
-"href=\"whatsthis1\">More about HTML mails...</a> <a href=\"whatsthis2\">More "
+"href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
 "<b>ATHUGIÐ:</b> Að leyfa HTML í pósti getur aukið líkurnar á því að kerfið "
@@ -8019,7 +8067,7 @@ msgstr "Ekki senda staðfestingu á móttöku fyrir dulrituð bréf"
 #, fuzzy, kde-format
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
-"privacy. <a href=\"whatsthis-mdn\">More about MDNs...</a>"
+"privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<b>ATHUGIÐ:</b> Það grefur undan friðhelgi einkalífsins að senda alltaf "
 "staðfestingar fyrir móttöku. <a href=\"whatsthis:%1\">Meira...</a>"
@@ -8457,6 +8505,127 @@ msgstr[1] "Breyta \"Ekki við\" svörum..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "A&dd..."
+#~ msgstr "&Bæta við..."
+
+#~ msgid "Add..."
+#~ msgstr "Bæta við..."
+
+#~ msgid "Select &Recipients..."
+#~ msgstr "Veldu móttakendu&r..."
+
+#~ msgid "Save &Distribution List..."
+#~ msgstr "Vista &póstlista..."
+
+#~ msgid "&Spellchecker..."
+#~ msgstr "&Stafsetningarráðgjafinn..."
+
+#~ msgid "Edit..."
+#~ msgstr "Breyta..."
+
+#, fuzzy
+#~| msgid "Moving messages"
+#~ msgid "Moving messages..."
+#~ msgstr "Færi bréf"
+
+#, fuzzy
+#~| msgid "Deleting messages"
+#~ msgid "Deleting messages..."
+#~ msgstr "Eyði bréfum"
+
+#~ msgid "Filter &Log Viewer..."
+#~ msgstr "Síu&annálabirtir..."
+
+#~ msgid "&Find Messages..."
+#~ msgstr "&Leita að bréfi..."
+
+#, fuzzy
+#~| msgid "&New Folder..."
+#~ msgid "&Archive Folder..."
+#~ msgstr "&Ný mappa..."
+
+#~ msgid "&New Message..."
+#~ msgstr "&Nýtt bréf..."
+
+#~ msgid "Save A&ttachments..."
+#~ msgstr "Vi&sta viðhengi..."
+
+#~ msgid "Manage &Sieve Scripts..."
+#~ msgstr "Sýsla með &Sieve skriftur..."
+
+#~ msgid "Expire..."
+#~ msgstr "Úrelda..."
+
+#, fuzzy
+#~| msgid "&New Folder..."
+#~ msgid "Add Favorite Folder..."
+#~ msgstr "&Ný mappa..."
+
+#, fuzzy
+#~ msgid "Jump to Folder..."
+#~ msgstr "Afrita í möppu"
+
+#~ msgid "Reply To..."
+#~ msgstr "Senda svar til..."
+
+#~ msgid "Forward To..."
+#~ msgstr "Framsenda til..."
+
+#, fuzzy
+#~| msgid "&New Message..."
+#~ msgctxt "@action:inmenu"
+#~ msgid "New Message..."
+#~ msgstr "&Nýtt bréf..."
+
+#~ msgid "&Reply..."
+#~ msgstr "&Svara..."
+
+#~ msgid "Reply to &All..."
+#~ msgstr "S&vara öllum..."
+
+#, fuzzy
+#~| msgid "&Inline..."
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "&Inline..."
+#~ msgstr "Setja &inn skrá..."
+
+#, fuzzy
+#~| msgctxt "Message->Forward->"
+#~| msgid "As &Attachment..."
+#~ msgctxt "@action:inmenu Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "Sem viðhen&gi..."
+
+#, fuzzy
+#~| msgid "Expire"
+#~ msgid "Export to PDF..."
+#~ msgstr "Eyða"
+
+#, fuzzy
+#~| msgid "&Inline..."
+#~ msgctxt "@action:inmenu Forward message inline."
+#~ msgid "&Inline..."
+#~ msgstr "Setja &inn skrá..."
+
+#~ msgctxt "Message->Forward->"
+#~ msgid "As &Attachment..."
+#~ msgstr "Sem viðhen&gi..."
+
+#~ msgid "Save Attachments..."
+#~ msgstr "Vista viðhengi..."
+
+#, fuzzy
+#~| msgid "Expire..."
+#~ msgid "More..."
+#~ msgstr "Úrelda..."
+
+#~ msgid "&Add..."
+#~ msgstr "B&æta við..."
+
+#, fuzzy
+#~ msgid "GnuPG Settings..."
+#~ msgstr "&Sending"
 
 #, fuzzy
 #~| msgid "Cha&rset"
@@ -9113,9 +9282,6 @@ msgstr ""
 #~| msgid "New Message"
 #~ msgid "Show Message"
 #~ msgstr "Nýtt bréf"
-
-#~ msgid "Filter Log Viewer"
-#~ msgstr "Síuannálabirtir"
 
 #~ msgid "&Log filter activities"
 #~ msgstr "Skrá &virkni sía"
@@ -10348,11 +10514,6 @@ msgstr ""
 #~ msgstr "Bæta við færslu..."
 
 #, fuzzy
-#~| msgid "Modify Account"
-#~ msgid "Edit Accounts Order"
-#~ msgstr "Breyta tengingu"
-
-#, fuzzy
 #~| msgid "&Use custom colors"
 #~ msgid "Use custom order"
 #~ msgstr "&Nota sérsniðna liti"
@@ -11378,9 +11539,6 @@ msgstr ""
 #~ msgid "Configure &POP Filters..."
 #~ msgstr "Stilla &POP síur..."
 
-#~ msgid "Manage Sieve Scripts"
-#~ msgstr "Sýsla með Sieve skriftur"
-
 #~ msgid "Available Scripts"
 #~ msgstr "Tiltækar skriftur"
 
@@ -11477,10 +11635,6 @@ msgstr ""
 #~ "Einhver (sennilega þú) hefur breytt frí skriftunni á miðlaranum. \n"
 #~ "KMail skilur ekki lengur stillingar fyrir sjálfvirkar svaranir.\n"
 #~ "Sjálfgefin gildi verða notuð."
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Hætta"
 
 #~ msgid ""
 #~ "Sieve script installed successfully on the server.\n"
@@ -11753,11 +11907,6 @@ msgstr ""
 
 #~ msgid "CC"
 #~ msgstr "CC"
-
-#, fuzzy
-#~| msgid "&Reply To"
-#~ msgid "Reply To"
-#~ msgstr "Senda sva&r til"
 
 #, fuzzy
 #~| msgid "Organization:"
@@ -12039,9 +12188,6 @@ msgstr ""
 
 #~ msgid "Copy Into Folder"
 #~ msgstr "Afrita í möppu"
-
-#~ msgid "Forward To"
-#~ msgstr "Áframsenda til"
 
 #, fuzzy
 #~ msgid "The addressee to whom the message will be forwarded."
@@ -13218,11 +13364,6 @@ msgstr ""
 #~ msgid "Save Attachments To"
 #~ msgstr "Vista viðhengi á"
 
-#, fuzzy
-#~| msgid "Save Attachment As"
-#~ msgid "Save Attachment"
-#~ msgstr "Vista viðhengi sem"
-
 #~ msgctxt "filename for the %1-th unnamed attachment"
 #~ msgid "attachment.%1"
 #~ msgstr "viðhengi.%1"
@@ -13454,9 +13595,6 @@ msgstr ""
 #~ msgid "<qt>Unable to access <b>%1</b>.</qt>"
 #~ msgstr "<qt>Gat ekki tengst <b>%1</b>.</qt>"
 
-#~ msgid "Select Recipient"
-#~ msgstr "Veldu viðtakanda"
-
 #, fuzzy
 #~| msgid "Search Criteria"
 #~ msgid "Search &Directory Service"
@@ -13495,12 +13633,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Afveldu þetta ef þú vilt ekki að nýlega notuð vistföng birtist í "
 #~ "sjálfklárunarlistanum í ritlinum."
-
-#, fuzzy
-#~| msgid "Save Distribution List"
-#~ msgctxt "@title:window"
-#~ msgid "Save Distribution List"
-#~ msgstr "Vista póstlista"
 
 #, fuzzy
 #~| msgid "Save List"
@@ -13981,10 +14113,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Reply"
 #~ msgstr "Senda sva&r til:"
-
-#, fuzzy
-#~ msgid "Reply to All"
-#~ msgstr "S&vara öllum..."
 
 #, fuzzy
 #~ msgctxt "Template type for forwarding messages."
@@ -17545,10 +17673,6 @@ msgstr ""
 
 #~ msgid "Show attachments as suggested by sender."
 #~ msgstr "Sýna viðhengi samkv. tillögu sendanda."
-
-#~ msgctxt "View->attachments->"
-#~ msgid "&Inline"
-#~ msgstr "&Innfelld"
 
 #~ msgid "Show all attachments inline (if possible)"
 #~ msgstr "Sýna öll viðengi innfeld (ef hægt)"
