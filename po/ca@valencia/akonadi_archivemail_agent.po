@@ -140,12 +140,12 @@ msgstr "txemaq@gmail.com,antonibella5@yahoo.com"
 #: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
 #, kde-format
 msgid "Add..."
-msgstr "Afig..."
+msgstr "Afig…"
 
 #: archivemailwidget.cpp:115
 #, kde-format
 msgid "Open Containing Folder..."
-msgstr "Obri la carpeta contenidora..."
+msgstr "Obri la carpeta contenidora…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
@@ -204,7 +204,7 @@ msgstr "Comença a arxivar %1"
 #: ui/archivemailwidget.ui:38
 #, kde-format
 msgid "Modify..."
-msgstr "Modifica..."
+msgstr "Modifica…"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format
