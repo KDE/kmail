@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-10 17:49+0100\n"
+"PO-Revision-Date: 2024-05-08 22:50+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1006,7 +1006,7 @@ msgstr "Etiq&uetas disponibles"
 #: configuredialog/configureappearancepage.cpp:978
 #, kde-format
 msgid "Add new tag"
-msgstr "Agregar nueva etiqueta"
+msgstr "Añadir nueva etiqueta"
 
 #: configuredialog/configureappearancepage.cpp:983
 #, kde-format
@@ -6071,7 +6071,8 @@ msgstr "Carpeta"
 #, kde-format
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
-"La búsqueda ha fallado, se encontraron algunos errores: <ul><li>%1</li></ul>"
+"La búsqueda ha fallado. Se han encontrado algunos errores: <ul><li>%1</li></"
+"ul>"
 
 #: searchdialog/searchwindow.cpp:75
 #, kde-format
@@ -6142,7 +6143,7 @@ msgstr "Se ha olvidado de definir la condición."
 #: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
-msgstr "Todas las carpetas seleccionadas están vacías o no se indexaron."
+msgstr "Todas las carpetas seleccionadas están vacías o no se han indexado."
 
 #: searchdialog/searchwindow.cpp:475
 #, kde-format

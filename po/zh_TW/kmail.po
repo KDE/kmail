@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-08 03:33+0900\n"
+"PO-Revision-Date: 2024-05-09 07:20+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -31,12 +31,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Franklin Weng"
+msgstr "Franklin Weng, Kisaragi Hiu"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "franklin@goodhorse.idv.tw"
+msgstr "franklin@goodhorse.idv.tw, mail@kisaragi-hiu.com"
 
 #: about/introduction_kmail.html:5
 #, kde-format
@@ -69,19 +69,13 @@ msgid "Some of the new features in this release of KMail include:"
 msgstr "在這一版的 KMail 中包含了一些新功能："
 
 #: about/introduction_kmail.html:34
-#, fuzzy
-#| msgid ""
-#| "<p>Please take a moment to fill in the KMail configuration panel at "
-#| "Settings-&gt;Configure KMail.\n"
-#| "You need to create at least a default identity and an incoming as well as "
-#| "outgoing mail account.</p>\n"
 msgid ""
 "Please take a moment to fill in the KMail configuration panel at Settings-"
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
-"<p>請花一點時間先設定 KMail。\n"
-"您至少需要先產生一個新身份，以及收信與發信的帳號。</p>\n"
+"請花一點時間先填入「設定」→「設定 KMail」中的資訊。您至少需要先產生一個預設身"
+"份，以及收信與發信的帳號。"
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
@@ -1308,7 +1302,7 @@ msgstr "移除(&M)"
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Mod&ify..."
-msgstr "修改(&I)..."
+msgstr "修改(&I)…"
 
 #: configuredialog/configurecomposerpage.cpp:700
 #, kde-format
@@ -1344,7 +1338,7 @@ msgstr "新增..."
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify..."
-msgstr "修改..."
+msgstr "修改…"
 
 #: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
@@ -1485,7 +1479,7 @@ msgstr "列印中"
 #: configuredialog/configuremiscpage.cpp:43
 #, kde-format
 msgid "User Feedback"
-msgstr "使用者意見回應"
+msgstr "使用者回饋"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
 #, kde-format
@@ -1882,12 +1876,12 @@ msgstr "通訊錄(&A)"
 #: editor/kmcomposerwin.cpp:1323
 #, kde-format
 msgid "Open Address Book"
-msgstr "開啟通訊錄..."
+msgstr "開啟通訊錄…"
 
 #: editor/kmcomposerwin.cpp:1330
 #, kde-format
 msgid "&New Composer"
-msgstr "寫信(&N)..."
+msgstr "寫信(&N)…"
 
 #: editor/kmcomposerwin.cpp:1336
 #, kde-format
@@ -3744,7 +3738,7 @@ msgstr "顯示指定的信件檔案"
 #: kmail_options.h:35
 #, kde-format
 msgid "Lists the available options for user feedback"
-msgstr "列出能用於使用者意見回應的選項"
+msgstr "列出能用於使用者回饋的選項"
 
 #: kmail_options.h:40
 #, kde-format
@@ -3861,7 +3855,7 @@ msgstr "請稍候"
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
-msgstr[0] "%1 封信件傳送中，請稍候..."
+msgstr[0] "%1 封信件傳送中，請稍候…"
 
 #: kmcommands.cpp:524
 #, kde-format
@@ -4056,7 +4050,7 @@ msgstr "送出信件中"
 #: kmkernel.cpp:1457
 #, kde-format
 msgid "Initiating sending process..."
-msgstr "正在起始寄件程序..."
+msgstr "正在起始寄件程序…"
 
 #: kmkernel.cpp:1536
 #, kde-format
@@ -5249,7 +5243,7 @@ msgstr "新增到現有的聯絡人"
 #: kmreaderwin.cpp:151
 #, kde-format
 msgid "Open in Address Book"
-msgstr "在通訊錄內開啟..."
+msgstr "在通訊錄內開啟…"
 
 #: kmreaderwin.cpp:156
 #, kde-format
@@ -5552,10 +5546,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact 摘要檢視"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 Kontact 開發團隊"
+msgstr "(c) 2003-2024 Kontact 開發團隊"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -6022,10 +6015,9 @@ msgstr "最近選擇的資料夾"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr "在工作列中顯示唯讀郵件"
+msgstr "在工作列中顯示未讀郵件"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
@@ -6063,10 +6055,9 @@ msgstr "離開時清空垃圾桶"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg.in:119
-#, fuzzy, kde-format
-#| msgid "Delete Sieve Script Confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "確認刪除過濾文稿"
+msgstr "不經確認即刪除信件"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
@@ -6264,10 +6255,9 @@ msgstr "設定 KMail 對話框高度（只內部使用）"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "信件預覽"
+msgstr "信件預覽面板："
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6289,10 +6279,9 @@ msgstr "顯示在信件列表右方"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "資料夾清單"
+msgstr "資料夾清單："
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362

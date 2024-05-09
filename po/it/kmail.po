@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-09 21:55+0100\n"
+"PO-Revision-Date: 2024-05-08 21:29+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -4741,7 +4741,7 @@ msgstr "&Importa messaggi..."
 #: kmmainwidget.cpp:2989
 #, kde-format
 msgid "&Debug Sieve..."
-msgstr "Sieve &debug..."
+msgstr "&Debug di sieve..."
 
 #: kmmainwidget.cpp:2996
 #, kde-format
