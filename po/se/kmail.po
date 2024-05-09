@@ -7569,34 +7569,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "A&dd..."
-#~ msgstr "L&asit …"
-
-#~ msgid "Add..."
-#~ msgstr "Lasit …"
-
-#~ msgid "&Spellchecker..."
-#~ msgstr "Čállin&dárkkisteapmi"
-
-#~ msgid "Edit..."
-#~ msgstr "Doaimmat …"
-
-#~ msgid "&New Message..."
-#~ msgstr "&Ođđa reive …"
-
-#~ msgid "Expire..."
-#~ msgstr "Boarásmahte …"
-
-#~ msgid "&Reply..."
-#~ msgstr "&Vástit …"
-
-#~ msgctxt "Message->Forward->"
-#~ msgid "As &Attachment..."
-#~ msgstr "&Mieldusin …"
-
-#~ msgid "More..."
-#~ msgstr "Eanet …"
-
-#~ msgid "&Add..."
-#~ msgstr "Lasi&t …"
