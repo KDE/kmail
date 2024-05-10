@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-08 00:39+0000\n"
-"PO-Revision-Date: 2024-05-08 05:53+0200\n"
+"PO-Revision-Date: 2024-05-09 05:40+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5829,7 +5829,7 @@ msgstr "მიმ&აგრებულ ფაილად…"
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
-msgstr "&გადამისამართება"
+msgstr "&გადამისამართება…"
 
 #: messageactions.cpp:72
 #, kde-format
