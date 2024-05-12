@@ -31,7 +31,7 @@ msgstr "Visor del registre de filtratge"
 #: filterlogdialog.cpp:79
 #, kde-format
 msgid "Share..."
-msgstr "Compartix..."
+msgstr "Compartix…"
 
 #: filterlogdialog.cpp:85
 #, kde-format

@@ -35,7 +35,7 @@ msgstr "txemaq@gmail.com,antonibella5@yahoo.com"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save..."
-msgstr "Guarda..."
+msgstr "Guarda…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -92,7 +92,7 @@ msgstr "Visualitza"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With..."
-msgstr "Visualitza amb..."
+msgstr "Visualitza amb…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -104,13 +104,13 @@ msgstr "Extrau"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To..."
-msgstr "Extrau a..."
+msgstr "Extrau a…"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To..."
-msgstr "Extrau-ho tot a..."
+msgstr "Extrau-ho tot a…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -134,13 +134,13 @@ msgstr "Mostra el text del missatge"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As..."
-msgstr "Guarda el text del missatge com a..."
+msgstr "Anomena i guarda el text del missatge…"
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder..."
-msgstr "Carpeta predeterminada..."
+msgstr "Carpeta predeterminada…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -215,13 +215,13 @@ msgstr "O&bri amb"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other..."
-msgstr "Al&tres..."
+msgstr "Al&tres…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With..."
-msgstr "O&bri amb..."
+msgstr "O&bri amb…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
