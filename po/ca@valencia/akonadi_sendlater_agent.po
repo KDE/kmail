@@ -92,7 +92,7 @@ msgstr "ID del missatge"
 #: sendlaterconfigurewidget.cpp:70
 #, kde-format
 msgid "No messages waiting..."
-msgstr "No hi ha missatges en espera..."
+msgstr "No hi ha missatges en espera…"
 
 #: sendlaterconfigurewidget.cpp:95
 #, kde-format
@@ -126,7 +126,7 @@ msgstr[1] "Voleu suprimir els elements seleccionats?"
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Supressió d'elements"
+msgstr "Suprimiu els elements"
 
 #: sendlaterconfigurewidget.cpp:218
 #, kde-format
@@ -139,7 +139,7 @@ msgstr[1] "També voleu suprimir els missatges?"
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr "Supressió de missatges"
+msgstr "Suprimiu els missatges"
 
 #: sendlaterconfigurewidget.cpp:221
 #, kde-format
@@ -207,4 +207,4 @@ msgstr "Torna a enviar"
 #: ui/sendlaterconfigurewidget.ui:31
 #, kde-format
 msgid "Modify..."
-msgstr "Modifica..."
+msgstr "Modifica…"

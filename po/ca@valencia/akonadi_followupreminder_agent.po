@@ -114,7 +114,7 @@ msgstr[1] "Voleu suprimir estos %1 elements seleccionats?"
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Supressió d'elements"
+msgstr "Suprimiu els elements"
 
 #: followupremindermanager.cpp:154
 #, kde-format

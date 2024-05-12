@@ -70,7 +70,7 @@ msgstr "Nom:"
 #: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Pick icon..."
-msgstr "Tria la icona..."
+msgstr "Tria la icona…"
 
 #: unifiedmailboxeditor.cpp:103
 #, kde-format
