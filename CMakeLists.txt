@@ -37,7 +37,7 @@ include(ECMFeatureSummary)
 
 # Do NOT add quote
 set(KDEPIM_DEV_VERSION alpha)
-set(RELEASE_SERVICE_VERSION "24.08.40")
+set(RELEASE_SERVICE_VERSION "24.07.40")
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
