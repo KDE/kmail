@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-24 18:16+0530\n"
+"PO-Revision-Date: 2024-05-12 16:27+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.1\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -941,7 +941,7 @@ msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">விருப்ப படிவத்தை பற்றிய விவரங்கள்…</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:693
-#, kde-format
+#, fuzzy, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
 "p><ul><li>d - the day as a number without a leading zero (1-31)</li><li>dd - "
@@ -981,7 +981,7 @@ msgstr ""
 "li><li>zzz - மில்லி விநாடிகள் முன்பூஜ்ஜியத்துடன்(000-999)</li><li>AP- காலை/மாலை "
 "தோற்றத்திற்கு மாற்று.  \"காலை\" அல்லது \"மாலை\"  AP க்கு பதிலாக மாற்றும்</"
 "li><li>apகாலை/மாலை தோற்றத்திற்கு மாற்று.  \"கா\" அல்லது \"மா\"  ap க்கு பதிலாக "
-"மாற்றும்</li><li>Z வட்டார நேரம் எண்ணாக (-0500)</li></ul><p>மற்ற எல்லா உள்ளீட்ட "
+"மாற்றும்</li><li>Z வட்டார நேரம் எண்ணாக (-0500)</li></ul><p><strong>மற்ற எல்லா உள்ளீட்ட "
 "உருக்களெல்லாம் கவனத்தில் கொள்ளப்படமாட்டாது</strong></p></qt>"
 
 #: configuredialog/configureappearancepage.cpp:730
@@ -1390,7 +1390,7 @@ msgstr "சே&ர்..."
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify..."
-msgstr "மா&ற்று…"
+msgstr "&திருத்து…"
 
 #: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
