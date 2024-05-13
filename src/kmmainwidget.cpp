@@ -3128,7 +3128,7 @@ void KMMainWidget::setupActions()
     // ### PORT ME: Add this to the context menu. Not possible right now because
     //              the context menu uses XMLGUI, and that would add the entry to
     //              all collection context menus
-    mArchiveFolderAction = new QAction(i18n("&Archive Folder…"), this);
+    mArchiveFolderAction = new QAction(i18nc("@action", "&Archive Folder…"), this);
     actionCollection()->addAction(QStringLiteral("archive_folder"), mArchiveFolderAction);
     connect(mArchiveFolderAction, &QAction::triggered, this, &KMMainWidget::slotArchiveFolder);
 
