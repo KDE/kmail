@@ -73,7 +73,7 @@ void HistoryClosedReaderMenu::slotReopenLastClosedViewer()
 void HistoryClosedReaderMenu::createReOpenClosedAction()
 {
     if (!mReopenAction) {
-        mReopenAction = new QAction(i18n("Reopen Closed Viewer"), this);
+        mReopenAction = new QAction(i18nc("@action", "Reopen Closed Viewer"), this);
         menu()->addAction(mReopenAction);
         connect(mReopenAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotReopenLastClosedViewer);
 

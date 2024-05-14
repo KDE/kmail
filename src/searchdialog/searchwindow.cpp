@@ -196,11 +196,11 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     mPrintAction = actionCollection()->addAction(KStandardAction::Print, QStringLiteral("search_print"));
     connect(mPrintAction, &QAction::triggered, this, &SearchWindow::slotPrintMsg);
 
-    mClearAction = new QAction(i18n("Clear Selection"), this);
+    mClearAction = new QAction(i18nc("@action", "Clear Selection"), this);
     actionCollection()->addAction(QStringLiteral("search_clear_selection"), mClearAction);
     connect(mClearAction, &QAction::triggered, this, &SearchWindow::slotClearSelection);
 
-    mJumpToFolderAction = new QAction(i18n("Jump to original folder"), this);
+    mJumpToFolderAction = new QAction(i18nc("@action", "Jump to original folder"), this);
     actionCollection()->addAction(QStringLiteral("search_jump_folder"), mJumpToFolderAction);
     connect(mJumpToFolderAction, &QAction::triggered, this, &SearchWindow::slotJumpToFolder);
 

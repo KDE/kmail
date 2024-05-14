@@ -292,7 +292,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     menu.addAction(switchOffline);
     connect(switchOffline, &QAction::toggled, this, &AccountsPageReceivingTab::slotOfflineOnShutdownChanged);
 
-    auto checkOnStartup = new QAction(i18n("Check mail on startup"), &menu);
+    auto checkOnStartup = new QAction(i18nc("@action", "Check mail on startup"), &menu);
     checkOnStartup->setCheckable(true);
     checkOnStartup->setChecked(CheckOnStartup);
     checkOnStartup->setData(ident);

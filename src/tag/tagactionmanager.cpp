@@ -165,7 +165,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
         mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorMoreAction);
 
         if (!mMoreAction) {
-            mMoreAction = new QAction(i18n("More…"), this);
+            mMoreAction = new QAction(i18nc("@action", "More…"), this);
             connect(mMoreAction, &QAction::triggered, this, &TagActionManager::tagMoreActionClicked);
         }
         mMessageActions->messageStatusMenu()->menu()->addAction(mMoreAction);

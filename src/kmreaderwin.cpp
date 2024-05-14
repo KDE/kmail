@@ -164,7 +164,7 @@ void KMReaderWin::createActions()
     connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
 
     // save URL as
-    mUrlSaveAsAction = new QAction(i18n("Save Link As…"), this);
+    mUrlSaveAsAction = new QAction(i18nc("@action", "Save Link As…"), this);
     ac->addAction(QStringLiteral("saveas_url"), mUrlSaveAsAction);
     ac->setShortcutsConfigurable(mUrlSaveAsAction, false);
     connect(mUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotUrlSave);
@@ -176,32 +176,32 @@ void KMReaderWin::createActions()
     ac->setDefaultShortcut(action, KStandardShortcut::find().first());
 
     // save Image On Disk
-    mImageUrlSaveAsAction = new QAction(i18n("Save Image On Disk…"), this);
+    mImageUrlSaveAsAction = new QAction(i18nc("@action", "Save Image On Disk…"), this);
     ac->addAction(QStringLiteral("saveas_imageurl"), mImageUrlSaveAsAction);
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false);
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
 
     // save Image On Disk
-    mOpenImageAction = new QAction(i18n("Open Image…"), this);
+    mOpenImageAction = new QAction(i18nc("@action", "Open Image…"), this);
     ac->addAction(QStringLiteral("open_image"), mOpenImageAction);
     ac->setShortcutsConfigurable(mOpenImageAction, false);
     connect(mOpenImageAction, &QAction::triggered, this, &KMReaderWin::slotOpenImage);
 
     // View html options
     mViewHtmlOptions = new QMenu(i18n("Show HTML Format"), this);
-    mViewAsHtml = new QAction(i18n("Show HTML format when mail comes from this contact"), mViewHtmlOptions);
+    mViewAsHtml = new QAction(i18nc("@action", "Show HTML format when mail comes from this contact"), mViewHtmlOptions);
     ac->setShortcutsConfigurable(mViewAsHtml, false);
     connect(mViewAsHtml, &QAction::triggered, this, &KMReaderWin::slotContactHtmlOptions);
     mViewAsHtml->setCheckable(true);
     mViewHtmlOptions->addAction(mViewAsHtml);
 
-    mLoadExternalReference = new QAction(i18n("Load external reference when mail comes for this contact"), mViewHtmlOptions);
+    mLoadExternalReference = new QAction(i18nc("@action", "Load external reference when mail comes for this contact"), mViewHtmlOptions);
     ac->setShortcutsConfigurable(mLoadExternalReference, false);
     connect(mLoadExternalReference, &QAction::triggered, this, &KMReaderWin::slotContactHtmlOptions);
     mLoadExternalReference->setCheckable(true);
     mViewHtmlOptions->addAction(mLoadExternalReference);
 
-    mShareImage = new QAction(i18n("Share image…"), this);
+    mShareImage = new QAction(i18nc("@action", "Share image…"), this);
     ac->addAction(QStringLiteral("share_imageurl"), mShareImage);
     ac->setShortcutsConfigurable(mShareImage, false);
     connect(mShareImage, &QAction::triggered, this, &KMReaderWin::slotShareImage);

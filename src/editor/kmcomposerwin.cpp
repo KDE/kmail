@@ -1333,10 +1333,10 @@ void KMComposerWin::setupActions()
     connect(action, &QAction::triggered, this, &KMComposerWin::slotNewComposer);
     actionCollection()->setDefaultShortcuts(action, KStandardShortcut::shortcut(KStandardShortcut::New));
 
-    action = new QAction(i18n("Select &Recipients…"), this);
+    action = new QAction(i18nc("@action", "Select &Recipients…"), this);
     actionCollection()->addAction(QStringLiteral("select_recipients"), action);
     connect(action, &QAction::triggered, mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::selectRecipients);
-    action = new QAction(i18n("Save &Distribution List…"), this);
+    action = new QAction(i18nc("@action", "Save &Distribution List…"), this);
     actionCollection()->addAction(QStringLiteral("save_distribution_list"), action);
     connect(action, &QAction::triggered, mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::saveDistributionList);
 
@@ -1357,11 +1357,11 @@ void KMComposerWin::setupActions()
     mReplaceText = KStandardAction::replace(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
     actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"), mComposerBase->editor(), SLOT(slotCheckSpelling()));
 
-    action = new QAction(i18n("Paste as Attac&hment"), this);
+    action = new QAction(i18nc("@action", "Paste as Attac&hment"), this);
     actionCollection()->addAction(QStringLiteral("paste_att"), action);
     connect(action, &QAction::triggered, this, &KMComposerWin::slotPasteAsAttachment);
 
-    action = new QAction(i18n("Cl&ean Spaces"), this);
+    action = new QAction(i18nc("@action", "Cl&ean Spaces"), this);
     actionCollection()->addAction(QStringLiteral("clean_spaces"), action);
     connect(action, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::cleanSpace);
 
@@ -1438,15 +1438,15 @@ void KMComposerWin::setupActions()
     connect(mSubjectAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
     // end of checkable
 
-    mAppendSignature = new QAction(i18n("Append S&ignature"), this);
+    mAppendSignature = new QAction(i18nc("@action", "Append S&ignature"), this);
     actionCollection()->addAction(QStringLiteral("append_signature"), mAppendSignature);
     connect(mAppendSignature, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::appendSignature);
 
-    mPrependSignature = new QAction(i18n("Pr&epend Signature"), this);
+    mPrependSignature = new QAction(i18nc("@action", "Pr&epend Signature"), this);
     actionCollection()->addAction(QStringLiteral("prepend_signature"), mPrependSignature);
     connect(mPrependSignature, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::prependSignature);
 
-    mInsertSignatureAtCursorPosition = new QAction(i18n("Insert Signature At C&ursor Position"), this);
+    mInsertSignatureAtCursorPosition = new QAction(i18nc("@action", "Insert Signature At C&ursor Position"), this);
     actionCollection()->addAction(QStringLiteral("insert_signature_at_cursor_position"), mInsertSignatureAtCursorPosition);
     connect(mInsertSignatureAtCursorPosition,
             &QAction::triggered,
