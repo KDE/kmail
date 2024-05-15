@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-08 00:39+0000\n"
+"POT-Creation-Date: 2024-05-15 00:39+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -677,7 +677,6 @@ msgid "Send &messages in outbox folder:"
 msgstr "&Trimite mesajele din dosarul \"trimitere\":"
 
 #: configuredialog/configureaccountpage.cpp:120
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
 msgid "Send Now"
 msgstr "Trimite acum"
@@ -742,7 +741,9 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Deconectează la închiderea KMail"
 
 #: configuredialog/configureaccountpage.cpp:295
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Check mail on startup"
+msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Verifică poșta la pornire"
 
@@ -2034,6 +2035,7 @@ msgstr "Compunere &nouă"
 #: editor/kmcomposerwin.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Select Recipient"
+msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Alege destinatarul"
 
@@ -2041,16 +2043,21 @@ msgstr "Alege destinatarul"
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "Save Distribution List"
+msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Salvează lista de distribuție"
 
 #: editor/kmcomposerwin.cpp:1360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Paste as Attac&hment"
+msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Lipește ca atașa&ment"
 
 #: editor/kmcomposerwin.cpp:1364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Cl&ean Spaces"
+msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Curăță spațiil&e"
 
@@ -2143,17 +2150,23 @@ msgid "S&ubject"
 msgstr "S&ubiect"
 
 #: editor/kmcomposerwin.cpp:1441
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Append S&ignature"
+msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Atașează &semnătura"
 
 #: editor/kmcomposerwin.cpp:1445
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Pr&epend Signature"
+msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Atașează s&emnătura la început"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Insert Signature At C&ursor Position"
+msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Inserează semnătura la poziția c&ursorului"
 
@@ -2744,6 +2757,13 @@ msgid ""
 "\">(details…)</a>"
 msgstr ""
 
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
+#, fuzzy, kde-format
+#| msgid "Send Now"
+msgctxt "@action"
+msgid "Send Now"
+msgstr "Trimite acum"
+
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
 msgid "Set a subject for this message"
@@ -2971,6 +2991,7 @@ msgstr ""
 #: historyclosedreader/historyclosedreadermenu.cpp:76
 #, fuzzy, kde-format
 #| msgid "Post New Message"
+msgctxt "@action"
 msgid "Reopen Closed Viewer"
 msgstr "Publică mesaj nou"
 
@@ -4900,7 +4921,9 @@ msgid "Save &As…"
 msgstr "Salv&are ca..."
 
 #: kmmainwidget.cpp:2920
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Expire All Folders"
+msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "E&xpiră toate dosarele"
 
@@ -4948,47 +4971,55 @@ msgstr "&Importă mesaje"
 #: kmmainwidget.cpp:2989
 #, fuzzy, kde-format
 #| msgid "&Debug Sieve..."
+msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Depanare Sieve..."
 
 #: kmmainwidget.cpp:2996
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
+msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Vizualizor jurnal de filtrări"
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "Notification"
+msgctxt "@action"
 msgid "Notification History…"
 msgstr "Notificare"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
+msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr ""
 
 #: kmmainwidget.cpp:3011
 #, fuzzy, kde-format
 #| msgid "Edit \"Out of Office\" Replies..."
+msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Editare răspunsuri „Ieșit din birou”..."
 
 #: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
+msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "Configurare &notificări..."
 
 #: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
+msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Ștergere mesaje..."
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
+msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Caută mesaje..."
 
@@ -4998,8 +5029,10 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Ș&terge"
 
-#: kmmainwidget.cpp:3045 kmmainwidget.cpp:4111
-#, kde-format
+#: kmmainwidget.cpp:3045
+#, fuzzy, kde-format
+#| msgid "M&ove Thread to Trash"
+msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "M&ută firul la gunoi"
 
@@ -5020,25 +5053,30 @@ msgid "&Find Messages…"
 msgstr "Caută mesaje"
 
 #: kmmainwidget.cpp:3063
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Selectează &toate mesajele"
 
 #: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
 #| msgid "&Mailing List Management..."
+msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Administrare &listă de discuții..."
 
 #: kmmainwidget.cpp:3078
 #, fuzzy, kde-format
 #| msgid "Identity account"
+msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Cont de identitate"
 
 #: kmmainwidget.cpp:3083
 #, fuzzy, kde-format
 #| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Dosarul curent și toate subdosarele"
 
@@ -5049,7 +5087,9 @@ msgid "&Assign Shortcut…"
 msgstr "&Asociază scurtătură..."
 
 #: kmmainwidget.cpp:3106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Expiration Settings"
+msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "Configurări &expirare"
 
@@ -5057,6 +5097,7 @@ msgstr "Configurări &expirare"
 #, fuzzy, kde-format
 #| msgctxt "@title:window for archiving a folder"
 #| msgid "Archive Folder"
+msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Arhivare dosar"
 
@@ -5108,24 +5149,28 @@ msgstr "&Creează filtru"
 #: kmmainwidget.cpp:3195
 #, fuzzy, kde-format
 #| msgid "Filter on &Subject..."
+msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Filtrează după câmpul &Subiect..."
 
 #: kmmainwidget.cpp:3202
 #, fuzzy, kde-format
 #| msgid "Filter on &From..."
+msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Filtrează după câmpul &De la..."
 
 #: kmmainwidget.cpp:3208
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
+msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Filtrează după câmpul &Către..."
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
+msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Filtrează după câmpul &Către..."
 
@@ -5261,12 +5306,16 @@ msgid "Collapse all threads in the current folder"
 msgstr "Restrânge toate firele din dosarul curent"
 
 #: kmmainwidget.cpp:3324
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Display Message"
+msgctxt "@action"
 msgid "&Display Message"
 msgstr "Afișează &mesajul"
 
 #: kmmainwidget.cpp:3331
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Next Message"
+msgctxt "@action"
 msgid "&Next Message"
 msgstr "Mesajul &următor"
 
@@ -5276,7 +5325,9 @@ msgid "Go to the next message"
 msgstr "Salt la următorul mesaj"
 
 #: kmmainwidget.cpp:3338
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Next &Unread Message"
+msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Mesajul următor &necitit"
 
@@ -5292,7 +5343,9 @@ msgid "Go to the next unread message"
 msgstr "Salt la următorul mesaj necitit"
 
 #: kmmainwidget.cpp:3351
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Previous Message"
+msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Mesajul &precedent"
 
@@ -5302,7 +5355,9 @@ msgid "Go to the previous message"
 msgstr "Salt la mesajul precedent"
 
 #: kmmainwidget.cpp:3358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Unread &Message"
+msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Mesajul precedent n&ecitit"
 
@@ -5318,7 +5373,9 @@ msgid "Go to the previous unread message"
 msgstr "Salt la mesajul precedent necitit"
 
 #: kmmainwidget.cpp:3371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Next Unread &Folder"
+msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "&Dosarul următor necitit"
 
@@ -5328,7 +5385,9 @@ msgid "Go to the next folder with unread messages"
 msgstr "Salt la următorul dosar cu mesaje necitite"
 
 #: kmmainwidget.cpp:3380
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Unread F&older"
+msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "D&osarul precedent necitit"
 
@@ -5366,6 +5425,7 @@ msgstr "Configurează &filtrele..."
 #: kmmainwidget.cpp:3409
 #, fuzzy, kde-format
 #| msgid "Manage Sieve Scripts"
+msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Gestionează scripturi Sieve"
 
@@ -5400,6 +5460,7 @@ msgstr "&Configurare KMail..."
 #: kmmainwidget.cpp:3442
 #, fuzzy, kde-format
 #| msgid "Expire"
+msgctxt "@action"
 msgid "Expire…"
 msgstr "Expiră"
 
@@ -5452,7 +5513,9 @@ msgid "Restart Account"
 msgstr "Cont de identitate"
 
 #: kmmainwidget.cpp:3520
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy Message to Folder"
+msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Copiază mesajul în dosar"
 
@@ -5463,103 +5526,135 @@ msgid "Jump to Folder…"
 msgstr "Sari la dosarul"
 
 #: kmmainwidget.cpp:3532
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Abort Current Operation"
+msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Abandonează operația curentă"
 
 #: kmmainwidget.cpp:3538
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Focalizează pe următorul dosar"
 
 #: kmmainwidget.cpp:3544
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Previous Folder"
+msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Focalizează pe dosarul precedent"
 
 #: kmmainwidget.cpp:3550
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Folder with Focus"
+msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Selectează dosarul cu focalizare"
 
 #: kmmainwidget.cpp:3557
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Focalizează pe următorul dosar"
 
 #: kmmainwidget.cpp:3563
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Focalizează pe următorul dosar"
 
 #: kmmainwidget.cpp:3569
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Next Message"
+msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Focalizează pe următorul mesaj"
 
 #: kmmainwidget.cpp:3575
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Previous Message"
+msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Focalizează pe mesajul precedent"
 
 #: kmmainwidget.cpp:3581
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select First Message"
 msgstr "Selectează &toate mesajele"
 
 #: kmmainwidget.cpp:3587
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Selectează &toate mesajele"
 
 #: kmmainwidget.cpp:3593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Message with Focus"
+msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Selectează mesajul cu focalizare"
 
 #: kmmainwidget.cpp:3600
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set Focus to Quick Search"
+msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Stabilește focalizarea la căutarea rapidă"
 
 #: kmmainwidget.cpp:3608
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Extend Selection to Previous Message"
+msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Extinde selecția la mesajul precedent"
 
 #: kmmainwidget.cpp:3614
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Extend Selection to Next Message"
+msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Extinde selecția la următorul mesaj"
 
 #: kmmainwidget.cpp:3621
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Message to Folder"
+msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Mută mesajul în dosar"
 
 #: kmmainwidget.cpp:3631
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
+msgstr "Dosarul curent și toate subdosarele"
 
 #: kmmainwidget.cpp:3636
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
+msgstr "Dosarul curent și toate subdosarele"
 
 #: kmmainwidget.cpp:3642
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
+msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "D&osarul precedent necitit"
 
 #: kmmainwidget.cpp:3649
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
+msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Ștergere dosar"
 
@@ -5574,6 +5669,11 @@ msgstr "Adaugă dosar favorit"
 #, kde-format
 msgid "&Delete Search"
 msgstr "Ș&terge căutarea"
+
+#: kmmainwidget.cpp:4111
+#, kde-format
+msgid "M&ove Thread to Trash"
+msgstr "M&ută firul la gunoi"
 
 #: kmmainwidget.cpp:4113
 #, fuzzy, kde-format
@@ -5773,6 +5873,7 @@ msgstr "Modificare notă..."
 #: kmreaderwin.cpp:167
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Salvează legătura ca..."
 
@@ -5785,13 +5886,14 @@ msgstr "&Caută în mesaj..."
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Salvează legătura ca..."
 
-#. i18n: ectx: property (text), widget (QPushButton, openImageButton)
-#: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
+#: kmreaderwin.cpp:185
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Open Image…"
 msgstr "Salvează legătura ca..."
 
@@ -5804,18 +5906,21 @@ msgstr "Folosește HTML"
 #: kmreaderwin.cpp:192
 #, fuzzy, kde-format
 #| msgid "Set the folder where new messages from this account are put"
+msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Stabilește dosarul în care vor fi plasate mesajele acestui cont"
 
 #: kmreaderwin.cpp:198
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
+msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Încarcă referințele externe din Internet pentru acest mesaj."
 
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Share image…"
 msgstr "Salvează legătura ca..."
 
@@ -6175,6 +6280,7 @@ msgstr "Răspunde pe lista de &discuții..."
 #: messageactions.cpp:68
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
+msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Răspunde fără &citare..."
 
@@ -6204,6 +6310,7 @@ msgstr "&Redirectează..."
 #: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
+msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Mesaj nou către lista de &discuții..."
 
@@ -6239,18 +6346,21 @@ msgstr "&Editează mesajul"
 #: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
+msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Filtrează după &lista de discuții..."
 
 #: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
+msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "&Caută mesaje..."
 
 #: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
+msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "T&rimite din nou..."
 
@@ -6466,13 +6576,16 @@ msgid "Save Attachments…"
 msgstr "Salvează atașamentul ca"
 
 #: searchdialog/searchwindow.cpp:199
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clear Selection"
+msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Elimină selecția"
 
 #: searchdialog/searchwindow.cpp:203
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
+msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Sari la dosarul"
 
@@ -7039,6 +7152,7 @@ msgstr "Adaugă marcaj nou"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
+msgctxt "@action"
 msgid "More…"
 msgstr ""
 
@@ -7106,6 +7220,13 @@ msgstr "Notificare &deliată mesaj nou"
 #| msgid "Other Actio&ns..."
 msgid "Other Actio&ns…"
 msgstr "Alte acțiu&ni..."
+
+#. i18n: ectx: property (text), widget (QPushButton, openImageButton)
+#: ui/encodedimagepicker.ui:78
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Open Image…"
+msgstr "Salvează legătura ca..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85

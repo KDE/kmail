@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-08 00:39+0000\n"
+"POT-Creation-Date: 2024-05-15 00:39+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -710,7 +710,6 @@ msgid "Send &messages in outbox folder:"
 msgstr "ส่งจดหมายที่ค้างอยู่ในกล่องจดหมายที่รอส่ง:"
 
 #: configuredialog/configureaccountpage.cpp:120
-#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
 msgid "Send Now"
 msgstr "ส่งทันที"
@@ -775,6 +774,7 @@ msgstr ""
 #: configuredialog/configureaccountpage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
+msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "ตรว&จจดหมายเมื่อเริ่มการทำงาน"
 
@@ -2033,22 +2033,28 @@ msgstr "เครื่องมือเขียนจดหมายใ&ห�
 #: editor/kmcomposerwin.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Select Recipient"
+msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "เลือกผู้รับ"
 
 #: editor/kmcomposerwin.cpp:1339
 #, fuzzy, kde-format
 #| msgid "Save Distribution List"
+msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "บันทึกรายการแจกจ่าย"
 
 #: editor/kmcomposerwin.cpp:1360
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Paste as Attac&hment"
+msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "วางเป็นสิ่งที่แ&นบมาด้วย"
 
 #: editor/kmcomposerwin.cpp:1364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Cl&ean Spaces"
+msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "ล้างช่อง&ว่าง"
 
@@ -2142,17 +2148,23 @@ msgid "S&ubject"
 msgstr "เ&รื่อง"
 
 #: editor/kmcomposerwin.cpp:1441
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Append S&ignature"
+msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "เพิ่ม&ลายเซ็นต่อท้าย"
 
 #: editor/kmcomposerwin.cpp:1445
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Pr&epend Signature"
+msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "เพิ่&มลายเซ็นก่อน"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Insert Signature At C&ursor Position"
+msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "แทรกลา&ยเซ็น ณ ตำแหน่งเคอร์เซอร์"
 
@@ -2726,6 +2738,13 @@ msgid ""
 "\">(details…)</a>"
 msgstr ""
 
+#: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
+#, fuzzy, kde-format
+#| msgid "Send Now"
+msgctxt "@action"
+msgid "Send Now"
+msgstr "ส่งทันที"
+
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
 #| msgid "Set subject of message"
@@ -2959,6 +2978,7 @@ msgstr ""
 #: historyclosedreader/historyclosedreadermenu.cpp:76
 #, fuzzy, kde-format
 #| msgid "Post New Message"
+msgctxt "@action"
 msgid "Reopen Closed Viewer"
 msgstr "ส่งจดหมายใหม่"
 
@@ -4736,7 +4756,9 @@ msgid "Save &As…"
 msgstr "บัน&ทึกเป็น..."
 
 #: kmmainwidget.cpp:2920
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Expire All Folders"
+msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "ให้ทุกโฟลเดอร์หมดอายุ"
 
@@ -4784,47 +4806,55 @@ msgstr "&นำเข้าจดหมาย..."
 #: kmmainwidget.cpp:2989
 #, fuzzy, kde-format
 #| msgid "&Debug Sieve..."
+msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "ดี&บั๊กสคริปต์ตัวกรอง..."
 
 #: kmmainwidget.cpp:2996
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
+msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "ตัวแสดงบันทึกการกรอง"
 
 #: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
+msgctxt "@action"
 msgid "Notification History…"
 msgstr "การแจ้งให้ทราบเมื่อมีจดหมายใหม่"
 
 #: kmmainwidget.cpp:3006
 #, kde-format
+msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr ""
 
 #: kmmainwidget.cpp:3011
 #, fuzzy, kde-format
 #| msgid "Edit \"Out of Office\" Replies..."
+msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "แก้ไขการตอบกลับ \"ไม่อยู่ที่ออฟฟิศ\""
 
 #: kmmainwidget.cpp:3017
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
+msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "ปรับแต่งการแจ้งเตือน..."
 
 #: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
+msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "กำลังลบจดหมาย..."
 
 #: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
+msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "ค้นหาจดหมาย..."
 
@@ -4834,8 +4864,10 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&ลบ"
 
-#: kmmainwidget.cpp:3045 kmmainwidget.cpp:4111
-#, kde-format
+#: kmmainwidget.cpp:3045
+#, fuzzy, kde-format
+#| msgid "M&ove Thread to Trash"
+msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 
@@ -4856,25 +4888,30 @@ msgid "&Find Messages…"
 msgstr "ค้นหาจดหมาย"
 
 #: kmmainwidget.cpp:3063
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "เลือกจดหมายทั้งหมด"
 
 #: kmmainwidget.cpp:3070
 #, fuzzy, kde-format
 #| msgid "&Mailing List Management..."
+msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "การจัดการจดหมายเวียน..."
 
 #: kmmainwidget.cpp:3078
 #, fuzzy, kde-format
 #| msgid "Identity Name"
+msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "ชื่อการแสดงตัว"
 
 #: kmmainwidget.cpp:3083
 #, fuzzy, kde-format
 #| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "โฟลเดอร์ปัจจุบัน และโฟลเดอร์ย่อยทั้งหมด"
 
@@ -4885,13 +4922,16 @@ msgid "&Assign Shortcut…"
 msgstr "กำหนดปุ่มพิมพ์ลัด..."
 
 #: kmmainwidget.cpp:3106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Expiration Settings"
+msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "ตั้งค่าการหมดอายุของจดหมาย"
 
 #: kmmainwidget.cpp:3131
 #, fuzzy, kde-format
 #| msgid "Archive Folder"
+msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "แฟ้มจัดเก็บของโฟลเดอร์"
 
@@ -4943,24 +4983,28 @@ msgstr "สร้างตัวกรองใหม่"
 #: kmmainwidget.cpp:3195
 #, fuzzy, kde-format
 #| msgid "Filter on &Subject..."
+msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "กรองส่วนเรื่อง..."
 
 #: kmmainwidget.cpp:3202
 #, fuzzy, kde-format
 #| msgid "Filter on &From..."
+msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "กรองส่วนจาก..."
 
 #: kmmainwidget.cpp:3208
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
+msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "กรองส่วนถึง..."
 
 #: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
+msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "กรองส่วนถึง..."
 
@@ -5095,12 +5139,16 @@ msgid "Collapse all threads in the current folder"
 msgstr "ย่อเก็บเธรดทั้งหมดในโฟลเดอร์ปัจจุบัน"
 
 #: kmmainwidget.cpp:3324
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Display Message"
+msgctxt "@action"
 msgid "&Display Message"
 msgstr "แสดงจดหมาย"
 
 #: kmmainwidget.cpp:3331
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Next Message"
+msgctxt "@action"
 msgid "&Next Message"
 msgstr "ฉบับ&ถัดไป"
 
@@ -5110,7 +5158,9 @@ msgid "Go to the next message"
 msgstr "ไปยังจดหมายฉบับถัดไป"
 
 #: kmmainwidget.cpp:3338
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Next &Unread Message"
+msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "ฉบับที่ยังไม่ได้อ่านถัดไป"
 
@@ -5126,7 +5176,9 @@ msgid "Go to the next unread message"
 msgstr "ไปยังจดหมายที่ยังไม่ได้อ่านฉบับถัดไป"
 
 #: kmmainwidget.cpp:3351
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Previous Message"
+msgctxt "@action"
 msgid "&Previous Message"
 msgstr "ฉบับ&ก่อนหน้านี้"
 
@@ -5136,7 +5188,9 @@ msgid "Go to the previous message"
 msgstr "ไปยังจดหมายฉบับก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Unread &Message"
+msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "ฉบับที่ยังไม่ได้อ่านก่อนหน้านี้"
 
@@ -5152,7 +5206,9 @@ msgid "Go to the previous unread message"
 msgstr "ไปยังจดหมายฉบับที่ยังไม่ได้อ่านก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Next Unread &Folder"
+msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวถัดไป"
 
@@ -5162,7 +5218,9 @@ msgid "Go to the next folder with unread messages"
 msgstr "ไปยังโฟลเดอร์ถัดไปที่มีจดหมายที่ยังไม่ได้อ่าน"
 
 #: kmmainwidget.cpp:3380
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Unread F&older"
+msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวก่อนหน้านี้"
 
@@ -5199,6 +5257,7 @@ msgstr "ปรับแต่งตัวกรอง..."
 #: kmmainwidget.cpp:3409
 #, fuzzy, kde-format
 #| msgid "Manage Sieve Scripts"
+msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "จัดการสคริปต์ของ Sieve"
 
@@ -5233,6 +5292,7 @@ msgstr "ปรับแต่งจัดการจดหมาย-K..."
 #: kmmainwidget.cpp:3442
 #, fuzzy, kde-format
 #| msgid "Expire"
+msgctxt "@action"
 msgid "Expire…"
 msgstr "หมดอายุ"
 
@@ -5284,7 +5344,9 @@ msgid "Restart Account"
 msgstr "ชื่อการแสดงตัว"
 
 #: kmmainwidget.cpp:3520
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Copy Message to Folder"
+msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "สำเนาจดหมายไปยังโฟลเดอร์"
 
@@ -5295,103 +5357,135 @@ msgid "Jump to Folder…"
 msgstr "กระโดดไปยังโฟลเดอร์"
 
 #: kmmainwidget.cpp:3532
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Abort Current Operation"
+msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "ยกเลิกปฏิบัติการที่ทำอยู่ในปัจจุบัน"
 
 #: kmmainwidget.cpp:3538
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
 #: kmmainwidget.cpp:3544
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Previous Folder"
+msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3550
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Folder with Focus"
+msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "เลือกโฟลเดอร์พร้อมกับโฟกัส"
 
 #: kmmainwidget.cpp:3557
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
 #: kmmainwidget.cpp:3563
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
+msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "โฟกัสไปยังโฟลเดอร์ถัดไป"
 
 #: kmmainwidget.cpp:3569
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Next Message"
+msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "โฟกัสไปยังจดหมายฉบับถัดไป"
 
 #: kmmainwidget.cpp:3575
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Focus on Previous Message"
+msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "โฟกัสไปยังจดหมายฉบับก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3581
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select First Message"
 msgstr "เลือกจดหมายทั้งหมด"
 
 #: kmmainwidget.cpp:3587
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
+msgctxt "@action"
 msgid "Select Last Message"
 msgstr "เลือกจดหมายทั้งหมด"
 
 #: kmmainwidget.cpp:3593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Message with Focus"
+msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "เลือกจดหมายพร้อมกับโฟกัส"
 
 #: kmmainwidget.cpp:3600
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set Focus to Quick Search"
+msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "ย้ายโฟกัสไปยังแถบค้นหาด่วน"
 
 #: kmmainwidget.cpp:3608
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Extend Selection to Previous Message"
+msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "ขยายการเลือกไปยังจดหมายฉบับก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3614
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Extend Selection to Next Message"
+msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "ขยายการเลือกไปยังจดหมายฉบับถัดไป"
 
 #: kmmainwidget.cpp:3621
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Message to Folder"
+msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "ย้ายจดหมายไปยังโฟลเดอร์"
 
 #: kmmainwidget.cpp:3631
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
+msgstr "โฟลเดอร์ปัจจุบัน และโฟลเดอร์ย่อยทั้งหมด"
 
 #: kmmainwidget.cpp:3636
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Folder & All Subfolders"
+msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
+msgstr "โฟลเดอร์ปัจจุบัน และโฟลเดอร์ย่อยทั้งหมด"
 
 #: kmmainwidget.cpp:3642
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
+msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "โฟลเดอร์ที่ยังไม่อ่านตัวก่อนหน้านี้"
 
 #: kmmainwidget.cpp:3649
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
+msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "ลบโฟลเดอร์"
 
@@ -5406,6 +5500,11 @@ msgstr "เพิ่มโฟลเดอร์โปรด"
 #, kde-format
 msgid "&Delete Search"
 msgstr "ลบการค้นหา"
+
+#: kmmainwidget.cpp:4111
+#, kde-format
+msgid "M&ove Thread to Trash"
+msgstr "ทิ้งทั้งเธรดลงถังขยะ"
 
 #: kmmainwidget.cpp:4113
 #, fuzzy, kde-format
@@ -5603,6 +5702,7 @@ msgstr "แก้ไขบันทึกย่อ..."
 #: kmreaderwin.cpp:167
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Save Link As…"
 msgstr "บันทึกตำแหน่งเชื่อมโยงเป็น..."
 
@@ -5615,13 +5715,14 @@ msgstr "ค้นหาในจดหมาย..."
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "บันทึกตำแหน่งเชื่อมโยงเป็น..."
 
-#. i18n: ectx: property (text), widget (QPushButton, openImageButton)
-#: kmreaderwin.cpp:185 ui/encodedimagepicker.ui:78
+#: kmreaderwin.cpp:185
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Open Image…"
 msgstr "บันทึกตำแหน่งเชื่อมโยงเป็น..."
 
@@ -5632,19 +5733,23 @@ msgid "Show HTML Format"
 msgstr "แสดงแบบ HTML"
 
 #: kmreaderwin.cpp:192
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load external references from the Internet for this message."
+msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
-msgstr ""
+msgstr "อนุญาตให้จดหมายนี้โหลดส่วนที่อ้างถึงภายนอกจากอินเทอร์เน็ตได้"
 
 #: kmreaderwin.cpp:198
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
+msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "อนุญาตให้จดหมายนี้โหลดส่วนที่อ้างถึงภายนอกจากอินเทอร์เน็ตได้"
 
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
+msgctxt "@action"
 msgid "Share image…"
 msgstr "บันทึกตำแหน่งเชื่อมโยงเป็น..."
 
@@ -6000,6 +6105,7 @@ msgstr "ตอบกลับไปยังผู้รับจดหมาย
 #: messageactions.cpp:68
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
+msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "ตอบกลับโดยไม่อ้างข้อความเดิม..."
 
@@ -6030,6 +6136,7 @@ msgstr "เป&ลี่ยนปลายทาง..."
 #: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
+msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "ส่งจดหมายใหม่ไปยังผู้รับจดหมายเวียน..."
 
@@ -6065,18 +6172,21 @@ msgstr "แ&ก้ไขจดหมาย"
 #: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
+msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "กรองบนรายการจดหมายเวียน..."
 
 #: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
+msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "ค้นหาจดหมาย..."
 
 #: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
+msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "ส่งอีกครั้ง..."
 
@@ -6295,13 +6405,16 @@ msgid "Save Attachments…"
 msgstr "บันทึกสิ่งที่แนบมาด้วย"
 
 #: searchdialog/searchwindow.cpp:199
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clear Selection"
+msgctxt "@action"
 msgid "Clear Selection"
 msgstr "ล้างส่วนการเลือก"
 
 #: searchdialog/searchwindow.cpp:203
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
+msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "กระโดดไปยังโฟลเดอร์"
 
@@ -6832,6 +6945,7 @@ msgstr "เพิ่มป้ายใหม่"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
+msgctxt "@action"
 msgid "More…"
 msgstr ""
 
@@ -6898,6 +7012,13 @@ msgstr "แจ้งรายละเอียดให้ทราบเมื
 #| msgid "Other Actio&ns..."
 msgid "Other Actio&ns…"
 msgstr "การกระ&ทำอื่น ๆ ..."
+
+#. i18n: ectx: property (text), widget (QPushButton, openImageButton)
+#: ui/encodedimagepicker.ui:78
+#, fuzzy, kde-format
+#| msgid "Save Link As..."
+msgid "Open Image…"
+msgstr "บันทึกตำแหน่งเชื่อมโยงเป็น..."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
