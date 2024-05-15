@@ -30,7 +30,7 @@ int main(int argc, char **argv)
                          i18n("KMail Assistant for refreshing settings"),
                          KAboutLicense::LGPL,
                          i18n("(c) 2019-2024 Laurent Montel <montel@kde.org>"));
-    aboutData.addAuthor(i18n("Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
 
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kontact")));
     QCommandLineParser parser;

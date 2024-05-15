@@ -105,9 +105,9 @@ const KAboutData SummaryView::aboutData()
                                       KAboutLicense::LGPL,
                                       i18n("(c) 2003-2024 The Kontact developers"));
 
-    aboutData.addAuthor(i18n("Sven Lueppken"), QString(), QStringLiteral("sven@kde.org"));
-    aboutData.addAuthor(i18n("Cornelius Schumacher"), QString(), QStringLiteral("schumacher@kde.org"));
-    aboutData.addAuthor(i18n("Tobias Koenig"), QString(), QStringLiteral("tokoe@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Sven Lueppken"), QString(), QStringLiteral("sven@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Cornelius Schumacher"), QString(), QStringLiteral("schumacher@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Tobias Koenig"), QString(), QStringLiteral("tokoe@kde.org"));
     aboutData.setProductName(QByteArrayLiteral("kontact/summary"));
     return aboutData;
 }

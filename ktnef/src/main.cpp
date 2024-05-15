@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
                          KAboutLicense::GPL,
                          i18n("Copyright 2000 Michael Goffioul \nCopyright 2012  Allen Winter"));
 
-    aboutData.addAuthor(i18n("Michael Goffioul"), i18n("Author"), QStringLiteral("kdeprint@swing.be"));
+    aboutData.addAuthor(i18nc("@info:credit", "Michael Goffioul"), i18n("Author"), QStringLiteral("kdeprint@swing.be"));
 
-    aboutData.addAuthor(i18n("Allen Winter"), i18n("Author, Ported to Qt4/KDE4"), QStringLiteral("winter@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Allen Winter"), i18n("Author, Ported to Qt4/KDE4"), QStringLiteral("winter@kde.org"));
 
     KAboutData::setApplicationData(aboutData);
 
