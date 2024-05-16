@@ -1452,7 +1452,8 @@ void KMMainWidget::slotExpireFolder()
 
         if (KMailSettings::self()->warnBeforeExpire()) {
             const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", mCurrentFolderSettings->name().toHtmlEscaped());
-            if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"), KGuiItem(i18n("&Expire"))) != KMessageBox::Continue) {
+            if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"), KGuiItem(i18nc("@action:button", "&Expire")))
+                != KMessageBox::Continue) {
                 return;
             }
         }
@@ -1550,7 +1551,7 @@ void KMMainWidget::slotExpireAll()
         const int ret = KMessageBox::warningContinueCancel(KMainWindow::memberList().constFirst(),
                                                            i18n("Are you sure you want to expire all old messages?"),
                                                            i18n("Expire Old Messages?"),
-                                                           KGuiItem(i18n("Expire")));
+                                                           KGuiItem(i18nc("@action:button", "Expire")));
         if (ret != KMessageBox::Continue) {
             return;
         }
@@ -1579,7 +1580,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
                                                              "\"spam\" and may increase the likelihood that your system will be "
                                                              "compromised by other present and anticipated security exploits."),
                                                         i18n("Security Warning"),
-                                                        KGuiItem(i18n("Load External References")),
+                                                        KGuiItem(i18nc("@action:button", "Load External References")),
                                                         KStandardGuiItem::cancel(),
                                                         QStringLiteral("OverrideHtmlLoadExtWarning"),
                                                         KMessageBox::Option());
@@ -3246,13 +3247,13 @@ void KMMainWidget::setupActions()
     mToggleThreadImportantAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-mark-important")), i18n("Mark Thread as &Important"), this);
     actionCollection()->addAction(QStringLiteral("thread_flag"), mToggleThreadImportantAction);
     connect(mToggleThreadImportantAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusImportant);
-    mToggleThreadImportantAction->setCheckedState(KGuiItem(i18n("Remove &Important Thread Mark")));
+    mToggleThreadImportantAction->setCheckedState(KGuiItem(i18nc("@action:button", "Remove &Important Thread Mark")));
     mThreadStatusMenu->addAction(mToggleThreadImportantAction);
 
     mToggleThreadToActAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("mail-mark-task")), i18n("Mark Thread as &Action Item"), this);
     actionCollection()->addAction(QStringLiteral("thread_toact"), mToggleThreadToActAction);
     connect(mToggleThreadToActAction, &KToggleAction::triggered, this, &KMMainWidget::slotSetThreadStatusToAct);
-    mToggleThreadToActAction->setCheckedState(KGuiItem(i18n("Remove &Action Item Thread Mark")));
+    mToggleThreadToActAction->setCheckedState(KGuiItem(i18nc("@action:button", "Remove &Action Item Thread Mark")));
     mThreadStatusMenu->addAction(mToggleThreadToActAction);
 
     //------- "Watch and ignore thread" actions
@@ -4771,7 +4772,7 @@ void KMMainWidget::slotChangeDisplayMessageFormat(MessageViewer::Viewer::Display
                                                                    "\"spam\" and may increase the likelihood that your system will be "
                                                                    "compromised by other present and anticipated security exploits."),
                                                               i18nc("@title:window", "Security Warning"),
-                                                              KGuiItem(i18n("Use HTML")),
+                                                              KGuiItem(i18nc("@action:button", "Use HTML")),
                                                               KStandardGuiItem::cancel(),
                                                               QStringLiteral("OverrideHtmlWarning"),
                                                               KMessageBox::Option());
@@ -4921,8 +4922,8 @@ void KMMainWidget::setupUnifiedMailboxChecker()
                  "show unified content of your inbox, sent and drafts folders?\n"
                  "You can configure unified mailboxes, create custom ones or\ndisable the feature completely in KMail's Plugin settings."),
             i18n("Enable Unified Mailboxes?"),
-            KGuiItem(i18n("Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
-            KGuiItem(i18n("Cancel"), QStringLiteral("dialog-cancel")));
+            KGuiItem(i18nc("@action:button", "Enable Unified Mailboxes"), QStringLiteral("dialog-ok")),
+            KGuiItem(i18nc("@action:button", "Cancel"), QStringLiteral("dialog-cancel")));
         if (answer == KMessageBox::ButtonCode::PrimaryAction) {
             iface.call(QStringLiteral("setEnableAgent"), true);
         }
@@ -4959,7 +4960,7 @@ void KMMainWidget::slotClearCacheDone()
         if (KMessageBox::questionTwoActions(this,
                                             i18n("Do you want to restart Akonadi?"),
                                             i18n("Restart Akonadi"),
-                                            KGuiItem(i18n("Restart")),
+                                            KGuiItem(i18nc("@action:button", "Restart")),
                                             KStandardGuiItem::cancel())
             == KMessageBox::ButtonCode::PrimaryAction) {
             auto process = new QProcess(this);

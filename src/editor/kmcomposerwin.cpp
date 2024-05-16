@@ -2813,8 +2813,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                                i18n("To: field is empty. "
                                                                     "Send message anyway?"),
                                                                i18nc("@title:window", "No To: specified"),
-                                                               KGuiItem(i18n("S&end as Is"), "mail-send"_L1),
-                                                               KGuiItem(i18n("&Specify the To field"), "edit-rename"_L1));
+                                                               KGuiItem(i18nc("@action:button", "S&end as Is"), "mail-send"_L1),
+                                                               KGuiItem(i18nc("@action:button", "&Specify the To field"), "edit-rename"_L1));
                 if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                     return;
                 }
@@ -2827,8 +2827,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                            i18n("You did not specify a subject. "
                                                                 "Send message anyway?"),
                                                            i18nc("@title:window", "No Subject Specified"),
-                                                           KGuiItem(i18n("S&end as Is"), QStringLiteral("mail-send")),
-                                                           KGuiItem(i18n("&Specify the Subject"), QStringLiteral("edit-rename")));
+                                                           KGuiItem(i18nc("@action:button", "S&end as Is"), QStringLiteral("mail-send")),
+                                                           KGuiItem(i18nc("@action:button", "&Specify the Subject"), QStringLiteral("edit-rename")));
             if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                 return;
             }
@@ -3061,8 +3061,8 @@ void KMComposerWin::confirmBeforeSend()
     const int rc = KMessageBox::warningTwoActionsCancel(mMainWidget,
                                                         i18n("About to send email…"),
                                                         i18nc("@title:window", "Send Confirmation"),
-                                                        KGuiItem(i18n("&Send Now"), "mail-send"_L1),
-                                                        KGuiItem(i18n("Send &Later"), "mail-queue"_L1));
+                                                        KGuiItem(i18nc("@action:button", "&Send Now"), "mail-send"_L1),
+                                                        KGuiItem(i18nc("@action:button", "Send &Later"), "mail-queue"_L1));
 
     if (rc == KMessageBox::ButtonCode::PrimaryAction) {
         doSend(MessageComposer::MessageSender::SendImmediate);
@@ -3139,8 +3139,8 @@ bool KMComposerWin::checkRecipientNumber() const
         if (KMessageBox::questionTwoActions(mMainWidget,
                                             i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
                                             i18n("Too many recipients"),
-                                            KGuiItem(i18n("&Send as Is")),
-                                            KGuiItem(i18n("&Edit Recipients")))
+                                            KGuiItem(i18nc("@action:button", "&Send as Is")),
+                                            KGuiItem(i18nc("@action:button", "&Edit Recipients")))
             == KMessageBox::ButtonCode::SecondaryAction) {
             return false;
         }
@@ -3180,8 +3180,8 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
                                                           i18n("Turning HTML mode off "
                                                                "will cause the text to lose the formatting. Are you sure?"),
                                                           i18n("Lose the formatting?"),
-                                                          KGuiItem(i18n("Lose Formatting")),
-                                                          KGuiItem(i18n("Add Markup Plain Text")),
+                                                          KGuiItem(i18nc("@action:button", "Lose Formatting")),
+                                                          KGuiItem(i18nc("@action:button", "Add Markup Plain Text")),
                                                           KStandardGuiItem::cancel(),
                                                           QStringLiteral("LoseFormattingWarning"));
 

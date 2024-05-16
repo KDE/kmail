@@ -923,8 +923,8 @@ KMCommand::Result KMForwardCommand::execute()
                                                                 "attachments in one message (as a MIME digest) or as "
                                                                 "individual messages?"),
                                                            QString(),
-                                                           KGuiItem(i18n("Send As Digest")),
-                                                           KGuiItem(i18n("Send Individually")));
+                                                           KGuiItem(i18nc("@action:button", "Send As Digest")),
+                                                           KGuiItem(i18nc("@action:button", "Send Individually")));
 
         if (answer == KMessageBox::ButtonCode::PrimaryAction) {
             Akonadi::Item firstItem(msgList.first());

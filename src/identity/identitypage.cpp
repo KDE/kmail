@@ -218,7 +218,7 @@ void IdentityPage::slotRemoveIdentity()
     if (KMessageBox::warningContinueCancel(this,
                                            msg,
                                            i18np("Remove Identity", "Remove Identities", numberOfIdentity),
-                                           KGuiItem(i18n("&Remove"), QStringLiteral("edit-delete")))
+                                           KGuiItem(i18nc("@action:button", "&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
         for (QTreeWidgetItem *selecteditem : selectedItems) {
             auto identityItem = dynamic_cast<IdentityListViewItem *>(selecteditem);

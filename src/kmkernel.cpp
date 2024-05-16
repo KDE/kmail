@@ -743,8 +743,8 @@ bool KMKernel::askToGoOnline()
                                                  i18n("KMail is currently in offline mode. "
                                                       "How do you want to proceed?"),
                                                  i18nc("@title:window", "Online/Offline"),
-                                                 KGuiItem(i18n("Work Online")),
-                                                 KGuiItem(i18n("Work Offline")));
+                                                 KGuiItem(i18nc("@action:button", "Work Online")),
+                                                 KGuiItem(i18nc("@action:button", "Work Offline")));
 
         s_askingToGoOnline = false;
         if (rc == KMessageBox::ButtonCode::SecondaryAction) {
