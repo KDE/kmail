@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-15 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2008-01-31 22:13+0200\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -6232,16 +6232,19 @@ msgstr "(c) 1997-2008, распрацоўшчыкі KMail"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
+msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, kde-format
+msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
+msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2014-07-01 01:59+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -35,6 +35,7 @@ msgstr ""
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
+msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr ""
 

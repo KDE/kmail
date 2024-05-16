@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-15 00:39+0000\n"
-"PO-Revision-Date: 2024-05-08 22:05+0200\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"PO-Revision-Date: 2024-05-15 11:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -697,8 +697,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Canvia a fora de línia en aturar el KMail"
 
 #: configuredialog/configureaccountpage.cpp:295
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Comprova el correu en iniciar"
@@ -1943,29 +1942,25 @@ msgid "&New Composer"
 msgstr "Editor nou"
 
 #: editor/kmcomposerwin.cpp:1336
-#, fuzzy, kde-format
-#| msgid "Select &Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "Tria els &destinataris…"
+msgstr "Selecciona els &destinataris…"
 
 #: editor/kmcomposerwin.cpp:1339
-#, fuzzy, kde-format
-#| msgid "Save &Distribution List…"
+#, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Desa la llista de &distribució…"
 
 #: editor/kmcomposerwin.cpp:1360
-#, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Enganxa com a ad&junt"
 
 #: editor/kmcomposerwin.cpp:1364
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Neteja els &espais"
@@ -2058,22 +2053,19 @@ msgid "S&ubject"
 msgstr "Ass&umpte"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "Append S&ignature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Adjunta la s&ignatura"
 
 #: editor/kmcomposerwin.cpp:1445
-#, fuzzy, kde-format
-#| msgid "Pr&epend Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Preposa la s&ignatura"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Adjunta la signatura a la posició del c&ursor"
@@ -2677,8 +2669,7 @@ msgstr ""
 "identitat <a href=\"phishingdetails\">(detalls…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
 msgstr "Envia ara"
@@ -2907,8 +2898,7 @@ msgid "Clear History"
 msgstr "Neteja l'historial"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Reopen Closed Viewer"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
 msgstr "Torna a obrir el visualitzador tancat"
@@ -4710,8 +4700,7 @@ msgid "Save &As…"
 msgstr "Desa &com a…"
 
 #: kmmainwidget.cpp:2920
-#, fuzzy, kde-format
-#| msgid "&Expire All Folders"
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Fes que caduquin &totes les carpetes"
@@ -4757,57 +4746,49 @@ msgid "&Import Messages…"
 msgstr "&Importa els missatges…"
 
 #: kmmainwidget.cpp:2989
-#, fuzzy, kde-format
-#| msgid "&Debug Sieve…"
+#, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Depura el «sieve»…"
 
 #: kmmainwidget.cpp:2996
-#, fuzzy, kde-format
-#| msgid "Filter &Log Viewer…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Visualitzador del &registre de filtratge…"
 
 #: kmmainwidget.cpp:3001
-#, fuzzy, kde-format
-#| msgid "Notification History…"
+#, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Historial de notificacions…"
 
 #: kmmainwidget.cpp:3006
-#, fuzzy, kde-format
-#| msgid "&Import from another Email Client…"
+#, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Importa des d'un altre client de correu…"
 
 #: kmmainwidget.cpp:3011
-#, fuzzy, kde-format
-#| msgid "Edit \"Out of Office\" Replies…"
+#, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Edita les respostes «fora de l'oficina»…"
 
 #: kmmainwidget.cpp:3017
-#, fuzzy, kde-format
-#| msgid "&Configure Automatic Archiving…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "&Configura l'arxivat automàtic…"
 
 #: kmmainwidget.cpp:3023
-#, fuzzy, kde-format
-#| msgid "Delayed Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Missatges ajornats…"
 
 #: kmmainwidget.cpp:3029
-#, fuzzy, kde-format
-#| msgid "Followup Reminder Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Missatges de recordatori de seguiment…"
@@ -4819,8 +4800,7 @@ msgid "&Delete"
 msgstr "Su&primeix"
 
 #: kmmainwidget.cpp:3045
-#, fuzzy, kde-format
-#| msgid "M&ove Thread to Trash"
+#, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Mou la c&onversa a la paperera"
@@ -4841,29 +4821,25 @@ msgid "&Find Messages…"
 msgstr "&Cerca als missatges…"
 
 #: kmmainwidget.cpp:3063
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Selecciona &tots els missatges"
 
 #: kmmainwidget.cpp:3070
-#, fuzzy, kde-format
-#| msgid "&Mailing List Management…"
+#, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "&Gestiona la llista de correu…"
 
 #: kmmainwidget.cpp:3078
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache…"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "&Neteja la memòria cau de l'Akonadi…"
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
@@ -4876,15 +4852,13 @@ msgid "&Assign Shortcut…"
 msgstr "&Assigna una drecera…"
 
 #: kmmainwidget.cpp:3106
-#, fuzzy, kde-format
-#| msgid "&Expiration Settings"
+#, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Configuració de la caducitat"
 
 #: kmmainwidget.cpp:3131
-#, fuzzy, kde-format
-#| msgid "&Archive Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&Arxiva la carpeta…"
@@ -4931,29 +4905,25 @@ msgid "&Create Filter"
 msgstr "&Crea un filtre"
 
 #: kmmainwidget.cpp:3195
-#, fuzzy, kde-format
-#| msgid "Filter on &Subject…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Filtra per l'&Assumpte…"
 
 #: kmmainwidget.cpp:3202
-#, fuzzy, kde-format
-#| msgid "Filter on &From…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Filtra pel &De…"
 
 #: kmmainwidget.cpp:3208
-#, fuzzy, kde-format
-#| msgid "Filter on &To…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Filtra pel &Per a…"
 
 #: kmmainwidget.cpp:3214
-#, fuzzy, kde-format
-#| msgid "Filter on &Cc…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Filtra pel &CC…"
@@ -5080,15 +5050,13 @@ msgid "Collapse all threads in the current folder"
 msgstr "Redueix totes les converses a la carpeta actual"
 
 #: kmmainwidget.cpp:3324
-#, fuzzy, kde-format
-#| msgid "&Display Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "M&ostra el missatge"
 
 #: kmmainwidget.cpp:3331
-#, fuzzy, kde-format
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "Missatge se&güent"
@@ -5099,8 +5067,7 @@ msgid "Go to the next message"
 msgstr "Ves al missatge següent"
 
 #: kmmainwidget.cpp:3338
-#, fuzzy, kde-format
-#| msgid "Next &Unread Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Missatge següent &sense llegir"
@@ -5117,8 +5084,7 @@ msgid "Go to the next unread message"
 msgstr "Ves al missatge següent sense llegir"
 
 #: kmmainwidget.cpp:3351
-#, fuzzy, kde-format
-#| msgid "&Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Missatge &anterior"
@@ -5129,8 +5095,7 @@ msgid "Go to the previous message"
 msgstr "Ves al missatge anterior"
 
 #: kmmainwidget.cpp:3358
-#, fuzzy, kde-format
-#| msgid "Previous Unread &Message"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "&Missatge anterior sense llegir"
@@ -5147,8 +5112,7 @@ msgid "Go to the previous unread message"
 msgstr "Ves al missatge anterior sense llegir"
 
 #: kmmainwidget.cpp:3371
-#, fuzzy, kde-format
-#| msgid "Next Unread &Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Ca&rpeta següent sense llegir"
@@ -5159,8 +5123,7 @@ msgid "Go to the next folder with unread messages"
 msgstr "Ves a la carpeta següent que tingui missatges sense llegir"
 
 #: kmmainwidget.cpp:3380
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "&Carpeta anterior sense llegir"
@@ -5196,8 +5159,7 @@ msgid "Configure &Filters…"
 msgstr "Configura els &filtres…"
 
 #: kmmainwidget.cpp:3409
-#, fuzzy, kde-format
-#| msgid "Manage &Sieve Scripts…"
+#, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Gestiona els scripts de «&Sieve»…"
@@ -5228,8 +5190,7 @@ msgid "&Configure KMail…"
 msgstr "&Configura el KMail…"
 
 #: kmmainwidget.cpp:3442
-#, fuzzy, kde-format
-#| msgid "Expire…"
+#, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Fes que caduqui…"
@@ -5275,8 +5236,7 @@ msgid "Restart Account"
 msgstr "Reinicia el compte"
 
 #: kmmainwidget.cpp:3520
-#, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Copia el missatge a la carpeta"
@@ -5287,113 +5247,97 @@ msgid "Jump to Folder…"
 msgstr "Salta a la carpeta…"
 
 #: kmmainwidget.cpp:3532
-#, fuzzy, kde-format
-#| msgid "Abort Current Operation"
+#, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Interromp l'operació actual"
 
 #: kmmainwidget.cpp:3538
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Apunta a la carpeta següent"
 
 #: kmmainwidget.cpp:3544
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Apunta a la carpeta anterior"
 
 #: kmmainwidget.cpp:3550
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Selecciona la carpeta on apuntar"
 
 #: kmmainwidget.cpp:3557
-#, fuzzy, kde-format
-#| msgid "Focus on First Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Apunta a la primera carpeta"
 
 #: kmmainwidget.cpp:3563
-#, fuzzy, kde-format
-#| msgid "Focus on Last Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Apunta a l'última carpeta"
 
 #: kmmainwidget.cpp:3569
-#, fuzzy, kde-format
-#| msgid "Focus on Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Apunta al missatge següent"
 
 #: kmmainwidget.cpp:3575
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Apunta al missatge anterior"
 
 #: kmmainwidget.cpp:3581
-#, fuzzy, kde-format
-#| msgid "Select First Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Selecciona el primer missatge"
 
 #: kmmainwidget.cpp:3587
-#, fuzzy, kde-format
-#| msgid "Select Last Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Selecciona l'últim missatge"
 
 #: kmmainwidget.cpp:3593
-#, fuzzy, kde-format
-#| msgid "Select Message with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Selecciona el missatge amb el focus"
 
 #: kmmainwidget.cpp:3600
-#, fuzzy, kde-format
-#| msgid "Set Focus to Quick Search"
+#, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Estableix el focus a la cerca ràpida"
 
 #: kmmainwidget.cpp:3608
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Amplia la selecció al missatge anterior"
 
 #: kmmainwidget.cpp:3614
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Amplia la selecció al missatge següent"
 
 #: kmmainwidget.cpp:3621
-#, fuzzy, kde-format
-#| msgid "Move Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Mou el missatge a la carpeta"
 
 #: kmmainwidget.cpp:3631
-#, fuzzy, kde-format
-#| msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
@@ -5401,22 +5345,19 @@ msgstr ""
 "subcarpetes"
 
 #: kmmainwidget.cpp:3636
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Elimina els duplicats en aquesta carpeta i totes les seves subcarpetes"
 
 #: kmmainwidget.cpp:3642
-#, fuzzy, kde-format
-#| msgid "Previous Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Carpeta anteriorment seleccionada"
 
 #: kmmainwidget.cpp:3649
-#, fuzzy, kde-format
-#| msgid "Next Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Carpeta següent seleccionada"
@@ -5623,8 +5564,7 @@ msgid "Edit contact…"
 msgstr "Edita el contacte…"
 
 #: kmreaderwin.cpp:167
-#, fuzzy, kde-format
-#| msgid "Save Link As…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Desa l'enllaç com a…"
@@ -5635,15 +5575,13 @@ msgid "&Find in Message…"
 msgstr "&Cerca al missatge…"
 
 #: kmreaderwin.cpp:179
-#, fuzzy, kde-format
-#| msgid "Save Image On Disk…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Desa la imatge al disc…"
 
 #: kmreaderwin.cpp:185
-#, fuzzy, kde-format
-#| msgid "Open Image…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Obre una imatge…"
@@ -5654,23 +5592,20 @@ msgid "Show HTML Format"
 msgstr "Mostra en format HTML"
 
 #: kmreaderwin.cpp:192
-#, fuzzy, kde-format
-#| msgid "Show HTML format when mail comes from this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Mostra el format HTML quan el correu provingui d'aquest contacte"
 
 #: kmreaderwin.cpp:198
-#, fuzzy, kde-format
-#| msgid "Load external reference when mail comes for this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr ""
 "Carrega les referències externes quan el correu provingui d'aquest contacte"
 
 #: kmreaderwin.cpp:204
-#, fuzzy, kde-format
-#| msgid "Share image…"
+#, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Comparteix la imatge…"
@@ -5942,17 +5877,23 @@ msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(C) 2003-2024, els desenvolupadors del Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Sven Lueppken"
+msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Cornelius Schumacher"
+msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tobias Koenig"
+msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
@@ -6001,8 +5942,7 @@ msgid "Reply to Mailing-&List…"
 msgstr "Respon a la &llista de correu…"
 
 #: messageactions.cpp:68
-#, fuzzy, kde-format
-#| msgid "Reply Without &Quote…"
+#, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Respon &sense citar…"
@@ -6026,8 +5966,7 @@ msgid "&Redirect…"
 msgstr "&Redirigeix…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message to Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Missatge nou a Destinataris…"
@@ -6060,22 +5999,19 @@ msgid "&Edit As New"
 msgstr "&Edita com a nou"
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
-#| msgid "Filter on Mailing-&List…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Filtra per la &Llista de correu…"
 
 #: messageactions.cpp:79
-#, fuzzy, kde-format
-#| msgid "Add Followup Reminder…"
+#, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Afegeix un recordatori de seguiment…"
 
 #: messageactions.cpp:81
-#, fuzzy, kde-format
-#| msgid "Send A&gain…"
+#, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "En&via novament…"
@@ -6267,15 +6203,13 @@ msgid "Save Attachments…"
 msgstr "Desa els adjunts…"
 
 #: searchdialog/searchwindow.cpp:199
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Neteja la selecció"
 
 #: searchdialog/searchwindow.cpp:203
-#, fuzzy, kde-format
-#| msgid "Jump to original folder"
+#, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Salta a la carpeta original"
@@ -6840,8 +6774,7 @@ msgid "Add new tag…"
 msgstr "Afegeix una etiqueta nova…"
 
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-#| msgid "More…"
+#, kde-format
 msgctxt "@action"
 msgid "More…"
 msgstr "Més…"

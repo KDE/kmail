@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2022-09-15 19:40+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -39,7 +39,9 @@ msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "பதிப்புரிமை (C) 2013-%1 லாரென்டு மான்டெல்"
 
 #: sendlaterconfiguredialog.cpp:57
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Laurent Montel"
+msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "லாரெண்டு மாண்டெல்"
 

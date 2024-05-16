@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-15 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -5961,16 +5961,19 @@ msgstr "(c) ১৯৯৭-২০০৫, কে-মেইল ডেভেলপা
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
+msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, kde-format
+msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
+msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr ""
 

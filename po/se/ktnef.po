@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2004-12-08 10:07+0100\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -277,6 +277,7 @@ msgstr ""
 
 #: main.cpp:37
 #, kde-format
+msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr ""
 
@@ -287,6 +288,7 @@ msgstr "Čálli"
 
 #: main.cpp:39
 #, kde-format
+msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr ""
 

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-15 00:39+0000\n"
-"PO-Revision-Date: 2024-05-08 12:12+0300\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"PO-Revision-Date: 2024-05-15 12:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -694,8 +694,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Переходити у режим «поза мережею» під час закриття KMail"
 
 #: configuredialog/configureaccountpage.cpp:295
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Перевіряти пошту при запуску"
@@ -1945,29 +1944,25 @@ msgid "&New Composer"
 msgstr "&Новий редактор"
 
 #: editor/kmcomposerwin.cpp:1336
-#, fuzzy, kde-format
-#| msgid "Select &Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Вибрати &адресатів…"
 
 #: editor/kmcomposerwin.cpp:1339
-#, fuzzy, kde-format
-#| msgid "Save &Distribution List…"
+#, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Зберегти &список розповсюдження…"
 
 #: editor/kmcomposerwin.cpp:1360
-#, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Вставити як &долучення"
 
 #: editor/kmcomposerwin.cpp:1364
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Оч&истити пропуски"
@@ -2060,22 +2055,19 @@ msgid "S&ubject"
 msgstr "Т&ема"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "Append S&ignature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Додати п&ідпис"
 
 #: editor/kmcomposerwin.cpp:1445
-#, fuzzy, kde-format
-#| msgid "Pr&epend Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Приєднати п&ідпис"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Вставити підпис у позицію к&урсора"
@@ -2691,8 +2683,7 @@ msgstr ""
 "\"phishingdetails\">(Подробиці…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
 msgstr "Надіслати зараз"
@@ -2926,8 +2917,7 @@ msgid "Clear History"
 msgstr "Спорожнити журнал"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Reopen Closed Viewer"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
 msgstr "Повторно відкрити закритий переглядач"
@@ -4756,8 +4746,7 @@ msgid "Save &As…"
 msgstr "Зберегти &як…"
 
 #: kmmainwidget.cpp:2920
-#, fuzzy, kde-format
-#| msgid "&Expire All Folders"
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Вилучити &застарілі повідомлення зі всіх тек"
@@ -4803,57 +4792,49 @@ msgid "&Import Messages…"
 msgstr "&Імпортувати повідомлення…"
 
 #: kmmainwidget.cpp:2989
-#, fuzzy, kde-format
-#| msgid "&Debug Sieve…"
+#, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Діагностика фільтрів…"
 
 #: kmmainwidget.cpp:2996
-#, fuzzy, kde-format
-#| msgid "Filter &Log Viewer…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Переглядач журналу &фільтра…"
 
 #: kmmainwidget.cpp:3001
-#, fuzzy, kde-format
-#| msgid "Notification History…"
+#, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Журнал сповіщень…"
 
 #: kmmainwidget.cpp:3006
-#, fuzzy, kde-format
-#| msgid "&Import from another Email Client…"
+#, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Імпортувати з іншої програми для роботи з ел. поштою…"
 
 #: kmmainwidget.cpp:3011
-#, fuzzy, kde-format
-#| msgid "Edit \"Out of Office\" Replies…"
+#, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Редагувати відповіді «Мене немає»…"
 
 #: kmmainwidget.cpp:3017
-#, fuzzy, kde-format
-#| msgid "&Configure Automatic Archiving…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "Налаштувати автоматичне а&рхівування…"
 
 #: kmmainwidget.cpp:3023
-#, fuzzy, kde-format
-#| msgid "Delayed Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Відкладені повідомлення…"
 
 #: kmmainwidget.cpp:3029
-#, fuzzy, kde-format
-#| msgid "Followup Reminder Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Повідомлення стеження за нагадуваннями…"
@@ -4865,8 +4846,7 @@ msgid "&Delete"
 msgstr "&Вилучити"
 
 #: kmmainwidget.cpp:3045
-#, fuzzy, kde-format
-#| msgid "M&ove Thread to Trash"
+#, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Пересунути &гілку в смітник"
@@ -4887,29 +4867,25 @@ msgid "&Find Messages…"
 msgstr "&Пошук повідомлень…"
 
 #: kmmainwidget.cpp:3063
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Ви&брати всі повідомлення"
 
 #: kmmainwidget.cpp:3070
-#, fuzzy, kde-format
-#| msgid "&Mailing List Management…"
+#, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "&Керування списком листування…"
 
 #: kmmainwidget.cpp:3078
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache…"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "С&порожнити кеш Akonadi…"
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "С&порожнити кеш Akonadi у цій теці і усіх її підтеках"
@@ -4920,15 +4896,13 @@ msgid "&Assign Shortcut…"
 msgstr "&Призначити скорочення…"
 
 #: kmmainwidget.cpp:3106
-#, fuzzy, kde-format
-#| msgid "&Expiration Settings"
+#, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Параметри вилучення застарілих повідомлень"
 
 #: kmmainwidget.cpp:3131
-#, fuzzy, kde-format
-#| msgid "&Archive Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&Архівувати теку…"
@@ -4975,29 +4949,25 @@ msgid "&Create Filter"
 msgstr "Створити &фільтр"
 
 #: kmmainwidget.cpp:3195
-#, fuzzy, kde-format
-#| msgid "Filter on &Subject…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Фільтр за темо&ю…"
 
 #: kmmainwidget.cpp:3202
-#, fuzzy, kde-format
-#| msgid "Filter on &From…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Фільтр &за відправником…"
 
 #: kmmainwidget.cpp:3208
-#, fuzzy, kde-format
-#| msgid "Filter on &To…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Фільтр за &адресатом…"
 
 #: kmmainwidget.cpp:3214
-#, fuzzy, kde-format
-#| msgid "Filter on &Cc…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Фільтр за &копією…"
@@ -5123,15 +5093,13 @@ msgid "Collapse all threads in the current folder"
 msgstr "Згортає всі гілки в поточній теці"
 
 #: kmmainwidget.cpp:3324
-#, fuzzy, kde-format
-#| msgid "&Display Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Показ&ати повідомлення"
 
 #: kmmainwidget.cpp:3331
-#, fuzzy, kde-format
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "На&ступне повідомлення"
@@ -5142,8 +5110,7 @@ msgid "Go to the next message"
 msgstr "Перейти до наступного повідомлення"
 
 #: kmmainwidget.cpp:3338
-#, fuzzy, kde-format
-#| msgid "Next &Unread Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Наступне н&епрочитане повідомлення"
@@ -5160,8 +5127,7 @@ msgid "Go to the next unread message"
 msgstr "Перейти до наступного непрочитаного повідомлення"
 
 #: kmmainwidget.cpp:3351
-#, fuzzy, kde-format
-#| msgid "&Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Попередн&є повідомлення"
@@ -5172,8 +5138,7 @@ msgid "Go to the previous message"
 msgstr "Перейти до попереднього повідомлення"
 
 #: kmmainwidget.cpp:3358
-#, fuzzy, kde-format
-#| msgid "Previous Unread &Message"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Попере&днє непрочитане повідомлення"
@@ -5190,8 +5155,7 @@ msgid "Go to the previous unread message"
 msgstr "Перейти до попереднього непрочитаного повідомлення"
 
 #: kmmainwidget.cpp:3371
-#, fuzzy, kde-format
-#| msgid "Next Unread &Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Наст&упна непрочитана тека"
@@ -5202,8 +5166,7 @@ msgid "Go to the next folder with unread messages"
 msgstr "Перейти до наступної теки з непрочитаними повідомленнями"
 
 #: kmmainwidget.cpp:3380
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Попе&редня непрочитана тека"
@@ -5239,8 +5202,7 @@ msgid "Configure &Filters…"
 msgstr "Налаштувати &фільтри…"
 
 #: kmmainwidget.cpp:3409
-#, fuzzy, kde-format
-#| msgid "Manage &Sieve Scripts…"
+#, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Керування скриптами &фільтрування…"
@@ -5271,8 +5233,7 @@ msgid "&Configure KMail…"
 msgstr "Налашту&вати KMail…"
 
 #: kmmainwidget.cpp:3442
-#, fuzzy, kde-format
-#| msgid "Expire…"
+#, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Застарівання…"
@@ -5318,8 +5279,7 @@ msgid "Restart Account"
 msgstr "Перезапустити обліковий запис"
 
 #: kmmainwidget.cpp:3520
-#, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Скопіювати повідомлення в теку"
@@ -5330,134 +5290,115 @@ msgid "Jump to Folder…"
 msgstr "Перейти до теки…"
 
 #: kmmainwidget.cpp:3532
-#, fuzzy, kde-format
-#| msgid "Abort Current Operation"
+#, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Припинити поточну дію"
 
 #: kmmainwidget.cpp:3538
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Фокус до наступної теки"
 
 #: kmmainwidget.cpp:3544
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Фокус до попередньої теки"
 
 #: kmmainwidget.cpp:3550
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Вибрати теку з фокусом"
 
 #: kmmainwidget.cpp:3557
-#, fuzzy, kde-format
-#| msgid "Focus on First Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Фокус на першу теку"
 
 #: kmmainwidget.cpp:3563
-#, fuzzy, kde-format
-#| msgid "Focus on Last Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Фокус на останню теку"
 
 #: kmmainwidget.cpp:3569
-#, fuzzy, kde-format
-#| msgid "Focus on Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Фокус до наступного повідомлення"
 
 #: kmmainwidget.cpp:3575
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Фокус до попереднього повідомлення"
 
 #: kmmainwidget.cpp:3581
-#, fuzzy, kde-format
-#| msgid "Select First Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Позначити перше повідомлення"
 
 #: kmmainwidget.cpp:3587
-#, fuzzy, kde-format
-#| msgid "Select Last Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Позначити останнє повідомлення"
 
 #: kmmainwidget.cpp:3593
-#, fuzzy, kde-format
-#| msgid "Select Message with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
-msgstr "Вибрати повідомлення з фокусом"
+msgstr "Позначити повідомлення з фокусом"
 
 #: kmmainwidget.cpp:3600
-#, fuzzy, kde-format
-#| msgid "Set Focus to Quick Search"
+#, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Перевести фокус на швидкий пошук"
 
 #: kmmainwidget.cpp:3608
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Включити до вибраного попереднє повідомлення"
 
 #: kmmainwidget.cpp:3614
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Включити до вибраного наступне повідомлення"
 
 #: kmmainwidget.cpp:3621
-#, fuzzy, kde-format
-#| msgid "Move Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Пересунути повідомлення в теку"
 
 #: kmmainwidget.cpp:3631
-#, fuzzy, kde-format
-#| msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Позначити усі повідомлення у цій теці і усіх підтеках як прочитані"
 
 #: kmmainwidget.cpp:3636
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Вилучити дублікати у цій теці і усіх її підтеках"
 
 #: kmmainwidget.cpp:3642
-#, fuzzy, kde-format
-#| msgid "Previous Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Попе&редня позначена тека"
 
 #: kmmainwidget.cpp:3649
-#, fuzzy, kde-format
-#| msgid "Next Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Наступна позначена тека"
@@ -5663,8 +5604,7 @@ msgid "Edit contact…"
 msgstr "Редагувати контакт…"
 
 #: kmreaderwin.cpp:167
-#, fuzzy, kde-format
-#| msgid "Save Link As…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Зберегти посилання як…"
@@ -5675,15 +5615,13 @@ msgid "&Find in Message…"
 msgstr "&Знайти в повідомленні…"
 
 #: kmreaderwin.cpp:179
-#, fuzzy, kde-format
-#| msgid "Save Image On Disk…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Зберегти зображення на диску…"
 
 #: kmreaderwin.cpp:185
-#, fuzzy, kde-format
-#| msgid "Open Image…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Відкрити зображення…"
@@ -5694,16 +5632,14 @@ msgid "Show HTML Format"
 msgstr "Показувати дані у форматі HTML"
 
 #: kmreaderwin.cpp:192
-#, fuzzy, kde-format
-#| msgid "Show HTML format when mail comes from this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr ""
 "Показувати дані у форматі HTML, якщо повідомлення надійшло від цього контакту"
 
 #: kmreaderwin.cpp:198
-#, fuzzy, kde-format
-#| msgid "Load external reference when mail comes for this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr ""
@@ -5711,8 +5647,7 @@ msgstr ""
 "цього контакту"
 
 #: kmreaderwin.cpp:204
-#, fuzzy, kde-format
-#| msgid "Share image…"
+#, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Оприлюднити зображення…"
@@ -5987,17 +5922,23 @@ msgid "(c) 2003-2024 The Kontact developers"
 msgstr "© Розробники Kontact, 2003–2024"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Sven Lueppken"
+msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Cornelius Schumacher"
+msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tobias Koenig"
+msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
@@ -6045,8 +5986,7 @@ msgid "Reply to Mailing-&List…"
 msgstr "Відповісти до &списку листування…"
 
 #: messageactions.cpp:68
-#, fuzzy, kde-format
-#| msgid "Reply Without &Quote…"
+#, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Відповідь &без цитування…"
@@ -6070,8 +6010,7 @@ msgid "&Redirect…"
 msgstr "&Переспрямувати…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message to Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Надіслати повідомлення отримувачам…"
@@ -6104,22 +6043,19 @@ msgid "&Edit As New"
 msgstr "&Редагувати як нове"
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
-#| msgid "Filter on Mailing-&List…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Фільтр за &списком листування…"
 
 #: messageactions.cpp:79
-#, fuzzy, kde-format
-#| msgid "Add Followup Reminder…"
+#, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Додати стеження за нагадуваннями…"
 
 #: messageactions.cpp:81
-#, fuzzy, kde-format
-#| msgid "Send A&gain…"
+#, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Надіслати &знову…"
@@ -6311,15 +6247,13 @@ msgid "Save Attachments…"
 msgstr "Зберегти долучення…"
 
 #: searchdialog/searchwindow.cpp:199
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Зняти вибір"
 
 #: searchdialog/searchwindow.cpp:203
-#, fuzzy, kde-format
-#| msgid "Jump to original folder"
+#, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Перейти до початкової теки"
@@ -6895,8 +6829,7 @@ msgid "Add new tag…"
 msgstr "Додати нову мітку…"
 
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-#| msgid "More…"
+#, kde-format
 msgctxt "@action"
 msgid "More…"
 msgstr "Більше…"

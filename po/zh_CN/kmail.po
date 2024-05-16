@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-15 00:39+0000\n"
+"POT-Creation-Date: 2024-05-16 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -678,8 +678,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "关闭 KMail 时切换到脱机模式"
 
 #: configuredialog/configureaccountpage.cpp:295
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "启动时检查邮件"
@@ -1880,11 +1879,10 @@ msgid "&New Composer"
 msgstr "新建撰写器(&N)"
 
 #: editor/kmcomposerwin.cpp:1336
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "编辑收件人(&E)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1339
 #, kde-format
@@ -1893,15 +1891,13 @@ msgid "Save &Distribution List…"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1360
-#, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "粘贴为附件(&H)"
 
 #: editor/kmcomposerwin.cpp:1364
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "清理空格(&E)"
@@ -1994,22 +1990,19 @@ msgid "S&ubject"
 msgstr "主题(&U)"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "Append S&ignature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "在结尾附加签名(&I)"
 
 #: editor/kmcomposerwin.cpp:1445
-#, fuzzy, kde-format
-#| msgid "Pr&epend Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "在开头附加签名(&E)"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "在光标位置处插入签名(&U)"
@@ -2551,8 +2544,7 @@ msgid ""
 msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
 msgstr "现在发送"
@@ -2766,11 +2758,10 @@ msgid "Clear History"
 msgstr "清除历史记录"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Reopen Closed Viewer"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "重新打开关闭的查看器"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -4465,8 +4456,7 @@ msgid "Save &As…"
 msgstr ""
 
 #: kmmainwidget.cpp:2920
-#, fuzzy, kde-format
-#| msgid "&Expire All Folders"
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "所有文件夹设置为过期删除(&E)"
@@ -4524,12 +4514,10 @@ msgid "Filter &Log Viewer…"
 msgstr ""
 
 #: kmmainwidget.cpp:3001
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Notification"
+#, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "通知"
+msgstr ""
 
 #: kmmainwidget.cpp:3006
 #, kde-format
@@ -4550,19 +4538,16 @@ msgid "&Configure Automatic Archiving…"
 msgstr ""
 
 #: kmmainwidget.cpp:3023
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr "删除消息"
+msgstr ""
 
 #: kmmainwidget.cpp:3029
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Find Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "查找消息"
+msgstr ""
 
 #: kmmainwidget.cpp:3040 util.cpp:149
 #, kde-format
@@ -4571,8 +4556,7 @@ msgid "&Delete"
 msgstr "删除(&D)"
 
 #: kmmainwidget.cpp:3045
-#, fuzzy, kde-format
-#| msgid "M&ove Thread to Trash"
+#, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "将线索移至废件夹(&O)"
@@ -4593,29 +4577,25 @@ msgid "&Find Messages…"
 msgstr ""
 
 #: kmmainwidget.cpp:3063
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "选中所有的消息(&A)"
 
 #: kmmainwidget.cpp:3070
-#, fuzzy, kde-format
-#| msgid "Mailing List Name: %1"
+#, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
-msgstr "邮件列表名称：%1"
+msgstr ""
 
 #: kmmainwidget.cpp:3078
-#, fuzzy, kde-format
-#| msgid "Clear Akonadi Cache"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "清除 Akonadi 缓存"
+msgstr ""
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "清除此文件夹及其所有子文件夹中的 Akonadi 缓存(&C)"
@@ -4626,19 +4606,16 @@ msgid "&Assign Shortcut…"
 msgstr ""
 
 #: kmmainwidget.cpp:3106
-#, fuzzy, kde-format
-#| msgid "&Expiration Settings"
+#, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "过期设置(&E)"
 
 #: kmmainwidget.cpp:3131
-#, fuzzy, kde-format
-#| msgctxt "@title:window for archiving a folder"
-#| msgid "Archive Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr "归档文件夹"
+msgstr ""
 
 #: kmmainwidget.cpp:3139
 #, kde-format
@@ -4826,15 +4803,13 @@ msgid "Collapse all threads in the current folder"
 msgstr "折叠当前文件夹内的所有线索"
 
 #: kmmainwidget.cpp:3324
-#, fuzzy, kde-format
-#| msgid "&Display Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "显示消息(&D)"
 
 #: kmmainwidget.cpp:3331
-#, fuzzy, kde-format
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "下一条消息(&N)"
@@ -4845,8 +4820,7 @@ msgid "Go to the next message"
 msgstr "跳转到下一条消息"
 
 #: kmmainwidget.cpp:3338
-#, fuzzy, kde-format
-#| msgid "Next &Unread Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "下一条未读消息(&U)"
@@ -4863,8 +4837,7 @@ msgid "Go to the next unread message"
 msgstr "跳转到下一条未读的消息"
 
 #: kmmainwidget.cpp:3351
-#, fuzzy, kde-format
-#| msgid "&Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "上一条消息(&P)"
@@ -4875,8 +4848,7 @@ msgid "Go to the previous message"
 msgstr "跳转到上一条消息"
 
 #: kmmainwidget.cpp:3358
-#, fuzzy, kde-format
-#| msgid "Previous Unread &Message"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "上一条未读消息(&M)"
@@ -4893,8 +4865,7 @@ msgid "Go to the previous unread message"
 msgstr "跳转到上一条未读的消息"
 
 #: kmmainwidget.cpp:3371
-#, fuzzy, kde-format
-#| msgid "Next Unread &Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "下一个未读文件夹(&F)"
@@ -4905,8 +4876,7 @@ msgid "Go to the next folder with unread messages"
 msgstr "跳转到下一个有未读消息的文件夹"
 
 #: kmmainwidget.cpp:3380
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "上一个未读文件夹(&O)"
@@ -4971,11 +4941,10 @@ msgid "&Configure KMail…"
 msgstr ""
 
 #: kmmainwidget.cpp:3442
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr "删除过期消息"
+msgstr ""
 
 #: kmmainwidget.cpp:3448
 #, kde-format
@@ -5018,8 +4987,7 @@ msgid "Restart Account"
 msgstr "重新启动账户"
 
 #: kmmainwidget.cpp:3520
-#, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "复制消息到文件夹"
@@ -5030,134 +4998,115 @@ msgid "Jump to Folder…"
 msgstr ""
 
 #: kmmainwidget.cpp:3532
-#, fuzzy, kde-format
-#| msgid "Abort Current Operation"
+#, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "中止当前操作"
 
 #: kmmainwidget.cpp:3538
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "焦点移到下一个文件夹"
 
 #: kmmainwidget.cpp:3544
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "焦点移到上一个文件夹"
 
 #: kmmainwidget.cpp:3550
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "选择带焦点的文件夹"
 
 #: kmmainwidget.cpp:3557
-#, fuzzy, kde-format
-#| msgid "Focus on First Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "焦点移到第一个文件夹"
 
 #: kmmainwidget.cpp:3563
-#, fuzzy, kde-format
-#| msgid "Focus on Last Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "焦点移到最后一个文件夹"
 
 #: kmmainwidget.cpp:3569
-#, fuzzy, kde-format
-#| msgid "Focus on Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "焦点移到下一封信"
 
 #: kmmainwidget.cpp:3575
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "焦点移到上一封信"
 
 #: kmmainwidget.cpp:3581
-#, fuzzy, kde-format
-#| msgid "Select First Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "选中第一条消息"
 
 #: kmmainwidget.cpp:3587
-#, fuzzy, kde-format
-#| msgid "Select Last Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "选中最后的消息"
 
 #: kmmainwidget.cpp:3593
-#, fuzzy, kde-format
-#| msgid "Select Message with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "带焦点选中消息"
 
 #: kmmainwidget.cpp:3600
-#, fuzzy, kde-format
-#| msgid "Set Focus to Quick Search"
+#, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "焦点设置到快速搜索栏"
 
 #: kmmainwidget.cpp:3608
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "延伸所选项到上一封信"
 
 #: kmmainwidget.cpp:3614
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "延伸所选项到下一封信"
 
 #: kmmainwidget.cpp:3621
-#, fuzzy, kde-format
-#| msgid "Move Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "移动消息到文件夹"
 
 #: kmmainwidget.cpp:3631
-#, fuzzy, kde-format
-#| msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "标记此文件夹及其所有子文件夹的邮件为已读"
 
 #: kmmainwidget.cpp:3636
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "移除此文件夹及其所有子文件夹的重复邮件"
 
 #: kmmainwidget.cpp:3642
-#, fuzzy, kde-format
-#| msgid "Previous Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "上一个选定的文件夹"
 
 #: kmmainwidget.cpp:3649
-#, fuzzy, kde-format
-#| msgid "Next Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "下一个选定的文件夹"
@@ -5378,11 +5327,10 @@ msgid "Save Image On Disk…"
 msgstr ""
 
 #: kmreaderwin.cpp:185
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
-msgstr "打开消息"
+msgstr ""
 
 #: kmreaderwin.cpp:191
 #, kde-format
@@ -5390,15 +5338,13 @@ msgid "Show HTML Format"
 msgstr "显示 HTML 格式"
 
 #: kmreaderwin.cpp:192
-#, fuzzy, kde-format
-#| msgid "Show HTML format when mail comes from this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "对来自此收件人的邮件显示 HTML 格式"
 
 #: kmreaderwin.cpp:198
-#, fuzzy, kde-format
-#| msgid "Load external reference when mail comes for this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "对来自此收件人的邮件加载外部引用"
@@ -5663,17 +5609,23 @@ msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 2003-2024 Kontact 开发者"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Sven Lueppken"
+msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Cornelius Schumacher"
+msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tobias Koenig"
+msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
@@ -5744,11 +5696,10 @@ msgid "&Redirect…"
 msgstr ""
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message From &Template"
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "新建基于模板的消息(&T)"
+msgstr ""
 
 #: messageactions.cpp:73
 #, kde-format
@@ -5778,12 +5729,10 @@ msgid "&Edit As New"
 msgstr "作为新邮件编辑（&E）"
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
-#| msgctxt "Message->"
-#| msgid "Mailing-&List"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr "邮件列表(&L)..."
+msgstr ""
 
 #: messageactions.cpp:79
 #, kde-format
@@ -5984,15 +5933,13 @@ msgid "Save Attachments…"
 msgstr ""
 
 #: searchdialog/searchwindow.cpp:199
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "清除选择"
 
 #: searchdialog/searchwindow.cpp:203
-#, fuzzy, kde-format
-#| msgid "Jump to original folder"
+#, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "跳转到原始文件夹"
