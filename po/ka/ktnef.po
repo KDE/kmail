@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2023-08-05 09:57+0200\n"
+"PO-Revision-Date: 2024-05-16 07:51+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -277,8 +277,7 @@ msgstr ""
 "Copyright 2012  Allen Winter"
 
 #: main.cpp:37
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -289,8 +288,7 @@ msgid "Author"
 msgstr "ავტორი"
 
 #: main.cpp:39
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"

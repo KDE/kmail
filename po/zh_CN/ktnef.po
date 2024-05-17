@@ -275,8 +275,7 @@ msgstr ""
 "Copyright 2012 Allen Winter"
 
 #: main.cpp:37
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -287,8 +286,7 @@ msgid "Author"
 msgstr "作者"
 
 #: main.cpp:39
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"

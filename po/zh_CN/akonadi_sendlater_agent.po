@@ -39,8 +39,7 @@ msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Copyright (C) 2013-%1 Laurent Montel"
 
 #: sendlaterconfiguredialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"

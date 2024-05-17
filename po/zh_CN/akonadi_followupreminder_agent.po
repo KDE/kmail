@@ -34,8 +34,7 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"

@@ -38,8 +38,7 @@ msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 msgstr ""
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"

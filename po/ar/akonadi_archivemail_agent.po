@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2024-02-10 21:27+0400\n"
+"PO-Revision-Date: 2024-05-16 12:17+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -114,11 +114,10 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "الحقوق محفوظة (C) 2014-%1 ‏Laurent Montel"
 
 #: archivemailwidget.cpp:96
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr "Laurent Montel"
+msgstr "لوران مونتال"
 
 #: archivemailwidget.cpp:96
 #, kde-format

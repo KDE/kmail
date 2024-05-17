@@ -276,11 +276,10 @@ msgstr ""
 "Autorská práva 2012 Allen Winter"
 
 #: main.cpp:37
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
-msgstr "Michael Goffioul"
+msgstr ""
 
 #: main.cpp:37
 #, kde-format
@@ -288,8 +287,7 @@ msgid "Author"
 msgstr "Autor"
 
 #: main.cpp:39
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
