@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-23 11:27+0100\n"
+"PO-Revision-Date: 2024-05-16 16:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2013,7 +2013,7 @@ msgstr "Text enriquit"
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgid "Toggle rich text editing mode"
-msgstr "Alterna el mode d'edició de text enriquit"
+msgstr "Alterna el mode edició de text enriquit"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -4056,7 +4056,7 @@ msgstr "Missatge"
 #: kmcommands.cpp:738
 #, kde-format
 msgid "The file does not contain a message."
-msgstr "El fitxer no conté un missatge."
+msgstr "El fitxer no conté cap missatge."
 
 #: kmcommands.cpp:811
 #, kde-format
