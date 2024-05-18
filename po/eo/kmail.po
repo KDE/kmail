@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-15 09:56+0100\n"
+"PO-Revision-Date: 2024-05-17 06:24+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -272,7 +272,7 @@ msgstr "POP3 Filtroreguloj"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr "Patch Solaris-kraŝo"
+msgstr "Patch Solaris-paneo"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
@@ -562,7 +562,7 @@ msgstr "(%1%)"
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
 msgid "Retrieval Options"
-msgstr "Opcioj de Ricevo"
+msgstr "Elektebloj de Ricevo"
 
 #: configuredialog/configureaccountpage.cpp:52
 #, kde-format
@@ -1524,7 +1524,7 @@ msgstr "Komponistaj Kromaĵoj"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
 #, kde-format
 msgid "Grammar Checker Plugins"
-msgstr "Gramatika Kontrolilo Kromaĵoj"
+msgstr "Gramatik-Kontrolilaj Kromaĵoj"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
 #, kde-format
@@ -1642,7 +1642,7 @@ msgstr "GnuPG Agordi Modulan Eraron"
 #: configuredialog/configuresecuritypage.cpp:434
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
-msgstr "Ĉi tiu opcio postulas dirmngr >= 0.9.0"
+msgstr "Ĉi tiu elekteblo postulas dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
 #: configuredialog/configuresecuritypage.cpp:573 ui/smimeconfiguration.ui:186
@@ -2300,15 +2300,13 @@ msgid "No To: specified"
 msgstr "\"Al:\" ne donita"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "S&endi tiel"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Specifi la kampon Al"
@@ -2325,8 +2323,7 @@ msgid "No Subject Specified"
 msgstr "Temo ne donita"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Specifi la temon"
@@ -2350,15 +2347,13 @@ msgid "Send Confirmation"
 msgstr "Sendi konfirmon"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Sendi tuj"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Sendi p&oste"
@@ -2377,15 +2372,13 @@ msgid "Too many recipients"
 msgstr "Tro da ricevantoj"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Sendi kiel estas"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "R&edakti Ricevantojn"
@@ -2404,15 +2397,13 @@ msgid "Lose the formatting?"
 msgstr "Ĉu perdi la formatadon?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Perdi formatadon"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Aldoni markolingvan plattekston"
@@ -2483,7 +2474,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 "Aŭtomata klaĉoŝlosilo estas uzata por ĉi tiu ricevanto. Ni ekhavis ĉi "
-"ŝlosilon de triapartiaj ricevantoj. Ĉi tiu ŝlosilo ne estas kontrolita."
+"ŝlosilon de triapartiaj ricevantoj. Ĉi tiu ŝlosilo ne estas konfirmita."
 
 #: editor/kmcomposerwin.cpp:3779
 #, kde-format
@@ -2493,7 +2484,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 "Aŭtomatoĉifra ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
-"estas kontrolita. La ricevanto preferas ĉifritajn respondojn."
+"estas konfirmita. La ricevanto preferas ĉifritajn respondojn."
 
 #: editor/kmcomposerwin.cpp:3783
 #, kde-format
@@ -2503,7 +2494,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 "Aŭtomatoĉifra ŝlosilo estas uzata por ĉi tiu ricevanto. Ĉi tiu ŝlosilo ne "
-"estas kontrolita. La ricevanto ne preferas ĉifritajn respondojn."
+"estas konfirmita. La ricevanto ne preferas ĉifritajn respondojn."
 
 #: editor/kmcomposerwin.cpp:3810
 #, kde-format
@@ -3569,8 +3560,7 @@ msgstr[0] "Forigi identecon"
 msgstr[1] "Forigi identecojn"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Fo&rigi"
@@ -3921,7 +3911,7 @@ msgstr "Movi la mesaĝan dosieron"
 #: kmail_options.h:35
 #, kde-format
 msgid "Lists the available options for user feedback"
-msgstr "Listigas la disponeblajn opciojn por uzant-sugestoj"
+msgstr "Listigas la disponeblajn elekteblojn por uzant-sugestoj"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4077,15 +4067,13 @@ msgstr ""
 "(kiel MIME-digest) aŭ kiel individuajn mesaĝojn?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Sendi Kiel Digesto"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Sendu Individue"
@@ -4126,7 +4114,7 @@ msgstr "Enmeti"
 #: kmcomposerui.rc:49
 #, kde-format
 msgid "&Options"
-msgstr "&Opcioj"
+msgstr "Elektebl&oj"
 
 #. i18n: ectx: Menu (attach)
 #: kmcomposerui.rc:86
@@ -4189,15 +4177,13 @@ msgid "Online/Offline"
 msgstr "Enreta/Senreta"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Labori konektite"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Labori malkonektite"
@@ -4388,7 +4374,7 @@ msgstr "(neniuj ŝablonoj)"
 #: kmmainwidget.cpp:1448
 #, kde-format
 msgid "This folder does not have any expiry options set"
-msgstr "Tiu leterujo ne havas iujn opciojn pri malvalidiĝo"
+msgstr "Tiu leterujo ne havas iujn elekteblojn pri malvalidiĝo"
 
 #: kmmainwidget.cpp:1454
 #, kde-format
@@ -4401,8 +4387,7 @@ msgid "Expire Folder"
 msgstr "Malplenigi leterujon"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Eksvalidigi"
@@ -4447,8 +4432,7 @@ msgid "Expire Old Messages?"
 msgstr "Forigi malnovajn mesaĝojn?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Forigi"
@@ -4470,8 +4454,7 @@ msgid "Security Warning"
 msgstr "Sekurecaverto"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Ŝargi eksterajn referencojn"
@@ -4705,17 +4688,17 @@ msgstr "&Eksvalidigi malnovon el ĉiuj leterujoj"
 #: kmmainwidget.cpp:2926
 #, kde-format
 msgid "Check &Mail"
-msgstr "Kontroli pri novaj &mesaĝoj"
+msgstr "Kontroli pri &Mesaĝoj"
 
 #: kmmainwidget.cpp:2934
 #, kde-format
 msgid "Check Mail In"
-msgstr "Kontroli poŝton en"
+msgstr "Kontroli Envenan Poŝton"
 
 #: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
 #, kde-format
 msgid "Check Mail"
-msgstr "Kontroli poŝton"
+msgstr "Kontroli Poŝton"
 
 #: kmmainwidget.cpp:2941
 #, kde-format
@@ -4956,8 +4939,7 @@ msgid "Mark Thread as &Important"
 msgstr "Mark&i la fadenon kiel grava"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Forig&i la fadenmarkon kiel grava"
@@ -4968,8 +4950,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "Marki Fadenon kiel &Agendero"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Forigi &Agenderan Fadenomarkon"
@@ -5436,8 +5417,7 @@ msgid "Security Warning"
 msgstr "Sekurecaverto"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Uzi HTMLon"
@@ -5463,15 +5443,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Ĉu Ebligi Unuigitajn Poŝtkestojn?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Ebligi Unuigitajn Poŝtkestojn"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Nuligi"
@@ -5487,8 +5465,7 @@ msgid "Restart Akonadi"
 msgstr "Rekomenci Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Rekomenci"
@@ -5750,9 +5727,9 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
-"Ebligu ĉi tiun opcion se vi volas vidi la plenan vojon por ĉiu dosierujo "
-"listigita en la resumo. Se ĉi tiu opcio ne estas ebligita, tiam nur la baza "
-"dosierujo estos montrita."
+"Ŝaltu ĉi tiun elekteblon se vi volas vidi la plenan vojon por ĉiu dosierujo "
+"listigita en la resumo. Se ĉi tiu elekteblo ne estas ŝaltita, tiam nur la "
+"baza dosierujo estos montrita."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, kde-format
@@ -5877,22 +5854,19 @@ msgid "(c) 2003-2024 The Kontact developers"
 msgstr "(c) 2003-2024 La Kontact-programistoj"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
-#, fuzzy, kde-format
-#| msgid "Sven Lueppken"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Sven Lueppken"
 msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
-#, fuzzy, kde-format
-#| msgid "Cornelius Schumacher"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
-#, fuzzy, kde-format
-#| msgid "Tobias Koenig"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
@@ -6522,7 +6496,7 @@ msgstr ""
 "<qt><p>Ebligu ĉi tiun opcion, se vi volas, ke KMail petu Mesaĝajn "
 "Dispoziciojn (MDN) por ĉiu el viaj elirantaj mesaĝoj.</p><p>Ĉi tiu opcio "
 "influas nur la defaŭltan; vi ankoraŭ povas ebligi aŭ malŝalti MDN-peton laŭ "
-"pomesaĝo en la komponisto, menuero <em>Opcioj</em>-><em>Peti Dispozician "
+"pomesaĝo en la komponisto, menuero <em>Elektebloj</em>-><em>Peti Dispozician "
 "Sciigon</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -7053,8 +7027,8 @@ msgstr ""
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px ; -qt-block-indent:0; text-indent:0px;\">Simile, serĉante la "
 "antaŭan nelegitan mesaĝon, la serĉo komenciĝos de la malsupro de la "
-"mesaĝlisto kaj daŭrigos al la antaŭa dosierujo depende de kiu opcio estas "
-"elektita.</p>\n"
+"mesaĝlisto kaj daŭrigos al la antaŭa dosierujo depende de kiu elekteblo "
+"estas elektita.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text- indent:0px;\"><span style=\" font-"
 "weight:600;\">Buklo en ĉiuj markitaj dosierujoj: </span>Tio samas kiel "
@@ -7197,7 +7171,7 @@ msgstr ""
 "povos legi la mesaĝojn se necesa atestilo eksvalidiĝas.\n"
 "<p>\n"
 "Tamen, povas ekzisti lokaj reguloj, kiuj postulas, ke vi ŝaltu ĉi tiun "
-"opcion. Se vi dubas, kontrolu kun via loka administranto.\n"
+"elekteblon. Se vi dubas, kontrolu kun via loka administranto.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
@@ -7406,10 +7380,10 @@ msgstr ""
 "mesaĝon (\"retaj cimoj\").</p><p>Estas. neniu valida kialo por ŝargi bildojn "
 "de la Interreto tiel, ĉar la sendinto ĉiam povas alfiksi la bezonatajn "
 "bildojn rekte al la mesaĝo.</p><p>Por protekti kontraŭ tia misuzo de la HTML-"
-"montra funkcio de KMail, ĉi tiu opcio estas <em>malŝaltita</em> defaŭlte.</"
-"p><p>Tamen, se vi volas, ekzemple, vidi bildojn en HTML-mesaĝoj kiuj ne "
-"estis alfiksitaj al ĝi, vi povas ebligi ĉi tiun opcion, sed vi devus esti "
-"konsciante pri la ebla problemo.</p></qt>"
+"montra funkcio de KMail, ĉi tiu elekteblo estas <em>malŝaltita</em> defaŭlte."
+"</p><p>Tamen, se vi volas, ekzemple, vidi bildojn en HTML-mesaĝoj kiuj ne "
+"estis alfiksitaj al ĝi, vi povas ebligi ĉi tiun elekteblon, sed vi devus "
+"esti konsciante pri la ebla problemo.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:32
@@ -7454,16 +7428,16 @@ msgid ""
 "can set this option on a per-folder basis from the <i>Folder</i> menu of "
 "KMail's main window.</p></qt>"
 msgstr ""
-"<qt><p>Mesaĝoj foje venas en ambaŭ formatoj. Ĉi tiu opcio kontrolas ĉu vi "
+"<qt><p>Mesaĝoj foje venas en ambaŭ formatoj. Ĉi tiu elekteblo regas ĉu vi "
 "volas ke la HTML-parto aŭ la klarteksta parto estu montrata.</p><p>Vidi la "
 "HTML-parton plibonigas la mesaĝon, sed samtempe pliigas la riskon de "
 "ekspluatado de sekurecaj truoj.</p><p>Montri la klartekstan parton perdas "
 "grandan parton de la formatado de la mesaĝo, sed preskaŭ <em>maleblas</em> "
 "ekspluati sekurecajn truojn en la HTML-bildilo (QtWebEngine).</p><p>La suba "
-"opcio protektas kontraŭ unu ofta misuzo de HTML-mesaĝoj, sed ĝi ne povas "
+"elekteblo protektas kontraŭ unu ofta misuzo de HTML-mesaĝoj, sed ĝi ne povas "
 "protekti kontraŭ sekurecproblemoj kiuj ne estis konataj kiam ĉi tiu versio "
 "de KMail estis skribita.</p><p>Estas do konsilinde <em>ne</em> preferi HTML-"
-"on ol simplan tekston.</p><p><b>Noto:</b> Vi povas agordi ĉi tiun opcion po-"
+"on ol simplan tekston.</p><p><b>Noto:</b> Vi povas agordi ĉi elekteblon po-"
 "dosieruje el la menuo <i>Dosierujo</i> de la ĉefa fenestro de KMail.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
@@ -7588,7 +7562,7 @@ msgstr ""
 "la ricevantula poŝtilo kreas respondon, de kiu la skribinto ekkonas, kio "
 "okazis al lia mesaĝo. Ĝeneralaj konfirmtipoj estas <b>vidigita</b> "
 "(signifas: legita), <b>forĵetita</b> kaj <b>plusendita</b>.</p> <p>La sekvaj "
-"eblecoj estas uzeblaj por kontroli la agmanieron de la ricevkonfirma sendo:</"
+"eblecoj estas uzeblaj por regi la agmanieron de la ricevkonfirma sendo:</"
 "p><ul><li><em>Ignori</em>: Ignoras la ricevkonfirmajn postulojn. Nenia "
 "ricevkonfirmo estos sendata iam aŭtomate (rekomdendata).</li> "
 "<li><em>Demandi</em>: Nur respondas post demando de la uzanto pri permeso. "
@@ -7695,13 +7669,13 @@ msgstr ""
 #: ui/smimeconfiguration.ui:33
 #, kde-format
 msgid "Validate certificates online (OCSP)"
-msgstr "Kontroli rete atestilojn"
+msgstr "Konfirmi atestilojn enrete (OCSP)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, OCSPGroupBox)
 #: ui/smimeconfiguration.ui:40
 #, kde-format
 msgid "Online Certificate Validation"
-msgstr "Reta atestilkontrolo"
+msgstr "Reta Atestilkonfirmo"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
@@ -7722,7 +7696,7 @@ msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
-"Enigu la serviladreson por reta kontrolo de atestiloj (RASPa respondilo). La "
+"Enigu la serviladreson por reta konfirmo de atestiloj (RASPa respondilo). La "
 "URLo kutime komenciĝas kun http://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
@@ -7741,7 +7715,7 @@ msgid ""
 msgstr ""
 "Norme GnuPGo uzas la dosieron ~/.gnupg/policies.txt por kontroli, ĉu "
 "atestila direktivo estas permesata. Se la opcio estas elektita, direktivoj "
-"ne estas kontrolataj-"
+"ne estas kontrolataj."
 
 #. i18n: ectx: property (text), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:104
@@ -7756,8 +7730,8 @@ msgid ""
 "If this option is checked, Certificate Revocation Lists are never used to "
 "validate S/MIME certificates."
 msgstr ""
-"Se la opcio estas markita, atestilaj nevalidiglistoj neniam estas uzataj por "
-"kontroli S/MIME-atestilojn."
+"Se la elekteblo estas markita, atestilaj nevalidiglistoj neniam estas uzataj "
+"por konfirmi S/MIME-atestilojn."
 
 #. i18n: ectx: property (text), widget (QCheckBox, neverConsultCB)
 #: ui/smimeconfiguration.ui:114
@@ -7772,8 +7746,8 @@ msgid ""
 "If this option is checked, missing issuer certificates are fetched when "
 "necessary (this applies to both validation methods, CRLs and OCSP)"
 msgstr ""
-"Se la opcio estas markita, mankaj donatulaj atestiloj estas prenataj, kiam "
-"necesas (Tio funkcias kun ambaŭ kontrolmanieroj, ANVLo kaj RASPo.)"
+"Se la elekteblo estas markita, mankaj donatulaj atestiloj estas prenataj, "
+"kiam necesas (Tio funkcias kun ambaŭ konfirmmanieroj, ANVLo kaj RASPo.)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:124
@@ -7812,8 +7786,8 @@ msgstr ""
 "Serĉante la lokon de CRL, la testata atestilo kutime enhavas tion, kio estas "
 "konataj kiel \"CRL-Distribua Punkto\" (DP), kiuj estas URL-oj priskribantaj "
 "la manieron aliri la URL. La unua trovita DP-eniro estas uzata. Kun ĉi tiu "
-"opcio ĉiuj enskriboj uzantaj la HTTP-skemon estas ignorataj kiam oni serĉas "
-"taŭgan DP."
+"elekteblo ĉiuj enskriboj uzantaj la HTTP-skemon estas ignorataj kiam oni "
+"serĉas taŭgan DP."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
@@ -7967,9 +7941,9 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"KMail povas sendi malgrandan (48x48 pikselojn) malaltkvalitan bildon kun ĉiu "
-"mesaĝo. Ekzemple, ĉi tio povus esti bildo de vi aŭ glifo. Ĝi estas montrita "
-"en la retpoŝta kliento de la ricevanto (se subtenata)."
+"KMail povas sendi malgrandan (48x48 rastrumerojn) malaltkvalitan bildon kun "
+"ĉiu mesaĝo. Ekzemple, ĉi tio povus esti bildo de vi aŭ glifo. Ĝi estas "
+"montrita en la retpoŝta kliento de la ricevanto (se subtenata)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78

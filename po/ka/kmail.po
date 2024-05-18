@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 07:50+0200\n"
+"PO-Revision-Date: 2024-05-17 04:49+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2292,15 +2292,13 @@ msgid "No To: specified"
 msgstr "ველი ვის: მითითებული არაა"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "&გაგზავნა, როგორც არის"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&მიუთითეთ ვის ველი"
@@ -2317,8 +2315,7 @@ msgid "No Subject Specified"
 msgstr "თემა მითითებული არაა"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "მიუთითეთ &თემა"
@@ -2342,15 +2339,13 @@ msgid "Send Confirmation"
 msgstr "თანხმობის გაგზავნა"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&ახლა გაგზავნა"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "&მოგვიანებით გაგზავნა"
@@ -2369,15 +2364,13 @@ msgid "Too many recipients"
 msgstr "მეტისმეტად ბევრი მიმღები"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&გაგზავნა, როგორც არის"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&მიმღებების ჩასწორება"
@@ -2397,15 +2390,13 @@ msgid "Lose the formatting?"
 msgstr "დაკარგავთ დაფორმატებას?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "დაფორმატების დაკარგვა"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "მარკირების უბრალო ტექსტის დამატება"
@@ -3564,8 +3555,7 @@ msgstr[0] "იდენტიფიკატორის წაშლა"
 msgstr[1] "იდენტიფიკატორების წაშლა"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&წაშლა"
@@ -4076,15 +4066,13 @@ msgstr ""
 "დაიჯესტის სახით) ფაილების სახით გადააგზავნოთ, თუ ცალ-ცალკე შეტყობინებებად?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "დაიჯესტის სახით გაგზავნა"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "სათითაოდ გაგზავნა"
@@ -4191,15 +4179,13 @@ msgid "Online/Offline"
 msgstr "გათიშული"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "ონლაინ-მუშაობა"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "ოფლაინ მუშაობა"
@@ -4407,8 +4393,7 @@ msgid "Expire Folder"
 msgstr "საქაღალდის მოძველებულადმონიშვნა"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&ვადა"
@@ -4453,8 +4438,7 @@ msgid "Expire Old Messages?"
 msgstr "წავშალო ძველი შეტყობინებები?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "ვადა"
@@ -4476,8 +4460,7 @@ msgid "Security Warning"
 msgstr "უსაფრთხოების შეტყობინება"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "გარე მიმართვების ჩატვირთვა"
@@ -4962,8 +4945,7 @@ msgid "Mark Thread as &Important"
 msgstr "&დისკუსიის მნიშვნელოვნად მონიშვნა"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "&დისკუსიის მნიშვნელოვნად მონიშვნის მოხსნა"
@@ -4974,8 +4956,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "დისკუსიის &ქმედების ელემენტად მონიშვნა"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "დისკუსიის &ქმედების ელემენტად მონიშვნის მოხსნა"
@@ -5443,8 +5424,7 @@ msgid "Security Warning"
 msgstr "უსაფრთხოების შეტყობინება"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML-ის გამოყენება"
@@ -5470,15 +5450,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "ჩავრთო გაერთიანებული საფოსტო ყუთები?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "გაერთიანებული საფოსტო ყუთების ჩართვა"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "გაუქმება"
@@ -5494,8 +5472,7 @@ msgid "Restart Akonadi"
 msgstr "Akonadi-ის გადატვირთვა"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "გადატვირთვა"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 11:16+0200\n"
+"PO-Revision-Date: 2024-05-17 21:30+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -2316,15 +2316,13 @@ msgid "No To: specified"
 msgstr "Полето \"До\" не е попълнено"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Изпращане &както си е"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Задаване на поле Изпращане до"
@@ -2341,8 +2339,7 @@ msgid "No Subject Specified"
 msgstr "Няма тема"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Задаване на тема"
@@ -2367,15 +2364,13 @@ msgid "Send Confirmation"
 msgstr "Изпращане на потвърждение"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Изпра&щане сега"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Изпращане &по-късно"
@@ -2395,15 +2390,13 @@ msgid "Too many recipients"
 msgstr "Твърде много получатели"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Изпращане &както си е"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Редактиране на получатели"
@@ -2420,21 +2413,19 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgid "Lose the formatting?"
-msgstr "Загубите форматирането?"
+msgstr "Да се премахне ли форматирането?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr "Загуби форматиране"
+msgstr "Премахване на форматиране"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
-msgstr "Добавяне на обикновен текст за маркиране"
+msgstr "Добавяне на обикновен текст Markup"
 
 #: editor/kmcomposerwin.cpp:3396
 #, kde-format
@@ -3600,8 +3591,7 @@ msgstr[0] "Премахване на самоличност"
 msgstr[1] "Премахване на самоличности"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "И&зтриване"
@@ -4114,15 +4104,13 @@ msgstr ""
 "съобщение (като MIME обобщение) или като отделни съобщения?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Изпращане като обобщение"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Изпращане поотделно"
@@ -4224,15 +4212,13 @@ msgid "Online/Offline"
 msgstr "Вкл/Изкл"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Работа в мрежата"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Работа извън мрежа"
@@ -4442,8 +4428,7 @@ msgid "Expire Folder"
 msgstr "Маркиране на папка като изтекла"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Маркиране като изтекла"
@@ -4490,11 +4475,10 @@ msgid "Expire Old Messages?"
 msgstr "Маркиране на старите съобщения като изтекли?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr "Маркиране като изтекли"
+msgstr "Маркиране като изтекла"
 
 #: kmmainwidget.cpp:1579
 #, kde-format
@@ -4512,8 +4496,7 @@ msgid "Security Warning"
 msgstr "Предупреждение за сигурността"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Зареждане на външни препратки"
@@ -4997,8 +4980,7 @@ msgid "Mark Thread as &Important"
 msgstr "&Важна"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Размаркиране на нишката като &важна"
@@ -5009,8 +4991,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "&Действие"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Премахване &маркиране на нишка за елемент на действие"
@@ -5477,8 +5458,7 @@ msgid "Security Warning"
 msgstr "Предупреждение за сигурността"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Използване на HTML"
@@ -5505,15 +5485,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Активиране на унифицирани пощенски кутии?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Активиране на унифицирани пощенски кутии"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Отказ"
@@ -5529,8 +5507,7 @@ msgid "Restart Akonadi"
 msgstr "Рестартиране на Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Рестартиране"

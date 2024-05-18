@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 09:29+0200\n"
+"PO-Revision-Date: 2024-05-17 10:30+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -2329,15 +2329,13 @@ msgid "No To: specified"
 msgstr "Geen Aan: opgegeven"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "Zo &verzenden"
+msgstr "Zo v&erzenden"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "Het Aan-veld &invullen"
@@ -2354,8 +2352,7 @@ msgid "No Subject Specified"
 msgstr "Geen onderwerp opgegeven"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Onderwerp opgeven"
@@ -2381,15 +2378,13 @@ msgid "Send Confirmation"
 msgstr "Bevestiging verzenden"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Nu ver&zenden"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "&Later verzenden"
@@ -2409,15 +2404,13 @@ msgid "Too many recipients"
 msgstr "Te veel geadresseerden"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Zo &verzenden"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Geadresseerden b&ewerken"
@@ -2437,15 +2430,13 @@ msgid "Lose the formatting?"
 msgstr "Opmaak verliezen?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Losse opmaak"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Markering als platte tekst toevoegen"
@@ -3615,8 +3606,7 @@ msgstr[0] "Identiteit verwijderen"
 msgstr[1] "Identiteiten verwijderen"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ve&rwijderen"
@@ -4128,15 +4118,13 @@ msgstr ""
 "(als een MIME-bundel) of elk bericht apart?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Als bundel versturen"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Individueel versturen"
@@ -4239,15 +4227,13 @@ msgid "Online/Offline"
 msgstr "Online/Offline"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Online werken"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Offline werken"
@@ -4462,8 +4448,7 @@ msgid "Expire Folder"
 msgstr "Map laten verlopen"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "V&erlopen"
@@ -4508,8 +4493,7 @@ msgid "Expire Old Messages?"
 msgstr "Oude berichten laten verlopen?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Laten verlopen"
@@ -4532,8 +4516,7 @@ msgid "Security Warning"
 msgstr "Beveiligingswaarschuwing"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Externe referenties ophalen"
@@ -5019,8 +5002,7 @@ msgid "Mark Thread as &Important"
 msgstr "Discussie markeren als belangr&ijk"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Markering voor belangr&ijke discussie verwijderen"
@@ -5031,8 +5013,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "Discussie markeren als &taak"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Markering voor t&aak van discussie verwijderen"
@@ -5498,8 +5479,7 @@ msgid "Security Warning"
 msgstr "Beveiligingswaarschuwing"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Gebruik HTML"
@@ -5525,15 +5505,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Geünificeerde e-mailvakken inschakelen?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Geünificeerde e-mailvakken inschakelen"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Annuleren"
@@ -5549,8 +5527,7 @@ msgid "Restart Akonadi"
 msgstr "Akonadi opnieuw starten"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Herstarten"

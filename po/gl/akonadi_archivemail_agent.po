@@ -3,14 +3,14 @@
 # Xosé <xosecalvo@gmail.com>, 2012, 2014.
 # Adrian Chaves Fernandez <adriyetichaves@gmail.com>, 2013, 2014, 2015, 2016, 2018.
 # Marce Villarino <mvillarino@kde-espana.org>, 2013, 2014.
-# SPDX-FileCopyrightText: 2023 Adrián Chaves (Gallaecio)
+# SPDX-FileCopyrightText: 2023, 2024 Adrián Chaves (Gallaecio)
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2023-12-31 20:26+0100\n"
+"PO-Revision-Date: 2024-05-17 20:58+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -114,8 +114,7 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "© 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"

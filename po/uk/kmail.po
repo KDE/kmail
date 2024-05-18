@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 09:13+0300\n"
+"PO-Revision-Date: 2024-05-17 16:45+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -2330,15 +2330,13 @@ msgid "No To: specified"
 msgstr "Не вказано адресата"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Надіслати &як є"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Вказати вміст поля «Кому»"
@@ -2355,8 +2353,7 @@ msgid "No Subject Specified"
 msgstr "Не вказано тему"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Вказати тему"
@@ -2382,15 +2379,13 @@ msgid "Send Confirmation"
 msgstr "Надсилання підтвердження"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Надіслати &зараз"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Надіслати &пізніше"
@@ -2410,15 +2405,13 @@ msgid "Too many recipients"
 msgstr "Забагато адресатів"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Надіслати &як є"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Змінити адресатів"
@@ -2438,15 +2431,13 @@ msgid "Lose the formatting?"
 msgstr "Відкинути форматування?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Відкинути форматування"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Додати форматування як простий текст"
@@ -3627,8 +3618,7 @@ msgstr[2] "Вилучити профілі"
 msgstr[3] "Вилучити профіль"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ви&лучити"
@@ -4141,15 +4131,13 @@ msgstr ""
 "повідомлення (тобто як дайджест MIME) чи як окремі повідомлення?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Надіслати дайджест"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Надіслати окремо"
@@ -4251,15 +4239,13 @@ msgid "Online/Offline"
 msgstr "В мережі/Поза мережею"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Працювати в мережі"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Працювати автономно"
@@ -4476,8 +4462,7 @@ msgid "Expire Folder"
 msgstr "Вилучити застарілі повідомлення з теки"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "В&илучити застарілі повідомлення"
@@ -4522,8 +4507,7 @@ msgid "Expire Old Messages?"
 msgstr "Вилучити застарілі повідомлення?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Вилучити застарілі повідомлення"
@@ -4545,8 +4529,7 @@ msgid "Security Warning"
 msgstr "Попередження безпеки"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Завантажувати зовнішні посилання"
@@ -5051,8 +5034,7 @@ msgid "Mark Thread as &Important"
 msgstr "Позначити гілку як ва&жливу"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Зняти мітку про &важливість гілки"
@@ -5063,8 +5045,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "Позначити гілку як &елемент дії"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Вилучити мітку про &елемент дії з гілки"
@@ -5529,8 +5510,7 @@ msgid "Security Warning"
 msgstr "Попередження безпеки"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Використовувати HTML"
@@ -5557,15 +5537,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Увімкнути уніфіковані поштові скриньки?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Увімкнути уніфіковані поштові скриньки"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Скасувати"
@@ -5581,8 +5559,7 @@ msgid "Restart Akonadi"
 msgstr "Перезапустити Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Перезапустити"
