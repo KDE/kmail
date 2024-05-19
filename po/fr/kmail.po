@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-17 09:44+0200\n"
+"PO-Revision-Date: 2024-05-17 16:14+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -4869,11 +4869,10 @@ msgid "&Debug Sieve…"
 msgstr "&Déboguer Sieve…"
 
 #: kmmainwidget.cpp:2997
-#, fuzzy, kde-format
-#| msgid "Filter &Log Viewer…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr "Afficheur de journaux de fi&ltres..."
+msgstr "Filtrer &l'afficheur de journaux..."
 
 #: kmmainwidget.cpp:3002
 #, kde-format
@@ -5390,11 +5389,10 @@ msgid "Select Folder with Focus"
 msgstr "Sélectionner le dossier ayant le focus"
 
 #: kmmainwidget.cpp:3558
-#, fuzzy, kde-format
-#| msgid "Focus on First Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
-msgstr "Focus sur le premier suivant"
+msgstr "Se focaliser sur le premier dossier"
 
 #: kmmainwidget.cpp:3564
 #, kde-format

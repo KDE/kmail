@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-03-26 11:41+0100\n"
+"PO-Revision-Date: 2024-05-18 14:25+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -553,7 +553,7 @@ msgstr "Nem olvas&ott:"
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -2918,11 +2918,10 @@ msgid "Clear History"
 msgstr "Előzmények törlése"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "Új üzenet"
+msgstr "Bezárt megjelenító újranyitása"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -6000,10 +5999,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact áttekintő nézet"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) A Kontact fejlesztői, 2003-2021."
+msgstr "(c) A Kontact fejlesztői, 2003-2024."
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, fuzzy, kde-format
