@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-12 16:27+0530\n"
+"PO-Revision-Date: 2024-05-19 17:18+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -162,14 +162,8 @@ msgid "PGP 6 support and further enhancements of the encryption support"
 msgstr "PGP 6 துணை மற்றும் மற்ற மேம்படுத்திய மறையாக்க துணை"
 
 #: aboutdata.cpp:63
-#, fuzzy
-#| msgid ""
-#| "Original encryption support\n"
-#| "PGP 2 and PGP 5 support"
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr ""
-"உண்மையான மறையாக்க துணை\n"
-"PGP 2 மற்றும் PGP 5 துணை"
+msgstr "முதன்முதலில் மறையாக்கத்தை அதரித்தது, PGP 2-ஐயும் PGP 5-ஐயும் அதரித்தது"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
@@ -205,7 +199,7 @@ msgstr "புதிய அஞ்சல்பட்டியலும் அட�
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "பல முக்கியமான பங்களிப்புகள்"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
@@ -249,7 +243,7 @@ msgstr ""
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Akonadi-க்கு பங்களித்தவர்"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
@@ -334,9 +328,8 @@ msgid "Usability tests and improvements"
 msgstr ""
 
 #: aboutdata.cpp:165
-#, fuzzy
 msgid "Patch composer configuration"
-msgstr "கையொப்ப கட்டமைப்பு"
+msgstr "அஞ்சலெழுதும் இடத்தின் அமைப்புகளை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -355,42 +348,32 @@ msgid "Automated recipient selection"
 msgstr "தானியக்க பெறுநர் தேர்வு"
 
 #: aboutdata.cpp:175
-#, fuzzy
-#| msgid "beta testing of PGP 6 support"
 msgid "Beta testing of PGP 6 support"
-msgstr "PGP 6 ன் பீட்டா சோதனை"
+msgstr "PGP 6 ஆதரவை சோதித்தார்"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "பிழைதிருத்தங்கள், வலது-க்ளிக் பட்டிகளை சுத்தம் செய்தார்"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
 msgstr "விண்டோஸ் ஆதரவு"
 
 #: aboutdata.cpp:181
-#, fuzzy
-#| msgid "&Quote indicator:"
 msgid "IM status indicator"
-msgstr "& மேற்கோள்குறி காட்டி "
+msgstr "IM நிலைகாட்டி"
 
 #: aboutdata.cpp:182
-#, fuzzy
-#| msgid "Select Recipient"
 msgid "Improve layout of recipients editor"
-msgstr "பெறுநரைத் தேர்ந்தெடு"
+msgstr "பெறுநர்பட்டியல் திருத்தியை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:184
-#, fuzzy
-#| msgid "timestamp for 'Transmission completed' status messages"
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr "அனுப்புதல் முடிவடைந்தது' என்ற நிலை செய்திகளுக்கான நேர முத்திரைகள்."
+msgstr "'அனுப்புவது முடிவடைந்தது' என்ற நிலைத்தகவல்களுக்கான நேர முத்திரைகள்."
 
 #: aboutdata.cpp:186
-#, fuzzy
-#| msgid "multiple encryption keys per address"
 msgid "Multiple encryption keys per address"
-msgstr "முகவரிக்கு பல மறையாக்க விசை"
+msgstr "ஒரே முகவரிக்கு பல மறையாக்க சாவிகள்"
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
@@ -717,8 +700,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "கேமெயில் நிறுத்தப்படும்போது தொடர்பற்ற நிலைக்கு மாற்று"
 
 #: configuredialog/configureaccountpage.cpp:295
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "துவக்கும்போது அஞ்சலுள்ளதா என பார்"
@@ -1943,29 +1925,25 @@ msgid "&New Composer"
 msgstr "&புதிய அஞ்சலெழுது"
 
 #: editor/kmcomposerwin.cpp:1336
-#, fuzzy, kde-format
-#| msgid "Select &Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "பெ&றுநர்களை தேர்ந்தெடு…"
 
 #: editor/kmcomposerwin.cpp:1339
-#, fuzzy, kde-format
-#| msgid "Save &Distribution List…"
+#, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "பெறுந&ர்பட்டியலை சேமி…"
 
 #: editor/kmcomposerwin.cpp:1360
-#, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "உடனிணைப்பாக &ஒட்டு"
 
 #: editor/kmcomposerwin.cpp:1364
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "&இடைவெளிகளை சீராக்கு"
@@ -2058,22 +2036,19 @@ msgid "S&ubject"
 msgstr "&தலைப்பு"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "Append S&ignature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "கை&யொப்பத்தை பின்சேர்"
 
 #: editor/kmcomposerwin.cpp:1445
-#, fuzzy, kde-format
-#| msgid "Pr&epend Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "கையொப்பத்தை &முன்சேர்"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "இடஞ்&சுட்டியிருக்குமிடத்தில் கையொப்பத்தை நுழை"
@@ -2329,15 +2304,13 @@ msgid "No To: specified"
 msgstr "பெறுநர் குறிப்பிடப்படவில்லை"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "&அப்படியே அனுப்பு."
+msgstr "&அப்படியே அனுப்பு"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&பெறுநர் புலத்தை நிரப்பவிடு"
@@ -2354,11 +2327,10 @@ msgid "No Subject Specified"
 msgstr "தலைப்பு குறிப்பிடப்படவில்லை"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
-msgstr "தலைப்பை &குறிப்பிடு"
+msgstr "தலைப்பை &நிரப்பவிடு"
 
 #: editor/kmcomposerwin.cpp:2876
 #, kde-format
@@ -2379,15 +2351,13 @@ msgid "Send Confirmation"
 msgstr "அஞ்சலனுப்புவதன் உறுதிப்பாடு"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&இப்போது அனுப்பு"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "பி&றகு அனுப்பு"
@@ -2407,15 +2377,13 @@ msgid "Too many recipients"
 msgstr "அதிகப்படியான பெறுநர்கள்"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&அப்படியே அனுப்பு"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "பெறுநர்களை &மாற்று"
@@ -2434,8 +2402,7 @@ msgid "Lose the formatting?"
 msgstr "வடிவமைப்பை இழக்கலாமா?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "வடிவமைப்பை இழ"
@@ -2676,11 +2643,10 @@ msgstr ""
 "\"phishingdetails\">(விவரங்கள்…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
-msgstr "உடனே அனுப்பு"
+msgstr "இப்போதே அனுப்பு"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
@@ -2898,8 +2864,7 @@ msgid "Clear History"
 msgstr "வரலாற்றை காலியாக்கு"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Reopen Closed Viewer"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
 msgstr "முடிய காட்டியைத் திற"
@@ -3552,8 +3517,7 @@ msgstr[0] "அடையாளத்தை நீக்குதல்"
 msgstr[1] "அடையாளங்களை நீக்குதல்"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&நீக்கு"
@@ -4055,15 +4019,13 @@ msgstr ""
 "விரும்புகிறீர்களா, அல்லது தனித்தனி அஞ்சல்களாகவா?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "ஒருங்கே அனுப்பு"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "தனித்தனியாக அனுப்பு"
@@ -4169,15 +4131,13 @@ msgid "Online/Offline"
 msgstr "தொடர்புள்ள/தொடர்பற்ற நிலை"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "தொடர்புள்ள நிலையில் இயங்கு"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "தொடர்பற்ற நிலையில் இயங்கு"
@@ -4380,8 +4340,7 @@ msgid "Expire Folder"
 msgstr "அடைவை காலாவதியாக்குதல்"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "கா&லாவதியாக்கு"
@@ -4426,8 +4385,7 @@ msgid "Expire Old Messages?"
 msgstr "பழைய அஞ்சல்களை காலாவதியாக்கலாமா?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "காலாவதியாக்கு"
@@ -4449,8 +4407,7 @@ msgid "Security Warning"
 msgstr "பாதுகாப்பு எச்சரிக்கை"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "வெளி இணைப்புகளை ஏற்று"
@@ -4676,8 +4633,7 @@ msgid "Save &As…"
 msgstr "&வேறு பெயரில் சேமி…"
 
 #: kmmainwidget.cpp:2921
-#, fuzzy, kde-format
-#| msgid "&Expire All Folders"
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "அனைத்து அடைவுகளையும் கா&லாவதியாக்கு"
@@ -4736,43 +4692,37 @@ msgid "Filter &Log Viewer…"
 msgstr "வடிகட்டிக்கான வ&ரலாற்றுப்பதிவுக்காட்டி…"
 
 #: kmmainwidget.cpp:3002
-#, fuzzy, kde-format
-#| msgid "Notification History…"
+#, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "அறிவிப்பு வரலாறு…"
 
 #: kmmainwidget.cpp:3007
-#, fuzzy, kde-format
-#| msgid "&Import from another Email Client…"
+#, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "வேறு மின்னஞ்சல் செயலியிலிருந்து &இறக்குமதி செய்…"
 
 #: kmmainwidget.cpp:3012
-#, fuzzy, kde-format
-#| msgid "Edit \"Out of Office\" Replies…"
+#, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
-msgstr "\"அலுவலகத்தில் இல்லை\" பதில்களை திருத்து…U+"
+msgstr "\"அலுவலகத்தில் இல்லை\" பதில்களை திருத்து…"
 
 #: kmmainwidget.cpp:3018
-#, fuzzy, kde-format
-#| msgid "&Configure Automatic Archiving…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "தானியக்க காப்பகப்படுத்தலை &அமை…"
 
 #: kmmainwidget.cpp:3024
-#, fuzzy, kde-format
-#| msgid "Delayed Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "தாமதமான அஞ்சல்கள்…"
 
 #: kmmainwidget.cpp:3030
-#, fuzzy, kde-format
-#| msgid "Followup Reminder Messages…"
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "பதிலளிக்க நினைவூட்ட வேண்டிய அஞ்சல்கள்…"
@@ -4784,11 +4734,10 @@ msgid "&Delete"
 msgstr "&நீக்கு"
 
 #: kmmainwidget.cpp:3046
-#, fuzzy, kde-format
-#| msgid "M&ove Thread to Trash"
+#, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
-msgstr "சார்ந்த அஞ்சல்களை அகற்றிடத்திற்கு ந&கர்த்து"
+msgstr "தொடரை அகற்றிடத்திற்கு ந&கர்த்து"
 
 #: kmmainwidget.cpp:3050
 #, kde-format
@@ -4806,29 +4755,25 @@ msgid "&Find Messages…"
 msgstr "&அஞ்சல்களை கண்டுபிடி…"
 
 #: kmmainwidget.cpp:3064
-#, fuzzy, kde-format
-#| msgid "Select &All Messages"
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "&அனைத்து அஞ்சல்களையும் தேர்வுசெய்"
 
 #: kmmainwidget.cpp:3071
-#, fuzzy, kde-format
-#| msgid "&Mailing List Management…"
+#, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "அஞ்சல் &பட்டியல் மேலாண்மை…"
 
 #: kmmainwidget.cpp:3079
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache…"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Akonadi-யின் &தற்காலிக நினைவிடத்தை காலியாக்கு…"
 
 #: kmmainwidget.cpp:3084
-#, fuzzy, kde-format
-#| msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "&இவ்வடைவிலும் இதில் சார்ந்தவற்றிலும் Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு"
@@ -4839,15 +4784,13 @@ msgid "&Assign Shortcut…"
 msgstr "&சுருக்குவழியை அமை…"
 
 #: kmmainwidget.cpp:3107
-#, fuzzy, kde-format
-#| msgid "&Expiration Settings"
+#, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&காலாவதி அமைப்புகள்"
 
 #: kmmainwidget.cpp:3132
-#, fuzzy, kde-format
-#| msgid "&Archive Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&அடைவை காப்பகப்படுத்து…"
@@ -4894,29 +4837,25 @@ msgid "&Create Filter"
 msgstr "&வடிகட்டியை உருவாக்கு"
 
 #: kmmainwidget.cpp:3196
-#, fuzzy, kde-format
-#| msgid "Filter on &Subject…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "&பொருளை கொண்டு வடிகட்டு…"
 
 #: kmmainwidget.cpp:3203
-#, fuzzy, kde-format
-#| msgid "Filter on &From…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "&அனுப்புநரை கொண்டு வடிகட்டு…"
 
 #: kmmainwidget.cpp:3209
-#, fuzzy, kde-format
-#| msgid "Filter on &To…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "பெ&றுநரை கொண்டு வடிகட்டு…"
 
 #: kmmainwidget.cpp:3215
-#, fuzzy, kde-format
-#| msgid "Filter on &Cc…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "&நகல் முகவரிகளை கொண்டு வடிகட்டு…"
@@ -4952,23 +4891,21 @@ msgid "Mark Thread as &Important"
 msgstr "சார்ந்த அஞ்சல்களை &முக்கியமானவையாக குறி"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
-msgstr "&முக்கியமானதாக குறிக்கும் குறிப்பை நீக்கு"
+msgstr "தொடரை &முக்கியமானதாக குறித்ததை நீக்கு"
 
 #: kmmainwidget.cpp:3253
 #, kde-format
 msgid "Mark Thread as &Action Item"
-msgstr "சார்ந்த அஞ்சல்களை &செயலுக்கானவையாக குறி"
+msgstr "தொடரை &செயலுக்கானதாக குறி"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
-msgstr "&செயலுக்கானதாக குறிக்கும் குறிப்பை நீக்கு"
+msgstr "தொடரை &செயலுக்கானதாக குறிக்கும் குறிப்பை நீக்கு"
 
 #: kmmainwidget.cpp:3260
 #, kde-format
@@ -5046,15 +4983,13 @@ msgid "Collapse all threads in the current folder"
 msgstr "தற்போதைய அடைவிலுள்ள அனைத்து தொகுப்புகளையும் சுருக்கும்"
 
 #: kmmainwidget.cpp:3325
-#, fuzzy, kde-format
-#| msgid "&Display Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&அஞ்சலை காட்டு"
 
 #: kmmainwidget.cpp:3332
-#, fuzzy, kde-format
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "அ&டுத்த அஞ்சல்"
@@ -5065,8 +5000,7 @@ msgid "Go to the next message"
 msgstr "அடுத்த அஞ்சலுக்கு செல்லும்"
 
 #: kmmainwidget.cpp:3339
-#, fuzzy, kde-format
-#| msgid "Next &Unread Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "அடு&த்த படிக்கப்படாத அஞ்சல்"
@@ -5083,8 +5017,7 @@ msgid "Go to the next unread message"
 msgstr "படிக்கப்படாத அடுத்த அஞ்சலுக்கு செல்லும்"
 
 #: kmmainwidget.cpp:3352
-#, fuzzy, kde-format
-#| msgid "&Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&முந்தைய அஞ்சல்"
@@ -5095,8 +5028,7 @@ msgid "Go to the previous message"
 msgstr "முந்தைய அஞ்சலுக்கு செல்லும்"
 
 #: kmmainwidget.cpp:3359
-#, fuzzy, kde-format
-#| msgid "Previous Unread &Message"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "மு&ந்தைய படிக்கப்படாத அஞ்சல்"
@@ -5113,8 +5045,7 @@ msgid "Go to the previous unread message"
 msgstr "படிக்கப்படாத முந்தைய அஞ்சலுக்கு செல்லும்"
 
 #: kmmainwidget.cpp:3372
-#, fuzzy, kde-format
-#| msgid "Next Unread &Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "அடுத்த படிக்கப்படாத அடை&வு"
@@ -5125,8 +5056,7 @@ msgid "Go to the next folder with unread messages"
 msgstr "படிக்கப்படாத அஞ்சல்களை கொண்ட அடுத்த அடைவிற்கு செல்லும்"
 
 #: kmmainwidget.cpp:3381
-#, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "முந்தை&ய படிக்கப்படாத அடைவு"
@@ -5193,8 +5123,7 @@ msgid "&Configure KMail…"
 msgstr "&கேமெயிலை அமை…"
 
 #: kmmainwidget.cpp:3443
-#, fuzzy, kde-format
-#| msgid "Expire…"
+#, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "காலாவதியாக்கு…"
@@ -5241,8 +5170,7 @@ msgid "Restart Account"
 msgstr "கணக்கை மீள்துவக்கு"
 
 #: kmmainwidget.cpp:3521
-#, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "அஞ்சலை அடைவுக்கு நகலெடு"
@@ -5253,134 +5181,115 @@ msgid "Jump to Folder…"
 msgstr "அடைவிற்கு தாவு…"
 
 #: kmmainwidget.cpp:3533
-#, fuzzy, kde-format
-#| msgid "Abort Current Operation"
+#, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "தற்போதைய செயல்பாட்டை ரத்து செய்"
 
 #: kmmainwidget.cpp:3539
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "அடுத்த அடைவை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3545
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "முந்தைய அடைவை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3551
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "குவியத்தை கொண்ட அடைவை தேர்வு செய்"
 
 #: kmmainwidget.cpp:3558
-#, fuzzy, kde-format
-#| msgid "Focus on First Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "முதல் அடைவை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3564
-#, fuzzy, kde-format
-#| msgid "Focus on Last Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "கடைசி அடைவை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3570
-#, fuzzy, kde-format
-#| msgid "Focus on Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "அடுத்த அஞ்சலை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3576
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "முந்தைய அஞ்சலை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3582
-#, fuzzy, kde-format
-#| msgid "Select First Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "முதல் அஞ்சலை தேர்ந்தெடு"
 
 #: kmmainwidget.cpp:3588
-#, fuzzy, kde-format
-#| msgid "Select Last Message"
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "கடைசி அஞ்சலை தேர்ந்தெடு"
 
 #: kmmainwidget.cpp:3594
-#, fuzzy, kde-format
-#| msgid "Select Message with Focus"
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "குவியத்திலுள்ள அஞ்சலை தேர்ந்தெடு"
 
 #: kmmainwidget.cpp:3601
-#, fuzzy, kde-format
-#| msgid "Set Focus to Quick Search"
+#, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "விரை தேடலை குவியப்படுத்து"
 
 #: kmmainwidget.cpp:3609
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Previous Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "முந்தைய அஞ்சலை தேர்வில் உட்படுத்து"
 
 #: kmmainwidget.cpp:3615
-#, fuzzy, kde-format
-#| msgid "Extend Selection to Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "அடுத்த அஞ்சலை தேர்வில் உட்படுத்து"
 
 #: kmmainwidget.cpp:3622
-#, fuzzy, kde-format
-#| msgid "Move Message to Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "அஞ்சலை அடைவிற்கு நகர்த்து"
 
 #: kmmainwidget.cpp:3632
-#, fuzzy, kde-format
-#| msgid "Mark All Messages As Read in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "இவ்வடைவிலும் சார்ந்துள்ள அடைவுகளிலும் உள்ள அனைத்து அஞ்சல்களையும் படித்த‍தாக குறி"
 
 #: kmmainwidget.cpp:3637
-#, fuzzy, kde-format
-#| msgid "Remove Duplicates in This Folder and All its Subfolder"
+#, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "இவ்வடைவிலும் சார்ந்துள்ளவற்றிலும் பலமுறை உள்ளவற்றை ஒன்றுபோக நீக்கு"
 
 #: kmmainwidget.cpp:3643
-#, fuzzy, kde-format
-#| msgid "Previous Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "தேர்ந்தெடுக்கப்பட்ட முந்தைய அடைவு"
 
 #: kmmainwidget.cpp:3650
-#, fuzzy, kde-format
-#| msgid "Next Selected Folder"
+#, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "தேர்ந்தெடுக்கப்பட்ட அடுத்த அடைவு"
@@ -5459,11 +5368,10 @@ msgid "Security Warning"
 msgstr "பாதுகாப்பு எச்சரிக்கை"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
-msgstr " HTML-ஐ பயன்படுத்து"
+msgstr "HTML-ஐ பயன்படுத்து"
 
 #: kmmainwidget.cpp:4921
 #, kde-format
@@ -5486,15 +5394,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கலாமா?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கு"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "ரத்து செய்"
@@ -5510,8 +5416,7 @@ msgid "Restart Akonadi"
 msgstr "Akonadi-யை மீள்துவக்கு"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "மீள்துவக்கு"
@@ -5593,8 +5498,7 @@ msgid "Edit contact…"
 msgstr "தொடர்பை திருத்து…"
 
 #: kmreaderwin.cpp:167
-#, fuzzy, kde-format
-#| msgid "Save Link As…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "இணைப்பை சேமி…"
@@ -5605,15 +5509,13 @@ msgid "&Find in Message…"
 msgstr "அஞ்சலில் &கண்டுபிடி…"
 
 #: kmreaderwin.cpp:179
-#, fuzzy, kde-format
-#| msgid "Save Image On Disk…"
+#, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "படத்தை வட்டில் சேமி…"
 
 #: kmreaderwin.cpp:185
-#, fuzzy, kde-format
-#| msgid "Open Image…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "படத்தை திற…"
@@ -5624,22 +5526,19 @@ msgid "Show HTML Format"
 msgstr "HTML வடிவத்தை காட்டு"
 
 #: kmreaderwin.cpp:192
-#, fuzzy, kde-format
-#| msgid "Show HTML format when mail comes from this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "இவரிடமிருந்து அஞ்சல் வரும்போது HTML வடிவத்தில் காட்டு"
 
 #: kmreaderwin.cpp:198
-#, fuzzy, kde-format
-#| msgid "Load external reference when mail comes for this contact"
+#, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "இவரிடமிருந்து அஞ்சல் வரும்போது வெளி இணைப்புகளை ஏற்று"
 
 #: kmreaderwin.cpp:204
-#, fuzzy, kde-format
-#| msgid "Share image…"
+#, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "படத்தை பகிர்…"
@@ -5689,10 +5588,8 @@ msgid "Added Markdown Editing Support"
 msgstr ""
 
 #: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "Add Transport"
 msgid "Added Grammar Plugin Support"
-msgstr "போக்குவரத்தை சேர்"
+msgstr ""
 
 #: kmreaderwin.cpp:279
 msgid "Added etesync resource support"
@@ -5897,10 +5794,9 @@ msgid "Kontact Summary View"
 msgstr "கான்டாக்டு தொகுப்புப்பார்வை"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 கான்டாக்டு நிரலாளர்கள்"
+msgstr "(c) 2003-2024 கான்டாக்டு நிரலாளர்கள்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -5912,11 +5808,10 @@ msgstr ""
 #, kde-format
 msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
-msgstr ""
+msgstr "கார்னீலியஸ் ஷூமாக்கர்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
-#, fuzzy, kde-format
-#| msgid "Tobias Koenig"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "டொபையாசு கோனிகு"
@@ -5964,8 +5859,7 @@ msgid "Reply to Mailing-&List…"
 msgstr "அஞ்சல் ப&ட்டியலுக்கு பதிலளி…"
 
 #: messageactions.cpp:68
-#, fuzzy, kde-format
-#| msgid "Reply Without &Quote…"
+#, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "மேற்கோளிடாமல் பதி&லளி…"
@@ -5989,8 +5883,7 @@ msgid "&Redirect…"
 msgstr "&வழிமாற்று…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message to Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "பெறுநர்களுக்கு புதிய அஞ்சல்…"
@@ -6023,22 +5916,19 @@ msgid "&Edit As New"
 msgstr "புதியதாக &திருத்து"
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
-#| msgid "Filter on Mailing-&List…"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "அஞ்சல் பட்டியலின்படி &வடிகட்டு…"
 
 #: messageactions.cpp:79
-#, fuzzy, kde-format
-#| msgid "Add Followup Reminder…"
+#, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "பதிலளிக்க நினைவூட்டு…"
 
 #: messageactions.cpp:81
-#, fuzzy, kde-format
-#| msgid "Send A&gain…"
+#, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "&மறுபடியும் அனுப்பு…"
@@ -6230,15 +6120,13 @@ msgid "Save Attachments…"
 msgstr "உடனிணைப்புகளை சேமி…"
 
 #: searchdialog/searchwindow.cpp:199
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "தேர்வை கைவிடு"
 
 #: searchdialog/searchwindow.cpp:203
-#, fuzzy, kde-format
-#| msgid "Jump to original folder"
+#, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "உள்ள அடைவிற்கு தாவு"
@@ -6769,8 +6657,7 @@ msgid "Add new tag…"
 msgstr "புதிய குறிச்சொல்லை சேர்…"
 
 #: tag/tagactionmanager.cpp:168
-#, fuzzy, kde-format
-#| msgid "More…"
+#, kde-format
 msgctxt "@action"
 msgid "More…"
 msgstr "மேலும்…"
@@ -7288,7 +7175,7 @@ msgstr ""
 "நாட்களை தேர்வு செய்யுங்கள்.\n"
 "<p>\n"
 "பரிந்துரைக்கப்பட்ட SPHINX  அமைப்பு - 14 நாட்கள்.\n"
-"</qt>"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
@@ -7320,8 +7207,8 @@ msgstr ""
 "<h1>சொந்த சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
-"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
-"</qt>"
+"SPHINX அமைப்பாக 30 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -7350,10 +7237,10 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"<h1>மூல சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
-"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
+"SPHINX அமைப்பாக 14 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
 "</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)

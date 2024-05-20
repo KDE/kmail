@@ -2246,15 +2246,13 @@ msgid "No To: specified"
 msgstr "未指定收件人"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "原样发送(&E)"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "指定收件人字段(&S)"
@@ -2271,8 +2269,7 @@ msgid "No Subject Specified"
 msgstr "未指定主题"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "指定主题(&S)"
@@ -2296,15 +2293,13 @@ msgid "Send Confirmation"
 msgstr "发送确认"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "立即发送(&S)"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "稍后发送(&L)"
@@ -2322,15 +2317,13 @@ msgid "Too many recipients"
 msgstr "收件人过多"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "原样发送(&S)"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "编辑收件人(&E)"
@@ -2348,15 +2341,13 @@ msgid "Lose the formatting?"
 msgstr "丢弃格式吗？"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "丢弃格式"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "添加标记纯文本"
@@ -3423,8 +3414,7 @@ msgid_plural "Remove Identities"
 msgstr[0] "删除身份"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "删除(&R)"
@@ -3922,15 +3912,13 @@ msgstr ""
 "息来转发？"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "作为摘要发送"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "各自独立发送"
@@ -4030,15 +4018,13 @@ msgid "Online/Offline"
 msgstr "联机/脱机"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "联机工作"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "脱机工作"
@@ -4231,8 +4217,7 @@ msgid "Expire Folder"
 msgstr "将文件夹设为过期删除"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "过期(&E)"
@@ -4275,8 +4260,7 @@ msgid "Expire Old Messages?"
 msgstr "删除过期旧消息？"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "删除过期消息"
@@ -4297,8 +4281,7 @@ msgid "Security Warning"
 msgstr "安全警告"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "加载外部引用"
@@ -4761,8 +4744,7 @@ msgid "Mark Thread as &Important"
 msgstr "将线索标为重要(&I)"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "删除重要线索标记(&I)"
@@ -4773,8 +4755,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "将线索标为活动项(&A)"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "删除活动项线索标记(&A)"
@@ -5237,8 +5218,7 @@ msgid "Security Warning"
 msgstr "安全警告"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "使用 HTML"
@@ -5263,15 +5243,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "启动聚合邮箱？"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "启用聚合邮箱"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "取消"
@@ -5287,8 +5265,7 @@ msgid "Restart Akonadi"
 msgstr "重启 Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "重启"

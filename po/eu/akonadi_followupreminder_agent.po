@@ -1,16 +1,16 @@
 # Translation for akonadi_followupreminder_agent.po to Euskara/Basque (eu).
-# Copyright (C) 2021-2022, This file is copyright:
+# Copyright (C) 2021-2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 # KDE euskaratzeko proiektuko arduraduna <xaba@ni.eus>.
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021, 2022.
+# SPDX-FileCopyrightText: 2021, 2022, 2024 Iñigo Salvador Azurmendi <xalba@ni.eus>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2022-09-07 07:53+0200\n"
+"PO-Revision-Date: 2024-05-19 09:08+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.0\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -36,8 +36,7 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
