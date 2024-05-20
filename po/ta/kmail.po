@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-12 16:27+0530\n"
+"PO-Revision-Date: 2024-05-19 17:18+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -162,14 +162,8 @@ msgid "PGP 6 support and further enhancements of the encryption support"
 msgstr "PGP 6 துணை மற்றும் மற்ற மேம்படுத்திய மறையாக்க துணை"
 
 #: aboutdata.cpp:63
-#, fuzzy
-#| msgid ""
-#| "Original encryption support\n"
-#| "PGP 2 and PGP 5 support"
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr ""
-"உண்மையான மறையாக்க துணை\n"
-"PGP 2 மற்றும் PGP 5 துணை"
+msgstr "முதன்முதலில் மறையாக்கத்தை அதரித்தது, PGP 2-ஐயும் PGP 5-ஐயும் அதரித்தது"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
@@ -205,7 +199,7 @@ msgstr "புதிய அஞ்சல்பட்டியலும் அட�
 
 #: aboutdata.cpp:82
 msgid "Many valuable contributions"
-msgstr ""
+msgstr "பல முக்கியமான பங்களிப்புகள்"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
@@ -249,7 +243,7 @@ msgstr ""
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Akonadi-க்கு பங்களித்தவர்"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
@@ -334,9 +328,8 @@ msgid "Usability tests and improvements"
 msgstr ""
 
 #: aboutdata.cpp:165
-#, fuzzy
 msgid "Patch composer configuration"
-msgstr "கையொப்ப கட்டமைப்பு"
+msgstr "அஞ்சலெழுதும் இடத்தின் அமைப்புகளை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -355,42 +348,32 @@ msgid "Automated recipient selection"
 msgstr "தானியக்க பெறுநர் தேர்வு"
 
 #: aboutdata.cpp:175
-#, fuzzy
-#| msgid "beta testing of PGP 6 support"
 msgid "Beta testing of PGP 6 support"
-msgstr "PGP 6 ன் பீட்டா சோதனை"
+msgstr "PGP 6 ஆதரவை சோதித்தார்"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "பிழைதிருத்தங்கள், வலது-க்ளிக் பட்டிகளை சுத்தம் செய்தார்"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
 msgstr "விண்டோஸ் ஆதரவு"
 
 #: aboutdata.cpp:181
-#, fuzzy
-#| msgid "&Quote indicator:"
 msgid "IM status indicator"
-msgstr "& மேற்கோள்குறி காட்டி "
+msgstr "IM நிலைகாட்டி"
 
 #: aboutdata.cpp:182
-#, fuzzy
-#| msgid "Select Recipient"
 msgid "Improve layout of recipients editor"
-msgstr "பெறுநரைத் தேர்ந்தெடு"
+msgstr "பெறுநர்பட்டியல் திருத்தியை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:184
-#, fuzzy
-#| msgid "timestamp for 'Transmission completed' status messages"
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr "அனுப்புதல் முடிவடைந்தது' என்ற நிலை செய்திகளுக்கான நேர முத்திரைகள்."
+msgstr "'அனுப்புவது முடிவடைந்தது' என்ற நிலைத்தகவல்களுக்கான நேர முத்திரைகள்."
 
 #: aboutdata.cpp:186
-#, fuzzy
-#| msgid "multiple encryption keys per address"
 msgid "Multiple encryption keys per address"
-msgstr "முகவரிக்கு பல மறையாக்க விசை"
+msgstr "ஒரே முகவரிக்கு பல மறையாக்க சாவிகள்"
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
@@ -4843,7 +4826,7 @@ msgstr "&முக்கியமானதாக குறிக்கும் 
 #: kmmainwidget.cpp:3252
 #, kde-format
 msgid "Mark Thread as &Action Item"
-msgstr "சார்ந்த அஞ்சல்களை &செயலுக்கானவையாக குறி"
+msgstr "தொடரை &செயலுக்கானதாக குறி"
 
 #: kmmainwidget.cpp:3255
 #, kde-format
@@ -5488,10 +5471,8 @@ msgid "Added Markdown Editing Support"
 msgstr ""
 
 #: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "Add Transport"
 msgid "Added Grammar Plugin Support"
-msgstr "போக்குவரத்தை சேர்"
+msgstr ""
 
 #: kmreaderwin.cpp:279
 msgid "Added etesync resource support"
@@ -5696,10 +5677,9 @@ msgid "Kontact Summary View"
 msgstr "கான்டாக்டு தொகுப்புப்பார்வை"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "(c) 2003-2021 கான்டாக்டு நிரலாளர்கள்"
+msgstr "(c) 2003-2024 கான்டாக்டு நிரலாளர்கள்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -5709,7 +5689,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, kde-format
 msgid "Cornelius Schumacher"
-msgstr ""
+msgstr "கார்னீலியஸ் ஷூமாக்கர்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
@@ -7061,7 +7041,7 @@ msgstr ""
 "நாட்களை தேர்வு செய்யுங்கள்.\n"
 "<p>\n"
 "பரிந்துரைக்கப்பட்ட SPHINX  அமைப்பு - 14 நாட்கள்.\n"
-"</qt>"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:221
@@ -7093,8 +7073,8 @@ msgstr ""
 "<h1>சொந்த சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
-"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
-"</qt>"
+"SPHINX அமைப்பாக 30 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:261
@@ -7123,10 +7103,10 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>மூல சான்றிதழ் காலம் கடந்தால் எச்சரி</h1>\n"
+"<h1>மூல சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
-"SPHINX  அமைப்பு பரிந்துரை- 14  நாட்கள்.\n"
+"SPHINX அமைப்பாக 14 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
 "</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
