@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-17 00:39+0000\n"
-"PO-Revision-Date: 2024-05-16 10:35+0200\n"
+"PO-Revision-Date: 2024-05-20 14:54+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1591,7 +1591,7 @@ msgstr "Notificationes de disposition de messages"
 #: configuredialog/configuresecuritypage.cpp:56
 #, kde-format
 msgid "Encryption"
-msgstr "Encryption"
+msgstr "Cryptation"
 
 #: configuredialog/configuresecuritypage.cpp:62
 #, kde-format
@@ -2310,15 +2310,13 @@ msgid "No To: specified"
 msgstr "Il non specificava alcun A:"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "Invi&a  como es"
+msgstr "Invia  como &es"
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the To field"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Specifica  le campo A"
@@ -2335,8 +2333,7 @@ msgid "No Subject Specified"
 msgstr "Necun subjecto specificate"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Specifica  le Subjecto"
@@ -2362,18 +2359,16 @@ msgid "Send Confirmation"
 msgstr "Invia confirmation"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Invia ora"
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
-msgstr "Invia plus &tarde"
+msgstr "Invia p&lus tarde"
 
 #: editor/kmcomposerwin.cpp:3140
 #, kde-format
@@ -2390,15 +2385,13 @@ msgid "Too many recipients"
 msgstr "Nimie destinatarios"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr "&Invia  como es"
+msgstr "Invia  como e&s"
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Modifica  Destinatarios"
@@ -2418,15 +2411,13 @@ msgid "Lose the formatting?"
 msgstr "Perde  le composition (formatting)?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Perde  le composition (formatting)"
 
 #: editor/kmcomposerwin.cpp:3184
-#, fuzzy, kde-format
-#| msgid "Add Markup Plain Text"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Adde Texto de Plan Marcation (Markup Plain Text) "
@@ -3471,7 +3462,7 @@ msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
-"Uno del configurate certificatos de cryption S/MIME non contine le adresse "
+"Uno del configurate certificatos de cryptation S/MIME non contine le adresse "
 "de e-posta configurate pro iste identitate (%1)."
 
 #: identity/identitydialog.cpp:848
@@ -3595,8 +3586,7 @@ msgstr[0] "Remove Identitate"
 msgstr[1] "Remove identitates"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Remove"
@@ -4105,15 +4095,13 @@ msgstr ""
 "un compendio de MIME) o como messages individual?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Invia un Compendio (Digest)"
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Invia individualmente"
@@ -4216,15 +4204,13 @@ msgid "Online/Offline"
 msgstr "In linea/ Foras de Linea"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Travaliar in linea"
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Travaliar Foras de linea"
@@ -4438,8 +4424,7 @@ msgid "Expire Folder"
 msgstr "Expira dossier"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Expira"
@@ -4484,8 +4469,7 @@ msgid "Expire Old Messages?"
 msgstr "Expira vetere messages?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Expira"
@@ -4507,8 +4491,7 @@ msgid "Security Warning"
 msgstr "Advertimento de securitate"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Carga referentias externe"
@@ -4991,8 +4974,7 @@ msgid "Mark Thread as &Important"
 msgstr "Marca topico como &importante"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Remove marca de topico &importante"
@@ -5003,8 +4985,7 @@ msgid "Mark Thread as &Action Item"
 msgstr "Marca topico como elemento de &action"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Remove marca de topico como elemento de &action"
@@ -5471,8 +5452,7 @@ msgid "Security Warning"
 msgstr "Advertimento de securitate"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Usa HTML"
@@ -5499,15 +5479,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Habilita cassas de e-posta unificate?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Habilita cassas de e-posta unificate"
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Cancella"
@@ -5523,8 +5501,7 @@ msgid "Restart Akonadi"
 msgstr "Re-Initia Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Re-Initia"
@@ -7269,7 +7246,7 @@ msgstr "Crypta omne messages quando il es possibile"
 #: ui/securitypageencryptiontab.ui:74
 #, kde-format
 msgid "Encryption indicators"
-msgstr "Indicatores de Encriptation"
+msgstr "Indicatores de Cryptation"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
 #: ui/securitypageencryptiontab.ui:80
@@ -7350,9 +7327,9 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Avisa si le certificato de cryption termina</h1>\n"
+"<h1>Avisa si le certificato de cryptation termina</h1>\n"
 "Selige le minime numero de dies number de validitate del certificato de "
-"cryption sin emitter alcun aviso.\n"
+"cryptation sin emitter alcun aviso.\n"
 "<p>\n"
 "Le preferentia recommendate de SPHINX es de 14 dies.\n"
 "</p></qt>"

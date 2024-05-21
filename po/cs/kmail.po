@@ -2264,18 +2264,16 @@ msgid "No To: specified"
 msgstr "Nebyl zadán adresát"
 
 #: editor/kmcomposerwin.cpp:2816 editor/kmcomposerwin.cpp:2830
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "Poslat tak, jak j&e"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2817
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
-msgstr "Zadat před&mět zprávy"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2827
 #, kde-format
@@ -2289,11 +2287,10 @@ msgid "No Subject Specified"
 msgstr "Nebyl zadán předmět"
 
 #: editor/kmcomposerwin.cpp:2831
-#, fuzzy, kde-format
-#| msgid "&Specify the Subject"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
-msgstr "Zadat před&mět zprávy"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2876
 #, kde-format
@@ -2314,18 +2311,16 @@ msgid "Send Confirmation"
 msgstr "Potvrzení odeslání"
 
 #: editor/kmcomposerwin.cpp:3064
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
-msgstr "&Poslat nyní"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3065
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
-msgstr "Poslat &později"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3140
 #, kde-format
@@ -2340,18 +2335,16 @@ msgid "Too many recipients"
 msgstr "Příliš mnoho příjemců"
 
 #: editor/kmcomposerwin.cpp:3142
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr "Po&slat tak, jak je"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3143
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
-msgstr "Upravit příj&emce"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3180
 #, kde-format
@@ -2366,11 +2359,10 @@ msgid "Lose the formatting?"
 msgstr "Zahodit formátování?"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr "Zahodit formátování"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3184
 #, kde-format
@@ -3459,8 +3451,7 @@ msgstr[1] "Odstranit identity"
 msgstr[2] "Odstranit identity"
 
 #: identity/identitypage.cpp:221
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Odst&ranit"
@@ -3963,18 +3954,16 @@ msgstr ""
 "souhrn)nebo jako samostatné zprávy?"
 
 #: kmcommands.cpp:926
-#, fuzzy, kde-format
-#| msgid "Send As Digest"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
-msgstr "Odeslat v jedné zprávě"
+msgstr ""
 
 #: kmcommands.cpp:927
-#, fuzzy, kde-format
-#| msgid "Send Individually"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
-msgstr "Odeslat jednotlivě"
+msgstr ""
 
 #: kmcommands.cpp:1314
 #, kde-format
@@ -4071,18 +4060,16 @@ msgid "Online/Offline"
 msgstr "Připojen/Odpojen"
 
 #: kmkernel.cpp:746
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
-msgstr "Pracovat připojen"
+msgstr ""
 
 #: kmkernel.cpp:747
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
-msgstr "Pracovat odpojen"
+msgstr ""
 
 #: kmkernel.cpp:771
 #, kde-format
@@ -4284,11 +4271,10 @@ msgid "Expire Folder"
 msgstr "Nechat vypršet složku"
 
 #: kmmainwidget.cpp:1455
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
-msgstr "N&echat vypršet"
+msgstr ""
 
 #: kmmainwidget.cpp:1472
 #, kde-format
@@ -4330,11 +4316,10 @@ msgid "Expire Old Messages?"
 msgstr "Nechat vypršet staré zprávy?"
 
 #: kmmainwidget.cpp:1554
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr "Vypršení"
+msgstr ""
 
 #: kmmainwidget.cpp:1579
 #, kde-format
@@ -4353,11 +4338,10 @@ msgid "Security Warning"
 msgstr "Bezpečnostní varování"
 
 #: kmmainwidget.cpp:1583
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
-msgstr "Načíst externí odkazy"
+msgstr ""
 
 #: kmmainwidget.cpp:1655
 #, kde-format
@@ -4831,11 +4815,10 @@ msgid "Mark Thread as &Important"
 msgstr "Označit vlákno jako Dů&ležité"
 
 #: kmmainwidget.cpp:3250
-#, fuzzy, kde-format
-#| msgid "Remove &Important Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
-msgstr "Odstranit značku vlákna Důlež&ité"
+msgstr ""
 
 #: kmmainwidget.cpp:3253
 #, kde-format
@@ -4843,11 +4826,10 @@ msgid "Mark Thread as &Action Item"
 msgstr "Označit vlákno j&ako Úkol"
 
 #: kmmainwidget.cpp:3256
-#, fuzzy, kde-format
-#| msgid "Remove &Action Item Thread Mark"
+#, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
-msgstr "Odstr&anit značku vlákna Úkol"
+msgstr ""
 
 #: kmmainwidget.cpp:3260
 #, kde-format
@@ -5310,11 +5292,10 @@ msgid "Security Warning"
 msgstr "Bezpečnostní varování"
 
 #: kmmainwidget.cpp:4775
-#, fuzzy, kde-format
-#| msgid "Use HTML"
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
-msgstr "Použít HTML"
+msgstr ""
 
 #: kmmainwidget.cpp:4921
 #, kde-format
@@ -5332,15 +5313,13 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Povolit sjednocené schránky?"
 
 #: kmmainwidget.cpp:4925
-#, fuzzy, kde-format
-#| msgid "Enable Unified Mailboxes"
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
-msgstr "Povolit sjednocené schránky"
+msgstr ""
 
 #: kmmainwidget.cpp:4926
-#, fuzzy, kde-format
-#| msgid "Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Zrušit"
@@ -5356,8 +5335,7 @@ msgid "Restart Akonadi"
 msgstr "Restartovat Akonadi"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Restartovat"
