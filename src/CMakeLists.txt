@@ -570,6 +570,10 @@ target_link_libraries(kmail
     KF6::WindowSystem
 )
 
+if(TARGET KF6::IconThemes)
+    target_link_libraries(kmail KF6::IconThemes)
+endif()
+
 if(BUILD_TESTING)
     add_subdirectory(autotests)
     add_subdirectory(tests)
