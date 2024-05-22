@@ -627,7 +627,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     hbox->addWidget(mDefaultDomainEdit);
     auto restoreDefaultDomainName = new QToolButton;
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
-    restoreDefaultDomainName->setToolTip(i18n("Restore default domain name"));
+    restoreDefaultDomainName->setToolTip(i18nc("@info:tooltip", "Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
     label = new QLabel(i18n("Defaul&t domain:"), tab);

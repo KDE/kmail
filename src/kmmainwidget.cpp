@@ -2934,7 +2934,7 @@ void KMMainWidget::setupActions()
     mAccountActionMenu->setText(i18n("Check Mail In"));
 
     mAccountActionMenu->setIconText(i18n("Check Mail"));
-    mAccountActionMenu->setToolTip(i18n("Check Mail"));
+    mAccountActionMenu->setToolTip(i18nc("@info:tooltip", "Check Mail"));
     actionCollection()->addAction(QStringLiteral("check_mail_in"), mAccountActionMenu);
     connect(mAccountActionMenu, &KActionMenu::triggered, this, &KMMainWidget::slotCheckMail);
 

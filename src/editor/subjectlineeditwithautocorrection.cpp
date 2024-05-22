@@ -13,7 +13,7 @@ SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *pa
     : PimCommon::LineEditWithAutoCorrection(parent, configFile)
 {
     setActivateLanguageMenu(false);
-    setToolTip(i18n("Set a subject for this message"));
+    setToolTip(i18nc("@info:tooltip", "Set a subject for this message"));
 }
 
 SubjectLineEditWithAutoCorrection::~SubjectLineEditWithAutoCorrection() = default;

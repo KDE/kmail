@@ -195,9 +195,9 @@ void AttachmentView::slotShowHideAttchementList(bool show)
 {
     setVisible(show);
     if (show) {
-        mToolButton->setToolTip(i18n("Hide attachment list"));
+        mToolButton->setToolTip(i18nc("@info:tooltip", "Hide attachment list"));
     } else {
-        mToolButton->setToolTip(i18n("Show attachment list"));
+        mToolButton->setToolTip(i18nc("@info:tooltip", "Show attachment list"));
     }
 }
 

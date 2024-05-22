@@ -361,14 +361,14 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     sigController->suspend(); // we have to do identity change tracking ourselves due to the template code
 
     auto dictionaryCombo = new DictionaryComboBox(mHeadersArea);
-    dictionaryCombo->setToolTip(i18n("Select the dictionary to use when spell-checking this message"));
+    dictionaryCombo->setToolTip(i18nc("@info:tooltip", "Select the dictionary to use when spell-checking this message"));
     mComposerBase->setDictionary(dictionaryCombo);
 
     mFccFolder = new MailCommon::FolderRequester(mHeadersArea);
     mFccFolder->setNotAllowToCreateNewFolder(true);
     mFccFolder->setMustBeReadWrite(true);
 
-    mFccFolder->setToolTip(i18n("Select the sent-mail folder where a copy of this message will be saved"));
+    mFccFolder->setToolTip(i18nc("@info:tooltip", "Select the sent-mail folder where a copy of this message will be saved"));
     connect(mFccFolder, &MailCommon::FolderRequester::folderChanged, this, &KMComposerWin::slotFccFolderChanged);
     connect(mFccFolder, &MailCommon::FolderRequester::invalidFolder, this, &KMComposerWin::slotFccIsInvalid);
 
@@ -376,7 +376,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 #if HAVE_ACTIVITY_SUPPORT
     transport->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
 #endif
-    transport->setToolTip(i18n("Select the outgoing account to use for sending this message"));
+    transport->setToolTip(i18nc("@info:tooltip", "Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
     connect(transport, &MailTransport::TransportComboBox::activated, this, &KMComposerWin::slotTransportChanged);
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
@@ -384,7 +384,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEdtFrom->installEventFilter(this);
     mEdtFrom->setObjectName("fromLine"_L1);
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
-    mEdtFrom->setToolTip(i18n("Set the \"From:\" email address for this message"));
+    mEdtFrom->setToolTip(i18nc("@info:tooltip", "Set the \"From:\" email address for this message"));
 
     auto recipientsEditor = new MessageComposer::RecipientsEditor(mHeadersArea);
     recipientsEditor->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
@@ -1411,7 +1411,7 @@ void KMComposerWin::setupActions()
     mMarkupAction = new KToggleAction(i18n("Rich Text Editing"), this);
     mMarkupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
     mMarkupAction->setIconText(i18n("Rich Text"));
-    mMarkupAction->setToolTip(i18n("Toggle rich text editing mode"));
+    mMarkupAction->setToolTip(i18nc("@info:tooltip", "Toggle rich text editing mode"));
     actionCollection()->addAction(QStringLiteral("html"), mMarkupAction);
     connect(mMarkupAction, &KToggleAction::triggered, this, &KMComposerWin::slotToggleMarkup);
 
@@ -1500,7 +1500,7 @@ void KMComposerWin::setupActions()
     mCryptoModuleAction = new KSelectAction(i18n("&Cryptographic Message Format"), this);
     actionCollection()->addAction(QStringLiteral("options_select_crypto"), mCryptoModuleAction);
     connect(mCryptoModuleAction, &KSelectAction::indexTriggered, this, &KMComposerWin::slotCryptoModuleSelected);
-    mCryptoModuleAction->setToolTip(i18n("Select a cryptographic format for this message"));
+    mCryptoModuleAction->setToolTip(i18nc("@info:tooltip", "Select a cryptographic format for this message"));
     mCryptoModuleAction->setItems(listCryptoFormat);
 
     mComposerBase->editor()->createActions(actionCollection());

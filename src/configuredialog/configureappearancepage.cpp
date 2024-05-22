@@ -842,7 +842,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
 
     // "Close message window after replying or forwarding" check box:
     populateCheckBox(mCloseAfterReplyOrForwardCheck = new QCheckBox(this), MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
-    mCloseAfterReplyOrForwardCheck->setToolTip(i18n("Close the standalone message window after replying or forwarding the message"));
+    mCloseAfterReplyOrForwardCheck->setToolTip(i18nc("@info:tooltip", "Close the standalone message window after replying or forwarding the message"));
     readerBoxLayout->addWidget(mCloseAfterReplyOrForwardCheck);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCloseAfterReplyOrForwardCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -975,12 +975,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     addremovegrid->addWidget(mTagAddLineEdit);
 
     mTagAddButton = new QPushButton(mTagsGroupBox);
-    mTagAddButton->setToolTip(i18n("Add new tag"));
+    mTagAddButton->setToolTip(i18nc("@info:tooltip", "Add new tag"));
     mTagAddButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
     addremovegrid->addWidget(mTagAddButton);
 
     mTagRemoveButton = new QPushButton(mTagsGroupBox);
-    mTagRemoveButton->setToolTip(i18n("Remove selected tag"));
+    mTagRemoveButton->setToolTip(i18nc("@info:tooltip", "Remove selected tag"));
     mTagRemoveButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
     addremovegrid->addWidget(mTagRemoveButton);
 
@@ -989,13 +989,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     tageditgrid->addLayout(updowngrid);
 
     mTagUpButton = new QPushButton(mTagsGroupBox);
-    mTagUpButton->setToolTip(i18n("Increase tag priority"));
+    mTagUpButton->setToolTip(i18nc("@info:tooltip", "Increase tag priority"));
     mTagUpButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
     mTagUpButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagUpButton);
 
     mTagDownButton = new QPushButton(mTagsGroupBox);
-    mTagDownButton->setToolTip(i18n("Decrease tag priority"));
+    mTagDownButton->setToolTip(i18nc("@info:tooltip", "Decrease tag priority"));
     mTagDownButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
     mTagDownButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagDownButton);
