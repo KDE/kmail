@@ -5,6 +5,7 @@
 */
 
 #include "activitiesmanager.h"
+#include "accountactivities.h"
 #include "identityactivities.h"
 #include "kmail_activities_debug.h"
 #include "ldapactivities.h"
@@ -18,6 +19,7 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
     , mIdentityActivities(new IdentityActivities(this))
     , mLdapActivities(new LdapActivities(this))
     , mActivitiesConsumer(new KActivities::Consumer(this))
+    , mAccountActivities(new AccountActivities(this))
 {
     connect(mActivitiesConsumer, &KActivities::Consumer::currentActivityChanged, this, [this](const QString &activityId) {
         qCDebug(KMAIL_ACTIVITIES_LOG) << " switch to activity " << activityId;
@@ -35,6 +37,7 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
         Q_EMIT mIdentityActivities->activitiesChanged();
         Q_EMIT mTransportActivities->activitiesChanged();
         Q_EMIT mLdapActivities->activitiesChanged();
+        Q_EMIT mAccountActivities->activitiesChanged();
     });
 }
 

@@ -349,6 +349,9 @@ if (TARGET Plasma::Activities)
 
 	activities/ldapactivities.cpp
 	activities/ldapactivities.h
+
+	activities/accountactivities.h
+	activities/accountactivities.cpp
     )
     if (BUILD_TESTING)
        add_subdirectory(activities/autotests)

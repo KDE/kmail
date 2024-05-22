@@ -14,6 +14,7 @@ class Consumer;
 class TransportActivities;
 class IdentityActivities;
 class LdapActivities;
+class AccountActivities;
 class KMAILTESTS_TESTS_EXPORT ActivitiesManager : public QObject
 {
     Q_OBJECT
@@ -42,5 +43,6 @@ private:
     IdentityActivities *const mIdentityActivities;
     LdapActivities *const mLdapActivities;
     KActivities::Consumer *const mActivitiesConsumer;
+    AccountActivities *const mAccountActivities;
     bool mEnabled = false;
 };
