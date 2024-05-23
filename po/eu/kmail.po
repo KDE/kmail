@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-04 20:49+0200\n"
+"PO-Revision-Date: 2024-05-19 12:03+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -544,7 +544,7 @@ msgstr "Ikusi"
 #: collectionpage/collectionviewpage.cpp:57
 #, kde-format
 msgid "Use custom &icons"
-msgstr "Erabili norberak finkatutako &ikonoak"
+msgstr "Erabili neurrira ipinitako &ikonoak"
 
 #: collectionpage/collectionviewpage.cpp:61
 #, kde-format
@@ -768,7 +768,7 @@ msgstr "Inprimatze-irteerakoa"
 #: configuredialog/configureappearancepage.cpp:149
 #, kde-format
 msgid "&Use custom fonts"
-msgstr "&Erabili letra-tipo pertsonalizatua"
+msgstr "&Erabili neurrira ipinitako letra-tipoa"
 
 #: configuredialog/configureappearancepage.cpp:171
 #, kde-format
@@ -822,7 +822,7 @@ msgstr "HTML egoera-barraren aurreko planoa - HTML mezua"
 #: configuredialog/configureappearancepage.cpp:325
 #, kde-format
 msgid "&Use custom colors"
-msgstr "&Erabili kolore pertsonalizatua"
+msgstr "&Erabili neurrira ipinitako koloreak"
 
 #: configuredialog/configureappearancepage.cpp:333
 #, kde-format
@@ -899,7 +899,7 @@ msgstr "Formatu adi&menduna (%1)"
 
 #: configuredialog/configureappearancepage.cpp:605
 msgid "C&ustom format:"
-msgstr "Norberak finkat&utako formatua:"
+msgstr "Ne&urrira ipintako formatua:"
 
 #: configuredialog/configureappearancepage.cpp:632
 #, kde-format
@@ -1070,7 +1070,7 @@ msgstr "Txantiloi estandarrak"
 #: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgid "Custom Templates"
-msgstr "Norberak finkatutako txantiloiak"
+msgstr "Neurrira ipinitako txantiloiak"
 
 #: configuredialog/configurecomposerpage.cpp:84
 #, kde-format
@@ -1396,17 +1396,17 @@ msgstr "Birbidaltzearen aurrizkia:"
 #: configuredialog/configurecomposerpage.cpp:783
 #, kde-format
 msgid "&Use custom message-id suffix"
-msgstr "&Erabili mezu-ID atzizki pertsonalizatua"
+msgstr "&Erabili neurrira ipinitako mezu-ID atzizkia"
 
 #: configuredialog/configurecomposerpage.cpp:799
 #, kde-format
 msgid "Custom message-&id suffix:"
-msgstr "Mezu-&ID atzizki pertsonalizatua:"
+msgstr "Neurrira ipinitako mezu-&ID atzizkia:"
 
 #: configuredialog/configurecomposerpage.cpp:811
 #, kde-format
 msgid "Define custom mime header fields:"
-msgstr "Zehaztu mime goiburuen eremu pertsonalizatuak:"
+msgstr "Definitu neurrira ipinitako goiburuko MIME eremuak:"
 
 #: configuredialog/configurecomposerpage.cpp:819
 #, kde-format
@@ -1967,7 +1967,7 @@ msgstr "&Eskatu jakinarazpena eskuratzean"
 #: editor/kmcomposerwin.cpp:1380
 #, kde-format
 msgid "&Request Delivery Confirmation"
-msgstr "Entrega berresteko eskae&ra"
+msgstr "Entrega baieztatzeko eskae&ra"
 
 #: editor/kmcomposerwin.cpp:1385
 #, kde-format
@@ -2682,7 +2682,7 @@ msgstr "Galdetu bidali aurretik"
 #: editor/validatesendmailshortcut.cpp:34
 #, kde-format
 msgid "Sending Without Confirmation"
-msgstr "Berrespenik gabe bidaltzea"
+msgstr "Baieztapenik gabe bidaltzea"
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:41
 #, kde-format
@@ -3342,7 +3342,7 @@ msgstr ""
 #: identity/identitydialog.cpp:656
 #, kde-format
 msgid "&Use custom message templates for this identity"
-msgstr "Era&bili norberak finkatutako mezu-txantiloiak nortasun honetarako"
+msgstr "Era&bili neurrira ipinitako mezu-txantiloiak nortasun honetarako"
 
 #: identity/identitydialog.cpp:670
 #, kde-format
@@ -3447,8 +3447,8 @@ msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
-"Nortasunerako norberak egindako karpeta ez dago; hori dela eta, "
-"lehenetsitako karpetak erabiliko dira."
+"Nortasunerako neurrira ipinitako karpetaren bat (jada) ez dago; hori dela "
+"eta, lehenetsitako karpetak erabiliko dira."
 
 #: identity/identitydialog.cpp:1165
 #, kde-format
@@ -3493,7 +3493,7 @@ msgstr "Benetan utzi nahi duzu bertan behera?"
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
-msgstr "Berrespena"
+msgstr "Baieztapena"
 
 #: identity/identityeditvcarddialog.cpp:126
 #, kde-format
@@ -4032,9 +4032,7 @@ msgstr "Fitxategiak ez du mezurik."
 #: kmcommands.cpp:811
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
-msgstr ""
-"Fitxategiak mezu bat baino gehiago ditu. Lehenengo mezua erakutsiko da "
-"bakarrik."
+msgstr "Fitxategiak hainbat mezu ditu. Lehenengo mezua bakarrik erakustan da."
 
 #: kmcommands.cpp:922
 #, kde-format
@@ -4042,7 +4040,7 @@ msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
-"Hautatutako mezuak mezu batean eranskin moduan (MIME laburpen gisa) edo "
+"Hautatutako mezuak mezu bakarrean eranskin gisa (MIME bilduma gisa) edo "
 "banakako mezu gisa birbidali nahi dituzu?"
 
 #: kmcommands.cpp:926
@@ -4360,7 +4358,7 @@ msgstr "<qt>Ziur zaude <b>%1</b> karpeta iraungitzea nahi duzula?</qt>"
 #: kmmainwidget.cpp:1455
 #, kde-format
 msgid "Expire Folder"
-msgstr "Iraungitu karpeta"
+msgstr "Iraungi karpeta"
 
 #: kmmainwidget.cpp:1455
 #, kde-format
@@ -5338,8 +5336,8 @@ msgstr ""
 "E-posta helbide bat baino gehiago ezarria duzu.\n"
 "Postontzi bateratuen ezaugarria gaitu nahi duzu, sarrerako ontzi, bidalita "
 "eta zirriborro karpetetan?\n"
-"Postontzi bateratuak konfiguratu, zuk nahi dituzun erakoak sortu\n"
-"eta erabat ezgaitu ditzakezu KMail-en pluginen ezarpenetan."
+"«KMail»en pluginen ezarpenetan, postontzi bateratuak konfiguratu,\n"
+"neurrira ipinitakoak sor ditzakezu edo ezaugarria erabat ezgaitu dezakezu."
 
 #: kmmainwidget.cpp:4924
 #, kde-format
@@ -6246,8 +6244,8 @@ msgid ""
 "Specifies the number of custom MIME header fields to be inserted in messages "
 "(for internal use only)"
 msgstr ""
-"Mezuetan sartu beharreko MIME-goiburu eremu pertsonalizatuen kopurua(barneko "
-"erabilerarako bakarrik)"
+"Mezuetan sartu beharreko, neurrira ipinitako goiburuko MIME-eremu kopurua "
+"zehazten du (barneko erabilerarako bakarrik)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg.in:111
@@ -6269,7 +6267,7 @@ msgstr "Hustu zakarrontzi karpeta lokala programatik irtetean"
 #: settings/kmail.kcfg.in:119
 #, kde-format
 msgid "Delete messages without confirmation"
-msgstr "Ezabatu mezuak berrespenik gabe"
+msgstr "Ezabatu mezuak baieztapenik gabe"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg.in:123
@@ -6348,8 +6346,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
-"Hartzaile kopurua balio hau baino handiagoa bada, KMail-ek abisua eman eta "
-"berresteko eskatuko du bidali aurretik. Abisua itzal daiteke."
+"Hartzaile kopurua balio hau baino handiagoa bada, «KMail»ek abisua eman eta "
+"bidali aurretik baieztatzea eskatuko du. Abisua itzal daiteke."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:212
@@ -6958,7 +6956,7 @@ msgstr "Ireki karpeta hau abiat&zean:"
 #: ui/miscpagemaintab.ui:180
 #, kde-format
 msgid "Allow deleting messages without confirmation"
-msgstr "Utzi mezuak berrespenik gabe ezabatzen"
+msgstr "Baimendu mezuak baieztapenik gabe ezabatzea"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
 #: ui/miscpagemaintab.ui:187
