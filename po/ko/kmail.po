@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2024-02-24 22:07+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -963,7 +963,11 @@ msgid "Message Window"
 msgstr "메시지 창"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "메시지에 답장을 쓰거나 전달한 후 단독 메시지 창 닫기"
@@ -997,22 +1001,30 @@ msgid "A&vailable Tags"
 msgstr "사용 가능한 태그(&V)"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "새 태그 추가"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "선택한 태그 삭제"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "태그 중요도 증가"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "태그 중요도 감소"
 
@@ -1207,12 +1219,16 @@ msgstr ""
 "- 읽음 확인 요청\"에서 변경할 수 있습니다"
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "받는 사람이 너무 많을 때 알림"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the maximum number of recipients for the warning"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "받는 사람이 다음보다 많을 때 알림"
 
@@ -1745,12 +1761,16 @@ msgid_plural "%1 attachments (%2)"
 msgstr[0] "첨부 %1개(%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "첨부 파일 목록 숨기기"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "첨부 파일 목록 표시"
 
@@ -1761,22 +1781,31 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "이 메시지의 맞춤법 검사 사전 선택"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "이 메시지의 사본을 저장할 보낸 편지함 폴더 선택"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "이 메시지를 보낼 계정 선택"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "이 메시지의 \"보낸 사람\" 주소 설정"
 
@@ -1980,7 +2009,9 @@ msgid "Rich Text"
 msgstr "서식 있는 텍스트"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle rich text editing mode"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "서식 있는 텍스트 편집 모드 전환"
 
@@ -2078,7 +2109,9 @@ msgid "&Cryptographic Message Format"
 msgstr "암호화 메시지 형식(&C)"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "이 메시지의 암호화 형식 선택"
 
@@ -2664,7 +2697,9 @@ msgid "Send Now"
 msgstr "지금 보내기"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "이 메시지의 제목 설정"
 
@@ -3323,7 +3358,9 @@ msgid "Autocorrection language:"
 msgstr "자동 고침 언어:"
 
 #: identity/identitydialog.cpp:630
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Restore default domain name"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "기본 도메인 이름 복원"
 
@@ -4674,8 +4711,15 @@ msgstr "메일 확인(&M)"
 msgid "Check Mail In"
 msgstr "다음에서 메일 확인"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "메일 확인"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "메일 확인"
 

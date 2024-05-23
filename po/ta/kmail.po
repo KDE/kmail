@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2024-05-19 17:18+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -978,7 +978,11 @@ msgid "Message Window"
 msgstr "அஞ்சல் சாளரம்"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1014,22 +1018,30 @@ msgid "A&vailable Tags"
 msgstr "&இப்போதுள்ள குறிச்சொற்கள்"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "புதிய குறிச்சொல்லை சேர்"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "தேர்ந்தெடுத்த குறிச்சொல்லை நீக்கு"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "குறிச்சொல்லின் முன்னிலையை கூட்டு"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "குறிச்சொல்லின் முன்னிலையை குறை"
 
@@ -1229,12 +1241,16 @@ msgstr ""
 "இதனை இயக்கலாம்."
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "அதிகப்படியான பெறுநர்கள் இருந்தால் எச்சரி"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the maximum number of recipients for the warning"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "எத்தனை பெறுநர்களுக்கு மேல் இருந்தால் எச்சரிக்க வேண்டுமென்பதை அமையுங்கள்"
 
@@ -1763,12 +1779,16 @@ msgstr[0] "1 உடனிணைப்பு (%2)"
 msgstr[1] "%1 உடனிணைப்புகள் (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "உடனிணைப்புகளின் பட்டியலை மறை"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "உடனிணைப்புகளின் பட்டியலை காட்டு"
 
@@ -1779,24 +1799,33 @@ msgid "KMail2"
 msgstr "கேமெயில் 2"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 "இவ்வஞ்சலின் எழுத்தாக்கத்தை சரிபாரக்கும்போது பயன்படுத்த வேண்டிய அகரமுதலியை தேர்ந்தெடுங்கள்"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "இந்த அஞ்சலை அனுப்பிய பின் அதன் நகல் எந்த அடைவில் சேமிக்கப்பட வேண்டுமென தேர்ந்தெடுங்கள்"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "இந்த அஞ்சலை அனுப்ப பயன்படுத்த வேண்டிய வெளிசெல்லும் கணக்கை தேர்ந்தெடுங்கள்"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "இந்த அஞ்சலுக்கான \"அனுப்புநர்\" முகவரியை இடுங்கள்"
 
@@ -1995,7 +2024,9 @@ msgid "Rich Text"
 msgstr "மேம்பட்ட உரை"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle rich text editing mode"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "மேம்பட்ட உரைத்திருத்த முறையை (rich text-ஐ) இயக்கு/முடக்கு"
 
@@ -2089,7 +2120,9 @@ msgid "&Cryptographic Message Format"
 msgstr "மறையாக்கம் செய்யும் &வடிவம்"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "இவ்வஞ்சலை மறையாக்கம் செய்யும் வித‍த்தை தேர்ந்தெடுங்கள்"
 
@@ -2649,7 +2682,9 @@ msgid "Send Now"
 msgstr "இப்போதே அனுப்பு"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "இவ்வஞ்சலின் தலைப்பை (பொருளை) இங்கு உள்ளிடுங்கள்"
 
@@ -3296,7 +3331,9 @@ msgid "Autocorrection language:"
 msgstr "தான்திருத்த மொழி:"
 
 #: identity/identitydialog.cpp:630
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Restore default domain name"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "இயல்பிருப்பு ஆள்கள பெயரை மீட்டமை"
 
@@ -4648,8 +4685,15 @@ msgstr "அஞ்சலுள்ளதா &என பார்"
 msgid "Check Mail In"
 msgstr "இதில் அஞ்சலுள்ளதா என பார்"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "அஞ்சலுள்ளதா என பார்"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "அஞ்சலுள்ளதா என பார்"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -1029,7 +1029,11 @@ msgid "Message Window"
 msgstr "Fereastra de mesaje"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1065,22 +1069,30 @@ msgid "A&vailable Tags"
 msgstr "&Etichete disponibile"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Adaugă marcaj nou"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Elimină marcajul ales"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Mărește prioritatea marcajului"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Micșorează pioritatea marcajului"
 
@@ -1300,12 +1312,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Atenționează dacă sunt specificați prea mulți destinatari"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the maximum number of recipients for the warning"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Stabilește numărul maxim de destinatari pentru avertizare"
 
@@ -1866,12 +1882,16 @@ msgstr[1] "%1 atașamente (%2)"
 msgstr[2] "%1 de atașamente (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Ascunde lista atașamentelor"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Arată lista atașamentelor"
 
@@ -1883,25 +1903,34 @@ msgid "KMail2"
 msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 "Alegeți dicționarul de utilizat la verificarea ortografică a acestui mesaj"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "Alegeți dosarul cu scrisori expediate în care va fi salvată o copie a "
 "acestui mesaj"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Alegeți contul de trimitere utilizat la expedierea acestui mesaj"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Stabiliți adresa „De la:” pentru acest mesaj"
 
@@ -2108,7 +2137,9 @@ msgid "Rich Text"
 msgstr "Text complex"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle rich text editing mode"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Comută regimul de redactare a textului complex"
 
@@ -2206,7 +2237,9 @@ msgid "&Cryptographic Message Format"
 msgstr "Format mesaj &criptografic"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Alegeți un format criptografic pentru acest mesaj"
 
@@ -2785,7 +2818,9 @@ msgid "Send Now"
 msgstr "Trimite acum"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Stabilește subiectul mesajului"
 
@@ -3509,6 +3544,7 @@ msgstr "Limba pentru corecție automată:"
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Domeniu &implicit:"
 
@@ -4982,8 +5018,15 @@ msgstr "Verifică &poșta"
 msgid "Check Mail In"
 msgstr "Verifică poșta în"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "Verifică poșta"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Verifică poșta"
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1010,7 +1010,11 @@ msgid "Message Window"
 msgstr "បង្អួច​សារ"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "បិទ​​បង្អួច​សារ​តែ​ឯង​បន្ទាប់ពី​ឆ្លើយតប​ ឬ​បញ្ជូនសារ​បន្ត"
@@ -1045,22 +1049,30 @@ msgid "A&vailable Tags"
 msgstr "ស្លាក​ដែលមាន"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "បន្ថែម​ស្លាក​ថ្មី"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "យក​ស្លាក​ដែល​បាន​ជ្រើស​ចេញ"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "បង្កើន​អាទិភាព​ស្លាក"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "បន្ថយ​អាទិភាព​ស្លាក"
 
@@ -1271,13 +1283,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "ព្រមាន ប្រសិនបើ​មាន​អ្នក​ទទួល​ច្រើន​ត្រូវ​បាន​បញ្ជាក់"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្នក​ទទួល​​ច្រើន​ជាង"
 
@@ -1836,12 +1851,16 @@ msgid_plural "%1 attachments (%2)"
 msgstr[0] "%1 ឯកសារ​ភ្ជាប់ (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "លាក់​បញ្ជី​ឯកសារភ្ជាប់"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "បង្ហាញ​បញ្ជី​ឯកសារ​​ភ្ជាប់"
 
@@ -1853,22 +1872,31 @@ msgid "KMail2"
 msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "ជ្រើស​វចនានុក្រម​ ដើម្បី​ប្រើនៅពេល​ពិនិត្យ​អក្ខរាវិរុទ្ធ​សារ​នេះ"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "ជ្រើស​ថត​សំបុត្រ​បានផ្ញើ​ ជា​កន្លែ​ង​ដែល​ច្បាប់​ចម្លង​សារ​នេះ​​នឹងត្រូវ​​បានរក្សាទុក"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "ជ្រើស​គណនី​ចេញ​ ដើម្បីប្រើ​សម្រាប់​សារ​នេះ"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "កំណត់​អាសយដ្ឋាន​ \"មក​ពី ៖\" សម្រាប់​សារ​នេះ"
 
@@ -2075,9 +2103,11 @@ msgid "Rich Text"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Lose Formatting"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "បាត់បង់​ការ​ធ្វើ​ទ្រង់ទ្រាយ"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2173,7 +2203,9 @@ msgid "&Cryptographic Message Format"
 msgstr "​ទ្រង់ទ្រាយ​សារ​គ្រីប"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "ជ្រើស​ទ្រង់ទ្រាយរហស្សលេខ​សម្រាប់​សារ​នេះ"
 
@@ -2724,7 +2756,9 @@ msgid "Send Now"
 msgstr "​ផ្ញើ​ឥឡូវ"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "កំណត់​ប្រធានបទ​សម្រាប់​សារ​នេះ"
 
@@ -3417,6 +3451,7 @@ msgstr "ភាសា​​ការ​កែ​ស្វ័យប្រវត្
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "ដែន​លំនាំដើម ៖"
 
@@ -4823,8 +4858,15 @@ msgstr "ពិនិត្យ​សំបុត្រ"
 msgid "Check Mail In"
 msgstr "ពិនិត្យ​សំបុត្រ​នៅ​ក្នុង"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "ពិនិត្យ​សំបុត្រ"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "ពិនិត្យ​សំបុត្រ"
 

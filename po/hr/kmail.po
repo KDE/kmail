@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -1036,6 +1036,7 @@ msgstr "Popisa poruka"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1070,23 +1071,27 @@ msgid "A&vailable Tags"
 msgstr "Postojeći Filteri"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Add new tag"
-msgstr ""
+msgstr "Dodaj korisnički račun"
 
 #: configuredialog/configureappearancepage.cpp:983
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Ukloni duplicirane poruke"
 
 #: configuredialog/configureappearancepage.cpp:992
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:998
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
@@ -1278,12 +1283,14 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr ""
+msgstr "<primatelji>"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Upozori ako koreni certifikat ističe za &manje od"
 
@@ -1858,11 +1865,13 @@ msgstr[2] "Prilog: %1"
 
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Snimi prilog kao"
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Pogledaj prilog: "
 
@@ -1877,23 +1886,29 @@ msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Odaberite mapu poslane pošte gdje će se spremiti kopija ove poruke"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "&Ukloni"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr ""
+msgstr "Postavi temu poruke."
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2100,6 +2115,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr ""
 
@@ -2196,9 +2212,10 @@ msgid "&Cryptographic Message Format"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr ""
+msgstr "&Ukloni"
 
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
@@ -2729,6 +2746,7 @@ msgstr "Pošalji odmah"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Postavi temu poruke."
 
@@ -3367,6 +3385,7 @@ msgstr "Odaberite &jezik:"
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Podra&zumijevana domena:"
 
@@ -4745,8 +4764,15 @@ msgstr "Provjeri &poštu"
 msgid "Check Mail In"
 msgstr "Provjeri poštu u"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "Provjeri poštu"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Provjeri poštu"
 
@@ -8550,10 +8576,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "GnuPG Log Viewer"
 #~ msgstr "Preglednik filtara i &logova..."
-
-#, fuzzy
-#~ msgid "Select an identity for this message"
-#~ msgstr "&Ukloni"
 
 #, fuzzy
 #~| msgid "Message Body"

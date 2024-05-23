@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1087,7 +1087,11 @@ msgid "Message Window"
 msgstr "پنجره پیام‌"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "بستن پنجره‌ی خوداتکای پیام پس از پاسخ دادن یا پیش‌سو کردن پیام"
@@ -1123,23 +1127,30 @@ msgstr "برچسبهای &موجود‌"
 
 #: configuredialog/configureappearancepage.cpp:978
 #, fuzzy, kde-format
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "افزودن برچسب جدید..."
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "حذف برچسب برگزیده"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "افزایش اولویت برچسب"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
-msgstr ""
+msgstr "افزایش اولویت برچسب"
 
 #: configuredialog/configureappearancepage.cpp:1022
 #, kde-format
@@ -1334,13 +1345,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No recipients"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr ""
+msgstr "گیرنده‌ای وجود ندارد"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Maximum number of recipient editor lines."
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "تعداد بیشینه خطوط ویرایشگر گیرنده."
 
@@ -1914,12 +1928,14 @@ msgstr[1] ""
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "ذخیره پیوست به عنوان"
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "ذخیره پیوست به عنوان"
 
@@ -1932,23 +1948,29 @@ msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use &Default Identity"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "استفاده از هویت &پیش‌فرض‌"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr ""
+msgstr "تنظیم موضوع پیام"
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2160,9 +2182,11 @@ msgid "Rich Text"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Login Information"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "اطلاعات ورود"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2259,9 +2283,11 @@ msgid "&Cryptographic Message Format"
 msgstr "قالب پیام &نهفته‌"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use &Default Identity"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr ""
+msgstr "استفاده از هویت &پیش‌فرض‌"
 
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
@@ -2840,6 +2866,7 @@ msgstr "هم اکنون ارسال شود"
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
 #| msgid "Set subject of message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "تنظیم موضوع پیام"
 
@@ -3570,6 +3597,7 @@ msgstr "انتخاب &زبان:‌"
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "دامنه &پیش‌فرض:‌"
 
@@ -5018,9 +5046,16 @@ msgstr "بررسی &نامه‌"
 msgid "Check Mail In"
 msgstr "بررسی &نامه‌"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
+msgid "Check Mail"
+msgstr "بررسی &نامه‌"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check &Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "بررسی &نامه‌"
 
@@ -9254,11 +9289,6 @@ msgstr "بزرگ‌نمایی"
 #~| msgid "GnuPG Log Viewer..."
 #~ msgid "GnuPG Log Viewer"
 #~ msgstr "مشاهده‌گر ثبت GnuPG"
-
-#, fuzzy
-#~| msgid "Use &Default Identity"
-#~ msgid "Select an identity for this message"
-#~ msgstr "استفاده از هویت &پیش‌فرض‌"
 
 #, fuzzy
 #~| msgid "%1 match (%2)"

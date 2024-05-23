@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -971,7 +971,11 @@ msgid "Message Window"
 msgstr "Məktub pəncərəsi"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1007,22 +1011,30 @@ msgid "A&vailable Tags"
 msgstr "Mö&vcud yarlıqlar"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Yeni yarlıq əlavə edin"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Seçilmiş yarlığı silin"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Yarlığın üstünlüyünü artırın"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Yarlığın üstünlüyünü azaldın"
 
@@ -1222,12 +1234,16 @@ msgstr ""
 "edərək hər məktub üçün seçə billərsiniz."
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Alıcıların say həddini aşıldıqda xəbərdar etmək"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the maximum number of recipients for the warning"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Xəbərdarlıq üçün ən çox alıcı sayını təyin edin"
 
@@ -1773,12 +1789,16 @@ msgstr[0] "1 qoşma (%2)"
 msgstr[1] "%1 qoşma (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Qoşmalar siyahısını gizlətmək"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Qoşmalar siyahısını göstərmək"
 
@@ -1789,22 +1809,31 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Bu məktubun orfoqrafiya yoxlaması üçün lüğəti seçin"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Bu məktubun bir nüsxəsi saxlanılacaq göndərilən-poçt qovluğunu seçin"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Bu məktubu göndərmək üçün istifadə ediləcək göndərən hesabı seçin"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "\"Kimdən:\" sahəsində e-poçt ünvanını göstərin"
 
@@ -2008,7 +2037,9 @@ msgid "Rich Text"
 msgstr "Formatlama ilə mətn"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle rich text editing mode"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Formatlama ilə düzəliş rejiminə keçid"
 
@@ -2106,7 +2137,9 @@ msgid "&Cryptographic Message Format"
 msgstr "&Şifrələnmiş məktub formatı"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Bu məktub üçün şifrələmə formatını seçin"
 
@@ -2705,7 +2738,9 @@ msgid "Send Now"
 msgstr "İndi göndərin"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Bu məktubun başlığını göstərin"
 
@@ -3377,7 +3412,9 @@ msgid "Autocorrection language:"
 msgstr "Avtodüzəltmə üçün dil:"
 
 #: identity/identitydialog.cpp:630
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Restore default domain name"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Standart domen adını bərpa edin:"
 
@@ -4774,8 +4811,15 @@ msgstr "Poçtu &Yoxlayın"
 msgid "Check Mail In"
 msgstr "Qutudakı poçtu yoxlayın"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "Poçtu Yoxlayın"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Poçtu Yoxlayın"
 

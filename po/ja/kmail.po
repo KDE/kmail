@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1029,7 +1029,11 @@ msgid "Message Window"
 msgstr "メッセージウィンドウ"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Close the standalone message window after replying or forwarding the "
+#| "message"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1065,22 +1069,30 @@ msgid "A&vailable Tags"
 msgstr "利用可能なタグ(&V)"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "新しいタグを追加"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "選択したタグを削除"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "タグの優先順位を上げる"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "タグの優先順位を下げる"
 
@@ -1279,13 +1291,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "指定された受信者が多すぎる場合に警告します"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "受信者の数がこれより多い場合に警告する"
 
@@ -1846,12 +1861,14 @@ msgstr[0] "添付ファイルとして"
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "添付ファイル"
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
 #| msgid "Name of the attachment:"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "添付ファイル名:"
 
@@ -1863,22 +1880,31 @@ msgid "KMail2"
 msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "このメッセージのスペルチェックをするときに使用する辞書を選択"
 
 #: editor/kmcomposerwin.cpp:371
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select the sent-mail folder where a copy of this message will be saved"
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "このメッセージのコピーを保存する送信済みフォルダを選択"
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the outgoing account to use for sending this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "このメッセージを送信するのに使う送信用アカウントを選択"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "このメッセージの差し出しメールアドレス(From:)を設定"
 
@@ -2093,9 +2119,11 @@ msgid "Rich Text"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Lose Formatting"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "書式を失う"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2191,7 +2219,9 @@ msgid "&Cryptographic Message Format"
 msgstr "メッセージの暗号化法形式(&C)"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "このメッセージの暗号化フォーマットを選択"
 
@@ -2745,7 +2775,9 @@ msgid "Send Now"
 msgstr "今すぐ送信"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "メッセージの件名を設定"
 
@@ -3450,6 +3482,7 @@ msgstr ""
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "デフォルトのドメイン(&T):"
 
@@ -4881,8 +4914,16 @@ msgid "Check Mail In"
 msgstr "メールをチェック(&C)|/|$[~setProps ~label '受信']"
 
 # ACCELERATOR added by translator
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "すべてのメールをチェック(&M)|/|$[~setProps ~label '受信']"
+
+# ACCELERATOR added by translator
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "すべてのメールをチェック(&M)|/|$[~setProps ~label '受信']"
 

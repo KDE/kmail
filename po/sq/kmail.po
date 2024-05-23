@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -941,6 +941,7 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -974,22 +975,28 @@ msgid "A&vailable Tags"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Add..."
+msgctxt "@info:tooltip"
 msgid "Add new tag"
-msgstr ""
+msgstr "&Shto..."
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Remove"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
-msgstr ""
+msgstr "&Hiqe"
 
 #: configuredialog/configureappearancepage.cpp:992
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:998
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
@@ -1177,11 +1184,13 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 
@@ -1720,12 +1729,14 @@ msgstr[1] "Bashkangjitjet:"
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
 #| msgid "Attachments:"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Bashkangjitjet:"
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Ruaj të bashkangjiturit ..."
 
@@ -1738,21 +1749,25 @@ msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:387
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
@@ -1956,6 +1971,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr ""
 
@@ -2052,6 +2068,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1503
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr ""
 
@@ -2580,6 +2597,7 @@ msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr ""
 
@@ -3190,6 +3208,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:630
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr ""
 
@@ -4498,10 +4517,18 @@ msgstr ""
 msgid "Check Mail In"
 msgstr ""
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
 msgid "Check Mail"
 msgstr ""
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgctxt "type of folder content"
+#| msgid "Mail"
+msgctxt "@info:tooltip"
+msgid "Check Mail"
+msgstr "Posta"
 
 #: kmmainwidget.cpp:2941
 #, kde-format

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -952,6 +952,7 @@ msgstr "Reiveláse"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -986,21 +987,26 @@ msgstr "O&lámuttus gilkorat"
 
 #: configuredialog/configureappearancepage.cpp:978
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Váldde eret válljejuvvon gilkora"
 
 #: configuredialog/configureappearancepage.cpp:992
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:998
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
@@ -1189,11 +1195,13 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 
@@ -1720,14 +1728,20 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Config->Composer->Attachments"
+#| msgid "Attachments"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr ""
+msgstr "Mildosat"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Config->Composer->Attachments"
+#| msgid "Attachments"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr ""
+msgstr "Mildosat"
 
 #: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
@@ -1737,21 +1751,25 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:387
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
@@ -1957,6 +1975,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr ""
 
@@ -2055,6 +2074,7 @@ msgstr "&Kryptografálaš reiveformáhtta"
 
 #: editor/kmcomposerwin.cpp:1503
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr ""
 
@@ -2595,9 +2615,11 @@ msgid "Send Now"
 msgstr "Sádde dál"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr ""
+msgstr "Mearrit reivve fáttá"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -3206,9 +3228,11 @@ msgid "Autocorrection language:"
 msgstr ""
 
 #: identity/identitydialog.cpp:630
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
-msgstr ""
+msgstr "S&tandárddomeana:"
 
 #: identity/identitydialog.cpp:633
 #, kde-format
@@ -4516,10 +4540,17 @@ msgstr "Iskka &boastta"
 msgid "Check Mail In"
 msgstr ""
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
 msgid "Check Mail"
 msgstr ""
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check &Mail"
+msgctxt "@info:tooltip"
+msgid "Check Mail"
+msgstr "Iskka &boastta"
 
 #: kmmainwidget.cpp:2941
 #, kde-format

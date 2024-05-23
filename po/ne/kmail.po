@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1097,6 +1097,7 @@ msgstr "सन्देश सञ्झ्याल"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -1133,23 +1134,28 @@ msgid "A&vailable Tags"
 msgstr "उपलब्ध फिल्टर"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add Entry..."
+msgctxt "@info:tooltip"
 msgid "Add new tag"
-msgstr ""
+msgstr "प्रविष्टि थप्नुहोस्..."
 
 #: configuredialog/configureappearancepage.cpp:983
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "नक्कल सन्देश हटाउनुहोस्"
 
 #: configuredialog/configureappearancepage.cpp:992
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:998
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
@@ -1351,13 +1357,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No recipients"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr ""
+msgstr "कुनै पनि प्रापक छैनन्"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Maximum number of recipient editor lines."
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "प्रापक सम्पादक लाइनका सम्पादकको लागि अधिकतम सङ्ख्या ।"
 
@@ -1938,12 +1947,14 @@ msgstr[1] "सङ्लग्नता: %1"
 #: editor/attachment/attachmentview.cpp:198
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "यस रूपमा सङ्लग्नता बचत गर्नुहोस्"
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "यस रूपमा सङ्लग्नता बचत गर्नुहोस्"
 
@@ -1956,23 +1967,29 @@ msgstr "केडीई मेल"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove Identity"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "परिचय हटाउनुहोस्"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr ""
+msgstr "सन्देशको विषयवस्तु सेट गर्नुहोस्"
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2184,9 +2201,11 @@ msgid "Rich Text"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Login Information"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "लगइन जानकारी"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2282,9 +2301,11 @@ msgid "&Cryptographic Message Format"
 msgstr "गुप्तलेखन सन्देश ढाँचा"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove Identity"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr ""
+msgstr "परिचय हटाउनुहोस्"
 
 #: editor/kmcomposerwin.cpp:1508
 #, fuzzy, kde-format
@@ -2859,6 +2880,7 @@ msgstr "अहिले पठाउनुहोस्"
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
 #| msgid "Set subject of message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "सन्देशको विषयवस्तु सेट गर्नुहोस्"
 
@@ -3590,6 +3612,7 @@ msgstr "भाषा रोज्नुहोस्:"
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "पूर्वनिर्धारित डोमेन:"
 
@@ -5039,9 +5062,16 @@ msgstr "मेल जाँच गर्नुहोस्"
 msgid "Check Mail In"
 msgstr "मेल जाँच गर्नुहोस्"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, fuzzy, kde-format
 #| msgid "Check &Mail"
+msgid "Check Mail"
+msgstr "मेल जाँच गर्नुहोस्"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check &Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "मेल जाँच गर्नुहोस्"
 
@@ -9246,11 +9276,6 @@ msgstr ""
 #~| msgid "GnuPG Log Viewer..."
 #~ msgid "GnuPG Log Viewer"
 #~ msgstr "GnuPG कार्य दर्शक..."
-
-#, fuzzy
-#~| msgid "Remove Identity"
-#~ msgid "Select an identity for this message"
-#~ msgstr "परिचय हटाउनुहोस्"
 
 #, fuzzy
 #~ msgid "Image (%1)"

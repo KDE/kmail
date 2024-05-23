@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -1008,10 +1008,12 @@ msgid "Message Window"
 msgstr "Laiško polangis"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close message window after replying or forwarding"
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
-msgstr ""
+msgstr "Persiuntus ar atsakius į laišką, užverti to laiško langą"
 
 #: configuredialog/configureappearancepage.cpp:857
 #, kde-format
@@ -1043,22 +1045,30 @@ msgid "A&vailable Tags"
 msgstr "&Galimos žymės"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Pridėti naują žymę"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Remove selected tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Pašalinti pasirinktas žymes"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase tag priority"
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Padidinti žymės prioritetą"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease tag priority"
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Sumažinti žymės prioritetą"
 
@@ -1246,12 +1256,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Warn if too many recipients are specified"
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Perspėti, jeigu per daug gavėjų išvardinta"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the maximum number of recipients for the warning"
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Nustatyti didžiausią gavėjų skaičių šiam perspėjimui"
 
@@ -1811,12 +1825,16 @@ msgstr[2] "%1 priedų (%2)"
 msgstr[3] "%1 priedas (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Hide attachment list"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Slėpti priedų sąrašą"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show attachment list"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Rodyti priedų sąrašą"
 
@@ -1828,22 +1846,29 @@ msgid "KMail2"
 msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:364
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Parinkite žodyną, naudojamą šio laiško rašybos tikrinimui"
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the dictionary to use when spell-checking this message"
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "Parinkite žodyną, naudojamą šio laiško rašybos tikrinimui"
 
 #: editor/kmcomposerwin.cpp:387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set the \"From:\" email address for this message"
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Parinkti „From:“ (nuo) el. pašto adresą šiam laiškui"
 
@@ -2049,9 +2074,11 @@ msgid "Rich Text"
 msgstr "Raiškusis tekstas"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "Raiškiojo teksto redagavimas"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2147,7 +2174,9 @@ msgid "&Cryptographic Message Format"
 msgstr "&Kriptografinis laiško formatas"
 
 #: editor/kmcomposerwin.cpp:1503
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select a cryptographic format for this message"
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Pasirinkite šio laiško kriptografinį formatą"
 
@@ -2708,7 +2737,9 @@ msgid "Send Now"
 msgstr "Siųsti dabar"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set a subject for this message"
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Nustatyti temą šiam laiškui"
 
@@ -3386,7 +3417,9 @@ msgid "Autocorrection language:"
 msgstr "Automatinio taisymo kalba:"
 
 #: identity/identitydialog.cpp:630
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Restore default domain name"
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Atkurti numatytą domeno vardą:"
 
@@ -4821,8 +4854,15 @@ msgstr "&Tikrinti paštą"
 msgid "Check Mail In"
 msgstr "Tikrinti paštą iš"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "Tikrinti paštą"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Tikrinti paštą"
 
@@ -8834,9 +8874,6 @@ msgstr "Mastelis"
 #~| msgid "Never sign/encrypt when sa&ving as draft"
 #~ msgid "Always sign/encrypt when sa&ving as draft"
 #~ msgstr "Niekada nepasirašyti/nešifruoti tik iš&saugant kaip juodraštį"
-
-#~ msgid "Close message window after replying or forwarding"
-#~ msgstr "Persiuntus ar atsakius į laišką, užverti to laiško langą"
 
 #~ msgid ""
 #~ "Could not start GnuPG LogViewer (kwatchgnupg); please check your "

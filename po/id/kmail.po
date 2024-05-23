@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-17 00:39+0000\n"
+"POT-Creation-Date: 2024-05-23 00:39+0000\n"
 "PO-Revision-Date: 2023-06-08 19:02+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -932,6 +932,7 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
+msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
@@ -965,22 +966,29 @@ msgid "A&vailable Tags"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:978
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add new tag"
+msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Tambahkan tag baru"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Remove Tag"
+msgctxt "@info:tooltip"
 msgid "Remove selected tag"
-msgstr ""
+msgstr "Hapus Tag"
 
 #: configuredialog/configureappearancepage.cpp:992
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:998
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
@@ -1166,11 +1174,13 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 
@@ -1692,14 +1702,20 @@ msgstr[0] "1 lampiran (%2)"
 msgstr[1] "%1 lampiran (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "1 attachment (%2)"
+#| msgid_plural "%1 attachments (%2)"
+msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr ""
+msgstr "1 lampiran (%2)"
 
 #: editor/attachment/attachmentview.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "1 attachment (%2)"
+#| msgid_plural "%1 attachments (%2)"
+msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr ""
+msgstr "1 lampiran (%2)"
 
 #: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
@@ -1709,21 +1725,25 @@ msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:371
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:387
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
@@ -1928,6 +1948,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr ""
 
@@ -2024,6 +2045,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1503
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr ""
 
@@ -2557,6 +2579,7 @@ msgstr "Kirim"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr ""
 
@@ -3156,6 +3179,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:630
 #, kde-format
+msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr ""
 
@@ -4462,8 +4486,15 @@ msgstr "Periksa &Mail"
 msgid "Check Mail In"
 msgstr "Periksa Mail Di"
 
-#: kmmainwidget.cpp:2936 kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2936
 #, kde-format
+msgid "Check Mail"
+msgstr "Periksa Mail"
+
+#: kmmainwidget.cpp:2937
+#, fuzzy, kde-format
+#| msgid "Check Mail"
+msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Periksa Mail"
 
