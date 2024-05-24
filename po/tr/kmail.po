@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 00:39+0000\n"
-"PO-Revision-Date: 2024-05-17 13:31+0300\n"
+"PO-Revision-Date: 2024-05-23 14:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -976,10 +976,7 @@ msgid "Message Window"
 msgstr "İleti Penceresi"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1014,29 +1011,25 @@ msgid "A&vailable Tags"
 msgstr "K&ullanılabilir Etiketler"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Yeni etiket ekle"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Seçili etiketi kaldır"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Etiket önceliğini yükselt"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Etiket önceliğini düşür"
@@ -1234,15 +1227,13 @@ msgstr ""
 "→ İleti Okundu Bildirimi İste’ kullanarak her iletiye özel seçebilirsiniz"
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Çok fazla sayıda alıcı belirtildiğinde uyar"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Uyarı için en fazla alıcı sayısını ayarla"
@@ -1778,15 +1769,13 @@ msgstr[0] "1 ek (%2)"
 msgstr[1] "%1 ek (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Ek listesini gizle"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Ek listesini göster"
@@ -1798,33 +1787,28 @@ msgid "KMail2"
 msgstr "K Posta2"
 
 #: editor/kmcomposerwin.cpp:364
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr "Bu iletinin yazım denetimini yapmak için kullanılacak sözlüğü seçin"
+msgstr "Bu iletinin yazım denetimini yapmak için kullanılacak sözlüğü seç"
 
 #: editor/kmcomposerwin.cpp:371
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
-msgstr "Bu iletinin kaydedileceği gönderilmiş-posta klasörünü seçin"
+msgstr "Bu iletinin kaydedileceği gönderilmiş posta klasörünü seç"
 
 #: editor/kmcomposerwin.cpp:379
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "Bu iletiyi gönderirken kullanılacak olan hesabı seçin"
+msgstr "Bu iletiyi gönderirken kullanılacak olan hesabı seç"
 
 #: editor/kmcomposerwin.cpp:387
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Bu ileti için ‘Kimden:’ e-posta adresini ayarla"
+msgstr "Bu ileti için “Kimden:” e-posta adresini ayarla"
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2021,8 +2005,7 @@ msgid "Rich Text"
 msgstr "Zengin Metin"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "Toggle rich text editing mode"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Zengin metin düzenleme kipini aç/kapat"
@@ -2117,11 +2100,10 @@ msgid "&Cryptographic Message Format"
 msgstr "&Şifreli İleti Biçimi"
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Bu ileti için bir kriptografik biçim seçin"
+msgstr "Bu ileti için bir kriptografik biçim seç"
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
@@ -2703,11 +2685,10 @@ msgid "Send Now"
 msgstr "Şimdi Gönder"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "Bu ileti için bir konu ayarlayın"
+msgstr "Bu ileti için bir konu ayarla"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -3371,8 +3352,7 @@ msgid "Autocorrection language:"
 msgstr "Kendiliğinden düzeltme dili:"
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Öntanımlı alan adını geri yükle"
@@ -4746,11 +4726,10 @@ msgid "Check Mail"
 msgstr "Postayı Denetle"
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
-msgstr "Postayı Denetle"
+msgstr "Postayı denetle"
 
 #: kmmainwidget.cpp:2941
 #, kde-format

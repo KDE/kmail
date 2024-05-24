@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 00:39+0000\n"
-"PO-Revision-Date: 2024-05-17 07:23+0200\n"
+"PO-Revision-Date: 2024-05-23 07:37+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -971,15 +971,12 @@ msgid "Message Window"
 msgstr "Okno sporočila"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
-"Po odgovoru ali posredovanju sporočila zapri samostojno okno s sporočilom"
+"Zapri samostojno okno s sporočilom po odgovoru ali posredovanju sporočila"
 
 #: configuredialog/configureappearancepage.cpp:857
 #, kde-format
@@ -1010,29 +1007,25 @@ msgid "A&vailable Tags"
 msgstr "Razpoložljive oznake"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Dodaj novo oznako"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Odstrani izbrano oznako"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Povečaj prednost oznake"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Zmanjšaj prednost oznake"
@@ -1050,7 +1043,7 @@ msgstr "Izbriši"
 #: configuredialog/configureappearancepage.cpp:1202
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
-msgstr "Ali želite odstraniti oznako »%1«?"
+msgstr "Ali želite odstraniti oznako '%1'?"
 
 #: configuredialog/configureappearancepage.cpp:1203
 #, kde-format
@@ -1233,18 +1226,16 @@ msgstr ""
 "Zahtevaj obvestilo o usodi«"
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Opozori, če je navedenih preveč prejemnikov"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
-msgstr "Nastavite največje število prejemnikov za opozorilo"
+msgstr "Nastavi največje število prejemnikov za opozorilo"
 
 #: configuredialog/configurecomposerpage.cpp:399
 #, kde-format
@@ -1781,15 +1772,13 @@ msgstr[2] "%1 prilogi (%2)"
 msgstr[3] "%1 priloge (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Skrij seznam prilog"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Pokaži seznam prilog"
@@ -1801,34 +1790,28 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr "Izberite slovar za uporabo pri preverjanju črkovanja v tem sporočilu"
+msgstr "Izberi slovar za uporabo pri preverjanju črkovanja tega sporočila"
 
 #: editor/kmcomposerwin.cpp:371
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
-msgstr ""
-"Izberite mapo za poslano pošto, v katero bo shranjena kopija tega sporočila"
+msgstr "Izberi mapo za poslano pošto, kamor bo shranjena kopija tega sporočila"
 
 #: editor/kmcomposerwin.cpp:379
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "Izberite račun, ki bo uporabljen za pošiljanje tega sporočila"
+msgstr "Izberi izhodni račun uporabljen za pošiljanje tega sporočila"
 
 #: editor/kmcomposerwin.cpp:387
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Izberite e-poštni naslov pošiljatelja tega sporočila"
+msgstr "Nastavi e-poštni naslov \"Od:\" pošiljatelja tega sporočila"
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2025,11 +2008,10 @@ msgid "Rich Text"
 msgstr "Bogato besedilo"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "Toggle rich text editing mode"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr "Preklopi način urejanja z bogatim besedilom"
+msgstr "Preklopi način urejanja z obogatenim besedilom"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2121,11 +2103,10 @@ msgid "&Cryptographic Message Format"
 msgstr "Oblika šifriranja sporočil"
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Izberite obliko šifriranja za to sporočilo"
+msgstr "Izberi obliko šifriranja za to sporočilo"
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
@@ -2705,11 +2686,10 @@ msgid "Send Now"
 msgstr "Pošlji zdaj"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "Nastavite zadevo tega sporočila"
+msgstr "Nastavi zadevo tega sporočila"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -3372,8 +3352,7 @@ msgid "Autocorrection language:"
 msgstr "Jezik samodejnega popravljanja:"
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Obnovi privzeto ime domene"
@@ -4789,8 +4768,7 @@ msgid "Check Mail"
 msgstr "Preveri pošto"
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Preveri pošto"
