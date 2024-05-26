@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 00:39+0000\n"
-"PO-Revision-Date: 2024-05-18 09:55+0200\n"
+"PO-Revision-Date: 2024-05-24 10:58+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1045,32 +1045,28 @@ msgid "A&vailable Tags"
 msgstr "Étiquettes &disponibles"
 
 #: configuredialog/configureappearancepage.cpp:978
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Ajouter une nouvelle étiquette"
 
 #: configuredialog/configureappearancepage.cpp:983
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Supprimer l'étiquette sélectionnée"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
-msgstr "Augmenter la priorité de cette étiquette"
+msgstr "Augmenter la priorité de l'étiquette"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
-msgstr "Réduire la priorité de cette étiquette"
+msgstr "Réduire la priorité de l'étiquette"
 
 #: configuredialog/configureappearancepage.cpp:1022
 #, kde-format
@@ -1273,11 +1269,12 @@ msgstr ""
 "réception »"
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr "Avertir si trop de destinataires ont été spécifiés"
+msgstr ""
+"Déclencher un avertissement lors de la spécification d'un nombre trop "
+"important de destinataires"
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
@@ -1823,15 +1820,13 @@ msgstr[0] "Une pièce jointe (%2)"
 msgstr[1] "%1 pièces jointes (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Masquer la liste des pièces jointes"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Afficher la liste des pièces jointes"
@@ -2070,11 +2065,10 @@ msgid "Rich Text"
 msgstr "Texte enrichi"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "Toggle rich text editing mode"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr "(Dés)Activer l'éditeur de texte enrichi"
+msgstr "Activer / désactiver l'éditeur de texte enrichi"
 
 #: editor/kmcomposerwin.cpp:1418
 #, kde-format
@@ -2764,11 +2758,10 @@ msgid "Send Now"
 msgstr "Envoyer maintenant"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "Définissez le sujet du message"
+msgstr "Définissez un objet pou ce message"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -3452,8 +3445,7 @@ msgid "Autocorrection language:"
 msgstr "Langue d'autocorrection : "
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Restaurer le nom de domaine par défaut"
@@ -4858,11 +4850,10 @@ msgid "Check Mail"
 msgstr "Relever le courriel"
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
-msgstr "Relever le courriel"
+msgstr "Relever les courriels"
 
 #: kmmainwidget.cpp:2941
 #, kde-format
