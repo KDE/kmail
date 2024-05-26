@@ -2,6 +2,7 @@
 Name=Archive Mail Agent
 Name[ar]=وكيل أرشفة البريد
 Name[az]=Poçtun arxivlənməsi vasitəsi
+Name[be]=Агент архівавання пошты
 Name[bg]=Агент за архивиране на поща
 Name[bs]=Arhiva poštanskih agenata
 Name[ca]=Agent d'arxivat de correu
@@ -54,6 +55,7 @@ Name[zh_TW]=封存郵件代理程式
 Comment=Archive Mail Agent
 Comment[ar]=وكيل أرشفة البريد
 Comment[az]=Poçtun arxivlənməsi vasitəsi
+Comment[be]=Агент архівавання пошты
 Comment[bg]=Агент за архивиране на поща
 Comment[bs]=Arhiva poštanskih agenata
 Comment[ca]=Agent d'arxivat de correu

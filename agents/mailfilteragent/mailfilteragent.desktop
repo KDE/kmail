@@ -2,6 +2,7 @@
 Name=Mail Filter Agent
 Name[ar]=عميل ترشيح البريد
 Name[az]=Poçt süzgəci vasitəsi
+Name[be]=Агент фільтравання пошты
 Name[bg]=Агент за филтриране на поща
 Name[bs]=Agent poštanskog filtera
 Name[ca]=Agent de filtre de correu
@@ -54,6 +55,7 @@ Name[zh_TW]=郵件過濾代理程式
 Comment=Extension to filter emails
 Comment[ar]=امتداد لترشيح البريد
 Comment[az]=Məktubların süzgəclənməsi uzantısı
+Comment[be]=Пашырэнне для фільтравання электроннай пошты
 Comment[bg]=Разширение за филтриране на имейлите
 Comment[bs]=Proširenje za filtriranje elektronske pošte
 Comment[ca]=Extensió per a filtrar correus
