@@ -63,7 +63,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
 
     mVCardPath->setMode(KFile::LocalOnly | KFile::File);
-    auto label = new QLabel(i18n("&vCard path:"), this);
+    auto label = new QLabel(i18nc("@label:textbox", "&vCard path:"), this);
     label->setBuddy(mVCardPath);
     label->setEnabled(false);
     mVCardPath->setEnabled(false);
@@ -86,7 +86,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
 
     mComboBox->addItems(shadowIdentities);
     mComboBox->setEnabled(false);
-    label = new QLabel(i18n("&Existing identities:"), this);
+    label = new QLabel(i18nc("@label:textbox", "&Existing identities:"), this);
     label->setBuddy(mComboBox);
     label->setEnabled(false);
     hlay->addWidget(label);

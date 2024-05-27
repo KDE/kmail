@@ -83,7 +83,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 {
     auto formLayout = new QFormLayout(this);
     // label: zero stretch ### FIXME more
-    formLayout->addRow(new QLabel(i18n("Outgoing accounts (add at least one):"), this));
+    formLayout->addRow(new QLabel(i18nc("@label:textbox", "Outgoing accounts (add at least one):"), this));
 
     auto tmw = new TransportManagementWidgetNg(this);
     tmw->layout()->setContentsMargins({});

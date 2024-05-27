@@ -412,10 +412,10 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mRunKeyResolverTimer->setInterval(500ms);
     connect(mRunKeyResolverTimer, &QTimer::timeout, this, &KMComposerWin::runKeyResolver);
 
-    mLblIdentity = new QLabel(i18n("&Identity:"), mHeadersArea);
-    mDictionaryLabel = new QLabel(i18n("&Dictionary:"), mHeadersArea);
-    mLblFcc = new QLabel(i18n("&Sent-Mail folder:"), mHeadersArea);
-    mLblTransport = new QLabel(i18n("&Mail transport:"), mHeadersArea);
+    mLblIdentity = new QLabel(i18nc("@label:textbox", "&Identity:"), mHeadersArea);
+    mDictionaryLabel = new QLabel(i18nc("@label:textbox", "&Dictionary:"), mHeadersArea);
+    mLblFcc = new QLabel(i18nc("@label:textbox", "&Sent-Mail folder:"), mHeadersArea);
+    mLblTransport = new QLabel(i18nc("@label:textbox", "&Mail transport:"), mHeadersArea);
     mLblFrom = new QLabel(i18nc("sender address field", "&From:"), mHeadersArea);
     mLblSubject = new QLabel(i18nc("@label:textbox Subject of email.", "S&ubject:"), mHeadersArea);
     mShowHeaders = KMailSettings::self()->headers();
@@ -1674,7 +1674,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
     mCursorLineLabel->setText(i18nc("Shows the linenumber of the cursor position.", " Line: %1 ", QStringLiteral("     ")));
     statusBar()->addPermanentWidget(mCursorLineLabel);
 
-    mCursorColumnLabel = new QLabel(i18n(" Column: %1 ", QStringLiteral("     ")));
+    mCursorColumnLabel = new QLabel(i18nc("@label:textbox", " Column: %1 ", QStringLiteral("     ")));
     mCursorColumnLabel->setTextFormat(Qt::PlainText);
     statusBar()->addPermanentWidget(mCursorColumnLabel);
 

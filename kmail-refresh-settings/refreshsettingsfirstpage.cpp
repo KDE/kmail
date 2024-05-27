@@ -17,7 +17,7 @@ RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     auto mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName("mainLayout"_L1);
     mainLayout->setContentsMargins({});
-    auto label = new QLabel(i18n("Please close KMail/Kontact before using it."));
+    auto label = new QLabel(i18nc("@label:textbox", "Please close KMail/Kontact before using it."));
     QFont f = label->font();
     f.setBold(true);
     f.setPixelSize(22);

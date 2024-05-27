@@ -269,7 +269,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Name" line edit and label:
     mNameEdit = new QLineEdit(tab);
     KLineEditEventHandler::catchReturnKey(mNameEdit);
-    auto label = new QLabel(i18n("&Your name:"), tab);
+    auto label = new QLabel(i18nc("@label:textbox", "&Your name:"), tab);
     formLayout->addRow(label, mNameEdit);
     label->setBuddy(mNameEdit);
 
@@ -285,7 +285,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // "Organization" line edit and label:
     mOrganizationEdit = new QLineEdit(tab);
     KLineEditEventHandler::catchReturnKey(mOrganizationEdit);
-    label = new QLabel(i18n("Organi&zation:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Organi&zation:"), tab);
     formLayout->addRow(label, mOrganizationEdit);
     label->setBuddy(mOrganizationEdit);
 
@@ -302,7 +302,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // (row 3: spacer)
     mEmailEdit = new QLineEdit(tab);
     KLineEditEventHandler::catchReturnKey(mEmailEdit);
-    label = new QLabel(i18n("&Email address:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&Email address:"), tab);
     formLayout->addRow(label, mEmailEdit);
     label->setBuddy(mEmailEdit);
 
@@ -326,7 +326,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto emailValidator1 = new KEmailValidator(this);
     mAliasEdit->lineEdit()->setValidator(emailValidator1);
 
-    label = new QLabel(i18n("Email a&liases:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Email a&liases:"), tab);
     formLayout->addRow(label, mAliasEdit);
     label->setBuddy(mAliasEdit);
 
@@ -360,7 +360,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to digitally sign emails using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP signing key:"), mCryptographyTab);
+    label = new QLabel(i18nc("@label:textbox", "OpenPGP signing key:"), mCryptographyTab);
     label->setBuddy(mPGPSigningKeyRequester);
     mPGPSigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -408,7 +408,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "to encrypt copies of outgoing messages to you using OpenPGP; "
         "normal mail functions will not be affected.</p>"
         "<p>You can find out more about keys at <a>https://www.gnupg.org</a></p></qt>");
-    label = new QLabel(i18n("OpenPGP encryption key:"), mCryptographyTab);
+    label = new QLabel(i18nc("@label:textbox", "OpenPGP encryption key:"), mCryptographyTab);
     label->setBuddy(mPGPEncryptionKeyRequester);
     label->setWhatsThis(msg);
     mPGPEncryptionKeyRequester->setWhatsThis(msg);
@@ -423,7 +423,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "<p>You can leave this blank, but KMail will not be able "
         "to digitally sign emails using S/MIME; "
         "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME signing certificate:"), mCryptographyTab);
+    label = new QLabel(i18nc("@label:textbox", "S/MIME signing certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMESigningKeyRequester);
     mSMIMESigningKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -443,7 +443,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         "<p>You can leave this blank, but KMail will not be able "
         "to encrypt copies of outgoing messages to you using S/MIME; "
         "normal mail functions will not be affected.</p></qt>");
-    label = new QLabel(i18n("S/MIME encryption certificate:"), mCryptographyTab);
+    label = new QLabel(i18nc("@label:textbox", "S/MIME encryption certificate:"), mCryptographyTab);
     label->setBuddy(mSMIMEEncryptionKeyRequester);
     mSMIMEEncryptionKeyRequester->setWhatsThis(msg);
     label->setWhatsThis(msg);
@@ -469,7 +469,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mAutocrypt->setCheckable(true);
     mAutocrypt->setChecked(true);
 
-    label = new QLabel(i18n("Autocrypt:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Autocrypt:"), tab);
     formLayout->addRow(label, mAutocrypt);
 
     vlay = new QVBoxLayout(mAutocrypt);
@@ -480,7 +480,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mOverrideDefault = new QGroupBox(i18n("Overwrite global settings for security defaults"));
     mOverrideDefault->setCheckable(true);
     mOverrideDefault->setChecked(false);
-    label = new QLabel(i18n("Overwrite defaults:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Overwrite defaults:"), tab);
     formLayout->addRow(label, mOverrideDefault);
 
     vlay = new QVBoxLayout(mOverrideDefault);
@@ -512,7 +512,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mReplyToEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mReplyToEdit->setClearButtonEnabled(true);
     mReplyToEdit->setObjectName("mReplyToEdit"_L1);
-    label = new QLabel(i18n("&Reply-To address:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&Reply-To address:"), tab);
     label->setBuddy(mReplyToEdit);
     formLayout->addRow(label, mReplyToEdit);
     msg = i18n(
@@ -534,7 +534,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mCcEdit = new PimCommon::AddresseeLineEdit(tab, true);
     mCcEdit->setClearButtonEnabled(true);
     mCcEdit->setObjectName("mCcEdit"_L1);
-    label = new QLabel(i18n("&CC addresses:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&CC addresses:"), tab);
     label->setBuddy(mCcEdit);
     formLayout->addRow(label, mCcEdit);
     KLineEditEventHandler::catchReturnKey(mCcEdit);
@@ -556,7 +556,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mBccEdit->setClearButtonEnabled(true);
     mBccEdit->setObjectName("mBccEdit"_L1);
     KLineEditEventHandler::catchReturnKey(mBccEdit);
-    label = new QLabel(i18n("&BCC addresses:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&BCC addresses:"), tab);
     label->setBuddy(mBccEdit);
     formLayout->addRow(label, mBccEdit);
     msg = i18n(
@@ -574,7 +574,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     // "Dictionary" combo box and label:
     mDictionaryCombo = new Sonnet::DictionaryComboBox(tab);
-    label = new QLabel(i18n("D&ictionary:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "D&ictionary:"), tab);
     label->setBuddy(mDictionaryCombo);
     formLayout->addRow(label, mDictionaryCombo);
 
@@ -590,7 +590,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mDraftsFolderRequester = new IdentityFolderRequester(tab);
     mDraftsFolderRequester->setSelectFolderTitleDialog(i18n("Select Draft Folder"));
     mDraftsFolderRequester->setShowOutbox(false);
-    label = new QLabel(i18n("&Drafts folder:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&Drafts folder:"), tab);
     label->setBuddy(mDraftsFolderRequester);
     formLayout->addRow(label, mDraftsFolderRequester);
 
@@ -598,7 +598,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mTemplatesFolderRequester = new IdentityFolderRequester(tab);
     mTemplatesFolderRequester->setSelectFolderTitleDialog(i18n("Select Templates Folder"));
     mTemplatesFolderRequester->setShowOutbox(false);
-    label = new QLabel(i18n("&Templates folder:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "&Templates folder:"), tab);
     label->setBuddy(mTemplatesFolderRequester);
     formLayout->addRow(label, mTemplatesFolderRequester);
 
@@ -615,7 +615,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
     mAutoCorrectionLanguage = new TextAutoCorrectionWidgets::AutoCorrectionLanguage(tab);
-    label = new QLabel(i18n("Autocorrection language:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Autocorrection language:"), tab);
     label->setBuddy(mAutoCorrectionLanguage);
     formLayout->addRow(label, mAutoCorrectionLanguage);
 
@@ -630,7 +630,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     restoreDefaultDomainName->setToolTip(i18nc("@info:tooltip", "Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
-    label = new QLabel(i18n("Defaul&t domain:"), tab);
+    label = new QLabel(i18nc("@label:textbox", "Defaul&t domain:"), tab);
     label->setBuddy(mDefaultDomainEdit);
     formLayout->addRow(label, mDefaultDomainEdit);
 

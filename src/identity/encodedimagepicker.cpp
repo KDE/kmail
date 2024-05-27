@@ -135,7 +135,7 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
         return;
     }
 
-    const Addressee contact = searchJob->contacts().at(0);
+    const Addressee contact = searchJob->contacts().constFirst();
 
     if (contact.photo().isIntern()) {
         const QImage photo = contact.photo().data();

@@ -130,7 +130,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     hboxWidget->setLayout(hboxHBoxLayout);
     hboxHBoxLayout->setContentsMargins({});
     pageVBoxLayout->addWidget(hboxWidget);
-    auto logSizeLab = new QLabel(i18n("Log size limit:"), hboxWidget);
+    auto logSizeLab = new QLabel(i18nc("@label:textbox", "Log size limit:"), hboxWidget);
     hboxHBoxLayout->addWidget(logSizeLab);
     mLogMemLimitSpin = new QSpinBox(hboxWidget);
     hboxHBoxLayout->addWidget(mLogMemLimitSpin, 1);

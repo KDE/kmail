@@ -21,13 +21,13 @@ CollectionQuotaWidget::CollectionQuotaWidget(QWidget *parent)
 {
     auto layout = new QGridLayout(this);
 
-    auto lab = new QLabel(i18n("Usage:"), this);
+    auto lab = new QLabel(i18nc("@label:textbox", "Usage:"), this);
     layout->addWidget(lab, 0, 0);
 
     mUsage->setTextFormat(Qt::PlainText);
     layout->addWidget(mUsage, 0, 1);
 
-    auto Status = new QLabel(i18n("Status:"), this);
+    auto Status = new QLabel(i18nc("@label:textbox", "Status:"), this);
     layout->addWidget(Status, 1, 0);
     // xgettext: no-c-format
     mProgressBar->setFormat(i18n("%p% full"));

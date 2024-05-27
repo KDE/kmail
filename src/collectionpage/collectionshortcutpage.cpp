@@ -40,10 +40,11 @@ void CollectionShortcutPage::init(const Akonadi::Collection &col)
 
     auto topLayout = new QVBoxLayout(this);
 
-    auto label = new QLabel(i18n("<qt>To choose a key or a combination "
-                                 "of keys which select the current folder, "
-                                 "click the button below and then press the key(s) "
-                                 "you wish to associate with this folder.</qt>"),
+    auto label = new QLabel(i18nc("@label:textbox",
+                                  "<qt>To choose a key or a combination "
+                                  "of keys which select the current folder, "
+                                  "click the button below and then press the key(s) "
+                                  "you wish to associate with this folder.</qt>"),
                             this);
     label->setWordWrap(true);
     topLayout->addWidget(label);

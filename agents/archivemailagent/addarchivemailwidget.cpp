@@ -35,7 +35,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     auto mainLayout = new QFormLayout(this);
     mainLayout->setContentsMargins({});
 
-    auto folderLabel = new QLabel(i18n("Folder:"), this);
+    auto folderLabel = new QLabel(i18nc("@label:textbox", "Folder:"), this);
     mFolderRequester->setObjectName("folder_requester"_L1);
     mFolderRequester->setMustBeReadWrite(false);
     mFolderRequester->setNotAllowToCreateNewFolder(true);
@@ -45,7 +45,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
         mFolderRequester->setEnabled(false);
     }
 
-    auto formatLabel = new QLabel(i18n("Format:"), this);
+    auto formatLabel = new QLabel(i18nc("@label:textbox", "Format:"), this);
     formatLabel->setObjectName("label_format"_L1);
     mainLayout->addRow(formatLabel, mFormatComboBox);
 
@@ -53,14 +53,14 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     mRecursiveCheckBox->setChecked(true);
     mainLayout->addWidget(mRecursiveCheckBox);
 
-    auto pathLabel = new QLabel(i18n("Path:"), this);
+    auto pathLabel = new QLabel(i18nc("@label:textbox", "Path:"), this);
     pathLabel->setObjectName("path_label"_L1);
     mPath->lineEdit()->setTrapReturnKey(true);
     connect(mPath, &KUrlRequester::textChanged, this, &AddArchiveMailWidget::slotUpdateOkButton);
     mPath->setMode(KFile::Directory);
     mainLayout->addRow(pathLabel, mPath);
 
-    auto dateLabel = new QLabel(i18n("Backup each:"), this);
+    auto dateLabel = new QLabel(i18nc("@label:textbox", "Backup each:"), this);
     dateLabel->setObjectName("date_label"_L1);
 
     auto hlayout = new QHBoxLayout;
@@ -72,7 +72,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
 
     mainLayout->addRow(dateLabel, hlayout);
 
-    auto maxCountlabel = new QLabel(i18n("Maximum number of archive:"), this);
+    auto maxCountlabel = new QLabel(i18nc("@label:textbox", "Maximum number of archive:"), this);
     mMaximumArchive->setMinimum(0);
     mMaximumArchive->setMaximum(9999);
     mMaximumArchive->setSpecialValueText(i18n("unlimited"));

@@ -50,7 +50,7 @@ using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)
     : KXmlGuiWindow(nullptr)
-    , mMessageLabel(new QLabel(i18n("Starting…")))
+    , mMessageLabel(new QLabel(i18nc("@label:textbox", "Starting…")))
 
 {
 #ifdef Q_OS_UNIX

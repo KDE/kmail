@@ -168,7 +168,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     }
     mFontLocationCombo->addItems(fontDescriptions);
 
-    auto label = new QLabel(i18n("Apply &to:"), this);
+    auto label = new QLabel(i18nc("@label:textbox", "Apply &to:"), this);
     label->setBuddy(mFontLocationCombo);
     label->setEnabled(false); // since !mCustomFontCheck->isChecked()
     hlay->addWidget(label);
@@ -359,7 +359,7 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     // close to quota threshold
     auto hbox = new QHBoxLayout();
     vlay->addLayout(hbox);
-    auto l = new QLabel(i18n("Close to quota threshold:"), this);
+    auto l = new QLabel(i18nc("@label:textbox", "Close to quota threshold:"), this);
     hbox->addWidget(l);
     mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
@@ -684,7 +684,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             connect(radio, &QAbstractButton::toggled, mCustomDateFormatEdit, &QWidget::setEnabled);
             connect(mCustomDateFormatEdit, &QLineEdit::textChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-            auto formatHelp = new QLabel(i18n("<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"), hbox);
+            auto formatHelp = new QLabel(i18nc("@label:textbox", "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"), hbox);
             formatHelp->setContextMenuPolicy(Qt::NoContextMenu);
             connect(formatHelp, &QLabel::linkActivated, this, &AppearancePageHeadersTab::slotLinkClicked);
             hboxHBoxLayout->addWidget(formatHelp);

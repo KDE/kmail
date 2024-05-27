@@ -297,7 +297,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mForwardTypeCombo->setToolTip(helpText);
     mForwardTypeCombo->setWhatsThis(helpText);
 
-    label = new QLabel(i18n("Default forwarding type:"), this);
+    label = new QLabel(i18nc("@label:textbox", "Default forwarding type:"), this);
     label->setBuddy(mForwardTypeCombo);
 
     connect(mForwardTypeCombo, &QComboBox::activated, this, &ComposerPageGeneralTab::slotEmitChanged);
@@ -436,7 +436,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecentAddress->setSpecialValueText(i18nc("No addresses are retained", "No save"));
     mMaximumRecentAddress->setEnabled(false);
 
-    label = new QLabel(i18n("Maximum recent addresses retained:"));
+    label = new QLabel(i18nc("@label:textbox", "Maximum recent addresses retained:"));
     label->setBuddy(mMaximumRecentAddress);
     label->setEnabled(false);
 
@@ -689,7 +689,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     auto layout = new QVBoxLayout(group);
 
     // row 0: help text:
-    auto label = new QLabel(i18n("Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
+    auto label =
+        new QLabel(i18nc("@label:textbox", "Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
     label->setWordWrap(true);
     label->setAlignment(Qt::AlignLeft);
 
@@ -719,7 +720,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     layout = new QVBoxLayout(group);
 
     // row 0: help text:
-    label = new QLabel(i18n("Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
+    label = new QLabel(i18nc("@label:textbox", "Recognize any sequence of the following prefixes (entries are case-insensitive regular expressions):"), group);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);
 
@@ -796,7 +797,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     // only ASCII letters, digits, plus, minus and dots are allowed
     auto messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
     mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
-    auto label = new QLabel(i18n("Custom message-&id suffix:"), this);
+    auto label = new QLabel(i18nc("@label:textbox", "Custom message-&id suffix:"), this);
     label->setBuddy(mMessageIdSuffixEdit);
     label->setEnabled(false); // since !mCreateOwnMessageIdCheck->isChecked()
     mMessageIdSuffixEdit->setEnabled(false);
@@ -808,7 +809,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
 
     // horizontal rule and "custom header fields" label:
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
-    vlay->addWidget(new QLabel(i18n("Define custom mime header fields:"), this));
+    vlay->addWidget(new QLabel(i18nc("@label:textbox", "Define custom mime header fields:"), this));
 
     // "custom header fields" listbox:
     auto glay = new QGridLayout(); // inherits spacing
@@ -848,7 +849,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     mTagValueEdit = new QLineEdit(this);
     mTagValueEdit->setClearButtonEnabled(true);
     mTagValueEdit->setEnabled(false);
-    mTagValueLabel = new QLabel(i18n("&Value:"), this);
+    mTagValueLabel = new QLabel(i18nc("@label:textbox", "&Value:"), this);
     mTagValueLabel->setBuddy(mTagValueEdit);
     mTagValueLabel->setEnabled(false);
     glay->addWidget(mTagValueLabel, 4, 0);
@@ -1038,8 +1039,9 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor
-    auto label = new QLabel(i18n("Recognize any of the following key words as "
-                                 "intention to attach a file:"),
+    auto label = new QLabel(i18nc("@label:textbox",
+                                  "Recognize any of the following key words as "
+                                  "intention to attach a file:"),
                             this);
     label->setAlignment(Qt::AlignLeft);
     label->setWordWrap(true);
@@ -1059,7 +1061,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, mAttachWordsListEditor, &QWidget::setEnabled);
 
     auto layAttachment = new QHBoxLayout;
-    label = new QLabel(i18n("Maximum Attachment Size:"), this);
+    label = new QLabel(i18nc("@label:textbox", "Maximum Attachment Size:"), this);
     label->setAlignment(Qt::AlignLeft);
     layAttachment->addWidget(label);
 

@@ -69,7 +69,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     // TODO: Explanation label
 
-    auto folderLabel = new QLabel(i18n("&Folder:"), mainWidget);
+    auto folderLabel = new QLabel(i18nc("@label:textbox", "&Folder:"), mainWidget);
     mainLayout->addWidget(folderLabel, row, 0);
     mFolderRequester = new FolderRequester(mainWidget);
     mFolderRequester->setMustBeReadWrite(false);
@@ -79,7 +79,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mainLayout->addWidget(mFolderRequester, row, 1);
     row++;
 
-    auto formatLabel = new QLabel(i18n("F&ormat:"), mainWidget);
+    auto formatLabel = new QLabel(i18nc("@label:textbox", "F&ormat:"), mainWidget);
     mainLayout->addWidget(formatLabel, row, 0);
     mFormatComboBox = new QComboBox(mainWidget);
     formatLabel->setBuddy(mFormatComboBox);
@@ -94,7 +94,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     mainLayout->addWidget(mFormatComboBox, row, 1);
     row++;
 
-    auto fileNameLabel = new QLabel(i18n("&Archive File:"), mainWidget);
+    auto fileNameLabel = new QLabel(i18nc("@label:textbox", "&Archive File:"), mainWidget);
     mainLayout->addWidget(fileNameLabel, row, 0);
     mUrlRequester = new KUrlRequester(mainWidget);
     mUrlRequester->setMode(KFile::LocalOnly | KFile::File);

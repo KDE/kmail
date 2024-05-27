@@ -42,7 +42,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
 
     auto mainLayout = new QVBoxLayout(this);
 
-    auto lab = new QLabel(i18n("You still wait an answer about this mail:"), this);
+    auto lab = new QLabel(i18nc("@label:textbox", "You still wait an answer about this mail:"), this);
     mainLayout->addWidget(lab);
     mWidget->setObjectName("FollowUpReminderInfoWidget"_L1);
     mainLayout->addWidget(mWidget);

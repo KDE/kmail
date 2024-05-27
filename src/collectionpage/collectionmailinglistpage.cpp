@@ -100,7 +100,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     addressTypeLayout->addWidget(mHandleButton);
     topLayout->addRow(i18n("Address type:"), addressWidget);
 
-    topLayout->addRow(new QLabel(i18n("URL for mailing list posting:"), this));
+    topLayout->addRow(new QLabel(i18nc("@label:textbox", "URL for mailing list posting:"), this));
 
     mEditList = new KEditListWidget(this);
     mEditList->lineEdit()->setClearButtonEnabled(true);

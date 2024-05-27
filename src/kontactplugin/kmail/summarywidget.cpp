@@ -193,7 +193,7 @@ void SummaryWidget::slotUpdateFolderList()
     displayModel(QModelIndex(), counter, showFolderPaths, QStringList());
 
     if (counter == 0) {
-        auto label = new QLabel(i18n("No unread messages in your monitored folders"), this);
+        auto label = new QLabel(i18nc("@label:textbox", "No unread messages in your monitored folders"), this);
         label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
         mLayout->addWidget(label, 0, 0);
         mLabels.append(label);

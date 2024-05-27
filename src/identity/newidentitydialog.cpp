@@ -58,7 +58,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *m
     mLineEdit->setFocus();
     mLineEdit->setClearButtonEnabled(true);
     KLineEditEventHandler::catchReturnKey(mLineEdit);
-    auto l = new QLabel(i18n("&New identity:"), page);
+    auto l = new QLabel(i18nc("@label:textbox", "&New identity:"), page);
     l->setBuddy(mLineEdit);
     hlay->addWidget(l);
     hlay->addWidget(mLineEdit, 1);
@@ -88,7 +88,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *m
     mComboBox = new QComboBox(page);
     mComboBox->addItems(manager->shadowIdentities());
     mComboBox->setEnabled(false);
-    auto label = new QLabel(i18n("&Existing identities:"), page);
+    auto label = new QLabel(i18nc("@label:textbox", "&Existing identities:"), page);
     label->setBuddy(mComboBox);
     label->setEnabled(false);
     hlay->addWidget(label);
