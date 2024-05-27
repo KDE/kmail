@@ -13,16 +13,16 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-03-17 11:18+0100\n"
+"PO-Revision-Date: 2024-05-26 12:10+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.4\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
+" || n%100>=20) ? 1 : 2);\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1336,7 +1336,7 @@ msgstr "U&suń"
 #: configuredialog/configurecomposerpage.cpp:1052
 #, kde-format
 msgid "Mod&ify..."
-msgstr "Zm&ień..."
+msgstr "Zm&ień…"
 
 #: configuredialog/configurecomposerpage.cpp:700
 #, kde-format
@@ -1372,7 +1372,7 @@ msgstr "Dodaj..."
 #: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify..."
-msgstr "Zmień..."
+msgstr "Zmień…"
 
 #: configuredialog/configurecomposerpage.cpp:728
 #, kde-format
@@ -4222,7 +4222,7 @@ msgstr "Wysyłanie wiadomości"
 #: kmkernel.cpp:1457
 #, kde-format
 msgid "Initiating sending process..."
-msgstr "Inicjalizacja procesu wysyłania..."
+msgstr "Inicjalizacja procesu wysyłania…"
 
 #: kmkernel.cpp:1536
 #, kde-format
@@ -5577,7 +5577,7 @@ msgstr "Pobieranie zawartości katalogu"
 #: kmreaderwin.cpp:318
 #, kde-format
 msgid "Please wait . . ."
-msgstr "Proszę czekać ..."
+msgstr "Proszę czekać …"
 
 #: kmreaderwin.cpp:324 kmreaderwin.cpp:333
 #, kde-format
@@ -5591,7 +5591,7 @@ msgid ""
 "a> to go online . . .</p>"
 msgstr ""
 "KMail jest obecnie odłączony od sieci. Naciśnij <a href=\"kmail:goOnline"
-"\">tutaj</a>, aby połączyć go ponownie z siecią...</p>"
+"\">tutaj</a>, aby połączyć go ponownie z siecią…</p>"
 
 #: kmreaderwin.cpp:335
 #, kde-format
@@ -5600,7 +5600,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 "Konto jest obecnie odłączone od sieci. Naciśnij <a href=\"kmail:"
-"goResourceOnline\">tutaj</a>, aby połączyć je ponownie z siecią...</p>"
+"goResourceOnline\">tutaj</a>, aby połączyć je ponownie z siecią…</p>"
 
 #: kmreaderwin.cpp:914
 #, kde-format
@@ -18943,3 +18943,4 @@ msgstr "Przybliżenie: %1%"
 
 #~ msgid "Message List - Date Field"
 #~ msgstr "Lista wiadomości - pole daty"
+
