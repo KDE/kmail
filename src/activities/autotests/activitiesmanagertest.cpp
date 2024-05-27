@@ -20,6 +20,7 @@ void ActivitiesManagerTest::shouldHaveDefaultValues()
     QVERIFY(w.transportActivities());
     QVERIFY(w.identityActivities());
     QVERIFY(w.ldapActivities());
+    QVERIFY(w.accountActivities());
 }
 
 #include "moc_activitiesmanagertest.cpp"
