@@ -35,6 +35,8 @@ public:
     [[nodiscard]] QString currentActivity() const;
     [[nodiscard]] LdapActivities *ldapActivities() const;
 
+    [[nodiscard]] AccountActivities *accountActivities() const;
+
 Q_SIGNALS:
     void activitiesChanged();
 

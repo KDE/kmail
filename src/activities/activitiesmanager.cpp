@@ -103,4 +103,9 @@ LdapActivities *ActivitiesManager::ldapActivities() const
     return mLdapActivities;
 }
 
+AccountActivities *ActivitiesManager::accountActivities() const
+{
+    return mAccountActivities;
+}
+
 #include "moc_activitiesmanager.cpp"
