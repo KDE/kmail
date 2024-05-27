@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 00:39+0000\n"
-"PO-Revision-Date: 2024-05-25 07:43+0300\n"
+"PO-Revision-Date: 2024-05-25 15:33+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3291,11 +3291,10 @@ msgid "You must provide an email for this identity."
 msgstr "השתמש ב&סיומת זיהוי הודעה מותאמת אישית"
 
 #: identity/identitydialog.cpp:751
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "כתובת דוא\"ל"
+msgstr "כתובת דוא״ל ריקה"
 
 #: identity/identitydialog.cpp:756
 #, kde-format
@@ -6277,7 +6276,7 @@ msgstr ""
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
-#, kde-format
+#, fuzzy, kde-format
 msgid "Send queued mail on mail check"
 msgstr "שלח דואל\" שבתור בעת בדיקת דוא\"ל"
 

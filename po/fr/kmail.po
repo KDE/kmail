@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-23 00:39+0000\n"
-"PO-Revision-Date: 2024-05-24 10:58+0200\n"
+"PO-Revision-Date: 2024-05-25 13:23+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1007,10 +1007,7 @@ msgid "Message Window"
 msgstr "Fenêtre de courriel"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1277,11 +1274,10 @@ msgstr ""
 "important de destinataires"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
-msgstr "Définir le nombre de destinataires maximum avant d'avertir"
+msgstr "Définir le nombre de destinataires maximum pour l'alarme"
 
 #: configuredialog/configurecomposerpage.cpp:399
 #, kde-format
@@ -1838,8 +1834,7 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
@@ -1847,9 +1842,7 @@ msgstr ""
 "orthographique de ce message"
 
 #: editor/kmcomposerwin.cpp:371
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
@@ -1857,18 +1850,16 @@ msgstr ""
 "sera enregistrée"
 
 #: editor/kmcomposerwin.cpp:379
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Sélectionnez le compte sortant à utiliser pour envoyer ce message"
 
 #: editor/kmcomposerwin.cpp:387
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Définissez l'adresse électronique du « De : » de ce message"
+msgstr "Définissez l'adresse de courriel « De : » de ce message"
 
 #: editor/kmcomposerwin.cpp:415
 #, kde-format
@@ -2160,11 +2151,10 @@ msgid "&Cryptographic Message Format"
 msgstr "&Format de message chiffré"
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Sélectionnez le format de chiffrement de ce message"
+msgstr "Sélectionnez le format de chiffrement pour ce message"
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
