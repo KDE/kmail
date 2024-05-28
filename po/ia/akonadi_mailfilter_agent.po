@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2023-09-25 10:14+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -84,7 +84,9 @@ msgid "Log filter actions"
 msgstr "Actiones de filtro de registro"
 
 #: filterlogdialog.cpp:133
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log size limit:"
+msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Limite de dimension de registro:"
 

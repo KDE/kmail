@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -445,6 +445,7 @@ msgstr "ලිපින වර්‍ගය (&A):"
 #: collectionpage/collectionmailinglistpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Mailing list description:"
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "ලිපිණ ලැයිස්තු විස්තරය"
 
@@ -510,12 +511,15 @@ msgid "Quota"
 msgstr "කෝටාව "
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Messages"
+msgctxt "@label:textbox"
 msgid "Usage:"
-msgstr ""
+msgstr "පණිවුඩ "
 
 #: collectionpage/collectionquotawidget.cpp:30
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr ""
 
@@ -536,8 +540,13 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "කෙටි මං (&u):"
 
-#: collectionpage/collectionshortcutpage.cpp:43
-#, kde-format
+#: collectionpage/collectionshortcutpage.cpp:44
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>To choose a key or a combination of keys which select the current "
+#| "folder, click the button below and then press the key(s) you wish to "
+#| "associate with this folder.</qt>"
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -612,7 +621,9 @@ msgid "LDAP server"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "පිටතට යවන ගිණුම් (අඩුම ගණනේ එකක් වත් තිබිය යුතුය) "
 
@@ -794,7 +805,9 @@ msgid "&Use custom fonts"
 msgstr "රුචි අකුරු භාවිත කරන්න (&U)"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "ඇතුලත් කරන්න (&t):"
 
@@ -859,6 +872,7 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:362
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr ""
 
@@ -943,6 +957,7 @@ msgstr "පෙරනිමි තේමාව"
 #: configuredialog/configureappearancepage.cpp:687
 #, fuzzy, kde-format
 #| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">රුචි හැඩසවි තොරතුරු...</a></qt>"
 
@@ -1217,6 +1232,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:300
 #, fuzzy, kde-format
 #| msgid "Default Forwarding Type:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "පෙරනිමි ඉදිරියට යැවීම් වර්‍ගය:"
 
@@ -1274,6 +1290,7 @@ msgstr "ස්වයංක්‍රීය සුරකුම නැත"
 
 #: configuredialog/configurecomposerpage.cpp:439
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr ""
 
@@ -1321,186 +1338,194 @@ msgstr ""
 msgid "Repl&y Subject Prefixes"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "ඉවත් කරන්න (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "වෙනස් කරන්න... (&i)"
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "නව පිළිතුරු පෙරනම ඇතුළත් කරන්න:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "ඔබට ගිණුම මැකීම අවශ්‍යද '%1'? "
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, fuzzy, kde-format
 #| msgid "Reply Special"
 msgid "Reply Prefix:"
 msgstr "විශේෂ පිළිතුරු"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "ඉවත් කරන්න (&v)"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "වෙනස් කරන්න..."
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "ඔබට ගිණුම මැකීම අවශ්‍යද '%1'? "
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "&Forward"
 msgid "Forward Prefix:"
 msgstr "ඉදිරියට (&F)"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "රුචි පණිවුඩ-id පසුනම භාවිත කරන්න (&U)"
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "&Use custom message-id suffix"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
-msgstr ""
+msgstr "රුචි පණිවුඩ-id පසුනම භාවිත කරන්න (&U)"
 
-#: configuredialog/configurecomposerpage.cpp:811
+#: configuredialog/configurecomposerpage.cpp:812
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "නම"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "අගය"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "නව (&w)"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "නම (&N):"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "අගය (&V):"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid header"
 msgstr "සාවද්‍ය විද්‍යුත් තැපැල් ලිපිනය"
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "මඟහැරුනු ඇමිණුම්වල හඳුනාගැනීම සක්‍රීය කරන්න (&n)"
 
-#: configuredialog/configurecomposerpage.cpp:1041
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "නව යතුරු වදනක් ඇතුළත් කරන්න:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "ඔබට ගිණුම මැකීම අවශ්‍යද '%1'? "
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "ඇමිණුම්"
 
-#: configuredialog/configurecomposerpage.cpp:1062
+#: configuredialog/configurecomposerpage.cpp:1064
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "ඇමිණුම්"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr ""
@@ -1661,6 +1686,7 @@ msgstr "GnuPG සැකසුම්..."
 
 #: configuredialog/configuresecuritypage.cpp:362
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1722,12 +1748,16 @@ msgid "Archive"
 msgstr "සංරක්‍ෂණය"
 
 #: dialog/archivefolderdialog.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "බහලුම (&F)"
 
 #: dialog/archivefolderdialog.cpp:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "හැඩසවිය (&o):"
 
@@ -1752,7 +1782,9 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-සංකෝචිත ටාර් සංරක්‍ෂණය (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Archive File:"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "සංරක්‍ෂණ ගොනුව (&A):"
 
@@ -1848,22 +1880,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "මෙම පණිවුඩය සඳහා මාතෘකාවක් සකසන්න"
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "අනන්‍යතාව (&I):"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "ශබ්දකෝශය (&D):"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "යැවූ-ලිපි බහලුම (&S):"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "ලිපි හුවමාරුව (&M):"
 
@@ -2190,8 +2230,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " පේළිය: %1 "
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " තීරුව: %1 "
 
@@ -2648,6 +2690,11 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr " තීරුව: %1 "
+
 #: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
@@ -2681,6 +2728,7 @@ msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr ""
 
@@ -2968,6 +3016,7 @@ msgstr "පවතින හඳුනාගැනීම දෙවන පිටප
 
 #: identity/identityaddvcarddialog.cpp:66
 #, kde-format
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr ""
 
@@ -2978,7 +3027,9 @@ msgid "&Duplicate existing vCard"
 msgstr "පවතින හඳුනාගැනීම දෙවන පිටපත "
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "පවතින හඳුනාගැනී"
 
@@ -3023,7 +3074,9 @@ msgid "General"
 msgstr "සාමාන්‍ය"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "ඔබේ නම (&Y):"
 
@@ -3038,7 +3091,9 @@ msgstr ""
 "නියම නම නොමැතිව ඊ-තැපැල් ලිපිණය පමණක් පෙනෙනු ඇත. "
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "ආයතනය:"
 
@@ -3053,7 +3108,9 @@ msgstr ""
 "සාමාන්‍ය ලෙස (ආරක්ෂිතව) මෙම කොටස හිස්ව තැබීම සුදුසුය.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "ඉ-තැපැල් ලිපිනය (&E):"
 
@@ -3068,9 +3125,11 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr ""
+msgstr "ඉ-තැපැල් ලිපිනය (&E):"
 
 #: identity/identitydialog.cpp:334
 #, kde-format
@@ -3098,8 +3157,10 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
-#, kde-format
+#: identity/identitydialog.cpp:363
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP අත්සන් යතුර:"
 
@@ -3114,6 +3175,11 @@ msgstr ""
 msgid "OpenPGP key:"
 msgstr "OpenPGP අත්සන් යතුර:"
 
+#: identity/identitydialog.cpp:387
+#, kde-format
+msgid "OpenPGP signing key:"
+msgstr "OpenPGP අත්සන් යතුර:"
+
 #: identity/identitydialog.cpp:404
 #, kde-format
 msgid ""
@@ -3126,7 +3192,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:411
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "OpenPGP encryption key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP සංඛේතාන්කණ යතුර:"
 
@@ -3140,7 +3208,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:426
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME signing certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME අත්සන් සහතිකය:"
 
@@ -3155,7 +3225,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME සංඛේතාන්කණ සහතිකය:"
 
@@ -3174,9 +3246,11 @@ msgid "Enable Autocrypt"
 msgstr "ගුප්තකේතනය"
 
 #: identity/identitydialog.cpp:472
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Encrypt"
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr ""
+msgstr "ගුප්තකේතනය"
 
 #: identity/identitydialog.cpp:477
 #, kde-format
@@ -3189,9 +3263,11 @@ msgid "Overwrite global settings for security defaults"
 msgstr ""
 
 #: identity/identitydialog.cpp:483
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr ""
+msgstr "පෙරනිමියට සකසන්න"
 
 #: identity/identitydialog.cpp:488
 #, fuzzy, kde-format
@@ -3226,7 +3302,9 @@ msgid "Advanced"
 msgstr "උසස්"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "පිළිතුරු ලිපිනය (&R):"
 
@@ -3244,6 +3322,7 @@ msgstr ""
 #: identity/identitydialog.cpp:537
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&BCC ලිපින:"
 
@@ -3259,7 +3338,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&BCC ලිපින:"
 
@@ -3275,9 +3356,11 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
-msgstr ""
+msgstr "ශබ්දකෝශය (&D):"
 
 #: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
@@ -3297,9 +3380,11 @@ msgid "Select Draft Folder"
 msgstr "අකුරු වර්ගය තෝරන්න "
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Font"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr ""
+msgstr "අකුරු වර්ගය තෝරන්න "
 
 #: identity/identitydialog.cpp:599
 #, fuzzy, kde-format
@@ -3308,9 +3393,11 @@ msgid "Select Templates Folder"
 msgstr "බහලුම මකන්න"
 
 #: identity/identitydialog.cpp:601
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete Folder"
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
-msgstr ""
+msgstr "බහලුම මකන්න"
 
 #: identity/identitydialog.cpp:606
 #, kde-format
@@ -3331,6 +3418,7 @@ msgstr "වෙනස් කරන්න... (&e)"
 
 #: identity/identitydialog.cpp:618
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr ""
 
@@ -3342,7 +3430,9 @@ msgid "Restore default domain name"
 msgstr "පෙරනිමි වසම (&t):"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "පෙරනිමි වසම (&t):"
 
@@ -3589,7 +3679,9 @@ msgid "New Identity"
 msgstr "නව හදුනාගැනිම"
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "නව හදුනාගැනිම (&N):"
 
@@ -5561,6 +5653,7 @@ msgstr ""
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Starting..."
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "අරඹමින්..."
 
@@ -5878,6 +5971,7 @@ msgstr ""
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, fuzzy, kde-format
 #| msgid "Send &messages in outbox folder:"
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "බැහැර බහලුමේ ඇති පණිවුඩ යවන්න (&m):"
 
@@ -5895,6 +5989,7 @@ msgstr ""
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
@@ -9220,11 +9315,6 @@ msgstr "විශාලන"
 
 #~ msgid "Signing"
 #~ msgstr "සන්කරමින්"
-
-#, fuzzy
-#~| msgid "Messages"
-#~ msgid "Message:"
-#~ msgstr "පණිවුඩ "
 
 #~ msgid "Display Mode of the Favorite Collections View"
 #~ msgstr "ප්‍රියතම එකතු දසුනේ දෘශ්‍යය ප්‍රකාරය"

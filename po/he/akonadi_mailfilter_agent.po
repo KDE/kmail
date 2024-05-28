@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-03-13 12:53+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -82,7 +82,9 @@ msgid "Log filter actions"
 msgstr "פעולות מסנן יומן"
 
 #: filterlogdialog.cpp:133
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log size limit:"
+msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "מגבלת גודל יומן:"
 

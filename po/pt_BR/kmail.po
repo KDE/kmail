@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-03-23 19:06-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -443,7 +443,9 @@ msgid "Address type:"
 msgstr "Tipo de endereço:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "URL for mailing list posting:"
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL para enviar na lista de discussão:"
 
@@ -504,12 +506,16 @@ msgid "Quota"
 msgstr "Quota"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Usage:"
+msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Uso:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Status:"
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Status:"
 
@@ -530,8 +536,13 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "Atalho"
 
-#: collectionpage/collectionshortcutpage.cpp:43
-#, kde-format
+#: collectionpage/collectionshortcutpage.cpp:44
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>To choose a key or a combination of keys which select the current "
+#| "folder, click the button below and then press the key(s) you wish to "
+#| "associate with this folder.</qt>"
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -606,7 +617,9 @@ msgid "LDAP server"
 msgstr "Servidor LDAP"
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Contas de envio (adicione ao menos uma):"
 
@@ -786,7 +799,9 @@ msgid "&Use custom fonts"
 msgstr "&Usar fontes personalizadas"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Aplicar &para:"
 
@@ -850,7 +865,9 @@ msgid "Recycle colors on deep &quoting"
 msgstr "&Reutilizar as cores em citações encadeadas"
 
 #: configuredialog/configureappearancepage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close to quota threshold:"
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Limite de proximidade da quota:"
 
@@ -929,6 +946,7 @@ msgstr "Tema padrão:"
 #: configuredialog/configureappearancepage.cpp:687
 #, fuzzy, kde-format
 #| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis1\">Informações sobre formatos personalizados...</a></"
@@ -1233,7 +1251,9 @@ msgid "Set the default forwarded message format"
 msgstr "Define o formato padrão das mensagens encaminhadas"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Default forwarding type:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Tipo de encaminhamento padrão:"
 
@@ -1305,7 +1325,9 @@ msgid "No save"
 msgstr "Sem salvar"
 
 #: configuredialog/configurecomposerpage.cpp:439
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum recent addresses retained:"
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Número máximo de endereços recentes:"
 
@@ -1353,9 +1375,13 @@ msgstr "Salvar automaticamente a mensagem neste intervalo de tempo"
 msgid "Repl&y Subject Prefixes"
 msgstr "Prefi&xos do assunto nas respostas"
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any sequence of the following prefixes (entries are case-"
+#| "insensitive regular expressions):"
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
@@ -1363,121 +1389,127 @@ msgstr ""
 "Reconhecer os seguintes prefixos (não há distinção entre maiúsculas e "
 "minúsculas):"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "Re&mover"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "Mod&ificar..."
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Digite o novo prefixo de resposta:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Deseja remover o prefixo de resposta?"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Prefixos das respostas:"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Prefixos do assunto nos &encaminhamentos"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Remo&ver"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "Modificar..."
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Digite o novo prefixo de encaminhamento:"
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Deseja remover o prefixo de encaminhar?"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Prefixos dos encaminhamentos"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Usar sufixo de identificador de mensagens personalizado"
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "Custom message-&id suffix:"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "&Sufixo de identificador de mensagens personalizado:"
 
-#: configuredialog/configurecomposerpage.cpp:811
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:812
+#, fuzzy, kde-format
+#| msgid "Define custom mime header fields:"
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definir campos de cabeçalhos MIME personalizados:"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nome"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valor"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&vo"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Nome:"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valor:"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1485,50 +1517,55 @@ msgstr ""
 "O 'Content-Type' não é uma string autorizada. Este cabeçalho não será "
 "gravado."
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Invalid header"
 msgstr "Cabeçalho inválido"
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&Habilitar detecção de inexistência de anexos"
 
-#: configuredialog/configurecomposerpage.cpp:1041
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1043
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any of the following key words as intention to attach a file:"
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Reconhecer qualquer uma das seguintes palavras-chave como intenção de anexar "
 "um arquivo:"
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Digite uma nova palavra-chave:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Deseja remover esta palavra de anexo'?"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Palavra do anexo:"
 
-#: configuredialog/configurecomposerpage.cpp:1062
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1064
+#, fuzzy, kde-format
+#| msgid "Maximum Attachment Size:"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Tamanho máximo do anexo:"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr "Sem limite"
@@ -1678,7 +1715,11 @@ msgid "GnuPG Settings"
 msgstr "Configurações do GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The module is missing. Please verify your installation. This module is "
+#| "provided by Kleopatra."
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1737,12 +1778,16 @@ msgid "Archive"
 msgstr "Arquivo"
 
 #: dialog/archivefolderdialog.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Pasta:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "F&ormato:"
 
@@ -1767,7 +1812,9 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "Arquivo TAR compactado com o GZ (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Archive File:"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "&Arquivo morto:"
 
@@ -1863,22 +1910,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "Defina o endereço de e-mail \"De:\" para esta mensagem"
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identidade:"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Dicionário:"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Pasta de men&sagens enviadas:"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Transporte de &mensagem:"
 
@@ -2201,8 +2256,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Linha: %1 "
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Coluna: %1 "
 
@@ -2692,6 +2749,11 @@ msgstr ""
 "chave criptográfica é totalmente confiável). Clique no ícone para mais "
 "detalhes."
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr " Coluna: %1 "
+
 #: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
@@ -2723,7 +2785,9 @@ msgid "Details"
 msgstr "Detalhes"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select email to put in whitelist:"
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr "Selecione o e-mail a incluir na lista de permissões:"
 
@@ -3022,7 +3086,9 @@ msgid "&From existing vCard"
 msgstr "&De um vCard existente"
 
 #: identity/identityaddvcarddialog.cpp:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&vCard path:"
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr "Caminho do &vCard:"
 
@@ -3032,7 +3098,9 @@ msgid "&Duplicate existing vCard"
 msgstr "&Duplicar um vCard existente"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Identidades &existentes:"
 
@@ -3075,7 +3143,9 @@ msgid "General"
 msgstr "Geral"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Seu nome:"
 
@@ -3092,7 +3162,9 @@ msgstr ""
 "p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organi&zação:"
 
@@ -3108,7 +3180,9 @@ msgstr ""
 "seguro (e normal) deixar este campo em branco.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&Endereço de e-mail:"
 
@@ -3129,7 +3203,9 @@ msgstr ""
 "terão dificuldades para responder a você.</p></qt>"
 
 #: identity/identitydialog.cpp:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Email a&liases:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Endereços de &e-mail alternativos:"
 
@@ -3172,8 +3248,10 @@ msgstr ""
 "serão afetadas.</p><p>Você pode aprender mais sobre chaves em <a>https://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
-#, kde-format
+#: identity/identitydialog.cpp:363
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Chave de assinatura OpenPGP:"
 
@@ -3186,6 +3264,11 @@ msgstr "Usar mesma chave para criptografia e assinatura"
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "Chave OpenPGP:"
+
+#: identity/identitydialog.cpp:387
+#, kde-format
+msgid "OpenPGP signing key:"
+msgstr "Chave de assinatura OpenPGP:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -3206,7 +3289,9 @@ msgstr ""
 "www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:411
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "OpenPGP encryption key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Chave de criptografia OpenPGP:"
 
@@ -3224,7 +3309,9 @@ msgstr ""
 "As funções normais de e-mail não serão afetadas.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME signing certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "Certificado de assinatura S/MIME:"
 
@@ -3244,7 +3331,9 @@ msgstr ""
 "MIME. As funções normais de e-mail não serão afetadas.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "Certificado de criptografia S/MIME:"
 
@@ -3260,7 +3349,9 @@ msgid "Enable Autocrypt"
 msgstr "Habilitar Autocrypt"
 
 #: identity/identitydialog.cpp:472
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocrypt:"
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Autocrypt:"
 
@@ -3275,7 +3366,9 @@ msgid "Overwrite global settings for security defaults"
 msgstr "Sobrescrever as configurações globais por padrões de segurança"
 
 #: identity/identitydialog.cpp:483
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Overwrite defaults:"
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Sobrescrever padrões:"
 
@@ -3308,7 +3401,9 @@ msgid "Advanced"
 msgstr "Avançado"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Endereço de &resposta:"
 
@@ -3331,7 +3426,9 @@ msgstr ""
 "estiver em dúvida, deixe este campo em branco.</p></qt>"
 
 #: identity/identitydialog.cpp:537
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&CC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Endereços &Cc:"
 
@@ -3353,7 +3450,9 @@ msgstr ""
 "branco.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Endereços de cópia oculta (Cco):"
 
@@ -3376,7 +3475,9 @@ msgstr ""
 "</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "D&ictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Dicionário:"
 
@@ -3396,7 +3497,9 @@ msgid "Select Draft Folder"
 msgstr "Selecionar pastas de rascunho"
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Drafts folder:"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Pasta de &rascunhos:"
 
@@ -3406,7 +3509,9 @@ msgid "Select Templates Folder"
 msgstr "Selecionar pasta de modelos"
 
 #: identity/identitydialog.cpp:601
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Templates folder:"
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Pasta de modelos:"
 
@@ -3427,7 +3532,9 @@ msgid "Create…"
 msgstr "Criar..."
 
 #: identity/identitydialog.cpp:618
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocorrection language:"
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Idioma de autocorreção:"
 
@@ -3439,7 +3546,9 @@ msgid "Restore default domain name"
 msgstr "Restaurar o nome de domínio padrão"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "&Domínio padrão:"
 
@@ -3688,7 +3797,9 @@ msgid "New Identity"
 msgstr "Nova identidade"
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "&Nova identidade:"
 
@@ -5693,6 +5804,7 @@ msgstr "Akonadi reiniciado."
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Starting..."
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Iniciando..."
 
@@ -6007,7 +6119,9 @@ msgid "%1 / %2"
 msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No unread messages in your monitored folders"
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Nenhuma mensagem não lida nas suas pastas monitoradas"
 
@@ -6023,7 +6137,9 @@ msgid "Summary Plugin Name"
 msgstr "Nome do plugin de resumo"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the plugin summaries to show on the summary page."
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Selecione os plugins a serem exibidos na página de resumo."
 

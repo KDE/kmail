@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-05-17 20:58+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -100,6 +100,8 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Limpar Dialog Size no ficheiro «%1»: Feito"
 
 #: refreshsettingsfirstpage.cpp:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Please close KMail/Kontact before using it."
+msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Peche KMail e Kontact antes de usar."

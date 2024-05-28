@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2014-03-17 20:32+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -81,7 +81,9 @@ msgid "Log filter actions"
 msgstr "Registruoti filtro veiksmus"
 
 #: filterlogdialog.cpp:133
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log size limit:"
+msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Registro dydžio riba:"
 

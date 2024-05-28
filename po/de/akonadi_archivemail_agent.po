@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-03-20 21:31+0100\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -34,27 +34,37 @@ msgid "Archive all subfolders"
 msgstr "Alle Unterordner archivieren"
 
 #: addarchivemailwidget.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Folder:"
+msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Ordner:"
 
 #: addarchivemailwidget.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format:"
+msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Format:"
 
 #: addarchivemailwidget.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Pfad:"
 
 #: addarchivemailwidget.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Backup each:"
+msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Sichern alle:"
 
 #: addarchivemailwidget.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum number of archive:"
+msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Maximale Anzahl von Archiven:"
 

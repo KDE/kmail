@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -478,6 +478,7 @@ msgstr "&Llyfr Cyfeiriadau"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "G&weithredu Gweithredoedd Hidlo"
 
@@ -537,12 +538,14 @@ msgstr "Cyfanswm"
 #: collectionpage/collectionquotawidget.cpp:24
 #, fuzzy, kde-format
 #| msgid "&Message"
+msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "&Neges"
 
 #: collectionpage/collectionquotawidget.cpp:30
 #, fuzzy, kde-format
 #| msgid "Status: "
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Cyflwr:"
 
@@ -567,8 +570,9 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "Byrlwybr:"
 
-#: collectionpage/collectionshortcutpage.cpp:43
+#: collectionpage/collectionshortcutpage.cpp:44
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -648,7 +652,9 @@ msgid "LDAP server"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Cyfrifon allfynd (ychwanegwch o leiaf un):"
 
@@ -836,7 +842,9 @@ msgid "&Use custom fonts"
 msgstr "&Defnyddio wynebfathau addasiedig"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Gwethr&edu ar:"
 
@@ -908,6 +916,7 @@ msgstr "Ailgylchu'r lliwiau wrth dd&yfynnu'n ddwfn"
 
 #: configuredialog/configureappearancepage.cpp:362
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr ""
 
@@ -993,6 +1002,7 @@ msgstr "wedi'u dileu"
 
 #: configuredialog/configureappearancepage.cpp:687
 #, kde-format
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 
@@ -1314,6 +1324,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:300
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Parth &rhagosod:"
 
@@ -1368,6 +1379,7 @@ msgstr "Dim hunan-gadw"
 
 #: configuredialog/configurecomposerpage.cpp:439
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Cyfeiriadau Diweddar"
 
@@ -1415,12 +1427,13 @@ msgstr "Gofyn yn ymysgogol am &hysbysiadau lleoliad negeseuon"
 msgid "Repl&y Subject Prefixes"
 msgstr "Rhagddodiadau ar gyfer P&wnc yr Ateb"
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
 #| "(entries are case-insensitive regular expressions):"
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
@@ -1429,182 +1442,192 @@ msgstr ""
 " (mae'r cofnodion yn fynegiadau rheolaidd efo llythrennau mawr/bach dim o "
 "bwys):"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "G&waredu"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "A&ddasu..."
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Mewnodosd rhagddodiad ateb newydd:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Rhagddodiadau ar gyfer P&wnc yr Ateb"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Rha&gddodiadau ar gyfer Pwnc y Blaenyrriad"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Gware&du"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "Addasu..."
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Mewnodosd rhagddodiad blaenyrriad newydd:"
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Rha&gddodiadau ar gyfer Pwnc y Blaenyrriad"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Defnyddio ôlddodiad dynodiad neges addasiedig."
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "Custom message-&id suffix:"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Ôlddodiad dynodiad n&eges addasiedig:"
 
-#: configuredialog/configurecomposerpage.cpp:811
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:812
+#, fuzzy, kde-format
+#| msgid "Define custom mime header fields:"
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Diffinio meyseydd pennawd mime addasiedig"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, fuzzy, kde-format
 #| msgid "Name"
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Enw"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, fuzzy, kde-format
 #| msgid "Value"
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Gwerth"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, fuzzy, kde-format
 #| msgid "Ne&w"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Ne&wydd"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, fuzzy, kde-format
 #| msgid "&Name:"
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Enw:"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Gwerth:"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid header"
 msgstr "&Galluogi llofnod"
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "G&alluogi darganfod atodiadau colledig"
 
-#: configuredialog/configurecomposerpage.cpp:1041
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1043
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any of the following key words as intention to attach a file:"
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Adnabod unrhyw un o'r allweddeiriau dilynnol fel bwriad o atodi ffeil:"
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Rhowch allweddair newydd:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "A&todiadau"
 
-#: configuredialog/configurecomposerpage.cpp:1062
+#: configuredialog/configurecomposerpage.cpp:1064
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Efo Atodiad"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "MB"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr ""
@@ -1770,6 +1793,7 @@ msgstr "&Anfon"
 
 #: configuredialog/configuresecuritypage.cpp:362
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1830,12 +1854,14 @@ msgstr "&Derbyn"
 #: dialog/archivefolderdialog.cpp:72
 #, fuzzy, kde-format
 #| msgid "Folder"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "Plygell"
 
 #: dialog/archivefolderdialog.cpp:82
 #, fuzzy, kde-format
 #| msgid "N&ormal:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "Ar&ferol:"
 
@@ -1862,6 +1888,7 @@ msgstr ""
 #: dialog/archivefolderdialog.cpp:97
 #, fuzzy, kde-format
 #| msgid "Attach File"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Atodi Ffeil"
 
@@ -1955,22 +1982,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "Gosd pwnc y neges."
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Dynodiad:"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Geiriadur:"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Plygell Ebost Anfonedig:"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "&Cludiant ebost:"
 
@@ -2294,8 +2329,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr "Llinell: %1"
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr "Colofn: %1"
 
@@ -2745,6 +2782,11 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr "Colofn: %1"
+
 #: editor/kmcomposerwin.cpp:4205
 #, fuzzy, kde-format
 #| msgctxt ""
@@ -2787,6 +2829,7 @@ msgstr "[Manylion]"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr ""
 
@@ -3083,6 +3126,7 @@ msgstr "D&yblygu dynodiad sy'n bodoli"
 
 #: identity/identityaddvcarddialog.cpp:66
 #, kde-format
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr ""
 
@@ -3093,7 +3137,9 @@ msgid "&Duplicate existing vCard"
 msgstr "D&yblygu dynodiad sy'n bodoli"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Dynodiadau &sy'n bodoli:"
 
@@ -3141,7 +3187,9 @@ msgid "General"
 msgstr "Cyffredinol"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Eich enw:"
 
@@ -3157,7 +3205,9 @@ msgstr ""
 "ni ddengys eich enw go iawn, ond cyfeiriad ebost yn unig.</p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Mu&diad:"
 
@@ -3177,7 +3227,9 @@ msgstr ""
 "arferol) i adael hwn yn wag.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "C&yfeiriad ebost:"
 
@@ -3201,6 +3253,7 @@ msgstr ""
 #: identity/identitydialog.cpp:329
 #, fuzzy, kde-format
 #| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "C&yfeiriad ebost:"
 
@@ -3236,8 +3289,9 @@ msgstr ""
 "ysgrifol.  Ni fydd effaith ar swyddogaethau ebostio arferol.</p>Gallwch "
 "ddarganfod mwy ynglyn ag allweddau wrth <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:363
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Allwedd OpenPGP:"
 
@@ -3251,6 +3305,11 @@ msgstr ""
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "Allwedd OpenPGP 0x%1"
+
+#: identity/identitydialog.cpp:387
+#, fuzzy, kde-format
+msgid "OpenPGP signing key:"
+msgstr "Allwedd OpenPGP:"
 
 #: identity/identitydialog.cpp:404
 #, fuzzy, kde-format
@@ -3270,6 +3329,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:411
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Allwedd OpenPGP:"
 
@@ -3289,6 +3349,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:426
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "Anfon Tystysgrifau"
 
@@ -3309,6 +3370,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:446
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "&Dewis tystysgrif:"
 
@@ -3324,9 +3386,10 @@ msgid "Enable Autocrypt"
 msgstr "Tanysgrifiad"
 
 #: identity/identitydialog.cpp:472
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Tanysgrifiad"
 
 #: identity/identitydialog.cpp:477
 #, kde-format
@@ -3341,6 +3404,7 @@ msgstr ""
 #: identity/identitydialog.cpp:483
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Trosysgrifo'r Ffeil?"
 
@@ -3377,7 +3441,9 @@ msgid "Advanced"
 msgstr "Uwch"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Cyfeiriad Ateb-I:"
 
@@ -3402,6 +3468,7 @@ msgstr ""
 #: identity/identitydialog.cpp:537
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Cyfeiriadau &BCC:"
 
@@ -3422,7 +3489,9 @@ msgstr ""
 "amheuaeth, gadewch y maes yma'n wag.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "Cyfeiriadau &BCC:"
 
@@ -3443,7 +3512,9 @@ msgstr ""
 "amheuaeth, gadewch y maes yma'n wag.</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "D&ictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Geiriadur:"
 
@@ -3464,7 +3535,9 @@ msgid "Select Draft Folder"
 msgstr "Dewis Ffeil Sŵn"
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Drafts folder:"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Plygell &brasluniau:"
 
@@ -3475,6 +3548,7 @@ msgstr "Plygell"
 
 #: identity/identitydialog.cpp:601
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Plygell S&bwriel:"
 
@@ -3498,6 +3572,7 @@ msgstr "Ailenwi..."
 #: identity/identitydialog.cpp:618
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Dewis i&aith:"
 
@@ -3509,7 +3584,9 @@ msgid "Restore default domain name"
 msgstr "Parth &rhagosod:"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Parth &rhagosod:"
 
@@ -3758,7 +3835,9 @@ msgid "New Identity"
 msgstr "Dynodiad Newydd"
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "D&ynodiad newydd:"
 
@@ -5715,6 +5794,7 @@ msgstr ""
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Subscription..."
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Tanysgrifiad..."
 
@@ -6028,6 +6108,7 @@ msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, fuzzy, kde-format
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Anfon negeseuon yn y b&lwch anfon wrth ymofyn"
 
@@ -6044,6 +6125,7 @@ msgstr ""
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 

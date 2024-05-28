@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2022-06-10 00:01+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -124,7 +124,9 @@ msgid "Follow Up Reminder"
 msgstr "Erinnerung an Folgenachrichten"
 
 #: followupremindernoanswerdialog.cpp:45
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "You still wait an answer about this mail:"
+msgctxt "@label:textbox"
 msgid "You still wait an answer about this mail:"
 msgstr "Sie warten immer noch auf eine Antwort auf diese E-Mail:"
 

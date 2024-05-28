@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2022-06-17 18:06+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -426,9 +426,11 @@ msgid "Address type:"
 msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Mailing list description:"
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr ""
+msgstr "Skildring av e-postliste:"
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
@@ -484,12 +486,16 @@ msgid "Quota"
 msgstr "Kvotar"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Usage:"
+msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Bruk:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Status:"
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Status:"
 
@@ -509,8 +515,13 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr ""
 
-#: collectionpage/collectionshortcutpage.cpp:43
-#, kde-format
+#: collectionpage/collectionshortcutpage.cpp:44
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>To choose a key or a combination of keys which select the current "
+#| "folder, click the button below and then press the key(s) you wish to "
+#| "associate with this folder.</qt>"
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -584,7 +595,9 @@ msgid "LDAP server"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Utgåande kontoar (legg til minst éin):"
 
@@ -760,7 +773,9 @@ msgid "&Use custom fonts"
 msgstr "&Bruk sjølvvalde skrifter"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "B&ruk på:"
 
@@ -824,7 +839,9 @@ msgid "Recycle colors on deep &quoting"
 msgstr "B&ruk om att fargar ved djup sitering"
 
 #: configuredialog/configureappearancepage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close to quota threshold:"
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Nær kvotegrensa:"
 
@@ -905,6 +922,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:687
 #, fuzzy, kde-format
 #| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">Informasjon om tilpassa format …</a></qt>"
 
@@ -1193,9 +1211,11 @@ msgid "Set the default forwarded message format"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
-msgstr ""
+msgstr "Sta&ndarddomene:"
 
 #: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
@@ -1248,6 +1268,7 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:439
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr ""
 
@@ -1293,176 +1314,188 @@ msgstr ""
 msgid "Repl&y Subject Prefixes"
 msgstr "Emneprefiks for sva&r"
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "&Fjern"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&Endra …"
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Skriv inn nytt svarprefiks:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, kde-format
 msgid "Reply Prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Emneprefiks for &vidaresending"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Fjern"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "Endra …"
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Skriv inn nytt vidaresendingsprefiks:"
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgid "Forward Prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "B&ruk sjølvvald ending i meldings-ID"
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "Custom message-&id suffix:"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Sjølvvald &ending i meldings-ID:"
 
-#: configuredialog/configurecomposerpage.cpp:811
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:812
+#, fuzzy, kde-format
+#| msgid "Define custom mime header fields:"
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Legg inn eigne meldingshovudfelt:"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Namn"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Verdi"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Ny"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "Na&mn:"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Verdi:"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Invalid header"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&Varsla ved sending av meldingar som manglar vedlegg"
 
-#: configuredialog/configurecomposerpage.cpp:1041
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1043
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any of the following key words as intention to attach a file:"
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "&Kjenn att desse nøkkelorda som kommandoar for å leggja ved ei fil:"
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Skriv inn nytt nøkkelord:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, kde-format
 msgid "Attachment Word:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1062
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1064
+#, fuzzy, kde-format
+#| msgid "As Attachment"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr ""
+msgstr "Som vedlegg"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr "Inga grense"
@@ -1613,6 +1646,7 @@ msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:362
 #, kde-format
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1669,12 +1703,16 @@ msgid "Archive"
 msgstr ""
 
 #: dialog/archivefolderdialog.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Mappe:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "F&ormat:"
 
@@ -1699,7 +1737,9 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-komprimert tar-arkiv (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Archive File:"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "&Arkivfil:"
 
@@ -1795,22 +1835,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "Vel avsendaradresse for denne meldinga"
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identitet:"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Ordliste:"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Mappe for se&nd e-post:"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "E-post-&transport:"
 
@@ -2133,8 +2181,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Linje: %1 "
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Kolonne: %1 "
 
@@ -2598,6 +2648,11 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr " Kolonne: %1 "
+
 #: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
@@ -2628,7 +2683,9 @@ msgid "Details"
 msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select email to put in whitelist:"
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr "Vel e-postadresser som blir kvitelista (klarert):"
 
@@ -2904,6 +2961,7 @@ msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:66
 #, kde-format
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr ""
 
@@ -2913,7 +2971,9 @@ msgid "&Duplicate existing vCard"
 msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Identitetar som finst frå før:"
 
@@ -2955,7 +3015,9 @@ msgid "General"
 msgstr "Generelt"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Namnet ditt:"
 
@@ -2972,7 +3034,9 @@ msgstr ""
 "qt>"
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organisas&jon:"
 
@@ -2989,7 +3053,9 @@ msgstr ""
 "vanleg) å la dette feltet stå tomt.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&E-postadresse:"
 
@@ -3004,9 +3070,11 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr ""
+msgstr "&E-postadresse:"
 
 #: identity/identitydialog.cpp:334
 #, kde-format
@@ -3039,8 +3107,10 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
-#, kde-format
+#: identity/identitydialog.cpp:363
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-signeringsnøkkel:"
 
@@ -3054,6 +3124,11 @@ msgstr ""
 msgid "OpenPGP key:"
 msgstr ""
 
+#: identity/identitydialog.cpp:387
+#, kde-format
+msgid "OpenPGP signing key:"
+msgstr "OpenPGP-signeringsnøkkel:"
+
 #: identity/identitydialog.cpp:404
 #, kde-format
 msgid ""
@@ -3066,7 +3141,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:411
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "OpenPGP encryption key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-krypteringsnøkkel:"
 
@@ -3084,7 +3161,9 @@ msgstr ""
 "vil framleis fungera.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME signing certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-signeringssertifikat:"
 
@@ -3104,7 +3183,9 @@ msgstr ""
 "av S/MIME. Dei vanlege e-postfunksjonane vil framleis fungera.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-krypteringssertifikat:"
 
@@ -3121,6 +3202,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:472
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr ""
 
@@ -3136,6 +3218,7 @@ msgstr ""
 
 #: identity/identitydialog.cpp:483
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr ""
 
@@ -3168,7 +3251,9 @@ msgid "Advanced"
 msgstr "Avansert"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Svaradresse:"
 
@@ -3191,9 +3276,11 @@ msgstr ""
 "stå tomt.</p></qt>"
 
 #: identity/identitydialog.cpp:537
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr ""
+msgstr "&Blindkopiadresser:"
 
 #: identity/identitydialog.cpp:543
 #, kde-format
@@ -3207,7 +3294,9 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Blindkopiadresser:"
 
@@ -3229,7 +3318,9 @@ msgstr ""
 "feltet stå tomt dersom du er i tvil.</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "D&ictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "Ordl&iste:"
 
@@ -3249,7 +3340,9 @@ msgid "Select Draft Folder"
 msgstr ""
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Drafts folder:"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "&Kladdmappe:"
 
@@ -3259,7 +3352,9 @@ msgid "Select Templates Folder"
 msgstr ""
 
 #: identity/identitydialog.cpp:601
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Templates folder:"
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Malmappe:"
 
@@ -3279,9 +3374,11 @@ msgid "Create…"
 msgstr ""
 
 #: identity/identitydialog.cpp:618
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocorrection"
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr ""
+msgstr "Autoretting"
 
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
@@ -3291,7 +3388,9 @@ msgid "Restore default domain name"
 msgstr "Sta&ndarddomene:"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Sta&ndarddomene:"
 
@@ -3541,7 +3640,9 @@ msgid "New Identity"
 msgstr ""
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "&Ny identitet:"
 
@@ -5493,6 +5594,7 @@ msgstr ""
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Starting..."
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startar …"
 
@@ -5796,7 +5898,9 @@ msgid "%1 / %2"
 msgstr "%1/%2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No unread messages in your monitored folders"
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Ingen ulesne meldingar i dei overvaka mappene"
 
@@ -5812,7 +5916,9 @@ msgid "Summary Plugin Name"
 msgstr "Namn på programtillegg for samandrag"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the plugin summaries to show on the summary page."
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 "Vel kva programtillegg for samandrag som skal visast på samandragssida."

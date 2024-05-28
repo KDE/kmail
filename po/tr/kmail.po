@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-05-23 14:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -440,7 +440,9 @@ msgid "Address type:"
 msgstr "Adres türü:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "URL for mailing list posting:"
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Posta listesine gönderim için URL:"
 
@@ -500,12 +502,16 @@ msgid "Quota"
 msgstr "Kota"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Usage:"
+msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Kullanım:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Status:"
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Durum:"
 
@@ -525,8 +531,13 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "Kısayol"
 
-#: collectionpage/collectionshortcutpage.cpp:43
-#, kde-format
+#: collectionpage/collectionshortcutpage.cpp:44
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>To choose a key or a combination of keys which select the current "
+#| "folder, click the button below and then press the key(s) you wish to "
+#| "associate with this folder.</qt>"
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -600,7 +611,9 @@ msgid "LDAP server"
 msgstr "LDAP Sunucusu"
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Giden hesaplar (en az bir hesap ekleyin):"
 
@@ -776,7 +789,9 @@ msgid "&Use custom fonts"
 msgstr "Ö&zel yazıtipi kullan"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "&Uygula:"
 
@@ -840,7 +855,9 @@ msgid "Recycle colors on deep &quoting"
 msgstr "Ç&oklu yanıtlarda renkler arasında geçiş yap"
 
 #: configuredialog/configureappearancepage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close to quota threshold:"
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Kotaya yaklaşma eşiği:"
 
@@ -917,7 +934,9 @@ msgid "Default theme:"
 msgstr "Öntanımlı tema:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">Özel biçim bilgisi…</a></qt>"
 
@@ -1206,7 +1225,9 @@ msgid "Set the default forwarded message format"
 msgstr "Öntanımlı iletilen ileti biçimini ayarla"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Default forwarding type:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Öntanımlı iletme türü:"
 
@@ -1266,7 +1287,9 @@ msgid "No save"
 msgstr "Kayıt yok"
 
 #: configuredialog/configurecomposerpage.cpp:439
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum recent addresses retained:"
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "En fazla son kullanılan adres:"
 
@@ -1313,9 +1336,13 @@ msgstr "İletiyi belirtilen aralıklarda kendiliğinden kaydet"
 msgid "Repl&y Subject Prefixes"
 msgstr "&Yanıtlama Konusu Önekleri"
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any sequence of the following prefixes (entries are case-"
+#| "insensitive regular expressions):"
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
@@ -1323,171 +1350,182 @@ msgstr ""
 "Aşağıdaki öneklerin herhangi bir sıralamasını tanı (girdiler BÜYÜK/küçük "
 "harf duyarsız düzenli ifadelerdir):"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr "E&kle…"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "&Kaldır"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&Değiştir…"
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Yeni yanıt önekini gir:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Yanıt önekini kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Yanıt öneki:"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "İletme &Konusu Önekleri"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ka&ldır"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr "Ekle…"
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "Değiştir…"
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Yeni iletme önekini gir:"
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "İletme önekini kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "İletme öneki:"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "Ö&zel ileti kimliği soneki kullan"
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "Custom message-&id suffix:"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Özel &ileti kimliği (message-id) soneki:"
 
-#: configuredialog/configurecomposerpage.cpp:811
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:812
+#, fuzzy, kde-format
+#| msgid "Define custom mime header fields:"
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Özel MIME üstbilgi etiketleri tanımla:"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Ad"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Değer"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Ye&ni"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Ad:"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Değer:"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "‘Content-Type’, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Invalid header"
 msgstr "Geçersiz üstbilgi"
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Eksik eklerin bulunmasını etki&nleştir"
 
-#: configuredialog/configurecomposerpage.cpp:1041
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1043
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any of the following key words as intention to attach a file:"
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Aşağıdaki anahtar sözcüklerden herhangi birini dosya iliştirme niyeti olarak "
 "kabul edin:"
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Yeni anahtar sözcüğü gir:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Bu ek sözcüğünü kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Ek sözcüğü:"
 
-#: configuredialog/configurecomposerpage.cpp:1062
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1064
+#, fuzzy, kde-format
+#| msgid "Maximum Attachment Size:"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "En büyük ek boyutu:"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr "Sınır yok"
@@ -1636,7 +1674,11 @@ msgid "GnuPG Settings"
 msgstr "GnuPG Ayarları"
 
 #: configuredialog/configuresecuritypage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The module is missing. Please verify your installation. This module is "
+#| "provided by Kleopatra."
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1695,12 +1737,16 @@ msgid "Archive"
 msgstr "Arşivle"
 
 #: dialog/archivefolderdialog.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Klasör:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "B&içim:"
 
@@ -1725,7 +1771,9 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ ile Sıkıştırılmış Tar Arşivi (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Archive File:"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "&Arşiv dosyası:"
 
@@ -1811,22 +1859,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "Bu ileti için “Kimden:” e-posta adresini ayarla"
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Kimlik:"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Sözlük:"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "&Gönderilen klasörü:"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "&Posta taşıyıcısı:"
 
@@ -2136,8 +2192,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Satır: %1 "
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Sütun: %1 "
 
@@ -2631,6 +2689,11 @@ msgstr ""
 "güvenilen başka bir anahtar tarafından imzalandı. Ayrıntılar için simgeye "
 "tıklayın."
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr " Sütun: %1 "
+
 #: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
@@ -2665,7 +2728,9 @@ msgid "Details"
 msgstr "Ayrıntılar"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select email to put in whitelist:"
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr "Beyaz listeye konulacak e-postayı seçin:"
 
@@ -2948,7 +3013,9 @@ msgid "&From existing vCard"
 msgstr "&Var Olan vCard’dan"
 
 #: identity/identityaddvcarddialog.cpp:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&vCard path:"
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr "&vCard yolu:"
 
@@ -2958,7 +3025,9 @@ msgid "&Duplicate existing vCard"
 msgstr "&Var Olan vCard’ı Çoğalt"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Var olan kimlikler:"
 
@@ -3000,7 +3069,9 @@ msgid "General"
 msgstr "Genel"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Adınız:"
 
@@ -3016,7 +3087,9 @@ msgstr ""
 "gösterilmeyecek, yalnızca e-posta adresiniz gösterilecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "&Kurum:"
 
@@ -3032,7 +3105,9 @@ msgstr ""
 "normaldir.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&E-posta adresi:"
 
@@ -3052,7 +3127,9 @@ msgstr ""
 "yazarsanız insanlar size yanıt yazmakta sorun yaşayacaklardır.</p></qt>"
 
 #: identity/identitydialog.cpp:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Email a&liases:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "&E-posta armaları:"
 
@@ -3094,8 +3171,10 @@ msgstr ""
 "etkilenmeyecektir.</p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://"
 "www.gnupg.org</a></p></qt> adresinde bulabilirsiniz."
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
-#, kde-format
+#: identity/identitydialog.cpp:363
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP imzalama anahtarı:"
 
@@ -3108,6 +3187,11 @@ msgstr "Şifreleme ve imzalama için aynı anahtarı kullan"
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP anahtarı:"
+
+#: identity/identitydialog.cpp:387
+#, kde-format
+msgid "OpenPGP signing key:"
+msgstr "OpenPGP imzalama anahtarı:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -3127,7 +3211,9 @@ msgstr ""
 "bilgiyi <a>https://www.gnupg.org</a> adresinden edinebilirsiniz</p>.</qt>"
 
 #: identity/identitydialog.cpp:411
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "OpenPGP encryption key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP şifreleme anahtarı:"
 
@@ -3145,7 +3231,9 @@ msgstr ""
 "normal posta işlevleri etkilenmeyecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME signing certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME imzalama sertifikası:"
 
@@ -3165,7 +3253,9 @@ msgstr ""
 "etkilenmeyecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME şifreleme sertifikası:"
 
@@ -3181,7 +3271,9 @@ msgid "Enable Autocrypt"
 msgstr "Kendiliğinden şifrelemeyi etkinleştir"
 
 #: identity/identitydialog.cpp:472
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocrypt:"
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Kendiliğinden şifrele:"
 
@@ -3196,7 +3288,9 @@ msgid "Overwrite global settings for security defaults"
 msgstr "Güvenlik öntanımlıları global ayarlarının üzerine yaz"
 
 #: identity/identitydialog.cpp:483
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Overwrite defaults:"
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Öntanımlıların üzerine yaz:"
 
@@ -3229,7 +3323,9 @@ msgid "Advanced"
 msgstr "Gelişmiş"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Yanıt adresi:"
 
@@ -3252,7 +3348,9 @@ msgstr ""
 "</p></qt>"
 
 #: identity/identitydialog.cpp:537
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&CC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&Kopya adresleri:"
 
@@ -3274,7 +3372,9 @@ msgstr ""
 "boş bırakın.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Gizli kopya adresleri:"
 
@@ -3297,7 +3397,9 @@ msgstr ""
 "qt>"
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "D&ictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Sözlük:"
 
@@ -3317,7 +3419,9 @@ msgid "Select Draft Folder"
 msgstr "Taslak Klasörünü Seç"
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Drafts folder:"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Tas&laklar klasörü:"
 
@@ -3327,7 +3431,9 @@ msgid "Select Templates Folder"
 msgstr "Şablonlar Klasörünü Seç"
 
 #: identity/identitydialog.cpp:601
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Templates folder:"
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Şablon klasörü:"
 
@@ -3347,7 +3453,9 @@ msgid "Create…"
 msgstr "Oluştur…"
 
 #: identity/identitydialog.cpp:618
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocorrection language:"
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Kendiliğinden düzeltme dili:"
 
@@ -3358,7 +3466,9 @@ msgid "Restore default domain name"
 msgstr "Öntanımlı alan adını geri yükle"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Öntanımlı &alan:"
 
@@ -3604,7 +3714,9 @@ msgid "New Identity"
 msgstr "Yeni Kimlik"
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "&Yeni kimlik:"
 
@@ -5504,7 +5616,9 @@ msgid "Akonadi restarted."
 msgstr "Akonadi yeniden başlatıldı."
 
 #: kmmainwin.cpp:53
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Starting…"
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Başlatılıyor…"
 
@@ -5805,7 +5919,9 @@ msgid "%1 / %2"
 msgstr "%1/%2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No unread messages in your monitored folders"
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "İzlenen klasörlerde okunmamış ileti yok"
 
@@ -5821,7 +5937,9 @@ msgid "Summary Plugin Name"
 msgstr "Özel Eklenti Adı"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the plugin summaries to show on the summary page."
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Özel sayfasında görüntülenmesini istediğiniz eklenti özetlerini seçin."
 

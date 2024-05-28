@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-23 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-05-23 06:21+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -434,7 +434,9 @@ msgid "Address type:"
 msgstr "Тип адреси:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "URL for mailing list posting:"
+msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Адреса для дописів у списку листування:"
 
@@ -494,12 +496,16 @@ msgid "Quota"
 msgstr "Квота"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Usage:"
+msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Використання:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Status:"
+msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Стан:"
 
@@ -519,8 +525,13 @@ msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "Скорочення"
 
-#: collectionpage/collectionshortcutpage.cpp:43
-#, kde-format
+#: collectionpage/collectionshortcutpage.cpp:44
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt>To choose a key or a combination of keys which select the current "
+#| "folder, click the button below and then press the key(s) you wish to "
+#| "associate with this folder.</qt>"
+msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
@@ -595,7 +606,9 @@ msgid "LDAP server"
 msgstr "Сервер LDAP"
 
 #: configuredialog/configureaccountpage.cpp:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Outgoing accounts (add at least one):"
+msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Вихідні облікові записи (додайте хоча б один):"
 
@@ -772,7 +785,9 @@ msgid "&Use custom fonts"
 msgstr "&Використовувати нетипові шрифти"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply &to:"
+msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Застосувати &до:"
 
@@ -836,7 +851,9 @@ msgid "Recycle colors on deep &quoting"
 msgstr "&Повторювати кольори при глибокому цитуванні"
 
 #: configuredialog/configureappearancepage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close to quota threshold:"
+msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Поріг наближення до квоти:"
 
@@ -913,7 +930,9 @@ msgid "Default theme:"
 msgstr "Типова тема:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
+msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 "<qt><a href=\"whatsthis1\">Інформація щодо нетипового формату…</a></qt>"
@@ -1209,7 +1228,9 @@ msgid "Set the default forwarded message format"
 msgstr "Встановити типовий формат переспрямовування повідомлень"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Default forwarding type:"
+msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Типовий тип переспрямовування:"
 
@@ -1275,7 +1296,9 @@ msgid "No save"
 msgstr "Без збереження"
 
 #: configuredialog/configurecomposerpage.cpp:439
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum recent addresses retained:"
+msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Максимальна кількість недавніх адрес:"
 
@@ -1326,9 +1349,13 @@ msgstr ""
 msgid "Repl&y Subject Prefixes"
 msgstr "П&рефікси теми відповіді"
 
-#: configuredialog/configurecomposerpage.cpp:692
-#: configuredialog/configurecomposerpage.cpp:722
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:723
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any sequence of the following prefixes (entries are case-"
+#| "insensitive regular expressions):"
+msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
@@ -1336,169 +1363,180 @@ msgstr ""
 "Розпізнавати будь-яку послідовність наступних префіксів (без урахування "
 "регістру):"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
 msgstr "&Додати…"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:832
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:700
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Mod&ify..."
 msgstr "&Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:700
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Введіть новий префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Хочете вилучити префікс відповіді?"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:704
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "П&рефікси теми пересилання"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:728 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr "Додати…"
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Modify..."
 msgstr "Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:728
+#: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Введіть новий префікс пересилки:"
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Хочете вилучити префікс переспрямовування?"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Префікс переспрямовування:"
 
-#: configuredialog/configurecomposerpage.cpp:783
+#: configuredialog/configurecomposerpage.cpp:784
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Використовувати власний суфікс ідентифікації повідомлення"
 
-#: configuredialog/configurecomposerpage.cpp:799
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:800
+#, fuzzy, kde-format
+#| msgid "Custom message-&id suffix:"
+msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "В&ласний суфікс ідентифікації повідомлення:"
 
-#: configuredialog/configurecomposerpage.cpp:811
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:812
+#, fuzzy, kde-format
+#| msgid "Define custom mime header fields:"
+msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Власні нетипові заголовки для листів:"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Назва"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:821
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Значення"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Створити"
 
-#: configuredialog/configurecomposerpage.cpp:841
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Назва:"
 
-#: configuredialog/configurecomposerpage.cpp:851
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:852
+#, fuzzy, kde-format
+#| msgid "&Value:"
+msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Значення:"
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "«Content-Type» не є дозволеним рядком. Цей заголовок не буде збережено."
 
-#: configuredialog/configurecomposerpage.cpp:990
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Invalid header"
 msgstr "Некоректний заголовок"
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1032
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Уві&мкнути визначення відсутніх долучень"
 
-#: configuredialog/configurecomposerpage.cpp:1041
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1043
+#, fuzzy, kde-format
+#| msgid ""
+#| "Recognize any of the following key words as intention to attach a file:"
+msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Вважати будь-яке з наступних слів наміром долучити файл:"
 
-#: configuredialog/configurecomposerpage.cpp:1052
+#: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Введіть нове слово:"
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1055
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Хочете вилучити цей слово долучення?"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1056
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Слово долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:1062
-#, kde-format
+#: configuredialog/configurecomposerpage.cpp:1064
+#, fuzzy, kde-format
+#| msgid "Maximum Attachment Size:"
+msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Максимальний розмір долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:1069
+#: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " кБ"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1073
 #, kde-format
 msgid "No limit"
 msgstr "Не обмежувати"
@@ -1650,7 +1688,11 @@ msgid "GnuPG Settings"
 msgstr "Параметри GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:362
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The module is missing. Please verify your installation. This module is "
+#| "provided by Kleopatra."
+msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
@@ -1709,12 +1751,16 @@ msgid "Archive"
 msgstr "Архівувати"
 
 #: dialog/archivefolderdialog.cpp:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Тека:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "Ф&ормат:"
 
@@ -1739,7 +1785,9 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "Архів Tar, стиснений GZ (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Archive File:"
+msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Файл ар&хіву:"
 
@@ -1832,22 +1880,30 @@ msgid "Set the \"From:\" email address for this message"
 msgstr "Вкажіть адресу «Від:» для цього повідомлення"
 
 #: editor/kmcomposerwin.cpp:415
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "П&рофіль:"
 
 #: editor/kmcomposerwin.cpp:416
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Словник:"
 
 #: editor/kmcomposerwin.cpp:417
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail folder:"
+msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Тека &надісланих повідомлень:"
 
 #: editor/kmcomposerwin.cpp:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail transport:"
+msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Канал надсилання по&шти:"
 
@@ -2157,8 +2213,10 @@ msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Рядок: %1 "
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3990
-#, kde-format
+#: editor/kmcomposerwin.cpp:1677
+#, fuzzy, kde-format
+#| msgid " Column: %1 "
+msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Стовпчик: %1 "
 
@@ -2663,6 +2721,11 @@ msgstr ""
 "Ключ шифрування не є необмежено довіреним або його підписано іншим "
 "необмежено довіреним ключем. Натисніть піктограму, щоб дізнатися більше."
 
+#: editor/kmcomposerwin.cpp:3990
+#, kde-format
+msgid " Column: %1 "
+msgstr " Стовпчик: %1 "
+
 #: editor/kmcomposerwin.cpp:4205
 #, kde-format
 msgctxt ""
@@ -2697,7 +2760,9 @@ msgid "Details"
 msgstr "Подробиці"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select email to put in whitelist:"
+msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr "Виберіть адресу для додавання до «білого» списку:"
 
@@ -2993,7 +3058,9 @@ msgid "&From existing vCard"
 msgstr "&На основі наявної візитівки"
 
 #: identity/identityaddvcarddialog.cpp:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&vCard path:"
+msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr "&Шлях до візитівки:"
 
@@ -3003,7 +3070,9 @@ msgid "&Duplicate existing vCard"
 msgstr "З&дублювати вже створену візитівку"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Existing identities:"
+msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Наявні профілі:"
 
@@ -3045,7 +3114,9 @@ msgid "General"
 msgstr "Загальні"
 
 #: identity/identitydialog.cpp:272
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Your name:"
+msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Ваше ім'я:"
 
@@ -3062,7 +3133,9 @@ msgstr ""
 "електронної пошти.</p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Organi&zation:"
+msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "&Установа:"
 
@@ -3079,7 +3152,9 @@ msgstr ""
 "типова ситуація), якщо залишити це поле порожнім.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Email address:"
+msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&Адреса пошти:"
 
@@ -3101,7 +3176,9 @@ msgstr ""
 "</p></qt>"
 
 #: identity/identitydialog.cpp:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Email a&liases:"
+msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "А&льтернативні адреси:"
 
@@ -3143,8 +3220,10 @@ msgstr ""
 "функції зі створення листів.</p><p>Більш докладно про ключі можна прочитати "
 "на <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:363 identity/identitydialog.cpp:387
-#, kde-format
+#: identity/identitydialog.cpp:363
+#, fuzzy, kde-format
+#| msgid "OpenPGP signing key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Ключ OpenPGP для підписів:"
 
@@ -3157,6 +3236,11 @@ msgstr "Використовувати один ключ для шифруван
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "Ключ OpenPGP:"
+
+#: identity/identitydialog.cpp:387
+#, kde-format
+msgid "OpenPGP signing key:"
+msgstr "Ключ OpenPGP для підписів:"
 
 #: identity/identitydialog.cpp:404
 #, kde-format
@@ -3177,7 +3261,9 @@ msgstr ""
 "ключі можна прочитати на <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:411
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "OpenPGP encryption key:"
+msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Ключ OpenPGP для шифрування:"
 
@@ -3196,7 +3282,9 @@ msgstr ""
 "створення листів.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME signing certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-сертифікат для підписування:"
 
@@ -3217,7 +3305,9 @@ msgstr ""
 "листів.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "S/MIME encryption certificate:"
+msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-сертифікат для шифрування:"
 
@@ -3233,7 +3323,9 @@ msgid "Enable Autocrypt"
 msgstr "Увімкнути автошифрування"
 
 #: identity/identitydialog.cpp:472
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocrypt:"
+msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Автошифрування:"
 
@@ -3248,7 +3340,9 @@ msgid "Overwrite global settings for security defaults"
 msgstr "Перезаписати загальні параметри для типового захисту"
 
 #: identity/identitydialog.cpp:483
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Overwrite defaults:"
+msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Перезаписати типове:"
 
@@ -3281,7 +3375,9 @@ msgid "Advanced"
 msgstr "Додатково"
 
 #: identity/identitydialog.cpp:515
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Reply-To address:"
+msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Зво&ротна адреса:"
 
@@ -3304,7 +3400,9 @@ msgstr ""
 "тут ввести, залиште це поле пустим.</p></qt>"
 
 #: identity/identitydialog.cpp:537
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&CC addresses:"
+msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Адреси &копій:"
 
@@ -3326,7 +3424,9 @@ msgstr ""
 "p><p>Якщо не знаєте, що тут ввести, залиште це поле порожнім.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&BCC addresses:"
+msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Потайні адреси:"
 
@@ -3349,7 +3449,9 @@ msgstr ""
 "ввести, залиште це поле порожнім.</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "D&ictionary:"
+msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "С&ловник:"
 
@@ -3369,7 +3471,9 @@ msgid "Select Draft Folder"
 msgstr "Вибір теки чернеток"
 
 #: identity/identitydialog.cpp:593
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Drafts folder:"
+msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Тека &чернеток:"
 
@@ -3379,7 +3483,9 @@ msgid "Select Templates Folder"
 msgstr "Вибір теки шаблонів"
 
 #: identity/identitydialog.cpp:601
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Templates folder:"
+msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Тека шаблонів:"
 
@@ -3399,7 +3505,9 @@ msgid "Create…"
 msgstr "Створити"
 
 #: identity/identitydialog.cpp:618
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Autocorrection language:"
+msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Мова автовиправлення:"
 
@@ -3410,7 +3518,9 @@ msgid "Restore default domain name"
 msgstr "Відновити типову назву домену"
 
 #: identity/identitydialog.cpp:633
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Defaul&t domain:"
+msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Тип&овий домен:"
 
@@ -3662,7 +3772,9 @@ msgid "New Identity"
 msgstr "Новий профіль"
 
 #: identity/newidentitydialog.cpp:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&New identity:"
+msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "&Новий профіль:"
 
@@ -5593,7 +5705,9 @@ msgid "Akonadi restarted."
 msgstr "Akonadi перезапущено."
 
 #: kmmainwin.cpp:53
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Starting…"
+msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Запуск…"
 
@@ -5903,7 +6017,9 @@ msgid "%1 / %2"
 msgstr "%1 з %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No unread messages in your monitored folders"
+msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Немає непрочитаних повідомлень у ваших теках під наглядом"
 
@@ -5919,7 +6035,9 @@ msgid "Summary Plugin Name"
 msgstr "Назва додатка резюме"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select the plugin summaries to show on the summary page."
+msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Вкажіть резюме додатка, які слід показати на сторінці резюме."
 

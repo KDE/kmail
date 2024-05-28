@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2014-11-09 22:31+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -84,7 +84,9 @@ msgid "Log filter actions"
 msgstr "Бележи радње филтера"
 
 #: filterlogdialog.cpp:133
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log size limit:"
+msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Ограничење величине дневника:"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-05-17 01:32+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -101,6 +101,8 @@ msgstr ""
 "“%1” ayar dosyasındaki iletişim kutusu boyutları temizleniyor: Tamamlandı"
 
 #: refreshsettingsfirstpage.cpp:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Please close KMail/Kontact before using it."
+msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Lütfen kullanımdan önce K Posta’yı/Kontak’ı kapatın."

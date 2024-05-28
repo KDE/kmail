@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -80,7 +80,9 @@ msgid "Log filter actions"
 msgstr "记录过滤器操作"
 
 #: filterlogdialog.cpp:133
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log size limit:"
+msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "日志大小限制："
 

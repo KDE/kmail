@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-01-22 11:58+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -101,6 +101,8 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Párbeszédablak-méret tisztítása a(z) „%1” fájlban: Kész"
 
 #: refreshsettingsfirstpage.cpp:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Please close KMail/Kontact before using it."
+msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Kérjük, zárja be a KMailt/Kontactot a használata előtt."

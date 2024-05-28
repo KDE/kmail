@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-05-16 15:50+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -109,6 +109,8 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Neteja la mida del diàleg en el fitxer de configuració «%1»: Fet"
 
 #: refreshsettingsfirstpage.cpp:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Please close KMail/Kontact before using it."
+msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Tanqueu KMail/Kontact abans d'utilitzar-lo."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2024-01-02 19:54+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -104,6 +104,8 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "清理設定檔案 `%1` 中的對話框大小：完成"
 
 #: refreshsettingsfirstpage.cpp:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Please close KMail/Kontact before using it."
+msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "請先關閉 KMail 和 Kontact 再使用它。"

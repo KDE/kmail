@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
@@ -39,27 +39,33 @@ msgstr ""
 #: addarchivemailwidget.cpp:38
 #, fuzzy, kde-format
 #| msgid "&Folder:"
+msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "قىسقۇچ(&F):"
 
 #: addarchivemailwidget.cpp:48
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
+msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "پىچىمى(&O):"
 
 #: addarchivemailwidget.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "يول:"
 
 #: addarchivemailwidget.cpp:63
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr ""
 
 #: addarchivemailwidget.cpp:75
 #, kde-format
+msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr ""
 

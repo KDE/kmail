@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2023-11-09 15:44+0100\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -35,27 +35,37 @@ msgid "Archive all subfolders"
 msgstr "Archivovat všechny podsložky"
 
 #: addarchivemailwidget.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Folder:"
+msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Složka:"
 
 #: addarchivemailwidget.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format:"
+msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formát:"
 
 #: addarchivemailwidget.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Cesta:"
 
 #: addarchivemailwidget.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Backup each:"
+msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Zálohovat každých:"
 
 #: addarchivemailwidget.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum number of archive:"
+msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Maximální počet archivů:"
 

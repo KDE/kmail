@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-05-28 00:38+0000\n"
 "PO-Revision-Date: 2023-12-30 17:52+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -37,27 +37,37 @@ msgid "Archive all subfolders"
 msgstr "歸檔所有的子資料夾"
 
 #: addarchivemailwidget.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Folder:"
+msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "資料夾："
 
 #: addarchivemailwidget.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format:"
+msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "格式："
 
 #: addarchivemailwidget.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Path:"
+msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "路徑："
 
 #: addarchivemailwidget.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Backup each:"
+msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "備份間隔："
 
 #: addarchivemailwidget.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum number of archive:"
+msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "歸檔最大數量："
 
