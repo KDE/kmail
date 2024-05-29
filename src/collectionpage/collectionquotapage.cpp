@@ -20,7 +20,7 @@ CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     , mQuotaWidget(new CollectionQuotaWidget(this))
 {
     setObjectName("KMail::CollectionQuotaPage"_L1);
-    setPageTitle(i18n("Quota"));
+    setPageTitle(i18nc("@title:tab Quota page.", "Quota"));
     init();
 }
 

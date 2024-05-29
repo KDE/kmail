@@ -25,7 +25,7 @@ CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     , mCollectionTemplateWidget(new MailCommon::CollectionTemplatesWidget(this))
 {
     setObjectName("KMail::CollectionTemplatesPage"_L1);
-    setPageTitle(i18n("Templates"));
+    setPageTitle(i18nc("@title:tab Templates settings page.", "Templates"));
     init();
 }
 
