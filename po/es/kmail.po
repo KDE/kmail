@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-08 22:50+0200\n"
+"PO-Revision-Date: 2024-05-28 16:38+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2234,8 +2234,8 @@ msgstr "Nombre de adjunto no válido"
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
-msgstr[0] "Añadir URL en el mensaje"
-msgstr[1] "Añadir los URL en el mensaje"
+msgstr[0] "Añadir la URL en el mensaje"
+msgstr[1] "Añadir las URL en el mensaje"
 
 #: editor/kmcomposerwin.cpp:2468
 #, kde-format
@@ -6465,7 +6465,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr "Una lista de URL usados recientemente"
+msgstr "Una lista de URL usadas recientemente"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.in:270
@@ -7596,7 +7596,7 @@ msgid ""
 msgstr ""
 "Si esta opción está seleccionada, los certificados S/MIME se validarán en "
 "línea usando el Protocolo de Estado de Certificados En Línea (OCSP). Rellene "
-"abajo el URL del repetidor OCSP."
+"la URL inferior del repetidor OCSP."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
@@ -7630,13 +7630,13 @@ msgid ""
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
 "Introduzca aquí la dirección del servidor para la validación en línea de "
-"certificados (repetidor OCSP). El URL suele comenzar con http://."
+"certificados (repetidor OCSP). La URL suele comenzar con http://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
 #, kde-format
 msgid "Ignore service URL of certificates"
-msgstr "Ignorar el URL del servicio de certificados"
+msgstr "Ignorar la URL del servicio de certificados"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:101
@@ -7719,7 +7719,7 @@ msgid ""
 msgstr ""
 "Al buscar la ubicación de un CRL, el certificado que se va a probar suele "
 "contener entradas del tipo «punto de distribución CRL» (DP), que son URL que "
-"describen la forma de acceder a los URL. La primera entrada DP que se "
+"describen la forma de acceder a las URL. La primera entrada DP que se "
 "encuentre en la que se usará. Con esta opción, todas las entradas que usen "
 "el esquema HTTP se ignorarán cuando se busque un DP adecuado."
 
@@ -7795,7 +7795,7 @@ msgid ""
 msgstr ""
 "Al buscar la ubicación de un CRL, el certificado que se va a probar suele "
 "contener entradas del tipo «punto de distribución CRL» (DP), que son URL que "
-"describen la forma de acceder a los URL. La primera entrada DP que se "
+"describen la forma de acceder a las URL. La primera entrada DP que se "
 "encuentre en la que se usará. Con esta opción, todas las entradas que usen "
 "el esquema LDAP se ignorarán cuando se busque un DP adecuado."
 
@@ -7826,8 +7826,8 @@ msgstr ""
 "Al introducir aquí un servidor LDAP, hace que todas las peticiones LDAP se "
 "dirijan, en primer lugar, a ese servidor. De forma más precisa, esta opción "
 "sustituye a la especificada en cualquier otra máquina y puerto que indique "
-"en un URL de LDAP y también se usará si es que omite la máquina y el puerto "
-"en el URL. Se usarán otros servidores LDAP Solo si ha fallado la conexión al "
+"en una URL de LDAP y también se usará si es que omite la máquina y el puerto "
+"en la URL. Se usarán otros servidores LDAP Solo si ha fallado la conexión al "
 "proxy.\n"
 "La sintaxis es «SERVIDOR» o «SERVIDOR:PUERTO». Si se omite el PUERTO, se usa "
 "el 389 (el puerto estándar para LDAP)."

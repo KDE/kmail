@@ -37,7 +37,7 @@ msgstr "归档全部子文件夹"
 #: addarchivemailwidget.cpp:38
 #, kde-format
 msgid "Folder:"
-msgstr "文件夹："
+msgstr ""
 
 #: addarchivemailwidget.cpp:48
 #, kde-format
