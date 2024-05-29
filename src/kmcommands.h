@@ -232,10 +232,8 @@ class KMAILTESTS_TESTS_EXPORT KMUrlSaveCommand : public KMCommand
 public:
     KMUrlSaveCommand(const QUrl &url, QWidget *parent);
 
-private Q_SLOTS:
-    void slotUrlSaveResult(KJob *job);
-
 private:
+    void slotUrlSaveResult(KJob *job);
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
 
     QUrl mUrl;
@@ -248,10 +246,9 @@ class KMAILTESTS_TESTS_EXPORT KMEditItemCommand : public KMCommand
 public:
     explicit KMEditItemCommand(QWidget *parent, const Akonadi::Item &msg, bool deleteFromSource = true);
     ~KMEditItemCommand() override;
-private Q_SLOTS:
-    void slotDeleteItem(KJob *job);
 
 private:
+    void slotDeleteItem(KJob *job);
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     bool mDeleteFromSource = false;
 };
@@ -300,11 +297,10 @@ public:
 private:
     [[nodiscard]] Result execute() override;
 
-private Q_SLOTS:
-    void slotDataArrived(KIO::Job *job, const QByteArray &data);
-    void slotResult(KJob *job);
-
 private:
+    KMAIL_NO_EXPORT void slotDataArrived(KIO::Job *job, const QByteArray &data);
+    KMAIL_NO_EXPORT void slotResult(KJob *job);
+
     KMAIL_NO_EXPORT void doesNotContainMessage();
     static const int MAX_CHUNK_SIZE = 64 * 1024;
     QUrl mUrl;
@@ -645,13 +641,12 @@ public:
 public Q_SLOTS:
     void slotMoveCanceled();
 
-private Q_SLOTS:
-    KMAIL_NO_EXPORT void slotMoveResult(KJob *job);
-    KMAIL_NO_EXPORT void slotDeleteResult(KJob *job);
 Q_SIGNALS:
     void moveDone(KMTrashMsgCommand *);
 
 private:
+    KMAIL_NO_EXPORT void slotMoveResult(KJob *job);
+    KMAIL_NO_EXPORT void slotDeleteResult(KJob *job);
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
     KMAIL_NO_EXPORT void completeMove(Result result);
 

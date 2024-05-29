@@ -529,24 +529,24 @@ Q_SIGNALS:
     void incomingAccountsChanged();
 private Q_SLOTS:
     /** Updates identities when a transport has been deleted. */
-    void transportRemoved(int id, const QString &name);
+    KMAIL_NO_EXPORT void transportRemoved(int id, const QString &name);
     /** Updates identities when a transport has been renamed. */
-    void transportRenamed(int id, const QString &oldName, const QString &newName);
-    void itemDispatchStarted();
-    void instanceStatusChanged(const Akonadi::AgentInstance &);
+    KMAIL_NO_EXPORT void transportRenamed(int id, const QString &oldName, const QString &newName);
+    KMAIL_NO_EXPORT void itemDispatchStarted();
+    KMAIL_NO_EXPORT void instanceStatusChanged(const Akonadi::AgentInstance &);
 
-    void akonadiStateChanged(Akonadi::ServerManager::State);
-    void slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item);
-    void slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message);
-    void slotInstanceWarning(const Akonadi::AgentInstance &instance, const QString &message);
-    void slotCollectionRemoved(const Akonadi::Collection &col);
-    void slotDeleteIdentity(uint identity);
-    void slotInstanceRemoved(const Akonadi::AgentInstance &);
-    void slotInstanceAdded(const Akonadi::AgentInstance &);
-    void slotSystemNetworkStatusChanged(bool isOnline);
-    void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
+    KMAIL_NO_EXPORT void akonadiStateChanged(Akonadi::ServerManager::State);
+    KMAIL_NO_EXPORT void slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item);
+    KMAIL_NO_EXPORT void slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message);
+    KMAIL_NO_EXPORT void slotInstanceWarning(const Akonadi::AgentInstance &instance, const QString &message);
+    KMAIL_NO_EXPORT void slotCollectionRemoved(const Akonadi::Collection &col);
+    KMAIL_NO_EXPORT void slotDeleteIdentity(uint identity);
+    KMAIL_NO_EXPORT void slotInstanceRemoved(const Akonadi::AgentInstance &);
+    KMAIL_NO_EXPORT void slotInstanceAdded(const Akonadi::AgentInstance &);
+    KMAIL_NO_EXPORT void slotSystemNetworkStatusChanged(bool isOnline);
+    KMAIL_NO_EXPORT void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
 
-    void slotCheckAccount(Akonadi::ServerManager::State state);
+    KMAIL_NO_EXPORT void slotCheckAccount(Akonadi::ServerManager::State state);
 
 private:
     KMAIL_NO_EXPORT void viewMessage(const QUrl &url);
