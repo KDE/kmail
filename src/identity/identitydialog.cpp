@@ -366,7 +366,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
 
     auto vbox = new QVBoxLayout;
-    mPGPSameKey = new QCheckBox(i18n("Use same key for encryption and signing"));
+    mPGPSameKey = new QCheckBox(i18n("Use same key for encryption and signing"), this);
     vbox->addWidget(mPGPSigningKeyRequester);
     vbox->addWidget(mPGPSameKey);
     formLayout->addRow(label, vbox);
@@ -485,16 +485,16 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay = new QVBoxLayout(mOverrideDefault);
 
-    mAutoSign = new QCheckBox(i18n("Sign messages"));
+    mAutoSign = new QCheckBox(i18n("Sign messages"), tab);
     vlay->addWidget(mAutoSign);
 
-    mAutoEncrypt = new QCheckBox(i18n("Encrypt messages when possible"));
+    mAutoEncrypt = new QCheckBox(i18n("Encrypt messages when possible"), tab);
     vlay->addWidget(mAutoEncrypt);
 
-    mWarnNotSign = new QCheckBox(i18n("Warn when trying to send unsigned messages"));
+    mWarnNotSign = new QCheckBox(i18n("Warn when trying to send unsigned messages"), tab);
     vlay->addWidget(mWarnNotSign);
 
-    mWarnNotEncrypt = new QCheckBox(i18n("Warn when trying to send unencrypted messages"));
+    mWarnNotEncrypt = new QCheckBox(i18n("Warn when trying to send unencrypted messages"), tab);
     vlay->addWidget(mWarnNotEncrypt);
 
     //
