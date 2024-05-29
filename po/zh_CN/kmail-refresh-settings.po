@@ -100,8 +100,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "清理设置文件“%1”中的对话框设置：完成"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "请在使用前关闭 KMail/Kontact。"

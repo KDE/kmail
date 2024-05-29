@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-28 00:38+0000\n"
-"PO-Revision-Date: 2024-05-16 07:37+0200\n"
+"PO-Revision-Date: 2024-05-28 07:22+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -130,8 +130,7 @@ msgid "Follow Up Reminder"
 msgstr "Opomnik za spremljanje pošte"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You still wait an answer about this mail:"
-msgstr "Še vedno čakate na odgovor te e-pošte:"
+msgstr "Še vedno čakate na odgovor na to sporočilo:"

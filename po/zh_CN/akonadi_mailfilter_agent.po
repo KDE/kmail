@@ -80,8 +80,7 @@ msgid "Log filter actions"
 msgstr "记录过滤器操作"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "日志大小限制："

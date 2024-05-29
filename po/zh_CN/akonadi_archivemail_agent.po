@@ -35,36 +35,31 @@ msgid "Archive all subfolders"
 msgstr "归档全部子文件夹"
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
-msgstr "文件夹："
+msgstr ""
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "Format:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "格式："
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "路径："
 
 #: addarchivemailwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Backup each:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "备份间隔："
 
 #: addarchivemailwidget.cpp:75
-#, fuzzy, kde-format
-#| msgid "Maximum number of archive:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "归档数上限："

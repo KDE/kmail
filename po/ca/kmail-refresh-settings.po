@@ -109,8 +109,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Neteja la mida del diàleg en el fitxer de configuració «%1»: Fet"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Tanqueu el KMail/Kontact abans d'usar-lo."

@@ -129,8 +129,7 @@ msgid "Follow Up Reminder"
 msgstr "Recordatori de seguiment"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You still wait an answer about this mail:"
 msgstr "Encara resteu a l'espera d'una resposta sobre este correu:"

@@ -89,8 +89,7 @@ msgid "Log filter actions"
 msgstr "Registra les accions de filtratge"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Límit de mida del registre:"
