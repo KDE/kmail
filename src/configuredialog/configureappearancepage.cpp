@@ -898,6 +898,21 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     connect(mShowNumberInTaskBar, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 #endif
 
+#if HAVE_ACTIVITY_SUPPORT
+    auto plasmaActivitiesBox = new QGroupBox(i18n("Plasma activities"), this);
+    topLayout->addWidget(plasmaActivitiesBox);
+
+    auto plasmaActivitiesBoxlayout = new QVBoxLayout(plasmaActivitiesBox);
+
+    mEnablePlasmaActivities = new QCheckBox(i18n("Enable"), this);
+    plasmaActivitiesBoxlayout->addWidget(mEnablePlasmaActivities);
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
+    connect(mEnablePlasmaActivities, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#else
+    connect(mEnablePlasmaActivities, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+#endif
+#endif
+
     topLayout->addStretch(100); // spacer
 }
 

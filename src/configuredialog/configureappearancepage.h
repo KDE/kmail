@@ -6,6 +6,7 @@
 #pragma once
 
 #include "MailCommon/Tag"
+#include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
 #include <QListWidgetItem>
@@ -158,6 +159,9 @@ private: // data
     QCheckBox *mSystemTrayCheck = nullptr;
     QCheckBox *mStartInTrayCheck = nullptr;
     QCheckBox *mShowNumberInTaskBar = nullptr;
+#if HAVE_ACTIVITY_SUPPORT
+    QCheckBox *mEnablePlasmaActivities = nullptr;
+#endif
 };
 
 class TagListWidgetItem : public QListWidgetItem
