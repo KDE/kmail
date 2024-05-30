@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-09 07:20+0900\n"
+"PO-Revision-Date: 2024-05-30 03:30+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -107,11 +107,11 @@ msgstr "前任協同維護者"
 
 #: aboutdata.cpp:39 aboutdata.cpp:41 aboutdata.cpp:42 aboutdata.cpp:43
 msgid "Former core developer"
-msgstr "前任核心發展者"
+msgstr "前任核心開發者"
 
 #: aboutdata.cpp:40
 msgid "Core developer"
-msgstr "主要發展者"
+msgstr "主要開發者"
 
 #: aboutdata.cpp:44
 msgid "Documentation"
@@ -2550,15 +2550,15 @@ msgid "Set a subject for this message"
 msgstr "設定此信件主題"
 
 #: editor/validatesendmailshortcut.cpp:30
-#, fuzzy, kde-format
-#| msgid ""
-#| "This shortcut allows to send mail directly. Mail can be send "
-#| "accidentally. What do you want to do?"
+#, kde-format
 msgid ""
 "This shortcut allows to send mail directly.\n"
 "Mail can be send accidentally.\n"
 "What do you want to do?"
-msgstr "此快捷鍵允許直接傳送郵件。郵件可能會不小心送出。您確定要這樣做嗎？"
+msgstr ""
+"此快捷鍵允許直接傳送郵件。\n"
+"郵件可能會不小心送出。\n"
+"您希望怎麼做？"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
@@ -2631,19 +2631,17 @@ msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr "寄件備份資料夾未定義。請在傳送郵件前先設定它。"
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
-msgstr "封存資料夾未定義。請檢查帳號 %1 的設定"
+msgstr "找不到身份。請確認您將使用正確身份。"
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
-#, fuzzy, kde-format
-#| msgid "Archive folder not defined. Please verify settings for account %1"
+#, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
-msgstr "封存資料夾未定義。請檢查帳號 %1 的設定"
+msgstr "找不到字典。請確認您將使用正確字典。"
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
@@ -3298,14 +3296,11 @@ msgid "Edit Identity \"%1\""
 msgstr "編輯身份 \"%1\""
 
 #: identity/identitydialog.cpp:945
-#, fuzzy, kde-format
-#| msgid ""
-#| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
-#| "therefore, the default drafts folder will be used."
+#, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
-msgstr "您所設定的草稿資料夾 %1 已不存在。因此改為使用預設的資料夾。"
+msgstr "身份的某些自訂資料夾不存在或不復存在；因此將會使用預設資料夾。"
 
 #: identity/identitydialog.cpp:1165
 #, kde-format
@@ -3679,16 +3674,14 @@ msgid "Set subject of message"
 msgstr "設定信件主題"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "信件裡增加 'header'。這可以重複。"
+msgstr "傳送副本給 'address'。這可以重複"
 
 #: kmail_options.h:20
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "信件裡增加 'header'。這可以重複。"
+msgstr "傳送密件副本給 'address'。這可以重複"
 
 #: kmail_options.h:23
 #, kde-format
@@ -4414,20 +4407,16 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
 #: kmmainwidget.cpp:2401
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
 msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
-msgstr[0] "<qt>您確定要刪除這 %1 封信件嗎？<br /> 刪除後就無法回復了。</qt>"
+msgstr[0] ""
+"<html>您確定要從 %1 個已選取信件中刪除所有附件嗎？<br />刪除後將無法復原。</"
+"html>"
 
 #: kmmainwidget.cpp:2408
 #, kde-format
@@ -5044,7 +5033,7 @@ msgstr "移動信件到資料夾"
 #: kmmainwidget.cpp:3631
 #, kde-format
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
-msgstr ""
+msgstr "將此資料夾及其子資料夾中所有信件標為已讀"
 
 #: kmmainwidget.cpp:3636
 #, kde-format
@@ -6212,10 +6201,9 @@ msgstr "顯示加密指示器"
 
 #. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
 #: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
+#, kde-format
 msgid "Show crypto ownertrust icons"
-msgstr "顯示加密指示器"
+msgstr "顯示加密擁有者信任圖示"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:284
