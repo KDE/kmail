@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-05-19 12:10+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -490,7 +490,9 @@ msgstr ""
 "Bete helbideak eskuz."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Kuota"
 
@@ -541,8 +543,9 @@ msgstr ""
 "d(it)uzun tekla(k).</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Txantiloiak"
 
@@ -1027,62 +1030,73 @@ msgstr "Hasi erretiluan ikonotuta"
 msgid "Show unread email in Taskbar"
 msgstr "Erakutsi ataza-barran irakurri gabeko e-posta"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "&Erregistratu iragazki ekintzak egunkarian"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Gaitu"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Etiketa era&bilgarriak"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Gehitu etiketa berria"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Kendu hautatutako etiketa"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Handiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Txikiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Eti&keta ezarpenak"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Ezabatuta"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "«%1» etiketa kendu nahi duzu?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Kendu etiketa"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Ezin dugu etiketa sortu. Izen bereko etiketa bat dago."
@@ -3522,6 +3536,11 @@ msgstr "Era&bili neurrira ipinitako mezu-txantiloiak nortasun honetarako"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Kopiatu txantiloi orokorrak"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Txantiloiak"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -8964,9 +8983,6 @@ msgstr "Zoom: %%1"
 #~ msgid "Show Message"
 #~ msgstr "Mezu berria"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "&Erregistratu iragazki ekintzak egunkarian"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10251,9 +10267,6 @@ msgstr "Zoom: %%1"
 #~| msgid "Save Attachment As"
 #~ msgid "Use storage service when attachment is larger than this limit"
 #~ msgstr "Gorde eranskina honela"
-
-#~ msgid "Enable"
-#~ msgstr "Gaitu"
 
 #, fuzzy
 #~| msgid "Search folder &name:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -556,7 +556,9 @@ msgstr ""
 "โปรแกรมจัดการจดหมาย-K ไม่สามารถตรวจสอบจดหมายเวียนในโฟลเดอร์นี้ได้ โปรดป้อนที่อยู่ด้วยตัวเอง"
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "พื้นที่จัดสรร"
 
@@ -602,8 +604,9 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "แม่แบบ"
 
@@ -1084,65 +1087,76 @@ msgstr ""
 msgid "Show unread email in Taskbar"
 msgstr "แสดงโปรแกรมจัดการจดหมาย-K ในถาดระบบเสมอ"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "กิจกรรมของบันทึกการกรอง"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "เปิดใช้"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "ป้าย&กำกับที่มีให้ใช้"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "เพิ่มป้ายใหม่"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "ลบป้ายที่เลือก"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "เพิ่มระดับความสำคัญของป้าย"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "ลดระดับความสำคัญของป้าย"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "ตั้งค่าป้า&ยกำกับ"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "ลบ"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "ลบ"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3556,6 +3570,11 @@ msgstr "ใ&ช้แม่แบบจดหมายที่กำหนด�
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&คัดลอกแม่แบบส่วนรวม"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "แม่แบบ"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -8936,9 +8955,6 @@ msgstr ""
 #~ msgid "Show Message"
 #~ msgstr "จดหมายใหม่"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "กิจกรรมของบันทึกการกรอง"
-
 #~ msgid "Logging Details"
 #~ msgstr "รายละเอียดการบันทึก"
 
@@ -10132,9 +10148,6 @@ msgstr ""
 
 #~ msgid "Allows you to create a calendar to-do or reminder from this message"
 #~ msgstr "อนุญาตให้คุณได้ทำการสร้างสิ่งที่จะทำ/เตือนความจำได้จากจดหมายฉบับนี้"
-
-#~ msgid "Enable"
-#~ msgstr "เปิดใช้"
 
 #, fuzzy
 #~| msgid "Search folder &name:"

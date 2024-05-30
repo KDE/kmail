@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-05-28 09:59+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -499,7 +499,9 @@ msgstr ""
 "adressen handmatig in."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Quota"
 
@@ -544,8 +546,9 @@ msgstr ""
 "toets(e)n die u aan deze map wilt koppelen.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Sjablonen"
 
@@ -1024,58 +1027,69 @@ msgstr "Geminimaliseerd starten in systeemvak"
 msgid "Show unread email in Taskbar"
 msgstr "Ongelezen e-mail in takenbalk tonen"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "&Filteractiviteiten vastleggen"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Inschakelen"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Beschi&kbare tags"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Nieuwe tag toevoegen"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Geselecteerde tag verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Tagprioriteit verhogen"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Tagprioriteit verlagen"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Ta&ginstellingen"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Wilt u tag '%1' verwijderen?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Tag verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3482,6 +3496,11 @@ msgstr "Aangepaste berichtsjablonen gebr&uiken voor deze identiteit"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "Globale sjablonen &kopiëren"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Sjablonen"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9024,9 +9043,6 @@ msgstr "Zoomen: %1%"
 #~ msgid "You still wait an answer about this mail:"
 #~ msgstr "U wacht nog steeds op een antwoord op dit e-mailbericht:"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "&Filteractiviteiten vastleggen"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10377,9 +10393,6 @@ msgstr "Zoomen: %1%"
 #~ msgctxt "@item:inlistbox for option \"Archive folder name\""
 #~ msgid "Month and year"
 #~ msgstr "Maand en jaar"
-
-#~ msgid "Enable"
-#~ msgstr "Inschakelen"
 
 #~ msgctxt "@label:listbox"
 #~ msgid "Archive folder name:"

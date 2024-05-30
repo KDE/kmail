@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-02-19 12:12+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -505,7 +505,9 @@ msgstr ""
 "osoitteet käsin."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Tilarajoitus"
 
@@ -555,8 +557,9 @@ msgstr ""
 "paina alla olevaa painiketta ja syötä haluamasi näppäinyhdistelmä.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Viestipohjat"
 
@@ -1041,62 +1044,73 @@ msgstr "Käynnistä pienennettynä ilmoitusalueelle"
 msgid "Show unread email in Taskbar"
 msgstr "Näytä lukematon posti ilmoitusaluekuvakkeessa"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "Kirjaa suodatustapahtumat &lokiin"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "&Käytettävissä olevat luokitukset"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Lisää uusi luokitus"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Poista valitut luokitus"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Kasvata luokituksen tärkeyttä"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Pienennä luokituksen tärkeyttä"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "&Luokitusten asetukset"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Poista"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Haluatko poistaa luokituksen %1?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Poista luokitus"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Tunnistetta ei voi luoda. Samanniminen tunniste on jo olemassa."
@@ -3553,6 +3567,11 @@ msgstr "M&ukauta tämän henkilöyden viestipohjia"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Kopioi järjestelmänlaajuiset viestipohjat"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Viestipohjat"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9188,9 +9207,6 @@ msgstr "Lähennys: %1 %"
 #~ msgid "You still wait an answer about this mail:"
 #~ msgstr "Odotat yhä vastausta tähän viestiin:"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "Kirjaa suodatustapahtumat &lokiin"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10534,9 +10550,6 @@ msgstr "Lähennys: %1 %"
 #~ msgctxt "@item:inlistbox for option \"Archive folder name\""
 #~ msgid "Month and year"
 #~ msgstr "Kuukausi ja vuosi"
-
-#~ msgid "Enable"
-#~ msgstr "Ota käyttöön"
 
 #~ msgctxt "@label:listbox"
 #~ msgid "Archive folder name:"

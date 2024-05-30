@@ -3,22 +3,22 @@
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011, 2012.
 # SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
-# Vit Pelcak <vit@pelcak.org>, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
-"PO-Revision-Date: 2023-12-07 11:24+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"PO-Revision-Date: 2024-05-27 16:30+0200\n"
+"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 24.02.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -422,11 +422,10 @@ msgid "Address type:"
 msgstr "Typ adresy:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "URL for mailing list posting:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr "URL pro posílání do mailing listů:"
+msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
@@ -479,23 +478,23 @@ msgstr ""
 "vyplňte adresy ručně."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Kvóta"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
-msgstr "Použití:"
+msgstr ""
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
-msgstr "Stav:"
+msgstr ""
 
 #: collectionpage/collectionquotawidget.cpp:33
 #, no-c-format, kde-format
@@ -514,23 +513,18 @@ msgid "Shortcut"
 msgstr "Zkratka"
 
 #: collectionpage/collectionshortcutpage.cpp:44
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>To choose a key or a combination of keys which select the current "
-#| "folder, click the button below and then press the key(s) you wish to "
-#| "associate with this folder.</qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
 "folder, click the button below and then press the key(s) you wish to "
 "associate with this folder.</qt>"
 msgstr ""
-"<qt>Klávesovou zkratku pro výběr aktuální složky nastavíte kliknutím na "
-"tlačítko a stisknutím požadované kombinace kláves.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Šablony"
 
@@ -593,11 +587,10 @@ msgid "LDAP server"
 msgstr "Server LDAP"
 
 #: configuredialog/configureaccountpage.cpp:86
-#, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
-msgstr "Odchozí účty (přidejte alespoň jeden):"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:93
 #, kde-format
@@ -657,12 +650,12 @@ msgstr "Povolit vrácení odeslání"
 #: configuredialog/configureaccountpage.cpp:209
 #, kde-format
 msgid "Add Mail Account…"
-msgstr ""
+msgstr "Přidat účet e-mailu…"
 
 #: configuredialog/configureaccountpage.cpp:210
 #, kde-format
 msgid "Custom Account…"
-msgstr ""
+msgstr "Vlastní účet…"
 
 #: configuredialog/configureaccountpage.cpp:230
 #: kmlaunchexternalcomponent.cpp:148
@@ -697,7 +690,7 @@ msgstr "Přepnout do odpojeného režimu při ukončení KMailu"
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
-msgstr ""
+msgstr "Zkontrolovat poštu při spuštění"
 
 #: configuredialog/configureaccountpage.cpp:342
 #, kde-format
@@ -770,11 +763,10 @@ msgid "&Use custom fonts"
 msgstr "&Použít vlastní písma"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, fuzzy, kde-format
-#| msgid "Apply &to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
-msgstr "Aplikova&t na:"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:307
 msgid "Quoted Text - First Level"
@@ -836,11 +828,10 @@ msgid "Recycle colors on deep &quoting"
 msgstr "Opakovat &barvy v případě větší hloubky citací"
 
 #: configuredialog/configureappearancepage.cpp:362
-#, fuzzy, kde-format
-#| msgid "Close to quota threshold:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
-msgstr "Blízko hranice kvóty:"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:368
 #, kde-format
@@ -1005,62 +996,68 @@ msgstr "Spustit minimalizovaný do lišty"
 msgid "Show unread email in Taskbar"
 msgstr "Zobrazit nepřečtenou poštu v panelu úloh"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, kde-format
+msgid "Plasma activities"
+msgstr ""
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr ""
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Dostupné značk&y"
 
-#: configuredialog/configureappearancepage.cpp:978
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#: configuredialog/configureappearancepage.cpp:993
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Přidat novou značku"
 
-#: configuredialog/configureappearancepage.cpp:983
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#: configuredialog/configureappearancepage.cpp:998
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Odstranit vybranou značku"
 
-#: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#: configuredialog/configureappearancepage.cpp:1007
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Zvýšit prioritu značky"
 
-#: configuredialog/configureappearancepage.cpp:998
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#: configuredialog/configureappearancepage.cpp:1013
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Snížit prioritu značky"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Nastav&ení značek"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Přejete si odstranit značku '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Odstranit značku"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -1200,11 +1197,10 @@ msgid "Set the default forwarded message format"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, fuzzy, kde-format
-#| msgid "Default forwarding type:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
-msgstr "Výchozí typ přeposílání:"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
@@ -1221,15 +1217,13 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr "Příliš mnoho příjemců"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Nastavit maximální počet příjemců pro varování"
@@ -1272,7 +1266,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgid "Configure Completion…"
-msgstr ""
+msgstr "Nastavit doplňování…"
 
 #: configuredialog/configurecomposerpage.cpp:465
 #, kde-format
@@ -1317,7 +1311,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "Při&dat…"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:833
@@ -1389,18 +1383,16 @@ msgid "&Use custom message-id suffix"
 msgstr "&Použít uživatelskou identifikační příponu"
 
 #: configuredialog/configurecomposerpage.cpp:800
-#, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
-msgstr "Uživatelská &identifikační přípona:"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:812
-#, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
-msgstr "Definovat vlastní pole pro MIME hlavičky:"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:820
 #, kde-format
@@ -1427,11 +1419,10 @@ msgid "&Name:"
 msgstr "&Jméno:"
 
 #: configuredialog/configurecomposerpage.cpp:852
-#, fuzzy, kde-format
-#| msgid "&Value:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
-msgstr "&Hodnota:"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
@@ -1450,14 +1441,10 @@ msgid "E&nable detection of missing attachments"
 msgstr "Povolit detekci c&hybějících příloh"
 
 #: configuredialog/configurecomposerpage.cpp:1043
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any of the following key words as intention to attach a file:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
-"Rozeznat jakékoliv z následujících klíčových slov jako záměr připojit "
-"přílohu:"
 
 #: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
@@ -1475,11 +1462,10 @@ msgid "Attachment Word:"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:1064
-#, fuzzy, kde-format
-#| msgid "Maximum Attachment Size:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Maximální velikost přílohy:"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
@@ -1696,18 +1682,16 @@ msgid "Archive"
 msgstr "Archivovat"
 
 #: dialog/archivefolderdialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
-msgstr "&Složka:"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:82
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
-msgstr "F&ormát:"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
@@ -1730,11 +1714,10 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-Komprimovaný archiv Tar (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, fuzzy, kde-format
-#| msgid "&Archive File:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
-msgstr "Soubor s &archivem:"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
@@ -1777,15 +1760,13 @@ msgstr[1] "%1 přílohy (%2)"
 msgstr[2] "%1 příloh (%2)"
 
 #: editor/attachment/attachmentview.cpp:198
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Skrýt seznam příloh"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Zobrazit seznam příloh"
@@ -1815,39 +1796,34 @@ msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:387
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Nastavit předmět zprávy"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:415
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
-msgstr "&Identita:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:416
-#, fuzzy, kde-format
-#| msgid "&Dictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
-msgstr "S&lovník:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:417
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
-msgstr "Složka ode&slaných zpráv:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:418
-#, fuzzy, kde-format
-#| msgid "&Mail transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
-msgstr "Přenos &pošty:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:419
 #, kde-format
@@ -1931,7 +1907,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "&Insert Text File…"
-msgstr ""
+msgstr "Vložit textový &soubor…"
 
 #: editor/kmcomposerwin.cpp:1312
 #, kde-format
@@ -1957,25 +1933,25 @@ msgstr "&Nový editor"
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr ""
+msgstr "Vyb&rat příjemce…"
 
 #: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr ""
+msgstr "Uložit &distribuční seznam…"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
-msgstr ""
+msgstr "Vložit jako přílo&hu"
 
 #: editor/kmcomposerwin.cpp:1364
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
-msgstr ""
+msgstr "Zruš&it mezery"
 
 #: editor/kmcomposerwin.cpp:1368
 #, kde-format
@@ -2069,24 +2045,24 @@ msgstr "Pře&dmět"
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
-msgstr ""
+msgstr "Př&ipojit podpis"
 
 #: editor/kmcomposerwin.cpp:1445
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
-msgstr ""
+msgstr "Př&ipojit podpis před"
 
 #: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
-msgstr ""
+msgstr "Vložit podpis na pozici k&urzoru"
 
 #: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "&Spellchecker…"
-msgstr ""
+msgstr "&Kontrola pravopisu…"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2119,21 +2095,20 @@ msgid "&Cryptographic Message Format"
 msgstr "Formát ši&frované zprávy"
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Nastavit předmět zprávy"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr ""
+msgstr "Vytvořit připomínku pro následnou činnost…"
 
 #: editor/kmcomposerwin.cpp:1542
 #, kde-format
 msgid "Configure KMail…"
-msgstr ""
+msgstr "Nastavit KMail…"
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
 #, kde-format
@@ -2157,11 +2132,10 @@ msgid " Line: %1 "
 msgstr " Řádka: %1 "
 
 #: editor/kmcomposerwin.cpp:1677
-#, fuzzy, kde-format
-#| msgid " Column: %1 "
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
-msgstr " Sloupec: %1 "
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1682
 #, kde-format
@@ -2342,7 +2316,7 @@ msgstr "Nebyl zadán adresát"
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr ""
+msgstr "Poslat tak, jak j&e"
 
 #: editor/kmcomposerwin.cpp:2817
 #, kde-format
@@ -2365,7 +2339,7 @@ msgstr "Nebyl zadán předmět"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
-msgstr ""
+msgstr "Zadat před&mět zprávy"
 
 #: editor/kmcomposerwin.cpp:2876
 #, kde-format
@@ -2377,7 +2351,7 @@ msgstr "Musíte zvolit alespoň jednoho příjemce, abyste mohli návrh zašifro
 #: editor/kmcomposerwin.cpp:3062
 #, kde-format
 msgid "About to send email…"
-msgstr ""
+msgstr "Chystáte se poslat e-mail…"
 
 #: editor/kmcomposerwin.cpp:3063
 #, kde-format
@@ -2389,13 +2363,13 @@ msgstr "Potvrzení odeslání"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
-msgstr ""
+msgstr "&Poslat nyní"
 
 #: editor/kmcomposerwin.cpp:3065
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
-msgstr ""
+msgstr "Poslat &později"
 
 #: editor/kmcomposerwin.cpp:3140
 #, kde-format
@@ -2413,13 +2387,13 @@ msgstr "Příliš mnoho příjemců"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr ""
+msgstr "Po&slat tak, jak je"
 
 #: editor/kmcomposerwin.cpp:3143
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
-msgstr ""
+msgstr "Upravit příj&emce"
 
 #: editor/kmcomposerwin.cpp:3180
 #, kde-format
@@ -2437,7 +2411,7 @@ msgstr "Zahodit formátování?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr ""
+msgstr "Zahodit formátování"
 
 #: editor/kmcomposerwin.cpp:3184
 #, kde-format
@@ -2657,11 +2631,10 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "Send Now"
-msgstr ""
+msgstr "Poslat nyní"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Nastavit předmět zprávy"
@@ -2919,11 +2892,10 @@ msgid "&From existing vCard"
 msgstr "Z e&xistující vizitky"
 
 #: identity/identityaddvcarddialog.cpp:66
-#, fuzzy, kde-format
-#| msgid "&vCard path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&vCard path:"
-msgstr "Cesta k &vizitce:"
+msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:77
 #, kde-format
@@ -2931,11 +2903,10 @@ msgid "&Duplicate existing vCard"
 msgstr "&Duplikovat existující vizitku"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Existing identities:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
-msgstr "&Existující identity:"
+msgstr ""
 
 #: identity/identitydialog.cpp:173
 #, kde-format
@@ -2960,7 +2931,7 @@ msgstr "Generovat nový pár klíčů"
 #: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair…"
-msgstr ""
+msgstr "Generuje se nový pár klíčů…"
 
 #: identity/identitydialog.cpp:241
 #, kde-format
@@ -2975,11 +2946,10 @@ msgid "General"
 msgstr "Obecné"
 
 #: identity/identitydialog.cpp:272
-#, fuzzy, kde-format
-#| msgid "&Your name:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
-msgstr "Vaše &jméno:"
+msgstr ""
 
 #: identity/identitydialog.cpp:277
 #, kde-format
@@ -2994,11 +2964,10 @@ msgstr ""
 "mailová adresa.</p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, fuzzy, kde-format
-#| msgid "Organi&zation:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
-msgstr "Or&ganizace:"
+msgstr ""
 
 #: identity/identitydialog.cpp:293
 #, kde-format
@@ -3012,11 +2981,10 @@ msgstr ""
 "p><p>Je bezpečné (a běžné) zanechat pole prázdné.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
-msgstr "&E-mailová adresa:"
+msgstr ""
 
 #: identity/identitydialog.cpp:310
 #, kde-format
@@ -3029,11 +2997,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:329
-#, fuzzy, kde-format
-#| msgid "Email a&liases:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr "Emai&lové přezdívky:"
+msgstr ""
 
 #: identity/identitydialog.cpp:334
 #, kde-format
@@ -3067,11 +3034,10 @@ msgstr ""
 "gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:363
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
-msgstr "Podepisovací klíč OpenPGP:"
+msgstr ""
 
 #: identity/identitydialog.cpp:369
 #, kde-format
@@ -3106,11 +3072,10 @@ msgstr ""
 "gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:411
-#, fuzzy, kde-format
-#| msgid "OpenPGP encryption key:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
-msgstr "Šifrovací klíč OpenPGP:"
+msgstr ""
 
 #: identity/identitydialog.cpp:421
 #, kde-format
@@ -3126,11 +3091,10 @@ msgstr ""
 "zůstanou zachovány.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, fuzzy, kde-format
-#| msgid "S/MIME signing certificate:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
-msgstr "Podepisovací S/MIME certifikát:"
+msgstr ""
 
 #: identity/identitydialog.cpp:440
 #, kde-format
@@ -3147,11 +3111,10 @@ msgstr ""
 "pošty pomocí S/MIME. Běžné poštovní funkce zůstanou zachovány.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, fuzzy, kde-format
-#| msgid "S/MIME encryption certificate:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
-msgstr "Šifrovací S/MIME certifikát:"
+msgstr ""
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3165,11 +3128,10 @@ msgid "Enable Autocrypt"
 msgstr "Povolit automatické šifrování"
 
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Autocrypt:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "Automaticky šifrovat"
+msgstr ""
 
 #: identity/identitydialog.cpp:477
 #, kde-format
@@ -3182,11 +3144,10 @@ msgid "Overwrite global settings for security defaults"
 msgstr "Přepsat globální nastavení pro výchozí bezpečnostní nastavení"
 
 #: identity/identitydialog.cpp:483
-#, fuzzy, kde-format
-#| msgid "Overwrite defaults:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "Přepsat výchozí:"
+msgstr ""
 
 #: identity/identitydialog.cpp:488
 #, kde-format
@@ -3217,11 +3178,10 @@ msgid "Advanced"
 msgstr "Rozšířené"
 
 #: identity/identitydialog.cpp:515
-#, fuzzy, kde-format
-#| msgid "&Reply-To address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
-msgstr "Ad&resa pro odpovědi:"
+msgstr ""
 
 #: identity/identitydialog.cpp:519
 #, kde-format
@@ -3242,11 +3202,10 @@ msgstr ""
 "qt>"
 
 #: identity/identitydialog.cpp:537
-#, fuzzy, kde-format
-#| msgid "&CC addresses:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr "Adresy &CC:"
+msgstr ""
 
 #: identity/identitydialog.cpp:543
 #, kde-format
@@ -3265,11 +3224,10 @@ msgstr ""
 "nejste jisti, ponechte pole prázdné.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, fuzzy, kde-format
-#| msgid "&BCC addresses:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
-msgstr "Adresy pro s&kryté kopie:"
+msgstr ""
 
 #: identity/identitydialog.cpp:563
 #, kde-format
@@ -3289,11 +3247,10 @@ msgstr ""
 "ponechte pole prázdné.</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, fuzzy, kde-format
-#| msgid "D&ictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
-msgstr "S&lovník:"
+msgstr ""
 
 #: identity/identitydialog.cpp:583
 #, kde-format
@@ -3311,11 +3268,10 @@ msgid "Select Draft Folder"
 msgstr "Vyberte složku konceptů"
 
 #: identity/identitydialog.cpp:593
-#, fuzzy, kde-format
-#| msgid "&Drafts folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr "Složka kon&ceptů:"
+msgstr ""
 
 #: identity/identitydialog.cpp:599
 #, kde-format
@@ -3323,11 +3279,10 @@ msgid "Select Templates Folder"
 msgstr "Vyberte složku šablon"
 
 #: identity/identitydialog.cpp:601
-#, fuzzy, kde-format
-#| msgid "&Templates folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
-msgstr "S&ložka se šablonami:"
+msgstr ""
 
 #: identity/identitydialog.cpp:606
 #, kde-format
@@ -3342,28 +3297,25 @@ msgstr "Přiložit ke zprávě moji vizitku"
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
 #, kde-format
 msgid "Create…"
-msgstr ""
+msgstr "Vytvořit…"
 
 #: identity/identitydialog.cpp:618
-#, fuzzy, kde-format
-#| msgid "Autocorrection language:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr "Jazyk pro automatickou opravu:"
+msgstr ""
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Obnovit výchozí název domény"
 
 #: identity/identitydialog.cpp:633
-#, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "Implici&tní doména:"
+msgstr ""
 
 #: identity/identitydialog.cpp:639
 #, kde-format
@@ -3383,6 +3335,11 @@ msgstr "Po&užít vlastní šablony zpráv pro tuto identitu"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Kopírovat globální šablony"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Šablony"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -3589,7 +3546,7 @@ msgstr "Odst&ranit"
 #: identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify…"
-msgstr ""
+msgstr "Změnit…"
 
 #: identity/identitypage.cpp:275
 #, kde-format
@@ -3608,11 +3565,10 @@ msgid "New Identity"
 msgstr "Nová identita"
 
 #: identity/newidentitydialog.cpp:61
-#, fuzzy, kde-format
-#| msgid "&New identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&New identity:"
-msgstr "&Nová identita:"
+msgstr ""
 
 #: identity/newidentitydialog.cpp:76
 #, kde-format
@@ -4089,13 +4045,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
-msgstr ""
+msgstr "Odeslat v jedné zprávě"
 
 #: kmcommands.cpp:927
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
-msgstr ""
+msgstr "Odeslat jednotlivě"
 
 #: kmcommands.cpp:1314
 #, kde-format
@@ -4195,13 +4151,13 @@ msgstr "Připojen/Odpojen"
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
-msgstr ""
+msgstr "Pracovat připojen"
 
 #: kmkernel.cpp:747
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
-msgstr ""
+msgstr "Pracovat odpojen"
 
 #: kmkernel.cpp:771
 #, kde-format
@@ -4406,7 +4362,7 @@ msgstr "Nechat vypršet složku"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
-msgstr ""
+msgstr "N&echat vypršet"
 
 #: kmmainwidget.cpp:1472
 #, kde-format
@@ -4451,7 +4407,7 @@ msgstr "Nechat vypršet staré zprávy?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr ""
+msgstr "Vypršení"
 
 #: kmmainwidget.cpp:1579
 #, kde-format
@@ -4473,7 +4429,7 @@ msgstr "Bezpečnostní varování"
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
-msgstr ""
+msgstr "Načíst externí odkazy"
 
 #: kmmainwidget.cpp:1655
 #, kde-format
@@ -4506,12 +4462,12 @@ msgstr "Smazat zprávu"
 #: kmmainwidget.cpp:1675
 #, kde-format
 msgid "Moving messages…"
-msgstr ""
+msgstr "Přesouvám zprávy…"
 
 #: kmmainwidget.cpp:1677 kmmainwidget.cpp:1871
 #, kde-format
 msgid "Deleting messages…"
-msgstr ""
+msgstr "Mažu zprávy…"
 
 #: kmmainwidget.cpp:1692 kmmainwidget.cpp:1891
 #, kde-format
@@ -4552,7 +4508,7 @@ msgstr "Přesunout zprávy do složky"
 #: kmmainwidget.cpp:1800
 #, kde-format
 msgid "Copying messages…"
-msgstr ""
+msgstr "Kopíruji zprávy…"
 
 #: kmmainwidget.cpp:1808
 #, kde-format
@@ -4578,12 +4534,12 @@ msgstr "Kopírovat zprávy do složky"
 #: kmmainwidget.cpp:1868
 #, kde-format
 msgid "Moving messages to trash…"
-msgstr ""
+msgstr "Přesouvám zprávy do koše…"
 
 #: kmmainwidget.cpp:1875
 #, kde-format
 msgid "Deleting and moving messages to trash…"
-msgstr ""
+msgstr "Mažu a přesunuji zprávy do koše…"
 
 #: kmmainwidget.cpp:1888
 #, kde-format
@@ -4687,13 +4643,13 @@ msgstr "Pracovat připojen"
 #: kmmainwidget.cpp:2910
 #, kde-format
 msgid "Save &As…"
-msgstr ""
+msgstr "Uložit j&ako…"
 
 #: kmmainwidget.cpp:2921
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
-msgstr ""
+msgstr "N&echat vypršet všechny složky"
 
 #: kmmainwidget.cpp:2926
 #, kde-format
@@ -4711,8 +4667,7 @@ msgid "Check Mail"
 msgstr "Zkontrolovat poštu"
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Zkontrolovat poštu"
@@ -4740,25 +4695,25 @@ msgstr "Správa certifikátů"
 #: kmmainwidget.cpp:2980
 #, kde-format
 msgid "&Import Messages…"
-msgstr ""
+msgstr "&Importovat zprávy…"
 
 #: kmmainwidget.cpp:2990
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
-msgstr ""
+msgstr "La&dit Sieve…"
 
 #: kmmainwidget.cpp:2997
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr ""
+msgstr "Proh&lížeč záznamů filtrů…"
 
 #: kmmainwidget.cpp:3002
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr ""
+msgstr "Historie upozornění…"
 
 #: kmmainwidget.cpp:3007
 #, kde-format
@@ -4770,25 +4725,25 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
-msgstr ""
+msgstr "Upravit odpovědi \"mimo kancelář\"…"
 
 #: kmmainwidget.cpp:3018
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
-msgstr ""
+msgstr "&Nastavit automatickou archivaci…"
 
 #: kmmainwidget.cpp:3024
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr ""
+msgstr "Zpožděné zprávy…"
 
 #: kmmainwidget.cpp:3030
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr ""
+msgstr "Následné upomínkové zprávy…"
 
 #: kmmainwidget.cpp:3041 util.cpp:149
 #, kde-format
@@ -4800,7 +4755,7 @@ msgstr "&Smazat"
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
-msgstr ""
+msgstr "Přesun&out vlákno do koše"
 
 #: kmmainwidget.cpp:3050
 #, kde-format
@@ -4815,48 +4770,48 @@ msgstr "Smazat v&lákno"
 #: kmmainwidget.cpp:3059 kmmainwidget.cpp:4114
 #, kde-format
 msgid "&Find Messages…"
-msgstr ""
+msgstr "Hle&dat zprávy…"
 
 #: kmmainwidget.cpp:3064
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
-msgstr ""
+msgstr "Vybr&at všechny zprávy"
 
 #: kmmainwidget.cpp:3071
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
-msgstr ""
+msgstr "Správa poštovní &konference…"
 
 #: kmmainwidget.cpp:3079
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr ""
+msgstr "&Vyčistit mezipaměť Akonadi…"
 
 #: kmmainwidget.cpp:3084
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr ""
+msgstr "Vyprázdnit mezipaměť Akonadi pro tuto složku a všechny její podsložky"
 
 #: kmmainwidget.cpp:3089
 #, kde-format
 msgid "&Assign Shortcut…"
-msgstr ""
+msgstr "Přiř&adit zkratku…"
 
 #: kmmainwidget.cpp:3107
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
-msgstr ""
+msgstr "Nastav&ení vypršení"
 
 #: kmmainwidget.cpp:3132
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr ""
+msgstr "Složka pro &archivaci…"
 
 #: kmmainwidget.cpp:3140
 #, kde-format
@@ -4866,17 +4821,17 @@ msgstr "Načíst e&xterní odkazy"
 #: kmmainwidget.cpp:3163
 #, kde-format
 msgid "Copy Message To…"
-msgstr ""
+msgstr "Kopírovat zprávu do…"
 
 #: kmmainwidget.cpp:3165
 #, kde-format
 msgid "Move Message To…"
-msgstr ""
+msgstr "Přesunout zprávu do…"
 
 #: kmmainwidget.cpp:3170
 #, kde-format
 msgid "&New Message…"
-msgstr ""
+msgstr "&Nová zpráva…"
 
 #: kmmainwidget.cpp:3172
 #, kde-format
@@ -4892,7 +4847,7 @@ msgstr "Zpráva ze š&ablony"
 #: kmmainwidget.cpp:3186
 #, kde-format
 msgid "New Message t&o Mailing-List…"
-msgstr ""
+msgstr "Nová zpráva do poštovní &konference…"
 
 #: kmmainwidget.cpp:3192
 #, kde-format
@@ -4903,19 +4858,19 @@ msgstr "Vytvořit filt&r"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
-msgstr ""
+msgstr "Filtr na &Předmětu…"
 
 #: kmmainwidget.cpp:3203
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
-msgstr ""
+msgstr "Filtr na &Od…"
 
 #: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
-msgstr ""
+msgstr "Filtr na &Komu…"
 
 #: kmmainwidget.cpp:3215
 #, kde-format
@@ -4957,7 +4912,7 @@ msgstr "Označit vlákno jako Dů&ležité"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
-msgstr ""
+msgstr "Odstranit značku vlákna Důlež&ité"
 
 #: kmmainwidget.cpp:3253
 #, kde-format
@@ -4968,7 +4923,7 @@ msgstr "Označit vlákno j&ako Úkol"
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
-msgstr ""
+msgstr "Odstr&anit značku vlákna Úkol"
 
 #: kmmainwidget.cpp:3260
 #, kde-format
@@ -4983,7 +4938,7 @@ msgstr "&Ignorovat vlákno"
 #: kmmainwidget.cpp:3272 kmreadermainwin.cpp:490
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr ""
+msgstr "Uloži&t přílohy…"
 
 #: kmmainwidget.cpp:3276
 #, kde-format
@@ -4994,7 +4949,7 @@ msgstr "Smazat všechny přílohy"
 #: kmmainwidget.cpp:3284
 #, kde-format
 msgid "Copy Decrypted To…"
-msgstr ""
+msgstr "Kopírovat dešifrované do…"
 
 #: kmmainwidget.cpp:3288
 #, kde-format
@@ -5049,13 +5004,13 @@ msgstr "Sbalit všechna vlákna v aktuální složce"
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
-msgstr ""
+msgstr "Zo&brazit zprávu"
 
 #: kmmainwidget.cpp:3332
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
-msgstr ""
+msgstr "&Následující zpráva"
 
 #: kmmainwidget.cpp:3335
 #, kde-format
@@ -5066,7 +5021,7 @@ msgstr "Přejít na následující zprávu"
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
-msgstr ""
+msgstr "Násled&ující nepřečtená"
 
 #: kmmainwidget.cpp:3347
 #, kde-format
@@ -5083,7 +5038,7 @@ msgstr "Přejít na následující nepřečtenou zprávu"
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
-msgstr ""
+msgstr "&Předchozí zpráva"
 
 #: kmmainwidget.cpp:3354
 #, kde-format
@@ -5094,7 +5049,7 @@ msgstr "Přejít na předchozí zprávu"
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
-msgstr ""
+msgstr "Předchozí &nepřečtená"
 
 #: kmmainwidget.cpp:3367
 #, kde-format
@@ -5111,7 +5066,7 @@ msgstr "Přejít na předchozí nepřečtenou zprávu"
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
-msgstr ""
+msgstr "Nás&ledující nepřečtená složka"
 
 #: kmmainwidget.cpp:3378
 #, kde-format
@@ -5122,7 +5077,7 @@ msgstr "Přejít na následující složku s nepřečtenými zprávami"
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
-msgstr ""
+msgstr "Předch&ozí nepřečtená složka"
 
 #: kmmainwidget.cpp:3387
 #, kde-format
@@ -5152,18 +5107,18 @@ msgstr ""
 #: kmmainwidget.cpp:3404
 #, kde-format
 msgid "Configure &Filters…"
-msgstr ""
+msgstr "Nastavit &filtry…"
 
 #: kmmainwidget.cpp:3410
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
-msgstr ""
+msgstr "&Spravovat Sieve skripty…"
 
 #: kmmainwidget.cpp:3415
 #, kde-format
 msgid "&Add Account…"
-msgstr ""
+msgstr "Přid&at účet…"
 
 #: kmmainwidget.cpp:3420
 #, kde-format
@@ -5178,28 +5133,28 @@ msgstr "Zobrazit uvítací stránku KMailu"
 #: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Configure &Notifications…"
-msgstr ""
+msgstr "&Nastavit upozornění…"
 
 #: kmmainwidget.cpp:3436
 #, kde-format
 msgid "&Configure KMail…"
-msgstr ""
+msgstr "&Nastavit KMail…"
 
 #: kmmainwidget.cpp:3443
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr ""
+msgstr "Nechat vypršet…"
 
 #: kmmainwidget.cpp:3449
 #, kde-format
 msgid "Add Favorite Folder…"
-msgstr ""
+msgstr "Přidat oblíbenou složku…"
 
 #: kmmainwidget.cpp:3455
 #, kde-format
 msgid "Serverside Subscription…"
-msgstr ""
+msgstr "Odběr na serveru…"
 
 #: kmmainwidget.cpp:3461 kmmainwidget.cpp:3469
 #, kde-format
@@ -5214,12 +5169,12 @@ msgstr "Aplikovat filtry na složku a všechny její podsložky"
 #: kmmainwidget.cpp:3487
 #, kde-format
 msgid "Import/Export KMail Data…"
-msgstr ""
+msgstr "Importovat/Exportovat data KMailu…"
 
 #: kmmainwidget.cpp:3493
 #, kde-format
 msgid "New AddressBook Contact…"
-msgstr ""
+msgstr "Nový kontakt knihy adres…"
 
 #: kmmainwidget.cpp:3501 kmmainwidget.cpp:4153
 #, kde-format
@@ -5235,102 +5190,102 @@ msgstr "Restartovat účet"
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
-msgstr ""
+msgstr "Kopírovat zprávu do složky"
 
 #: kmmainwidget.cpp:3527
 #, kde-format
 msgid "Jump to Folder…"
-msgstr ""
+msgstr "Přejít do složky…"
 
 #: kmmainwidget.cpp:3533
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
-msgstr ""
+msgstr "Zrušit aktuální operaci"
 
 #: kmmainwidget.cpp:3539
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
-msgstr ""
+msgstr "Změřit se na následující složku"
 
 #: kmmainwidget.cpp:3545
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
-msgstr ""
+msgstr "Zaměřit se na předchozí složku"
 
 #: kmmainwidget.cpp:3551
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
-msgstr ""
+msgstr "Vybrat složku se zaměřením"
 
 #: kmmainwidget.cpp:3558
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
-msgstr ""
+msgstr "Přepnout se na první složku"
 
 #: kmmainwidget.cpp:3564
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
-msgstr ""
+msgstr "Přepnout se na poslední složku"
 
 #: kmmainwidget.cpp:3570
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
-msgstr ""
+msgstr "Zaměřit se na následující zprávu"
 
 #: kmmainwidget.cpp:3576
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
-msgstr ""
+msgstr "Zaměřit se na předchozí zprávu"
 
 #: kmmainwidget.cpp:3582
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
-msgstr ""
+msgstr "Vybrat první zprávu"
 
 #: kmmainwidget.cpp:3588
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
-msgstr ""
+msgstr "Vybrat poslední zprávu"
 
 #: kmmainwidget.cpp:3594
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
-msgstr ""
+msgstr "Vybrat zprávu se zaměřením"
 
 #: kmmainwidget.cpp:3601
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
-msgstr ""
+msgstr "Přejít do rychlého vyhledávání"
 
 #: kmmainwidget.cpp:3609
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
-msgstr ""
+msgstr "Rozšířit výběr na předchozí zprávu"
 
 #: kmmainwidget.cpp:3615
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
-msgstr ""
+msgstr "Rozšířit výběr na následující zprávu"
 
 #: kmmainwidget.cpp:3622
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
-msgstr ""
+msgstr "Přesunout zprávu do složky"
 
 #: kmmainwidget.cpp:3632
 #, kde-format
@@ -5348,7 +5303,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
-msgstr ""
+msgstr "Předchozí vybraná složka"
 
 #: kmmainwidget.cpp:3650
 #, kde-format
@@ -5375,7 +5330,7 @@ msgstr "Přesun&out vlákno do koše"
 #: kmmainwidget.cpp:4114
 #, kde-format
 msgid "Edit Search…"
-msgstr ""
+msgstr "Upravit vyhledávání…"
 
 #: kmmainwidget.cpp:4151
 #, kde-format
@@ -5411,7 +5366,7 @@ msgstr "Filtr %1"
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr ""
+msgstr "Hledat... <%1>"
 
 #: kmmainwidget.cpp:4771
 #, kde-format
@@ -5434,7 +5389,7 @@ msgstr "Bezpečnostní varování"
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
-msgstr ""
+msgstr "Použít HTML"
 
 #: kmmainwidget.cpp:4921
 #, kde-format
@@ -5455,7 +5410,7 @@ msgstr "Povolit sjednocené schránky?"
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
-msgstr ""
+msgstr "Povolit sjednocené schránky"
 
 #: kmmainwidget.cpp:4926
 #, kde-format
@@ -5485,11 +5440,10 @@ msgid "Akonadi restarted."
 msgstr "Akonadi bylo restartováno."
 
 #: kmmainwin.cpp:53
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "Na&stavení"
+msgstr ""
 
 #: kmreadermainwin.cpp:493 util.cpp:149
 #, kde-format
@@ -5520,17 +5474,17 @@ msgstr "Položku nelze zkopírovat. %1"
 #: kmreaderwin.cpp:122
 #, kde-format
 msgid "New Message To…"
-msgstr ""
+msgstr "Nová zpráva pro…"
 
 #: kmreaderwin.cpp:128
 #, kde-format
 msgid "Reply To…"
-msgstr ""
+msgstr "Odpovědět komu…"
 
 #: kmreaderwin.cpp:134
 #, kde-format
 msgid "Forward To…"
-msgstr ""
+msgstr "Předat dál na…"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5555,30 +5509,30 @@ msgstr "Přidat tento odkaz do záložek"
 #: kmreaderwin.cpp:161
 #, kde-format
 msgid "Edit contact…"
-msgstr ""
+msgstr "Upravit kontakt…"
 
 #: kmreaderwin.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr ""
+msgstr "Uložit odkaz jako…"
 
 #: kmreaderwin.cpp:173
 #, kde-format
 msgid "&Find in Message…"
-msgstr ""
+msgstr "Hle&dat ve zprávě…"
 
 #: kmreaderwin.cpp:179
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
-msgstr ""
+msgstr "Uložit obrázek na disk…"
 
 #: kmreaderwin.cpp:185
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
-msgstr ""
+msgstr "Otevřít obrázek…"
 
 #: kmreaderwin.cpp:191
 #, kde-format
@@ -5601,7 +5555,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
-msgstr ""
+msgstr "Sdílet obrázek…"
 
 #: kmreaderwin.cpp:259
 msgid ""
@@ -5744,7 +5698,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
-msgstr ""
+msgstr "Nová zpráva…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5784,11 +5738,10 @@ msgid "%1 / %2"
 msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, fuzzy, kde-format
-#| msgid "No unread messages in your monitored folders"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
-msgstr "Žádné nepřečtené zprávy ve sledovaných složkách"
+msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
@@ -5802,16 +5755,15 @@ msgid "Summary Plugin Name"
 msgstr "Název modulu se souhrnem"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, fuzzy, kde-format
-#| msgid "Select the plugin summaries to show on the summary page."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
-msgstr "Vybrat moduly k zobrazení na souhrnné stránce."
+msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, kde-format
 msgid "&Configure Summary View…"
-msgstr ""
+msgstr "Nastavit &souhrnný pohled…"
 
 #: kontactplugin/summary/summaryview_part.cpp:50
 #: kontactplugin/summary/summaryview_plugin.cpp:102
@@ -5861,13 +5813,13 @@ msgstr "Pohled na shrnutí kontaktu"
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr ""
+msgstr "(c) 2003-2024 Vývojáři aplikace Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
 msgctxt "@info:credit"
 msgid "Sven Lueppken"
-msgstr ""
+msgstr "Sven Lueppken"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, kde-format
@@ -5906,52 +5858,52 @@ msgstr "O&dpovědět"
 #: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
 #, kde-format
 msgid "&Reply…"
-msgstr ""
+msgstr "&Odpovědět…"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
 #, kde-format
 msgid "Reply to &All…"
-msgstr ""
+msgstr "Odpovědě&t všem…"
 
 #: messageactions.cpp:66
 #, kde-format
 msgid "Reply to A&uthor…"
-msgstr ""
+msgstr "Odpovědět a&utorovi…"
 
 #: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
 #, kde-format
 msgid "Reply to Mailing-&List…"
-msgstr ""
+msgstr "Odpovědět do e-mai&lové konferenci…"
 
 #: messageactions.cpp:68
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
-msgstr ""
+msgstr "Odpověď be&z citace…"
 
 #: messageactions.cpp:69
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
-msgstr ""
+msgstr "Vloži&t…"
 
 #: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr ""
+msgstr "J&ako přílohu…"
 
 #: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
-msgstr ""
+msgstr "&Přesměrovat…"
 
 #: messageactions.cpp:72
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr ""
+msgstr "Nová zpráva pro příjemce…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -5973,7 +5925,7 @@ msgstr "E-mai&lová konference"
 #: messageactions.cpp:76 messageactions.cpp:371
 #, kde-format
 msgid "Add Note…"
-msgstr ""
+msgstr "Přidat poznámku…"
 
 #: messageactions.cpp:77
 #, kde-format
@@ -5984,19 +5936,19 @@ msgstr "Upravi&t jako nové"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr ""
+msgstr "Filtr na e-mai&lové konferenci…"
 
 #: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr ""
+msgstr "Přidat následnou upomínku…"
 
 #: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
-msgstr ""
+msgstr "Po&slat znovu …"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -6006,7 +5958,7 @@ msgstr "Nová zpráva ze š&ablony"
 #: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
-msgstr ""
+msgstr "Exportovat do PDF…"
 
 #: messageactions.cpp:85
 #, kde-format
@@ -6017,12 +5969,12 @@ msgstr "Archivovat zprávu"
 #: messageactions.cpp:373
 #, kde-format
 msgid "Edit Note…"
-msgstr ""
+msgstr "Upravit poznámku…"
 
 #: messageactions.cpp:418
 #, kde-format
 msgid "Filter on Mailing-List…"
-msgstr ""
+msgstr "Filtr na e-mailové konferenci…"
 
 #: messageactions.cpp:454
 #, kde-format
@@ -6068,7 +6020,7 @@ msgstr "Odhlásit z diskuzní skupiny"
 #: messageactions.cpp:484
 #, kde-format
 msgid "Filter on Mailing-List %1…"
-msgstr ""
+msgstr "Filtr na e-mailové konferenci %1…"
 
 #: messageactions.cpp:661
 #, kde-format
@@ -6117,7 +6069,7 @@ msgstr "Indexování"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections…"
-msgstr ""
+msgstr "Indexují se sbírky…"
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
 #: searchdialog/kmsearchmessagemodel.cpp:94
@@ -6171,30 +6123,30 @@ msgstr "&Hledat"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
-msgstr ""
+msgstr "Vloži&t…"
 
 #: searchdialog/searchwindow.cpp:177
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr ""
+msgstr "J&ako přílohu…"
 
 #: searchdialog/searchwindow.cpp:192
 #, kde-format
 msgid "Save Attachments…"
-msgstr ""
+msgstr "Uložit přílohy…"
 
 #: searchdialog/searchwindow.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
-msgstr ""
+msgstr "Smazat výběr"
 
 #: searchdialog/searchwindow.cpp:203
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
-msgstr ""
+msgstr "Přejít do původní složky"
 
 #: searchdialog/searchwindow.cpp:294
 #, kde-format
@@ -6243,7 +6195,7 @@ msgstr ""
 #: searchdialog/searchwindow.cpp:522
 #, kde-format
 msgid "Searching…"
-msgstr ""
+msgstr "Hledání..."
 
 #: searchdialog/searchwindow.cpp:535
 #, kde-format
@@ -6292,7 +6244,7 @@ msgstr[2] "Vyjmout %1 zpráv"
 #: searchdialog/searchwindow.cpp:911
 #, kde-format
 msgid "Checking index status…"
-msgstr ""
+msgstr "Kontroluji stav indexu…"
 
 #: secondarywindow.cpp:57
 #, kde-format
@@ -6590,7 +6542,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:343
 #, kde-format
 msgid "Message preview pane:"
-msgstr ""
+msgstr "Rám s náhledem zprávy:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6614,7 +6566,7 @@ msgstr "Zobrazovat rám s náhledem zprávy vedle seznamu zpráv"
 #: settings/kmail.kcfg.in:359
 #, kde-format
 msgid "Folder list:"
-msgstr ""
+msgstr "Seznam složek:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
@@ -6726,7 +6678,7 @@ msgstr "Přidat novou značku…"
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr ""
+msgstr "Více…"
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -6747,18 +6699,18 @@ msgstr "Vyberte značky"
 #: tag/tagselectdialog.cpp:53
 #, kde-format
 msgid "Add New Tag…"
-msgstr ""
+msgstr "Přidat novou značku…"
 
 #: tag/tagselectdialog.cpp:67
 #, kde-format
 msgid "Search tag…"
-msgstr ""
+msgstr "Hledat značku…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order…"
-msgstr ""
+msgstr "Upravit pořadí účtů…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6782,13 +6734,13 @@ msgstr "Deta&ilní upozornění na novou poštu"
 #: ui/accountspagereceivingtab.ui:81
 #, kde-format
 msgid "Other Actio&ns…"
-msgstr ""
+msgstr "Ji&né činnosti…"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
 #, kde-format
 msgid "Open Image…"
-msgstr ""
+msgstr "Otevřít obrázek…"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
@@ -6806,7 +6758,7 @@ msgstr "Přidat novou identitu"
 #: ui/identitypage.ui:27
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "Přid&at…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37
@@ -6818,7 +6770,7 @@ msgstr "Změnit vybranou identitu"
 #: ui/identitypage.ui:40
 #, kde-format
 msgid "&Modify…"
-msgstr ""
+msgstr "Z&měnit…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identitypage.ui:50
@@ -7056,7 +7008,7 @@ msgstr "Vyberte konkrétní složky:"
 #: ui/searchwindow.ui:60
 #, kde-format
 msgid "Select Folders…"
-msgstr ""
+msgstr "Vyberte složky…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -7290,7 +7242,7 @@ msgstr "Pro certifikáty prostředníků:"
 #: ui/securitypageencryptiontab.ui:354
 #, kde-format
 msgid "GnuPG Settings…"
-msgstr ""
+msgstr "Nastavení GnuPG…"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:393
@@ -7348,6 +7300,10 @@ msgid ""
 "href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
+"<b>POZOR:</b> Povolení HTML v poště učiní systém více zranitelným vůči "
+"napadení zneužitím nějaké, dosud neznámé, bezpečnostní chyby. <a href="
+"\"whatsthis1\">Více o HTML zprávách</a> <a href=\"whatsthis2\">Více o "
+"externích odkazech...</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:75
@@ -7578,6 +7534,8 @@ msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
+"<b>POZOR:</b> Bezvýhradné vracení potvrzenek poněkud narušuje vaše soukromí. "
+"<a href=\"whatsthis-mdn\">Více o doručenkách</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17

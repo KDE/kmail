@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-05-08 21:29+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -488,7 +488,9 @@ msgstr ""
 "questa cartella. Riempi gli indirizzi a mano."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Quota"
 
@@ -539,8 +541,9 @@ msgstr ""
 "associare a questa cartella.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Modelli"
 
@@ -1028,62 +1031,73 @@ msgstr "Avvia minimizzato nel vassoio di sistema"
 msgid "Show unread email in Taskbar"
 msgstr "Mostra i messaggi non letti nella barra delle applicazioni"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "Registra attività dei fi&ltri"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Abilita"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Etic&hette disponibili"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Aggiungi nuova etichetta"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Rimuovi etichetta selezionata"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Aumenta priorità dell'etichetta"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Riduci priorità dell'etichetta"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Im&postazioni etichette"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Elimina"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Vuoi rimuovere l'etichetta «%1»?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Rimuovi etichetta"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3568,6 +3582,11 @@ msgstr "&Usa modelli personalizzati di messaggio per questa identità"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Copia modelli globali"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Modelli"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9203,9 +9222,6 @@ msgstr "Ingrandimento: %1%"
 #~ msgid "You still wait an answer about this mail:"
 #~ msgstr "Aspetti ancora una risposta riguardo questo messaggio:"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "Registra attività dei fi&ltri"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -13623,9 +13639,6 @@ msgstr "Ingrandimento: %1%"
 #~ msgstr ""
 #~ "KMail non è in grado di rilevare se l'editor scelto è chiuso. Per evitare "
 #~ "perdite di dati, la modifica dell'allegato sarà interrotta."
-
-#~ msgid "Enable"
-#~ msgstr "Abilita"
 
 #~ msgctxt "@info"
 #~ msgid ""

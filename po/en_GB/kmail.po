@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-05-23 19:19+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -484,7 +484,9 @@ msgstr ""
 "in the addresses by hand."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Quota"
 
@@ -535,8 +537,9 @@ msgstr ""
 "associate with this folder.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Templates"
 
@@ -1016,58 +1019,69 @@ msgstr "Start minimised to tray"
 msgid "Show unread email in Taskbar"
 msgstr "Show unread email in Taskbar"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "&Log filter activities"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Enable"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "A&vailable Tags"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Add new tag"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Remove selected tag"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Increase tag priority"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Decrease tag priority"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Ta&g Settings"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Delete"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Do you want to remove tag '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Remove Tag"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "We cannot create tag. A tag with same name already exists."
@@ -3488,6 +3502,11 @@ msgstr "&Use custom message templates for this identity"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Copy Global Templates"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Templates"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -8960,9 +8979,6 @@ msgstr "Zoom: %1%"
 #~ msgid "You still wait an answer about this mail:"
 #~ msgstr "You are still waiting for an answer about this mail:"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "&Log filter activities"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10289,9 +10305,6 @@ msgstr "Zoom: %1%"
 #~ "This option starts the KOrganizer to-do editor with initial values taken "
 #~ "from the currently selected message. Then you can edit the to-do to your "
 #~ "liking before saving it to your calendar."
-
-#~ msgid "Enable"
-#~ msgstr "Enable"
 
 #, fuzzy
 #~| msgid "Search folder &name:"

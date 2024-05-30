@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -532,6 +532,7 @@ msgstr ""
 
 #: collectionpage/collectionquotapage.cpp:23
 #, fuzzy, kde-format
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Cyfanswm"
 
@@ -580,10 +581,10 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
-msgstr ""
+msgstr "&Amnewid"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, fuzzy, kde-format
@@ -1117,62 +1118,72 @@ msgstr ""
 msgid "Show unread email in Taskbar"
 msgstr "&Dangos y cafn cysawd o hyd"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+msgid "Plasma activities"
+msgstr "Gweithredoedd Hidlo"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Galluogi"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Hidlau ar Gael"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Ychwanegu cofnod ..."
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Gwaredu Negeseuon Dyblyg"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Anfon"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "Wedi'u dileu"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>Ydych wir eisiau gwaredu'r dynodiad o'r enw <b>%1</b>?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Gware&du"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3608,6 +3619,11 @@ msgstr "&Defnyddio ôlddodiad dynodiad neges addasiedig."
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Amnewid"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr ""
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9108,10 +9124,6 @@ msgstr ""
 #~ msgstr "Neges Newydd"
 
 #, fuzzy
-#~ msgid "&Log filter activities"
-#~ msgstr "Gweithredoedd Hidlo"
-
-#, fuzzy
 #~| msgid "Show alway&s"
 #~ msgid "Logging Details"
 #~ msgstr "Dangos o &hyd"
@@ -10026,9 +10038,6 @@ msgstr ""
 #~| msgid "Save Attachment As"
 #~ msgid "Use storage service when attachment is larger than this limit"
 #~ msgstr "Cadw Atodiad Fel..."
-
-#~ msgid "Enable"
-#~ msgstr "Galluogi"
 
 #, fuzzy
 #~| msgid "Search folder &name:"
@@ -17071,10 +17080,6 @@ msgstr ""
 
 #~ msgid "&Subject"
 #~ msgstr "&Pwnc"
-
-#, fuzzy
-#~ msgid "&Templates"
-#~ msgstr "&Amnewid"
 
 #~ msgid "&Signature"
 #~ msgstr "&Llofnod"

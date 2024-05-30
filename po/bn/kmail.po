@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -520,6 +520,7 @@ msgstr ""
 
 #: collectionpage/collectionquotapage.cpp:23
 #, fuzzy, kde-format
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "মোট"
 
@@ -568,10 +569,10 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
-msgstr ""
+msgstr "&বদলাও"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, fuzzy, kde-format
@@ -1063,62 +1064,72 @@ msgstr ""
 msgid "Show unread email in Taskbar"
 msgstr "কে-মেইল সিস্টেম ট্রে-তে সর্বদা দেখাও"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, kde-format
+msgid "Plasma activities"
+msgstr ""
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "সক্রিয় করো"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "যে যে ফিল্টার আপাতত আছে"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "এন্ট্রি যোগ করো..."
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "পরিচিতি সরিয়ে ফেলো"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "প্রের&ণ"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "মুছে ফেলা"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>আপনি কি সত্যিই <b>%1</b> নামক পরিচিতিটি সরিয়ে ফেলতে চান?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "&সরিয়ে ফেলো"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3519,6 +3530,11 @@ msgstr "বার্তা ক্ষেত্রের &উপরে"
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&বদলাও"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr ""
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9439,9 +9455,6 @@ msgstr ""
 #~ msgid "Use storage service when attachment is larger than this limit"
 #~ msgstr "অ্যাটাচমেন্ট নতুন নামে সংরক্ষণ করো"
 
-#~ msgid "Enable"
-#~ msgstr "সক্রিয় করো"
-
 #, fuzzy
 #~| msgid "Search folder &name:"
 #~ msgctxt "@label:listbox"
@@ -14624,10 +14637,6 @@ msgstr ""
 
 #~ msgid "&Subject"
 #~ msgstr "বি&ষয়"
-
-#, fuzzy
-#~ msgid "&Templates"
-#~ msgstr "&বদলাও"
 
 #~ msgid "&Signature"
 #~ msgstr "স্বাক্ষ&র"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -497,7 +497,9 @@ msgstr ""
 "KMail njeje mejlowu lisćinu połnje spóznał. Prošu zapodajće adresy z ruku."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Přidźělenje"
 
@@ -548,8 +550,9 @@ msgstr ""
 "kotruž chceće z tutym zapiskom zwjazać.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Šablony"
 
@@ -1036,62 +1039,72 @@ msgstr "Minimizowany we wotkładce startować"
 msgid "Show unread email in Taskbar"
 msgstr "Nječitane mejlki w pasku nadawkow pokazać"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+msgid "Plasma activities"
+msgstr "Filtrowe akcije"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, fuzzy, kde-format
+msgid "Enable"
+msgstr "Šifrowanje"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Móžne etikety"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Etiket dodać"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Wuzwoleny etiket wotstronić"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Prioritu etiketa zwyšić"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Prioritu etiketa znižić"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Nastajenja eti&ketow"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "Z&ničić"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Chceće etiket '%1' wotstronić?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Etiket wotstronić"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Etiket njehodźi so wutworić. Etiket ze samsnym mjenom hižo eksistuje."
@@ -3482,6 +3495,11 @@ msgstr "Wubrane powěsće markěrować jako nowe"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Globalne šablony kopěrować"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Šablony"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -8762,10 +8780,6 @@ msgstr ""
 #~ msgstr "Nowa powěsć"
 
 #, fuzzy
-#~ msgid "&Log filter activities"
-#~ msgstr "Filtrowe akcije"
-
-#, fuzzy
 #~| msgid "[Details]"
 #~ msgid "Logging Details"
 #~ msgstr "[Nadrobnosće]"
@@ -9607,10 +9621,6 @@ msgstr ""
 #~| msgid "Save Attachment As"
 #~ msgid "Use storage service when attachment is larger than this limit"
 #~ msgstr "Přiwěšk zawěsćić jako"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "Šifrowanje"
 
 #, fuzzy
 #~ msgctxt "@label:listbox"

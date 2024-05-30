@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2024-05-26 12:15+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -488,7 +488,9 @@ msgstr ""
 "adresy ręcznie."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Przydział"
 
@@ -539,8 +541,9 @@ msgstr ""
 "lub kombinację.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Szablony"
 
@@ -1019,58 +1022,69 @@ msgstr "Uruchom zminimalizowany na tacce systemowej"
 msgid "Show unread email in Taskbar"
 msgstr "Pokaż nieprzeczytane wiadomości na tacce systemowej"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "&Zapisuj działania filtrów do dziennika"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, kde-format
+msgid "Enable"
+msgstr "Włącz"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "&Dostępne znaczniki"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Dodaj nowy znacznik"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Usuń wybrany znacznik"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Zwiększ priorytet znacznika"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Zmniejsz priorytet znacznika"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Ustawienia &znaczników"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, kde-format
 msgid "Delete"
 msgstr "Usuń"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Czy chcesz usunąć znacznik '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Usuń znacznik"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3503,6 +3517,11 @@ msgstr "&Użyj własnych szablonów dla tej tożsamości"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "S&kopiuj szablony globalne"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Szablony"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9008,9 +9027,6 @@ msgstr "Przybliżenie: %1%"
 #~ msgid "You still wait an answer about this mail:"
 #~ msgstr "Nadal oczekujesz na odpowiedź na tę wiadomość:"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "&Zapisuj działania filtrów do dziennika"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10342,9 +10358,6 @@ msgstr "Przybliżenie: %1%"
 #~ "Ta opcja uruchamia edytor zadań-do-wykonania KOrganizera z domyślnymi "
 #~ "wartościami wziętymi z obecnie wybranej wiadomości. Zadanie można potem "
 #~ "dowolnie modyfikować przed zapisaniem w kalendarzu."
-
-#~ msgid "Enable"
-#~ msgstr "Włącz"
 
 #, fuzzy
 #~| msgid "Search folder &name:"

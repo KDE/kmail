@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -522,6 +522,7 @@ msgstr ""
 
 #: collectionpage/collectionquotapage.cpp:23
 #, fuzzy, kde-format
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Iyonke"
 
@@ -571,10 +572,10 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
-msgstr ""
+msgstr "&Buyisela"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, kde-format
@@ -1099,60 +1100,70 @@ msgstr ""
 msgid "Show unread email in Taskbar"
 msgstr "S&oloko"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+msgid "Plasma activities"
+msgstr "Iintshukumo Zecebo lokucoca ulwelo"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, fuzzy, kde-format
+msgid "Enable"
+msgstr "&Sukufihla"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Amacebo ococo olwelo Afumanekayo"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Ungeno olutsha:"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Cima Imiyalezo"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Ithumela"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "Ci&ma"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "&Susa"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -3475,6 +3486,11 @@ msgstr "&Sebenzisa umyalezo wesiko onesimamva se-id "
 #, fuzzy, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Buyisela"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr ""
 
 #: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
@@ -8774,10 +8790,6 @@ msgstr ""
 #~ msgstr "Umyalezo omtsha"
 
 #, fuzzy
-#~ msgid "&Log filter activities"
-#~ msgstr "Iintshukumo Zecebo lokucoca ulwelo"
-
-#, fuzzy
 #~| msgid "[Details]"
 #~ msgid "Logging Details"
 #~ msgstr "[Iinkcukacha]"
@@ -9652,10 +9664,6 @@ msgstr ""
 #~| msgid "Save Attachment As"
 #~ msgid "Use storage service when attachment is larger than this limit"
 #~ msgstr "Gcina Izincamatheliso Njenge"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "&Sukufihla"
 
 #, fuzzy
 #~ msgctxt "@label:listbox"
@@ -16312,10 +16320,6 @@ msgstr ""
 
 #~ msgid "&Subject"
 #~ msgstr "&Umxholo"
-
-#, fuzzy
-#~ msgid "&Templates"
-#~ msgstr "&Buyisela"
 
 #~ msgid "&Signature"
 #~ msgstr "&Utyikityo"

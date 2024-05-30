@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-05-30 00:39+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -539,7 +539,9 @@ msgstr ""
 "Rimplixhoz les adresses al mwin, s' i vs plait."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quota"
+msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Cwota"
 
@@ -591,8 +593,9 @@ msgstr ""
 "vôrîz assoçner avou ç' ridant la.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#: identity/identitydialog.cpp:677
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Templates"
+msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Modeles"
 
@@ -1087,65 +1090,76 @@ msgstr ""
 msgid "Show unread email in Taskbar"
 msgstr "Mostrer emiles nén léjhous el boesse ås imådjetes sistinme"
 
-#: configuredialog/configureappearancepage.cpp:965
+#: configuredialog/configureappearancepage.cpp:902
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgid "Plasma activities"
+msgstr "Edjistrî e d&journå les activités des passetes"
+
+#: configuredialog/configureappearancepage.cpp:907
+#, fuzzy, kde-format
+msgid "Enable"
+msgstr "&Ni nén Ecripter"
+
+#: configuredialog/configureappearancepage.cpp:980
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "E&tiketes k' i gn a"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Radjouter novele etikete"
 
-#: configuredialog/configureappearancepage.cpp:983
+#: configuredialog/configureappearancepage.cpp:998
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Disfacer l' etikete tchoezeye"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:1007
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Agrandi l' prumiristé di l' etikete"
 
-#: configuredialog/configureappearancepage.cpp:998
+#: configuredialog/configureappearancepage.cpp:1013
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Raptiti l' prumiristé di l' etikete"
 
-#: configuredialog/configureappearancepage.cpp:1022
+#: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Tchuzes di l' eti&kete"
 
-#: configuredialog/configureappearancepage.cpp:1072
+#: configuredialog/configureappearancepage.cpp:1087
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "Disfacer"
 
-#: configuredialog/configureappearancepage.cpp:1202
+#: configuredialog/configureappearancepage.cpp:1217
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove tag '%1'?"
 msgstr "Voloz vs oister l' conte « %1 » ?"
 
-#: configuredialog/configureappearancepage.cpp:1203
+#: configuredialog/configureappearancepage.cpp:1218
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Oister"
 
-#: configuredialog/configureappearancepage.cpp:1248
-#: configuredialog/configureappearancepage.cpp:1283
+#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1298
 #, fuzzy, kde-format
 #| msgid "We can not create tag. A tag with same name already exists."
 msgid "We cannot create tag. A tag with same name already exists."
@@ -3561,6 +3575,11 @@ msgstr "E&ployî des modeles di messaedje a vosse môde po ciste idintité ci"
 #, kde-format
 msgid "&Copy Global Templates"
 msgstr "&Copyî globås modeles"
+
+#: identity/identitydialog.cpp:677
+#, kde-format
+msgid "Templates"
+msgstr "Modeles"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -9065,9 +9084,6 @@ msgstr "Zoumer"
 #~ msgid "Show Message"
 #~ msgstr "Novea messaedje"
 
-#~ msgid "&Log filter activities"
-#~ msgstr "Edjistrî e d&journå les activités des passetes"
-
 #~ msgid ""
 #~ "You can turn logging of filter activities on and off here. Of course, log "
 #~ "data is collected and shown only when logging is turned on. "
@@ -10329,10 +10345,6 @@ msgstr "Zoumer"
 #~ "Cisse tchuze enonde l' aspougneu d' afés di  KOrganizer avou les "
 #~ "valixhances di cmince prinjhes e messaedje tchoezi pol moumint. Vos savoz "
 #~ "adon candjî l' afé a vosse gosse divant del schaper e vosse calindrî."
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "&Ni nén Ecripter"
 
 #, fuzzy
 #~| msgid "Search folder &name:"
