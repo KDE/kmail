@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-30 03:32+0900\n"
+"PO-Revision-Date: 2024-05-30 22:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -167,7 +167,7 @@ msgstr "重要貢獻者"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
-msgstr ""
+msgstr "各式各樣的錯誤修正"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
@@ -199,7 +199,7 @@ msgstr "殺死很多臭蟲"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
-msgstr ""
+msgstr "微笑符號等等轉為表情符號字元的處理"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
@@ -219,7 +219,7 @@ msgstr "選擇性的壓縮附件"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
-msgstr ""
+msgstr "新增垃圾信狀態到豪華標頭中"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
@@ -486,8 +486,7 @@ msgid ""
 msgstr "KMail 無法在這個資料夾完整偵測郵件論壇的信件。請自行輸入位址。"
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "大小限制"
@@ -530,8 +529,7 @@ msgid ""
 msgstr "<qt>按底下的按鈕，並按下您要設定的熱鍵。</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "樣本"
@@ -562,7 +560,7 @@ msgstr "未讀(&U)："
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -769,11 +767,10 @@ msgid "&Use custom fonts"
 msgstr "使用自訂字型(&U)"
 
 #: configuredialog/configureappearancepage.cpp:171
-#, fuzzy, kde-format
-#| msgid "Apply &to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
-msgstr "回覆給(&T)："
+msgstr "套用到(&T)："
 
 #: configuredialog/configureappearancepage.cpp:307
 msgid "Quoted Text - First Level"
@@ -1004,12 +1001,12 @@ msgstr "在工作列中顯示唯讀郵件"
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Plasma 活動"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "啟用"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
@@ -1035,11 +1032,10 @@ msgid "Increase tag priority"
 msgstr "提高標籤優先權"
 
 #: configuredialog/configureappearancepage.cpp:1013
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
-msgstr "遞減標籤優先權"
+msgstr "降低標籤優先權"
 
 #: configuredialog/configureappearancepage.cpp:1037
 #, kde-format
@@ -1209,8 +1205,7 @@ msgid "Set the default forwarded message format"
 msgstr "設定預設轉寄信件格式"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, fuzzy, kde-format
-#| msgid "Default forwarding type:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "預設轉寄型態："
@@ -1232,27 +1227,19 @@ msgstr ""
 "定。"
 
 #: configuredialog/configurecomposerpage.cpp:364
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr "若是指定太多收件者則提出警告"
+msgstr "指定太多收件者時提出警告"
 
 #: configuredialog/configurecomposerpage.cpp:375
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "最多幾個收件者時發出警告"
 
 #: configuredialog/configurecomposerpage.cpp:399
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only allow this many recipients to be specified for the message. This "
-#| "applies to doing a \"Reply to All\", entering recipients manually or "
-#| "using the \"Select...\" picker.  Setting this limit helps you to avoid "
-#| "accidentally sending a message to too many people.  Note, however, that "
-#| "it does not take account of distribution lists or mailing lists."
+#, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
@@ -1261,8 +1248,8 @@ msgid ""
 "account of distribution lists or mailing lists."
 msgstr ""
 "發出信件時只允許這麼多的收件者。在「全部回覆」、手動輸入收件者，或是用「選"
-"擇」來選收件者時若超過數量則會提出警告。這樣您可以避免不小心一次送給太多人。"
-"注意，它不會把郵件論壇或是群組清單裡的人數算進去。"
+"擇…」來選收件者時若超過數量則會提出警告。這樣您可以避免不小心一次送給太多人。"
+"注意，它不會把郵件論壇或是分派清單裡的人數算進去。"
 
 #: configuredialog/configurecomposerpage.cpp:420
 #, kde-format
@@ -1448,8 +1435,7 @@ msgid "&Name:"
 msgstr "名稱(&N)："
 
 #: configuredialog/configurecomposerpage.cpp:852
-#, fuzzy, kde-format
-#| msgid "&Value:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "數值(&V)："
@@ -1494,8 +1480,7 @@ msgid "Attachment Word:"
 msgstr "附加文字："
 
 #: configuredialog/configurecomposerpage.cpp:1064
-#, fuzzy, kde-format
-#| msgid "Maximum Attachment Size:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "最大附件大小："
@@ -1808,26 +1793,22 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:364
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "選擇要對此信件做拼字檢查使用的字典"
 
 #: editor/kmcomposerwin.cpp:371
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "選擇此信件的寄件備份要放在哪個資料夾"
 
 #: editor/kmcomposerwin.cpp:379
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "請選擇傳送此信件要使用的帳號"
+msgstr "選擇傳送此信件要使用的帳號"
 
 #: editor/kmcomposerwin.cpp:387
 #, kde-format
@@ -1854,8 +1835,7 @@ msgid "&Sent-Mail folder:"
 msgstr "寄件備份(&S)："
 
 #: editor/kmcomposerwin.cpp:418
-#, fuzzy, kde-format
-#| msgid "&Mail transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "發送信件帳號(&M)："
@@ -1965,18 +1945,16 @@ msgid "&New Composer"
 msgstr "寫信(&N)…"
 
 #: editor/kmcomposerwin.cpp:1336
-#, fuzzy, kde-format
-#| msgid "Select &Recipients…"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "選擇收件者(&R)…"
 
 #: editor/kmcomposerwin.cpp:1339
-#, fuzzy, kde-format
-#| msgid "Save &Distribution List…"
+#, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr "儲存聯絡人群組(&D)…"
+msgstr "儲存分派清單(&D)…"
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2080,15 +2058,13 @@ msgid "S&ubject"
 msgstr "主題(&U)"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "Append S&ignature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "附上簽名(&I)"
 
 #: editor/kmcomposerwin.cpp:1445
-#, fuzzy, kde-format
-#| msgid "Pr&epend Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "在前面附上簽名(&E)"
@@ -2136,8 +2112,7 @@ msgid "&Cryptographic Message Format"
 msgstr "信件加密格式(&C)"
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "請選擇此信件使用的加密格式"
@@ -2438,11 +2413,10 @@ msgid "Lose the formatting?"
 msgstr "要拿掉排版格式嗎？"
 
 #: editor/kmcomposerwin.cpp:3183
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr "遺失格式"
+msgstr "捨棄格式"
 
 #: editor/kmcomposerwin.cpp:3184
 #, kde-format
@@ -2867,7 +2841,7 @@ msgstr "資料夾捷徑 %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr ""
+msgstr "已關閉的閱讀器"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
@@ -3152,13 +3126,13 @@ msgstr "預設格式："
 #: identity/identitydialog.cpp:468
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr ""
+msgstr "啟用 Autocrypt"
 
 #: identity/identitydialog.cpp:472
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr ""
+msgstr "Autocrypt："
 
 #: identity/identitydialog.cpp:477
 #, kde-format
@@ -3593,7 +3567,7 @@ msgstr "複製現有身份(&D)"
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
 msgid "Face"
-msgstr ""
+msgstr "Face"
 
 #: identity/xfaceconfigurator.cpp:41
 #, kde-format
@@ -3606,6 +3580,8 @@ msgid ""
 "More information under <a href=\"https://quimby.gnus.org/circus/face/"
 "\">https://quimby.gnus.org/circus/face/</a>."
 msgstr ""
+"更多資訊請見 <a href=\"https://quimby.gnus.org/circus/face/\">https://quimby."
+"gnus.org/circus/face/</a>。"
 
 #: identity/xfaceconfigurator.cpp:43
 #, kde-format
@@ -3613,8 +3589,8 @@ msgid ""
 "Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/"
 "\">https://ace.home.xs4all.nl/X-Faces/</a>."
 msgstr ""
-"範例在 <a href=\"http://ace.home.xs4all.nl/X-Faces/\">https://ace.home."
-"xs4all.nl/X-Faces/</a> 可以找到。"
+"範例可參閱 <a href=\"https://ace.home.xs4all.nl/X-Faces/\">https://ace.home."
+"xs4all.nl/X-Faces/</a>。"
 
 #: identity/xfaceconfigurator.cpp:125
 #, kde-format
@@ -3624,12 +3600,12 @@ msgstr "將不會傳送任何影像。"
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr ""
+msgstr "KMail 會透過 Face 標頭傳送多彩的影像。"
 
 #: identity/xfaceconfigurator.cpp:131
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
+msgstr "KMail 會透過 X-Face 標頭傳送黑白的影像。"
 
 #: identity/xfaceconfigurator.cpp:134
 #, kde-format
@@ -5570,7 +5546,7 @@ msgstr "新增為釣魚網址的檢查"
 
 #: kmreaderwin.cpp:276
 msgid "Added Check DKIM"
-msgstr ""
+msgstr "新增 DKIM 檢查"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
@@ -5757,7 +5733,7 @@ msgctxt "@info:whatsthis"
 msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
-msgstr ""
+msgstr "選擇此項目會顯示讓您選取希望看到的摘要並依喜好調整各摘要的對話框。"
 
 #: kontactplugin/summary/summaryview_part.cpp:107
 #, kde-format
@@ -5767,7 +5743,7 @@ msgstr "%1 的摘要"
 #: kontactplugin/summary/summaryview_part.cpp:365
 #, kde-format
 msgid "What's next?"
-msgstr ""
+msgstr "下一個是什麼？"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:30
 #, kde-format
@@ -7764,13 +7740,13 @@ msgstr "不要傳送"
 #: ui/xfaceconfigurator.ui:35
 #, kde-format
 msgid "Send color (Face)"
-msgstr ""
+msgstr "傳送多彩 (Face 標頭)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:40
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr ""
+msgstr "傳送黑白 (X-Face 標頭)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45

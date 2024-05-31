@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-28 09:28+0300\n"
+"PO-Revision-Date: 2024-05-30 14:30+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -490,8 +490,7 @@ msgstr ""
 "ласка, адреси вручну."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Квота"
@@ -537,8 +536,7 @@ msgstr ""
 "комбінацію клавіш буде пов’язано з відповідною текою.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Шаблони"
@@ -1018,12 +1016,12 @@ msgstr "Показувати кількість непрочитаних пов�
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Простори дій Плазми"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "Увімкнути"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format

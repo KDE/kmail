@@ -8,13 +8,12 @@
 # David Gil <al016950@yahoo.es>, 2005.
 # Joan Maspons <joanmaspons@gmail.com>, 2009.
 # Manuel Tortosa Moreno <manutortosa@chakra-project.org>, 2009, 2010, 2011.
-# Josep M. Ferrer <txemaq@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-28 14:44+0200\n"
+"PO-Revision-Date: 2024-05-30 10:15+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -494,8 +493,7 @@ msgstr ""
 "carpeta. Ompliu les adreces a mà."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Quota"
@@ -541,8 +539,7 @@ msgstr ""
 "associar amb aquesta carpeta.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Plantilles"
@@ -1026,12 +1023,12 @@ msgstr "Mostra els correus sense llegir a la barra de tasques"
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Activitats del Plasma"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "Activa"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
@@ -8241,115 +8238,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "A&dd..."
-#~ msgstr "A&fegeix..."
-
-#~ msgid "Add..."
-#~ msgstr "Afegeix..."
-
-#~ msgid "&Spellchecker..."
-#~ msgstr "&Corrector ortogràfic..."
-
-#~ msgid "Edit..."
-#~ msgstr "Edita..."
-
-#~ msgid "Moving messages..."
-#~ msgstr "S'estan movent els missatges..."
-
-#~ msgid "Deleting messages..."
-#~ msgstr "S'estan suprimint els missatges..."
-
-#~ msgid "&Find Messages..."
-#~ msgstr "&Cerca als missatges..."
-
-#~ msgid "&Clear Akonadi Cache..."
-#~ msgstr "&Neteja la memòria cau de l'Akonadi..."
-
-#~ msgid "&Archive Folder..."
-#~ msgstr "&Arxiva la carpeta..."
-
-#~ msgid "&New Message..."
-#~ msgstr "Missatge &nou..."
-
-#~ msgid "Expire..."
-#~ msgstr "Fes que caduqui..."
-
-#~ msgid "Add Favorite Folder..."
-#~ msgstr "Afegeix una carpeta preferida..."
-
-#~ msgid "Jump to Folder..."
-#~ msgstr "Salta a la carpeta..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "New Message..."
-#~ msgstr "Missatge nou..."
-
-#~ msgid "&Reply..."
-#~ msgstr "&Respon..."
-
-#~ msgctxt "@action:inmenu Message->Forward->"
-#~ msgid "&Inline..."
-#~ msgstr "&Inclou..."
-
-#~ msgctxt "@action:inmenu Message->Forward->"
-#~ msgid "As &Attachment..."
-#~ msgstr "Com a &adjunt..."
-
-#~ msgid "Export to PDF..."
-#~ msgstr "Exporta a PDF..."
-
-#~ msgctxt "@action:inmenu Forward message inline."
-#~ msgid "&Inline..."
-#~ msgstr "&Inclou..."
-
-#~ msgctxt "Message->Forward->"
-#~ msgid "As &Attachment..."
-#~ msgstr "Com a &adjunt..."
-
-#~ msgid "Add new tag..."
-#~ msgstr "Afegeix una etiqueta nova..."
-
-#~ msgid "More..."
-#~ msgstr "Més..."
-
-#~ msgid "&Add..."
-#~ msgstr "&Afegeix..."
-
-#~ msgid "GnuPG Settings..."
-#~ msgstr "Configuració del GnuPG..."
-
-#~ msgid "Charset"
-#~ msgstr "Joc de caràcters"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "Aquesta llista es comprova de dalt a baix cada vegada que s'envia un "
-#~ "missatge cercant un joc de caràcters amb tots els caràcters requerits."
-
-#~ msgid "Enter charset:"
-#~ msgstr "Introduïu el joc de caràcters:"
-
-#~ msgid "Do you want to remove this selected charset?"
-#~ msgstr "Realment voleu eliminar aquest joc de caràcters seleccionat?"
-
-#~ msgid "Add Charset:"
-#~ msgstr "Afegiu un joc de caràcters:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr ""
-#~ "Ma&ntén el joc de caràcters original en respondre o reenviar (si és "
-#~ "possible)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Aquest joc de caràcters no està admès."
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "Codificació"

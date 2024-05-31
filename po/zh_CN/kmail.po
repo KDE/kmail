@@ -477,8 +477,7 @@ msgid ""
 msgstr "KMail 在此文件夹中检测不到邮件列表，请手工填写地址。"
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "配额"
@@ -523,8 +522,7 @@ msgstr ""
 "文件夹关联的按键。</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "模板"

@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-29 09:07+0200\n"
+"PO-Revision-Date: 2024-05-30 19:15+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -492,8 +492,7 @@ msgstr ""
 "automática. Introduza os enderezos á man."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Cota"
@@ -539,8 +538,7 @@ msgstr ""
 "desexe asociar a este cartafol.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Modelos"
@@ -1020,10 +1018,9 @@ msgid "Show unread email in Taskbar"
 msgstr "Amosar o correo sen ler na barra de tarefas"
 
 #: configuredialog/configureappearancepage.cpp:902
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgid "Plasma activities"
-msgstr "&Rexistrar a actividade de filtrado"
+msgstr "Actividades de Plasma"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-29 12:40+0200\n"
+"PO-Revision-Date: 2024-05-30 10:34+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -481,8 +481,7 @@ msgstr ""
 "dossier. Pro favor tu reimple le adresses per mano."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Quota"
@@ -528,8 +527,7 @@ msgstr ""
 "tu vole associar a iste dossier.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Patronos"
@@ -1010,10 +1008,9 @@ msgid "Show unread email in Taskbar"
 msgstr "Monstra message de e-posta non legite in le barra de cargas"
 
 #: configuredialog/configureappearancepage.cpp:902
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgid "Plasma activities"
-msgstr "&Registra activitates de filtro"
+msgstr "Activitates de Plasma"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format

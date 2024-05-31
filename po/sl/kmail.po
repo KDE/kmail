@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-28 09:24+0200\n"
+"PO-Revision-Date: 2024-05-30 06:26+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -487,11 +487,10 @@ msgstr ""
 "izpolnite naslove."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
-msgstr "Količinska omejitev"
+msgstr "Kvota"
 
 #: collectionpage/collectionquotawidget.cpp:24
 #, kde-format
@@ -534,8 +533,7 @@ msgstr ""
 "to mapo.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Predloge"
@@ -1015,12 +1013,12 @@ msgstr "Pokaži neprebrano pošto v orodni vrstici"
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Dejavnosti Plasme"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "Omogoči"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
