@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-29 12:56+0300\n"
+"PO-Revision-Date: 2024-05-31 14:24+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -496,8 +496,7 @@ msgstr ""
 "adresleri elle doldurun."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Kota"
@@ -542,8 +541,7 @@ msgstr ""
 "aşağıdaki düğmeye tıklayın ve bu klasöre atayacağınız düğmelere basın.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Şablonlar"
@@ -1019,12 +1017,12 @@ msgstr "Sistem tepsisinde okunmamış e-postaları göster"
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Plasma Etkinlikler"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "Etkinleştir"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
