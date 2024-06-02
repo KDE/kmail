@@ -649,12 +649,12 @@ msgstr "启用撤销发送"
 #: configuredialog/configureaccountpage.cpp:209
 #, kde-format
 msgid "Add Mail Account…"
-msgstr ""
+msgstr "添加邮箱账户"
 
 #: configuredialog/configureaccountpage.cpp:210
 #, kde-format
 msgid "Custom Account…"
-msgstr ""
+msgstr "自定义账户"
 
 #: configuredialog/configureaccountpage.cpp:230
 #: kmlaunchexternalcomponent.cpp:148
@@ -906,7 +906,7 @@ msgstr "默认主题："
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
-msgstr ""
+msgstr "<qt><a href=\"whatsthis\">自定义格式信息...</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:693
 #, kde-format
@@ -992,12 +992,12 @@ msgstr "在任务栏显示未读邮件"
 #: configuredialog/configureappearancepage.cpp:902
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Plasma活动"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
@@ -1239,6 +1239,9 @@ msgid ""
 "sending a message to too many people.  Note, however, that it does not take "
 "account of distribution lists or mailing lists."
 msgstr ""
+"只允许不超过特定数量的收件人。这会影响“全部回复”、手动输入联系人或使用“选"
+"择...”对话框。设置此限制帮助您避免意外地发送邮件给太多人。但是请注意，它对邮"
+"件列表和联系人列表无效。"
 
 #: configuredialog/configurecomposerpage.cpp:420
 #, kde-format
@@ -1268,7 +1271,7 @@ msgstr "自动补全记忆邮箱地址数量的上限"
 #: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgid "Configure Completion…"
-msgstr ""
+msgstr "配置补全"
 
 #: configuredialog/configurecomposerpage.cpp:465
 #, kde-format
@@ -1313,7 +1316,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "添加(&D)"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:833
@@ -1357,7 +1360,7 @@ msgstr "删除(&V)"
 #: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "添加…"
 
 #: configuredialog/configurecomposerpage.cpp:729
 #, kde-format
@@ -1903,7 +1906,7 @@ msgstr "邮件另存为文本或 html 文件"
 #: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "&Insert Text File…"
-msgstr ""
+msgstr "插入文本文件(&I)..."
 
 #: editor/kmcomposerwin.cpp:1312
 #, kde-format
@@ -1929,13 +1932,13 @@ msgstr "新建撰写器(&N)"
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr ""
+msgstr "选择收件人"
 
 #: editor/kmcomposerwin.cpp:1339
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr ""
+msgstr "保存分发列表(&D)..."
 
 #: editor/kmcomposerwin.cpp:1360
 #, kde-format
@@ -2058,7 +2061,7 @@ msgstr "在光标位置处插入签名(&U)"
 #: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgid "&Spellchecker…"
-msgstr ""
+msgstr "拼写检查器(&S)"
 
 #: editor/kmcomposerwin.cpp:1465
 #, kde-format
@@ -2099,12 +2102,12 @@ msgstr "为这封信选择加密格式"
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr ""
+msgstr "创建后续提醒"
 
 #: editor/kmcomposerwin.cpp:1542
 #, kde-format
 msgid "Configure KMail…"
-msgstr ""
+msgstr "配置 KMail..."
 
 #: editor/kmcomposerwin.cpp:1573 kmmainwin.cpp:222 kmreadermainwin.cpp:538
 #, kde-format
@@ -2335,7 +2338,7 @@ msgstr "您必须指定至少一个收件人才能加密草稿。"
 #: editor/kmcomposerwin.cpp:3062
 #, kde-format
 msgid "About to send email…"
-msgstr ""
+msgstr "即将发送邮件..."
 
 #: editor/kmcomposerwin.cpp:3063
 #, kde-format
@@ -2611,7 +2614,7 @@ msgstr "选择放到白名单的电子邮件："
 msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details…)</a>"
-msgstr ""
+msgstr "找到潜在的钓鱼电子邮件地址 <a href=\"phishingdetails\">(详细信息…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
@@ -2832,7 +2835,7 @@ msgstr "清除历史记录"
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr ""
+msgstr "重新打开关闭的查看器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -2915,7 +2918,7 @@ msgstr "生成新密钥对"
 #: identity/identitydialog.cpp:228
 #, kde-format
 msgid "Generating new key pair…"
-msgstr ""
+msgstr "正在生成新的密钥对"
 
 #: identity/identitydialog.cpp:241
 #, kde-format
@@ -3277,7 +3280,7 @@ msgstr "将我的 vCard 附加到消息"
 #: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
 #, kde-format
 msgid "Create…"
-msgstr ""
+msgstr "创建…"
 
 #: identity/identitydialog.cpp:618
 #, kde-format
@@ -3413,7 +3416,7 @@ msgstr "当前身份的一些自定义文件夹不存在；因此会使用默认
 #: identity/identitydialog.cpp:1165
 #, kde-format
 msgid "Edit…"
-msgstr ""
+msgstr "编辑…"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, kde-format
@@ -3511,7 +3514,7 @@ msgstr "删除(&R)"
 #: identity/identitypage.cpp:274
 #, kde-format
 msgid "Modify…"
-msgstr ""
+msgstr "修改…"
 
 #: identity/identitypage.cpp:275
 #, kde-format
@@ -4399,12 +4402,12 @@ msgstr "删除消息"
 #: kmmainwidget.cpp:1675
 #, kde-format
 msgid "Moving messages…"
-msgstr ""
+msgstr "正在移动消息..."
 
 #: kmmainwidget.cpp:1677 kmmainwidget.cpp:1871
 #, kde-format
 msgid "Deleting messages…"
-msgstr ""
+msgstr "正在删除消息..."
 
 #: kmmainwidget.cpp:1692 kmmainwidget.cpp:1891
 #, kde-format
@@ -4445,7 +4448,7 @@ msgstr "移动消息到文件夹"
 #: kmmainwidget.cpp:1800
 #, kde-format
 msgid "Copying messages…"
-msgstr ""
+msgstr "正在复制消息..."
 
 #: kmmainwidget.cpp:1808
 #, kde-format
@@ -4471,12 +4474,12 @@ msgstr "复制消息到文件夹"
 #: kmmainwidget.cpp:1868
 #, kde-format
 msgid "Moving messages to trash…"
-msgstr ""
+msgstr "将信件放入废件夹"
 
 #: kmmainwidget.cpp:1875
 #, kde-format
 msgid "Deleting and moving messages to trash…"
-msgstr ""
+msgstr "正在删除/移动此邮件至垃圾箱"
 
 #: kmmainwidget.cpp:1888
 #, kde-format
@@ -4574,7 +4577,7 @@ msgstr "联机工作"
 #: kmmainwidget.cpp:2910
 #, kde-format
 msgid "Save &As…"
-msgstr ""
+msgstr "另存为..."
 
 #: kmmainwidget.cpp:2921
 #, kde-format
@@ -4626,31 +4629,31 @@ msgstr "证书管理器"
 #: kmmainwidget.cpp:2980
 #, kde-format
 msgid "&Import Messages…"
-msgstr ""
+msgstr "导入信件(&I)..."
 
 #: kmmainwidget.cpp:2990
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
-msgstr ""
+msgstr "调试筛选(&D)..."
 
 #: kmmainwidget.cpp:2997
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr ""
+msgstr "过滤器日志查看器(&L)..."
 
 #: kmmainwidget.cpp:3002
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr ""
+msgstr "通知历史记录..."
 
 #: kmmainwidget.cpp:3007
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr ""
+msgstr "从另一个电子邮件客户端导入(&I)..."
 
 #: kmmainwidget.cpp:3012
 #, kde-format
@@ -4662,19 +4665,19 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
-msgstr ""
+msgstr "配置自动存档(&C)..."
 
 #: kmmainwidget.cpp:3024
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr ""
+msgstr "已延迟消息"
 
 #: kmmainwidget.cpp:3030
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr ""
+msgstr "提醒后续邮件"
 
 #: kmmainwidget.cpp:3041 util.cpp:149
 #, kde-format
@@ -4701,7 +4704,7 @@ msgstr "删除线索(&H)"
 #: kmmainwidget.cpp:3059 kmmainwidget.cpp:4114
 #, kde-format
 msgid "&Find Messages…"
-msgstr ""
+msgstr "查找信件(&F)..."
 
 #: kmmainwidget.cpp:3064
 #, kde-format
