@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-30 18:32+0200\n"
+"PO-Revision-Date: 2024-06-01 12:30+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -4146,7 +4146,7 @@ msgstr "Изпращане на имейл"
 #: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Impossible to send email"
-msgstr "Невъзможно е да се изпрати имейл"
+msgstr "Изпращането на имейли е невъзможно"
 
 #: kmkernel.cpp:668
 #, kde-format

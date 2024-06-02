@@ -2750,7 +2750,7 @@ msgstr "清除历史记录"
 #: historyclosedreader/historyclosedreadermenu.cpp:76
 #, kde-format
 msgid "Reopen Closed Viewer"
-msgstr ""
+msgstr "重新打开关闭的查看器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
