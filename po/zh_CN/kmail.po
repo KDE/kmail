@@ -4716,13 +4716,13 @@ msgstr "选中所有的消息(&A)"
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
-msgstr ""
+msgstr "邮件列表管理(&M)..."
 
 #: kmmainwidget.cpp:3079
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr ""
+msgstr "清除 Akonadi 缓存(&C)..."
 
 #: kmmainwidget.cpp:3084
 #, kde-format
@@ -4733,7 +4733,7 @@ msgstr "清除此文件夹及其所有子文件夹中的 Akonadi 缓存(&C)"
 #: kmmainwidget.cpp:3089
 #, kde-format
 msgid "&Assign Shortcut…"
-msgstr ""
+msgstr "设定快捷键(&A)..."
 
 #: kmmainwidget.cpp:3107
 #, kde-format
@@ -4745,7 +4745,7 @@ msgstr "过期设置(&E)"
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr ""
+msgstr "归档文件夹(&A)..."
 
 #: kmmainwidget.cpp:3140
 #, kde-format
@@ -4755,17 +4755,17 @@ msgstr "加载外部引用(&X)"
 #: kmmainwidget.cpp:3163
 #, kde-format
 msgid "Copy Message To…"
-msgstr ""
+msgstr "抄送信件给"
 
 #: kmmainwidget.cpp:3165
 #, kde-format
 msgid "Move Message To…"
-msgstr ""
+msgstr "移动信件到"
 
 #: kmmainwidget.cpp:3170
 #, kde-format
 msgid "&New Message…"
-msgstr ""
+msgstr "新邮件(&N)..."
 
 #: kmmainwidget.cpp:3172
 #, kde-format
@@ -4781,7 +4781,7 @@ msgstr "新建基于模板的消息(&T)"
 #: kmmainwidget.cpp:3186
 #, kde-format
 msgid "New Message t&o Mailing-List…"
-msgstr ""
+msgstr "新建到邮件列表的新建(&O)..."
 
 #: kmmainwidget.cpp:3192
 #, kde-format
@@ -4792,25 +4792,25 @@ msgstr "创建过滤器(&C)"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
-msgstr ""
+msgstr "按主题过滤(&S)..."
 
 #: kmmainwidget.cpp:3203
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
-msgstr ""
+msgstr "按发件人过滤(&F)..."
 
 #: kmmainwidget.cpp:3209
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
-msgstr ""
+msgstr "按收件人过滤(&T)..."
 
 #: kmmainwidget.cpp:3215
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
-msgstr ""
+msgstr "按抄送过滤(&C)..."
 
 #: kmmainwidget.cpp:3229
 #, kde-format
@@ -4872,7 +4872,7 @@ msgstr "忽略线索(&I)"
 #: kmmainwidget.cpp:3272 kmreadermainwin.cpp:490
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr ""
+msgstr "保存附件(&T)..."
 
 #: kmmainwidget.cpp:3276
 #, kde-format
