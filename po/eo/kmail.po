@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-17 06:24+0100\n"
+"PO-Revision-Date: 2024-05-30 07:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -1001,7 +1001,7 @@ msgstr "Montri nelegitan retpoŝton en Taskbreto"
 #: configuredialog/configureappearancepage.cpp:965
 #, kde-format
 msgid "A&vailable Tags"
-msgstr "Disponebl&aj Etikedoj"
+msgstr "Ha&veblaj Etikedoj"
 
 #: configuredialog/configureappearancepage.cpp:978
 #, kde-format
@@ -1026,7 +1026,7 @@ msgstr "Malpliigi etikedan prioritaton"
 #: configuredialog/configureappearancepage.cpp:1022
 #, kde-format
 msgid "Ta&g Settings"
-msgstr "Eti&ked-Agordoj"
+msgstr "Etiked-A&gordoj"
 
 #: configuredialog/configureappearancepage.cpp:1072
 #, kde-format
@@ -1091,7 +1091,7 @@ msgstr "Aŭtokorekto"
 #: configuredialog/configurecomposerpage.cpp:109
 #, kde-format
 msgid "Auto Resize Image"
-msgstr "Aŭtomate Regrandigi Bildon"
+msgstr "Aŭtomate Aligrandigi Bildon"
 
 #: configuredialog/configurecomposerpage.cpp:127
 #, kde-format
@@ -1302,7 +1302,7 @@ msgstr "Aŭtomate konservi la mesaĝon je ĉi tiu specifita intervalo"
 #: configuredialog/configurecomposerpage.cpp:688
 #, kde-format
 msgid "Repl&y Subject Prefixes"
-msgstr "Temo&prefiksoj por respondo"
+msgstr "Temoprefikso&j por respondo"
 
 #: configuredialog/configurecomposerpage.cpp:692
 #: configuredialog/configurecomposerpage.cpp:722
@@ -1351,7 +1351,7 @@ msgstr "Respondprefikso:"
 #: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgid "For&ward Subject Prefixes"
-msgstr "&Temoprefiksoj por plusendo"
+msgstr "Plusendi &Temoprefiksojn"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:728 ui/identitypage.ui:66
@@ -1888,7 +1888,7 @@ msgstr "Konservi retpoŝton en Ŝablona dosierujo"
 #: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save as &File"
-msgstr "Konservi Dosieron"
+msgstr "Konservi kiel &Dosiero"
 
 #: editor/kmcomposerwin.cpp:1304
 #, kde-format
@@ -4405,9 +4405,9 @@ msgid ""
 "\"spam\" and may increase the likelihood that your system will be "
 "compromised by other present and anticipated security exploits."
 msgstr ""
-"Ŝarĝi eksterajn referencojn en html-poŝto igos vin pli vundebla kontraŭ "
-"\"spamo\" kaj povas pliigi la verŝajnecon, ke via sistemo estos kompromitita "
-"de aliaj aktualaj kaj antaŭviditaj sekurecaj ekspluatoj."
+"Ŝargi eksterajn referencojn en html-poŝto igos vin pli vundebla je \"spamo\" "
+"kaj povas pliigi la verŝajnecon, ke via sistemo estos kompromitita de aliaj "
+"aktualaj kaj antaŭviditaj sekurecaj ekspluatoj."
 
 #: kmmainwidget.cpp:1581
 #, kde-format
@@ -4841,12 +4841,12 @@ msgstr "Filtri per &Cc..."
 #: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Mark &Thread"
-msgstr "Marki &fadenon"
+msgstr "Marki &Fadenon"
 
 #: kmmainwidget.cpp:3231
 #, kde-format
 msgid "Mark Thread as &Read"
-msgstr "Marki la fadenon kiel legita"
+msgstr "Ma&rki Fadenon kiel Legita"
 
 #: kmmainwidget.cpp:3234
 #, kde-format
@@ -4856,7 +4856,7 @@ msgstr "Marki ĉiujn mesaĝojn en la fadenon kiel legitaj"
 #: kmmainwidget.cpp:3237
 #, kde-format
 msgid "Mark Thread as &Unread"
-msgstr "Marki la fadenon kiel &nelegita"
+msgstr "Marki Fadenon kiel &Nelegita"
 
 #: kmmainwidget.cpp:3240
 #, kde-format
@@ -5128,17 +5128,17 @@ msgstr "Nova Kontakto de Adreslibro..."
 #: kmmainwidget.cpp:3500 kmmainwidget.cpp:4153
 #, kde-format
 msgid "Account &Settings"
-msgstr "Kontagordoj"
+msgstr "Kon&tagordoj"
 
 #: kmmainwidget.cpp:3504
 #, kde-format
 msgid "Restart Account"
-msgstr "Restarti Konton"
+msgstr "Restartigi Konton"
 
 #: kmmainwidget.cpp:3520
 #, kde-format
 msgid "Copy Message to Folder"
-msgstr "Kopii mesaĝon al leterujo"
+msgstr "Kopii Mesaĝon al Leterujo"
 
 #: kmmainwidget.cpp:3526
 #, kde-format
@@ -5838,7 +5838,7 @@ msgstr "&Plusendi"
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
-msgstr "Dissendolisto"
+msgstr "Dissendo&listo"
 
 #: messageactions.cpp:77 messageactions.cpp:372
 #, kde-format
@@ -7679,13 +7679,13 @@ msgstr ""
 #: ui/smimeconfiguration.ui:179
 #, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "Uzu sistemon HTTP-prokurilon:"
+msgstr "Uzu s&isteman HTTP-prokurilon:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
 #, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "Uzu &ĉi tiun prokurilon por HTTP-petoj:"
+msgstr "Uzu ĉi &tiun prokurilon por HTTP-petoj:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
