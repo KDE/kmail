@@ -187,6 +187,7 @@ target_sources(kmailprivate PRIVATE
     mailserviceimpl.cpp
     secondarywindow.cpp
     util.cpp
+    kmail_options.h
     messageactions.cpp
     foldershortcutactionmanager.cpp
     kmlaunchexternalcomponent.cpp
