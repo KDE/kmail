@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
-"PO-Revision-Date: 2024-05-24 19:30\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
+"PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -435,11 +435,10 @@ msgid "Address type:"
 msgstr "Тып адраса:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "Mailing list description:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr "Апісанне спіса рассылкі:"
+msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
 #, kde-format
@@ -496,15 +495,13 @@ msgid "Quota"
 msgstr ""
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Выкарыстанне:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Статус:"
@@ -535,8 +532,7 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Шаблоны"
@@ -600,10 +596,10 @@ msgid "LDAP server"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:86
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
-msgstr "Уваходныя (дадайце прынамсі адзін запіс):"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:93
 #, kde-format
@@ -774,11 +770,10 @@ msgid "&Use custom fonts"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:171
-#, fuzzy, kde-format
-#| msgid "&Reply to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
-msgstr "&Адказаць:"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:307
 msgid "Quoted Text - First Level"
@@ -978,8 +973,7 @@ msgid "Enable system tray icon"
 msgstr "Уключыць значок на прасторы апавяшчэнняў"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -990,14 +984,14 @@ msgid "Show unread email in Taskbar"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:902
-#, fuzzy, kde-format
+#, kde-format
 msgid "Plasma activities"
-msgstr "Весткі часопіс фільтра"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:907
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable"
-msgstr "Уключаны"
+msgstr "Уключыць"
 
 #: configuredialog/configureappearancepage.cpp:980
 #, kde-format
@@ -1005,15 +999,13 @@ msgid "A&vailable Tags"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:993
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Дадаць новы тэг"
 
 #: configuredialog/configureappearancepage.cpp:998
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Выдаліць абраны тэг"
@@ -1192,11 +1184,10 @@ msgid "Set the default forwarded message format"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
-msgstr "Выдаліць тэчку"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:318
 #, kde-format
@@ -1416,12 +1407,10 @@ msgid "&Name:"
 msgstr "&Назва:"
 
 #: configuredialog/configurecomposerpage.cpp:852
-#, fuzzy, kde-format
-#| msgctxt "@title:column Value of the mimeheader."
-#| msgid "Value"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
-msgstr "Значэнне"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
@@ -1461,11 +1450,10 @@ msgid "Attachment Word:"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:1064
-#, fuzzy, kde-format
-#| msgid "Has Attachment"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Змяшчае далучэнне"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:1071
 #, kde-format
@@ -1681,17 +1669,16 @@ msgid "Archive"
 msgstr "Архіў"
 
 #: dialog/archivefolderdialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Каталог:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
-msgstr "Звычайнае:"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
@@ -1714,11 +1701,10 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr ""
 
 #: dialog/archivefolderdialog.cpp:97
-#, fuzzy, kde-format
-#| msgid "&New Folder..."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
-msgstr "&Новая тэчка..."
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
@@ -1762,18 +1748,16 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: editor/attachment/attachmentview.cpp:198
-#, fuzzy, kde-format
-#| msgid "Has Attachment"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr "Змяшчае далучэнне"
+msgstr ""
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Show attachment icon"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr "Паказваць значку далучэння"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
@@ -1794,46 +1778,40 @@ msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:379
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "Выдаліць увасабленне"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:387
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Выдаліць увасабленне"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:415
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
-msgstr "&Увасабленне:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:416
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
-msgstr "&Слоўнік"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:417
-#, fuzzy, kde-format
-#| msgid "Renaming folder"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
-msgstr "Перайменаванне тэчкі"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:418
-#, fuzzy, kde-format
-#| msgid "Special &transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
-msgstr "Спецыяльны &транспарт:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:419
 #, kde-format
@@ -2105,11 +2083,10 @@ msgid "&Cryptographic Message Format"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1503
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Выдаліць увасабленне"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
@@ -2141,11 +2118,10 @@ msgid " Line: %1 "
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1677
-#, fuzzy, kde-format
-#| msgid "View Columns"
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
-msgstr "Паказваць калёнкі"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1682
 #, kde-format
@@ -2636,11 +2612,10 @@ msgid "Send Now"
 msgstr "Адправіць зараз"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "Выдаліць увасабленне"
+msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -2900,11 +2875,10 @@ msgid "&Duplicate existing vCard"
 msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, fuzzy, kde-format
-#| msgid "&User identifier:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
-msgstr "Ідэнтыфікатар &карыстальніка:"
+msgstr ""
 
 #: identity/identitydialog.cpp:173
 #, kde-format
@@ -2944,12 +2918,10 @@ msgid "General"
 msgstr "Асноўныя налады"
 
 #: identity/identitydialog.cpp:272
-#, fuzzy, kde-format
-#| msgctxt "NAME OF TRANSLATORS"
-#| msgid "Your names"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
-msgstr "Дарафей Праляскоўскі, Андрэйчанка Анастасія, Сталярчук Іван, Antikruk"
+msgstr ""
 
 #: identity/identitydialog.cpp:277
 #, kde-format
@@ -2960,11 +2932,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:288
-#, fuzzy, kde-format
-#| msgid "Organization:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
-msgstr "Установа:"
+msgstr ""
 
 #: identity/identitydialog.cpp:293
 #, kde-format
@@ -2975,8 +2946,7 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:305
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "Адрас &электроннай пошты:"
@@ -2992,11 +2962,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:329
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr "Адрас &электроннай пошты:"
+msgstr ""
 
 #: identity/identitydialog.cpp:334
 #, kde-format
@@ -3025,11 +2994,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:363
-#, fuzzy, kde-format
-#| msgid "OpenPGP key:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
-msgstr "Ключ OpenPGP:"
+msgstr ""
 
 #: identity/identitydialog.cpp:369
 #, kde-format
@@ -3058,11 +3026,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:411
-#, fuzzy, kde-format
-#| msgid "Your OpenPGP Encryption Key"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
-msgstr "Ваш ключ OpenPGP для шыфравання"
+msgstr ""
 
 #: identity/identitydialog.cpp:421
 #, kde-format
@@ -3074,11 +3041,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:426
-#, fuzzy, kde-format
-#| msgid "Your S/MIME Signature Certificate"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
-msgstr "Ваш сертыфікат S/MIME для подпісу"
+msgstr ""
 
 #: identity/identitydialog.cpp:440
 #, kde-format
@@ -3091,11 +3057,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:446
-#, fuzzy, kde-format
-#| msgid "Your S/MIME Encryption Certificate"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
-msgstr "Ваш сертыфікат S/MIME для шыфравання"
+msgstr ""
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3125,11 +3090,10 @@ msgid "Overwrite global settings for security defaults"
 msgstr ""
 
 #: identity/identitydialog.cpp:483
-#, fuzzy, kde-format
-#| msgid "Overwrite File?"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "Перазапісаць файл?"
+msgstr ""
 
 #: identity/identitydialog.cpp:488
 #, kde-format
@@ -3160,11 +3124,10 @@ msgid "Advanced"
 msgstr "Дадатковыя"
 
 #: identity/identitydialog.cpp:515
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
-msgstr "Адрас &электроннай пошты:"
+msgstr ""
 
 #: identity/identitydialog.cpp:519
 #, kde-format
@@ -3178,11 +3141,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:537
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr "Адрас &электроннай пошты:"
+msgstr ""
 
 #: identity/identitydialog.cpp:543
 #, kde-format
@@ -3196,11 +3158,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:559
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
-msgstr "Адрас &электроннай пошты:"
+msgstr ""
 
 #: identity/identitydialog.cpp:563
 #, kde-format
@@ -3214,11 +3175,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:577
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
-msgstr "&Слоўнік"
+msgstr ""
 
 #: identity/identitydialog.cpp:583
 #, kde-format
@@ -3236,11 +3196,10 @@ msgid "Select Draft Folder"
 msgstr ""
 
 #: identity/identitydialog.cpp:593
-#, fuzzy, kde-format
-#| msgid "&Destination folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr "Тэчка прызначэння:"
+msgstr ""
 
 #: identity/identitydialog.cpp:599
 #, kde-format
@@ -3248,11 +3207,10 @@ msgid "Select Templates Folder"
 msgstr ""
 
 #: identity/identitydialog.cpp:601
-#, fuzzy, kde-format
-#| msgid "&Replace"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
-msgstr "&Замяніць"
+msgstr ""
 
 #: identity/identitydialog.cpp:606
 #, kde-format
@@ -3270,11 +3228,10 @@ msgid "Create…"
 msgstr "Стварыць…"
 
 #: identity/identitydialog.cpp:618
-#, fuzzy, kde-format
-#| msgid "Autocorrection"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr "Аўтавыпраўленне"
+msgstr ""
 
 #: identity/identitydialog.cpp:630
 #, kde-format
@@ -3283,11 +3240,10 @@ msgid "Restore default domain name"
 msgstr ""
 
 #: identity/identitydialog.cpp:633
-#, fuzzy, kde-format
-#| msgid "Delete T&hread"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "Выдаліць &тэму"
+msgstr ""
 
 #: identity/identitydialog.cpp:639
 #, kde-format
@@ -3524,12 +3480,10 @@ msgid "New Identity"
 msgstr "Новыя асабістыя даныя"
 
 #: identity/newidentitydialog.cpp:61
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&New identity:"
-msgstr "Новыя асабістыя даныя"
+msgstr ""
 
 #: identity/newidentitydialog.cpp:76
 #, kde-format
@@ -3790,53 +3744,74 @@ msgstr ""
 msgid "Set replyTo to 'address'"
 msgstr ""
 
-#: kmail_options.h:25
-#, kde-format
-msgid "Add 'header' to message. This can be repeated"
-msgstr ""
-
 #: kmail_options.h:26
-#, kde-format
-msgid "Read message body from 'file'"
-msgstr ""
-
-#: kmail_options.h:27
-#, kde-format
-msgid "Set body of message"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message"
+msgctxt "@info:shell"
+msgid "Add 'header' to message. This can be repeated"
+msgstr "Дадаць 'загаловак' да паведамлення"
 
 #: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Removing old messages from folder %1 failed."
+msgctxt "@info:shell"
+msgid "Read message body from 'file'"
+msgstr "Немагчыма выдаліць старыя паведамленні з тэчкі %1."
+
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Todo Message"
+msgctxt "@info:shell"
+msgid "Set body of message"
+msgstr "Паведамленне з паметкай \"зрабіць\""
+
+#: kmail_options.h:30
 #, kde-format
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr ""
 
-#: kmail_options.h:29
-#, kde-format
-msgid "Only check for new mail"
-msgstr ""
-
 #: kmail_options.h:31
-#, kde-format
-msgid "Only open composer window"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Checking account %1 for new mail"
+msgctxt "@info:shell"
+msgid "Only check for new mail"
+msgstr "Пошук новых паведамленняў для рахунку %1"
 
 #: kmail_options.h:32
 #, kde-format
-msgid "Set identity name"
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
 msgstr ""
 
 #: kmail_options.h:33
 #, kde-format
-msgid "View the given message file"
+msgctxt "@info:shell"
+msgid "Only open composer window"
 msgstr ""
 
+#: kmail_options.h:34
+#, fuzzy, kde-format
+msgctxt "@info:shell"
+msgid "Set identity name"
+msgstr "Новае ўвасабленне"
+
 #: kmail_options.h:35
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@info:shell"
+msgid "View the given message file"
+msgstr "Пад паведамленнем"
+
+#: kmail_options.h:37
+#, fuzzy, kde-format
+#| msgid "Lists the available options for user feedback"
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Спіс даступных параметраў для водгукаў"
 
-#: kmail_options.h:40
+#: kmail_options.h:42
 #, kde-format
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
 
@@ -4596,11 +4571,10 @@ msgid "Check Mail"
 msgstr ""
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check &Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
-msgstr "Праверыць &пошту"
+msgstr "Праверыць пошту"
 
 #: kmmainwidget.cpp:2941
 #, kde-format
@@ -5365,8 +5339,7 @@ msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:53
-#, fuzzy, kde-format
-#| msgid "Starting…"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Запуск…"
@@ -5659,10 +5632,10 @@ msgid "%1 / %2"
 msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
-msgstr "Не атрымоўваецца дадаць паведамленне ў Выходныя"
+msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
@@ -10069,9 +10042,6 @@ msgstr ""
 #~ msgid "Ready."
 #~ msgstr "Гатовы."
 
-#~ msgid "Add 'header' to message"
-#~ msgstr "Дадаць 'загаловак' да паведамлення"
-
 #, fuzzy
 #~| msgid "is in address book"
 #~ msgid "Add address book"
@@ -10661,10 +10631,6 @@ msgstr ""
 #~ msgstr "Выдаліць увасабленне"
 
 #, fuzzy
-#~ msgid "&Sender identity:"
-#~ msgstr "Новае ўвасабленне"
-
-#, fuzzy
 #~ msgid ""
 #~ "Select the sender identity to be used when writing new mail or replying "
 #~ "to mail in this folder. This means that if you are in one of your work "
@@ -11221,11 +11187,6 @@ msgstr ""
 #~ msgstr "Выдаліць паведамленне"
 
 #, fuzzy
-#~| msgid "Todo Message"
-#~ msgid "Body of Message"
-#~ msgstr "Паведамленне з паметкай \"зрабіць\""
-
-#, fuzzy
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Перапісаць загаловак"
 
@@ -11761,14 +11722,6 @@ msgstr ""
 #~ msgstr[0] "Немагчыма перанесці старыя паведамленні з тэчкі %1 у тэчку %2."
 #~ msgstr[1] "Немагчыма перанесці старыя паведамленні з тэчкі %1 у тэчку %2."
 #~ msgstr[2] "Немагчыма перанесці старыя паведамленні з тэчкі %1 у тэчку %2."
-
-#, fuzzy
-#~| msgid "Removing old messages from folder %1 failed."
-#~ msgid "Removed 1 old message from folder %2."
-#~ msgid_plural "Removed %1 old messages from folder %2."
-#~ msgstr[0] "Немагчыма выдаліць старыя паведамленні з тэчкі %1."
-#~ msgstr[1] "Немагчыма выдаліць старыя паведамленні з тэчкі %1."
-#~ msgstr[2] "Немагчыма выдаліць старыя паведамленні з тэчкі %1."
 
 #, fuzzy
 #~| msgid "Moving old messages from folder %1 to folder %2 failed."
@@ -14397,10 +14350,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Above the message pane"
 #~ msgstr "Над паведамленнем"
-
-#, fuzzy
-#~ msgid "Below the message pane"
-#~ msgstr "Пад паведамленнем"
 
 #, fuzzy
 #~| msgid "Show &never"
@@ -18193,9 +18142,6 @@ msgstr ""
 #~ "Рахунак %1 не ўтрымлівае паштовай скрыні:\n"
 #~ "праверка пошты перарваная.\n"
 #~ "Праверце настаўленні сваёй паштовай скрыні."
-
-#~ msgid "Checking account %1 for new mail"
-#~ msgstr "Пошук новых паведамленняў для рахунку %1"
 
 #~ msgid "POP Account"
 #~ msgstr "POP рахунак"

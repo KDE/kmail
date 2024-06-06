@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2024-05-31 14:24+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1003,8 +1003,7 @@ msgid "Enable system tray icon"
 msgstr "Sistem tepsisi simgesini etkinleştir"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Tepsiye küçültülmüş olarak başlat"
@@ -3960,53 +3959,80 @@ msgstr "Gizli kopya:’yı “adres”e gönder. Bu, yinelenebilir"
 msgid "Set replyTo to 'address'"
 msgstr "Yanıt adresini “adres” olarak ayarla"
 
-#: kmail_options.h:25
-#, kde-format
+#: kmail_options.h:26
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "İletiye bir “üstbilgi” ekle. Bu, yinelenebilir"
 
-#: kmail_options.h:26
-#, kde-format
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Read message body from 'file'"
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "“dosya”dan ileti gövdesini oku"
 
-#: kmail_options.h:27
-#, kde-format
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Set body of message"
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "İletinin gövdesini belirleyin"
 
-#: kmail_options.h:28
-#, kde-format
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Add an attachment to the mail. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Postaya bir ek iliştirin. Bu işlemi yineleyebilirsiniz"
 
-#: kmail_options.h:29
-#, kde-format
+#: kmail_options.h:31
+#, fuzzy, kde-format
+#| msgid "Only check for new mail"
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Yalnızca yeni e-postaları denetle"
 
-#: kmail_options.h:31
-#, kde-format
+#: kmail_options.h:32
+#, fuzzy, kde-format
+#| msgid "Start minimized to tray"
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr "Tepsiye küçültülmüş olarak başlat"
+
+#: kmail_options.h:33
+#, fuzzy, kde-format
+#| msgid "Only open composer window"
+msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Yalnızca düzenleyici penceresini aç"
 
-#: kmail_options.h:32
-#, kde-format
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Set identity name"
+msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Kimlik adını ayarla"
 
-#: kmail_options.h:33
-#, kde-format
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "View the given message file"
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Verilen ileti dosyasını göster"
 
-#: kmail_options.h:35
-#, kde-format
+#: kmail_options.h:37
+#, fuzzy, kde-format
+#| msgid "Lists the available options for user feedback"
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Kullanıcı geri bildirimi için kullanılabilir seçenekleri listeler"
 
-#: kmail_options.h:40
-#, kde-format
+#: kmail_options.h:42
+#, fuzzy, kde-format
+#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "İletiyi “URL”ye gönder veya “URL”nin gösterdiği dosyayı iliştir"
 

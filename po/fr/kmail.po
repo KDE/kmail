@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2024-05-31 11:11+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1035,8 +1035,7 @@ msgid "Enable system tray icon"
 msgstr "Activer l'icône"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Démarrer en mode réduit dans la barre à miniatures"
@@ -4059,57 +4058,84 @@ msgstr ""
 msgid "Set replyTo to 'address'"
 msgstr "Définir l'adresse de réponse à « adresse »"
 
-#: kmail_options.h:25
-#, kde-format
+#: kmail_options.h:26
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr ""
 "Ajouter un en-tête au message. Cette opération peut être effectuée plusieurs "
 "fois."
 
-#: kmail_options.h:26
-#, kde-format
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Read message body from 'file'"
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Lire le corps du message dans « fichier »."
 
-#: kmail_options.h:27
-#, kde-format
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Set body of message"
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Définir le corps du message"
 
-#: kmail_options.h:28
-#, kde-format
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Add an attachment to the mail. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr ""
 "Ajouter une pièce jointe au message. Cette opération peut être effectuée "
 "plusieurs fois."
 
-#: kmail_options.h:29
-#, kde-format
+#: kmail_options.h:31
+#, fuzzy, kde-format
+#| msgid "Only check for new mail"
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Ne vérifier que les nouveaux messages"
 
-#: kmail_options.h:31
-#, kde-format
+#: kmail_options.h:32
+#, fuzzy, kde-format
+#| msgid "Start minimized to tray"
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr "Démarrer en mode réduit dans la barre à miniatures"
+
+#: kmail_options.h:33
+#, fuzzy, kde-format
+#| msgid "Only open composer window"
+msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "N'ouvrir qu'une fenêtre d'édition"
 
-#: kmail_options.h:32
-#, kde-format
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Set identity name"
+msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Définir le nom d'identité"
 
-#: kmail_options.h:33
-#, kde-format
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "View the given message file"
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Afficher le message indiqué."
 
-#: kmail_options.h:35
-#, kde-format
+#: kmail_options.h:37
+#, fuzzy, kde-format
+#| msgid "Lists the available options for user feedback"
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Liste les options disponibles pour le retour des utilisateurs"
 
-#: kmail_options.h:40
-#, kde-format
+#: kmail_options.h:42
+#, fuzzy, kde-format
+#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
 "Envoyer le courrier électronique à l'adresse désirée avec le fichier pointé "

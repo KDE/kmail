@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1053,8 +1053,7 @@ msgid "Enable system tray icon"
 msgstr "Ikoon süsteemisalves"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Käivitamine süsteemisalve minimeerituna"
@@ -4186,54 +4185,80 @@ msgstr "'päise' lisamine kirjale. Seda võib korrata"
 msgid "Set replyTo to 'address'"
 msgstr "replyTo määramine 'aadressile'"
 
-#: kmail_options.h:25
-#, kde-format
+#: kmail_options.h:26
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "'päise' lisamine kirjale. Seda võib korrata"
 
-#: kmail_options.h:26
-#, kde-format
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Read message body from 'file'"
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Kirja tekst võetakse 'failist'"
 
-#: kmail_options.h:27
-#, kde-format
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Set body of message"
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Kirja teksti määramine"
 
-#: kmail_options.h:28
-#, kde-format
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Add an attachment to the mail. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Kirjale lisatakse kaasatud fail. Seda tegevust võib korrata"
 
-#: kmail_options.h:29
-#, kde-format
+#: kmail_options.h:31
+#, fuzzy, kde-format
+#| msgid "Only check for new mail"
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Kontrollitakse ainult uusi kirju"
 
-#: kmail_options.h:31
-#, kde-format
+#: kmail_options.h:32
+#, fuzzy, kde-format
+#| msgid "Start minimized to tray"
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr "Käivitamine süsteemisalve minimeerituna"
+
+#: kmail_options.h:33
+#, fuzzy, kde-format
+#| msgid "Only open composer window"
+msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Avatakse ainult redaktori aken"
 
-#: kmail_options.h:32
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Set identity"
+msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Identiteedi määramine"
 
-#: kmail_options.h:33
-#, kde-format
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "View the given message file"
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Näitab antud kirja faili"
 
-#: kmail_options.h:35
-#, kde-format
+#: kmail_options.h:37
+#, fuzzy, kde-format
+#| msgid "Lists the available options for user feedback"
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Kasutaja tagasiside saadaolevate valikute loend"
 
-#: kmail_options.h:40
-#, kde-format
+#: kmail_options.h:42
+#, fuzzy, kde-format
+#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "Kiri saadetakse 'aadressile' või lisatakse fail, millele osutab 'URL'"
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -1038,8 +1038,7 @@ msgid "Enable system tray icon"
 msgstr "Povoliť ikonu v systémovej lište"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Spustiť minimalizované v lište"
@@ -4137,53 +4136,80 @@ msgstr "Pridať 'hlavičku' k správe. Toto môžete urobiť opakovane"
 msgid "Set replyTo to 'address'"
 msgstr "Nastaviť odpovedaťNa na 'adresa'"
 
-#: kmail_options.h:25
-#, kde-format
+#: kmail_options.h:26
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Pridať 'hlavičku' k správe. Toto môžete urobiť opakovane"
 
-#: kmail_options.h:26
-#, kde-format
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Read message body from 'file'"
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Prečítať telo správy zo súboru 'súbor'"
 
-#: kmail_options.h:27
-#, kde-format
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Set body of message"
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Nastaviť text správy"
 
-#: kmail_options.h:28
-#, kde-format
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Add an attachment to the mail. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Pridať prílohy k správe. Toto môžete urobiť opakovane"
 
-#: kmail_options.h:29
-#, kde-format
+#: kmail_options.h:31
+#, fuzzy, kde-format
+#| msgid "Only check for new mail"
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Overiť len novú poštu"
 
-#: kmail_options.h:31
-#, kde-format
+#: kmail_options.h:32
+#, fuzzy, kde-format
+#| msgid "Start minimized to tray"
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr "Spustiť minimalizované v lište"
+
+#: kmail_options.h:33
+#, fuzzy, kde-format
+#| msgid "Only open composer window"
+msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Otvoriť len editor správ"
 
-#: kmail_options.h:32
-#, kde-format
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Set identity name"
+msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Nastaviť názov identity"
 
-#: kmail_options.h:33
-#, kde-format
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "View the given message file"
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Zobraziť zadaný súbor správy"
 
-#: kmail_options.h:35
-#, kde-format
+#: kmail_options.h:37
+#, fuzzy, kde-format
+#| msgid "Lists the available options for user feedback"
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Uvádza dostupné možnosti spätnej väzby od používateľov"
 
-#: kmail_options.h:40
-#, kde-format
+#: kmail_options.h:42
+#, fuzzy, kde-format
+#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "Poslať správu na 'adresu' resp. priložiť súbor, kam ukazuje 'URL'"
 

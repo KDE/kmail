@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -1058,8 +1058,7 @@ msgid "Enable system tray icon"
 msgstr "Ikona u sistemskom tray-u"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -4213,54 +4212,78 @@ msgstr "Dodaj zaglavlje poruci. Ovo može biti ponovljeno"
 msgid "Set replyTo to 'address'"
 msgstr "Pošalji odgovor na 'adresu'"
 
-#: kmail_options.h:25
-#, kde-format
+#: kmail_options.h:26
+#, fuzzy, kde-format
+#| msgid "Add 'header' to message. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Dodaj zaglavlje poruci. Ovo može biti ponovljeno"
 
-#: kmail_options.h:26
-#, kde-format
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "Read message body from 'file'"
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Učitaj tijelo poruke iz 'datoteke'."
 
-#: kmail_options.h:27
-#, kde-format
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Set body of message"
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Podesi tijelo poruke"
 
-#: kmail_options.h:28
-#, kde-format
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Add an attachment to the mail. This can be repeated"
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Dodaj prilog poruci. Ovo može biti ponovljeno"
 
-#: kmail_options.h:29
-#, kde-format
+#: kmail_options.h:31
+#, fuzzy, kde-format
+#| msgid "Only check for new mail"
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Samo provjeri da li ima novih poruka"
 
-#: kmail_options.h:31
+#: kmail_options.h:32
 #, kde-format
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr ""
+
+#: kmail_options.h:33
+#, fuzzy, kde-format
+#| msgid "Only open composer window"
+msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Otvori samo sastavljač poruka"
 
-#: kmail_options.h:32
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "&New identity:"
+msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "&Novi identitet:"
 
-#: kmail_options.h:33
-#, kde-format
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "View the given message file"
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Pregledaj datu datoteku sa porukom"
 
-#: kmail_options.h:35
+#: kmail_options.h:37
 #, kde-format
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:40
-#, kde-format
+#: kmail_options.h:42
+#, fuzzy, kde-format
+#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "Šalji poruku na 'adresu' ili priloži datoteku na koju 'URL' pokazuje"
 

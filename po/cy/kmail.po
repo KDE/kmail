@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-30 00:39+0000\n"
+"POT-Creation-Date: 2024-06-06 00:39+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -1107,8 +1107,7 @@ msgid "Enable system tray icon"
 msgstr "hysbysiad cafn cysawd"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 kmail_options.h:30
-#: settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
@@ -4138,53 +4137,69 @@ msgstr "Ychwanegu atodiad i'r ebost.  Gellir ailadrodd hwn."
 msgid "Set replyTo to 'address'"
 msgstr "Anfon CC: i 'gyfeiriad'."
 
-#: kmail_options.h:25
+#: kmail_options.h:26
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Ychwanegu atodiad i'r ebost.  Gellir ailadrodd hwn."
 
-#: kmail_options.h:26
+#: kmail_options.h:28
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Darllen corff y neges o 'ffeil'."
 
-#: kmail_options.h:27
+#: kmail_options.h:29
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Gosod corff y neges."
 
-#: kmail_options.h:28
+#: kmail_options.h:30
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Ychwanegu atodiad i'r ebost.  Gellir ailadrodd hwn."
 
-#: kmail_options.h:29
+#: kmail_options.h:31
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Ymofyn am ebost newydd yn unig."
 
-#: kmail_options.h:31
-#, fuzzy, kde-format
-msgid "Only open composer window"
-msgstr "Agor ffenestr gyfansoddi yn unig."
-
 #: kmail_options.h:32
-#, fuzzy, kde-format
-msgid "Set identity name"
-msgstr "gosod dynodiad i"
+#, kde-format
+msgctxt "@info:shell"
+msgid "Start minimized to tray"
+msgstr ""
 
 #: kmail_options.h:33
 #, fuzzy, kde-format
+msgctxt "@info:shell"
+msgid "Only open composer window"
+msgstr "Agor ffenestr gyfansoddi yn unig."
+
+#: kmail_options.h:34
+#, fuzzy, kde-format
+msgctxt "@info:shell"
+msgid "Set identity name"
+msgstr "gosod dynodiad i"
+
+#: kmail_options.h:35
+#, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Dan y c&warel neges"
 
-#: kmail_options.h:35
+#: kmail_options.h:37
 #, kde-format
+msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:40
+#: kmail_options.h:42
 #, fuzzy, kde-format
+msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
 "Anfon neges i bob un 'cyfeiriad', gan atodi'r ffeil y mae'r 'URL' yn ei "
