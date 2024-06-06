@@ -12,7 +12,9 @@ static void kmail_options(QCommandLineParser *parser)
 {
     QList<QCommandLineOption> options;
 
-    options << QCommandLineOption(QStringList() << QStringLiteral("s") << QStringLiteral("subject"), i18n("Set subject of message"), QStringLiteral("subject"))
+    options << QCommandLineOption(QStringList() << QStringLiteral("s") << QStringLiteral("subject"),
+                                  i18nc("@info:shell", "Set subject of message"),
+                                  QStringLiteral("subject"))
             << QCommandLineOption(QStringList() << QStringLiteral("c") << QStringLiteral("cc"),
                                   i18n("Send CC: to 'address'. This can be repeated"),
                                   QStringLiteral("address"))
