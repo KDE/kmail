@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-06 00:39+0000\n"
-"PO-Revision-Date: 2024-05-30 11:43+0200\n"
+"POT-Creation-Date: 2024-06-07 00:39+0000\n"
+"PO-Revision-Date: 2024-06-06 19:41+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3968,99 +3968,90 @@ msgctxt "@title:window"
 msgid "Save File as"
 msgstr "Guardar archivo como"
 
-#: kmail_options.h:15
-#, kde-format
+#: kmail_options.h:16
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Poner el asunto del mensaje"
 
-#: kmail_options.h:17
+#: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Enviar Cc a «dirección». Se puede repetir."
 
-#: kmail_options.h:20
+#: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Enviar Cco a «dirección». Se puede repetir."
 
-#: kmail_options.h:23
+#: kmail_options.h:25
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Establecer responder-A a «dirección»"
 
-#: kmail_options.h:26
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#: kmail_options.h:28
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Añadir «cabecera» al mensaje. Se puede repetir."
 
-#: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "Read message body from 'file'"
+#: kmail_options.h:30
+#, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Leer el cuerpo-del-mensaje desde «archivo»"
 
-#: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#: kmail_options.h:31
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Poner cuerpo del mensaje"
 
-#: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#: kmail_options.h:32
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Añadir un adjunto al correo. Se puede repetir."
 
-#: kmail_options.h:31
-#, fuzzy, kde-format
-#| msgid "Only check for new mail"
+#: kmail_options.h:33
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Comprobar Solo correo nuevo"
 
-#: kmail_options.h:32
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#: kmail_options.h:34
+#, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Iniciar minimizado en la bandeja del sistema"
 
-#: kmail_options.h:33
-#, fuzzy, kde-format
-#| msgid "Only open composer window"
+#: kmail_options.h:35
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Abrir Solo la ventana del editor"
 
-#: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Set identity name"
+#: kmail_options.h:36
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Definir nombre de la identidad"
 
-#: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "View the given message file"
+#: kmail_options.h:37
+#, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Ver el archivo de mensaje dado"
 
-#: kmail_options.h:37
-#, fuzzy, kde-format
-#| msgid "Lists the available options for user feedback"
+#: kmail_options.h:39
+#, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Lista todas las opciones disponibles para los comentarios del usuario"
 
-#: kmail_options.h:42
-#, fuzzy, kde-format
-#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+#: kmail_options.h:44
+#, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""

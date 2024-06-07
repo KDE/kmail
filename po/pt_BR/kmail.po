@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-06 00:39+0000\n"
+"POT-Creation-Date: 2024-06-07 00:39+0000\n"
 "PO-Revision-Date: 2024-03-23 19:06-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -4079,97 +4079,99 @@ msgctxt "@title:window"
 msgid "Save File as"
 msgstr "Salvar arquivo como"
 
-#: kmail_options.h:15
-#, kde-format
+#: kmail_options.h:16
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Definir o assunto da mensagem"
 
-#: kmail_options.h:17
+#: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Enviar Cc: para o 'endereço'. Isto pode ser repetido"
 
-#: kmail_options.h:20
+#: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Enviar Cco: para o 'endereço'. Isto pode ser repetido"
 
-#: kmail_options.h:23
+#: kmail_options.h:25
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Define o endereço de resposta como 'endereço'"
 
-#: kmail_options.h:26
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Adiciona o 'cabeçalho' à mensagem. Isto pode ser repetido"
 
-#: kmail_options.h:28
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Lê o corpo da mensagem do 'arquivo'"
 
-#: kmail_options.h:29
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Definir o corpo da mensagem"
 
-#: kmail_options.h:30
+#: kmail_options.h:32
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Adiciona um anexo à mensagem. Isto pode ser repetido"
 
-#: kmail_options.h:31
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Verificar somente se houver nova mensagem"
 
-#: kmail_options.h:32
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Start minimized to tray"
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Iniciar minizado na área de notificação"
 
-#: kmail_options.h:33
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Abrir somente a janela do compositor"
 
-#: kmail_options.h:34
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set identity name"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Definir nome da identidade"
 
-#: kmail_options.h:35
+#: kmail_options.h:37
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Visualizar o arquivo de mensagem fornecido"
 
-#: kmail_options.h:37
+#: kmail_options.h:39
 #, fuzzy, kde-format
 #| msgid "Lists the available options for user feedback"
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Apresenta as opções disponíveis para os comentários do usuário"
 
-#: kmail_options.h:42
+#: kmail_options.h:44
 #, fuzzy, kde-format
 #| msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgctxt "@info:shell"

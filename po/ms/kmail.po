@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-06 00:39+0000\n"
+"POT-Creation-Date: 2024-06-07 00:39+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -4218,98 +4218,100 @@ msgctxt "@title:window"
 msgid "Save File as"
 msgstr "Simpan ke dalam Fail"
 
-#: kmail_options.h:15
-#, kde-format
+#: kmail_options.h:16
+#, fuzzy, kde-format
+#| msgid "Set subject of message"
+msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Setkan subjek mesej"
 
-#: kmail_options.h:17
+#: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Tambah lampiran kepada mel. Ini boleh diulangi"
 
-#: kmail_options.h:20
+#: kmail_options.h:22
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Tambah lampiran kepada mel. Ini boleh diulangi"
 
-#: kmail_options.h:23
+#: kmail_options.h:25
 #, fuzzy, kde-format
 #| msgid "Send CC: to 'address'"
 msgid "Set replyTo to 'address'"
 msgstr "Hantar Sk: kepada 'alamat'"
 
-#: kmail_options.h:26
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Tambah lampiran kepada mel. Ini boleh diulangi"
 
-#: kmail_options.h:28
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Baca isi mesej dari 'fail'"
 
-#: kmail_options.h:29
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Setkan isi mesej"
 
-#: kmail_options.h:30
+#: kmail_options.h:32
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Tambah lampiran kepada mel. Ini boleh diulangi"
 
-#: kmail_options.h:31
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Semak mel baru sahaja"
 
-#: kmail_options.h:32
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:33
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Buka tetingkap komposer sahaja"
 
-#: kmail_options.h:34
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set Identity To"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Setkan Identiti Kepada"
 
-#: kmail_options.h:35
+#: kmail_options.h:37
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Paparkan fail mesej yang diberi"
 
-#: kmail_options.h:37
+#: kmail_options.h:39
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:42
+#: kmail_options.h:44
 #, fuzzy, kde-format
 #| msgid "Send message to 'address' resp. attach the file the 'URL' points to"
 msgctxt "@info:shell"
