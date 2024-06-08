@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-02-19 12:12+0200\n"
+"PO-Revision-Date: 2024-03-11 16:38+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -575,7 +575,7 @@ msgstr "L&ukematta:"
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1 %)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -5736,10 +5736,9 @@ msgid "Kontact Summary View"
 msgstr "Kontactin yhteenvetonäkymä"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "© 2003–2021 Kontactin kehittäjät"
+msgstr "© 2003–2024 Kontactin kehittäjät"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
