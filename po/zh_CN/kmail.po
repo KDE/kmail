@@ -3788,8 +3788,7 @@ msgid "Save File as"
 msgstr "文件另存为"
 
 #: kmail_options.h:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "设置消息主题"
