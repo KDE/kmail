@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-07 00:39+0000\n"
-"PO-Revision-Date: 2024-06-07 08:56+0200\n"
+"PO-Revision-Date: 2024-06-08 08:15+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -4035,11 +4035,10 @@ msgid "Save File as"
 msgstr "Enregistrer le fichier sous"
 
 #: kmail_options.h:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set subject of message"
-msgstr "Définir le sujet du message"
+msgstr "Définir l'objet du message"
 
 #: kmail_options.h:19
 #, kde-format
