@@ -201,7 +201,7 @@ if (OPTION_USE_PLASMA_ACTIVITIES)
 endif()
 if (OPTION_USE_PLASMA_ACTIVITIES)
     if (NOT WIN32 AND NOT APPLE)
-       find_package(PlasmaActivities "6.0.0")
+       find_package(PlasmaActivities "6.1.0")
     endif()
 endif()
 
