@@ -412,6 +412,7 @@
       <caption xml:lang="pl">Główne okno KMaila ze spisem katalogów wiadomości i samymi wiadomościami.</caption>
       <caption xml:lang="ru">Главное окно приложения KMail со списком папок и письмами.</caption>
       <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
+      <caption xml:lang="sv">Kmail huvudfönster med en lista över e-postkorgar och brev.</caption>
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
       <caption xml:lang="uk">Головне вікно KMail зі списком тек та повідомлень електронної пошти.</caption>
       <caption xml:lang="x-test">xxKMail main window with a list of email folders and emails.xx</caption>
@@ -443,6 +444,7 @@
       <caption xml:lang="pl">Program do wysyłania poczty wyposażony w tłumacza</caption>
       <caption xml:lang="ru">Окно создания электронного письма со встроенным переводчиком</caption>
       <caption xml:lang="sl">Sestavljalnik e-pošte z vdelanim prevajalnikom</caption>
+      <caption xml:lang="sv">E-postfönster med inbäddad översättning</caption>
       <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
       <caption xml:lang="uk">Редактор повідомлення із вбудованим перекладачем</caption>
       <caption xml:lang="x-test">xxEmail Composer with an embedded translatorxx</caption>
