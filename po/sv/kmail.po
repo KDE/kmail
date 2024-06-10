@@ -6,21 +6,21 @@
 # Mattias Newzella <newzella@linux.nu>, 2000, 2001, 2002,2003, 2004, 2005.
 # Anders Widell <awl@hem.passagen.se>, 2000.
 # Daniel Karlsson <chaotica@home.se>, 2001.
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
-# Stefan Asserhall <stefan.asserhall@bredband.net>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# Stefan Asserhall <stefan.asserhall@gmail.com>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2023-09-09 13:04+0200\n"
+"PO-Revision-Date: 2024-06-09 14:06+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.04.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -556,7 +556,7 @@ msgstr "O&läst:"
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1 %)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -671,8 +671,7 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:232
 #: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Kan inte starta kontoguiden"
@@ -852,11 +851,10 @@ msgid "Never"
 msgstr "Aldrig"
 
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Show Favorite Folders View"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "Visa favoritkorgar"
+msgstr "Visa favoritkorgar:"
 
 #: configuredialog/configureappearancepage.cpp:512
 #, kde-format
@@ -874,11 +872,10 @@ msgid "Always"
 msgstr "Alltid"
 
 #: configuredialog/configureappearancepage.cpp:528
-#, fuzzy, kde-format
-#| msgid "Folder Tooltips"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Korgverktygstips"
+msgstr "Korgverktygstips:"
 
 #: configuredialog/configureappearancepage.cpp:602
 #, kde-format
@@ -1727,7 +1724,7 @@ msgstr "&Arkivfil:"
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "Arkivfil (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
 #, kde-format
@@ -1745,8 +1742,7 @@ msgid "Please select the folder that should be archived."
 msgstr "Välj korgen som ska arkiveras."
 
 #: dialog/archivefolderdialog.cpp:171
-#, fuzzy, kde-format
-#| msgid "No folder selected"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Ingen korg vald"
@@ -2107,8 +2103,7 @@ msgstr ""
 "skriva in %1.</qt>"
 
 #: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:225
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Dölj menyrad"
@@ -2178,22 +2173,19 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "Vill du kasta bort brevet eller spara det till senare?"
 
 #: editor/kmcomposerwin.cpp:2074
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Stäng brevfönster"
 
 #: editor/kmcomposerwin.cpp:2142
-#, fuzzy, kde-format
-#| msgid "Autosave Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Misslyckades spara brev automatiskt"
 
 #: editor/kmcomposerwin.cpp:2143
-#, fuzzy, kde-format
-#| msgid "Sending Message Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Misslyckades skicka brev"
@@ -2225,8 +2217,7 @@ msgid "Attachment name can't be empty"
 msgstr "Bilagans namn kan inte vara tomt"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Invalid Attachment Name"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Ogiltigt namn på bilaga"
@@ -2267,8 +2258,7 @@ msgstr ""
 "användas i identitetsinställningarna.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2639
-#, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
+#, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Odefinierad signeringsnyckel"
@@ -2299,8 +2289,7 @@ msgid "To: field is empty. Send message anyway?"
 msgstr "Fältet Till: är tomt. Skicka brevet i alla fall?"
 
 #: editor/kmcomposerwin.cpp:2815
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Till: inte angivet"
@@ -2321,8 +2310,7 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr "Du angav inte någon rubrik. Skicka brevet i alla fall?"
 
 #: editor/kmcomposerwin.cpp:2829
-#, fuzzy, kde-format
-#| msgid "No Subject Specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Ingen rubrik angiven"
@@ -2345,8 +2333,7 @@ msgid "About to send email..."
 msgstr "På väg att skicka e-post..."
 
 #: editor/kmcomposerwin.cpp:3063
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Skicka bekräftelse"
@@ -2610,15 +2597,7 @@ msgstr ""
 "pålitlig nyckel. Klicka på ikonen för detaljerad information."
 
 #: editor/kmcomposerwin.cpp:4205
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' is not possible please use "
-#| "the plural in the translation"
-#| msgid ""
-#| "<qt>No valid and trusted encryption key was found for \"%1\".<br/><br/"
-#| ">Select the key(s) which should be used for this recipient. If there is "
-#| "no suitable key in the list you can also <a href=\"%2\">search for "
-#| "external keys</a>.</qt>"
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2629,10 +2608,11 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Ingen giltig och pålitlig krypteringsnyckel hittades för \"%1\".<br/><br/"
-">Välj nyckel eller nycklar som ska användas för mottagaren. Om det inte "
-"finns någon lämplig nyckel i listan kan du också <a href=\"%2\">leta efter "
-"externa nycklar</a>.</qt>"
+"<qt>Inget giltigt och pålitligt krypteringscertifikat hittades för \"%1\"."
+"<br/><br/>Välj certifikat som ska användas för mottagaren. Om det inte finns "
+"något lämpligt certifikat i listan kan du också söka efter externa "
+"certifikat genom att klicka på knappen: sök efter externa certifikat</a>.</"
+"qt>"
 
 #: editor/kmcomposerwin.cpp:4217
 #, kde-format
@@ -2871,22 +2851,20 @@ msgid "Folder Shortcut %1"
 msgstr "Genväg till korg %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:15
-#, fuzzy, kde-format
-#| msgid "Quoted Headers"
+#, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Rubriker med citattecken"
+msgstr "Stängt brevfönster"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Rensa historik"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgid "Reopen Closed Viewer"
-msgstr "Skicka nytt brev"
+msgstr "Öppna stängt brevfönster igen"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -2902,8 +2880,7 @@ msgstr "Du har inte din egen kontakt definierad i adressboken."
 
 #: identity/encodedimagepicker.cpp:134 identity/encodedimagepicker.cpp:144
 #: identity/encodedimagepicker.cpp:152
-#, fuzzy, kde-format
-#| msgid "No Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Ingen bild"
@@ -3381,11 +3358,10 @@ msgid "You must provide an email for this identity."
 msgstr "Du måste ange en e-postadress för identiteten."
 
 #: identity/identitydialog.cpp:751
-#, fuzzy, kde-format
-#| msgid "Empty Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "Töm e-postadress"
+msgstr "Tom e-postadress"
 
 #: identity/identitydialog.cpp:756
 #, kde-format
@@ -3437,8 +3413,7 @@ msgstr ""
 "identitetens inställda e-postadress (%1)."
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-postadress hittades inte i nyckel eller certifikat"
@@ -3486,8 +3461,7 @@ msgstr "Är du säker på att du vill ta bort det här visitkortet?"
 
 #: identity/identityeditvcarddialog.cpp:58
 #: identity/identityeditvcarddialog.cpp:78
-#, fuzzy, kde-format
-#| msgid "Delete vCard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Ta bort visitkort"
@@ -3680,8 +3654,7 @@ msgstr[0] "Distributionslistan %2 är tom. Den kan inte användas."
 msgstr[1] "Distributionslistorna %2 är tomma. De kan inte användas."
 
 #: job/addressvalidationjob.cpp:81 job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ogiltig e-postadress"
@@ -3716,8 +3689,7 @@ msgid "Contact cannot be stored: %1"
 msgstr "Kontakten kan inte lagras: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Misslyckades lagra kontakt"
@@ -3728,11 +3700,10 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Vill du verkligen bilägga korgen \"%1\"?"
 
 #: job/opencomposerjob.cpp:119
-#, fuzzy, kde-format
-#| msgid "Attach Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
-msgstr "Bilägg korg"
+msgstr "Bilägg katalog"
 
 #: job/opencomposerjob.cpp:120
 #, kde-format
@@ -3834,11 +3805,10 @@ msgstr "Fel uppstod vid borttagning av duplicerade brev: '%1'"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
-#, fuzzy, kde-format
-#| msgid "Error while removing duplicates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "Fel vid borttagning av dubbletter."
+msgstr "Fel vid borttagning av dubbletter"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -4165,8 +4135,7 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Kmail är för närvarande i nerkopplat läge. Hur vill du fortsätta?"
 
 #: kmkernel.cpp:745
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Uppkopplad/nerkopplad"
@@ -4278,8 +4247,7 @@ msgstr ""
 "riktigt installerad."
 
 #: kmlaunchexternalcomponent.cpp:89
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Kmail-fel"
@@ -4294,8 +4262,7 @@ msgstr ""
 "installerad."
 
 #: kmlaunchexternalcomponent.cpp:104
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "Kan inte starta importguiden"
@@ -4310,8 +4277,7 @@ msgstr ""
 "informationshantering\". Kontrollera installationen."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr ""
@@ -4328,8 +4294,7 @@ msgstr ""
 "installerad."
 
 #: kmlaunchexternalcomponent.cpp:139
-#, fuzzy, kde-format
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Kan inte starta importguiden"
@@ -5341,8 +5306,7 @@ msgstr ""
 "intrång i ditt system."
 
 #: kmmainwidget.cpp:4774
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Säkerhetsvarning"
@@ -5772,10 +5736,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact-översiktsvy"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2021 The Kontact developers"
+#, kde-format
 msgid "(c) 2003-2024 The Kontact developers"
-msgstr "© 2003-2021 Kontact-utvecklarna"
+msgstr "© 2003-2024 Kontact-utvecklarna"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -6501,10 +6464,9 @@ msgstr "Höjden på dialogrutan Anpassa Kmail (bara för intern användning)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:343
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Brevförhandsgranskningsruta"
+msgstr "Förhandsgranskningsruta för brev:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:346
@@ -6526,10 +6488,9 @@ msgstr "Visa förhandsgranskningsruta för brev intill brevlistan"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:359
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "Korglista"
+msgstr "Korglista:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:362
