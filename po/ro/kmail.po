@@ -1089,7 +1089,8 @@ msgid "Plasma activities"
 msgstr "&Jurnalizează activitățile filtrului"
 
 #: configuredialog/configureappearancepage.cpp:907
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Enable"
 msgid "Enable"
 msgstr "Activează"
 
