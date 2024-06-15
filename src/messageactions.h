@@ -73,7 +73,6 @@ public:
     [[nodiscard]] KActionMenu *messageStatusMenu() const;
     [[nodiscard]] KActionMenu *forwardMenu() const;
 
-    [[nodiscard]] QAction *annotateAction() const;
     [[nodiscard]] QAction *printAction() const;
     [[nodiscard]] QAction *printPreviewAction() const;
     [[nodiscard]] QAction *listFilterAction() const;
@@ -111,7 +110,6 @@ public Q_SLOTS:
 
 private:
     Q_DISABLE_COPY(MessageActions)
-    void annotateMessage();
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction(const QString &item, const QUrl &url);
@@ -165,7 +163,6 @@ private:
     KActionMenu *const mStatusMenu;
     KActionMenu *const mForwardActionMenu;
     KActionMenu *const mMailingListActionMenu;
-    QAction *const mAnnotateAction;
     QAction *const mEditAsNewAction;
     QAction *mPrintAction = nullptr;
     QAction *mPrintPreviewAction = nullptr;

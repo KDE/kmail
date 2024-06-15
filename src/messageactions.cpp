@@ -20,7 +20,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <MessageCore/StringUtil>
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
-#include <PimCommonAkonadi/AnnotationDialog>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ItemFetchJob>
@@ -48,7 +47,6 @@ using namespace Qt::Literals::StringLiterals;
 
 #include "folderarchive/folderarchivemanager.h"
 #include <Akonadi/Collection>
-#include <Akonadi/EntityAnnotationsAttribute>
 #include <Akonadi/StandardMailActionManager>
 #include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
@@ -73,7 +71,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mStatusMenu(new KActionMenu(i18n("Mar&k Message"), this))
     , mForwardActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this))
     , mMailingListActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-message-new-list")), i18nc("Message->", "Mailing-&List"), this))
-    , mAnnotateAction(new QAction(QIcon::fromTheme(QStringLiteral("view-pim-notes")), i18n("Add Note…"), this))
     , mEditAsNewAction(new QAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("&Edit As New"), this))
     , mListFilterAction(new QAction(i18nc("@action", "Filter on Mailing-&List…"), this))
     , mAddFollowupReminderAction(new QAction(i18nc("@action", "Add Followup Reminder…"), this))
@@ -117,9 +114,6 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mListFilterAction, &QAction::triggered, this, &MessageActions::slotMailingListFilter);
 
     ac->addAction(QStringLiteral("set_status"), mStatusMenu);
-
-    ac->addAction(QStringLiteral("annotate"), mAnnotateAction);
-    connect(mAnnotateAction, &QAction::triggered, this, &MessageActions::annotateMessage);
 
     ac->addAction(QStringLiteral("editasnew"), mEditAsNewAction);
     connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
@@ -291,11 +285,6 @@ KActionMenu *MessageActions::forwardMenu() const
     return mForwardActionMenu;
 }
 
-QAction *MessageActions::annotateAction() const
-{
-    return mAnnotateAction;
-}
-
 QAction *MessageActions::printAction() const
 {
     return mPrintAction;
@@ -365,14 +354,6 @@ void MessageActions::updateActions()
     mNoQuoteReplyAction->setEnabled(hasPayload);
     mSendAgainAction->setEnabled(hasPayload);
 
-    mAnnotateAction->setEnabled(uniqItem);
-    mAddFollowupReminderAction->setEnabled(uniqItem);
-    if (!mCurrentItem.hasAttribute<Akonadi::EntityAnnotationsAttribute>()) {
-        mAnnotateAction->setText(i18n("Add Note…"));
-    } else {
-        mAnnotateAction->setText(i18n("Edit Note…"));
-    }
-
     mStatusMenu->setEnabled(multiVisible);
 
     mPrintAction->setEnabled(mMessageView != nullptr);
@@ -386,7 +367,6 @@ void MessageActions::updateActions()
             job->fetchScope().fetchAllAttributes();
             job->fetchScope().fetchFullPayload(true);
             job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
-            job->fetchScope().fetchAttribute<Akonadi::EntityAnnotationsAttribute>();
             connect(job, &Akonadi::ItemFetchJob::result, this, &MessageActions::slotUpdateActionsFetchDone);
         }
     }
@@ -695,17 +675,6 @@ void MessageActions::editCurrentMessage()
         command = new KMEditMessageCommand(mParent, mCurrentItem.payload<KMime::Message::Ptr>());
         command->start();
     }
-}
-
-void MessageActions::annotateMessage()
-{
-    if (!mCurrentItem.isValid()) {
-        return;
-    }
-
-    auto dialog = new PimCommon::AnnotationEditDialog(mCurrentItem, mParent);
-    dialog->exec();
-    delete dialog;
 }
 
 void MessageActions::addWebShortcutsMenu(QMenu *menu, const QString &text)
