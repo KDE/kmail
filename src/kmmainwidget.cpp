@@ -3075,12 +3075,12 @@ void KMMainWidget::setupActions()
             &ManageShowCollectionProperties::slotFolderMailingListProperties);
     // mFolderMailingListPropertiesAction->setIcon(QIcon::fromTheme("document-properties-mailing-list"));
 
-    mClearFolderCacheAction = new QAction(i18n("&Clear Akonadi Cache…"), this);
+    mClearFolderCacheAction = new QAction(i18n("&Clear Cache…"), this);
     actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache"), mClearFolderCacheAction);
     connect(mClearFolderCacheAction, &QAction::triggered, this, &KMMainWidget::slotClearFolder);
 
     {
-        auto action = new QAction(i18n("&Clear Akonadi Cache in This Folder and All its Subfolders"), this);
+        auto action = new QAction(i18n("&Clear Cache in This Folder and All its Subfolders"), this);
         actionCollection()->addAction(QStringLiteral("folder_clear_akonadi_cache_and_subfolders"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotClearFolderAndSubFolders);
     }
@@ -4957,8 +4957,8 @@ void KMMainWidget::slotClearCacheDone()
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
         if (KMessageBox::questionTwoActions(this,
-                                            i18n("Do you want to restart Akonadi?"),
-                                            i18n("Restart Akonadi"),
+                                            i18n("Do you want to restart the background services?"),
+                                            i18n("Restart Background Services"),
                                             KGuiItem(i18n("Restart")),
                                             KStandardGuiItem::cancel())
             == KMessageBox::ButtonCode::PrimaryAction) {
@@ -4966,7 +4966,7 @@ void KMMainWidget::slotClearCacheDone()
             process->setProgram(QStandardPaths::findExecutable(QStringLiteral("akonadictl")));
             process->setArguments(QStringList() << QStringLiteral("restart"));
             connect(process, &QProcess::finished, this, [this, process]() {
-                KMessageBox::information(this, i18n("Akonadi restarted."));
+                KMessageBox::information(this, i18n("Background services restarted."));
                 process->deleteLater();
             });
             process->start();

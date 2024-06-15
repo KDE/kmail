@@ -66,7 +66,7 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
     if (lst.isEmpty()) {
         deleteLater();
     } else {
-        KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem(i18n("Clear Akonadi Cache"));
+        KPIM::ProgressItem *item = KPIM::ProgressManager::createProgressItem(i18n("Clear Cache"));
         item->setUsesBusyIndicator(true);
         item->setCryptoStatus(KPIM::ProgressItem::Unknown);
 

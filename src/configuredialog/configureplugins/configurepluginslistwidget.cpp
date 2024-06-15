@@ -284,7 +284,7 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
     mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_unifiedmailbox_agent"), QStringLiteral("/UnifiedMailboxAgent"));
 
     PimCommon::ConfigurePluginsListWidget::fillTopItems(mPluginUtilDataList,
-                                                        i18n("Akonadi Agents"),
+                                                        i18n("Background services"),
                                                         QString(),
                                                         QString(),
                                                         mAgentPluginsItems,
