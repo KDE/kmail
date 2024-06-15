@@ -13,11 +13,12 @@
 #include "settings/kmailsettings.h"
 
 // other KDE headers:
-#include <QTabBar>
-#include <QTabWidget>
+#include <KConfigDialogManager>
 
 // Qt headers:
 #include <QShowEvent>
+#include <QTabBar>
+#include <QTabWidget>
 #include <QVBoxLayout>
 
 // Other headers:
@@ -31,6 +32,8 @@ ConfigModuleWithTabs::ConfigModuleWithTabs(QObject *parent, const KPluginMetaDat
     vlay->addWidget(mTabWidget);
     mTabWidget->setDocumentMode(true);
     mTabWidget->tabBar()->setExpanding(true);
+
+    m_configDialogManager = new KConfigDialogManager(mTabWidget, KMailSettings::self());
 }
 
 void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
@@ -39,10 +42,12 @@ void ConfigModuleWithTabs::addTab(ConfigModuleTab *tab, const QString &title)
     connect(tab, &ConfigModuleTab::changed, this, [this](bool state) {
         setNeedsSave(state);
     });
+    m_configDialogManager->addWidget(tab);
 }
 
 void ConfigModuleWithTabs::load()
 {
+    m_configDialogManager->updateWidgets();
     const int numberOfTab = mTabWidget->count();
     for (int i = 0; i < numberOfTab; ++i) {
         auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
@@ -57,6 +62,7 @@ void ConfigModuleWithTabs::load()
 void ConfigModuleWithTabs::save()
 {
     if (mWasInitialized) {
+        m_configDialogManager->updateSettings();
         KCModule::save();
         const int numberOfTab = mTabWidget->count();
         for (int i = 0; i < numberOfTab; ++i) {
@@ -70,6 +76,7 @@ void ConfigModuleWithTabs::save()
 
 void ConfigModuleWithTabs::defaults()
 {
+    m_configDialogManager->updateWidgetsDefault();
     auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
     if (tab) {
         tab->defaults();

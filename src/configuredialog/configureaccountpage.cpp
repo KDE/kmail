@@ -13,10 +13,8 @@ using namespace Qt::Literals::StringLiterals;
 #include "settings/kmailsettings.h"
 #include "undosend/undosendcombobox.h"
 #include <MailCommon/AccountConfigOrderDialog>
-#include <MessageComposer/MessageComposerSettings>
-#include <PimCommon/ConfigureImmutableWidgetUtils>
-using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MailTransport/TransportManagementWidgetNg>
+#include <MessageComposer/MessageComposerSettings>
 using MailTransport::TransportManagementWidgetNg;
 #include <MailCommon/MailUtil>
 
@@ -91,6 +89,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 
     // "confirm before send" check box:
     mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
+    mConfirmSendCheck->setObjectName(u"kcfg_ConfirmBeforeSend"_s);
     formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
@@ -99,6 +98,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 #endif
 
     mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
+    mCheckSpellingBeforeSending->setObjectName(u"kcfg_CheckSpellingBeforeSend"_s);
     formLayout->addRow(QString(), mCheckSpellingBeforeSending);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
@@ -123,6 +123,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 
     auto hLayout = new QHBoxLayout;
     mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
+    mUndoSend->setObjectName(u"kcfg_EnabledUndoSend"_s);
     hLayout->addWidget(mUndoSend);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
         mUndoSendComboBox->setEnabled(state);
@@ -139,27 +140,18 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
 void AccountsPageSendingTab::doLoadFromGlobalSettings()
 {
     mSendOnCheckCombo->setCurrentIndex(KMailSettings::self()->sendOnCheck());
-    loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
-    loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
-    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
     mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
 void AccountsPageSendingTab::doLoadOther()
 {
     mSendMethodCombo->setCurrentIndex(MessageComposer::MessageComposerSettings::self()->sendImmediate() ? 0 : 1);
-    loadWidget(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
-    loadWidget(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
-    loadWidget(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
     mUndoSendComboBox->setDelay(KMailSettings::self()->undoSendDelay());
 }
 
 void AccountsPageSendingTab::save()
 {
     KMailSettings::self()->setSendOnCheck(mSendOnCheckCombo->currentIndex());
-    saveCheckBox(mConfirmSendCheck, KMailSettings::self()->confirmBeforeSendItem());
-    saveCheckBox(mCheckSpellingBeforeSending, KMailSettings::self()->checkSpellingBeforeSendItem());
-    saveCheckBox(mUndoSend, KMailSettings::self()->enabledUndoSendItem());
     MessageComposer::MessageComposerSettings::self()->setSendImmediate(mSendMethodCombo->currentIndex() == 0);
     KMailSettings::self()->setUndoSendDelay(mUndoSendComboBox->delay());
 }

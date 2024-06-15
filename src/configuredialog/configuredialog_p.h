@@ -14,6 +14,7 @@
 #include "kmail_export.h"
 class QTabWidget;
 class ConfigureDialog;
+class KConfigDialogManager;
 
 // Individual tab of a ConfigModuleWithTabs
 class ConfigModuleTab : public QWidget
@@ -80,5 +81,6 @@ protected:
 
 private:
     QTabWidget *const mTabWidget;
+    KConfigDialogManager *m_configDialogManager = nullptr;
     bool mWasInitialized = false;
 };
