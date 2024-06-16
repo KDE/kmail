@@ -25,7 +25,7 @@ void FillComposerJob::start()
 {
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mSettings.mIdentity);
-    mMsg->contentType()->setCharset("utf-8");
+    mMsg->contentType()->setCharset(QByteArrayLiteral("utf-8"));
     if (!mSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mSettings.mCc, QByteArrayLiteral("utf-8"));
     }

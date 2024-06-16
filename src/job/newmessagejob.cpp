@@ -24,7 +24,7 @@ void NewMessageJob::start()
     mAttachURL = QUrl::fromLocalFile(mNewMessageJobSettings.mAttachURL);
     mMsg = KMime::Message::Ptr(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
-    mMsg->contentType()->setCharset("utf-8");
+    mMsg->contentType()->setCharset(QByteArrayLiteral("utf-8"));
     // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc, QByteArrayLiteral("utf-8"));
