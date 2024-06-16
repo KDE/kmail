@@ -227,7 +227,7 @@ void KTNEFMain::viewFile()
 {
     if (!mView->getSelection().isEmpty()) {
         KTNEFAttach *attach = mView->getSelection().at(0);
-        QUrl url = QUrl::fromLocalFile(extractTemp(attach));
+        const QUrl url = QUrl::fromLocalFile(extractTemp(attach));
         QString mimename(attach->mimeTag());
 
         if (mimename.isEmpty() || mimename == "application/octet-stream"_L1) {
