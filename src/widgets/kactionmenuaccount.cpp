@@ -10,7 +10,7 @@
 #include <Akonadi/AgentManager>
 #include <MailCommon/MailUtil>
 #include <QMenu>
-
+// TODO add plasma activities support
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
     : KActionMenu(parent)
 {

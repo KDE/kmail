@@ -7,7 +7,7 @@
 #include "kactionmenutransport.h"
 #include <MailTransport/TransportManager>
 #include <QMenu>
-
+// TODO add plasma activities support
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
 {
