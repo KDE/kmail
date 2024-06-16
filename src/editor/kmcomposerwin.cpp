@@ -1230,7 +1230,11 @@ void KMComposerWin::setQuotePrefix(uint uoid)
             quotePrefix = quoteTemplate.quoteString();
         }
     }
-    mComposerBase->editor()->setQuotePrefixName(MessageCore::StringUtil::formatQuotePrefix(quotePrefix, mMsg->from()->displayString()));
+    QString fromStr;
+    if (auto h = mMsg->from(false)) {
+        fromStr = h->displayString();
+    }
+    mComposerBase->editor()->setQuotePrefixName(MessageCore::StringUtil::formatQuotePrefix(quotePrefix, fromStr));
 }
 
 void KMComposerWin::setupActions()
