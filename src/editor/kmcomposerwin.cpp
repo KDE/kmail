@@ -3394,7 +3394,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
             if (key.isNull() || !key.canEncrypt()) {
                 mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
                                                   "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable for encryption.",
-                                                  QString::fromUtf8(ident.pgpEncryptionKey())));
+                                                  QString::fromLatin1(ident.pgpEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
@@ -3407,7 +3407,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                 if (key.isNull() || !key.canSign()) {
                     mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
                                                       "Your selected PGP signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
-                                                      QString::fromUtf8(ident.pgpSigningKey())));
+                                                      QString::fromLatin1(ident.pgpSigningKey())));
                     mNearExpiryWarning->setWarning(true);
                     mNearExpiryWarning->show();
                 } else {
@@ -3423,7 +3423,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
             if (key.isNull() || !key.canEncrypt()) {
                 mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
                                                   "Your selected SMIME key (%1) doesn't exist in your keyring or is not suitable for encryption.",
-                                                  QString::fromUtf8(ident.smimeEncryptionKey())));
+                                                  QString::fromLatin1(ident.smimeEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
                 mNearExpiryWarning->show();
             } else {
@@ -3436,7 +3436,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                 if (key.isNull() || !key.canSign()) {
                     mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
                                                       "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
-                                                      QString::fromUtf8(ident.smimeSigningKey())));
+                                                      QString::fromLatin1(ident.smimeSigningKey())));
                     mNearExpiryWarning->setWarning(true);
                     mNearExpiryWarning->show();
                 } else {
