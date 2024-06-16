@@ -132,7 +132,7 @@ void HistoryClosedReaderManagerTest::shouldAssignMaxValues()
     HistoryClosedReaderManager w;
     for (int i = 0; i < 15; i++) {
         HistoryClosedReaderInfo info;
-        info.setItem(2);
+        info.setItem(2 + i);
         info.setSubject(QStringLiteral("sub"));
         w.addInfo(std::move(info));
     }
