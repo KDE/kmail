@@ -41,7 +41,7 @@ void CreateForwardMessageJob::start()
 void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &fmsg)
 {
     if (mSettings.url.isValid()) {
-        fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url).toLower(), "utf-8");
+        fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url).toLower(), QByteArrayLiteral("utf-8"));
     }
     bool lastEncrypt = false;
     bool lastSign = false;

@@ -3316,7 +3316,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                 const Transport *transport = TransportManager::self()->transportById(transportId, false); /*don't return default transport */
                 if (transport) {
                     auto header = new KMime::Headers::Generic("X-KMail-Transport");
-                    header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                    header->fromUnicodeString(QString::number(transport->id()), QByteArrayLiteral("utf-8"));
                     mMsg->setHeader(header);
                     mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
                 } else {

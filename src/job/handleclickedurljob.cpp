@@ -33,11 +33,11 @@ void HandleClickedUrlJob::start()
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
         if (element.first == "to"_L1) {
-            mMsg->to()->fromUnicodeString(element.second, "utf-8");
+            mMsg->to()->fromUnicodeString(element.second, QByteArrayLiteral("utf-8"));
         } else if (element.first == "subject"_L1) {
             const QString subject = element.second;
             if (!subject.isEmpty()) {
-                mMsg->subject()->fromUnicodeString(subject, "utf-8");
+                mMsg->subject()->fromUnicodeString(subject, QByteArrayLiteral("utf-8"));
             }
         } else if (element.first == "body"_L1) {
             const QString body = element.second;
@@ -47,12 +47,12 @@ void HandleClickedUrlJob::start()
         } else if (element.first == "cc"_L1) {
             const QString cc = element.second;
             if (!cc.isEmpty()) {
-                mMsg->cc()->fromUnicodeString(cc, "utf-8");
+                mMsg->cc()->fromUnicodeString(cc, QByteArrayLiteral("utf-8"));
             }
         } else if (element.first == "bcc"_L1) {
             const QString bcc = element.second;
             if (!bcc.isEmpty()) {
-                mMsg->bcc()->fromUnicodeString(bcc, "utf-8");
+                mMsg->bcc()->fromUnicodeString(bcc, QByteArrayLiteral("utf-8"));
             }
         } else if (element.first == "attach"_L1) {
             const QString attach = element.second;

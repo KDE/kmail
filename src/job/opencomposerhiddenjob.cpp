@@ -25,16 +25,16 @@ void OpenComposerHiddenJob::start()
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager());
     mMsg->contentType()->setCharset("utf-8");
     if (!mSettings.mCc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(mSettings.mCc, "utf-8");
+        mMsg->cc()->fromUnicodeString(mSettings.mCc, QByteArrayLiteral("utf-8"));
     }
     if (!mSettings.mBcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(mSettings.mBcc, "utf-8");
+        mMsg->bcc()->fromUnicodeString(mSettings.mBcc, QByteArrayLiteral("utf-8"));
     }
     if (!mSettings.mSubject.isEmpty()) {
-        mMsg->subject()->fromUnicodeString(mSettings.mSubject, "utf-8");
+        mMsg->subject()->fromUnicodeString(mSettings.mSubject, QByteArrayLiteral("utf-8"));
     }
     if (!mSettings.mTo.isEmpty()) {
-        mMsg->to()->fromUnicodeString(mSettings.mTo, "utf-8");
+        mMsg->to()->fromUnicodeString(mSettings.mTo, QByteArrayLiteral("utf-8"));
     }
     if (!mSettings.mBody.isEmpty()) {
         mMsg->setBody(mSettings.mBody.toUtf8());

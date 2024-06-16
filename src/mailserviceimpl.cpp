@@ -44,19 +44,19 @@ bool MailServiceImpl::sendMessage(const QString &from,
     msg->contentType()->setCharset("utf-8");
 
     if (!from.isEmpty()) {
-        msg->from()->fromUnicodeString(from, "utf-8");
+        msg->from()->fromUnicodeString(from, QByteArrayLiteral("utf-8"));
     }
     if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
+        msg->to()->fromUnicodeString(to, QByteArrayLiteral("utf-8"));
     }
     if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
+        msg->cc()->fromUnicodeString(cc, QByteArrayLiteral("utf-8"));
     }
     if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
+        msg->bcc()->fromUnicodeString(bcc, QByteArrayLiteral("utf-8"));
     }
     if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
+        msg->subject()->fromUnicodeString(subject, QByteArrayLiteral("utf-8"));
     }
     if (!body.isEmpty()) {
         msg->setBody(body.toUtf8());
@@ -93,19 +93,19 @@ bool MailServiceImpl::sendMessage(const QString &from,
     msg->contentType()->setCharset("utf-8");
 
     if (!from.isEmpty()) {
-        msg->from()->fromUnicodeString(from, "utf-8");
+        msg->from()->fromUnicodeString(from, QByteArrayLiteral("utf-8"));
     }
     if (!to.isEmpty()) {
-        msg->to()->fromUnicodeString(to, "utf-8");
+        msg->to()->fromUnicodeString(to, QByteArrayLiteral("utf-8"));
     }
     if (!cc.isEmpty()) {
-        msg->cc()->fromUnicodeString(cc, "utf-8");
+        msg->cc()->fromUnicodeString(cc, QByteArrayLiteral("utf-8"));
     }
     if (!bcc.isEmpty()) {
-        msg->bcc()->fromUnicodeString(bcc, "utf-8");
+        msg->bcc()->fromUnicodeString(bcc, QByteArrayLiteral("utf-8"));
     }
     if (!subject.isEmpty()) {
-        msg->subject()->fromUnicodeString(subject, "utf-8");
+        msg->subject()->fromUnicodeString(subject, QByteArrayLiteral("utf-8"));
     }
     if (!body.isEmpty()) {
         msg->setBody(body.toUtf8());

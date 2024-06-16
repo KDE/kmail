@@ -48,25 +48,25 @@ void OpenComposerJob::start()
 
     mMsg->contentType()->setCharset("utf-8");
     if (!mOpenComposerSettings.mTo.isEmpty()) {
-        mMsg->to()->fromUnicodeString(mOpenComposerSettings.mTo, "utf-8");
+        mMsg->to()->fromUnicodeString(mOpenComposerSettings.mTo, QByteArrayLiteral("utf-8"));
     }
 
     if (!mOpenComposerSettings.mCc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(mOpenComposerSettings.mCc, "utf-8");
+        mMsg->cc()->fromUnicodeString(mOpenComposerSettings.mCc, QByteArrayLiteral("utf-8"));
     }
 
     if (!mOpenComposerSettings.mBcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(mOpenComposerSettings.mBcc, "utf-8");
+        mMsg->bcc()->fromUnicodeString(mOpenComposerSettings.mBcc, QByteArrayLiteral("utf-8"));
     }
 
     if (!mOpenComposerSettings.mSubject.isEmpty()) {
-        mMsg->subject()->fromUnicodeString(mOpenComposerSettings.mSubject, "utf-8");
+        mMsg->subject()->fromUnicodeString(mOpenComposerSettings.mSubject, QByteArrayLiteral("utf-8"));
     }
     if (!mOpenComposerSettings.mReplyTo.isEmpty()) {
-        mMsg->replyTo()->fromUnicodeString(mOpenComposerSettings.mReplyTo, "utf-8");
+        mMsg->replyTo()->fromUnicodeString(mOpenComposerSettings.mReplyTo, QByteArrayLiteral("utf-8"));
     }
     if (!mOpenComposerSettings.mInReplyTo.isEmpty()) {
-        mMsg->inReplyTo()->fromUnicodeString(mOpenComposerSettings.mInReplyTo, "utf-8");
+        mMsg->inReplyTo()->fromUnicodeString(mOpenComposerSettings.mInReplyTo, QByteArrayLiteral("utf-8"));
     }
 
     if (!mOpenComposerSettings.mMessageFile.isEmpty() && QFile::exists(mOpenComposerSettings.mMessageFile)) {
