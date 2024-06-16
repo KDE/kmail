@@ -46,7 +46,7 @@ public:
 
     MailCommon::ScheduledJob *run() override;
 
-    int taskTypeId() const override
+    [[nodiscard]] int taskTypeId() const override
     {
         return 2;
     }

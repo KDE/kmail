@@ -28,14 +28,14 @@ public:
 
     static ArchiveMailKernel *self();
 
-    KIdentityManagementCore::IdentityManager *identityManager() override;
-    MessageComposer::MessageSender *msgSender() override;
+    [[nodiscard]] KIdentityManagementCore::IdentityManager *identityManager() override;
+    [[nodiscard]] MessageComposer::MessageSender *msgSender() override;
 
-    Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
-    KSharedConfig::Ptr config() override;
+    [[nodiscard]] Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
+    [[nodiscard]] KSharedConfig::Ptr config() override;
     void syncConfig() override;
-    MailCommon::JobScheduler *jobScheduler() const override;
-    Akonadi::ChangeRecorder *folderCollectionMonitor() const override;
+    [[nodiscard]] MailCommon::JobScheduler *jobScheduler() const override;
+    [[nodiscard]] Akonadi::ChangeRecorder *folderCollectionMonitor() const override;
     void updateSystemTray() override;
 
     [[nodiscard]] qreal closeToQuotaThreshold() override;

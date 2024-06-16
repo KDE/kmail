@@ -32,7 +32,7 @@ public:
 
     void archiveFolder(const QString &path, Akonadi::Collection::Id collectionId);
 
-    ArchiveMailKernel *kernel() const;
+    [[nodiscard]] ArchiveMailKernel *kernel() const;
 
 public Q_SLOTS:
     void load();
