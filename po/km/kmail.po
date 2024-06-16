@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-07 00:39+0000\n"
+"POT-Creation-Date: 2024-06-16 00:39+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -605,52 +605,52 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "ជម្រើស​ទៅ​យក"
 
-#: configuredialog/configureaccountpage.cpp:52
+#: configuredialog/configureaccountpage.cpp:50
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "​អត្តសញ្ញាណ"
 
-#: configuredialog/configureaccountpage.cpp:58
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "ការទទួល"
 
-#: configuredialog/configureaccountpage.cpp:65
+#: configuredialog/configureaccountpage.cpp:63
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "ការផ្ញើ"
 
-#: configuredialog/configureaccountpage.cpp:71
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:86
+#: configuredialog/configureaccountpage.cpp:84
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "គណនីផ្ញើចេញ (បន្ថែម​យ៉ាងហោចណាស់​មួយ) ៖"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "&Confirm action"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:93
 #, fuzzy, kde-format
 #| msgid "Check spelling before sending"
 msgid "Before sending:"
 msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:100
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgid "Check spelling"
@@ -696,19 +696,19 @@ msgstr "វិធីសាស្ត្រ​ផ្ញើ​លំនាំដើ
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:209
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Add Mail Account…"
 msgstr "បន្ថែម​ចំណាំ..."
 
-#: configuredialog/configureaccountpage.cpp:210
+#: configuredialog/configureaccountpage.cpp:202
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Custom Account…"
 msgstr "ប្ដូរ​លំដាប់​គណនី​តាម​បំណង..."
 
-#: configuredialog/configureaccountpage.cpp:230
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
@@ -717,7 +717,7 @@ msgid ""
 "properly installed."
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​គណនី​បានទេ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក ។"
 
-#: configuredialog/configureaccountpage.cpp:232
+#: configuredialog/configureaccountpage.cpp:224
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -725,26 +725,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​គណនី​បានទេ"
 
-#: configuredialog/configureaccountpage.cpp:280
+#: configuredialog/configureaccountpage.cpp:272
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "រួម​បញ្ចូល​ក្នុងការ​ពិនិត្យ​មើល​ដោយ​ដៃ"
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "បើក​ក្រៅ​បណ្ដាញ នៅពេល​បិទ KMail"
 
-#: configuredialog/configureaccountpage.cpp:295
+#: configuredialog/configureaccountpage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "ពិនិត្យ​មើល​សំបុត្រ​នៅ​ពេល​ចាប់ផ្ដើម"
 
-#: configuredialog/configureaccountpage.cpp:342
+#: configuredialog/configureaccountpage.cpp:334
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -7344,13 +7344,13 @@ msgstr "ជ្រើស​ពុម្ពអក្សរ"
 msgid "Unselect All"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
 #, kde-format
 msgid "&Ask for action after dragging messages to another folder"
 msgstr "សួរ​ថា​ត្រូវ​ធ្វើ​អ្វី បន្ទាប់​ពី​អូស​សារ​ទៅ​ថត​ផ្សេង"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEmptyTrashCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EmptyTrashOnExit)
 #: ui/miscpagemaintab.ui:26
 #, kde-format
 msgid "Empty local &trash folder on program exit"
@@ -7378,31 +7378,31 @@ msgctxt ""
 msgid "When ente&ring a folder:"
 msgstr "ពេល​ចូល​ថត​មួយ ៖"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ExcludeImportantMailFromExpiry)
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
 msgstr "ដក​មិន​ឲ្យ​សារ​សំខាន់​ផុតកំណត់"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
 #, kde-format
 msgid "Jump to First Unread Message"
 msgstr "លោត​ទៅ​សារ​មិន​ទាន់​អាន​ដំបូង​គេ"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
 #, kde-format
 msgid "Jump to Last Selected Message"
 msgstr "លោត​ទៅ​សារ​ដែល​បាន​ជ្រើស​ចុងក្រោយ"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, kde-format
 msgid "Jump to Newest Message"
 msgstr "លោតទៅ​សារ​ថ្មី​បំផុត"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, kde-format
 msgid "Jump to Oldest Message"
@@ -7414,7 +7414,7 @@ msgstr "លោ​តទៅ​សារ​ចាស់​បំផុត"
 msgid "Mar&k selected message as read after"
 msgstr "សម្គាល់​សារ​ដែល​បាន​ជ្រើស ថា​អាន​រួច​បន្ទាប់​ពី"
 
-#. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
 #, fuzzy, kde-format
 #| msgctxt "what's this help"
@@ -7523,25 +7523,25 @@ msgstr ""
 "\" លើកលែង​តែ​ថត​ណាមួយ​ត្រូវ​បាន​​ពិចារណា​ថា​តើ​មួយ​ណា​ត្រូវ​បាន​សម្គាល់​ជា​មួយ​នឹង​លក្ខណ​សម្បត្តិ​ថត \"មាន​"
 "សកម្មភាព​លើ​សំបុត្រ​ថ្មី/មិនទាន់​អាន​នៅ​ក្នុង​ថត​នេះ\" ។</p></body></html>"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
 #, kde-format
 msgid "Do not Loop"
 msgstr "កុំ​រង្វិលជុំ"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
 #, kde-format
 msgid "Loop in Current Folder"
 msgstr "រង្វិលជុំ​នៅ​ក្នុង​ថត​បច្ចុប្បន្ន"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
 #, kde-format
 msgid "Loop in All Folders"
 msgstr "រង្វិលជុំ​នៅ​ក្នុង​ថត​ទាំងអស់"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
 #, kde-format
 msgid "Loop in All Marked Folders"
@@ -7553,20 +7553,20 @@ msgstr "រង្វិលជុំ​នៅ​ក្នុង​ថត​ដែ
 msgid " sec"
 msgstr " វិ."
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStartUpFolderCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_StartSpecificFolderAtStartup)
 #: ui/miscpagemaintab.ui:173
 #, kde-format
 msgid "Open this folder on &startup:"
 msgstr "បើក​ថត​នេះ ពេល​ចាប់ផ្ដើម ៖"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_DeleteMessageWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Allow deleting messages without confirmation"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"

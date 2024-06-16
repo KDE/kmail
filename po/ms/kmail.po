@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-07 00:39+0000\n"
+"POT-Creation-Date: 2024-06-16 00:39+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -629,14 +629,14 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Opsyen Umum"
 
-#: configuredialog/configureaccountpage.cpp:52
+#: configuredialog/configureaccountpage.cpp:50
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&Identiti"
 
-#: configuredialog/configureaccountpage.cpp:58
+#: configuredialog/configureaccountpage.cpp:56
 #, fuzzy, kde-format
 #| msgid "&Receiving"
 msgctxt ""
@@ -644,38 +644,38 @@ msgctxt ""
 msgid "Receiving"
 msgstr "Mene&rima"
 
-#: configuredialog/configureaccountpage.cpp:65
+#: configuredialog/configureaccountpage.cpp:63
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "&Menghantar"
 
-#: configuredialog/configureaccountpage.cpp:71
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:86
+#: configuredialog/configureaccountpage.cpp:84
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Akaun keluar (tambah sekurang-kurangnya satu):"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "&Confirm action"
 msgstr "Hantar Pengesahan"
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:93
 #, kde-format
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:100
 #, fuzzy, kde-format
 #| msgid "Confirm &before send"
 msgid "Check spelling"
@@ -721,19 +721,19 @@ msgstr "Kaedah penghantaran pia&wai:"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:209
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "Add..."
 msgid "Add Mail Account…"
 msgstr "Tambah..."
 
-#: configuredialog/configureaccountpage.cpp:210
+#: configuredialog/configureaccountpage.cpp:202
 #, fuzzy, kde-format
 #| msgid "Add..."
 msgid "Custom Account…"
 msgstr "Tambah..."
 
-#: configuredialog/configureaccountpage.cpp:230
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
@@ -742,7 +742,7 @@ msgid ""
 "properly installed."
 msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 
-#: configuredialog/configureaccountpage.cpp:232
+#: configuredialog/configureaccountpage.cpp:224
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
@@ -750,27 +750,27 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Tidak dapat mencipta akaun"
 
-#: configuredialog/configureaccountpage.cpp:280
+#: configuredialog/configureaccountpage.cpp:272
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Masukkan dalam sema&kan mel manual"
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:295
+#: configuredialog/configureaccountpage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Sema&k mel semasa pemulaan"
 
-#: configuredialog/configureaccountpage.cpp:342
+#: configuredialog/configureaccountpage.cpp:334
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -7474,14 +7474,14 @@ msgstr "Pilih &Semua Mesej"
 msgid "Unselect All"
 msgstr "Pilih &Semua Mesej"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
 #, fuzzy, kde-format
 #| msgid "Ask for action after &dragging messages to another folder"
 msgid "&Ask for action after dragging messages to another folder"
 msgstr "Tanya apa tindakan selepas m&enyeret mesej ke folder lain"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEmptyTrashCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EmptyTrashOnExit)
 #: ui/miscpagemaintab.ui:26
 #, kde-format
 msgid "Empty local &trash folder on program exit"
@@ -7513,13 +7513,13 @@ msgctxt ""
 msgid "When ente&ring a folder:"
 msgstr "Apabila masuk ke folder:"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ExcludeImportantMailFromExpiry)
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
 msgstr "&Keluarkan mesej penting dari peluputan"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When entering a folder:\""
@@ -7527,7 +7527,7 @@ msgstr "&Keluarkan mesej penting dari peluputan"
 msgid "Jump to First Unread Message"
 msgstr "Langkau ke Mesej Belum Baca Pertama atau Mesej Baru"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When entering a folder:\""
@@ -7535,7 +7535,7 @@ msgstr "Langkau ke Mesej Belum Baca Pertama atau Mesej Baru"
 msgid "Jump to Last Selected Message"
 msgstr "Langkau ke Mesej Terakhir Dipilih"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When entering a folder:\""
@@ -7543,7 +7543,7 @@ msgstr "Langkau ke Mesej Terakhir Dipilih"
 msgid "Jump to Newest Message"
 msgstr "Langkau ke Mesej Baru Pertama"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When entering a folder:\""
@@ -7557,7 +7557,7 @@ msgstr "Langkau ke Mesej Baru Pertama"
 msgid "Mar&k selected message as read after"
 msgstr "Tan&dakan mesej yang dipilih sebagai baca selepas"
 
-#. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
 #, kde-format
 msgctxt "what's this help"
@@ -7599,7 +7599,7 @@ msgid ""
 "\".</p></body></html>"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7607,7 +7607,7 @@ msgstr ""
 msgid "Do not Loop"
 msgstr "Jangan gelungkan"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7615,7 +7615,7 @@ msgstr "Jangan gelungkan"
 msgid "Loop in Current Folder"
 msgstr "Gelungkan dalam Mesej Semasa"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7623,7 +7623,7 @@ msgstr "Gelungkan dalam Mesej Semasa"
 msgid "Loop in All Folders"
 msgstr "Gelungkan dalam Semua Folder"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7637,21 +7637,21 @@ msgstr "Gelungkan dalam Semua Folder"
 msgid " sec"
 msgstr "saat"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStartUpFolderCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_StartSpecificFolderAtStartup)
 #: ui/miscpagemaintab.ui:173
 #, fuzzy, kde-format
 #| msgid "Open this folder on startup:"
 msgid "Open this folder on &startup:"
 msgstr "Buka folder ini semasa pemulaan:"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_DeleteMessageWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Allow deleting messages without confirmation"
 msgstr "Hantar Pengesahan"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"

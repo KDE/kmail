@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-07 00:39+0000\n"
+"POT-Creation-Date: 2024-06-16 00:39+0000\n"
 "PO-Revision-Date: 2022-06-17 18:06+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -572,49 +572,49 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:52
+#: configuredialog/configureaccountpage.cpp:50
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:58
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Mottak"
 
-#: configuredialog/configureaccountpage.cpp:65
+#: configuredialog/configureaccountpage.cpp:63
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Sending"
 
-#: configuredialog/configureaccountpage.cpp:71
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:86
+#: configuredialog/configureaccountpage.cpp:84
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Utgåande kontoar (legg til minst éin):"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:91
 #, kde-format
 msgid "&Confirm action"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:93
 #, kde-format
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:100
 #, kde-format
 msgid "Check spelling"
 msgstr ""
@@ -659,18 +659,18 @@ msgstr "S&tandard sendemetode:"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:209
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "&Add Account..."
 msgid "Add Mail Account…"
 msgstr "&Legg til konto …"
 
-#: configuredialog/configureaccountpage.cpp:210
+#: configuredialog/configureaccountpage.cpp:202
 #, kde-format
 msgid "Custom Account…"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:230
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -678,7 +678,7 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:232
+#: configuredialog/configureaccountpage.cpp:224
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -686,26 +686,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Klarte ikkje starta kontovegvisaren"
 
-#: configuredialog/configureaccountpage.cpp:280
+#: configuredialog/configureaccountpage.cpp:272
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Set som «fråkopla» når KMail blir avslutta. "
 
-#: configuredialog/configureaccountpage.cpp:295
+#: configuredialog/configureaccountpage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Check Mail In"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Sjekk e-post i"
 
-#: configuredialog/configureaccountpage.cpp:342
+#: configuredialog/configureaccountpage.cpp:334
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -7074,13 +7074,13 @@ msgstr "&Merk alt"
 msgid "Unselect All"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
 #, kde-format
 msgid "&Ask for action after dragging messages to another folder"
 msgstr "&Spør etter handling når melding vert dregen til ei anna mappe"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEmptyTrashCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EmptyTrashOnExit)
 #: ui/miscpagemaintab.ui:26
 #, kde-format
 msgid "Empty local &trash folder on program exit"
@@ -7104,31 +7104,31 @@ msgctxt ""
 msgid "When ente&ring a folder:"
 msgstr "Ved &opning av mappe:"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ExcludeImportantMailFromExpiry)
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
 msgstr "&Ikkje la viktige meldingar gå ut på dato"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
 #, kde-format
 msgid "Jump to First Unread Message"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
 #, kde-format
 msgid "Jump to Last Selected Message"
 msgstr "Gå til siste valde melding"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, kde-format
 msgid "Jump to Newest Message"
 msgstr "Gå til nyaste melding"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, kde-format
 msgid "Jump to Oldest Message"
@@ -7140,7 +7140,7 @@ msgstr "Gå til eldste melding"
 msgid "Mar&k selected message as read after"
 msgstr "Merk meldinga som &lesen etter"
 
-#. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
 #, kde-format
 msgctxt "what's this help"
@@ -7182,25 +7182,25 @@ msgid ""
 "\".</p></body></html>"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
 #, kde-format
 msgid "Do not Loop"
 msgstr "Ikkje gå rundt"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
 #, kde-format
 msgid "Loop in Current Folder"
 msgstr "Gå rundt i gjeldande mappe"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
 #, kde-format
 msgid "Loop in All Folders"
 msgstr "Gå rundt i alle mappene"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
 #, kde-format
 msgid "Loop in All Marked Folders"
@@ -7212,19 +7212,19 @@ msgstr "Gå rundt i alle merkte mapper"
 msgid " sec"
 msgstr " sekund"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStartUpFolderCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_StartSpecificFolderAtStartup)
 #: ui/miscpagemaintab.ui:173
 #, kde-format
 msgid "Open this folder on &startup:"
 msgstr "&Opna denne mappa ved oppstart:"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_DeleteMessageWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
 #, kde-format
 msgid "Allow deleting messages without confirmation"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-07 00:39+0000\n"
+"POT-Creation-Date: 2024-06-16 00:39+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -612,14 +612,14 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "সাধারণ অপশন"
 
-#: configuredialog/configureaccountpage.cpp:52
+#: configuredialog/configureaccountpage.cpp:50
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&পরিচিতি"
 
-#: configuredialog/configureaccountpage.cpp:58
+#: configuredialog/configureaccountpage.cpp:56
 #, fuzzy, kde-format
 #| msgid "&Receiving"
 msgctxt ""
@@ -627,39 +627,39 @@ msgctxt ""
 msgid "Receiving"
 msgstr "প্রাপ্তি (&ত)"
 
-#: configuredialog/configureaccountpage.cpp:65
+#: configuredialog/configureaccountpage.cpp:63
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "প্রের&ণ"
 
-#: configuredialog/configureaccountpage.cpp:71
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:86
+#: configuredialog/configureaccountpage.cpp:84
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "বহির্মুখী অ্যাকাউন্ট (অন্তত একটি যোগ করুন):"
 
-#: configuredialog/configureaccountpage.cpp:93
+#: configuredialog/configureaccountpage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "&Confirm action"
 msgstr "বার্তা&বলী কনফিগার করো..."
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:93
 #, fuzzy, kde-format
 #| msgid "Ask &before encrypting each part"
 msgid "Before sending:"
 msgstr "প্রত্যেকটি অংশ এনক্রিপ্ট করার &আগে জিজ্ঞাসা করো"
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:100
 #, fuzzy, kde-format
 #| msgid "Confirm &before send"
 msgid "Check spelling"
@@ -705,19 +705,19 @@ msgstr "পাঠাবার ডি&ফল্ট উপায়:"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:209
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account…"
 msgstr "অ্যাকাউন্ট যোগ করো"
 
-#: configuredialog/configureaccountpage.cpp:210
+#: configuredialog/configureaccountpage.cpp:202
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Custom Account…"
 msgstr "অ্যাকাউন্ট যোগ করো"
 
-#: configuredialog/configureaccountpage.cpp:230
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -725,7 +725,7 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:232
+#: configuredialog/configureaccountpage.cpp:224
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
@@ -733,27 +733,27 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "অ্যাকাউন্ট তৈরি করতে অক্ষম"
 
-#: configuredialog/configureaccountpage.cpp:280
+#: configuredialog/configureaccountpage.cpp:272
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "নিজে হাতে মেইল পরীক্ষায় অন্তর্ভুক্ত &করো"
 
-#: configuredialog/configureaccountpage.cpp:288
+#: configuredialog/configureaccountpage.cpp:280
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:295
+#: configuredialog/configureaccountpage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "শুরু করার স&ময় মেইল পরীক্ষা করো"
 
-#: configuredialog/configureaccountpage.cpp:342
+#: configuredialog/configureaccountpage.cpp:334
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -7229,14 +7229,14 @@ msgstr "সব লেখা নির্বাচন করো"
 msgid "Unselect All"
 msgstr "সব লেখা নির্বাচন করো"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowPopupAfterDnD)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
 #, fuzzy, kde-format
 #| msgid "Ask for action after &dragging messages to another folder"
 msgid "&Ask for action after dragging messages to another folder"
 msgstr "বার্তা &অন্য ফোল্ডারে টেনে নিয়ে যাবার পর কী করা হবে জিজ্ঞাসা করো"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEmptyTrashCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EmptyTrashOnExit)
 #: ui/miscpagemaintab.ui:26
 #, kde-format
 msgid "Empty local &trash folder on program exit"
@@ -7262,34 +7262,34 @@ msgctxt ""
 msgid "When ente&ring a folder:"
 msgstr "ফোল্ডার তৈরি করাকালীন সমস্যা।"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mExcludeImportantFromExpiry)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ExcludeImportantMailFromExpiry)
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
 #, fuzzy, kde-format
 #| msgid "Go to Next Unread Message"
 msgid "Jump to First Unread Message"
 msgstr "পরবর্তী অপঠিত বার্তায় যাও"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:81
 #, fuzzy, kde-format
 #| msgid "Important Message"
 msgid "Jump to Last Selected Message"
 msgstr "গুরুত্বপূর্ণ বার্তা"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:86
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
 msgid "Jump to Newest Message"
 msgstr "বার্তা আ&মদানি করো..."
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mActionEnterFolder)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:91
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
@@ -7302,7 +7302,7 @@ msgstr "বার্তা আ&মদানি করো..."
 msgid "Mar&k selected message as read after"
 msgstr "নির্বাচিত বার্তাকে এই সময়ের পর &পঠিত হিসাবে চিহ্নিত করো"
 
-#. i18n: ectx: property (whatsThis), widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:127
 #, kde-format
 msgctxt "what's this help"
@@ -7344,14 +7344,14 @@ msgid ""
 "\".</p></body></html>"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
 #, fuzzy, kde-format
 #| msgid "Do Not Go To"
 msgid "Do not Loop"
 msgstr "এখানে যেও না"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:136
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7359,7 +7359,7 @@ msgstr "এখানে যেও না"
 msgid "Loop in Current Folder"
 msgstr "বর্তমান ফোল্ডারে ঘোরো"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:141
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7367,7 +7367,7 @@ msgstr "বর্তমান ফোল্ডারে ঘোরো"
 msgid "Loop in All Folders"
 msgstr "সব ফোল্ডারে ঘোরো"
 
-#. i18n: ectx: property (text), item, widget (QComboBox, mLoopOnGotoUnread)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:146
 #, fuzzy, kde-format
 #| msgctxt "continuation of \"When trying to find unread messages:\""
@@ -7381,21 +7381,21 @@ msgstr "সব ফোল্ডারে ঘোরো"
 msgid " sec"
 msgstr " সেকণ্ড"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStartUpFolderCheck)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_StartSpecificFolderAtStartup)
 #: ui/miscpagemaintab.ui:173
 #, fuzzy, kde-format
 #| msgid "Open this folder on startup:"
 msgid "Open this folder on &startup:"
 msgstr "চালু করার সময় এই ফোল্ডারটি খোলো:"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mDeleteMessagesWithoutConfirmation)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_DeleteMessageWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Allow deleting messages without confirmation"
 msgstr "লগ-ইন তথ্য"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mEnableFolderDragAndDrop)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
