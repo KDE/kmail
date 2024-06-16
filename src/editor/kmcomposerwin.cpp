@@ -1136,7 +1136,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
     }
 
     auto header = new KMime::Headers::Generic("X-KMail-Templates");
-    header->fromUnicodeString(ident.templates(), "utf-8");
+    header->fromUnicodeString(ident.templates(), QByteArrayLiteral("utf-8"));
     mMsg->setHeader(header);
 
     if (mode == TemplateParser::TemplateParserJob::NewMessage) {
@@ -1753,7 +1753,7 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
                 xface.insert(i * 70, QStringLiteral("\n\t"));
             }
             auto header = new KMime::Headers::Generic("X-Face");
-            header->fromUnicodeString(xface, "utf-8");
+            header->fromUnicodeString(xface, QByteArrayLiteral("utf-8"));
             msg->setHeader(header);
         }
     }
@@ -1777,7 +1777,7 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
             }
 
             auto header = new KMime::Headers::Generic("Face");
-            header->fromUnicodeString(face, "utf-8");
+            header->fromUnicodeString(face, QByteArrayLiteral("utf-8"));
             msg->setHeader(header);
         }
     }
@@ -3298,7 +3298,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         mMsg->removeHeader<KMime::Headers::Organization>();
     } else {
         auto const organization = new KMime::Headers::Organization;
-        organization->fromUnicodeString(ident.organization(), "utf-8");
+        organization->fromUnicodeString(ident.organization(), QByteArrayLiteral("utf-8"));
         mMsg->setHeader(organization);
     }
 
@@ -3321,7 +3321,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                         const Transport *transport = TransportManager::self()->transportByName(identityStrName, true);
                         if (transport) {
                             auto header = new KMime::Headers::Generic("X-KMail-Transport");
-                            header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                            header->fromUnicodeString(QString::number(transport->id()), QByteArrayLiteral("utf-8"));
                             mMsg->setHeader(header);
                             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
                         } else {
@@ -3337,7 +3337,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             const Transport *transport = TransportManager::self()->transportById(transportId, true);
             if (transport) {
                 auto header = new KMime::Headers::Generic("X-KMail-Transport");
-                header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+                header->fromUnicodeString(QString::number(transport->id()), QByteArrayLiteral("utf-8"));
                 mMsg->setHeader(header);
                 mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
             } else {
@@ -3352,7 +3352,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
         } else {
             auto header = new KMime::Headers::Generic("X-KMail-Transport");
-            header->fromUnicodeString(QString::number(transport->id()), "utf-8");
+            header->fromUnicodeString(QString::number(transport->id()), QByteArrayLiteral("utf-8"));
             mMsg->setHeader(header);
             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
         }
@@ -3361,7 +3361,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     const bool fccIsDisabled = ident.disabledFcc();
     if (fccIsDisabled) {
         auto header = new KMime::Headers::Generic("X-KMail-FccDisabled");
-        header->fromUnicodeString(QStringLiteral("true"), "utf-8");
+        header->fromUnicodeString(QStringLiteral("true"), QByteArrayLiteral("utf-8"));
         mMsg->setHeader(header);
     } else {
         mMsg->removeHeader("X-KMail-FccDisabled");
