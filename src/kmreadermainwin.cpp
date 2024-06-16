@@ -64,8 +64,8 @@ using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
     : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
+    , mReaderWin(new KMReaderWin(this, this, actionCollection()))
 {
-    mReaderWin = new KMReaderWin(this, this, actionCollection());
     mReaderWin->setDisplayFormatMessageOverwrite(format);
     mReaderWin->setHtmlLoadExtDefault(htmlLoadExtDefault);
     mReaderWin->setDecryptMessageOverwrite(true);
@@ -74,15 +74,15 @@ KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage for
 
 KMReaderMainWin::KMReaderMainWin(const QString &name)
     : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
+    , mReaderWin(new KMReaderWin(this, this, actionCollection()))
 {
-    mReaderWin = new KMReaderWin(this, this, actionCollection());
     initKMReaderMainWin();
 }
 
 KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name)
     : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
+    , mReaderWin(new KMReaderWin(this, this, actionCollection()))
 {
-    mReaderWin = new KMReaderWin(this, this, actionCollection());
     mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setDisplayFormatMessageOverwrite(format);
     mReaderWin->setMsgPart(aMsgPart);

@@ -125,7 +125,7 @@ private:
     QAction *mTrashAction = nullptr;
     QAction *mSaveAtmAction = nullptr;
     KMail::MessageActions *mMsgActions = nullptr;
-    KMReaderWin *mReaderWin = nullptr;
+    KMReaderWin *const mReaderWin;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
     KMail::TagActionManager *mTagActionManager = nullptr;
     KToggleAction *mHideMenuBarAction = nullptr;
