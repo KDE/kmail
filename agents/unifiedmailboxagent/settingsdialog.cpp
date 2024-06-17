@@ -50,7 +50,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
 
     auto v = new QVBoxLayout;
     h->addLayout(v);
-    auto addButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18n("Add"));
+    auto addButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18nc("@action:button", "Add"));
     v->addWidget(addButton);
     const auto addMailBox = [this]() {
         auto mailbox = std::make_unique<UnifiedMailbox>();
@@ -65,7 +65,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     };
     connect(addButton, &QPushButton::clicked, this, addMailBox);
 
-    auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18n("Modify"));
+    auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18nc("@action:button", "Modify"));
     editButton->setEnabled(false);
     v->addWidget(editButton);
 

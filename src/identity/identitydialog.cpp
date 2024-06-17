@@ -611,7 +611,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
     mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
-    mEditVCard = new QPushButton(i18n("Create…"), tab);
+    mEditVCard = new QPushButton(i18nc("@action:button", "Create…"), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
     mAutoCorrectionLanguage = new TextAutoCorrectionWidgets::AutoCorrectionLanguage(tab);
@@ -667,7 +667,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     vlay->addWidget(mWidget);
 
     auto btns = new QHBoxLayout();
-    mCopyGlobal = new QPushButton(i18n("&Copy Global Templates"), tab);
+    mCopyGlobal = new QPushButton(i18nc("@action:button", "&Copy Global Templates"), tab);
     mCopyGlobal->setEnabled(false);
     btns->addWidget(mCopyGlobal);
     vlay->addLayout(btns);

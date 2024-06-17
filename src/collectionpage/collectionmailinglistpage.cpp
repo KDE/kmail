@@ -65,7 +65,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     connect(mHoldsMailingList, &QCheckBox::toggled, this, &CollectionMailingListPage::slotConfigChanged);
     topLayout->addRow(QString(), mHoldsMailingList);
 
-    mDetectButton = new QPushButton(i18n("Detect Automatically"), this);
+    mDetectButton = new QPushButton(i18nc("@action:button", "Detect Automatically"), this);
     connect(mDetectButton, &QPushButton::pressed, this, &CollectionMailingListPage::slotDetectMailingList);
     topLayout->addRow(QString(), mDetectButton);
 
@@ -91,7 +91,7 @@ void CollectionMailingListPage::init(const Akonadi::Collection &col)
     // FIXME: if the mailing list actions have either QAction's or toolbar buttons
     //       associated with them - remove this button since it's really silly
     //       here
-    mHandleButton = new QPushButton(i18n("Invoke Handler"), this);
+    mHandleButton = new QPushButton(i18nc("@action:button", "Invoke Handler"), this);
     if (mFolder) {
         connect(mHandleButton, &QPushButton::clicked, this, &CollectionMailingListPage::slotInvokeHandler);
     } else {

@@ -76,7 +76,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareError, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareError);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareSuccess, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareSuccess);
-    auto mShareButton = new QPushButton(i18n("Share…"), this);
+    auto mShareButton = new QPushButton(i18nc("@action:button", "Share…"), this);
     mShareButton->setMenu(purposeMenu->menu());
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
     purposeMenu->setEditorWidget(mTextEdit->editor());

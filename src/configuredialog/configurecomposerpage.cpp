@@ -453,7 +453,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     ++row;
 
     // Configure All Address settings
-    auto configureCompletionButton = new QPushButton(i18n("Configure Completion…"), this);
+    auto configureCompletionButton = new QPushButton(i18nc("@action:button", "Configure Completion…"), this);
     connect(configureCompletionButton, &QAbstractButton::clicked, this, &ComposerPageGeneralTab::slotConfigureAddressCompletion);
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     groupGridLayout->setRowStretch(row, 1);
@@ -830,7 +830,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     connect(button, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotNewMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(button, 0, 2);
-    mRemoveHeaderButton = new QPushButton(i18n("Re&move"), this);
+    mRemoveHeaderButton = new QPushButton(i18nc("@action:button", "Re&move"), this);
     connect(mRemoveHeaderButton, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
     button->setAutoDefault(false);
     glay->addWidget(mRemoveHeaderButton, 1, 2);
