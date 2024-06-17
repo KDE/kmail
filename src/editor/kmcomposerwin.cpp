@@ -131,7 +131,6 @@
 #include <MessageCore/AttachmentPart>
 #include <MessageCore/AutocryptStorage>
 #include <MessageCore/MessageCoreSettings>
-#include <MessageCore/NodeHelper>
 #include <MessageCore/StringUtil>
 
 #include <MessageViewer/MessageViewerSettings>
