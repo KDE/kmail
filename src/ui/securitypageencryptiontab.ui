@@ -18,7 +18,7 @@
      </property>
      <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="mAlwaysEncryptWhenSavingInDrafts">
+       <widget class="QCheckBox" name="kcfg_AlwaysEncryptDrafts">
         <property name="text">
          <string>Encrypt draft messages</string>
         </property>
@@ -28,7 +28,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mStoreEncrypted">
+       <widget class="QCheckBox" name="kcfg_CryptoStoreEncrypted">
         <property name="toolTip">
          <string>Check to store messages encrypted </string>
         </property>
@@ -75,7 +75,7 @@ However, there may be local rules that require you to turn this option on. When 
      </property>
      <layout class="QVBoxLayout">
       <item>
-       <widget class="QCheckBox" name="mShowEncSignIndicator">
+       <widget class="QCheckBox" name="kcfg_ShowCryptoLabelIndicator">
         <property name="text">
          <string>Show sign/encrypt indicator</string>
         </property>
@@ -85,7 +85,7 @@ However, there may be local rules that require you to turn this option on. When 
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="mShowCryptoOwnertrust">
+       <widget class="QCheckBox" name="kcfg_ShowCryptoOwnertrust">
         <property name="text">
          <string>Show encryption key ownertrust level</string>
         </property>
@@ -422,7 +422,7 @@ The recommended SPHINX setting is 14 days.
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>mStoreEncrypted</tabstop>
+  <tabstop>kcfg_CryptoStoreEncrypted</tabstop>
  </tabstops>
  <resources/>
  <connections/>

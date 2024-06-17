@@ -326,12 +326,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     // "Automatically request MDNs" checkbox
     mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(), this);
-
-    helpText = i18n(
-        "By default, request an MDN when starting to compose a message. You can select this on a per-message basis using \"Options - Request Disposition "
-        "Notification\"");
-    mAutoRequestMDNCheck->setToolTip(helpText);
-    mAutoRequestMDNCheck->setWhatsThis(helpText);
+    mAutoRequestMDNCheck->setObjectName(u"kcfg_RequestMDN"_s);
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mAutoRequestMDNCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -359,8 +354,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Warn if too many recipients" checkbox/spinbox
     mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
     mRecipientCheck->setObjectName("kcfg_TooManyRecipients"_L1);
-    helpText = i18n(KMailSettings::self()->tooManyRecipientsItem()->whatsThis().toUtf8().constData());
-    mRecipientCheck->setWhatsThis(helpText);
     mRecipientCheck->setToolTip(i18nc("@info:tooltip", "Warn if too many recipients are specified"));
 
     mRecipientSpin = new QSpinBox(this);
@@ -370,8 +363,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setValue(5 /*init*/);
     mRecipientSpin->setObjectName("kcfg_RecipientThreshold"_L1);
     mRecipientSpin->setEnabled(false);
-    helpText = i18n(KMailSettings::self()->recipientThresholdItem()->whatsThis().toUtf8().constData());
-    mRecipientSpin->setWhatsThis(helpText);
     mRecipientSpin->setToolTip(i18nc("@info:tooltip", "Set the maximum number of recipients for the warning"));
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
@@ -539,7 +530,6 @@ void ComposerPageGeneralTab::doLoadFromGlobalSettings()
 
     loadWidget(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     loadWidget(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
-    loadWidget(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     loadWidget(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     loadWidget(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
@@ -571,7 +561,6 @@ void ComposerPageGeneralTab::save()
 
     saveCheckBox(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     saveCheckBox(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
-    saveCheckBox(mAutoRequestMDNCheck, KMailSettings::self()->requestMDNItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
     MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto")
@@ -1030,7 +1019,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 
     // "Enable detection of missing attachments" check box
     mMissingAttachmentDetectionCheck = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
-    mMissingAttachmentDetectionCheck->setChecked(true);
+    mMissingAttachmentDetectionCheck->setObjectName(u"kcfg_ShowForgottenAttachmentWarning"_s);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 #else
@@ -1052,6 +1041,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
         PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mAttachWordsListEditor =
         new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify…"), i18n("Enter new key word:"));
+    mAttachWordsListEditor->setObjectName(u"kcfg_AttachmentKeywords"_s);
     mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     mAttachWordsListEditor->setAddDialogLabel(i18n("Attachment Word:"));
     connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
@@ -1077,17 +1067,12 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 
 void ComposerPageAttachmentsTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
-    loadWidget(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
     const int maximumAttachmentSize(MessageCore::MessageCoreSettings::self()->maximumAttachmentSize());
     mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::MessageCoreSettings::self()->maximumAttachmentSize() / 1024);
 }
 
 void ComposerPageAttachmentsTab::save()
 {
-    saveCheckBox(mMissingAttachmentDetectionCheck, KMailSettings::self()->showForgottenAttachmentWarningItem());
-    saveSimpleStringListEditor(mAttachWordsListEditor, KMailSettings::self()->attachmentKeywordsItem());
-
     const int maximumAttachmentSize(mMaximumAttachmentSize->value());
     MessageCore::MessageCoreSettings::self()->setMaximumAttachmentSize(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize * 1024);
 }
