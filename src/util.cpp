@@ -24,7 +24,7 @@ KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::
 {
     KMime::Types::Mailbox::List addresses;
     // determine the mailing list posting address
-    Akonadi::Collection parentCollection = item.parentCollection();
+    const Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
         const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
         if (fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty()) {
@@ -39,7 +39,7 @@ KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::
 
 Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
 {
-    Akonadi::Collection parentCollection = item.parentCollection();
+    const Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
         const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
         if (fd->putRepliesInSameFolder()) {
