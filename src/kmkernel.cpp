@@ -1454,7 +1454,7 @@ void KMKernel::itemDispatchStarted()
                                                           Akonadi::DispatcherInterface().dispatcherInstance(),
                                                           QStringLiteral("Sender"),
                                                           i18n("Sending messages"),
-                                                          i18n("Initiating sending process..."),
+                                                          i18n("Initiating sending process…"),
                                                           true,
                                                           KPIM::ProgressItem::Unknown);
 }
