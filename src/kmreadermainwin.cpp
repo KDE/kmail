@@ -63,13 +63,11 @@ using namespace Qt::Literals::StringLiterals;
 using namespace MailCommon;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
-    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
-    , mReaderWin(new KMReaderWin(this, this, actionCollection()))
+    : KMReaderMainWin(name)
 {
     mReaderWin->setDisplayFormatMessageOverwrite(format);
     mReaderWin->setHtmlLoadExtDefault(htmlLoadExtDefault);
     mReaderWin->setDecryptMessageOverwrite(true);
-    initKMReaderMainWin();
 }
 
 KMReaderMainWin::KMReaderMainWin(const QString &name)
@@ -80,13 +78,11 @@ KMReaderMainWin::KMReaderMainWin(const QString &name)
 }
 
 KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name)
-    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
-    , mReaderWin(new KMReaderWin(this, this, actionCollection()))
+    : KMReaderMainWin(name)
 {
     mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setDisplayFormatMessageOverwrite(format);
     mReaderWin->setMsgPart(aMsgPart);
-    initKMReaderMainWin();
 }
 
 void KMReaderMainWin::initKMReaderMainWin()
