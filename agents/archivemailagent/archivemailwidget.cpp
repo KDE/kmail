@@ -106,13 +106,13 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
     QMenu menu(parentWidget());
-    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add..."), this, &ArchiveMailWidget::slotAddItem);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add…"), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
             menu.addSeparator();
             menu.addAction(mWidget.modifyItem->text(), this, &ArchiveMailWidget::slotModifyItem);
             menu.addSeparator();
-            menu.addAction(i18n("Open Containing Folder..."), this, &ArchiveMailWidget::slotOpenFolder);
+            menu.addAction(i18n("Open Containing Folder…"), this, &ArchiveMailWidget::slotOpenFolder);
         }
         menu.addSeparator();
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &ArchiveMailWidget::slotDeleteItem);

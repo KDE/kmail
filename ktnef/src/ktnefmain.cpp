@@ -112,7 +112,7 @@ void KTNEFMain::setupActions()
     connect(openAction, &QAction::triggered, this, &KTNEFMain::viewFile);
 
     QAction *openAsAction = actionCollection()->addAction(QStringLiteral("view_file_as"));
-    openAsAction->setText(i18nc("@action:inmenu", "View With..."));
+    openAsAction->setText(i18nc("@action:inmenu", "View With…"));
     connect(openAsAction, &QAction::triggered, this, &KTNEFMain::viewFileAs);
 
     QAction *extractAction = actionCollection()->addAction(QStringLiteral("extract_file"));
@@ -120,12 +120,12 @@ void KTNEFMain::setupActions()
     connect(extractAction, &QAction::triggered, this, &KTNEFMain::extractFile);
 
     QAction *extractToAction = actionCollection()->addAction(QStringLiteral("extract_file_to"));
-    extractToAction->setText(i18nc("@action:inmenu", "Extract To..."));
+    extractToAction->setText(i18nc("@action:inmenu", "Extract To…"));
     extractToAction->setIcon(QIcon::fromTheme(QStringLiteral("archive-extract")));
     connect(extractToAction, &QAction::triggered, this, &KTNEFMain::extractFileTo);
 
     QAction *extractAllToAction = actionCollection()->addAction(QStringLiteral("extract_all_files"));
-    extractAllToAction->setText(i18nc("@action:inmenu", "Extract All To..."));
+    extractAllToAction->setText(i18nc("@action:inmenu", "Extract All To…"));
     extractAllToAction->setIcon(QIcon::fromTheme(QStringLiteral("archive-extract")));
     connect(extractAllToAction, &QAction::triggered, this, &KTNEFMain::extractAllFiles);
 
@@ -144,7 +144,7 @@ void KTNEFMain::setupActions()
     connect(messShowAction, &QAction::triggered, this, &KTNEFMain::slotShowMessageText);
 
     QAction *messSaveAction = actionCollection()->addAction(QStringLiteral("msg_save"));
-    messSaveAction->setText(i18nc("@action:inmenu", "Save Message Text As..."));
+    messSaveAction->setText(i18nc("@action:inmenu", "Save Message Text As…"));
     messSaveAction->setIcon(QIcon::fromTheme(QStringLiteral("document-save")));
     connect(messSaveAction, &QAction::triggered, this, &KTNEFMain::slotSaveMessageText);
 
@@ -157,7 +157,7 @@ void KTNEFMain::setupActions()
 
     // Options menu
     QAction *defFolderAction = actionCollection()->addAction(QStringLiteral("options_default_dir"));
-    defFolderAction->setText(i18nc("@action:inmenu", "Default Folder..."));
+    defFolderAction->setText(i18nc("@action:inmenu", "Default Folder…"));
     defFolderAction->setIcon(QIcon::fromTheme(QStringLiteral("folder-open")));
     connect(defFolderAction, &QAction::triggered, this, &KTNEFMain::optionDefaultDir);
 }
@@ -399,7 +399,7 @@ void KTNEFMain::contextMenuEvent(QContextMenuEvent *event)
         menu.addSeparator();
     }
     QAction *extract = menu.addAction(i18nc("@action:inmenu", "Extract"));
-    QAction *extractTo = menu.addAction(QIcon::fromTheme(QStringLiteral("archive-extract")), i18nc("@action:inmenu", "Extract To..."));
+    QAction *extractTo = menu.addAction(QIcon::fromTheme(QStringLiteral("archive-extract")), i18nc("@action:inmenu", "Extract To…"));
     if (list.count() == 1) {
         menu.addSeparator();
         prop = menu.addAction(QIcon::fromTheme(QStringLiteral("document-properties")), i18nc("@action:inmenu", "Properties"));
@@ -567,9 +567,9 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         QString openWithActionName;
         if (menu != topMenu) { // submenu
             menu->addSeparator();
-            openWithActionName = i18nc("@action:inmenu Open With", "&Other...");
+            openWithActionName = i18nc("@action:inmenu Open With", "&Other…");
         } else {
-            openWithActionName = i18nc("@title:menu", "&Open With...");
+            openWithActionName = i18nc("@title:menu", "&Open With…");
         }
         auto openWithAct = new QAction(menu);
         openWithAct->setText(openWithActionName);
@@ -577,7 +577,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
         menu->addAction(openWithAct);
     } else { // no app offers -> Open With...
         auto act = new QAction(topMenu);
-        act->setText(i18nc("@title:menu", "&Open With..."));
+        act->setText(i18nc("@title:menu", "&Open With…"));
         connect(act, &QAction::triggered, this, &KTNEFMain::viewFileAs);
         topMenu->addAction(act);
     }

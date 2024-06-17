@@ -698,7 +698,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
     auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
         PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mReplyListEditor =
-        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new reply prefix:"));
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify…"), i18n("Enter new reply prefix:"));
     mReplyListEditor->setRemoveDialogLabel(i18n("Do you want to remove reply prefix?"));
     connect(mReplyListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mReplyListEditor->setAddDialogLabel(i18n("Reply Prefix:"));
@@ -726,7 +726,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 1: string list editor
     mForwardListEditor =
-        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("Add…"), i18n("Remo&ve"), i18n("Modify..."), i18n("Enter new forward prefix:"));
+        new PimCommon::SimpleStringListEditor(group, buttonCode, i18n("Add…"), i18n("Remo&ve"), i18n("Modify…"), i18n("Enter new forward prefix:"));
     mForwardListEditor->setRemoveDialogLabel(i18n("Do you want to remove forward prefix?"));
     mForwardListEditor->setAddDialogLabel(i18n("Forward Prefix:"));
     connect(mForwardListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
@@ -1051,7 +1051,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     auto buttonCode = static_cast<PimCommon::SimpleStringListEditor::ButtonCode>(
         PimCommon::SimpleStringListEditor::Add | PimCommon::SimpleStringListEditor::Remove | PimCommon::SimpleStringListEditor::Modify);
     mAttachWordsListEditor =
-        new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify..."), i18n("Enter new key word:"));
+        new PimCommon::SimpleStringListEditor(this, buttonCode, i18n("A&dd…"), i18n("Re&move"), i18n("Mod&ify…"), i18n("Enter new key word:"));
     mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     mAttachWordsListEditor->setAddDialogLabel(i18n("Attachment Word:"));
     connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);

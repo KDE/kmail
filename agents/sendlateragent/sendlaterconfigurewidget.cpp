@@ -67,7 +67,7 @@ SendLaterWidget::SendLaterWidget(QWidget *parent)
     mWidget->treeWidget->setRootIsDecorated(false);
     mWidget->treeWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);
     mWidget->treeWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-    mWidget->treeWidget->setDefaultText(i18n("No messages waiting..."));
+    mWidget->treeWidget->setDefaultText(i18n("No messages waiting…"));
 
     connect(mWidget->treeWidget, &QTreeWidget::customContextMenuRequested, this, &SendLaterWidget::slotCustomContextMenuRequested);
 

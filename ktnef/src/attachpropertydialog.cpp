@@ -58,7 +58,7 @@ AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &AttachPropertyDialog::reject);
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
-    user1Button->setText(i18n("Save..."));
+    user1Button->setText(i18n("Save…"));
     connect(user1Button, &QPushButton::clicked, this, &AttachPropertyDialog::slotSave);
 
     mainLayout->addWidget(mainWidget);
