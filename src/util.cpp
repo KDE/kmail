@@ -13,7 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include <KLocalizedString>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 
 #include <QAction>
 #include <QStandardPaths>

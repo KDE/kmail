@@ -84,7 +84,7 @@ using KMail::MailServiceImpl;
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/Session>
 #include <KMime/Headers>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 
 #include <Libkleo/FileSystemWatcher>
 #include <Libkleo/GnuPG>

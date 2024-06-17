@@ -20,7 +20,7 @@
 #include <Akonadi/ETMViewStateSaver>
 #include <Akonadi/EntityTreeModel>
 
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 
 #include "kmailplugin_debug.h"
 #include <KCheckableProxyModel>

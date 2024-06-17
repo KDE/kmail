@@ -42,7 +42,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <Akonadi/StandardActionManager>
 #include <KActionMenu>
 #include <KMessageBox>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 #include <KStandardAction>
 #include <KStandardGuiItem>
 #include <PIM/indexeditems.h>

@@ -21,7 +21,7 @@
 #include <Akonadi/ItemMoveJob>
 #include <Akonadi/MessageParts>
 #include <KLocalizedString>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 #include <KNotification>
 #include <MailCommon/FilterImporterExporter>
 #include <MailCommon/FilterLog>

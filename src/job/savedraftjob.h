@@ -9,7 +9,7 @@
 
 #include <Akonadi/Collection>
 #include <KJob>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 
 class SaveDraftJob : public KJob
 {

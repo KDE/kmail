@@ -14,7 +14,7 @@
 #include <Akonadi/Session>
 
 #include <Akonadi/MessageParts>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 
 #include <KLocalizedString>
 #include <QApplication>

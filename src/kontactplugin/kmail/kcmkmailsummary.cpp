@@ -10,7 +10,7 @@
 #include "kcmkmailsummary.h"
 
 #include <Akonadi/ETMViewStateSaver>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 #include <PimCommonAkonadi/CheckedCollectionWidget>
 
 #include "kmailplugin_debug.h"

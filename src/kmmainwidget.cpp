@@ -123,7 +123,7 @@
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
 #include <KMime/HeaderParsing>
-#include <KMime/KMimeMessage>
+#include <KMime/Message>
 #include <KSieveCore/Util>
 #include <KSieveUi/ManageSieveScriptsDialog>
 #include <MailTransport/Transport>
